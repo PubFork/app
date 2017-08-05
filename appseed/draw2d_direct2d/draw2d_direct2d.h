@@ -69,9 +69,7 @@ namespace draw2d_direct2d
 
 
 
-//#ifdef WINDOWSEX
-#include "draw2d_direct2d_win_tls.h"
-//#endif
+#include "draw2d_direct2d_global.h"
 
 
 #include "draw2d_direct2d_factory_exchange.h"

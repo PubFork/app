@@ -5345,7 +5345,7 @@ namespace draw2d
 
    }
 
-#ifdef METROWIN
+#ifdef WINDOWS
 
    ID2D1Factory1 * device_lock::g_pfactory = NULL;
 

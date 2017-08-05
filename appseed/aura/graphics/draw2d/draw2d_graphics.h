@@ -799,10 +799,7 @@ CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const RECT
 namespace draw2d
 {
 
-
-#ifdef METROWIN
-
-   
+#ifdef WINDOWS
 
    class CLASS_DECL_AURA device_lock
    {
@@ -810,7 +807,7 @@ namespace draw2d
 
       static ID2D1Factory1 * g_pfactory;
 
-      Microsoft::WRL::ComPtr<ID2D1Multithread> m_D2DMultithread;
+      ::windows::comptr < ID2D1Multithread > m_D2DMultithread;
 
       device_lock()
       {
@@ -829,7 +826,7 @@ namespace draw2d
       ~device_lock()
       {
 
-         if (m_D2DMultithread.Get() != NULL)
+         if (m_D2DMultithread.m_p != NULL)
          {
 
             m_D2DMultithread->Leave();
