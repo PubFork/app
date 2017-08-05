@@ -796,15 +796,122 @@ CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const RECT
 
 
 
+namespace draw2d
+{
+
+
+#ifdef METROWIN
+
+   
+
+   class CLASS_DECL_AURA device_lock
+   {
+   public:
+
+      static ID2D1Factory1 * g_pfactory;
+
+      Microsoft::WRL::ComPtr<ID2D1Multithread> m_D2DMultithread;
+
+      device_lock()
+      {
+
+         if (g_pfactory != NULL)
+         {
+
+            g_pfactory->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
+
+            m_D2DMultithread->Enter();
+
+         }
+
+      }
+
+      ~device_lock()
+      {
+
+         if (m_D2DMultithread.Get() != NULL)
+         {
+
+            m_D2DMultithread->Leave();
+
+         }
+
+      }
 
 
 
 
+   };
+
+
+   class CLASS_DECL_AURA lock :
+      public synch_lock
+   {
+   public:
+
+      static mutex * g_pmutex;
+
+      lock() :
+         synch_lock(g_pmutex)
+      {
+
+      }
+
+      virtual ~lock()
+      {
+
+      }
+
+   };
+
+
+#else
+
+
+   class device_lock
+   {
+   public:
+
+      device_lock()
+      {
+
+      }
+
+      ~device_lock()
+      {
+
+
+      }
 
 
 
 
+   };
+
+   class lock
+   {
+   public:
+
+      lock()
+      {
+
+      }
+
+      ~lock()
+      {
 
 
+      }
+
+
+
+
+   };
+
+
+#endif
+
+
+} // namespace draw2d
 
 

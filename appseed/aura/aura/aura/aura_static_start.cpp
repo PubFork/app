@@ -9,8 +9,8 @@
 
 extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
-CLASS_DECL_AURA void init_draw2d_mutex();
-CLASS_DECL_AURA void term_draw2d_mutex();
+//CLASS_DECL_AURA void init_draw2d_mutex();
+//CLASS_DECL_AURA void term_draw2d_mutex();
 void aura_auto_debug_teste();
 void teste_aura_cmp();
 void init_resolve_addr_file_func_line();
@@ -390,7 +390,7 @@ namespace aura
 
          g_pmapLibCall = NULL;
 
-         term_draw2d_mutex();
+         //term_draw2d_mutex();
 
          delete g_pmutexFactory;
 
@@ -583,27 +583,27 @@ namespace aura
 } // namespace aura
 
 
-static mutex * s_pmutexDraw2d = NULL;
-
-CLASS_DECL_AURA mutex * draw2d_mutex()
-{
-
-   return s_pmutexDraw2d;
-
-}
-
-
-CLASS_DECL_AURA void init_draw2d_mutex()
-{
-
-   s_pmutexDraw2d = new mutex();
-
-}
+//static mutex * s_pmutexDraw2d = NULL;
+//
+//CLASS_DECL_AURA mutex * draw2d_mutex()
+//{
+//
+//   return s_pmutexDraw2d;
+//
+//}
 
 
-CLASS_DECL_AURA void term_draw2d_mutex()
-{
+//CLASS_DECL_AURA void init_draw2d_mutex()
+//{
+//
+//   s_pmutexDraw2d = new mutex();
+//
+//}
 
-   ::aura::del(s_pmutexDraw2d);
 
-}
+//CLASS_DECL_AURA void term_draw2d_mutex()
+//{
+//
+//   ::aura::del(s_pmutexDraw2d);
+//
+//}

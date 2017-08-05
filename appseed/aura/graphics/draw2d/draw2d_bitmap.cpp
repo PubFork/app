@@ -234,6 +234,20 @@ namespace draw2d
    void copy_colorref(int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)
    {
 
+      if (pcolorrefDst == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pcolorrefSrc == NULL)
+      {
+
+         return;
+
+      }
+
       if(iStrideSrc <= 0)
       {
 

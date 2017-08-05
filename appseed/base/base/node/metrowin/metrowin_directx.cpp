@@ -13,6 +13,8 @@ using namespace D2D1;
 namespace metrowin
 {
 
+
+
    // Constructor.
    directx_base::directx_base(::aura::application * papp):
       m_pauraapp(papp),
@@ -37,21 +39,30 @@ namespace metrowin
       m_dpiIni = dpi;
 
       CreateDeviceIndependentResources();
-      //CreateDeviceResources();
-      //SetDpi(dpi);
+
       m_bInit = true;
+
    }
 
 
    bool directx_base::defer_init()
    {
-      synch_lock sl(draw2d_mutex());
+    
+      ::draw2d::lock draw2dlock;
 
-      if(m_bInitialized)
+      if (m_bInitialized)
+      {
+
          return true;
 
-      if(!m_bInit)
+      }
+
+      if (!m_bInit)
+      {
+
          return false;
+
+      }
 
       CreateDeviceResources();
 
@@ -62,10 +73,13 @@ namespace metrowin
       return true;
 
    }
+
+
    // Recreate all device resources and set them back to the current state.
    void directx_base::HandleDeviceLost()
    {
-      synch_lock sl(draw2d_mutex());
+      
+      ::draw2d::lock draw2dlock;
 
       // Reset these member variables to ensure that SetDpi recreates all resources.
       float dpi = m_dpi;
@@ -75,13 +89,17 @@ namespace metrowin
       m_swapChain = nullptr;
 
       CreateDeviceResources();
+
       SetDpi(dpi);
+
    }
+
 
    // These are the resources required independent of the device.
    void directx_base::CreateDeviceIndependentResources()
    {
-      synch_lock sl(draw2d_mutex());
+
+      ::draw2d::lock draw2dlock;
 
       D2D1_FACTORY_OPTIONS options;
       ZeroMemory(&options,sizeof(D2D1_FACTORY_OPTIONS));
@@ -196,24 +214,13 @@ namespace metrowin
    void directx_base::CreateDeviceResources()
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
-      m_d3dDevice = TlsGetD3D11Device1();
+      m_d3dDevice = global_draw_get_d3d11_device1();
 
-      m_d3dContext = TlsGetD3D11DeviceContext1();
+      m_d3dContext = global_draw_get_d3d11_device_context1();
 
-      m_d2dDevice = TlsGetD2D1Device();
-
-      m_d2dContext = TlsGetD2D1DeviceContext();
-
-      ::metrowin::throw_if_failed(
-         m_d2dContext->CreateSolidColorBrush(
-            D2D1::ColorF(D2D1::ColorF::Black),
-            &m_blackBrush
-         )
-      );
-
-
+      m_d2dDevice = global_draw_get_d2d1_device();
 
    }
 
@@ -221,7 +228,7 @@ namespace metrowin
    // This is called in the dpiChanged event handler in the view class.
    void directx_base::SetDpi(float dpi)
    {
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       if(dpi != m_dpi)
       {
@@ -229,9 +236,6 @@ namespace metrowin
          m_dpi = dpi;
 
          System.m_dpi = dpi;
-
-         // Update Direct2D's stored DPI.
-         m_d2dContext->SetDpi(m_dpi,m_dpi);
 
          m_size.cx = m_window->Bounds.Width;
 
@@ -268,18 +272,22 @@ namespace metrowin
    void directx_base::OnWindowSizeChange()
    {
 
-      synch_lock sl(draw2d_mutex());
-
-      if (m_size.cx != m_windowBounds.Width ||
-         m_size.cy != m_windowBounds.Height)
+      if (m_size.cx != m_windowBounds.Width || m_size.cy != m_windowBounds.Height)
       {
-         m_d2dContext->SetTarget(nullptr);
-         m_d2dTargetBitmap = nullptr;
-         m_d3dRenderTargetView = nullptr;
-         m_d3dDepthStencilView = nullptr;
-         m_windowSizeChangeInProgress = true;
-         CreateWindowSizeDependentResources();
-         sl.unlock();
+
+         {
+
+            ::draw2d::lock draw2dlock;
+
+            m_d2dTargetBitmap = nullptr;
+            m_d3dRenderTargetView = nullptr;
+            m_d3dDepthStencilView = nullptr;
+            m_windowSizeChangeInProgress = true;
+            
+            CreateWindowSizeDependentResources();
+
+         }
+
          System.m_possystemwindow->m_pui->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
          if (System.directrix()->m_varTopicQuery.has_property("client_only"))
          {
@@ -301,7 +309,7 @@ namespace metrowin
    // Allocate all memory resources that change on a window SizeChanged event.
    void directx_base::CreateWindowSizeDependentResources()
    {
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       // Store the window bounds so the next time we get a SizeChanged event we can
       // avoid rebuilding everything if the size is identical.
@@ -454,27 +462,37 @@ namespace metrowin
             m_dpi
          );
 
+
+      ::draw2d_direct2d::throw_if_failed(
+         global_draw_get_d2d1_device()->CreateDeviceContext(
+            D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+            //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+            &m_pd2d1devicecontext
+         )
+      );
+
+
       ComPtr<IDXGISurface> dxgiBackBuffer;
       ::metrowin::throw_if_failed(
          m_swapChain->GetBuffer(0,IID_PPV_ARGS(&dxgiBackBuffer))
       );
 
       ::metrowin::throw_if_failed(
-         m_d2dContext->CreateBitmapFromDxgiSurface(
+         m_pd2d1devicecontext->CreateBitmapFromDxgiSurface(
             dxgiBackBuffer.Get(),
             &bitmapProperties,
             &m_d2dTargetBitmap
          )
       );
 
-      m_d2dContext->SetTarget(m_d2dTargetBitmap.Get());
+      m_pd2d1devicecontext->SetTarget(m_d2dTargetBitmap.Get());
 
       // Grayscale text anti-aliasing is recommended for all Metro style apps.
-      m_d2dContext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+      m_pd2d1devicecontext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
       String^ text = "Hello World From ... DirectWrite!";
 
-      D2D1_SIZE_F size = m_d2dContext->GetSize();
+      D2D1_SIZE_F size = m_pd2d1devicecontext->GetSize();
 
       // Create a DirectWrite Text Layout object
       ::metrowin::throw_if_failed(
@@ -544,63 +562,96 @@ namespace metrowin
    void directx_base::Present()
    {
 
-      synch_lock sl(draw2d_mutex());
+      HRESULT hr = S_OK;
 
-      if(!defer_init())
-         return;
-
-      // The application may optionally specify "dirty" or "scroll" rects to improve efficiency
-      // in certain scenarios.  In this sample, however, we do not utilize those features.
-      DXGI_PRESENT_PARAMETERS parameters = {0};
-      parameters.DirtyRectsCount = 0;
-      parameters.pDirtyRects = nullptr;
-      parameters.pScrollRect = nullptr;
-      parameters.pScrollOffset = nullptr;
-
-      if (m_swapChain == nullptr)
       {
 
-         return;
+         if (!defer_init())
+         {
+
+            return;
+
+         }
+
+         try
+         {
+
+
+            // The application may optionally specify "dirty" or "scroll" rects to improve efficiency
+            // in certain scenarios.  In this sample, however, we do not utilize those features.
+            DXGI_PRESENT_PARAMETERS parameters = {};
+
+            parameters.DirtyRectsCount = 0;
+
+            parameters.pDirtyRects = nullptr;
+
+            parameters.pScrollRect = nullptr;
+
+            parameters.pScrollOffset = nullptr;
+
+            if (m_swapChain == nullptr)
+            {
+
+               return;
+
+            }
+
+            {
+
+               ::draw2d::lock draw2dlock;
+
+               // The first argument instructs DXGI to block until VSync, putting the application
+               // to sleep until the next VSync. This ensures we don't waste any cycles rendering
+               // frames that will never be displayed to the screen.
+               hr = m_swapChain->Present1(1, 0, &parameters);
+
+               // Discard the contents of the render target.
+               // This is a valid operation only when the existing contents will be entirely
+               // overwritten. If dirty or scroll rects are used, this call should be removed.
+               m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
+
+               // Discard the contents of the depth stencil.
+               m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
+
+            }
+
+            // If the device was removed either by a disconnect or a driver upgrade, we
+            // must recreate all device resources.
+            if (hr == DXGI_ERROR_DEVICE_REMOVED)
+            {
+
+               HandleDeviceLost();
+
+            }
+            else
+            {
+
+               ::metrowin::throw_if_failed(hr);
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
 
       }
-
-      // The first argument instructs DXGI to block until VSync, putting the application
-      // to sleep until the next VSync. This ensures we don't waste any cycles rendering
-      // frames that will never be displayed to the screen.
-      HRESULT hr = m_swapChain->Present1(1,0,&parameters);
-
-      // Discard the contents of the render target.
-      // This is a valid operation only when the existing contents will be entirely
-      // overwritten. If dirty or scroll rects are used, this call should be removed.
-      m_d3dContext->DiscardView(m_d3dRenderTargetView.Get());
-
-      // Discard the contents of the depth stencil.
-      m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
-
-      // If the device was removed either by a disconnect or a driver upgrade, we
-      // must recreate all device resources.
-      if(hr == DXGI_ERROR_DEVICE_REMOVED)
-      {
-         HandleDeviceLost();
-      }
-      else
-      {
-         ::metrowin::throw_if_failed(hr);
-      }
-
-      sl.unlock();
 
       if (m_windowSizeChangeInProgress)
       {
+
          m_windowSizeChangeInProgress = false;
-         m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal,ref new Windows::UI::Core::DispatchedHandler([this]()
-      {
+
+         m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]()
+         {
+
             // A window size change has been initiated and the app has just completed presenting
             // the first frame with the new size. Notify the resize manager so we can short
             // circuit any resize animation and prevent unnecessary delays.
             CoreWindowResizeManager::GetForCurrentView()->NotifyLayoutCompleted();
-         
-      }));
+
+         }));
 
       }
 
@@ -608,7 +659,7 @@ namespace metrowin
 
    void directx_base::ValidateDevice()
    {
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
       // The D3D Device is no longer valid if the default adapter changes or if
       // the device has been removed.
 
@@ -649,26 +700,26 @@ namespace metrowin
 
    HRESULT directx_base::Render()
    {
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       if(!defer_init())
          return E_FAIL;
 
-      m_d2dContext->BeginDraw();
+      m_pd2d1devicecontext->BeginDraw();
 
       D2D1_COLOR_F cr;
       cr.a = 1.0f;
       cr.b = 0xcc / 255.f;
       cr.r = 0xcc / 255.f;
       cr.g = 0xcc / 255.f;
-      m_d2dContext->Clear(cr);
+      m_pd2d1devicecontext->Clear(cr);
 
 
-      m_d2dContext->SetTransform(D2D1::Matrix3x2F::Identity());
+      m_pd2d1devicecontext->SetTransform(D2D1::Matrix3x2F::Identity());
 
       ::draw2d::graphics_sp dc(get_app()->allocer());
 
-      dc->attach((ID2D1DeviceContext *)m_d2dContext.Get());
+      dc->attach((ID2D1DeviceContext *)m_pd2d1devicecontext.Get());
 
       sp(::user::interaction_impl) pimpl = Sys(::aura::system::g_p).m_possystemwindow->m_pui->m_pimpl;
 
@@ -702,7 +753,7 @@ namespace metrowin
 
       // We ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
       // is lost. It will be handled during the next call to Present.
-      HRESULT hr = m_d2dContext->EndDraw();
+      HRESULT hr = m_pd2d1devicecontext->EndDraw();
 
       if(FAILED(hr))
       {

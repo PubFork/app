@@ -42,7 +42,7 @@ namespace draw2d_direct2d
          }
 
 
-         IDWriteFactory * pfactory = TlsGetWriteFactory();
+         IDWriteFactory * pfactory = global_draw_get_write_factory();
 
 
          DWRITE_FONT_STYLE style;

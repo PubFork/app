@@ -5347,6 +5347,14 @@ namespace draw2d
       int jNextBoundary;
       int jStart;
       byte * pdata = (byte *)m_pcolorref;
+
+      if (pdata == NULL)
+      {
+
+         return;
+
+      }
+
       int w = m_size.cx;
       int sw = w * sizeof(COLORREF);
 
@@ -7165,7 +7173,14 @@ COLORREF o = ARGB(255, uchR, uchG, uchB);
 
       }
 
-      create((int)image->width, (int)image->height);
+      if (!create((int)image->width, (int)image->height))
+      {
+
+         printf("Could not open SVG image (Dib creation failed).\n");
+
+         goto error;
+
+      }
 
       map();
 

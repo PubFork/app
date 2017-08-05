@@ -7366,8 +7366,7 @@ bool imaging::LoadImageFromFile(::draw2d::dib * pdib, ::file::file * pfile)
    bool imaging::load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool bCache)
    {
 
-      
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       //single_lock sl(&m_mutex);
 

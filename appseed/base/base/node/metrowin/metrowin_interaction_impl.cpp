@@ -398,8 +398,6 @@ namespace metrowin
                      try
                      {
 
-                        synch_lock sl(draw2d_mutex());
-
                         HRESULT hr = m_xapp->m_directx->Render();
 
                         if (SUCCEEDED(hr))

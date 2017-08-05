@@ -55,12 +55,15 @@ namespace draw2d_direct2d
    // These are the resources required independent of the device.
    void directx::CreateDeviceIndependentResources()
    {
+
       D2D1_FACTORY_OPTIONS options;
       ZeroMemory(&options, sizeof(D2D1_FACTORY_OPTIONS));
 
 #if defined(_DEBUG)
+      
       // If the project is in a debug build, enable Direct2D debugging via SDK Layers.
       options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
+
 #endif
 
       ::draw2d_direct2d::throw_if_failed(
@@ -70,67 +73,6 @@ namespace draw2d_direct2d
          &m_dwriteFactory
          )
          );
-
-/*      ::draw2d_direct2d::throw_if_failed(
-         CoCreateInstance(
-         CLSID_WICImagingFactory,
-         nullptr,
-         CLSCTX_INPROC_SERVER,
-         IID_PPV_ARGS(&m_wicFactory)
-         )
-         );
-
-         */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       // Create a DirectWrite text format object.
@@ -225,7 +167,7 @@ namespace draw2d_direct2d
 
       // Create the Direct2D device object and a corresponding context.
       ::draw2d_direct2d::throw_if_failed(
-         GetD2D1Factory1()->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
+         get_d2d1_factory1()->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
          );
 
       ::draw2d_direct2d::throw_if_failed(
@@ -241,42 +183,6 @@ namespace draw2d_direct2d
 
       System.m_pdevicecontext    = pdevicecontext;
       System.m_pmutexDc          = &m_mutexDc;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

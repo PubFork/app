@@ -335,8 +335,8 @@ inline ::Windows::Foundation::AsyncStatus wait(::Windows::Foundation::IAsyncActi
 //};
 //
 //
-//CLASS_DECL_AURA IDWriteFactory * TlsGetWriteFactory();
+//CLASS_DECL_AURA IDWriteFactory * global_draw_get_write_factory();
 //
-//CLASS_DECL_AURA ID2D1Factory1 * GetD2D1Factory1();
+//CLASS_DECL_AURA ID2D1Factory1 * get_d2d1_factory1();
 
 

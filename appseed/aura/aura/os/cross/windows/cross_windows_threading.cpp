@@ -416,7 +416,7 @@ void thread_shutdown()
       /*      try
       {
 
-      IDWriteFactory * pfactory = TlsGetWriteFactory();
+      IDWriteFactory * pfactory = global_draw_get_write_factory();
 
       if(pfactory != NULL)
       {
@@ -433,7 +433,7 @@ void thread_shutdown()
       try
       {
 
-      ID2D1Factory1 * pfactory = GetD2D1Factory1();
+      ID2D1Factory1 * pfactory = get_d2d1_factory1();
 
       if(pfactory != NULL)
       {
@@ -684,7 +684,7 @@ void * __thread_get_data(IDTHREAD hthread,uint32_t dwIndex)
 //      /*      try
 //      {
 //
-//      IDWriteFactory * pfactory = TlsGetWriteFactory();
+//      IDWriteFactory * pfactory = global_draw_get_write_factory();
 //
 //      if(pfactory != NULL)
 //      {
@@ -701,7 +701,7 @@ void * __thread_get_data(IDTHREAD hthread,uint32_t dwIndex)
 //      try
 //      {
 //
-//      ID2D1Factory1 * pfactory = GetD2D1Factory1();
+//      ID2D1Factory1 * pfactory = get_d2d1_factory1();
 //
 //      if(pfactory != NULL)
 //      {

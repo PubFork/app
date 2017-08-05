@@ -18,10 +18,13 @@ namespace draw2d_direct2d
 
       HRESULT                       m_hrEndDraw;
       BITMAPINFO                    m_info;
+      
       ::draw2d::bitmap_sp           m_spbitmap;
-      //::draw2d::bitmap_sp           m_spbitmapMap;
       ::draw2d::graphics_sp         m_spgraphics;
-      //::draw2d::graphics_sp         m_spgraphicsMap;
+
+      ::draw2d::bitmap_sp           m_spbitmapMap;
+      ::draw2d::graphics_sp         m_spgraphicsMap;
+
       bool                          m_bMapped;
       bool                          m_bTrans;
 

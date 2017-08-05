@@ -110,7 +110,7 @@ namespace draw2d_direct2d
    ID2D1Brush * brush::get_os_brush(::draw2d_direct2d::graphics * pgraphics) const
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
 
       if(pgraphics->m_prendertarget == NULL)

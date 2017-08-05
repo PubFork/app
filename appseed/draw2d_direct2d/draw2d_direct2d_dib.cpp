@@ -1,4 +1,4 @@
-#include "framework.h"
+ï»¿#include "framework.h"
 
 
 namespace draw2d_direct2d
@@ -18,12 +18,12 @@ namespace draw2d_direct2d
       m_spgraphics(allocer())
    {
 
-      m_pcolorref    = NULL;
-      m_bMapped      = false;
-      m_bTrans       = false;
+      m_pcolorref = NULL;
+      m_bMapped = false;
+      m_bTrans = false;
    }
 
-   
+
    COLORREF * dib::get_data() const
    {
 
@@ -68,9 +68,9 @@ namespace draw2d_direct2d
    bool dib::create(int width, int height)
    {
       if (m_spbitmap.is_set()
-            && m_spbitmap->get_os_data() != NULL
-            && width == m_size.cx
-            && height == m_size.cy)
+         && m_spbitmap->get_os_data() != NULL
+         && width == m_size.cx
+         && height == m_size.cy)
          return TRUE;
 
       Destroy();
@@ -78,9 +78,9 @@ namespace draw2d_direct2d
       if (width <= 0 || height <= 0)
          return FALSE;
 
-      ZeroMemory(&m_info, sizeof (BITMAPINFO));
+      ZeroMemory(&m_info, sizeof(BITMAPINFO));
 
-      m_info.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
+      m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
       m_info.bmiHeader.biWidth = width;
       m_info.bmiHeader.biHeight = -height;
       m_info.bmiHeader.biPlanes = 1;
@@ -89,10 +89,11 @@ namespace draw2d_direct2d
       m_info.bmiHeader.biSizeImage = width * height * 4;
 
       m_spbitmap.alloc(allocer());
-
+      m_spbitmapMap.alloc(allocer());
       m_spgraphics.alloc(allocer());
+      m_spgraphicsMap.alloc(allocer());
 
-      if (m_spbitmap.m_p == NULL || m_spgraphics.is_null())
+      if (m_spbitmap.m_p == NULL || m_spbitmapMap.is_null() || m_spgraphics.is_null() || m_spgraphicsMap.is_null())
       {
 
          m_size.cx = 0;
@@ -105,40 +106,31 @@ namespace draw2d_direct2d
 
       }
 
-      //m_spgraphicsMap->CreateCompatibleDC(NULL);
+      m_spgraphicsMap->CreateCompatibleDC(NULL);
 
-      //if (!m_spbitmapMap->CreateDIBSection(m_spgraphicsMap, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, NULL))
-      //{
-
-      //   m_size.cx = 0;
-
-      //   m_size.cy = 0;
-
-      //   m_iScan = 0;
-
-      //   return false;
-
-      //}
-
-      //if (m_spbitmapMap->get_os_data() == NULL)
-      //{
-
-      //   Destroy();
-
-      //   return false;
-
-      //}
-
-      //HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
-
-      if (!m_spgraphics->CreateCompatibleDC(NULL))
+      if (!m_spbitmapMap->CreateDIBSection(m_spgraphicsMap, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, NULL))
       {
+
+         m_size.cx = 0;
+
+         m_size.cy = 0;
+
+         m_iScan = 0;
 
          return false;
 
       }
 
-      m_spgraphics->SelectObject(m_spbitmap);
+      if (m_spbitmapMap->get_os_data() == NULL)
+      {
+
+         Destroy();
+
+         return false;
+
+      }
+
+      HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
 
       m_size.cx = width;
 
@@ -146,22 +138,20 @@ namespace draw2d_direct2d
 
       m_iScan = width * sizeof(COLORREF);
 
+      realize(NULL);
 
+      if (!is_realized())
+      {
 
-      //realize(NULL);
+         m_size.cx = 0;
 
-      //if (!is_realized())
-      //{
+         m_size.cy = 0;
 
-      //   m_size.cx = 0;
+         m_iScan = 0;
 
-      //   m_size.cy = 0;
+         return false;
 
-      //   m_iScan = 0;
-
-      //   return false;
-
-      //}
+      }
 
 
       m_bMapped = false;
@@ -171,7 +161,7 @@ namespace draw2d_direct2d
 
       //realize(m_spgraphicsMap);
 
-      ((ID2D1DeviceContext *) m_spgraphics->get_os_data())->BeginDraw();
+      ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->BeginDraw();
 
       m_hrEndDraw = S_OK;
 
@@ -1437,7 +1427,7 @@ namespace draw2d_direct2d
 
    //// too slow for animation on AMD XP gen_hon.
    //// TOP SUGGESTION:
-   //// The gradient can´t have more then 256 levels of the most bright color
+   //// The gradient canï¿½t have more then 256 levels of the most bright color
    //// (white). So creating a radial fill of radius 256 and then using fasting
    //// stretching algorithms is much faster than calculating radial fill.
    //void dib::RadialFill(BYTE alpha, BYTE red, BYTE green, BYTE blue, int xCenter, int yCenter, int iRadius)
@@ -2560,89 +2550,95 @@ namespace draw2d_direct2d
    void dib::map(bool bApplyAlphaTransform) const
    {
 
-      synch_lock ml(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       if (m_bMapped)
          return;
 
-      //if (m_spbitmapMap.is_null() || m_spbitmap.is_null())
-      //   return;
+      if (m_spbitmapMap.is_null() || m_spbitmap.is_null())
+         return;
 
-      if (m_spgraphics.is_set())
-      {
+      dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->SaveClip();
 
-         dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->SaveClip();
-
-         if (m_spgraphics->get_os_data() != NULL)
-         {
-
-            ((dib *) this)->m_hrEndDraw = ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->EndDraw();
-
-         }
-
-      }
+      ((dib *) this)->m_hrEndDraw = ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->EndDraw();
 
       HRESULT hr = S_OK;
 
-      //if (m_spbitmap->get_os_data() != NULL)
-      //{
+      if (m_spbitmap->get_os_data() != NULL)
+      {
 
 
-      //   //hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->CopyFromBitmap(NULL, (ID2D1Bitmap *)m_spbitmap->get_os_data(), NULL);
+         hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->CopyFromBitmap(NULL, (ID2D1Bitmap *)m_spbitmap->get_os_data(), NULL);
 
-      //}
+      }
 
       sp(::draw2d_direct2d::bitmap) pb = m_spbitmap;
 
-      if (pb.is_set())
+      ZERO(pb->m_map);
+
+      hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Map(D2D1_MAP_OPTIONS_READ, &pb->m_map);
+
+      if (FAILED(hr) || pb->m_map.bits == NULL)
+         throw "";
+
+      ((dib *) this)->m_pcolorref = (COLORREF *)pb->m_map.bits;
+
+      ((dib *) this)->m_iScan = pb->m_map.pitch;
+
+      int compare_scan = m_size.cx * sizeof(COLORREF);
+
+      int64_t i = m_iScan * m_size.cy / sizeof(COLORREF);
+
+      if (bApplyAlphaTransform)
       {
 
-         ZERO(pb->m_map);
 
-         //hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Map(D2D1_MAP_OPTIONS_READ, &pb->m_map);
 
-         //if (FAILED(hr) || pb->m_map.bits == NULL)
-         //   throw "";
+         //byte * p = ((byte *)m_pcolorref);
+         //while (i > 0)
+         //{
+         //   if (p[3] == 0)
+         //   {
+         //      p[0] = 0;
+         //      p[1] = 0;
+         //      p[2] = 0;
+         //   }
+         //   else
+         //   {
+         //      p[0] = (p[0] * 255 / p[3]);
+         //      p[1] = (p[1] * 255 / p[3]);
+         //      p[2] = (p[2] * 255 / p[3]);
+         //   }
+         //   p += 4;
+         //   i--;
+         //}
 
-         ((dib *) this)->m_pcolorref = (COLORREF *)pb->m_map.bits;
-
-         ((dib *) this)->m_iScan = pb->m_map.pitch;
-
-         int compare_scan = m_size.cx * sizeof(COLORREF);
-
-         int64_t i = m_iScan * m_size.cy / sizeof(COLORREF);
-
-         if (bApplyAlphaTransform)
-         {
-
-            ((dib *) this)->m_bTrans = true;
-
-         }
-
-         ((dib *) this)->m_bMapped = true;
+         ((dib *) this)->m_bTrans = true;
 
       }
+
+      ((dib *) this)->m_bMapped = true;
 
    }
 
    void dib::unmap() const
    {
 
-      synch_lock ml(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       if (!m_bMapped)
          return;
 
-      //if (m_spbitmapMap.is_null() || m_spbitmap.is_null())
-      //   return;
+      if (m_spbitmapMap.is_null() || m_spbitmap.is_null())
+         return;
 
       try
       {
 
-         if(m_spbitmap->get_os_data() == NULL)
+         if (m_spbitmap->get_os_data() == NULL)
          {
 
-            //HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
+            HRESULT hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
 
             ((dib *) this)->m_pcolorref = NULL;
 
@@ -2658,7 +2654,7 @@ namespace draw2d_direct2d
 
          int64_t i = m_iScan * m_size.cy / sizeof(COLORREF);
 
-         if(m_bTrans)
+         if (m_bTrans)
          {
 
             //while(i > 0)
@@ -2682,14 +2678,14 @@ namespace draw2d_direct2d
 
          //memset(m_pcolorref, 127, scan * cy / 2);
 
-         HRESULT hr = ((ID2D1Bitmap *)m_spbitmap->get_os_data())->CopyFromMemory(&srcRect,m_pcolorref,m_iScan);
+         HRESULT hr = ((ID2D1Bitmap *)m_spbitmap->get_os_data())->CopyFromMemory(&srcRect, m_pcolorref, m_iScan);
          //zero(&METROWIN_BITMAP(m_spbitmapMap.m_p)->m_map, sizeof(METROWIN_BITMAP(m_spbitmapMap.m_p)->m_map));
 
-         //hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
+         hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Unmap();
 
          ((dib *) this)->m_pcolorref = NULL;
 
-         if(FAILED(hr))
+         if (FAILED(hr))
          {
 
             ((dib *) this)->m_bMapped = false;
@@ -2701,11 +2697,11 @@ namespace draw2d_direct2d
          m_spgraphics->SelectObject(m_spbitmap);
 
       }
-      catch(...)
+      catch (...)
       {
       }
 
-      if(SUCCEEDED(m_hrEndDraw))
+      if (SUCCEEDED(m_hrEndDraw))
       {
          ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->BeginDraw();
 
@@ -2744,7 +2740,7 @@ namespace draw2d_direct2d
    bool dib::realize(::draw2d::graphics * pgraphics) const
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       if (is_realized())
          unrealize();
@@ -2753,13 +2749,12 @@ namespace draw2d_direct2d
          return false;
 
       ((dib *) this)->m_spbitmap.alloc(((dib *) this)->allocer());
-
       ((dib *) this)->m_spgraphics.alloc(((dib *) this)->allocer());
 
-      //if(((dib *) this)->m_spbitmap.is_null() || ((dib *) this)->m_spbitmapMap.is_null() || ((dib *) this)->m_spgraphics.is_null() || ((dib *) this)->m_spgraphicsMap.is_null())
-      //{
-      //   return false;
-      //}
+      if (((dib *) this)->m_spbitmap.is_null() || ((dib *) this)->m_spbitmapMap.is_null() || ((dib *) this)->m_spgraphics.is_null() || ((dib *) this)->m_spgraphicsMap.is_null())
+      {
+         return false;
+      }
 
       ::draw2d_direct2d::graphics * pgraphicsSrc = dynamic_cast <::draw2d_direct2d::graphics *> (pgraphics);
 
@@ -2772,16 +2767,16 @@ namespace draw2d_direct2d
       pgraphicsDst->m_iType = 11;
 
       D2D1_SIZE_U sizeu = D2D1::SizeU(m_size.cx, m_size.cy);
-      
       D2D1_PIXEL_FORMAT pixelformat;
 
       pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-
       pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
       Microsoft::WRL::ComPtr < ID2D1RenderTarget > t;
 
-      pgraphicsDst->m_pdevicecontext->QueryInterface(IID_PPV_ARGS(&t));
+      pgraphicsDst->CreateCompatibleDC(NULL);
+
+      t = pgraphicsDst->m_prendertarget;
 
       HRESULT hr = t->CreateCompatibleRenderTarget(NULL, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &pgraphicsDst->m_pbitmaprendertarget);
 
@@ -2851,7 +2846,7 @@ namespace draw2d_direct2d
       srcRect.top = 0;
       srcRect.bottom = m_size.cy;
 
-      //HRESULT hr = ((ID2D1Bitmap *)((dib *) this)->m_spbitmapMap->get_os_data())->CopyFromBitmap(&p,((ID2D1Bitmap *)((dib *) this)->m_spbitmapMap->get_os_data()),&srcRect);
+      HRESULT hr = ((ID2D1Bitmap *)((dib *) this)->m_spbitmapMap->get_os_data())->CopyFromBitmap(&p, ((ID2D1Bitmap *)((dib *) this)->m_spbitmapMap->get_os_data()), &srcRect);
 
       ((dib *) this)->m_spgraphics.release();
 
@@ -2863,7 +2858,7 @@ namespace draw2d_direct2d
    bool dib::is_realized() const
    {
 
-      if(((dib *) this)->m_spgraphics.is_null() || ((dib *) this)->m_spgraphics->get_os_data() == NULL)
+      if (((dib *) this)->m_spgraphics.is_null() || ((dib *) this)->m_spgraphics->get_os_data() == NULL)
          return false;
 
       return true;
@@ -2877,10 +2872,10 @@ namespace draw2d_direct2d
 
    }*/
 
-//#if defined(WINDOWSEX)
+   //#if defined(WINDOWSEX)
 
 
-   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
+   bool dib::update_window(::aura::draw_interface * pwnd, signal_details * pobj, bool bTransferBuffer)
    {
 
       rect64 rectWindow;
@@ -2893,7 +2888,7 @@ namespace draw2d_direct2d
 
       rect rect(rectWindow);
 
-//      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
+      //      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
 
       return true;
 
@@ -2987,7 +2982,7 @@ namespace draw2d_direct2d
    */
 
 
-//#endif
+   //#endif
 
 
 } // namespace draw2d_direct2d

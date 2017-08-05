@@ -451,7 +451,7 @@ extern thread_int_ptr < HTHREAD > currentThread;
 //      try
 //      {
 //
-//         IDWriteFactory * pfactory = TlsGetWriteFactory();
+//         IDWriteFactory * pfactory = global_draw_get_write_factory();
 //
 //         if(pfactory != NULL)
 //         {
@@ -468,7 +468,7 @@ extern thread_int_ptr < HTHREAD > currentThread;
 //      try
 //      {
 //
-//         ID2D1Factory1 * pfactory = GetD2D1Factory1();
+//         ID2D1Factory1 * pfactory = get_d2d1_factory1();
 //
 //         if(pfactory != NULL)
 //         {
