@@ -577,6 +577,8 @@
     <ClInclude Include="multithreading\multithreading_event_base.h" />
     <ClInclude Include="multithreading\multithreading_event_collection.h" />
     <ClInclude Include="multithreading\multithreading_file_change_event.h" />
+    <ClInclude Include="multithreading\multithreading_fork.h" />
+    <ClInclude Include="multithreading\multithreading_forking_thread.h" />
     <ClInclude Include="multithreading\multithreading_go_thread.h" />
     <ClInclude Include="multithreading\multithreading_initial_single_lock.h" />
     <ClInclude Include="multithreading\multithreading_manual_reset_event.h" />

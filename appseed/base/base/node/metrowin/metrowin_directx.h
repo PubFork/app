@@ -79,7 +79,7 @@ namespace metrowin
       // Direct2D Rendering Objects. Required for 2D.
       //Microsoft::WRL::ComPtr<ID2D1Factory1>           m_d2dFactory;
       Microsoft::WRL::ComPtr<ID2D1Device>             m_d2dDevice;
-      Microsoft::WRL::ComPtr<ID2D1DeviceContext>      m_d2dContext;
+      Microsoft::WRL::ComPtr<ID2D1DeviceContext>      m_pd2d1devicecontext;
       Microsoft::WRL::ComPtr<ID2D1Bitmap1>            m_d2dTargetBitmap;
 
       // Direct3D Rendering Objects. Required for 3D.
@@ -95,7 +95,7 @@ namespace metrowin
 
 
 
-      Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>                    m_blackBrush;
+      //Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>                    m_blackBrush;
       Microsoft::WRL::ComPtr<IDWriteTextFormat>                       m_textFormat;
       Microsoft::WRL::ComPtr<IDWriteTypography>                       m_textTypography;
       Microsoft::WRL::ComPtr<IDWriteTextLayout>                       m_textLayout;

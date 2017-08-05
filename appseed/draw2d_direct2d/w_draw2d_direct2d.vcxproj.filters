@@ -98,7 +98,7 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="draw2d_direct2d_win_tls.cpp">
+    <ClCompile Include="draw2d_direct2d_winrt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2314,7 +2314,7 @@ namespace user
    void interaction_impl::_001UpdateBuffer()
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       m_pui->defer_check_layout();
 

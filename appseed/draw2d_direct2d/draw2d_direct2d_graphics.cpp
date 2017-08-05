@@ -19,17 +19,16 @@ namespace draw2d_direct2d
       ::object(papp),
       ::draw2d::graphics(papp)
    {
+
+      defer_create_mutex();
+
       m_bSaveClip = false;
 
       m_hdcAttach = NULL;
 
       m_pmutex                = new mutex(papp);
 
-
-//      draw2d_mutex() = draw2d_mutex();
-
       m_sppen.alloc(allocer());
-
 
       m_iType     = 0;
 
@@ -37,18 +36,8 @@ namespace draw2d_direct2d
 
       m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
 
-
-      
-
-      /*m_bPrinting       = FALSE;
-      m_pdibAlphaBlend  = NULL;
-      m_prendertarget       = NULL;
-      m_hdc             = NULL;
-      m_ppath           = NULL;
-      m_ppathPaint      = NULL;
-      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;*/
-
    }
+
 
    graphics::~graphics()
    {
@@ -94,162 +83,140 @@ namespace draw2d_direct2d
       //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
    }
 
+   
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    { 
+      
       throw todo(get_app());
-      //return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
+      
    }
 
-   bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
+
+   bool graphics::CreateCompatibleDC(::draw2d::graphics *)
    { 
 
-      //single_lock sl(System.m_pmutexDc, true);
+      ::draw2d::lock draw2dlock;
 
-      synch_lock ml(draw2d_mutex());
+      if (m_iType != 0)
+      {
 
-      if(m_iType != 0)
          destroy();
 
-      /*if(pgraphics == NULL)
-      {
-         
-         GetD2D1Factory1()->CreateDevice(TlsGetDXGIDevice(), &m_pdevice);
-
-         m_pdevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m_pdevicecontext);
-
-         if(m_pdevicecontext == NULL)
-         {
-            m_pdevice->Release();
-            m_pdevice = NULL;
-            return false;
-         }
-
-         m_prendertarget = NULL;
-
-         HRESULT hr = m_pdevicecontext->QueryInterface(IID_ID2D1RenderTarget, (void **) &m_prendertarget);
-
-         if(FAILED(hr) || m_prendertarget == NULL)
-         {
-            m_pdevice->Release();
-            m_pdevice = NULL;
-            m_pdevicecontext->Release();
-            m_pdevicecontext = NULL;
-            return false;
-         }
-
-
-         m_iType = 3;
-
-         return true;         
-      }*/
-      //else
-
-
-
-      //Microsoft::WRL::ComPtr<ID2D1RenderTarget> prendertarget = pgraphics->get_typed_os_data < ID2D1RenderTarget >(::draw2d_direct2d::graphics::data_render_target);
-
-      Microsoft::WRL::ComPtr<ID2D1RenderTarget> prendertarget;
+      }
 
       HRESULT hr;
 
-      if(pgraphics == NULL || pgraphics->get_os_data() == NULL)
-      {
-         if(System.m_pdevicecontext == NULL)
-         {
-            prendertarget = nullptr;
-         }
-         else
-         {
-            hr = System.m_pdevicecontext->QueryInterface(IID_ID2D1RenderTarget,(void **)&prendertarget);
-            if(FAILED(hr))
-            {
+      Microsoft::WRL::ComPtr<ID2D1DeviceContext> pdevicecontextTemplate;
 
-               trace_hr("graphics::CreateCompatibleDC, QueryInterface (1) ",hr);
-
-            }
-         }
-      }
-      else
-      {
-         prendertarget = pgraphics->get_typed_os_data < ID2D1RenderTarget > (data_render_target);
-      }
-
-
-
-      if(prendertarget == NULL)
+      if (FAILED(hr = global_draw_get_d2d1_device()->CreateDeviceContext(
+         D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+         //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+         &pdevicecontextTemplate)))
       {
 
-         GetD2D1Factory1()->CreateDevice(TlsGetDXGIDevice(), &m_pdevice);
+         trace_hr("graphics::CreateCompatibleDC, CreateDeviceContext (1) ", hr);
 
-         m_pdevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m_pdevicecontext);
-
-         if(m_pdevicecontext == NULL)
-         {
-            m_pdevice = nullptr;
-            return false;
-         }
-
-         m_prendertarget = nullptr;
-
-         HRESULT hr = m_pdevicecontext.As(&m_prendertarget);
-
-         if(FAILED(hr) || m_prendertarget == NULL)
-         {
-            m_pdevice = nullptr;
-            m_pdevicecontext = nullptr;
-            return false;
-         }
-
-         prendertarget = m_prendertarget.Get();
-
-
-         m_iType = 3;
-
-         return true;         
+         return false;
 
       }
+
+      Microsoft::WRL::ComPtr<ID2D1RenderTarget> prendertargetTemplate;
+
+      pdevicecontextTemplate->SetDpi(System.m_dpi, System.m_dpi);
+
+      if (FAILED(hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget,(void **)&prendertargetTemplate)))
+      {
+
+         trace_hr("graphics::CreateCompatibleDC, QueryInterface (2) ",hr);
+
+         return false;
+
+      }
+
+      //if(prendertarget == NULL)
+      //{
+
+      //   get_d2d1_factory1()->CreateDevice(global_draw_get_dxgi_device(), &m_pdevice);
+
+      //   m_pdevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m_pdevicecontext);
+
+      //   if(m_pdevicecontext == NULL)
+      //   {
+      //      m_pdevice = nullptr;
+      //      return false;
+      //   }
+
+      //   m_prendertarget = nullptr;
+
+      //   HRESULT hr = m_pdevicecontext.As(&m_prendertarget);
+
+      //   if(FAILED(hr) || m_prendertarget == NULL)
+      //   {
+      //      m_pdevice = nullptr;
+      //      m_pdevicecontext = nullptr;
+      //      return false;
+      //   }
+
+      //   prendertarget = m_prendertarget.Get();
+
+
+      //   m_iType = 3;
+
+      //   return true;         
+
+      //}
 
       D2D1_SIZE_U sizeu = D2D1::SizeU(1, 1);
+
       D2D1_PIXEL_FORMAT pixelformat;
 
       pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+
       pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      hr = prendertarget->CreateCompatibleRenderTarget(NULL, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
-
-      if(FAILED(hr))
+      if (FAILED(hr = prendertargetTemplate->CreateCompatibleRenderTarget(
+         NULL,
+         &sizeu,
+         &pixelformat,
+         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+         &m_pbitmaprendertarget)))
       {
 
-         trace_hr("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (1) ",hr);
+         trace_hr("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
 
-      }
-
-      if(m_pbitmaprendertarget == NULL)
-      {
          return false;
+
       }
 
       hr = m_pbitmaprendertarget.As(&m_prendertarget);
 
       if(FAILED(hr))
       {
+
          m_pbitmaprendertarget = nullptr;
+
          return false;
+
       }
 
       hr = m_pbitmaprendertarget.As(&m_pdevicecontext);
 
       if(FAILED(hr))
       {
+
          m_prendertarget = nullptr;
+
          m_pbitmaprendertarget = nullptr;
+
          return false;
       }
 
+      if (m_spbitmap.is_null())
+      {
 
-      if(m_spbitmap.is_null())
          m_spbitmap.alloc(allocer());
 
+      }
 
       ID2D1Bitmap * pbitmap;
 
@@ -257,8 +224,11 @@ namespace draw2d_direct2d
 
       if(FAILED(hr))
       {
+
          m_pbitmaprendertarget = nullptr;
+
          return false;
+
       }
 
       m_spbitmap->attach(pbitmap);
@@ -266,7 +236,6 @@ namespace draw2d_direct2d
       m_iType = 3;
 
       return true;
-
 
    }
 
@@ -1335,7 +1304,7 @@ namespace draw2d_direct2d
    bool graphics::BitBltRaw(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, uint32_t dwRop)
    { 
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
       try
       {
@@ -2515,7 +2484,7 @@ namespace draw2d_direct2d
    bool graphics::alpha_blendRaw(int xDst, int yDst, int nDstWidth, int nDstHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dRate)
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
 /*      float fA = (float) dRate;
 
@@ -3637,7 +3606,7 @@ namespace draw2d_direct2d
    int graphics::SelectClipRgn(::draw2d::region * pregion)
    {
 
-      synch_lock sl(m_pmutex);
+      ::draw2d::lock draw2dlock;
 
       if (pregion == NULL)
       {
@@ -3724,7 +3693,7 @@ namespace draw2d_direct2d
    int graphics::IntersectClipRect(int x1, int y1, int x2, int y2)
    {
       
-      synch_lock sl(m_pmutex);
+      ::draw2d::lock draw2dlock;
 
       {
 
@@ -4472,7 +4441,7 @@ namespace draw2d_direct2d
          
          wstring wstrChar = str.Mid(iIndex, ::str::get_utf8_char_length(&lpszString[iIndex]));
          
-         hr = TlsGetWriteFactory()->CreateTextLayout(
+         hr = global_draw_get_write_factory()->CreateTextLayout(
             wstrChar,                // The string to be laid out and formatted.
             (UINT32)1,   // The length of the string.
             get_os_font(m_spfont),    // The text format to apply to the string (contains font information, etc).
@@ -4485,7 +4454,7 @@ namespace draw2d_direct2d
 
       IDWriteTextLayout * playout = NULL;
 
-      hr = TlsGetWriteFactory()->CreateTextLayout(
+      hr = global_draw_get_write_factory()->CreateTextLayout(
          wstr,                // The string to be laid out and formatted.
          (UINT32) wstr.get_length(),   // The length of the string.
          get_os_font(m_spfont),    // The text format to apply to the string (contains font information, etc).
@@ -4954,7 +4923,7 @@ namespace draw2d_direct2d
          D2D1_FEATURE_LEVEL_DEFAULT
          );
 
-      HRESULT hr = GetD2D1Factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
+      HRESULT hr = get_d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
 
       if(FAILED(hr))
          return false;
@@ -5096,9 +5065,7 @@ namespace draw2d_direct2d
    bool graphics::destroy()
    {
 
-      synch_lock ml(draw2d_mutex());
-
-      single_lock sl(&System.m_mutexDc, true);
+      ::draw2d::lock draw2dlock;
 
       if(m_player != NULL)
       {
@@ -5113,7 +5080,7 @@ namespace draw2d_direct2d
  
       m_prendertarget = nullptr;
    
-      m_pdevice = nullptr;
+//      m_pdevice = nullptr;
 
       m_pdevicecontext = nullptr;
 
@@ -5316,7 +5283,7 @@ namespace draw2d_direct2d
 
       IDWriteTextFormat * pformat =(IDWriteTextFormat *) get_os_font(path.m_spfont);
 
-      IDWriteFactory * pfactory = TlsGetWriteFactory();
+      IDWriteFactory * pfactory = global_draw_get_write_factory();
 
       IDWriteTextLayout * playout = NULL;
 
@@ -5334,7 +5301,7 @@ namespace draw2d_direct2d
          return false;
       }
 
-      CustomTextRenderer * pr = new CustomTextRenderer(GetD2D1Factory1(),m_prendertarget.Get(),get_os_pen_brush(ppen));
+      CustomTextRenderer * pr = new CustomTextRenderer(get_d2d1_factory1(),m_prendertarget.Get(),get_os_pen_brush(ppen));
 
       playout->Draw(NULL, pr, (FLOAT) path.m_x, (FLOAT) path.m_y);
 
@@ -5352,7 +5319,7 @@ namespace draw2d_direct2d
 
       IDWriteTextFormat * pformat = (IDWriteTextFormat *)get_os_font(path.m_spfont);
 
-      IDWriteFactory * pfactory = TlsGetWriteFactory();
+      IDWriteFactory * pfactory = global_draw_get_write_factory();
 
       IDWriteTextLayout * playout = NULL;
 
@@ -5370,7 +5337,7 @@ namespace draw2d_direct2d
          return false;
       }
 
-      CustomTextRenderer * pr = new CustomTextRenderer(GetD2D1Factory1(), m_prendertarget.Get(), NULL, get_os_brush(pbrush));
+      CustomTextRenderer * pr = new CustomTextRenderer(get_d2d1_factory1(), m_prendertarget.Get(), NULL, get_os_brush(pbrush));
 
       playout->Draw(NULL, pr, (FLOAT)path.m_x, (FLOAT)path.m_y);
 
@@ -5402,7 +5369,7 @@ namespace draw2d_direct2d
    bool graphics::SaveClip()
    {
 
-      synch_lock sl(m_pmutex);
+      ::draw2d::lock draw2dlock;
 
       //if(m_bSaveClip)
       //   return true;
@@ -5439,7 +5406,7 @@ namespace draw2d_direct2d
    bool graphics::RestoreClip()
    {
 
-      synch_lock sl(m_pmutex);
+      ::draw2d::lock draw2dlock;
 
       //if(!m_bSaveClip)
       //   return true;
@@ -5470,7 +5437,7 @@ namespace draw2d_direct2d
       ::windows::comptr<IDWriteFontCollection> pFontCollection;
 
       // Get the system font collection. 
-      HRESULT hr = TlsGetWriteFactory()->GetSystemFontCollection(&pFontCollection);
+      HRESULT hr = global_draw_get_write_factory()->GetSystemFontCollection(&pFontCollection);
 
       UINT32 familyCount = 0;
 

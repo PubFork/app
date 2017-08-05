@@ -21,7 +21,7 @@ namespace draw2d_direct2d
       };
 
 
-      Microsoft::WRL::ComPtr<ID2D1Device>                m_pdevice;
+      //Microsoft::WRL::ComPtr<ID2D1Device>                m_pdevice;
       Microsoft::WRL::ComPtr<ID2D1RenderTarget>          m_prendertarget;
       Microsoft::WRL::ComPtr<ID2D1DeviceContext>         m_pdevicecontext;
       Microsoft::WRL::ComPtr<ID2D1BitmapRenderTarget>    m_pbitmaprendertarget;
@@ -67,10 +67,10 @@ namespace draw2d_direct2d
       virtual ~graphics();
 
 
-      ID2D1Device & d()
-      {
-         return *m_pdevice.Get();
-      }
+      //ID2D1Device & d()
+      //{
+         ///return *m_pdevice.Get();
+      ///}
 
       bool IsPrinting() const;            // TRUE if being used for printing
 

@@ -117,7 +117,7 @@ namespace draw2d_direct2d
 
       wstring szOutline(strText);
 
-      IDWriteFactory * pfactory = TlsGetWriteFactory();
+      IDWriteFactory * pfactory = global_draw_get_write_factory();
 
       Microsoft::WRL::ComPtr<IDWriteTextLayout>                       textLayout;
 
@@ -279,7 +279,7 @@ namespace draw2d_direct2d
 
       m_ppath = nullptr;
 
-      HRESULT hr = ::GetD2D1Factory1()->CreatePathGeometry(&m_ppath);
+      HRESULT hr = ::get_d2d1_factory1()->CreatePathGeometry(&m_ppath);
 
       ::draw2d_direct2d::throw_if_failed(hr);
 

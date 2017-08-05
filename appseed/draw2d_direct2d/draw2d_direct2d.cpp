@@ -247,7 +247,7 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
 
 
    // Create the path geometry.
-   hr = GetD2D1Factory1()->CreatePathGeometry(
+   hr = get_d2d1_factory1()->CreatePathGeometry(
       &pPathGeometry
       );
 

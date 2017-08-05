@@ -196,7 +196,7 @@ namespace draw2d_direct2d
             
             ID2D1PathGeometry * ppathgeometry = NULL;
 
-            HRESULT hr = GetD2D1Factory1()->CreatePathGeometry(&ppathgeometry);
+            HRESULT hr = get_d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
             if(FAILED(hr))
                return NULL;
@@ -227,7 +227,7 @@ namespace draw2d_direct2d
 
       ID2D1RectangleGeometry * pgeometry = NULL;
 
-      GetD2D1Factory1()->CreateRectangleGeometry(D2D1::RectF((FLOAT)m_x1, (FLOAT)m_y1, (FLOAT)m_x2, (FLOAT)m_y2), &pgeometry);
+      get_d2d1_factory1()->CreateRectangleGeometry(D2D1::RectF((FLOAT)m_x1, (FLOAT)m_y1, (FLOAT)m_x2, (FLOAT)m_y2), &pgeometry);
 
       return pgeometry;
          
@@ -245,7 +245,7 @@ namespace draw2d_direct2d
 
       ID2D1EllipseGeometry * pgeometry = NULL;
 
-      GetD2D1Factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
+      get_d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
 
       return pgeometry;
 
@@ -323,7 +323,7 @@ namespace draw2d_direct2d
 
       ID2D1PathGeometry * ppathgeometry = NULL;
 
-      HRESULT hr = GetD2D1Factory1()->CreatePathGeometry(&ppathgeometry);
+      HRESULT hr = get_d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
       ID2D1GeometrySink * psink = NULL;
 

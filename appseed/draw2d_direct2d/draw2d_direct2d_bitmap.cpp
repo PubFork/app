@@ -8,24 +8,24 @@ namespace draw2d_direct2d
 
    bitmap::bitmap(::aura::application * papp) :
       ::object(papp)
-   { 
+   {
 
 
    }
 
    bitmap::~bitmap()
-   { 
+   {
 
       destroy();
 
    }
 
    bool bitmap::CreateBitmap(::draw2d::graphics * pgraphics, int cx, int cy, UINT nPlanes, UINT nBitcount, const void * lpBits, int stride)
-   { 
+   {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
-      if(m_pbitmap != NULL)
+      if (m_pbitmap != NULL)
       {
 
          destroy();
@@ -46,12 +46,12 @@ namespace draw2d_direct2d
 
       pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
 
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-      //props.colorContext = NULL;
+                                                                      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+                                                                      //props.colorContext = NULL;
 
-      //if(ppdata != NULL)
+                                                                      //if(ppdata != NULL)
       {
-        // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
       }
       //else
       //{
@@ -59,14 +59,14 @@ namespace draw2d_direct2d
 
       //}
 
-      if(FAILED(hr))
+      if (FAILED(hr))
          return false;
 
       zero(&m_map, sizeof(m_map));
-  //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
-//
+      //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
+      //
       //if(ppdata != NULL)
-        // *ppdata = (COLORREF *) m_map.bits;
+      // *ppdata = (COLORREF *) m_map.bits;
 
 
       return true;
@@ -74,17 +74,17 @@ namespace draw2d_direct2d
    }
 
    bool bitmap::CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap)
-   { 
+   {
       return FALSE;
    }
 
 
    bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
-   { 
+   {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
-      if(m_pbitmap != NULL)
+      if (m_pbitmap != NULL)
       {
 
          destroy();
@@ -100,16 +100,16 @@ namespace draw2d_direct2d
 
       ZERO(props);
 
-//#ifdef WINDOWSEX
-  //    props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_IGNORE;
-    //  props.pixelFormat.format = DXGI_FORMAT_UNKNOWN;
-//#else
+      //#ifdef WINDOWSEX
+      //    props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_IGNORE;
+      //  props.pixelFormat.format = DXGI_FORMAT_UNKNOWN;
+      //#else
       props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-//#endif
+      //#endif
 
       draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
-      
+
       pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you again https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
       props.colorContext = NULL;
@@ -124,32 +124,32 @@ namespace draw2d_direct2d
       HRESULT hr;
       //if(ppvBits == NULL || *ppvBits == NULL)
       {
-        // hr = METROWIN_DC(pgraphics)->m_pdc->CreateBitmap(size, NULL, 0, props, &m_pbitmap);
+         // hr = METROWIN_DC(pgraphics)->m_pdc->CreateBitmap(size, NULL, 0, props, &m_pbitmap);
       }
       //else
       {
          //hr = METROWIN_DC(pgraphics)->m_pdevicecontext->CreateBitmap(size, m_memory.get_data(), size.width * sizeof(COLORREF), props, &m_pbitmap1);
       }
-      hr = ((ID2D1DeviceContext *) pgraphics->get_os_data())->CreateBitmap(size, NULL,  0, props, &m_pbitmap1);
+      hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, NULL, 0, props, &m_pbitmap1);
 
-      if(FAILED(hr) || m_pbitmap1 == NULL)
+      if (FAILED(hr) || m_pbitmap1 == NULL)
          return FALSE;
 
       D2D1_MAPPED_RECT        map;
 
       hr = m_pbitmap1->Map(D2D1_MAP_OPTIONS_READ, &map);
 
-      if(FAILED(hr) || map.bits == NULL)
+      if (FAILED(hr) || map.bits == NULL)
       {
          destroy();
          return false;
       }
 
 
-      if(ppvBits != NULL)
+      if (ppvBits != NULL)
       {
 
-         *ppvBits = (COLORREF *) map.bits;
+         *ppvBits = (COLORREF *)map.bits;
 
       }
 
@@ -166,25 +166,25 @@ namespace draw2d_direct2d
 
 
    bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
-   { 
+   {
       return FALSE;
    }
 
 
    uint32_t bitmap::SetBitmapBits(uint32_t dwCount, const void * lpBits)
-   { 
+   {
 
       //return ::SetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
 
    }
    uint32_t bitmap::GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const
-   { 
+   {
       //return ::GetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
    }
    bool bitmap::LoadBitmap(const char * lpszResourceName)
-   { 
+   {
       //   return Attach(::LoadBitmap(::core::FindResourceHandle(
       //lpszResourceName, RT_BITMAP), lpszResourceName));
       return FALSE;
@@ -207,7 +207,7 @@ namespace draw2d_direct2d
    size bitmap::GetBitmapDimension() const
    {
 
-      if(m_pbitmap == NULL)
+      if (m_pbitmap == NULL)
          return class size(0, 0);
 
       D2D1_SIZE_U size = m_pbitmap->GetPixelSize();
@@ -217,21 +217,21 @@ namespace draw2d_direct2d
    }
 
    bool bitmap::LoadBitmap(UINT nIDResource)
-   { 
+   {
       //return Attach(::LoadBitmap(::core::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
-   { 
+   {
       //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
    bool bitmap::CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight)
    {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
-      if(m_pbitmap != NULL)
+      if (m_pbitmap != NULL)
       {
 
          destroy();
@@ -249,24 +249,24 @@ namespace draw2d_direct2d
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 
       draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
-      
+
       pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thanks again and a third time https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
       props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CPU_READ;
 
       //if(ppdata != NULL)
       {
-        // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
       }
       //else
-//      ID2D1Bitmap1 * pbitmap1;
+      //      ID2D1Bitmap1 * pbitmap1;
       {
-          ((ID2D1DeviceContext *) pgraphics->get_os_data())->CreateBitmap(size, NULL, size.width * sizeof(COLORREF), props, &m_pbitmap1);
+         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, NULL, size.width * sizeof(COLORREF), props, &m_pbitmap1);
       }
       m_pbitmap = m_pbitmap1;
 
       //if(ppdata != NULL)
-        // *ppdata = (COLORREF *) m_map.bits;
+      // *ppdata = (COLORREF *) m_map.bits;
 
 
       return true;
@@ -275,11 +275,11 @@ namespace draw2d_direct2d
 
 
    bool bitmap::CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight)
-   { 
+   {
 
-      synch_lock sl(draw2d_mutex());
+      ::draw2d::lock draw2dlock;
 
-      if(m_pbitmap != NULL)
+      if (m_pbitmap != NULL)
       {
 
          destroy();
@@ -297,36 +297,36 @@ namespace draw2d_direct2d
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 
       draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
-      
+
       pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); // One more time, Thank you very much https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
       props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CPU_READ;
 
       //if(ppdata != NULL)
       {
-        // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(COLORREF), props, &m_pbitmap);
       }
       //else
       {
-          ((ID2D1DeviceContext *) pgraphics->get_os_data())->CreateBitmap(size, NULL, size.width * sizeof(COLORREF), &props, &m_pbitmap1);
+         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, NULL, size.width * sizeof(COLORREF), &props, &m_pbitmap1);
       }
       m_pbitmap = m_pbitmap1;
       //m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
 
       //if(ppdata != NULL)
-        // *ppdata = (COLORREF *) m_map.bits;
+      // *ppdata = (COLORREF *) m_map.bits;
 
 
       return true;
 
    }
 
-/*
+   /*
    int bitmap::GetBitmap(BITMAP* pBitMap)
-   { 
-      //   ASSERT(get_handle() != NULL);
-      // return ::GetObject(get_handle(), sizeof(BITMAP), pBitMap); 
-      return 0;
+   {
+   //   ASSERT(get_handle() != NULL);
+   // return ::GetObject(get_handle(), sizeof(BITMAP), pBitMap);
+   return 0;
    }
    */
 
@@ -365,23 +365,23 @@ namespace draw2d_direct2d
    void * bitmap::get_os_data() const
    {
 
-      return (void *) m_pbitmap.Get();
+      return (void *)m_pbitmap.Get();
 
    }
 
    void * bitmap::get_os_data_ex(int i) const
    {
 
-      if(i == data_bitmap)
+      if (i == data_bitmap)
       {
 
-         return (void *) m_pbitmap.Get();
+         return (void *)m_pbitmap.Get();
 
       }
-      else if(i == data_bitmap1)
+      else if (i == data_bitmap1)
       {
 
-         return (void *) m_pbitmap1.Get();
+         return (void *)m_pbitmap1.Get();
 
       }
 
@@ -392,14 +392,14 @@ namespace draw2d_direct2d
    bool bitmap::attach(void * hbitmap)
    {
 
-      if(m_pbitmap != NULL)
+      if (m_pbitmap != NULL)
       {
 
          destroy();
 
       }
 
-      m_pbitmap = (ID2D1Bitmap *) hbitmap;
+      m_pbitmap = (ID2D1Bitmap *)hbitmap;
 
       m_pbitmap.As(&m_pbitmap1);
 
@@ -420,9 +420,9 @@ namespace draw2d_direct2d
    bool bitmap::destroy()
    {
 
-      m_pbitmap   = nullptr;
+      m_pbitmap = nullptr;
 
-      m_pbitmap1  = nullptr;
+      m_pbitmap1 = nullptr;
 
       return true;
 

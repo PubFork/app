@@ -50,19 +50,16 @@
     <ClCompile Include="draw2d_direct2d_region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="draw2d_direct2d_win_tls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="draw2d_direct2d_printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="my_debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_draw2d_direct2d.cpp">
+    <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework.cpp">
+    <ClCompile Include="draw2d_direct2d_global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,13 +100,13 @@
     <ClInclude Include="draw2d_direct2d_region.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="draw2d_direct2d_win_tls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="draw2d_direct2d_printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_direct2d_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

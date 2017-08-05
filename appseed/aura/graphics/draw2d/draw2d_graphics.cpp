@@ -5345,6 +5345,14 @@ namespace draw2d
 
    }
 
+#ifdef WINDOWS
+
+   ID2D1Factory1 * device_lock::g_pfactory = NULL;
+
+
+   mutex * lock::g_pmutex = NULL;
+
+#endif
 
 } // namespace draw2d
 
