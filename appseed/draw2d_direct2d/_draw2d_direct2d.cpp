@@ -16,5 +16,5 @@
 #include "draw2d_direct2d_preview_dc.cpp"
 #include "draw2d_direct2d_printer.cpp"
 #include "draw2d_direct2d_region.cpp"
-#include "draw2d_direct2d_win_tls.cpp"
+#include "draw2d_direct2d_global.cpp"
 #include "my_debug.cpp"

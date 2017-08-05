@@ -235,7 +235,7 @@ ID2D1Factory1 * get_d2d1_factory1(bool bCreate)
 
    }
 
-   ::draw2d::lock::g_pfactory = ::draw2d_direct2d::g_pplugin->g_pd2factory.Get();
+   ::draw2d::device_lock::g_pfactory = ::draw2d_direct2d::g_pplugin->g_pd2factory.Get();
 
    return ::draw2d_direct2d::g_pplugin->g_pd2factory.Get();
 
