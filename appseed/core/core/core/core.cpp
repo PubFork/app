@@ -195,7 +195,8 @@ int g_iCoreRefCount = 0;
 }
 
 
-CLASS_DECL_CORE bool defer_core_init()
+extern "C"
+bool defer_core_init()
 {
 
    g_iCoreRefCount++;

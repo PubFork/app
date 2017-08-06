@@ -206,11 +206,8 @@ CLASS_DECL_AURA const char *StrError(int x);
 
 #elif defined(WINDOWSEX)
 
-// ----------------------------------------
-// Win32
-#ifdef _MSC_VER
 #pragma comment(lib, "wsock32.lib")
-#endif
+
 #define strcasecmp _stricmp
 
 

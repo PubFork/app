@@ -28,7 +28,7 @@
 
 FIBITMAP *DLL_CALLCONV 
 FreeImage_RotateClassic(FIBITMAP *dib, double angle) {
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(ARM)
 	DEPRECATE("FreeImage_RotateClassic()", "FreeImage_Rotate()")
 #endif // _WIN32
 	return FreeImage_Rotate(dib, angle, NULL);
