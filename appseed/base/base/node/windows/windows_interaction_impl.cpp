@@ -3912,7 +3912,7 @@ namespace windows
 
       }
 
-      if (GetExStyle() & WS_EX_LAYERED)
+      if (!(GetExStyle() & WS_EX_LAYERED))
       {
 
          rect rectWindow;
