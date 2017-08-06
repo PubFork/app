@@ -3912,6 +3912,16 @@ namespace windows
 
       }
 
+      if (GetExStyle() & WS_EX_LAYERED)
+      {
+
+         rect rectWindow;
+
+         ::GetWindowRect(m_oswindow, rectWindow);
+
+         ::copy(m_rectParentClientRequest, rectWindow);
+            
+      }
 
       *lprect = m_rectParentClientRequest;
 
