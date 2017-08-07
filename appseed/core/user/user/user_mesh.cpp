@@ -2687,7 +2687,6 @@ namespace user
 
    }
 
-   DWORD g_dwStartLDown;
 
    void mesh::_001OnLButtonDown(signal_details * pobj)
    {
@@ -2800,29 +2799,48 @@ namespace user
             }
             else
             {
+               
                m_rangeSelection.clear();
+               
                index iItem;
+
                if(_001DisplayHitTest(pt,iItem))
                {
-                  g_dwStartLDown = get_tick_count();
+
                   m_iShiftFirstSelection = iItem;
+
                   m_iItemFocus = iItem;
+
                   _001DisplayHitTest(pt,m_iItemDrag);
+
                   m_iItemDrop = m_iItemDrag;
+
                   m_uiLButtonDownFlags = pmouse->m_nFlags;
+
                   m_ptLButtonDown = pt;
+
                   SetTimer(12345678,800,NULL);
+
                   item_range itemrange;
+
                   itemrange.set(iItem,iItem,0,m_nColumnCount - 1,- 1,-1);
+
                   _001AddSelection(itemrange);
+
                }
+
             }
+
          }
+
       }
 
       RedrawWindow();
+
       pobj->m_bRet = true;
+
       pmouse->set_lresult(1);
+
    }
 
 
@@ -2846,21 +2864,26 @@ namespace user
          {
 
             index iItemOld = m_iItemDrop;
+
             if (_001DisplayHitTest(pt, m_iItemDrop))
             {
+
                if (m_iItemDrag != m_iItemDrop && m_iItemDrop != -1)
                {
-                  // swap
-                  index i = m_meshlayout.m_iaDisplayToStrict[m_iItemDrag];
-                  m_meshlayout.m_iaDisplayToStrict[m_iItemDrag] = m_meshlayout.m_iaDisplayToStrict[m_iItemDrop];
-                  m_meshlayout.m_iaDisplayToStrict[m_iItemDrop] = i;
+                  
+                  m_meshlayout.m_iaDisplayToStrict.swap(m_iItemDrag, m_iItemDrop);
+
                   _001OnAfterSort();
+
                }
+
             }
+
          }
 
       }
-      else if (m_bHoverSelect || (get_tick_count() - g_dwStartLDown > 800))
+      // if Hover Select or ***LONG Long Press PhRESSing***
+      else if (m_bHoverSelect || (get_tick_count() - m_dwLButtonDownStart > 800)) 
       {
 
          if (m_bLButtonDown)
@@ -2891,35 +2914,20 @@ namespace user
 
                }
 
-
             }
 
          }
 
       }
-      else
-      {
-//         if ()
-         {
 
-         }
-      }
-      //else
-      //{
-      // commented on 2017-03-28
-      //   m_iClick++;
-      //   m_uiLButtonUpFlags = (UINT)pmouse->m_nFlags;
-      //   m_ptLButtonUp = pt;
-      //   SetTimer(12345679, 500, NULL);
-      //   KillTimer(12345678);
-      //}
       pobj->m_bRet = true;
+
       pmouse->set_lresult(1);
 
       m_bLButtonDown = false;
 
-
    }
+
 
    void mesh::_001OnRButtonDown(signal_details * pobj)
    {

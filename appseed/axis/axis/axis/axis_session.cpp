@@ -680,6 +680,13 @@ namespace axis
 
    }
 
+   
+   DWORD session::get_Long_PhRESSing_time()
+   {
+
+      return m_dwLongPhRESSingTime;
+
+   }
 
 
    void session::defer_initialize_user_presence()

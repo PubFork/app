@@ -206,7 +206,7 @@ namespace aura
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      //throw todo(get_app());
 
 #else
 
@@ -345,7 +345,7 @@ namespace aura
 
       strAppId.replace("-","-");
 
-      strKey = "core-" + strAppId;
+      strKey = strAppId;
 
 #else
 

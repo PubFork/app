@@ -3179,7 +3179,8 @@ namespace user
          }
          
       }
-      else if (get_tick_count() - g_dwStartLDown > 800)
+      // ***LONG Long Press PhRESSing***
+      else if ((get_tick_count() - m_dwLButtonDownStart) > Session.get_Long_PhRESSing_time())
       {
 
          if (m_bLButtonDown)

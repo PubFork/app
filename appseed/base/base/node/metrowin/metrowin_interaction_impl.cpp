@@ -358,8 +358,11 @@ namespace metrowin
 
       ModifyStyle(0, WS_VISIBLE);
 
+
       m_pthreadDraw = ::fork(get_app(), [&]()
       {
+
+         bool bDrawing = false;
 
          DWORD dwLastRedraw;
 
@@ -381,9 +384,11 @@ namespace metrowin
 
             }
 
-            if (m_pui->has_pending_graphical_update()
-               || m_pui->defer_check_layout())
+            if (!bDrawing && (m_pui->has_pending_graphical_update()
+               || m_pui->defer_check_layout()))
             {
+
+               bDrawing = true;
 
                if (m_xapp != nullptr)
                {
@@ -392,8 +397,10 @@ namespace metrowin
 
                   m_window->Dispatcher->RunAsync(
                         CoreDispatcherPriority::Normal, 
-                        ref new Windows::UI::Core::DispatchedHandler([this, &evDraw]()
+                        ref new Windows::UI::Core::DispatchedHandler([this, &evDraw, & bDrawing]()
                   {
+
+                     keep < bool > keepDrawing(&bDrawing, true, false, true);
 
                      try
                      {

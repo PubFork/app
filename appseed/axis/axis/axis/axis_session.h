@@ -68,7 +68,7 @@ namespace axis
 
       ::user::copydesk *                                       m_pcopydesk;
 
-
+      DWORD                                                    m_dwLongPhRESSingTime;
 
 
 
@@ -119,6 +119,9 @@ namespace axis
       //virtual bool is_inside_time_dir(const char * pszPath);
       //virtual bool file_is_read_only(const char * pszPath);
 
+      // Long PhRESSing time
+      // time in milliseconds that a pressing is considered a double click
+      virtual DWORD get_Long_PhRESSing_time();
 
       virtual void defer_initialize_user_presence();
 
