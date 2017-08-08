@@ -150,12 +150,45 @@ int32_t db_str_sync_queue::run()
       while (get_run_thread())
       {
 
-         if (&ApplicationUser == NULL)
+         try
          {
 
-            Sleep(5000);
 
-            continue;
+            if (m_pauraapp == NULL)
+            {
+
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession == NULL)
+            {
+
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession->m_pfontopus == NULL)
+            {
+
+               break;
+
+            }
+
+            if (&ApplicationUser == NULL)
+            {
+
+               Sleep(5000);
+
+               continue;
+
+            }
+
+         }
+         catch (...)
+         {
+
+            break;
 
          }
 
