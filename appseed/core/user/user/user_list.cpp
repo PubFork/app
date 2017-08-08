@@ -3098,6 +3098,8 @@ namespace user
 
                      }
 
+                     sl.unlock();
+
                      RedrawWindow();
 
                   }
@@ -3121,6 +3123,8 @@ namespace user
 
                      strSort += "-" + m_strDisplay + ".icon_list_view_sort";
 
+                     sl.lock();
+
                      stringa stra;
 
                      for (index a = 0; a <= m_plist->m_iconlayout.m_iaDisplayToStrict.m_iMaxA; a++)
@@ -3133,6 +3137,8 @@ namespace user
                      }
 
                      Application.file().put_contents(strSort, stra.implode("\r\n"));
+
+                     sl.unlock();
 
                      update_icon_list_view_sort();
 
@@ -3148,6 +3154,8 @@ namespace user
 
          if (m_eview == view_report)
          {
+
+            sl.unlock();
 
             pmouse->previous();
 
@@ -3167,6 +3175,8 @@ namespace user
 
                   if (iItem >= 0)
                   {
+
+                     sl.unlock();
 
                      _001OnItemClick(iItem);
 
@@ -3207,6 +3217,8 @@ namespace user
 
                   }
 
+                  sl.unlock();
+
                   _001OnClick(pmouse->m_nFlags, pt);
 
                }
@@ -3235,6 +3247,8 @@ namespace user
 
                   if (iItem >= 0)
                   {
+
+                     sl.unlock();
 
                      _001OnItemClick(iItem);
 

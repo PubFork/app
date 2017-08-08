@@ -4,6 +4,20 @@
 namespace metrowin
 {
 
+   class directx_interaction :
+      public ::user::interaction
+   {
+   public:
+
+      directx_interaction(::aura::application * papp);
+      virtual ~directx_interaction();
+
+      virtual void _001DrawThis(::draw2d::graphics * pgraphics) override;
+      virtual void _001DrawChildren(::draw2d::graphics * pgraphics) override;
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
+
+   };
 
    ref class directx_application : 
       public Windows::ApplicationModel::Core::IFrameworkView,
@@ -27,6 +41,8 @@ namespace metrowin
       ::base::system *                          m_psystem;
 
       ::base::application *                     m_papp;
+
+      directx_interaction *                     m_pdxi;
 
       bool                                      m_bLeftButton;
 

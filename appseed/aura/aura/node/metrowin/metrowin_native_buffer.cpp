@@ -43,6 +43,28 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_folder(string & strPat
    else
    {
 
+      ::file::patha patha;
+
+      ::file::path path(strPath);
+
+      patha = path.ascendants_path();
+
+      for (auto & pathFolder : patha)
+      {
+
+         ::Windows::Storage::StorageFolder ^ folder = ::wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(pathFolder));
+
+         if (folder != nullptr)
+         {
+
+            strPrefix = pathFolder;
+
+            return folder;
+
+         }
+
+      }
+
       return nullptr;
 
    }
@@ -108,6 +130,7 @@ namespace metrowin
    {
 
       m_bCloseOnDelete = TRUE;
+      m_dwAccess = 0;
 
    }
 
@@ -129,13 +152,15 @@ namespace metrowin
 
       if(!open(lpszfileName,nOpenFlags))
          throw ::file::exception(papp,::file::exception::none,-1,lpszfileName);
+      m_dwAccess = 0;
 
    }
 
    native_buffer::~native_buffer()
    {
-
-      m_file = nullptr;
+      
+      close();
+      
 
    }
 
@@ -164,6 +189,7 @@ namespace metrowin
    ::cres native_buffer::open(const ::file::path & path,UINT nOpenFlags)
    {
 
+      m_dwAccess = 0;
       m_file = nullptr;
       m_folder = nullptr;
 
@@ -207,6 +233,8 @@ namespace metrowin
       else
       {
 
+         strRelative.trim("\\/");
+
          m_folder = wait(folder->GetFolderAsync(strRelative));
 
       }
@@ -222,7 +250,7 @@ namespace metrowin
       if(nOpenFlags & ::file::defer_create_directory)
       {
 
-         Application.dir().mk(lpszfileName.folder());
+         Application.dir().mk(path.folder());
 
       }
 
@@ -317,7 +345,24 @@ namespace metrowin
       //   return failure;
       //}
 
-      m_stream = ::wait(m_file->OpenAsync(::Windows::Storage::FileAccessMode::Read));
+      ASSERT((::file::mode_read | ::file::mode_write | ::file::mode_read_write) == 3);
+      switch (nOpenFlags & 3)
+      {
+      case ::file::mode_read:
+         m_stream = ::wait(m_file->OpenAsync(::Windows::Storage::FileAccessMode::Read));
+         break;
+      case ::file::mode_write:
+         m_stream = ::wait(m_file->OpenAsync(::Windows::Storage::FileAccessMode::ReadWrite));
+         break;
+      case ::file::mode_read_write:
+         m_stream = ::wait(m_file->OpenAsync(::Windows::Storage::FileAccessMode::ReadWrite));
+         break;
+      default:
+         m_stream = ::wait(m_file->OpenAsync(::Windows::Storage::FileAccessMode::Read));
+         break;
+      }
+
+      
       if(m_stream == nullptr)
       {
          m_file = nullptr;
@@ -327,6 +372,8 @@ namespace metrowin
 
 
       m_bCloseOnDelete = TRUE;
+
+      m_dwAccess = dwAccess;
 
       return no_exception;
 
@@ -352,22 +399,20 @@ namespace metrowin
 
    void native_buffer::write(const void * lpBuf,memory_size_t nCount)
    {
-      //ASSERT_VALID(this);
-      //ASSERT(m_hnative_buffer != (UINT)hnative_bufferNull);
 
-      //if(nCount == 0)
-      //   return;     // avoid Win32 "NULL-write" option
+      memory memory(lpBuf, nCount);
 
-      //ASSERT(lpBuf != NULL);
-      //ASSERT(__is_valid_address(lpBuf,nCount,FALSE));
+      ::Windows::Storage::Streams::IBuffer ^ buffer = memory.get_os_buffer();
 
-      //DWORD nWritten;
-      //if(!::Writenative_buffer((HANDLE)m_hnative_buffer,lpBuf,(DWORD)nCount,&nWritten,NULL))
-      //   WinFileException::ThrowOsError(get_app(),(LONG)::GetLastError(),m_strFileName);
+      unsigned int ui = ::wait(m_stream->WriteAsync(buffer));
 
-      //// Win32s will not return an error all the time (usually DISK_FULL)
-      //if(nWritten != nCount)
-      //   ::file::throw_exception(get_app(),::file::exception::diskFull,-1,m_strFileName);
+      if (ui != nCount)
+      {
+
+         throw io_exception(get_app());
+
+      }
+
    }
 
    file_position_t native_buffer::seek(file_offset_t lOff,::file::e_seek nFrom)
@@ -394,18 +439,35 @@ namespace metrowin
       return m_stream->Position;
    }
 
+
    void native_buffer::Flush()
    {
-      //m_stream->Flush();
+      
+      ::wait(m_stream->FlushAsync());
+
    }
+
 
    void native_buffer::close()
    {
-      //m_file->Close();
-      m_stream = nullptr;
-      m_file = nullptr;
-      m_folder = nullptr;
+
+      if (m_dwAccess & GENERIC_WRITE)
+      {
+
+         Flush();
+
+      }
+      
+      m_stream    = nullptr;
+
+      m_file      = nullptr;
+
+      m_folder    = nullptr;
+
+      m_dwAccess  = 0;
+
    }
+
 
    void native_buffer::Abort()
    {

@@ -135,28 +135,19 @@ namespace metrowin
 
       }
 
-      if(::str::begins_ci(strPath, "winmetro-Document://") || ::str::begins_ci(strPath,"winmetro-Pictures://") || ::str::begins_ci(strPath, "winmetro-Music://") || ::str::begins_ci(strPath, "winmetro-Videos://"))
+      //if(::str::begins_ci(strPath, "winmetro-Document://") || ::str::begins_ci(strPath,"winmetro-Pictures://") || ::str::begins_ci(strPath, "winmetro-Music://") || ::str::begins_ci(strPath, "winmetro-Videos://"))
       {
 
          spfile = canew(::metrowin::native_buffer(papp));
 
          cres cres = spfile->open(strPath,nOpenFlags);
 
-         if (cres.failed())
+         if (cres.succeeded())
          {
 
-            return NULL;
+            return spfile;
 
          }
-
-         if(pfesp != NULL)
-         {
-
-            *pfesp = cres;
-
-         }
-
-         return spfile;
 
       }
 

@@ -2443,6 +2443,20 @@ namespace draw2d_direct2d
 
       unmap();
 
+      if (pdib->get_bitmap() == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pdib->get_bitmap()->get_os_data() == NULL)
+      {
+
+         return;
+
+      }
+
       D2D1_RECT_F rectDest = D2D1::RectF(0, 0, (FLOAT)m_size.cx, (FLOAT)m_size.cy);
 
       D2D1_RECT_F rectSource = D2D1::RectF(0, 0, (FLOAT)pdib->m_size.cx, (FLOAT)pdib->m_size.cy);

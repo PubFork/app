@@ -49,6 +49,8 @@ namespace user
 
       }
 
+      throw invalid_argument_exception(get_app());
+
       return false;
 
    }
@@ -436,6 +438,12 @@ namespace user
       {
 
          return 0;
+
+      }
+      else if (ecolor == color_scrollbar_background)
+      {
+
+         return ARGB(127, 127, 127, 127);
 
       }
 

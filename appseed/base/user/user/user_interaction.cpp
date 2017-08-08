@@ -1627,7 +1627,7 @@ namespace user
 
       _001OnDraw(pgraphics);
 
-      pgraphics->flush();
+      //pgraphics->flush();
 
    }
 
@@ -1680,6 +1680,8 @@ namespace user
 
          try
          {
+
+            ::draw2d::keep keep(pgraphics);
 
             if (!pui->is_custom_draw())
             {

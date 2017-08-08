@@ -14,13 +14,24 @@ void my_debug();
 namespace draw2d_direct2d
 {
 
-   
+
+   graphics::state::state()
+   {
+
+   }
+
+   graphics::state::~state()
+   {
+   }
+
    graphics::graphics(::aura::application * papp) :
       ::object(papp),
       ::draw2d::graphics(papp)
    {
 
       defer_create_mutex();
+
+      m_pstate = canew(state);
 
       m_bSaveClip = false;
 
@@ -292,61 +303,48 @@ namespace draw2d_direct2d
       //return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData); 
    }
 
+
    ::draw2d::bitmap* graphics::SelectObject(::draw2d::bitmap* pBitmap)
    { 
 
+      if (pBitmap == NULL)
+      {
 
-      if(pBitmap == NULL)
          return NULL;
 
-//      if(m_pdevicecontext == NULL)
-  //       return NULL;
+      }
 
-      /*      if(get_handle1() == NULL)
-      return NULL;
-      if(pBitmap == NULL)
-      return NULL;
-      return dynamic_cast < ::draw2d::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pBitmap->get_os_data()));*/
       if(m_prendertarget == NULL)
       {
+
          CreateCompatibleDC(NULL);
+
       }
 
       m_pdevicecontext->SetTarget((ID2D1Bitmap *)pBitmap->get_os_data());
 
       m_spbitmap = pBitmap;
 
-      
-
       m_iType = 3;
 
-
-      //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
-
-      //m_spbitmap = pBitmap;
-
       return m_spbitmap;
+
    }
 
 
    ::draw2d::object* graphics::SelectObject(::draw2d::object* pObject)
    {
-      /*      ASSERT(get_handle1() != NULL); 
-      if(pObject == NULL)
+
       return NULL;
-      return SelectGdiObject(get_app(), get_handle1(), pObject->get_os_data()); */
-      return NULL;
+
    }
 
-/*   HGDIOBJ graphics::SelectObject(HGDIOBJ hObject) // Safe for NULL handles
-   {
-      return hObject;
-   }*/
 
    COLORREF graphics::GetNearestColor(COLORREF crColor) const
    { 
+
       throw todo(get_app());
-      //return ::GetNearestColor(get_handle2(), crColor); 
+
    }
 
    UINT graphics::RealizePalette()
@@ -392,13 +390,14 @@ namespace draw2d_direct2d
       //return ::GetGraphicsMode(get_handle2()); 
    }
 
+
    bool graphics::GetWorldTransform(XFORM* pXform) const
    { 
+
       throw todo(get_app());
 
-      //return ::GetWorldTransform(get_handle2(),pXform) != FALSE; 
-
    }
+
 
    point graphics::GetViewportOrg() const
    {
@@ -1679,7 +1678,7 @@ namespace draw2d_direct2d
       if(m_spfont.is_null())
          return false;
 
-      IDWriteFontCollection * pcollection = NULL;
+      Microsoft::WRL::ComPtr<IDWriteFontCollection> pcollection;
 
       WCHAR name[256]; 
       UINT32 findex; 
@@ -1725,7 +1724,7 @@ namespace draw2d_direct2d
 
       }
 
-      IDWriteFontFamily *ffamily;
+      Microsoft::WRL::ComPtr<IDWriteFontFamily> ffamily;
 
       pcollection->GetFontFamily(findex, &ffamily);
 
@@ -1736,11 +1735,11 @@ namespace draw2d_direct2d
          lpMetrics->tmAscent = 0;
          lpMetrics->tmDescent = 0;
          lpMetrics->tmHeight = 0;
-         pcollection->Release();
+//         pcollection->Release();
          return true;
 
       }
-      IDWriteFont * pfont;
+      Microsoft::WRL::ComPtr<IDWriteFont> pfont;
 
       ffamily->GetFirstMatchingFont(get_os_font(m_spfont)->GetFontWeight(), get_os_font(m_spfont)->GetFontStretch(), get_os_font(m_spfont)->GetFontStyle(), &pfont);
 
@@ -1751,8 +1750,8 @@ namespace draw2d_direct2d
          lpMetrics->tmAscent = 0;
          lpMetrics->tmDescent = 0;
          lpMetrics->tmHeight = 0;
-         ffamily->Release();
-         pcollection->Release();
+         //ffamily->Release();
+         //pcollection->Release();
          return true;
 
       }
@@ -1774,9 +1773,9 @@ namespace draw2d_direct2d
       lpMetrics->tmExternalLeading = (LONG)( metrics.lineGap * ratio);
       lpMetrics->tmHeight = (LONG) ((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
 
-      pfont->Release();
-      ffamily->Release();
-      pcollection->Release();
+      //pfont->Release();
+      //ffamily->Release();
+      //pcollection->Release();
 
       return true;
 
@@ -3150,21 +3149,16 @@ namespace draw2d_direct2d
    int graphics::SaveDC()
    {
 
-      m_prendertarget->GetTransform(&m_state.m_m);
+      m_prendertarget->GetTransform(&m_pstate->m_m);
 
       ::count iSaveDC = m_statea.get_size();
 
-      m_statea.add(m_state);
+      m_statea.add(m_pstate);
+
+      m_pstate = canew(state);
 
       return (int) iSaveDC;
-      //throw todo(get_app());
 
-      //int nRetVal = 0;
-      //if(get_handle2() != NULL)
-      //   nRetVal = ::SaveDC(get_handle2());
-      //if(get_handle1() != NULL && get_handle1() != get_handle2() && ::SaveDC(get_handle1()) != 0)
-      //   nRetVal = -1;   // -1 is the only valid restore value for complex DCs
-      //return nRetVal;
    }
 
    bool graphics::RestoreDC(int nSavedDC)
@@ -3184,60 +3178,36 @@ namespace draw2d_direct2d
 
       }
 
-      ::count c;
+      m_statea.add(m_pstate);
 
-      index iStart = 0;
-
-      for (;
-         iStart < m_state.m_sparegionClip.get_size()
-         && iStart < m_statea[nSavedDC].m_sparegionClip.get_size()
-         && m_state.m_sparegionClip[iStart] == m_statea[nSavedDC].m_sparegionClip[iStart]; )
-      {
-         iStart++;
-      }
-
-      for (index i = iStart; i < m_state.m_sparegionClip.get_size(); i++)
+      for (index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
       {
 
-         m_prendertarget->PopLayer();
+         auto state = m_statea[iState];
 
-         m_state.m_sparegionClip.remove_last();
+         for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+         {
 
-         m_state.m_maRegion.remove_last();
+            m_prendertarget->PopLayer();
 
-      }
+         }
 
-      
+         state->m_maRegion.remove_all();
 
-      for (index i = iStart;  i < m_statea[nSavedDC].m_sparegionClip.get_size(); i++)
-      {
+         state->m_sparegionClip.remove_all();
 
-         m_prendertarget->SetTransform(&m_statea[nSavedDC].m_maRegion[i]);
-
-         ID2D1Geometry * pgeometry = (ID2D1Geometry *)(dynamic_cast < region * > (m_statea[nSavedDC].m_sparegionClip[i].m_p))->get_os_data();
-
-         m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), NULL);
-
-         m_state.m_sparegionClip.add(m_statea[nSavedDC].m_sparegionClip[i]);
-
-         m_state.m_maRegion.add(m_statea[nSavedDC].m_maRegion[i]);
+         m_statea.remove_at(iState);
 
       }
 
-      m_prendertarget->SetTransform(&m_statea[nSavedDC].m_m);
+      m_prendertarget->SetTransform(&m_statea[nSavedDC]->m_m);
+
+      m_pstate = m_statea[nSavedDC];
 
       m_statea.set_size(nSavedDC);
 
       return true;
-      //throw todo(get_app());
 
-   //   bool bRetVal = TRUE;
-   //   if(get_handle1() != NULL && get_handle1() != get_handle2())
-   //      bRetVal = ::RestoreDC(get_handle1(), nSavedDC) != FALSE;
-   //   if(get_handle2() != NULL)
-   //      bRetVal = (bRetVal && ::RestoreDC(get_handle2(), nSavedDC) != FALSE);
-   //   return bRetVal;
-   //
    }
 
 
@@ -3611,14 +3581,36 @@ namespace draw2d_direct2d
       if (pregion == NULL)
       {
 
-         for (index i = 0; i < m_state.m_sparegionClip.get_size(); i++)
+         for (index iState = m_statea.get_upper_bound(); iState >= 0; iState--)
+         {
+
+            auto state = m_statea[iState];
+
+            for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+            {
+
+               m_prendertarget->PopLayer();
+
+            }
+
+            state->m_maRegion.remove_all();
+
+            state->m_sparegionClip.remove_all();
+
+         }
+
+         auto & state = m_pstate;
+
+         for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
          {
 
             m_prendertarget->PopLayer();
 
          }
 
-         m_state.m_sparegionClip.remove_all();
+         state->m_maRegion.remove_all();
+
+         state->m_sparegionClip.remove_all();
 
       }
       else
@@ -3628,9 +3620,9 @@ namespace draw2d_direct2d
 
          m_prendertarget->GetTransform(&m);
 
-         m_state.m_sparegionClip.add(pregion);
+         m_pstate->m_sparegionClip.add(pregion);
 
-         m_state.m_maRegion.add(m);
+         m_pstate->m_maRegion.add(m);
 
          ID2D1Geometry * pgeometry = (ID2D1Geometry *) (dynamic_cast < region * > (pregion))->get_os_data();
 
@@ -3705,9 +3697,9 @@ namespace draw2d_direct2d
 
          m_prendertarget->GetTransform(&m);
 
-         m_state.m_sparegionClip.add(pregion);
+         m_pstate->m_sparegionClip.add(pregion);
 
-         m_state.m_maRegion.add(m);
+         m_pstate->m_maRegion.add(m);
 
          ID2D1Geometry * pgeometry = (ID2D1Geometry *)(dynamic_cast < region * > (pregion.m_p))->get_os_data();
 
@@ -4432,7 +4424,7 @@ namespace draw2d_direct2d
 
       wstring wstr(str);
 
-      IDWriteTextLayout * playout1 = NULL;
+      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout1;
 
       HRESULT hr;
 
@@ -4452,7 +4444,7 @@ namespace draw2d_direct2d
 
       }
 
-      IDWriteTextLayout * playout = NULL;
+      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout;
 
       hr = global_draw_get_write_factory()->CreateTextLayout(
          wstr,                // The string to be laid out and formatted.
@@ -4660,9 +4652,11 @@ namespace draw2d_direct2d
 
       //strTest1.trim_left();
 
-      //size sd1 = GetTextExtent(strTest1);
+      string str(lpszString, nCount);
 
-      D2D1_RECT_F rectf = D2D1::RectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + 1024 * 1024) , (FLOAT)(0 + 1024 * 1024));
+      size sizeText = GetTextExtent(str);
+
+      D2D1_RECT_F rectf = D2D1::RectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2) , (FLOAT)(0 + sizeText.cy * 2));
 
       HRESULT  hr = get_os_font(m_spfont)->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
@@ -4694,8 +4688,6 @@ namespace draw2d_direct2d
       hr = get_os_font(m_spfont)->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
       
 
-      string str(lpszString, nCount);
-
       wstring wstr(str);
 
       
@@ -4717,7 +4709,13 @@ namespace draw2d_direct2d
       if(lpcwsz != NULL && uiLen > 0)
       {
 
+         //D2D1_POINT_2F d2d1pointf;
+
+         //d2d1pointf.x = 0.0f;
+         //d2d1pointf.y = 0.0f;
+
          m_prendertarget->DrawText(lpcwsz,(int) uiLen,pfont,&rectf,pbrush);
+//         m_prendertarget->DrawTextLayout(d2d1pointf, ::Ma  lpcwsz, (int)uiLen, pfont, &rectf, pbrush);
 
       }
 

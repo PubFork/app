@@ -680,7 +680,6 @@ public:
    void splice(iterator position, list & l);
    void splice(iterator position, list & l, iterator i);
    void splice(iterator position, list & l, iterator first, iterator last);
-
    void swap(POSITION position1, POSITION position2);
 
 
@@ -694,17 +693,24 @@ public:
 
 };
 
+
 template<class TYPE, class ARG_TYPE>
 inline ::count list<TYPE, ARG_TYPE>::get_count() const
 {
+
    return this->m_count;
+
 }
+
 
 template<class TYPE, class ARG_TYPE>
 inline ::count list<TYPE, ARG_TYPE>::get_size() const
 {
+
    return this->m_count;
+
 }
+
 
 template<class TYPE, class ARG_TYPE>
 inline ::count list<TYPE, ARG_TYPE>::size() const

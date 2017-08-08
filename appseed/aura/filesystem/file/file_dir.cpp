@@ -6,7 +6,7 @@
    #pragma pop_macro("System")
 #endif
 
-
+   CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
 ::file::path dir::ca2_module()
 {
@@ -779,26 +779,8 @@ bool dir::is(const ::file::path & path1)
    }
    string strPrefix;
 
-   if (::str::begins_eat_ci(str, "winmetro-Pictures:\\\\"))
-   {
+   auto folderBase = winrt_folder(str, strPrefix);
 
-      strPrefix = "winmetro-Pictures:\\\\";
-
-   }
-
-   if (::str::begins_eat_ci(str, "winmetro-Music:\\\\"))
-   {
-
-      strPrefix = "winmetro-Music:\\\\";
-
-   }
-
-   if (::str::begins_eat_ci(str, "winmetro-Videos:\\\\"))
-   {
-
-      strPrefix = "winmetro-Videos:\\\\";
-
-   }
 
    uint32_t dwFileAttributes = ::GetFileAttributesW(wstring(str));
    if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
@@ -806,6 +788,20 @@ bool dir::is(const ::file::path & path1)
       return true;
    else
    {
+
+      if (folderBase != nullptr)
+      {
+
+         auto folder = ::wait(folderBase->GetFolderAsync(str));
+
+         if (folder != nullptr)
+         {
+
+            return true;
+
+         }
+
+      }
 
       DWORD dwLastError = ::GetLastError();
 
