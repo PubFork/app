@@ -237,6 +237,27 @@ namespace user
    ::user::front_end_schema * GetUfeSchema(::aura::application * papp)
    {
 
+      if (papp == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      if (papp->m_pbasesession == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      if (papp->m_pbasesession->m_puser == NULL)
+      {
+
+         return NULL;
+
+      }
+
       return Sess(papp).user()->GetUfeSchema();
 
    }
