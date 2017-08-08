@@ -4,9 +4,12 @@
    using namespace ::Windows::System;
 
    #pragma pop_macro("System")
-#endif
+
 
    CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
+
+#endif
+
 
 ::file::path dir::ca2_module()
 {
