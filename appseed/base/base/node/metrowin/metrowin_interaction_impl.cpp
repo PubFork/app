@@ -541,7 +541,7 @@ namespace metrowin
 
    void interaction_impl::_001OnMove(signal_details * pobj)
    {
-      throw todo(get_app());
+      //throw todo(get_app());
       //UNREFERENCED_PARAMETER(pobj);
       //if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
       //{
