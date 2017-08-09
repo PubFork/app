@@ -172,6 +172,9 @@ namespace draw2d_direct2d
       //virtual bool print_window(::user::interaction_impl * pwnd, signal_details * pobj);
 
 
+      virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA);
+
+
    };
 
 

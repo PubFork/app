@@ -321,49 +321,62 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_combine()
    {
 
-      ID2D1PathGeometry * ppathgeometry = NULL;
+      Microsoft::WRL::ComPtr <ID2D1PathGeometry> ppathgeometry ;
 
       HRESULT hr = get_d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      ID2D1GeometrySink * psink = NULL;
+      Microsoft::WRL::ComPtr < ID2D1GeometrySink > psink ;
 
-      if(FAILED(hr))
+      if (FAILED(hr))
+      {
+
          return NULL;
+
+      }
 
       hr = ppathgeometry->Open(&psink);
 
       if(FAILED(hr))
       {
-         ppathgeometry->Release();
+         
          return NULL;
+
       }
 
-
       ID2D1Geometry * pgeometry1 = (ID2D1Geometry *) m_pregion1->get_os_data();
+
       ID2D1Geometry * pgeometry2 = (ID2D1Geometry *) m_pregion2->get_os_data();
 
       if(m_ecombine == combine_add)
       {
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, NULL, NULL, psink);
+
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, NULL, NULL, psink.Get());
+
       }
       else if(m_ecombine == combine_exclude)
       {
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, NULL, NULL, psink);
+
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, NULL, NULL, psink.Get());
+
       }
       else if(m_ecombine == combine_intersect)
       {
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, NULL, NULL, psink);
+
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, NULL, NULL, psink.Get());
+
       }
       else
       {
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, NULL, NULL, psink);
+
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, NULL, NULL, psink.Get());
+
       }
 
       if(FAILED(hr))
       {
-         psink->Release();
-         ppathgeometry->Release();
+
          return NULL;
+
       }
 
 
@@ -371,22 +384,12 @@ namespace draw2d_direct2d
 
       if(FAILED(hr))
       {
-         psink->Release();
-         ppathgeometry->Release();
+
          return NULL;
-      }
-
-      try
-      {
-
-         psink->Release();
 
       }
-      catch(...)
-      {
-      }
 
-      return ppathgeometry;
+      return ppathgeometry.Detach();
 
    }
 

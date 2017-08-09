@@ -77,6 +77,8 @@ namespace draw2d_direct2d
       graphics(::aura::application * papp);
       virtual ~graphics();
 
+      virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount) override;
+      virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop);
 
       //ID2D1Device & d()
       //{

@@ -58,6 +58,7 @@ inline byte byte_clip(int i)
 
 #define byte_clip(i)  ((byte) (((i) < 0) ? 0 : (((i)> 255) ? 255 : i)))
 
+
 namespace draw2d
 {
 
@@ -635,11 +636,48 @@ namespace draw2d
                //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
                //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
                //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
-               byte acomplement = ~psrc2[3];
-               pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
-               pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
-               pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
-               pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
+               byte a = pdst2[3];
+               byte alpha = psrc2[3];
+               if (a == 0)
+               {
+
+               }
+               else if(alpha == 0)
+               {
+                  
+                  *((COLORREF *)pdst2) = 0;
+
+               }
+               else
+               {
+
+                  //int d0 = pdst2[0] * 255 / a;
+                  //int d1 = pdst2[1] * 255 / a;
+                  //int d2 = pdst2[2] * 255 / a;
+
+                  //int s0 = psrc2[0] * 255 / alpha;
+                  //int s1 = psrc2[1] * 255 / alpha;
+                  //int s2 = psrc2[2] * 255 / alpha;
+
+                  //d0 = ((s0 * a) + (d0 * alpha)) >> 8;
+                  //d1 = ((s1 * a) + (d1 * alpha)) >> 8;
+                  //d2 = ((s2 * a) + (d2 * alpha)) >> 8;
+                  //pdst2[3] = ((psrc2[3] * a) + (pdst2[3] * alpha)) >> 8;
+
+                  //pdst[0] = (d0 * pdst2[3]) >> 8;
+                  //pdst[1] = (d1 * pdst2[3]) >> 8;
+                  //pdst[2] = (d2 * pdst2[3]) >> 8;
+
+                  //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
+                  //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
+                  //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
+                  //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
+
+                  pdst2[0] = (pdst2[0] * alpha) >> 8;
+                  pdst2[1] = (pdst2[1] * alpha) >> 8;
+                  pdst2[2] = (pdst2[2] * alpha) >> 8;
+                  pdst2[3] = (pdst2[3] * alpha) >> 8;
+               }
 
 
 

@@ -6,7 +6,11 @@
 //
 //#endif
 
+
 CLASS_DECL_AURA void init_draw2d_mutex();
+
+
+extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
 
 
 namespace draw2d_direct2d
@@ -16,6 +20,15 @@ namespace draw2d_direct2d
    factory_exchange::factory_exchange(::aura::application * papp) :
       ::object(papp)
    {
+
+
+      if (g_pdiba == NULL)
+      {
+
+         g_pdiba = new spa(::draw2d::dib);
+
+      }
+
 
       //init_draw2d_mutex();
 
