@@ -795,12 +795,23 @@ bool dir::is(const ::file::path & path1)
       if (folderBase != nullptr)
       {
 
-         auto folder = ::wait(folderBase->GetFolderAsync(str));
-
-         if (folder != nullptr)
+         try
          {
 
-            return true;
+            auto folder = ::wait(folderBase->GetFolderAsync(str));
+
+            if (folder != nullptr)
+            {
+
+               return true;
+
+            }
+
+         }
+         catch (...)
+         {
+
+            return false;
 
          }
 
