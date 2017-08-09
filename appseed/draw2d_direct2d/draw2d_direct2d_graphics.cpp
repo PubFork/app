@@ -4,19 +4,6 @@
 
 
 
-namespace d2d1
-{
-
-
-   COM_DECLSPEC_NOTHROW D2D1FORCEINLINE D2D1_RECT_F rectf(LPCRECT lpcrect)
-   {
-
-      return D2D1::Rect<FLOAT>(lpcrect->left, lpcrect->top, lpcrect->right, lpcrect->bottom);
-
-   }
-
-
-} // namespace d2d1
 
 
 void copy(D2D1_RECT_F & rectSrc, LPCRECT lpcrect)

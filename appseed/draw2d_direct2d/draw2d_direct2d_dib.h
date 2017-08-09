@@ -174,6 +174,7 @@ namespace draw2d_direct2d
 
       virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA);
 
+      virtual void tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B) override;
 
    };
 

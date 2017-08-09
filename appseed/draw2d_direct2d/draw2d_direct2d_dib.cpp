@@ -3163,6 +3163,38 @@ namespace draw2d_direct2d
 
    //#endif
 
+   void dib::tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B)
+   {
+
+      if (!create(pdib->m_size))
+      {
+
+         return;
+
+      }
+
+      ::rect rectDib1(null_point(), pdib->m_size);
+
+      get_graphics()->FillSolidRect(rectDib1, ARGB(255, R, G, B));
+
+      sp(::draw2d_direct2d::graphics) pgraphicsDib1 = get_graphics();
+
+      sp(::draw2d_direct2d::graphics) pgraphicsDib2 = pdib->get_graphics();
+
+      ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+
+      pgraphicsDib1->m_pdevicecontext->DrawImage(
+         (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+         D2D1::Point2F(0.f, 0.f),
+         d2d1::rectf(rectDib1),
+         D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+         D2D1_COMPOSITE_MODE_DESTINATION_IN);
+
+      set_alpha_mode(::draw2d::alpha_mode_blend);
+
+      ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+
+   }
 
 } // namespace draw2d_direct2d
 

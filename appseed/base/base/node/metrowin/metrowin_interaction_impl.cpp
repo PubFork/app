@@ -7401,15 +7401,19 @@ namespace metrowin
       for (auto p : m_pui->m_uiptraChild)
       {
 
-         if (p->has_pending_graphical_update())
+         if (p != NULL)
          {
 
-            return true;
+            if (p->has_pending_graphical_update())
+            {
+
+               return true;
+
+            }
 
          }
 
       }
-
 
       return false;
 
