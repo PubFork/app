@@ -885,8 +885,6 @@
 		9A0974801F223D7500CFA833 /* DDInvocationGrabber.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974711F223D2E00CFA833 /* DDInvocationGrabber.mm */; };
 		9A0974811F223D7A00CFA833 /* NSObject+DDExtensions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974731F223D2E00CFA833 /* NSObject+DDExtensions.mm */; };
 		9A0974821F223D7E00CFA833 /* UncaughtExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974751F223D2E00CFA833 /* UncaughtExceptionHandler.mm */; };
-		9A0974851F223E5000CFA833 /* apple_ns_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */; };
-		9A0974861F223E5000CFA833 /* apple_ns_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */; };
 		9A0974871F223E5000CFA833 /* apple_ns_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0974841F223E5000CFA833 /* apple_ns_exception.h */; };
 		9A0974881F223E5000CFA833 /* apple_ns_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A0974841F223E5000CFA833 /* apple_ns_exception.h */; };
 		9A16414F19C4A4CE00966C5E /* aura.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D3319C4A4CC00966C5E /* aura.h */; };
@@ -1253,15 +1251,16 @@
 		9A8181021F21A43A00FDAF74 /* netserver_socket_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */; };
 		9A8181031F21A43C00FDAF74 /* netserver_socket_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */; };
 		9A8181041F21A43F00FDAF74 /* netserver_socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */; };
-		9A81810D1F21A80100FDAF74 /* apple_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A81810C1F21A80100FDAF74 /* apple_graphics.cpp */; };
-		9A81810E1F21A85100FDAF74 /* apple_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A81810C1F21A80100FDAF74 /* apple_graphics.cpp */; };
-		9A81811A1F21B39600FDAF74 /* apple_multihreading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8181191F21B39600FDAF74 /* apple_multihreading.cpp */; };
 		9A8370261E46931200803F9F /* ios_file_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8370241E4692FB00803F9F /* ios_file_watcher.cpp */; };
 		9A8EC8551E453771009694BC /* os_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B9C301E149015000D0E92 /* os_debug.cpp */; };
 		9A8ED4831F20052E007DB75C /* draw2d_nanosvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */; };
 		9A8ED5801F204BDD007DB75C /* macos_user_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ED57F1F204BDD007DB75C /* macos_user_mm.mm */; };
 		9A8ED5831F204E28007DB75C /* RoundWindowApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8ED5811F204E28007DB75C /* RoundWindowApp.h */; };
 		9A8ED5841F204E28007DB75C /* RoundWindowApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ED5821F204E28007DB75C /* RoundWindowApp.mm */; };
+		9A920F5D1F3BE99400CD9D94 /* apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE612311F229D2100F7CDC2 /* apple.cpp */; };
+		9A920F5E1F3BE99400CD9D94 /* apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE612311F229D2100F7CDC2 /* apple.cpp */; };
+		9A920F5F1F3BE9A000CD9D94 /* apple_ns_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */; };
+		9A920F601F3BE9A000CD9D94 /* apple_ns_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */; };
 		9A9799151DAC3C2B001CD6D9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9799141DAC3C2B001CD6D9 /* libiconv.tbd */; };
 		9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07BD556C16210BD4008E31F0 /* AppKit.framework */; };
 		9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8897A514C24736006B4023 /* Foundation.framework */; };
@@ -1903,8 +1902,6 @@
 		9AE6120B1F22924E00F7CDC2 /* data_item.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C7EA1996D29C00E50F88 /* data_item.h */; };
 		9AE6120C1F22924E00F7CDC2 /* exception_exit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DF519C4A4CD00966C5E /* exception_exit.h */; };
 		9AE6120D1F22924E00F7CDC2 /* file_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B171184A3B430092C3E1 /* file_stream.h */; };
-		9AE612321F229D2100F7CDC2 /* apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE612311F229D2100F7CDC2 /* apple.cpp */; };
-		9AE612331F229D2100F7CDC2 /* apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE612311F229D2100F7CDC2 /* apple.cpp */; };
 		9AE724FB17E83B69003E47F9 /* multithreading.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226917E83B68003E47F9 /* multithreading.h */; };
 		9AE724FD17E83B69003E47F9 /* multithreading_condition.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226C17E83B68003E47F9 /* multithreading_condition.h */; };
 		9AE7250017E83B69003E47F9 /* multithreading_critical_section.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE7226F17E83B68003E47F9 /* multithreading_critical_section.h */; };
@@ -6715,7 +6712,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AD005371EB9AD1F00B9FB48 /* javascript.cpp in Sources */,
-				9A81810E1F21A85100FDAF74 /* apple_graphics.cpp in Sources */,
 				9AD005351EB9AC9B00B9FB48 /* javascript_functions.cpp in Sources */,
 				9AD005361EB9AC9B00B9FB48 /* javascript_tinyjs_functions.cpp in Sources */,
 				9AD005341EB9AA5B00B9FB48 /* user_interactive.cpp in Sources */,
@@ -6729,7 +6725,6 @@
 				9A0974821F223D7E00CFA833 /* UncaughtExceptionHandler.mm in Sources */,
 				9A0974801F223D7500CFA833 /* DDInvocationGrabber.mm in Sources */,
 				9A2736CB1EB9A58D0085D2AD /* _math.cpp in Sources */,
-				9A0974861F223E5000CFA833 /* apple_ns_exception.cpp in Sources */,
 				9A2736C61EB9A52A0085D2AD /* _sockets.cpp in Sources */,
 				9A8181041F21A43F00FDAF74 /* netserver_socket.cpp in Sources */,
 				9A2736C51EB9A4630085D2AD /* _net.cpp in Sources */,
@@ -6738,11 +6733,11 @@
 				9A0974811F223D7A00CFA833 /* NSObject+DDExtensions.mm in Sources */,
 				9A8370261E46931200803F9F /* ios_file_watcher.cpp in Sources */,
 				9A8EC8551E453771009694BC /* os_debug.cpp in Sources */,
+				9A920F5D1F3BE99400CD9D94 /* apple.cpp in Sources */,
 				9A8087471DE1021A00F70A07 /* ios_library.cpp in Sources */,
 				9A2116ED1D832B5C000C4336 /* _.cpp in Sources */,
 				9A2116EE1D832B5C000C4336 /* charDistribution.cpp in Sources */,
 				9A2116EF1D832B5C000C4336 /* pcre.cpp in Sources */,
-				9AE612331F229D2100F7CDC2 /* apple.cpp in Sources */,
 				9A6715D41D14F7970069A961 /* test.cpp in Sources */,
 				070214231C514A9A00DB16A7 /* exception_engine.cpp in Sources */,
 				07CAA9741B4DC5E900180410 /* ios_cross_gdi.mm in Sources */,
@@ -6765,6 +6760,7 @@
 				077A05C81B4D7403001C85FF /* aura_timer.mm in Sources */,
 				077A05CA1B4D7403001C85FF /* net_url.cpp in Sources */,
 				077A05CB1B4D7403001C85FF /* _colorertake5.cpp in Sources */,
+				9A920F601F3BE9A000CD9D94 /* apple_ns_exception.cpp in Sources */,
 				077A05CD1B4D7403001C85FF /* _aura_aura.cpp in Sources */,
 				077A05CF1B4D7403001C85FF /* _multithreading.cpp in Sources */,
 				9A8181031F21A43C00FDAF74 /* netserver_socket_thread.cpp in Sources */,
@@ -6780,7 +6776,6 @@
 				9A2A53D51F1FEE49001AB0F8 /* install_windows_win.cpp in Sources */,
 				07CABC141B3DFF200009F5B9 /* user_frame.cpp in Sources */,
 				9A4B9C311E149015000D0E92 /* os_debug.cpp in Sources */,
-				9A81811A1F21B39600FDAF74 /* apple_multihreading.cpp in Sources */,
 				9A0254F01EA59304003C82CF /* _datetime.cpp in Sources */,
 				9A640E7A1EA6C2B900866C2C /* user_interactive.cpp in Sources */,
 				9AB8C85D1EA98EA0007670A6 /* netserver_socket.cpp in Sources */,
@@ -6793,7 +6788,6 @@
 				9A2A53D31F1FEE49001AB0F8 /* install_windows_boot.cpp in Sources */,
 				9A8ED5841F204E28007DB75C /* RoundWindowApp.mm in Sources */,
 				9A5DF96E1CEE2741008916A4 /* test.cpp in Sources */,
-				9A0974851F223E5000CFA833 /* apple_ns_exception.cpp in Sources */,
 				9A1EDB6019C841D600F5CCE8 /* service_plain_service.cpp in Sources */,
 				9A0256891EA593AC003C82CF /* _sockets.cpp in Sources */,
 				077CEF1F1B23D027009A57EF /* _filesystem.cpp in Sources */,
@@ -6807,6 +6801,7 @@
 				9A34F5D31E15763000AE2607 /* mmos.mm in Sources */,
 				9A8ED4831F20052E007DB75C /* draw2d_nanosvg.cpp in Sources */,
 				9A26A6DB1D7F0019001F47A8 /* pcre.cpp in Sources */,
+				9A920F5E1F3BE99400CD9D94 /* apple.cpp in Sources */,
 				9A16421B19C4A4CE00966C5E /* exception_mm.mm in Sources */,
 				07C530BD1B6FBA1300379625 /* ns_exe_path.cpp in Sources */,
 				9A0254F61EA5938A003C82CF /* _math.cpp in Sources */,
@@ -6814,7 +6809,6 @@
 				9A02568E1EA593AC003C82CF /* _bsd.cpp in Sources */,
 				9AEEADB519C4E10900866C9E /* simple_message_box.cpp in Sources */,
 				9A640E5B1EA6BC4E00866C2C /* javascript.cpp in Sources */,
-				9AE612321F229D2100F7CDC2 /* apple.cpp in Sources */,
 				07B0953618495C2B007A0560 /* str_ch_class.cpp in Sources */,
 				9AB8C85B1EA98EA0007670A6 /* netserver_socket_handler.cpp in Sources */,
 				9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */,
@@ -6833,9 +6827,9 @@
 				077CEF241B23D0FF009A57EF /* _multithreading.cpp in Sources */,
 				9A4B9C2F1E148E1A000D0E92 /* macos_mm.mm in Sources */,
 				9A1644A219C4A4CF00966C5E /* os_http.cpp in Sources */,
-				9A81810D1F21A80100FDAF74 /* apple_graphics.cpp in Sources */,
 				9A1644A519C4A4CF00966C5E /* os_thread.cpp in Sources */,
 				9A0254BE1EA59238003C82CF /* _compress.cpp in Sources */,
+				9A920F5F1F3BE9A000CD9D94 /* apple_ns_exception.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

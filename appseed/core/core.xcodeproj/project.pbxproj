@@ -158,48 +158,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9A12C60B1F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AEB75A316F78DF10085103B;
-			remoteInfo = gcom;
-		};
-		9A12C60D1F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AE24E8A1904CFFD001AEFFB;
-			remoteInfo = ios_gcom;
-		};
-		9A12C60F1F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AE24E991904CFFD001AEFFB;
-			remoteInfo = gcom_iosTests;
-		};
-		9A12C6141F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AEB75F416F78EDC0085103B;
-			remoteInfo = wndfrm_core;
-		};
-		9A12C6161F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AE24E5A1904CFE2001AEFFB;
-			remoteInfo = ios_wndfrm_core;
-		};
-		9A12C6181F22CFFA00C763C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AE24E691904CFE2001AEFFB;
-			remoteInfo = wndfrm_core_iosTests;
-		};
 		9A4E85231D1FD49A008A419B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AA6A3871907ACBE000A1F4A /* base.xcodeproj */;
@@ -519,8 +477,6 @@
 		07F5B36F184A4FA00092C3E1 /* user_xfplayer_view_line_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_line_selection.h; sourceTree = "<group>"; };
 		07F5B371184A4FA00092C3E1 /* user_xfplayer_view_lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_xfplayer_view_lines.h; sourceTree = "<group>"; };
 		07F5B400184A50E50092C3E1 /* userex_userex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userex_userex.h; sourceTree = "<group>"; };
-		9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gcom.xcodeproj; path = "/ios/app-core/appseed/hellomultiverse/../gcom/gcom.xcodeproj"; sourceTree = "<absolute>"; };
-		9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = wndfrm_core.xcodeproj; path = "/ios/app-core/appseed/hellomultiverse/../wndfrm_core/wndfrm_core.xcodeproj"; sourceTree = "<absolute>"; };
 		9A19A1A519C6F50B0018DF7D /* libcore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A19A37219C6F5940018DF7D /* wndfrm_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_frame.h; sourceTree = "<group>"; };
 		9A19A37419C6F5940018DF7D /* wndfrm_frame_appearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wndfrm_frame_appearance.h; sourceTree = "<group>"; };
@@ -1105,26 +1061,6 @@
 			path = user;
 			sourceTree = "<group>";
 		};
-		9A12C6021F22CFFA00C763C8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9A12C60C1F22CFFA00C763C8 /* libgcom.dylib */,
-				9A12C60E1F22CFFA00C763C8 /* libios_gcom.a */,
-				9A12C6101F22CFFA00C763C8 /* gcom_iosTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		9A12C6051F22CFFA00C763C8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9A12C6151F22CFFA00C763C8 /* libwndfrm_core.dylib */,
-				9A12C6171F22CFFA00C763C8 /* libwndfrm_core.a */,
-				9A12C6191F22CFFA00C763C8 /* wndfrm_core_iosTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9A19A37019C6F5940018DF7D /* wndfrm */ = {
 			isa = PBXGroup;
 			children = (
@@ -1181,8 +1117,6 @@
 		9A8897AB14C2C8DB006B4023 = {
 			isa = PBXGroup;
 			children = (
-				9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */,
-				9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */,
 				9A9F05B41D7F24B000ED6D8A /* libios_ace.dylib */,
 				9A9F05B11D7F24A300ED6D8A /* libace.dylib */,
 				9A986CF51D2266AC001F4C04 /* libios_aura.dylib */,
@@ -1492,14 +1426,6 @@
 					ProductGroup = 9A4E851B1D1FD49A008A419B /* Products */;
 					ProjectRef = 9AA6A3871907ACBE000A1F4A /* base.xcodeproj */;
 				},
-				{
-					ProductGroup = 9A12C6021F22CFFA00C763C8 /* Products */;
-					ProjectRef = 9A12C6011F22CFFA00C763C8 /* gcom.xcodeproj */;
-				},
-				{
-					ProductGroup = 9A12C6051F22CFFA00C763C8 /* Products */;
-					ProjectRef = 9A12C6041F22CFFA00C763C8 /* wndfrm_core.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1511,48 +1437,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9A12C60C1F22CFFA00C763C8 /* libgcom.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libgcom.dylib;
-			remoteRef = 9A12C60B1F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A12C60E1F22CFFA00C763C8 /* libios_gcom.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libios_gcom.a;
-			remoteRef = 9A12C60D1F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A12C6101F22CFFA00C763C8 /* gcom_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = gcom_iosTests.xctest;
-			remoteRef = 9A12C60F1F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A12C6151F22CFFA00C763C8 /* libwndfrm_core.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libwndfrm_core.dylib;
-			remoteRef = 9A12C6141F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A12C6171F22CFFA00C763C8 /* libwndfrm_core.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libwndfrm_core.a;
-			remoteRef = 9A12C6161F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A12C6191F22CFFA00C763C8 /* wndfrm_core_iosTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = wndfrm_core_iosTests.xctest;
-			remoteRef = 9A12C6181F22CFFA00C763C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		9A4E85241D1FD49A008A419B /* libbase.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";

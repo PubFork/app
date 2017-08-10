@@ -302,6 +302,13 @@
 			remoteGlobalIDString = 07108BD71B4C97D500A28F80;
 			remoteInfo = ios_axisfreeimage;
 		};
+		9A920F861F3BF28900CD9D94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
+			remoteInfo = axisfreeimage;
+		};
 		9A9808291DDF955B00BB294E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A9808241DDF955B00BB294E /* aurapcre.xcodeproj */;
@@ -1436,6 +1443,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A920F871F3BF28900CD9D94 /* PBXTargetDependency */,
 				9A9809931DDF9AFC00BB294E /* PBXTargetDependency */,
 				9A9F0A841D7F35B000ED6D8A /* PBXTargetDependency */,
 				9A19A0DB19C68DE00018DF7D /* PBXTargetDependency */,
@@ -1699,6 +1707,11 @@
 			isa = PBXTargetDependency;
 			name = ios_aurapcre;
 			targetProxy = 9A8087591DE10FDF00F70A07 /* PBXContainerItemProxy */;
+		};
+		9A920F871F3BF28900CD9D94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = axisfreeimage;
+			targetProxy = 9A920F861F3BF28900CD9D94 /* PBXContainerItemProxy */;
 		};
 		9A9809931DDF9AFC00BB294E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
