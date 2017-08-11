@@ -2935,7 +2935,20 @@ namespace aura
    }
 
 
-
+   bool system::on_open_file(var varFile)
+   {
+      
+      if(get_appptra().get_size() > 0)
+      {
+         
+         
+         get_appptra()[0]->_001OpenDocumentFile(varFile);
+         
+      }
+      
+      return true;
+      
+   }
 
 } // namespace aura
 
