@@ -6,7 +6,7 @@ stefan_vsure thing  :D
 
 ca2for slack I need e-mail address to send invite... you can send your e-mail in private message or thoutgh my Skyp: camilo@ca2.email
 
-ca2and this is the discord inviting link https://discord.gg/6ZTPkg
+ca2and this is the discord inviting link https://discord.gg/2uVD9rB
 
 mark_millermaybe next time
 
