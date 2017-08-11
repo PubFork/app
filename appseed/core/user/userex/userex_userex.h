@@ -40,7 +40,7 @@ namespace userex
       virtual ~userex();
 
 
-      ::user::shell::shell & shell();
+      ::user::shell::shell * shell();
 
       virtual bool initialize1();
       virtual bool initialize2();

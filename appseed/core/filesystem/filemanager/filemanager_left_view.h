@@ -18,6 +18,9 @@ namespace filemanager
 
       left_view(::aura::application * papp);
       virtual ~left_view();
+      
+      
+      virtual void install_message_handling(::message::dispatch * pinterface);
 
 
       virtual void assert_valid() const;

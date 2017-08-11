@@ -60,6 +60,7 @@ public:
    virtual void round_window_close();
    
    virtual void round_window_set_title(const char * pszTitle);
+   virtual void round_window_get_title(char * pszTitle, int iSize);
    
    
 };

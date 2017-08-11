@@ -129,9 +129,11 @@ namespace user
       IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
 
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
-      ////IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&mesh::_001OnTimer);
+      
       connect_command("mesh_view_auto_arrange",&mesh::_001OnMeshViewAutoArrange);
+      
       connect_update_cmd_ui("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
+      
    }
 
 
@@ -2653,33 +2655,37 @@ namespace user
 
       track_mouse_leave();
 
-      //if(m_spmenuPopup.is_null())
       {
 
          UpdateHover();
+
          pobj->m_bRet = true;
 
-
          index iItemEnter;
+
          index iSubItemEnter;
+         
          point point;
-         //Session.get_cursor_pos(&point);
-         //ScreenToClient(&point);
 
          if (_001DisplayHitTest(pt, iItemEnter, iSubItemEnter))
          {
+            
             if (m_bSelect && m_bHoverSelect &&
                (m_iSubItemEnter != iSubItemEnter ||
                   m_iItemEnter != iItemEnter)
                && !m_rangeSelection.has_item(iItemEnter))
             {
+               
                m_iMouseFlagEnter = pmouse->m_nFlags;
+               
                m_iItemEnter = iItemEnter;
+               
                m_iSubItemEnter = iSubItemEnter;
-               //SetTimer(12321, 840, NULL);
-               SetTimer(12321, 184 + 177 + 151, NULL);
-               //track_mouse_hover();
+               
+               SetTimer(12321, 800, NULL);
+               
             }
+            
          }
 
       }
@@ -4110,22 +4116,30 @@ namespace user
 
    void mesh::_001OnTimer(::timer * ptimer)
    {
-      //      return; //xxxtimer
+
       ::user::control::_001OnTimer(ptimer);
+      
       if(ptimer->m_nIDEvent == 12345679) // left click
       {
+         
          KillTimer(12345679);
+         
          if(m_bSelect)
          {
+            
             if(m_bHoverSelect)
             {
+               
             }
 
          }
+         
       }
       else if(ptimer->m_nIDEvent == 8477) // right click
       {
+         
          KillTimer(8477);
+         
          //if(!_001IsEditing())
          {
             uint_ptr nFlags = m_uiRButtonUpFlags;
@@ -4238,24 +4252,31 @@ namespace user
       else if(ptimer->m_nIDEvent == 12321)
       {
 
-
          KillTimer(ptimer->m_nIDEvent);
 
-
          index iItemSel;
+         
          index iSubItemSel;
+         
          point point;
+         
          Session.get_cursor_pos(&point);
+         
          ScreenToClient(&point);
+         
          try
          {
-            if(_001DisplayHitTest(point,iItemSel,iSubItemSel))
+            
+            if(_001DisplayHitTest(point, iItemSel,iSubItemSel))
             {
-               if(m_iSubItemEnter == iSubItemSel &&
-                  m_iItemEnter == iItemSel)
+               
+               if(m_iSubItemEnter == iSubItemSel && m_iItemEnter == iItemSel)
                {
+                  
                   m_iSubItemEnter = -1;
+                  
                   m_iItemEnter = -1;
+                  
                   bool bLShiftKeyDown     = Session.is_key_pressed(::user::key_lshift);
                   bool bRShiftKeyDown     = Session.is_key_pressed(::user::key_rshift);
                   bool bLControlKeyDown   = Session.is_key_pressed(::user::key_lcontrol);
@@ -4265,9 +4286,12 @@ namespace user
 
                   if(m_bMultiSelect && bShiftKeyDown)
                   {
+                     
                      if(bControlKeyDown)
                      {
+                        
                         item_range itemrange;
+                        
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4275,11 +4299,15 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
+                        
                         _001AddSelection(itemrange);
+                        
                      }
                      else
                      {
+                        
                         item_range itemrange;
+                        
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4287,18 +4315,29 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
+                        
                         range range;
+                        
                         range.add_item(itemrange);
+                        
                         _001SetSelection(range);
+                        
                      }
+                     
                   }
                   else if(m_bMultiSelect && bControlKeyDown)
                   {
+                     
                      m_iLastItemSel = m_iItemSel;
+                     
                      m_iLastSubItemSel = m_iSubItemSel;
+                     
                      m_iItemSel = iItemSel;
+                     
                      m_iSubItemSel = iSubItemSel;
+                     
                      item_range itemrange;
+                     
                      itemrange.set(
                         m_iItemSel,
                         m_iItemSel,
@@ -4306,15 +4345,23 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
+                     
                      _001AddSelection(itemrange);
+                     
                   }
                   else
                   {
+                     
                      m_iLastItemSel = m_iItemSel;
+                     
                      m_iLastSubItemSel = m_iSubItemSel;
+                     
                      m_iItemSel = iItemSel;
+                     
                      m_iSubItemSel = iSubItemSel;
+                     
                      item_range itemrange;
+                     
                      itemrange.set(
                         DisplayToStrict(m_iItemSel),
                         DisplayToStrict(m_iItemSel),
@@ -4322,22 +4369,31 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
+                     
                      range range;
+                     
                      range.add_item(itemrange);
+                     
                      _001SetSelection(range);
+                     
                   }
+                  
                }
+               
             }
+            
          }
          catch(...)
          {
+            
          }
+         
          m_iSubItemEnter = -1;
+         
          m_iItemEnter = -1;
 
       }
 
-//      ptimer->m_bRet = false;
    }
 
    bool mesh::_001IsItemVisible(index iItem)

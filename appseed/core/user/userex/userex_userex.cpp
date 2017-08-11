@@ -354,10 +354,10 @@ namespace userex
    }
 
 
-   ::user::shell::shell & userex::shell()
+   ::user::shell::shell * userex::shell()
    {
 
-      return *m_pshell;
+      return m_pshell;
 
    }
 

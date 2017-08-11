@@ -60,12 +60,12 @@ namespace filemanager
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual sp(::fs::data)                       get_fs_data();
-      virtual ::fs::item &                         get_filemanager_item();
-      virtual sp(::filemanager::data)              get_filemanager_data();
-      virtual sp(::filemanager::manager_template)  get_filemanager_template();
+      virtual ::fs::data *                         get_fs_data();
+      virtual ::fs::item *                         get_filemanager_item();
+      virtual ::filemanager::data *                get_filemanager_data();
+      virtual ::filemanager::manager_template *    get_filemanager_template();
 
-	  virtual sp(manager) get_main_manager();
+      virtual manager * get_main_manager();
 
       DECL_GEN_SIGNAL(_001OnLevelUp);
       DECL_GEN_SIGNAL(_001OnUpdateLevelUp);
@@ -92,7 +92,7 @@ namespace filemanager
 
       ::critical_section * GetItemIdListCriticalSection();
 
-      virtual bool FileManagerBrowse(sp(::fs::item) item, ::action::context actioncontext);
+      virtual bool FileManagerBrowse(::fs::item * pitem, ::action::context actioncontext);
       virtual bool FileManagerBrowse(const char * lpcsz, ::action::context actioncontext);
 
       virtual void FileManagerOneLevelUp(::action::context actioncontext);
@@ -118,7 +118,7 @@ namespace filemanager
       virtual void on_create(::create * pcreate);
 
 
-      sp(operation_document) get_operation_doc(bool bSwitch);
+      operation_document * get_operation_doc(bool bSwitch);
 
 
       virtual bool on_simple_action(id id);
@@ -131,7 +131,7 @@ namespace filemanager
 
       void PopViews();
       void CreateViews();
-      void OpenFolder(sp(::fs::item) item,::action::context actioncontext);
+      void OpenFolder(::fs::item * item,::action::context actioncontext);
       void Initialize(bool bMakeVisible, bool bInitialBrowsePath = true);
       void Initialize(bool bMakeVisible, const ::file::path & path);
 

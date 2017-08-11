@@ -61,15 +61,12 @@ namespace userfs
       virtual count _001GetItemCount();
 
       DECL_GEN_SIGNAL(_001OnHScroll);
-         DECL_GEN_SIGNAL(_001OnVScroll);
-         DECL_GEN_SIGNAL(_001OnFileRename);
-         DECL_GEN_SIGNAL(_001OnUpdateFileRename);
-         DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnVScroll);
+      DECL_GEN_SIGNAL(_001OnFileRename);
+      DECL_GEN_SIGNAL(_001OnUpdateFileRename);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
-
-         virtual void _001InitializeFormPreData();
-
-
+      virtual void _001InitializeFormPreData();
 
       virtual bool query_drop(index iDisplayDrop, index iDisplayDrag);
       virtual bool do_drop(index iDisplayDrop, index iDisplayDrag);

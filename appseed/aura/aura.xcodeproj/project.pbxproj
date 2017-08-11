@@ -452,7 +452,6 @@
 		077A07971B4D7403001C85FF /* aura_aura.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D4319C4A4CC00966C5E /* aura_aura.h */; };
 		077A07981B4D7403001C85FF /* primitive_property_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722EC17E83B69003E47F9 /* primitive_property_set.h */; };
 		077A07991B4D7403001C85FF /* primitive_request_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722EE17E83B69003E47F9 /* primitive_request_interface.h */; };
-		077A079A1B4D7403001C85FF /* aura_file_watcher_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6919C4A4CC00966C5E /* aura_file_watcher_thread.h */; };
 		077A079B1B4D7403001C85FF /* primitive_request_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F017E83B69003E47F9 /* primitive_request_signal.h */; };
 		077A079D1B4D7403001C85FF /* primitive_shared_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F217E83B69003E47F9 /* primitive_shared_memory.h */; };
 		077A079E1B4D7403001C85FF /* primitive_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F417E83B69003E47F9 /* primitive_signal.h */; };
@@ -496,7 +495,6 @@
 		077A07CA1B4D7403001C85FF /* colorertake5_cregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC3156C198E4CB8008FB109 /* colorertake5_cregexp.h */; };
 		077A07CB1B4D7403001C85FF /* windows_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FC219C4A4CD00966C5E /* windows_types.h */; };
 		077A07CC1B4D7403001C85FF /* datetime_value.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0944F18495C2A007A0560 /* datetime_value.h */; };
-		077A07CD1B4D7403001C85FF /* aura_element.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6019C4A4CC00966C5E /* aura_element.h */; };
 		077A07CE1B4D7403001C85FF /* windows_nt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FB719C4A4CD00966C5E /* windows_nt.h */; };
 		077A07CF1B4D7403001C85FF /* exception_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163E0919C4A4CD00966C5E /* exception_memory.h */; };
 		077A07D01B4D7403001C85FF /* math_scalar.h in Headers */ = {isa = PBXBuildFile; fileRef = 079AE0641886481200635C39 /* math_scalar.h */; };
@@ -907,12 +905,10 @@
 		9A16417319C4A4CE00966C5E /* aura_debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D5819C4A4CC00966C5E /* aura_debug.h */; };
 		9A16417419C4A4CE00966C5E /* aura_definition.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D5919C4A4CC00966C5E /* aura_definition.h */; };
 		9A16417919C4A4CE00966C5E /* aura_draw2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D5E19C4A4CC00966C5E /* aura_draw2d.h */; };
-		9A16417B19C4A4CE00966C5E /* aura_element.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6019C4A4CC00966C5E /* aura_element.h */; };
 		9A16417C19C4A4CE00966C5E /* aura_enum.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6119C4A4CC00966C5E /* aura_enum.h */; };
 		9A16417E19C4A4CE00966C5E /* aura_file_watcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6319C4A4CC00966C5E /* aura_file_watcher.h */; };
 		9A16418019C4A4CE00966C5E /* aura_file_watcher_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6519C4A4CC00966C5E /* aura_file_watcher_impl.h */; };
 		9A16418219C4A4CE00966C5E /* aura_file_watcher_listener_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6719C4A4CC00966C5E /* aura_file_watcher_listener_thread.h */; };
-		9A16418419C4A4CE00966C5E /* aura_file_watcher_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6919C4A4CC00966C5E /* aura_file_watcher_thread.h */; };
 		9A16418619C4A4CE00966C5E /* aura_fixed_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6B19C4A4CC00966C5E /* aura_fixed_alloc.h */; };
 		9A16418719C4A4CE00966C5E /* aura_fixed_alloc_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6C19C4A4CC00966C5E /* aura_fixed_alloc_impl.h */; };
 		9A16418919C4A4CE00966C5E /* aura_flags.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6E19C4A4CC00966C5E /* aura_flags.h */; };
@@ -1803,7 +1799,6 @@
 		9AE611A71F22924E00F7CDC2 /* aura_aura.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D4319C4A4CC00966C5E /* aura_aura.h */; };
 		9AE611A81F22924E00F7CDC2 /* primitive_property_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722EC17E83B69003E47F9 /* primitive_property_set.h */; };
 		9AE611A91F22924E00F7CDC2 /* primitive_request_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722EE17E83B69003E47F9 /* primitive_request_interface.h */; };
-		9AE611AA1F22924E00F7CDC2 /* aura_file_watcher_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6919C4A4CC00966C5E /* aura_file_watcher_thread.h */; };
 		9AE611AB1F22924E00F7CDC2 /* primitive_request_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F017E83B69003E47F9 /* primitive_request_signal.h */; };
 		9AE611AC1F22924E00F7CDC2 /* primitive_shared_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F217E83B69003E47F9 /* primitive_shared_memory.h */; };
 		9AE611AD1F22924E00F7CDC2 /* primitive_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F417E83B69003E47F9 /* primitive_signal.h */; };
@@ -1847,7 +1842,6 @@
 		9AE611D41F22924E00F7CDC2 /* colorertake5_cregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC3156C198E4CB8008FB109 /* colorertake5_cregexp.h */; };
 		9AE611D51F22924E00F7CDC2 /* windows_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FC219C4A4CD00966C5E /* windows_types.h */; };
 		9AE611D61F22924E00F7CDC2 /* datetime_value.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0944F18495C2A007A0560 /* datetime_value.h */; };
-		9AE611D71F22924E00F7CDC2 /* aura_element.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6019C4A4CC00966C5E /* aura_element.h */; };
 		9AE611D81F22924E00F7CDC2 /* windows_nt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FB719C4A4CD00966C5E /* windows_nt.h */; };
 		9AE611D91F22924E00F7CDC2 /* exception_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163E0919C4A4CD00966C5E /* exception_memory.h */; };
 		9AE611DA1F22924E00F7CDC2 /* math_scalar.h in Headers */ = {isa = PBXBuildFile; fileRef = 079AE0641886481200635C39 /* math_scalar.h */; };
@@ -2555,12 +2549,10 @@
 		9A163D5819C4A4CC00966C5E /* aura_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_debug.h; sourceTree = "<group>"; };
 		9A163D5919C4A4CC00966C5E /* aura_definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_definition.h; sourceTree = "<group>"; };
 		9A163D5E19C4A4CC00966C5E /* aura_draw2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_draw2d.h; sourceTree = "<group>"; };
-		9A163D6019C4A4CC00966C5E /* aura_element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_element.h; sourceTree = "<group>"; };
 		9A163D6119C4A4CC00966C5E /* aura_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_enum.h; sourceTree = "<group>"; };
 		9A163D6319C4A4CC00966C5E /* aura_file_watcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_file_watcher.h; sourceTree = "<group>"; };
 		9A163D6519C4A4CC00966C5E /* aura_file_watcher_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_file_watcher_impl.h; sourceTree = "<group>"; };
 		9A163D6719C4A4CC00966C5E /* aura_file_watcher_listener_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_file_watcher_listener_thread.h; sourceTree = "<group>"; };
-		9A163D6919C4A4CC00966C5E /* aura_file_watcher_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_file_watcher_thread.h; sourceTree = "<group>"; };
 		9A163D6B19C4A4CC00966C5E /* aura_fixed_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_fixed_alloc.h; sourceTree = "<group>"; };
 		9A163D6C19C4A4CC00966C5E /* aura_fixed_alloc_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_fixed_alloc_impl.h; sourceTree = "<group>"; };
 		9A163D6E19C4A4CC00966C5E /* aura_flags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_flags.h; sourceTree = "<group>"; };
@@ -2923,6 +2915,8 @@
 		9A9799141DAC3C2B001CD6D9 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		9A98A6151771D67E000AE16E /* libaura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file_watcher.cpp; sourceTree = "<group>"; };
+		9AB628391F3CDC0D0007966E /* aura_system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_system.cpp; sourceTree = "<group>"; };
+		9AB6283B1F3CE4F70007966E /* aura_session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_session.cpp; sourceTree = "<group>"; };
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
 		9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_thread.cpp; sourceTree = "<group>"; };
 		9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket.cpp; sourceTree = "<group>"; };
@@ -3760,6 +3754,8 @@
 		9A163D3119C4A4CC00966C5E /* aura */ = {
 			isa = PBXGroup;
 			children = (
+				9AB6283B1F3CE4F70007966E /* aura_session.cpp */,
+				9AB628391F3CDC0D0007966E /* aura_system.cpp */,
 				9A4421861D5B231E00199308 /* aura_application.cpp */,
 				07EC4CD61B4C34CD00EB5965 /* aura_timer_array.h */,
 				07EC4CD71B4C34CD00EB5965 /* aura_timer_callback.h */,
@@ -3786,12 +3782,10 @@
 				9A163D5819C4A4CC00966C5E /* aura_debug.h */,
 				9A163D5919C4A4CC00966C5E /* aura_definition.h */,
 				9A163D5E19C4A4CC00966C5E /* aura_draw2d.h */,
-				9A163D6019C4A4CC00966C5E /* aura_element.h */,
 				9A163D6119C4A4CC00966C5E /* aura_enum.h */,
 				9A163D6319C4A4CC00966C5E /* aura_file_watcher.h */,
 				9A163D6519C4A4CC00966C5E /* aura_file_watcher_impl.h */,
 				9A163D6719C4A4CC00966C5E /* aura_file_watcher_listener_thread.h */,
-				9A163D6919C4A4CC00966C5E /* aura_file_watcher_thread.h */,
 				9A163D6B19C4A4CC00966C5E /* aura_fixed_alloc.h */,
 				9A163D6C19C4A4CC00966C5E /* aura_fixed_alloc_impl.h */,
 				9A163D6E19C4A4CC00966C5E /* aura_flags.h */,
@@ -5087,7 +5081,6 @@
 				077A07971B4D7403001C85FF /* aura_aura.h in Headers */,
 				077A07981B4D7403001C85FF /* primitive_property_set.h in Headers */,
 				077A07991B4D7403001C85FF /* primitive_request_interface.h in Headers */,
-				077A079A1B4D7403001C85FF /* aura_file_watcher_thread.h in Headers */,
 				077A079B1B4D7403001C85FF /* primitive_request_signal.h in Headers */,
 				077A079D1B4D7403001C85FF /* primitive_shared_memory.h in Headers */,
 				077A079E1B4D7403001C85FF /* primitive_signal.h in Headers */,
@@ -5131,7 +5124,6 @@
 				077A07CA1B4D7403001C85FF /* colorertake5_cregexp.h in Headers */,
 				077A07CB1B4D7403001C85FF /* windows_types.h in Headers */,
 				077A07CC1B4D7403001C85FF /* datetime_value.h in Headers */,
-				077A07CD1B4D7403001C85FF /* aura_element.h in Headers */,
 				077A07CE1B4D7403001C85FF /* windows_nt.h in Headers */,
 				077A07CF1B4D7403001C85FF /* exception_memory.h in Headers */,
 				077A07D01B4D7403001C85FF /* math_scalar.h in Headers */,
@@ -5789,7 +5781,6 @@
 				9A16415E19C4A4CE00966C5E /* aura_aura.h in Headers */,
 				9AE7257617E83B69003E47F9 /* primitive_property_set.h in Headers */,
 				9AE7257817E83B69003E47F9 /* primitive_request_interface.h in Headers */,
-				9A16418419C4A4CE00966C5E /* aura_file_watcher_thread.h in Headers */,
 				9AE7257A17E83B69003E47F9 /* primitive_request_signal.h in Headers */,
 				9A0256B11EA593AC003C82CF /* sip_base.h in Headers */,
 				9A2A53CD1F1FEE49001AB0F8 /* install_tool.h in Headers */,
@@ -5858,7 +5849,6 @@
 				9A02564F1EA593AC003C82CF /* http_signal.h in Headers */,
 				9A0256C81EA593AC003C82CF /* smtpd_socket.h in Headers */,
 				07B0951218495C2B007A0560 /* datetime_value.h in Headers */,
-				9A16417B19C4A4CE00966C5E /* aura_element.h in Headers */,
 				9A1643B019C4A4CF00966C5E /* windows_nt.h in Headers */,
 				9A16421819C4A4CE00966C5E /* exception_memory.h in Headers */,
 				07DF8DA71C5289FC0050DDEA /* ios_shell.h in Headers */,
@@ -6359,7 +6349,6 @@
 				9AE611A71F22924E00F7CDC2 /* aura_aura.h in Headers */,
 				9AE611A81F22924E00F7CDC2 /* primitive_property_set.h in Headers */,
 				9AE611A91F22924E00F7CDC2 /* primitive_request_interface.h in Headers */,
-				9AE611AA1F22924E00F7CDC2 /* aura_file_watcher_thread.h in Headers */,
 				9AE611AB1F22924E00F7CDC2 /* primitive_request_signal.h in Headers */,
 				9AE611AC1F22924E00F7CDC2 /* primitive_shared_memory.h in Headers */,
 				9AE611AD1F22924E00F7CDC2 /* primitive_signal.h in Headers */,
@@ -6403,7 +6392,6 @@
 				9AE611D41F22924E00F7CDC2 /* colorertake5_cregexp.h in Headers */,
 				9AE611D51F22924E00F7CDC2 /* windows_types.h in Headers */,
 				9AE611D61F22924E00F7CDC2 /* datetime_value.h in Headers */,
-				9AE611D71F22924E00F7CDC2 /* aura_element.h in Headers */,
 				9AE611D81F22924E00F7CDC2 /* windows_nt.h in Headers */,
 				9AE611D91F22924E00F7CDC2 /* exception_memory.h in Headers */,
 				9AE611DA1F22924E00F7CDC2 /* math_scalar.h in Headers */,

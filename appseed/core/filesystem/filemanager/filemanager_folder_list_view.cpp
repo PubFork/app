@@ -21,6 +21,14 @@ namespace filemanager
    }
 
 
+   void folder_list_view::install_message_handling(::message::dispatch * pdispatch)
+   {
+      
+      ::filemanager::impact::install_message_handling(pdispatch);
+      ::simple_list_view::install_message_handling(pdispatch);
+      
+   }
+   
    void folder_list_view::Initialize(::database::id  datakey,bool bRecursive)
    {
       

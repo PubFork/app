@@ -141,7 +141,7 @@
 		07EDC5A11B4F611B00AF8928 /* ios_window_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */; };
 		07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC5B51B4FE64F00AF8928 /* main_mm.mm */; };
 		9A4B9CF81E149BC4000D0E92 /* wndfrm_frame_updowninterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4B9CF61E149BC4000D0E92 /* wndfrm_frame_updowninterface.h */; };
-		9A80879B1DE1270600F70A07 /* ios_interaction_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */; };
+		9A920FF21F3C05E500CD9D94 /* ios_interaction_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */; };
 		9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07BD556C16210BD4008E31F0 /* AppKit.framework */; };
 		9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8897A514C24736006B4023 /* Foundation.framework */; };
 		9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE931714155F1599005F90F6 /* Carbon.framework */; };
@@ -457,6 +457,7 @@
 		9A6716461D15495F0069A961 /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../macos/app/appseed/aura/build/Debug-iphoneos/libaura.dylib"; sourceTree = "<group>"; };
 		9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_interaction_impl.cpp; sourceTree = "<group>"; };
 		9A8897A514C24736006B4023 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
+		9A920FEB1F3C05A300CD9D94 /* ios_factory_exchange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_factory_exchange.cpp; sourceTree = "<group>"; };
 		9A986CF21D22666D001F4C04 /* libios_aura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_aura.dylib; path = "../aura/build/Debug-iphoneos/libios_aura.dylib"; sourceTree = "<group>"; };
 		9A986D9F1D226E06001F4C04 /* libios_axiswinpr.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_axiswinpr.dylib; path = "../../../../macos/app/axis/winpr/build/Debug-iphoneos/libios_axiswinpr.dylib"; sourceTree = "<group>"; };
 		9A98A6151771D67E000AE16E /* libbase.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbase.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -857,6 +858,7 @@
 		07EDC5431B4F234300AF8928 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				9A920FEB1F3C05A300CD9D94 /* ios_factory_exchange.cpp */,
 				9A8087991DE126F500F70A07 /* ios_interaction_impl.cpp */,
 				07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */,
 				07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */,
@@ -1380,7 +1382,7 @@
 			files = (
 				9AFEDB3F1EB9B3E6008F0D19 /* install_canvas.cpp in Sources */,
 				9AFEDB361EB9B3AF008F0D19 /* _graphics.cpp in Sources */,
-				9A80879B1DE1270600F70A07 /* ios_interaction_impl.cpp in Sources */,
+				9A920FF21F3C05E500CD9D94 /* ios_interaction_impl.cpp in Sources */,
 				07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */,
 				07703C671B6FE3B5009026EA /* _database.cpp in Sources */,
 				07EDC59A1B4F234300AF8928 /* round_window.mm in Sources */,

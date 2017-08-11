@@ -16,6 +16,16 @@ namespace filemanager
    view::~view()
    {
    }
+   
+   
+   void view::install_message_handling(::message::dispatch * pdispatch)
+   {
+      
+      ::filemanager::impact::install_message_handling(pdispatch);
+      ::user::split_view::install_message_handling(pdispatch);
+      
+   }
+   
 
    void view::assert_valid() const
    {

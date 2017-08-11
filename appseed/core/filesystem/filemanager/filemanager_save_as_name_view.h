@@ -11,21 +11,24 @@ namespace filemanager
    {
    public:
 
+      
       bool m_bVoidSync;
 
 
       save_as_edit_view(::aura::application * papp);
-
+      
+      
+      virtual void install_message_handling(::message::dispatch * pinterface);
 
       virtual void _001OnAfterChangeText(::action::context actioncontext);
 
-
       void on_update(::user::impact * pSender, LPARAM lHint, object* phint);
-
 
       virtual void browse_sync(::action::context actioncontext);
 
+      
    };
+   
 
    class CLASS_DECL_CORE save_as_button :
       virtual public ::user::show < ::user::button >,
@@ -33,7 +36,12 @@ namespace filemanager
    {
    public:
 
+      
       save_as_button(::aura::application * papp);
+      
+      
+      virtual void install_message_handling(::message::dispatch * pinterface);
+      
 
       virtual bool _001OnClick(uint_ptr nFlag, point point) override;
       void on_update(user::impact *, LPARAM, object *);
@@ -53,11 +61,13 @@ namespace filemanager
       
       save_as_view(::aura::application * papp);
 
+      
+      virtual void install_message_handling(::message::dispatch * pinterface);
 
       void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
 
-
       virtual void on_create_views();
+      
 
    };
 

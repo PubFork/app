@@ -20,110 +20,21 @@ namespace filemanager
    }
 
 
-   void impact::install_filemanager_impact_handling(command_target * ptarget,::message::dispatch * pdispatch)
+   void impact::install_message_handling(::message::dispatch * pdispatch)
    {
 
-      try
-      {
+      ::user::impact::install_message_handling(pdispatch);
+      
+      connect_update_cmd_ui("edit_paste",&impact::_001OnUpdateEditPaste);
 
-         if(ptarget != NULL)
-         {
+      connect_command("edit_paste",&impact::_001OnEditPaste);
 
-            ptarget->connect_update_cmd_ui("edit_paste",this, &impact::_001OnUpdateEditPaste);
-
-            ptarget->connect_command("edit_paste",this, &impact::_001OnEditPaste);
-
-         }
-
-         if(pdispatch != NULL)
-         {
-
-            IGUI_WIN_MSG_LINK(WM_APP + 1024,pdispatch,this,&impact::_001OnOperationDocMessage);
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
+      IGUI_WIN_MSG_LINK(WM_APP + 1024,pdispatch,this,&impact::_001OnOperationDocMessage);
 
    }
 
 
-   void impact::install_filemanager_impact_handling()
-   {
-
-      if(m_bEditConnectInit)
-         return;
-
-      m_bEditConnectInit = true;
-
-      try
-      {
-
-         //::command_target * ptarget = dynamic_cast <::command_target *> (this);
-
-         ::user::interaction * pinteraction = dynamic_cast <::user::interaction *>(this);
-
-         if(pinteraction != NULL)
-         {
-
-            //::message::dispatch * pdispatch = dynamic_cast <::message::dispatch *> (this);
-
-            install_filemanager_impact_handling(pinteraction,pinteraction->m_pimpl);
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-
-      try
-      {
-
-         ::data::data * pdata = dynamic_cast <::data::data *> (this);
-
-         if(pdata != NULL)
-         {
-
-            for(index i = 0; i < pdata->get_data_bound_view_count(); i++)
-            {
-
-               try
-               {
-
-                  ::user::impact * pview = pdata->get_data_bound_view(i);
-
-                  if(pview != NULL)
-                  {
-
-                     install_filemanager_impact_handling(pview,pview->m_pimpl);
-
-                  }
-
-               }
-               catch(...)
-               {
-
-               }
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-   }
-
-
+  
    ::user::impact * impact::get_this_view()
    {
 
@@ -132,7 +43,7 @@ namespace filemanager
    }
 
 
-   ::fs::item & impact::get_filemanager_item()
+   ::fs::item * impact::get_filemanager_item()
    {
 
       return get_filemanager_manager()->get_filemanager_item();
@@ -142,7 +53,7 @@ namespace filemanager
    ::file::path impact::get_filemanager_path()
    {
 
-      return get_filemanager_item().m_filepath;
+      return get_filemanager_item()->m_filepath;
    }
 
    manager * impact::get_filemanager_manager()
@@ -189,14 +100,12 @@ namespace filemanager
 
                   m_pmanager = puh->m_pmanager;
 
-                  install_filemanager_impact_handling();
-
                }
 
             }
             else if(puh->is_type_of(update_hint::TypeSynchronizePath))
             {
-               if(puh->m_filepath == get_filemanager_item().m_filepath)
+               if(puh->m_filepath == get_filemanager_item()->m_filepath)
                {
 #define DBG_LOOP  1
                   for (index i = 0; i < DBG_LOOP; i++)
@@ -232,7 +141,7 @@ namespace filemanager
    void impact::_001Refresh()
    {
 
-      get_filemanager_manager()->FileManagerBrowse(&get_filemanager_item(),::action::source_sync);
+      get_filemanager_manager()->FileManagerBrowse(get_filemanager_item(),::action::source_sync);
 
    }
 
@@ -268,15 +177,19 @@ namespace filemanager
       ::file::listing stra;
 
       Session.copydesk().get_filea(stra);
-
+      
       string strDir;
 
-      strDir = get_filemanager_item().m_filepath;
+      strDir = get_filemanager_item()->m_filepath;
 
       ::user::impact * pview  = get_this_view();
 
       if(pview == NULL)
+      {
+         
          return;
+         
+      }
 
       tab_view * ptabview = get_this_view()->GetTypedParent < tab_view >();
 
@@ -288,15 +201,9 @@ namespace filemanager
          ptabview->filemanager_manager().get_operation_doc(true)->m_thread.kick();
 
       }
+      
       pobj->m_bRet =true;
 
-      /* for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-      ::CopyFileW(
-      L"\\\\?\\" + ::str::international::utf8_to_unicode(stra[i]),
-      L"\\\\?\\" + ::str::international::utf8_to_unicode(strDir / System.file().title(stra[i]))), TRUE);
-      }*/
-      //get_document()->update_all_views(NULL, 123);
    }
 
 

@@ -189,7 +189,7 @@ namespace filemanager
    }
 
 
-   bool manager::FileManagerBrowse(sp(::fs::item) item, ::action::context actioncontext)
+   bool manager::FileManagerBrowse(::fs::item * pitem, ::action::context actioncontext)
    {
 
       if (m_fsset->m_spafsdata.is_empty())
@@ -217,7 +217,7 @@ namespace filemanager
       try
       {
 
-         m_item = canew(::fs::item(*item));
+         m_item = canew(::fs::item(*pitem));
 
          if (get_fs_data()->is_link(m_item->m_filepath))
          {
@@ -296,25 +296,25 @@ namespace filemanager
    void manager::FileManagerOneLevelUp(::action::context actioncontext)
    {
 
-      if (get_filemanager_item().m_filepath.is_empty())
+      if (get_filemanager_item()->m_filepath.is_empty())
          return;
 
-      string strParent = get_filemanager_item().m_filepath.up();
+      string strParent = get_filemanager_item()->m_filepath.up();
 
       FileManagerBrowse(strParent, ::action::source::sync(actioncontext));
 
    }
 
 
-   ::fs::item & manager::get_filemanager_item()
+   ::fs::item * manager::get_filemanager_item()
    {
 
-      return *m_item;
+      return m_item;
 
    }
 
 
-   sp(manager_template) manager::get_filemanager_template()
+   manager_template * manager::get_filemanager_template()
    {
 
       return get_filemanager_data()->get_filemanager_template();
@@ -322,7 +322,7 @@ namespace filemanager
    }
 
 
-   sp(::filemanager::data) manager::get_filemanager_data()
+   ::filemanager::data * manager::get_filemanager_data()
    {
 
 
@@ -332,7 +332,7 @@ namespace filemanager
    }
 
 
-   sp(::fs::data) manager::get_fs_data()
+   ::fs::data * manager::get_fs_data()
    {
 
 
@@ -342,7 +342,7 @@ namespace filemanager
    }
 
 
-   sp(manager) manager::get_main_manager()
+   manager * manager::get_main_manager()
    {
 
       sp(tab_view) ptabview = get_typed_view < tab_view >();
@@ -1064,10 +1064,10 @@ namespace filemanager
    }
 
 
-   void manager::OpenFolder(sp(::fs::item) item, ::action::context actioncontext)
+   void manager::OpenFolder(::fs::item * pitem, ::action::context actioncontext)
    {
 
-      FileManagerBrowse(item, actioncontext);
+      FileManagerBrowse(pitem, actioncontext);
 
    }
 
@@ -1140,7 +1140,7 @@ namespace filemanager
    }
 
 
-   sp(operation_document) manager::get_operation_doc(bool bSwitch)
+   operation_document * manager::get_operation_doc(bool bSwitch)
    {
 
       ::filemanager::tab_view * ptabview = Session.filemanager().std().m_pdoctemplateMain->get_document(0)->get_typed_view < ::filemanager::tab_view >();
@@ -1166,7 +1166,7 @@ namespace filemanager
 
          }
 
-         return ptabview->get("filemanager::operation")->m_pdoc;
+         return dynamic_cast < operation_document * > (ptabview->get("filemanager::operation")->m_pdoc);
 
       }
 

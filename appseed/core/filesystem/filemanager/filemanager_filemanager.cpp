@@ -116,7 +116,7 @@ namespace filemanager
 
 
       m_ptemplateStd = canew(manager_template(get_app()));
-      Session.userex()->shell().initialize();
+      Session.userex()->shell()->initialize();
       m_ptemplateStd->Initialize(0, pszMatter);
 
       m_ptemplateStd->m_setToolbar[manager::mode_normal] = "filemanager_toolbar.xml";

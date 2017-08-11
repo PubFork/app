@@ -41,7 +41,7 @@ namespace aura
       delete_timer(nIDEvent);
 
       synch_lock sl(&m_mutex);
-
+      
       timer * ptimer = new timer(get_app(),nIDEvent,pfnTimer,pvoidData, &m_mutex);
 
       ptimer->m_pcallback = this;

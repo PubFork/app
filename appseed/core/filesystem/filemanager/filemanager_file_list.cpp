@@ -26,21 +26,29 @@ namespace filemanager
 
       bool bDoubleClickInWebView = true;
 
-#ifdef WINDOWSEX
-      
-      SHELLSTATE shellstate;
+//#ifdef WINDOWSEX
+//      
+//      SHELLSTATE shellstate;
+//
+//      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
+//
+//      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
+//      
+//#elif defined(MACOS)
+//      
+//      bDoubleClickInWebView = true;
+//
+//#endif
 
-      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
-
-      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
-
-#endif
-
-#ifdef LINUX
+//#ifdef LINUX
+//      
       m_bHoverSelect = true;
-#else
-      m_bHoverSelect = !bDoubleClickInWebView;
-#endif
+      
+//#else
+//      
+//      m_bHoverSelect = !bDoubleClickInWebView;
+//      
+//#endif
 
 
       connect_update_cmd_ui("edit_copy", &file_list::_001OnUpdateEditCopy);
@@ -67,7 +75,7 @@ namespace filemanager
    void file_list::install_message_handling(::message::dispatch * pinterface)
    {
 
-      ::user::impact::install_message_handling(pinterface);
+      impact::install_message_handling(pinterface);
       ::user::form_list::install_message_handling(pinterface);
       ::userfs::list::install_message_handling(pinterface);
       IGUI_WIN_MSG_LINK(MessageMainPost, pinterface, this, &file_list::_001OnMainPostMessage);
@@ -107,7 +115,7 @@ namespace filemanager
 
          get_filemanager_manager()->data_load(get_filemanager_template()->m_dataidStatic, filepatha);
 
-         ::file::path filepath = get_filemanager_item().m_filepath;
+         ::file::path filepath = get_filemanager_item()->m_filepath;
 
          filepath.trim();
 
@@ -119,7 +127,7 @@ namespace filemanager
 
                get_filemanager_manager()->data_save(get_filemanager_template()->m_dataidStatic, filepatha);
 
-               add_item(get_filemanager_item().m_filepath, get_filemanager_item().m_filepath.name());
+               add_item(get_filemanager_item()->m_filepath, get_filemanager_item()->m_filepath.name());
 
                _001OnUpdateItemCount();
 
@@ -167,7 +175,7 @@ namespace filemanager
             else if(!m_bStatic && puh->is_type_of(update_hint::TypeSynchronizePath))
             {
 
-               if(puh->m_filepath != get_filemanager_item().m_filepath)
+               if(puh->m_filepath != get_filemanager_item()->m_filepath)
                   return;
 
                if(get_filemanager_data()->m_pholderFileList != NULL)
@@ -247,7 +255,7 @@ namespace filemanager
                   if (pmanageruh->m_strFind.has_char())
                   {
 
-                     ::file::path pathFolder = get_filemanager_item().m_filepath;
+                     ::file::path pathFolder = get_filemanager_item()->m_filepath;
 
                      Application.file().replace(pathFolder, pmanageruh->m_strFind, pmanageruh->m_strReplace);
 
@@ -262,7 +270,7 @@ namespace filemanager
                   if (pmanageruh->m_str.has_char())
                   {
 
-                     ::file::path pathFolder = get_filemanager_item().m_filepath / pmanageruh->m_str;
+                     ::file::path pathFolder = get_filemanager_item()->m_filepath / pmanageruh->m_str;
 
                      Application.dir().mk(pathFolder);
 
@@ -668,45 +676,44 @@ namespace filemanager
 
    void file_list::_001OnUpdateEditCopy(signal_details * pobj)
    {
+      
       SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      
       range range;
+      
       _001GetSelection(range);
+      
       pcmdui->m_pcmdui->Enable(range.get_item_count() > 0);
+      
       pobj->m_bRet = true;
+      
    }
 
+   
    void file_list::_001OnEditCopy(signal_details * pobj)
    {
+      
       UNREFERENCED_PARAMETER(pobj);
+      
       ::fs::item_array itema;
+      
       GetSelected(itema);
-      stringa stra;
+      
+      ::file::patha patha;
 
       for(int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         stra.add(itema[i]->m_filepath);
+         patha.add(itema[i]->m_filepath);
 
       }
 
-      /*
-      string str;
-      if(itema.get_size() > 0)
-      {
-         str = itema[0]->m_strPath;
-      }
-      for(int32_t i = 1; i < itema.get_size(); i++)
-      {
-         str += "|" + itema[i]->m_strPath;
-      }
-      System.m_strCopy = str;
-   */
-
-
-      Session.copydesk().set_filea(stra);
+      Session.copydesk().set_filea(patha);
+      
       pobj->m_bRet = true;
 
    }
+   
 
    void file_list::_001OnUpdateTrashThatIsNotTrash(signal_details * pobj)
    {
@@ -927,7 +934,7 @@ namespace filemanager
          time.GetHour(),
          time.GetMinute());
 
-      string strBase = get_filemanager_item().m_filepath / "spafy_";
+      string strBase = get_filemanager_item()->m_filepath / "spafy_";
 
       string strList = strBase + "list_" + strTime + ".txt";
       string strCheck = strBase + "check_" + strTime + ".txt";
@@ -1002,7 +1009,7 @@ namespace filemanager
          time.GetDay(),
          time.GetHour(),
          time.GetMinute());
-      string strBase = get_filemanager_item().m_filepath /  "spafy_";
+      string strBase = get_filemanager_item()->m_filepath /  "spafy_";
       string strList = strBase + "list_" + strTime + ".txt";
       string strCheck = strBase + "check_" + strTime + ".txt";
 
@@ -1065,7 +1072,7 @@ namespace filemanager
 
    id file_list::data_get_current_list_layout_id()
    {
-      return get_filemanager_item().m_filepath;
+      return get_filemanager_item()->m_filepath;
    }
 
 
@@ -1106,7 +1113,7 @@ namespace filemanager
 
             item.m_filepath = strPath;
 
-            //item.m_iImage = Session.userex()->shell().get_image(
+            //item.m_iImage = Session.userex()->shell()->get_image(
             //   get_handle(),
             //   item.filepath,
             //   get_document()->get_fs_data()->is_dir(item.m_filepath) ?
@@ -1142,7 +1149,7 @@ namespace filemanager
 
       ::userfs::list_item item(get_app());
 
-      string strParent = get_filemanager_item().m_filepath;
+      string strParent = get_filemanager_item()->m_filepath;
 
       int32_t iMaxSize;
       iMaxSize = 1000;
@@ -1209,7 +1216,7 @@ namespace filemanager
 
             spitem->m_filepath = fullpath;
 
-            //spitem->m_iImage = Session.userex()->shell().get_image(
+            //spitem->m_iImage = Session.userex()->shell()->get_image(
             //   get_handle(),
             //   path,
             //   path.m_iDir == 1 ? 
@@ -1233,7 +1240,7 @@ namespace filemanager
          {
             /*   // primeiro, todos System arquivos que foram removidos
             // ou seja, que existem no array antigo,
-            // mas não existe no novo.
+            // mas nï¿½o existe no novo.
             for(index strictOld = 0; strictOld < straStrictOrder.get_count(); strictOld++)
             {
             string str = straStrictOrder[strictOld];
@@ -1256,7 +1263,7 @@ namespace filemanager
                   iaDisplayToStrictNew.set(iDisplay, strictNew);
                }
             }
-            // terceiro, adiciona System novos arquivos nos primeiros espaços
+            // terceiro, adiciona System novos arquivos nos primeiros espaï¿½os
             // vazios
             for (index strictNew = 0; strictNew < m_pathaStrictOrder.get_count(); strictNew++)
             {
@@ -1337,7 +1344,7 @@ namespace filemanager
 //
 //      ::file::path path = m_plist->get_filemanager_path();
 //
-//      Sess(get_app()).userex()->shell().open_folder(m_plist->get_handle(), path);
+//      Sess(get_app()).userex()->shell()->open_folder(m_plist->get_handle(), path);
 //
 //      try
 //      {
@@ -1368,7 +1375,7 @@ namespace filemanager
 //
 //      }
 //
-//      Sess(get_app()).userex()->shell().close_folder(path);
+//      Sess(get_app()).userex()->shell()->close_folder(path);
 //
 //   }
 
@@ -1424,7 +1431,7 @@ namespace filemanager
    //   }
    //   sl.unlock();
 
-   //   int iImage = Session.userex()->shell().get_image(
+   //   int iImage = Session.userex()->shell()->get_image(
    //      get_handle(),
    //      path,
    //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
@@ -1519,8 +1526,8 @@ namespace filemanager
          column.m_uiText = "";
          column.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
          column.m_bEditOnSecondClick = false;
-         column.m_pil = Session.userex()->shell().GetImageList(get_filemanager_data()->m_iIconSize);
-         column.m_pilHover = Session.userex()->shell().GetImageListHover(get_filemanager_data()->m_iIconSize);
+         column.m_pil = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
+         column.m_pilHover = Session.userex()->shell()->GetImageListHover(get_filemanager_data()->m_iIconSize);
          _001AddColumn(column);
          m_iSelectionSubItem = i;
 
@@ -1564,8 +1571,8 @@ namespace filemanager
       column.m_uiText = "Name";
       column.m_datakey = "FILE_MANAGER_ID_FILE_NAME";
       column.m_bEditOnSecondClick = true;
-      column.m_pil = Session.userex()->shell().GetImageList(get_filemanager_data()->m_iIconSize);
-      column.m_pilHover = Session.userex()->shell().GetImageListHover(get_filemanager_data()->m_iIconSize);
+      column.m_pil = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
+      column.m_pilHover = Session.userex()->shell()->GetImageListHover(get_filemanager_data()->m_iIconSize);
       _001AddColumn(column);
 
       i++;
@@ -2014,7 +2021,7 @@ namespace filemanager
    {
       if (i == 0)
       {
-         return   Session.userex()->shell().GetImageList(get_filemanager_data()->m_iIconSize);
+         return   Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
 
       }
       return NULL;

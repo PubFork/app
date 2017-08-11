@@ -590,6 +590,8 @@ namespace aura
       virtual bool http_download(const char * pszUrl, const char * pszFile);
       virtual string http_get(const char * pszUrl);
 
+      
+      virtual bool on_open_document_file(var varFile);
 
    };
 

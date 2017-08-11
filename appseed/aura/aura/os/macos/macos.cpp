@@ -349,10 +349,18 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
 
 
 
-int32_t run_system()
+int32_t defer_run_system()
 {
    
-   return   __run_system_command_line(g_pszCommandLine);
+   return __start_system(NULL);
+   
+}
+
+
+int32_t defer_run_system(const char * pszFileName)
+{
+   
+   return __start_system(pszFileName);
    
 }
 
@@ -363,3 +371,21 @@ void macos_on_app_activate()
    ::aura::system::g_p->on_setting_changed(::aura::setting_app_activation);
    
 }
+
+
+void macos_on_new_file()
+{
+   
+   ::aura::system::g_p->on_open_file(var::type_empty);
+   
+}
+
+
+void macos_on_open_file(const char * pszFilename)
+{
+   
+   ::aura::system::g_p->on_open_file(pszFilename);
+   
+}
+
+

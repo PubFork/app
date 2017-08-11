@@ -58,6 +58,7 @@ bool m_bDirty;
    virtual void round_window_show_keyboard(bool bShow = true);
    
    virtual void round_window_set_title(const char * pszTitle);
+   virtual void round_window_get_title(char * pszTitle, int iSize);
 
    
 };

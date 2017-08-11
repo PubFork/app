@@ -512,18 +512,27 @@ namespace macos
 
    bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
+      
       if (IsWindow())
       {
-         SetWindowText(pszName);
+         
+         set_window_text(pszName);
+         
       }
       else
       {
+         
          if (!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD, null_rect(), MESSAGE_WINDOW_PARENT))
          {
+            
             return false;
+            
          }
+         
       }
+      
       return true;
+      
    }
 
 
@@ -893,16 +902,19 @@ namespace macos
    }
 
 
-   void interaction_impl::GetWindowText(string & rString)
+   void interaction_impl::get_window_text(string & str)
    {
-      /*ASSERT(::IsWindow(get_handle()));
-
-       int32_t nLen = ::GetWindowTextLength(get_handle());
-       ::GetWindowText(get_handle(), rString.GetBufferSetLength(nLen), nLen+1);
-       rString.ReleaseBuffer();*/
-      rString = m_strWindowText;
-
+      
+      char sz[2048];
+      
+      ZERO(sz);
+      
+      round_window_get_title(sz, sizeof(sz));
+      
+      str = m_strWindowText;
+      
    }
+   
 
    /*
     int32_t interaction_impl::GetDlgItemText(int32_t nID, string & rString) const
@@ -4353,7 +4365,7 @@ namespace macos
 
    }
 
-   void interaction_impl::SetWindowText(const char * lpszString)
+   void interaction_impl::set_window_text(const char * lpszString)
    {
       
       m_strWindowText = lpszString;
@@ -4362,21 +4374,21 @@ namespace macos
       
    }
 
-   strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
-   {
-      strncpy(lpszString, m_strWindowText, nMaxCount);
-      return MIN(nMaxCount, m_strWindowText.get_length());
-   }
+   //strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
+   //{
+     // strncpy(lpszString, m_strWindowText, nMaxCount);
+      //return MIN(nMaxCount, m_strWindowText.get_length());
+   //}
 
-   strsize interaction_impl::GetWindowTextLength()
-   {
+   //strsize interaction_impl::GetWindowTextLength()
+   //{
 
-      throw not_implemented(get_app());
+     // throw not_implemented(get_app());
       //ASSERT(::IsWindow(get_handle()));
 
       //return ::GetWindowTextLength(get_handle());
 
-   }
+   //}
 
    /*
 

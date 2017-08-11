@@ -6,7 +6,7 @@ namespace filemanager
 
 
    class CLASS_DECL_CORE impact :
-      virtual public ::user::interaction
+      virtual public ::user::impact
    {
    public:
 
@@ -19,11 +19,10 @@ namespace filemanager
       virtual ~impact();
 
 
-      virtual void install_filemanager_impact_handling();
-      virtual void install_filemanager_impact_handling(command_target * ptarget, ::message::dispatch * pdispatch);
+      virtual void install_message_handling(::message::dispatch * pdispatch);
 
 
-      ::fs::item & get_filemanager_item();
+      ::fs::item * get_filemanager_item();
       ::file::path get_filemanager_path();
 
       virtual ::filemanager::manager *                get_filemanager_manager();
@@ -40,7 +39,6 @@ namespace filemanager
 
       DECL_GEN_SIGNAL(_001OnEditPaste);
       DECL_GEN_SIGNAL(_001OnUpdateEditPaste);
-
       DECL_GEN_SIGNAL(_001OnOperationDocMessage);
 
    };

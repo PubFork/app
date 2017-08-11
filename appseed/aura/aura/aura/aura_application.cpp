@@ -5321,12 +5321,6 @@ namespace aura
 
    }
 
-   //bool application::set_main_init_data(main_init_data * pdata)
-   //{
-
-   //   return m_pappimpl->set_main_init_data(pdata);
-
-   //}
 
 
 
@@ -6997,6 +6991,16 @@ namespace aura
 
    }
 
+   
+   bool application::on_open_document_file(var varFile)
+   {
+      
+      request_file(varFile);
+      
+      return varFile["document"].cast < ::object > () != NULL;
+      
+   }
+   
 
 } // namespace aura
 

@@ -9,7 +9,7 @@
 #pragma once
 
 
-uint32_t __run_system_command_line(const char * pszCommandLine);
+uint32_t __start_system(const char * pszFileName);
 
 
 

@@ -72,7 +72,7 @@ namespace filemanager
       virtual void _001OnItemCollapse(::data::tree_item * pitem, ::action::context actioncontext);
 
 
-      virtual void _017OpenFolder(sp(::fs::item)  item, ::action::context actioncontext);
+      virtual void _017OpenFolder(::fs::item * pitem, ::action::context actioncontext) override;
 
 #ifdef WINDOWSEX
 

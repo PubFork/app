@@ -15,7 +15,16 @@ namespace filemanager
 
    }
 
-
+   
+   void path_view::install_message_handling(::message::dispatch * pdispatch)
+   {
+      
+      ::filemanager::impact::install_message_handling(pdispatch);
+      ::user::plain_edit::install_message_handling(pdispatch);
+      
+   }
+   
+   
    void path_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
 
@@ -78,12 +87,12 @@ namespace filemanager
 
       _001GetText(strOld);
 
-      string strPath = get_filemanager_item().m_filepath;
+      string strPath = get_filemanager_item()->m_filepath;
 
       if (strOld == strPath)
          return;
 
-      _001SetText(get_filemanager_item().m_filepath, actioncontext);
+      _001SetText(get_filemanager_item()->m_filepath, actioncontext);
 
    }
 
@@ -129,7 +138,7 @@ namespace filemanager
 
             if (get_filemanager_manager()->get_fs_data()->is_dir(strName))
             {
-               if (!get_filemanager_item().m_filepath == strName)
+               if (!get_filemanager_item()->m_filepath == strName)
                {
                   keep < bool > keepVoidSync(&m_bVoidSync, true, false, true);
                   get_filemanager_manager()->FileManagerBrowse(strName, ::action::source::sync(actioncontext));

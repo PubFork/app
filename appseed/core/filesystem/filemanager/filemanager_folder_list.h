@@ -75,7 +75,7 @@ namespace filemanager
 #endif
 
 
-      ::fs::item & get_filemanager_item();
+      ::fs::item * get_filemanager_item();
 
       virtual void _001GetItemImage(::user::mesh_item * pitem);
       virtual void _001CreateImageList(::user::list_column * column);

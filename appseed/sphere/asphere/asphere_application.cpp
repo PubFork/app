@@ -52,9 +52,9 @@ namespace asphere
 
 
 
-      Sess(this).userex()->shell().m_straThemeableIconName.add("google-android.ico");
-      Sess(this).userex()->shell().m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
-      Sess(this).userex()->shell().m_straThemeableIconName.add("firefox_weather.ico");
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
+      Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
 
       ::file::patha patha;
 
@@ -189,7 +189,7 @@ namespace asphere
 
       string strTheme = get_theme();
 
-      Sess(this).userex()->shell().m_strShellThemePrefix = "desk/" + strTheme + "/";
+      Sess(this).userex()->shell()->m_strShellThemePrefix = "desk/" + strTheme + "/";
 
       m_crFg = m_mapFg[strTheme];
       m_crBg = m_mapBg[strTheme];

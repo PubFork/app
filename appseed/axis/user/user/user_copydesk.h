@@ -18,7 +18,7 @@ namespace user
       virtual bool initialize();
       virtual bool finalize();
 
-      virtual void set_filea(stringa & stra);
+      virtual void set_filea(const ::file::patha & stra);
 
       virtual int32_t get_file_count();
       virtual void get_filea(::file::patha & stra);

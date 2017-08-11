@@ -151,10 +151,10 @@ namespace ios
       
       
       // oswindow Text Functions
-      void SetWindowText(const char * lpszString) override;
-      strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
-      void GetWindowText(string & rString) override;
-      strsize GetWindowTextLength() override;
+      void set_window_text(const char * lpszString) override;
+      //strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
+      void get_window_text(string & str) override;
+      //strsize GetWindowTextLength() override;
       //      void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
       //    ::draw2d::font* GetFont();
       

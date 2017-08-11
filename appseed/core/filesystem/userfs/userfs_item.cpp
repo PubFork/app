@@ -63,7 +63,7 @@ namespace userfs
          //{
          //   return m_ptree->m_iDefaultImageSelected;
          //}
-         return Session.userex()->shell().get_image(m_ptree->m_treeptra[0]->get_handle(), m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_open);
+         return Session.userex()->shell()->get_image(m_ptree->m_treeptra[0]->get_handle(), m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_open);
       }
       else
       {
@@ -71,7 +71,7 @@ namespace userfs
          //{
          //   return m_ptree->m_iDefaultImage;
          //}
-         return Session.userex()->shell().get_image(m_ptree->m_treeptra[0]->get_handle(), m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_normal);
+         return Session.userex()->shell()->get_image(m_ptree->m_treeptra[0]->get_handle(), m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_normal);
          //return m_iImage;
       }
 

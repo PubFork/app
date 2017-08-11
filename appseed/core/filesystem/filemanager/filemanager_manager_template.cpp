@@ -109,6 +109,65 @@ namespace filemanager
          string strManagerId;
 
          ::file::path path;
+         
+         for(index i = 0; i < stra.get_size();)
+         {
+            
+            string str = stra[i];
+            
+            strsize iFind = str.find(':');
+            
+            if(iFind > 0)
+            {
+               
+               string strPath = str.Mid(iFind + 1);
+               
+               for(index j = i + 1; j < stra.get_size();)
+               {
+                  
+                  string strOther = stra[j];
+                  
+                  iFind = strOther.find(':');
+                  
+                  if(iFind > 0)
+                  {
+                     
+                     string strOtherPath = strOther.Mid(iFind + 1);
+                     
+                     if(strOtherPath.compare_ci(strPath) == 0)
+                     {
+                        
+                        stra.remove_at(j);
+                        
+                     }
+                     else
+                     {
+                        
+                        j++;
+                        
+                     }
+                     
+                  }
+                  else
+                  {
+                  
+                     j++;
+                     
+                  }
+                  
+               }
+               
+               i++;
+               
+            }
+            else
+            {
+               
+               stra.remove_at(i);
+               
+            }
+            
+         }
 
          for (auto str : stra)
          {
@@ -160,9 +219,16 @@ namespace filemanager
             continue;
 
          }
+         
+         if(pdoc->get_filemanager_item() == NULL)
+         {
+            
+            continue;
+            
+         }
 
-         stra.add(pdoc->m_strManagerId + ":" + pdoc->get_filemanager_item().m_filepath);
-
+         stra.add(pdoc->m_strManagerId + ":" + pdoc->get_filemanager_item()->m_filepath);
+            
       }
 
       {
@@ -204,7 +270,7 @@ namespace filemanager
 
 		   }
 
-		   if (pdoc->get_filemanager_item().m_filepath.is_equal(varFile))
+		   if (pdoc->get_filemanager_item()->m_filepath.is_equal(varFile))
 		   {
 
 			   return pdoc;
@@ -542,7 +608,7 @@ namespace filemanager
          pdoc->get_filemanager_data()->m_pfilemanager = pcallback;
          pdoc->get_filemanager_data()->m_pmanager = pdoc;
          pdoc->get_filemanager_data()->m_pmanagerMain = pdoc;
-         pdoc->get_filemanager_template() = this;
+         pdoc->get_filemanager_data()->m_pmanagertemplate = this;
          pdoc->get_filemanager_data()->m_iTemplate = m_iTemplate;
          pdoc->get_filemanager_data()->m_iDocument = m_iNextDocument++;
 

@@ -317,6 +317,55 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
    
 }
 
+int mm_clipboard_get_file_count();
+
+char ** mm_clipboard_get_filea(int * pc);
+
+void mm_clipboard_set_filea(const char ** psza, int c);
+
+int macos_clipboard_get_file_count()
+{
+   
+   return mm_clipboard_get_file_count();
+   
+}
+
+void macos_clipboard_get_filea(::file::patha & patha)
+{
+   
+   int c = 0;
+   
+   try
+   {
+  
+      char ** psza = mm_clipboard_get_filea(&c);
+      
+      patha.c_add(psza, c);
+      
+   }
+   catch (...)
+   {
+      
+   }
+   
+}
+
+
+void macos_clipboard_set_filea(const ::file::patha & patha)
+{
+   
+   auto psza = patha.c_get();
+   
+   mm_clipboard_set_filea(psza.get_data(), psza.get_count());
+   
+}
+
+
+
+
+
+
+
 
 
 

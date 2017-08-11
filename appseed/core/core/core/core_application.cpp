@@ -2524,18 +2524,20 @@ namespace core
    }
 
 
+   
+//   bool application::on_open_document_file(var varFile)
+//   {
+//   
+//      return _001OpenDocumentFile(varFile);
+//      
+//   }
+   
    ::user::document * application::_001OpenDocumentFile(var varFile)
    {
-      string strId = m_strId;
-      char chFirst = '\0';
-      if (strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
 
-      return NULL;
+      request_file(varFile);
 
-      //      return m_pimpl->_001OpenDocumentFile(varFile);
+      return varFile["document"].cast < ::user::document >();
 
    }
 

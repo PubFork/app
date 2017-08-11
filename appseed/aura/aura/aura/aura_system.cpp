@@ -1475,34 +1475,17 @@ namespace aura
 
    application_ptra system::get_appptra()
    {
-
+      
       application_ptra appptra;
 
-      //try
-      //{
-
-      //   for(index iBaseSession = 0; iBaseSession < m_basesessionptra.get_count(); iBaseSession++)
-      //   {
-
-      //      try
-      //      {
-
-      //         appptra += m_basesessionptra[iBaseSession]->appptra();
-
-      //      }
-      //      catch(...)
-      //      {
-
-      //      }
-
-      //   }
-
-      //}
-      //catch(...)
-      //{
-
-
-      //}
+      
+      {
+      
+         synch_lock sl(m_pmutex);
+      
+         appptra = Session.m_appptra;
+         
+      }
 
       return appptra;
 
@@ -2219,6 +2202,8 @@ namespace aura
       string strApp;
 
       set._008ParseCommandFork(pdata->m_vssCommandLine,varFile,strApp);
+      
+      varFile._001Add(m_pinitmaindata->m_straFile);
 
       string strAppId(strApp);
 
@@ -2938,15 +2923,44 @@ namespace aura
    bool system::on_open_file(var varFile)
    {
       
-      if(get_appptra().get_size() > 0)
+      auto appptra = get_appptra();
+      
+      ::aura::application * papp = NULL;
+      
+      if(appptra.get_size() > 0)
       {
          
+         papp = appptra[0];
          
-         get_appptra()[0]->_001OpenDocumentFile(varFile);
+      }
+      else
+      {
+         
+         papp = this;
          
       }
       
-      return true;
+      if(papp != NULL)
+      {
+      
+         if(varFile.is_empty())
+         {
+
+            papp->directrix()->add_fork("app.exe : open_default");
+            
+         }
+         else
+         {
+
+            papp->directrix()->add_fork("app.exe " + varFile.get_file_path());
+            
+         }
+         
+         return true;
+         
+      }
+      
+      return false;
       
    }
 

@@ -51,6 +51,17 @@ void round_window::round_window_set_title(const char * pszTitle)
    
 }
 
+
+void round_window::round_window_get_title(char * pszTitle, int iSize)
+{
+   
+   NSString * str = [((__bridge RoundWindow *)m_proundwindow) title];
+   
+   strncpy(pszTitle, [str UTF8String], iSize);
+   
+}
+
+
 void round_window::round_window_close()
 {
    

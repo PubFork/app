@@ -349,6 +349,7 @@ namespace core
       //      virtual ::core::file_system & file_system();
       virtual bool _001OnDDECommand(const char * lpcsz);
       virtual ::user::document * _001OpenDocumentFile(var varFile);
+      //virtual bool on_open_document_file(var varFile) override;
       DECL_GEN_SIGNAL(_001OnFileNew);
 
 

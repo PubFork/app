@@ -266,7 +266,7 @@ void command_line::_001ParseCommandFork(const string & strCommandFork)
       m_ecommand = command_line::command_file_open;
 
    }
-
+   
    if(m_varQuery.has_property("uri"))
    {
 

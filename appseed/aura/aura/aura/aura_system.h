@@ -457,6 +457,9 @@ namespace aura
       virtual bool android_set_user_wallpaper(string strUrl);
 
 #endif
+      
+      
+      virtual bool on_open_file(var varFile);
 
    };
 

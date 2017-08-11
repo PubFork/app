@@ -1496,55 +1496,6 @@ namespace draw2d_quartz2d
    {
 
 
-//      if (m_pdibAlphaBlend != NULL)
-//      {
-//         
-//         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-//         
-//         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
-//         
-//         if (rectIntersect.intersect(rectIntersect, rectBlt))
-//         {
-//            
-//            // The following commented out code does not work well when there is clipping
-//            // and some calculations are not precise
-//            //if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
-//            //{
-//            
-//            //   point ptOff = GetViewportOrg();
-//            
-//            //   x += ptOff.x;
-//            
-//            //   y += ptOff.y;
-//            
-//            //   return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
-//            
-//            //}
-//            //else
-//            {
-//               
-//               ::draw2d::dib_sp dib1(allocer());
-//               
-//               dib1->create(rectBlt.size());
-//               
-//               dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-//               
-//               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
-//                  return false;
-//               
-//               dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size());
-//               
-//               keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-//               
-//               return BitBlt(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
-//               
-//            }
-//            
-//         }
-//         
-//      }
-
-
       try
       {
 
@@ -1553,17 +1504,6 @@ namespace draw2d_quartz2d
 
          if(pgraphicsSrc->m_pdib != NULL)
          {
-            
-//            if(m_pdib != NULL)
-//            {
-//               
-//               m_pdib->map();
-//               
-//               pgraphicsSrc->m_pdib->map();
-//               
-//               return m_pdib->from(point(x, y) - GetViewportOrg(), pgraphicsSrc->m_pdib, point(xSrc, ySrc), size(nWidth, nHeight));
-//               
-//            }
             
             pgraphicsSrc->m_pdib->unmap();
 
@@ -1585,16 +1525,6 @@ namespace draw2d_quartz2d
 
          CGContextRef pdcSrc = (CGContextRef) pgraphicsSrc->get_os_data();
 
-//         CGContextSaveGState(pdcSrc);
-         
-         //pgraphicsSrc->SetViewportOrg(0, 0);
-         
-//         CGAffineTransform affineABCD = CGContextGetCTM(m_pdc);
-         
-//         CGAffineTransform affineABCDInvert = CGAffineTransformInvert(affineABCD);
-         
-//         CGContextConcatCTM(m_pdc, affineABCDInvert);
-         
          CGImageRef image = CGBitmapContextCreateImage(pdcSrc);
 
          if(image == NULL)
@@ -1622,8 +1552,6 @@ namespace draw2d_quartz2d
           
             CGImageRelease(image);
             
-//            CGContextRestoreGState(pdcSrc);
-            
             return true;
             
          }
@@ -1632,8 +1560,6 @@ namespace draw2d_quartz2d
          {
             
             CGImageRelease(image);
-            
-//            CGContextRestoreGState(pdcSrc);
             
             return true;
             

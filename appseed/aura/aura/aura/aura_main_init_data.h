@@ -9,7 +9,9 @@ namespace aura
    {
    public:
 
-      string    m_vssCommandLine;
+      string         m_vssCommandLine;
+      
+      stringa        m_straFile;
 
    };
 

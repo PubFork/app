@@ -311,6 +311,7 @@ public:
 
    typedef const char * BASE_ARG_TYPE;
 
+   ::array < const char * > c_get() const;
    void c_add(char ** ppsz, ::count iCount);
    void c_add(char ** ppsz);
    void c_add(wchar_t ** ppsz, ::count iCount);
@@ -3419,6 +3420,25 @@ void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
    }
 
    free((void *)ppsz);
+   
+}
+
+
+
+template < class Type, class RawType >
+::array < const char * > string_array < Type, RawType > ::c_get() const
+{
+   
+   ::array < const char * > psza;
+   
+   for(index i = 0; i < get_size(); i++)
+   {
+      
+      psza.add((const char *) element_at(i));
+      
+   }
+   
+   return psza;
    
 }
 

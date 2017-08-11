@@ -1732,30 +1732,42 @@ namespace user
       return false;
    }
 
+   
    bool list::_001DisplayHitTest(point point, int_ptr &iItemParam, int_ptr &iSubItemParam)
    {
 
       int_ptr iItem;
+      
       if (!_001DisplayHitTest(point, iItem))
       {
+         
          return false;
+         
       }
+      
       if (m_eview == view_icon || m_eview == view_list)
       {
+         
          iItemParam = iItem;
+         
          if (iItem == -1)
          {
+            
             iSubItemParam = -1;
+            
          }
          else
          {
+            
             iSubItemParam = 0;
+            
          }
+         
          return true;
+         
       }
-      int_ptr iColumnCount = _001GetColumnCount();
 
-      //point ptOffset = get_viewport_offset();
+      int_ptr iColumnCount = _001GetColumnCount();
 
       ::point ptOffset = get_viewport_offset();
 
@@ -1764,29 +1776,59 @@ namespace user
       get_margin_rect(rectMargin);
 
       int_ptr iLeft = (index)-ptOffset.x - (rectMargin.left * 2);
+      
       if (m_bGroup && m_bLateralGroup)
+      {
+         
          iLeft += m_iLateralGroupWidth;
+         
+      }
+      
       int_ptr iRight;
+      
       draw_list_item item(this);
+      
       if (point.x < 0)
+      {
+         
          return false;
+         
+      }
+      
       for (item.m_iColumn = 0; item.m_iColumn < iColumnCount; item.m_iColumn++)
       {
+         
          _001GetColumnWidth(&item);
+         
          if (!item.m_bOk)
+         {
+            
             continue;
+            
+         }
+         
          iRight = iLeft + item.m_iColumnWidth;
+         
          if (iLeft <= point.x && point.x < iRight)
          {
+            
             iItemParam = iItem;
+            
             iSubItemParam = item.m_iSubItem;
+            
             return true;
+            
          }
+         
          iLeft = iRight;
+         
       }
+    
       return false;
+      
    }
 
+   
    bool list::_001DisplayHitTest(POINT pt, int_ptr &iItemParam)
    {
 
@@ -1797,16 +1839,21 @@ namespace user
 
          index iy = pt.y + ptOffset.y + (m_bHeaderCtrl ? -m_iItemHeight : 0);
 
-         if (iy < 0)
-            iy = 0;
-
          index iItem = -1;
 
          if (m_iItemHeight != 0)
+         {
+            
             iItem = iy / m_iItemHeight;
+            
+         }
 
          if (iItem < 0)
+         {
+            
             return false;
+            
+         }
 
          //if(m_bHeaderCtrl)
          //{
@@ -2774,30 +2821,43 @@ namespace user
 
       if (m_bDrag)
       {
+         
          if (m_iItemMouseDown < 0)
          {
 
             if (m_eview == view_icon)
             {
+               
                class rect rectClient;
+               
                GetClientRect(&rectClient);
+               
                index iIconSize = MAX(32, m_columna[0]->m_sizeIcon.cy);
+               
                index iItemSize = iIconSize * 2;
+               
                ::count iItemColumnCount = MAX(1, rectClient.width() / iItemSize);
+               
                m_ptLButtonUp = pt;
+               
                index iItemStart;
+               
                index iItemEnd;
+               
                if (_001DisplayHitTest(m_ptLButtonDown, iItemStart))
                {
+                  
                   if (_001DisplayHitTest(pt, iItemEnd))
                   {
 
                      index iCol1 = iItemStart % iItemColumnCount;
+                     
                      index iCol2 = iItemEnd % iItemColumnCount;
 
                      ::sort::sort(iCol1, iCol2);
 
                      index iRow1 = iItemStart / iItemColumnCount;
+                     
                      index iRow2 = iItemEnd / iItemColumnCount;
 
                      ::sort::sort(iRow1, iRow2);
@@ -2806,13 +2866,20 @@ namespace user
 
                      for (index i = iRow1; i <= iRow2; i++)
                      {
+                        
                         for (index j = iCol1; j <= iCol2; j++)
                         {
+                           
                            item_range itemrange;
+                           
                            itemrange.set_lower_bound(m_iconlayout.m_iaDisplayToStrict.get_b(i * iItemColumnCount + j));
+                           
                            itemrange.set_upper_bound(m_iconlayout.m_iaDisplayToStrict.get_b(i * iItemColumnCount + j));
+                           
                            m_rangeSelection.add_item(itemrange);
+                           
                         }
+                        
                      }
 
                   }
@@ -2824,49 +2891,8 @@ namespace user
          }
 
       }
-      //   index iItemOld = m_iItemDrop;
-      //   if(!_001DisplayHitTest(pt, m_iItemDrop))
-      //   {
-      //      m_iItemDrop = m_iItemDrag;
-      //   }
-      //   if(iItemOld != m_iItemDrop)
-      //   {
-      //      RedrawWindow();
-      //   }
-      //}
 
       track_mouse_leave();
-
-      //if (m_spmenuPopup.is_null())
-      //{
-
-      //   UpdateHover();
-      //   pobj->m_bRet = true;
-
-
-      //   index iItemEnter;
-      //   index iSubItemEnter;
-      //   point point;
-      //   //Session.get_cursor_pos(&point);
-      //   //ScreenToClient(&point);
-
-      //   if (_001DisplayHitTest(pt, iItemEnter, iSubItemEnter))
-      //   {
-      //      if (m_bHoverSelect &&
-      //         (m_iSubItemEnter != iSubItemEnter ||
-      //         m_iItemEnter != iItemEnter)
-      //         && !m_rangeSelection.has_item(iItemEnter))
-      //      {
-      //         m_iMouseFlagEnter = pmouse->m_nFlags;
-      //         m_iItemEnter = iItemEnter;
-      //         m_iSubItemEnter = iSubItemEnter;
-      //         //SetTimer(12321, 840, NULL);
-      //         SetTimer(12321, 184 + 177 + 151, NULL);
-      //      }
-      //   }
-
-      //}
-
 
    }
 
@@ -4668,192 +4694,13 @@ namespace user
 
    void list::_001OnTimer(::timer * ptimer)
    {
-      //      return; //xxxtimer
-      ::user::mesh::_001OnTimer(ptimer);;
-      //      if(ptimer->m_nIDEvent == 12345679) // left click
-      //      {
-      //         KillTimer(12345679);
-      //         if(m_iClick == 1)
-      //         {
-      //            m_iClick = 0;
-      //            if(!_001IsEditing())
-      //            {
-      //               uint_ptr nFlags = m_uiLButtonUpFlags;
-      //               point point = m_ptLButtonUp;
-      //               _001OnClick(nFlags, point);
-      //               Redraw();
-      //
-      //
-      //               /* trans
-      //               window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
-      //               if(wndidNotify == NULL)
-      //               wndidNotify = pwnd->GetParent()->GetSafeoswindow_(); */
-      //
-      ////               LRESULT lresult = 0;
-      //
-      //               /* trans            if(wndidNotify)
-      //               {
-      //               NMLISTVIEW nm;
-      //               nm.hdr.idFrom = pwnd->GetDlgCtrlId();
-      //               nm.hdr.code =   NM_CLICK;
-      //               nm.hdr.oswindowFrom = pwnd->GetSafeoswindow_();
-      //               lresult = ::SendMessage(
-      //               wndidNotify,
-      //               WM_NOTIFY,
-      //               nm.hdr.idFrom,
-      //               (LPARAM) &nm);
-      //               }*/
-      //            }
-      //         }
-      //         else
-      //         {
-      //            m_iClick = 0;
-      //         }
-      //
-      //
-      //      }
-      //      else if(ptimer->m_nIDEvent == 8477) // right click
-      //      {
-      //         KillTimer(8477);
-      //         //if(!_001IsEditing())
-      //         {
-      //            uint_ptr nFlags = m_uiLButtonUpFlags;
-      //            point point = m_ptLButtonUp;
-      //            _001OnRightClick(nFlags, point);
-      //            Redraw();
-      //
-      //
-      //            /* trans
-      //            window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
-      //            if(wndidNotify == NULL)
-      //            wndidNotify = pwnd->GetParent()->GetSafeoswindow_(); */
-      //
-      ////            LRESULT lresult = 0;
-      //
-      //            /* trans            if(wndidNotify)
-      //            {
-      //            NMLISTVIEW nm;
-      //            nm.hdr.idFrom = pwnd->GetDlgCtrlId();
-      //            nm.hdr.code =   NM_CLICK;
-      //            nm.hdr.oswindowFrom = pwnd->GetSafeoswindow_();
-      //            lresult = ::SendMessage(
-      //            wndidNotify,
-      //            WM_NOTIFY,
-      //            nm.hdr.idFrom,
-      //            (LPARAM) &nm);
-      //            }*/
-      //         }
-      //      }
-      //      else if(ptimer->m_nIDEvent == 0xfffffffe)
-      //      {
-      //         if(!Filter1Step())
-      //            KillTimer(ptimer->m_nIDEvent);
-      //      }
-      //      else if(ptimer->m_nIDEvent == 12345678)
-      //      {
-      //         KillTimer(ptimer->m_nIDEvent);
-      //         m_bDrag = true;
-      //      }
-      //      else if(ptimer->m_nIDEvent == 12321)
-      //      {
-      //         KillTimer(ptimer->m_nIDEvent);
-      //         index iItemSel;
-      //         index iSubItemSel;
-      //         point point;
-      //         Session.get_cursor_pos(&point);
-      //         ScreenToClient(&point);
-      //         try
-      //         {
-      //            if(_001DisplayHitTest(point, iItemSel, iSubItemSel))
-      //            {
-      //               if(m_iSubItemEnter == iSubItemSel &&
-      //                  m_iItemEnter == iItemSel)
-      //               {
-      //                  m_iSubItemEnter = -1;
-      //                  m_iItemEnter = -1;
-      //                  bool bLShiftKeyDown     = Session.is_key_pressed(::user::key_lshift);
-      //                  bool bRShiftKeyDown     = Session.is_key_pressed(::user::key_rshift);
-      //                  bool bLControlKeyDown   = Session.is_key_pressed(::user::key_lcontrol);
-      //                  bool bRControlKeyDown   = Session.is_key_pressed(::user::key_rcontrol);
-      //                  bool bShiftKeyDown      = bLShiftKeyDown     || bRShiftKeyDown;
-      //                  bool bControlKeyDown    = bLControlKeyDown   || bRControlKeyDown;
-      //
-      //                  if(m_bMultiSelect && bShiftKeyDown)
-      //                  {
-      //                     if(bControlKeyDown)
-      //                     {
-      //                        item_range itemrange;
-      //                        itemrange.set(
-      //                           MIN(iItemSel, m_iItemSel),
-      //                           MAX(iItemSel, m_iItemSel),
-      //                           MIN(iSubItemSel, m_iSubItemSel),
-      //                           MAX(iSubItemSel, m_iSubItemSel),
-      //                           -1,
-      //                           -1);
-      //                        _001AddSelection(itemrange);
-      //                     }
-      //                     else
-      //                     {
-      //                        item_range itemrange;
-      //                        itemrange.set(
-      //                           MIN(iItemSel, m_iItemSel),
-      //                           MAX(iItemSel, m_iItemSel),
-      //                           MIN(iSubItemSel, m_iSubItemSel),
-      //                           MAX(iSubItemSel, m_iSubItemSel),
-      //                           -1,
-      //                           -1);
-      //                        range range;
-      //                        range.add_item(itemrange);
-      //                        _001SetSelection(range);
-      //                     }
-      //                  }
-      //                  else if(m_bMultiSelect && bControlKeyDown)
-      //                  {
-      //                     m_iLastItemSel = m_iItemSel;
-      //                     m_iLastSubItemSel = m_iSubItemSel;
-      //                     m_iItemSel = iItemSel;
-      //                     m_iSubItemSel = iSubItemSel;
-      //                     item_range itemrange;
-      //                     itemrange.set(
-      //                        m_iItemSel,
-      //                        m_iItemSel,
-      //                        m_iSubItemSel,
-      //                        m_iSubItemSel,
-      //                        -1,
-      //                        -1);
-      //                     _001AddSelection(itemrange);
-      //                  }
-      //                  else
-      //                  {
-      //                     m_iLastItemSel = m_iItemSel;
-      //                     m_iLastSubItemSel = m_iSubItemSel;
-      //                     m_iItemSel = iItemSel;
-      //                     m_iSubItemSel = iSubItemSel;
-      //                     item_range itemrange;
-      //                     itemrange.set(
-      //                        m_iItemSel,
-      //                        m_iItemSel,
-      //                        m_iSubItemSel,
-      //                        m_iSubItemSel,
-      //                        -1,
-      //                        -1);
-      //                     range range;
-      //                     range.add_item(itemrange);
-      //                     _001SetSelection(range);
-      //                  }
-      //               }
-      //            }
-      //         }
-      //         catch(...)
-      //         {
-      //         }
-      //         m_iSubItemEnter = -1;
-      //         m_iItemEnter = -1;
-      //
-      //      }
-      //
+
+      ::user::mesh::_001OnTimer(ptimer);
+      
       ptimer->m_bRet = false;
+      
    }
+   
 
    bool list::_001IsItemVisible(index iItem)
    {

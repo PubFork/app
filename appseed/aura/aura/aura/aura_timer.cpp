@@ -522,14 +522,6 @@ bool timer::call_on_timer()
    try
    {
 
-      //if (::get_thread() == NULL)
-      //{
-      //   ::set_thread(this);
-
-      //   set_run(true);
-
-      //}
-      
       synch_lock sl(m_pmutex);
 
       if (m_bKill || m_bDestroying || m_bDeal)
@@ -549,6 +541,8 @@ bool timer::call_on_timer()
 
       if(!m_bPeriodic)
       {
+         
+         stop(false);
          
          post_quit();
          
