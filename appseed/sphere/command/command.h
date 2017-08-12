@@ -4,14 +4,14 @@
 #include "app/appseed/sphere/filehandler/filehandler.h"
 
 
-namespace command
+namespace prompt
 {
 
 
    class document;
 
 
-} // namespace command
+} // namespace prompt
 
 #include "command_document.h"
 #include "command_frame.h"

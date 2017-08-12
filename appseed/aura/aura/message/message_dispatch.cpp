@@ -83,25 +83,36 @@ namespace message
 
       if(pbase->m_uiMessage == MESSAGE_POST_MESSAGE)
       {
-         sp(::signal_details) pbase2 = pbase->m_lparam;
-         message_handler(pbase2);
-//         if(pbase2->m_wparam != 0)
-  //       {
-    //        delete pbase;
-      //   }
+         
+         sp(::signal_details) pbaseCast = pbase->m_lparam;
+         
+         message_handler(pbaseCast);
+         
          return;
+         
       }
+      
       int i = 0;
+      
       Signal * pSignal;
+      
       while((pSignal = m_signala.GetSignal(pbase->m_uiMessage,0,0,i)) != NULL)
       {
+         
          class ::signal * psignal = pSignal->m_psignal;
+         
          pbase->m_psignal = psignal;
+         
          psignal->emit(pbase);
+         
          if(pbase->m_bRet)
+         {
+            
             return;
+            
+         }
+         
       }
-
 
    }
 

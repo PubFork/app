@@ -84,9 +84,52 @@ namespace user
       ::user::interaction_ptra      m_guieptraMouseHover;
 
       sp(::thread)                  m_pthreadUpdateWindow;
+      
+      
+      enum e_queue_thread
+      {
+         
+         queue_thread_none,
+         queue_thread_first,
+         queue_thread_mouse_move = queue_thread_first,
+         queue_thread_input,
+         queue_thread_other,
+         queue_thread_end,
+         
+      };
+      
+      class queue_thread :
+      virtual public ::thread
+      {
+      public:
+         
+         
+         ::user::interaction_impl *    m_pimpl;
+         manual_reset_event            m_evNewMessage;
+         spa(::message::base)          m_messagequeue;
+         
+         
+         queue_thread(::user::interaction_impl * pimpl);
+         virtual ~queue_thread();
+         
+         
+         virtual void queue_message_handler(::message::base * pbase);
+         
+         
+         virtual int32_t run() override;
+         
+         
+      };
+      
+      
+      map < e_queue_thread, e_queue_thread, sp(queue_thread) > m_mapqueue;
+      
 
 
       interaction_impl();
+      
+      
+      virtual e_queue_thread message_queue_thread(UINT uiMessage);
 
 
       void user_common_construct();
@@ -94,6 +137,10 @@ namespace user
 
       virtual void install_message_handling(::message::dispatch * pdispatch) override;
 
+      
+      virtual void queue_message_handler(signal_details * pobj) override;
+
+      
 
       virtual mutex * draw_mutex();
 
@@ -787,6 +834,8 @@ namespace user
 
 
 } // namespace user
+
+
 
 
 

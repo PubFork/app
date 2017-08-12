@@ -456,10 +456,8 @@ namespace console
    
    sp(::user::wndfrm::frame::frame) prompt_frame::create_frame_schema()
    {
-
-      return simple_frame_window::create_frame_schema();
-
-      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema("wndfrm_core","002");
+      
+      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema("wndfrm_core","002");
 
       return pschema;
 
@@ -510,7 +508,7 @@ namespace console
 
 
 
-} // namespace command
+} // namespace prompt
 
 
 

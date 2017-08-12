@@ -215,12 +215,6 @@ void thread::CommonConstruct()
 
    m_nDisablePumpCount  = 0;
 
-   m_pcommandthread = NULL;
-
-   //m_hthread = NULL;
-
-
-
 }
 
 
@@ -2362,9 +2356,9 @@ bool thread::process_message(LPMESSAGE lpmessage)
          else if (msg.wParam == system_message_command)
          {
 
-            sp(::primitive::command) pcommand((lparam)msg.lParam);
+            sp(::command::command) pcommand((lparam)msg.lParam);
 
-            m_pcommandthread->on_command(pcommand);
+            m_phandler->on_handle(pcommand);
 
          }
          else if (msg.wParam == system_message_pred)
@@ -2853,56 +2847,24 @@ void thread::_001OnThreadMessage(signal_details * pobj)
 
 }
 
-::command_thread * thread::command_central()
-{
-   return m_pcommandthread;
-}
 
-::command_thread * thread::command_thread()
+::handler * thread::handler()
 {
-   return m_pcommandthread;
-}
-
-::command_thread * thread::command()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::guideline()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::directrix()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::axiom()
-{
-   return m_pcommandthread;
+   
+   return m_phandler;
+   
 }
 
 
 bool thread::verb()
 {
 
-//   m_pcommandthread->run();
-
    return true;
 
 }
 
 
-
-::command_thread * thread::creation()
-{
-   return m_pcommandthread;
-}
-
-
-
-void thread::on_command(::primitive::command * pcommand)
+void thread::on_command(::command::command * pcommand)
 {
 
    sp(::create) pcreate = pcommand;
@@ -2955,6 +2917,14 @@ void thread::on_create(::create * pcreate)
 
 }
 
+
+// a thread transforms a request to create into a request workflow...
+void thread::request_create(::create * pcreate)
+{
+   
+   on_request(pcreate);
+   
+}
 
 
 mutex * g_pmutexThreadOn = NULL;

@@ -97,20 +97,20 @@ namespace http
          || !strcmp(System.get_module_name(), "netnodecfgapp")
          || System.get_license_id() == "simpledbcfg"
          || System.get_license_id() == "app-core/netnodelite"
-         || System.command()->m_varTopicQuery["app"] == "simpledbcfg")
+         || System.handler()->m_varTopicQuery["app"] == "simpledbcfg")
       {
          return;
       }
-      else if(System.command()->m_varTopicQuery["app"] == "mydns"
-         || System.command()->m_varTopicQuery.has_property("install")
-         || System.command()->m_varTopicQuery.has_property("uninstall"))
+      else if(System.handler()->m_varTopicQuery["app"] == "mydns"
+         || System.handler()->m_varTopicQuery.has_property("install")
+         || System.handler()->m_varTopicQuery.has_property("uninstall"))
       {
          return;
       }
       else if(!strcmp(System.get_module_name(), "productionapp")
          || !strcmp(System.get_module_name(), "productionbasisapp")
          || !strcmp(System.get_module_name(), "backupapp")
-         || System.command()->m_varTopicQuery["app"] == "production"
+         || System.handler()->m_varTopicQuery["app"] == "production"
          || System.get_license_id() == "winservice_filesystemsize")
       {
          return;

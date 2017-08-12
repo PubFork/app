@@ -421,8 +421,8 @@ namespace fontopus
 
 #ifdef METROWIN
 
-      //if(!System.directrix()->m_varTopicQuery.has_property("install")
-      //   && !System.directrix()->m_varTopicQuery.has_property("uninstall"))
+      //if(!System.handler()->m_varTopicQuery.has_property("install")
+      //   && !System.handler()->m_varTopicQuery.has_property("uninstall"))
       //{
 
       //   sp(::create) spcreate(allocer());

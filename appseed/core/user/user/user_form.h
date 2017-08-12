@@ -29,7 +29,6 @@ namespace user
       virtual bool open_document(var varFile);
 
 
-      using control::create;
       using ::user::control::_001IsPointInside;
       virtual bool _001IsPointInside(sp(control) pcontrol, point64 pt);
       virtual void control_get_window_rect(sp(control) pcontrol, LPRECT lprect);

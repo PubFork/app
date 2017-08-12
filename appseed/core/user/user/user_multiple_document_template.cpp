@@ -92,15 +92,22 @@ namespace user
       pdocument->m_bAutoDelete = bAutoDelete;
       if (pFrame == NULL)
       {
-         // linux System.simple_message_box(__IDP_FAILED_TO_CREATE_DOC);
-         string strId = typeid(*pcreate->m_puiAlloc).name();
+
+         string strId = demangle(typeid(*pcreate->m_puiAlloc).name());
+         
          if (strId.find_ci("userex::message_box") < 0)
          {
+            
             System.simple_message_box(NULL, "Failed to create ::user::document");
+            
          }
+         
          remove_document(pdocument);
+         
          return;
+         
       }
+      
       ASSERT_VALID(pFrame);
 
       if(pcreate->m_spCommandLine->m_varFile.is_empty())

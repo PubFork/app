@@ -427,7 +427,12 @@ bool sync_object::is_locked() const
 }
 
 
-
+void object::handle(::command::command * pcommand)
+{
+   
+   on_handle(pcommand);
+   
+}
 
 
 void object::handle(::create * pcreate)
@@ -448,7 +453,7 @@ void object::handle(::create * pcreate)
 void object::add_line(const char * pszCommandLine, application_bias * pbiasCreate)
 {
    
-   command command;
+   ::command::command command;
    
    command.m_strCommandLine = pszCommandLine;
    
@@ -457,7 +462,7 @@ void object::add_line(const char * pszCommandLine, application_bias * pbiasCreat
 }
 
 
-void object::add_line(command * pcommand,application_bias * pbiasCreate)
+void object::add_line(::command::command * pcommand,application_bias * pbiasCreate)
 {
    
    ::handler * commandcentral = get_app()->handler();
@@ -567,7 +572,7 @@ void object::add_line_uri(const char * pszCommandLine,application_bias * pbiasCr
 void object::add_fork(const char * pszCommandLine, application_bias * pbiasCreate)
 {
    
-   command command;
+   ::command::command command;
    
    command.m_strCommandLine = pszCommandLine;
    
@@ -576,7 +581,7 @@ void object::add_fork(const char * pszCommandLine, application_bias * pbiasCreat
 }
 
 
-void object::add_fork(command * pcommand, application_bias * pbiasCreate)
+void object::add_fork(::command::command * pcommand, application_bias * pbiasCreate)
 {
    
    sp(::handler) handler = get_app()->handler();
@@ -848,7 +853,7 @@ object & object::operator = (const object & o)
 
 
 
-void object::on_handle(::command * pcommand)
+void object::on_handle(::command::command * pcommand)
 {
    
    

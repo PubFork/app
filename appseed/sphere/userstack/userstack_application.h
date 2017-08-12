@@ -9,7 +9,7 @@ namespace userstack
 
 
    class CLASS_DECL_SPHERE application :
-      virtual public ::command::application
+      virtual public ::prompt::application
    {
    public:
 

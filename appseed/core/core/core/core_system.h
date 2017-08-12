@@ -71,19 +71,19 @@ namespace core
       virtual ~system();
 
 
-      virtual void construct(const char * pszAppId);
+      virtual void construct(const char * pszAppId) override;
 
       virtual void discard_to_factory(sp(object) pca);
 
-      virtual bool is_system();
+      virtual bool is_system() override;
 
-      virtual bool process_initialize();
+      virtual bool process_initialize() override;
 
-      virtual bool initialize2();
+      virtual bool initialize2() override;
 
       virtual bool initialize_application() override;
 
-      virtual bool finalize();
+      virtual bool finalize() override;
 
       virtual int32_t exit_application() override;
 
@@ -92,11 +92,11 @@ namespace core
       //virtual int32_t main();
       virtual bool InitApplication();
 
-      virtual bool initialize();
-      virtual bool initialize1();
-      virtual bool initialize3();
+      virtual bool initialize() override;
+      virtual bool initialize1() override;
+      virtual bool initialize3() override;
 
-      virtual bool bergedge_start();
+      virtual bool bergedge_start() override;
 
 
       virtual index get_new_bergedge(application_bias * pbiasCreation = NULL);
@@ -104,7 +104,7 @@ namespace core
       spa(::core::session) &    planesessionptra();
 
 
-      virtual bool base_support();
+      virtual bool base_support() override;
 
 
       DECL_GEN_SIGNAL(on_application_signal);
@@ -116,9 +116,9 @@ namespace core
       virtual ::core::session *  get_platform(index iEdge,application_bias * pbiasCreation = NULL);
 
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
 
-      //      virtual sp(::command_thread) command_thread();
+      //      virtual sp(::handler) handler();
 
 
 
@@ -129,11 +129,11 @@ namespace core
 
 
 
-      virtual void on_allocation_error(::aura::application * papp, ::type * ptype);
+      virtual void on_allocation_error(::aura::application * papp, ::type * ptype) override;
 
 
       
-      virtual ::aura::session * on_create_session();
+      virtual ::aura::session * on_create_session() override;
 
 
 //      ::core::stra                           & stra();
@@ -168,7 +168,7 @@ namespace core
 
       virtual void post_fork_uri(const char * pszUri,application_bias * pbiasCreate);
 
-      ::aura::session * query_session(index iEdge);
+      ::aura::session * query_session(index iEdge) override;
 
 //      virtual bool wait_twf(uint32_t dwTimeOut = INFINITE);
 
@@ -178,28 +178,28 @@ namespace core
 
 
 
-      ::user::document * place_hold(::user::interaction * pui);
+      ::user::document * place_hold(::user::interaction * pui) override;
 
 
 
-      virtual bool on_install();
+      virtual bool on_install() override;
 
       virtual string get_host_location_url();
 
-      virtual bool add_library(::aura::library * plibrary);
+      virtual bool add_library(::aura::library * plibrary) override;
 
       //virtual void get_cursor_pos(LPPOINT lppoint);
 
 
-      virtual bool set_main_init_data(::aura::main_init_data * pdata);
+      virtual bool process_command(::command::command * pcommand) override;
 
 
 
-      void assert_valid() const;
-      void dump(dump_context & context) const;
+      void assert_valid() const override;
+      void dump(dump_context & context) const override;
 
-      virtual int32_t main();
-      virtual void hist_hist(const char * psz);
+      virtual int32_t main() override;
+      virtual void hist_hist(const char * psz) override;
 
 
       virtual sp(type) get_pane_tab_view_type_info();

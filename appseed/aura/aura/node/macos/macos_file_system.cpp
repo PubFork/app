@@ -1255,10 +1255,10 @@ namespace macos
       
       string strUserFolderShift;
       
-      if(App(get_app()).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+      if(App(get_app()).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
       {
          
-         strUserFolderShift = strRelative / App(get_app()).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+         strUserFolderShift = strRelative / App(get_app()).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
          
       }
       else

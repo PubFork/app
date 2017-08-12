@@ -42,7 +42,9 @@ namespace user
       virtual void prio_install_message_handling(::message::dispatch * pinterface);
       virtual void last_install_message_handling(::message::dispatch * pinterface);
 
-
+      
+      virtual void queue_message_handler(::signal_details * pobj);
+      
 
       virtual bool check_need_layout();
       virtual void clear_need_layout();

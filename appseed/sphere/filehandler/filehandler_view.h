@@ -45,7 +45,7 @@ namespace filehandler
          list(::aura::application * papp);
 
 
-         void parse(handler * phandler, const char * pszTopic);
+         void parse(::filehandler::handler * phandler, const char * pszTopic);
 
          void on_layout(LPCRECT lpcrect);
          void draw(sp(view) pview, ::draw2d::graphics * pgraphics);

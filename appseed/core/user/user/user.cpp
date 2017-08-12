@@ -289,7 +289,7 @@ namespace core
       if (m_pdocmanager != NULL)
       {
 
-         document_manager().close_all_documents(eend != end_close);
+         document_manager()->close_all_documents(eend != end_close);
 
       }
 
@@ -314,7 +314,7 @@ namespace core
       if (m_pcoresession->m_pdocmanager != NULL)
       {
 
-         m_pcoresession->document_manager().close_all_documents(true);
+         m_pcoresession->document_manager()->close_all_documents(true);
 
          m_pcoresession->m_pdocmanager.release();
 
@@ -323,7 +323,7 @@ namespace core
       if (m_pcoresystem->m_pdocmanager != NULL)
       {
 
-         m_pcoresystem->document_manager().close_all_documents(true);
+         m_pcoresystem->document_manager()->close_all_documents(true);
 
          m_pcoresystem->m_pdocmanager.release();
 
@@ -563,10 +563,10 @@ namespace core
 
 
 
-   ::user::document_manager          &application::document_manager()
+   ::user::document_manager * application::document_manager()
    {
 
-      return *m_pdocmanager.cast < ::user::document_manager >();
+      return m_pdocmanager;
 
    }
 
@@ -630,7 +630,7 @@ namespace core
       }*/
 
       if (pcreate->m_bClientOnly ||
-         Application.directrix()->m_varTopicQuery.has_property("client_only") ||
+         Application.handler()->m_varTopicQuery.has_property("client_only") ||
          pcreate->m_bOuterPopupAlertLike)
       {
          return puiParent;

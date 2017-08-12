@@ -44,10 +44,10 @@ inline ::aura::allocatorsp & object::allocer()
 
 
 
-inline sp(::command_thread) object::command_thread()
+inline sp(::handler) object::handler()
 {
 
-   return m_pauraapp->command_thread();
+   return m_pauraapp->handler();
 
 }
 

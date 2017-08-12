@@ -358,7 +358,6 @@
 		077A072F1B4D7403001C85FF /* file_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B144184A3B420092C3E1 /* file_c.h */; };
 		077A07301B4D7403001C85FF /* filesystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B188184A3B430092C3E1 /* filesystem.h */; };
 		077A07311B4D7403001C85FF /* comparison_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0944318495C2A007A0560 /* comparison_md5.h */; };
-		077A07321B4D7403001C85FF /* aura_microtimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9519C4A4CC00966C5E /* aura_microtimer.h */; };
 		077A07341B4D7403001C85FF /* collection_simple_object_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0941818495C2A007A0560 /* collection_simple_object_array.h */; };
 		077A07351B4D7403001C85FF /* aura_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DCC19C4A4CC00966C5E /* aura_types.h */; };
 		077A07361B4D7403001C85FF /* geometry_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0945B18495C2A007A0560 /* geometry_types.h */; };
@@ -394,7 +393,7 @@
 		077A07591B4D7403001C85FF /* ansios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163F8A19C4A4CD00966C5E /* ansios.h */; };
 		077A075A1B4D7403001C85FF /* macos_shell.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A16481719C4ADA000966C5E /* macos_shell.h */; };
 		077A075B1B4D7403001C85FF /* primitive_command_line.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C717E83B69003E47F9 /* primitive_command_line.h */; };
-		077A075C1B4D7403001C85FF /* primitive_command_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_command_thread.h */; };
+		077A075C1B4D7403001C85FF /* primitive_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_handler.h */; };
 		077A075D1B4D7403001C85FF /* file_status.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B16F184A3B430092C3E1 /* file_status.h */; };
 		077A075E1B4D7403001C85FF /* str_stringtow.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0949618495C2A007A0560 /* str_stringtow.h */; };
 		077A075F1B4D7403001C85FF /* aura_command_target.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D4A19C4A4CC00966C5E /* aura_command_target.h */; };
@@ -411,7 +410,6 @@
 		077A076C1B4D7403001C85FF /* colorertake5_outline_item.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC3158A198E4CB8008FB109 /* colorertake5_outline_item.h */; };
 		077A076D1B4D7403001C85FF /* exception_temporary.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163E2A19C4A4CD00966C5E /* exception_temporary.h */; };
 		077A076E1B4D7403001C85FF /* aura_file_watcher_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6519C4A4CC00966C5E /* aura_file_watcher_impl.h */; };
-		077A076F1B4D7403001C85FF /* aura_main_init_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8D19C4A4CC00966C5E /* aura_main_init_data.h */; };
 		077A07701B4D7403001C85FF /* file_plain_text_stream_base.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B163184A3B430092C3E1 /* file_plain_text_stream_base.h */; };
 		077A07711B4D7403001C85FF /* aura_cregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D5419C4A4CC00966C5E /* aura_cregexp.h */; };
 		077A07721B4D7403001C85FF /* primitive_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722D517E83B69003E47F9 /* primitive_factory.h */; };
@@ -519,7 +517,6 @@
 		077A07E61B4D7403001C85FF /* data_data_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C7E81996D29C00E50F88 /* data_data_listener.h */; };
 		077A07E71B4D7403001C85FF /* collection_string_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0942A18495C2A007A0560 /* collection_string_map.h */; };
 		077A07E81B4D7403001C85FF /* file_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B151184A3B430092C3E1 /* file_exception.h */; };
-		077A07E91B4D7403001C85FF /* aura_live_object.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8119C4A4CC00966C5E /* aura_live_object.h */; };
 		077A07EA1B4D7403001C85FF /* aura_heap_item_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D7519C4A4CC00966C5E /* aura_heap_item_array.h */; };
 		077A07EB1B4D7403001C85FF /* cross.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FC519C4A4CD00966C5E /* cross.h */; };
 		077A07EC1B4D7403001C85FF /* collection_point_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0940D18495C2A007A0560 /* collection_point_array.h */; };
@@ -921,17 +918,14 @@
 		9A16419519C4A4CE00966C5E /* aura_keep_true.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D7B19C4A4CC00966C5E /* aura_keep_true.h */; };
 		9A16419619C4A4CE00966C5E /* aura_launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D7C19C4A4CC00966C5E /* aura_launcher.h */; };
 		9A16419919C4A4CE00966C5E /* aura_library.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D7F19C4A4CC00966C5E /* aura_library.h */; };
-		9A16419B19C4A4CE00966C5E /* aura_live_object.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8119C4A4CC00966C5E /* aura_live_object.h */; };
 		9A16419D19C4A4CE00966C5E /* aura_live_signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8319C4A4CC00966C5E /* aura_live_signal.h */; };
 		9A16419F19C4A4CE00966C5E /* aura_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8519C4A4CC00966C5E /* aura_log.h */; };
 		9A1641A019C4A4CE00966C5E /* aura_lparam.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8619C4A4CC00966C5E /* aura_lparam.h */; };
 		9A1641A219C4A4CE00966C5E /* aura_machine_event.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8819C4A4CC00966C5E /* aura_machine_event.h */; };
 		9A1641A419C4A4CE00966C5E /* aura_machine_event_central.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8A19C4A4CC00966C5E /* aura_machine_event_central.h */; };
 		9A1641A619C4A4CE00966C5E /* aura_machine_event_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8C19C4A4CC00966C5E /* aura_machine_event_data.h */; };
-		9A1641A719C4A4CE00966C5E /* aura_main_init_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8D19C4A4CC00966C5E /* aura_main_init_data.h */; };
 		9A1641A919C4A4CE00966C5E /* aura_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8F19C4A4CC00966C5E /* aura_math.h */; };
 		9A1641AA19C4A4CE00966C5E /* aura_message_loop.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9019C4A4CC00966C5E /* aura_message_loop.h */; };
-		9A1641AF19C4A4CE00966C5E /* aura_microtimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9519C4A4CC00966C5E /* aura_microtimer.h */; };
 		9A1641B219C4A4CE00966C5E /* aura_muldiv64.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9819C4A4CC00966C5E /* aura_muldiv64.h */; };
 		9A1641B419C4A4CE00966C5E /* aura_net.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9A19C4A4CC00966C5E /* aura_net.h */; };
 		9A1641B619C4A4CE00966C5E /* aura_new.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9C19C4A4CC00966C5E /* aura_new.h */; };
@@ -1705,7 +1699,6 @@
 		9AE611491F22924E00F7CDC2 /* file_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B144184A3B420092C3E1 /* file_c.h */; };
 		9AE6114A1F22924E00F7CDC2 /* filesystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B188184A3B430092C3E1 /* filesystem.h */; };
 		9AE6114B1F22924E00F7CDC2 /* comparison_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0944318495C2A007A0560 /* comparison_md5.h */; };
-		9AE6114C1F22924E00F7CDC2 /* aura_microtimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D9519C4A4CC00966C5E /* aura_microtimer.h */; };
 		9AE6114D1F22924E00F7CDC2 /* collection_simple_object_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0941818495C2A007A0560 /* collection_simple_object_array.h */; };
 		9AE6114E1F22924E00F7CDC2 /* aura_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163DCC19C4A4CC00966C5E /* aura_types.h */; };
 		9AE6114F1F22924E00F7CDC2 /* geometry_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0945B18495C2A007A0560 /* geometry_types.h */; };
@@ -1741,7 +1734,7 @@
 		9AE6116D1F22924E00F7CDC2 /* ansios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163F8A19C4A4CD00966C5E /* ansios.h */; };
 		9AE6116E1F22924E00F7CDC2 /* macos_shell.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A16481719C4ADA000966C5E /* macos_shell.h */; };
 		9AE6116F1F22924E00F7CDC2 /* primitive_command_line.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C717E83B69003E47F9 /* primitive_command_line.h */; };
-		9AE611701F22924E00F7CDC2 /* primitive_command_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_command_thread.h */; };
+		9AE611701F22924E00F7CDC2 /* primitive_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_handler.h */; };
 		9AE611711F22924E00F7CDC2 /* file_status.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B16F184A3B430092C3E1 /* file_status.h */; };
 		9AE611721F22924E00F7CDC2 /* str_stringtow.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0949618495C2A007A0560 /* str_stringtow.h */; };
 		9AE611731F22924E00F7CDC2 /* aura_command_target.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D4A19C4A4CC00966C5E /* aura_command_target.h */; };
@@ -1758,7 +1751,6 @@
 		9AE6117E1F22924E00F7CDC2 /* colorertake5_outline_item.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC3158A198E4CB8008FB109 /* colorertake5_outline_item.h */; };
 		9AE6117F1F22924E00F7CDC2 /* exception_temporary.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163E2A19C4A4CD00966C5E /* exception_temporary.h */; };
 		9AE611801F22924E00F7CDC2 /* aura_file_watcher_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D6519C4A4CC00966C5E /* aura_file_watcher_impl.h */; };
-		9AE611811F22924E00F7CDC2 /* aura_main_init_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8D19C4A4CC00966C5E /* aura_main_init_data.h */; };
 		9AE611821F22924E00F7CDC2 /* file_plain_text_stream_base.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B163184A3B430092C3E1 /* file_plain_text_stream_base.h */; };
 		9AE611831F22924E00F7CDC2 /* aura_cregexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D5419C4A4CC00966C5E /* aura_cregexp.h */; };
 		9AE611841F22924E00F7CDC2 /* primitive_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722D517E83B69003E47F9 /* primitive_factory.h */; };
@@ -1866,7 +1858,6 @@
 		9AE611ED1F22924E00F7CDC2 /* data_data_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE4C7E81996D29C00E50F88 /* data_data_listener.h */; };
 		9AE611EE1F22924E00F7CDC2 /* collection_string_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0942A18495C2A007A0560 /* collection_string_map.h */; };
 		9AE611EF1F22924E00F7CDC2 /* file_exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F5B151184A3B430092C3E1 /* file_exception.h */; };
-		9AE611F01F22924E00F7CDC2 /* aura_live_object.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D8119C4A4CC00966C5E /* aura_live_object.h */; };
 		9AE611F11F22924E00F7CDC2 /* aura_heap_item_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163D7519C4A4CC00966C5E /* aura_heap_item_array.h */; };
 		9AE611F21F22924E00F7CDC2 /* cross.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A163FC519C4A4CD00966C5E /* cross.h */; };
 		9AE611F31F22924E00F7CDC2 /* collection_point_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B0940D18495C2A007A0560 /* collection_point_array.h */; };
@@ -1924,7 +1915,7 @@
 		9AE7254D17E83B69003E47F9 /* primitive_bit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C317E83B69003E47F9 /* primitive_bit.h */; };
 		9AE7254F17E83B69003E47F9 /* primitive_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C517E83B69003E47F9 /* primitive_command.h */; };
 		9AE7255117E83B69003E47F9 /* primitive_command_line.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C717E83B69003E47F9 /* primitive_command_line.h */; };
-		9AE7255317E83B69003E47F9 /* primitive_command_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_command_thread.h */; };
+		9AE7255317E83B69003E47F9 /* primitive_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722C917E83B69003E47F9 /* primitive_handler.h */; };
 		9AE7255D17E83B69003E47F9 /* primitive_edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722D317E83B69003E47F9 /* primitive_edit.h */; };
 		9AE7255F17E83B69003E47F9 /* primitive_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722D517E83B69003E47F9 /* primitive_factory.h */; };
 		9AE7256117E83B69003E47F9 /* primitive_id.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722D717E83B69003E47F9 /* primitive_id.h */; };
@@ -2566,17 +2557,14 @@
 		9A163D7B19C4A4CC00966C5E /* aura_keep_true.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_keep_true.h; sourceTree = "<group>"; };
 		9A163D7C19C4A4CC00966C5E /* aura_launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_launcher.h; sourceTree = "<group>"; };
 		9A163D7F19C4A4CC00966C5E /* aura_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_library.h; sourceTree = "<group>"; };
-		9A163D8119C4A4CC00966C5E /* aura_live_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_live_object.h; sourceTree = "<group>"; };
 		9A163D8319C4A4CC00966C5E /* aura_live_signal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_live_signal.h; sourceTree = "<group>"; };
 		9A163D8519C4A4CC00966C5E /* aura_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_log.h; sourceTree = "<group>"; };
 		9A163D8619C4A4CC00966C5E /* aura_lparam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_lparam.h; sourceTree = "<group>"; };
 		9A163D8819C4A4CC00966C5E /* aura_machine_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_machine_event.h; sourceTree = "<group>"; };
 		9A163D8A19C4A4CC00966C5E /* aura_machine_event_central.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_machine_event_central.h; sourceTree = "<group>"; };
 		9A163D8C19C4A4CC00966C5E /* aura_machine_event_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_machine_event_data.h; sourceTree = "<group>"; };
-		9A163D8D19C4A4CC00966C5E /* aura_main_init_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_main_init_data.h; sourceTree = "<group>"; };
 		9A163D8F19C4A4CC00966C5E /* aura_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_math.h; sourceTree = "<group>"; };
 		9A163D9019C4A4CC00966C5E /* aura_message_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_message_loop.h; sourceTree = "<group>"; };
-		9A163D9519C4A4CC00966C5E /* aura_microtimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_microtimer.h; sourceTree = "<group>"; };
 		9A163D9819C4A4CC00966C5E /* aura_muldiv64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_muldiv64.h; sourceTree = "<group>"; };
 		9A163D9A19C4A4CC00966C5E /* aura_net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_net.h; sourceTree = "<group>"; };
 		9A163D9C19C4A4CC00966C5E /* aura_new.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_new.h; sourceTree = "<group>"; };
@@ -2899,6 +2887,7 @@
 		9A640E791EA6C2B900866C2C /* user_interactive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_interactive.cpp; sourceTree = "<group>"; };
 		9A640E7B1EA6C3D800866C2C /* libaxisidn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxisidn.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/mac-core-ahzhhtvfpdnspleyodjmxkejrnxq/Build/Products/Debug/libaxisidn.dylib"; sourceTree = "<group>"; };
 		9A67166C1D1553BF0069A961 /* ace.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ace.xcodeproj; path = ../ace/ace.xcodeproj; sourceTree = "<group>"; };
+		9A7F270B1F3DCCED00F038A2 /* _aura_aura_aura.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _aura_aura_aura.cpp; sourceTree = "<group>"; };
 		9A8087451DE0FF3000F70A07 /* ios_library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_library.cpp; sourceTree = "<group>"; };
 		9A81810C1F21A80100FDAF74 /* apple_graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_graphics.cpp; sourceTree = "<group>"; };
 		9A81810F1F21A9A000FDAF74 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -2917,6 +2906,9 @@
 		9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file_watcher.cpp; sourceTree = "<group>"; };
 		9AB628391F3CDC0D0007966E /* aura_system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_system.cpp; sourceTree = "<group>"; };
 		9AB6283B1F3CE4F70007966E /* aura_session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_session.cpp; sourceTree = "<group>"; };
+		9AB871191F3E30D50007F324 /* aura_os.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_os.cpp; sourceTree = "<group>"; };
+		9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_handler.cpp; sourceTree = "<group>"; };
+		9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primitive_object.cpp; sourceTree = "<group>"; };
 		9AB8C8581EA98EA0007670A6 /* netserver_socket_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_handler.cpp; sourceTree = "<group>"; };
 		9AB8C8591EA98EA0007670A6 /* netserver_socket_thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket_thread.cpp; sourceTree = "<group>"; };
 		9AB8C85A1EA98EA0007670A6 /* netserver_socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = netserver_socket.cpp; sourceTree = "<group>"; };
@@ -3025,7 +3017,7 @@
 		9AE722C317E83B69003E47F9 /* primitive_bit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_bit.h; sourceTree = "<group>"; };
 		9AE722C517E83B69003E47F9 /* primitive_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_command.h; sourceTree = "<group>"; };
 		9AE722C717E83B69003E47F9 /* primitive_command_line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_command_line.h; sourceTree = "<group>"; };
-		9AE722C917E83B69003E47F9 /* primitive_command_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_command_thread.h; sourceTree = "<group>"; };
+		9AE722C917E83B69003E47F9 /* primitive_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_handler.h; sourceTree = "<group>"; };
 		9AE722D317E83B69003E47F9 /* primitive_edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_edit.h; sourceTree = "<group>"; };
 		9AE722D517E83B69003E47F9 /* primitive_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_factory.h; sourceTree = "<group>"; };
 		9AE722D717E83B69003E47F9 /* primitive_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_id.h; sourceTree = "<group>"; };
@@ -3754,6 +3746,8 @@
 		9A163D3119C4A4CC00966C5E /* aura */ = {
 			isa = PBXGroup;
 			children = (
+				9AB871191F3E30D50007F324 /* aura_os.cpp */,
+				9A7F270B1F3DCCED00F038A2 /* _aura_aura_aura.cpp */,
 				9AB6283B1F3CE4F70007966E /* aura_session.cpp */,
 				9AB628391F3CDC0D0007966E /* aura_system.cpp */,
 				9A4421861D5B231E00199308 /* aura_application.cpp */,
@@ -3801,17 +3795,14 @@
 				9A163D7B19C4A4CC00966C5E /* aura_keep_true.h */,
 				9A163D7C19C4A4CC00966C5E /* aura_launcher.h */,
 				9A163D7F19C4A4CC00966C5E /* aura_library.h */,
-				9A163D8119C4A4CC00966C5E /* aura_live_object.h */,
 				9A163D8319C4A4CC00966C5E /* aura_live_signal.h */,
 				9A163D8519C4A4CC00966C5E /* aura_log.h */,
 				9A163D8619C4A4CC00966C5E /* aura_lparam.h */,
 				9A163D8819C4A4CC00966C5E /* aura_machine_event.h */,
 				9A163D8A19C4A4CC00966C5E /* aura_machine_event_central.h */,
 				9A163D8C19C4A4CC00966C5E /* aura_machine_event_data.h */,
-				9A163D8D19C4A4CC00966C5E /* aura_main_init_data.h */,
 				9A163D8F19C4A4CC00966C5E /* aura_math.h */,
 				9A163D9019C4A4CC00966C5E /* aura_message_loop.h */,
-				9A163D9519C4A4CC00966C5E /* aura_microtimer.h */,
 				9A163D9819C4A4CC00966C5E /* aura_muldiv64.h */,
 				9A163D9A19C4A4CC00966C5E /* aura_net.h */,
 				9A163D9C19C4A4CC00966C5E /* aura_new.h */,
@@ -4587,9 +4578,10 @@
 				9AE722C317E83B69003E47F9 /* primitive_bit.h */,
 				9AE722C517E83B69003E47F9 /* primitive_command.h */,
 				9AE722C717E83B69003E47F9 /* primitive_command_line.h */,
-				9AE722C917E83B69003E47F9 /* primitive_command_thread.h */,
+				9AE722C917E83B69003E47F9 /* primitive_handler.h */,
 				9AE722D317E83B69003E47F9 /* primitive_edit.h */,
 				9AE722D517E83B69003E47F9 /* primitive_factory.h */,
+				9AB8711B1F3E47F10007F324 /* primitive_handler.cpp */,
 				9AE722D717E83B69003E47F9 /* primitive_id.h */,
 				9AE722D917E83B69003E47F9 /* primitive_id_space.h */,
 				9AE722DB17E83B69003E47F9 /* primitive_interlocked_long.h */,
@@ -4599,6 +4591,7 @@
 				9AE722E217E83B69003E47F9 /* primitive_memory_base.h */,
 				9AE722E417E83B69003E47F9 /* primitive_memory_c.h */,
 				9AE722E617E83B69003E47F9 /* primitive_memory_container.h */,
+				9AB8711D1F3E4D9B0007F324 /* primitive_object.cpp */,
 				9AE722E817E83B69003E47F9 /* primitive_object.h */,
 				9AE722EA17E83B69003E47F9 /* primitive_property.h */,
 				9AE722EC17E83B69003E47F9 /* primitive_property_set.h */,
@@ -4987,7 +4980,6 @@
 				077A072F1B4D7403001C85FF /* file_c.h in Headers */,
 				077A07301B4D7403001C85FF /* filesystem.h in Headers */,
 				077A07311B4D7403001C85FF /* comparison_md5.h in Headers */,
-				077A07321B4D7403001C85FF /* aura_microtimer.h in Headers */,
 				077A07341B4D7403001C85FF /* collection_simple_object_array.h in Headers */,
 				077A07351B4D7403001C85FF /* aura_types.h in Headers */,
 				077A07361B4D7403001C85FF /* geometry_types.h in Headers */,
@@ -5023,7 +5015,7 @@
 				077A07591B4D7403001C85FF /* ansios.h in Headers */,
 				077A075A1B4D7403001C85FF /* macos_shell.h in Headers */,
 				077A075B1B4D7403001C85FF /* primitive_command_line.h in Headers */,
-				077A075C1B4D7403001C85FF /* primitive_command_thread.h in Headers */,
+				077A075C1B4D7403001C85FF /* primitive_handler.h in Headers */,
 				077A075D1B4D7403001C85FF /* file_status.h in Headers */,
 				077A075E1B4D7403001C85FF /* str_stringtow.h in Headers */,
 				077A075F1B4D7403001C85FF /* aura_command_target.h in Headers */,
@@ -5040,7 +5032,6 @@
 				077A076C1B4D7403001C85FF /* colorertake5_outline_item.h in Headers */,
 				077A076D1B4D7403001C85FF /* exception_temporary.h in Headers */,
 				077A076E1B4D7403001C85FF /* aura_file_watcher_impl.h in Headers */,
-				077A076F1B4D7403001C85FF /* aura_main_init_data.h in Headers */,
 				077A07701B4D7403001C85FF /* file_plain_text_stream_base.h in Headers */,
 				077A07711B4D7403001C85FF /* aura_cregexp.h in Headers */,
 				077A07721B4D7403001C85FF /* primitive_factory.h in Headers */,
@@ -5148,7 +5139,6 @@
 				077A07E61B4D7403001C85FF /* data_data_listener.h in Headers */,
 				077A07E71B4D7403001C85FF /* collection_string_map.h in Headers */,
 				077A07E81B4D7403001C85FF /* file_exception.h in Headers */,
-				077A07E91B4D7403001C85FF /* aura_live_object.h in Headers */,
 				077A07EA1B4D7403001C85FF /* aura_heap_item_array.h in Headers */,
 				077A07EB1B4D7403001C85FF /* cross.h in Headers */,
 				077A07EC1B4D7403001C85FF /* collection_point_array.h in Headers */,
@@ -5649,7 +5639,6 @@
 				9A0256691EA593AC003C82CF /* pop3_socket.h in Headers */,
 				07F5B1F8184A3B430092C3E1 /* filesystem.h in Headers */,
 				07B0950718495C2B007A0560 /* comparison_md5.h in Headers */,
-				9A1641AF19C4A4CE00966C5E /* aura_microtimer.h in Headers */,
 				07B094DF18495C2B007A0560 /* collection_simple_object_array.h in Headers */,
 				9A1641E019C4A4CE00966C5E /* aura_types.h in Headers */,
 				9A02568F1EA593AC003C82CF /* resolv_server.h in Headers */,
@@ -5705,7 +5694,7 @@
 				9A16484019C4ADA100966C5E /* macos_shell.h in Headers */,
 				9ADD53F01F20E1B70008AA41 /* zip_iowin32.h in Headers */,
 				9AE7255117E83B69003E47F9 /* primitive_command_line.h in Headers */,
-				9AE7255317E83B69003E47F9 /* primitive_command_thread.h in Headers */,
+				9AE7255317E83B69003E47F9 /* primitive_handler.h in Headers */,
 				9A0256781EA593AC003C82CF /* net_open_weather_city.h in Headers */,
 				07F5B1DF184A3B430092C3E1 /* file_status.h in Headers */,
 				07B0955518495C2B007A0560 /* str_stringtow.h in Headers */,
@@ -5729,7 +5718,6 @@
 				9A26A6DC1D7F0019001F47A8 /* pcre.h in Headers */,
 				9A16423919C4A4CE00966C5E /* exception_temporary.h in Headers */,
 				9A16418019C4A4CE00966C5E /* aura_file_watcher_impl.h in Headers */,
-				9A1641A719C4A4CE00966C5E /* aura_main_init_data.h in Headers */,
 				07F5B1D3184A3B430092C3E1 /* file_plain_text_stream_base.h in Headers */,
 				07DF8DA01C5289FC0050DDEA /* ios_file_system.h in Headers */,
 				9A16416F19C4A4CE00966C5E /* aura_cregexp.h in Headers */,
@@ -5890,7 +5878,6 @@
 				9A02567A1EA593AC003C82CF /* net_port_forward.h in Headers */,
 				07B094EF18495C2B007A0560 /* collection_string_map.h in Headers */,
 				07F5B1C1184A3B430092C3E1 /* file_exception.h in Headers */,
-				9A16419B19C4A4CE00966C5E /* aura_live_object.h in Headers */,
 				9A16418F19C4A4CE00966C5E /* aura_heap_item_array.h in Headers */,
 				9A2A532B1F1FEDFD001AB0F8 /* draw2d.h in Headers */,
 				9A1643BE19C4A4CF00966C5E /* cross.h in Headers */,
@@ -6255,7 +6242,6 @@
 				9AE611491F22924E00F7CDC2 /* file_c.h in Headers */,
 				9AE6114A1F22924E00F7CDC2 /* filesystem.h in Headers */,
 				9AE6114B1F22924E00F7CDC2 /* comparison_md5.h in Headers */,
-				9AE6114C1F22924E00F7CDC2 /* aura_microtimer.h in Headers */,
 				9AE6114D1F22924E00F7CDC2 /* collection_simple_object_array.h in Headers */,
 				9AE6114E1F22924E00F7CDC2 /* aura_types.h in Headers */,
 				9AE6114F1F22924E00F7CDC2 /* geometry_types.h in Headers */,
@@ -6291,7 +6277,7 @@
 				9AE6116D1F22924E00F7CDC2 /* ansios.h in Headers */,
 				9AE6116E1F22924E00F7CDC2 /* macos_shell.h in Headers */,
 				9AE6116F1F22924E00F7CDC2 /* primitive_command_line.h in Headers */,
-				9AE611701F22924E00F7CDC2 /* primitive_command_thread.h in Headers */,
+				9AE611701F22924E00F7CDC2 /* primitive_handler.h in Headers */,
 				9AE611711F22924E00F7CDC2 /* file_status.h in Headers */,
 				9AE611721F22924E00F7CDC2 /* str_stringtow.h in Headers */,
 				9AE611731F22924E00F7CDC2 /* aura_command_target.h in Headers */,
@@ -6308,7 +6294,6 @@
 				9AE6117E1F22924E00F7CDC2 /* colorertake5_outline_item.h in Headers */,
 				9AE6117F1F22924E00F7CDC2 /* exception_temporary.h in Headers */,
 				9AE611801F22924E00F7CDC2 /* aura_file_watcher_impl.h in Headers */,
-				9AE611811F22924E00F7CDC2 /* aura_main_init_data.h in Headers */,
 				9AE611821F22924E00F7CDC2 /* file_plain_text_stream_base.h in Headers */,
 				9AE611831F22924E00F7CDC2 /* aura_cregexp.h in Headers */,
 				9AE611841F22924E00F7CDC2 /* primitive_factory.h in Headers */,
@@ -6416,7 +6401,6 @@
 				9AE611ED1F22924E00F7CDC2 /* data_data_listener.h in Headers */,
 				9AE611EE1F22924E00F7CDC2 /* collection_string_map.h in Headers */,
 				9AE611EF1F22924E00F7CDC2 /* file_exception.h in Headers */,
-				9AE611F01F22924E00F7CDC2 /* aura_live_object.h in Headers */,
 				9AE611F11F22924E00F7CDC2 /* aura_heap_item_array.h in Headers */,
 				9AE611F21F22924E00F7CDC2 /* cross.h in Headers */,
 				9AE611F31F22924E00F7CDC2 /* collection_point_array.h in Headers */,

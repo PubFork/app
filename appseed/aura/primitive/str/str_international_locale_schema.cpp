@@ -682,8 +682,8 @@ restart:
 
       bool locale_schema::process_final_locale_schema()
       {
-         return process_final_locale_schema(Application.directrix()->m_varTopicQuery.has_property("right_to_left_layout") &&
-            (bool) Application.directrix()->m_varTopicQuery["right_to_left_layout"]);
+         return process_final_locale_schema(Application.handler()->m_varTopicQuery.has_property("right_to_left_layout") &&
+            (bool) Application.handler()->m_varTopicQuery["right_to_left_layout"]);
       }
 
       locale_schema & locale_schema::operator = (const locale_schema & ls)

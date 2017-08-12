@@ -70,12 +70,16 @@ namespace filehandler
 
    }
 
+   
    void view::item::parse(const char * pszApp)
    {
+      
       m_strApp = pszApp;
+      
    }
+   
 
-   void view::list::parse(handler * phandler, const char * pszTopic)
+   void view::list::parse(::filehandler::handler * phandler, const char * pszTopic)
    {
 
       remove_all();

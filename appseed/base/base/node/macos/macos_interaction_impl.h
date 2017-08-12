@@ -449,9 +449,6 @@ namespace macos
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
       void CenterWindow(::user::interaction *   pAlternateOwner = NULL);
 
-      // oswindow-Management message handler member functions
-      virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
-      virtual bool OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       void OnActivate(UINT nState, ::user::interaction * pWndOther, bool bMinimized);
       void OnActivateApp(bool bActive, DWORD dwThreadID);

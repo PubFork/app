@@ -36,7 +36,6 @@ public:
    virtual ~image_list();
 
 
-   using ::object::create;
    bool create(int32_t cx, int32_t cy);
    bool create(int32_t cx, int32_t cy, UINT nFlags, int32_t nInitial, int32_t nGrow);
    bool realize(::draw2d::graphics * pgraphics) const;

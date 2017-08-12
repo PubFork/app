@@ -158,6 +158,7 @@ namespace user
 
 
             virtual void OnAttach();
+            virtual void OnDetach();
 
             virtual bool is_control_box_moveable();
 

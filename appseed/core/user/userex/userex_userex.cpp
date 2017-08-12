@@ -233,7 +233,7 @@ namespace userex
       string strLicense = Application.get_license_id();
 
 
-      var & varTopicQuey = System.directrix()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
       bool bHasInstall = varTopicQuey.has_property("install");
 
@@ -690,7 +690,16 @@ namespace userex
    void userex::_001OnFileNew()
    {
       
-      Application.document_manager()._001OnFileNew();
+      ASSERT(Application.document_manager() != NULL);
+      
+      if(Application.document_manager() == NULL)
+      {
+         
+         return;
+         
+      }
+      
+      Application.document_manager()->_001OnFileNew();
 
    }
 
@@ -1041,7 +1050,7 @@ namespace userex
 
          m_mapTemplate[pt] = psystem;
 
-         App(papp).document_manager().add_document_template(psystem);
+         App(papp).document_manager()->add_document_template(psystem);
 
       }
 

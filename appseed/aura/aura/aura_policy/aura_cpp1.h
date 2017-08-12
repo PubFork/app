@@ -486,7 +486,7 @@ class critical_section;
 class var_array;
 //class pair_set_interface;
 //class str_str_interface;
-class command_thread;
+class handler;
 class thread;
 class command_target;
 class cmd_ui;

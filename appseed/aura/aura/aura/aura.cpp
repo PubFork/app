@@ -285,3 +285,35 @@ CLASS_DECL_AURA void writeln(const char * psz)
    output_debug_string(string(psz) + "\n");
 
 }
+
+
+
+BEGIN_EXTERN_C
+
+CLASS_DECL_AURA void c_function_call(void * p)
+{
+   
+   const char * psz = (const char *) p;
+
+   
+}
+
+END_EXTERN_C
+
+
+template < >
+CLASS_DECL_AURA void function_call(const ::object * p)
+{
+   
+   const char * psz = reinterpret_cast< const char * > (p);
+   
+}
+
+
+
+
+
+
+
+
+

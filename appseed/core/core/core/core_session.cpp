@@ -396,7 +396,7 @@ namespace core
 
       }
 
-      papp->m_pcoreapp->::object::create(pcreate);
+      papp->m_pcoreapp->::object::handle(pcreate);
 
       return true;
 
@@ -419,7 +419,7 @@ namespace core
    //      {
    //         /*
    //         ::memory_file file(get_app());
-   //         file.from_string(command()->m_varTopicFile);
+   //         file.from_string(handler()->m_varTopicFile);
    //         COPYDATASTRUCT data;
    //         data.dwData = 1984;
    //         data.cbData = (uint32_t) file.get_length();
@@ -434,7 +434,7 @@ namespace core
    //
    //         if(channel.open("::draw2d::fontopus::message_wnd::session::"))
    //         {
-   //            channel.send(command()->m_varTopicFile, false);
+   //            channel.send(handler()->m_varTopicFile, false);
    //            channel.close();
    //         }
    //
@@ -654,7 +654,7 @@ namespace core
       {
 #ifdef WINDOWSEX
          ::memory_file file(get_app());
-         file.from_string(command()->m_varTopicFile);
+         file.from_string(handler()->m_varTopicFile);
          COPYDATASTRUCT data;
          data.dwData = 1984;
          data.cbData = (uint32_t) file.get_length();

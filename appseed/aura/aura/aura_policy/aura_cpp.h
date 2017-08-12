@@ -1,12 +1,12 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
-//   All Pure and Aural ca2 and God and Gods and Goddssesses and devils's blessings
+//  ca2
 //
-//   C++
+//  ca2 is an all-purpose multi-platform framework and set of libraries
+//  written in C++ language to help developers create great apps for users.
 //
-//   C => in ca2 scope
+//  ca2/C++/C/Assembly/Huffman Machine/Hardware/Universe/Multiverse stack
 //
-//   Thank you God for C++!! Cheap and valuable!!
 //
 
 #pragma once
@@ -16,6 +16,13 @@
 #endif
 
 #include "nodeapp/operational_system/operational_system.h"
+
+namespace command
+{
+
+   class command;
+   
+} // namespace command
 
 // very short name ([{c}])ontext (switchers, as it as context) enums
 enum e_context_switcher_null
@@ -40,6 +47,16 @@ enum e_context_switcher_failed
 {
    failure,
    failure_no_log
+};
+
+enum e_command
+{
+   
+   command_default,
+   command_on_agree_exit,
+   command_france_exit,
+   command_check_exit
+   
 };
 
 
@@ -233,7 +250,7 @@ class critical_section;
 class var_array;
 //class pair_set_interface;
 //class str_str_interface;
-class command_thread;
+class handler;
 class thread;
 class command_target;
 class cmd_ui;
@@ -1152,31 +1169,17 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 CLASS_DECL_AURA string get_exe_path();
 
 
-//#include "user/user/user_window_map.h"
-//
-//#include "user/user/user_keyboard_layout.h"
-//#include "user/user/user_keyboard.h"
-//#include "user/user/user_user.h"
-
-#include "aura/aura/aura/aura_main_init_data.h"
-
 #include "aura/aura/aura/aura_savings.h"
 
 #include "aura/net/net.h"
 
-
 #include "aura/aura/aura/aura_launcher.h"
-
 
 #include "aura/aura/aura/aura_ipc.h"
 
-
 #include "aura/aura/aura/aura_app_launcher.h"
 
-
 #include "aura/aura/aura/aura_ipi.h"
-
-
 
 
 #include "aura/filesystem/filesystem/filesystem_application.h"
@@ -1188,6 +1191,8 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/filesystem/file/file_set.h"
 
 #include "aura/primitive/primitive_application_bias.h"
+
+#include "aura/primitive/primitive_command.h"
 
 
 #include "aura/user/user/user_interactive.h"
@@ -1214,7 +1219,6 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_fixed_alloc_impl.h"
 #include "aura/aura/aura/aura_plex_heap_impl.h"
 #include "aura/primitive/primitive_command_line.h"
-#include "aura/primitive/primitive_command.h"
 #include "aura/aura/aura/aura_create_context.h"
 #include "aura/primitive/primitive_create.h"
 #include "aura/primitive/primitive_request_signal.h"
@@ -1226,7 +1230,7 @@ CLASS_DECL_AURA string get_exe_path();
 
 
 
-#include "aura/primitive/primitive_command_thread.h"
+#include "aura/primitive/primitive_handler.h"
 
 
 
@@ -1808,6 +1812,22 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/install/install2.h"
 
 
+
+template < typename TYPE >
+CLASS_DECL_AURA void function_call(const TYPE * p)
+{
+   
+   const char * psz = reinterpret_cast < const char * > (p);
+   
+}
+
+
+template < >
+CLASS_DECL_AURA void function_call(const ::object * p);
+
+
+
+
 namespace user
 {
 
@@ -1834,6 +1854,7 @@ namespace user
 #include "aura/filesystem/filesystem.inl"
 
 #include "aura/net/net.inl"
+
 
 
 

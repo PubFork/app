@@ -11,7 +11,7 @@ namespace fs
 } // namespace fs
 
 
-class command_thread;
+class handler;
 
 
 class CLASS_DECL_AURA command_line :

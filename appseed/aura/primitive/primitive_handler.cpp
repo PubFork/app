@@ -1,5 +1,3 @@
-//#include "framework.h"
-
 
 handler::handler(::thread * pthread) :
    object(pthread->get_app())
@@ -20,7 +18,7 @@ handler::~handler()
 }
 
 
-void handler::handle(::command * pcommand)
+void handler::handle(::command::command * pcommand)
 {
 
    m_pthread->post_object(message_system, system_message_command, pcommand);
@@ -39,19 +37,20 @@ void handler::handle(::create * pcreate)
 void handler::handle(::e_command ecommand)
 {
 
-   handle(canew(::command(get_app(),ecommand)));
+   handle(canew(::command::command(get_app(),ecommand)));
 
 }
 
 
-void handler::on_handle(::command * pcommand)
+void handler::on_handle(::command::command * pcommand)
 {
 
    m_pthread->on_command(pcommand);
 
 }
 
-void handler::on_handle(::command * pcreate)
+
+void handler::on_handle(::create * pcreate)
 {
    
    m_pthread->on_create(pcreate);
@@ -59,7 +58,7 @@ void handler::on_handle(::command * pcreate)
 }
 
 
-void handler::merge(::command * pcommand)
+void handler::merge(::command::command * pcommand)
 {
    
    sp(::create) pcreate = pcommand;
@@ -195,7 +194,7 @@ bool handler::has_property(const char * pszKey)
 }
 
 
-void handler::record(::command * pcommand)
+void handler::record(::command::command * pcommand)
 {
 
    synch_lock sl(m_pmutex);

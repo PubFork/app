@@ -88,7 +88,7 @@ namespace axis
 
       m_iWaitCursorCount         = 0;
 
-      m_pinitmaindata = NULL;
+      m_pcommand = NULL;
 
    }
 
@@ -391,32 +391,32 @@ namespace axis
    //}
 
 
-   //sp(::command_thread) application::command_central()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::command_thread()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::command()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::guideline()
+   //sp(::handler) application::guideline()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::directrix()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::axiom()
+   //sp(::handler) application::axiom()
    //{
    //   return m_pcommandthread;
    //}
@@ -429,7 +429,7 @@ namespace axis
 
    }
 
-   //sp(::command_thread) application::creation()
+   //sp(::handler) application::creation()
    //{
    //   return m_pcommandthread;
    //}
@@ -1242,7 +1242,7 @@ namespace axis
    //         m_iReturnCode = -1;
    //         exit_thread();
    //         m_bReady = true;
-   //         ::output_debug_string("exiting on check directrix\n");
+   //         ::output_debug_string("exiting on check handler\n");
    //         return false;
    //      }
 
@@ -1470,7 +1470,7 @@ namespace axis
    bool application::check_install()
    {
 
-      if (directrix()->m_varTopicQuery.has_property("install"))
+      if (handler()->m_varTopicQuery.has_property("install"))
       {
 
          if (!on_install())
@@ -1497,7 +1497,7 @@ namespace axis
 
          }
 
-         if (strAppId.has_char() && command()->m_varTopicQuery.has_property("app") && strAppId == command()->m_varTopicQuery["app"])
+         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
          {
 
             system_add_app_install(strAppId, "installed");
@@ -1510,7 +1510,7 @@ namespace axis
             }
 
          }
-         else if (strAppId.has_char() && command()->m_varTopicQuery.has_property("session_start") && strAppId == command()->m_varTopicQuery["session_start"])
+         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
          {
 
             system_add_app_install(strAppId, "installed");
@@ -1538,7 +1538,7 @@ namespace axis
          }
 
       }
-      else if (directrix()->m_varTopicQuery.has_property("uninstall"))
+      else if (handler()->m_varTopicQuery.has_property("uninstall"))
       {
 
          if (!on_uninstall())
@@ -1567,7 +1567,7 @@ namespace axis
 
       string strLicense = get_license_id();
 
-      var & varTopicQuey = System.directrix()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
       bool bHasInstall = varTopicQuey.has_property("install");
 
@@ -1663,7 +1663,7 @@ namespace axis
 
       ::object::on_request(pcreate);
 
-      command()->consolidate(pcreate);
+      handler()->merge(pcreate);
 
    }
 
@@ -1736,7 +1736,7 @@ namespace axis
    //bool application::is_installing()
    //{
 
-   //   return directrix()->has_property("install");
+   //   return handler()->has_property("install");
 
    //}
 
@@ -1744,7 +1744,7 @@ namespace axis
    //bool application::is_uninstalling()
    //{
 
-   //   return directrix()->has_property("uninstall");
+   //   return handler()->has_property("uninstall");
 
    //}
 
@@ -2015,27 +2015,37 @@ namespace axis
 
       if(is_system())
       {
-         if(guideline()->m_varTopicQuery.propset().has_property("save_processing"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_processing"))
          {
+            
             Session.savings().save(::aura::resource_processing);
+            
          }
-         if(guideline()->m_varTopicQuery.propset().has_property("save_blur_back"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_blur_back"))
          {
+            
             Session.savings().save(::aura::resource_blur_background);
+            
          }
-         if(guideline()->m_varTopicQuery.propset().has_property("save_transparent_back"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_transparent_back"))
          {
+            
             Session.savings().save(::aura::resource_translucent_background);
+            
          }
+         
       }
 
-      if(directrix()->m_varTopicQuery.propset().has_property("install"))
+      if(handler()->m_varTopicQuery.propset().has_property("install"))
       {
          // core level app install
          if(!Ex2OnAppInstall())
             return false;
       }
-      else if(directrix()->m_varTopicQuery.propset().has_property("uninstall"))
+      else if(handler()->m_varTopicQuery.propset().has_property("uninstall"))
       {
          // core level app uninstall
          if(!Ex2OnAppUninstall())
@@ -2069,10 +2079,10 @@ namespace axis
       m_dwAlive = ::get_tick_count();
 
       if(is_system()
-         && !command_thread()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
-         && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-         && command_thread()->m_varTopicQuery["app"] != "app-gtech/alarm"
-         && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+         && !handler()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
+         && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+         && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
+         && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       {
          System.http().defer_auto_initialize_proxy_configuration();
       }
@@ -3283,7 +3293,7 @@ namespace axis
    //         m_iReturnCode = -1;
    //         exit();
    //         m_bReady = true;
-   //         ::OutputDebugStringW(L"exiting on check directrix");
+   //         ::OutputDebugStringW(L"exiting on check handler");
    //         return false;
    //      }
 
@@ -3696,7 +3706,7 @@ namespace axis
 
    //   ::object::on_request(pcreate);
 
-   //   command()->consolidate(pcreate);
+   //   handler()->consolidate(pcreate);
 
    //}
 

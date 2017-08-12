@@ -293,7 +293,7 @@ namespace filemanager
       if (pcreate == NULL)
       {
 
-         pcreate = canew(::create(Application.creation(), varFile, true));
+         pcreate = canew(::create(Application.handler(), varFile, true));
 
       }
 
@@ -407,7 +407,7 @@ namespace filemanager
       if (pcreate == NULL)
       {
 
-         pcreate = canew(::create(Application.creation()));
+         pcreate = canew(::create(Application.handler()));
 
       }
 
@@ -515,7 +515,7 @@ namespace filemanager
       if (pcreate == NULL)
       {
 
-         pcreate = canew(::create(Application.creation()));
+         pcreate = canew(::create(Application.handler()));
 
       }
 

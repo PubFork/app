@@ -28,7 +28,7 @@ public:
 
 
 class CLASS_DECL_AURA create :
-   virtual public ::primitive::command
+   virtual public ::command::command
 {
 public:
 
@@ -43,16 +43,17 @@ public:
    sp(application_bias)                                        m_spApplicationBias;
    command_line_sp                                             m_spCommandLine;
    stack < ::aura::create_context >                            m_user; 
-   ::command_thread *                                          m_pthreadParent;
-
+   ::handler *                                                 m_phandlerParent;
 
 
    create(::aura::application * papp);
-   create(::command_thread * pthreadParent);
-   create(::command_thread * pthreadParent,var varFile,bool bMakeVisible = true,::user::primitive * puiParent = NULL);
+   create(::handler * phandlerParent);
+   create(::handler * phandlerParent,var varFile,bool bMakeVisible = true,::user::primitive * puiParent = NULL);
    create(const create & createcontext);
    virtual ~create();
 
+   
+   void common_construct(bool bMakeVisible = true, ::user::primitive * puiParent = NULL);
 
    create & operator = (const create & createcontext);
 

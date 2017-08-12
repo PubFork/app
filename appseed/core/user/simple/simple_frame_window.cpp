@@ -42,7 +42,7 @@ int simple_frame_window::helper_task::run()
 
       g_pevent->wait(millis(84));
 
-      // the computer maybe blown here, where there is no code (when it is not running)... by falling into a curve in a road from a truck or by the multiverses bramas collapsing into a high energy dot.com... and bubble restarts when the spirtual world decides for restarting the virtual machine - with some pauses - as we does not detect change in time vector, as it is a non-readable, executable/paused/non existent only register in the parent processor... Imagine a overhaul upgrade with much more strings in the chords, why they mantain consitency between virtual machines versions... they like to hinder a lot!! strange, this is a hello 666... // and the time they have to overhaul is infinite, because they can pause our ticker... besides I hope no ones stops their tick counters...
+      // the computer maybe blown here, where there is no code (when it is not running)... by falling into a curve in a road from a truck or by the multiverses bramas collapsing into a high energy dot.com... and bubble restarts when the spirtual world decides for restarting the virtual machine - with some pauses - as we does not detect change in time vector, as it is a non-readable, executable/paused/non existent only register in the parent handler... Imagine a overhaul upgrade with much more strings in the chords, why they mantain consitency between virtual machines versions... they like to hinder a lot!! strange, this is a hello 666... // and the time they have to overhaul is infinite, because they can pause our ticker... besides I hope no ones stops their tick counters...
       if(m_pframe->m_bSizeMove) // not here, any error here (or am i wrong, the OpSys may not have started the FULLStack DevOp).... because it is lInUx... its not ADVENTURE_Clean_NoERRORs_may_be_old_tommorrow_just_EX_OS...
       {
 
@@ -270,13 +270,17 @@ void simple_frame_window::_001OnDestroy(signal_details * pobj)
 
 sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 {
-
-   sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
+   
+   if(Application.wndfrm() == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
 
    pschema->set_style(m_varFrame["style"]);
-
-
-
 
    return pschema;
 
@@ -416,7 +420,7 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
    if (m_bAutoWindowFrame)
    {
-      if(Application.command()->m_varTopicQuery.has_property("client_only"))
+      if(Application.handler()->m_varTopicQuery.has_property("client_only"))
       {
          m_bWindowFrame = false;
       }
@@ -469,8 +473,7 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
       try
       {
-
-
+         
          pinteractionframe = create_frame_schema();
 
       }
@@ -492,10 +495,21 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
          return;
 
       }
+      
+      if(pinteractionframe == NULL)
+      {
+         
+         pcreate->m_lresult = -1;
+         
+         pcreate->m_bRet = true;
+         
+         return;
+         
+      }
 
       //frame::FrameSchema * pschema = dynamic_cast < ::frame::FrameSchema * > (pinteractionframe);
 
-      if (pinteractionframe != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+      if (pinteractionframe != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
       {
 
          //pinteractionframe->set_style("BlueRedPurple");
@@ -504,28 +518,28 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
       /*{
          frame::FrameSchemaHardCoded001 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded001 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded001::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded002 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded002 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded002::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded005 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded005 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded005::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded008 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded008 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded008::StyleBlueRedPurple);
          }
@@ -1663,7 +1677,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    if(m_bFrameMoveEnable)
    {
 
-      if(Application.command()->m_varTopicQuery.has_property("wfi_maximize")
+      if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
             && (GetParent() == NULL
 #if defined(ANDROID) || defined(METROWIN) || defined(APPLE_IOS)
                 || GetParent() == System.m_possystemwindow->m_pui
@@ -1674,8 +1688,8 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
          WfiMaximize();
 
       }
-      else if(Application.command()->m_varTopicQuery.has_property("client_only")
-              || Application.command()->m_varTopicQuery.has_property("full_screen"))
+      else if(Application.handler()->m_varTopicQuery.has_property("client_only")
+              || Application.handler()->m_varTopicQuery.has_property("full_screen"))
       {
 
          if(m_workset.IsAppearanceEnabled())

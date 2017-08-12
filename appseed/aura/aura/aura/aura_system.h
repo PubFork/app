@@ -97,7 +97,6 @@ namespace aura
       ::process::department                       m_process;
 
 
-      string                                       m_strCmdLine;
       int32_t                                      m_nCmdShow;
       size_t                                       m_nSafetyPoolSize;      // ideal size
 //      ::html::html *                               m_phtml; // only defined  in core;
@@ -438,13 +437,13 @@ namespace aura
 
       virtual void on_map_application_library(::aura::library & library);
 
-      virtual bool set_main_init_data(::aura::main_init_data * pdata) override;
+      virtual bool process_command(::command::command * command) override;
 
       virtual void request_exit();
 
       virtual void defer_check_exit();
 
-      virtual void on_command(::primitive::command * pcommand) override;
+      virtual void on_command(::command::command * pcommand) override;
 
       virtual void defer_check_openweather_city_list();
 

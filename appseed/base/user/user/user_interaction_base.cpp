@@ -6,8 +6,7 @@ namespace user
 {
 
 
-   interaction_base::interaction_base() :
-      m_evNewMessage(::get_thread_app())
+   interaction_base::interaction_base()
    {
 
    }
@@ -15,8 +14,7 @@ namespace user
 
    interaction_base::interaction_base(::aura::application * papp) :
       ::object(papp),
-      command_target_interface(papp),
-      m_evNewMessage(papp)
+      command_target_interface(papp)
    {
 
    }
@@ -1593,98 +1591,8 @@ Restart:
       return 0;
 
    }
-
-
-   void interaction_base::queue_message_handler(signal_details * pobj)
-   {
-
-      if (m_pthread.is_null())
-      {
-
-         m_evNewMessage.ResetEvent();
-
-         m_pthread = ::fork(get_app(),
-            [&]()
-         {
-
-            m_messagequeue.defer_create_mutex();
-
-            m_evNewMessage.SetEvent();
-
-            while (get_thread_run())
-            {
-
-               if (m_evNewMessage.wait(seconds(1)).succeeded())
-               {
-
-
-                  m_evNewMessage.ResetEvent();
-
-               }
-
-               {
-
-                  single_lock sl(m_messagequeue.m_pmutex);
-
-                  if (m_messagequeue.has_elements())
-                  {
-
-                     smart_pointer < ::message::base > pbase = m_messagequeue.element_at(0);
-
-                     m_messagequeue.remove_at(0);
-
-                     sl.unlock();
-
-                     message_handler(pbase);
-
-                  }
-
-               }
-
-            }
-
-         });
-
-         m_evNewMessage.wait();
-
-      }
-
-
-      smart_pointer < ::message::base > pbase = pobj;
-
-      if (pbase.is_set())
-      {
-
-         if (pbase->m_uiMessage == WM_MOUSEMOVE)
-         {
-
-            {
-
-               single_lock sl(m_messagequeue.m_pmutex);
-
-               m_messagequeue.add(pbase);
-
-            }
-
-            m_evNewMessage.SetEvent();
-
-         }
-         else
-         {
-
-            ::fork(get_app(), [this, pbase]()
-            {
-
-               message_handler(pbase);
-
-            });
-
-         }
-
-      }
-
-
-   }
+   
+      
 
 
 

@@ -80,7 +80,7 @@ namespace console
    }
 
 
-} // namespace command
+} // namespace prompt
 
 
 

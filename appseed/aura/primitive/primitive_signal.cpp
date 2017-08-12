@@ -352,10 +352,14 @@ void signal::emit(signal_details * pobj)
 
          pdelegate->emit(pobj);
 
-         sl.lock();
-
          if(pobj->m_bRet)
+         {
+            
             return;
+            
+         }
+
+         sl.lock();
 
       }
 

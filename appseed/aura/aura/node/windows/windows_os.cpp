@@ -1079,7 +1079,7 @@ namespace windows
 
       string strCalling = Sys(papp).dir().module() / strExe + " : service";
 
-      if(System.directrix()->m_varTopicQuery.has_property("no_remote_simpledb"))
+      if(System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
       {
 
          strCalling += " no_remote_simpledb";
@@ -1221,7 +1221,7 @@ namespace windows
       {
          DWORD Ret = ::GetLastError();
          CloseServiceHandle(hdlSCM);
-         if(Ret == 1060) // O serviço já não existe. Service already doesn't exist.
+         if(Ret == 1060) // O serviï¿½o jï¿½ nï¿½o existe. Service already doesn't exist.
             return true; // do self-healing
          return false;
       }

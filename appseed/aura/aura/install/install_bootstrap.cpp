@@ -445,7 +445,7 @@ namespace install
          else
          {
 
-            strId = Application.get_app_id(Application.directrix()->m_varTopicFile);
+            strId = Application.get_app_id(Application.handler()->m_varTopicFile);
 
             if (strId.length() <= 0)
             {
@@ -733,7 +733,7 @@ namespace install
          else
          {
 
-            strId = Application.get_app_id(Application.directrix()->m_varTopicFile);
+            strId = Application.get_app_id(Application.handler()->m_varTopicFile);
 
             if (strId.length() <= 0)
             {

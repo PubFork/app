@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
    class CLASS_DECL_SPHERE view :
@@ -59,6 +59,6 @@ namespace command
    };
 
 
-} // namespace command
+} // namespace prompt
 
 

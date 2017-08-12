@@ -639,9 +639,9 @@ try1:
 
       string strUserFolderShift;
 
-      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
       {
-         strUserFolderShift = App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+         strUserFolderShift = App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
       }
 
       return str / "ca2" / strUserFolderShift;

@@ -1,7 +1,7 @@
 //#include "framework.h"
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -45,13 +45,13 @@ namespace command
       if(pobj->previous())
          return;
 
-      add_tab("3-action-launch", command::PaneViewThreeActionLaunch);
-      add_tab("menu", command::PaneViewContextMenu);
-      add_tab("primary verbing", command::PaneViewPrimaryCommand);
-      add_tab("options", command::PaneViewConfiguration);
-      add_tab("file manager", command::PaneViewFileManager);
+      add_tab("3-action-launch", prompt::PaneViewThreeActionLaunch);
+      add_tab("menu", prompt::PaneViewContextMenu);
+      add_tab("primary verbing", prompt::PaneViewPrimaryCommand);
+      add_tab("options", prompt::PaneViewConfiguration);
+      add_tab("file manager", prompt::PaneViewFileManager);
 
-      set_cur_tab_by_id(command::PaneViewPrimaryCommand);
+      set_cur_tab_by_id(prompt::PaneViewPrimaryCommand);
 
    }
 
@@ -60,7 +60,7 @@ namespace command
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
-         set_cur_tab_by_id(command::PaneViewPrimaryCommand);
+         set_cur_tab_by_id(prompt::PaneViewPrimaryCommand);
       }
       if(pHint != NULL)
       {
@@ -100,12 +100,12 @@ namespace command
       ::userex::pane_tab_view::on_show_view();
       sp(frame) pframe = GetTypedParent < frame > ();
 
-      if(get_view_id() == command::PaneViewFileManager)
+      if(get_view_id() == prompt::PaneViewFileManager)
       {
          pframe->m_bAutoHideOnOutClick = false;
          pframe->ShowWindow(SW_MAXIMIZE);
       }
-      else if(get_view_id() == command::PaneViewContextMenu)
+      else if(get_view_id() == prompt::PaneViewContextMenu)
       {
          sp(::filemanager::manager) pdoc =  (get_view_uie());
          pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\menu", ::action::source::system_default());
@@ -293,20 +293,20 @@ namespace command
 
    void pane_view::rotate()
    {
-      command::EPaneView eviewNew;
+      prompt::EPaneView eviewNew;
       switch(get_view_id())
       {
-      case command::PaneViewContextMenu:
-         eviewNew = command::PaneViewPrimaryCommand;
+      case prompt::PaneViewContextMenu:
+         eviewNew = prompt::PaneViewPrimaryCommand;
          break;
-      case command::PaneViewPrimaryCommand:
-         eviewNew = command::PaneViewFileManager;
+      case prompt::PaneViewPrimaryCommand:
+         eviewNew = prompt::PaneViewFileManager;
          break;
-      case command::PaneViewFileManager:
-         eviewNew = command::PaneViewContextMenu;
+      case prompt::PaneViewFileManager:
+         eviewNew = prompt::PaneViewContextMenu;
          break;
       default:
-         eviewNew = command::PaneViewPrimaryCommand;
+         eviewNew = prompt::PaneViewPrimaryCommand;
       }
 
       set_cur_tab_by_id(eviewNew);
@@ -356,6 +356,6 @@ namespace command
    }
 
 
-} // namespace command
+} // namespace prompt
 
 

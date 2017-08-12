@@ -729,7 +729,7 @@ namespace filemanager
    void manager::_001OnNewManager(signal_details * pobj)
    {
 
-      Session.filemanager().std().add_manager("", canew(::create(Application.creation())));
+      Session.filemanager().std().add_manager("", canew(::create(Application.handler())));
 
       pobj->m_bRet = true;
 

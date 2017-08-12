@@ -96,18 +96,18 @@ uint32_t __start_system(const char * pszFileName)
       
    ::set_thread(psystem);
       
-   ::aura::main_init_data * pinitmaindata   = new ::aura::main_init_data;
+   ::command::command * pcommand = new ::command::command;
       
-   pinitmaindata->m_vssCommandLine          = g_pszCommandLine;
+   pcommand->m_strCommandLine = g_pszCommandLine;
    
    if(pszFileName != NULL)
    {
    
-      pinitmaindata->m_straFile.add(pszFileName);
+      pcommand->m_straFile.add(pszFileName);
       
    }
    
-   psystem->init_main_data(pinitmaindata);
+   psystem->startup_command(pcommand);
       
    bool bOk = true;
       

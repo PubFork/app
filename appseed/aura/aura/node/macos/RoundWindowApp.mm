@@ -21,6 +21,8 @@ void macos_on_app_activate();
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
    
+   //MessageBox(NULL, "applicationDidFinishLaunching", "applicationDidFinishLaunching", MB_OK);
+   
    defer_run_system();
    
 }
@@ -29,6 +31,8 @@ void macos_on_app_activate();
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender
                     hasVisibleWindows:(BOOL)flag
 {
+   
+   //MessageBox(NULL, "applicationShouldHandleReopen", "applicationShouldHandleReopen", MB_OK);
    
    macos_on_app_activate();
 
@@ -40,6 +44,8 @@ void macos_on_app_activate();
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
 {
    
+   //MessageBox(NULL, "applicationOpenUntitledFile", "applicationOpenUntitledFile", MB_OK);
+   
    defer_run_system();
    
    return YES;
@@ -49,6 +55,8 @@ void macos_on_app_activate();
 
 - (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename
 {
+   
+   //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
    
    defer_run_system([filename UTF8String]);
    

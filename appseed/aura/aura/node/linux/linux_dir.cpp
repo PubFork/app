@@ -1344,10 +1344,10 @@ namespace linux
 
       string strUserFolderShift;
 
-//      if(App(get_app()).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+//      if(App(get_app()).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
   //    {
 
-    //     strUserFolderShift = ::file::path(strRelative) / App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+    //     strUserFolderShift = ::file::path(strRelative) / App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
 
   //    }
   //    else
@@ -1502,10 +1502,10 @@ namespace linux
 
       string strUserFolderShift;
 
-      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
       {
 
-         strUserFolderShift = ::file::path(strRelative) / App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+         strUserFolderShift = ::file::path(strRelative) / App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
 
       }
       else

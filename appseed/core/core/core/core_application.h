@@ -51,7 +51,7 @@ namespace core
 
       // Pointer to ::user::document_manager used to manage document templates
       // for this application instance.
-      sp(::object)                             m_pdocmanager;
+      sp(::user::document_manager)           m_pdocmanager;
 
       // Support for Shift+F1 help mode.
       // TRUE if we're in SHIFT+F1 mode.
@@ -74,7 +74,7 @@ namespace core
 
       int32_t                                m_iResourceId;
 
-      sp(::object)                           m_pwndfrm;
+      sp(::user::wndfrm::wndfrm)             m_pwndfrm;
 
 
       stringa                                m_straAppInterest;
@@ -360,12 +360,12 @@ namespace core
 
       virtual int32_t run();
 
-      sp(::aura::application) get_system();
+      ::aura::application * get_system();
 
       virtual bool set_keyboard_layout(const char * pszPath,::action::context actioncontext);
 
-      ::user::wndfrm::wndfrm          & wndfrm();
-      ::user::document_manager          & document_manager();
+      ::user::wndfrm::wndfrm * wndfrm();
+      ::user::document_manager * document_manager();
 
 
       string message_box(const char * pszMatter,property_set & propertyset);

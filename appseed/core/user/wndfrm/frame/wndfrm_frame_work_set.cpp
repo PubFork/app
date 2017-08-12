@@ -1561,8 +1561,26 @@ namespace user
          return ModeNone;
          }*/
 
-         void WorkSet::AttachFrameSchema(sp(::user::wndfrm::frame::frame) pframeschema)
+         void WorkSet::AttachFrameSchema(::user::wndfrm::frame::frame * pframeschema)
          {
+            
+            if(m_pframeschema != NULL && m_pframeschema != pframeschema)
+            {
+               
+               m_pframeschema->OnDetach();
+               
+               m_pframeschema->m_pworkset = NULL;
+               
+               m_pframeschema = NULL;
+               
+            }
+            
+            if(pframeschema == NULL)
+            {
+               
+               return;
+               
+            }
 
             m_pframeschema = pframeschema;
 
@@ -1571,25 +1589,37 @@ namespace user
             m_pframeschema->OnAttach();
 
          }
+         
 
          ::user::interaction * WorkSet::get_draw_window()
          {
+            
             return m_pwndDraw;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetEventWindow()
          {
+            
             return m_pwndEvent;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetRegionWindow()
          {
+            
             return m_pwndRegion;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetCommandWindow()
          {
+            
             return m_pwndCommand;
+            
          }
 
 

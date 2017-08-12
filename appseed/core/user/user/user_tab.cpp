@@ -102,7 +102,7 @@ namespace user
 
 
 
-      m_bNoTabs = System.directrix()->m_varTopicQuery.has_property("no_tabs");
+      m_bNoTabs = System.handler()->m_varTopicQuery.has_property("no_tabs");
 
 
       //m_rectBorder.set(7, 1, 7, 0);

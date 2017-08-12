@@ -8,27 +8,39 @@ class CLASS_DECL_AURA handler :
 public:
 
    
-   spa(::command)             m_ptraHistory; // accumulatted as handler history passes
-   //spa(::command)        m_ptra; // pending commands to be run - handler does not "run" forks, let it's own thread/process run it
+   /// accumulatted as handler history passes
+   spa(::command::command)    m_ptraHistory;
+   
+   
+   /// pending commands to run - handler doesn't "run" THEM. Let thread does it.
+   // spa(::command)          m_ptra;
+   
    stringa                    m_straHistory;
 
+   /// accumulatted, reset, set, or clear as handler history passes
+   var                        m_varTopicFile;
 
-   var                        m_varTopicFile;  // accumulatted, reset, set, or clear as handler history passes
-   var                        m_varTopicQuery; // accumulatted, reset, set, or clear as handler history passes
-   //manual_reset_event               m_ev;
+   /// accumulatted, reset, set, or clear as handler history passes
+   var                        m_varTopicQuery;
+   
    sp(command_line)           m_spcommandline;
+   
    ::thread *                 m_pthread;
+   
 
 
    handler(::thread * pthread);
    virtual ~handler();
 
+   
    virtual int64_t add_ref()
    {
 
       return ::object::add_ref();
 
    }
+   
+   
    virtual int64_t dec_ref()
    {
 
@@ -37,11 +49,15 @@ public:
    }
 
 
-   virtual void handle(::command * pcommand);
+   virtual void handle(::command::command * pcommand);
+   
+   virtual void handle(::create * pcreate);
 
    virtual void handle(::e_command ecommand);
 
-   virtual void on_handle(::command * pcommand);
+   virtual void on_handle(::command::command * pcommand);
+   
+   virtual void on_handle(::create * pcreate);
 
    virtual bool is_thread();
 
@@ -49,11 +65,12 @@ public:
    
    virtual bool has_property(const char * pszKey);
 
-   virtual void merge(::command * pcommand);
+   virtual void merge(::command::command * pcommand);
    
    virtual void merge(::handler * phandler);
 
-   virtual void record(::command * pcommand);
+   virtual void record(::command::command * pcommand);
+   
    
 };
 

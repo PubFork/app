@@ -74,14 +74,14 @@ bool db_server::initialize_user(mysql::database * pmysqldbUser, const char * psz
 bool db_server::initialize()
 {
 
-   if(System.directrix()->m_varTopicQuery["app"] == "app-core/netnodelite"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnodecfg"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/mydns"
-   || System.directrix()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
-   || System.directrix()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
-   || System.directrix()->m_varTopicQuery.has_property("no_remote_simpledb"))
+   if(System.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/mydns"
+   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
+   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
+   || System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
    {
 
       m_bRemote = false;
@@ -110,7 +110,7 @@ bool db_server::initialize()
 
    int32_t iBufferSize = 128 * 1024;
 
-   sp(::command_thread) commandthread = System.command();
+   sp(::handler) commandthread = System.handler();
 
    if(commandthread->m_varTopicQuery.has_property("filesizebuffer"))
    {

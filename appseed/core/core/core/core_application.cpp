@@ -304,16 +304,16 @@ namespace core
             data_set(".local://system_locale", Session.get_locale());
          }
 
-         if (command()->m_varTopicQuery["locale"].get_count() > 0)
+         if (handler()->m_varTopicQuery["locale"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["locale"].stra()[0];
+            str = handler()->m_varTopicQuery["locale"].stra()[0];
             data_set(".local://system_locale", str);
             data_set("locale", str);
             Session.set_locale(str, ::action::source::database());
          }
-         else if (command()->m_varTopicQuery["lang"].get_count() > 0)
+         else if (handler()->m_varTopicQuery["lang"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["lang"].stra()[0];
+            str = handler()->m_varTopicQuery["lang"].stra()[0];
             data_set(".local://system_locale", str);
             data_set(".local://locale", str);
             Session.set_locale(str, ::action::source::database());
@@ -349,9 +349,9 @@ namespace core
             data_set(".local://system_schema", Session.get_schema());
          }
 
-         if (command()->m_varTopicQuery["schema"].get_count() > 0)
+         if (handler()->m_varTopicQuery["schema"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["schema"].stra()[0];
+            str = handler()->m_varTopicQuery["schema"].stra()[0];
             data_set(".local://system_schema", str);
             data_set(".local://schema", str);
             Session.set_schema(str, ::action::source::database());
@@ -479,7 +479,7 @@ namespace core
       if (!is_session() && !is_system())
       {
 
-         if (directrix()->m_varTopicQuery.has_property("install"))
+         if (handler()->m_varTopicQuery.has_property("install"))
          {
 
             if (is_user_service())
@@ -953,11 +953,11 @@ namespace core
       // call doc-template idle hook
       ::count count = 0;
       if (m_pdocmanager != NULL)
-      count = document_manager().get_template_count();
+      count = document_manager()->get_template_count();
 
       for(index index = 0; index < count; index++)
       {
-      sp(impact_system) ptemplate = document_manager().get_template(index);
+      sp(impact_system) ptemplate = document_manager()->get_template(index);
       ASSERT_KINDOF(impact_system, ptemplate);
       ptemplate->on_idle();
       }
@@ -1701,13 +1701,13 @@ namespace core
          chFirst = strId[0];
       }
       /*      if (m_pdocmanager != NULL)
-      document_manager()._001OnFileNew();*/
+      document_manager()->_001OnFileNew();*/
    }
 
    void application::on_file_open()
    {
       ENSURE(m_pdocmanager != NULL);
-      //document_manager().on_file_open();
+      //document_manager()->on_file_open();
    }
 
 
@@ -1931,7 +1931,7 @@ namespace core
    bool application::save_all_modified()
    {
       /*      if (m_pdocmanager != NULL)
-      return document_manager().save_all_modified();*/
+      return document_manager()->save_all_modified();*/
       return TRUE;
    }
 
@@ -1940,7 +1940,7 @@ namespace core
    bool application::OnDDECommand(LPTSTR lpszCommand)
    {
       /*      if (m_pdocmanager != NULL)
-      return document_manager().OnDDECommand(lpszCommand);
+      return document_manager()->OnDDECommand(lpszCommand);
       else*/
       return FALSE;
    }
@@ -2044,20 +2044,20 @@ namespace core
    void application::RegisterShellFileTypes(bool bCompat)
    {
       ENSURE(m_pdocmanager != NULL);
-      //      document_manager().RegisterShellFileTypes(bCompat);
+      //      document_manager()->RegisterShellFileTypes(bCompat);
    }
 
    void application::UnregisterShellFileTypes()
    {
       ENSURE(m_pdocmanager != NULL);
-      //    document_manager().UnregisterShellFileTypes();
+      //    document_manager()->UnregisterShellFileTypes();
    }
 
 
    int32_t application::get_open_document_count()
    {
       ENSURE(m_pdocmanager != NULL);
-      //  return document_manager().get_open_document_count();
+      //  return document_manager()->get_open_document_count();
       return 0;
    }
 
@@ -2624,7 +2624,7 @@ namespace core
 
 
       /*      if (m_pdocmanager != NULL)
-      document_manager().dump(dumpcontext);*/
+      document_manager()->dump(dumpcontext);*/
 
       dumpcontext << "\nm_nWaitCursorCount = " << m_iWaitCursorCount;
       dumpcontext << "\nm_nNumPreviewPages = " << m_nNumPreviewPages;
@@ -2761,10 +2761,10 @@ namespace core
       //}
 
       //if(is_system()
-      //   && command_thread()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-gtech/alarm"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+      //   && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
+      //   && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+      //   && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
+      //   && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       //{
       //   System.http().defer_auto_initialize_proxy_configuration();
       //}
@@ -2778,10 +2778,10 @@ namespace core
       //   }
       //
       //   if(is_system()
-      //      && command_thread()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_netnode"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+      //      && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
+      //      && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_netnode"
+      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       //   {
       //      System.http().defer_auto_initialize_proxy_configuration();
       //   }
@@ -2955,7 +2955,7 @@ namespace core
    {
       if (m_strId == "session" || m_strAppName == "session")
       {
-         if (!directrix()->m_varTopicQuery.has_property("session_start"))
+         if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
             ::multithreading::post_quit(&System);
          }
@@ -2989,7 +2989,7 @@ namespace core
 
       if (m_strId == "session")
       {
-         if (!directrix()->m_varTopicQuery.has_property("session_start"))
+         if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
             ::multithreading::post_quit(&System);
          }
@@ -3191,9 +3191,11 @@ namespace core
 
 
 
-   sp(::aura::application) application::get_system()
+   ::aura::application * application::get_system()
    {
+      
       return new application();
+      
    }
 
 
@@ -3536,10 +3538,7 @@ namespace core
    void application::_001OnFranceExit()
    {
 
-
-      document_manager().close_all_documents(true);
-
-
+      document_manager()->close_all_documents(true);
 
    }
 

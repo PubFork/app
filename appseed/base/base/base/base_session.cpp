@@ -859,7 +859,7 @@ namespace base
 
       {
 
-         string strConfig = Application.directrix()->m_varTopicQuery["wndfrm"];
+         string strConfig = Application.handler()->m_varTopicQuery["wndfrm"];
 
          if (strConfig.has_char())
          {

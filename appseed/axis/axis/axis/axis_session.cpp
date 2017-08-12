@@ -346,8 +346,8 @@ namespace axis
 
       }
 
-      if(Application.directrix()->m_varTopicQuery.has_property("uninstall")
-         || Application.directrix()->m_varTopicQuery.has_property("install"))
+      if(Application.handler()->m_varTopicQuery.has_property("uninstall")
+         || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
          if(m_pfontopus->create_system_user("system") == NULL)

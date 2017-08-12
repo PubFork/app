@@ -117,7 +117,7 @@ int get_proc_cpuinfo_core_count()
       while(fgets(str, sizeof str, fp))
       {
 
-         if( !memcmp(str, "processor", 9) )
+         if( !memcmp(str, "handler", 9) )
          {
 
             procCount++;

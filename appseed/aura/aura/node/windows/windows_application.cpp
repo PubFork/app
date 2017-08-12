@@ -299,15 +299,15 @@ namespace aura
 
 
 
-   bool application::set_main_init_data(::aura::main_init_data * pauradata)
+   bool application::process_command(::aura::main_init_data * pauradata)
    {
 
       // m_pmaininitdata = pauradata;
 
-      if(m_pinitmaindata != NULL && m_pauraapp->is_system())
+      if(m_pcommand != NULL && m_pauraapp->is_system())
       {
 
-         ::windows::main_init_data * pdata = (::windows::main_init_data *) m_pinitmaindata;
+         ::windows::main_init_data * pdata = (::windows::main_init_data *) m_pcommand;
          if (!m_pauraapp->is_system())
             return false;
 
@@ -335,8 +335,8 @@ namespace aura
 
          if (strAppId.has_char())
          {
-            directrix()->m_varTopicQuery["appid"] = strAppId;
-            m_pauraapp->directrix()->m_varTopicQuery["appid"] = strAppId;
+            handler()->m_varTopicQuery["appid"] = strAppId;
+            m_pauraapp->handler()->m_varTopicQuery["appid"] = strAppId;
          }
 
          // Initialize interaction_impl::m_pfnNotifyWinEvent

@@ -1743,6 +1743,16 @@ namespace user
       return false;
 
    }
+   
+   
+   void interaction_impl_base::queue_message_handler(::signal_details * pobj)
+   {
+      
+      
+      return m_pui->message_handler(pobj);
+      
+      
+   }
 
 
 } // namespace user

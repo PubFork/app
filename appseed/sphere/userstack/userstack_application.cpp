@@ -175,7 +175,7 @@ namespace userstack
       {
 #ifdef WINDOWSEX
          ::memory_file file(get_app());
-         file.from_string(command()->m_varTopicFile);
+         file.from_string(handler()->m_varTopicFile);
          COPYDATASTRUCT data;
          data.dwData = 1984;
          data.cbData = (uint32_t) file.get_length();
@@ -225,7 +225,7 @@ namespace userstack
                || ::str::begins_eat(strCommand, "ca2prompt\n"))
                {
                   strCommand.trim();
-                  command()->add_fork_uri(strCommand);
+                  handler()->add_fork_uri(strCommand);
                }
                return;
             }

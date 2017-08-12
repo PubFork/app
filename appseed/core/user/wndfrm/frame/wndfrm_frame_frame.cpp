@@ -80,8 +80,16 @@ namespace user
 
             }
 
+
          }
 
+         
+         void frame::OnDetach()
+         {
+            
+         }
+         
+         
          bool frame::is_control_box_moveable()
          {
 

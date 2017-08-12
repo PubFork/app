@@ -1,12 +1,13 @@
 #pragma once
 
+
 namespace multimedia
 {
 
    namespace audio_plugin
    {
 
-   class plugin;
+      class plugin;
 
    } // namespace audio_plugin
 
@@ -64,7 +65,7 @@ namespace aura
       ::aura::allocatorsp                             m_allocer;
       sp(class signal)                                m_psignal;
 
-      ::aura::main_init_data *                        m_pinitmaindata;
+      sp(::command::command)                          m_pcommand;
 
       ::http::application                             m_http;
 
@@ -456,42 +457,9 @@ namespace aura
 
       virtual bool assert_user_logged_in();
 
-      virtual bool init_main_data(::aura::main_init_data * pdata);
+      virtual bool startup_command(::command::command * pcommand);
 
-      virtual bool set_main_init_data(::aura::main_init_data * pdata);
-
-
-      //virtual void dir_matter_ls_file(const string & str,stringa & stra);
-      //virtual string matter_as_string(const char * pszMatter,const char * pszMatter2 = NULL);
-      //virtual string file().as_string(var varFile);
-      //virtual string file().as_string(var varFile,var & varQuery);
-      //virtual string dir().matter(const char * pszMatter,const char * pszMatter2 = NULL);
-      //virtual bool is_inside_time_dir(const char * pszPath);
-      //virtual bool file_is_read_only(const char * pszPath);
-      //virtual bool file().exists(const char * pszPath);
-      //virtual bool file_is_equal_path(const char * pszPath1,const char * pszPath2);
-      //virtual bool dir().id(const char * psz);
-      //virtual bool file_del(const char * psz);
-      //virtual string file_extension(const char * pszPath);
-      //virtual string dir_path(const char * psz1,const char * psz2,const char * psz3 = NULL);
-      //virtual string dir_element(const char * psz = NULL);
-      //virtual string dir_ca2module(const char * psz = NULL);
-      //virtual string dir_name(const char * psz);
-      //virtual void  dir_ls_dir(const char * lpcsz,::file::patha & patha);
-      //virtual void  dir_rls(const char * lpcsz,::file::patha & patha);
-      //virtual bool dir_mk(const char * psz);
-      //virtual string file_title(const char * psz);
-      //virtual string file().name_(const char * psz);
-      //virtual string file_time_square();
-      //virtual string dir_userappdata(const char * lpcsz = NULL,const char * lpcsz2 = NULL);
-      //virtual string dir_appdata(const char * lpcsz = NULL,const char * lpcsz2 = NULL);
-      //virtual string dir_simple_path(const string & str1,const string & str2);
-
-//#ifdef APPLEOS
-//      virtual CLASS_DECL_AURA string dir_pathfind(const char * pszEnv, const char * pszTopic, const char * pszMode);
-//#endif
-
-      //virtual ::file::file_sp file_get_file(var varFile,uint32_t uiFlags);
+      virtual bool process_command(::command::command * pcommand);
 
       virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
 
@@ -550,7 +518,7 @@ namespace aura
 
       virtual string lstr(id id,const string & strDefault = (const string &)*((const string *)NULL)) override;
 
-      void on_command(::primitive::command * pcommand) override;
+      void on_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
 
 

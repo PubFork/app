@@ -1,7 +1,7 @@
 //#include "framework.h"
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -30,11 +30,11 @@ namespace command
    bool application::initialize_application()
    {
 
-      System.factory().creatable_small < command::document >();
-      System.factory().creatable_small < command::frame >();
-      System.factory().creatable_small < command::view >();
-      System.factory().creatable_small < command::pane_view >();
-      System.factory().creatable_small < command::primary_view >();
+      System.factory().creatable_small < prompt::document >();
+      System.factory().creatable_small < prompt::frame >();
+      System.factory().creatable_small < prompt::view >();
+      System.factory().creatable_small < prompt::pane_view >();
+      System.factory().creatable_small < prompt::primary_view >();
 
       if(!::asphere::application::initialize_application())
          return false;
@@ -48,9 +48,9 @@ namespace command
 	      pDocTemplate = new ::user::single_document_template(
             this,
 		      "system/form",
-		      System.type_info < command::document > (),
-		      System.type_info < command::frame > (),
-		      System.type_info < command::pane_view > ());
+		      System.type_info < prompt::document > (),
+		      System.type_info < prompt::frame > (),
+		      System.type_info < prompt::pane_view > ());
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
@@ -98,7 +98,7 @@ namespace command
 
    }
 
-} // namespace command
+} // namespace prompt
 
 
 

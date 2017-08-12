@@ -25,7 +25,7 @@ namespace user
 
    void interaction_impl::user_common_construct()
    {
-
+      
       m_dFps = 60.0;
       m_bIpcCopy = false;
       m_pmutex                               = new mutex(get_app());
@@ -276,11 +276,22 @@ namespace user
       return false;
 
    }
+   
+   
 
 
    void interaction_impl::prio_install_message_handling(::message::dispatch * pinterface)
    {
-
+      
+      for(index i = (index) queue_thread_first; i < (index) queue_thread_end; i++)
+      {
+         
+         e_queue_thread e = (e_queue_thread) i;
+         
+         m_mapqueue.set_at(e, canew(queue_thread(this)));
+         
+      }
+      
       ::user::interaction_impl_base::prio_install_message_handling(pinterface);
 
    }
@@ -347,6 +358,8 @@ namespace user
    }
 
    
+   
+   
    void interaction_impl::_001OnTriggerMouseInside()
    {
 
@@ -354,6 +367,151 @@ namespace user
 
    }
 
+
+   interaction_impl::queue_thread::queue_thread(::user::interaction_impl * pimpl) :
+      ::thread(pimpl->m_pui->get_app()),
+      m_evNewMessage(pimpl->m_pui->get_app()),
+      m_pimpl(pimpl)
+   {
+    
+      if(get_app() != NULL)
+      {
+      
+         begin();
+         
+      }
+      
+   }
+   
+      
+   interaction_impl::queue_thread::~queue_thread()
+   {
+         
+         
+   }
+      
+      
+   void interaction_impl::queue_thread::queue_message_handler(::message::base * pbase)
+   {
+      
+      if(m_hthread == NULL)
+      {
+         
+         m_pimpl->m_pui->message_handler(pbase);
+         
+         return;
+         
+      }
+      
+      {
+            
+         single_lock sl(m_pmutex);
+            
+         m_messagequeue.add(pbase);
+            
+      }
+         
+      m_evNewMessage.SetEvent();
+         
+   }
+      
+      
+   int32_t interaction_impl::queue_thread::run()
+   {
+      
+      while(get_thread_run())
+      {
+            
+         
+         if (m_evNewMessage.wait(seconds(1)).succeeded())
+         {
+                  
+            m_evNewMessage.ResetEvent();
+                  
+         }
+         
+         {
+               
+            synch_lock sl(m_pmutex);
+               
+            if (m_messagequeue.has_elements())
+            {
+                  
+               sp(::message::base) pbase = m_messagequeue.element_at(0);
+                  
+               m_messagequeue.remove_at(0);
+                  
+               sl.unlock();
+               
+               try
+               {
+                  
+                  m_pimpl->m_pui->message_handler(pbase);
+                  
+               }
+               catch (...)
+               {
+               
+               }
+                  
+               
+                  
+            }
+            
+         }
+         
+      }
+      
+      return 0;
+         
+   }
+   
+   
+   interaction_impl::e_queue_thread interaction_impl::message_queue_thread(UINT uiMessage)
+   {
+      
+      if (uiMessage == WM_MOUSEMOVE)
+      {
+         
+         return queue_thread_mouse_move;
+         
+      }
+      else if ((uiMessage >= WM_MOUSEFIRST
+                && uiMessage <= WM_MOUSELAST)
+               ||
+               (uiMessage >= WM_KEYFIRST
+                && uiMessage <= WM_KEYLAST))
+      {
+         
+         return queue_thread_input;
+         
+      }
+
+      return queue_thread_other;
+
+   }
+   
+   
+   void interaction_impl::queue_message_handler(signal_details * pobj)
+   {
+      
+      sp(::message::base) pbase = pobj;
+      
+      if(pbase.is_null())
+      {
+         
+         message_handler(pobj);
+         
+         return;
+         
+      }
+      
+      e_queue_thread equeuethread = message_queue_thread(pbase->m_uiMessage);
+         
+      m_mapqueue[equeuethread]->queue_message_handler(pbase);
+      
+   }
+   
 
    void interaction_impl::_008OnMouse(::message::mouse * pmouse)
    {

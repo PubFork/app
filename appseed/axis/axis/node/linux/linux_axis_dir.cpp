@@ -965,9 +965,9 @@ namespace linux
 //
 //      string strUserFolderShift;
 //
-//      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+//      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
 //      {
-//         strUserFolderShift = path(strRelative, App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string());
+//         strUserFolderShift = path(strRelative, App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string());
 //      }
 //      else
 //      {

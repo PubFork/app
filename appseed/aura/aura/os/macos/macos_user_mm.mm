@@ -1,4 +1,4 @@
-//
+        //
 //  macos_user.mm
 //  base
 //
@@ -31,19 +31,12 @@ void ns_shared_application(int argc, char *argv[])
    id quitMenuItem = [[NSMenuItem alloc] initWithTitle:quitTitle
                                                 action:@selector(terminate:) keyEquivalent:@"q"];
    [appMenu addItem:quitMenuItem];
+
    [appMenuItem setSubmenu:appMenu];
-   /*   id window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200)
-    styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO]
-    ;
-    [window cascadeTopLeftFromPoint:NSMakePoint(20,20)];
-    [window setTitle:appName];
-    [window makeKeyAndOrderFront:nil];*/
+
    [NSApp activateIgnoringOtherApps:YES];
-   [NSApp run];
-   //   return 0;
-   //   NSApplicationMain(argc, (const char **) argv);
    
-   //   [RoundWindowApp sharedApplication];
+   [NSApp run];
    
 }
 

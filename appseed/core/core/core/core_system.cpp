@@ -874,26 +874,26 @@ OutputDebugString("gtk_main exited");
    void system::post_fork_uri(const char * pszUri,application_bias * pbiasCreate)
    {
 
-      command()->add_fork_uri(pszUri,pbiasCreate);
+      handler()->add_fork_uri(pszUri,pbiasCreate);
 
-      //if(command()->m_varTopicQuery.has_property("version"))
+      //if(handler()->m_varTopicQuery.has_property("version"))
       //{
 
-      //   install().m_strVersion = command()->m_varTopicQuery["version"];
+      //   install().m_strVersion = handler()->m_varTopicQuery["version"];
 
       //}
 
-      if(command()->m_varTopicQuery["locale"].array_get_count() > 0)
+      if(handler()->m_varTopicQuery["locale"].array_get_count() > 0)
       {
 
-         Session.set_locale(command()->m_varTopicQuery["locale"].stra()[0],::action::source::user());
+         Session.set_locale(handler()->m_varTopicQuery["locale"].stra()[0],::action::source::user());
 
       }
 
-      if(command()->m_varTopicQuery["schema"].array_get_count() > 0)
+      if(handler()->m_varTopicQuery["schema"].array_get_count() > 0)
       {
 
-         Session.set_schema(command()->m_varTopicQuery["schema"].stra()[0],::action::source::user());
+         Session.set_schema(handler()->m_varTopicQuery["schema"].stra()[0],::action::source::user());
 
       }
 
@@ -934,10 +934,10 @@ OutputDebugString("gtk_main exited");
 #endif
 
 
-   bool system::set_main_init_data(::aura::main_init_data * pdata)
+   bool system::process_command(::command::command * pcommand)
    {
 
-      return base::system::set_main_init_data(pdata);
+      return base::system::process_command(pcommand);
 
    }
 

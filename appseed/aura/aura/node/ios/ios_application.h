@@ -48,7 +48,7 @@
 //      
 //      virtual void SetCurrentHandles();
 //      
-//      virtual bool set_main_init_data(::aura::main_init_data * pdata);
+//      virtual bool process_command(::aura::main_init_data * pdata);
 //      
 //      virtual bool process_initialize();
 //      virtual bool initialize1();

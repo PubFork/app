@@ -44,7 +44,7 @@ namespace multithreading
 
       ::set_thread(pthread);
 
-      processor_cache_oriented_set_thread_memory_pool(0); // set default processor cache oriented thread memory pool index to 0 ("zero") (The First One)
+      processor_cache_oriented_set_thread_memory_pool(0); // set default handler cache oriented thread memory pool index to 0 ("zero") (The First One)
 
       __init_thread();
 

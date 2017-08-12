@@ -1,7 +1,7 @@
 //#include "framework.h"
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -439,6 +439,6 @@ namespace command
    }
 
 
-} // namespace command
+} // namespace prompt
 
 

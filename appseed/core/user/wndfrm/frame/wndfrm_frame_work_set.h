@@ -85,7 +85,7 @@ namespace user
             SizeManager * GetSizingManager();
 
 
-            void AttachFrameSchema(sp(frame) pframeschema);
+            void AttachFrameSchema(frame * pframeschema);
             void install_message_handling(::message::dispatch * pdispatch);
 
             DECL_GEN_SIGNAL(_001OnLButtonDown);

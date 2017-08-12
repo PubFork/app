@@ -39,29 +39,44 @@ namespace user
 
          sp(::user::interaction) appearance::get_window()
          {
+            
             return m_pworkset->GetRegionWindow();
+            
          }
+         
 
          bool appearance::update()
          {
+            
             if (m_pworkset == NULL)
+            {
+               
                return false;
-
+               
+            }
+            
+            if(m_pworkset->m_pframeschema == NULL)
+            {
+               
+               return false;
+               
+            }
 
             try
             {
 
                m_pworkset->m_pframeschema->on_initialize_appearance();
 
+               return true;
+               
             }
             catch (...)
             {
-
+               
             }
 
-            //      sp(::user::interaction) pwnd = get_window();
-
-            return true;
+            return false;
+            
          }
 
 

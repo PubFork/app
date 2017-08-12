@@ -518,11 +518,11 @@ namespace metrowin
 
       //m_psystem->m_ptwf->twf_start();
 
-      stringa straLibrary = m_psystem->command()->m_varTopicQuery["app"].stra();
+      stringa straLibrary = m_psystem->handler()->m_varTopicQuery["app"].stra();
 
-      for(int i = 0; i < m_psystem->command()->m_varTopicQuery["app"].get_count(); i++)
+      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
       {
-         string strApp = m_psystem->command()->m_varTopicQuery["app"].stra()[i];
+         string strApp = m_psystem->handler()->m_varTopicQuery["app"].stra()[i];
       }
 
       straLibrary.replace("\\", "_");
@@ -537,12 +537,12 @@ namespace metrowin
          iFind = strLibrary.find("/", iFind + 1);
          if(iFind >= 0)
             strLibrary.Truncate(iFind);
-         m_psystem->m_mapAppLibrary[m_psystem->command()->m_varTopicQuery["app"][i]] = strLibrary;
+         m_psystem->m_mapAppLibrary[m_psystem->handler()->m_varTopicQuery["app"][i]] = strLibrary;
       }
 
-      for(int i = 0; i < m_psystem->command()->m_varTopicQuery["app"].get_count(); i++)
+      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
       {
-         string strApp = m_psystem->command()->m_varTopicQuery["app"][i];
+         string strApp = m_psystem->handler()->m_varTopicQuery["app"][i];
       }
 
       m_psystem->m_mapAppLibrary["app/ca2/cube"] = "ca2";

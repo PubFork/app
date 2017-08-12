@@ -62,8 +62,6 @@ class user_interaction_ptr_array;
 
 class thread_startup;
 
-namespace primitive { class command;  }
-
 ///
 /// \author Camilo Sasuke Tsumanuma
 ///
@@ -175,7 +173,7 @@ public:
    string                                    m_strFile;
    int                                       m_iLine;
 
-   sp(::command_thread)                      m_pcommandthread;
+   sp(::handler)                             m_phandler;
    DWORD_PTR                                 m_dwThreadAffinityMask;
    spa(::thread_toolset)                     m_toolset;
 
@@ -378,25 +376,24 @@ public:
    virtual int32_t thread_term();
    virtual void thread_delete();
    operator HTHREAD() const;
+   
    void construct();
+   
    void construct(__THREADPROC pfnthread_implProc, LPVOID pParam);
+   
    virtual bool begin_thread(bool bSynch = false,int32_t * piStartupError = NULL,int32_t epriority= ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlagsParam = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
-   //virtual int_ptr item() const;
+   
    virtual bool initialize_message_queue();
+   
    virtual void message_handler(signal_details * pobj);
 
-   // Wall-eeeeee aliases
-   ::command_thread * command_central();
-   ::command_thread * command_thread();
-   ::command_thread * guideline();
-   ::command_thread * command();
-   ::command_thread * directrix();
-   ::command_thread * axiom();
-   ::command_thread * creation();
+   ::handler * handler();
 
-   virtual void on_command(::primitive::command * pcommand);
+   virtual void on_command(::command::command * pcommand);
 
    virtual void on_create(::create * pcreate);
+   
+   virtual void request_create(::create * pcreate);
 
 };
 

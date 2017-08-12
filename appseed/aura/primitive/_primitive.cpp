@@ -28,7 +28,7 @@
 #endif /* DEBUG */
 
 
-// Thank you (casey) Thank you Mummi Thank you Carlos. primitive _amalgamation... Visual Studio 2015 Preview seems to need it (too long filename or extension).
+// Thank you (casey) Thank you Mummi Thank you TBS. primitive _amalgamation... Visual Studio 2015 Preview seems to need it (too long filename or extension).
 
 //O volume na unidade Z ‚ eco
  //O N£mero de S‚rie do Volume ‚ 4A91-94E4
@@ -40,7 +40,7 @@
 #include "primitive_color.cpp"
 #include "primitive_command.cpp"
 #include "primitive_command_line.cpp"
-#include "primitive_command_thread.cpp"
+#include "primitive_handler.cpp" // TBS - :) tons of handlers/routers/algorithms in kaem.io/dk
 #include "primitive_create.cpp"
 #include "primitive_edit.cpp"
 #include "primitive_factory.cpp"

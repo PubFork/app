@@ -194,18 +194,26 @@ namespace aura
 
    }
 
-#ifdef WINDOWS
 
-   bool os::open_in_ie(const char * lpcsz)
+   /// Windows (IE), macOS (Safari), Linux (Firefox, oder...)
+   /// Remark: it is not default browser (necessarily)
+   bool os::native_full_web_browser(const char * lpcsz)
    {
-
-      ::exception::throw_interface_only(get_app());
+      
+      throw not_implemented(get_app());
 
       return false;
-
+      
    }
-
-#endif
+   
+   /// Windows (Edge), fallback to native_full_web_browser
+   /// Remark: it is not default browser (necessarily)
+   bool os::native_modern_web_browser(const char * lpcsz)
+   {
+     
+      return native_full_web_browser(lpcsz);
+      
+   }
 
 
    bool os::create_service(::aura::application * papp)
@@ -495,6 +503,7 @@ namespace aura
       return false;
 
    }
+   
 
    bool os::is_user_auto_start(string strId)
    {
@@ -502,6 +511,7 @@ namespace aura
       return false;
 
    }
+   
 
    ::file::path os::get_app_path(const string & strApp)
    {
@@ -510,6 +520,14 @@ namespace aura
 
    }
 
+   
+   void os::on_process_command(::command::command * pcommand)
+   {
+      
+      UNREFERENCED_PARAMETER(pcommand);
+      
+   }
+   
 
 } // namespace core
 

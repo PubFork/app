@@ -8,56 +8,51 @@ create::create(::aura::application * papp) :
    m_spApplicationBias(allocer()),
    m_spCommandLine(allocer())
 {
+   
+   common_construct();
 
-   m_pthreadParent                     = NULL;
-   m_bMakeVisible                      = true;
-   m_bTransparentBackground            = true;
-   m_bClientOnly                       = false;
-   m_bOuterPopupAlertLike              = false;
-   m_bHold                             = true;
-   m_puiAlloc                          = NULL;
-   m_puiParent                         = NULL;
-   m_pthreadParent                     = Application.creation();
+   m_phandlerParent = papp->m_phandler;
 
 }
 
-create::create(::command_thread * pthreadParent) :
+
+create::create(::handler * phandlerParent) :
+   create(phandlerParent->get_app())
+{
+
+}
+
+
+create::create(::handler * pthreadParent, var varFile, bool bMakeVisible, ::user::primitive * puiParent) :
    object(pthreadParent->get_app()),
    command(pthreadParent->get_app()),
    m_spApplicationBias(allocer()),
    m_spCommandLine(allocer())
 {
+   
+   common_construct(bMakeVisible, puiParent);
 
-   m_bMakeVisible                      = true;
-   m_bTransparentBackground            = true;
-   m_bClientOnly                       = false;
-   m_bOuterPopupAlertLike              = false;
-   m_bHold                             = true;
-   m_puiAlloc                          = NULL;
-   m_puiParent                         = NULL;
-   m_pthreadParent                     = pthreadParent;
-
-}
-
-create::create(::command_thread * pthreadParent, var varFile, bool bMakeVisible, ::user::primitive * puiParent) :
-   object(pthreadParent->get_app()),
-   command(pthreadParent->get_app()),
-   m_spApplicationBias(allocer()),
-   m_spCommandLine(allocer())
-{
-
-   m_puiAlloc                          = NULL;
-   m_puiParent                         = NULL;
    m_spCommandLine->m_varFile          = varFile;
+   
+   m_phandlerParent                    = pthreadParent;
+
+}
+
+
+void create::common_construct(bool bMakeVisible, ::user::primitive * puiParent)
+{
+   
    m_bMakeVisible                      = bMakeVisible;
    m_bTransparentBackground            = true;
-   m_bHold                             = true;
    m_bClientOnly                       = false;
    m_bOuterPopupAlertLike              = false;
+   m_bHold                             = true;
+   m_puiAlloc                          = NULL;
    m_puiParent                         = puiParent;
-   m_pthreadParent                     = pthreadParent;
+   m_phandlerParent                    = NULL;
 
 }
+
 
 create::create(const create & createcontext) :
    object(createcontext.get_app()),
@@ -65,30 +60,41 @@ create::create(const create & createcontext) :
    m_spApplicationBias(allocer()),
    m_spCommandLine(allocer())
 {
-   m_puiAlloc                          = NULL;
-   m_puiParent                         = NULL;
-   m_bHold                             = true;
+   
+   common_construct();
+   
    operator = (createcontext);
+   
 }
+
 
 create::~create()
 {
+   
 }
 
-create & create::operator = (const create & createcontext)
+
+create & create::operator = (const create & create)
 {
+   
+   if(this == &create)
+   {
+      
+      return *this;
+      
+   }
 
-   m_bMakeVisible             = createcontext.m_bMakeVisible;
-   m_bTransparentBackground   = createcontext.m_bTransparentBackground;
-   m_bClientOnly              = createcontext.m_bClientOnly;
-   m_bOuterPopupAlertLike     = createcontext.m_bOuterPopupAlertLike;
-   m_bHold                    = createcontext.m_bHold;
-   m_puiParent                = createcontext.m_puiParent;
-   m_puiAlloc                 = createcontext.m_puiAlloc;
-   m_spApplicationBias        .oattrib(createcontext.m_spApplicationBias);
-   m_spCommandLine            .oattrib(createcontext.m_spCommandLine);
+   m_bMakeVisible             = create.m_bMakeVisible;
+   m_bTransparentBackground   = create.m_bTransparentBackground;
+   m_bClientOnly              = create.m_bClientOnly;
+   m_bOuterPopupAlertLike     = create.m_bOuterPopupAlertLike;
+   m_bHold                    = create.m_bHold;
+   m_puiParent                = create.m_puiParent;
+   m_puiAlloc                 = create.m_puiAlloc;
+   m_spApplicationBias        .oattrib(create.m_spApplicationBias);
+   m_spCommandLine            .oattrib(create.m_spCommandLine);
 
-   m_pthreadParent->consolidate((sp(::create)) this);
+   m_phandlerParent->merge(this);
 
    return *this;
 

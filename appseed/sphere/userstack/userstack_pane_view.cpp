@@ -60,24 +60,24 @@ namespace userstack
 
       add_tab("menu", ::userstack::PaneViewContextMenu);
 
-      for(int32_t i = 0; i < Application.directrix()->m_varTopicQuery["app"].stra().get_count(); i++)
+      for(int32_t i = 0; i < Application.handler()->m_varTopicQuery["app"].stra().get_count(); i++)
       {
 
-         string strId = Application.directrix()->m_varTopicQuery["app"].stra()[i];
+         string strId = Application.handler()->m_varTopicQuery["app"].stra()[i];
 
          if(i == 0 && strId == "app/sphere/userstack")
             continue;
 
          add_tab(strId, "app:" + strId);
 
-         set_cur_tab_by_id("app:" + Application.directrix()->m_varTopicQuery["app"].stra()[i]);
+         set_cur_tab_by_id("app:" + Application.handler()->m_varTopicQuery["app"].stra()[i]);
 
       }
 
-      for (int32_t i = 0; i < Application.directrix()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra().get_count(); i++)
+      for (int32_t i = 0; i < Application.handler()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra().get_count(); i++)
       {
 
-         set_cur_tab_by_id("app:" + Application.directrix()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra()[i]);
+         set_cur_tab_by_id("app:" + Application.handler()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra()[i]);
 
       }
 
@@ -218,15 +218,15 @@ namespace userstack
 
             string str;
 
-            if(papp->directrix()->m_varTopicQuery.has_property(strId))
+            if(papp->handler()->m_varTopicQuery.has_property(strId))
             {
 
-               createcontext->m_spCommandLine->m_varQuery.propset().merge(papp->directrix()->m_varTopicQuery[(const char *) strId].propset());
+               createcontext->m_spCommandLine->m_varQuery.propset().merge(papp->handler()->m_varTopicQuery[(const char *) strId].propset());
 
-               if(papp->directrix()->m_varTopicQuery[(const char *) strId].has_property("file"))
+               if(papp->handler()->m_varTopicQuery[(const char *) strId].has_property("file"))
                {
 
-                  createcontext->m_spCommandLine->m_varFile = papp->directrix()->m_varTopicQuery[(const char *) strId]["file"];
+                  createcontext->m_spCommandLine->m_varFile = papp->handler()->m_varTopicQuery[(const char *) strId]["file"];
 
                }
 

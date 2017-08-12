@@ -187,7 +187,7 @@ namespace filemanager
       if (get_pane_count() > 0)
          return;
 
-      bool bPathView = !Application.command_thread()->m_varTopicQuery.has_property("no_path_view");
+      bool bPathView = !Application.handler()->m_varTopicQuery.has_property("no_path_view");
 
       SetPaneCount(bPathView ? 2 : 1);
 

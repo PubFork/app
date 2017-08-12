@@ -178,7 +178,7 @@ namespace aura
 
       m_psignal = canew(class signal());
 
-      m_pcommandthread = canew(::command_thread(this));
+      m_phandler = canew(::handler(this));
 
       m_bLicense = false;
 
@@ -193,8 +193,6 @@ namespace aura
 
       m_bAuraInitializeInstance = false;
       m_bAuraInitializeInstanceResult = false;
-
-      m_pinitmaindata = NULL;
 
 #if defined(LINUX)
 
@@ -216,13 +214,6 @@ namespace aura
       {
 
          delete m_peventReady;
-
-      }
-
-      if (m_pinitmaindata != NULL)
-      {
-
-         delete m_pinitmaindata;
 
       }
 
@@ -297,10 +288,10 @@ namespace aura
    }
 
 
-   void application::on_command(::primitive::command * pcommand)
+   void application::on_command(::command::command * pcommand)
    {
 
-      if (pcommand->m_ecommand == ::primitive::command_on_agree_exit)
+      if (pcommand->m_ecommand == ::command_on_agree_exit)
       {
 
          m_bAgreeExit = _001OnAgreeExit();
@@ -308,7 +299,7 @@ namespace aura
          m_bAgreeExitOk = true;
 
       }
-      else if (pcommand->m_ecommand == ::primitive::command_france_exit)
+      else if (pcommand->m_ecommand == ::command_france_exit)
       {
 
          _001OnFranceExit();
@@ -3306,8 +3297,8 @@ namespace aura
       string strId(pszId);
       string strSystemLocale = System.m_strLocale;
       string strSystemSchema = System.m_strSchema;
-      stringa straLocale = command()->m_varTopicQuery["locale"].stra();
-      stringa straSchema = command()->m_varTopicQuery["schema"].stra();
+      stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
+      stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
 
 #if defined(INSTALL_SUBSYSTEM)
 
@@ -3386,162 +3377,14 @@ namespace aura
 
 
 
-
-   //   void application::construct(const char *pszId)
-   //   {
-   //      //if(m_strAppName.has_char())
-   //      //   return;
-   //      //m_strAppName.Empty();
-   //      //m_strId.Empty();
-   //      if (pszId == NULL)
-   //      {
-   //#ifdef WINDOWSEX
-   //         wstring wstr = ::GetCommandLineW();
-   //         string str = ::str::international::unicode_to_utf8(wstr);
-   //         strsize iFind = str.find(" : ");
-   //         if (iFind >= 0)
-   //         {
-   //            iFind = str.find("app=", iFind);
-   //            if (iFind >= 0)
-   //            {
-   //               strsize iEnd = str.find(" ", iFind);
-   //               if (iEnd < 0)
-   //               {
-   //                  m_strId = str.Mid(iFind + 4);
-   //               }
-   //               else
-   //               {
-   //                  m_strId = str.Mid(iFind + 4, iEnd - iFind - 4);
-   //               }
-   //               ::str::begins_eat(m_strId, "\"");
-   //               ::str::ends_eat(m_strId, "\"");
-   //            }
-   //         }
-   //#endif
-   //      }
-   //      else
-   //      {
-   //         m_strId = pszId;
-   //      }
-   //      if (m_strId.is_empty())
-   //         m_strId = "mplite";
-   //      construct();
-   //      if (m_strAppName.is_empty())
-   //      {
-   //         if (m_strAppId.has_char())
-   //            m_strAppName = m_strAppId;
-   //         else if (m_strInstallToken.has_char())
-   //            m_strAppName = m_strInstallToken;
-   //      }
-   //   }
-
-
-   //void application::construct()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-
-   //   ::core::application::construct();
-
-   //}
-
-
-
-
-   //void application::_001OnFileNew()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   ::core::application::_001OnFileNew(NULL);
-   //}
-
-
-   //bool application::bergedge_start()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::bergedge_start();
-   //}
-
-
-
-   //bool application::on_install()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_install();
-   //}
-
-   //bool application::on_uninstall()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_uninstall();
-   //}
-
-
    void application::on_request(::create * pcreate)
    {
 
       ::object::on_request(pcreate);
 
-      command()->consolidate(pcreate);
+      m_phandler->merge(pcreate);
 
    }
-
-   //bool application::is_serviceable()
-   //{
-
-
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::is_serviceable();
-   //}
-
-   //service_base * application::allocate_new_service()
-   //{
-
-   //   return NULL;
-
-   //}
-
-
-   //::user::document *  application::_001OpenDocumentFile(var varFile)
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::_001OpenDocumentFile(varFile);
-
-   //}
-
 
    int32_t application::run()
    {
@@ -3549,7 +3392,7 @@ namespace aura
       if (!is_system() && !is_session())
       {
 
-         if (command()->m_varTopicQuery.has_property("service"))
+         if (handler()->m_varTopicQuery.has_property("service"))
          {
 
             create_new_service();
@@ -3557,7 +3400,7 @@ namespace aura
             ::service_base::serve(*m_pservice);
 
          }
-         else if (command()->m_varTopicQuery.has_property("run") || is_serviceable())
+         else if (handler()->m_varTopicQuery.has_property("run") || is_serviceable())
          {
 
             create_new_service();
@@ -3662,7 +3505,7 @@ namespace aura
    bool application::is_installing()
    {
 
-      return directrix()->has_property("install");
+      return handler()->has_property("install");
 
    }
 
@@ -3670,7 +3513,7 @@ namespace aura
    bool application::is_uninstalling()
    {
 
-      return directrix()->has_property("uninstall");
+      return handler()->has_property("uninstall");
 
    }
 
@@ -3859,8 +3702,8 @@ namespace aura
          if (!check_exclusive(bHandled))
          {
 
-            if (!bHandled && (is_debugger_attached() && !System.directrix()->m_varTopicQuery.has_property("install")
-              && !System.directrix()->m_varTopicQuery.has_property("uninstall")))
+            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
+              && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
 
                simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", seconds(5), MB_ICONASTERISK);
@@ -4151,17 +3994,17 @@ namespace aura
       if (strSchemaSystem.has_char())
          strSchema = strSchemaSystem;
 
-      if (Sys(this).directrix()->m_varTopicQuery["locale"].get_count() > 0)
-         strLocale = Sys(this).directrix()->m_varTopicQuery["locale"].stra()[0];
+      if (Sys(this).handler()->m_varTopicQuery["locale"].get_count() > 0)
+         strLocale = Sys(this).handler()->m_varTopicQuery["locale"].stra()[0];
 
-      if (Sys(this).directrix()->m_varTopicQuery["schema"].get_count() > 0)
-         strSchema = Sys(this).directrix()->m_varTopicQuery["schema"].stra()[0];
+      if (Sys(this).handler()->m_varTopicQuery["schema"].get_count() > 0)
+         strSchema = Sys(this).handler()->m_varTopicQuery["schema"].stra()[0];
 
-      if (App(this).directrix()->m_varTopicQuery["locale"].get_count() > 0)
-         strLocale = App(this).directrix()->m_varTopicQuery["locale"].stra()[0];
+      if (App(this).handler()->m_varTopicQuery["locale"].get_count() > 0)
+         strLocale = App(this).handler()->m_varTopicQuery["locale"].stra()[0];
 
-      if (App(this).directrix()->m_varTopicQuery["schema"].get_count() > 0)
-         strSchema = App(this).directrix()->m_varTopicQuery["schema"].stra()[0];
+      if (App(this).handler()->m_varTopicQuery["schema"].get_count() > 0)
+         strSchema = App(this).handler()->m_varTopicQuery["schema"].stra()[0];
 
 
       set_locale(strLocale, ::action::source::database());
@@ -4291,7 +4134,7 @@ namespace aura
 
          release_exclusive();
 
-         m_pcommandthread.release();
+         m_phandler.release();
 
 
          //         if(m_spuiMessage.is_set())
@@ -4327,48 +4170,13 @@ namespace aura
 
          }
 
-         //try
-         //{
-         //   if (!is_system())
-         //   {
-         //      System.unregister_bergedge_application(this);
-         //   }
-         //}
-         //catch (...)
-         //{
-         //}
-
-         /*try
-         {
-         ::release(smart_pointer <thread>::m_p);
-         }
-         catch(...)
-         {
-         }*/
-
-
-         if (is_system())
-         {
-
-            //         try
-            //       {
-            //        if(m_spfilesystem.m_p != NULL)
-            //      {
-            //       ::core::del(m_spfilesystem.m_p);
-            //  }
-            //         }
-            //       catch(...)
-            //     {
-            //   }
-         }
-
          if (!is_session() && !is_system())
          {
 
-            if (m_paurasystem != NULL && m_paurasystem->m_pcommandthread != NULL)
+            if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
             {
 
-               m_paurasystem->m_pcommandthread->command(::primitive::command_check_exit);
+               m_paurasystem->m_phandler->handle(::command_check_exit);
 
             }
 
@@ -4911,7 +4719,7 @@ namespace aura
          if (m_pipi != NULL)
          {
 
-            int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.directrix()->m_spcommandline->m_strCommandLine));
+            int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.handler()->m_spcommandline->m_strCommandLine));
 
             if (!map[System.os().get_pid()].is_new())
             {
@@ -4955,12 +4763,12 @@ namespace aura
 
    string application::get_local_mutex_id()
    {
-      return command()->m_varTopicQuery["local_mutex_id"];
+      return handler()->m_varTopicQuery["local_mutex_id"];
    }
 
    string application::get_global_mutex_id()
    {
-      return command()->m_varTopicQuery["global_mutex_id"];
+      return handler()->m_varTopicQuery["global_mutex_id"];
    }
 
    ::mutex * application::get_local_mutex()
@@ -5311,231 +5119,16 @@ namespace aura
       return false;
 
    }
+   
 
-   bool application::init_main_data(main_init_data * pdata)
+   bool application::startup_command(::command::command * pcommand)
    {
 
-      m_pinitmaindata = pdata;
+      m_pcommand = pcommand;
 
       return true;
 
    }
-
-
-
-
-
-
-
-   //void application::dir_matter_ls_file(const string & str,stringa & stra)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //string application::file().as_string(var varFile)
-   //{
-
-   //   return ::file_as_string_dup(varFile.get_string());
-
-   //}
-
-
-   //string application::file().as_string(var varFile,var & varQuery)
-   //{
-
-   //   return file().as_string(varFile);
-
-   //}
-
-
-   //string application::matter_as_string(const char * pszMatter,const char * pszMatter2)
-   //{
-
-   //   var varQuery;
-
-   //   varQuery["disable_ca2_sessid"] = true;
-
-   //   return file().as_string(dir().matter(pszMatter,pszMatter2),varQuery);
-
-   //}
-
-   //string application::dir().matter(const char * pszMatter,const char * pszMatter2)
-   //{
-
-   //   return dir().matter(pszMatter,pszMatter2);
-
-   //}
-
-   //bool application::is_inside_time_dir(const char * pszPath)
-   //{
-   //   throw not_implemented(this);
-   //   return false;
-   //}
-
-   //bool application::file_is_read_only(const char * pszPath)
-   //{
-   //   throw not_implemented(this);
-   //   return false;
-   //}
-
-
-   //bool application::file().exists(const char * pszPath)
-   //{
-
-   //   return ::file_exists_dup(pszPath) != FALSE;
-
-   //}
-
-
-   //bool application::file_is_equal_path(const char * pszPath1,const char * pszPath2)
-   //{
-
-   //   return ::file_is_equal_path_dup(pszPath1,pszPath2) != FALSE;
-
-   //}
-
-
-   //bool application::dir().id(const char * psz)
-   //{
-
-   //   return ::dir::is(psz);
-
-   //}
-
-
-   //bool application::file_del(const char * psz)
-   //{
-
-   //   return file_delete_dup(psz) != FALSE;
-
-   //}
-
-   //string application::file_extension(const char * pszPath)
-   //{
-
-   //   return ::file_extension_dup(pszPath);
-
-   //}
-
-
-   //string application::dir_userappdata(const char * lpcsz,const char * lpcsz2)
-   //{
-
-   //   throw not_implemented(this);
-
-   //}
-
-   //string application::dir_appdata(const char * lpcsz,const char * lpcsz2)
-   //{
-
-   //   throw not_implemented(this);
-
-   //}
-
-
-   //string application::dir_simple_path(const string & str1,const string & str2)
-   //{
-
-   //   return dir_path(str1,str2);
-
-   //}
-
-
-   //string application::dir_path(const char * psz1,const char * psz2,const char * psz3)
-   //{
-
-   //   return ::dir::path(psz1,psz2,psz3);
-
-   //}
-
-
-   //string application::dir_element(const char * psz)
-   //{
-
-   //   return ::dir::path(::dir::element(),psz);
-
-   //}
-
-   //string application::dir_ca2module(const char * psz)
-   //{
-
-   //   return ::dir::path(::dir::ca2_module(),psz);
-
-   //}
-
-   //string application::dir_name(const char * psz)
-   //{
-
-   //   return ::dir::name(psz);
-
-   //}
-
-
-   //void application::dir_ls_dir(const char * lpcsz,::file::patha & patha)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //void application::dir_rls(const char * lpcsz,::file::patha & patha)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //bool application::dir_mk(const char * psz)
-   //{
-
-   //   return ::dir::mk(psz);
-
-   //}
-
-
-   //string application::file_title(const char * psz)
-   //{
-
-   //   return ::file_title_dup(psz);
-
-   //}
-
-
-   //string application::file().name_(const char * psz)
-   //{
-
-   //   return ::file_name_dup(psz);
-
-   //}
-
-//#ifdef APPLEOS
-//
-//   string application::dir_pathfind(const char * pszEnv, const char * pszTopic, const char * pszMode)
-//   {
-//
-//      ::exception::throw_interface_only(get_app());
-//
-//      return "";
-//
-//   }
-//
-//#endif
-//
-
-   //string application::file_time_square()
-   //{
-
-   //   //return get_temp_file_name_template(
-   //   ::exception::throw_interface_only(get_app());
-
-   //   return "";
-
-   //}
 
 
    string application::http_get_locale_schema(const char * pszUrl, const char * pszLocale, const char * pszSchema)
@@ -5546,21 +5139,7 @@ namespace aura
       return "";
 
    }
-   /*
-
-      ::file::file_sp application::file_get_file(var varFile,uint32_t uiFlags)
-      {
-
-         ::file::file_sp buffer(allocer());
-
-         if(!buffer->open(varFile,uiFlags))
-            return NULL;
-
-         return buffer;
-
-      }
-
-   */
+   
 
    void application::process_message_filter(int32_t code, signal_details * pobj)
    {
@@ -5914,17 +5493,17 @@ namespace aura
 
       stringa stra;
 
-      stra = Application.directrix()->m_varTopicQuery["locale"].stra();
+      stra = Application.handler()->m_varTopicQuery["locale"].stra();
 
       stra.remove_ci("_std");
 
-      straLocale.add_unique(Application.directrix()->m_varTopicQuery["locale"].stra());
+      straLocale.add_unique(Application.handler()->m_varTopicQuery["locale"].stra());
 
-      stra = Application.directrix()->m_varTopicQuery["schema"].stra();
+      stra = Application.handler()->m_varTopicQuery["schema"].stra();
 
       stra.remove_ci("_std");
 
-      straSchema.add_unique(Application.directrix()->m_varTopicQuery["schema"].stra());
+      straSchema.add_unique(Application.handler()->m_varTopicQuery["schema"].stra());
 
 
       localeschema.m_idLocale = straLocale[0];
@@ -6052,11 +5631,9 @@ namespace aura
 
       papp->m_pbasesystem = m_pbasesystem;
 
-      papp->command_central()->consolidate(System.command_central());
+      papp->handler()->merge(System.handler());
 
-      papp->command_central()->consolidate(command_central());
-
-      //   papp->m_bSystemSynchronizedCursor = m_bSystemSynchronizedCursor;
+      papp->handler()->merge(handler());
 
       if (pbias != NULL)
       {
@@ -6076,8 +5653,8 @@ namespace aura
 
       if ((papp == NULL || papp->m_strAppId != strAppId)
          &&
-         (!Application.command()->m_varTopicQuery.has_property("install")
-            && !Application.command()->m_varTopicQuery.has_property("uninstall")))
+         (!Application.handler()->m_varTopicQuery.has_property("install")
+            && !Application.handler()->m_varTopicQuery.has_property("uninstall")))
       {
 
          TRACE("Failed to instantiate %s, going to try installation through ca2_cube_install", strAppId);
@@ -6525,19 +6102,19 @@ namespace aura
 
          string strAddUp;
 
-         if (System.directrix()->m_varTopicQuery.has_property("enable_desktop_launch"))
+         if (System.handler()->m_varTopicQuery.has_property("enable_desktop_launch"))
          {
 
-            if (System.directrix()->m_varTopicQuery["enable_desktop_launch"].has_char())
+            if (System.handler()->m_varTopicQuery["enable_desktop_launch"].has_char())
             {
 
-               strAddUp = " enable_desktop_launch=" + System.directrix()->m_varTopicQuery["enable_desktop_launch"];
+               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["enable_desktop_launch"];
 
             }
             else
             {
 
-               strAddUp = " enable_desktop_launch=" + System.directrix()->m_varTopicQuery["app"];
+               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["app"];
 
             }
 
@@ -6826,10 +6403,10 @@ namespace aura
 
          string strLibrary;
 
-         if (command()->m_varTopicQuery.has_property("draw2d"))
+         if (handler()->m_varTopicQuery.has_property("draw2d"))
          {
 
-            string strDraw2d = command()->m_varTopicQuery["draw2d"];
+            string strDraw2d = handler()->m_varTopicQuery["draw2d"];
 
             strDraw2d.trim();
 

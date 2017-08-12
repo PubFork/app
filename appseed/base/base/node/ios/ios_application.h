@@ -48,7 +48,7 @@ namespace ios
       
       virtual void SetCurrentHandles();
       
-      virtual bool set_main_init_data(::core::main_init_data * pdata);
+      virtual bool process_command(::core::main_init_data * pdata);
       
       virtual bool process_initialize();
       virtual bool initialize1();

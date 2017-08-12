@@ -314,7 +314,7 @@ namespace aura
 
 
 
-   bool application::set_main_init_data(::aura::main_init_data * pdata)
+   bool application::process_command(::aura::main_init_data * pdata)
    {
 
 //      m_pmaininitdata = (::ios::main_init_data *) pdata;
@@ -325,9 +325,9 @@ namespace aura
 //            return false;
 //      }
 
-      m_pinitmaindata = pdata;
+      m_pcommand = pdata;
       
-      if(m_pinitmaindata != NULL && is_system())
+      if(m_pcommand != NULL && is_system())
       {
          
          string strCmdLine          = pdata->m_vssCommandLine;

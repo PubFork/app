@@ -206,53 +206,19 @@ namespace user
                              WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,   // default frame styles
                              dynamic_cast < ::user::interaction * > (pcreate->m_puiParent), pcreate))
       {
+         
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: impact_system couldn't create a frame.\n");
+         
          // frame will be deleted in PostNcDestroy cleanup
+         
          return NULL;
+         
       }
 
-      // it worked !
       return pFrame;
+      
    }
-
-   /*
-   sp(::user::frame_window) impact_system::CreateOleFrame(::window_sp pParentWnd, ::user::document * pdocument,
-   bool bCreateView)
-   {
-   create_context context;
-   context.m_pCurrentFrame = NULL;
-   context.m_pCurrentDoc = pdocument;
-   context.m_typeinfoNewView = bCreateView ? m_pOleViewClass : NULL;
-   context.m_pNewDocTemplate = this;
-
-   if (m_pOleFrameClass == NULL)
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: pOleFrameClass not specified for doc template.\n");
-   return NULL;
-   }
-
-   ASSERT(!m_strServerMatter.is_empty()); // must have a resource ID to load from
-   sp(::user::frame_window) pFrame = (System.alloc(m_pOleFrameClass));
-   if (pFrame == NULL)
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n",
-   m_pOleFrameClass->name());
-   return NULL;
-   }
-
-   // create new from resource (OLE frames are created as child windows)
-   if (!pFrame->LoadFrame(m_strServerMatter,
-   WS_CHILD|WS_CLIPSIBLINGS, pParentWnd, &context))
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: impact_system couldn't create an OLE frame.\n");
-   // frame will be deleted in PostNcDestroy cleanup
-   return NULL;
-   }
-
-   // it worked !
-   return pFrame;
-   }
-   */
+   
 
    void impact_system::InitialUpdateFrame(sp(::user::frame_window) pFrame, ::user::document * pdocument,
                                           bool bMakeVisible)

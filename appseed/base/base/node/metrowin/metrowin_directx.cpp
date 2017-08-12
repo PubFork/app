@@ -290,7 +290,7 @@ namespace metrowin
          }
 
          System.m_possystemwindow->m_pui->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
-         if (System.directrix()->m_varTopicQuery.has_property("client_only"))
+         if (System.handler()->m_varTopicQuery.has_property("client_only"))
          {
             for (int i = 0; i < System.m_possystemwindow->m_pui->m_uiptraChild.get_count(); i++)
             {

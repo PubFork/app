@@ -2546,7 +2546,7 @@ namespace user
    LRESULT interaction::send(::message::base * pbase)
    {
 
-      message_handler(pbase);
+      m_pimpl->queue_message_handler(pbase);
 
       return pbase->get_lresult();
 
@@ -3095,19 +3095,20 @@ namespace user
       {
 
          m_pimpl = Application.alloc(System.type_info < interaction_impl >());
-         //oswindow window = m_pimpl->m_pui->get_handle();
+
          dwStyle &= ~WS_CHILD;
+         
          if(!m_pimpl->create_window_ex(this, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id,lpParam))
          {
-
-            //m_threadptra.remove_all();
 
             m_pimpl.release();
 
             return false;
+            
          }
-         //install_message_handling(this);
+
          return true;
+         
       }
       else
 #endif
