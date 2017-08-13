@@ -330,9 +330,13 @@ namespace aura
 
          g_pmapLibCall = new string_map < sp(::aura::library) >();
 
-#ifndef ANDROID
+#ifdef MEMORY_COUNTERS
 
          g_iMemoryCountersStartable = 1;
+
+#else
+
+        g_iMemoryCountersStartable = 0;
 
 #endif
 

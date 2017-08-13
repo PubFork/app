@@ -1504,14 +1504,14 @@ namespace user
    bool interaction_impl_base::SetTimer(uint_ptr nIDEvent,UINT nEllapse, PFN_TIMER pfnTimer)
    {
 
-      if(nEllapse < 584)
+      if(nEllapse < 500)
       {
 
-         string str;
-
-         str.Format("creating fast timer: %d\n", nEllapse);
-
-         ::output_debug_string(str);
+//         string str;
+//
+//         str.Format("creating fast timer: %d\n", nEllapse);
+//
+//         ::output_debug_string(str);
 
       }
 

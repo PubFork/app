@@ -246,11 +246,6 @@ namespace base
 
 
 
-
-#ifdef MACOS
-      ns_app_close();
-#endif
-
       return m_iReturnCode;
 
    }

@@ -285,6 +285,8 @@ namespace core
 
    void application::close(e_end eend)
    {
+      
+      close_dependent_threads(seconds(15));
 
       if (m_pdocmanager != NULL)
       {

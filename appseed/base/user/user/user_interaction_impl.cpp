@@ -283,14 +283,15 @@ namespace user
    void interaction_impl::prio_install_message_handling(::message::dispatch * pinterface)
    {
       
-      for(index i = (index) queue_thread_first; i < (index) queue_thread_end; i++)
-      {
-         
-         e_queue_thread e = (e_queue_thread) i;
-         
-         m_mapqueue.set_at(e, canew(queue_thread(this)));
-         
-      }
+      m_queuethread = canew(queue_thread(this));
+//      for(index i = (index) queue_thread_first; i < (index) queue_thread_end; i++)
+//      {
+//         
+//         e_queue_thread e = (e_queue_thread) i;
+//         
+//         m_mapqueue.set_at(e, canew(queue_thread(this)));
+//         
+//      }
       
       ::user::interaction_impl_base::prio_install_message_handling(pinterface);
 
@@ -369,6 +370,7 @@ namespace user
 
 
    interaction_impl::queue_thread::queue_thread(::user::interaction_impl * pimpl) :
+      ::object(pimpl->m_pui->get_app()),
       ::thread(pimpl->m_pui->get_app()),
       m_evNewMessage(pimpl->m_pui->get_app()),
       m_pimpl(pimpl)
@@ -422,7 +424,6 @@ namespace user
       while(get_thread_run())
       {
             
-         
          if (m_evNewMessage.wait(seconds(1)).succeeded())
          {
                   
@@ -443,18 +444,28 @@ namespace user
                   
                sl.unlock();
                
-               try
+               if(pbase.is_set())
                {
                   
-                  m_pimpl->m_pui->message_handler(pbase);
+                  signal_details * pobj = pbase.cast < ::signal_details >();
+                  
+                  if(pobj != NULL)
+                  {
+                     
+                     try
+                     {
+                  
+                        m_pimpl->m_pui->message_handler(pobj);
+                  
+                     }
+                     catch (...)
+                     {
+               
+                     }
+                     
+                  }
                   
                }
-               catch (...)
-               {
-               
-               }
-                  
-               
                   
             }
             
@@ -507,8 +518,24 @@ namespace user
       }
       
       e_queue_thread equeuethread = message_queue_thread(pbase->m_uiMessage);
+      
+      if(equeuethread == queue_thread_mouse_move)
+      {
          
-      m_mapqueue[equeuethread]->queue_message_handler(pbase);
+         DWORD dwNow = get_tick_count();
+         
+         if(dwNow - m_dwLastMouseMove < 10)
+         {
+            
+            return;
+            
+         }
+
+         m_dwLastMouseMove = dwNow;
+         
+      }
+      
+      m_queuethread->queue_message_handler(pbase);
       
    }
    
@@ -1851,14 +1878,16 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
+   
    bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region * prgnUpdate,UINT flags)
    {
-      UNREFERENCED_PARAMETER(lpRectUpdate);
-      UNREFERENCED_PARAMETER(prgnUpdate);
-      UNREFERENCED_PARAMETER(flags);
-      ::exception::throw_interface_only(get_app());
-      return false;
+   
+      m_pui->set_need_redraw();
+      
+      return true;
+      
    }
+   
 
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags,UINT nArrowFlags)
    {

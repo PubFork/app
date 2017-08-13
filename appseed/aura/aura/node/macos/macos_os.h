@@ -81,6 +81,9 @@ namespace macos
       virtual void on_process_command(::command::command * pcommand) override;
       
       
+      virtual void set_file_status(const char * lpszFileName, const ::file::file_status& status) override;
+
+      
    };
 
 

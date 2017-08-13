@@ -396,6 +396,17 @@ namespace macos
          
          bOk = false;
          
+         ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
+         
+         ::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
+         
+         //for(auto & pthread : m_mapqueue)
+         {
+          
+        //    ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
+            
+         }
+         
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
          
       }
@@ -583,7 +594,7 @@ namespace macos
    void interaction_impl::_001OnDestroy(signal_details * pobj)
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(10));
+      UNREFERENCED_PARAMETER(pobj);
       
       if(GetActiveWindow() == m_pui)
       {
@@ -592,52 +603,55 @@ namespace macos
          
       }
       
-      round_window_close();
-
-      UNREFERENCED_PARAMETER(pobj);
-
       Default();
+      
+      round_window_hide();
+      
+      delete_all_timers();
+      
+      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
+      
+      //for(auto & pthread : m_mapqueue)
+      {
+         
+        // ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
+          ::multithreading::post_quit_and_wait(m_queuethread, millis(5));
+         
+      }
 
-//      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(10));
-
-      //      ::macos::window_draw * pdraw = dynamic_cast < ::macos::window_draw * > (System.get_twf());
-      //
-      //      if(pdraw != NULL)
-      //      {
-      //
-      //         retry_single_lock sl(&pdraw->m_eventFree, millis(84), millis(84));
-      //
-      //         pdraw->m_wndpaOut.remove(m_pui);
-      //
-      //      }
-
+      
    }
 
 
    // WM_NCDESTROY is the absolute LAST message sent.
    void interaction_impl::_001OnNcDestroy(signal_details * pobj)
    {
+      
       single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+      
       pobj->m_bRet = true;
+      
       // cleanup main and active windows
-      ::thread* pThread = ::get_thread();
-      if (pThread != NULL)
+      ::thread* pthread = ::get_thread();
+      
+      if (pthread != NULL)
       {
-         if (pThread->get_active_ui() == m_pui)
-            pThread->set_active_ui(NULL);
-      }
-
-      // cleanup tooltip support
-      if (m_pui != NULL)
-      {
-         if (m_pui->m_nFlags & WF_TOOLTIPS)
+         
+         if (pthread->get_active_ui() == m_pui)
          {
+            
+            pthread->set_active_ui(NULL);
+            
          }
+         
       }
 
+      round_window_destroy();
 
       Detach();
+      
       ASSERT(get_handle() == NULL);
+      
       m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
 
       signalizable_disconnect_all();
@@ -661,11 +675,12 @@ namespace macos
 
    }
 
+   
    void interaction_impl::PostNcDestroy()
    {
+      
+      ::user::interaction_impl::PostNcDestroy();
 
-      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
-   
    }
 
    void interaction_impl::on_final_release()
@@ -2239,47 +2254,88 @@ namespace macos
          {
 
             DWORD dwStart;
+            
+            bool bUpdateScreen = false;
 
             while (::get_thread_run())
             {
-
-               dwStart = ::get_tick_count();
-
-               if (!m_pui->m_bLockWindowUpdate)
+               
+               try
                {
 
-                  if (m_pui->has_pending_graphical_update()
-                  || m_pui->check_need_layout())
+                  dwStart = ::get_tick_count();
+               
+                  if(m_pui == NULL)
                   {
-
-                     RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
-
-                     m_pui->on_after_graphical_update();
-
+                  
+                     break;
+                  
                   }
                   
-               }
-               
-               _001UpdateBuffer();
-               
-               DWORD dwSpan = ::get_tick_count() - dwStart;
+                  if (!m_pui->m_bLockWindowUpdate)
+                  {
 
-               if (dwSpan < 20)
+                     if (m_pui->has_pending_graphical_update()
+                         || m_pui->check_need_layout())
+                     {
+
+                        _001UpdateBuffer();
+
+                        m_pui->on_after_graphical_update();
+                        
+                        bUpdateScreen = true;
+
+                     }
+                  
+                  }
+
+                  if(bUpdateScreen)
+                  {
+                     
+                     bUpdateScreen = false;
+                     
+                     _001UpdateScreen();
+                     
+                  }
+               
+                  DWORD dwSpan = ::get_tick_count() - dwStart;
+
+                  if (dwSpan < 20)
+                  {
+
+                     Sleep(20 - dwSpan);
+
+                  }
+
+               }
+               catch(...)
                {
-
-                  Sleep(20 - dwSpan);
-
+                  
+                  break;
+                  
                }
-
+            
             }
             
             output_debug_string("m_pthreadDraw has finished!");
-
+            
+            release_graphics_resources();
+            
+            
          });
 
       }
 
 
+   }
+   
+   
+   void interaction_impl::release_graphics_resources()
+   {
+      
+      m_spgraphics.release();
+      
+      
    }
 
 
@@ -4055,25 +4111,92 @@ namespace macos
 
    }
 
-   bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
+//   bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region* prgnUpdate, UINT flags)
+//   {
+//
+//
+//      if (flags & RDW_UPDATENOW)
+//      {
+///*
+//         unsigned long long uiNow = get_nanos();
+//
+//         if (uiNow - m_uiLastUpdateEnd < ((12 * 1000 * 1000) + (500 * 1000)))
+//         {
+//
+//            return true;
+//
+//         }
+//
+//         m_uiLastUpdateBeg = uiNow;
+//*/
+//         
+//         if(m_bShowFlags)
+//         {
+//            
+//            if(!IsWindowVisible() && (m_iShowFlags & SWP_SHOWWINDOW))
+//            {
+//               
+//               round_window_show();
+//               
+//            }
+//            else if(IsWindowVisible() && (m_iShowFlags & SWP_HIDEWINDOW))
+//            {
+//               
+//               round_window_hide();
+//               
+//            }
+//            
+//         }
+//         
+//         if (m_rectLastPos != m_rectParentClientRequest)
+//         {
+//            
+//            ::SetWindowPos(m_oswindow, NULL,
+//                           m_rectParentClientRequest.left,
+//                           m_rectParentClientRequest.top,
+//                           m_rectParentClientRequest.width(),
+//                           m_rectParentClientRequest.height(),
+//                           SWP_NOZORDER
+//                           | SWP_NOREDRAW
+//                           | SWP_NOCOPYBITS
+//                           | SWP_NOACTIVATE
+//                           | SWP_NOOWNERZORDER
+//                           | SWP_NOSENDCHANGING
+//                           | SWP_DEFERERASE);
+//            
+//            m_rectLastPos = m_rectParentClientRequest;
+//            
+//         }
+//         
+//         if (IsWindowVisible())
+//         {
+//
+//            round_window_redraw();
+//
+//         }
+//         else
+//         {
+//
+//            _001UpdateWindow();
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         m_pui->m_bRedraw = true;
+//
+//      }
+//
+//      return true;
+//
+//   }
+
+   void interaction_impl::_001UpdateScreen()
    {
-
-
-      if (flags & RDW_UPDATENOW)
-      {
-/*
-         unsigned long long uiNow = get_nanos();
-
-         if (uiNow - m_uiLastUpdateEnd < ((12 * 1000 * 1000) + (500 * 1000)))
-         {
-
-            return true;
-
-         }
-
-         m_uiLastUpdateBeg = uiNow;
-*/
-         
+      
+      
          if(m_bShowFlags)
          {
             
@@ -4114,27 +4237,21 @@ namespace macos
          
          if (IsWindowVisible())
          {
-
+            
             round_window_redraw();
-
+            
          }
          else
          {
-
+            
             _001UpdateWindow();
-
+            
          }
-
-      }
-      else
-      {
-
-         m_pui->m_bRedraw = true;
-
-      }
-
-      return true;
-
+         
+   
+      
+      //return true;
+      
    }
 
    /*
@@ -5349,8 +5466,6 @@ namespace macos
    void interaction_impl::round_window_draw(CGContextRef cgc)
    {
 
-      single_lock sl(m_pui->m_pmutex, true);
-
       m_uiLastUpdateBeg = get_nanos();
 
       if (m_bUpdateGraphics)
@@ -5359,12 +5474,6 @@ namespace macos
          update_graphics_resources();
 
       }
-
-      sl.unlock();
-
-      _001UpdateWindow();
-
-      sl.lock();
 
       cslock slDisplay(cs_display());
 
@@ -5415,14 +5524,21 @@ namespace macos
 
       pkey->m_nChar = uiKeyCode;
 
-
       spbase = pkey;
+      
+      if(m_pui == NULL)
+      {
+         
+         return false;
+         
+      }
 
       m_pui->send(spbase);
 
       return spbase->m_bRet;
 
    }
+   
 
    bool interaction_impl::round_window_key_up(unsigned int uiKeyCode)
    {
@@ -5436,6 +5552,13 @@ namespace macos
       pkey->m_nChar = uiKeyCode;
 
       spbase = pkey;
+      
+      if(m_pui == NULL)
+      {
+         
+         return false;
+         
+      }
 
       m_pui->send(spbase);
 
@@ -5443,6 +5566,7 @@ namespace macos
 
    }
 
+   
    bool interaction_impl::round_window_key_down(unsigned int vk, unsigned int scan)
    {
 
@@ -5455,6 +5579,13 @@ namespace macos
       pkey->set(m_pui, WM_KEYDOWN, vk, (LPARAM)(scan << 16), l);
 
       spbase = pkey;
+      
+      if(m_pui == NULL)
+      {
+         
+         return false;
+         
+      }
 
       m_pui->send(spbase);
 
@@ -5462,6 +5593,7 @@ namespace macos
 
    }
 
+   
    bool interaction_impl::round_window_key_up(unsigned int vk, unsigned int scan)
    {
 
@@ -5474,6 +5606,13 @@ namespace macos
       pkey->set(m_pui, WM_KEYUP, vk, (LPARAM)(scan << 16), l);
 
       spbase = pkey;
+      
+      if(m_pui == NULL)
+      {
+         
+         return false;
+         
+      }
 
       m_pui->send(spbase);
 
@@ -5512,6 +5651,13 @@ namespace macos
                pactivate->m_bMinimized = false;
 
                spbase = pactivate;
+               
+               if(m_pui == NULL)
+               {
+                  
+                  return;
+                  
+               }
 
                m_pui->send(spbase);
 
@@ -5520,6 +5666,7 @@ namespace macos
          }
          catch (...)
          {
+            
          }
 
       }
@@ -5530,19 +5677,30 @@ namespace macos
 
          if (iButton == 1)
          {
+            
             pmouse->m_uiMessage = WM_RBUTTONDOWN;
+            
          }
          else
          {
+            
             pmouse->m_uiMessage = WM_LBUTTONDOWN;
+            
          }
+         
          pmouse->m_pt.x = (LONG)x;
          pmouse->m_pt.y = (LONG)y;
          pmouse->m_bTranslated = true;
-         //pmouse->m_bTranslateMouseMessageCursor = true;
 
          spbase = pmouse;
 
+         if(m_pui == NULL)
+         {
+            
+            return;
+            
+         }
+         
          m_pui->send(spbase);
 
       }
@@ -5559,22 +5717,34 @@ namespace macos
 
       if (iButton == 1)
       {
+         
          pmouse->m_uiMessage = WM_RBUTTONUP;
+         
       }
       else
       {
+         
          pmouse->m_uiMessage = WM_LBUTTONUP;
+         
       }
+      
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
-      //      pmouse->m_bTranslateMouseMessageCursor = true;
 
       spbase = pmouse;
+
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->send(spbase);
 
    }
+   
 
    void interaction_impl::round_window_double_click(int iButton, double x, double y)
    {
@@ -5585,22 +5755,34 @@ namespace macos
       
       if (iButton == 1)
       {
+         
          pmouse->m_uiMessage = WM_RBUTTONDBLCLK;
+         
       }
       else
       {
+         
          pmouse->m_uiMessage = WM_LBUTTONDBLCLK;
+         
       }
+      
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
-      //      pmouse->m_bTranslateMouseMessageCursor = true;
       
       spbase = pmouse;
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
       
       m_pui->send(spbase);
       
    }
+   
 
    void interaction_impl::round_window_mouse_moved(double x, double y)
    {
@@ -5613,9 +5795,15 @@ namespace macos
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
-      //      pmouse->m_bTranslateMouseMessageCursor = true;
 
       spbase = pmouse;
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->send(spbase);
 
@@ -5633,9 +5821,15 @@ namespace macos
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
-      //      pmouse->m_bTranslateMouseMessageCursor = true;
 
       spbase = pmouse;
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
 
       m_pui->send(spbase);
 
@@ -5669,7 +5863,14 @@ namespace macos
          sz = m_rectParentClient.size();
 
       }
-
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
+      
       m_pui->send_message(WM_SIZE, 0, sz.lparam());
 
       if (bMove)
@@ -5696,7 +5897,14 @@ namespace macos
          pt = m_rectParentClient.top_left();
 
       }
-
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
+      
       m_pui->send_message(WM_MOVE, 0, pt.lparam());
 
    }
@@ -5704,6 +5912,13 @@ namespace macos
    
    void interaction_impl::round_window_iconified()
    {
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
       
       m_pui->m_eappearanceBefore = m_pui->m_eappearance;
       
@@ -5714,6 +5929,13 @@ namespace macos
 
    void interaction_impl::round_window_deiconified()
    {
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
       
       if(m_pui->m_eappearanceBefore == ::user::AppearanceIconic)
       {
@@ -5730,6 +5952,13 @@ namespace macos
    void interaction_impl::round_window_on_show()
    {
       
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
+      
       m_pui->message_call(WM_SHOWWINDOW, 1);
       
    }
@@ -5737,6 +5966,13 @@ namespace macos
    
    void interaction_impl::round_window_on_hide()
    {
+      
+      if(m_pui == NULL)
+      {
+         
+         return;
+         
+      }
       
       m_pui->message_call(WM_SHOWWINDOW, 0);
       
@@ -5799,9 +6035,6 @@ namespace macos
       return true;
 
    }
-
-
-
 
 
    __STATIC void CLASS_DECL_BASE
@@ -5951,12 +6184,12 @@ namespace macos
 
 
 
-   void interaction_impl::_001UpdateWindow()
-   {
+   //void interaction_impl::_001UpdateWindow()
+   //{
 
-      ::user::interaction_impl::_001UpdateWindow();
+     // ::user::interaction_impl::_001UpdateWindow();
 
-   }
+   //}
 
 
    void interaction_impl::offset_viewport_org(LPRECT lprectScreen)

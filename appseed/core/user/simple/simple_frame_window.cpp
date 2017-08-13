@@ -402,8 +402,13 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
    }
    else
    {
+      
+      fork([&]()
+      {
 
-      data_get("transparent_frame", m_bTransparentFrame);
+         data_get("transparent_frame", m_bTransparentFrame);
+         
+      });
 
    }
 
@@ -1271,13 +1276,21 @@ void simple_frame_window::_001OnClose(signal_details * pobj)
    {
       pobj->m_bRet = true;
    }
+   
+   bool bDestroyWindow = false;
+   
+   {
+   
+      {
    // Note: only queries the active document
-   sp(::user::document) pdocument = GetActiveDocument();
+   ::user::document * pdocument = GetActiveDocument();
    if (pdocument != NULL && !pdocument->can_close_frame(this))
    {
       // document can't close right now -- don't close it
       return;
    }
+         
+      }
 
    ::aura::application * papp = &Application;
 
@@ -1309,7 +1322,16 @@ void simple_frame_window::_001OnClose(signal_details * pobj)
    }
    else
    {
+      bDestroyWindow = true;
+   }
+      
+   }
+   
+   if(bDestroyWindow)
+   {
+      
       DestroyWindow();
+      
    }
 
 }

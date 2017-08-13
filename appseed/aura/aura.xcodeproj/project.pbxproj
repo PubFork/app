@@ -2850,6 +2850,8 @@
 		9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_boot.cpp; sourceTree = "<group>"; };
 		9A2A539E1F1FEE49001AB0F8 /* install_windows_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_service.cpp; sourceTree = "<group>"; };
 		9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_win.cpp; sourceTree = "<group>"; };
+		9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_timer.cpp; sourceTree = "<group>"; };
+		9A2C3A9D1F40110E00B2DA15 /* _ansios_node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _ansios_node.cpp; sourceTree = "<group>"; };
 		9A33276A1D4C50EB00255105 /* file_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_path.h; sourceTree = "<group>"; };
 		9A33A74D1EA901F5000EC109 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		9A34F5D01E15763000AE2607 /* mmos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmos.h; sourceTree = "<group>"; };
@@ -3926,6 +3928,7 @@
 		9A163E3F19C4A4CD00966C5E /* node */ = {
 			isa = PBXGroup;
 			children = (
+				9A2C3A961F4007A300B2DA15 /* apple */,
 				07DF8D8C1C5289C00050DDEA /* ios */,
 				9A163E6919C4A4CD00966C5E /* ansios */,
 				9A163EC719C4A4CD00966C5E /* macos */,
@@ -3937,6 +3940,7 @@
 		9A163E6919C4A4CD00966C5E /* ansios */ = {
 			isa = PBXGroup;
 			children = (
+				9A2C3A9D1F40110E00B2DA15 /* _ansios_node.cpp */,
 				9A163E6A19C4A4CD00966C5E /* ansios.h */,
 				9A163E6C19C4A4CD00966C5E /* ansios_pipe.h */,
 				9A163E6E19C4A4CD00966C5E /* ansios_process.h */,
@@ -4317,6 +4321,14 @@
 				9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */,
 			);
 			path = windows;
+			sourceTree = "<group>";
+		};
+		9A2C3A961F4007A300B2DA15 /* apple */ = {
+			isa = PBXGroup;
+			children = (
+				9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */,
+			);
+			path = apple;
 			sourceTree = "<group>";
 		};
 		9A4E846F1D1FD3A7008A419B /* Products */ = {

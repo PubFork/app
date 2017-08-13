@@ -994,6 +994,112 @@ namespace macos
       
    }
    
+   void os::set_file_status(const char * lpszFileName, const ::file::file_status& status)
+   {
+      
+      
+//      DWORD wAttr;
+//      FILETIME creationTime;
+//      FILETIME lastAccessTime;
+//      FILETIME lastWriteTime;
+//      LPFILETIME lpCreationTime = NULL;
+//      LPFILETIME lpLastAccessTime = NULL;
+//      LPFILETIME lpLastWriteTime = NULL;
+//      
+//      wstring wstr(lpszFileName);
+//      
+//      if((wAttr = GetFileAttributesW(wstr)) == (DWORD)-1L)
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//         
+//      }
+//      
+//      if ((DWORD)status.m_attribute != wAttr && (wAttr & ::windows::file::readOnly))
+//      {
+//         
+//         // set file attribute, only if currently readonly.
+//         // This way we will be able to modify the time assuming the
+//         // caller changed the file from readonly.
+//         
+//         if (!SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+//         {
+//            
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            
+//         }
+//         
+//      }
+//      
+//      // last modification time
+//      if (status.m_mtime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(), status.m_mtime, &lastWriteTime);
+//         
+//         lpLastWriteTime = &lastWriteTime;
+//         
+//      }
+//      
+//      // last access time
+//      if (status.m_atime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(),status.m_atime, &lastAccessTime);
+//         
+//         lpLastAccessTime = &lastAccessTime;
+//         
+//      }
+//      
+//      // create time
+//      if (status.m_ctime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(),status.m_ctime, &creationTime);
+//         
+//         lpCreationTime = &creationTime;
+//         
+//      }
+//      
+//      HANDLE hFile = ::CreateFileW(wstr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+//      
+//      if(hFile == INVALID_HANDLE_VALUE)
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if(!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if(!::CloseHandle(hFile))
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if ((DWORD)status.m_attribute != wAttr && !(wAttr & ::windows::file::readOnly))
+//      {
+//         
+//         if (!::SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+//         {
+//            
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            
+//         }
+//         
+//      }
+      
+
+      
+   }
+
    
    
 } // namespace macos

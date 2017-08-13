@@ -30,6 +30,7 @@ string get_user_name()
 #endif
 #ifdef MACOS
 void ns_app_terminate();
+//void ns_app_terminate();
 void ns_create_alias(const char * pszTarget, const char * pszSource);
 #endif
 namespace aura
@@ -288,6 +289,8 @@ namespace aura
 
 
       
+      
+
 
    }
 
@@ -695,7 +698,7 @@ namespace aura
    int32_t system::exit_application()
    {
 
-
+      
       try
       {
          
@@ -890,9 +893,9 @@ namespace aura
       //   m_peengine = NULL;
 
       //}
-#ifdef MACOS
-      ns_app_terminate();
-#endif
+//#ifdef MACOS
+  //    ns_app_terminate();
+//#endif
 
       return iRet;
 

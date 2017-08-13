@@ -223,7 +223,7 @@ void ui_app_run(int argc, char * argv[])
 }
 
 
-void round_window::round_window_close()
+void round_window::round_window_destroy()
 {
    
    [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] close];

@@ -80,6 +80,7 @@ FormatMessage(
     
 }
 
+void ns_log(const char * pszLog);
 
 VOID
 WINAPI
@@ -88,9 +89,9 @@ OutputDebugStringA(
                    )
 {
     
-    
-    fprintf(stderr, "%s", lpOutputString);
-    fflush(stderr);
+   ns_log(lpOutputString);
+    //fprintf(stderr, "%s", lpOutputString);
+    //fflush(stderr);
     //printf("%s", lpOutputString);
     
     

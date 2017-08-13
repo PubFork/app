@@ -25,7 +25,7 @@ namespace macos
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
-      ::thread *                       m_pthreadDraw;
+      sp(::thread)                     m_pthreadDraw;
       rect64                           m_rectLastPos;
       uint32_t                         m_dwLastPos;
 
@@ -36,6 +36,9 @@ namespace macos
 
 
       virtual void construct(oswindow hwnd);
+      
+      
+      virtual void release_graphics_resources();
 
 
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
@@ -249,7 +252,9 @@ namespace macos
         virtual ::draw2d::graphics * GetDCEx(::draw2d::region* prgnClip, DWORD flags);
         virtual bool LockWindowUpdate();
         virtual void UnlockWindowUpdate();
-        virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL, ::draw2d::region* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_ERASE);
+//        virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL, ::draw2d::region* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_ERASE);
+      virtual void _001UpdateScreen();
+      //virtual votru8id _001UpdateWindow(bool bUpdateBuffer = false) override;
       // xxx      virtual bool EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
         virtual bool DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
@@ -684,8 +689,6 @@ namespace macos
 
       virtual void _001BaseWndInterfaceMap();
 
-
-      void _001UpdateWindow();
 
       void _001WindowMinimize();
 

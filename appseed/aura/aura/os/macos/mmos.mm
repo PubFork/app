@@ -332,3 +332,13 @@ const char * ns_user_local_video_folder()
    
 }
 
+
+
+void ns_log(const char * pszLog)
+{
+ 
+   NSString * strLog = [[NSString alloc]initWithUTF8String:pszLog];
+   
+   NSLog(@"%@", strLog);
+   
+}

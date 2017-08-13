@@ -23,6 +23,11 @@ CLASS_DECL_IMPORT void draw2d_factory_exchange(::aura::application * papp);
 
 #endif
 
+#ifdef MACOS
+
+void ns_app_terminate();
+#endif
+
 #if defined(LINUX)
 #ifdef _GNU_SOURCE
 #undef _GNU_SOURCE
@@ -2540,86 +2545,176 @@ namespace aura
 
    int32_t application::main()
    {
-
+      
+      
       TRACE(string(typeid(*this).name()) + " main");;
-
+      
       dappy(string(typeid(*this).name()) + " : application::main 1");
-
+      
       try
       {
-
+         
          TRACE(string(typeid(*this).name()) + " on_run");;
          dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
          m_iReturnCode = 0;
          m_bReady = true;
          m_iReturnCode = on_run();
-         if (m_iReturnCode != 0)
+         if(m_iReturnCode != 0)
          {
             dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-            ::output_debug_string("application::main on_run termination failure");
+            ::output_debug_string("application::main on_run termination failure\n");
          }
-
-      }
-      catch (::exit_exception &)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-         ::multithreading::post_quit(&System);
-
-         goto exit_application;
-
-      }
-      catch (...)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run general exception");
-
-         goto exit_application;
-
-      }
-
-      try
-      {
-
-         if (is_system())
-         {
-
-            dappy(string(typeid(*this).name()) + " : quiting main");
-
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-   exit_application:
-
-      try
-      {
-
-         m_iReturnCode = exit_application();
-
+         
       }
       catch(::exit_exception &)
       {
-
+         
+         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+         
          ::multithreading::post_quit(&System);
-
-         m_iReturnCode = -1;
-
+         
+         goto exit_application;
+         
       }
       catch(...)
       {
-
+         
+         dappy(string(typeid(*this).name()) + " : on_run general exception");
+         
+         goto exit_application;
+         
+      }
+      
+      try
+      {
+         
+         if(is_system())
+         {
+            
+            dappy(string(typeid(*this).name()) + " : quiting main");
+            
+            //::aura::post_quit_thread(&System);
+            
+            //Sleep(5000);
+            
+         }
+         
+      }
+      catch(...)
+      {
+         
+      }
+      
+   exit_application:
+      
+      
+      try
+      {
+         
+         m_iReturnCode = exit_thread();
+         
+      }
+      catch(::exit_exception &)
+      {
+         
+         ::multithreading::post_quit(&System);
+         
          m_iReturnCode = -1;
-
+         
+      }
+      catch(...)
+      {
+         
+         m_iReturnCode = -1;
+         
       }
 
+      ns_app_terminate();
+
       return m_iReturnCode;
+
+//
+//      TRACE(string(typeid(*this).name()) + " main");;
+//
+//      dappy(string(typeid(*this).name()) + " : application::main 1");
+//
+//      try
+//      {
+//
+//         TRACE(string(typeid(*this).name()) + " on_run");;
+//         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
+//         m_iReturnCode = 0;
+//         m_bReady = true;
+//         m_iReturnCode = on_run();
+//         if (m_iReturnCode != 0)
+//         {
+//            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
+//            ::output_debug_string("application::main on_run termination failure");
+//         }
+//
+//      }
+//      catch (::exit_exception &)
+//      {
+//
+//         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+//
+//         ::multithreading::post_quit(&System);
+//
+//         goto exit_application;
+//
+//      }
+//      catch (...)
+//      {
+//
+//         dappy(string(typeid(*this).name()) + " : on_run general exception");
+//
+//         goto exit_application;
+//
+//      }
+//
+//      try
+//      {
+//
+//         if (is_system())
+//         {
+//
+//            dappy(string(typeid(*this).name()) + " : quiting main");
+//
+//
+//         }
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+//
+//   exit_application:
+//
+//      try
+//      {
+//
+//         m_iReturnCode = exit_application();
+//
+//      }
+//      catch(::exit_exception &)
+//      {
+//
+//         ::multithreading::post_quit(&System);
+//
+//         m_iReturnCode = -1;
+//
+//      }
+//      catch(...)
+//      {
+//
+//         m_iReturnCode = -1;
+//
+//      }
+//
+//      return m_iReturnCode;
+      
+      
 
    }
 

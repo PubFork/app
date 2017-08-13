@@ -190,6 +190,21 @@ namespace user
 
    }
 
+   
+   void interaction::set_need_redraw(bool bAscendants)
+   {
+      
+      m_bRedraw = true;
+      
+      if(bAscendants && m_pparent != NULL)
+      {
+         
+         m_pparent->set_need_redraw(true);
+         
+      }
+      
+   }
+
 
    bool interaction::defer_check_translation()
    {

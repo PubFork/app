@@ -3,53 +3,75 @@ void * CreateDispatchQueue();
 void CancelDispatchSource(void * p);
 
 void * CreateDispatchTimer(uint64_t interval, uint64_t leeway, void * queue, void(*timer)(void * p), void * p);
+void * ResetDispatchTimer(void * timer, uint64_t interval, uint64_t leeway);
 
 void ReleaseDispatch(void * p);
 
 void aura_timer(void * p);
 
 
-
-
-namespace aura
+void timer::impl_init()
 {
    
-   class Timer :
-   public ::timer
+   m_queue = NULL;
+   m_timer = NULL;
+   
+}
+
+bool timer::impl_start()
+{
+   
+   if(m_queue == NULL)
    {
-   public:
       
+      m_queue = CreateDispatchQueue();
       
-      void *               m_queue;
-      void *               m_timer;
-      bool                 m_bFirst;
-      
-      Timer()
+      if (m_queue == NULL)
       {
          
-         m_queue = NULL;
-         m_timer = NULL;
+         m_bSet = false;
+         
+         return false;
          
       }
       
-      ~Timer()
-      {
+   }
+   
+   m_bSet = true;
+   
+   m_timer = CreateDispatchTimer(m_dwMillis, MAX(1, m_dwMillis / 20), m_queue, aura_timer, this);
+   
+   if (m_timer == NULL)
+   {
+      
+      m_bSet = false;
+      
+      return false;
+      
+   }
+
+   return true;
+
+}
+      
+void timer::impl_term()
+{
          
-         if (m_queue != NULL)
-         {
+   if (m_queue != NULL)
+   {
             
-            ReleaseDispatch(m_queue);
+      ReleaseDispatch(m_queue);
             
-            m_queue = NULL;
+      m_queue = NULL;
             
-         }
+   }
          
-      }
+}
       
       
       
-      void stop(bool bWaitCompletion)
-      {
+void timer::impl_stop(bool bWaitCompletion)
+{
          
          int iRetry = 1000;
          
@@ -75,7 +97,47 @@ namespace aura
          
          m_bSet = false;
          
-      }
       
-   };
+
 }
+
+
+
+
+bool timer::impl_restart()
+{
+   
+   
+   m_bSet = true;
+   
+   m_timer = ResetDispatchTimer(m_timer, m_dwMillis, MAX(1, m_dwMillis / 20));
+   
+   if (m_timer == NULL)
+   {
+      
+      m_bSet = false;
+      
+      return false;
+      
+   }
+
+   return true;
+
+}
+
+
+
+
+
+
+void aura_timer(void * p)
+{
+   
+   ::timer * ptimer = (::timer *)p;
+   
+   ptimer->call_on_timer();
+   
+}
+
+
+

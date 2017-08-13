@@ -122,8 +122,10 @@ namespace user
       };
       
       
-      map < e_queue_thread, e_queue_thread, sp(queue_thread) > m_mapqueue;
+      //map < e_queue_thread, e_queue_thread, sp(queue_thread) > m_mapqueue;
       
+      sp(queue_thread)        m_queuethread;
+      DWORD                   m_dwLastMouseMove;
 
 
       interaction_impl();

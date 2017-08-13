@@ -36,4 +36,4 @@ extern char * const * environ;
 //               0 pasta(s)   19.156.402.176 bytes dispon¡veis
 
 
-#include "ansios_timer.cpp"
+

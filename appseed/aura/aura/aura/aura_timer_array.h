@@ -11,13 +11,12 @@ namespace aura
    {
    public:
 
-      typedef map < uint_ptr,uint_ptr,timer *, timer  * > MAP;
+
+      typedef map < uint_ptr,uint_ptr, ::timer *, ::timer  * > MAP;
 
       MAP        m_map;
-
-      mutex       m_mutex;
-
       
+
       timer_array(::aura::application * papp);
       virtual ~timer_array();
 
@@ -28,7 +27,7 @@ namespace aura
       
       virtual void delete_all_timers();
 
-      virtual bool on_timer(timer * ptimer);
+      virtual bool on_timer(::timer * ptimer);
       virtual void _001OnTimer(::timer * ptimer);
 
    };

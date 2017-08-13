@@ -32,11 +32,30 @@ void * CreateDispatchTimer(uint64_t interval, uint64_t leeway, void * queue, voi
    if (timer)
    {
       
-      dispatch_source_set_timer(timer, dispatch_walltime(NULL, 0), interval * NSEC_PER_MSEC, leeway * NSEC_PER_MSEC);
+      dispatch_source_set_timer(timer, dispatch_walltime(DISPATCH_TIME_NOW, interval * NSEC_PER_MSEC), DISPATCH_TIME_FOREVER, leeway * NSEC_PER_MSEC);
       
       dispatch_source_set_event_handler(timer, ^(){ pfnTimer(p); });
       
       dispatch_resume(timer);
+      
+   }
+   
+   return timer;
+   
+}
+
+
+void * ResetDispatchTimer(void * timerParam, uint64_t interval, uint64_t leeway)
+{
+   
+   dispatch_source_t timer = (dispatch_source_t) timerParam;
+   
+   if (timer)
+   {
+      
+      dispatch_source_set_timer(timer, dispatch_walltime(DISPATCH_TIME_NOW, interval * NSEC_PER_MSEC), DISPATCH_TIME_FOREVER, leeway * NSEC_PER_MSEC);
+      
+      //dispatch_resume(timer);
       
    }
    

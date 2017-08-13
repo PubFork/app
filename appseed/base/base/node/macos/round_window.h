@@ -15,6 +15,17 @@
 class round_window
 {
 public:
+   
+   
+#ifdef __OBJC__
+   
+   RoundWindow * m_proundwindow;
+   
+#else
+   
+   void * m_proundwindow; // cast to RoundWindow * to use it
+   
+#endif
 
 
    bool m_bDirty;
@@ -23,8 +34,8 @@ public:
    unsigned long long   m_uiLastUpdateEnd;
 
    
-   void * m_proundwindow; // cast to RoundWindow * to use it
-   
+   round_window();
+   virtual ~round_window();
    
    virtual void round_window_draw(CGContextRef cgc) = 0;
    virtual void round_window_mouse_down(int iButton, double x, double y) = 0;
@@ -57,11 +68,10 @@ public:
    virtual void round_window_make_key_window_and_order_front();
    virtual void round_window_make_main_window();
    
-   virtual void round_window_close();
-   
    virtual void round_window_set_title(const char * pszTitle);
    virtual void round_window_get_title(char * pszTitle, int iSize);
    
+   virtual void round_window_destroy();
    
 };
 

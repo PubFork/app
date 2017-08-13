@@ -1122,93 +1122,11 @@ namespace axis
 
 
 
-
    int32_t application::main()
    {
+      
+      return ::aura::application::main();
 
-      TRACE(string(typeid(*this).name()) + " main");;
-
-      dappy(string(typeid(*this).name()) + " : application::main 1");
-
-      try
-      {
-
-         TRACE(string(typeid(*this).name()) + " on_run");;
-         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-         m_iReturnCode = 0;
-         m_bReady = true;
-         m_iReturnCode = on_run();
-         if(m_iReturnCode != 0)
-         {
-            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-            ::output_debug_string("application::main on_run termination failure\n");
-         }
-
-      }
-      catch(::exit_exception &)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-         ::multithreading::post_quit(&System);
-
-         goto exit_application;
-
-      }
-      catch(...)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run general exception");
-
-         goto exit_application;
-
-      }
-
-      try
-      {
-
-         if(is_system())
-         {
-
-            dappy(string(typeid(*this).name()) + " : quiting main");
-
-            //::aura::post_quit_thread(&System);
-
-            //Sleep(5000);
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-   exit_application:
-
-
-      try
-      {
-
-         m_iReturnCode = exit_thread();
-
-      }
-      catch(::exit_exception &)
-      {
-
-         ::multithreading::post_quit(&System);
-
-         m_iReturnCode = -1;
-
-      }
-      catch(...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-      return m_iReturnCode;
 
    }
 
