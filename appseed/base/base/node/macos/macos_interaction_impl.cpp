@@ -5479,6 +5479,13 @@ namespace macos
       cslock slDisplay(cs_display());
 
       window_buffer * pbuffer = m_spgraphics.cast < window_buffer >();
+      
+      if(pbuffer == NULL)
+      {
+         
+         return;
+         
+      }
 
       synch_lock sl1(pbuffer->m_pmutex);
 

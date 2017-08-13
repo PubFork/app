@@ -376,15 +376,15 @@ void macos_on_app_activate()
 void macos_on_new_file()
 {
    
-   ::aura::system::g_p->on_open_file(var::type_empty);
+   ::aura::system::g_p->on_open_file(var::type_empty, "");
    
 }
 
 
-void macos_on_open_file(const char * pszFilename)
+void macos_on_open_file(const char * pszFilename, const char * pszExtra)
 {
    
-   ::aura::system::g_p->on_open_file(pszFilename);
+   ::aura::system::g_p->on_open_file(pszFilename, pszExtra);
    
 }
 

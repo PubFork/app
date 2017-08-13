@@ -458,7 +458,7 @@ namespace aura
 #endif
       
       
-      virtual bool on_open_file(var varFile);
+      virtual bool on_open_file(var varFile, string strExtra);
 
    };
 

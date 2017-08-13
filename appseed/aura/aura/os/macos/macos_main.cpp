@@ -73,14 +73,37 @@
 uint32_t __start_system(const char * pszFileName)
 {
    
+   string strFirst(pszFileName);
+   
+   string strExtra;
+   
+   stringa stra;
+   
+   // TODO : stringa::_001Explode
+   stra.explode(":", strFirst);
+   
+   if(stra.get_count() > 1)
+   {
+      
+      strFirst = stra[0];
+      
+      strExtra = stra.implode(":", 1);
+      
+   }
+   
+   // TODO processs strFirst properly
+   strFirst.trim();
+   
+   // TODO processs strExtra properly
+   strExtra.trim();
    
    if(::aura::system::g_p != NULL)
    {
       
-      if(pszFileName != NULL)
+      if(strFirst.has_char())
       {
       
-         macos_on_open_file(pszFileName);
+         macos_on_open_file(str, strExtra);
          
       }
     
@@ -100,12 +123,20 @@ uint32_t __start_system(const char * pszFileName)
       
    pcommand->m_strCommandLine = g_pszCommandLine;
    
-   if(pszFileName != NULL)
+   if(strFirst.has_char())
    {
    
-      pcommand->m_straFile.add(pszFileName);
+      pcommand->m_straFile.add(strFirst);
       
    }
+   
+   if(strExtra.has_char())
+   {
+      
+      pcommand->m_strExtra = strExtra;
+      
+   }
+   
    
    psystem->startup_command(pcommand);
       

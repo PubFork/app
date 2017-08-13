@@ -14,6 +14,7 @@ namespace command
       e_command                  m_ecommand;
       string                     m_strCommandLine;
       stringa                    m_straFile;
+      string                     m_strExtra;
             
  
       command();
