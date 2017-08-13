@@ -760,8 +760,11 @@ namespace user
 //
 //      }
 //
+      
+      
       *lprect = m_rectParentClient;
-
+      
+     
       return true;
 
    }

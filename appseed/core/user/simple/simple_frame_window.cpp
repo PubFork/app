@@ -961,6 +961,8 @@ bool simple_frame_window::WfiToggleTransparentFrame()
 
    set_need_layout();
 
+   set_need_redraw();
+   
    return true;
 
 }

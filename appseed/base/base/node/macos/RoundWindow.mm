@@ -62,6 +62,10 @@
    
    m_controller = [[NSWindowController alloc] initWithWindow: self];
 
+   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidBecomeKey:) name: NSWindowDidBecomeKeyNotification object: self];
+
+   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidResignKey:) name: NSWindowDidResignKeyNotification object: self];
+
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidResize:) name: NSWindowDidResizeNotification object: self];
    
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector (windowDidMove:) name: NSWindowDidMoveNotification object: self];
@@ -111,10 +115,21 @@
 //
 // Redraw the close button when the main window status changes.
 //
-- (void)mainWindowChanged:(NSNotification *)aNotification
+- (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
 
-   printf("mainWindowChanged\n");
+   printf("windowDidBecomeKey\n");
+
+   m_pwindow->round_window_activate();
+   
+}
+
+- (void)windowDidResignKey:(NSNotification *)aNotification
+{
+   
+   printf("windowDidResignKey\n");
+   
+   m_pwindow->round_window_deactivate();
    
 }
 

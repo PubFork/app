@@ -535,6 +535,13 @@ void object::add_line(::command::command * pcommand,application_bias * pbiasCrea
    
    create->m_spCommandLine->m_varFile._001Add(pcommand->m_straFile);
 
+   if(!create->m_spCommandLine->m_varFile.is_empty())
+   {
+
+      create->m_spCommandLine->m_ecommand = command_line::command_file_open;
+
+   }
+
    commandcentral->merge(create);
 
    if (commandcentral != System.handler())

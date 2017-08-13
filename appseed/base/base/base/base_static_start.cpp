@@ -94,6 +94,8 @@ namespace base
 
          g_poswindowdataptra = new oswindow_dataptra;
 
+         g_poswindowdataptra->defer_create_mutex();
+
 #endif // defined(APPLEOS)
 
 

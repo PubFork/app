@@ -231,6 +231,11 @@ namespace macos
         virtual bool round_window_key_up(unsigned int vk, unsigned int scan);
         virtual bool round_window_key_down(unsigned int uiKeyCode);
         virtual bool round_window_key_up(unsigned int uiKeyCode);
+      
+      
+      virtual void round_window_activate();
+      virtual void round_window_deactivate();
+
 
        virtual void round_window_resized(CGRect rect);
        virtual void round_window_moved(CGPoint point);

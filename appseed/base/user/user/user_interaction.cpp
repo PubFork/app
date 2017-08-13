@@ -2398,6 +2398,11 @@ namespace user
       rect64 rect;
 
       GetWindowRect(rect);
+      
+      int iLeft = rect.left;
+      int iTop = rect.top;
+      int iRight = rect.right;
+      int iBottom = rect.bottom;
 
       return rect.contains(pt);
 

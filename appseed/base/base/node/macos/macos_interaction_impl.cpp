@@ -6,6 +6,7 @@
 #include "base/user/all.h"
 
 
+void DeactivateWindow(oswindow window);
 
 struct __CTLCOLOR
 {
@@ -5909,6 +5910,26 @@ namespace macos
 
    }
    
+   
+   void interaction_impl::round_window_activate()
+   {
+      
+      ::SetActiveWindow(get_handle());
+      
+      m_pui->RedrawWindow();
+      
+   }
+
+   
+   void interaction_impl::round_window_deactivate()
+   {
+      
+      ::DeactivateWindow(get_handle());
+      
+      m_pui->RedrawWindow();
+      
+   }
+
    
    void interaction_impl::round_window_iconified()
    {
