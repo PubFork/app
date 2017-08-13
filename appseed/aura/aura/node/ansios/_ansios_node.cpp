@@ -34,3 +34,6 @@ extern char * const * environ;
 //2015-01-05  08:57                 0 _ansios_nod.cpp"
 //               4 arquivo(s)         20.265 bytes
 //               0 pasta(s)   19.156.402.176 bytes dispon¡veis
+
+
+#include "ansios_timer.cpp"
