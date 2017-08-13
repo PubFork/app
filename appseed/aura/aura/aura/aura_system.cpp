@@ -2858,7 +2858,7 @@ namespace aura
    }
 
 
-   bool system::on_open_file(var varFile)
+   bool system::on_open_file(var varFile, string strExtra)
    {
       
       auto appptra = get_appptra();
@@ -2884,13 +2884,13 @@ namespace aura
          if(varFile.is_empty())
          {
 
-            papp->handler()->add_fork("app.exe : open_default");
+            papp->handler()->add_fork("app.exe : open_default " + strExtra);
             
          }
          else
          {
 
-            papp->handler()->add_fork("app.exe " + varFile.get_file_path());
+            papp->handler()->add_fork("app.exe " + varFile.get_file_path() + ::str::has_char(strExtra, " : "));
             
          }
          

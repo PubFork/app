@@ -103,7 +103,7 @@ uint32_t __start_system(const char * pszFileName)
       if(strFirst.has_char())
       {
       
-         macos_on_open_file(str, strExtra);
+         macos_on_open_file(strFirst, strExtra);
          
       }
     
