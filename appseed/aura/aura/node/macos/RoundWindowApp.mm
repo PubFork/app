@@ -71,25 +71,25 @@ void macos_on_app_activate();
 - (void)application:(NSApplication *)sender openFiles:(NSArray<NSString *> *)filenames
 {
    
-   int c = [filenames count];
+   unsigned long ulCount = [filenames count];
    
-   if(c <= 0)
+   if(ulCount <= 0)
    {
       
       return;
       
    }
    
-   char ** psza = (char **) malloc(c * sizeof(char*));
+   char ** psza = (char **) malloc(ulCount * sizeof(char*));
    
-   for(int i = 0; i < c; i++)
+   for(unsigned long ul = 0; ul < ulCount; ul++)
    {
       
-      psza[i] = strdup([[filenames objectAtIndex:i] UTF8String]);
+      psza[ul] = strdup([[filenames objectAtIndex:ul] UTF8String]);
       
    }
    
-   defer_run_system(psza, c);
+   defer_run_system(psza, ulCount);
    
    
 }
