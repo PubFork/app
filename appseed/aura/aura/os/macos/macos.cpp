@@ -365,6 +365,18 @@ int32_t defer_run_system(const char * pszFileName)
 }
 
 
+int32_t defer_run_system(char * * psza, int c)
+{
+   
+   stringa stra;
+   
+   stra.c_add(psza, c);
+   
+   return __start_system(stra);
+   
+}
+
+
 void macos_on_app_activate()
 {
    

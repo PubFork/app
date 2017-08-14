@@ -77,7 +77,7 @@ string command::get_description()
    
    m_ecommand        = command.m_ecommand;
    m_strCommandLine  = command.m_strCommandLine;
-   m_straFile        = command.m_straFile;
+   m_varFile         = command.m_varFile;
    
    return *this;
    

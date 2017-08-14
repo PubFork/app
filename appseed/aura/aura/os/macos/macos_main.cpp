@@ -70,21 +70,30 @@
 //}
 
 
+uint32_t __start_system(const stringa & stra);
+
+
 uint32_t __start_system(const char * pszFileName)
 {
    
-   string strFileName(pszFileName);
-   
-   string strExtra;
+   string str(pszFileName);
    
    stringa stra;
    
+   stra._001Explode(str);
+   
+   return __start_system(stra);
+   
+}
+
+uint32_t __start_system(const stringa & stra)
+{
+   
    var varFile;
    
-   // TODO : stringa::_001Explode
-   stra._001Explode(strFirst);
+   string strExtra;
    
-   int iFind = stra.find_first(":")
+   index iFind = stra.find_first(":");
    
    if(iFind >= 0)
    {
@@ -111,19 +120,15 @@ uint32_t __start_system(const char * pszFileName)
       
    }
    
-   // TODO processs strFirst properly x
-   strFirst.trim();
-   
-   // TODO processs strExtra properly
    strExtra.trim();
    
    if(::aura::system::g_p != NULL)
    {
       
-      if(strFirst.has_char())
+      if(!varFile.is_empty())
       {
       
-         macos_on_open_file(strFirst, strExtra);
+         macos_on_open_file(varFile, strExtra);
          
       }
     
@@ -143,20 +148,9 @@ uint32_t __start_system(const char * pszFileName)
       
    pcommand->m_strCommandLine = g_pszCommandLine;
    
-   if(strFirst.has_char())
-   {
-   
-      pcommand->m_straFile.add(strFirst);
+   pcommand->m_varFile = varFile;
       
-   }
-   
-   if(strExtra.has_char())
-   {
-      
-      pcommand->m_strExtra = strExtra;
-      
-   }
-   
+   pcommand->m_strExtra = strExtra;
    
    psystem->startup_command(pcommand);
       

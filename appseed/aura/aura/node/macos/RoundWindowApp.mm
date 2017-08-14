@@ -12,6 +12,8 @@ int32_t defer_run_system();
 
 int32_t defer_run_system(const char * pszFileName);
 
+int32_t defer_run_system(char * * psza, int c);
+
 void macos_on_app_activate();
 
 
@@ -63,6 +65,35 @@ void macos_on_app_activate();
    return true;
    
 }
+
+
+
+- (void)application:(NSApplication *)sender openFiles:(NSArray<NSString *> *)filenames
+{
+   
+   int c = [filenames count];
+   
+   if(c <= 0)
+   {
+      
+      return;
+      
+   }
+   
+   char ** psza = (char **) malloc(c * sizeof(char*));
+   
+   for(int i = 0; i < c; i++)
+   {
+      
+      psza[i] = strdup([[filenames objectAtIndex:i] UTF8String]);
+      
+   }
+   
+   defer_run_system(psza, c);
+   
+   
+}
+
 
 
 //- (void)sendEvent:(NSEvent *)theEvent

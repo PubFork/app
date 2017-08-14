@@ -2213,7 +2213,7 @@ namespace aura
 
       set._008ParseCommandFork(pcommand->m_strCommandLine, varFile, strApp);
       
-      varFile._001Add(m_pcommand->m_straFile);
+      varFile._001Add(m_pcommand->m_varFile.stra());
 
       string strAppId(strApp);
 
