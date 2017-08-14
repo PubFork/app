@@ -73,25 +73,45 @@
 uint32_t __start_system(const char * pszFileName)
 {
    
-   string strFirst(pszFileName);
+   string strFileName(pszFileName);
    
    string strExtra;
    
    stringa stra;
    
-   // TODO : stringa::_001Explode
-   stra.explode(":", strFirst);
+   var varFile;
    
-   if(stra.get_count() > 1)
+   // TODO : stringa::_001Explode
+   stra._001Explode(strFirst);
+   
+   int iFind = stra.find_first(":")
+   
+   if(iFind >= 0)
    {
       
-      strFirst = stra[0];
+      if(iFind >= 1)
+      {
+         
+         if(iFind == 1)
+         {
+            
+            varFile = stra[0];
+            
+         }
+         else
+         {
+            
+            varFile = stra.slice(0, iFind);
+            
+         }
+         
+      }
       
-      strExtra = stra.implode(":", 1);
+      strExtra = stra.implode(" ", 1);
       
    }
    
-   // TODO processs strFirst properly
+   // TODO processs strFirst properly x
    strFirst.trim();
    
    // TODO processs strExtra properly

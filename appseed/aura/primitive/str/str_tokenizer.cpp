@@ -262,6 +262,98 @@ namespace str
    }
 
 
+   bool tokenizer::_001GetNextToken(string & strToken)
+   {
+      
+      const char * psz = &c_str()[m_nCurrentIndex];
+                          
+      const char * pszEnd = psz + strlen(psz);
+                          
+      const char * pszStart = NULL;
+      
+      strsize iLen;
+   
+      while(psz < pszEnd)
+      {
+
+         if(::str::ch::is_whitespace(psz, pszEnd))
+         {
+            
+            if(pszStart != NULL)
+            {
+               
+               iLen = psz - pszStart;
+               
+               strToken = string(pszStart, iLen);
+               
+               m_nCurrentIndex += iLen;
+               
+               return true;
+               
+            }
+            
+         }
+         else if(*psz == '\"' || *psz == '\'')
+         {
+            
+            if(pszStart == NULL)
+            {
+               
+               pszStart = psz;
+               
+            }
+            else if(*psz == *pszStart)
+            {
+               
+               iLen = psz - pszStart;
+               
+               strToken = string(pszStart, iLen);
+               
+               m_nCurrentIndex += iLen;
+               
+               return true;
+               
+            }
+            
+         }
+         
+         psz = ::str::utf8_inc(psz);
+         
+      }
+      
+      if(pszStart != NULL)
+      {
+         
+         if(*pszStart == '\"' || *pszStart == '\'')
+         {
+      
+            iLen = psz - pszStart;
+      
+            strToken = string(pszStart, iLen);
+      
+            m_nCurrentIndex += iLen;
+            
+         }
+         else
+         {
+            
+            iLen = psz - pszStart;
+            
+            strToken = string(pszStart, iLen);
+            
+            m_nCurrentIndex += iLen;
+            
+         }
+         
+         return true;
+         
+      }
+      
+      return false;
+      
+      
+   }
+   
 
 } // namespace str
 
