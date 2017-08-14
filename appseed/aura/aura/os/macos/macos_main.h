@@ -9,7 +9,8 @@
 #pragma once
 
 
-uint32_t __start_system(const char * pszFileName);
+uint32_t __start_system(const stringa & straParameters);
+uint32_t __start_system(const char * pszCommandLineArguments);
 
 
 

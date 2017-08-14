@@ -533,7 +533,7 @@ void object::add_line(::command::command * pcommand,application_bias * pbiasCrea
 
    }
    
-   create->m_spCommandLine->m_varFile._001Add(pcommand->m_straFile);
+   create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
 
    if(!create->m_spCommandLine->m_varFile.is_empty())
    {
@@ -599,7 +599,7 @@ void object::add_fork(::command::command * pcommand, application_bias * pbiasCre
    
    create->m_spCommandLine->_001ParseCommandFork(pcommand->m_strCommandLine);
    
-   create->m_spCommandLine->m_varFile._001Add(pcommand->m_straFile);
+   create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
    
    handler->merge(create);
    

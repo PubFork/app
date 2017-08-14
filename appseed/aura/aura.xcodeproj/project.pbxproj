@@ -2898,6 +2898,7 @@
 		9A8181151F21A9DF00FDAF74 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		9A8181191F21B39600FDAF74 /* apple_multihreading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_multihreading.cpp; sourceTree = "<group>"; };
 		9A8370241E4692FB00803F9F /* ios_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_file_watcher.cpp; sourceTree = "<group>"; };
+		9A83827B1F4122FA005ED52C /* str_tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = str_tokenizer.cpp; sourceTree = "<group>"; };
 		9A8897A514C24736006B4023 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
 		9A8ED4821F20052E007DB75C /* draw2d_nanosvg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_nanosvg.cpp; sourceTree = "<group>"; };
 		9A8ED57F1F204BDD007DB75C /* macos_user_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macos_user_mm.mm; sourceTree = "<group>"; };
@@ -3311,6 +3312,7 @@
 		07B0946E18495C2A007A0560 /* str */ = {
 			isa = PBXGroup;
 			children = (
+				9A83827B1F4122FA005ED52C /* str_tokenizer.cpp */,
 				07B0946F18495C2A007A0560 /* str.h */,
 				07B0947018495C2A007A0560 /* str.inl */,
 				07B0947218495C2A007A0560 /* str_base64.h */,
