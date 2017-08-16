@@ -55,6 +55,18 @@ namespace aura
       virtual int_map < var > call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va);
 
       template<typename T,typename... Args>
+      int_map < var > scall(bool bAutoLaunch, duration durTimeout, const string & strApp,const string & strObject,const string & strMember,const T & t,Args... args)
+      {
+         
+         var_array va;
+         
+         va.add(t,args...);
+         
+         return scall(bAutoLaunch, strApp,strObject,strMember,va, durTimeout);
+         
+      }
+      
+     template<typename T,typename... Args>
       int_map < var > scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,const T & t,Args... args)
       {
 
@@ -66,7 +78,7 @@ namespace aura
 
       }
 
-      virtual int_map < var > scall(bool bAutoLaunch,const string & strApp,const string & strObject,const string & strMember,var_array & va);
+      virtual int_map < var > scall(bool bAutoLaunch,const string & strApp,const string & strObject,const string & strMember,var_array & va, duration durTimeout = millis(1000));
 
       template<typename T,typename... Args>
       var call(const string & strApp,int iPid, const string & strObject,const string & strMember,const T & t,Args... args)
@@ -80,7 +92,7 @@ namespace aura
 
       }
 
-      virtual var call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va);
+      virtual var call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va, duration durTimeout = millis(1000));
 
       ::aura::ipc::tx & tx(const string & strApp, int iPid);
 

@@ -187,11 +187,11 @@ void html_document::soft_reload()
 }
 
 
-bool html_document::on_simple_update(cmd_ui * pcmdui)
+bool html_document::on_simple_update(command_ui * pcommandui)
 {
-   if(pcmdui->m_id == "viewindefaultbrowser")
+   if(pcommandui->m_id == "viewindefaultbrowser")
    {
-      pcmdui->Enable();
+      pcommandui->Enable();
       return true;
    }
    return false;

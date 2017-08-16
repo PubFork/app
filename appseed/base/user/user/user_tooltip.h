@@ -34,9 +34,6 @@ namespace user
       void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      bool get_translucency(::user::ETranslucency  & etranslucency) override;
-
-
       virtual ::user::interaction::e_type get_window_type() override;
 
 

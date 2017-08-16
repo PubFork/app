@@ -1,21 +1,28 @@
 //#include "framework.h"
 
+
 namespace user
 {
 
+   
    menu_button::menu_button(::aura::application * papp):
       object(papp),
       ::user::interaction(papp),
       ::user::button(papp)
    {
+      
+      construct_userstyle(style_menu_button);
+      
       m_pitem = NULL;
+      
    }
+   
 
    menu_button::~menu_button()
    {
+      
    }
-
-
+   
 
    void menu_button::install_message_handling(::message::dispatch * pinterface)
    {
@@ -87,25 +94,24 @@ namespace user
    void menu_button::on_layout()
    {
 
-      if (m_puserschemaSchema == NULL)
-      {
-
-         if (m_pitem != NULL)
-         {
-
-            sp(::user::menu) pui = m_pitem->m_pbase;
-
-            if (pui.is_set() && pui->m_oswindowParent != NULL)
-            {
-
-               m_puserschemaSchema = pui->m_oswindowParent;
-
-
-            }
-
-         }
-
-      }
+//      if (m_puserstyle == NULL)
+//      {
+//
+//         if (m_pitem != NULL)
+//         {
+//
+//            sp(::user::menu) pui = m_pitem->m_pmenu;
+//
+//            if (pui.is_set() && pui->m_puiParent != NULL)
+//            {
+//
+//               m_puserstyle = pui->m_puiParent;
+//
+//            }
+//
+//         }
+//
+//      }
 
    }
    
@@ -172,7 +178,7 @@ namespace user
       else
       {
 
-         ::user::GetUfeSchema(get_app())->DrawCheck(m_echeck, m_rectCheckBox, pgraphics);
+         m_puserstyle->DrawCheck(m_echeck, m_rectCheckBox, pgraphics);
 
       }
 
@@ -197,42 +203,6 @@ namespace user
 
    }
 
-   menu_button_cmd_ui::menu_button_cmd_ui(::aura::application * papp) :
-      object(papp),
-      cmd_ui(papp)
-   {
-   }
-
-
-   void menu_button_cmd_ui::Enable(bool bOn, ::action::context actioncontext)
-   {
-
-      m_bEnableChanged = TRUE;
-
-      menu_button* pbutton = dynamic_cast < menu_button * > (m_pOther);
-
-      pbutton->enable_window(bOn != FALSE);
-
-   }
-
-
-   void menu_button_cmd_ui::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
-   {
-      
-      ASSERT(echeck == check::checked || echeck == check::unchecked || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
-      
-      menu_button* pbutton = dynamic_cast < menu_button *  > (m_pOther);
-
-      pbutton->_001SetCheck(echeck, actioncontext);
-
-   }
-
-
-   void menu_button_cmd_ui::SetText(const char *, ::action::context)
-   {
-      
-
-   }
 
 
 

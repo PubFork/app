@@ -227,7 +227,7 @@ namespace user
 
    //   }
 
-   //   return ::user::schema::get_font(spfont, efont, pui);
+   //   return ::user::style::get_font(spfont, efont, pui);
 
    //}
 
@@ -357,7 +357,7 @@ namespace user
 
       sort::sort(iSelBeg, iSelEnd);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
       //size size3;
@@ -1546,7 +1546,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       const int iLenUniText = 14;
 
@@ -1886,17 +1886,17 @@ namespace user
       }
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevel();
+         m_puserstyle = GetTopLevel();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
@@ -1937,7 +1937,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       const int iLenUniText = 14;
 
@@ -2368,7 +2368,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -2510,7 +2510,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       rect rectClient;
 
@@ -4671,13 +4671,13 @@ namespace user
    void plain_edit::_001OnUpdateEditCut(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pupdatecmdui->Enable(str.has_char());
 
    }
 
@@ -4704,13 +4704,13 @@ namespace user
    void plain_edit::_001OnUpdateEditCopy(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pupdatecmdui->Enable(str.has_char());
 
    }
 
@@ -4729,9 +4729,9 @@ namespace user
    void plain_edit::_001OnUpdateEditPaste(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
 
-      pupdatecmdui->m_pcmdui->Enable(Session.copydesk().get_plain_text().has_char());
+      pupdatecmdui->Enable(Session.copydesk().get_plain_text().has_char());
 
    }
 
@@ -4755,13 +4755,13 @@ namespace user
    void plain_edit::_001OnUpdateEditDelete(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pupdatecmdui->Enable(str.has_char());
 
    }
 

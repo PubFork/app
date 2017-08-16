@@ -143,7 +143,7 @@ namespace core
       if(!::base::session::initialize())
          return false;
 
-      userschema();
+      userstyle();
 
       return true;
 
@@ -264,7 +264,7 @@ namespace core
    }
 
 
-   bool session::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool session::_001OnCmdMsg(::user::command * pcmdmsg)
    {
 
       return application::_001OnCmdMsg(pcmdmsg);

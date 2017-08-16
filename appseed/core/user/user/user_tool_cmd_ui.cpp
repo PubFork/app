@@ -11,7 +11,7 @@ namespace user
 
    tool_cmd_ui::tool_cmd_ui(::aura::application * papp) :
       object(papp),
-      cmd_ui(papp)
+      command_ui(papp)
    {
    }
       

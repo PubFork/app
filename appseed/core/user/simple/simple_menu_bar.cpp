@@ -138,7 +138,7 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
 }*/
 
 
-bool simple_menu_bar::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+bool simple_menu_bar::_001OnCmdMsg(::user::command * pcmdmsg)
 {
    // TODO: add your specialized code here and/or call the base class
 

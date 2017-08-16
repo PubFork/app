@@ -176,9 +176,6 @@ namespace base
 
       m_bSystemSynchronizedScreen = true;
 
-      m_pschemaLayeredFrame = canew(::user::style(this));
-
-
    }
 
 
@@ -222,8 +219,6 @@ namespace base
       {
    
       }         
-
-      m_pschemaLayeredFrame.release();
 
 #ifdef WINDOWSEX
 

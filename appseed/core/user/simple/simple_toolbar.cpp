@@ -2,7 +2,7 @@
 
 #define TIMER_HOVER 321654
 
-class SimpleToolCmdUI : public cmd_ui        // class private to this file !
+class SimpleToolCmdUI : public command_ui        // class private to this file !
 {
 public: // re-implementations only
 
@@ -219,6 +219,8 @@ size simple_toolbar::CalcSimpleLayout()
 void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
+   draw_lock dl(this, pgraphics);
+   
    sp(::user::tab) ptab = GetTypedParent < ::user::tab >();
 
    if (ptab.is_set())
@@ -243,7 +245,7 @@ void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 
    //::user::interaction::_001OnDraw(pgraphics);
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -385,7 +387,7 @@ void simple_toolbar::_001OnCreate(signal_details * pobj)
       return;
 
 
-   //m_puserschemaSchema = Session.m_puserschemaSchema;
+   //m_puserstyle = Session.m_puserstyle;
    m_dibDraft->create(20, 20);
 }
 
@@ -439,8 +441,8 @@ size simple_toolbar::CalcSize(int32_t nCount)
    ASSERT(nCount > 0);
 
    ::draw2d::memory_graphics pgraphics(allocer());
-
-   select_font(pgraphics, ::user::font_toolbar, this);
+   
+   select_font(pgraphics, ::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -615,10 +617,10 @@ size simple_toolbar::CalcSize(int32_t nCount)
 void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawToolbarItem(pgraphics, iItem, this))
+      if (m_puserstyle->_001DrawToolbarItem(pgraphics, iItem, this))
       {
 
          return;
@@ -635,14 +637,16 @@ void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 
 void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
-
+   
+   draw_select ds(this, pgraphics);
+   
    pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
    rect rectItem;
 
    rect rectImage;
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -657,55 +661,87 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
    UINT uiImage = pmenucentral->CommandToImage(item.m_id);
 
    e_element eelement = element_item;
+   
    e_element eelementImage = element_image;
+   
    e_element eelementText = element_text;
+   
    if ((nStyle & TBBS_SEPARATOR) == 0)
    {
+      
       if ((nStyle & TBBS_DISABLED) == 0)
       {
+         
          // item is enabled
          if (m_iButtonPressItem >= 0)
          {
+            
             if (iItem == m_iButtonPressItem)
             {
+               
                if (bHover)
                {
+                  
                   eelement = ElementItemPress;
+                  
                   eelementImage = ElementImagePress;
+                  
                   eelementText = ElementTextPress;
+                  
                }
                else
                {
+                  
                   eelement = ElementItemHover;
+                  
                   eelementImage = ElementImageHover;
+                  
                   eelementText = ElementTextHover;
+                  
                }
+               
             }
+            
          }
          else if (bHover)
          {
+            
             eelement = ElementItemHover;
+            
             eelementImage = ElementImageHover;
+            
             eelementText = ElementTextHover;
+            
          }
+         
       }
       else
       {
+         
          // item is disabled
+         
          eelement = element_item;
+         
          eelementImage = element_image;
+         
          eelementText = element_text;
+         
       }
+      
    }
    else
    {
+      
       eelement = element_item;
+      
       eelementImage = element_image;
+      
       eelementText = element_text;
+      
    }
 
-
    int iOffsetX = 0;
+   
    int iOffsetY = 0;
 
    _001GetElementRect(iItem, rectItem, eelement);
@@ -714,17 +750,26 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    if ((nStyle & TBBS_SEPARATOR) != 0)
    {
+      
       rect rectSeparator;
+      
       rectSeparator.left = (rectImage.left + rectImage.right) / 2 - 1;
+      
       rectSeparator.right = rectSeparator.left + 2;
+      
       rectSeparator.top = rectImage.top;
+      
       rectSeparator.bottom = rectImage.bottom;
+      
       pgraphics->Draw3dRect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
+      
    }
    else
    {
+      
       if (eelement == ElementItemHover)
       {
+         
          if ((nStyle & TBBS_CHECKED) != 0)
          {
 
@@ -743,6 +788,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                   RGB(255, 255, 250), 208);
 
                pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+               
             }
             
             if (uiImage != 0xffffffffu)
@@ -777,11 +823,17 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             {
 
                ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
+               
                ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
+               
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
+               
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
+               
                pgraphics->Rectangle(rectItem);
+               
                pgraphics->SelectObject(ppenOld);
+               
                pgraphics->SelectObject(pbrushOld);
 
             }
@@ -806,6 +858,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                pmenucentral->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
 
                pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+               
             }
 
          }
@@ -818,11 +871,17 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          {
 
             ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
+            
             ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
+            
             ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
+            
             ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
+            
             pgraphics->Rectangle(rectItem);
+            
             pgraphics->SelectObject(ppenOld);
+            
             pgraphics->SelectObject(pbrushOld);
 
          }
@@ -899,7 +958,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
    if (item.m_str.has_char())
    {
 
-      select_font(pgraphics, ::user::font_toolbar, this);
+      select_font(::user::font_toolbar);
 
       m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -1140,17 +1199,17 @@ void simple_toolbar::on_layout()
 
    synch_lock ml(m_pmutex);
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = GetTopLevel();
+      m_puserstyle = GetTopLevel();
 
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
    }
 
@@ -1424,7 +1483,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
 SimpleToolCmdUI::SimpleToolCmdUI(::aura::application * papp) :
    object(papp),
-   cmd_ui(papp)
+   command_ui(papp)
 {
 }
 void SimpleToolCmdUI::Enable(bool bOn, ::action::context actioncontext)

@@ -395,7 +395,7 @@ WINBOOL IsWindow(oswindow oswindow)
 void output_debug_string(const char * psz)
 {
    
-   ::OutputDebugString(wstring(psz));
+   ::output_debug_string(wstring(psz));
 
 }
 

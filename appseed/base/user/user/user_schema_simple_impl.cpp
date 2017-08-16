@@ -10,7 +10,7 @@ namespace user
       object(papp)
    {
 
-      m_etranslucency      = TranslucencyUndefined;
+      m_etranslucency      = translucency_undefined;
 
    }
 
@@ -65,10 +65,10 @@ namespace user
 
    }
 
-   bool schema_simple_impl::get_translucency(ETranslucency & etranslucency)
+   bool schema_simple_impl::get_translucency(e_translucency & etranslucency)
    {
 
-      if(m_etranslucency == TranslucencyUndefined)
+      if(m_etranslucency == translucency_undefined)
          return false;
 
       etranslucency = m_etranslucency;
@@ -76,6 +76,59 @@ namespace user
       return true;
 
    }
+   
+   
+   bool schema_simple_impl::prepare_menu_button(::user::menu_item * pitem)
+   {
+      
+      if(!::user::style::prepare_menu_button(pitem))
+      {
+         
+         return false;
+         
+      }
+      
+      sp(::user::button) pbutton = pitem->m_pui;
+      
+      if(pbutton->m_id == "close")
+      {
+         
+         pbutton->m_pschema = m_pschemaSysMenuCloseButton;
+         
+         pbutton->resize_to_fit();
+         
+         pbutton->set_stock_icon(stock_icon_close);
+         
+         return true;
+         
+      }
+      else
+      {
+         
+         pbutton->m_pschema = m_pschemaItemButton;
+         
+         int cx = pbutton->width();
+         
+         int cy = pbutton->height();
+         
+         pbutton->m_pitem = pitem;
+         
+         pbutton->m_rectCheckBox.left = m_rectItemMargin.left;
+         pbutton->m_rectCheckBox.top = m_rectItemMargin.top;
+         pbutton->m_rectCheckBox.bottom = cy - m_rectItemMargin.bottom;
+         pbutton->m_rectCheckBox.right = puiButton->m_rectCheckBox.left + m_iCheckBoxSize;
+         
+         pbutton->m_rectText.left = puiButton->m_rectCheckBox.right + m_iElementPadding;
+         pbutton->m_rectText.top = m_rectItemMargin.top;
+         pbutton->m_rectText.bottom = cy - m_rectItemMargin.bottom;
+         pbutton->m_rectText.right = cx - m_rectItemMargin.right;
+         
+      }
+      
+      return true;
+      
+   }
+
 
 
 } // namespace user

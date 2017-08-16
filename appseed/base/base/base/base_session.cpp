@@ -105,7 +105,7 @@ namespace base
       if (m_puserstyle == NULL)
       {
 
-         m_puserstyle = get_user_schema(pszUiInteractionLibrary);
+         m_puserstyle = get_user_style(pszUiInteractionLibrary);
 
          if (m_puserstyle == NULL)
          {
@@ -317,6 +317,12 @@ namespace base
       if(!::base::application::initialize1())
          return false;
 
+      if (m_puserstyle.is_null())
+      {
+         
+         defer_create_user_schema(preferred_userschema());
+         
+      }
 
       if(!m_puser->initialize1())
          return false;
@@ -797,7 +803,7 @@ namespace base
 
    }
 
-   sp(::user::style) session::get_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp)
+   sp(::user::style) session::get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
       sp(::user::style) & p = m_mapStyle[pszUinteractionLibrary];
@@ -1024,8 +1030,8 @@ namespace base
       if (pschema.is_null())
       {
          
-         pschema = canew(::user::style());
-
+         pschema = canew(::user::style(this));
+         
       }
 
       return pschema;
@@ -1106,6 +1112,15 @@ namespace base
 
 #endif
 
+   }
+   
+   
+   sp(::user::impact) session::get_view()
+   {
+    
+      return NULL;
+      
+      
    }
 
 

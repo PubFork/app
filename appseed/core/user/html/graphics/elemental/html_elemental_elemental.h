@@ -7,7 +7,7 @@ namespace html
 
    class CLASS_DECL_CORE elemental : 
       virtual public ::user::elemental,
-      virtual public ::user::schema
+      virtual public ::user::style
    {
    public:
 
@@ -19,7 +19,7 @@ namespace html
       base *                     m_pbase;
       data *                     m_pdata;
 
-      style                      m_style;
+      ::html::style              m_style;
       spa(elemental)             m_elementalptra;
 
       e_tag                      m_etag;

@@ -24,7 +24,7 @@ CLASS_DECL_AXIS bool vfxResolveShortcut(string & strTarget,const char * pszSourc
 //      if(!defer_axis_init())
 //      {
 //
-//         ::OutputDebugString("Failed to defer_axis_init.");
+//         ::output_debug_string("Failed to defer_axis_init.");
 //
 //         return -2;
 //
@@ -53,7 +53,7 @@ CLASS_DECL_AXIS bool vfxResolveShortcut(string & strTarget,const char * pszSourc
 //      if(!defer_axis_term())
 //      {
 //
-//         ::OutputDebugString("Failed to defer_axis_term.");
+//         ::output_debug_string("Failed to defer_axis_term.");
 //
 //         iRet -= 9011;
 //

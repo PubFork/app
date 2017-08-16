@@ -8,7 +8,7 @@ output_debug_string_a(
    )
 {
 
-   ::OutputDebugStringW(wstring(lpOutputString));
+   ::output_debug_string(wstring(lpOutputString));
 
 }
 
@@ -21,11 +21,11 @@ FN_OutputDebugStringA(
 
 typedef FN_OutputDebugStringA * PFN_OutputDebugStringA;
 
-PFN_OutputDebugStringA g_pfnOutputDebugString = ::OutputDebugStringA;
+PFN_OutputDebugStringA g_pfnOutputDebugString = ::output_debug_string;
 
 void set_simple_output_debug_string()
 {
-   g_pfnOutputDebugString = ::OutputDebugStringA;
+   g_pfnOutputDebugString = ::output_debug_string;
 }
 
 void set_extended_output_debug_string()

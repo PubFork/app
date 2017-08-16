@@ -7,7 +7,8 @@ namespace base
 
    class CLASS_DECL_BASE application :
       virtual public ::axis::application,
-      virtual public ::user::form_callback
+      virtual public ::user::form_callback,
+      virtual public ::user::style
    {
    public:
 
@@ -85,7 +86,7 @@ namespace base
 
       virtual ::user::interaction * FindWindow(const char * lpszClassName,const char * lpszWindowName);
       virtual ::user::interaction * FindWindowEx(oswindow oswindowParent,oswindow oswindowChildAfter,const char * lpszClass,const char * lpszWindow);
-      virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0);
+      virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0) override;
 
 
 
@@ -97,7 +98,9 @@ namespace base
 
       virtual string preferred_userschema();
 
-      virtual ::user::schema * userschema();
+//      virtual ::user::style * userstyle();
+//      
+//      virtual ::user::style * userstyle(::user::e_style estyle);
 
       //virtual int32_t exit_instance();
       
@@ -113,7 +116,7 @@ namespace base
   
       virtual bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent) override;
 
-
+      virtual ::user::interaction * create_menu_interaction();
 
    };
 

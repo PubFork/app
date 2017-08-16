@@ -11,12 +11,13 @@
 namespace hi5
 {
 
+   
    namespace twitter
    {
 
+      
       authorization::authorization(::aura::application * papp, const char * pszAuthorizationUrl, const char * pszForm, bool bAuth, bool bInteractive) :
-         ::object(papp),
-         ::user::schema_simple_impl(papp)
+         ::object(papp)
       {
 
          m_strAuthorizationUrl=pszAuthorizationUrl;
@@ -165,10 +166,8 @@ namespace hi5
          if(pframe != NULL)
          {
 
-            pframe->m_puserschemaSchema = this;
+            pframe->m_puserstyle = this;
             
-            m_etranslucency = ::user::TranslucencyPresent;
-
             //pframe->m_bblur_Background = true;
 
          }
@@ -264,6 +263,16 @@ namespace hi5
          }
          return false;
       }
+      
+      bool authorization::style_translucency(::user::e_translucency & etranslucency, ::user::e_element)
+      {
+         
+         etranslucency = ::user::translucency_present;
+         
+         return true;
+         
+      }
+
 
 
    } // namespace twitter

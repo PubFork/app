@@ -97,8 +97,8 @@ namespace user
       {
       protected:
 
-         int_map < sp(image_list) >                                     m_pil; // int is the size
-         int_map < sp(image_list) >                                     m_pilHover; // int is the size;
+         ::int_map < sp(image_list) >                                     m_pil; // int is the size
+         ::int_map < sp(image_list) >                                     m_pilHover; // int is the size;
 
       public:
 

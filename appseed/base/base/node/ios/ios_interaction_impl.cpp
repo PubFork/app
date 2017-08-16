@@ -1053,7 +1053,7 @@ namespace ios
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if(command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -1780,7 +1780,7 @@ namespace ios
        return FALSE;
 
        // make sure command has not become disabled before routing
-       CTestCmdUI state;
+       probe_command_ui state;
        state.m_id = nID;
        _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
        if (!state.m_bEnabled)
@@ -3539,7 +3539,7 @@ namespace ios
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      cmd_ui state(get_app());
+      command_ui state(get_app());
       user::interaction wndTemp;       // very temporary user::interaction just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -4006,9 +4006,9 @@ namespace ios
 
    void interaction_impl::_001WindowRestore()
    {
-      m_pui->m_eappearance = user::AppearanceNormal;
+      m_pui->m_eappearance = user::appearance_normal;
       if(m_pui != NULL)
-         m_pui->m_eappearance = user::AppearanceNormal;
+         m_pui->m_eappearance = user::appearance_normal;
       //      ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
@@ -4046,7 +4046,7 @@ namespace ios
       ASSERT(::IsWindow(get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == user::AppearanceIconic;
+         return m_pui->m_eappearance == user::appearance_iconic;
       }
       else
       {
@@ -4057,7 +4057,7 @@ namespace ios
    bool interaction_impl::WfiIsZoomed()
    {
       ASSERT(::IsWindow(get_handle()));
-      return m_pui->m_eappearance == user::AppearanceZoomed;
+      return m_pui->m_eappearance == user::appearance_zoomed;
    }
 
 

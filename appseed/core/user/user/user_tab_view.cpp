@@ -781,7 +781,7 @@ namespace user
 
    }
 
-   bool tab_view::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool tab_view::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if(!handle(pcmdmsg))
          return false;

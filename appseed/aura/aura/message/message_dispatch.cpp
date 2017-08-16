@@ -148,10 +148,10 @@ namespace message
    if(pcommand->m_bHasCommandHandler)
    {
    update_cmd_ui updatecmdui;
-   updatecmdui.m_pcmdui = (cmd_ui *)pExtra;
+   updatecmdui.m_pcommandui = (command_ui *)pExtra;
    signal.m_psignal->emit(&updatecmdui);
    b = TRUE;
-   if(updatecmdui.m_pcmdui->m_bEnableChanged)
+   if(updatecmdui.m_pcommandui->m_bEnableChanged)
    return true;
    }
    else

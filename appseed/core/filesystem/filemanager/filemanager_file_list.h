@@ -81,11 +81,11 @@ namespace filemanager
 
       void FileSize();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-      bool on_simple_update(cmd_ui * pcmdui);
+      bool on_simple_update(command_ui * pcommandui);
       bool on_simple_action(id id);
 
       DECL_GEN_SIGNAL(_001OnUpdateOpenWith);

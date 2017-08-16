@@ -1076,7 +1076,7 @@ namespace linux
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if(command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -1926,7 +1926,7 @@ DWORD dwLastPaint;
       return FALSE;
 
       // make sure command has not become disabled before routing
-      CTestCmdUI state;
+      probe_command_ui state;
       state.m_id = nID;
       _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
       if (!state.m_bEnabled)
@@ -3513,7 +3513,7 @@ throw not_implemented(get_app());
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      cmd_ui state(get_app());
+      command_ui state(get_app());
       interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -4084,7 +4084,7 @@ throw not_implemented(get_app());
 
          m_pui->m_eappearanceBefore = m_pui->m_eappearance;
 
-         m_pui->m_eappearance = ::user::AppearanceIconic;
+         m_pui->m_eappearance = ::user::appearance_iconic;
 
          m_pui->ModifyStyleEx(WS_VISIBLE, 0, 0);
 
@@ -4100,7 +4100,7 @@ throw not_implemented(get_app());
       if(m_pui != NULL)
       {
 
-         m_pui->m_eappearance = ::user::AppearanceNormal;
+         m_pui->m_eappearance = ::user::appearance_normal;
 
       }
 
@@ -4132,7 +4132,7 @@ throw not_implemented(get_app());
       if(GetExStyle() & WS_EX_LAYERED)
       {
 
-         return m_pui->m_eappearance == ::user::AppearanceIconic;
+         return m_pui->m_eappearance == ::user::appearance_iconic;
 
       }
       else
@@ -4155,7 +4155,7 @@ throw not_implemented(get_app());
 
       }
 
-      return m_pui->m_eappearance == ::user::AppearanceZoomed;
+      return m_pui->m_eappearance == ::user::appearance_zoomed;
 
    }
 

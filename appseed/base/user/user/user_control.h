@@ -5,9 +5,6 @@
 #include "base/user/user/user_box.h"
 
 
-class Ex1FormInterfaceComboBox;
-
-
 namespace user
 {
 
@@ -78,12 +75,7 @@ namespace user
          } m_ddx;
 
 
-         union
-         {
-            void                       * m_pvoid;
-            Ex1FormInterfaceComboBox   * m_pcombobox;
-         } m_data;
-
+         ::user::interaction *         m_pui;
          form_window *                 m_pform;
          index_map < sp(control) >     m_controlmap;
          id                            m_id;
@@ -191,7 +183,6 @@ namespace user
       //virtual form_list * get_form_list();
       virtual bool _001IsPointInside(point64 pt);
 
-      Ex1FormInterfaceComboBox * GetComboBox();
       control null() { return control(); }
       bool Validate(string & str);
       bool get_data(sp(::user::interaction) pwnd, var & var);
@@ -237,7 +228,7 @@ namespace user
    };
 
 
-   class control_cmd_ui : public ::aura::cmd_ui
+   class control_cmd_ui : public ::command_ui
    {
    public:
       
@@ -267,7 +258,7 @@ namespace user
       virtual bool BaseControlExOnCommand(WPARAM wParam, LPARAM lParam) ;
       virtual sp(::user::interaction) get_window();
 
-      control_cmd_ui  m_cmdui; // cmd_ui derived class used to update
+      control_cmd_ui  m_commandui; // command_ui derived class used to update
                                     // base_controlex derived controls
       list<oswindow, oswindow> m_listwndptrBlackList;
    };

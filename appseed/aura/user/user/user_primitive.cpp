@@ -8,7 +8,7 @@ namespace user
    primitive::primitive()
    {
 
-      m_pvoidUserInteraction = NULL;
+      m_puiThis = NULL;
 
    }
 
@@ -88,6 +88,27 @@ namespace user
    //   m_threadptra.remove(pthread);
 
    //}
+   
+   bool primitive::enable_window(bool bEnableWindow)
+   {
+      
+      return true;
+      
+   }
+   
+   
+   void primitive::_001SetCheck(check::e_check echeck,::action::context)
+   {
+      
+      
+   }
+   
+   
+   
+   void primitive::_001SetText(const string & strText,::action::context)
+   {
+      
+   }
 
 
 } // namespace user

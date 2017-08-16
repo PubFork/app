@@ -109,7 +109,7 @@ bool __node_aura_pre_init()
    }
 
 
-   OutputDebugStringW(L"__node_aura_pre_init\n");
+   output_debug_string(L"__node_aura_pre_init\n");
 
    xxdebug_box("__node_aura_pre_init","box",MB_OK);
    g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
@@ -189,7 +189,7 @@ bool __node_aura_pos_term()
    ::aura::del(g_pgdiplusStartupInput);
    ::aura::del(g_pgdiplusStartupOutput);
 
-   OutputDebugStringW(L"aura terminating!\n");
+   output_debug_string(L"aura terminating!\n");
 
    //::CoUninitialize();
 
@@ -770,11 +770,11 @@ namespace core
    //{
    //   TRACE("throw hresult_exception: hr = 0x%x\n", hr);
    //  throw hresult_exception(hr);
-   /*   ::OutputDebugString("throw hresult_exception");
+   /*   ::output_debug_string("throw hresult_exception");
    char sz[200];
    sprintf(sz, "0x%s", hr);
-   ::OutputDebugString(sz);
-   ::OutputDebugString("\n");
+   ::output_debug_string(sz);
+   ::output_debug_string("\n");
    //TRACE(trace::category_Exception, 0, "throw hresult_exception: hr = 0x%x\n", hr );
    ASSERT( false );
    DWORD dwExceptionCode;

@@ -1,10 +1,9 @@
 #pragma once
 
 
-
-struct CLASS_DECL_AURA blob
+class CLASS_DECL_AURA blob
 {
-
+public:
 
    size_t   m_sizet;
    char *   m_pchData;
@@ -12,25 +11,41 @@ struct CLASS_DECL_AURA blob
 
    blob();
    ~blob();
-   void read(HANDLE hfile);
-   void write(HANDLE hfile);
+   
+   void read(FILE * file);
+   void write(FILE * file);
+   
    blob & operator = (const char * psz);
+   
+   
 };
+
 
 class CLASS_DECL_AURA machine_event_data
 {
 public:
-   struct CLASS_DECL_AURA fixed
+   
+   class CLASS_DECL_AURA fixed
    {
-      fixed();
+   public:
+      
+      
       bool  m_bRequestCloseApplication;
       bool  m_bSpaUpgrade;
+      
+      
+      fixed();
+      
    };
-   fixed m_fixed;
-   blob m_blobCommand;
+   
+   
+   fixed    m_fixed;
+   blob     m_blobCommand;
 
-   void read(HANDLE hfile);
-   void write(HANDLE hfile);
+   void read(FILE * file);
+   void write(FILE * file);
+   
+   
 };
 
 

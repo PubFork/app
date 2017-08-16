@@ -41,20 +41,20 @@ namespace aura
    }
 
 
-   var ipi::call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va)
+   var ipi::call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va, duration durTimeout)
    {
 
       ::aura::ipc::tx & txc = tx(strApp,iPid);
 
       string strVara = str_from_va(va);
 
-      txc.send("call " + strObject + "." + strMember + " : " + strVara ,584);
+      txc.send("call " + strObject + "." + strMember + " : " + strVara ,durTimeout.get_total_milliseconds());
 
       return ::var();
 
    }
 
-   int_map < var > ipi::scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,var_array & va)
+   int_map < var > ipi::scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,var_array & va, duration durTimeout)
    {
 
       int_map < var > map;
@@ -80,7 +80,7 @@ namespace aura
       for(int iPid : iaPid)
       {
 
-         map[iPid] = call(strApp,iPid,strObject,strMember,va);
+         map[iPid] = call(strApp,iPid,strObject,strMember,va, durTimeout);
 
       }
 

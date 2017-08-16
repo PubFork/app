@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "aura/user/user.h"
+
+
 #include "user/user_elemental.h"
 
 

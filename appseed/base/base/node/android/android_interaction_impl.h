@@ -23,7 +23,7 @@ namespace android
       static const UINT                         m_nMsgDragList;
       //int32_t                                   m_nModalResult;      // for return values from interaction_impl::RunModalLoop
 
-      ::user::EAppearance                       m_eapperanceLayout;
+      ::user::e_appearance                       m_eapperanceLayout;
       bool                                      m_bEnabled;
       ::thread *                                m_pthreadDraw;
 
@@ -58,7 +58,7 @@ namespace android
       //virtual ::user::interaction * get_owner();
       //virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
       void _002OnDraw(::draw2d::dib * pdib);
 

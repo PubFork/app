@@ -57,7 +57,7 @@ void __trace_message(const char * lpszPrefix,::signal_details * pobj)
       // lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //pbase->m_wparam, pbase->m_lparam);
 #else
-      //  ::OutputDebugString(::ca2::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
+      //  ::output_debug_string(::ca2::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
       //         lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //       pbase->m_wparam, pbase->m_lparam);
 #endif
@@ -65,11 +65,11 @@ void __trace_message(const char * lpszPrefix,::signal_details * pobj)
    else
    {
 #ifdef _WIN64
-      //      ::OutputDebugString(::ca2::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
+      //      ::output_debug_string(::ca2::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
       //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #else
-      //      ::OutputDebugString(::ca2::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+      //      ::output_debug_string(::ca2::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
       //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #endif

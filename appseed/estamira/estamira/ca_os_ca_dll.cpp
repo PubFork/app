@@ -9,7 +9,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugString("::ca2:: data.dll :: initializing!\n");
+      ::output_debug_string("::ca2:: data.dll :: initializing!\n");
 
 #ifndef METROWIN
       /* initialize client library */
@@ -33,7 +33,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
       }
 #endif
 
-      ::OutputDebugString("::ca2:: data.dll :: terminating!\n");
+      ::output_debug_string("::ca2:: data.dll :: terminating!\n");
    }
    return 1;   // ok
 }

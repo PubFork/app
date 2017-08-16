@@ -35,7 +35,7 @@ command_target::~command_target()
 {
 }
 
-bool command_target::handle(::aura::cmd_msg * pcmdmsg)
+bool command_target::handle(::user::command * pcmdmsg)
 {
    return pcmdmsg->handle(this);
 }
@@ -145,7 +145,7 @@ case ::core::SigCmdUI:
 ASSERT(CN_UPDATE_COMMAND_UI == (UINT)-1);
 ASSERT(nCode == CN_UPDATE_COMMAND_UI || nCode == 0xFFFF);
 ENSURE_ARG(pExtra != NULL);
-cmd_ui* pCmdUI = (cmd_ui*)pExtra;
+command_ui* pCmdUI = (command_ui*)pExtra;
 ASSERT(!pCmdUI->m_bContinueRouting);    // idle - not set
 (pTarget->*mmf.pfnCmdUI_v_C)(pCmdUI);
 bResult = !pCmdUI->m_bContinueRouting;
@@ -158,7 +158,7 @@ case ::core::SigCmdUI_RANGE:
 // ON_UPDATE_COMMAND_UI case
 ASSERT(nCode == CN_UPDATE_COMMAND_UI);
 ENSURE_ARG(pExtra != NULL);
-cmd_ui* pCmdUI = (cmd_ui*)pExtra;
+command_ui* pCmdUI = (command_ui*)pExtra;
 ASSERT(pCmdUI->m_nID == nID);           // sanity assert
 ASSERT(!pCmdUI->m_bContinueRouting);    // idle - not set
 (pTarget->*mmf.pfnCmdUI_v_C_u)(pCmdUI, nID);
@@ -246,7 +246,7 @@ case ::core::Sig_cmdui:
 ASSERT(CN_UPDATE_COMMAND_UI == (UINT)-1);
 ASSERT(nCode == CN_UPDATE_COMMAND_UI || nCode == 0xFFFF);
 ENSURE_ARG(pExtra != NULL);
-cmd_ui* pCmdUI = (cmd_ui*)pExtra;
+command_ui* pCmdUI = (command_ui*)pExtra;
 ASSERT(!pCmdUI->m_bContinueRouting);    // idle - not set
 (pTarget->*mmf.pfn_UPDATE_COMMAND_UI)(pCmdUI);
 bResult = !pCmdUI->m_bContinueRouting;
@@ -259,7 +259,7 @@ case ::core::Sig_cmduiw:
 // ON_UPDATE_COMMAND_UI case
 ASSERT(nCode == CN_UPDATE_COMMAND_UI);
 ENSURE_ARG(pExtra != NULL);
-cmd_ui* pCmdUI = (cmd_ui*)pExtra;
+command_ui* pCmdUI = (command_ui*)pExtra;
 ASSERT(pCmdUI->m_nID == nID);           // sanity assert
 ASSERT(!pCmdUI->m_bContinueRouting);    // idle - not set
 (pTarget->*mmf.pfn_UPDATE_COMMAND_UI_RANGE)(pCmdUI, nID);
@@ -291,7 +291,7 @@ return bResult;
       IsEqualGUID(*(pGuid1), *(pGuid2))))
 
 /*
-bool command_target::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+bool command_target::_001OnCmdMsg(::user::command * pcmdmsg)
 
 {
 
@@ -380,10 +380,10 @@ return &messageMap;
 */
 
 /////////////////////////////////////////////////////////////////////////////
-// cmd_ui - User Interface for a command
+// command_ui - User Interface for a command
 
-// cmd_ui is a protocol class for all command handler variants
-//      cmd_ui is an implementation class for menus and general dialog
+// command_ui is a protocol class for all command handler variants
+//      command_ui is an implementation class for menus and general dialog
 //        controls (usually buttons)
 
 

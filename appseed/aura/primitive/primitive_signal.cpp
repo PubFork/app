@@ -32,6 +32,13 @@ signal_details::signal_details(class signal * psignal) :
 void signal_details::reset(class ::signal * psignal)
 {
    
+   if(psignal->get_app() != NULL)
+   {
+   
+      set_app(psignal->get_app());
+      
+   }
+   
    m_psignal   = psignal;
    m_bRet      = false;
    m_iIndex    = 0;

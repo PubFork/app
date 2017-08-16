@@ -91,13 +91,13 @@ script_instance * script_cache::create_instance(const char * lpcszName, script *
       return pscript->create_instance();
    }
 
-   //::OutputDebugString(lpcszName);
+   //::output_debug_string(lpcszName);
    string strName(lpcszName);
    strName = m_pmanager->real_path(lpcszName);
-   //::OutputDebugString(strName);
+   //::output_debug_string(strName);
    if(strName.is_empty())
       strName =  m_pmanager->real_path(string(lpcszName) + ".ds");
-   //::OutputDebugString(strName);
+   //::output_debug_string(strName);
    strName.replace("\\", "/");
    single_lock sl(&m_cs, TRUE);
    m_pmanager->include_has_script(strName);

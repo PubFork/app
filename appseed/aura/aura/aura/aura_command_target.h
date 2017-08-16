@@ -245,17 +245,17 @@ public:
 
    
    virtual bool _001SendCommand(id id);
-   virtual bool _001SendUpdateCmdUi(cmd_ui * pcmdUI);
+   virtual bool _001SendUpdateCmdUi(command_ui * pcmdUI);
 
    virtual bool on_simple_action(id id);
    virtual bool _001HasCommandHandler(id id);
-   virtual bool on_simple_update(cmd_ui * pcmdui);
+   virtual bool on_simple_update(command_ui * pcommandui);
 
-   //virtual bool on_simple_update(cmd_ui * pcmdui);
-   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+   //virtual bool on_simple_update(command_ui * pcommandui);
+   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
    //virtual bool _001HasCommandHandler(const char * pszId);
 
-   void get_command_signal_array(::aura::cmd_msg::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id);
+   void get_command_signal_array(::user::command::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id);
 
 
    virtual void install_message_handling(::message::dispatch * pdispatch);
@@ -279,13 +279,13 @@ public:
    void RestoreWaitCursor();       // call after messagebox
 
 
-   virtual bool handle(::aura::cmd_msg * pcmdmsg);
+   virtual bool handle(::user::command * pcmdmsg);
 
 
    // Overridables
    // route and dispatch standard command message types
    //   (more sophisticated than OnCommand)
-   //   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+   //   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
 
    // Implementation
@@ -303,9 +303,11 @@ public:
 
 
 
-// cmd_ui
-inline void cmd_ui::ContinueRouting()
+// command_ui
+inline void command_ui::ContinueRouting()
 {
+   
    m_bContinueRouting = TRUE;
+   
 }
 

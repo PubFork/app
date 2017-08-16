@@ -668,7 +668,7 @@ HANDLE OnlyGetDrv()
    HMODULE hModule = GetModuleHandle(_T("core.dll"));
    if(!hModule)
    {
-      OutputDebugStringW(L"GetModuleHandle(_T(\"core.dll\")); failed");
+      output_debug_string(L"GetModuleHandle(_T(\"core.dll\")); failed");
       return 0;
    }
    string csFilePath;
@@ -842,7 +842,7 @@ void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUser
    PNtQuerySystemInformation NtQuerySystemInformation = (PNtQuerySystemInformation)GetProcAddress(hModule,"NtQuerySystemInformation");
    if(0 == NtQuerySystemInformation)
    {
-      OutputDebugStringW(L"Getting proc of NtQuerySystemInformation failed");
+      output_debug_string(L"Getting proc of NtQuerySystemInformation failed");
       return;
    }
 
@@ -897,7 +897,7 @@ void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUser
          {
             string csError;
             csError.Format("Query hang for handle %d",(int32_t)pSysHandleInformation->Handles[g_CurrentIndex - 1].wValue);
-            OutputDebugString(csError);
+            output_debug_string(csError);
             TerminateThread(ThreadHandle,0);
             CloseHandle(ThreadHandle);
             ThreadHandle = 0;
@@ -969,7 +969,7 @@ void EnumerateOpenedFiles(string& csPath,OF_CALLBACK CallBackProc,uint_ptr pUser
                // Get the drive name from the dos device name
                if(!GetDrive((LPCTSTR)stHandle.tcDeviceName,csFileName,true))
                {
-                  OutputDebugStringW(L"GetDrive failed");
+                  output_debug_string(L"GetDrive failed");
                }
                csFileName += (LPCTSTR)stHandle.tcFileName;
             }

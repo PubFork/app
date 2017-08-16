@@ -28,7 +28,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    if (dwReason == DLL_PROCESS_ATTACH)
    {
 
-      OutputDebugStringW(L"base.dll initializing!\n");
+      output_debug_string(L"base.dll initializing!\n");
 
       xxdebug_box("base.dll DllMain", "box", MB_OK);
       
@@ -36,7 +36,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    else if (dwReason == DLL_PROCESS_DETACH)
    {
 
-      OutputDebugStringW(L"base.dll terminating!\n");
+      output_debug_string(L"base.dll terminating!\n");
 
    }
 

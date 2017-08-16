@@ -22,7 +22,7 @@ CLASS_DECL_AURA string get_command_line(HANDLE handleProcess)
 
    if (!ReadProcessMemory(handleProcess, (PCHAR)&ppeb->ProcessParameters, &pparam1, sizeof(PRTL_USER_PROCESS_PARAMETERS), NULL) || pparam1 == NULL)
    {
-      ::OutputDebugStringA("Could not read the address of ProcessParameters!\n");
+      ::output_debug_string("Could not read the address of ProcessParameters!\n");
       return "";
    }
 
@@ -31,7 +31,7 @@ CLASS_DECL_AURA string get_command_line(HANDLE handleProcess)
 
    if (!ReadProcessMemory(handleProcess, (PCHAR)&pparam1->CommandLine, &ustrCommandLine, sizeof(ustrCommandLine), NULL))
    {
-      ::OutputDebugStringA("Could not read CommandLine!\n");
+      ::output_debug_string("Could not read CommandLine!\n");
       return "";
    }
 
@@ -40,7 +40,7 @@ CLASS_DECL_AURA string get_command_line(HANDLE handleProcess)
    /* read the command line */
    if (!ReadProcessMemory(handleProcess, ustrCommandLine.Buffer, commandLineContents, ustrCommandLine.Length, NULL))
    {
-      ::OutputDebugStringA("Could not read the command line string!\n");
+      ::output_debug_string("Could not read the command line string!\n");
       return "";
    }
    commandLineContents[ustrCommandLine.Length / sizeof(WCHAR)] = L'\0';

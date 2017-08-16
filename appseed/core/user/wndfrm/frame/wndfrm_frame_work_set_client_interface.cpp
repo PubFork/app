@@ -81,7 +81,7 @@ namespace user
 
          }
 
-         void WorkSetClientInterface::WfiOnDock(EAppearance eapperance)
+         void WorkSetClientInterface::WfiOnDock(e_appearance eapperance)
          {
 
          }
@@ -96,7 +96,7 @@ namespace user
 
          }
 
-         bool WorkSetClientInterface::Wfi(EAppearance eappearance)
+         bool WorkSetClientInterface::Wfi(e_appearance eappearance)
          {
 
             if (!IsWindowVisible())
@@ -106,14 +106,14 @@ namespace user
 
             }
 
-            if(eappearance == AppearanceCurrent)
+            if(eappearance == appearance_current)
             {
 
                eappearance = m_eappearance;
 
             }
 
-            if(eappearance == AppearanceNone)
+            if(eappearance == appearance_none)
             {
 
                return true;
@@ -128,25 +128,25 @@ namespace user
             {
                switch(eappearance)
                {
-               case AppearanceZoomed:
+               case appearance_zoomed:
                   WfiMaximize();
                   break;
-               case AppearanceIconic:
+               case appearance_iconic:
                   WfiMinimize();
                   break;
-               case AppearanceNormal:
+               case appearance_normal:
                   WfiRestore(true);
                   break;
-               case AppearanceNotifyIcon:
+               case appearance_notify_icon:
                   WfiNotifyIcon();
                   break;
-               case AppearanceFullScreen:
+               case appearance_full_screen:
                   WfiFullScreen();
                   break;
-               case AppearanceUp:
+               case appearance_up:
                   WfiUp();
                   break;
-               case AppearanceDown:
+               case appearance_down:
                   WfiDown();
                   break;
                default:
@@ -162,7 +162,7 @@ namespace user
          }
 
 
-         bool WorkSetClientInterface::WfiDock(EAppearance eappearance)
+         bool WorkSetClientInterface::WfiDock(e_appearance eappearance)
          {
 
             if(!::user::is_docking_appearance(eappearance))
@@ -202,17 +202,17 @@ namespace user
          bool WorkSetClientInterface::WfiRestore(bool bForceNormal)
          {
 
-            ::user::EAppearance eappearanceRestore;
+            ::user::e_appearance eappearanceRestore;
 
             if(bForceNormal)
             {
 
-               eappearanceRestore = AppearanceNormal;
+               eappearanceRestore = appearance_normal;
 
             }
-            else if(m_workset.GetAppearance() == AppearanceIconic
-               || (m_workset.GetAppearance() == AppearanceFullScreen
-               && m_eappearanceBefore != AppearanceIconic))
+            else if(m_workset.GetAppearance() == appearance_iconic
+               || (m_workset.GetAppearance() == appearance_full_screen
+               && m_eappearanceBefore != appearance_iconic))
             {
 
                eappearanceRestore = m_eappearanceBefore;
@@ -220,7 +220,7 @@ namespace user
                if(m_eappearanceBefore == m_eappearance)
                {
                   
-                  eappearanceRestore = AppearanceNormal;
+                  eappearanceRestore = appearance_normal;
 
                }
 
@@ -228,23 +228,23 @@ namespace user
             else
             {
 
-               eappearanceRestore = AppearanceNormal;
+               eappearanceRestore = appearance_normal;
 
             }
 
             switch(eappearanceRestore)
             {
-            case AppearanceZoomed:
+            case appearance_zoomed:
                return WfiMaximize();
-            case AppearanceIconic:
+            case appearance_iconic:
                return WfiMinimize();
-            case AppearanceFullScreen:
+            case appearance_full_screen:
                return WfiFullScreen();
-            case AppearanceNotifyIcon:
+            case appearance_notify_icon:
                return WfiNotifyIcon();
-            case AppearanceUp:
+            case appearance_up:
                return WfiUp();
-            case AppearanceDown:
+            case appearance_down:
                return WfiDown();
             default:
                break;
@@ -253,7 +253,7 @@ namespace user
             if(!WfiOnBeforeRestore())
                return false;
 
-            m_workset.SetAppearance(AppearanceNormal);
+            m_workset.SetAppearance(appearance_normal);
 
             WfiOnRestore();
 
@@ -279,7 +279,7 @@ namespace user
             if(!WfiOnBeforeMaximize())
                return false;
 
-            m_workset.SetAppearance(AppearanceZoomed);
+            m_workset.SetAppearance(appearance_zoomed);
 
             WfiOnMaximize();
 
@@ -312,7 +312,7 @@ namespace user
 
             m_eappearanceBefore = m_workset.GetAppearance();
 
-            m_workset.SetAppearance(AppearanceFullScreen);
+            m_workset.SetAppearance(appearance_full_screen);
 
             WfiOnFullScreen();
 
@@ -341,7 +341,7 @@ namespace user
             if(!WfiOnBeforeNotifyIcon())
                return false;
 
-            m_workset.SetAppearance(AppearanceNotifyIcon);
+            m_workset.SetAppearance(appearance_notify_icon);
 
             WfiOnNotifyIcon();
 
@@ -369,7 +369,7 @@ namespace user
 
             m_eappearanceBefore = m_workset.GetAppearance();
 
-            m_workset.SetAppearance(AppearanceIconic);
+            m_workset.SetAppearance(appearance_iconic);
 
             WfiOnMinimize(bNoActivate);
 
@@ -388,7 +388,7 @@ namespace user
             if(!WfiOnBeforeDown())
                return false;
 
-            m_workset.SetAppearance(AppearanceDown);
+            m_workset.SetAppearance(appearance_down);
 
             WfiOnDown();
 
@@ -407,7 +407,7 @@ namespace user
             if(!WfiOnBeforeUp())
                return false;
 
-            m_workset.SetAppearance(AppearanceUp);
+            m_workset.SetAppearance(appearance_up);
 
             WfiOnUp();
 
@@ -510,7 +510,7 @@ namespace user
 
          }
 
-         bool WorkSetClientInterface::WfiOnBeforeDock(EAppearance eappearance)
+         bool WorkSetClientInterface::WfiOnBeforeDock(e_appearance eappearance)
          {
 
             if(WfiIsFullScreen())
@@ -598,7 +598,7 @@ namespace user
             WindowDataSaveWindowRect();
          }
 
-         void WorkSetClientInterface::WfiOnAfterDock(EAppearance eappearance)
+         void WorkSetClientInterface::WfiOnAfterDock(e_appearance eappearance)
          {
             WindowDataSaveWindowRect();
          }

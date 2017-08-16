@@ -428,11 +428,11 @@ namespace prompt
       return simple_frame_window::on_simple_action(id);
    }
 
-   bool frame::on_simple_update(cmd_ui * pcmdui)
+   bool frame::on_simple_update(command_ui * pcommandui)
    {
-      if(pcmdui->m_id == "app_exit")
+      if(pcommandui->m_id == "app_exit")
       {
-         pcmdui->Enable();
+         pcommandui->Enable();
          return true;
       }
       return false;

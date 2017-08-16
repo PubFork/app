@@ -7,7 +7,6 @@ namespace user
 
    menu_list_view::menu_list_view(::aura::application * papp) :
       object(papp),
-      menu_base(papp),
       menu(papp),
       menu_list_window(papp)
    {
@@ -66,24 +65,39 @@ namespace user
          {
             pbase->set_lresult(GetParent()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          }
+         
          pbase->m_bRet = true;
+         
          return;
+         
       }
+      
       return impact::GuieProc(pobj);
+      
    }
+   
 
-   bool menu_list_view::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool menu_list_view::_001OnCmdMsg(::user::command * pcmdmsg)
    {
+      
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
+         
          if (m_puiNotify->_001OnCmdMsg(pcmdmsg))
-            return TRUE;
+         {
+            
+            return true;
+            
+         }
+         
       }
+      
       return impact::_001OnCmdMsg(pcmdmsg);
+      
    }
 
 
-   bool menu_list_view::LoadMenu(sp(::xml::node) pnode, sp(::user::interaction) puiNotify, UINT uiCallbackMessage)
+   bool menu_list_view::load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage)
    {
 
       destroy_menu();
@@ -91,10 +105,10 @@ namespace user
       m_uiMessage = uiCallbackMessage;
       m_bAutoClose = false;
 
-      if (!menu_list_window::LoadMenu(pnode))
+      if (!menu_list_window::load_menu(pnode))
          return false;
 
-      MenuFill(this, GetParentFrame());
+      menu_fill(this, GetParentFrame());
 
       m_puiNotify = puiNotify;
 

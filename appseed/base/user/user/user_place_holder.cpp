@@ -297,7 +297,7 @@ namespace user
 
    }
 
-   bool place_holder::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool place_holder::_001OnCmdMsg(::user::command * pcmdmsg)
    {
 
       // then pump through frame

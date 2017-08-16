@@ -296,15 +296,15 @@ void color::get_hls(
 
    if(dHParam > 1.0)
    {
-      ::OutputDebugString("dHParam > 1.0");
+      ::output_debug_string("dHParam > 1.0");
    }
    if(dLParam > 1.0)
    {
-      ::OutputDebugString("dLParam > 1.0");
+      ::output_debug_string("dLParam > 1.0");
    }
    if(dSParam > 1.0)
    {
-      ::OutputDebugString("dSParam > 1.0");
+      ::output_debug_string("dSParam > 1.0");
    }
    */
 }
@@ -944,4 +944,76 @@ bool color::parse_color(const char * psz)
    return false;
 
 
+}
+
+
+CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, COLORREF cr)
+{
+   
+   return (cr & 0xffffff) | ((bAlpha & 0xff) << 24);
+   
+}
+
+CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, e_color ecolor)
+{
+
+   return alpha_color(bAlpha, pure_color(ecolor));
+
+}
+
+CLASS_DECL_AURA COLORREF pure_color(e_color ecolor)
+{
+   
+   COLORREF cr;
+   
+   switch(ecolor)
+   {
+      case color_black:
+         cr = RGB(0, 0, 0);
+         break;
+      case color_red:
+         cr = RGB(255, 0, 0);
+         break;
+      case color_green:
+         cr = RGB(0, 255, 0);
+         break;
+      case color_blue:
+         cr = RGB(0, 0, 255);
+         break;
+      case color_white:
+         cr = RGB(255, 255, 255);
+         break;
+      case color_yellow:
+         cr = RGB(255, 255, 0);
+         break;
+      case color_magenta:
+         cr = RGB(255, 0, 255);
+         break;
+      case color_cyan:
+         cr = RGB(0, 255, 255);
+         break;
+     case color_gray:
+         cr = RGB(127, 127, 127);
+      default:
+         cr = 0;
+         break;
+   };
+   
+   return cr;
+   
+   
+}
+
+CLASS_DECL_AURA COLORREF opaque_color(COLORREF cr)
+{
+   
+   return alpha_color(255, cr);
+   
+}
+
+CLASS_DECL_AURA COLORREF opaque_color(e_color ecolor)
+{
+   
+   return opaque_color(pure_color(ecolor));
+   
 }

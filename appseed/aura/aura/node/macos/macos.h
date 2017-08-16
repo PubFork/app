@@ -75,4 +75,7 @@ CLASS_DECL_AURA void vfxThrowFileException(::aura::application * papp, ::file::e
 
 
 
+void ns_app_terminate();
+void ns_create_alias(const char * pszTarget, const char * pszSource);
+
 

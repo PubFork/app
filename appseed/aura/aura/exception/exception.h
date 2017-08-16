@@ -153,7 +153,7 @@ void ::core::DoForAllClasses(void (c_cdecl *pfn)(sp(type) pClass,
 #define __is_memory_block(p, nBytes) TRUE
 #define __enable_memory_tracking(bTrack) FALSE
 #define __enable_memory_leak_override(bEnable) TRUE
-#define __output_debug_string(lpsz) ::OutputDebugString(lpsz)
+#define __output_debug_string(lpsz) ::output_debug_string(lpsz)
 
 
 #endif // DEBUG

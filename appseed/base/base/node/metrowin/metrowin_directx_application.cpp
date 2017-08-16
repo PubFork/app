@@ -387,7 +387,7 @@ UINT system_main(LPVOID lp)
       m_psystem->m_iReturnCode = m_psystem->on_run();
       if(m_psystem->m_iReturnCode != 0)
       {
-         ::OutputDebugStringW(L"application::main on_run termination failure");
+         ::output_debug_string(L"application::main on_run termination failure");
       }
       if(m_psystem->is_system())
       {

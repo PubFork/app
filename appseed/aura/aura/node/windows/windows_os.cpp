@@ -34,6 +34,12 @@ namespace windows
    os::~os()
    {
    }
+   string os::get_command_dup()
+   {
+      
+      return GetCommandLineW();
+      
+   }
 
 
    bool os::shutdown(bool bIfPowerOff)

@@ -404,7 +404,7 @@ namespace android
 
 		bool dir::name_is(const ::file::path & str, ::aura::application * papp)
 		{
-			//OutputDebugString(str);
+			//output_debug_string(str);
 			strsize iLast = str.get_length() - 1;
 			while (iLast >= 0)
 			{

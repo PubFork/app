@@ -101,9 +101,7 @@ namespace base
          
       }
       
-      
       return true;
-      
       
    }
 
@@ -792,36 +790,36 @@ run:
 
    }
 
-   ::user::style * application::userstyle()
-   {
-
-      if (m_pbasesession->m_puserstyle == NULL)
-      {
-
-         m_pbasesession->defer_create_user_schema(preferred_userschema());
-
-      }
-
-      return m_pbasesession->m_puserstyle;
-
-   }
-
-   
-   ::user::style * application::userstyle(::user::e_style estyle)
-   {
-      
-      ::user::style * puserstyle = userstyle();
-      
-      if(puserstyle == NULL)
-      {
-       
-         return NULL;
-         
-      }
-      
-      return puserstyle->operator[](estyle);
-      
-   }
+//   ::user::style_base * application::userstyle()
+//   {
+//
+//      if (m_pbasesession->m_puserstyle == NULL)
+//      {
+//
+//         m_pbasesession->defer_create_user_schema(preferred_userschema());
+//
+//      }
+//
+//      return m_pbasesession->m_puserstyle;
+//
+//   }
+//
+//   
+//   ::user::style_base * application::userstyle(::user::e_style estyle)
+//   {
+//      
+//      ::user::style * puserstyle = userstyle();
+//      
+//      if(puserstyle == NULL)
+//      {
+//       
+//         return NULL;
+//         
+//      }
+//      
+//      return puserstyle->operator[](estyle);
+//      
+//   }
 
 
    void application::on_create_view(::user::view_creator_data * pcreatordata)

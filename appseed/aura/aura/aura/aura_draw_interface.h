@@ -20,22 +20,22 @@ namespace aura
    public:
 
 
-      virtual void _000OnDraw(::draw2d::graphics * pgraphics) = 0;
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics);
 
-      virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) = 0;
+      virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics);
 
-      virtual void _001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) = 0;
+      virtual void _001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics);
 
-      virtual bool GetWindowRect(LPRECT lprect) = 0;
-      virtual bool GetWindowRect(RECT64 * lprect) = 0;
-      virtual rect GetWindowRect() = 0;
-      virtual rect64 GetWindowRect64() = 0;
+      virtual bool GetWindowRect(LPRECT lprect);
+      virtual bool GetWindowRect(RECT64 * lprect);
+      virtual rect GetWindowRect();
+      virtual rect64 GetWindowRect64();
 
 
-      virtual ::window_graphics * get_window_graphics() = 0;
-      virtual oswindow get_handle() const = 0;
+      virtual ::window_graphics * get_window_graphics();
+      virtual oswindow get_handle() const;
 
-      virtual bool is_composite() = 0;
+      virtual bool is_composite();
 
 
    };

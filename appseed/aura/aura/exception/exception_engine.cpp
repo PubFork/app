@@ -609,7 +609,7 @@ namespace exception
 
       if (!dwModBase)
       {
-         //::OutputDebugString("engine::stack_next :: StackWalk returned TRUE but the address doesn't belong to a module in the process.");
+         //::output_debug_string("engine::stack_next :: StackWalk returned TRUE but the address doesn't belong to a module in the process.");
          return;
          if (bRetry)
          {
@@ -1155,7 +1155,7 @@ namespace exception
 
          //         char sz[200];
          //         sprintf(sz, "engine::stack_trace patience near down %u%%\n", iPatience * 100 / iInverseAgility);
-         //         ::OutputDebugString(sz);
+         //         ::output_debug_string(sz);
 
          if (-1 == SuspendThread(pcontext->thread))
          {
@@ -1256,7 +1256,7 @@ namespace exception
       }
       //char sz[200];
       //sprintf(sz, "engine::stack_trace patience near down %u%%\n", iPatience * 100 / iInverseAgility);
-      //::OutputDebugString(sz);
+      //::output_debug_string(sz);
       }
       else
       {

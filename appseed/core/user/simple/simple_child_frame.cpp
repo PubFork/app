@@ -44,7 +44,7 @@ bool simple_child_frame::pre_create_window(::user::create_struct& cs)
 
 }
 
-bool simple_child_frame::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)  
+bool simple_child_frame::_001OnCmdMsg(::user::command * pcmdmsg)  
 {
 
    if(simple_frame_window::_001OnCmdMsg(pcmdmsg))
@@ -64,13 +64,13 @@ void simple_child_frame::_001OnDraw(::draw2d::graphics * pgraphics)
 }
 
 
-bool simple_child_frame::get_translucency(::user::ETranslucency & etranslucency)
+bool simple_child_frame::get_translucency(::user::e_translucency & etranslucency)
 {
 
-   // etranslucency = ::user::TranslucencyPresent for children that may ask the translucency guideline for this as parent,
+   // etranslucency = ::user::translucency_present for children that may ask the translucency guideline for this as parent,
    // but simple_child_frame, at the moment of this remark writing, itself draw transparently.
 
-   etranslucency = ::user::TranslucencyPresent; 
+   etranslucency = ::user::translucency_present; 
 
    return true;
 

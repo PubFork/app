@@ -24,10 +24,8 @@
 //
 // Pasta de Z:\nordroid\app\appseed\core\user\menu
 
-#include "menu/user_menu.cpp"
 #include "menu/user_menu_button.cpp"
 #include "menu/user_menu_central.cpp"
-#include "menu/user_menu_item.cpp"
 #include "menu/user_menu_list_view.cpp"
 #include "menu/user_menu_list_window.cpp"
  //              5 arquivo(s)         44.883 bytes

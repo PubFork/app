@@ -66,14 +66,23 @@ namespace user
    class interaction;
    class interaction_impl;
    class interaction_child;
-   class schema;
-   class schema_simple_impl;
    class user;
    class copydesk;
    class create_struct;
    class window_draw;
    class control_event;
    class form_window;
+   class style;
+   
+//   namespace schema
+//   {
+//    
+//      class schema;
+//      class button;
+//      class menu;
+//      class system_menu;
+//      
+//   } // namespace schema
 
 
 } // namespace user

@@ -419,7 +419,7 @@ namespace user
    }
 
 
-   void button::ResizeToFit()
+   void button::resize_to_fit()
    {
 
       if(m_estyle == style_simple)

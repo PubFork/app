@@ -427,30 +427,47 @@ namespace console
       }
       else if(pbase->m_wparam == 33)
       {
+         
          pbase->set_lresult(1);
+         
       }
+      
       pbase->m_bRet = true;
+      
    }
 
 
    bool prompt_frame::on_simple_action(id id)
    {
+      
       if(id == "app_exit")
       {
+         
          simple_frame_window::OnClose();
+         
          return true;
+         
       }
+      
       return simple_frame_window::on_simple_action(id);
+      
    }
 
-   bool prompt_frame::on_simple_update(cmd_ui * pcmdui)
+   
+   bool prompt_frame::on_simple_update(command_ui * pcommandui)
    {
-      if(pcmdui->m_id == "app_exit")
+      
+      if(pcommandui->m_id == "app_exit")
       {
-         pcmdui->Enable();
+         
+         pcommandui->Enable();
+         
          return true;
+         
       }
+      
       return false;
+      
    }
 
    
@@ -471,7 +488,7 @@ namespace console
 
       System.get_monitor_rect(0,&r);
 
-      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::AppearanceNormal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
+      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::appearance_normal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
 
       r.left += 100;
 
@@ -481,9 +498,9 @@ namespace console
 
       r.right -= 400;
 
-      m_workset.SetAppearance(::user::AppearanceMinimal);
+      m_workset.SetAppearance(::user::appearance_minimal);
 
-      set_appearance(::user::AppearanceMinimal);
+      set_appearance(::user::appearance_minimal);
 
       SetWindowPos(ZORDER_TOP,r,SWP_SHOWWINDOW);
 
@@ -497,10 +514,10 @@ namespace console
 
    }
    
-   bool prompt_frame::get_translucency(::user::ETranslucency & etranslucency)
+   bool prompt_frame::get_translucency(::user::e_translucency & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 

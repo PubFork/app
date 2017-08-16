@@ -25,7 +25,7 @@ DllMain(HINSTANCE hInstance,UINT dwReason,LPVOID lpReserved)
 
 
 #if defined(_WIN32) && !defined(METROWIN)
-      ::OutputDebugString("::ca2:: axisrdpclient.dll :: initializing!\n");
+      ::output_debug_string("::ca2:: axisrdpclient.dll :: initializing!\n");
 #endif
 
    }
@@ -34,7 +34,7 @@ DllMain(HINSTANCE hInstance,UINT dwReason,LPVOID lpReserved)
 
       //freerdp_channels_global_uninit();
 #if defined(_WIN32) && !defined(METROWIN)
-      ::OutputDebugString("::ca2:: axisrdpclient.dll :: terminating!\n");
+      ::output_debug_string("::ca2:: axisrdpclient.dll :: terminating!\n");
 #endif
 
    }

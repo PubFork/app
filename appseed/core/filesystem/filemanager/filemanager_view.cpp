@@ -59,7 +59,7 @@ namespace filemanager
                   {
                      pframe->m_dataid = str;
                   }
-                  m_puserschemaSchema = get_filemanager_data();
+                  m_puserstyle = get_filemanager_data();
 
                }
                else if (puh->is_type_of(update_hint::TypePop))

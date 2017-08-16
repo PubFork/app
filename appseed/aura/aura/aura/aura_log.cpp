@@ -123,7 +123,7 @@ namespace aura
 
             strCaption = "Assertion Failed";
 
-            OutputDebugStringW(wstring(str));
+            output_debug_string(wstring(str));
             /*if(simple_message_box(NULL, str, strCaption, MB_ICONINFORMATION | MB_OKCANCEL | MB_DEFBUTTON1) == IDCANCEL)
             {
                string strCmdLine = "\"C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\Common7\\IDE\\devenv.exe\" /edit \""+string(pszFileName)+ "\" /command \"edit.goto "+::str::from(iLine)+"\"";
@@ -141,7 +141,7 @@ namespace aura
 
          char buf[2048];
          vsnprintf_s(buf, sizeof(buf), sizeof(buf), pszFormat, list);
-         OutputDebugStringW(wstring(buf));
+         output_debug_string(wstring(buf));
 
       }
 
@@ -603,7 +603,7 @@ namespace aura
          string strLine = strPre + strTick + stra[i] + "\r\n";
          try
          {
-            ::OutputDebugStringW(::str::international::utf8_to_unicode(strLine));
+            ::output_debug_string(::str::international::utf8_to_unicode(strLine));
             plog->m_spfile->write(strLine, strLine.get_length());
          }
          catch(::exception::exception &)

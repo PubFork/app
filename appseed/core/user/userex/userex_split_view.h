@@ -17,7 +17,7 @@ namespace userex
 
       virtual bool on_new_view_creator_data(::user::view_creator_data * pcreatordata);
 
-      bool on_simple_update(cmd_ui * pcmdui);
+      bool on_simple_update(command_ui * pcommandui);
 
       bool on_simple_action(id id);
 

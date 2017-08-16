@@ -909,17 +909,17 @@ namespace user
          return;
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevel();
+         m_puserstyle = GetTopLevel();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 

@@ -2,9 +2,8 @@
 
 
 
-CTestCmdUI::CTestCmdUI(::aura::application * papp):
-object(papp),
-cmd_ui(papp)
+probe_command_ui::probe_command_ui(::aura::application * papp):
+::command_ui(papp)
 {
 
    m_bEnabled        = TRUE;  // assume it is enabled
@@ -15,7 +14,7 @@ cmd_ui(papp)
 }
 
 
-void CTestCmdUI::Enable(bool bOn,::action::context)
+void probe_command_ui::Enable(bool bOn,::action::context)
 {
 
    m_bEnabled        = bOn;
@@ -24,22 +23,22 @@ void CTestCmdUI::Enable(bool bOn,::action::context)
 }
 
 
-void CTestCmdUI::_001SetCheck(bool bCheck,::action::context context)
+void probe_command_ui::_001SetCheck(bool bCheck,::action::context context)
 {
 
-   ::cmd_ui::_001SetCheck(bCheck,context);
+   ::command_ui::_001SetCheck(bCheck,context);
 
 }
 
 
-void CTestCmdUI::_001SetCheck(check::e_check echeck,::action::context)
+void probe_command_ui::_001SetCheck(check::e_check echeck,::action::context)
 {
 
    m_echeck = echeck;
 
 }
 
-void CTestCmdUI::SetRadio(bool bOn,::action::context)
+void probe_command_ui::SetRadio(bool bOn,::action::context)
 {
 
    m_bRadio = bOn;
@@ -48,7 +47,7 @@ void CTestCmdUI::SetRadio(bool bOn,::action::context)
 
 }
 
-void CTestCmdUI::SetText(const char * lpszText,::action::context)
+void probe_command_ui::SetText(const char * lpszText,::action::context)
 {
 
    m_strText = lpszText;

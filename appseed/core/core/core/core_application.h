@@ -188,10 +188,10 @@ namespace core
       virtual LRESULT GetPaintMsgProc(int32_t nCode,WPARAM wParam,LPARAM lParam);
 
 
-      void OnUpdateRecentFileMenu(cmd_ui * pcmdui);
+      void OnUpdateRecentFileMenu(command_ui * pcommandui);
 
       virtual DECL_GEN_SIGNAL(OnAppLanguage);
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
 
 

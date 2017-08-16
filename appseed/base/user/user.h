@@ -1,15 +1,19 @@
 #pragma once
 
 
+#include "base/base/base/base.h"
 
-#include "axis/axis/axis/axis.h"
 
 #if defined(__cplusplus) || defined(__cplusplus_winrt)
 
-#include "aura/user/user.h"
+#include "axis/user/user.h"
 
 
 #define new AURA_NEW
+
+
+class simple_scroll_bar;
+
 
 namespace user
 {
@@ -27,48 +31,75 @@ namespace user
 
    class tooltip;
 
-
-      class control_event;
-      class create_context;
-      class printer;
-      class user;
-      class frame_window;
+   class control_event;
+   class create_context;
+   class printer;
+   class user;
+   class frame_window;
       
-      //   class form_interface;
-      class form_list;
-      class form_callback;
-      class form_view;
-
-      
-      class interaction;
-      class interaction_impl;
-      class view_creator_data;
-      class tree;
-      class str_context;
-      class schema_simple_impl;
-      class window_draw;
-      class str;
-      
+   // class form_interface;
+   class form_list;
+   class form_callback;
+   class form_view;
 
       
-      class interaction;
-      class control_event;
-      class create_context;
-      class user;
-      class frame_window;
+   class interaction;
+   class interaction_impl;
+   class view_creator_data;
+   class tree;
+   class str_context;
+   class window_draw;
+   class str;
       
-      //   class form_interface;
-      class form_list;
-      class form_callback;
+   class interaction;
+   class control_event;
+   class create_context;
+   class user;
+   class frame_window;
       
+   // class form_interface;
+   class form_list;
+   class form_callback;
+   
+   class interaction;
+   class interaction_impl;
+   class frame_window;
+   class create_struct;
+   
+   
+   class tab;
+   
+   class tab_pane;
+   
+   class toolbar;
+   
+   class scroll_bar;
+   
+   enum e_object
+   {
       
+      object_list,
+      object_tree
       
-      class interaction;
-         class interaction_impl;
-         class frame_window;
-         class create_struct;
-         
-         
+   };
+   
+   enum e_style
+   {
+      
+      style_default,
+      style_menu,
+      style_button,
+      style_menu_button,
+      style_menu_close,
+      style_menu_popup,
+      style_system_menu_button,
+      style_system_menu_close,
+      style_system_menu_popup,
+      
+   };
+
+   using style_sp = sp(style);
+   
 } // namespace user
    
 
@@ -213,7 +244,12 @@ namespace user
 #endif
 
 
-#include "user/user_schema.h"
+#include "user/user_mouse.h"
+
+
+#include "user/user_style_base.h"
+#include "user/user_style_composite.h"
+#include "user/user_style.h"
 
 
 #include "base/base/message/message_user.h"
@@ -240,3 +276,157 @@ namespace user
 #include "base/user/user/user_interaction_impl.h"
 
 #endif
+
+
+
+
+
+
+#pragma once
+
+
+#if defined(__cplusplus) || defined(__cplusplus_winrt)
+
+//#include "base/user/user/user_front_end_schema.h"
+//#include "base/user/user/user_front_end.h"
+#include "base/user/user/user_control_bar.h"
+#include "base/user/user/user_wait_cursor.h"
+#include "simple_ui/simple_ui_style.h"
+#include "simple_ui/simple_ui_interaction.h"
+#include "base/user/user/user_scroll.h"
+#include "base/user/user/user_box.h"
+#include "base/user/user/user_frame_window.h"
+#include "base/user/user/user_server.h"
+#include "base/user/user/user_impact_system.h"
+
+
+#include "base/user/user/user_tooltip.h"
+
+
+#ifdef WINDOWSEX
+
+
+
+
+#endif
+
+
+
+
+#include "base/user/user/user_form_callback.h"
+
+
+#include "base/user/user/user_document_data_map.h"
+#include "base/user/user/user_document.h"
+//#include "base/user/user/user_application_as_proxy_document.h"
+#include "base/user/user/user_impact.h"
+
+
+
+
+
+//#if defined(METROWIN)
+//
+//#include "app/appseed/base/base/os/metrowin/metrowin_sockets.h"
+//
+//#endif
+
+
+
+#include "base/user/user/user_window_map.h"
+
+//#include "base/user/user/user_keyboard_layout.h"
+//#include "base/user/user/user_keyboard.h"
+#include "base/user/user/user_user.h"
+
+
+
+//#include "base/user/user/user_create_context.h"
+
+
+//#include "base/user/user/user_str_context.h"
+
+
+//#include "axis/base/base_print_job.h"
+#include "base/user/user/user_control_event.h"
+
+#include "base/user/user/user_control.h"
+#include "base/user/user/user_scroll_bar.h"
+//#include "base/user/user/userex_scroll.h"
+
+#include "base/user/user/user_button.h"
+
+#include "base/user/user/user_plain_text_data.h"
+#include "base/user/user/user_plain_edit.h"
+
+#include "base/user/user/user_form_window.h"
+#include "base/user/user/user_form_update_hint.h"
+
+
+#include "base/user/user/user_message_queue.h"
+
+
+
+#include "base/user/user/user_place_holder.h"
+#include "base/user/user/user_place_holder_container.h"
+#include "base/user/user/user_view_creator_data.h"
+#include "base/user/user/user_view_container.h"
+#include "base/user/user/user_view_creator.h"
+
+
+//#include "base/user/user/user_copydesk.h"
+#include "base/user/user/user_user.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include "app/appseed/axis/axis/node/node.h"
+
+
+
+#include "base/user/simple/simple.h"
+#include "base/user/simple_ui/simple_ui.h"
+
+//#include "base/user/userpresence/userpresence.h"
+
+
+
+
+#include "base/user/user/user.h"
+
+
+#include "base/user/wndfrm/frame/wndfrm_frame_updowninterface.h"
+
+namespace user
+{
+   
+   typedef show < control > scroll_view;
+   
+   typedef show < plain_edit > plain_edit_view;
+   
+   
+} // namespace user
+
+
+
+
+
+#endif // __cplusplus
+
+
+
+
+
+

@@ -56,7 +56,7 @@ namespace ios
       
       virtual ::user::interaction * get_wnd() const override;
       
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg) override;
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg) override;
       
       virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
       

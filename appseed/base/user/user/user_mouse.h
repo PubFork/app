@@ -5,10 +5,30 @@
 //  Created by Camilo Sasuke Tsumanuma on 14/08/17.
 //
 //
+#pragma once
 
-#ifndef user_mouse_hpp
-#define user_mouse_hpp
 
-#include <stdio.h>
+namespace user
+{
+   
+   class CLASS_DECL_BASE mouse
+   {
+   public:
+      uint_ptr                m_nFlags;
+      point                   m_pt;
+      point                   m_ptDesired;
+      bool                    m_bTranslated;
+      ::visual::e_cursor      m_ecursor;
+      ::visual::cursor *      m_pcursor;
+      
+      
+      virtual unsigned int get_message()
+      {
+         return 0;
+      }
+      
+   };
+   
+   
+} // namespace user
 
-#endif /* user_mouse_hpp */

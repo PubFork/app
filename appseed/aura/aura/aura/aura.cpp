@@ -20,7 +20,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
    //if (strstr(pszFormat, "%") == NULL)
    //{
    //
-   //   ::OutputDebugStringW(wstring(pszFormat));
+   //   ::output_debug_string(wstring(pszFormat));
    //
    //   return;
 
@@ -34,7 +34,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
 
    vsnprintf(sz,sizeof(sz),pszFormat,argList);
 
-   ::OutputDebugStringW(wstring(sz));
+   ::output_debug_string(sz);
 
    va_end(argList);
 
@@ -230,7 +230,7 @@ void dappy(const char * psz)
 
    //debug_print("app._ : %s : %s\n",_argv[2],psz);
    //debug_print("hello!!    : %s\n",psz);
-   //::OutputDebugString("hello!!    : " + string(psz) + "\n");
+   //::output_debug_string("hello!!    : " + string(psz) + "\n");
 
 }
 

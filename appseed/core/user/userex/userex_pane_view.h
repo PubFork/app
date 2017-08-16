@@ -36,7 +36,7 @@ namespace userex
       void set_menu_info(id id, const char * pszMatter, class id idCommand);
    
 
-      bool on_simple_update(cmd_ui * pcmdui);
+      bool on_simple_update(command_ui * pcommandui);
       bool on_simple_action(id id);
 
    };

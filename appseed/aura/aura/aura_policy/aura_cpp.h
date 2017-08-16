@@ -253,7 +253,7 @@ class var_array;
 class handler;
 class thread;
 class command_target;
-class cmd_ui;
+class command_ui;
 class critical_section;
 class mutex;
 class string;
@@ -291,7 +291,7 @@ class memory;
 //
 //} // namespace plane
 
-class cmd_ui;
+class command_ui;
 
 namespace datetime
 {
@@ -1025,9 +1025,9 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/primitive/primitive_check.h"
 //#include "user/user/user_check_interface.h"
 #include "aura/aura/aura/aura_command.h"
-#include "aura/aura/aura/aura_command_msg.h"
+#include "aura/user/user/user_command.h"
 #include "aura/aura/aura/aura_command_ui.h"
-#include "aura/aura/aura/aura_command_ui_test.h"
+#include "aura/aura/aura/aura_command_ui_probe.h"
 //#include "graphics/visual/visual_const.h"
 //#include "user/user/user_key_enum.h"
 #include "aura/aura/message/message.h"

@@ -66,14 +66,14 @@ namespace user
 
    }
 
-   bool tooltip::get_translucency(::user::ETranslucency  & etranslucency)
-   {
-
-      etranslucency = ::user::TranslucencyPresent;
-
-      return true;
-
-   }
+//   bool tooltip::get_translucency(::user::e_translucency  & etranslucency)
+//   {
+//
+//      etranslucency = ::user::translucency_present;
+//
+//      return true;
+//
+//   }
 
 
    void tooltip::_001OnDraw(::draw2d::graphics * pgraphics)

@@ -26,7 +26,7 @@ namespace prompt
       virtual int32_t exit_application() override;
 
 
-	   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+	   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
 
       void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);

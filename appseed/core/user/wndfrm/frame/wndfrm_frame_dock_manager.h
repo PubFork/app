@@ -26,7 +26,7 @@ namespace user
             point                      m_ptWindowOrigin;
             bool                       m_bDocking;
             UINT                       m_uiSWPFlags;
-            ::user::EAppearance        m_eappearanceOrigin;
+            ::user::e_appearance        m_eappearanceOrigin;
             size                       m_sizeOrigin;
 
 

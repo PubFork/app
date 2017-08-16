@@ -272,7 +272,7 @@ namespace macos
 
    bool dir::name_is(const ::file::path & str, ::aura::application *   papp)
    {
-      //OutputDebugString(str);
+      //output_debug_string(str);
       strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
@@ -326,7 +326,7 @@ namespace macos
 
       wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
 
-      //OutputDebugStringW(wstrPath);
+      //output_debug_string(wstrPath);
 
 //      if(wstrPath.get_length() >= MAX_PATH)
 //      {
@@ -402,13 +402,13 @@ namespace macos
                      dwError = ::GetLastError();
                   }
                }
-               char * pszError;
-//               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
-                              FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
-
-               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-               // xxx               ::LocalFree(pszError);
-               //m_isdirmap.set(stra[i], false);
+//               char * pszError;
+////               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
+//                              FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
+//
+//               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+//               // xxx               ::LocalFree(pszError);
+//               //m_isdirmap.set(stra[i], false);
             }
             else
             {
@@ -763,7 +763,7 @@ namespace macos
     
 //    bool dir::name_is(const ::file::path & str, ::aura::application * papp)
 //    {
-//        //OutputDebugString(str);
+//        //output_debug_string(str);
 //        strsize iLast = str.get_length() - 1;
 //        while(iLast >= 0)
 //        {
@@ -827,7 +827,7 @@ namespace macos
 //        
 //        wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
 //        
-//        //OutputDebugStringW(wstrPath);
+//        //output_debug_string(wstrPath);
 //        
 //        if(wstrPath.get_length() >= MAX_PATH)
 //        {

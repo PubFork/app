@@ -14,6 +14,9 @@ namespace macos
       os(::aura::application * papp);
       virtual ~os();
 
+      
+      virtual string get_command_line();
+      
 
       virtual bool reboot() override;
       

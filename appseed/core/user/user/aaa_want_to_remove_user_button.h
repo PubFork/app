@@ -72,7 +72,7 @@
 //
 //      virtual bool create_control(class control::descriptor * pdescriptor, index iItem = 0);
 //
-//      virtual void ResizeToFit();
+//      virtual void resize_to_fit();
 //
 //      virtual void install_message_handling(::message::dispatch * pinterface);
 //

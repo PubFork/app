@@ -1,30 +1,7 @@
 #pragma once
 
 
-namespace user
-{
-
-   class CLASS_DECL_BASE mouse
-   {
-   public:
-      uint_ptr                m_nFlags;
-      point                   m_pt;
-      point                   m_ptDesired;
-      bool                    m_bTranslated;
-      ::visual::e_cursor      m_ecursor;
-      ::visual::cursor *      m_pcursor;
-
-
-      virtual unsigned int get_message()
-      {
-         return 0;
-      }
-
-   };
-
-
-} // namespace user
-
+#include "base_application.h"
 
 
 namespace base
@@ -33,28 +10,30 @@ namespace base
 
    class CLASS_DECL_BASE session:
       virtual public ::axis::session,
-      virtual public :: base ::application,
-      virtual public ::user::schema
+      virtual public :: base ::application
    {
    public:
 
 
-      ::visual::e_cursor                                       m_ecursor;
-      ::visual::cursor *                                       m_pcursor;
-      ::visual::e_cursor                                       m_ecursorDefault;
+      ::visual::e_cursor               m_ecursor;
+      ::visual::cursor *               m_pcursor;
+      ::visual::e_cursor               m_ecursorDefault;
 
 
-      ::user::user *                m_puser;
-      sp(::user::schema)            m_puserschemasimple;
-      string_map < sp(::user::schema) >   m_mapSchema;
+      ::user::user *                   m_puser;
+      ::user::style_sp                 m_puserstyle;
+      string_map < ::user::style_sp >  m_mapStyle;
 
-      ::user::interaction *         m_puiCapture;
+      ::user::interaction *            m_puiCapture;
 
 
       session(::aura::application * papp);
       virtual ~session_parent;
 
       inline ::user::user *                        user() { return m_puser; }
+      
+      virtual sp(::user::impact)                      get_view();
+      
 
       virtual void set_cursor(::visual::cursor * pcursor);
       virtual void set_cursor(::visual::e_cursor ecursor);
@@ -94,13 +73,14 @@ namespace base
       virtual sp(::user::interaction) GetCapture();
 
 
-      sp(::user::schema) create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
+      sp(::user::style) create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
 
-      sp(::user::schema) get_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
+      sp(::user::style) get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
 
 
       virtual void on_finally_focus_set(::user::elemental * pelementalFocus) override;
 
+      
 
       virtual oswindow get_capture();
 

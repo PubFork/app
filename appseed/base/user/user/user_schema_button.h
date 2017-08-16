@@ -5,6 +5,7 @@
 //  Created by Camilo Sasuke Tsumanuma on 14/08/17.
 //
 //
+#pragma once
 
 
 namespace user
@@ -15,12 +16,10 @@ namespace user
    
 
    class CLASS_DECL_BASE button :
-      public ::user::schema::schema
+      public ::user::style
    {
    public:
    
-   
-      bool                    m_bBorder;
    
       button(::aura::application * papp);
    

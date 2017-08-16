@@ -4,6 +4,7 @@
 namespace user
 {
 
+   
    template < class CELL >
    class mesh_cache  :
       public mesh_cache_interface
@@ -13,7 +14,7 @@ namespace user
       
       bool                                  m_bCaching;
       int32_t                               m_iCacheNextIndex;
-      int_map < int_map < CELL > >          m_map;
+      ::int_map < ::int_map < CELL > >      m_map;
 
 
       mesh_cache();

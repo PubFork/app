@@ -59,7 +59,7 @@ namespace userfs
             {
                //if (get_filemanager_template()->get_filemanager_data()->m_bTransparentBackground)
                //{
-               //   ::user::tree::m_etranslucency = ::user::tree::TranslucencyPresent;
+               //   ::user::tree::m_etranslucency = ::user::tree::translucency_present;
                //}
                /* xxx _001SetExpandImage(
                   System.LoadIcon(

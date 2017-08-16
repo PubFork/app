@@ -691,26 +691,26 @@ void memdleak_dump()
    {
       if (pblock->m_iStack > 0)
       {
-         OutputDebugString("\n");
-         OutputDebugString("--------------------------------------------------------\n");
+         output_debug_string("\n");
+         output_debug_string("--------------------------------------------------------\n");
          ultoa_dup(sz, ++i, 10);
-         OutputDebugString("Index : ");
-         OutputDebugString(sz);
-         OutputDebugString("\n");
+         output_debug_string("Index : ");
+         output_debug_string(sz);
+         output_debug_string("\n");
          ultoa_dup(sz, pblock->m_size, 10);
-         OutputDebugString("Size : ");
-         OutputDebugString(sz);
-         OutputDebugString("\n");
-         OutputDebugString(::exception::engine().stack_trace(pblock->m_puiStack, pblock->m_iStack));
+         output_debug_string("Size : ");
+         output_debug_string(sz);
+         output_debug_string("\n");
+         output_debug_string(::exception::engine().stack_trace(pblock->m_puiStack, pblock->m_iStack));
       }
       pblock = pblock->m_pnext;
    }
-   OutputDebugString("\n");
-   OutputDebugString("--------------------------------------------------------\n");
+   output_debug_string("\n");
+   output_debug_string("--------------------------------------------------------\n");
    ultoa_dup(sz, i, 10);
-   OutputDebugString("\nFound ");
-   OutputDebugString(sz);
-   OutputDebugString(" memory leaks.");
+   output_debug_string("\nFound ");
+   output_debug_string(sz);
+   output_debug_string(" memory leaks.");
 
    //file_put_contents_dup(::dir::system() / "m.html", get_mem_info_report1());
 }

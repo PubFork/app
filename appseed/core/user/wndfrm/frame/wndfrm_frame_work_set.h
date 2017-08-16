@@ -153,8 +153,8 @@ namespace user
             void SetActiveFlag(bool fActive);
             void SetSWPFlags(UINT uiFlags);
 
-            ::user::EAppearance GetAppearance();
-            void SetAppearance(::user::EAppearance nMode);
+            ::user::e_appearance GetAppearance();
+            void SetAppearance(::user::e_appearance nMode);
             void SetAppearance();
 
             void GetRegionClientRect(LPRECT lprect);
@@ -183,7 +183,7 @@ namespace user
             bool IsFullScreen();
             bool ViewFullScreen(bool bFullScreen);
 
-            virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+            virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
             virtual void OnSize(UINT nType, int32_t cx, int32_t cy);
 

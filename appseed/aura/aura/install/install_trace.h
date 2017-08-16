@@ -17,7 +17,7 @@ namespace install
 
 
       stringa              m_stra;
-      HANDLE               m_hfile;
+      FILE *               m_file;
       string               m_strLastStatus;
       string               m_strLastGlsStatus;
       int32_t              m_iLastStatus;

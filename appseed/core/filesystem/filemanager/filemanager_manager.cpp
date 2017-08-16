@@ -670,25 +670,25 @@ namespace filemanager
       return ::user::document::on_simple_action(id);
    }
 
-   bool manager::on_simple_update(cmd_ui * pcmdui)
+   bool manager::on_simple_update(command_ui * pcommandui)
    {
-      /*if(pcmdui->m_id == get_filemanager_template()->m_strLevelUp)
+      /*if(pcommandui->m_id == get_filemanager_template()->m_strLevelUp)
       {
-      FileManagerOnUpdateLevelUp(pcmdui);
+      FileManagerOnUpdateLevelUp(pcommandui);
       return true;
       }*/
-      return ::user::document::on_simple_update(pcmdui);
+      return ::user::document::on_simple_update(pcommandui);
    }
 
 
-   /*bool manager::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   /*bool manager::_001OnCmdMsg(::user::command * pcmdmsg)
    {
    if (nCode == CN_UPDATE_COMMAND_UI)
    {
-   cmd_ui * pcmdui = (cmd_ui *) pExtra;
+   command_ui * pcommandui = (command_ui *) pExtra;
    if(nID == get_filemanager_template()->m_uiLevelUp)
    {
-   FileManagerOnUpdateLevelUp(pcmdui);
+   FileManagerOnUpdateLevelUp(pcommandui);
    return TRUE;
    }
    }
@@ -717,9 +717,9 @@ namespace filemanager
    void manager::_001OnUpdateNewManager(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommandui->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -739,9 +739,9 @@ namespace filemanager
    void manager::_001OnUpdateDelManager(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommandui->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -779,18 +779,18 @@ namespace filemanager
    void manager::_001OnUpdateLevelUp(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
       if (m_item.is_null() || m_item->m_filepath.is_empty())
       {
 
-         pcmdui->m_pcmdui->Enable(FALSE);
+         pcommandui->Enable(FALSE);
 
       }
       else
       {
 
-         pcmdui->m_pcmdui->Enable(TRUE);
+         pcommandui->Enable(TRUE);
 
       }
 
@@ -809,9 +809,9 @@ namespace filemanager
    void manager::_001OnUpdateAddLocation(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommandui->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -831,9 +831,9 @@ namespace filemanager
    void manager::_001OnUpdateReplaceText(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommandui->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -855,9 +855,9 @@ namespace filemanager
    void manager::_001OnUpdateNewFolder(signal_details * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommandui->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -878,9 +878,9 @@ namespace filemanager
 
    void manager::_001OnUpdateEditPaste(signal_details * pobj)
    {
-      //      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      //      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-      //         pcmdui->m_pcmdui->Enable(System.m_strCopy.is_empty());
+      //         pcommandui->Enable(System.m_strCopy.is_empty());
       pobj->m_bRet = true;
    }
 
@@ -894,20 +894,20 @@ namespace filemanager
 
    void manager::_001OnUpdateFileSaveAs(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
    }
 
    void manager::_001OnUpdateFileImport(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
    }
 
    void manager::_001OnUpdateFileExport(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
    }
 
 
@@ -1114,15 +1114,15 @@ namespace filemanager
       update_all_views(NULL, 0, &uh);
    }
 
-   bool manager::HandleDefaultFileManagerItemCmdMsg(::aura::cmd_msg * pcmdmsg, ::fs::item_array & itema)
+   bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcmdmsg, ::fs::item_array & itema)
    {
-      if (pcmdmsg->m_etype == ::aura::cmd_msg::type_cmdui)
+      if (pcmdmsg->m_etype == ::user::command::type_command_ui)
       {
          if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcmdmsg->m_pcmdui->m_id, itema))
+            get_filemanager_data(), pcmdmsg->m_pcommandui->m_id, itema))
          {
             get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(
-               get_filemanager_data(), pcmdmsg->m_pcmdui, itema);
+               get_filemanager_data(), pcmdmsg->m_pcommandui, itema);
             return TRUE;
          }
       }

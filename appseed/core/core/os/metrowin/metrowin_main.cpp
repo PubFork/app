@@ -43,7 +43,7 @@ CLASS_DECL_CORE int app_core_main(const char * pszCmdLine)
 
    sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t) ::get_tick_count() - g_dwStartTime);
 
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
 
    printf(szTimeMessage);
 

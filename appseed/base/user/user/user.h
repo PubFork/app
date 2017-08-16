@@ -10,23 +10,6 @@
 #define CY_BORDER   1
 
 
-class Ex1FormInterfaceComboBox;
-
-/*
-class CLASS_DECL_BASE Ex1FormInterfaceComboBox:
-   virtual public ::object
-{
-public:
-
-
-   ::database::id       m_datakeyFill;
-   stringa              m_wstra;
-   uint_array          m_dwaData;
-
-
-};
-
-*/
 
 
 // Implementation structures
@@ -37,16 +20,7 @@ struct __SIZEPARENTPARAMS;    // control bar implementationproperca2_property.h
 //::draw2d::graphics_sp
 class preview_dc;               // Virtual DC for print preview
 
-//command_target
-//interaction_impl
-//::user::impact
-class CPreviewView;     // Print preview ::user::impact
-//frame_window
-class COleCntrFrameWnd;
-//CMiniFrameWnd
 class mini_dock_frame_window;
-
-class CDockContext;                     // for dragging control bars
 
 /////////////////////////////////////////////////////////////////////////////
 // Global ID ranges (see Technical note TN020 for more details)
@@ -109,171 +83,6 @@ namespace user
 #endif
 
 
-// General OLE features
-
-#if (!defined ___NO_OLE_SUPPORT) && (defined _OBJBASE_H_)
-
-// Implementation structures
-struct __EVENT;               // Event sink implementation
-
-// Classes declared in this file
-class COleControlLock;
-
-#endif
-
-// OLE Automation features
-
-#ifdef __AFXDISP_H__
-// Classes declared in this file
-
-//IStream
-class CArchiveStream;
-
-// Functions declared in this file
-
-// ::core::BSTR2ABTSR
-// ::core::TaskStringA2W
-// ::core::TaskStringW2A
-
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// General OLE features
-
-#if (!defined ___NO_OLE_SUPPORT) && (defined _OBJBASE_H_)
-#ifndef __AFXPRIV2_H__OLE__
-#define __AFXPRIV2_H__OLE__
-
-/////////////////////////////////////////////////////////////////////////////
-// Implementation of event sink handling
-
-struct __EVENT
-{
-   enum
-   {
-      event,
-      propRequest, propChanged,
-      propDSCNotify
-   };
-
-   __EVENT(int32_t eventKind);
-
-   __EVENT(int32_t eventKind, DISPID dispid, DISPPARAMS* pDispParams = NULL,
-      EXCEPINFO* pExcepInfo = NULL, UINT* puArgError = NULL);
-
-   int32_t m_eventKind;
-   DISPID m_dispid;
-   DISPPARAMS* m_pDispParams;
-   EXCEPINFO* m_pExcepInfo;
-   UINT* m_puArgError;
-   bool m_bPropChanged;
-   HRESULT m_hResult;
-   DSCSTATE m_nDSCState;
-   DSCREASON m_nDSCReason;
-};
-
-inline __EVENT::__EVENT(int32_t eventKind)
-{
-   m_eventKind = eventKind;
-   m_dispid = DISPID_UNKNOWN;
-   m_pDispParams = NULL;
-   m_pExcepInfo = NULL;
-   m_puArgError = NULL;
-   m_hResult = NOERROR;
-   m_nDSCState = dscNoState;
-   m_nDSCReason = dscNoReason;
-}
-
-inline __EVENT::__EVENT(int32_t eventKind, DISPID dispid,
-   DISPPARAMS* pDispParams, EXCEPINFO* pExcepInfo, UINT* puArgError)
-{
-   m_eventKind = eventKind;
-   m_dispid = dispid;
-   m_pDispParams = pDispParams;
-   m_pExcepInfo = pExcepInfo;
-   m_puArgError = puArgError;
-   m_hResult = NOERROR;
-   m_nDSCState = dscNoState;
-   m_nDSCReason = dscNoReason;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// COleControlLock
-
-class COleControlLock
-{
-   // Constructors
-public:
-   explicit COleControlLock(REFCLSID clsid);
-
-   // Attributes
-   CLSID m_clsid;
-   LPCLASSFACTORY m_pClassFactory;
-   COleControlLock* m_pNextLock;
-
-   // Implementation
-public:
-   virtual ~COleControlLock();
-};
-
-#endif // __AFXPRIV2_H__OLE__
-#endif //(!defined ___NO_OLE_SUPPORT) && (defined _OBJBASE_H_)
-
-/////////////////////////////////////////////////////////////////////////////
-// OLE Automation features
-
-#ifdef __AFXDISP_H__
-#ifndef __AFXPRIV2_H__DISP__
-#define __AFXPRIV2_H__DISP__
-
-/////////////////////////////////////////////////////////////////////////////
-// CArchiveStream
-/*
-class CLASS_DECL_BASE CArchiveStream : public IStream
-{
-public:
-CArchiveStream(CArchive* pArchive);
-
-// Implementation
-CArchive* m_pArchive;
-
-STDMETHOD_(ULONG, AddRef)();
-STDMETHOD_(ULONG, Release)();
-HRes QueryInterface)(REFIID, LPVOID*);
-
-HRes read)(void *, ULONG, ULONG*);
-HRes write)(const void *, memory_size_t cb, memory_size_t*);
-HRes seek)(LARGE_INTEGER, uint32_t, ULARGE_INTEGER*);
-HRes set_size)(ULARGE_INTEGER);
-HRes CopyTo)(LPSTREAM, ULARGE_INTEGER, ULARGE_INTEGER*,
-ULARGE_INTEGER*);
-HRes Commit)(uint32_t);
-HRes Revert)();
-HRes LockRegion)(ULARGE_INTEGER, ULARGE_INTEGER,uint32_t);
-HRes UnlockRegion)(ULARGE_INTEGER, ULARGE_INTEGER, uint32_t);
-HRes Stat)(STATSTG*, uint32_t);
-HRes Clone)(LPSTREAM*);
-};
-*/
-/////////////////////////////////////////////////////////////////////////////
-// Global UNICODE<>ANSI translation helpers
-
-CLASS_DECL_BASE void ::core::BSTR2String(string* pStr, BSTR bstr);
-
-#if !defined(_UNICODE)
-CLASS_DECL_BASE BSTR::core::BSTR2ABSTR(BSTR bstrW);
-CLASS_DECL_BASE unichar * ::core::TaskStringA2W(const char * lpa);
-CLASS_DECL_BASE char * ::core::TaskStringW2A(const unichar * lpw);
-#endif
-
-#endif // __AFXPRIV2_H__DISP__
-#endif // __AFXDISP_H__
-
-/////////////////////////////////////////////////////////////////////////////
-
-//#include "axis/database/database/database_user_interaction.h"
-
-
 #include "user_impact_update_hint.h"
 //#include "user_job.h"
 
@@ -284,8 +93,10 @@ CLASS_DECL_BASE char * ::core::TaskStringW2A(const unichar * lpw);
 //#include "user_print_job.h"
 
 
-#include "user_menu_base_item.h"
-#include "user_menu_base.h"
+#include "user_menu_item.h"
+#include "user_menu_command_ui.h"
+#include "user_menu.h"
+
 
 
 //#include "user_copydesk.h"

@@ -809,17 +809,17 @@ namespace user
       }
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevelFrame();
+         m_puserstyle = GetTopLevelFrame();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
@@ -6087,9 +6087,9 @@ namespace user
 
    void list::_001OnUpdateListViewAutoArrange(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->_001SetCheck(get_auto_arrange());
-      pcmdui->m_pcmdui->Enable();
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->_001SetCheck(get_auto_arrange());
+      pcommandui->Enable();
    }
 
    bool list::is_valid_display_item(index iDisplayItem)

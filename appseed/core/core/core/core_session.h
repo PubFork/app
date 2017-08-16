@@ -92,7 +92,7 @@ namespace core
 
       void _001OnFileNew();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
       virtual ::user::document * userex_on_request(::create * pcreate);
 

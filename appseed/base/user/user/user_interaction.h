@@ -59,6 +59,29 @@ namespace user
          updown_up,
          updown_down,
       };
+      
+      
+      class draw_select
+      {
+      public:
+         
+         interaction * m_pui;
+         ::draw2d::graphics * m_pgraphics;
+         
+         draw_select(interaction * pui, ::draw2d::graphics * pgraphics) :
+            m_pui(pui),
+         m_pgraphics(pgraphics)
+         {
+            m_pui->select(pgraphics);
+         }
+         
+         ~draw_select()
+         {
+            m_pui->select(NULL);
+         }
+         
+      };
+      
 
       flags < e_non_client >              m_flagNonClient;
 
@@ -103,8 +126,8 @@ namespace user
 
       ::user::interaction *               m_pparent;
 
-      EAppearance                         m_eappearance;
-      EAppearance                         m_eappearanceBefore;
+      e_appearance                         m_eappearance;
+      e_appearance                         m_eappearanceBefore;
       sp(interaction_impl_base)           m_pimpl;
 
 
@@ -121,7 +144,7 @@ namespace user
       sp(::axis::session)                 m_psession;
       bool                                m_bMessageWindow;
 
-      bool                                m_bCreated;
+      //bool                                m_bCreated;
 
       string                              m_strWindowText;
 
@@ -132,6 +155,12 @@ namespace user
       int32_t                             m_nModalResult; // for return values from ::interaction_impl::RunModalLoop
 
       sp(interaction)                     m_ptooltip;
+      
+      /// The menu_item this user_interaction (window)
+      /// represents (this window is a button [a menu button],
+      /// this window is a checkbox [a menu checkbox],
+      /// this window is a player/view [a menu picture/video/chat?!])
+      sp(menu_item)                       m_pitem;
 
 
 
@@ -166,7 +195,8 @@ namespace user
       virtual bool defer_check_zorder();
       virtual bool check_need_zorder();
       virtual void clear_need_zorder();
-      virtual void zorder();
+      virtual void do_zorder();
+      virtual void zorder(int ZOrder, int nFlags);
 
       virtual bool create_message_queue(const char * pszName) override;
 
@@ -366,7 +396,7 @@ namespace user
       virtual void _001WindowMaximize() override;
       virtual void _001WindowFullScreen() override;
       virtual void _001WindowRestore() override;
-      virtual void _001WindowDock(::user::EAppearance eappearance);
+      virtual void _001WindowDock(::user::e_appearance eappearance);
 
       using ::user::interaction_base::GetWindowRect;
       virtual bool GetClientRect(LPRECT lprect) override;
@@ -530,6 +560,8 @@ namespace user
       virtual string get_window_text() override;
       virtual void get_window_text(string & rString) override;
       virtual strsize get_window_text_length() override;
+      
+      virtual void _001SetText(const string & str, ::action::context actioncontext);
 
       virtual void install_message_handling(::message::dispatch * pinterface) override;
       virtual bool IsWindowVisible() override;
@@ -763,15 +795,15 @@ namespace user
 
 
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags) override;
 
@@ -783,9 +815,9 @@ namespace user
       virtual bool WfiIsIconic() override;
 
 
-      virtual bool Wfi(EAppearance eapperance = AppearanceCurrent) override;
+      virtual bool Wfi(e_appearance eapperance = appearance_current) override;
 
-      virtual bool WfiDock(EAppearance eapperance) override;
+      virtual bool WfiDock(e_appearance eapperance) override;
       virtual bool WfiClose() override;
       virtual bool WfiRestore(bool bForceNormal = false) override;
       virtual bool WfiMinimize() override;
@@ -799,11 +831,11 @@ namespace user
       virtual bool WfiIsMoving();
       virtual bool WfiIsSizing();
 
-      virtual EAppearance get_appearance() override;
-      virtual EAppearance get_appearance_before() override;
+      virtual e_appearance get_appearance() override;
+      virtual e_appearance get_appearance_before() override;
 
-      virtual bool set_appearance(EAppearance eappearance) override;
-      virtual bool set_appearance_before(EAppearance eappearance) override;
+      virtual bool set_appearance(e_appearance eappearance) override;
+      virtual bool set_appearance_before(e_appearance eappearance) override;
 
 
       virtual void show_keyboard(bool bShow = true) override;
@@ -812,8 +844,8 @@ namespace user
 
       virtual ::user::interaction * best_top_level_parent(LPRECT lprect);
 
-      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
-      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_monitor(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_wkspace(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index good_restore(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
@@ -843,9 +875,10 @@ namespace user
       virtual int get_final_y_scroll_bar_width();
 
 
+      //virtual ::user::style * get_user_style() override;
+      virtual ::user::style_base * parent_userstyle() override;
 
-      virtual ::user::schema * get_parent_user_schema() override;
-
+//      bool select_font(::draw2d::graphics * pgraphics, e_font efont);
 
       /*
 
@@ -947,7 +980,7 @@ namespace user
       virtual void on_after_graphical_update();
 
 
-      virtual void _001OnDeiconify(::user::EAppearance eappearance);
+      virtual void _001OnDeiconify(::user::e_appearance eappearance);
       
       virtual void on_setting_changed(::aura::e_setting esetting);
       
@@ -955,6 +988,16 @@ namespace user
 
       virtual bool _001OnClick(uint_ptr nFlag, point point);
       virtual bool _001OnRightClick(uint_ptr nFlag, point point);
+      
+      
+      virtual int width();
+      virtual int height();
+      
+      virtual int client_width();
+      virtual int client_height();
+
+      
+      virtual void resize_to_fit();
 
    };
 

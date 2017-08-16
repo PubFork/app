@@ -96,7 +96,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_fastblur(allocer())
 {
 
-   m_etranslucency = ::user::TranslucencyUndefined;
+   m_etranslucency = ::user::translucency_undefined;
 
    m_bShowTask = true;
 
@@ -439,19 +439,19 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
       }
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
       string strSchema = m_varFrame["wndfrm"];
 
-      m_puserschemaSchema = Session.get_user_schema(strSchema, get_app());
+      m_puserstyle = Session.get_user_style(strSchema, get_app());
 
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
 
 
@@ -1004,10 +1004,10 @@ void simple_frame_window::_001OnMouseMove(signal_details * pobj)
 
 void simple_frame_window::_001OnUpdateViewFullScreen(signal_details * pobj)
 {
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-   pcmdui->m_pcmdui->Enable();
-   pcmdui->m_pcmdui->_001SetCheck(WfiIsFullScreen());
-   pcmdui->m_bRet = true;
+   SCAST_PTR(::command_ui, pcommandui, pobj);
+   pcommandui->Enable();
+   pcommandui->_001SetCheck(WfiIsFullScreen());
+   pcommandui->m_bRet = true;
 }
 
 
@@ -1089,9 +1089,9 @@ void simple_frame_window::_001OnToggleCustomFrame(signal_details * pobj)
 
 void simple_frame_window::_001OnUpdateToggleCustomFrame(signal_details * pobj)
 {
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-   pcmdui->m_pcmdui->Enable();
-   pcmdui->m_pcmdui->_001SetCheck(m_bWindowFrame);
+   SCAST_PTR(::command_ui, pcommandui, pobj);
+   pcommandui->Enable();
+   pcommandui->_001SetCheck(m_bWindowFrame);
 }
 
 
@@ -1108,9 +1108,9 @@ void simple_frame_window::_001OnToggleTransparentFrame(signal_details * pobj)
 void simple_frame_window::_001OnUpdateToggleTransparentFrame(signal_details * pobj)
 {
 
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+   SCAST_PTR(::command_ui, pcommandui, pobj);
 
-   pcmdui->m_pcmdui->Enable();
+   pcommandui->Enable();
 
    //if (GetTopLevelFrame()->frame_is_transparent())
    //{
@@ -1125,7 +1125,7 @@ void simple_frame_window::_001OnUpdateToggleTransparentFrame(signal_details * po
 
    //}
 
-   pcmdui->m_pcmdui->_001SetCheck(frame_is_transparent());
+   pcommandui->_001SetCheck(frame_is_transparent());
 
 }
 
@@ -1649,7 +1649,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if (IsFullScreen() && Session.is_key_pressed(::user::key_control) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if (WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if (WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -1671,7 +1671,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if(IsFullScreen() && Session.is_key_pressed(::user::key_alt) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if(WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if(WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -1749,7 +1749,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    if (m_workset.IsAppearanceEnabled())
    {
 
-      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::AppearanceIconic)
+      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
       {
 
          WfiRestore(false);
@@ -1862,7 +1862,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
    if(dAlpha > 0.0)
    {
 
-      if(m_puserschemaSchema != NULL && m_puserschemaSchema->_001OnDrawMainFrameBackground(pgraphics,this))
+      if(m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics,this))
       {
 
          _001DrawThis(pgraphics);
@@ -2346,7 +2346,7 @@ bool simple_frame_window::create_window(const char * lpszClassName,const char * 
 
 
 
-bool simple_frame_window::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+bool simple_frame_window::_001OnCmdMsg(::user::command * pcmdmsg)
 {
 
    if (m_workset._001OnCmdMsg(pcmdmsg))
@@ -2960,7 +2960,7 @@ void simple_frame_window::WfiOnRestore()
 }
 
 
-void simple_frame_window::WfiOnDock(::user::EAppearance eappearance)
+void simple_frame_window::WfiOnDock(::user::e_appearance eappearance)
 {
 
    _001WindowDock(eappearance);
@@ -3037,7 +3037,7 @@ bool simple_frame_window::DeferFullScreen(bool bFullScreen, bool bRestore)
 bool simple_frame_window::calc_layered()
 {
 
-   if (m_bLayered && _001GetTranslucency() != ::user::TranslucencyNone)
+   if (m_bLayered && _001GetTranslucency() != ::user::translucency_none)
    {
       return !Session.savings().is_trying_to_save(::aura::resource_processing)
              && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth);
@@ -3052,10 +3052,10 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::ETranslucency & etranslucency)
+bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
 {
 
-   if (m_etranslucency != ::user::TranslucencyUndefined)
+   if (m_etranslucency != ::user::translucency_undefined)
    {
 
       etranslucency = m_etranslucency;
@@ -3064,7 +3064,7 @@ bool simple_frame_window::get_translucency(::user::ETranslucency & etranslucency
 
    }
 
-   return ::user::frame_window::get_translucency(etranslucency);
+   return ::user::frame_window::get_translucency(etranslucency, eelement);
 
 }
 
@@ -3112,7 +3112,7 @@ class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_
 
 
 
-bool simple_frame_window::set_appearance(::user::EAppearance eappearance)
+bool simple_frame_window::set_appearance(::user::e_appearance eappearance)
 {
 
    bool bOk1 = ::user::frame_window::set_appearance(eappearance);
@@ -3302,19 +3302,19 @@ void simple_frame_window::show_task(bool bShow)
 }
 
 
-::user::front_end_schema * simple_frame_window::get_user_front_end_schema()
-{
-
-   if (m_workset.m_pframeschema == NULL)
-   {
-
-      return NULL;
-
-   }
-
-   return m_workset.m_pframeschema->get_user_front_end_schema();
-
-}
+//::user::front_end_schema * simple_frame_window::get_user_front_end_schema()
+//{
+//
+//   if (m_workset.m_pframeschema == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   return m_workset.m_pframeschema->get_user_front_end_schema();
+//
+//}
 
 
 bool simple_frame_window::IsNotifyIconEnabled()

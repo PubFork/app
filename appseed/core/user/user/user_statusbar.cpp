@@ -709,7 +709,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // status_bar idle update through CStatusCmdUI class
 
-   class CStatusCmdUI : public cmd_ui      // class private to this file!
+   class CStatusCmdUI : public command_ui      // class private to this file!
    {
    public: // re-implementations only
 
@@ -721,7 +721,7 @@ namespace user
 
    CStatusCmdUI::CStatusCmdUI(::aura::application * papp) :
    object(papp),
-      cmd_ui(papp)
+      command_ui(papp)
 
 
    {

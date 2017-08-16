@@ -41,18 +41,18 @@ namespace hotplugin
       int left;
       int right;
 
-      if(height(rect) < h)
+      if(::height(rect) < h)
       {
          top = rect.top;
          bottom = rect.bottom;
       }
       else
       {
-         top = rect.top + height(rect) / 2 - h / 2;
-         bottom = rect.top + height(rect) / 2 + h / 2;
+         top = rect.top + ::height(rect) / 2 - h / 2;
+         bottom = rect.top + ::height(rect) / 2 + h / 2;
       }
 
-      if(width(rect) < m)
+      if(::width(rect) < m)
       {
          left = rect.left;
          right = rect.right;
@@ -60,8 +60,8 @@ namespace hotplugin
       else
       {
 
-         left = rect.left + MIN(m / 2,width(rect) / 2);
-         right = rect.right - MIN(m / 2,width(rect) / 2);
+         left = rect.left + MIN(m / 2,::width(rect) / 2);
+         right = rect.right - MIN(m / 2,::width(rect) / 2);
 
       }
 

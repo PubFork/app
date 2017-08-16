@@ -16,6 +16,7 @@ namespace user
 
       menu_list_view(::aura::application * papp);
       virtual ~menu_list_view();
+      
 
       virtual void install_message_handling(::message::dispatch * pinterface);
 
@@ -23,9 +24,9 @@ namespace user
 
       virtual void GuieProc(signal_details * pobj);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
-      bool LoadMenu(sp(::xml::node) pnode, sp(::user::interaction) puiNotify, UINT uiCallbackMessage);
+      bool load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage);
          
    #ifdef DEBUG
       virtual void assert_valid() const;

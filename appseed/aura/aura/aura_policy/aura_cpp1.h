@@ -489,7 +489,7 @@ class var_array;
 class handler;
 class thread;
 class command_target;
-class cmd_ui;
+class command_ui;
 class critical_section;
 class mutex;
 class string;
@@ -527,7 +527,7 @@ class memory;
 //
 //} // namespace plane
 
-class cmd_ui;
+class command_ui;
 
 namespace datetime
 {

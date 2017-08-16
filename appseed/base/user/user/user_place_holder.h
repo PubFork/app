@@ -48,7 +48,7 @@ namespace user
 
       virtual bool _001IsBackgroundBypass();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
 
    };

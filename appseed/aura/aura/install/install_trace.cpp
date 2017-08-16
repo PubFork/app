@@ -14,7 +14,7 @@ namespace install
 
       defer_create_mutex();
 
-      m_hfile           = INVALID_HANDLE_VALUE;
+      m_file            = NULL;
       m_iLastStatus     = 0;
       m_iLastGlsStatus  = 0;
 
@@ -31,26 +31,33 @@ namespace install
    }
 
 
-
-
    void trace::ensure_trace_file()
    {
+
       dir::mk(dir::element());
-      if (m_hfile != INVALID_HANDLE_VALUE)
+      
+      if (m_file != NULL)
       {
-         // best really determination that m_hfile is valid, if it is valid, it is not necessary to create or open it
+
          string str2 = "ensure_trace_file";
-         DWORD dwWritten;
-         if (WriteFile(m_hfile, str2, (uint32_t)str2.length(), &dwWritten, NULL))
+         
+         DWORD dwWritten = fwrite(str2, 1, str2.length(), m_file);
+         
+         if (dwWritten == str2.length())
          {
-            ::FlushFileBuffers(m_hfile);
+            
+            ::fflush(m_file);
+            
             return;
+            
          }
+         
       }
 
-      m_hfile = ::create_file(path::install_log(process_platform_dir_name2()),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+      // _SH_DENYNO
+      m_file = fopen_dup(path::install_log(process_platform_dir_name2()), "a+");
 
-      ::SetFilePointer(m_hfile, 0, NULL, FILE_END);
+      //::SetFilePointer(m_hfile, 0, NULL, FILE_END);
 
    }
 
@@ -134,13 +141,16 @@ namespace install
    void trace::on_trace(string & str, string & str2)
    {
 
-      if (m_hfile != NULL && str2.length() > 0)
+      if (m_file != NULL && str2.length() > 0)
       {
 
-         DWORD dwWritten;
-         ::SetFilePointer(m_hfile, 0, NULL, SEEK_END);
-         WriteFile(m_hfile, str2, (uint32_t)str2.length(), &dwWritten, NULL);
-         ::FlushFileBuffers(m_hfile);
+//         DWORD dwWritten;
+//         ::SetFilePointer(m_hfile, 0, NULL, SEEK_END);
+         //WriteFile(m_hfile, str2, (uint32_t)str2.length(), &dwWritten, NULL);
+         
+         fwrite(str2, 1, str2.length(), m_file);
+         
+         fflush(m_file);
 
       }
 

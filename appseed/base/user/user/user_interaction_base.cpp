@@ -951,9 +951,7 @@ Restart:
    bool interaction_base::IsWindow() const
    {
 
-      ::exception::throw_interface_only(get_app());
-
-      return false;
+      return ::user::elemental::IsWindow();
 
    }
 
@@ -2420,7 +2418,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2451,7 +2449,7 @@ Restart:
 
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2481,7 +2479,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2536,7 +2534,7 @@ Restart:
       return false;
 
    }
-   bool interaction_base::Wfi(EAppearance eapperance)
+   bool interaction_base::Wfi(e_appearance eapperance)
    {
 
       return false;
@@ -2544,7 +2542,7 @@ Restart:
    }
 
 
-   bool interaction_base::WfiDock(EAppearance eapperance)
+   bool interaction_base::WfiDock(e_appearance eapperance)
    {
 
       return false;
@@ -2622,23 +2620,23 @@ Restart:
    }
 
 
-   EAppearance interaction_base::get_appearance()
+   e_appearance interaction_base::get_appearance()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 
 
-   EAppearance interaction_base::get_appearance_before()
+   e_appearance interaction_base::get_appearance_before()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 
 
-   bool interaction_base::set_appearance(EAppearance eappearance)
+   bool interaction_base::set_appearance(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2648,7 +2646,7 @@ Restart:
    }
 
 
-   bool interaction_base::set_appearance_before(EAppearance eappearance)
+   bool interaction_base::set_appearance_before(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());

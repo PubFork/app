@@ -72,7 +72,7 @@ public:
    bool                                m_bCustomFrameBefore;
    rect                                m_FullScreenWindowRect;
    visual::fastblur                    m_fastblur;
-   ::user::ETranslucency               m_etranslucency;
+   ::user::e_translucency               m_etranslucency;
 
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;
@@ -113,7 +113,7 @@ public:
 
    virtual bool is_application_main_window();
    
-   virtual bool get_translucency(::user::ETranslucency & etranslucency) override;
+   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -128,7 +128,7 @@ public:
    virtual void ShowControlBars(bool bShow = true, bool bLeaveFullScreenBarsOnHide = false);
 
    virtual bool IsNotifyIconEnabled() override;
-   void OnUpdateControlBarMenu(cmd_ui * pcmdui);
+   void OnUpdateControlBarMenu(command_ui * pcommandui);
 
    virtual sp(::user::wndfrm::frame::frame) create_frame_schema();
 
@@ -251,17 +251,17 @@ public:
    virtual void WfiOnMaximize() override;
    virtual void WfiOnMinimize(bool bNoActivate) override;
    virtual void WfiOnRestore() override;
-   virtual void WfiOnDock(::user::EAppearance eappearance) override;
+   virtual void WfiOnDock(::user::e_appearance eappearance) override;
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
-   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
    virtual void data_on_after_change(signal_details * pobj);
 
 
 
-   virtual bool set_appearance(::user::EAppearance eappearance);
+   virtual bool set_appearance(::user::e_appearance eappearance);
 
    virtual void InitialUpdateFrame(::user::document * pDoc,bool bMakeVisible);
 
@@ -296,7 +296,7 @@ public:
 
    virtual void defer_set_icon();
 
-   virtual ::user::front_end_schema * get_user_front_end_schema() override;
+   virtual ::user::style * get_user_style() override;
 
    virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
 

@@ -21,7 +21,7 @@ namespace simple_ui
 
    {
 
-      m_pstyle       = NULL;
+      m_puserstyle       = NULL;
 
    }
 
@@ -98,21 +98,21 @@ namespace simple_ui
    }
 
 
-   style * interaction::get_style()
-   {
+//   ::user::style * interaction::get_user_style()
+//   {
+//
+//      if (m_puserstyle != NULL)
+//         return m_puserstyle;
+//
+//      if (GetTypedParent < ::simple_ui::interaction >() == NULL)
+//         return NULL;
+//
+//      return GetTypedParent < ::simple_ui::interaction >()->get_style();
+//
+//   }
 
-      if (m_pstyle != NULL)
-         return m_pstyle;
 
-      if (GetTypedParent < ::simple_ui::interaction >() == NULL)
-         return NULL;
-
-      return GetTypedParent < ::simple_ui::interaction >()->get_style();
-
-   }
-
-
-   void interaction::simple_ui_draw_back_01_old(style::e_schema eschema, rect m_rect, ::draw2d::graphics * pgraphics)
+   void interaction::simple_ui_draw_back_01_old(rect m_rect, ::draw2d::graphics * pgraphics)
    {
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
@@ -138,21 +138,21 @@ namespace simple_ui
 
       }
 
-      int32_t iBorderH = MIN(height(&m_rect) / 2, 49);
+      int32_t iBorderH = MIN(m_rect.height() / 2, 49);
 
       ::draw2d::brush_sp br(allocer());
 
       br->CreateLinearGradientBrush(m_rect.top_left(), point(m_rect.left, m_rect.top + iBorderH), crOut, crIn);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.top, (int32_t)width(&m_rect), iBorderH), br);
+      pgraphics->FillRect(rect(m_rect.left, m_rect.top, (int32_t)m_rect.width(), iBorderH), br);
 
       br->create_solid(crIn);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.top + iBorderH, (int32_t)width(&m_rect), (int32_t)height(&m_rect) - (iBorderH * 2)), br);
+      pgraphics->FillRect(rect(m_rect.left, m_rect.top + iBorderH, (int32_t)m_rect.width(), (int32_t)m_rect.height() - (iBorderH * 2)), br);
 
       br->CreateLinearGradientBrush(point(m_rect.left, m_rect.bottom - iBorderH), m_rect.bottom_left(), crIn, crOut);
 
-      pgraphics->FillRect(rect(m_rect.left, m_rect.bottom - iBorderH, (int32_t)width(&m_rect), iBorderH), br);
+      pgraphics->FillRect(rect(m_rect.left, m_rect.bottom - iBorderH, (int32_t)m_rect.width(), iBorderH), br);
 
    }
 
@@ -227,7 +227,7 @@ namespace simple_ui
    void interaction::simple_ui_draw_focus_rect(::draw2d::graphics * pgraphics)
    {
       
-      Session.simple_ui_draw_focus_rect(this,pgraphics);
+      userstyle()->simple_ui_draw_focus_rect(this,pgraphics);
 
    }
 

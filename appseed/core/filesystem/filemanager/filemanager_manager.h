@@ -122,12 +122,12 @@ namespace filemanager
 
 
       virtual bool on_simple_action(id id);
-      virtual bool on_simple_update(cmd_ui * pcmdui);
+      virtual bool on_simple_update(command_ui * pcommandui);
 
       virtual bool on_new_document();
       virtual bool on_open_document(var varFile);
 
-      virtual bool HandleDefaultFileManagerItemCmdMsg(::aura::cmd_msg * pcmdmsg,::fs::item_array & itema);
+      virtual bool HandleDefaultFileManagerItemCmdMsg(::user::command * pcmdmsg,::fs::item_array & itema);
 
       void PopViews();
       void CreateViews();

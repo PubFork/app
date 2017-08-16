@@ -1,9 +1,8 @@
 #include "framework.h"
 #include "macos.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 #include "base/user/user/user.h"
 #include "base/user/user/user_user.h"
-#include "base/user/all.h"
 
 
 void DeactivateWindow(oswindow window);
@@ -36,7 +35,7 @@ namespace macos
 {
 
 
-   interaction_impl::interaction_impl() :
+   interaction_impl::interaction_impl():
       ::aura::timer_array(get_app())
    {
 
@@ -799,16 +798,7 @@ namespace macos
    bool interaction_impl::DestroyWindow()
    {
 
-      single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
-
-      if (get_handle() == NULL)
-         return false;
-
-      //      round_window_close();
-
-      bool bResult = ::user::interaction_impl::DestroyWindow();
-
-      return bResult;
+      return ::user::interaction_impl::DestroyWindow();
 
    }
 
@@ -1086,7 +1076,7 @@ namespace macos
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if (command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -2966,7 +2956,7 @@ namespace macos
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      cmd_ui state(get_app());
+      command_ui state(get_app());
       user::interaction wndTemp;       // very temporary user::interaction just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -3582,9 +3572,9 @@ namespace macos
 
    void interaction_impl::_001WindowRestore()
    {
-      m_pui->m_eappearance = user::AppearanceNormal;
+      m_pui->m_eappearance = user::appearance_normal;
       if (m_pui != NULL)
-         m_pui->m_eappearance = user::AppearanceNormal;
+         m_pui->m_eappearance = user::appearance_normal;
       //      ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
@@ -3612,7 +3602,7 @@ namespace macos
       ASSERT(::IsWindow(get_handle()));
       if (GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == user::AppearanceIconic;
+         return m_pui->m_eappearance == user::appearance_iconic;
       }
       else
       {
@@ -3623,7 +3613,7 @@ namespace macos
    bool interaction_impl::WfiIsZoomed()
    {
       ASSERT(::IsWindow(get_handle()));
-      return m_pui->m_eappearance == user::AppearanceZoomed;
+      return m_pui->m_eappearance == user::appearance_zoomed;
    }
 
 
@@ -5950,7 +5940,7 @@ namespace macos
       
       m_pui->m_eappearanceBefore = m_pui->m_eappearance;
       
-      m_pui->m_eappearance = ::user::AppearanceIconic;
+      m_pui->m_eappearance = ::user::appearance_iconic;
       
    }
    
@@ -5965,10 +5955,10 @@ namespace macos
          
       }
       
-      if(m_pui->m_eappearanceBefore == ::user::AppearanceIconic)
+      if(m_pui->m_eappearanceBefore == ::user::appearance_iconic)
       {
          
-         m_pui->m_eappearanceBefore = ::user::AppearanceNormal;
+         m_pui->m_eappearanceBefore = ::user::appearance_normal;
          
       }
    

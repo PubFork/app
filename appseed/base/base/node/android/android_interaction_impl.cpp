@@ -1213,7 +1213,7 @@ namespace android
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if(command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -3008,7 +3008,7 @@ void interaction_impl::UpdateDialogControls(command_target* pTarget, bool bDisab
 {
    UNREFERENCED_PARAMETER(pTarget);
    UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-   cmd_ui state(get_app());
+   command_ui state(get_app());
    //interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
                                    // walk all the kids - assume the IDs are for buttons
@@ -3624,7 +3624,7 @@ void interaction_impl::_001WindowMaximize()
 void interaction_impl::_001WindowRestore()
 {
    if (m_pui != NULL)
-      m_pui->m_eappearance = ::user::AppearanceNormal;
+      m_pui->m_eappearance = ::user::appearance_normal;
    ::ShowWindow((oswindow)get_handle(), SW_RESTORE);
 }
 
@@ -3647,7 +3647,7 @@ bool interaction_impl::WfiIsIconic()
    if (GetExStyle() & WS_EX_LAYERED)
    {
 
-      return m_pui->m_eappearance == ::user::AppearanceIconic;
+      return m_pui->m_eappearance == ::user::appearance_iconic;
 
    }
    else
@@ -3662,7 +3662,7 @@ bool interaction_impl::WfiIsIconic()
 bool interaction_impl::WfiIsZoomed()
 {
    ASSERT(::IsWindow((oswindow)get_handle()));
-   return m_pui->m_eappearance == ::user::AppearanceZoomed;
+   return m_pui->m_eappearance == ::user::appearance_zoomed;
 }
 
 

@@ -270,12 +270,12 @@ namespace user
       virtual bool NegotiateBorderSpace(UINT nBorderCmd, LPRECT lpRectBorder);
       virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
       void OnContextHelp();   // for Shift+F1 help
-      void OnUpdateControlBarMenu(cmd_ui* pCmdUI);
+      void OnUpdateControlBarMenu(command_ui* pCmdUI);
       bool OnBarCheck(UINT nID);
 
       virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
@@ -378,7 +378,7 @@ namespace user
       virtual bool get_window_minimum_size(::size & sizeMin);
 
 
-      virtual ::user::front_end_schema * get_user_front_end_schema();
+      virtual ::user::style * get_user_style();
 
 
    };

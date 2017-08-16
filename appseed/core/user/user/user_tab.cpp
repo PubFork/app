@@ -526,7 +526,7 @@ namespace user
       if(GetTopLevel()->frame_is_transparent())
          return;
 
-      if(m_puserschemaSchema == NULL)
+      if(m_puserstyle == NULL)
       {
 
          _001OnDrawStandard(pgraphics);
@@ -536,7 +536,7 @@ namespace user
       }
       
 
-      if (!m_puserschemaSchema->_001TabOnDrawSchema01(pgraphics, this))
+      if (!m_puserstyle->_001TabOnDrawSchema01(pgraphics, this))
       {
 
          _001OnDrawSchema01(pgraphics);
@@ -1083,24 +1083,24 @@ else
 
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevelFrame();
+         m_puserstyle = GetTopLevelFrame();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
-      if(m_puserschemaSchema != NULL)
+      if(m_puserstyle != NULL)
       {
 
-         if (m_puserschemaSchema->_001OnTabLayout(this))
+         if (m_puserstyle->_001OnTabLayout(this))
          {
 
             return;
@@ -1779,7 +1779,7 @@ else
 
       get_data()->m_fontUnderline->create_point_font(FONT_SANS, 10, FW_NORMAL, false, true);
 
-      //m_puserschemaSchema = Application.userschema();
+      //m_puserstyle = Application.userstyle();
    //  m_pimagelist = new image_list(get_app());
 
       get_data()->m_bCreated = true;

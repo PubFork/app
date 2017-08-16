@@ -252,7 +252,7 @@ namespace console
 
    void prompt_impact::simple_ui_draw_focus_rect(::draw2d::graphics * pgraphics)
    {
-      //if(GetTypedParent <prompt_frame>()->get_appearance() != ::user::AppearanceMinimal)
+      //if(GetTypedParent <prompt_frame>()->get_appearance() != ::user::appearance_minimal)
       {
          ::user::impact::simple_ui_draw_focus_rect(pgraphics);
       }

@@ -390,7 +390,7 @@ string get_system_error_message(uint32_t dwError)
 //void output_debug_string(const char * psz)
 //{
 //   
-//   ::OutputDebugString(wstring(psz));
+//   ::output_debug_string(wstring(psz));
 //
 //}
 

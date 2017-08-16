@@ -208,8 +208,8 @@ namespace fontopus
 
       }
 
-      rectFontopus.left = rectDesktop.left + (width(rectDesktop) - w) / 2;
-      rectFontopus.top = rectDesktop.top + (height(rectDesktop) - h) / 3;
+      rectFontopus.left = rectDesktop.left + (rectDesktop.width() - w) / 2;
+      rectFontopus.top = rectDesktop.top + (rectDesktop.height() - h) / 3;
       rectFontopus.right = rectFontopus.left + w;
       rectFontopus.bottom = rectFontopus.top + h;
 

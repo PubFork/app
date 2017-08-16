@@ -66,7 +66,7 @@ namespace metrowin
 
       virtual oswindow _get_handle();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 

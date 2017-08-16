@@ -1,11 +1,11 @@
 #include "framework.h"
 
 
-namespace aura
+namespace user
 {
 
 
-   cmd_msg::cmd_msg()
+   command::command()
    {
 
       m_pcommandtargetSource        = NULL;
@@ -14,7 +14,7 @@ namespace aura
    }
 
 
-   cmd_msg::cmd_msg(id id)
+   command::command(id id)
    {
 
       m_pcommandtargetSource        = NULL;
@@ -24,24 +24,29 @@ namespace aura
    }
 
 
-   cmd_msg::cmd_msg(::command_ui * pcommandui)
+   command::command(::command_ui * pcommandui)
    {
 
       m_pcommandtargetSource        = NULL;
-      m_etype                       = type_cmdui;
-      m_pcmdui                      = pcommandui;
+      m_etype                       = type_command_ui;
+      m_pcommandui                      = pcommandui;
 
    }
 
 
-   bool cmd_msg::handle(::command_target * pcommandtarget)
+   bool command::handle(::command_target * pcommandtarget)
    {
+      
       return m_commandtargetptraHandle.add_unique(pcommandtarget);
+      
    }
+   
 
-   bool cmd_msg::is_handled(::command_target * pcommandtarget)
+   bool command::is_handled(::command_target * pcommandtarget)
    {
+      
       return m_commandtargetptraHandle.contains(pcommandtarget);
+      
    }
 
 

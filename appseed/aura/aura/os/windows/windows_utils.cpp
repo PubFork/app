@@ -88,7 +88,7 @@ HANDLE ExtractAndInstallDrv()
         HMODULE hModule = GetModuleHandle(_T("core.dll"));
         if( !hModule )
         {
-            OutputDebugStringW( L"GetModuleHandle(_T(\"core.dll\")); failed" );
+            output_debug_string( L"GetModuleHandle(_T(\"core.dll\")); failed" );
             return 0;
         }
         string csFilePath;
@@ -119,7 +119,7 @@ HANDLE ExtractAndInstallDrv()
 		
 		if( 0 == hService )
 		{
-            OutputDebugStringW( L"CreateService failed");
+            output_debug_string( L"CreateService failed");
 			CloseServiceHandle(hSCManager);
 			return 0;
 		}
@@ -134,7 +134,7 @@ HANDLE ExtractAndInstallDrv()
 			CloseServiceHandle(hService);
 			CloseServiceHandle(hSCManager);			
 			//DeleteFile( csPath );
-            OutputDebugStringW( L"StartService failed");
+            output_debug_string( L"StartService failed");
 			return 0;
 		}
 		

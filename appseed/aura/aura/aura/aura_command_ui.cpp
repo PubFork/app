@@ -1,29 +1,27 @@
 #include "framework.h"
 
 
-namespace aura
+command_ui::command_ui(::aura::application * papp) :
+   ::signal_details(papp)
+{
+   
+      m_iIndex                      = 0;
+      m_iCount                      = 0;
+      m_pMenu                       = NULL;
+      m_pSubMenu                    = NULL;
+      m_pParentMenu                 = NULL;
+      m_pOther                      = NULL;
+      m_bEnableChanged              = FALSE;
+      m_bContinueRouting            = FALSE;
+      m_bEnableIfHasCommandHandler  = true;
+   
+}
+
+command_ui::command_ui(class ::signal * psignal):
+   signal_details(psignal)
 {
 
-
-   cmd_ui::cmd_ui(class ::signal * psignal):
-      signal_details(psignal)
-   {
-
-   }
-
-
-} // namespace aura
-
-
-
-
-
-
-
-cmd_ui::cmd_ui(::aura::application * papp):
-object(papp)
-{
-
+   
    m_iIndex                      = 0;
    m_iCount                      = 0;
    m_pMenu                       = NULL;
@@ -33,11 +31,21 @@ object(papp)
    m_bEnableChanged              = FALSE;
    m_bContinueRouting            = FALSE;
    m_bEnableIfHasCommandHandler  = true;
+   
+}
+
+
+
+void command_ui::reset(class ::signal * psignal)
+{
+
+   ::signal_details::reset(psignal);
 
 }
 
-// default cmd_ui implementation only works for Menu Items
-void cmd_ui::Enable(bool bOn,::action::context actioncontext)
+
+// default command_ui implementation only works for Menu Items
+void command_ui::Enable(bool bOn,::action::context actioncontext)
 {
 
    if(m_pMenu != NULL)
@@ -63,7 +71,7 @@ void cmd_ui::Enable(bool bOn,::action::context actioncontext)
 
 }
 
-void cmd_ui::_001SetCheck(bool bCheck,::action::context actioncontext)
+void command_ui::_001SetCheck(bool bCheck,::action::context actioncontext)
 {
 
    _001SetCheck((check::e_check) (bCheck ? check::checked : check::unchecked),actioncontext);
@@ -71,7 +79,7 @@ void cmd_ui::_001SetCheck(bool bCheck,::action::context actioncontext)
 }
 
 
-void cmd_ui::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
+void command_ui::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
 {
 
    if(m_pMenu != NULL)
@@ -101,7 +109,7 @@ void cmd_ui::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
 
 __STATIC void __load_dot_bitmap(); // for swap tuning
 
-void cmd_ui::SetRadio(bool bOn,::action::context actioncontext)
+void command_ui::SetRadio(bool bOn,::action::context actioncontext)
 {
    _001SetCheck(bOn != FALSE,actioncontext); // this default works for most things as well
    if(m_pMenu != NULL)
@@ -118,7 +126,7 @@ void cmd_ui::SetRadio(bool bOn,::action::context actioncontext)
    }
 }
 
-void cmd_ui::SetText(const char * lpszText,::action::context actioncontext)
+void command_ui::SetText(const char * lpszText,::action::context actioncontext)
 {
    ENSURE_ARG(lpszText != NULL);
    ASSERT(__is_valid_string(lpszText));
@@ -129,7 +137,7 @@ void cmd_ui::SetText(const char * lpszText,::action::context actioncontext)
    }
 }
 
-bool cmd_ui::DoUpdate(command_target* pTarget,bool bDisableIfNoHndler)
+bool command_ui::DoUpdate(command_target* pTarget,bool bDisableIfNoHndler)
 {
    if(m_id.is_empty())
       return TRUE;     // ignore invalid IDs

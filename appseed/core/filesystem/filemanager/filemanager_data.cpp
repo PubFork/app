@@ -170,7 +170,7 @@ namespace filemanager
    }
 
 
-   void data::OnFileManagerItemUpdate(cmd_ui * pcmdui, const ::fs::item_array & itema)
+   void data::OnFileManagerItemUpdate(command_ui * pcommandui, const ::fs::item_array & itema)
    {
 
       ASSERT(m_pcallback != NULL);
@@ -178,7 +178,7 @@ namespace filemanager
       if(m_pcallback != NULL)
       {
 
-         m_pcallback->OnFileManagerItemUpdate(this, pcmdui, itema);
+         m_pcallback->OnFileManagerItemUpdate(this, pcommandui, itema);
 
       }
 
@@ -337,7 +337,7 @@ namespace filemanager
       else
       {
 
-         return ::user::schema::get_color(cr,ecolor);
+         return ::user::style::get_color(cr,ecolor);
 
       }
 
@@ -357,19 +357,19 @@ namespace filemanager
    }
 
 
-   bool data::get_translucency(::user::ETranslucency & etranslucency)
+   bool data::get_translucency(::user::e_translucency & etranslucency)
    {
 
       if(m_bTransparentBackground)
       {
 
-         etranslucency = ::user::TranslucencyPresent;
+         etranslucency = ::user::translucency_present;
 
       }
       else
       {
 
-         etranslucency = ::user::TranslucencyNone;
+         etranslucency = ::user::translucency_none;
 
       }
 

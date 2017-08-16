@@ -1001,7 +1001,7 @@ namespace user
    }
 
 
-   bool frame_window::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool frame_window::_001OnCmdMsg(::user::command * pcmdmsg)
    {
 
       if(::user::interaction::_001OnCmdMsg(pcmdmsg))
@@ -1935,13 +1935,13 @@ namespace user
 
 
 
-   void frame_window::OnUpdateControlBarMenu(cmd_ui * pcmdui)
+   void frame_window::OnUpdateControlBarMenu(command_ui * pcommandui)
    {
       /*      ASSERT(ID_VIEW_STATUS_BAR == "status_bar");
       ASSERT(ID_VIEW_TOOLBAR == __IDW_TOOLBAR);
       ASSERT(ID_VIEW_REBAR == __IDW_REBAR);*/
 
-      pcmdui->ContinueRouting();
+      pcommandui->ContinueRouting();
    }
 
    bool frame_window::OnBarCheck(UINT nID)
@@ -2137,7 +2137,7 @@ namespace user
    bool frame_window::get_window_minimum_size(::size & sizeMin)
    {
 
-      if(get_appearance() == ::user::AppearanceMinimal)
+      if(get_appearance() == ::user::appearance_minimal)
       {
 
          sizeMin.cx = 8;
@@ -2157,7 +2157,7 @@ namespace user
    }
 
    
-   ::user::front_end_schema * frame_window::get_user_front_end_schema()
+   ::user::style * frame_window::get_user_style()
    {
 
       return NULL;

@@ -40,7 +40,7 @@ namespace filemanager
                            str.Format("file_list(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
                            if(get_filemanager_data()->m_bTransparentBackground)
                            {
-                           ::user::list::m_etranslucency = ::user::list::TranslucencyPresent;
+                           ::user::list::m_etranslucency = ::user::list::translucency_present;
                            }
                            DISetSection(str);
                            _001UpdateColumns();*/
