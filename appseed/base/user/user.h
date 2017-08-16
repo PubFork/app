@@ -14,32 +14,64 @@
 namespace user
 {
 
-
-
-
-
    class interaction;
    class create_struct;
    class control_event;
 
-   class menu_base_item;
+   class menu_item;
+   class menu_item_ptra;
    class menu;
-   class menu_base;
-
-   class schema;
+   
    class tree;
    class plain_text_group_command;
-
 
    class tooltip;
 
 
+      class control_event;
+      class create_context;
+      class printer;
+      class user;
+      class frame_window;
+      
+      //   class form_interface;
+      class form_list;
+      class form_callback;
+      class form_view;
 
+      
+      class interaction;
+      class interaction_impl;
+      class view_creator_data;
+      class tree;
+      class str_context;
+      class schema_simple_impl;
+      class window_draw;
+      class str;
+      
+
+      
+      class interaction;
+      class control_event;
+      class create_context;
+      class user;
+      class frame_window;
+      
+      //   class form_interface;
+      class form_list;
+      class form_callback;
+      
+      
+      
+      class interaction;
+         class interaction_impl;
+         class frame_window;
+         class create_struct;
+         
+         
+} // namespace user
    
 
-} // namespace user
-
-
 namespace simple_ui
 {
 
@@ -48,82 +80,9 @@ namespace simple_ui
    class password;
    class tap;
 
-}
-
-
-
-
-namespace user
-{
-
-   class control_event;
-   class create_context;
-   class printer;
-   class user;
-   class frame_window;
-
-   //   class form_interface;
-   class form_list;
-   class form_callback;
-   class form_view;
-
-
-} // namespace user
-
-namespace user
-{
-
-   class interaction;
-   class interaction_impl;
-   class view_creator_data;
-   class schema;
-   class tree;
-   class str_context;
-   class schema_simple_impl;
-   class window_draw;
-   class str;
 
 }
 
-
-namespace user
-{
-
-   class interaction;
-   class control_event;
-   class create_context;
-   class user;
-   class frame_window;
-
-   //   class form_interface;
-   class form_list;
-   class form_callback;
-
-
-} // namespace user
-
-
-namespace simple_ui
-{
-
-   class label;
-   class edit_box;
-   class password;
-   class tap;
-
-}
-
-namespace user
-{
-
-
-   class interaction;
-   class interaction_impl;
-   class frame_window;
-   class create_struct;
-
-
-} // namespace user
 
 
 typedef sp(::user::interaction_impl) window_sp;
@@ -261,8 +220,6 @@ namespace user
 
 
 
-using user_interaction = ::user::interaction;
-
 
 #include "base/user/user/user_message_queue_listener.h"
 
@@ -270,8 +227,8 @@ using user_interaction = ::user::interaction;
 //#include "user/user/user_mouse_focus.h"
 //#include "base/user/user/user_elemental.h"
 //#include "user/user/user_check_interface.h"
-#include "base/user/user/user_schema_simple_impl.h"
-#include "base/user/user/user_schema_layered_frame.h"
+//#include "base/user/user/user_schema_simple_impl.h"
+//#include "base/user/user/user_schema_layered_frame.h"
 //#include "user/user/user_text_interface.h"
 //#include "user/user/user_draw_interface.h"
 #include "base/user/user/user_window_util.h"

@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CTestCmdUI - used to test for disabled commands before dispatching
 
-class CTestCmdUI: public cmd_ui
+class test_command_ui: public command_ui
 {
 public:
 

@@ -17,7 +17,8 @@ namespace user
    public:
 
 
-      sp(menu_base_item)      m_pitem;
+      menu *                     m_pmenuParent;
+      sp(menu_base_item)         m_pitem;
 
 
       menu_base();

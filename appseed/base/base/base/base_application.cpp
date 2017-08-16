@@ -1,6 +1,5 @@
 #include "framework.h" // from "axis/user/user.h"
-#include "base/user/core_user.h"
-#include "base/user/common_user.h"
+#include "base/user/user.h"
 #include "base/os/windows/windows_system_interaction_impl.h"
 
 
@@ -488,7 +487,7 @@ namespace base
 
 #endif
 
-      pmessage->m_pui               = (::user::interaction *) pui->m_pvoidUserInteraction;
+      pmessage->m_pui               = pui->m_puiThis;
       pmessage->m_uiMessage         = message;
       pmessage->m_wparam            = wparam;
       pmessage->m_lparam            = lparam;
@@ -502,21 +501,22 @@ namespace base
    bool application::is_window(::user::primitive * pui)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->IsWindow();
+      return pui->m_puiThis->IsWindow();
 
    }
 
    LRESULT application::send_message(::user::primitive * pui,UINT message,WPARAM wparam,lparam lparam)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->send_message(message,wparam,lparam);
+      return pui->m_puiThis->send_message(message,wparam,lparam);
 
    }
+   
 
    oswindow application::get_safe_handle(::user::primitive * pui)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->get_safe_handle();
+      return pui->m_puiThis->get_safe_handle();
 
    }
 
@@ -552,16 +552,16 @@ namespace base
       if(!bEnable)
       {
 
-         if(Session.get_focus_ui() == ((::user::interaction *)pui->m_pvoidUserInteraction))
+         if(Session.get_focus_ui() == pui->m_puiThis)
          {
 
-            Application.send_message(Application.get_parent(((::user::interaction *)pui->m_pvoidUserInteraction)),WM_NEXTDLGCTL,0,(LPARAM)FALSE);
+            Application.send_message(pui->m_puiThis->GetParent(), WM_NEXTDLGCTL, 0, (LPARAM)FALSE);
 
          }
 
       }
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->enable_window(bEnable);
+      return pui->m_puiThis->enable_window(bEnable);
 
    }
 
@@ -684,7 +684,7 @@ namespace base
       try
       {
 
-         ((::user::interaction *)pbase->m_pwnd->m_pvoidUserInteraction)->message_handler(pobj);
+         pbase->m_pwnd->m_puiThis->message_handler(pobj);
 
 
       }
@@ -735,7 +735,7 @@ run:
       if(m_puiMain == NULL)
          return NULL;
 
-      return (::user::interaction *) m_puiMain->m_pvoidUserInteraction;
+      return m_puiMain->m_puiThis;
 
    }
 
@@ -792,18 +792,35 @@ run:
 
    }
 
-   ::user::schema * application::userschema()
+   ::user::style * application::userstyle()
    {
 
-      if (m_pbasesession->m_puserschemaSchema == NULL)
+      if (m_pbasesession->m_puserstyle == NULL)
       {
 
          m_pbasesession->defer_create_user_schema(preferred_userschema());
 
       }
 
-      return m_pbasesession->m_puserschemaSchema;
+      return m_pbasesession->m_puserstyle;
 
+   }
+
+   
+   ::user::style * application::userstyle(::user::e_style estyle)
+   {
+      
+      ::user::style * puserstyle = userstyle();
+      
+      if(puserstyle == NULL)
+      {
+       
+         return NULL;
+         
+      }
+      
+      return puserstyle->operator[](estyle);
+      
    }
 
 
@@ -983,6 +1000,14 @@ run:
 
    }
 
+   
+   ::user::interaction * application::create_menu_interaction()
+   {
+      
+      return canew(::user::button);
+      
+   }
+   
 
 } // namespace base
 

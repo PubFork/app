@@ -122,14 +122,14 @@ namespace user
    bool interaction_child::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction *  pparent,id id, ::create * pcreate)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
 
-      m_bCreate = true;
+      //m_bCreate = true;
 
       m_pui = pui;
 
@@ -166,12 +166,12 @@ namespace user
 
       m_pui->pre_create_window(cs);
 
-      if (!m_pui->m_bCreated)
-      {
+      //if (!m_pui->m_bCreated)
+      //{
 
          m_pui->send_message(WM_CREATE, 0, (lparam)(LPARAM)&cs);
 
-      }
+      //}
 
       ::rect rectChild(rect);
 

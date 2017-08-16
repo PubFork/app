@@ -5,151 +5,355 @@ namespace user
 {
 
 
-   schema::schema()
+   style::style(::aura::application * papp) :
+   ::object(papp)
    {
 
       m_plibrary = NULL;
-      m_puserschemaSchema = NULL;
+      m_etranslucency      = TranslucencyUndefined;
 
    }
 
 
-   schema::~schema()
+   style::~style()
    {
       
       ::aura::del(m_plibrary);
 
    }
+   
+   void style::initialize_style_menu()
+   {
+      
+      style & style = *this;
+      
+      style.m_pfont->create_point_font(FONT_SANS,9.0);
+      
+      style[style_menu_button] = operator[](style_menu_button);
+      style[style_menu_close] = operator[](style_menu_close);
+      style[style_menu_popup] = operator[](style_menu_popup);
+      style[style_system_menu_button] = operator[](style_system_menu_button);
+      style[style_system_menu_close] = operator[](style_system_menu_close);
+      style[style_system_menu_popup] = operator[](style_system_menu_popup);
+      
+      style.m_iElementPadding = 3;
+      style.m_rectItemMargin.left = 4;
+      style.m_rectItemMargin.top = 4;
+      style.m_rectItemMargin.right = 4;
+      style.m_rectItemMargin.bottom = 4;
 
+   }
 
-   bool schema::get_color(COLORREF & cr, e_color ecolor)
+   void style::initialize_style_button()
+   {
+      
+      color color;
+      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
+      
+
+      m_pfont.alloc(allocer());
+      m_pfont->create_point_font(FONT_SANS,11.0);
+      set_color(color_text_normal,ARGB(255,0,0,0));
+      set_color(color_text_press,color | (0xff << 24));
+      set_color(color_text_disabled,ARGB(255,127,127,127));
+      set_color(color_text_hover,color | (0xff << 24));
+      set_color(color_background_normal,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
+      set_color(color_background_press,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
+      set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
+      set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
+      m_bBorder      = true;
+      m_etranslucency = ::user::TranslucencyNone;
+
+   }
+
+   void style::initialize_style_menu_button()
+   {
+      
+      color color;
+      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
+      
+
+      m_pfont.alloc(allocer());
+      m_pfont->create_point_font(FONT_SANS, 12.0);
+      set_color(color_text_normal,ARGB(184,0,0,0));
+      set_color(color_text_press,color | (184 << 24));
+      set_color(color_text_disabled,ARGB(184,127,127,127));
+      set_color(color_text_hover,color | (184 << 24));
+      set_color(color_background_normal,ARGB(84, 180, 192, 255));
+      set_color(color_background_press,ARGB(184,180,192,255));
+      set_color(color_background_disabled,ARGB(84,180,192,255));
+      set_color(color_background_hover,ARGB(127,180,192,255));
+      m_bBorder      = false;
+      m_etranslucency = ::user::TranslucencyPresent;
+      
+      
+   }
+   
+   
+   void style::initialize_style_menu_popup()
+   {
+      
+      
+      color color;
+      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
+      
+
+      m_pfont.alloc(allocer());
+      m_pfont->create_point_font(FONT_SANS, 9.0, FW_BOLD);
+      set_color(color_text_normal,ARGB(184,0,0,0));
+      set_color(color_text_press,color | (184 << 24));
+      set_color(color_text_disabled,ARGB(184,127,127,127));
+      set_color(color_text_hover,color | (184 << 24));
+      set_color(color_background_normal, Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
+      set_color(color_background_press,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
+      set_color(color_background_disabled,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
+      set_color(color_background_hover,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
+      m_bBorder      = false;
+      m_etranslucency = ::user::TranslucencyPresent;
+      
+      
+   }
+   void style::initialize_style_system_menu_button()
+   {
+      
+      color color;
+      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
+      
+
+      m_pfont.alloc(allocer());
+      m_pfont->create_point_font("Marlett", 11.0);
+      set_color(color_text_normal,ARGB(184,0,0,0));
+      set_color(color_text_press,color | (184 << 24));
+      set_color(color_text_disabled,ARGB(184,127,127,127));
+      set_color(color_text_hover,color | (184 << 24));
+      set_color(color_background_normal,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
+      set_color(color_background_press,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
+      set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
+      set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
+      m_bBorder      = false;
+      m_etranslucency = ::user::TranslucencyPresent;
+  
+   }
+   
+   
+   void style::initialize_style_system_menu_close()
+   {
+      
+      m_pfont.alloc(allocer());
+      m_pfont->create_point_font("Marlett",11.0);
+      set_color(color_text_normal,ARGB(184,184,84,77));
+      set_color(color_text_press,ARGB(223,255,0,0));
+      set_color(color_text_disabled,ARGB(184,127,127,127));
+      set_color(color_text_hover,ARGB(184,255,49,49));
+      set_color(color_background_normal,ARGB(184,208,192,192));
+      set_color(color_background_press,ARGB(223,255,192,192));
+      set_color(color_background_disabled,ARGB(184,192,192,192));
+      set_color(color_background_hover,ARGB(184,223,192,192));
+      m_bBorder      = false;
+      m_etranslucency = ::user::TranslucencyPresent;
+    
+   }
+   
+   
+   void style::initialize_style_system_menu_popup()
+   {
+      
+      initialize_style_system_menu_button();
+      
+   }
+
+   
+   void style::initialize_style()
    {
 
-      if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
+      style & style = *this;
+      
+      style[style_menu].alloc(allocer());
+      style[style_button].alloc(allocer());
+      style[style_menu_button].alloc(allocer());
+      style[style_menu_popup].alloc(allocer());
+      style[style_system_menu_button].alloc(allocer());
+      style[style_system_menu_popup].alloc(allocer());
+
+      style[style_menu]->initialize_style_menu();
+      style[style_button]->initialize_style_button();
+      style[style_menu_button]->initialize_style_menu_button();
+      style[style_menu_popup]->initialize_style_menu_popup();
+      style[style_system_menu_button]->initialize_style_system_menu_button();
+      style[style_system_menu_popup]->initialize_style_system_menu_popup();
+
+      
+      color color;
+      color.set_rgb(Session.get_default_color(COLOR_HIGHLIGHT));
+      
+      class color colorHover(color);
+      colorHover.hls_rate(0.0, 0.3, 0.0);
+      
+      class color colorPress(color);
+      colorPress.hls_rate(0.0, 0.7, 0.0);
+
+      
+      
+      
+      
+      
+         m_crTextNormal = ARGB(255, 0, 0, 0);
+         
+      }
+      
+   
+      void style::DrawCheck(check::e_check echeck, const RECT & rect, ::draw2d::graphics * pgraphics)
       {
+         
+         
+         
+         if(echeck == check::checked)
+         {
+            point_array pta;
+            
+            pta.add(point(2, 10));
+            pta.add(point(6, 14));
+            pta.add(point(14, 6));
+            pta.add(point(14, 2));
+            pta.add(point(6, 12));
+            pta.add(point(2, 8));
+            
+            pta.offset(rect.left, rect.top);
+            
+            pgraphics->Polygon(pta);
+            
+         }
+      
+      
+   }
 
-         if (m_puserschemaSchema->get_color(cr, ecolor))
-            return true;
 
+   bool style::get_color(COLORREF & cr, e_color ecolor)
+   {
+
+      if (m_mapColor.Lookup(ecolor, cr))
+      {
+         
+         return true;
+         
       }
 
-      if (get_parent_user_schema() != NULL)
+      return false;
+
+   }
+   
+
+   bool style::get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui)
+   {
+
+      if(m_pfont.is_set())
       {
-
-         if (get_parent_user_schema()->get_color(cr, ecolor))
-            return true;
-
+      
+         spfont = m_pfont;
+         
+         return true;
+         
       }
-
-      if (m_pauraapp != NULL && this != m_pauraapp->m_pbasesession &&m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession != m_puserschemaSchema && m_pauraapp->m_pbasesession->m_puserschemasimple != m_puserschemaSchema)
-      {
-
-         if (m_pauraapp->m_pbasesession->get_color(cr, ecolor))
-            return true;
-
-      }
-
-      throw invalid_argument_exception(get_app());
 
       return false;
 
    }
 
-   bool schema::get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui)
+
+   bool style::select_text_color(::draw2d::graphics * pgraphics,e_color ecolor)
+   {
+   
+      COLORREF cr;
+      
+      if(!get_color(cr, ecolor))
+      {
+       
+         return false;
+         
+      }
+      
+      pgraphics->set_text_color(cr);
+      
+      return true;
+      
+   }
+   
+   
+   bool style::select_solid_brush(::draw2d::graphics * pgraphics,e_color ecolor)
+   {
+      
+      COLORREF cr;
+      
+      if(!get_color(cr, ecolor))
+      {
+         
+         return false;
+         
+      }
+      
+      ::draw2d::brush_sp brush(allocer());
+      
+      brush->create_solid(cr);
+      
+      pgraphics->SelectObject(brush);
+      
+      return true;
+      
+   }
+   
+   
+   bool style::select_font(::draw2d::graphics * pgraphics, e_font efont, ::user::interaction * pui)
+   {
+      
+      ::draw2d::font_sp font;
+      
+      if(!get_font(font, efont, pui))
+      {
+       
+         font.alloc(allocer());
+            
+         if (!font->create_point_font(FONT_SANS, 12.0))
+         {
+               
+            return false;
+               
+         }
+
+      }
+      
+      pgraphics->select_font(font);
+      
+      return true;
+      
+   }
+   
+
+   bool style::get_translucency(ETranslucency & etranslucency)
    {
 
-      if (get_parent_user_schema() != NULL)
+      if(m_etranslucency != TranslucencyUndefined)
       {
-
-         if (get_parent_user_schema()->get_font(spfont, efont, pui))
-            return true;
-
+      
+         etranslucency = m_etranslucency;
+      
+         return true;
+         
       }
-
-      if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
-      {
-
-         if (m_puserschemaSchema->get_font(spfont, efont, pui))
-            return true;
-
-      }
-
-      if (m_pauraapp != NULL && this != m_pauraapp->m_pbasesession && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession != m_puserschemaSchema && m_pauraapp->m_pbasesession->m_puserschemasimple != m_puserschemaSchema)
-      {
-
-         if (m_pauraapp->m_pbasesession->get_font(spfont, efont, pui))
-            return true;
-
-      }
-
+      
       return false;
 
    }
 
 
-   bool schema::get_translucency(ETranslucency & etranslucency)
+   bool style::on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui)
    {
 
-      if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
-      {
-
-         if (m_puserschemaSchema->get_translucency(etranslucency))
-            return true;
-
-      }
-
-      if (get_parent_user_schema() != NULL)
-      {
-
-         if (get_parent_user_schema()->get_translucency(etranslucency))
-            return true;
-
-      }
-
-      if (m_pauraapp != NULL && this != m_pauraapp->m_pbasesession && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession != m_puserschemaSchema && m_pauraapp->m_pbasesession->m_puserschemasimple != m_puserschemaSchema)
-      {
-
-         if (m_pauraapp->m_pbasesession->get_translucency(etranslucency))
-            return true;
-
-      }
-
       return false;
-
+      
    }
+   
 
-
-   bool schema::on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui)
-   {
-
-      if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
-      {
-
-         if (m_puserschemaSchema->on_ui_event(eevent, eobject, pui))
-            return true;
-
-      }
-
-      if (get_parent_user_schema() != NULL)
-      {
-
-         if (get_parent_user_schema()->on_ui_event(eevent, eobject, pui))
-            return true;
-
-      }
-
-      if (m_pauraapp != NULL && this != m_pauraapp->m_pbasesession && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession != m_puserschemaSchema && m_pauraapp->m_pbasesession->m_puserschemasimple != m_puserschemaSchema)
-      {
-
-         if (m_pauraapp->m_pbasesession->on_ui_event(eevent, eobject, pui))
-            return true;
-
-      }
-
-      return false;
-   }
-
-   COLORREF schema::_001GetColor(e_color ecolor, COLORREF crDefault)
+   COLORREF style::_001GetColor(e_color ecolor, COLORREF crDefault)
    {
 
       COLORREF cr;
@@ -161,7 +365,7 @@ namespace user
 
    }
 
-   COLORREF schema::_001GetColor(e_color ecolor)
+   COLORREF style::_001GetColor(e_color ecolor)
    {
 
       COLORREF cr;
@@ -452,7 +656,7 @@ namespace user
    }
 
 
-   ETranslucency schema::_001GetTranslucency(ETranslucency etranslucencyDefault)
+   ETranslucency style::_001GetTranslucency(ETranslucency etranslucencyDefault)
    {
 
       ETranslucency etranslucency = TranslucencyUndefined;
@@ -475,7 +679,7 @@ namespace user
 
 
 
-   bool schema::_001IsTranslucent()
+   bool style::_001IsTranslucent()
    {
 
       ETranslucency etranslucency = _001GetTranslucency();
@@ -485,7 +689,7 @@ namespace user
    }
 
 
-   bool schema::_001IsBackgroundBypass()
+   bool style::_001IsBackgroundBypass()
    {
 
       return _001GetTranslucency() == TranslucencyTotal;
@@ -493,7 +697,7 @@ namespace user
    }
 
 
-   bool schema::_001HasTranslucency()
+   bool style::_001HasTranslucency()
    {
 
       ETranslucency etranslucency = _001GetTranslucency();
@@ -503,7 +707,7 @@ namespace user
    }
 
 
-   bool schema::_001IsTransparent()
+   bool style::_001IsTransparent()
    {
 
       return _001GetTranslucency() == TranslucencyTotal;
@@ -511,35 +715,12 @@ namespace user
    }
 
 
-   ::user::schema * schema::get_user_schema()
-   {
-
-      if (m_puserschemaSchema != NULL)
-      {
-
-         return m_puserschemaSchema;
-
-      }
-
-      return get_parent_user_schema();
-
-   }
-
-
-   ::user::schema * schema::get_parent_user_schema()
-   {
-
-      return NULL;
-
-   }
-
-
-   bool schema::select_layered_frame()
+  
+   bool style::select_layered_frame()
    {
 
 
-
-      m_puserschemaSchema = System.m_pschemaLayeredFrame;
+      m_etranslucency = TranslucencyPresent;
 
       return true;
 
@@ -547,56 +728,56 @@ namespace user
 
 
 
-   bool schema::select_text_color(::draw2d::graphics * pgraphics, e_color ecolor)
+//   bool style::select_text_color(::draw2d::graphics * pgraphics, e_color ecolor)
+//   {
+//
+//      COLORREF crText;
+//
+//      if (!get_color(crText, ecolor))
+//         return false;
+//
+//      return pgraphics->set_text_color(crText);
+//
+//   }
+
+
+//   bool style::select_font(::draw2d::graphics * pgraphics, e_font efont, ::user::interaction * pui)
+//   {
+//
+//      ::draw2d::font_sp spfont;
+//
+//      if (!get_font(spfont, efont, pui))
+//      {
+//
+//         spfont.alloc(allocer());
+//
+//         if (!spfont->create_point_font(FONT_SANS, 12.0))
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//
+//      if (spfont.is_null())
+//         return false;
+//
+//      return pgraphics->set_font(spfont);
+//
+//   }
+
+
+   bool style::simple_ui_draw_focus_rect(::user::interaction * pui, ::draw2d::graphics * pgraphics)
    {
-
-      COLORREF crText;
-
-      if (!get_color(crText, ecolor))
-         return false;
-
-      return pgraphics->set_text_color(crText);
-
-   }
-
-
-   bool schema::select_font(::draw2d::graphics * pgraphics, e_font efont, ::user::interaction * pui)
-   {
-
-      ::draw2d::font_sp spfont;
-
-      if (!get_font(spfont, efont, pui))
-      {
-
-         spfont.alloc(allocer());
-
-         if (!spfont->create_point_font(FONT_SANS, 12.0))
-         {
-
-            return false;
-
-         }
-
-      }
-
-      if (spfont.is_null())
-         return false;
-
-      return pgraphics->set_font(spfont);
-
-   }
-
-
-   bool schema::simple_ui_draw_focus_rect(::user::interaction * pui, ::draw2d::graphics * pgraphics)
-   {
-
-      if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
-      {
-
-         if (m_puserschemaSchema->simple_ui_draw_focus_rect(pui, pgraphics))
-            return true;
-
-      }
+//
+//      if (m_puserstyle != NULL && m_puserstyle != this)
+//      {
+//
+//         if (m_puserstyle->simple_ui_draw_focus_rect(pui, pgraphics))
+//            return true;
+//
+//      }
 
 
 
@@ -852,7 +1033,7 @@ namespace user
    }
 
 
-   bool schema::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics, tab * ptab)
+   bool style::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics, tab * ptab)
    {
 
       return false;
@@ -860,20 +1041,20 @@ namespace user
    }
 
 
-   void schema::_001OnTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
+   void style::_001OnTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      if (Session.userschema() != this)
+      if (Session.userstyle() != this)
       {
 
-         Session.userschema()->_001OnTabPaneDrawTitle(pane, ptab, pgraphics, lpcrect, brushText);
+         Session.userstyle()->_001OnTabPaneDrawTitle(pane, ptab, pgraphics, lpcrect, brushText);
 
       }
 
    }
 
 
-   bool schema::_001OnTabLayout(::user::tab * ptab)
+   bool style::_001OnTabLayout(::user::tab * ptab)
    {
 
       return false;
@@ -881,7 +1062,7 @@ namespace user
    }
 
 
-   bool schema::_001GetMainFrameTranslucency(::user::ETranslucency & etranslucency)
+   bool style::_001GetMainFrameTranslucency(::user::ETranslucency & etranslucency)
    {
 
       return false;
@@ -889,7 +1070,7 @@ namespace user
    }
 
 
-   bool schema::_001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics, ::user::frame_window * pframe)
+   bool style::_001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics, ::user::frame_window * pframe)
    {
 
       return false;
@@ -897,7 +1078,7 @@ namespace user
    }
 
 
-   void schema::_001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck)
+   void style::_001DrawCheckBox(::draw2d::graphics * pgraphics, LPCRECT lpcrectClient, ::check::e_check echeck)
    {
 
 
@@ -947,7 +1128,7 @@ namespace user
    }
 
 
-   bool schema::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
+   bool style::_001DrawToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem, ::user::toolbar * ptoolbar)
    {
 
       return false;
@@ -955,7 +1136,7 @@ namespace user
    }
 
 
-   bool schema::_001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar)
+   bool style::_001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar)
    {
 
       return false;
@@ -963,15 +1144,109 @@ namespace user
    }
 
 
-   bool schema::_001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar)
+   bool style::_001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar)
    {
 
       return false;
 
    }
+   
+   
+   ::user::interaction * style::create_menu_button()
+   {
+      
+      return canew(::user::button(get_app()));
+   
+   }
+   
+
+   bool style::prepare_menu(::user::menu_item * pitem)
+   {
+      
+      if(!prepare_menu_button(pitem))
+      {
+         
+         return false;
+         
+      }
+      
+      return true;
+      
+   }
+   
 
 
+   
+   
+   bool style::set_color(e_color ecolor,COLORREF cr)
+   {
+      
+      m_mapColor[ecolor] = cr;
+      
+      return true;
+      
+   }
+   
+   
+   bool style::prepare_menu_button(::user::menu_item * pitem)
+   {
+      
+      if(!::user::style::prepare_menu_button(pitem))
+      {
+         
+         return false;
+         
+      }
+      
+      sp(::user::button) pbutton = pitem->m_pui;
+      
+      if(pbutton->m_id == "close")
+      {
+         
+         pbutton->m_puserstyle = get(style_system_menu_close);
+         
+         pbutton->ResizeToFit();
+         
+         pbutton->set_stock_icon(stock_icon_close);
+         
+         return true;
+         
+      }
+      else
+      {
+         
+         pbutton->m_puserstyle = get(style_system_menu_button);
+         
+         int cx = pbutton->width();
+         
+         int cy = pbutton->height();
+         
+         pbutton->m_pitem = pitem;
+         
+         pbutton->m_rectCheckBox.left = m_rectItemMargin.left;
+         pbutton->m_rectCheckBox.top = m_rectItemMargin.top;
+         pbutton->m_rectCheckBox.bottom = cy - m_rectItemMargin.bottom;
+         pbutton->m_rectCheckBox.right = pbutton->m_rectCheckBox.left + pitem->m_pmenu->m_iCheckBoxSize;
+         
+         pbutton->m_rectText.left = pbutton->m_rectCheckBox.right + m_iElementPadding;
+         pbutton->m_rectText.top = m_rectItemMargin.top;
+         pbutton->m_rectText.bottom = cy - m_rectItemMargin.bottom;
+         pbutton->m_rectText.right = cx - m_rectItemMargin.right;
+         
+      }
+      
+      return true;
+      
+   }
+   
+   
 } // namespace user
+
+
+
+
+
+
 
 
 

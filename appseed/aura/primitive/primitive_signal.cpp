@@ -29,6 +29,15 @@ signal_details::signal_details(class signal * psignal) :
 }
 
 
+void signal_details::reset(class ::signal * psignal)
+{
+   
+   m_psignal   = psignal;
+   m_bRet      = false;
+   m_iIndex    = 0;
+   
+}
+
 signal_details::signal_details(::aura::application * papp,class signal * psignal):
    object(papp)
 {

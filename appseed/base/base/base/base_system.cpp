@@ -1,6 +1,6 @@
 #include "framework.h" // from "axis/user/user.h"
 #include "base/user/user/user_windowing.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 #include "base/node/node.h"
 
 
@@ -176,7 +176,7 @@ namespace base
 
       m_bSystemSynchronizedScreen = true;
 
-      m_pschemaLayeredFrame = canew(::user::schema_layered_frame(this));
+      m_pschemaLayeredFrame = canew(::user::style(this));
 
 
    }

@@ -51,7 +51,7 @@ namespace user
 
       m_bNeedLayout = false;
 
-      m_bCreated = false;
+      //m_bCreated = false;
 
       m_bLockWindowUpdate = false;
 
@@ -1128,7 +1128,7 @@ namespace user
 
       //single_lock sl(m_pmutex,true);
 
-      m_bCreated = false;
+      //m_bCreated = false;
 
       user_interaction_on_hide();
 
@@ -1993,7 +1993,7 @@ namespace user
 
       UNREFERENCED_PARAMETER(pobj);
 
-      m_bCreated = true;
+      //m_bCreated = true;
 
       if(m_pauraapp == NULL)
          throw simple_exception(get_app(), "m_pauraapp cannot be null");
@@ -3708,11 +3708,11 @@ namespace user
 
 ///      single_lock slTwf(System.wait_twf(), true);
 
-      single_lock sl1(get_wnd() != NULL && get_wnd() != this ? get_wnd()->m_pmutex : NULL,true);
+      //single_lock sl1(get_wnd() != NULL && get_wnd() != this ? get_wnd()->m_pmutex : NULL,true);
 
       //single_lock sl(m_pmutex,true);
 
-      m_bCreated = false;
+      //m_bCreated = false;
 
       if(!IsWindow())
       {
