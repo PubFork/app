@@ -481,9 +481,9 @@ namespace console
 
       r.right -= 400;
 
-      m_workset.SetAppearance(::user::AppearanceMinimal);
+      m_workset.SetAppearance(::user::appearance_minimal);
 
-      set_appearance(::user::AppearanceMinimal);
+      set_appearance(::user::appearance_minimal);
 
       SetWindowPos(ZORDER_TOP,r,SWP_SHOWWINDOW);
 
@@ -497,10 +497,10 @@ namespace console
 
    }
    
-   bool prompt_frame::get_translucency(::user::ETranslucency & etranslucency)
+   bool prompt_frame::get_translucency(::user::e_translucency & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 

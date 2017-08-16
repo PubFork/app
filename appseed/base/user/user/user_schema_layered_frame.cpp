@@ -14,10 +14,10 @@ namespace user
    }
 
 
-   bool schema_layered_frame::get_translucency(ETranslucency & etranslucency)
+   bool schema_layered_frame::get_translucency(e_translucency & etranslucency)
    {
 
-      etranslucency = TranslucencyPresent;
+      etranslucency = translucency_present;
 
       return true;
 

@@ -72,7 +72,7 @@ public:
    bool                                m_bCustomFrameBefore;
    rect                                m_FullScreenWindowRect;
    visual::fastblur                    m_fastblur;
-   ::user::ETranslucency               m_etranslucency;
+   ::user::e_translucency               m_etranslucency;
 
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;
@@ -113,7 +113,7 @@ public:
 
    virtual bool is_application_main_window();
    
-   virtual bool get_translucency(::user::ETranslucency & etranslucency) override;
+   virtual bool get_translucency(::user::e_translucency & etranslucency) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -251,7 +251,7 @@ public:
    virtual void WfiOnMaximize() override;
    virtual void WfiOnMinimize(bool bNoActivate) override;
    virtual void WfiOnRestore() override;
-   virtual void WfiOnDock(::user::EAppearance eappearance) override;
+   virtual void WfiOnDock(::user::e_appearance eappearance) override;
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
@@ -261,7 +261,7 @@ public:
 
 
 
-   virtual bool set_appearance(::user::EAppearance eappearance);
+   virtual bool set_appearance(::user::e_appearance eappearance);
 
    virtual void InitialUpdateFrame(::user::document * pDoc,bool bMakeVisible);
 

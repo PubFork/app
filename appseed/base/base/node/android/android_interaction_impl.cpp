@@ -3662,7 +3662,7 @@ bool interaction_impl::WfiIsIconic()
 bool interaction_impl::WfiIsZoomed()
 {
    ASSERT(::IsWindow((oswindow)get_handle()));
-   return m_pui->m_eappearance == ::user::AppearanceZoomed;
+   return m_pui->m_eappearance == ::user::appearance_zoomed;
 }
 
 

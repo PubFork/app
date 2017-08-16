@@ -357,19 +357,19 @@ namespace filemanager
    }
 
 
-   bool data::get_translucency(::user::ETranslucency & etranslucency)
+   bool data::get_translucency(::user::e_translucency & etranslucency)
    {
 
       if(m_bTransparentBackground)
       {
 
-         etranslucency = ::user::TranslucencyPresent;
+         etranslucency = ::user::translucency_present;
 
       }
       else
       {
 
-         etranslucency = ::user::TranslucencyNone;
+         etranslucency = ::user::translucency_none;
 
       }
 

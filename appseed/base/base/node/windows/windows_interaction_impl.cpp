@@ -4102,7 +4102,7 @@ namespace windows
       if (!::IsWindow(get_handle()))
          return false;
 
-      return m_pui->get_appearance() == ::user::AppearanceZoomed;
+      return m_pui->get_appearance() == ::user::appearance_zoomed;
 
    }
 

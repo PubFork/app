@@ -87,7 +87,7 @@ namespace user
    }
 
 
-   bool schema::get_translucency(ETranslucency & etranslucency)
+   bool schema::get_translucency(e_translucency & etranslucency)
    {
 
       if (m_puserschemaSchema != NULL && m_puserschemaSchema != this)
@@ -452,15 +452,15 @@ namespace user
    }
 
 
-   ETranslucency schema::_001GetTranslucency(ETranslucency etranslucencyDefault)
+   e_translucency schema::_001GetTranslucency(e_translucency etranslucencyDefault)
    {
 
-      ETranslucency etranslucency = TranslucencyUndefined;
+      e_translucency etranslucency = translucency_underfined;
 
       if (get_translucency(etranslucency))
       {
 
-         if (etranslucency != TranslucencyUndefined)
+         if (etranslucency != translucency_underfined)
          {
 
             return etranslucency;
@@ -478,9 +478,9 @@ namespace user
    bool schema::_001IsTranslucent()
    {
 
-      ETranslucency etranslucency = _001GetTranslucency();
+      e_translucency etranslucency = _001GetTranslucency();
 
-      return etranslucency == TranslucencyPresent || etranslucency == TranslucencyTotal;
+      return etranslucency == translucency_present || etranslucency == translucency_total;
 
    }
 
@@ -488,7 +488,7 @@ namespace user
    bool schema::_001IsBackgroundBypass()
    {
 
-      return _001GetTranslucency() == TranslucencyTotal;
+      return _001GetTranslucency() == translucency_total;
 
    }
 
@@ -496,9 +496,9 @@ namespace user
    bool schema::_001HasTranslucency()
    {
 
-      ETranslucency etranslucency = _001GetTranslucency();
+      e_translucency etranslucency = _001GetTranslucency();
 
-      return etranslucency == TranslucencyPresent || etranslucency == TranslucencyTotal;
+      return etranslucency == translucency_present || etranslucency == translucency_total;
 
    }
 
@@ -506,7 +506,7 @@ namespace user
    bool schema::_001IsTransparent()
    {
 
-      return _001GetTranslucency() == TranslucencyTotal;
+      return _001GetTranslucency() == translucency_total;
 
    }
 
@@ -881,7 +881,7 @@ namespace user
    }
 
 
-   bool schema::_001GetMainFrameTranslucency(::user::ETranslucency & etranslucency)
+   bool schema::_001GetMainFrameTranslucency(::user::e_translucency & etranslucency)
    {
 
       return false;

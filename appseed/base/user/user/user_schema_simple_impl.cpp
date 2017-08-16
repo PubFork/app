@@ -10,7 +10,7 @@ namespace user
       object(papp)
    {
 
-      m_etranslucency      = TranslucencyUndefined;
+      m_etranslucency      = translucency_underfined;
 
    }
 
@@ -65,10 +65,10 @@ namespace user
 
    }
 
-   bool schema_simple_impl::get_translucency(ETranslucency & etranslucency)
+   bool schema_simple_impl::get_translucency(e_translucency & etranslucency)
    {
 
-      if(m_etranslucency == TranslucencyUndefined)
+      if(m_etranslucency == translucency_underfined)
          return false;
 
       etranslucency = m_etranslucency;

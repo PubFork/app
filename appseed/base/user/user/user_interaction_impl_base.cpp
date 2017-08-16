@@ -338,7 +338,7 @@ namespace user
    }
 
    
-   void interaction_impl_base::_001WindowDock(::user::EAppearance eappearance)
+   void interaction_impl_base::_001WindowDock(::user::e_appearance eappearance)
    {
 
       ASSERT(is_docking_appearance(eappearance));
@@ -356,7 +356,7 @@ namespace user
    void interaction_impl_base::_001WindowMaximize()
    {
 
-      m_pui->set_appearance(AppearanceZoomed);
+      m_pui->set_appearance(appearance_zoomed);
 
       rect rectNormal;
 
@@ -370,7 +370,7 @@ namespace user
    void interaction_impl_base::_001WindowFullScreen()
    {
 
-      m_pui->set_appearance(AppearanceFullScreen);
+      m_pui->set_appearance(appearance_full_screen);
 
       rect rectNormal;
 

@@ -57,7 +57,7 @@ namespace user
             bool frame_schema::_000OnLButtonDown(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->_000OnLButtonDown(pmouse))
@@ -75,7 +75,7 @@ namespace user
             bool frame_schema::_000OnLButtonUp(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->_000OnLButtonUp(pmouse))
@@ -92,7 +92,7 @@ namespace user
             bool frame_schema::_000OnMouseMove(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->_000OnMouseMove(pmouse))
@@ -109,7 +109,7 @@ namespace user
             bool frame_schema::_000OnNcLButtonDown(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->_000OnLButtonDown(pmouse))
@@ -126,7 +126,7 @@ namespace user
             bool frame_schema::_000OnNcLButtonUp(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->Relay(pmouse))
@@ -143,7 +143,7 @@ namespace user
             bool frame_schema::_000OnNcMouseMove(::message::mouse * pmouse)
             {
 
-               if (m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+               if (m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
                {
 
                   if (m_pworkset->GetSizingManager()->Relay(pmouse))
@@ -432,7 +432,7 @@ namespace user
 
                case ElementMoveGripMinimal:
                   
-                  if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->GetAppearance() != ::user::AppearanceMinimal)
+                  if(m_pworkset->m_pappearance == NULL || m_pworkset->m_pappearance->GetAppearance() != ::user::appearance_minimal)
                      return false;
 
                   lprect->left = m_pointMoveGripMinimal.x + 2;

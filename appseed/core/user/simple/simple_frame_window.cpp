@@ -96,7 +96,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_fastblur(allocer())
 {
 
-   m_etranslucency = ::user::TranslucencyUndefined;
+   m_etranslucency = ::user::translucency_underfined;
 
    m_bShowTask = true;
 
@@ -1649,7 +1649,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if (IsFullScreen() && Session.is_key_pressed(::user::key_control) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if (WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if (WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -1671,7 +1671,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if(IsFullScreen() && Session.is_key_pressed(::user::key_alt) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if(WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if(WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -2960,7 +2960,7 @@ void simple_frame_window::WfiOnRestore()
 }
 
 
-void simple_frame_window::WfiOnDock(::user::EAppearance eappearance)
+void simple_frame_window::WfiOnDock(::user::e_appearance eappearance)
 {
 
    _001WindowDock(eappearance);
@@ -3037,7 +3037,7 @@ bool simple_frame_window::DeferFullScreen(bool bFullScreen, bool bRestore)
 bool simple_frame_window::calc_layered()
 {
 
-   if (m_bLayered && _001GetTranslucency() != ::user::TranslucencyNone)
+   if (m_bLayered && _001GetTranslucency() != ::user::translucency_none)
    {
       return !Session.savings().is_trying_to_save(::aura::resource_processing)
              && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth);
@@ -3052,10 +3052,10 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::ETranslucency & etranslucency)
+bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency)
 {
 
-   if (m_etranslucency != ::user::TranslucencyUndefined)
+   if (m_etranslucency != ::user::translucency_underfined)
    {
 
       etranslucency = m_etranslucency;
@@ -3112,7 +3112,7 @@ class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_
 
 
 
-bool simple_frame_window::set_appearance(::user::EAppearance eappearance)
+bool simple_frame_window::set_appearance(::user::e_appearance eappearance)
 {
 
    bool bOk1 = ::user::frame_window::set_appearance(eappearance);

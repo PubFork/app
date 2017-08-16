@@ -107,7 +107,7 @@ namespace user
 
       virtual bool get_color(COLORREF & cr,::user::e_color ecolor);
 
-      virtual bool get_translucency(::user::ETranslucency & etranslucency);
+      virtual bool get_translucency(::user::e_translucency & etranslucency);
 
       virtual bool has_pending_graphical_update();
 

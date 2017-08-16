@@ -33,7 +33,7 @@ namespace user
 
    class interaction_impl_base;
 
-   CLASS_DECL_BASE bool is_docking_appearance(::user::EAppearance eappearance);
+   CLASS_DECL_BASE bool is_docking_appearance(::user::e_appearance eappearance);
 
 
 } // namespace user

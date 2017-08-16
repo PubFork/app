@@ -195,13 +195,13 @@ namespace user
 
          bool WorkSet::IsMovingEnabled()
          {
-            return m_bMovingEnabled && !IsFullScreen() && GetAppearance() != ::user::AppearanceZoomed;
+            return m_bMovingEnabled && !IsFullScreen() && GetAppearance() != ::user::appearance_zoomed;
          }
 
          bool WorkSet::IsSizingEnabled()
          {
             return m_bSizingEnabled && (m_pappearance == NULL ||
-               m_pappearance->GetAppearance() != AppearanceFixedSize);
+               m_pappearance->GetAppearance() != appearance_fixed_size);
          }
 
          bool WorkSet::IsSysMenuEnabled()
@@ -232,13 +232,13 @@ namespace user
             m_pframeschema->get_window_client_rect(lprect);
          }
 
-         void WorkSet::SetAppearance(::user::EAppearance nMode)
+         void WorkSet::SetAppearance(::user::e_appearance nMode)
          {
             if(m_pappearance != NULL)
                m_pappearance->SetAppearance(nMode);
          }
 
-         ::user::EAppearance WorkSet::GetAppearance()
+         ::user::e_appearance WorkSet::GetAppearance()
          {
             ASSERT(m_pappearance != NULL);
             return m_pappearance->GetAppearance();
@@ -275,7 +275,7 @@ namespace user
             //    m_bFullScreen = bFullScreen;
             if(bFullScreen)
             {
-               m_pappearance->SetAppearance(AppearanceFullScreen);
+               m_pappearance->SetAppearance(appearance_full_screen);
             }
             else
             {
@@ -363,7 +363,7 @@ namespace user
          {
          if(IsFullScreen())
          {
-         m_pappearance->SetAppearance(WorkSet::AppearanceFullScreen);
+         m_pappearance->SetAppearance(WorkSet::appearance_full_screen);
          }
          else
          {
@@ -509,8 +509,8 @@ namespace user
          }
 
 
-         //  define System flags que serão usados para posicionar ou
-         //  dimensionar pelo uso da função SetWindowPos
+         //  define System flags que serï¿½o usados para posicionar ou
+         //  dimensionar pelo uso da funï¿½ï¿½o SetWindowPos
 
          void WorkSet::SetSWPFlags(UINT uiFlags)
          {

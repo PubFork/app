@@ -4791,7 +4791,7 @@ ExitModal:
    }
 
 
-   void interaction::_001WindowDock(::user::EAppearance eappearance)
+   void interaction::_001WindowDock(::user::e_appearance eappearance)
    {
 
       m_pimpl->_001WindowDock(eappearance);
@@ -5931,7 +5931,7 @@ restart:
    }
 
 
-   bool interaction::Wfi(EAppearance eapperance)
+   bool interaction::Wfi(e_appearance eapperance)
    {
 
       return false;
@@ -5939,7 +5939,7 @@ restart:
    }
 
 
-   bool interaction::WfiDock(EAppearance eapperance)
+   bool interaction::WfiDock(e_appearance eapperance)
    {
 
       return false;
@@ -6021,7 +6021,7 @@ restart:
 
 
 
-   EAppearance interaction::get_appearance()
+   e_appearance interaction::get_appearance()
    {
 
       return m_eappearance;
@@ -6029,7 +6029,7 @@ restart:
    }
 
 
-   bool interaction::set_appearance(EAppearance eappearance)
+   bool interaction::set_appearance(e_appearance eappearance)
    {
 
       if(get_appearance() != get_appearance_before())
@@ -6046,7 +6046,7 @@ restart:
    }
 
 
-   bool interaction::set_appearance_before(EAppearance eappearance)
+   bool interaction::set_appearance_before(e_appearance eappearance)
    {
 
       m_eappearanceBefore = eappearance;
@@ -6056,7 +6056,7 @@ restart:
    }
 
 
-   EAppearance interaction::get_appearance_before()
+   e_appearance interaction::get_appearance_before()
    {
 
       return m_eappearanceBefore;
@@ -6431,7 +6431,7 @@ restart:
    }
 
 
-   index interaction::make_zoneing(LPRECT lprect,const RECT & rect,bool bSet,::user::EAppearance * peappearance,UINT uiSwpFlags,int_ptr iZOrder)
+   index interaction::make_zoneing(LPRECT lprect,const RECT & rect,bool bSet,::user::e_appearance * peappearance,UINT uiSwpFlags,int_ptr iZOrder)
    {
 
       if(peappearance == NULL || !::user::is_docking_appearance(*peappearance))
@@ -6545,10 +6545,10 @@ restart:
 
    }
 
-   index interaction::best_zoneing(LPRECT lprect,const RECT & rect,bool bSet,::user::EAppearance * peappearance, UINT uiSwpFlags,int_ptr iZOrder)
+   index interaction::best_zoneing(LPRECT lprect,const RECT & rect,bool bSet,::user::e_appearance * peappearance, UINT uiSwpFlags,int_ptr iZOrder)
    {
 
-      ::user::EAppearance eappearance;
+      ::user::e_appearance eappearance;
 
       if(peappearance == NULL)
       {
@@ -7368,16 +7368,16 @@ restart:
    }
 
 
-   CLASS_DECL_BASE bool is_docking_appearance(::user::EAppearance eappearance)
+   CLASS_DECL_BASE bool is_docking_appearance(::user::e_appearance eappearance)
    {
       return eappearance == ::user::appearance_left
-             || eappearance == ::user::AppearanceTop
-             || eappearance == ::user::AppearanceRight
-             || eappearance == ::user::AppearanceBottom
-             || eappearance == ::user::AppearanceTopLeft
-             || eappearance == ::user::AppearanceTopRight
-             || eappearance == ::user::AppearanceBottomRight
-             || eappearance == ::user::AppearanceBottomLeft;
+             || eappearance == ::user::appearance_top
+             || eappearance == ::user::appearance_right
+             || eappearance == ::user::appearance_bottom
+             || eappearance == ::user::appearance_top_left
+             || eappearance == ::user::appearance_top_right
+             || eappearance == ::user::appearance_bottom_right
+             || eappearance == ::user::appearance_bottom_left;
    }
 
    void interaction::_001OnShowWindow(signal_details * pobj)
@@ -8292,7 +8292,7 @@ restart:
    }
 
 
-   void interaction::_001OnDeiconify(::user::EAppearance eappearance)
+   void interaction::_001OnDeiconify(::user::e_appearance eappearance)
    {
 
       WfiRestore();

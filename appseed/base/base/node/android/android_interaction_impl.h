@@ -23,7 +23,7 @@ namespace android
       static const UINT                         m_nMsgDragList;
       //int32_t                                   m_nModalResult;      // for return values from interaction_impl::RunModalLoop
 
-      ::user::EAppearance                       m_eapperanceLayout;
+      ::user::e_appearance                       m_eapperanceLayout;
       bool                                      m_bEnabled;
       ::thread *                                m_pthreadDraw;
 

@@ -39,7 +39,7 @@ namespace user
       m_button.set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
       m_button.set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (0xff << 24));
       m_button.m_bBorder      = false;
-      m_button.m_etranslucency = ::user::TranslucencyNone;
+      m_button.m_etranslucency = ::user::translucency_none;
 
       m_buttonBaseWndMenuSysMenuClose.m_pfont.alloc(allocer());
       m_buttonBaseWndMenuSysMenuClose.m_pfont->create_point_font("Marlett",11.0);
@@ -52,7 +52,7 @@ namespace user
       m_buttonBaseWndMenuSysMenuClose.set_color(color_background_disabled,ARGB(184,192,192,192));
       m_buttonBaseWndMenuSysMenuClose.set_color(color_background_hover,ARGB(184,223,192,192));
       m_buttonBaseWndMenuSysMenuClose.m_bBorder      = false;
-      m_buttonBaseWndMenuSysMenuClose.m_etranslucency = ::user::TranslucencyPresent;
+      m_buttonBaseWndMenuSysMenuClose.m_etranslucency = ::user::translucency_present;
 
 
       m_buttonBaseWndMenuSysMenu.m_pfont.alloc(allocer());
@@ -66,7 +66,7 @@ namespace user
       m_buttonBaseWndMenuSysMenu.set_color(color_background_disabled,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
       m_buttonBaseWndMenuSysMenu.set_color(color_background_hover,Session.get_default_color(COLOR_3DFACE) | (184 << 24));
       m_buttonBaseWndMenuSysMenu.m_bBorder      = false;
-      m_buttonBaseWndMenuSysMenu.m_etranslucency = ::user::TranslucencyPresent;
+      m_buttonBaseWndMenuSysMenu.m_etranslucency = ::user::translucency_present;
 
 
       m_buttonBaseWndMenuItem.m_pfont.alloc(allocer());
@@ -80,7 +80,7 @@ namespace user
       m_buttonBaseWndMenuItem.set_color(color_background_disabled,ARGB(84,180,192,255));
       m_buttonBaseWndMenuItem.set_color(color_background_hover,ARGB(127,180,192,255));
       m_buttonBaseWndMenuItem.m_bBorder      = false;
-      m_buttonBaseWndMenuItem.m_etranslucency = ::user::TranslucencyPresent;
+      m_buttonBaseWndMenuItem.m_etranslucency = ::user::translucency_present;
 
 
 
@@ -98,7 +98,7 @@ namespace user
       m_buttonBaseWndMenuItemPopup.set_color(color_background_disabled,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
       m_buttonBaseWndMenuItemPopup.set_color(color_background_hover,Session.get_default_color(COLOR_3DHIGHLIGHT) | (184 << 24));
       m_buttonBaseWndMenuItemPopup.m_bBorder      = false;
-      m_buttonBaseWndMenuItemPopup.m_etranslucency = ::user::TranslucencyPresent;
+      m_buttonBaseWndMenuItemPopup.m_etranslucency = ::user::translucency_present;
 
 
       m_menu.m_font->create_point_font(FONT_SANS,9.0);

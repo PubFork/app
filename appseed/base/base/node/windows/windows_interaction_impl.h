@@ -31,7 +31,7 @@ namespace windows
 
       WNDPROC                                   m_pfnSuper;          // for subclassing of controls
 
-      ::user::EAppearance                       m_eapperanceLayout;
+      ::user::e_appearance                       m_eapperanceLayout;
       
       //::thread *                                m_pthreadDraw;
       

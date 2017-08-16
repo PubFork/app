@@ -186,8 +186,8 @@ namespace axis
 
       virtual void  get_monitor(rect_array & rectaMonitor,rect_array & rectaIntersect,const RECT & rect);
 
-      virtual index get_zoneing(LPRECT lprect,const RECT & rect,::user::EAppearance eappearance);
-      virtual index get_best_zoneing(::user::EAppearance * peappearance,LPRECT lprect,const RECT & rect);
+      virtual index get_zoneing(LPRECT lprect,const RECT & rect,::user::e_appearance eappearance);
+      virtual index get_best_zoneing(::user::e_appearance * peappearance,LPRECT lprect,const RECT & rect);
       virtual index get_best_monitor(LPRECT lprect,const RECT & rect);
       virtual index get_best_wkspace(LPRECT lprect,const RECT & rect);
       virtual index get_good_iconify(LPRECT lprect,const RECT & rect);

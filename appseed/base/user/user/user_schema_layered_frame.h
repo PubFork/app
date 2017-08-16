@@ -14,7 +14,7 @@ namespace user
       schema_layered_frame(::aura::application * papp);
 
 
-      virtual bool get_translucency(ETranslucency & etranslucency);
+      virtual bool get_translucency(e_translucency & etranslucency);
 
 
    };

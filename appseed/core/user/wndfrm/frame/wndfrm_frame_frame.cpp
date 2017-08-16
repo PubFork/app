@@ -329,7 +329,7 @@ namespace user
          bool frame::_000OnLButtonDown(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                //if(m_pworkset->GetDockingManager()->_000OnLButtonDown(pmouse))
@@ -350,7 +350,7 @@ namespace user
          bool frame::_000OnLButtonUp(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                if(m_pworkset->GetDockingManager()->_000OnLButtonUp(pmouse))
@@ -370,7 +370,7 @@ namespace user
          bool frame::_000OnMouseMove(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
@@ -393,7 +393,7 @@ namespace user
          bool frame::_000OnNcLButtonDown(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                if(m_pworkset->GetDockingManager()->_000OnLButtonDown(pmouse))
@@ -413,7 +413,7 @@ namespace user
          bool frame::_000OnNcLButtonUp(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                if(m_pworkset->GetDockingManager()->Relay(pmouse))
@@ -433,7 +433,7 @@ namespace user
          bool frame::_000OnNcMouseMove(::message::mouse * pmouse)
          {
 
-            if(m_pworkset->GetAppearance() != ::user::AppearanceZoomed && m_pworkset->GetAppearance() != ::user::AppearanceFullScreen)
+            if(m_pworkset->GetAppearance() != ::user::appearance_zoomed && m_pworkset->GetAppearance() != ::user::appearance_full_screen)
             {
 
                if(!m_pworkset->GetMovingManager()->IsMoving()
@@ -519,8 +519,8 @@ namespace user
          //{
          //   int32_t iMargin = m_iMargin;
 
-         //   /*            if (get_appearance()->GetAppearance() == AppearanceZoomed
-         //   || get_appearance()->GetAppearance() == AppearanceFullScreen)
+         //   /*            if (get_appearance()->GetAppearance() == appearance_zoomed
+         //   || get_appearance()->GetAppearance() == appearance_full_screen)
          //   {
          //   iMargin = 0;
          //   }*/
@@ -568,13 +568,13 @@ namespace user
          }
 
 
-         int32_t frame::calc_caption_height(::user::EAppearance eappearance)
+         int32_t frame::calc_caption_height(::user::e_appearance eappearance)
          {
 
-            if(eappearance == AppearanceFullScreen)
+            if(eappearance == appearance_full_screen)
                return 0;
 
-            if(eappearance == AppearanceMinimal)
+            if(eappearance == appearance_minimal)
                return 0;
 
             rect * prectMargin = get_margin_rect();
@@ -782,7 +782,7 @@ namespace user
 
             ::rect rectIcon = ::null_rect();
 
-            if(pappearance->GetAppearance() == ::user::AppearanceMinimal)
+            if(pappearance->GetAppearance() == ::user::appearance_minimal)
             {
 
                if(get_element_rect(rectIcon,ElementTopLeftIcon))
@@ -1005,7 +1005,7 @@ namespace user
 
             int iLeftDeflate;
 
-            if(get_appearance()->GetAppearance() == ::user::AppearanceFullScreen)
+            if(get_appearance()->GetAppearance() == ::user::appearance_full_screen)
             {
 
                iTopDeflate = 0;
@@ -1013,7 +1013,7 @@ namespace user
                iLeftDeflate = 0;
 
             }
-            else if(get_appearance()->GetAppearance() == ::user::AppearanceMinimal)
+            else if(get_appearance()->GetAppearance() == ::user::appearance_minimal)
             {
 
                iTopDeflate = prectMargin->top;
@@ -1033,7 +1033,7 @@ namespace user
 
             int iRightDeflate;
             
-            if(get_appearance()->GetAppearance() == ::user::AppearanceMinimal)
+            if(get_appearance()->GetAppearance() == ::user::appearance_minimal)
             {
 
                iRightDeflate = (rect.right - get_control_box_rect()->left) + 2 ;
@@ -1067,13 +1067,13 @@ namespace user
          rect * frame::get_margin_rect()
          {
 
-            if (m_pworkset->get_appearance()->GetAppearance() == AppearanceFullScreen)
+            if (m_pworkset->get_appearance()->GetAppearance() == appearance_full_screen)
             {
 
                return &m_rectMarginFullScreen;
 
             }
-            else if (m_pworkset->get_appearance()->GetAppearance() == AppearanceZoomed)
+            else if (m_pworkset->get_appearance()->GetAppearance() == appearance_zoomed)
             {
 
                return &m_rectMarginZoomed;
@@ -1092,13 +1092,13 @@ namespace user
          rect * frame::get_control_box_margin_rect()
          {
 
-            if (m_pworkset->get_appearance()->GetAppearance() == AppearanceFullScreen)
+            if (m_pworkset->get_appearance()->GetAppearance() == appearance_full_screen)
             {
 
                return &m_rectControlBoxMarginFullScreen;
 
             }
-            else if (m_pworkset->get_appearance()->GetAppearance() == AppearanceZoomed)
+            else if (m_pworkset->get_appearance()->GetAppearance() == appearance_zoomed)
             {
 
                return &m_rectControlBoxMarginZoomed;
@@ -1123,13 +1123,13 @@ namespace user
          rect * frame::get_control_box_rect()
          {
 
-            if(m_pworkset->get_appearance()->GetAppearance() == AppearanceFullScreen)
+            if(m_pworkset->get_appearance()->GetAppearance() == appearance_full_screen)
             {
 
                return &m_rectControlBoxFullScreen;
 
             }
-            else if(m_pworkset->get_appearance()->GetAppearance() == AppearanceZoomed)
+            else if(m_pworkset->get_appearance()->GetAppearance() == appearance_zoomed)
             {
 
                return &m_rectControlBoxZoomed;

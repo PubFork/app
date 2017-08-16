@@ -232,18 +232,18 @@ namespace user
                      }
                      else if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-//                        if(m_eappearanceOrigin != ::user::AppearanceTop)
+//                        if(m_eappearanceOrigin != ::user::appearance_top)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTop);
+                           GetDockWindow()->set_appearance(::user::appearance_top);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width(),rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-  //                      if(m_eappearanceOrigin != ::user::AppearanceBottom)
+  //                      if(m_eappearanceOrigin != ::user::appearance_bottom)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottom);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top + rectWork.height() / 2,rectWork.width(),rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -262,9 +262,9 @@ namespace user
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceRight);
+                           GetDockWindow()->set_appearance(::user::appearance_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top,rectWork.width() / 2,rectWork.height());
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -274,18 +274,18 @@ namespace user
                   {
                      if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceTopLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_top_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTopLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_top_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceBottomLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_bottom_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottomLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top + rectWork.height() / 2,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -295,18 +295,18 @@ namespace user
                   {
                      if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceTopRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_top_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTopRight);
+                           GetDockWindow()->set_appearance(::user::appearance_top_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceBottomRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_bottom_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottomRight);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top + rectWork.height() / 2,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }

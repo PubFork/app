@@ -2536,7 +2536,7 @@ Restart:
       return false;
 
    }
-   bool interaction_base::Wfi(EAppearance eapperance)
+   bool interaction_base::Wfi(e_appearance eapperance)
    {
 
       return false;
@@ -2544,7 +2544,7 @@ Restart:
    }
 
 
-   bool interaction_base::WfiDock(EAppearance eapperance)
+   bool interaction_base::WfiDock(e_appearance eapperance)
    {
 
       return false;
@@ -2622,7 +2622,7 @@ Restart:
    }
 
 
-   EAppearance interaction_base::get_appearance()
+   e_appearance interaction_base::get_appearance()
    {
 
       return appearance_none;
@@ -2630,7 +2630,7 @@ Restart:
    }
 
 
-   EAppearance interaction_base::get_appearance_before()
+   e_appearance interaction_base::get_appearance_before()
    {
 
       return appearance_none;
@@ -2638,7 +2638,7 @@ Restart:
    }
 
 
-   bool interaction_base::set_appearance(EAppearance eappearance)
+   bool interaction_base::set_appearance(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2648,7 +2648,7 @@ Restart:
    }
 
 
-   bool interaction_base::set_appearance_before(EAppearance eappearance)
+   bool interaction_base::set_appearance_before(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());

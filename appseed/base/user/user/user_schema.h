@@ -42,11 +42,11 @@ namespace user
 
       virtual bool get_color(COLORREF & cr,e_color ecolor);
       virtual bool get_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui);
-      virtual bool get_translucency(ETranslucency & etranslucency);
+      virtual bool get_translucency(e_translucency & etranslucency);
 
       virtual COLORREF        _001GetColor(e_color ecolor, COLORREF crDefault);
       virtual COLORREF        _001GetColor(e_color ecolor);
-      virtual ETranslucency   _001GetTranslucency(ETranslucency etranslucencyDefault = TranslucencyUndefined);
+      virtual e_translucency   _001GetTranslucency(e_translucency etranslucencyDefault = translucency_underfined);
 
       virtual bool _001IsBackgroundBypass();
       virtual bool _001IsTransparent();
@@ -67,7 +67,7 @@ namespace user
 
       virtual bool _001OnTabLayout(::user::tab * ptab);
 
-      virtual bool _001GetMainFrameTranslucency(::user::ETranslucency & etranslucency);
+      virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency);
 
       virtual bool _001OnDrawMainFrameBackground(::draw2d::graphics * pgraphics,::user::frame_window * pframe);
 

@@ -105,7 +105,7 @@ namespace user
             return m_bEnabled;
          }
 
-         void appearance::SetAppearance(::user::EAppearance emode)
+         void appearance::SetAppearance(::user::e_appearance emode)
          {
 
             if (m_pworkset == NULL)
@@ -132,7 +132,7 @@ namespace user
             if (pwnd == NULL)
                return;
             if (pwnd->WfiIsZoomed())
-               SetAppearance(AppearanceZoomed);
+               SetAppearance(appearance_zoomed);
             else if (pwnd->WfiIsIconic())
                SetAppearance(appearance_iconic);
             else
@@ -141,7 +141,7 @@ namespace user
          }
 
 
-         ::user::EAppearance appearance::GetAppearance()
+         ::user::e_appearance appearance::GetAppearance()
          {
 
             return m_emode;
@@ -152,7 +152,7 @@ namespace user
          bool appearance::IsZoomed()
          {
 
-            return GetAppearance() == AppearanceZoomed;
+            return GetAppearance() == appearance_zoomed;
 
          }
 
@@ -166,7 +166,7 @@ namespace user
          bool appearance::IsFullScreen()
          {
 
-            return GetAppearance() == AppearanceFullScreen;
+            return GetAppearance() == appearance_full_screen;
 
          }
 
@@ -174,7 +174,7 @@ namespace user
          bool appearance::IsMinimal()
          {
 
-            return GetAppearance() == AppearanceMinimal;
+            return GetAppearance() == appearance_minimal;
 
          }
 
@@ -252,11 +252,11 @@ namespace user
             }
             else if (pwnd->WfiIsZoomed())
             {
-               m_emode = AppearanceZoomed;
+               m_emode = appearance_zoomed;
             }
             else if (bFullScreen)
             {
-               m_emode = AppearanceFullScreen;
+               m_emode = appearance_full_screen;
             }
             else
             {

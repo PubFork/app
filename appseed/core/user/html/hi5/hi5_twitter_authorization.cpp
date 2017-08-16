@@ -167,7 +167,7 @@ namespace hi5
 
             pframe->m_puserschemaSchema = this;
             
-            m_etranslucency = ::user::TranslucencyPresent;
+            m_etranslucency = ::user::translucency_present;
 
             //pframe->m_bblur_Background = true;
 

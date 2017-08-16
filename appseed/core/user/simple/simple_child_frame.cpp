@@ -64,13 +64,13 @@ void simple_child_frame::_001OnDraw(::draw2d::graphics * pgraphics)
 }
 
 
-bool simple_child_frame::get_translucency(::user::ETranslucency & etranslucency)
+bool simple_child_frame::get_translucency(::user::e_translucency & etranslucency)
 {
 
-   // etranslucency = ::user::TranslucencyPresent for children that may ask the translucency guideline for this as parent,
+   // etranslucency = ::user::translucency_present for children that may ask the translucency guideline for this as parent,
    // but simple_child_frame, at the moment of this remark writing, itself draw transparently.
 
-   etranslucency = ::user::TranslucencyPresent; 
+   etranslucency = ::user::translucency_present; 
 
    return true;
 

@@ -66,10 +66,10 @@ namespace user
 
    }
 
-   bool tooltip::get_translucency(::user::ETranslucency  & etranslucency)
+   bool tooltip::get_translucency(::user::e_translucency  & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 

@@ -66,7 +66,7 @@ namespace user
 
             WorkSet *                           m_pworkset;
             bool                                m_bEnabled;
-            ::user::EAppearance                 m_emode;
+            ::user::e_appearance                 m_emode;
             EAppearanceTransparency             m_nTransparency;
             CTool001 *                          m_ptool001;
 
@@ -81,7 +81,7 @@ namespace user
 //            void SetDownUpInterface(CWorkSetDownUpInterface * pinterface);
             //bool WndFrameworkDownUpGetDownEnable();
             //virtual bool WndFrameworkDownUpGetUpEnable();
-            ::user::EAppearance GetAppearance();
+            ::user::e_appearance GetAppearance();
             bool update();
             bool IsIconic();
             bool IsFullScreen();
@@ -92,7 +92,7 @@ namespace user
             void Enable(bool bEnable);
 
             void SetTransparency(EAppearanceTransparency nTransparency);
-            void SetAppearance(::user::EAppearance nMode);
+            void SetAppearance(::user::e_appearance nMode);
             void SetAppearance();
 
             EHitTest hit_test(point pt);

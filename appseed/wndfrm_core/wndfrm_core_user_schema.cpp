@@ -18,7 +18,7 @@ namespace wndfrm_core
       ::user::schema_simple_impl(papp)
    {
 
-      m_etranslucency      = ::user::TranslucencyPresent;
+      m_etranslucency      = ::user::translucency_present;
       m_pfont.alloc(allocer());
 
       

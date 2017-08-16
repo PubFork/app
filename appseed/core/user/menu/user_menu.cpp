@@ -825,10 +825,10 @@ namespace user
    }
 
 
-   bool menu::get_translucency(::user::ETranslucency & etranslucency)
+   bool menu::get_translucency(::user::e_translucency & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
    }

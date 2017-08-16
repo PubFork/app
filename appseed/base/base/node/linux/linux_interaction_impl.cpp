@@ -4155,7 +4155,7 @@ throw not_implemented(get_app());
 
       }
 
-      return m_pui->m_eappearance == ::user::AppearanceZoomed;
+      return m_pui->m_eappearance == ::user::appearance_zoomed;
 
    }
 

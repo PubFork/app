@@ -103,8 +103,8 @@ namespace user
 
       ::user::interaction *               m_pparent;
 
-      EAppearance                         m_eappearance;
-      EAppearance                         m_eappearanceBefore;
+      e_appearance                         m_eappearance;
+      e_appearance                         m_eappearanceBefore;
       sp(interaction_impl_base)           m_pimpl;
 
 
@@ -366,7 +366,7 @@ namespace user
       virtual void _001WindowMaximize() override;
       virtual void _001WindowFullScreen() override;
       virtual void _001WindowRestore() override;
-      virtual void _001WindowDock(::user::EAppearance eappearance);
+      virtual void _001WindowDock(::user::e_appearance eappearance);
 
       using ::user::interaction_base::GetWindowRect;
       virtual bool GetClientRect(LPRECT lprect) override;
@@ -783,9 +783,9 @@ namespace user
       virtual bool WfiIsIconic() override;
 
 
-      virtual bool Wfi(EAppearance eapperance = appearance_current) override;
+      virtual bool Wfi(e_appearance eapperance = appearance_current) override;
 
-      virtual bool WfiDock(EAppearance eapperance) override;
+      virtual bool WfiDock(e_appearance eapperance) override;
       virtual bool WfiClose() override;
       virtual bool WfiRestore(bool bForceNormal = false) override;
       virtual bool WfiMinimize() override;
@@ -799,11 +799,11 @@ namespace user
       virtual bool WfiIsMoving();
       virtual bool WfiIsSizing();
 
-      virtual EAppearance get_appearance() override;
-      virtual EAppearance get_appearance_before() override;
+      virtual e_appearance get_appearance() override;
+      virtual e_appearance get_appearance_before() override;
 
-      virtual bool set_appearance(EAppearance eappearance) override;
-      virtual bool set_appearance_before(EAppearance eappearance) override;
+      virtual bool set_appearance(e_appearance eappearance) override;
+      virtual bool set_appearance_before(e_appearance eappearance) override;
 
 
       virtual void show_keyboard(bool bShow = true) override;
@@ -812,8 +812,8 @@ namespace user
 
       virtual ::user::interaction * best_top_level_parent(LPRECT lprect);
 
-      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
-      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_monitor(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_wkspace(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index good_restore(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
@@ -947,7 +947,7 @@ namespace user
       virtual void on_after_graphical_update();
 
 
-      virtual void _001OnDeiconify(::user::EAppearance eappearance);
+      virtual void _001OnDeiconify(::user::e_appearance eappearance);
       
       virtual void on_setting_changed(::aura::e_setting esetting);
       

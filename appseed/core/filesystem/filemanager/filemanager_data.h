@@ -60,7 +60,7 @@ namespace filemanager
 
       virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
       virtual bool get_font(::draw2d::font_sp & font);
-      virtual bool get_translucency(::user::ETranslucency & etranslucency);
+      virtual bool get_translucency(::user::e_translucency & etranslucency);
 
 
       virtual sp(::filemanager::manager_template) get_filemanager_template();

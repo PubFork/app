@@ -4461,7 +4461,7 @@ namespace ios
    bool window::WfiIsZoomed()
    {
       ASSERT(::IsWindow(get_handle()));
-      return m_pui->m_eappearance == user::AppearanceZoomed;
+      return m_pui->m_eappearance == user::appearance_zoomed;
    }
 
 

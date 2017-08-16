@@ -17,7 +17,7 @@ public:
 
    virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-   virtual bool get_translucency(::user::ETranslucency & etranslucency);
+   virtual bool get_translucency(::user::e_translucency & etranslucency);
 
 };
 

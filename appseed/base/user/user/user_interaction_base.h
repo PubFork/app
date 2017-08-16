@@ -557,9 +557,9 @@ namespace user
       virtual bool WfiIsZoomed();
       virtual bool WfiIsIconic();
 
-      virtual bool Wfi(EAppearance eapperance = appearance_current);
+      virtual bool Wfi(e_appearance eapperance = appearance_current);
 
-      virtual bool WfiDock(EAppearance eapperance);
+      virtual bool WfiDock(e_appearance eapperance);
       virtual bool WfiClose();
       virtual bool WfiRestore(bool bForceNormal = false);
       virtual bool WfiMinimize();
@@ -569,11 +569,11 @@ namespace user
       virtual bool WfiDown();
       virtual bool WfiNotifyIcon();
 
-      virtual EAppearance get_appearance();
-      virtual EAppearance get_appearance_before();
+      virtual e_appearance get_appearance();
+      virtual e_appearance get_appearance_before();
 
-      virtual bool set_appearance(EAppearance eappearance);
-      virtual bool set_appearance_before(EAppearance eappearance);
+      virtual bool set_appearance(e_appearance eappearance);
+      virtual bool set_appearance_before(e_appearance eappearance);
 
 
       virtual void show_keyboard(bool bShow = true);
