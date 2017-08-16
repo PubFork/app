@@ -68,7 +68,7 @@ namespace user
    }
 
 
-   bool notify_icon::create(UINT uiId, notify_icon_listener * plistener, sp(::visual::icon) hicon)
+   bool notify_icon::create_notify_icon(UINT uiId, notify_icon_listener * plistener, ::visual::icon * pvisualicon)
    {
 
       if(m_bCreated)
@@ -80,7 +80,7 @@ namespace user
 
       m_strId.Format("user::notify_icon - %d", uiId);
 
-      m_strId = "ca2-" + hicon->m_strAppTrayIcon + "-" + m_strId;
+      m_strId = "ca2-" + pvisualicon->m_strAppTrayIcon + "-" + m_strId;
 
 #ifdef WINDOWSEX
 
@@ -99,7 +99,7 @@ namespace user
 
       m_nid.hWnd                 = get_safe_handle();
       m_nid.uID                  = uiId;
-      m_nid.hIcon                = *hicon;
+      m_nid.hIcon                = *pvisualicon;
       m_nid.uFlags               = NIF_ICON | NIF_MESSAGE;
       m_nid.uCallbackMessage     = MessageNotifyIcon;
 

@@ -1814,7 +1814,7 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 
 template < typename TYPE >
-CLASS_DECL_AURA void function_call(const TYPE * p)
+void function_call(const TYPE * p)
 {
    
    const char * psz = reinterpret_cast < const char * > (p);

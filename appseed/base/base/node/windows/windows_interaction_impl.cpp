@@ -4083,7 +4083,7 @@ namespace windows
       if (GetExStyle() & WS_EX_LAYERED)
       {
 
-         return m_pui->m_eappearance == ::user::AppearanceIconic;
+         return m_pui->m_eappearance == ::user::appearance_iconic;
 
       }
       else

@@ -11,7 +11,7 @@ bool timer::impl_start()
    
    m_bSet = true;
    
-   if(!CreateTimerQueueTimer(&m_ptimer->m_hTimer,m_ptimer->m_hTimerQueue,(WAITORTIMERCALLBACK)aura_timer_TimerRoutine,m_ptimer,m_dwMillis,0,WT_EXECUTEONLYONCE | WT_EXECUTELONGFUNCTION))
+   if(!CreateTimerQueueTimer(&m_hTimer,m_hTimerQueue,(WAITORTIMERCALLBACK)aura_timer_TimerRoutine,this,m_dwMillis,0,WT_EXECUTEONLYONCE | WT_EXECUTELONGFUNCTION))
    {
       
       m_bSet = false;
@@ -24,75 +24,66 @@ bool timer::impl_start()
 
    
 }
-
-
       
       
-      Timer()
-      {
+void timer::impl_init()
+{
          
-         m_hTimer = NULL;
+   m_hTimer = NULL;
          
-         m_ptimer = NULL;
+   m_hTimerQueue = CreateTimerQueue();
          
-         m_hTimerQueue = CreateTimerQueue();
-         
-         if(NULL == m_hTimerQueue)
-         {
+   if(NULL == m_hTimerQueue)
+   {
             
-            throw - 1;
+      throw - 1;
             
-         }
+   }
          
-      }
-      
-      ~Timer()
-      {
-         
-         stop(false);
-         
-         if(m_hTimerQueue != NULL && m_hTimerQueue != INVALID_HANDLE_VALUE)
-         {
-            
-            DeleteTimerQueue(m_hTimerQueue);
-            
-         }
-         
-      }
-      
-      
-      void stop(bool bWaitCompletion)
-      {
-         
-         if(m_hTimerQueue != NULL && m_hTimer != NULL)
-         {
-            
-            DeleteTimerQueueTimer(m_hTimerQueue,m_hTimer, bWaitCompletion ? INVALID_HANDLE_VALUE : NULL);
-            
-            m_hTimer = NULL;
-            
-         }
-         
-      }
-      
-   };
-   
 }
+      
+void timer::impl_term()
+{
+         
+   stop(false);
+         
+   if(m_hTimerQueue != NULL && m_hTimerQueue != INVALID_HANDLE_VALUE)
+   {
+            
+      DeleteTimerQueue(m_hTimerQueue);
+            
+   }
+         
+}
+      
+      
+void timer::impl_stop(bool bWaitCompletion)
+{
+         
+   if(m_hTimerQueue != NULL && m_hTimer != NULL)
+   {
+            
+      DeleteTimerQueueTimer(m_hTimerQueue,m_hTimer, bWaitCompletion ? INVALID_HANDLE_VALUE : NULL);
+            
+      m_hTimer = NULL;
+            
+   }
+         
+}
+      
 
 
 bool timer::impl_restart()
 {
    
-DeleteTimerQueueTimer(m_ptimer->m_hTimerQueue, m_ptimer->m_hTimer, NULL);
+   DeleteTimerQueueTimer(m_hTimerQueue, m_hTimer, NULL);
 
-if(!CreateTimerQueueTimer(&m_ptimer->m_hTimer,m_ptimer->m_hTimerQueue,(WAITORTIMERCALLBACK)aura_timer_TimerRoutine,m_ptimer,m_dwMillis,0,WT_EXECUTEONLYONCE | WT_EXECUTELONGFUNCTION))
-{
+   if(!CreateTimerQueueTimer(&m_hTimer,m_hTimerQueue,(WAITORTIMERCALLBACK)aura_timer_TimerRoutine,this,m_dwMillis,0,WT_EXECUTEONLYONCE | WT_EXECUTELONGFUNCTION))
+   {
    
-   return false;
+      return false;
    
-}
-
-
+   }
 
 }
 
@@ -110,10 +101,11 @@ VOID CALLBACK aura_timer_TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired)
       return;
    }
    
-   ::aura::Timer * ptimer = (::aura::Timer *)lpParam;
+   ::timer * ptimer = (::timer *)lpParam;
    
    if (g_axisoninitthread)
    {
+
       g_axisoninitthread();
       
    }
@@ -133,7 +125,7 @@ VOID CALLBACK aura_timer_TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired)
    try
    {
       
-      ptimer->m_ptimer->call_on_timer();
+      ptimer->call_on_timer();
       
       bOk = true;
       
@@ -164,11 +156,5 @@ VOID CALLBACK aura_timer_TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired)
       
    }
    
-   if (!bOk)
-   {
-      
-      ::aura::del(ptimer);
-      
-   }
    
 }

@@ -1043,11 +1043,11 @@ namespace user
                if(get_element_rect(rectIcon,ElementTopLeftIcon))
                {
 
-                  iRightDeflate += calc_caption_height(::user::AppearanceNormal);
+                  iRightDeflate += calc_caption_height(::user::appearance_normal);
 
                }
 
-               iRightDeflate += calc_caption_height(::user::AppearanceNormal); // for the ElementMoveGripMinimal
+               iRightDeflate += calc_caption_height(::user::appearance_normal); // for the ElementMoveGripMinimal
 
             }
             else

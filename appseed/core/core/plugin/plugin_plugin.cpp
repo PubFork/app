@@ -141,7 +141,7 @@ namespace plugin
 
          pinitmaindata->m_hInstance             = hInstance;
          pinitmaindata->m_hPrevInstance         = hPrevInstance;
-         pinitmaindata->m_vssCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
+         pinitmaindata->m_strCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
          pinitmaindata->m_nCmdShow              = nCmdShow;
 
 

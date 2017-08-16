@@ -2629,7 +2629,15 @@ namespace aura
          
       }
 
+#ifdef MACOS
+
       ns_app_terminate();
+
+#elif defined(APPLEIOS)
+
+      ui_app_terminate();
+
+#endif
 
       return m_iReturnCode;
 

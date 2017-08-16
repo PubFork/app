@@ -142,7 +142,7 @@ namespace aura
 
       m_pcommand =  pdata;
 
-      string strCmdLine          = pdata->m_vssCommandLine;
+      string strCmdLine          = pdata->m_strCommandLine;
 
       SetCurrentHandles();
 

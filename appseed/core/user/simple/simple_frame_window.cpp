@@ -1749,7 +1749,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    if (m_workset.IsAppearanceEnabled())
    {
 
-      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::AppearanceIconic)
+      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
       {
 
          WfiRestore(false);
@@ -2242,7 +2242,7 @@ void simple_frame_window::defer_create_notification_icon()
 
    m_pnotifyicon = canew(::user::notify_icon(get_app()));
 
-   m_pnotifyicon->create(1, this, m_piconNotify);
+   m_pnotifyicon->create_notify_icon(1, this, m_piconNotify);
 
    //if (m_workset.m_pframeschema != NULL)
    {

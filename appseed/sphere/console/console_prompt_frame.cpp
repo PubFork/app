@@ -471,7 +471,7 @@ namespace console
 
       System.get_monitor_rect(0,&r);
 
-      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::AppearanceNormal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
+      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::appearance_normal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
 
       r.left += 100;
 

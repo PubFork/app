@@ -557,7 +557,7 @@ namespace user
       virtual bool WfiIsZoomed();
       virtual bool WfiIsIconic();
 
-      virtual bool Wfi(EAppearance eapperance = AppearanceCurrent);
+      virtual bool Wfi(EAppearance eapperance = appearance_current);
 
       virtual bool WfiDock(EAppearance eapperance);
       virtual bool WfiClose();

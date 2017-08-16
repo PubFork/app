@@ -330,7 +330,7 @@ namespace aura
       if(m_pcommand != NULL && is_system())
       {
          
-         string strCmdLine          = pdata->m_vssCommandLine;
+         string strCmdLine          = pdata->m_strCommandLine;
          
          System.m_strCmdLine = strCmdLine;
          

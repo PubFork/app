@@ -53,7 +53,7 @@ namespace user
 
             rect rectWindow;
 
-            if(GetDockWindow()->get_appearance() != ::user::AppearanceNormal)
+            if(GetDockWindow()->get_appearance() != ::user::appearance_normal)
             {
 
                GetDockWindow()->_001WindowRestore();
@@ -226,8 +226,8 @@ namespace user
                         // ignore
                         if(bMove && rectWindow.top_left() != pt)
                         {
-                           m_eappearanceOrigin = ::user::AppearanceNormal;
-                           GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                           m_eappearanceOrigin = ::user::appearance_normal;
+                           GetDockWindow()->set_appearance(::user::appearance_normal);
                         }
                      }
                      else if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
@@ -253,9 +253,9 @@ namespace user
                   {
                      if(ptCursor.x >= screen.left && ptCursor.x - screen.left <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width() / 2,rectWork.height());
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -317,8 +317,8 @@ namespace user
                {
                   if(bMove && rectWindow.top_left() != pt)
                   {
-                     m_eappearanceOrigin = ::user::AppearanceNormal;
-                     GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                     m_eappearanceOrigin = ::user::appearance_normal;
+                     GetDockWindow()->set_appearance(::user::appearance_normal);
                   }
                }
             }
@@ -326,13 +326,13 @@ namespace user
             {
                if(bMove && rectWindow.top_left() != pt)
                {
-                  m_eappearanceOrigin = ::user::AppearanceNormal;
-                  GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                  m_eappearanceOrigin = ::user::appearance_normal;
+                  GetDockWindow()->set_appearance(::user::appearance_normal);
                }
             }
 
 
-            if(bMove && rectWindow.top_left() != pt && GetDockWindow()->get_appearance() == ::user::AppearanceNormal)
+            if(bMove && rectWindow.top_left() != pt && GetDockWindow()->get_appearance() == ::user::appearance_normal)
             {
                class point ptMove = pt;
                if(GetDockWindow()->GetParent() != NULL)

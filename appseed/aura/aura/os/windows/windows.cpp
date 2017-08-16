@@ -18,7 +18,7 @@ int g_iWsaStartup;
 
 
 
-::aura::system * app_common_prelude(int & iError, ::windows::main_init_data * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
+::aura::system * app_common_prelude(int & iError, ::windows::command * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
 int app_common_term(int iError, ::aura::system * psystem, app_core & appcore);
 
 
@@ -904,7 +904,7 @@ CLASS_DECL_AURA string expand_env(string str)
 #include "aura/node/windows/windows.h"
 
 
-CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::main_init_data * pmaininitdata);
+CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata);
 
 typedef bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
@@ -918,7 +918,7 @@ CLASS_DECL_AURA int32_t app_common_main(HINSTANCE hinstance, HINSTANCE hPrevInst
 
    int iError = 0;
 
-   ::windows::main_init_data * pmaininitdata = NULL;
+   ::windows::command * pmaininitdata = NULL;
 
    ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore, hinstance, hPrevInstance,  lpCmdLine, nCmdShow);
 
@@ -950,7 +950,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
    int iError = 0;
 
-   ::windows::main_init_data * pmaininitdata = NULL;
+   ::windows::command * pmaininitdata = NULL;
 
    ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore);
 
@@ -970,7 +970,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
 
 
-::aura::system * app_common_prelude(int & iError, ::windows::main_init_data * & pmaininitdata, app_core & appcore, HINSTANCE hinstance, HINSTANCE hinstancePrev, const char * pszCmdLine, int nCmdShow)
+::aura::system * app_common_prelude(int & iError, ::windows::command * & pmaininitdata, app_core & appcore, HINSTANCE hinstance, HINSTANCE hinstancePrev, const char * pszCmdLine, int nCmdShow)
 {
 
    string strAppId;
@@ -1065,7 +1065,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
    psystem->m_strAppId = strAppId;
 
-   pmaininitdata = new ::windows::main_init_data;
+   pmaininitdata = new ::windows::command;
 
    pmaininitdata->m_hInstance = hinstance;
    pmaininitdata->m_hPrevInstance = hinstancePrev;
@@ -1074,13 +1074,13 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
    if(pszCmdLine == NULL)
    {
 
-      pmaininitdata->m_vssCommandLine = ::path::module() + " : app=" + psystem->m_strAppId;
+      pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + psystem->m_strAppId;
 
    }
    else
    {
 
-      pmaininitdata->m_vssCommandLine = pszCmdLine;
+      pmaininitdata->m_strCommandLine = pszCmdLine;
 
    }
 

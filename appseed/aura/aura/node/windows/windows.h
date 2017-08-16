@@ -33,14 +33,14 @@ CLASS_DECL_AURA void __try_cleanup();
 
 
 
-#include "windows_application.h"
+#include "windows_command.h"
 
 
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall();
 void CLASS_DECL_AURA __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 bool CLASS_DECL_AURA __windows_init();
-int32_t CLASS_DECL_AURA __windows_main(sp(::aura::system) psystem, ::windows::main_init_data * pmaininitdata);
+int32_t CLASS_DECL_AURA __windows_main(::aura::system * psystem, ::windows::command * pmaininitdata);
 
 
 #include "windows_console_window.h"

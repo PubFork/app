@@ -46,7 +46,7 @@ namespace user
             virtual bool WfiIsFullScreenEnabled();
 
 
-            virtual bool Wfi(EAppearance eappearance = AppearanceCurrent);
+            virtual bool Wfi(EAppearance eappearance = appearance_current);
 
             virtual bool WfiDock(EAppearance eappearance);
             virtual bool WfiClose();

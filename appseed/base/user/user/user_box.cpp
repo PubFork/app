@@ -222,7 +222,7 @@ namespace user
             else if (bIconic && !bInitialFramePosition)
             {
 
-               pwindow->set_appearance(::user::AppearanceIconic);
+               pwindow->set_appearance(::user::appearance_iconic);
 
                pwindow->good_iconify(NULL, rectWindow, true);
 
@@ -236,7 +236,7 @@ namespace user
             else
             {
 
-               pwindow->set_appearance(::user::AppearanceNormal);
+               pwindow->set_appearance(::user::appearance_normal);
 
                pwindow->good_restore(NULL, rectWindow, true);
 
@@ -246,7 +246,7 @@ namespace user
          else
          {
 
-            pwindow->set_appearance(::user::AppearanceNormal);
+            pwindow->set_appearance(::user::appearance_normal);
 
             pwindow->good_restore(NULL, rectWindow, true);
 
@@ -336,7 +336,7 @@ namespace user
    void box::_001WindowRestore()
    {
 
-      set_appearance(::user::AppearanceNormal);
+      set_appearance(::user::appearance_normal);
 
       WindowDataLoadWindowRect(true);
 

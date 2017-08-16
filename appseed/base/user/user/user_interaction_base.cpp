@@ -2625,7 +2625,7 @@ Restart:
    EAppearance interaction_base::get_appearance()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 
@@ -2633,7 +2633,7 @@ Restart:
    EAppearance interaction_base::get_appearance_before()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 

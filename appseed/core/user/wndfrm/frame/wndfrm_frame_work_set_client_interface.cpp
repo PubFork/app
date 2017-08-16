@@ -106,14 +106,14 @@ namespace user
 
             }
 
-            if(eappearance == AppearanceCurrent)
+            if(eappearance == appearance_current)
             {
 
                eappearance = m_eappearance;
 
             }
 
-            if(eappearance == AppearanceNone)
+            if(eappearance == appearance_none)
             {
 
                return true;
@@ -131,10 +131,10 @@ namespace user
                case AppearanceZoomed:
                   WfiMaximize();
                   break;
-               case AppearanceIconic:
+               case appearance_iconic:
                   WfiMinimize();
                   break;
-               case AppearanceNormal:
+               case appearance_normal:
                   WfiRestore(true);
                   break;
                case AppearanceNotifyIcon:
@@ -207,12 +207,12 @@ namespace user
             if(bForceNormal)
             {
 
-               eappearanceRestore = AppearanceNormal;
+               eappearanceRestore = appearance_normal;
 
             }
-            else if(m_workset.GetAppearance() == AppearanceIconic
+            else if(m_workset.GetAppearance() == appearance_iconic
                || (m_workset.GetAppearance() == AppearanceFullScreen
-               && m_eappearanceBefore != AppearanceIconic))
+               && m_eappearanceBefore != appearance_iconic))
             {
 
                eappearanceRestore = m_eappearanceBefore;
@@ -220,7 +220,7 @@ namespace user
                if(m_eappearanceBefore == m_eappearance)
                {
                   
-                  eappearanceRestore = AppearanceNormal;
+                  eappearanceRestore = appearance_normal;
 
                }
 
@@ -228,7 +228,7 @@ namespace user
             else
             {
 
-               eappearanceRestore = AppearanceNormal;
+               eappearanceRestore = appearance_normal;
 
             }
 
@@ -236,7 +236,7 @@ namespace user
             {
             case AppearanceZoomed:
                return WfiMaximize();
-            case AppearanceIconic:
+            case appearance_iconic:
                return WfiMinimize();
             case AppearanceFullScreen:
                return WfiFullScreen();
@@ -253,7 +253,7 @@ namespace user
             if(!WfiOnBeforeRestore())
                return false;
 
-            m_workset.SetAppearance(AppearanceNormal);
+            m_workset.SetAppearance(appearance_normal);
 
             WfiOnRestore();
 
@@ -369,7 +369,7 @@ namespace user
 
             m_eappearanceBefore = m_workset.GetAppearance();
 
-            m_workset.SetAppearance(AppearanceIconic);
+            m_workset.SetAppearance(appearance_iconic);
 
             WfiOnMinimize(bNoActivate);
 

@@ -459,7 +459,7 @@ namespace metrowin
 
       pinitmaindata->m_hInstance             = NULL;
       pinitmaindata->m_hPrevInstance         = NULL;
-      pinitmaindata->m_vssCommandLine        = strId;
+      pinitmaindata->m_strCommandLine        = strId;
       pinitmaindata->m_nCmdShow              = 0;
 
       m_psystem->init_main_data(pinitmaindata);

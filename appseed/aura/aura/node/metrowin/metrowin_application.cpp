@@ -498,7 +498,7 @@ namespace aura
       //if(m_pmaininitdata != NULL && m_pimpl->is_system())
       //ASSERT(pdata->m_hPrevInstance == NULL);
 
-      string strCmdLine = pdata->m_vssCommandLine;
+      string strCmdLine = pdata->m_strCommandLine;
 
       System.m_strCmdLine = strCmdLine;
       //System.m_nCmdShow = pdata->;

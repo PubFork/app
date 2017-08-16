@@ -4006,9 +4006,9 @@ namespace ios
 
    void interaction_impl::_001WindowRestore()
    {
-      m_pui->m_eappearance = user::AppearanceNormal;
+      m_pui->m_eappearance = user::appearance_normal;
       if(m_pui != NULL)
-         m_pui->m_eappearance = user::AppearanceNormal;
+         m_pui->m_eappearance = user::appearance_normal;
       //      ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
@@ -4046,7 +4046,7 @@ namespace ios
       ASSERT(::IsWindow(get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == user::AppearanceIconic;
+         return m_pui->m_eappearance == user::appearance_iconic;
       }
       else
       {

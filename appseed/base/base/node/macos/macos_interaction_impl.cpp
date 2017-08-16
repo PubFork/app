@@ -3582,9 +3582,9 @@ namespace macos
 
    void interaction_impl::_001WindowRestore()
    {
-      m_pui->m_eappearance = user::AppearanceNormal;
+      m_pui->m_eappearance = user::appearance_normal;
       if (m_pui != NULL)
-         m_pui->m_eappearance = user::AppearanceNormal;
+         m_pui->m_eappearance = user::appearance_normal;
       //      ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
@@ -3612,7 +3612,7 @@ namespace macos
       ASSERT(::IsWindow(get_handle()));
       if (GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == user::AppearanceIconic;
+         return m_pui->m_eappearance == user::appearance_iconic;
       }
       else
       {
@@ -5950,7 +5950,7 @@ namespace macos
       
       m_pui->m_eappearanceBefore = m_pui->m_eappearance;
       
-      m_pui->m_eappearance = ::user::AppearanceIconic;
+      m_pui->m_eappearance = ::user::appearance_iconic;
       
    }
    
@@ -5965,10 +5965,10 @@ namespace macos
          
       }
       
-      if(m_pui->m_eappearanceBefore == ::user::AppearanceIconic)
+      if(m_pui->m_eappearanceBefore == ::user::appearance_iconic)
       {
          
-         m_pui->m_eappearanceBefore = ::user::AppearanceNormal;
+         m_pui->m_eappearanceBefore = ::user::appearance_normal;
          
       }
    

@@ -327,7 +327,7 @@ namespace user
    void interaction_impl_base::_001WindowMinimize(bool bNoActivate)
    {
 
-      m_pui->set_appearance(AppearanceIconic);
+      m_pui->set_appearance(appearance_iconic);
 
       rect rectNormal;
 
@@ -384,7 +384,7 @@ namespace user
    void interaction_impl_base::_001WindowRestore()
    {
 
-      m_pui->set_appearance(AppearanceNormal);
+      m_pui->set_appearance(appearance_normal);
 
       rect rectNormal;
 

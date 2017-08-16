@@ -3624,7 +3624,7 @@ void interaction_impl::_001WindowMaximize()
 void interaction_impl::_001WindowRestore()
 {
    if (m_pui != NULL)
-      m_pui->m_eappearance = ::user::AppearanceNormal;
+      m_pui->m_eappearance = ::user::appearance_normal;
    ::ShowWindow((oswindow)get_handle(), SW_RESTORE);
 }
 
@@ -3647,7 +3647,7 @@ bool interaction_impl::WfiIsIconic()
    if (GetExStyle() & WS_EX_LAYERED)
    {
 
-      return m_pui->m_eappearance == ::user::AppearanceIconic;
+      return m_pui->m_eappearance == ::user::appearance_iconic;
 
    }
    else

@@ -1169,7 +1169,7 @@ namespace axis
       {
          *lprect = rect_dim(0,0,cx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceLeft)
+      else if(eappearance == ::user::appearance_left)
       {
          *lprect = rect_dim(0,0,midcx,cy) + top_left(lprect);
       }
@@ -1242,7 +1242,7 @@ namespace axis
       aa.add(::user::AppearanceTop);
       recta.add_dim(0,0,cx,midcy);
 
-      aa.add(::user::AppearanceLeft);
+      aa.add(::user::appearance_left);
       recta.add_dim(0,0,midcx,cy);
 
       aa.add(::user::AppearanceRight);

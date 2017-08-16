@@ -783,7 +783,7 @@ namespace user
       virtual bool WfiIsIconic() override;
 
 
-      virtual bool Wfi(EAppearance eapperance = AppearanceCurrent) override;
+      virtual bool Wfi(EAppearance eapperance = appearance_current) override;
 
       virtual bool WfiDock(EAppearance eapperance) override;
       virtual bool WfiClose() override;

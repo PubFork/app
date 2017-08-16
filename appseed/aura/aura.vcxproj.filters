@@ -548,9 +548,6 @@
     <ClInclude Include="primitive\primitive_command_line.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_command_thread.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\primitive_request_signal.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
@@ -1289,9 +1286,6 @@
     <ClInclude Include="aura\aura\aura_machine_event_data.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_main_init_data.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_math.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -1429,9 +1423,6 @@
     </ClInclude>
     <ClInclude Include="aura\node\node.h">
       <Filter>Header Files\aura\node</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\node\windows\windows_application.h">
-      <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="aura\node\windows\windows_exception.h">
       <Filter>Header Files\aura\node\windows</Filter>
@@ -2854,6 +2845,36 @@
     </ClInclude>
     <ClInclude Include="aura\aura\aura_chronometer.h">
       <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura__c.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cmp2.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_session_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_session_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\os.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_command.h">
+      <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

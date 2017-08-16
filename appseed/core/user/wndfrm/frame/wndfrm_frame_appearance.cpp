@@ -134,9 +134,9 @@ namespace user
             if (pwnd->WfiIsZoomed())
                SetAppearance(AppearanceZoomed);
             else if (pwnd->WfiIsIconic())
-               SetAppearance(AppearanceIconic);
+               SetAppearance(appearance_iconic);
             else
-               SetAppearance(AppearanceNormal);
+               SetAppearance(appearance_normal);
 
          }
 
@@ -182,7 +182,7 @@ namespace user
          bool appearance::IsIconic()
          {
 
-            return GetAppearance() == AppearanceIconic;
+            return GetAppearance() == appearance_iconic;
 
          }
 
@@ -248,7 +248,7 @@ namespace user
 
             if (pwnd->WfiIsIconic())
             {
-               m_emode = AppearanceIconic;
+               m_emode = appearance_iconic;
             }
             else if (pwnd->WfiIsZoomed())
             {
@@ -260,7 +260,7 @@ namespace user
             }
             else
             {
-               m_emode = AppearanceNormal;
+               m_emode = appearance_normal;
             }
          }
 

@@ -73,7 +73,7 @@ plane_system::plane_system(const char * pszId)
    
    ::aura::main_init_data * pinitmaindata  = new ::aura::main_init_data;
    
-   pinitmaindata->m_vssCommandLine        = pszId;
+   pinitmaindata->m_strCommandLine        = pszId;
    
    m_psystem->init_main_data(pinitmaindata);
    

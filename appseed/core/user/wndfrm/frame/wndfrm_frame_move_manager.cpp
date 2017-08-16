@@ -62,10 +62,10 @@ namespace user
 
             }
 
-            if(GetMoveWindow()->get_appearance() != ::user::AppearanceNormal && GetMoveWindow()->get_appearance() != ::user::AppearanceMinimal)
+            if(GetMoveWindow()->get_appearance() != ::user::appearance_normal && GetMoveWindow()->get_appearance() != ::user::AppearanceMinimal)
             {
 
-               GetMoveWindow()->set_appearance(::user::AppearanceNormal);
+               GetMoveWindow()->set_appearance(::user::appearance_normal);
 
             }
 

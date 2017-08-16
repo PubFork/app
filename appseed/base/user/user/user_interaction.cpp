@@ -63,7 +63,7 @@ namespace user
 
       m_bMayProDevian = true;
       //m_pmutex                   = NULL;
-      m_eappearance = AppearanceNormal;
+      m_eappearance = appearance_normal;
       m_bCursorInside = false;
       m_nFlags = 0;
       m_puiOwner = NULL;
@@ -7370,7 +7370,7 @@ restart:
 
    CLASS_DECL_BASE bool is_docking_appearance(::user::EAppearance eappearance)
    {
-      return eappearance == ::user::AppearanceLeft
+      return eappearance == ::user::appearance_left
              || eappearance == ::user::AppearanceTop
              || eappearance == ::user::AppearanceRight
              || eappearance == ::user::AppearanceBottom

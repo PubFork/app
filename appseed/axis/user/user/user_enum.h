@@ -8,11 +8,11 @@ namespace user
    enum EAppearance
    {
 
-      AppearanceNone,
-      AppearanceCurrent,
-      AppearanceIconic,
-      AppearanceNormal,
-      AppearanceLeft,
+      appearance_none,
+      appearance_current,
+      appearance_iconic,
+      appearance_normal,
+      appearance_left,
       AppearanceTop,
       AppearanceRight,
       AppearanceBottom,

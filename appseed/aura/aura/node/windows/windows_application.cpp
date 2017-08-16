@@ -299,7 +299,7 @@ namespace aura
 
 
 
-   bool application::process_command(::aura::main_init_data * pauradata)
+   bool application::process_command(::command::command * pcommand)
    {
 
       // m_pmaininitdata = pauradata;
@@ -307,7 +307,7 @@ namespace aura
       if(m_pcommand != NULL && m_pauraapp->is_system())
       {
 
-         ::windows::main_init_data * pdata = (::windows::main_init_data *) m_pcommand;
+         ::windows::command * pdata = m_pcommand.cast < ::windows::command >();
          if (!m_pauraapp->is_system())
             return false;
 
@@ -315,7 +315,7 @@ namespace aura
 
          HINSTANCE hInstance = pdata->m_hInstance;
          //         HINSTANCE hPrevInstance    = pdata->m_hPrevInstance;
-         string strCmdLine = pdata->m_vssCommandLine;
+         string strCmdLine = pdata->m_strCommandLine;
          UINT nCmdShow = pdata->m_nCmdShow;
 
          // handle critical errors and avoid Windows message boxes
@@ -325,7 +325,6 @@ namespace aura
          m_pauraapp->m_hinstance = hInstance;
          m_pauraapp->m_hinstance = hInstance;
          //hPrevInstance; // Obsolete.
-         System.m_strCmdLine = strCmdLine;
          System.m_nCmdShow = nCmdShow;
          //pApp->SetCurrentHandles();
          m_pauraapp->SetCurrentHandles();
@@ -455,15 +454,15 @@ void __node_init_main_data(::aura::application * papp,HINSTANCE hInstance,HINSTA
 {
 
 
-   ::windows::main_init_data * pmaininitdata = new ::windows::main_init_data;
+   ::windows::command * pmaininitdata = new ::windows::command;
 
 
    pmaininitdata->m_hInstance = hInstance;
    pmaininitdata->m_hPrevInstance = hPrevInstance;
-   pmaininitdata->m_vssCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
+   pmaininitdata->m_strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
    pmaininitdata->m_nCmdShow = nCmdShow;
 
-   papp->init_main_data(pmaininitdata);
+   papp->startup_command(pmaininitdata);
 
 }
 
