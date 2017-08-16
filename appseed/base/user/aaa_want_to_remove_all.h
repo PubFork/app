@@ -73,6 +73,8 @@
 #include "base/user/user/user_scroll_bar.h"
 //#include "base/user/user/userex_scroll.h"
 
+#include "base/user/user/user_button.h"
+
 #include "base/user/user/user_plain_text_data.h"
 #include "base/user/user/user_plain_edit.h"
 
