@@ -2,11 +2,11 @@
 
 #define TIMER_HOVER 321654
 
-class SimpleToolCmdUI : public command_ui        // class private to this file !
+class simple_tool_command_ui : public command_ui        // class private to this file !
 {
 public: // re-implementations only
 
-   SimpleToolCmdUI(::aura::application * papp);
+   simple_tool_command_ui(::aura::application * papp);
    virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
    //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
    virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
@@ -219,8 +219,6 @@ size simple_toolbar::CalcSimpleLayout()
 void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   draw_lock dl(this, pgraphics);
-   
    sp(::user::tab) ptab = GetTypedParent < ::user::tab >();
 
    if (ptab.is_set())
@@ -395,7 +393,7 @@ void simple_toolbar::_001OnCreate(signal_details * pobj)
 void simple_toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
 {
 
-   SimpleToolCmdUI state(get_app());
+   simple_tool_command_ui state(get_app());
 
    state.m_pOther = (this);
 
@@ -1479,14 +1477,13 @@ void simple_toolbar::_001OnImageListAttrib()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// simple_toolbar idle update through SimpleToolCmdUI class
+// simple_toolbar idle update through simple_tool_command_ui class
 
-SimpleToolCmdUI::SimpleToolCmdUI(::aura::application * papp) :
-   object(papp),
+simple_tool_command_ui::simple_tool_command_ui(::aura::application * papp) :
    command_ui(papp)
 {
 }
-void SimpleToolCmdUI::Enable(bool bOn, ::action::context actioncontext)
+void simple_tool_command_ui::Enable(bool bOn, ::action::context actioncontext)
 {
    m_bEnableChanged = TRUE;
    simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_pOther);
@@ -1507,7 +1504,7 @@ void SimpleToolCmdUI::Enable(bool bOn, ::action::context actioncontext)
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle);
 }
 
-void SimpleToolCmdUI::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+void simple_tool_command_ui::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
 {
    ASSERT(echeck == check::checked
       || echeck == check::unchecked
@@ -1527,7 +1524,7 @@ void SimpleToolCmdUI::_001SetCheck(check::e_check echeck, ::action::context acti
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle | TBBS_CHECKBOX);
 }
 
-void SimpleToolCmdUI::SetText(const char *, ::action::context)
+void simple_tool_command_ui::SetText(const char *, ::action::context)
 {
    // ignore it
 }
@@ -1615,7 +1612,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    ::draw2d::memory_graphics pgraphics(allocer());
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 

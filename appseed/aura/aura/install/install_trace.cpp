@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <stdio.h>
 
 
 #if defined(INSTALL_SUBSYSTEM)

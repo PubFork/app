@@ -128,7 +128,7 @@ namespace user
 
       br->create_solid(ARGB(255, 84, 84, 77));
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -233,7 +233,7 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -340,7 +340,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -442,7 +442,7 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       //pgraphics->SelectObject(br);
 
@@ -506,7 +506,7 @@ namespace user
 
       pgraphics->CreateCompatibleDC(NULL);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 

@@ -24,8 +24,6 @@ CLASS_DECL_BASE bool __register_class(WNDCLASSW* lpWndClass);
 CLASS_DECL_BASE LRESULT CALLBACK __window_procedure(oswindow oswindow,UINT nMsg,WPARAM wParam,LPARAM lParam);
 CLASS_DECL_BASE WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
-typedef void (__MSG_CALL ::user::interaction_impl::*__PMSGW)();
-typedef void (__MSG_CALL thread::*__PMSGT)();
 extern CLASS_DECL_BASE const unichar gen_Wnd[];           // simple child windows/controls
 extern CLASS_DECL_BASE const unichar gen_WndControlBar[]; // controls with gray backgrounds
 extern CLASS_DECL_BASE const unichar gen_WndMDIFrame[];

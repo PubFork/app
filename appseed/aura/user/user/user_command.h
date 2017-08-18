@@ -9,7 +9,7 @@ namespace user
 
 
    class CLASS_DECL_AURA command:
-      public object
+      public signal_details
    {
    public:
 
@@ -28,6 +28,7 @@ namespace user
 
 
       command();
+      command(signal * psignal);
       command(id id);
       command(::command_ui * pcommandui);
 

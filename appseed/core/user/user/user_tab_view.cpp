@@ -781,14 +781,14 @@ namespace user
 
    }
 
-   bool tab_view::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool tab_view::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(!handle(pcmdmsg))
+      if(!handle(pcommand))
          return false;
       if(get_view_uie() != NULL)
-         if(get_view_uie()->_001OnCmdMsg(pcmdmsg))
+         if(get_view_uie()->_001OnCmdMsg(pcommand))
             return true;
-      return impact::_001OnCmdMsg(pcmdmsg);
+      return impact::_001OnCmdMsg(pcommand);
    }
 
    void tab_view::set_view_creator(::user::view_creator * pviewcreator)

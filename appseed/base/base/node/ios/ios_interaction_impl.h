@@ -56,7 +56,7 @@ namespace ios
       
       virtual ::user::interaction * get_wnd() const override;
       
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg) override;
+      virtual bool _001OnCmdMsg(::user::command * pcommand) override;
       
       virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
       
@@ -560,8 +560,8 @@ namespace ios
                          ::user::interaction * pActivateWnd, ::user::interaction * pDeactivateWnd);
       
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
       
       // Win4 messages
       //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);

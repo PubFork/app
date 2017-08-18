@@ -333,7 +333,7 @@ namespace user
          //font->operator=(*System.visual().fonts().GetListCtrlFont());
          //font->set_bold();
          //data.m_pdc->set_font(font);
-         select_font(data.m_pdc, font_tree, this);
+         select_font(data.m_pdc, font_tree);
          data.m_pdc->_DrawText(strItem, strItem.get_length(), rect, m_iDrawTextFlags);
 
       }
@@ -1142,7 +1142,7 @@ namespace user
       //font->set_bold();
       //g->set_font(font);
 
-      select_font(g, font_tree, this);
+      select_font(g, font_tree);
 
 
       size size;

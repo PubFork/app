@@ -47,14 +47,14 @@ namespace user
 
 
 
-   bool document::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool document::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target::_001OnCmdMsg(pcmdmsg))
+      if (command_target::_001OnCmdMsg(pcommand))
          return TRUE;
 
       // otherwise check template
       if (m_pimpactsystem != NULL &&
-            m_pimpactsystem->_001OnCmdMsg(pcmdmsg))
+            m_pimpactsystem->_001OnCmdMsg(pcommand))
          return TRUE;
 
       return FALSE;

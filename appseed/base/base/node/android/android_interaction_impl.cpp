@@ -1213,9 +1213,9 @@ namespace android
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target_interface::_001OnCmdMsg(pcmdmsg))
+      if(command_target_interface::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1224,7 +1224,7 @@ namespace android
       // return b;
 
       command_target * pcmdtarget = dynamic_cast <command_target *> (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcmdmsg);
+      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
    }
 
 

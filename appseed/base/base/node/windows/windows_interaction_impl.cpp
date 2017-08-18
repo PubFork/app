@@ -1358,9 +1358,9 @@ namespace windows
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target_interface::_001OnCmdMsg(pcmdmsg))
+      if (command_target_interface::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1369,7 +1369,7 @@ namespace windows
       // return b;
 
       command_target * pcmdtarget = dynamic_cast <command_target *> (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcmdmsg);
+      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
    }
 
 
@@ -1402,7 +1402,8 @@ namespace windows
       //}
 
 
-      bool bDestroying = m_pui->m_bDestroying;
+      bool bUserElementalOk = !m_pui->m_bUserElementalOk;
+
       if (pbase->m_uiMessage == WM_ENABLE)
       {
 
@@ -1732,11 +1733,19 @@ namespace windows
          m_pui->BaseOnControlEvent(pbase);
          return;
       }
+      
       ::user::interaction_impl::message_handler(pobj);
+      
       //if(pobj->m_bRet && !pbase->m_bDoSystemDefault)
+      
       if (pobj->m_bRet)
+      {
+
          return;
-      if (!bDestroying)
+
+      }
+
+      if (!bUserElementalOk)
       {
          if (m_pui != NULL)
          {
@@ -2606,7 +2615,7 @@ namespace windows
 
       }
 
-      if (m_pui->m_bCreated)
+      if (m_pui->m_bUserElementalOk)
       {
 
          pcreate->set_lresult(0);

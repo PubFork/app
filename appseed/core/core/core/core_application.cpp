@@ -1008,10 +1008,10 @@ namespace core
       }
    }
 
-   bool application::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool application::_001OnCmdMsg(::user::command * pcommand)
 
    {
-      if (command_target_interface::_001OnCmdMsg(pcmdmsg))
+      if (command_target_interface::_001OnCmdMsg(pcommand))
          return TRUE;
       return 0;
    }

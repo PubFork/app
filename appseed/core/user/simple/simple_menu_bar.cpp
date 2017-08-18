@@ -125,8 +125,8 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
   //  m_pwthreadTracking->m_evInitialized.lock();
     //m_pwthreadTracking->m_puiMain->SendMessage(WM_USER, 3, (LPARAM) this);
     //m_pwthreadTracking->m_puiMain->SendMessage(WM_USER, 4, lpnmtb->iItem);
-    TRACE("MenuBarV033::OnDropDown simple_menu_bar::_TrackPopupMenu % d\n", lpnmtb->iItem);
-    _TrackPopupMenu(lpnmtb->iItem);
+    TRACE("MenuBarV033::OnDropDown simple_menu_bar::_track_popup_menu % d\n", lpnmtb->iItem);
+    _track_popup_menu(lpnmtb->iItem);
 
     *result = TBDDRET_DEFAULT;
 }*/
@@ -138,11 +138,11 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
 }*/
 
 
-bool simple_menu_bar::_001OnCmdMsg(::user::command * pcmdmsg)
+bool simple_menu_bar::_001OnCmdMsg(::user::command * pcommand)
 {
    // TODO: add your specialized code here and/or call the base class
 
-   return simple_toolbar::_001OnCmdMsg(pcmdmsg);
+   return simple_toolbar::_001OnCmdMsg(pcommand);
 }
 
 
@@ -154,9 +154,9 @@ void simple_menu_bar::_001OnMouseMove(signal_details * pobj)
 }
 
 
-bool simple_menu_bar::_TrackPopupMenu(int32_t iItem)
+bool simple_menu_bar::_track_popup_menu(int32_t iItem)
 {
-    TRACE("simple_menu_bar::_TrackPopupMenu % d\n", iItem);
+    TRACE("simple_menu_bar::_track_popup_menu % d\n", iItem);
     m_iTracking = iItem;
     m_iButtonPressItem = iItem;
     RedrawWindow();
@@ -191,7 +191,7 @@ void simple_menu_bar::pre_translate_message(signal_details * pobj)
    {
       if(pbase->m_wparam == 33)
       {
-         _TrackPopupMenu((int32_t) pbase->m_lparam);
+         _track_popup_menu((int32_t) pbase->m_lparam);
       }
    }
    TRACE("simple_menu_bar::pre_translate_message messageID=%d wParam=%d lParam=%d\n", pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam);
@@ -245,7 +245,7 @@ LRESULT CALLBACK simple_menu_bar::MessageProc(
             TRACE("simple_menu_bar::MessageProc %d %d %d \n", fwKeys, xPos, yPos);
             point pt(xPos, yPos);
             ScreenToClient(&pt);
-            _TrackPopupMenu(pt);
+            _track_popup_menu(pt);
 
         }
     }
@@ -254,7 +254,7 @@ LRESULT CALLBACK simple_menu_bar::MessageProc(
 }
 
 
-bool simple_menu_bar::_TrackPopupMenu(point point)
+bool simple_menu_bar::_track_popup_menu(point point)
 {
    if(m_bTracking)
    {
@@ -263,14 +263,14 @@ bool simple_menu_bar::_TrackPopupMenu(point point)
          iItem < m_iTopMenuCount &&
          iItem != m_iTracking)
       {
-         TRACE("simple_menu_bar::OnMouseMove simple_menu_bar::_TrackPopupMenu % d\n", iItem);
+         TRACE("simple_menu_bar::OnMouseMove simple_menu_bar::_track_popup_menu % d\n", iItem);
          //            SendMessage(WM_KEYDOWN, VK_ESCAPE);
          //            if(m_iTracking >= 0)
          //          {
                 send_message(WM_CANCELMODE);
     //        }
             send_message(WM_USER, 33, iItem);
-            //return _TrackPopupMenu(iItem);
+            //return _track_popup_menu(iItem);
         }
     }
 
@@ -368,7 +368,7 @@ void simple_menu_bar::OnUpdateCmdUI(sp(::user::frame_window)pTarget, bool bDisab
    UNREFERENCED_PARAMETER(pTarget);
    UNREFERENCED_PARAMETER(bDisableIfNoHndler);
    return;
-/*   tool_cmd_ui state;
+/*   tool_command_ui state;
    state.m_pOther = this;
 
    state.m_nIndexMax = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
@@ -719,7 +719,7 @@ size simple_menu_bar::CalcFixedLayout(bool bStretch, bool bHorz)
 
 /*void simple_menu_bar::_001Hover(point pt)
 {
-   _TrackPopupMenu(pt);
+   _track_popup_menu(pt);
    int32_t iHover = -1;
    if(m_iTracking >= 0)
    {
@@ -778,7 +778,7 @@ bool simple_menu_bar::OnEraseBkgnd(::draw2d::graphics * pgraphics)
 
 void simple_menu_bar::_001OnDropDown(int32_t iItem)
 {
-   _TrackPopupMenu(iItem);
+   _track_popup_menu(iItem);
 }
 
 void simple_menu_bar::_001OnClick(index iItem)
@@ -791,7 +791,7 @@ void simple_menu_bar::OnUpdateHover()
 {
    if(m_iHover >= 0)
    {
-      //_TrackPopupMenu(m_iHover);
+      //_track_popup_menu(m_iHover);
    }
 }
 

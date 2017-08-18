@@ -18,7 +18,7 @@ namespace filemanager
       m_bRestartCreateImageList = false;
       m_bStatic = false;
       m_bPendingSize = false;
-//      m_pcreateimagelistthread = NULL;
+      //      m_pcreateimagelistthread = NULL;
 
       m_bFileSize = false;
       m_bShow = false;
@@ -26,29 +26,29 @@ namespace filemanager
 
       bool bDoubleClickInWebView = true;
 
-//#ifdef WINDOWSEX
-//      
-//      SHELLSTATE shellstate;
-//
-//      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
-//
-//      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
-//      
-//#elif defined(MACOS)
-//      
-//      bDoubleClickInWebView = true;
-//
-//#endif
+      //#ifdef WINDOWSEX
+      //      
+      //      SHELLSTATE shellstate;
+      //
+      //      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
+      //
+      //      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
+      //      
+      //#elif defined(MACOS)
+      //      
+      //      bDoubleClickInWebView = true;
+      //
+      //#endif
 
-//#ifdef LINUX
-//      
+      //#ifdef LINUX
+      //      
       m_bHoverSelect = true;
-      
-//#else
-//      
-//      m_bHoverSelect = !bDoubleClickInWebView;
-//      
-//#endif
+
+      //#else
+      //      
+      //      m_bHoverSelect = !bDoubleClickInWebView;
+      //      
+      //#endif
 
 
       connect_update_cmd_ui("edit_copy", &file_list::_001OnUpdateEditCopy);
@@ -88,7 +88,7 @@ namespace filemanager
    }
 
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void file_list::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -98,7 +98,7 @@ namespace filemanager
    {
       ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+#endif //DEBUG
 
 
    void file_list::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
@@ -108,7 +108,7 @@ namespace filemanager
 
       ::userfs::list::on_update(pSender, lHint, phint);
 
-      if(m_bStatic && lHint == hint_add_location)
+      if (m_bStatic && lHint == hint_add_location)
       {
 
          ::file::patha filepatha;
@@ -119,10 +119,10 @@ namespace filemanager
 
          filepath.trim();
 
-         if(filepath.has_char() && get_filemanager_manager()->get_fs_data()->is_dir(filepath))
+         if (filepath.has_char() && get_filemanager_manager()->get_fs_data()->is_dir(filepath))
          {
 
-            if(filepatha.add_unique(filepath) >= 0)
+            if (filepatha.add_unique(filepath) >= 0)
             {
 
                get_filemanager_manager()->data_save(get_filemanager_template()->m_dataidStatic, filepatha);
@@ -136,34 +136,34 @@ namespace filemanager
          }
 
       }
-      else if(lHint == 123458)
+      else if (lHint == 123458)
       {
          _001SetView(view_list);
       }
-      else if(lHint == 1234511)
+      else if (lHint == 1234511)
       {
          _001SetView(view_report);
       }
-      else if(lHint == 1234525)
+      else if (lHint == 1234525)
       {
          _001SetView(view_icon);
       }
-      if(phint != NULL)
+      if (phint != NULL)
       {
-         if(base_class < update_hint >::bases(phint))
+         if (base_class < update_hint >::bases(phint))
          {
-            update_hint * puh = (update_hint *) phint;
-            if(puh->is_type_of(update_hint::TypeInitialize))
+            update_hint * puh = (update_hint *)phint;
+            if (puh->is_type_of(update_hint::TypeInitialize))
             {
 
 
                m_pauraapp = get_app()->m_pcoreapp;
-               db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
-               if(pcentral == NULL)
+               db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+               if (pcentral == NULL)
                   return;
                string str;
                str.Format(".local://file_list(%s)", get_filemanager_data()->m_strDISection);
-               if(get_filemanager_data()->m_bPassBk)
+               if (get_filemanager_data()->m_bPassBk)
                {
                   ::user::list::m_bBackgroundBypass = true;
                }
@@ -172,15 +172,15 @@ namespace filemanager
                _001OnUpdateItemCount();
 
             }
-            else if(!m_bStatic && puh->is_type_of(update_hint::TypeSynchronizePath))
+            else if (!m_bStatic && puh->is_type_of(update_hint::TypeSynchronizePath))
             {
 
-               if(puh->m_filepath != get_filemanager_item()->m_filepath)
+               if (puh->m_filepath != get_filemanager_item()->m_filepath)
                   return;
 
-               if(get_filemanager_data()->m_pholderFileList != NULL)
+               if (get_filemanager_data()->m_pholderFileList != NULL)
                {
-                  if(get_filemanager_data()->m_pholderFileList->m_uiptraChild.get_size() > 0)
+                  if (get_filemanager_data()->m_pholderFileList->m_uiptraChild.get_size() > 0)
                   {
                      get_filemanager_data()->m_pholderFileList->m_uiptraChild[0]->ShowWindow(SW_HIDE);
                   }
@@ -204,9 +204,9 @@ namespace filemanager
                   }
                }*/
             }
-            else if(puh->is_type_of(update_hint::TypeFilter))
+            else if (puh->is_type_of(update_hint::TypeFilter))
             {
-               if(puh->m_wstrFilter.is_empty())
+               if (puh->m_wstrFilter.is_empty())
                {
                   FilterClose();
                }
@@ -214,39 +214,39 @@ namespace filemanager
                {
                   FilterBegin();
                   Filter1(puh->m_wstrFilter);
-//                  FilterApply();
+                  //                  FilterApply();
                }
             }
-            else if(puh->is_type_of(update_hint::TypeGetActiveViewSelection))
+            else if (puh->is_type_of(update_hint::TypeGetActiveViewSelection))
             {
-               if(GetParentFrame()->GetActiveView() ==  (this))
+               if (GetParentFrame()->GetActiveView() == (this))
                {
                   GetSelected(puh->m_itemaSelected);
                }
             }
          }
-         else if(base_class < form_update_hint > :: bases(phint))
+         else if (base_class < form_update_hint > ::bases(phint))
          {
-            form_update_hint * puh = dynamic_cast<form_update_hint * > (phint);
-            if(puh->m_etype == form_update_hint::type_after_browse)
+            form_update_hint * puh = dynamic_cast<form_update_hint *> (phint);
+            if (puh->m_etype == form_update_hint::type_after_browse)
             {
-               if(puh->m_strForm == "filemanager\\replace_name_in_file_system.xhtml")
+               if (puh->m_strForm == "filemanager\\replace_name_in_file_system.xhtml")
                {
                   //html::elemental * pelemental = dynamic_cast < html::elemental * > (puh->m_pformview->get_html_data()->get_element_by_name("encontrar"));
                   //html::impl::input_text * pinput = dynamic_cast < html::impl::input_text * > (pelemental->m_pimpl);
                   sp(::user::interaction) ptext = puh->m_pform->get_child_by_id("encontrar");
                   range range;
                   _001GetSelection(range);
-                  if(range.get_item_count() > 0)
+                  if (range.get_item_count() > 0)
                   {
                      ptext->_001SetText(get_fs_mesh_data()->m_itema.get_item(range.ItemAt(0).get_lower_bound()).m_strName, puh->m_actioncontext);
                   }
                }
             }
 
-            form_update_hint * pmanageruh = dynamic_cast<form_update_hint * > (phint);
+            form_update_hint * pmanageruh = dynamic_cast<form_update_hint *> (phint);
 
-            if(pmanageruh != NULL)
+            if (pmanageruh != NULL)
             {
 
                if (pmanageruh->m_ehint == manager::hint_replace_name)
@@ -286,16 +286,16 @@ namespace filemanager
    }
 
 
-  bool file_list::_001OnClick(uint_ptr nFlags, point point)
+   bool file_list::_001OnClick(uint_ptr nFlags, point point)
    {
       UNREFERENCED_PARAMETER(nFlags);
       index iItem;
       index iSubItem;
-      if(_001HitTest_(point, iItem, iSubItem))
+      if (_001HitTest_(point, iItem, iSubItem))
       {
-         if(iSubItem == m_iNameSubItem || (m_eview == view_list && iSubItem == 0))
+         if (iSubItem == m_iNameSubItem || (m_eview == view_list && iSubItem == 0))
          {
-           _017OpenSelected(true, ::action::source_user);
+            _017OpenSelected(true, ::action::source_user);
          }
          return true;
       }
@@ -312,7 +312,7 @@ namespace filemanager
       UNREFERENCED_PARAMETER(nFlags);
       index iItem;
       index iSubItem;
-      if(_001HitTest_(point, iItem, iSubItem))
+      if (_001HitTest_(point, iItem, iSubItem))
       {
          _017OpenContextMenuSelected(::action::source_user);
       }
@@ -350,14 +350,14 @@ namespace filemanager
       synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
       index iItem;
-//      HRESULT hr;
+      //      HRESULT hr;
       point point = pcontextmenu->m_pt;
       class point ptClient = point;
       ::user::list::ScreenToClient(&ptClient);
-        if(_001HitTest_(ptClient, iItem))
+      if (_001HitTest_(ptClient, iItem))
       {
          ::user::menu menu(get_app());
-         if(get_fs_mesh_data()->m_itema.get_item(iItem).IsFolder())
+         if (get_fs_mesh_data()->m_itema.get_item(iItem).IsFolder())
          {
             _017OpenContextMenuFolder(canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iItem))), ::action::source_user);
             /*if (menu.LoadXmlMenu(get_filemanager_template()->m_strFolderPopup))
@@ -368,7 +368,7 @@ namespace filemanager
                sp(::user::frame_window) pframe = ( (GetParentFrame()));
                pframe->SetActiveView(this);
                menuPopup.set_app(get_app());
-               menuPopup.TrackPopupMenu(
+               menuPopup.track_popup_menu(
                   point.x, point.y,
                   pframe);
             }*/
@@ -401,18 +401,18 @@ namespace filemanager
 
    UINT c_cdecl file_list::ThreadProcFileSize(LPVOID lpparam)
    {
-      file_size * psize = (file_size *) lpparam;
-      db_server * pcentral = dynamic_cast < db_server * > (&App(psize->m_pview->m_pauraapp).simpledb().db());
-      if(pcentral == NULL)
+      file_size * psize = (file_size *)lpparam;
+      db_server * pcentral = dynamic_cast <db_server *> (&App(psize->m_pview->m_pauraapp).simpledb().db());
+      if (pcentral == NULL)
          return 0;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
       bool bPendingSize;
       int64_t i64Size;
-      while(true)
+      while (true)
       {
          bPendingSize = false;
          pset->get_fs_size(i64Size, psize->m_str, bPendingSize);
-         if(!bPendingSize)
+         if (!bPendingSize)
             break;
       }
       //psize->m_pview->RedrawWindow();
@@ -424,27 +424,27 @@ namespace filemanager
 
    void file_list::FileSize()
    {
-      if(m_bFileSize)
+      if (m_bFileSize)
          return;
       m_bFileSize = true;
 
-      db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
-      if(pcentral == NULL)
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+      if (pcentral == NULL)
          return;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
 
       int32_t i;
-      while(true)
+      while (true)
       {
          i = 0;
-         while(i < get_fs_mesh_data()->m_itema.get_count() || IsWindowVisible())
+         while (i < get_fs_mesh_data()->m_itema.get_count() || IsWindowVisible())
          {
             int64_t i64Size;
             bool bPendingSize;
             single_lock lock(m_pauraapp->m_pmutex);
-            if(!lock.lock(millis(1984)))
+            if (!lock.lock(millis(1984)))
                return;
-            if(i >= get_fs_mesh_data()->m_itema.get_count())
+            if (i >= get_fs_mesh_data()->m_itema.get_count())
                i = 0;
             bPendingSize = false;
 
@@ -454,7 +454,7 @@ namespace filemanager
                pset->get_fs_size(i64Size, get_fs_mesh_data()->m_itema.get_item(i).m_filepath, bPendingSize);
 
             }
-            catch(...)
+            catch (...)
             {
 
             }
@@ -474,17 +474,17 @@ namespace filemanager
 
       ::userfs::list::_001OnTimer(ptimer);
 
-      if(ptimer->m_nIDEvent == 888888)
+      if (ptimer->m_nIDEvent == 888888)
       {
-         if(get_filemanager_data()->m_bSetBergedgeTopicFile)
+         if (get_filemanager_data()->m_bSetBergedgeTopicFile)
          {
             stringa stra;
             GetSelectedFilePath(stra);
-            if(stra.get_count() <= 0)
+            if (stra.get_count() <= 0)
             {
                Session.m_varTopicFile.unset();
             }
-            else if(stra.get_count() == 1)
+            else if (stra.get_count() == 1)
             {
                Session.m_varTopicFile = stra[0];
             }
@@ -509,13 +509,13 @@ namespace filemanager
       //SetTimer(1234567, 50, NULL);
    }
 
-   bool file_list::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool file_list::_001OnCmdMsg(::user::command * pcommand)
    {
       ::fs::item_array itema;
       GetSelected(itema);
-      if(get_filemanager_manager()->HandleDefaultFileManagerItemCmdMsg(pcmdmsg, itema))
+      if (get_filemanager_manager()->HandleDefaultFileManagerItemCmdMsg(pcommand, itema))
          return TRUE;
-      return ::user::impact::_001OnCmdMsg(pcmdmsg);
+      return ::user::impact::_001OnCmdMsg(pcommand);
    }
 
    void file_list::_001OnShellCommand(signal_details * pobj)
@@ -526,7 +526,7 @@ namespace filemanager
 
    void file_list::_001OnFileManagerItemCommand(signal_details * pobj)
    {
-      
+
       SCAST_PTR(::user::command, pcommand, pobj);
 
       ::fs::item_array itema;
@@ -537,17 +537,17 @@ namespace filemanager
 
       _001GetSelection(range);
 
-      for(iItemRange = 0;
-          iItemRange < range.get_item_count();
-          iItemRange++)
+      for (iItemRange = 0;
+         iItemRange < range.get_item_count();
+         iItemRange++)
       {
 
          item_range itemrange = range.ItemAt(iItemRange);
 
-         for(iItem = itemrange.get_lower_bound() ; iItem <= itemrange.get_upper_bound(); iItem ++)
+         for (iItem = itemrange.get_lower_bound(); iItem <= itemrange.get_upper_bound(); iItem++)
          {
 
-            itema.add(canew(::fs::item  (get_fs_mesh_data()->m_itema.get_item(iItem))));
+            itema.add(canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iItem))));
 
          }
 
@@ -571,14 +571,14 @@ namespace filemanager
       index iItemRange, iItem;
       range range;
       _001GetSelection(range);
-      for(iItemRange = 0;
-          iItemRange < range.get_item_count();
-          iItemRange++)
+      for (iItemRange = 0;
+         iItemRange < range.get_item_count();
+         iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
-         for(iItem = itemrange.get_lower_bound() ; iItem <= itemrange.get_upper_bound(); iItem ++)
+         for (iItem = itemrange.get_lower_bound(); iItem <= itemrange.get_upper_bound(); iItem++)
          {
-            itema.add(canew ( ::fs::item  (get_fs_mesh_data()->m_itema.get_item(iItem))));
+            itema.add(canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iItem))));
          }
       }
       get_filemanager_data()->OnFileManagerItemUpdate(
@@ -596,19 +596,15 @@ namespace filemanager
 
       get_filemanager_data()->OnFileManagerOpenContextMenuFolder(item, straCommand, straCommandTitle, actioncontext);
 
-      if(straCommand.get_size() > 0)
+      if (straCommand.get_size() > 0)
       {
 
-         sp(::user::menu_base) pmenu = canew(::user::menu(get_app()));
+         sp(::user::menu) pmenu = canew(::user::menu(get_app()));
 
-         point ptCursor;
-
-         Session.get_cursor_pos(&ptCursor);
-
-         if(pmenu->create_menu(straCommand, straCommandTitle))
+         if (pmenu->create_menu(straCommand, straCommandTitle))
          {
 
-            pmenu->TrackPopupMenu(0, ptCursor, GetParentFrame());
+            pmenu->track_popup_menu(GetParentFrame());
 
          }
 
@@ -673,12 +669,12 @@ namespace filemanager
 
    void file_list::_001OnUpdateFileRename(signal_details * pobj)
    {
-//      SCAST_PTR(::command_ui, pcommandui, pobj);
-  //    pcommandui->Enable(_001GetSelectedItemCount() == 1);
-    //  pobj->m_bRet = true;
+      //      SCAST_PTR(::command_ui, pcommandui, pobj);
+        //    pcommandui->Enable(_001GetSelectedItemCount() == 1);
+          //  pobj->m_bRet = true;
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
-         range range;
+      range range;
       _001GetSelection(range);
       pcommandui->Enable(
          range.get_item_count() == 1
@@ -690,32 +686,32 @@ namespace filemanager
 
    void file_list::_001OnUpdateEditCopy(signal_details * pobj)
    {
-      
+
       SCAST_PTR(::command_ui, pcommandui, pobj);
-      
+
       range range;
-      
+
       _001GetSelection(range);
-      
+
       pcommandui->Enable(range.get_item_count() > 0);
-      
+
       pobj->m_bRet = true;
-      
+
    }
 
-   
+
    void file_list::_001OnEditCopy(signal_details * pobj)
    {
-      
+
       UNREFERENCED_PARAMETER(pobj);
-      
+
       ::fs::item_array itema;
-      
+
       GetSelected(itema);
-      
+
       ::file::patha patha;
 
-      for(int32_t i = 0; i < itema.get_size(); i++)
+      for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
          patha.add(itema[i]->m_filepath);
@@ -723,11 +719,11 @@ namespace filemanager
       }
 
       Session.copydesk().set_filea(patha);
-      
+
       pobj->m_bRet = true;
 
    }
-   
+
 
    void file_list::_001OnUpdateTrashThatIsNotTrash(signal_details * pobj)
    {
@@ -750,7 +746,7 @@ namespace filemanager
 
       ::file::patha stra;
 
-      for(int32_t i = 0; i < itema.get_size(); i++)
+      for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
          stra.add(itema[i]->m_filepath);
@@ -768,70 +764,76 @@ namespace filemanager
 
    void file_list::_001OnUpdateOpenWith(signal_details * pobj)
    {
+
       SCAST_PTR(::command_ui, pcommandui, pobj);
 
-         ::user::menu_command_ui * pcmdui1 = dynamic_cast < ::user::menu_command_ui * > (pcommandui->m_pcommandui);
-         if(pcmdui1 != NULL)
+      ::user::menu_command_ui * pmenucommandui = dynamic_cast <::user::menu_command_ui *> (pcommandui);
+
+      if (pmenucommandui != NULL)
+      {
+
+         ::user::menu_item_ptra * pitema = pmenucommandui->m_pitema;
+
+         ::user::menu * pmenu = pitema->element_at(pmenucommandui->m_iIndex)->m_pmenu;
+
+         pitema->remove_at(pcommandui->m_iIndex);
+
+
+         index iStartIndex = pcommandui->m_iIndex;
+         index iIndex = iStartIndex;
+
+
+         ::fs::item_array itema;
+         GetSelected(itema);
+
+         ::file::path strPath = itema[0]->m_filepath;
+
+         string strExt = strPath.extension();
+
+         stringa stra;
+         System.os().file_extension_get_open_with_list_keys(stra, strExt);
+
+         m_straOpenWith = stra;
+         ::count iCount = stra.get_size();
+
+         sp(::user::menu_item) pmenuitem(canew(::user::menu_item(get_app())));
+         string str;
+         for (int32_t i = 0; i < iCount; i++)
          {
-            ::user::menu_item_ptra * pitema = pcmdui1->m_pitema;
-
-            ::user::menu_base * pbase = pitema->element_at(pcommandui->m_iIndex)->m_pbase;
-            pitema->remove_at(pcommandui->m_iIndex);
-
-
-            index iStartIndex = pcommandui->m_iIndex;
-            index iIndex = iStartIndex;
-
-
-            ::fs::item_array itema;
-            GetSelected(itema);
-
-            ::file::path strPath = itema[0]->m_filepath;
-
-            string strExt = strPath.extension();
-
-            stringa stra;
-            System.os().file_extension_get_open_with_list_keys(stra, strExt);
-
-            m_straOpenWith = stra;
-            ::count iCount = stra.get_size();
-
-            sp(::user::menu_item) pmenuitem(canew(::user::menu_item(get_app())));
-            string str;
-            for(int32_t i = 0; i < iCount; i++)
-            {
-               pmenuitem->m_id = "open with" + stra[i];
-               pmenuitem->m_button.set_window_text(stra[i]);
-               pmenuitem->m_iLevel = pitema->m_pitemContainer != NULL ? pitema->m_pitemContainer->m_iLevel + 1 : 0;
-               pmenuitem->m_pbase = pbase;
-               pitema->insert_at(iIndex, pmenuitem);
-               iIndex++;
-            }
-            pcommandui->m_iIndex = iStartIndex;
-
-            pcommandui->m_iCount = iIndex;
-
-
-            pbase->on_layout();
-
+            pmenuitem->m_id = "open with" + stra[i];
+            pmenuitem->m_pui->set_window_text(stra[i]);
+            pmenuitem->m_iLevel = pitema->m_pitemParent != NULL ? pitema->m_pitemParent->m_iLevel + 1 : 0;
+            pmenuitem->m_pmenu = pmenu;
+            pitema->insert_at(iIndex, pmenuitem);
+            iIndex++;
          }
+         pcommandui->m_iIndex = iStartIndex;
+
+         pcommandui->m_iCount = iIndex;
+
+
+         pmenu->on_layout();
+
+      }
+
       pobj->m_bRet = true;
+
    }
 
 
    bool file_list::on_simple_update(command_ui * pcommandui)
    {
       int32_t iPos = -1;
-      for(int32_t i = 0; i < m_straOpenWith.get_size(); i++)
+      for (int32_t i = 0; i < m_straOpenWith.get_size(); i++)
       {
          string strId = "open with" + m_straOpenWith[i];
-         if(pcommandui->m_id == strId)
+         if (pcommandui->m_id == strId)
          {
             iPos = i;
             break;
          }
       }
-      if(iPos >= 0)
+      if (iPos >= 0)
       {
          pcommandui->Enable(TRUE);
          return true;
@@ -844,22 +846,22 @@ namespace filemanager
 
    bool file_list::on_simple_action(id id)
    {
-      if(id == "1000")
+      if (id == "1000")
       {
-   //      _017OpenSelected(true, ::action::source_user);
+         //      _017OpenSelected(true, ::action::source_user);
          return true;
       }
       int32_t iPos = -1;
-      for(int32_t i = 0; i < m_straOpenWith.get_size(); i++)
+      for (int32_t i = 0; i < m_straOpenWith.get_size(); i++)
       {
          string strId = "open with" + m_straOpenWith[i];
-         if(id == strId)
+         if (id == strId)
          {
             iPos = i;
             break;
          }
       }
-      if(iPos >= 0)
+      if (iPos >= 0)
       {
 
          ::fs::item_array itema;
@@ -909,22 +911,22 @@ namespace filemanager
 
       string strFileList;
       string strFileCheck;
-      for(int32_t i = 0; i < itema.get_size(); i++)
+      for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         if(Application.dir().is(itema[i]->m_filepath) && itema[i]->m_filepath.name() != ".svn")
+         if (Application.dir().is(itema[i]->m_filepath) && itema[i]->m_filepath.name() != ".svn")
          {
 
             straSub.rls(itema[i]->m_filepath);
 
-            for(int32_t j = 0; j < straSub.get_size(); j++)
+            for (int32_t j = 0; j < straSub.get_size(); j++)
             {
-               if(!Application.dir().is(straSub[j]) && straSub[j].find(".svn") < 0)
+               if (!Application.dir().is(straSub[j]) && straSub[j].find(".svn") < 0)
                {
                   strFileList += straSub[j] + "\n";
                   strFileCheck += straSub[j] + ",";
                   strFileCheck += Application.file().length(straSub[j]).get_string() + ",";
-                  strFileCheck += Application.file().md5(straSub[j]) +"\n";
+                  strFileCheck += Application.file().md5(straSub[j]) + "\n";
                }
             }
          }
@@ -933,7 +935,7 @@ namespace filemanager
             strFileList += itema[i]->m_filepath + "\n";
             strFileCheck += itema[i]->m_filepath + ",";
             strFileCheck += Application.file().length(itema[i]->m_filepath).get_string() + ",";
-            strFileCheck += Application.file().md5(itema[i]->m_filepath) +"\n";
+            strFileCheck += Application.file().md5(itema[i]->m_filepath) + "\n";
          }
       }
 
@@ -978,39 +980,39 @@ namespace filemanager
 
       string strFileList;
       string strFileCheck;
-      for(int32_t i = 0; i < pdata->m_itema.get_count(); i++)
+      for (int32_t i = 0; i < pdata->m_itema.get_count(); i++)
       {
-         if(::userfs::list::get_document()->get_fs_data()->is_dir(pdata->m_itema.get_item(i).m_filepath)
+         if (::userfs::list::get_document()->get_fs_data()->is_dir(pdata->m_itema.get_item(i).m_filepath)
             && pdata->m_itema.get_item(i).m_filepath.name() != ".svn")
          {
             straSub.rls(pdata->m_itema.get_item(i).m_filepath);
-            for(int32_t j = 0; j < straSub.get_size(); j++)
+            for (int32_t j = 0; j < straSub.get_size(); j++)
             {
-             string strExtension = straSub[j].extension();
+               string strExtension = straSub[j].extension();
 
-               if(!Application.dir().is(straSub[j])
-         && (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
-             || strExtension == "exe.manifest"))
+               if (!Application.dir().is(straSub[j])
+                  && (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
+                     || strExtension == "exe.manifest"))
                {
                   strFileList += straSub[j] + "\n";
                   strFileCheck += straSub[j] + ",";
                   strFileCheck += Application.file().length(straSub[j]).get_string() + ",";
-                  strFileCheck += Application.file().md5(straSub[j]) +"\n";
+                  strFileCheck += Application.file().md5(straSub[j]) + "\n";
                }
             }
          }
          else
          {
-             string strExtension = pdata->m_itema.get_item(i).m_filepath.extension();
-         if(strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
-             || strExtension == "exe.manifest")
-         {
+            string strExtension = pdata->m_itema.get_item(i).m_filepath.extension();
+            if (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
+               || strExtension == "exe.manifest")
+            {
 
-            strFileList += pdata->m_itema.get_item(i).m_filepath + "\n";
-            strFileCheck += pdata->m_itema.get_item(i).m_filepath + ",";
-            strFileCheck += Application.file().length(pdata->m_itema.get_item(i).m_filepath).get_string() + ",";
-            strFileCheck += Application.file().md5(pdata->m_itema.get_item(i).m_filepath) +"\n";
-         }
+               strFileList += pdata->m_itema.get_item(i).m_filepath + "\n";
+               strFileCheck += pdata->m_itema.get_item(i).m_filepath + ",";
+               strFileCheck += Application.file().length(pdata->m_itema.get_item(i).m_filepath).get_string() + ",";
+               strFileCheck += Application.file().md5(pdata->m_itema.get_item(i).m_filepath) + "\n";
+            }
          }
       }
 
@@ -1023,7 +1025,7 @@ namespace filemanager
          time.GetDay(),
          time.GetHour(),
          time.GetMinute());
-      string strBase = get_filemanager_item()->m_filepath /  "spafy_";
+      string strBase = get_filemanager_item()->m_filepath / "spafy_";
       string strList = strBase + "list_" + strTime + ".txt";
       string strCheck = strBase + "check_" + strTime + ".txt";
 
@@ -1045,7 +1047,7 @@ namespace filemanager
 
       UNREFERENCED_PARAMETER(psz);
 
-      if(!IsWindowVisible())
+      if (!IsWindowVisible())
          return;
 
    }
@@ -1055,15 +1057,15 @@ namespace filemanager
    {
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
-      if(!pshowwindow->m_bShow)
+      if (!pshowwindow->m_bShow)
       {
-   //      System.simple_message_box("hide");
+         //      System.simple_message_box("hide");
       }
 
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::show_window, pshow, pobj);
 
-      db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
       if (pcentral == NULL)
          return;
       //DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
@@ -1095,25 +1097,25 @@ namespace filemanager
    void file_list::browse_sync(::action::context actioncontext)
    {
 
-      if(m_bStatic)
+      if (m_bStatic)
       {
 
          ::userfs::list_item item(get_app());
 
          stringa stra;
 
-         get_filemanager_manager()->data_load(get_filemanager_template()->m_dataidStatic,stra);
+         get_filemanager_manager()->data_load(get_filemanager_template()->m_dataidStatic, stra);
 
          synch_lock lock(get_fs_mesh_data()->m_pmutex);
 
          get_fs_mesh_data()->m_itema.m_itema.remove_all();
 
-         for(int32_t i = 0; i < stra.get_size(); i++)
+         for (int32_t i = 0; i < stra.get_size(); i++)
          {
 
             item.m_flags.unsignalize_all();
 
-            if(Application.dir().is(stra[i]))
+            if (Application.dir().is(stra[i]))
             {
                item.m_flags.signalize(::fs::FlagFolder);
             }
@@ -1146,18 +1148,18 @@ namespace filemanager
 
       }
 
-      if(get_filemanager_data()->m_bSetBergedgeTopicFile)
+      if (get_filemanager_data()->m_bSetBergedgeTopicFile)
       {
-         SetTimer(888888,230,NULL);
+         SetTimer(888888, 230, NULL);
       }
 
 
       stringa straStrictOrder;
 
-      data_load(     data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder",      straStrictOrder);
+      data_load(data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder", straStrictOrder);
       index_biunique iaDisplayToStrict;
       icon_layout iconlayout;
-      data_get(data_get_current_sort_id() + "." + data_get_current_list_layout_id(),     iconlayout);
+      data_get(data_get_current_sort_id() + "." + data_get_current_list_layout_id(), iconlayout);
       iaDisplayToStrict = iconlayout.m_iaDisplayToStrict;
       index_biunique iaDisplayToStrictNew;
 
@@ -1297,23 +1299,23 @@ namespace filemanager
 
       }
 
-///      _001CreateImageList();
+      ///      _001CreateImageList();
 
-      //file_size_add_request(true);
-      /*   for(int32_t i = 0; i < m_itema.get_item_count(); i++)
+            //file_size_add_request(true);
+            /*   for(int32_t i = 0; i < m_itema.get_item_count(); i++)
+            {
+            pset->m_table.add_request(m_itema.get_item(i).m_strPath);
+            }*/
+      if (m_eview == view_icon)
       {
-      pset->m_table.add_request(m_itema.get_item(i).m_strPath);
-      }*/
-      if(m_eview == view_icon)
-      {
-         data_save(     data_get_current_sort_id() + "."+data_get_current_list_layout_id() + ".straStrictOrder",          m_pathaStrictOrder);
+         data_save(data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder", m_pathaStrictOrder);
          m_iconlayout.m_iaDisplayToStrict = iaDisplayToStrictNew;
          data_set_DisplayToStrict();
       }
 
       _001ClearSelection();
 
-      set_viewport_offset(0,0);
+      set_viewport_offset(0, 0);
 
       set_need_layout();
 
@@ -1322,168 +1324,168 @@ namespace filemanager
    }
 
 
-//   void file_list::_001CreateImageList()
-//   {
-//
-//      icon_key iconkey;
-//      icon icon;
-//
-//#ifdef WINDOWSEX
-//      for (POSITION pos = m_iconmap.get_start_position(); pos != NULL; m_iconmap.get_next_assoc(pos, iconkey, icon))
-//      {
-//         DestroyIcon((HICON) *icon.m_picon);
-//      }
-//#endif
-//
-//      m_iCreateImageListStep = 0;
-//      m_bCreateImageList = true;
-//      //if (m_pcreateimagelistthread == NULL)
-//      //{
-//      //   m_pcreateimagelistthread = new create_image_list_thread(get_app());
-//      //   m_pcreateimagelistthread->m_plist = this;
-//      //   m_pcreateimagelistthread->begin();
-//      //}
-//   }
-//
-//   file_list::create_image_list_thread::create_image_list_thread(::aura::application * papp) :
-//      object(papp),
-//      thread(papp)
-//   {
-//   }
-//
-//   int32_t file_list::create_image_list_thread::run()
-//   {
-//
-//      int32_t iStepSetCount = 84;
-//
-//      ::file::path path = m_plist->get_filemanager_path();
-//
-//      Sess(get_app()).userex()->shell()->open_folder(m_plist->get_handle(), path);
-//
-//      try
-//      {
-//
-//         //      int32_t iStepSetSleep = 23;
-//         while (get_run_thread())
-//         {
-//            int32_t i = iStepSetCount;
-//            while (i > 0 && get_run_thread())
-//            {
-//               if (!m_plist->_001CreateImageListStep())
-//                  goto endloop;
-//               i--;
-//            }
-//            //m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemStepSetRedraw);
-//            //Sleep(iStepSetSleep);
-//         }
-//      endloop:
-//         m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemRedraw);
-//         //synch_lock lock(m_plist->m_pauraapp);
-//         m_plist->m_pcreateimagelistthread = NULL;
-//         return 0;
-//
-//      }
-//      catch (...)
-//      {
-//
-//
-//      }
-//
-//      Sess(get_app()).userex()->shell()->close_folder(path);
-//
-//   }
-
-
-   //bool file_list::_001CreateImageListStep()
-   //{
-
-   //   synch_lock sl(get_fs_mesh_data()->m_pmutex);
-
-   //   if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+   //   void file_list::_001CreateImageList()
    //   {
-   //      if (m_bRestartCreateImageList)
+   //
+   //      icon_key iconkey;
+   //      icon icon;
+   //
+   //#ifdef WINDOWSEX
+   //      for (POSITION pos = m_iconmap.get_start_position(); pos != NULL; m_iconmap.get_next_assoc(pos, iconkey, icon))
    //      {
-   //         m_bRestartCreateImageList = false;
-   //         m_iCreateImageListStep = 0;
-   //         if (m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+   //         DestroyIcon((HICON) *icon.m_picon);
+   //      }
+   //#endif
+   //
+   //      m_iCreateImageListStep = 0;
+   //      m_bCreateImageList = true;
+   //      //if (m_pcreateimagelistthread == NULL)
+   //      //{
+   //      //   m_pcreateimagelistthread = new create_image_list_thread(get_app());
+   //      //   m_pcreateimagelistthread->m_plist = this;
+   //      //   m_pcreateimagelistthread->begin();
+   //      //}
+   //   }
+   //
+   //   file_list::create_image_list_thread::create_image_list_thread(::aura::application * papp) :
+   //      object(papp),
+   //      thread(papp)
+   //   {
+   //   }
+   //
+   //   int32_t file_list::create_image_list_thread::run()
+   //   {
+   //
+   //      int32_t iStepSetCount = 84;
+   //
+   //      ::file::path path = m_plist->get_filemanager_path();
+   //
+   //      Sess(get_app()).userex()->shell()->open_folder(m_plist->get_handle(), path);
+   //
+   //      try
+   //      {
+   //
+   //         //      int32_t iStepSetSleep = 23;
+   //         while (get_run_thread())
    //         {
-   //            return false;
+   //            int32_t i = iStepSetCount;
+   //            while (i > 0 && get_run_thread())
+   //            {
+   //               if (!m_plist->_001CreateImageListStep())
+   //                  goto endloop;
+   //               i--;
+   //            }
+   //            //m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemStepSetRedraw);
+   //            //Sleep(iStepSetSleep);
    //         }
+   //      endloop:
+   //         m_plist->post_message(MessageMainPost, MessageMainPostCreateImageListItemRedraw);
+   //         //synch_lock lock(m_plist->m_pauraapp);
+   //         m_plist->m_pcreateimagelistthread = NULL;
+   //         return 0;
+   //
    //      }
-   //      else
+   //      catch (...)
    //      {
-   //         return false;
+   //
+   //
    //      }
-   //   }
-
-   //   ::file::path path;
-
-   //   {
-
-   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
-   //      if (&item == NULL)
-   //      {
-
-   //         return true;
-
-   //      }
-   //      ::file::path & p = item.m_filepath;
-   //      if (p.m_iDir < 0)
-   //      {
-
-   //         p.m_iDir = get_document()->get_fs_data()->is_dir(p) ? 1 : 0;
-
-   //      }
-
-   //      if (p.m_iDir == 1)
-   //      {
-
-   //         item.m_flags.signalize(::fs::FlagFolder);
-
-   //      }
-   //      path = p;
-   //   }
-   //   sl.unlock();
-
-   //   int iImage = Session.userex()->shell()->get_image(
-   //      get_handle(),
-   //      path,
-   //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-   //      ::user::shell::icon_normal);
-
-   //   sl.lock();
-   //   {
-
-   //      //single_lock sl(m_pmutex, true);
-
-   //      if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-   //      {
-   //         return true;
-   //      }
-   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
-
-   //      if (&item == NULL)
-   //      {
-
-   //         return true;
-
-   //      }
-
-   //      if (path == item.m_filepath)
-   //      {
-
-   //         item.m_iImage = iImage;
-
-   //      }
-
+   //
+   //      Sess(get_app()).userex()->shell()->close_folder(path);
+   //
    //   }
 
 
-   //   m_iCreateImageListStep++;
+      //bool file_list::_001CreateImageListStep()
+      //{
 
-   //   return true;
+      //   synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
-   //}
+      //   if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+      //   {
+      //      if (m_bRestartCreateImageList)
+      //      {
+      //         m_bRestartCreateImageList = false;
+      //         m_iCreateImageListStep = 0;
+      //         if (m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+      //         {
+      //            return false;
+      //         }
+      //      }
+      //      else
+      //      {
+      //         return false;
+      //      }
+      //   }
+
+      //   ::file::path path;
+
+      //   {
+
+      //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
+      //      if (&item == NULL)
+      //      {
+
+      //         return true;
+
+      //      }
+      //      ::file::path & p = item.m_filepath;
+      //      if (p.m_iDir < 0)
+      //      {
+
+      //         p.m_iDir = get_document()->get_fs_data()->is_dir(p) ? 1 : 0;
+
+      //      }
+
+      //      if (p.m_iDir == 1)
+      //      {
+
+      //         item.m_flags.signalize(::fs::FlagFolder);
+
+      //      }
+      //      path = p;
+      //   }
+      //   sl.unlock();
+
+      //   int iImage = Session.userex()->shell()->get_image(
+      //      get_handle(),
+      //      path,
+      //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
+      //      ::user::shell::icon_normal);
+
+      //   sl.lock();
+      //   {
+
+      //      //single_lock sl(m_pmutex, true);
+
+      //      if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+      //      {
+      //         return true;
+      //      }
+      //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
+
+      //      if (&item == NULL)
+      //      {
+
+      //         return true;
+
+      //      }
+
+      //      if (path == item.m_filepath)
+      //      {
+
+      //         item.m_iImage = iImage;
+
+      //      }
+
+      //   }
+
+
+      //   m_iCreateImageListStep++;
+
+      //   return true;
+
+      //}
 
 
    void file_list::_001InsertColumns()
@@ -1557,7 +1559,7 @@ namespace filemanager
       //pcontrol->descriptor().m_id = _vms::FILE_MANAGER_ID_FILE_NAME;
       control.set_data_type(user::control::DataTypeString);
       control.add_function(user::control::function_vms_data_edit);
-      control.m_typeinfo = System.type_info < ::user::plain_edit > ();
+      control.m_typeinfo = System.type_info < ::user::plain_edit >();
       //control.m_typeinfo = sp(type)();
       control.m_iSubItem = i;
       control.m_id = 1000 + i;
@@ -1719,23 +1721,23 @@ namespace filemanager
    void file_list::_001OnMainPostMessage(signal_details * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-         switch (pbase->m_wparam)
+      switch (pbase->m_wparam)
       {
-         case MessageMainPostCreateImageListItemStepSetRedraw:
+      case MessageMainPostCreateImageListItemStepSetRedraw:
+      {
+         uint32_t dwNow = get_tick_count();
+         if (dwNow - m_dwLastRedraw > 784)
          {
-                                                                uint32_t dwNow = get_tick_count();
-                                                                if (dwNow - m_dwLastRedraw > 784)
-                                                                {
-                                                                   m_dwLastRedraw = dwNow;
-                                                                   RedrawWindow();
-                                                                }
+            m_dwLastRedraw = dwNow;
+            RedrawWindow();
          }
-            break;
-         case MessageMainPostCreateImageListItemRedraw:
-         {
-                                                         RedrawWindow();
-         }
-            break;
+      }
+      break;
+      case MessageMainPostCreateImageListItemRedraw:
+      {
+         RedrawWindow();
+      }
+      break;
       }
       pbase->set_lresult(0);
       pbase->m_bRet = true;
@@ -1785,7 +1787,7 @@ namespace filemanager
    void file_list::TakeAnimationSnapshot()
    {
       m_iAnimate = 1;
-//      ::user::list::_001OnDraw(m_gdibuffer.GetBuffer());
+      //      ::user::list::_001OnDraw(m_gdibuffer.GetBuffer());
    }
 
    void file_list::_017OpenSelected(bool bOpenFile, ::action::context actioncontext)
@@ -1819,12 +1821,12 @@ namespace filemanager
             ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item(iStrict);
             if (item.IsFolder())
             {
-               _017OpenFolder(canew (::fs::item(item)), ::action::source::sel(actioncontext));
+               _017OpenFolder(canew(::fs::item(item)), ::action::source::sel(actioncontext));
                break;
             }
             else
             {
-               itema.add(canew( ::fs::item(item)));
+               itema.add(canew(::fs::item(item)));
             }
          }
       }
@@ -1869,7 +1871,7 @@ namespace filemanager
             }
             if (get_fs_mesh_data()->m_itema.get_item(iStrict).IsFolder())
             {
-               _017OpenContextMenuFolder(canew ( ::fs::item(get_fs_mesh_data()->m_itema.get_item(iStrict))), actioncontext);
+               _017OpenContextMenuFolder(canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iStrict))), actioncontext);
                break;
             }
             else
@@ -1926,7 +1928,7 @@ namespace filemanager
          {
             iStrict = m_meshlayout.m_iaDisplayToStrict[iItem];
          }
-         pcallback->OnButtonAction((int32_t)pcontrol->descriptor().m_id - 1000,canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iStrict))));
+         pcallback->OnButtonAction((int32_t)pcontrol->descriptor().m_id - 1000, canew(::fs::item(get_fs_mesh_data()->m_itema.get_item(iStrict))));
       }
    }
 
@@ -1988,7 +1990,7 @@ namespace filemanager
    void file_list::_001OnVScroll(signal_details * pobj)
    {
       SCAST_PTR(::message::scroll, pscroll, pobj);
-         m_iCreateImageListStep = pscroll->m_nPos;
+      m_iCreateImageListStep = pscroll->m_nPos;
       m_bRestartCreateImageList = true;
       pobj->m_bRet = false;
    }
@@ -2046,7 +2048,7 @@ namespace filemanager
    void file_list::file_size_add_request(bool bClear)
    {
       UNREFERENCED_PARAMETER(bClear);
-      db_server * pcentral = dynamic_cast < db_server * > (&System.m_simpledb.db());
+      db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
       if (pcentral == NULL)
          return;
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;

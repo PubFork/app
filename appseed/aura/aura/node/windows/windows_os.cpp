@@ -35,7 +35,9 @@ namespace windows
    os::~os()
    {
    }
-   string os::get_command_dup()
+
+
+   string os::get_command_line()
    {
       
       return GetCommandLineW();

@@ -322,11 +322,6 @@ CLASS_DECL_BASE bool __node_base_pos_term();
 //CLASS_DECL_BASE void __trace_message(const char * lpszPrefix,::signal_details * pobj);
 //CLASS_DECL_BASE void __trace_message(const char * lpszPrefix,LPMESSAGE lpmsg);
 
-#include "base/user/user.h"
-
-//#include "base/user/user/user_schema.h"
-//#include "base/user/user/user_window_util.h"
-//#include "base/user/user/user_form_callback.h"
 
 CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow);
 
@@ -339,46 +334,21 @@ CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow)
 
 #include "base/database/database.h"
 
-
-//#include "base/base/base_platform_interface.h"
-
-//#include "filesystem/file/file_edit_buffer.h"
-
-//#include "base/base/base_command_target.h"
+#include "base/user/user_prelude.h"
 
 #include "base/base/base_application.h"
-
-
-
-
 
 #include "base/base/base_session.h"
 
 #include "base/base/base_system.h"
 
-
 #include "base/user/user.h"
-
 
 #include "base/base/node/node.h"
 
-
-//#include "base/user/user.h"
-
-//#include "base/base/hotplugin/hotplugin.h"
-
-//#include "base/install/install.h"
-
 #include "base/base/base_simple_app.h"
 
-//#include "base/user/userpresence/userpresence.h"
-
-//#include "base/user/fontopus/fontopus.h"
-
-
 #include "base/user/user.inl"
-
-
 
 #include "base/base/base.inl"
 

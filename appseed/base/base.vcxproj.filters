@@ -458,9 +458,6 @@
     <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h">
       <Filter>Header Files\user\wndfrm\frame</Filter>
     </ClInclude>
-    <ClInclude Include="base_cpp1.h">
-      <Filter>Header Files\base\base_policy</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -491,19 +488,7 @@
     <ClInclude Include="base\os\windows\windows_window_buffer.h">
       <Filter>Header Files\base\os\windows</Filter>
     </ClInclude>
-    <ClInclude Include="user\aaa_want_to_remove_all.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\aaa_want_to_remove_base.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\aaa_want_to_remove_common_user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\aaa_want_to_remove_plain_edit.h">
       <Filter>Header Files\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_mouse.h">
@@ -516,6 +501,15 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_style.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user_prelude.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_menu.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_menu_item.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
@@ -604,9 +598,6 @@
     <ClCompile Include="user\user\user.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_application_as_proxy_document.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_control.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -655,12 +646,6 @@
     <ClCompile Include="user\user\user_interaction_impl_base.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_menu_base.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_menu_base_item.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_message.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -674,15 +659,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_plain_text_data.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema_layered_frame.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema_simple_impl.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_scroll.cpp">
@@ -754,12 +730,6 @@
     <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp">
       <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_front_end.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_front_end_schema.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp">
       <Filter>Source Files\user\fontopus</Filter>
     </ClCompile>
@@ -778,9 +748,6 @@
     <ClCompile Include="base\os\windows\windows_window_buffer.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="user\aaa_want_to_remove_framework_user.cpp">
-      <Filter>Header Files\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
@@ -798,6 +765,27 @@
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_top.cpp">
       <Filter>Source Files\user\simple_ui</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_item.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_base.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_composite.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_button.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_command_ui.cpp">
+      <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

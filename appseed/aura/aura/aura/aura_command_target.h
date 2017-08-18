@@ -252,7 +252,7 @@ public:
    virtual bool on_simple_update(command_ui * pcommandui);
 
    //virtual bool on_simple_update(command_ui * pcommandui);
-   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+   virtual bool _001OnCmdMsg(::user::command * pcommand);
    //virtual bool _001HasCommandHandler(const char * pszId);
 
    void get_command_signal_array(::user::command::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id);
@@ -279,13 +279,13 @@ public:
    void RestoreWaitCursor();       // call after messagebox
 
 
-   virtual bool handle(::user::command * pcmdmsg);
+   virtual bool handle(::user::command * pcommand);
 
 
    // Overridables
    // route and dispatch standard command message types
    //   (more sophisticated than OnCommand)
-   //   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+   //   virtual bool _001OnCmdMsg(::user::command * pcommand);
 
 
    // Implementation
@@ -301,13 +301,4 @@ public:
 
 
 
-
-
-// command_ui
-inline void command_ui::ContinueRouting()
-{
-   
-   m_bContinueRouting = TRUE;
-   
-}
 

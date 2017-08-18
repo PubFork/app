@@ -37,7 +37,7 @@ namespace user
 
       virtual void destroy_menu();
 
-      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify);
+      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify = NULL);
 
       bool menu_fill(::user::interaction * puiFill, ::user::interaction * puiNotify);
 

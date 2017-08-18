@@ -44,7 +44,7 @@ namespace user
                   /*            ::user::menu * pmenu = pwnd->GetSystemMenu(FALSE);
                            if(pmenu != NULL)
                            {
-                           pmenu->TrackPopupMenu(
+                           pmenu->track_popup_menu(
                            lpMsg->pt.x, lpMsg->pt.y,
                            pwnd);
                            }*/
@@ -93,7 +93,7 @@ namespace user
                            {
                            point pt(LOWORD(lparam), HIWORD(lparam));
                            pwnd->ClientToScreen(&pt);
-                           pmenu->TrackPopupMenu(
+                           pmenu->track_popup_menu(
                            pt.x, pt.y,
                            pwnd);
                            }*/

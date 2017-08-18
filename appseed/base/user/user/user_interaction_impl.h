@@ -190,7 +190,7 @@ namespace user
       bool attach(oswindow oswindow_New);
       oswindow detach();
 
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       DECL_GEN_SIGNAL(_002OnDraw);
       DECL_GEN_SIGNAL(_001OnShowWindow);
@@ -694,8 +694,8 @@ namespace user
 //      void OnMDIActivate(bool bActivate,::window_sp pActivateWnd,::window_sp pDeactivateWnd);
 //
 //      // menu loop notification messages
-//      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-//      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+//      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+//      void OnExitMenuLoop(bool bIstrack_popup_menu);
 //
 //      // Win4 messages
 //#ifdef WINDOWSEX

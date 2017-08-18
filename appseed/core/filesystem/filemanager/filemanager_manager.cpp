@@ -681,7 +681,7 @@ namespace filemanager
    }
 
 
-   /*bool manager::_001OnCmdMsg(::user::command * pcmdmsg)
+   /*bool manager::_001OnCmdMsg(::user::command * pcommand)
    {
    if (nCode == CN_UPDATE_COMMAND_UI)
    {
@@ -710,7 +710,7 @@ namespace filemanager
    }
    }
    }*/
-   /*   return ::user::document::_001OnCmdMsg(pcmdmsg);
+   /*   return ::user::document::_001OnCmdMsg(pcommand);
    }
    */
 
@@ -1114,25 +1114,25 @@ namespace filemanager
       update_all_views(NULL, 0, &uh);
    }
 
-   bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcmdmsg, ::fs::item_array & itema)
+   bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand, ::fs::item_array & itema)
    {
-      if (pcmdmsg->m_etype == ::user::command::type_command_ui)
+      if (pcommand->m_etype == ::user::command::type_command_ui)
       {
          if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcmdmsg->m_pcommandui->m_id, itema))
+            get_filemanager_data(), pcommand->m_pcommandui->m_id, itema))
          {
             get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(
-               get_filemanager_data(), pcmdmsg->m_pcommandui, itema);
+               get_filemanager_data(), pcommand->m_pcommandui, itema);
             return TRUE;
          }
       }
       else
       {
          if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcmdmsg->m_id, itema))
+            get_filemanager_data(), pcommand->m_id, itema))
          {
             get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(
-               get_filemanager_data(), pcmdmsg->m_id, itema);
+               get_filemanager_data(), pcommand->m_id, itema);
             return true;
          }
       }

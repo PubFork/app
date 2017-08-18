@@ -707,27 +707,26 @@ namespace user
    }
 
    /////////////////////////////////////////////////////////////////////////////
-   // status_bar idle update through CStatusCmdUI class
+   // status_bar idle update through status_command_ui class
 
-   class CStatusCmdUI : public command_ui      // class private to this file!
+   class status_command_ui : public command_ui      // class private to this file!
    {
    public: // re-implementations only
 
-      CStatusCmdUI(::aura::application * papp);
+      status_command_ui(::aura::application * papp);
       virtual void Enable(bool bOn);
       virtual void SetCheck(check::e_check echeck = check::checked);
       virtual void SetText(const char * lpszText);
    };
 
-   CStatusCmdUI::CStatusCmdUI(::aura::application * papp) :
-   object(papp),
+   status_command_ui::status_command_ui(::aura::application * papp) :
       command_ui(papp)
-
-
    {
+
    }
 
-   void CStatusCmdUI::Enable(bool bOn)
+
+   void status_command_ui::Enable(bool bOn)
    {
       m_bEnableChanged = TRUE;
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
@@ -741,7 +740,7 @@ namespace user
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
    }
 
-   void CStatusCmdUI::SetCheck(check::e_check echeck) // "checking" will pop out the text
+   void status_command_ui::SetCheck(check::e_check echeck) // "checking" will pop out the text
    {
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
       ASSERT(pStatusBar != NULL);
@@ -759,7 +758,7 @@ namespace user
 
    }
 
-   void CStatusCmdUI::SetText(const char * lpszText)
+   void status_command_ui::SetText(const char * lpszText)
    {
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
       ASSERT(pStatusBar != NULL);
@@ -772,7 +771,7 @@ namespace user
 
    void status_bar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
    {
-      CStatusCmdUI state(get_app());
+      status_command_ui state(get_app());
       state.m_pOther = this;
       state.m_iCount = (UINT)m_panea.get_count();
       for (state.m_iIndex = 0; state.m_iIndex < state.m_iCount; state.m_iIndex++)

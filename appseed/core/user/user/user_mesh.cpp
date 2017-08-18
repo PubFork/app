@@ -316,7 +316,7 @@ namespace user
 
       bool bHoverFont = false;
       
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
 
       m_pdrawmeshitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
@@ -337,14 +337,14 @@ namespace user
          {
             if(!bHoverFont)
             {
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
             }
          }
          else
          {
             if(bHoverFont)
             {
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -445,7 +445,7 @@ namespace user
 
       bool bHoverFont = false;
       
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
 
       pdrawitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
@@ -484,7 +484,7 @@ namespace user
             if(!bHoverFont)
             {
                bHoverFont = true;
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
             }
          }
          else
@@ -492,7 +492,7 @@ namespace user
             if(bHoverFont)
             {
                bHoverFont = false;
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -522,15 +522,14 @@ namespace user
          (m_eview != view_icon ||
          ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) < m_nItemCount)));
 
-      ::draw2d::font * pfont;
       if(pdrawitem->m_bListItemHover)
       {
          pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem,ARGB(128,255,255,255));
-         select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+         select_font(pdrawitem->m_pgraphics, font_list_hover);
       }
       else
       {
-         select_font(pdrawitem->m_pgraphics, font_list_item, this);
+         select_font(pdrawitem->m_pgraphics, font_list_item);
       }
 //      pdrawitem->m_pgraphics->set_font(pfont);
 
@@ -2127,16 +2126,16 @@ namespace user
                if(eelement == ::user::mesh::element_group_image)
                {
                   pdrawitem->m_rectImage.left      = x;
-                  pdrawitem->m_rectImage.right     = x + width(&ii.m_rect);
+                  pdrawitem->m_rectImage.right     = x + ii.m_rect.width();
                   pdrawitem->m_rectImage.top       = pdrawitem->m_rectGroup.top;
-                  pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectImage.top + height(&ii.m_rect);
+                  pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectImage.top + ii.m_rect.height();
                   return_(pdrawitem->m_bOk,true);
                }
                else
                {
-                  x += width(&ii.m_rect);
+                  x += ii.m_rect.width();
                   x += 2;
-                  iImageBottom += height(&ii.m_rect) + 2;
+                  iImageBottom += ii.m_rect.height() + 2;
                }
             }
             else if(eelement == ::user::mesh::element_group_image)
@@ -2250,14 +2249,14 @@ namespace user
             //      if(eelement == ::user::mesh::element_image)
             //      {
             //         pdrawitem->m_rectImage.left      = x;
-            //         pdrawitem->m_rectImage.right     = x + width(&ii.m_rect);
+            //         pdrawitem->m_rectImage.right     = x + ii.m_rect.width();
             //         pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectSubItem.bottom;
-            //         pdrawitem->m_rectImage.top       = pdrawitem->m_rectImage.bottom - height(&ii.m_rect);
+            //         pdrawitem->m_rectImage.top       = pdrawitem->m_rectImage.bottom - ii.m_rect.height();
             //         return_(pdrawitem->m_bOk,true);
             //      }
             //      else
             //      {
-            //         x += width(&ii.m_rect);
+            //         x += ii.m_rect.width();
             //         x += 2;
             //      }
             //   }
@@ -4467,7 +4466,7 @@ namespace user
    void mesh::_001LayoutTopText()
    {
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(font_list_item);
       array < size > sizea;
       m_dcextension.GetTextExtent(pgraphics,m_strTopText,sizea);
       rect rectClient;
@@ -4572,8 +4571,11 @@ namespace user
 
    int32_t mesh::_001CalcItemWidth(index iItem,index iSubItem)
    {
+      
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+
+      select_font(pgraphics, font_list_item);
+
       index cx = _001CalcItemWidth(pgraphics,iItem,iSubItem);
 
       return (int32_t)cx;
@@ -4586,10 +4588,14 @@ namespace user
    //   return _001CalcItemWidth(pgraphics,iItem,iSubItem);
    //}
 
+
    int32_t mesh::_001CalcItemWidth(::draw2d::graphics * pgraphics,index iItem,index iSubItem)
    {
+
 #ifdef WINDOWSEX
-      select_font(pgraphics, font_list_item, this);
+
+      select_font(pgraphics, font_list_item);
+
       ::image_list::info ii;
       rect rect;
       size size;
@@ -5310,7 +5316,7 @@ namespace user
    {
       UNREFERENCED_PARAMETER(iColumn);
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
       //pgraphics->SelectObject(pfont);
       int32_t iMaxWidth = 0;
       ::count iCount = m_nItemCount;

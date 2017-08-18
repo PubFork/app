@@ -275,7 +275,7 @@ namespace user
 
       virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
 
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();

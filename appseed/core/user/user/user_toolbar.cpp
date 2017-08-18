@@ -1334,7 +1334,7 @@ throw todo(get_app());
    /*
    void toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
    {
-      tool_cmd_ui state;
+      tool_command_ui state;
       state.m_pOther = this;
 
       state.m_iCount = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);

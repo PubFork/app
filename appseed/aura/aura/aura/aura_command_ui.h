@@ -54,3 +54,15 @@ public:
 };
 
 
+
+
+
+
+// command_ui
+inline void command_ui::ContinueRouting()
+{
+
+   m_bContinueRouting = TRUE;
+
+}
+

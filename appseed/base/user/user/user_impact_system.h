@@ -128,7 +128,7 @@ namespace user
       virtual void assert_valid() const;
 
       virtual void on_idle();             // for all documents
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
 
       bool on_open_document(::user::document * pdoc, var varFile);

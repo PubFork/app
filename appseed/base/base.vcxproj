@@ -712,7 +712,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\fontopus\fontopus.cpp" />
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp" />
-    <ClCompile Include="user\aaa_want_to_remove_framework_user.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_composer.cpp" />
     <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp" />
@@ -742,8 +741,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\simple_ui\simple_ui_tap.cpp" />
     <ClCompile Include="user\simple_ui\simple_ui_top.cpp" />
     <ClCompile Include="user\user\user.cpp" />
-    <ClCompile Include="user\user\user_application_as_proxy_document.cpp" />
     <ClCompile Include="user\user\user_box.cpp" />
+    <ClCompile Include="user\user\user_button.cpp" />
     <ClCompile Include="user\user\user_control.cpp" />
     <ClCompile Include="user\user\user_control_bar.cpp" />
     <ClCompile Include="user\user\user_control_event.cpp" />
@@ -752,8 +751,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_form_update_hint.cpp" />
     <ClCompile Include="user\user\user_form_window.cpp" />
     <ClCompile Include="user\user\user_frame_window.cpp" />
-    <ClCompile Include="user\user\user_front_end.cpp" />
-    <ClCompile Include="user\user\user_front_end_schema.cpp" />
     <ClCompile Include="user\user\user_impact.cpp" />
     <ClCompile Include="user\user\user_impact_system.cpp" />
     <ClCompile Include="user\user\user_impact_update_hint.cpp" />
@@ -762,20 +759,21 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_interaction_child.cpp" />
     <ClCompile Include="user\user\user_interaction_impl.cpp" />
     <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
-    <ClCompile Include="user\user\user_menu_base.cpp" />
-    <ClCompile Include="user\user\user_menu_base_item.cpp" />
+    <ClCompile Include="user\user\user_menu.cpp" />
+    <ClCompile Include="user\user\user_menu_command_ui.cpp" />
+    <ClCompile Include="user\user\user_menu_item.cpp" />
     <ClCompile Include="user\user\user_message.cpp" />
     <ClCompile Include="user\user\user_message_queue.cpp" />
     <ClCompile Include="user\user\user_place_holder.cpp" />
     <ClCompile Include="user\user\user_place_holder_container.cpp" />
     <ClCompile Include="user\user\user_plain_edit.cpp" />
     <ClCompile Include="user\user\user_plain_text_data.cpp" />
-    <ClCompile Include="user\user\user_schema.cpp" />
-    <ClCompile Include="user\user\user_schema_layered_frame.cpp" />
-    <ClCompile Include="user\user\user_schema_simple_impl.cpp" />
     <ClCompile Include="user\user\user_scroll.cpp" />
     <ClCompile Include="user\user\user_scroll_bar.cpp" />
     <ClCompile Include="user\user\user_server.cpp" />
+    <ClCompile Include="user\user\user_style.cpp" />
+    <ClCompile Include="user\user\user_style_base.cpp" />
+    <ClCompile Include="user\user\user_style_composite.cpp" />
     <ClCompile Include="user\user\user_tooltip.cpp" />
     <ClCompile Include="user\user\user_user.cpp" />
     <ClCompile Include="user\user\user_view_container.cpp" />
@@ -836,7 +834,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="base\os\windows\windows_internal.h" />
     <ClInclude Include="base\os\windows\windows_system_interaction_impl.h" />
     <ClInclude Include="base\os\windows\windows_window_buffer.h" />
-    <ClInclude Include="base_cpp1.h" />
     <ClInclude Include="database\database.h" />
     <ClInclude Include="database\database\database.h" />
     <ClInclude Include="database\simpledb\simpledb.h" />
@@ -858,8 +855,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="graphics\graphics_window_buffer.h" />
     <ClInclude Include="graphics\graphics_window_dc.h" />
     <ClInclude Include="graphics\graphics_window_graphics.h" />
-    <ClInclude Include="user\aaa_want_to_remove_all.h" />
-    <ClInclude Include="user\aaa_want_to_remove_base.h" />
     <ClInclude Include="user\user.h" />
     <ClInclude Include="user\fontopus\fontopus.h" />
     <ClInclude Include="user\fontopus\fontopus_login.h" />
@@ -873,7 +868,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\install\install.h" />
     <ClInclude Include="user\install\install_plugin.h" />
     <ClInclude Include="user\install\install_starter_start.h" />
-    <ClInclude Include="user\aaa_want_to_remove_plain_edit.h" />
     <ClInclude Include="user\simple\simple.h" />
     <ClInclude Include="user\simple\simple_scroll_bar.h" />
     <ClInclude Include="user\simple_ui\simple_ui.h" />
@@ -884,7 +878,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\simple_ui\simple_ui_password.h" />
     <ClInclude Include="user\simple_ui\simple_ui_style.h" />
     <ClInclude Include="user\simple_ui\simple_ui_tap.h" />
-    <ClInclude Include="user\aaa_want_to_remove_common_user.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_application_as_proxy_document.h" />
     <ClInclude Include="user\user\user_box.h" />
@@ -909,8 +902,10 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_interaction_child.h" />
     <ClInclude Include="user\user\user_interaction_impl.h" />
     <ClInclude Include="user\user\user_interaction_impl_base.h" />
+    <ClInclude Include="user\user\user_menu.h" />
     <ClInclude Include="user\user\user_menu_base.h" />
     <ClInclude Include="user\user\user_menu_base_item.h" />
+    <ClInclude Include="user\user\user_menu_item.h" />
     <ClInclude Include="user\user\user_message.h" />
     <ClInclude Include="user\user\user_message_queue.h" />
     <ClInclude Include="user\user\user_message_queue_listener.h" />
@@ -934,6 +929,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_windowing.h" />
     <ClInclude Include="user\user\user_window_map.h" />
     <ClInclude Include="user\user\user_window_util.h" />
+    <ClInclude Include="user\user_prelude.h" />
     <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h" />
   </ItemGroup>
   <ItemGroup>

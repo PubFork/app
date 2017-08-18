@@ -5,8 +5,8 @@
 #include "aura/user/colorertake5/colorertake5.h"
 #include "user.h"
 
-//O volume na unidade Z ‚ eco
-//O N£mero de S‚rie do Volume ‚ 4A91 - 94E4
+//O volume na unidade Z ï¿½ eco
+//O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91 - 94E4
 
 //Pasta de Z:\nordroid\app\appseed\base\user
 
@@ -113,7 +113,7 @@
 
 //Total de Arquivos na Lista:
 //62 arquivo(s)        777.568 bytes
-//0 pasta(s)   65.245.597.696 bytes dispon¡veis
+//0 pasta(s)   65.245.597.696 bytes disponï¿½veis
 
 #include "base/user/wndfrm/frame/wndfrm_frame_updowninterface.cpp"
 

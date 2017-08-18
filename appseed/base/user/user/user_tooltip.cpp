@@ -66,8 +66,8 @@ namespace user
 
    }
 
-<<<<<<< HEAD
-   bool tooltip::get_translucency(::user::e_translucency  & etranslucency)
+
+   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement)
    {
 
       etranslucency = ::user::translucency_present;
@@ -75,16 +75,6 @@ namespace user
       return true;
 
    }
-=======
-//   bool tooltip::get_translucency(::user::e_translucency  & etranslucency)
-//   {
-//
-//      etranslucency = ::user::translucency_present;
-//
-//      return true;
-//
-//   }
->>>>>>> feature/stringa_001Explode
 
 
    void tooltip::_001OnDraw(::draw2d::graphics * pgraphics)

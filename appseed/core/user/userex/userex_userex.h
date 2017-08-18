@@ -67,7 +67,7 @@ namespace userex
 
       virtual bool finalize();
 
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
 
       virtual void _001OnFileNew();

@@ -48,7 +48,7 @@ public:
         LPARAM lParam   // address of structure with message data
         );
 
-   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+   virtual bool _001OnCmdMsg(::user::command * pcommand);
    virtual void pre_translate_message(signal_details * pobj);
    protected:
    virtual bool pre_create_window(::user::create_struct& cs);
@@ -82,8 +82,8 @@ public:
    //size CalcDynamicLayout(int32_t nLength, uint32_t dwMode);
    //static ::music::e_result CalcSize(::user::toolbar_control & tbc, size & size);
    //static ::music::e_result CalcSize(CToolBarCtrl & tbc, size & size);
-   bool _TrackPopupMenu(point point);
-   bool _TrackPopupMenu(int32_t iItem);
+   bool _track_popup_menu(point point);
+   bool _track_popup_menu(int32_t iItem);
    bool LoadMenuBar(UINT nIDResource);
    void SetMenuID(UINT nIDResource);
 

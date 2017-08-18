@@ -618,7 +618,6 @@ copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configur
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aura\aura\aura_chronometer.cpp" />
-    <ClCompile Include="aura\aura\aura_str_pool.cpp" />
     <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -1008,13 +1007,13 @@ copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configur
     <ClInclude Include="aura\aura\aura_auto.h" />
     <ClInclude Include="aura\aura\aura_chronometer.h" />
     <ClInclude Include="aura\aura\aura_cmp2.h" />
+    <ClInclude Include="aura\aura\aura_command_ui_probe.h" />
     <ClInclude Include="aura\aura\aura_os_alloc.h" />
     <ClInclude Include="aura\aura\aura_pointer.h" />
     <ClInclude Include="aura\aura\aura_cmp.h" />
     <ClInclude Include="aura\aura\aura_command_msg.h" />
     <ClInclude Include="aura\aura\aura_command_target.h" />
     <ClInclude Include="aura\aura\aura_command_ui.h" />
-    <ClInclude Include="aura\aura\aura_command_ui_test.h" />
     <ClInclude Include="aura\aura\aura_common.h" />
     <ClInclude Include="aura\aura\aura_console_window.h" />
     <ClInclude Include="aura\aura\aura_conv.h" />
@@ -1396,11 +1395,10 @@ copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configur
     <ClCompile Include="aura\aura\aura_allocate_x86_cache_oriented.cpp" />
     <ClCompile Include="aura\aura\aura_app_core.cpp" />
     <ClCompile Include="aura\aura\aura_assert_running_task.cpp" />
-    <ClCompile Include="aura\aura\aura_command_msg.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui.cpp" />
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
     <ClCompile Include="aura\aura\aura_command_target_interface.cpp" />
-    <ClCompile Include="aura\aura\aura_command_ui_test.cpp" />
+    <ClCompile Include="aura\aura\aura_command_ui_probe.cpp" />
     <ClCompile Include="aura\aura\aura_console_window.cpp" />
     <ClCompile Include="aura\aura\aura_create_context.cpp" />
     <ClCompile Include="aura\aura\aura_draw_context.cpp" />

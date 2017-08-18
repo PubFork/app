@@ -83,7 +83,7 @@ namespace user
       virtual void hint_position(point pt);
       virtual void hints(int iFlags, point pt);
       
-      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify);
+      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify = NULL);
       
       void _001OnTimer(::timer * ptimer);
       
@@ -110,15 +110,7 @@ namespace user
       sp(::user::menu_item) get_item(::user::interaction * pui);
       
       virtual bool get_color(COLORREF & cr,::user::e_color ecolor);
-<<<<<<< HEAD:appseed/core/user/menu/user_menu.h
-
-      virtual bool get_translucency(::user::e_translucency & etranslucency);
-
-=======
-      
-      virtual bool get_translucency(::user::e_translucency & etranslucency);
-      
->>>>>>> feature/stringa_001Explode:appseed/base/user/user/user_menu.h
+      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement);
       virtual bool has_pending_graphical_update();
       
       virtual bool create_menu(const stringa & straCommand, const stringa & straCommandTitle);

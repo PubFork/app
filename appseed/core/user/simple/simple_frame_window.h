@@ -113,11 +113,7 @@ public:
 
    virtual bool is_application_main_window();
    
-<<<<<<< HEAD
-   virtual bool get_translucency(::user::e_translucency & etranslucency) override;
-=======
    virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement) override;
->>>>>>> feature/stringa_001Explode
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -259,7 +255,7 @@ public:
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
-   virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+   virtual bool _001OnCmdMsg(::user::command * pcommand);
 
    virtual void data_on_after_change(signal_details * pobj);
 
@@ -300,7 +296,7 @@ public:
 
    virtual void defer_set_icon();
 
-   virtual ::user::style * get_user_style() override;
+   //virtual ::user::style * get_user_style() override;
 
    virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
 

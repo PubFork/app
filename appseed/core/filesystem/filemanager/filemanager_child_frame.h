@@ -26,7 +26,7 @@ namespace filemanager
 
       bool on_create_bars();
       bool DestroyBars();
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnAppLanguage);

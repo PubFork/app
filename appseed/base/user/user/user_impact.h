@@ -137,7 +137,7 @@ namespace user
       //virtual void on_draw_view(::draw2d::graphics * pgraphics, spa(::data::data) spadata);
       //virtual void defer_draw_view(::draw2d::dib * pdib);
 
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg) override;
+      virtual bool _001OnCmdMsg(::user::command * pcommand) override;
 
       virtual bool pre_create_window(::user::create_struct& cs) override;
       virtual void PostNcDestroy() override;
@@ -224,7 +224,7 @@ namespace user
 
 
 
-      //      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      //      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       //      virtual bool pre_create_window(::user::create_struct& cs);
 

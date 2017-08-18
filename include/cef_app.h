@@ -124,7 +124,7 @@ void CefRunMessageLoop();
 void CefQuitMessageLoop();
 
 ///
-// Set to true before calling Windows APIs like TrackPopupMenu that enter a
+// Set to true before calling Windows APIs like track_popup_menu that enter a
 // modal message loop. Set to false after exiting the modal message loop.
 ///
 /*--cef()--*/

@@ -191,7 +191,7 @@ namespace core
       void OnUpdateRecentFileMenu(command_ui * pcommandui);
 
       virtual DECL_GEN_SIGNAL(OnAppLanguage);
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
 
 

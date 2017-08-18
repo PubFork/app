@@ -15,7 +15,7 @@ namespace sphere
       virtual ~main_frame();
 
 
-      virtual bool get_translucency(::user::e_translucency & etranslucency) override;
+      virtual bool get_translucency(::user::e_translucency & etranslucency, e_element eelement) override;
 
       virtual bool get_color(COLORREF & cr, ::user::e_color ecolor) override;
 

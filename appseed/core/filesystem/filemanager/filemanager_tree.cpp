@@ -735,9 +735,12 @@ namespace filemanager
       switch(pbase->m_wparam)
       {
       case MessageMainPostCreateImageListItemRedraw:
-         {
-            ((::user::interaction *) pbase->m_pwnd->m_pvoidUserInteraction)->RedrawWindow();
-            ((::user::interaction *) pbase->m_pwnd->m_pvoidUserInteraction)->KillTimer(123);
+      {
+            
+         pbase->m_pwnd->m_puiThis->RedrawWindow();
+            
+            pbase->m_pwnd->m_puiThis->KillTimer(123);
+
             /*
             rect rect;
             int32_t iArrange = (int32_t) lparam;

@@ -151,7 +151,7 @@ namespace user
 
       pgraphics->set_text_color(crText);
 
-      select_font(pgraphics, font_static, this);
+      select_font(pgraphics, font_static);
 
       pgraphics->text_out(0, 0, get_window_text());
 

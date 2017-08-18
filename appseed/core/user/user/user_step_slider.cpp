@@ -172,7 +172,7 @@ namespace user
 
       lprect->top = lpcrectClient->top;
       lprect->bottom = lpcrectClient->bottom;
-      double dWidth = ((double)width(lpcrectClient)) / (iMax - iMin);
+      double dWidth = ((double)::width(lpcrectClient)) / (iMax - iMin);
       lprect->left = (LONG) (dWidth * (iStep - iMin));
       lprect->right = (LONG) (dWidth * (iStep - iMin + 1));
 

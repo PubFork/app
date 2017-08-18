@@ -74,7 +74,7 @@
 #include "user_tab_view_update_hint.cpp"
 #include "user_toolbar.cpp"
 #include "user_toolbar_ctrl.cpp"
-#include "user_tool_cmd_ui.cpp"
+#include "user_tool_command_ui.cpp"
 #include "user_tool_tip_tool.cpp"
 #include "user_tool_tip_window.cpp"
 #include "user_tree.cpp"

@@ -1175,7 +1175,7 @@ namespace install
 
       DWORD dwRead;
 
-      HANDLE hfile = ::create_file(::path::install_log(process_platform_dir_name2()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+      FILE * file = ::fopen_dup(::path::install_log(process_platform_dir_name2()), "r");
 
       double dRate = 0.0;
 
@@ -1183,21 +1183,37 @@ namespace install
 
       bool bStatus = false;
 
-      if(hfile != INVALID_HANDLE_VALUE)
+      if(file != NULL)
       {
 
-         int32_t iTell = ::SetFilePointer(hfile, 0, NULL, SEEK_END);
+         int32_t iTell = ::fseek(file, 0, SEEK_END);
+
          iTell--;
+
          string strLine;
+
          int32_t iSkip = 0;
+
          bool bStatus2 = false;
+
          char ch = '\0';
+
          bool bFirst = true;
+
          while(iTell >= 0)
          {
-            ::SetFilePointer(hfile, iTell, NULL, SEEK_SET);
-            if(!ReadFile(hfile, &ch,  1, &dwRead, NULL))
+
+            ::fseek(file, iTell, SEEK_SET);
+
+            dwRead = fread(&ch, 1, 1, file);
+
+            if (dwRead == 1)
+            {
+
                break;
+
+            }
+
             if(dwRead <= 0)
                break;
 
@@ -1243,16 +1259,25 @@ namespace install
                   break;
 
                strLine = ch;
+
             }
             else
             {
+
                strLine = ch + strLine;
+
             }
+
             iTell--;
+
          }
-         ::CloseHandle(hfile);
+         
+         ::fclose(file);
+
       }
+
       return dRate;
+
    }
 
 

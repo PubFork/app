@@ -52,7 +52,7 @@ namespace ios
 
       virtual ::window * get_wnd() const;
 
-      virtual bool _001OnCmdMsg(::base::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::base::cmd_msg * pcommand);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -582,8 +582,8 @@ namespace ios
                          ::window * pActivateWnd, ::window * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);

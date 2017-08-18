@@ -35,9 +35,9 @@ command_target::~command_target()
 {
 }
 
-bool command_target::handle(::user::command * pcmdmsg)
+bool command_target::handle(::user::command * pcommand)
 {
-   return pcmdmsg->handle(this);
+   return pcommand->handle(this);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -291,7 +291,7 @@ return bResult;
       IsEqualGUID(*(pGuid1), *(pGuid2))))
 
 /*
-bool command_target::_001OnCmdMsg(::user::command * pcmdmsg)
+bool command_target::_001OnCmdMsg(::user::command * pcommand)
 
 {
 

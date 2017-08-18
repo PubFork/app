@@ -58,7 +58,7 @@ namespace android
       //virtual ::user::interaction * get_owner();
       //virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       void _002OnDraw(::draw2d::dib * pdib);
 
@@ -547,8 +547,8 @@ namespace android
          ::user::interaction * pActivateWnd,::user::interaction * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       void OnStyleChanged(int32_t nStyleType,LPSTYLESTRUCT lpStyleStruct);

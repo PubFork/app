@@ -213,12 +213,12 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Command routing
 
-   bool impact::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool impact::_001OnCmdMsg(::user::command * pcommand)
 
    {
 
       // first pump through pane
-      if (::user::interaction::_001OnCmdMsg(pcmdmsg))
+      if (::user::interaction::_001OnCmdMsg(pcommand))
       {
 
          return true;
@@ -230,7 +230,7 @@ namespace user
       if (puiParent.cast < ::user::impact > () != NULL)
       {
          
-         if (puiParent->_001OnCmdMsg(pcmdmsg))
+         if (puiParent->_001OnCmdMsg(pcommand))
          {
 
             return true;
@@ -243,7 +243,7 @@ namespace user
       if (::user::impact::get_document() != NULL)
       {
          
-         if (::user::impact::get_document()->_001OnCmdMsg(pcmdmsg))
+         if (::user::impact::get_document()->_001OnCmdMsg(pcommand))
          {
 
             return TRUE;
@@ -258,7 +258,7 @@ namespace user
             if (pview != NULL && pview != this && !IsAscendant(pview))
             {
 
-               if (pview->::user::interaction::_001OnCmdMsg(pcmdmsg))
+               if (pview->::user::interaction::_001OnCmdMsg(pcommand))
                {
 
                   return true;

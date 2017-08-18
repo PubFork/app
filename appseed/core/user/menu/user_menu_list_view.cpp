@@ -77,13 +77,13 @@ namespace user
    }
    
 
-   bool menu_list_view::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool menu_list_view::_001OnCmdMsg(::user::command * pcommand)
    {
       
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
          
-         if (m_puiNotify->_001OnCmdMsg(pcmdmsg))
+         if (m_puiNotify->_001OnCmdMsg(pcommand))
          {
             
             return true;
@@ -92,7 +92,7 @@ namespace user
          
       }
       
-      return impact::_001OnCmdMsg(pcmdmsg);
+      return impact::_001OnCmdMsg(pcommand);
       
    }
 

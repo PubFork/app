@@ -7,16 +7,27 @@ namespace user
 
    command::command()
    {
-
+      
+      m_pcommandui = NULL;
       m_pcommandtargetSource        = NULL;
       m_etype                       = type_command;
 
    }
 
+   command::command(signal * psignal) :
+      signal_details(psignal)
+   {
+
+      m_pcommandui = NULL;
+      m_pcommandtargetSource = NULL;
+      m_etype = type_command;
+
+   }
 
    command::command(id id)
    {
 
+      m_pcommandui                  = NULL;
       m_pcommandtargetSource        = NULL;
       m_etype                       = type_command;
       m_id                          = id;
@@ -27,9 +38,10 @@ namespace user
    command::command(::command_ui * pcommandui)
    {
 
+      m_pcommandui                  = NULL;
       m_pcommandtargetSource        = NULL;
       m_etype                       = type_command_ui;
-      m_pcommandui                      = pcommandui;
+      m_pcommandui                  = pcommandui;
 
    }
 

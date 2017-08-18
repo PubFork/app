@@ -19,7 +19,7 @@
 //   bool m_bTimerOn;
 //
 //   virtual bool pre_create_window(::user::create_struct& cs);
-//   virtual bool _001OnCmdMsg(::user::command * pcmdmsg); 
+//   virtual bool _001OnCmdMsg(::user::command * pcommand); 
 //   void ShowControlBars(bool bShow);
 
 //   virtual ~html_frame();

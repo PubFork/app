@@ -1001,10 +1001,10 @@ namespace user
    }
 
 
-   bool frame_window::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool frame_window::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      if(::user::interaction::_001OnCmdMsg(pcmdmsg))
+      if(::user::interaction::_001OnCmdMsg(pcommand))
          return true;
 
       return false;

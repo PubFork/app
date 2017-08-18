@@ -69,7 +69,7 @@ namespace user
       if (str.has_char())
       {
 
-         select_font(pdrawitem->m_pgraphics, font_list_item, this);
+         select_font(pdrawitem->m_pgraphics, font_list_item);
          //      pgraphics->SetBkMode(TRANSPARENT);
 
          pgraphics->set_text_color(_001GetColor(::user::color_list_header));

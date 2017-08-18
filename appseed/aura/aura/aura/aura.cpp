@@ -1,6 +1,13 @@
 #include "framework.h"
 #include <stdio.h>
 
+
+
+
+CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
+
+
+
 BEGIN_EXTERN_C
 CLASS_DECL_AURA int g_bAura = 0;
 END_EXTERN_C

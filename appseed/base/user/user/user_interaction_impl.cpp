@@ -879,10 +879,10 @@ namespace user
 //#endif
 
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      UNREFERENCED_PARAMETER(pcmdmsg);
+      UNREFERENCED_PARAMETER(pcommand);
 
       ::exception::throw_interface_only(get_app());
 

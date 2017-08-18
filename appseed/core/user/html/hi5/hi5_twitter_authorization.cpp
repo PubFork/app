@@ -168,13 +168,6 @@ namespace hi5
 
             pframe->m_puserstyle = this;
             
-<<<<<<< HEAD
-            m_etranslucency = ::user::translucency_present;
-
-=======
->>>>>>> feature/stringa_001Explode
-            //pframe->m_bblur_Background = true;
-
          }
 
          //if(&Session != NULL && Session.get_document() != NULL && Session.get_document()->get_bergedge_view() != NULL)

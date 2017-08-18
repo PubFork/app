@@ -39,7 +39,7 @@ namespace user
       
       ::user::interaction * _001GetTabWnd(int32_t iTab);
 
-      bool _001OnCmdMsg(::user::command * pcmdmsg);
+      bool _001OnCmdMsg(::user::command * pcommand);
 
 
       virtual void set_view_creator(::user::view_creator * pview);

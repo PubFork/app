@@ -38,8 +38,6 @@ LRESULT simple_static::OnSetIcon(WPARAM wparam, LPARAM lparam)
 void simple_static::_001OnDraw(::draw2d::graphics * pgraphics)
 {
    
-   draw_lock dl(this, pgraphics);
-   
    if (get_type() == type_icon)
    {
       

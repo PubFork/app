@@ -278,9 +278,9 @@ namespace user
       }
    }
 
-   bool impact_system::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool impact_system::_001OnCmdMsg(::user::command * pcommand)
    {
-      return command_target::_001OnCmdMsg(pcmdmsg);
+      return command_target::_001OnCmdMsg(pcommand);
    }
 
 

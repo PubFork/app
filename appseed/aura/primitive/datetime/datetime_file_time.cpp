@@ -194,7 +194,7 @@ void get_file_time(const char * psz,file_time & time)
 void get_file_time(const char * psz,FILETIME & creation,FILETIME & modified)
 {
 
-   HANDLE h = create_file(psz,GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+   HANDLE h = CreateFileW(wstring(psz),GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
 
    try
    {

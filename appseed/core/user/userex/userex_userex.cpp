@@ -164,8 +164,8 @@ namespace userex
       System.factory().creatable_small < ::user::combo_list >();
       System.factory().creatable_small < ::user::plain_edit >();
 
-      System.factory().creatable_small < ::user::menu_item >(System.type_info < ::user::menu_base_item >());
-      System.factory().creatable_small < ::user::menu >(System.type_info < ::user::menu_base >());
+      System.factory().creatable_small < ::user::menu_item >(System.type_info < ::user::menu_item >());
+      System.factory().creatable_small < ::user::menu >(System.type_info < ::user::menu >());
 
       System.factory().creatable_small < ::user::button >();
 
@@ -1127,10 +1127,10 @@ namespace userex
    }
 
 
-   bool userex::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool userex::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      UNREFERENCED_PARAMETER(pcmdmsg);
+      UNREFERENCED_PARAMETER(pcommand);
 
       return false;
 

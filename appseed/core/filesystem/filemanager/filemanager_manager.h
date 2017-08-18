@@ -127,7 +127,7 @@ namespace filemanager
       virtual bool on_new_document();
       virtual bool on_open_document(var varFile);
 
-      virtual bool HandleDefaultFileManagerItemCmdMsg(::user::command * pcmdmsg,::fs::item_array & itema);
+      virtual bool HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand,::fs::item_array & itema);
 
       void PopViews();
       void CreateViews();

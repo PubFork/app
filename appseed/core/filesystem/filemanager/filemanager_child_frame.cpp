@@ -39,11 +39,11 @@ namespace filemanager
       return true;
    }
 
-   bool child_frame::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool child_frame::_001OnCmdMsg(::user::command * pcommand)
    {
 
       //file_list_callback * pcallback = get_filemanager_template()->m_pfilelistcallback;
-      return simple_child_frame::_001OnCmdMsg(pcmdmsg);
+      return simple_child_frame::_001OnCmdMsg(pcommand);
    }
 
    void child_frame::OnChangeEditSearch()

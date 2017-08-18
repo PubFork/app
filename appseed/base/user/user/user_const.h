@@ -147,7 +147,7 @@ namespace user
       
    };
 
-   map < e_flag, e_flag, bool, bool > map_flag;
+   using flag_map = map < e_flag, e_flag, bool, bool >;
    
    enum e_rect
    {

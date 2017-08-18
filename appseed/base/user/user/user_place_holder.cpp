@@ -297,16 +297,16 @@ namespace user
 
    }
 
-   bool place_holder::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool place_holder::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // then pump through frame
-      if(::user::interaction::_001OnCmdMsg(pcmdmsg))
+      if(::user::interaction::_001OnCmdMsg(pcommand))
          return TRUE;
 
       // then pump through parent
       sp(::user::interaction) puiParent = GetParent();
-      if(puiParent != NULL && puiParent->_001OnCmdMsg(pcmdmsg))
+      if(puiParent != NULL && puiParent->_001OnCmdMsg(pcommand))
          return TRUE;
 
       return false;

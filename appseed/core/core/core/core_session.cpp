@@ -264,10 +264,10 @@ namespace core
    }
 
 
-   bool session::_001OnCmdMsg(::user::command * pcmdmsg)
+   bool session::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      return application::_001OnCmdMsg(pcmdmsg);
+      return application::_001OnCmdMsg(pcommand);
 
    }
 

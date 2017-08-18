@@ -454,17 +454,17 @@ namespace user
             return false;
          }
 
-         bool WorkSet::_001OnCmdMsg(::user::command * pcmdmsg)
+         bool WorkSet::_001OnCmdMsg(::user::command * pcommand)
          {
 
-            if(pcmdmsg->m_etype == ::user::command::type_command && m_pwndCommand != NULL)
+            if(pcommand->m_etype == ::user::command::type_command && m_pwndCommand != NULL)
             {
 
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
                ASSERT(pinterface != NULL);
 
-               ::user::wndfrm::frame::e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pcmdmsg->m_id);
+               ::user::wndfrm::frame::e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pcommand->m_id);
 
                switch(ebutton)
                {

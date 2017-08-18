@@ -1814,9 +1814,6 @@
     <ClInclude Include="aura\aura\aura_command_target.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui_test.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_command_ui.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -2879,6 +2876,9 @@
     <ClInclude Include="user\user\user_command.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_command_ui_probe.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -3919,12 +3919,6 @@
     <ClCompile Include="aura\aura\aura_command_ui.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_command_ui_test.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\aura_command_msg.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\ansios\ansios_local_memory_map.cpp">
       <Filter>Source Files\aura\os\ansios</Filter>
     </ClCompile>
@@ -4786,20 +4780,20 @@
     <ClCompile Include="net\sockets\bsd\internal\sockets_SSLInitializer.cpp">
       <Filter>Source Files\net\sockets\bsd\internal</Filter>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_str_pool.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\windows\windows_file.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\os_windowing.cpp">
-      <Filter>Source Files\aura\os</Filter>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_timer_event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_command.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_command_ui_probe.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_windowing.cpp">
+      <Filter>Source Files\aura\os</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
