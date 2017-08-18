@@ -92,7 +92,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
    if(dwReason == DLL_PROCESS_ATTACH)
    {
 
-      OutputDebugStringW(L"draw2d_cairo.dll initializing!\n");
+      output_debug_string(L"draw2d_cairo.dll initializing!\n");
 
       xxdebug_box("draw2d_cairo.dll DllMain","box",MB_OK);
 
@@ -127,7 +127,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
       }
 
 
-      OutputDebugStringW(L"draw2d_cairo.dll terminating!\n");
+      output_debug_string(L"draw2d_cairo.dll terminating!\n");
 
 
    }

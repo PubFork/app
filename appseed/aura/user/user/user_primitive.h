@@ -4,6 +4,9 @@
 namespace user
 {
 
+   
+   class interaction;
+   
 
    class CLASS_DECL_AURA primitive:
       virtual public command_target,
@@ -11,9 +14,8 @@ namespace user
    {
    public:
 
-      //ref_array < thread >                m_threadptra;
-
-      void *                              m_pvoidUserInteraction; // ::user::primitive * 
+      
+      interaction *     m_puiThis;
 
 
       primitive();
@@ -22,8 +24,11 @@ namespace user
       inline oswindow get_safe_handle() const;
 
 #ifdef WINDOWSEX
+      
       virtual bool GetWindowPlacement(WINDOWPLACEMENT* lpwndpl);
+      
       virtual bool SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl);
+      
 #endif
 
       virtual bool SetPlacement(const RECT & rect,UINT nFlags = SWP_SHOWWINDOW);
@@ -32,11 +37,9 @@ namespace user
 
       virtual void _001OnTimer(::timer * ptimer);
 
-
-//      virtual ref_array < ::thread > get_thread(::user::primitive * pui);
-//      virtual void add_thread(::thread * pthread);
-  //    virtual void remove_thread(::thread * pthread);
-
+      virtual bool enable_window(bool bEnable = true);
+      virtual void _001SetCheck(check::e_check echeck,::action::context);
+      virtual void _001SetText(const string & strText,::action::context);
 
    };
 

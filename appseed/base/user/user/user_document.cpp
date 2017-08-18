@@ -47,7 +47,7 @@ namespace user
 
 
 
-   bool document::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool document::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if (command_target::_001OnCmdMsg(pcmdmsg))
          return TRUE;

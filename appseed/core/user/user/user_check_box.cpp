@@ -69,14 +69,14 @@ namespace user
    void check_box::_001OnDrawNormal(::draw2d::graphics * pgraphics)
    {
 
-      if (m_puserschemaSchema != NULL)
+      if (m_puserstyle != NULL)
       {
 
          rect rectClient;
 
          GetClientRect(rectClient);
 
-         m_puserschemaSchema->_001DrawCheckBox(pgraphics, rectClient, _001GetCheck());
+         m_puserstyle->_001DrawCheckBox(pgraphics, rectClient, _001GetCheck());
 
       }
 
@@ -230,7 +230,7 @@ namespace user
 
       SCAST_PTR(::message::create, pcreate, pobj);
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
    }
 

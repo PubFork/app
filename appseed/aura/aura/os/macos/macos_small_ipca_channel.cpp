@@ -83,22 +83,32 @@ namespace aura
          
          CFDataRef data = m.get_os_cf_data();
          
+         CFTimeInterval sendTimeout = (double) dwTimeout / 1000.0;
+         
+         CFTimeInterval rcvimeout = (double) dwTimeout / 1000.0;
 
          SInt32 status =
          CFMessagePortSendRequest(m_port,
                                   0x80000000,
                                   data,
-                                  dwTimeout / 1000.0,
-                                  dwTimeout / 1000.0,
+                                  sendTimeout,
+                                  rcvimeout,
                                   NULL,
                                   NULL);
-         if (status == kCFMessagePortSuccess) {
+         if (status == kCFMessagePortSuccess)
+         {
+            
             return true;
+            
          }
+         
          if(status != kCFMessagePortSendTimeout && status != kCFMessagePortReceiveTimeout)
          {
+            
             close();
+            
          }
+         
          return false;
 
       }

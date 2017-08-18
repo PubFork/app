@@ -509,7 +509,7 @@ namespace filemanager
       //SetTimer(1234567, 50, NULL);
    }
 
-   bool file_list::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool file_list::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       ::fs::item_array itema;
       GetSelected(itema);
@@ -568,7 +568,7 @@ namespace filemanager
          }
       }
       get_filemanager_data()->OnFileManagerItemUpdate(
-         pupdatecmdui->m_pcmdui,
+         pupdatecmdui->m_pcommandui,
          itema);
       pobj->m_bRet = true;
    }
@@ -659,14 +659,14 @@ namespace filemanager
 
    void file_list::_001OnUpdateFileRename(signal_details * pobj)
    {
-//      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-  //    pcmdui->m_pcmdui->Enable(_001GetSelectedItemCount() == 1);
+//      SCAST_PTR(::command_ui, pcommandui, pobj);
+  //    pcommandui->Enable(_001GetSelectedItemCount() == 1);
     //  pobj->m_bRet = true;
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
          range range;
       _001GetSelection(range);
-      pcmdui->m_pcmdui->Enable(
+      pcommandui->Enable(
          range.get_item_count() == 1
          && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;
@@ -677,13 +677,13 @@ namespace filemanager
    void file_list::_001OnUpdateEditCopy(signal_details * pobj)
    {
       
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
       
       range range;
       
       _001GetSelection(range);
       
-      pcmdui->m_pcmdui->Enable(range.get_item_count() > 0);
+      pcommandui->Enable(range.get_item_count() > 0);
       
       pobj->m_bRet = true;
       
@@ -717,10 +717,10 @@ namespace filemanager
 
    void file_list::_001OnUpdateTrashThatIsNotTrash(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
       range range;
       _001GetSelection(range);
-      pcmdui->m_pcmdui->Enable(range.get_item_count() > 0);
+      pcommandui->Enable(range.get_item_count() > 0);
       pobj->m_bRet = true;
    }
 
@@ -754,18 +754,18 @@ namespace filemanager
 
    void file_list::_001OnUpdateOpenWith(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
 
-         ::user::menu_button_cmd_ui * pcmdui1 = dynamic_cast < ::user::menu_button_cmd_ui * > (pcmdui->m_pcmdui);
+         ::user::menu_command_ui * pcmdui1 = dynamic_cast < ::user::menu_command_ui * > (pcommandui->m_pcommandui);
          if(pcmdui1 != NULL)
          {
             ::user::menu_item_ptra * pitema = pcmdui1->m_pitema;
 
-            ::user::menu_base * pbase = pitema->element_at(pcmdui->m_pcmdui->m_iIndex)->m_pbase;
-            pitema->remove_at(pcmdui->m_pcmdui->m_iIndex);
+            ::user::menu_base * pbase = pitema->element_at(pcommandui->m_iIndex)->m_pbase;
+            pitema->remove_at(pcommandui->m_iIndex);
 
 
-            index iStartIndex = pcmdui->m_pcmdui->m_iIndex;
+            index iStartIndex = pcommandui->m_iIndex;
             index iIndex = iStartIndex;
 
 
@@ -793,9 +793,9 @@ namespace filemanager
                pitema->insert_at(iIndex, pmenuitem);
                iIndex++;
             }
-            pcmdui->m_pcmdui->m_iIndex = iStartIndex;
+            pcommandui->m_iIndex = iStartIndex;
 
-            pcmdui->m_pcmdui->m_iCount = iIndex;
+            pcommandui->m_iCount = iIndex;
 
 
             pbase->on_layout();
@@ -805,13 +805,13 @@ namespace filemanager
    }
 
 
-   bool file_list::on_simple_update(cmd_ui * pcmdui)
+   bool file_list::on_simple_update(command_ui * pcommandui)
    {
       int32_t iPos = -1;
       for(int32_t i = 0; i < m_straOpenWith.get_size(); i++)
       {
          string strId = "open with" + m_straOpenWith[i];
-         if(pcmdui->m_id == strId)
+         if(pcommandui->m_id == strId)
          {
             iPos = i;
             break;
@@ -819,12 +819,12 @@ namespace filemanager
       }
       if(iPos >= 0)
       {
-         pcmdui->Enable(TRUE);
+         pcommandui->Enable(TRUE);
          return true;
       }
       else
       {
-         return ::user::impact::on_simple_update(pcmdui);
+         return ::user::impact::on_simple_update(pcommandui);
       }
    }
 
@@ -878,10 +878,10 @@ namespace filemanager
 
    void file_list::_001OnUpdateSpafy(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
       range range;
       _001GetSelection(range);
-      pcmdui->m_pcmdui->Enable(range.get_item_count() > 0);
+      pcommandui->Enable(range.get_item_count() > 0);
       pobj->m_bRet = true;
    }
 
@@ -947,8 +947,8 @@ namespace filemanager
 
    void file_list::_001OnUpdateSpafy2(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
       pobj->m_bRet = true;
    }
 

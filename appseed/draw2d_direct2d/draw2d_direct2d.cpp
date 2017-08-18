@@ -16,7 +16,7 @@ WINBOOL APIENTRY DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugStringW(L"::coe:: draw2d_direct2d.dll :: initializing!\n");
+      ::output_debug_string(L"::coe:: draw2d_direct2d.dll :: initializing!\n");
 
 
 
@@ -30,7 +30,7 @@ WINBOOL APIENTRY DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
 //      delete g_pdxgidebug;
 
-      ::OutputDebugStringW(L"::core:: draw2d_direct2d.dll :: terminating!\n");
+      ::output_debug_string(L"::core:: draw2d_direct2d.dll :: terminating!\n");
 
    }
    else if(dwReason == DLL_THREAD_DETACH)

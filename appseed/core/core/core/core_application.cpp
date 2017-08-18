@@ -706,56 +706,56 @@ namespace core
 
 
 
-   void application::OnUpdateRecentFileMenu(cmd_ui * pcmdui)
+   void application::OnUpdateRecentFileMenu(command_ui * pcommandui)
    {
-      UNREFERENCED_PARAMETER(pcmdui);
+      UNREFERENCED_PARAMETER(pcommandui);
       /*TRACE("\nCVmsGenApp::OnUpdateRecentFileMenu");
       if(m_pRecentFileList == NULL)
       {
-      pcmdui->Enable(FALSE);
+      pcommandui->Enable(FALSE);
       //string str;
       //str.load_string(IDS_RECENT_FILE);
-      //pcmdui->SetText(str);
+      //pcommandui->SetText(str);
       for (int32_t iMRU = 1; iMRU < 10; iMRU++)
-      pcmdui->m_pMenu->DeleteMenu(pcmdui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommandui->m_pMenu->DeleteMenu(pcommandui->m_nID + iMRU, MF_BYCOMMAND);
       return;
       }
 
       ASSERT(m_pRecentFileList->m_arrNames != NULL);
 
-      ::user::menu* pMenu = pcmdui->m_pMenu;
+      ::user::menu* pMenu = pcommandui->m_pMenu;
       if (m_pRecentFileList->m_strOriginal.is_empty() && pMenu != NULL)
-      pMenu->GetMenuString(pcmdui->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
+      pMenu->GetMenuString(pcommandui->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
 
       if (m_pRecentFileList->m_arrNames[0].is_empty())
       {
       // no MRU files
       if (!m_pRecentFileList->m_strOriginal.is_empty())
-      pcmdui->SetText(m_pRecentFileList->m_strOriginal);
-      pcmdui->Enable(FALSE);
+      pcommandui->SetText(m_pRecentFileList->m_strOriginal);
+      pcommandui->Enable(FALSE);
       return;
       }
 
-      if (pcmdui->m_pMenu == NULL)
+      if (pcommandui->m_pMenu == NULL)
       return;
 
-      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcmdui->m_pMenu, pcmdui->m_nID);
+      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcommandui->m_pMenu, pcommandui->m_nID);
 
       //if(pmenu == NULL)
       //{
-      // pmenu = pcmdui->m_pMenu;
+      // pmenu = pcommandui->m_pMenu;
       //}
 
-      bool bCmdUIMenu = pmenu == pcmdui->m_pMenu;
+      bool bCmdUIMenu = pmenu == pcommandui->m_pMenu;
 
       if(!bCmdUIMenu)
       return;
 
-      int32_t nID = pcmdui->m_nID;
+      int32_t nID = pcommandui->m_nID;
       int32_t nIndex = CMenuUtil::GetMenuPosition(pmenu, nID);
 
       for (int32_t iMRU = 0; iMRU < m_pRecentFileList->m_nSize; iMRU++)
-      pcmdui->m_pMenu->DeleteMenu(pcmdui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommandui->m_pMenu->DeleteMenu(pcommandui->m_nID + iMRU, MF_BYCOMMAND);
 
 
 
@@ -791,8 +791,8 @@ namespace core
       char buf[10];
       wsprintf(buf, "&%d ", (iMRU+1+m_pRecentFileList->m_nStart) % 10);
 
-      //      pcmdui->m_pMenu->InsertMenu(pcmdui->m_nIndex++,
-      //         MF_STRING | MF_BYPOSITION, pcmdui->m_nID++,
+      //      pcommandui->m_pMenu->InsertMenu(pcommandui->m_nIndex++,
+      //         MF_STRING | MF_BYPOSITION, pcommandui->m_nID++,
       //         string(buf) + strTemp);
       pmenu->InsertMenu(nIndex,
       MF_STRING | MF_BYPOSITION, nID,
@@ -801,19 +801,19 @@ namespace core
       nID++;
       if(bCmdUIMenu)
       {
-      pcmdui->m_nIndex = nIndex;
-      pcmdui->m_nID = nID;
+      pcommandui->m_nIndex = nIndex;
+      pcommandui->m_nID = nID;
       }
       }
 
       // update end menu count
       if(bCmdUIMenu)
       {
-      pcmdui->m_nIndex--; // point to last menu added
-      pcmdui->m_nIndexMax = pcmdui->m_pMenu->GetMenuItemCount();
+      pcommandui->m_nIndex--; // point to last menu added
+      pcommandui->m_nIndexMax = pcommandui->m_pMenu->GetMenuItemCount();
       }
 
-      pcmdui->m_bEnableChanged = TRUE;    // all the added items are enabled*/
+      pcommandui->m_bEnableChanged = TRUE;    // all the added items are enabled*/
 
    }
 
@@ -1008,7 +1008,7 @@ namespace core
       }
    }
 
-   bool application::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool application::_001OnCmdMsg(::user::command * pcmdmsg)
 
    {
       if (command_target_interface::_001OnCmdMsg(pcmdmsg))
@@ -1898,7 +1898,7 @@ namespace core
 
       ASSERT(m_puiMain != NULL);
 
-      ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->send_message(WM_CLOSE);
+      m_puiMain->m_puiThis->send_message(WM_CLOSE);
 
    }
 
@@ -1911,12 +1911,11 @@ namespace core
             return;
 
          // hide the application's windows before closing all the documents
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->ShowWindow(SW_HIDE);
+         m_puiMain->m_puiThis->ShowWindow(SW_HIDE);
          // trans    m_puiMain->ShowOwnedPopups(FALSE);
 
          // put the window at the bottom of zorder, so it isn't activated
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->SetWindowPos(ZORDER_BOTTOM, 0, 0, 0, 0,
-               SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+         m_puiMain->m_puiThis->zorder(ZORDER_BOTTOM, SWP_NOACTIVATE);
       }
       catch (...)
       {
@@ -2425,16 +2424,24 @@ namespace core
 
    bool application::does_launch_window_on_startup()
    {
+      
       return true;
+      
    }
 
+   
    bool application::activate_app()
    {
+      
       if (m_puiMain != NULL)
       {
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->ShowWindow(SW_SHOWNORMAL);
+         
+         m_puiMain->m_puiThis->ShowWindow(SW_SHOWNORMAL);
+         
       }
+      
       return true;
+      
    }
 
 

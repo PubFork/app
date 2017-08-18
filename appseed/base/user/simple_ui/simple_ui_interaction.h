@@ -5,38 +5,6 @@
 #include "simple_ui_style.h"
 
 
-namespace user
-{
-
-   enum e_element
-   {
-
-      element_none,
-      element_tab,
-      element_close_tab_button,
-      element_status_image,
-      element_text,
-      element_icon,
-      element_border,
-      element_client,
-      element_area,
-      element_drop_down,
-      element_item,
-      element_search_edit,
-      element_search_ok,
-      element_scrollbar_rect,
-      element_scrollbar_rectA,
-      element_scrollbar_rectB,
-      element_scrollbar_pageA,
-      element_scrollbar_pageB,
-
-      element_split = 10000,
-
-   };
-
-
-} // namespace user
-
 namespace simple_ui
 {
 
@@ -73,7 +41,7 @@ namespace simple_ui
       virtual void simple_ui_draw_pestana(::draw2d::graphics * pgraphics);
       virtual void simple_ui_draw_fuzzy_color_spread(::draw2d::graphics * pgraphics);
 
-      virtual void simple_ui_draw_back_01_old(style::e_schema eschema,rect m_rect,::draw2d::graphics * pgraphics);
+      virtual void simple_ui_draw_back_01_old(rect m_rect,::draw2d::graphics * pgraphics);
       virtual void simple_ui_draw_back_01_new(rect m_rect,::draw2d::graphics * pgraphics);
 
       virtual bool has_action_hover();
@@ -91,7 +59,7 @@ namespace simple_ui
 
       virtual bool keyboard_focus_is_focusable();
 
-      virtual style * get_style();
+//      virtual style * get_style();
 
 
       virtual index hit_test(point point,::user::e_element & eelement);

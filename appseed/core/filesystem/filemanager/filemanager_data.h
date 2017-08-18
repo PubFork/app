@@ -7,7 +7,7 @@ namespace filemanager
 
    class CLASS_DECL_CORE data :
       virtual public ::data::data,
-      virtual public ::user::schema
+      virtual public ::user::style
    {
    public:
 
@@ -55,7 +55,7 @@ namespace filemanager
       void OnFileManagerOpenFile(const ::fs::item_array & itema, ::action::context actioncontext);
       void OnFileManagerOpenFolder(sp(::fs::item)  str, ::action::context actioncontext);
 
-      void OnFileManagerItemUpdate(cmd_ui * pcmdui, const ::fs::item_array & itema);
+      void OnFileManagerItemUpdate(command_ui * pcommandui, const ::fs::item_array & itema);
       void OnFileManagerItemCommand(const char * pszId, const ::fs::item_array & itema);
 
       virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);

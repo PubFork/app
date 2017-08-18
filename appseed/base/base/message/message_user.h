@@ -254,7 +254,7 @@ namespace message
 
 
       update_cmd_ui(::aura::application * papp): ::message::base(papp) {}
-      cmd_ui *    m_pcmdui;
+      command_ui *    m_pcommandui;
    };
 
    class CLASS_DECL_BASE command: public base

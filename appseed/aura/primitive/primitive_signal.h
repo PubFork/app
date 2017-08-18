@@ -37,6 +37,9 @@ public:
    signal_details(::aura::application * pap, class signal * psignal);
    virtual ~signal_details();
 
+   
+   void reset(class ::signal * psignal);
+
 
    bool emit(); // returns m_bRet
 

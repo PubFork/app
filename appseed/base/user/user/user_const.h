@@ -4,6 +4,37 @@
 namespace user
 {
 
+   
+   enum e_element
+   {
+      
+      element_none,
+      element_frame_window,
+      element_tab,
+      element_close_tab_button,
+      element_status_image,
+      element_text,
+      element_icon,
+      element_border,
+      element_client,
+      element_area,
+      element_drop_down,
+      element_item,
+      element_search_edit,
+      element_search_ok,
+      element_scrollbar_rect,
+      element_scrollbar_rectA,
+      element_scrollbar_rectB,
+      element_scrollbar_pageA,
+      element_scrollbar_pageB,
+      
+      element_split = 10000,
+      
+   };
+   
+   using translucency_map = ::map < e_element, e_element, e_translucency, e_translucency >;
+
+   
    enum e_event
    {
       event_initialize_control,
@@ -89,11 +120,13 @@ namespace user
       color_tab_layout_background,
 
    };
+   
+   using color_map = map < e_color,e_color,COLORREF,COLORREF >;
 
    enum e_font
    {
 
-      font_none,
+      font_default,
       font_button,
       font_plain_edit,
       font_tree,
@@ -104,6 +137,47 @@ namespace user
 
    };
 
+   using font_map = map < e_font,e_font,::draw2d::font_sp >;
+   
+   enum e_flag
+   {
+      
+      flag_none,
+      flag_border,
+      
+   };
+   
+   using flag_map = ::map < e_flag, e_flag, bool, bool >;
+   
+   enum e_rect
+   {
+      
+      rect_none,
+      rect_menu_margin,
+      
+   };
+   
+   using rect_map = ::map < e_rect, e_rect, rect, rect >;
+   
+   enum e_int
+   {
+      
+      int_none,
+      int_border,
+      int_element_padding,
+      int_menu_button_padding,
+      
+   };
+   
+   using int_map = ::map < e_int, e_int, int, int >;
 
+   enum e_timer
+   {
+      
+      timer_update_menu_command_ui = 1000,
+      
+   };
+
+   
 } // namespace user
 

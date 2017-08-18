@@ -467,7 +467,7 @@ namespace hotplugin
    void host::set_bitmap(::draw2d::graphics * pgraphics,const RECT & lprect)
    {
 
-      ensure_bitmap_data((int32_t)width(lprect), (int32_t)height(lprect), false);
+      ensure_bitmap_data((int32_t)::width(lprect), (int32_t)::height(lprect), false);
 
       if(!m_memBitmap.is_mapped())
          return;
@@ -507,7 +507,7 @@ namespace hotplugin
    void host::paint_bitmap(::draw2d::graphics * pgraphics,const RECT & lprect)
    {
 
-      ensure_bitmap_data((int32_t)width(lprect), (int32_t)height(lprect), false);
+      ensure_bitmap_data((int32_t)::width(lprect), (int32_t)::height(lprect), false);
 
       if(!m_memBitmap.is_mapped())
          return;
@@ -551,9 +551,9 @@ namespace hotplugin
 
       GetWindowRect(rect);
 
-      m_sizeBitmap.cx = abs((int32_t)width(rect));
+      m_sizeBitmap.cx = abs((int32_t)::width(rect));
 
-      m_sizeBitmap.cy = abs((int32_t)height(rect));
+      m_sizeBitmap.cy = abs((int32_t)::height(rect));
 
       ensure_bitmap_data(m_sizeBitmap.cx, m_sizeBitmap.cy, false);
 

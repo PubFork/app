@@ -39,7 +39,7 @@
 #include "aura_assert_running_task.cpp"
 #include "aura_checked.cpp"
 #include "aura_command.cpp"
-#include "aura_command_msg.cpp"
+//#include "aura_command_msg.cpp"
 #include "aura_command_target.cpp"
 #include "aura_command_target_interface.cpp"
 #include "aura_command_ui.cpp"

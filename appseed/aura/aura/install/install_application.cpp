@@ -74,7 +74,7 @@ namespace install
 
          }
 
-         str += string(::GetCommandLineW());
+         str += System.os().get_command_line();
 
          ::MessageBoxA(NULL, str.c_str(), "zzzAPPzzz install", MB_ICONINFORMATION);
 
@@ -400,13 +400,13 @@ namespace install
       if (mutex.already_exists())
       {
 
-         add_command_line(::GetCommandLineW());
+         add_command_line(System.os().get_command_line());
 
          return -34;
 
       }
 
-      string str(::GetCommandLineW());
+      string str(System.os().get_command_line());
 
       if (str.find(" install ") < 0)
       {

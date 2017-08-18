@@ -9,6 +9,8 @@ namespace user
       button(get_app())
    {
 
+      construct_userstyle(style_button);
+      
    }
 
 
@@ -16,6 +18,8 @@ namespace user
       object(papp),
       ::user::interaction(papp)
    {
+      
+      ::user::style::m_estyle = ::user::style_button;
 
       m_estockicon      = stock_icon_none;
 
@@ -25,7 +29,7 @@ namespace user
       m_plist           = NULL;
       m_iHover          = -1;
       m_echeck          = check::unchecked;
-      m_pschema         = NULL;
+      m_puserstyle     = NULL;
       m_iClick          = 0;
 
    }
@@ -95,7 +99,7 @@ namespace user
          GetClientRect(rectClient);
 
 
-         if(m_puserschemaSchema == NULL)
+         if(m_puserstyle == NULL)
          {
 
             if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
@@ -121,25 +125,25 @@ namespace user
             if(m_iHover == 0 || Session.m_puiLastLButtonDown == this)
             {
 
-               //pgraphics->Draw3dRect(rectClient,m_pschema->_001GetColor(color_border_hover),m_pschema->_001GetColor(color_border_hover));
+               //pgraphics->Draw3dRect(rectClient,m_puserstyle->_001GetColor(color_border_hover),m_puserstyle->_001GetColor(color_border_hover));
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, m_puserschemaSchema->_001GetColor(color_button_background_hover));
+               pgraphics->FillSolidRect(rectClient, m_puserstyle->_001GetColor(color_button_background_hover));
 
-               pgraphics->set_text_color(m_puserschemaSchema->_001GetColor(color_button_text_hover));
+               pgraphics->set_text_color(m_puserstyle->_001GetColor(color_button_text_hover));
 
             }
             else
             {
 
-               //pgraphics->Draw3dRect(rectClient,m_pschema->_001GetColor(color_border_normal),m_pschema->_001GetColor(color_border_normal));
+               //pgraphics->Draw3dRect(rectClient,m_puserstyle->_001GetColor(color_border_normal),m_puserstyle->_001GetColor(color_border_normal));
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, m_puserschemaSchema->_001GetColor(color_button_background_normal));
+               pgraphics->FillSolidRect(rectClient, m_puserstyle->_001GetColor(color_button_background_normal));
 
-               pgraphics->set_text_color(m_puserschemaSchema->_001GetColor(color_button_text_normal));
+               pgraphics->set_text_color(m_puserstyle->_001GetColor(color_button_text_normal));
 
             }
 
@@ -148,7 +152,7 @@ namespace user
          if(m_estockicon == stock_icon_none)
          {
 
-            select_font(pgraphics, font_button, this);
+            select_font(pgraphics, font_button);
 
             pgraphics->text_out(m_rectText.left,m_rectText.top,strText);
 
@@ -186,11 +190,12 @@ namespace user
 
    void button::_001OnLButtonDown(signal_details * pobj)
    {
+      
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
-         pobj->previous();
+      pobj->previous();
 
-         e_element eelement;
+      e_element eelement;
 
       if(hit_test(pmouse->m_pt, eelement) >= 0)
       {
@@ -204,17 +209,17 @@ namespace user
 
          }
 
-
-
       }
 
    }
 
+   
    void button::_001OnMButtonDown(signal_details * pobj)
    {
+      
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
-         pobj->previous();
+      pobj->previous();
 
       e_element eelement;
 
@@ -230,16 +235,17 @@ namespace user
 
          }
 
-
-
       }
 
    }
+   
+   
    void button::_001OnMButtonUp(signal_details * pobj)
    {
+      
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
-         pobj->previous();
+       pobj->previous();
 
       e_element eelement;
 
@@ -398,7 +404,7 @@ namespace user
       if(pgraphics.is_null())
          return size(0, 0);
 
-      select_font(pgraphics, font_button, this);
+      select_font(pgraphics, font_button);
 
       string strText(m_strWindowText);
 
@@ -419,7 +425,7 @@ namespace user
    }
 
 
-   void button::ResizeToFit()
+   void button::resize_to_fit()
    {
 
       if(m_estyle == style_simple)
@@ -427,7 +433,7 @@ namespace user
 
             ::draw2d::memory_graphics pgraphics(allocer());
 
-            select_font(pgraphics, font_button, this);
+            select_font(pgraphics, font_button);
 
             string str;
             get_window_text(str);
@@ -493,7 +499,7 @@ namespace user
    {
 
       UNREFERENCED_PARAMETER(pobj);
-
+      
       if(m_estyle == style_none)
       {
 
@@ -511,39 +517,6 @@ namespace user
       rect rectClient;
 
       GetClientRect(rectClient);
-
-
-      ::user::front_end_schema * pschema = NULL;
-
-      if (m_puserschemaSchema == NULL)
-      {
-
-         m_puserschemaSchema = GetTopLevel();
-
-      }
-
-      sp(::user::frame_window) pframewindow = GetTypedParent < ::user::frame_window >();
-
-      if (m_puserschemaSchema == NULL)
-      {
-
-         m_puserschemaSchema = Application.userschema();
-
-      }
-
-      if (pschema == NULL)
-      {
-
-         pschema = Session.user()->GetUfeSchema();
-
-      }
-
-      if (pschema != NULL)
-      {
-
-         m_pschema = &pschema->m_button;
-
-      }
 
 
       ::size sizeText = calc_text_size();
@@ -587,7 +560,7 @@ namespace user
    void button::_002OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      if(m_pschema == NULL)
+      if(m_puserstyle == NULL)
          return;
 
       
@@ -599,23 +572,23 @@ namespace user
       COLORREF crBk;
       if(!is_window_enabled())
       {
-         crBk = m_puserschemaSchema->_001GetColor(color_button_background_disabled);
+         crBk = m_puserstyle->_001GetColor(color_button_background_disabled);
       }
       else if(is_pressed())
       {
-         crBk = m_puserschemaSchema->_001GetColor(color_button_background_press);
+         crBk = m_puserstyle->_001GetColor(color_button_background_press);
       }
       else if(m_iHover >= 0)
       {
-         crBk = m_puserschemaSchema->_001GetColor(color_button_background_hover);
+         crBk = m_puserstyle->_001GetColor(color_button_background_hover);
       }
       else
       {
-         crBk = m_puserschemaSchema->_001GetColor(color_button_background_normal);
+         crBk = m_puserstyle->_001GetColor(color_button_background_normal);
       }
 
 
-      if(::user::button::_001IsTranslucent())
+      if(_001IsTranslucent())
       {
          class imaging & imaging = System.visual().imaging();
          imaging.color_blend(
@@ -647,8 +620,8 @@ namespace user
       {
          crBorder = ARGB(255, 10, 10, 100);
       }
-
-      if(m_pschema->m_bBorder)
+      
+      if(has_flag(flag_border))
       {
          pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
       }
@@ -679,30 +652,30 @@ namespace user
 
       if(!is_window_enabled())
       {
-//         pgraphics->set_text_color(m_pschema->m_crTextDisabled);
-         brushText->create_solid(m_puserschemaSchema->_001GetColor(color_button_text_disabled));
+//         pgraphics->set_text_color(m_puserstyle->m_crTextDisabled);
+         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_disabled));
       }
       else if(is_pressed())
       {
-//         pgraphics->set_text_color(m_pschema->m_crTextPress);
-         brushText->create_solid(m_puserschemaSchema->_001GetColor(color_button_text_press));
+//         pgraphics->set_text_color(m_puserstyle->m_crTextPress);
+         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_press));
       }
       else if(m_iHover >= 0)
       {
-//         pgraphics->set_text_color(m_pschema->m_crTextHover);
-         brushText->create_solid(m_puserschemaSchema->_001GetColor(color_button_text_hover));
+//         pgraphics->set_text_color(m_puserstyle->m_crTextHover);
+         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_hover));
       }
       else
       {
-//         pgraphics->set_text_color(m_pschema->m_crTextNormal);
-         brushText->create_solid(m_puserschemaSchema->_001GetColor(color_button_text_normal));
+//         pgraphics->set_text_color(m_puserstyle->m_crTextNormal);
+         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_normal));
       }
 
       pgraphics->SelectObject(brushText);
 
       string strText(get_window_text());
 
-      select_font(pgraphics, font_button, this);
+      select_font(pgraphics, font_button);
 
       pgraphics->draw_text(strText, rectText, DT_LEFT | DT_TOP);
 
@@ -785,7 +758,7 @@ namespace user
 
       color color;
 
-      if(m_pschema == NULL)
+      if(m_puserstyle == NULL)
       {
 
          color.set_rgb(ARGB(255,127,127,127));
@@ -794,7 +767,7 @@ namespace user
       else
       {
 
-         color.set_rgb(m_pschema->_001GetColor(::user::color_button_background_normal));
+         color.set_rgb(m_puserstyle->_001GetColor(::user::color_button_background_normal));
 
       }
 

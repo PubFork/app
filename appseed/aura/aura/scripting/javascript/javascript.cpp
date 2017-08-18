@@ -1170,20 +1170,33 @@ CScriptVar *CScriptVar::deepCopy() {
     return newVar;
 }
 
-void CScriptVar::trace(string indentStr, const string &name) {
+
+void CScriptVar::trace(string indentStr, const string &name)
+{
+   
    string str;
+   
    str.Format("%s'%s' = '%s' %s\n",
         indentStr.c_str(),
         name.c_str(),
         getString().c_str(),
         getFlagsAsString().c_str());
-   ::OutputDebugStringW(::str::international::utf8_to_unicode(str));
-    string indent = indentStr+" ";
-    CScriptVarLink *link = firstChild;
-    while (link) {
+   
+   ::output_debug_string(str);
+   
+   string indent = indentStr+" ";
+   
+   CScriptVarLink *link = firstChild;
+   
+   while (link)
+   {
+      
       link->var->trace(indent, link->name);
+      
       link = link->nextSibling;
-    }
+      
+   }
+   
 }
 
 string CScriptVar::getFlagsAsString() {

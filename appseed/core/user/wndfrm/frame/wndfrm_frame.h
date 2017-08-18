@@ -5,7 +5,7 @@ namespace user
 {
 
 
-   class front_end_schema;
+//   class front_end_schema;
 
 
    namespace wndfrm

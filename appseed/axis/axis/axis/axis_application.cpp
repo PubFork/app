@@ -713,18 +713,20 @@ namespace axis
 
 #else
 
-      char lpPathBuffer[MAX_PATH * 4];
+//      char lpPathBuffer[MAX_PATH * 4];
+//
+//      uint32_t dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
+//
+//      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
+//      {
+//
+//         return FALSE;
+//
+//      }
 
-      uint32_t dwRetVal = GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
-
-      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
-      {
-
-         return FALSE;
-
-      }
-
-      string str(lpPathBuffer);
+//      string str(lpPathBuffer);
+      
+      string str = System.dir().time();
 
 #endif
 
@@ -3111,7 +3113,7 @@ namespace axis
    //      if(m_iReturnCode != 0)
    //      {
    //         dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-   //         ::OutputDebugStringW(L"application::main on_run termination failure");
+   //         ::output_debug_string(L"application::main on_run termination failure");
    //      }
 
    //   }
@@ -3211,7 +3213,7 @@ namespace axis
    //         m_iReturnCode = -1;
    //         exit();
    //         m_bReady = true;
-   //         ::OutputDebugStringW(L"exiting on check handler");
+   //         ::output_debug_string(L"exiting on check handler");
    //         return false;
    //      }
 
@@ -3224,7 +3226,7 @@ namespace axis
    //         exit();
    //         m_iReturnCode = -1;
    //         m_bReady = true;
-   //         ::OutputDebugStringW(L"application::main os_native_bergedge_start failure");
+   //         ::output_debug_string(L"application::main os_native_bergedge_start failure");
    //         return false;
    //      }
 

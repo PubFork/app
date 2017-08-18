@@ -5883,9 +5883,9 @@ namespace user
 
    void mesh::_001OnUpdateMeshViewAutoArrange(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui,pcmdui,pobj);
-         pcmdui->m_pcmdui->_001SetCheck(get_auto_arrange());
-      pcmdui->m_pcmdui->Enable();
+      SCAST_PTR(::command_ui,pcommandui,pobj);
+         pcommandui->_001SetCheck(get_auto_arrange());
+      pcommandui->Enable();
    }
 
    bool mesh::is_valid_display_item(index iDisplayItem)

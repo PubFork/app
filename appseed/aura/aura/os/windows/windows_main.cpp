@@ -84,7 +84,7 @@ int app_core::start()
    if (!defer_aura_init())
    {
 
-      ::OutputDebugString("Failed to defer_core_init");
+      ::output_debug_string("Failed to defer_core_init");
 
       return -4;
 
@@ -121,7 +121,7 @@ int app_core::end()
    if (!defer_aura_term())
    {
 
-      ::OutputDebugString("Failed to defer_core_term");
+      ::output_debug_string("Failed to defer_core_term");
 
       iRet -= 10000;
 
@@ -142,13 +142,13 @@ int app_core::end()
    sprintf(szTime, "%04d-%02d-%02d %02d:%02d:%02d", t.tm_year + 1900, t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
 
    sprintf(szTimeMessage, "\n\n\n---------------------------------------------------------------------------------------------\n|\n|\n|  Just After First Application Request Completion %d", (uint32_t)m_dwAfterApplicationFirstRequest - m_dwStartTime);
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    int iMillisecondsTotal = dwEnd - m_dwStartTime;
 
    sprintf(szTimeMessage, "\n|  Total Elapsed Time %d ms", (uint32_t)iMillisecondsTotal);
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    int iMilliseconds = iMillisecondsTotal % 1000;
@@ -185,43 +185,43 @@ int app_core::end()
 
    }
 
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n|  %s", szTime);
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n-------------------------------------------------------------------------------------------- - ");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
-   ::OutputDebugStringA(szTimeMessage);
+   ::output_debug_string(szTimeMessage);
    printf(szTimeMessage);
 
 

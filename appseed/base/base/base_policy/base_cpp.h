@@ -38,7 +38,6 @@ namespace user
    class interaction_impl_base;
    class interaction;
    class user;
-   class schema_simple_impl;
    class window_draw;
    class control_event;
    class interaction_impl;
@@ -49,6 +48,9 @@ namespace user
    class message;
    class map_form_window;
    class document_manager;
+   class menu_item;
+   class menu;
+   class button;
 
    class interaction_spa;
 
@@ -111,7 +113,7 @@ namespace plane
 
 } // namespace plane
 
-class cmd_ui;
+class command_ui;
 
 
 namespace draw2d
@@ -322,10 +324,11 @@ CLASS_DECL_BASE bool __node_base_pos_term();
 //CLASS_DECL_BASE void __trace_message(const char * lpszPrefix,::signal_details * pobj);
 //CLASS_DECL_BASE void __trace_message(const char * lpszPrefix,LPMESSAGE lpmsg);
 
+#include "base/user/user.h"
 
-#include "base/user/user/user_schema.h"
+//#include "base/user/user/user_schema.h"
 //#include "base/user/user/user_window_util.h"
-#include "base/user/user/user_form_callback.h"
+//#include "base/user/user/user_form_callback.h"
 
 CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow);
 
@@ -367,6 +370,10 @@ CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow)
 //#include "base/user/userpresence/userpresence.h"
 
 //#include "base/user/fontopus/fontopus.h"
+
+
+#include "base/user/user.inl"
+
 
 
 #include "base/base/base.inl"

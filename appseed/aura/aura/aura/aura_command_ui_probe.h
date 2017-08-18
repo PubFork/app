@@ -1,11 +1,15 @@
 #pragma once
 
 /////////////////////////////////////////////////////////////////////////////
+//
+//   probe_command_ui - used to check for command status
+//
+//   It can be used before dispatching a command
+//   It can be used to update a command button with updated status
+//   ...
+//
 
-/////////////////////////////////////////////////////////////////////////////
-// CTestCmdUI - used to test for disabled commands before dispatching
-
-class CTestCmdUI: public cmd_ui
+class probe_command_ui: public command_ui
 {
 public:
 
@@ -17,7 +21,7 @@ public:
    bool                    m_bRadioChanged;
 
 
-   CTestCmdUI(::aura::application * papp);
+   probe_command_ui(::aura::application * papp);
 
 
    virtual void Enable(bool bOn,::action::context actioncontext = ::action::source_system);
@@ -30,68 +34,68 @@ public:
 };
 
 
-// special cmd_ui derived classes are used for other UI paradigms
-//  like toolbar buttons and status indicators
+// special command_ui derived classes are used for other UI paradigms
+// like toolbar buttons and status indicators
 
-// pointer to member function
-#ifndef __MSG_CALL
-#define __MSG_CALL
-#endif
-typedef void (__MSG_CALL command_target::*__PMSG)();
-
-enum __DISPMAP_FLAGS
-{
-   afxDispCustom = 0,
-   afxDispStock = 1
-};
-
-//IA64: __DISPMAP_ENTRY could be ordered more efficiently to reduce size
-// bloat from alignment
-#pragma warning( disable: 4121 )
-struct CLASS_DECL_AURA __DISPMAP_ENTRY
-{
-   const char * lpszName;       // member/property name
-   long lDispID;           // DISPID (may be DISPID_UNKNOWN)
-   const char * lpszParams;      // member parameter description
-   WORD vt;                // return value type / or type of property
-   __PMSG pfn;           // normal member On<membercall> or, OnGet<property>
-   __PMSG pfnSet;        // special member for OnSet<property>
-   size_t nPropOffset;     // property offset
-   __DISPMAP_FLAGS flags;// flags (e.g. stock/custom)
-};
-#pragma warning( default: 4121 )
-
-struct CLASS_DECL_AURA __EVENTSINKMAP_ENTRY
-{
-   __DISPMAP_ENTRY dispEntry;
-   UINT nCtrlIDFirst;
-   UINT nCtrlIDLast;
-};
-
-// DSC Sink state/reason codes passed to core API ::fontopus::user event handlers
-enum DSCSTATE
-{
-   dscNoState = 0,
-   dscOKToDo,
-   dscCancelled,
-   dscSyncBefore,
-   dscAboutToDo,
-   dscFailedToDo,
-   dscSyncAfter,
-   dscDidEvent
-};
-
-enum DSCREASON
-{
-   dscNoReason = 0,
-   dscClose,
-   dscCommit,
-   dscDelete,
-   dscEdit,
-   dscInsert,
-   dscModify,
-   dscMove
-};
+//// pointer to member function
+//#ifndef __MSG_CALL
+//#define __MSG_CALL
+//#endif
+////typedef void (__MSG_CALL command_target::*__PMSG)();
+////
+////enum __DISPMAP_FLAGS
+////{
+////   afxDispCustom = 0,
+////   afxDispStock = 1
+////};
+//
+////IA64: __DISPMAP_ENTRY could be ordered more efficiently to reduce size
+//// bloat from alignment
+//#pragma warning( disable: 4121 )
+//struct CLASS_DECL_AURA __DISPMAP_ENTRY
+//{
+//   const char * lpszName;       // member/property name
+//   long lDispID;           // DISPID (may be DISPID_UNKNOWN)
+//   const char * lpszParams;      // member parameter description
+//   WORD vt;                // return value type / or type of property
+//   __PMSG pfn;           // normal member On<membercall> or, OnGet<property>
+//   __PMSG pfnSet;        // special member for OnSet<property>
+//   size_t nPropOffset;     // property offset
+//   __DISPMAP_FLAGS flags;// flags (e.g. stock/custom)
+//};
+//#pragma warning( default: 4121 )
+//
+//struct CLASS_DECL_AURA __EVENTSINKMAP_ENTRY
+//{
+//   __DISPMAP_ENTRY dispEntry;
+//   UINT nCtrlIDFirst;
+//   UINT nCtrlIDLast;
+//};
+//
+//// DSC Sink state/reason codes passed to core API ::fontopus::user event handlers
+//enum DSCSTATE
+//{
+//   dscNoState = 0,
+//   dscOKToDo,
+//   dscCancelled,
+//   dscSyncBefore,
+//   dscAboutToDo,
+//   dscFailedToDo,
+//   dscSyncAfter,
+//   dscDidEvent
+//};
+//
+//enum DSCREASON
+//{
+//   dscNoReason = 0,
+//   dscClose,
+//   dscCommit,
+//   dscDelete,
+//   dscEdit,
+//   dscInsert,
+//   dscModify,
+//   dscMove
+//};
 
 /////////////////////////////////////////////////////////////////////////////
 // interaction_impl implementation

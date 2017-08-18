@@ -951,9 +951,7 @@ Restart:
    bool interaction_base::IsWindow() const
    {
 
-      ::exception::throw_interface_only(get_app());
-
-      return false;
+      return ::user::elemental::IsWindow();
 
    }
 
@@ -2420,7 +2418,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2451,7 +2449,7 @@ Restart:
 
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2481,7 +2479,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt)
    {
 
       ::exception::throw_interface_only(get_app());

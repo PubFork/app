@@ -383,7 +383,7 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
 //void output_debug_string(const char * psz)
 //{
 //   
-//   ::OutputDebugString(wstring(psz));
+//   ::output_debug_string(wstring(psz));
 //
 //}
 

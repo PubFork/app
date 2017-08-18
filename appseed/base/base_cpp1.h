@@ -106,7 +106,7 @@ namespace plane
 
 } // namespace plane
 
-class cmd_ui;
+class command_ui;
 
 
 namespace draw2d

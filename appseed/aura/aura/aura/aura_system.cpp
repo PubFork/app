@@ -28,11 +28,7 @@ string get_user_name()
    return string(wsz);
 }
 #endif
-#ifdef MACOS
-void ns_app_terminate();
-//void ns_app_terminate();
-void ns_create_alias(const char * pszTarget, const char * pszSource);
-#endif
+
 namespace aura
 {
 

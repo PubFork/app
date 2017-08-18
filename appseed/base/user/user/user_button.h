@@ -5,7 +5,7 @@ namespace user
 {
 
 
-   class CLASS_DECL_CORE button :
+   class CLASS_DECL_BASE button :
       virtual public control
    {
    public:
@@ -52,10 +52,12 @@ namespace user
       check::e_check                      m_echeck;
       rect                                m_rectText;
       index                               m_iClick;
-      ::user::front_end_schema::button *  m_pschema;
-      ::user::front_end_schema::button *  m_pschemaDraw;
+//      ::user::front_end_schema::button *  m_pschema;
+//      ::user::front_end_schema::button *  m_pschemaDraw;
       e_stock_icon                        m_estockicon;
 
+      rect                    m_rectCheckBox;
+      
 
       // bitmap
 
@@ -72,7 +74,7 @@ namespace user
 
       virtual bool create_control(class control::descriptor * pdescriptor, index iItem = 0);
 
-      virtual void ResizeToFit();
+      virtual void resize_to_fit();
 
       virtual void install_message_handling(::message::dispatch * pinterface);
 

@@ -1022,7 +1022,7 @@ namespace install
 
       if(m_bLogin)
       {
-         //::OutputDebugString("m_bLogin");
+         //::output_debug_string("m_bLogin");
          //get_login().draw(pgraphics);
       }
       else if (System.install().is_installing_ca2())
@@ -1062,7 +1062,7 @@ namespace install
       }
       else
       {
-         //::OutputDebugString("Neither");
+         //::output_debug_string("Neither");
       }
 
 #ifdef WINDOWS
@@ -1096,7 +1096,7 @@ namespace install
       else
       {
 
-         //::OutputDebugString("m_bLogin || !bInstallingCa2");
+         //::output_debug_string("m_bLogin || !bInstallingCa2");
       }
 
 

@@ -268,7 +268,7 @@ void ds_script::Load()
        iRetry--;
    }*/
 #endif
-   //::OutputDebugString(m_strScriptPath);
+   //::output_debug_string(m_strScriptPath);
    if(!Application.file().exists(m_strScriptPath))
    {
       if(HasTempError())

@@ -6,7 +6,7 @@ namespace user
 
 
    class CLASS_DECL_BASE schema_simple_impl:
-      virtual public ::user::schema
+      virtual public ::user::style
    {
    public:
 
@@ -19,6 +19,8 @@ namespace user
       schema_simple_impl(::aura::application * papp);
       virtual ~schema_simple_impl();
 
+      
+      virtual bool prepare_menu_button(::user::menu_item * pitem) override;
 
       virtual bool get_color(COLORREF & cr, e_color ecolor) override;
       virtual bool get_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui) override;

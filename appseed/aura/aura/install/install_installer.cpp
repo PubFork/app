@@ -408,9 +408,9 @@ namespace install
          for (int32_t i = 0; i < straFileList.get_count(); i++)
          {
 
-            ::OutputDebugStringA(straFileList[i]);
+            ::output_debug_string(straFileList[i]);
 
-            ::OutputDebugStringA("\r\n");
+            ::output_debug_string("\r\n");
 
          }
 

@@ -17,7 +17,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    {
 
 
-      ::OutputDebugStringW(L"wndfrm_core.dll initializing!\n");
+      ::output_debug_string(L"wndfrm_core.dll initializing!\n");
 
 
    }
@@ -25,7 +25,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    {
 
 
-      ::OutputDebugStringW(L"wndfrm_core.dll terminating!\n");
+      ::output_debug_string(L"wndfrm_core.dll terminating!\n");
 
 
    }

@@ -1098,7 +1098,7 @@ namespace user
 
    //   }
 
-   //   return ::user::schema::get_font(spfont);
+   //   return ::user::style::get_font(spfont);
 
    //}
 

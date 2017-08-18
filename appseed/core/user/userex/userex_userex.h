@@ -67,7 +67,7 @@ namespace userex
 
       virtual bool finalize();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
 
       virtual void _001OnFileNew();

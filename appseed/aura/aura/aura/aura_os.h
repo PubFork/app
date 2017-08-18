@@ -15,6 +15,8 @@ namespace aura
       os(::aura::application * papp);
       virtual ~os();
 
+      
+      virtual string get_command_line();
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);

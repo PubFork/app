@@ -55,7 +55,7 @@ void __trace_message(const char * lpszPrefix,signal_details * pobj)
       // lpszPrefix, pbase->m_oswindow, lpszMsgName,
       //pbase->m_wparam, pbase->m_lparam);
 #else
-      //  ::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
+      //  ::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
       //         lpszPrefix, pbase->m_oswindow, lpszMsgName,
       //       pbase->m_wparam, pbase->m_lparam);
 #endif
@@ -63,11 +63,11 @@ void __trace_message(const char * lpszPrefix,signal_details * pobj)
    else
    {
 #ifdef _WIN64
-      //      ::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
+      //      ::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
       //       lpszPrefix, pbase->m_oswindow, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #else
-      //      ::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+      //      ::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
       //       lpszPrefix, pbase->m_oswindow, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #endif
@@ -128,7 +128,7 @@ void __trace_message(const char * lpszPrefix,LPMSG lpmsg)
       //       lpszPrefix, pMsg->oswindow, lpszMsgName,
       //     pMsg->wParam, pMsg->lParam);
 #else
-      //      ::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
+      //      ::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
       //       lpszPrefix, lpmsg->oswindow, lpszMsgName,
       //     lpmsg->wParam, lpmsg->lParam);
 #endif
@@ -136,11 +136,11 @@ void __trace_message(const char * lpszPrefix,LPMSG lpmsg)
    else
    {
 #ifdef WIN64
-      //::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
+      //::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
       // lpszPrefix, pMsg->oswindow, lpszMsgName,
       //pMsg->wParam, pMsg->lParam);
 #else
-      //::OutputDebugString(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+      //::output_debug_string(::aura::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
       // lpszPrefix, lpmsg->oswindow, lpszMsgName,
       //lpmsg->wParam, lpmsg->lParam);
 #endif

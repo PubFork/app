@@ -1127,7 +1127,7 @@ namespace userex
    }
 
 
-   bool userex::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool userex::_001OnCmdMsg(::user::command * pcmdmsg)
    {
 
       UNREFERENCED_PARAMETER(pcmdmsg);

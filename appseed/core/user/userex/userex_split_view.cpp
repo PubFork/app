@@ -82,10 +82,10 @@ namespace userex
    }
 
 
-   bool split_view::on_simple_update(cmd_ui * pcmdui)
+   bool split_view::on_simple_update(command_ui * pcommandui)
    {
 
-      UNREFERENCED_PARAMETER(pcmdui);
+      UNREFERENCED_PARAMETER(pcommandui);
 
       return false;
 

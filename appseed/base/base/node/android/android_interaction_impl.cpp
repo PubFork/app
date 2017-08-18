@@ -1213,7 +1213,7 @@ namespace android
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       if(command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -3008,7 +3008,7 @@ void interaction_impl::UpdateDialogControls(command_target* pTarget, bool bDisab
 {
    UNREFERENCED_PARAMETER(pTarget);
    UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-   cmd_ui state(get_app());
+   command_ui state(get_app());
    //interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
                                    // walk all the kids - assume the IDs are for buttons

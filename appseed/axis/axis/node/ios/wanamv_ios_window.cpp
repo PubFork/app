@@ -1995,7 +1995,7 @@ namespace ios
        return FALSE;
 
        // make sure command has not become disabled before routing
-       CTestCmdUI state;
+       probe_command_ui state;
        state.m_id = nID;
        _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
        if (!state.m_bEnabled)
@@ -3742,7 +3742,7 @@ namespace ios
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      cmd_ui state(get_app());
+      command_ui state(get_app());
 //      window wndTemp;       // very temporary window just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons

@@ -15,7 +15,7 @@ namespace user
 
          class CLASS_DECL_CORE frame :
             virtual public signalizable,
-            virtual public ::user::schema,
+            virtual public ::user::style,
             virtual public ::object
          {
          public:
@@ -84,7 +84,7 @@ namespace user
 
             virtual appearance * get_appearance();
 
-            virtual ::user::front_end_schema * get_user_front_end_schema();
+            //virtual ::user::front_end_schema * get_user_front_end_schema();
 
             virtual void set_style(const char * pszStyle);
             virtual void on_initialize_appearance();

@@ -278,7 +278,7 @@ namespace user
       }
    }
 
-   bool impact_system::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool impact_system::_001OnCmdMsg(::user::command * pcmdmsg)
    {
       return command_target::_001OnCmdMsg(pcmdmsg);
    }

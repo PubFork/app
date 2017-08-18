@@ -518,10 +518,10 @@ namespace userfs
 
    void list::_001OnUpdateFileRename(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
          range range;
       _001GetSelection(range);
-      pcmdui->m_pcmdui->Enable(
+      pcommandui->Enable(
          range.get_item_count() == 1
          && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;

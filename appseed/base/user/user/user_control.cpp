@@ -576,11 +576,6 @@ namespace user
    }
 
 
-   Ex1FormInterfaceComboBox * control::GetComboBox()
-   {
-      return descriptor().m_data.m_pcombobox;
-   }
-
    control::ddx_dbflags::ddx_dbflags(::database::key key, int_ptr value)
    {
       m_key       = key;
@@ -745,13 +740,13 @@ namespace user
 
    void control_cmd_ui::Enable(bool bOn)
    {
-       m_pcmdui->m_bEnableChanged = TRUE;
-       sp(::user::interaction) pwnd = (sp(::user::interaction))m_pcmdui->m_pOther;
+       m_bEnableChanged = TRUE;
+       sp(::user::interaction) pwnd = (sp(::user::interaction))m_pOther;
        ASSERT(pwnd != NULL);
        ASSERT_KINDOF(::user::interaction, pwnd);
        //ASSERT(m_nIndex < m_nIndexMax);
 
-      sp(::user::interaction) pcontrol = pwnd->get_child_by_id(m_pcmdui->m_idControl);
+      sp(::user::interaction) pcontrol = pwnd->get_child_by_id(m_idControl);
       sp(control) pcontrolex =  (pcontrol.m_p);
       if(pcontrolex != NULL)
       {
@@ -852,7 +847,7 @@ namespace user
    {
       sp(::user::interaction) pview = get_window();
 
-      cmd_ui & state = *m_cmdui.m_pcmdui;
+      command_ui & state = m_commandui;
       state.m_pOther = pview;
 
       sp(::user::interaction) pwndIterator = pview->GetTopWindow();
@@ -876,7 +871,7 @@ namespace user
 
    // xxx         state.m_nIndex = uiID;
             state.m_iCount = -1;
-            state.m_id = m_cmdui.GetControlCommand(idControl);
+            state.m_id = m_commandui.GetControlCommand(idControl);
             state.m_bContinueRouting = FALSE;
 
               // ignore separators
@@ -926,7 +921,7 @@ namespace user
 
          if(uiMessage == BN_CLICKED)
          {
-            //xxx id idCommand = m_cmdui.GetControlCommand(wParam & 0xffff);
+            //xxx id idCommand = m_commandui.GetControlCommand(wParam & 0xffff);
             //xxx get_window()->GetParentFrame()->_001SendCommand(idCommand);
          }
 
@@ -1053,13 +1048,13 @@ namespace user
 
 
    control_cmd_ui::control_cmd_ui(class ::signal * psignal) :
-      ::aura::cmd_ui(psignal)
+      ::command_ui(psignal)
    {
    }
 
 
    control_view_impl::control_view_impl() :
-      m_cmdui(NULL)
+      m_commandui(NULL)
    {
    }
 

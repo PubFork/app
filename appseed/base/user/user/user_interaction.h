@@ -59,6 +59,29 @@ namespace user
          updown_up,
          updown_down,
       };
+      
+      
+      class draw_select
+      {
+      public:
+         
+         interaction * m_pui;
+         ::draw2d::graphics * m_pgraphics;
+         
+         draw_select(interaction * pui, ::draw2d::graphics * pgraphics) :
+            m_pui(pui),
+         m_pgraphics(pgraphics)
+         {
+            m_pui->select(pgraphics);
+         }
+         
+         ~draw_select()
+         {
+            m_pui->select(NULL);
+         }
+         
+      };
+      
 
       flags < e_non_client >              m_flagNonClient;
 
@@ -121,7 +144,7 @@ namespace user
       sp(::axis::session)                 m_psession;
       bool                                m_bMessageWindow;
 
-      bool                                m_bCreated;
+      //bool                                m_bCreated;
 
       string                              m_strWindowText;
 
@@ -132,6 +155,12 @@ namespace user
       int32_t                             m_nModalResult; // for return values from ::interaction_impl::RunModalLoop
 
       sp(interaction)                     m_ptooltip;
+      
+      /// The menu_item this user_interaction (window)
+      /// represents (this window is a button [a menu button],
+      /// this window is a checkbox [a menu checkbox],
+      /// this window is a player/view [a menu picture/video/chat?!])
+      sp(menu_item)                       m_pitem;
 
 
 
@@ -166,7 +195,8 @@ namespace user
       virtual bool defer_check_zorder();
       virtual bool check_need_zorder();
       virtual void clear_need_zorder();
-      virtual void zorder();
+      virtual void do_zorder();
+      virtual void zorder(int ZOrder, int nFlags);
 
       virtual bool create_message_queue(const char * pszName) override;
 
@@ -530,6 +560,8 @@ namespace user
       virtual string get_window_text() override;
       virtual void get_window_text(string & rString) override;
       virtual strsize get_window_text_length() override;
+      
+      virtual void _001SetText(const string & str, ::action::context actioncontext);
 
       virtual void install_message_handling(::message::dispatch * pinterface) override;
       virtual bool IsWindowVisible() override;
@@ -763,15 +795,15 @@ namespace user
 
 
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags) override;
 
@@ -843,9 +875,10 @@ namespace user
       virtual int get_final_y_scroll_bar_width();
 
 
+      //virtual ::user::style * get_user_style() override;
+      virtual ::user::style_base * parent_userstyle() override;
 
-      virtual ::user::schema * get_parent_user_schema() override;
-
+//      bool select_font(::draw2d::graphics * pgraphics, e_font efont);
 
       /*
 
@@ -955,6 +988,16 @@ namespace user
 
       virtual bool _001OnClick(uint_ptr nFlag, point point);
       virtual bool _001OnRightClick(uint_ptr nFlag, point point);
+      
+      
+      virtual int width();
+      virtual int height();
+      
+      virtual int client_width();
+      virtual int client_height();
+
+      
+      virtual void resize_to_fit();
 
    };
 

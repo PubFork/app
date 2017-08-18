@@ -831,7 +831,7 @@ namespace user
 
       if (!pcontrol->Validate(str))
       {
-         // que tal um balão para indicar o erro
+         // que tal um balï¿½o para indicar o erro
          return false;
       }
 
@@ -1904,10 +1904,10 @@ namespace user
 
                      }
 
-                     if (m_puserschemaSchema != NULL)
+                     if (m_puserstyle != NULL)
                      {
 
-                        m_puserschemaSchema->_001DrawCheckBox(pdrawitem->m_pgraphics, r, echeck);
+                        m_puserstyle->_001DrawCheckBox(pdrawitem->m_pgraphics, r, echeck);
 
                      }
 

@@ -43,6 +43,14 @@ namespace macos
    {
    }
 
+   
+   string os::get_command_line()
+   {
+    
+      return get_command_line_dup();
+      
+   }
+   
 
    bool os::shutdown(bool bIfPowerOff)
    {

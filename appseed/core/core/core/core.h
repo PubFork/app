@@ -314,7 +314,7 @@ typedef unichar * BSTR;// must (semantically) match typedef in oleauto.h
 #define APPN_CHILDDELETE 1000
 #define APPN_OPENLINK 1001
                        // lParam is a pointer to a Unicode string
-                       // that can´t be deleted
+                       // that canï¿½t be deleted
 
 #define VMSM_NOTIFY WM_USER + 1117
 #define VMSM_TIMER WM_USER + 1119
@@ -499,7 +499,7 @@ class multiple_document_template; // MDI support
 
 
                                   // Helper classes
-class cmd_ui;           // Menu/button enabling
+class command_ui;           // Menu/button enabling
                         //class CDataExchange;    // Data exchange and validation context
                         //class CCommandLineInfo; // CommandLine parsing helper
 

@@ -1146,7 +1146,7 @@ void script_compiler::cppize1(ds_script * pscript)
          { \r\n \
  \r\n \
  \r\n \
-             ::OutputDebugString(\"netnodelite script initializing : " + strCppPath + "!\\n\"); \r\n \
+             ::output_debug_string(\"netnodelite script initializing : " + strCppPath + "!\\n\"); \r\n \
  \r\n \
  \r\n \
          } \r\n \
@@ -1154,7 +1154,7 @@ void script_compiler::cppize1(ds_script * pscript)
          { \r\n \
  \r\n \
  \r\n \
-            ::OutputDebugString(\"netnodelite script terminating : " + strCppPath + "!\\n\"); \r\n \
+            ::output_debug_string(\"netnodelite script terminating : " + strCppPath + "!\\n\"); \r\n \
  \r\n \
  \r\n \
          } \r\n \

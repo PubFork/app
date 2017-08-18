@@ -37,22 +37,28 @@ LRESULT simple_static::OnSetIcon(WPARAM wparam, LPARAM lparam)
 
 void simple_static::_001OnDraw(::draw2d::graphics * pgraphics)
 {
+   
+   draw_lock dl(this, pgraphics);
+   
    if (get_type() == type_icon)
    {
+      
       ::visual::icon * picon = get_icon();
+      
       if (picon != NULL)
       {
+         
          pgraphics->DrawIcon(null_point(), picon);
+         
       }
+      
    }
    else if (get_type() == type_text)
    {
 
-      select_font(pgraphics, ::user::font_static, this);
+      select_font(::user::font_static);
 
-      ::draw2d::brush_sp brush(allocer(), Session.user()->GetUfeSchema()->m_crTextNormal);
-
-      pgraphics->SelectObject(brush);
+      select_text_color();
 
       string str;
 

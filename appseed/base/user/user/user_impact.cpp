@@ -213,7 +213,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Command routing
 
-   bool impact::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool impact::_001OnCmdMsg(::user::command * pcmdmsg)
 
    {
 
@@ -481,7 +481,7 @@ namespace user
    }*/
 
 
-   void impact::OnUpdateSplitCmd(cmd_ui* pCmdUI)
+   void impact::OnUpdateSplitCmd(command_ui* pCmdUI)
    {
       UNREFERENCED_PARAMETER(pCmdUI);
       /*ENSURE_ARG(pCmdUI != NULL);
@@ -500,7 +500,7 @@ namespace user
       return TRUE;    // attempted at least
    }
 
-   void impact::OnUpdateNextPaneMenu(cmd_ui* pCmdUI)
+   void impact::OnUpdateNextPaneMenu(command_ui* pCmdUI)
    {
       UNREFERENCED_PARAMETER(pCmdUI);
       /*ASSERT(pCmdUI->m_nID == ID_NEXT_PANE ||

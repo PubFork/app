@@ -712,7 +712,7 @@ namespace file
       bool system::name_is(const ::file::path & strPath,::aura::application * papp)
       {
 
-         //OutputDebugString(strPath);
+         //output_debug_string(strPath);
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(strPath, ".zip")))
          {
             m_isdirmap.set(strPath, true, 0);

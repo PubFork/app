@@ -44,7 +44,7 @@ namespace console
       void ToFront();
 
       virtual bool on_simple_action(id id);
-      virtual bool on_simple_update(cmd_ui * pcmdui);
+      virtual bool on_simple_update(command_ui * pcommandui);
 
 
       virtual bool get_translucency(::user::e_translucency & etranslucency);

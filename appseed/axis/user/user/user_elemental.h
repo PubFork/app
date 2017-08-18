@@ -6,13 +6,13 @@ namespace user
 
 
    class CLASS_DECL_AXIS elemental :
-      virtual public ::object
+      virtual public ::user::primitive
    {
    public:
 
 
       DWORD                               m_dwFocusStartTick;
-      bool                                m_bDestroying;
+      bool                                m_bUserElementalOk;
 
 
       elemental();
@@ -80,6 +80,10 @@ namespace user
 
       virtual void on_reset_focus_start_tick();
 
+      
+      virtual bool IsWindow() const;
+      
+      
    };
 
 

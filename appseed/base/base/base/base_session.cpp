@@ -1,6 +1,5 @@
 #include "framework.h" // from "axis/user/user.h"
-#include "base/user/core_user.h"
-#include "base/user/common_user.h"
+#include "base/user/user.h"
 
 
 namespace base
@@ -78,9 +77,9 @@ namespace base
 
       //m_paxissystem->m_basesessionptra.add_unique(this);
 
-      m_puserschemasimple           = NULL;
+      m_puserstyle                 = NULL;
 
-      m_puserschemaSchema           = NULL;
+      //m_puserstyle           = NULL;
 
       m_pcopydesk                   = NULL;
 
@@ -103,12 +102,12 @@ namespace base
    void session::defer_create_user_schema(const char * pszUiInteractionLibrary)
    {
 
-      if (m_puserschemasimple == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemasimple = get_user_schema(pszUiInteractionLibrary);
+         m_puserstyle = get_user_style(pszUiInteractionLibrary);
 
-         if (m_puserschemasimple == NULL)
+         if (m_puserstyle == NULL)
          {
 
             thisfail << 1;
@@ -116,8 +115,6 @@ namespace base
             throw resource_exception(this);
 
          }
-
-         m_puserschemaSchema = m_puserschemasimple;
 
       }
 
@@ -320,6 +317,12 @@ namespace base
       if(!::base::application::initialize1())
          return false;
 
+      if (m_puserstyle.is_null())
+      {
+         
+         defer_create_user_schema(preferred_userschema());
+         
+      }
 
       if(!m_puser->initialize1())
          return false;
@@ -800,10 +803,10 @@ namespace base
 
    }
 
-   sp(::user::schema) session::get_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp)
+   sp(::user::style) session::get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
-      sp(::user::schema) & p = m_mapSchema[pszUinteractionLibrary];
+      sp(::user::style) & p = m_mapStyle[pszUinteractionLibrary];
 
       if (p.is_null())
       {
@@ -816,7 +819,7 @@ namespace base
 
    }
 
-   sp(::user::schema) session::create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp)
+   sp(::user::style) session::create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
       thisstart;
@@ -935,7 +938,7 @@ namespace base
 
       straLibrary.add("wndfrm_core");
 
-      sp(::user::schema) pschema;
+      sp(::user::style) pschema;
 
       for (string strLibrary : straLibrary)
       {
@@ -1027,8 +1030,8 @@ namespace base
       if (pschema.is_null())
       {
          
-         pschema = canew(::user::schema_simple_impl(papp));
-
+         pschema = canew(::user::style(this));
+         
       }
 
       return pschema;
@@ -1109,6 +1112,15 @@ namespace base
 
 #endif
 
+   }
+   
+   
+   sp(::user::impact) session::get_view()
+   {
+    
+      return NULL;
+      
+      
    }
 
 

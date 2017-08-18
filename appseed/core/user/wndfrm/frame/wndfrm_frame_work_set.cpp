@@ -454,10 +454,10 @@ namespace user
             return false;
          }
 
-         bool WorkSet::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+         bool WorkSet::_001OnCmdMsg(::user::command * pcmdmsg)
          {
 
-            if(pcmdmsg->m_etype == ::aura::cmd_msg::type_command && m_pwndCommand != NULL)
+            if(pcmdmsg->m_etype == ::user::command::type_command && m_pwndCommand != NULL)
             {
 
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;

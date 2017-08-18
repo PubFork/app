@@ -133,7 +133,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugString("salt.DLL Initializing!\n");
+      ::output_debug_string("salt.DLL Initializing!\n");
       
       // Extension DLL one-time initialization
       if (!AfxInitExtensionModule(VmscdadecDLL, hInstance))
@@ -155,7 +155,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
-      ::OutputDebugString("salt.DLL Terminating!\n");
+      ::output_debug_string("salt.DLL Terminating!\n");
       // Terminate the library before destructors are called
       AfxTermExtensionModule(VmscdadecDLL);
    }

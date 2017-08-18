@@ -14,6 +14,16 @@ namespace aura
    {
    }
 
+   
+   string os::get_command_line()
+   {
+
+      throw interface_only_exception(get_app(), "this is an interface");
+      
+      return "";
+      
+   }
+   
 
    bool os::shutdown(bool bIfPowerOff)
    {

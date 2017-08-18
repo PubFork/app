@@ -73,14 +73,21 @@ HANDLE _get_osfhandle(int32_t i)
 	return (HANDLE)i;		// FIXME:  This doesn't work under Win64
 }*/
 
-_FILE *fopen_dup(const char *path, const char *attrs)
+
+FILE * fopen_dup(const char *path, const char * pszAttrs)
 {
+   
+   string attrs(pszAttrs);
+   
+   if(attrs)
+      
+   
+   
 
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
     return fopen(path, attrs);
 #elif defined(METROWIN)
-
 
 	uint32_t access, disp;
 	if (strchr_dup(attrs, 'w'))
@@ -119,33 +126,7 @@ _FILE *fopen_dup(const char *path, const char *attrs)
 
 #else
 
-	uint32_t access, disp;
-	if (strchr_dup(attrs, 'w'))
-	{
-		access = GENERIC_WRITE;
-		disp = CREATE_ALWAYS;
-	}
-	else
-	{
-		access = GENERIC_READ;
-		disp = OPEN_EXISTING;
-	}
-
-   wstring wstr(path);
-
-	HANDLE hFile = CreateFileW(wstr, access, 0, 0, disp, 0, 0);
-
-	if (hFile == INVALID_HANDLE_VALUE)
-		return 0;
-
-	_FILE *file = new _FILE;
-	memset_dup(file, 0, sizeof(_FILE));
-	file->_base = (char *) hFile;
-
-	if (strchr_dup(attrs, 't'))
-		file->_flag |= _FILE_TEXT;
-
-	return file;
+   return wfopen(wstring(path), attrs);
 
 #endif
 

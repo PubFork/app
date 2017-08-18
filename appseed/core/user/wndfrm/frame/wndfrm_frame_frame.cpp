@@ -37,14 +37,14 @@ namespace user
          {
          }
 
-         ::user::front_end_schema * frame::get_user_front_end_schema()
-         {
-
-            ::exception::throw_interface_only(get_app());
-
-            return NULL;
-
-         }
+//         ::user::front_end_schema * frame::get_user_front_end_schema()
+//         {
+//
+//            ::exception::throw_interface_only(get_app());
+//
+//            return NULL;
+//
+//         }
 
          void frame::set_style(const char * pszStyle)
          {

@@ -5,7 +5,7 @@ namespace user
 {
 
    class tool_cmd_ui :
-      public cmd_ui        // class private to this file !
+      public command_ui        // class private to this file !
    {
    public: // re-implementations only
 

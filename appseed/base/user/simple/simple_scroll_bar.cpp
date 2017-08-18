@@ -10,8 +10,8 @@ simple_scroll_bar::simple_scroll_bar(::aura::application * papp) :
    ::user::interaction(papp),
    m_penDraw(allocer()),
    m_brushDraw(allocer()),
-   m_rgnA(allocer()), // região da primeira seta
-   m_rgnB(allocer()) // região da segunda seta
+   m_rgnA(allocer()), // regiï¿½o da primeira seta
+   m_rgnB(allocer()) // regiï¿½o da segunda seta
 {
    //m_brushNull->CreateStockObject(NULL_BRUSH);
    m_flagNonClient.unsignalize(non_client_background);
@@ -822,17 +822,17 @@ void simple_scroll_bar::_001OnCreate(signal_details * pobj)
    SCAST_PTR(::message::create, pcreate, pobj);
 
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = GetTopLevel();
+      m_puserstyle = GetTopLevel();
 
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
    }
 
@@ -994,10 +994,10 @@ public:
 void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawSimpleScrollBar(pgraphics, this))
+      if (m_puserstyle->_001DrawSimpleScrollBar(pgraphics, this))
       {
 
          return;
@@ -1007,10 +1007,10 @@ void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
    }
 
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawScrollBar(pgraphics, this))
+      if (m_puserstyle->_001DrawScrollBar(pgraphics, this))
       {
 
          return;
@@ -1029,7 +1029,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    COLORREF crBackground = 0;
 
-   get_color(crBackground, ::user::color_background);
+   style_color(crBackground, ::user::color_background);
 
    rect rectClient;
 

@@ -18,16 +18,16 @@ namespace userex
    }
 
 
-   bool pane_view::on_simple_update(cmd_ui * pcmdui)
+   bool pane_view::on_simple_update(command_ui * pcommandui)
    {
 
       for(int32_t i = 0; i < m_menua.get_size(); i++)
       {
 
-         if(pcmdui->m_id == m_menua[i]->m_id)
+         if(pcommandui->m_id == m_menua[i]->m_id)
          {
 
-            pcmdui->Enable(TRUE);
+            pcommandui->Enable(TRUE);
 
             return true;
 
@@ -35,7 +35,7 @@ namespace userex
 
       }
 
-      return on_simple_update(pcmdui);
+      return on_simple_update(pcommandui);
 
    }
 

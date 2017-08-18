@@ -5,8 +5,7 @@ class keyboard;
 class front_end_schema;
 
 #include "user_window_map.h"
-#include "user_front_end_schema.h"
-#include "user_front_end.h"
+#include "user_style.h"
 
 
 namespace user
@@ -20,12 +19,11 @@ namespace user
 
 
 
-      ::user::elemental *                    m_pmousefocusLButtonDown;
-      ::user::elemental *                    m_pmousefocusRButtonDown;
-      sp(::user::window_map)                 m_pwindowmap;
-      stringa                                m_straEscape;
-      ::user::front_end_schema *             m_pufeschema;
-      ::user::front_end *                    m_pufe;
+      ::user::elemental *           m_pmousefocusLButtonDown;
+      ::user::elemental *           m_pmousefocusRButtonDown;
+      sp(::user::window_map)        m_pwindowmap;
+      stringa                       m_straEscape;
+      //::user::style_sp              m_puserstyle;
 
 
 
@@ -35,8 +33,7 @@ namespace user
 
       
 
-      ::user::front_end_schema * GetUfeSchema();
-      ::user::front_end * GetUfe();
+      //::user::style * get_user_style();
 
 
       virtual bool initialize1();
@@ -74,9 +71,8 @@ namespace user
 
    };
 
-   CLASS_DECL_BASE ::user::front_end_schema * GetUfeSchema(::aura::application * papp);
-   CLASS_DECL_BASE ::user::front_end * GetUfe(::aura::application * papp);
 
+   
 } // namespace user
 
 

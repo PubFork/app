@@ -223,7 +223,7 @@ void canvas::on_paint(::draw2d::graphics * pgraphics, const RECT & rectParam)
       if(rect.bottom - rect.top >= size.cy)
       {
 
-         HANDLE hfile = ::create_file(::path::install_log(process_platform_dir_name2()),GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+         HANDLE hfile = fopen_dup(::path::install_log(process_platform_dir_name2()),GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
 
          if(hfile != INVALID_HANDLE_VALUE)
          {

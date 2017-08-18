@@ -206,7 +206,7 @@ namespace user
       virtual void on_idle();
       virtual void on_final_release();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
       friend class impact_system;
 
@@ -221,7 +221,7 @@ namespace user
       void on_file_save();
       void on_file_save_as();
       void on_file_send_mail();
-      void on_update_file_send_mail(cmd_ui* pCmdUI);
+      void on_update_file_send_mail(command_ui* pCmdUI);
 
 
 
@@ -236,7 +236,7 @@ namespace user
 //      virtual void dump(dump_context &) const;
   //    virtual void assert_valid() const;
 
-//      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+//      virtual bool _001OnCmdMsg(::user::command * pcmdmsg);
 
       template < class DOCUMENT >
       DOCUMENT * get_typed_document()

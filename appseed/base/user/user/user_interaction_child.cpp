@@ -53,12 +53,14 @@ namespace user
    bool interaction_child::create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pparent,id id,LPVOID lpParam)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try {
 
       m_bCreate = true;
 
@@ -113,6 +115,17 @@ namespace user
          ShowWindow(SW_SHOW);
 
       }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         
+         return false;
+         
+         
+      }
 
       return true;
 
@@ -122,12 +135,15 @@ namespace user
    bool interaction_child::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction *  pparent,id id, ::create * pcreate)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try {
+      
 
       m_bCreate = true;
 
@@ -166,12 +182,12 @@ namespace user
 
       m_pui->pre_create_window(cs);
 
-      if (!m_pui->m_bCreated)
-      {
+      //if (!m_pui->m_bCreated)
+      //{
 
          m_pui->send_message(WM_CREATE, 0, (lparam)(LPARAM)&cs);
 
-      }
+      //}
 
       ::rect rectChild(rect);
 
@@ -194,6 +210,16 @@ namespace user
          }
 
       }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         return false;
+         
+         
+      }
 
       return true;
 
@@ -203,12 +229,15 @@ namespace user
    bool interaction_child::create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try
+      {
 
       m_bCreate         = true;
 
@@ -254,6 +283,15 @@ namespace user
 
          ShowWindow(SW_SHOW);
 
+      }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         return false;
+         
       }
 
       return true;
@@ -503,7 +541,13 @@ namespace user
    {
 
       if(!m_bCreate)
+      {
+         
          return false;
+         
+      }
+      
+      m_bCreate = false;
 
       bool bOk = ::user::interaction_impl_base::DestroyWindow();
 
@@ -744,7 +788,7 @@ namespace user
 
       m_puiOwner = pui;
 
-      return ((::user::interaction *)m_puiOwner->m_pvoidUserInteraction);
+      return m_puiOwner->m_puiThis;
 
    }
 
@@ -755,7 +799,7 @@ namespace user
       if(m_puiOwner != NULL)
       {
 
-         return ((::user::interaction *)m_puiOwner->m_pvoidUserInteraction);
+         return m_puiOwner->m_puiThis;
 
       }
 

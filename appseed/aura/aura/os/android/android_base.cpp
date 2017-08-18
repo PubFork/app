@@ -56,7 +56,7 @@ void Sleep(DWORD dwMillis)
 void output_debug_string(const char * psz)
 {
 
-   OutputDebugString(psz);
+   output_debug_string(psz);
 
 }
 

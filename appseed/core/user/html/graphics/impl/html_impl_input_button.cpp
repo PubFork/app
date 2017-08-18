@@ -66,7 +66,7 @@ namespace html
          elemental::implement_phase1(pdata, pelemental);
          m_pbutton->set_window_text(pelemental->m_pbase->get_tag()->get_attr_value("value"));
          m_pbutton->m_id = pelemental->m_pbase->get_tag()->get_attr_value("id");
-         m_pbutton->m_puserschemaSchema = pelemental;
+         m_pbutton->m_puserstyle = pelemental;
          if(m_pbutton->m_id.is_empty())
          {
             m_pbutton->m_id = pelemental->m_pbase->get_tag()->get_attr_value("name");
@@ -79,7 +79,7 @@ namespace html
       bool input_button::layout_phase1(data * pdata)
       {
 
-         m_pbutton->ResizeToFit();
+         m_pbutton->resize_to_fit();
 
          rect rectClient = m_pbutton->m_pimpl->m_rectParentClientRequest;
 

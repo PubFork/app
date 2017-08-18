@@ -11,6 +11,21 @@
 /* initially set for achromatic colors */
 #define UNDEFINED_HUE (HLSMAX*2.0/3.0)
 
+enum e_color
+{
+   
+   color_black,
+   color_red,
+   color_green,
+   color_blue,
+   color_white,
+   color_yellow,
+   color_magenta,
+   color_cyan,
+   color_gray,
+
+};
+
 class CLASS_DECL_AURA color
 {
 public:
@@ -33,6 +48,7 @@ public:
 
    color();
    color(const color & color);
+   color(e_color ecolor);
    color(COLORREF cr);
    color(RGBQUAD quad);
    virtual ~color();
@@ -123,3 +139,10 @@ namespace visual
 #define bgr_get_g_value(bgr)      (LOBYTE((bgr)>>8))
 #define bgr_get_r_value(bgr)      (LOBYTE((bgr)>>16))
 #define bgr_get_a_value(bgr)      (LOBYTE((bgr)>>24))
+
+
+CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, COLORREF cr);
+CLASS_DECL_AURA COLORREF alpha_color(BYTE bAlpha, e_color ecolor);
+CLASS_DECL_AURA COLORREF opaque_color(COLORREF cr);
+CLASS_DECL_AURA COLORREF pure_color(e_color ecolor);
+CLASS_DECL_AURA COLORREF opaque_color(e_color ecolor);

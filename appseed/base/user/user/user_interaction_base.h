@@ -2,19 +2,16 @@
 
 
 #include "user_window_util.h"
+#include "user_style.h"
 
 
 namespace user
 {
 
    
-   class menu_base_item;
-
-
    class CLASS_DECL_BASE interaction_base :
-      virtual public ::user::primitive,
       virtual public ::user::elemental,
-      virtual public ::user::schema
+      virtual public ::user::style
    {
    public:
 
@@ -89,8 +86,6 @@ namespace user
       };
       
       
-      
-
       interaction_base();
       interaction_base(::aura::application * papp);
       virtual ~interaction_base();
@@ -538,15 +533,15 @@ namespace user
 
 
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags, POINT pt);
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj);
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags);
 

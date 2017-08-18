@@ -324,25 +324,25 @@ namespace simple_ui
 
          }
 
-         int32_t iBorderH = height(&rectClient) / 2;
+         int32_t iBorderH = rectClient.height() / 2;
 
          ::draw2d::brush_sp br(allocer());
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top - 1), point(rectClient.left, rectClient.top + iBorderH + 2), crOut, crIn);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)width(&rectClient), iBorderH), br);
+         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)rectClient.width(), iBorderH), br);
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top + iBorderH - 1), point(rectClient.left, rectClient.top + iBorderH * 2 + 2), crIn, crOut);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)width(&rectClient), rectClient.top + iBorderH + iBorderH), br);
+         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)rectClient.width(), rectClient.top + iBorderH + iBorderH), br);
 
          /*Gdiplus::Pen pen1(crBorderOut);
 
-         graphics2.DrawRectangle(&pen1, rectClient.left, rectClient.top, width(&rectClient), iBorderH * 2);*/
+         graphics2.DrawRectangle(&pen1, rectClient.left, rectClient.top, rectClient.width(), iBorderH * 2);*/
 
          ::draw2d::pen_sp pen(pgraphics, 1.0, crBorderIn);
 
-         pgraphics->DrawRect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)width(&rectClient) - 2, rectClient.top + iBorderH * 2 - 2), pen);
+         pgraphics->DrawRect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)rectClient.width() - 2, rectClient.top + iBorderH * 2 - 2), pen);
 
       }
 
@@ -395,15 +395,15 @@ namespace simple_ui
 
       pgraphics->SelectObject(b);
 
-      //float fMargin = (height(&rectClient) * ((1.0f - 0.7f) / 2.0f));
+      //float fMargin = (rectClient.height() * ((1.0f - 0.7f) / 2.0f));
 
-      float fMargin = (height(&rectClient) * ((1.0f - 0.84f) / 2.0f));
+      float fMargin = (rectClient.height() * ((1.0f - 0.84f) / 2.0f));
 
       rectClient.deflate((int32_t) fMargin, (int32_t) fMargin);
 
       ::draw2d::font_sp f(allocer());
 
-      f->create_pixel_font(FONT_SANS_EX, (int32_t)height(rectClient)* 0.7);
+      f->create_pixel_font(FONT_SANS_EX, (int32_t)rectClient.height()* 0.7);
 
       pgraphics->SelectObject(f);
 

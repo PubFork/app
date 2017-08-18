@@ -169,8 +169,8 @@ namespace prompt
 
    void primary_view::_001OnUpdateEditCopy(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
    }
 
    void primary_view::_001OnEditCopy(signal_details * pobj)
@@ -181,8 +181,8 @@ namespace prompt
 
    void primary_view::_001OnUpdateEditPaste(signal_details * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::command_ui, pcommandui, pobj);
+      pcommandui->Enable(TRUE);
    }
 
 

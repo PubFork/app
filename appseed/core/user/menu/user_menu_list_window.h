@@ -18,7 +18,6 @@ namespace user
       UINT                                m_uiMessage;
       bool                                m_bAutoClose;
       bool                                m_bAutoDelete;
-      ::user::front_end_schema::menu *    m_pschema;
       bool                                m_bOwnItem;
       ::user::menu_item                   m_itemClose;
       int32_t                             m_iHeaderHeight;
@@ -27,7 +26,7 @@ namespace user
 
       menu_list_window();
       menu_list_window(::aura::application * papp);
-      menu_list_window(::aura::application * papp, sp(menu_item) pitem);
+      menu_list_window(::aura::application * papp, menu_item * pitem);
       virtual ~menu_list_window();
 
       void on_layout();
@@ -38,9 +37,9 @@ namespace user
 
       virtual void destroy_menu();
 
-      virtual bool TrackPopupMenu(sp(::user::interaction) pwndParent, sp(::user::interaction) pwndNotify);
+      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify);
 
-      bool MenuFill(sp(::user::interaction) pwndFill, sp(::user::interaction) pwndNotify);
+      bool menu_fill(::user::interaction * puiFill, ::user::interaction * puiNotify);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);
@@ -53,11 +52,10 @@ namespace user
       bool BaseOnControlEvent(::user::control_event * pevent);
 
 
-      bool _TrackPopupMenu(sp(::user::interaction) pwndParent, sp(::user::interaction) pwndNotify);
-      void _CreateButtons(sp(menu_item) pitem);
-      void _UpdateCmdUi(sp(menu_item) pitem);
-      void _CalcSize(sp(menu_item) pitem, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
-      void _LayoutButtons(sp(menu_item) pitem, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound);
+      void create_buttons(menu_item * pitem);
+      void update_command_ui(menu_item * pitem);
+      void calc_size(menu_item * pitem, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
+      void layout_buttons(menu_item * pitem, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound);
 
    };
 

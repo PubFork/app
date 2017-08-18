@@ -328,7 +328,7 @@ bool event::ResetEvent()
       if(m_object == NULL)
       {
 
-         ::OutputDebugStringW(L"error reset event (1)");
+         ::output_debug_string(L"error reset event (1)");
 
       }
 
@@ -340,7 +340,7 @@ bool event::ResetEvent()
    catch(...)
    {
 
-      ::OutputDebugStringW(L"error reset event (2)");
+      ::output_debug_string(L"error reset event (2)");
 
    }
 

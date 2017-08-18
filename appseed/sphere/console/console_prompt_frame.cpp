@@ -427,30 +427,47 @@ namespace console
       }
       else if(pbase->m_wparam == 33)
       {
+         
          pbase->set_lresult(1);
+         
       }
+      
       pbase->m_bRet = true;
+      
    }
 
 
    bool prompt_frame::on_simple_action(id id)
    {
+      
       if(id == "app_exit")
       {
+         
          simple_frame_window::OnClose();
+         
          return true;
+         
       }
+      
       return simple_frame_window::on_simple_action(id);
+      
    }
 
-   bool prompt_frame::on_simple_update(cmd_ui * pcmdui)
+   
+   bool prompt_frame::on_simple_update(command_ui * pcommandui)
    {
-      if(pcmdui->m_id == "app_exit")
+      
+      if(pcommandui->m_id == "app_exit")
       {
-         pcmdui->Enable();
+         
+         pcommandui->Enable();
+         
          return true;
+         
       }
+      
       return false;
+      
    }
 
    

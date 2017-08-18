@@ -579,7 +579,7 @@ string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
 
 
 
-bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,memory_size_t * puiWritten)
+bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,memory_size_t * puiWritten)
 {
 
 #if OSBIT > 32
@@ -596,8 +596,10 @@ bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,m
    {
 
       dwWrite = (DWORD)MIN(nCount - uiWrittenTotal,0xffffffffu);
+      
+      dw = fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file);
 
-      if(!::WriteFile(hFile,&((byte *)lpBuf)[pos],dwWrite,&dw,NULL))
+      if(dw != dwWrite)
       {
 
          uiWrittenTotal += dw;

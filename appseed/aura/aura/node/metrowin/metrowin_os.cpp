@@ -24,6 +24,14 @@ namespace metrowin
    {
    }
 
+   
+   string os::get_command_line()
+   {
+      
+      return zzz123;
+      
+   }
+
 
    bool os::shutdown(bool bIfPowerOff)
    {

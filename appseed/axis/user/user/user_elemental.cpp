@@ -9,7 +9,7 @@ namespace user
    elemental::elemental()
    {
 
-      m_bDestroying = false;
+      m_bUserElementalOk = false;
 
    }
 
@@ -443,6 +443,14 @@ namespace user
 
       m_dwFocusStartTick = ::get_tick_count();
 
+   }
+   
+   
+   bool elemental::IsWindow() const
+   {
+    
+      return m_bUserElementalOk;
+      
    }
 
 

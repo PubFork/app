@@ -39,7 +39,7 @@ namespace axis
       m_puserstrcontext             = NULL;
 
 
-//      m_puserschema                 = &m_schemasimple;
+//      m_puserstyle                 = &m_schemasimple;
 
   //    m_schemasimple.m_pfont.alloc(allocer());
 

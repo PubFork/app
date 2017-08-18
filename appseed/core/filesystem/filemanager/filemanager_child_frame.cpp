@@ -39,7 +39,7 @@ namespace filemanager
       return true;
    }
 
-   bool child_frame::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool child_frame::_001OnCmdMsg(::user::command * pcmdmsg)
    {
 
       //file_list_callback * pcallback = get_filemanager_template()->m_pfilelistcallback;

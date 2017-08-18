@@ -3,8 +3,7 @@
 
 
 #include "aura/user/colorertake5/colorertake5.h"
-#include "core_user.h"
-#include "common_user.h"
+#include "user.h"
 
 //O volume na unidade Z ‚ eco
 //O N£mero de S‚rie do Volume ‚ 4A91 - 94E4
@@ -48,6 +47,7 @@
 #include "user/aaa_want_to_remove_user_text_interface.cpp"
 #include "user/aaa_want_to_remove_user_window_draw.cpp"
 #include "user/user.cpp"
+#include "user/user_button.cpp"
 #include "user/user_control.cpp"
 #include "user/user_control_bar.cpp"
 #include "user/user_control_event.cpp"
@@ -67,16 +67,20 @@
 #include "user/user_interaction_child.cpp"
 #include "user/user_interaction_impl.cpp"
 #include "user/user_interaction_impl_base.cpp"
-#include "user/user_menu_base.cpp"
-#include "user/user_menu_base_item.cpp"
+#include "user/user_menu.cpp"
+#include "user/user_menu_item.cpp"
+#include "user/user_menu_command_ui.cpp"
 #include "user/user_message.cpp"
 #include "user/user_message_queue.cpp"
 #include "user/user_place_holder.cpp"
 #include "user/user_place_holder_container.cpp"
 #include "user/user_plain_text_data.cpp"
-#include "user/user_schema.cpp"
-#include "user/user_schema_layered_frame.cpp"
-#include "user/user_schema_simple_impl.cpp"
+#include "user/user_style_base.cpp"
+#include "user/user_style_composite.cpp"
+#include "user/user_style.cpp"
+//#include "user/user_styled.cpp"
+//#include "user/user_schema_layered_frame.cpp"
+//#include "user/user_schema_simple_impl.cpp"
 #include "user/user_scroll_bar.cpp"
 #include "user/user_scroll.cpp"
 #include "user/user_server.cpp"
@@ -88,13 +92,13 @@
 #include "user/user_window_map.cpp"
 #include "user/user_window_util.cpp"
 
-#include "user/user_front_end.cpp"
-#include "user/user_front_end_schema.cpp"
+//#include "user/user_front_end.cpp"
+//#include "user/user_front_end_schema.cpp"
 //47 arquivo(s)        656.222 bytes
 
 //#include "user/user_copydesk.cpp"
 
-#include "user/user_application_as_proxy_document.cpp"
+//#include "user/user_application_as_proxy_document.cpp"
 
 
 #include "user/user_tooltip.cpp"
