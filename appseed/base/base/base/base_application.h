@@ -100,7 +100,7 @@ namespace base
 
 //      virtual ::user::style * userstyle();
 //      
-//      virtual ::user::style * userstyle(::user::e_style estyle);
+//      virtual ::user::style * userstyle(::user::e_schema estyle);
 
       //virtual int32_t exit_instance();
       

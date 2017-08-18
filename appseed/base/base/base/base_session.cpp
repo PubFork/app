@@ -100,7 +100,7 @@ namespace base
    }
 
    
-   void session::defer_create_user_schema(const char * pszUiInteractionLibrary)
+   void session::defer_create_user_style(const char * pszUiInteractionLibrary)
    {
 
       if (m_puserstyle == NULL)
@@ -321,7 +321,7 @@ namespace base
       if (m_puserstyle.is_null())
       {
          
-         defer_create_user_schema(preferred_userschema());
+         defer_create_user_style(preferred_userschema());
          
       }
 
@@ -812,7 +812,7 @@ namespace base
       if (p.is_null())
       {
 
-         p = create_new_user_schema(pszUinteractionLibrary, papp);
+         p = create_new_user_style(pszUinteractionLibrary, papp);
 
       }
 
@@ -820,7 +820,7 @@ namespace base
 
    }
 
-   sp(::user::style) session::create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp)
+   sp(::user::style) session::create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
    {
 
       thisstart;
@@ -1009,12 +1009,12 @@ namespace base
 
          }
 
-         pschema = plibrary->create_object(papp, "user_schema", NULL);
+         pschema = plibrary->create_object(papp, "user_style", NULL);
 
          if (pschema.is_null())
          {
 
-            thisinfo << "could not create user_schema from " << strLibrary;
+            thisinfo << "could not create user_style from " << strLibrary;
 
             ::aura::del(plibrary);
 

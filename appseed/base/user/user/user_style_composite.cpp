@@ -66,19 +66,19 @@ namespace user
    void style_composite::initialize_style()
    {
       
-      m_map[style_menu].alloc(allocer());
-      m_map[style_button].alloc(allocer());
-      m_map[style_menu_button].alloc(allocer());
-      m_map[style_menu_popup].alloc(allocer());
-      m_map[style_system_menu_button].alloc(allocer());
-      m_map[style_system_menu_popup].alloc(allocer());
+      m_map[schema_menu].alloc(allocer());
+      m_map[schema_button].alloc(allocer());
+      m_map[schema_menu_button].alloc(allocer());
+      m_map[schema_menu_popup].alloc(allocer());
+      m_map[schema_system_menu_button].alloc(allocer());
+      m_map[schema_system_menu_popup].alloc(allocer());
       
-      m_map[style_menu]->initialize_style_menu();
-      m_map[style_button]->initialize_style_button();
-      m_map[style_menu_button]->initialize_style_menu_button();
-      m_map[style_menu_popup]->initialize_style_menu_popup();
-      m_map[style_system_menu_button]->initialize_style_system_menu_button();
-      m_map[style_system_menu_popup]->initialize_style_system_menu_popup();
+      m_map[schema_menu]->initialize_style_menu();
+      m_map[schema_button]->initialize_style_button();
+      m_map[schema_menu_button]->initialize_style_menu_button();
+      m_map[schema_menu_popup]->initialize_style_menu_popup();
+      m_map[schema_system_menu_button]->initialize_style_system_menu_button();
+      m_map[schema_system_menu_popup]->initialize_style_system_menu_popup();
 
    }
    
@@ -472,10 +472,10 @@ namespace user
    
 
 
-   void style_composite::on_select_userstyle()
+   void style_composite::on_select_user_style()
    {
    
-      e_style estyle = get_style();
+      e_schema eschema = get_user_style();
    
       sp(::user::style) puserstyle = Session.m_puserstyle;
    
@@ -500,7 +500,7 @@ namespace user
          
       }
       
-      if(estyle == style_default)
+      if(eschema == schema_default)
       {
     
          m_puserstyle = puserstyle;
@@ -509,7 +509,7 @@ namespace user
       else
       {
       
-         sp(::user::style) puserstyleNext = puserstyle->style_get(estyle);
+         sp(::user::style) puserstyleNext = puserstyle->style_get(eschema);
       
          if(puserstyleNext.is_set())
          {
@@ -529,7 +529,7 @@ namespace user
    }
 
 
-   ::user::style_base * style_composite::parent_userstyle()
+   ::user::style * style_composite::parent_userstyle()
    {
    
       return NULL;
@@ -561,6 +561,15 @@ namespace user
       return userstyle()->get_translucency(etranslucency, eelement);
    
    }
+
+
+   style * style_composite::userstyle()
+   {
+
+      return m_puserstyle;
+
+   }
+
 
 
    bool style_composite::style_flag(e_flag eflag)

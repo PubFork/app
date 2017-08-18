@@ -20,7 +20,7 @@ namespace fontopus
 #else
       m_bMayProDevian = false;
 #endif
-      m_eschema = schema_normal;
+      m_etheme = ::user::theme_lite;
       m_login.m_pstyle = this;
       m_bLButtonDown = false;
       m_bFontopusSimpleUiLayout = false;

@@ -42,8 +42,6 @@ namespace user
 
    };
 
-   map < e_element, e_element, e_translucency, e_translucency > map_translucency;
-
    enum e_control_type
    {
       control_type_none,

@@ -81,18 +81,29 @@ namespace user
 
    };
 
-   enum e_style
+
+   enum e_theme
    {
 
-      style_default,
-      style_menu,
-      style_button,
-      style_menu_button,
-      style_menu_close,
-      style_menu_popup,
-      style_system_menu_button,
-      style_system_menu_close,
-      style_system_menu_popup,
+      theme_lite,
+      theme_blue,
+      theme_dark
+
+   };
+
+
+   enum e_schema
+   {
+
+      schema_default,
+      schema_menu,
+      schema_button,
+      schema_menu_button,
+      schema_menu_close,
+      schema_menu_popup,
+      schema_system_menu_button,
+      schema_system_menu_close,
+      schema_system_menu_popup,
 
    };
 
@@ -261,8 +272,8 @@ namespace user
   //#include "user/user/user_mouse_focus.h"
   //#include "base/user/user/user_elemental.h"
   //#include "user/user/user_check_interface.h"
-  //#include "base/user/user/user_schema_simple_impl.h"
-  //#include "base/user/user/user_schema_layered_frame.h"
+  //#include "base/user/user/user_style_simple_impl.h"
+  //#include "base/user/user/user_style_layered_frame.h"
   //#include "user/user/user_text_interface.h"
   //#include "user/user/user_draw_interface.h"
 #include "base/user/user/user_window_util.h"
@@ -285,7 +296,7 @@ namespace user
 
 #if defined(__cplusplus) || defined(__cplusplus_winrt)
 
-  //#include "base/user/user/user_front_end_schema.h"
+  //#include "base/user/user/user_front_end_style.h"
   //#include "base/user/user/user_front_end.h"
 #include "base/user/user/user_control_bar.h"
 #include "base/user/user/user_wait_cursor.h"

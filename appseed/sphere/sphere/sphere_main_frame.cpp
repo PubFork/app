@@ -21,7 +21,7 @@ namespace sphere
    }
 
 
-   bool main_frame::get_translucency(::user::e_translucency & etranslucency)
+   bool main_frame::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
    {
 
       etranslucency = ::user::translucency_present;

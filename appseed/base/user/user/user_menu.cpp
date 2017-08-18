@@ -1,11 +1,9 @@
-//#include "core/user/user/user.h"
+#include "framework.h"
 
 
 namespace user
 {
 
-   const int32_t BaseWndMenuTimer = 500;
-   const int32_t BaseWndMenuCmdUi = 117;
    
    
    menu::menu():
@@ -505,7 +503,7 @@ namespace user
       
       SetWindowPos(ZORDER_TOPMOST,rectWindow,SWP_FRAMECHANGED | SWP_SHOWWINDOW);
       
-      SetTimer(::user::BaseWndMenuCmdUi,100,NULL);
+      SetTimer(::user::timer_update_menu_command_ui,100,NULL);
       
    }
    
@@ -645,7 +643,7 @@ namespace user
                   m_idSubMenu = "";
                }
                /*
-                SetTimer(BaseWndMenuTimer, BaseWndMenuTiming, NULL);
+                SetTimer(timer_menu, BaseWndMenuTiming, NULL);
                 if(m_pitem->m_pitema->element_at(pevent->m_pcontrol->m_uiId)->m_bPopup)
                 {
                 m_iTimerMenu = pevent->m_pcontrol->m_uiId;
@@ -717,7 +715,7 @@ namespace user
       {
          if(pevent->m_puie->m_id == m_idTimerMenu)
          {
-            KillTimer(BaseWndMenuTimer);
+            KillTimer(timer_menu);
             m_idTimerMenu.is_empty();
          }
          return true;
@@ -744,9 +742,9 @@ namespace user
       
       sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
       
-      if(ptimer->m_nIDEvent == BaseWndMenuTimer)
+      if(ptimer->m_nIDEvent == timer_menu)
       {
-         KillTimer(BaseWndMenuTimer);
+         KillTimer(timer_menu);
          if(m_idSubMenu.has_char())
          {
             m_psubmenu->send_message(WM_CLOSE);
@@ -773,7 +771,7 @@ namespace user
          m_idTimerMenu.is_empty();
          
       }
-      else if(ptimer->m_nIDEvent == ::user::BaseWndMenuCmdUi)
+      else if(ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
       {
          if(spitema != NULL)
          {

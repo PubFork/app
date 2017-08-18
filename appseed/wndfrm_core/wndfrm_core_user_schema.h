@@ -5,15 +5,15 @@ namespace wndfrm_core
 {
 
 
-   class CLASS_DECL_APP_CORE_WNDFRM_CORE user_schema:
-      virtual public ::user::schema_simple_impl
+   class CLASS_DECL_APP_CORE_WNDFRM_CORE user_style:
+      virtual public ::user::style_simple_impl
    {
    public:
 
 
 
-      user_schema(::aura::application * papp);
-      virtual ~user_schema();
+      user_style(::aura::application * papp);
+      virtual ~user_style();
 
       virtual int64_t add_ref()
       {

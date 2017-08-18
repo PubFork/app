@@ -11,7 +11,7 @@ namespace user
       ::user::button(papp)
    {
       
-      construct_userstyle(style_menu_button);
+      construct_user_style(schema_menu_button);
       
       m_pitem = NULL;
       

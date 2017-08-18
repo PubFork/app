@@ -2157,7 +2157,7 @@ namespace user
    }
 
    
-   ::user::style * frame_window::get_user_style()
+   ::user::style * frame_window::userstyle()
    {
 
       return NULL;

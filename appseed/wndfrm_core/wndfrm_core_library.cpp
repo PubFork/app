@@ -54,10 +54,10 @@ namespace user
                return new ::user::meta_button(papp);
 
             }
-            else if(string(pszClass) == "user_schema")
+            else if(string(pszClass) == "user_style")
             {
 
-               return new ::wndfrm_core::user_schema(get_app());
+               return new ::wndfrm_core::user_style(get_app());
 
             }
             else

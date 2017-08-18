@@ -13,9 +13,9 @@ namespace wndfrm_core
 {
 
 
-   user_schema::user_schema(::aura::application * papp):
+   user_style::user_style(::aura::application * papp):
       object(papp),
-      ::user::schema_simple_impl(papp)
+      ::user::style_simple_impl(papp)
    {
 
       m_etranslucency      = ::user::translucency_present;
@@ -26,13 +26,13 @@ namespace wndfrm_core
    }
 
 
-   user_schema::~user_schema()
+   user_style::~user_style()
    {
 
    }
 
 
-   bool user_schema::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
+   bool user_style::_001TabOnDrawSchema01(::draw2d::graphics * pgraphics,::user::tab * ptab)
    {
 
       class rect rect;
@@ -323,7 +323,7 @@ namespace wndfrm_core
    }
 
 
-   void user_schema::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
+   void user_style::_001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText)
    {
 
       stringa & straTitle = pane.m_straTitle;
@@ -384,7 +384,7 @@ namespace wndfrm_core
 
 
 
-   bool user_schema::_001OnTabLayout(::user::tab * ptab)
+   bool user_style::_001OnTabLayout(::user::tab * ptab)
    {
 
 
@@ -634,7 +634,7 @@ namespace wndfrm_core
    }
 
 
-   bool user_schema::_001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar)
+   bool user_style::_001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar)
    {
 
       COLORREF crBackground = 0;
@@ -925,7 +925,7 @@ namespace wndfrm_core
 
 
 
-   bool user_schema::get_color(COLORREF & cr, ::user::e_color ecolor)
+   bool user_style::get_color(COLORREF & cr, ::user::e_color ecolor)
    {
 
       if (ecolor == ::user::color_background)

@@ -74,17 +74,7 @@ namespace user
    class form_window;
    class style;
    
-//   namespace schema
-//   {
-//    
-//      class schema;
-//      class button;
-//      class menu;
-//      class system_menu;
-//      
-//   } // namespace schema
-
-
+   
 } // namespace user
 
 

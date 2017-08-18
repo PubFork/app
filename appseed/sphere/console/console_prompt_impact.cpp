@@ -116,7 +116,7 @@ namespace console
 
          GetTypedParent < prompt_frame > ()->ShowWindow(SW_HIDE);
 
-         ((::user::interaction *) Application.m_puiMain->m_pvoidUserInteraction)->SetActiveWindow();
+         Application.m_puiMain->m_puiThis->SetActiveWindow();
 
          clear();
 

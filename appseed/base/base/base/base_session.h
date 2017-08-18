@@ -70,7 +70,7 @@ namespace base
       virtual sp(::user::interaction) GetCapture();
 
 
-      sp(::user::style) create_new_user_schema(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
+      sp(::user::style) create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
 
       sp(::user::style) get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp = NULL);
 
@@ -82,7 +82,7 @@ namespace base
       virtual oswindow get_capture();
 
 
-      virtual void defer_create_user_schema(const char * pszUiInteractionLibrary = NULL);
+      virtual void defer_create_user_style(const char * pszUiInteractionLibrary = NULL);
 
       
 

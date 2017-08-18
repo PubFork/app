@@ -797,7 +797,7 @@ run:
 //      if (m_pbasesession->m_puserstyle == NULL)
 //      {
 //
-//         m_pbasesession->defer_create_user_schema(preferred_userschema());
+//         m_pbasesession->defer_create_user_style(preferred_userschema());
 //
 //      }
 //
@@ -806,7 +806,7 @@ run:
 //   }
 //
 //   
-//   ::user::style_base * application::userstyle(::user::e_style estyle)
+//   ::user::style_base * application::userstyle(::user::e_schema estyle)
 //   {
 //      
 //      ::user::style * puserstyle = userstyle();

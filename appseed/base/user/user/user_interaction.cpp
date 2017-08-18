@@ -2104,7 +2104,7 @@ namespace user
       try
       {
       
-         on_select_userstyle();
+         on_select_user_style();
          
       }
       catch (...)
@@ -7512,7 +7512,7 @@ restart:
 //   }
 
 
-   ::user::style_base * interaction::parent_userstyle()
+   ::user::style * interaction::parent_userstyle()
    {
 
       ::user::interaction * puiParent = GetParent();

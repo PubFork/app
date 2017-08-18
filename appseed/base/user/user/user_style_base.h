@@ -51,7 +51,7 @@ namespace user
       virtual rect get_rect(::user::e_rect erect) = 0;
       virtual int get_int(::user::e_int eint) = 0;
 
-      virtual e_style get_style() = 0;
+      virtual e_schema get_user_style() = 0;
       
 
    };

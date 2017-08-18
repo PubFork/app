@@ -45,7 +45,7 @@ namespace axis
       
 
 
-      //::user::schema_simple_impl                               m_schemasimple;
+      //::user::style_simple_impl                               m_schemasimple;
 
       ::user::interaction *                                    m_puiMouseMoveCapture;
       ::user::interaction *                                    m_puiLastLButtonDown;

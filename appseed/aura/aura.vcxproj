@@ -1011,7 +1011,6 @@ copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configur
     <ClInclude Include="aura\aura\aura_os_alloc.h" />
     <ClInclude Include="aura\aura\aura_pointer.h" />
     <ClInclude Include="aura\aura\aura_cmp.h" />
-    <ClInclude Include="aura\aura\aura_command_msg.h" />
     <ClInclude Include="aura\aura\aura_command_target.h" />
     <ClInclude Include="aura\aura\aura_command_ui.h" />
     <ClInclude Include="aura\aura\aura_common.h" />
@@ -1290,9 +1289,6 @@ copy $(SolutionDir)..\..\..\nodeapp\thirdparty\binary\$(PlatformName)\$(Configur
     <ClInclude Include="aura\os\os_binreloc.h" />
     <ClInclude Include="aura\os\os_process.h" />
     <ClInclude Include="aura\os\windows\windows.h" />
-    <ClInclude Include="aura\os\windows\windows_base_file.h" />
-    <ClInclude Include="aura\os\windows\windows_base_internal.h" />
-    <ClInclude Include="aura\os\windows\windows_base_registry.h" />
     <ClInclude Include="aura\os\windows\windows_comptr.h" />
     <ClInclude Include="aura\os\windows\windows_file_watcher.h" />
     <ClInclude Include="aura\os\windows\windows_implementation.h" />

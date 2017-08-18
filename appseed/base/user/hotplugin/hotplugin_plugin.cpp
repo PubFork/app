@@ -72,7 +72,7 @@ namespace hotplugin
       m_ptCursorPhase.x = 0;
       m_ptCursorPhase.y = 0;
 
-      m_eschema         = schema_normal;
+      m_etheme = ::user::theme_lite;
 
       m_pauraapp = this;
       m_pauraapp->m_paxissession = this;

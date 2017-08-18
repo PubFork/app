@@ -876,7 +876,7 @@ namespace user
 
 
       //virtual ::user::style * get_user_style() override;
-      virtual ::user::style_base * parent_userstyle() override;
+      virtual ::user::style * parent_userstyle() override;
 
 //      bool select_font(::draw2d::graphics * pgraphics, e_font efont);
 

@@ -3052,12 +3052,6 @@ bool simple_frame_window::calc_layered()
 }
 
 
-<<<<<<< HEAD
-bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency)
-{
-
-   if (m_etranslucency != ::user::translucency_underfined)
-=======
 bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
 {
 

@@ -1454,15 +1454,6 @@
     <ClInclude Include="aura\node\windows\windows_thread.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_file.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_internal.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_registry.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="aura\os\windows\windows_file_watcher.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
@@ -1815,9 +1806,6 @@
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_command_ui.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_msg.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\os\cross\ansios\ansios_file.h">

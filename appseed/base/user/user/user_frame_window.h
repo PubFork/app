@@ -378,7 +378,7 @@ namespace user
       virtual bool get_window_minimum_size(::size & sizeMin);
 
 
-      virtual ::user::style * get_user_style();
+      virtual ::user::style * userstyle();
 
 
    };

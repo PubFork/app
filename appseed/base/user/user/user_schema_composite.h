@@ -5,38 +5,38 @@ namespace user
 {
 
 
-   class CLASS_DECL_BASE style_composite :
-      virtual public style_base
+   class CLASS_DECL_BASE schema_composite :
+      virtual public schema_base
    {
    public:
       
       
-      using style_map = ::map < e_schema, e_schema, style_sp >;
+      using schema_map = ::map < e_schema, e_schema, style_sp >;
       
-      style_map               m_map;
+      schema_map               m_map;
       
       ::aura::library *       m_plibrary;
       
-      ::user::style_sp        m_puserstyle;
+      ::user::style_sp        m_puserschema;
       
-      style_composite();
-      virtual ~style_composite();
+      schema_composite();
+      virtual ~schema_composite();
       
 
-      // these are style_base pure virtual functions
+      // these are schema_base pure virtual functions
       // "implementation"
-      // these are style_base pure virtual functions
+      // these are schema_base pure virtual functions
       // composition
       // these function should be always be a composition
-      // based on userstyle()
-      virtual void initialize_style_menu() override;
-      virtual void initialize_style_button() override;
-      virtual void initialize_style_menu_button() override;
-      virtual void initialize_style_menu_popup() override;
-      virtual void initialize_style_system_menu_button() override;
-      virtual void initialize_style_system_menu_close() override;
-      virtual void initialize_style_system_menu_popup() override;
-      virtual void initialize_style() override;
+      // based on userschema()
+      virtual void initialize_schema_menu() override;
+      virtual void initialize_schema_button() override;
+      virtual void initialize_schema_menu_button() override;
+      virtual void initialize_schema_menu_popup() override;
+      virtual void initialize_schema_system_menu_button() override;
+      virtual void initialize_schema_system_menu_close() override;
+      virtual void initialize_schema_system_menu_popup() override;
+      virtual void initialize_schema() override;
       virtual ::user::interaction * create_menu_button() override;
       virtual bool prepare_menu(::user::menu_item * pitem) override;
       virtual bool prepare_menu_button(::user::menu_item * pitem) override;
@@ -61,11 +61,11 @@ namespace user
       virtual rect get_rect(::user::e_rect erect) override;
       virtual int get_int(::user::e_int eint) override;
       
-      //virtual e_style get_style() override;
+      //virtual e_schema get_schema() override;
       
       
       // these are exception of rule above
-//      virtual sp(style) & operator[](e_style estyle) override;
+//      virtual sp(style) & operator[](e_schema eschema) override;
      
       
 //      virtual bool impl_get_color(COLORREF & cr, e_color eusercolor) = 0;
@@ -79,10 +79,10 @@ namespace user
       
       // these are utility functions
       // the utility functions should be based on this class functions
-      // specially the style_base pure function overrides
-      // that way, if some styled class overriding any style_base pure function
+      // specially the schema_base pure function overrides
+      // that way, if some schemad class overriding any schema_base pure function
       // will affect the return of the utility function.
-      // so, it should be very avoided using the m_pstylebase compositor
+      // so, it should be very avoided using the m_pschemabase compositor
       // to implement the utility functions
       //virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency);
 
@@ -113,28 +113,33 @@ namespace user
       
 
       // special utility functions
-      // they are very suitable for style containers that contains that style
-      // by deriving from this style class
-      virtual ::user::style * userstyle();
+      // they are very suitable for schema containers that contains that schema
+      // by deriving from this schema class
+      inline ::user::style * userschema()
+      {
+         
+         return m_puserschema;
+         
+      }
       
 
       
-      /// style selection generally done at initialization
-      virtual void on_select_user_style();
-      virtual ::user::style * parent_userstyle();
-      virtual style * style_get(e_schema eschema) = 0;
+      /// schema selection generally done at initialization
+      virtual void on_select_userschema();
+      virtual ::user::style_base * parent_userschema();
+      virtual schema * schema_get(e_schema eschema) = 0;
 
       
-      virtual ::draw2d::graphics * style_get_graphics();
+      virtual ::draw2d::graphics * schema_get_graphics();
       
       
-      // e_style composition
-      virtual bool style_color(COLORREF & cr,e_color ecolor);
-      virtual bool style_font(::draw2d::font_sp & sp, e_font efont);
-      virtual bool style_translucency(e_translucency & etranslucency, e_element eelement);
-      virtual bool style_flag(::user::e_flag eflag);
-      virtual rect style_rect(::user::e_rect erect);
-      virtual int style_int(::user::e_int eint);
+      // e_schema composition
+      virtual bool schema_color(COLORREF & cr,e_color ecolor);
+      virtual bool schema_font(::draw2d::font_sp & sp, e_font efont);
+      virtual bool schema_translucency(e_translucency & etranslucency, e_element eelement);
+      virtual bool schema_flag(::user::e_flag eflag);
+      virtual rect schema_rect(::user::e_rect erect);
+      virtual int schema_int(::user::e_int eint);
       
       
       

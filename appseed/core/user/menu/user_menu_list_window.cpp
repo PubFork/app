@@ -12,7 +12,7 @@ namespace user
       menu_list_window(get_app())
    {
 
-      construct_userstyle(style_menu);
+      construct_user_style(schema_menu);
 
    }
 
@@ -187,7 +187,7 @@ namespace user
 
          m_itemClose.m_pui->set_window_text("r");
          
-         m_itemClose.m_pui->select_userstyle(::user::style_system_menu_close);
+         m_itemClose.m_pui->select_user_style(::user::schema_system_menu_close);
          
          //m_itemClose.m_pui->m_pschema = m_pschema->m_pschemaSysMenuButton;
          

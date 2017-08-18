@@ -11,15 +11,9 @@ namespace simple_ui
    {
    public:
 
-      enum e_schema
-      {
 
-         schema_normal,
-         schema_darker
 
-      };
-
-      e_schema                      m_eschema;
+      ::user::e_theme               m_etheme;
       string                        m_strLocale;
       string                        m_strSchema;
       string                        m_strRuri;

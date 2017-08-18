@@ -15,8 +15,7 @@ namespace user
 
          class CLASS_DECL_CORE frame :
             virtual public signalizable,
-            virtual public ::user::style,
-            virtual public ::object
+            virtual public ::user::style
          {
          public:
 

@@ -19,7 +19,7 @@ namespace user
       rect_map                   m_mapRect;
       ::user::int_map            m_mapInt;
       
-      e_style                    m_estyle;
+      e_schema                   m_eschema;
       
       ::draw2d::graphics *       m_pgraphics;
       
@@ -92,13 +92,13 @@ namespace user
       
       
       
-      virtual void construct_userstyle(::user::e_style estyle);
-      virtual void select_userstyle(::user::e_style estyle);
+      virtual void construct_user_style(::user::e_schema eschema);
+      virtual void select_user_style(::user::e_schema eschema);
 
       
       virtual void select(::draw2d::graphics * pgraphics);
       
-      virtual bool create_and_select_style(e_style estyle);
+      virtual bool create_and_select_user_style(e_schema eschema);
       virtual bool create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight = FW_NORMAL);
       virtual bool create_color(e_color eusercolor, COLORREF cr);
       virtual bool create_opaque_color(e_color eusercolor, COLORREF cr);
@@ -111,11 +111,11 @@ namespace user
       virtual bool create_int(e_int eint, int i);
 
       
-      virtual e_style get_style() override;
+      virtual e_schema get_user_style() override;
       
       
       virtual ::draw2d::graphics * style_get_graphics() override;
-      virtual style * style_get(e_style estyle);
+      virtual style * style_get(e_schema eschema);
       
       
    };

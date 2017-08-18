@@ -153,9 +153,13 @@ CLASS_DECL_AURA int_bool defer_aura_term()
 
 #ifdef WINDOWS
 
-void set_simple_output_debug_string();
+void set_simple_output_debug_string_a();
 
-void set_extended_output_debug_string();
+void set_extended_output_debug_string_a();
+
+void set_simple_output_debug_string_w();
+
+void set_extended_output_debug_string_w();
 
 #endif
 
@@ -184,7 +188,9 @@ bool aura_init()
 
 #ifdef WINDOWS
 
-   set_extended_output_debug_string();
+   set_extended_output_debug_string_a();
+
+   set_extended_output_debug_string_w();
 
 #endif
 
@@ -215,7 +221,9 @@ bool aura_term()
 
 #ifdef WINDOWS
 
-   set_simple_output_debug_string();
+   set_simple_output_debug_string_a();
+
+   set_simple_output_debug_string_w();
 
 #endif
 

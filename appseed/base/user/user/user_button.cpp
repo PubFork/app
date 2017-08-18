@@ -9,7 +9,7 @@ namespace user
       button(get_app())
    {
 
-      construct_userstyle(style_button);
+      construct_user_style(schema_button);
       
    }
 
@@ -19,7 +19,7 @@ namespace user
       ::user::interaction(papp)
    {
       
-      ::user::style::m_estyle = ::user::style_button;
+      construct_user_style(schema_button);
 
       m_estockicon      = stock_icon_none;
 
