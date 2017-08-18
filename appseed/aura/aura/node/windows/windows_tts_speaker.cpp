@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -107,7 +107,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
       strLang = "409";
 
    }
-   else if(str == "pt" || str == "br" || str == "portugues" || str == "português")
+   else if(str == "pt" || str == "br" || str == "portugues" || str == "portuguï¿½s")
    {
 
       strLang = "416";

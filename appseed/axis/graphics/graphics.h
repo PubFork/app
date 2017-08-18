@@ -23,7 +23,7 @@
 #endif
 
 
-#include "visual/visual.h"
+#include "axis/graphics/visual/visual.h"
 
 
 #include "dib_console.h"

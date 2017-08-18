@@ -1,8 +1,8 @@
-////#include "framework.h"
+#include "framework.h"
 
 
-//O volume na unidade Z ‚ eco
-// O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+// O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 //
 // Pasta de Z:\ca2\app\appseed\base\base\install
 //
@@ -12,4 +12,4 @@
 #include "install_plugin_bare_paint_veri_discreet.cpp"
 #include "install_starter_start.cpp"
                //5 arquivo(s)         57.808 bytes
-               //0 pasta(s)   33.004.011.520 bytes dispon¡veis
+               //0 pasta(s)   33.004.011.520 bytes disponï¿½veis

@@ -1,6 +1,7 @@
-//#include "framework.h"
-//#include "axis/net/net_sockets.h"
-//#include "simpledb_socket.h"
+#include "framework.h"
+#include "simpledb_socket.h"
+
+
 
 
 namespace simpledb

@@ -54,13 +54,13 @@ namespace install
    void install_item::progress(double dRate)
    {
 
-      if (Application.get_admin())
+      if (Application.install_get_admin())
       {
 
          if (m_eitemtype == item_type_spa)
          {
 
-            Application.trace(0.05 + ((((double)m_pstatus->m_lTotal - (double)(m_pstatus->m_lProcessing)) * (0.25 - 0.05)) / ((double)m_pstatus->m_lTotal)));
+            Application.install_trace(0.05 + ((((double)m_pstatus->m_lTotal - (double)(m_pstatus->m_lProcessing)) * (0.25 - 0.05)) / ((double)m_pstatus->m_lTotal)));
 
          }
 

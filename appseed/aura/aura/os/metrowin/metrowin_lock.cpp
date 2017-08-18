@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 int _c_lock_is_active(const char * pszName)
 {

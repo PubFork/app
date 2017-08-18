@@ -1,4 +1,4 @@
-//#include "framework.h" // from "axis/net/net_sockets.h"
+#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -91,7 +91,7 @@ namespace fontopus
    }
 
 
-   sp(::fontopus::user) validate::get_user(const char * pszRequestingParty,const char * pszSessId)
+   ::fontopus::user * validate::get_user(const char * pszRequestingParty,const char * pszSessId)
    {
 
       m_loginthread.m_strSalt.Empty();

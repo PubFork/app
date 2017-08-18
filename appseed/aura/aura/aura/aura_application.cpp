@@ -6682,7 +6682,629 @@ namespace aura
    }
    
 
-} // namespace aura
+   bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (!is_application_installed(strAppId, dwGoodToCheckAgain))
+      {
+
+         return false;
+
+      }
+
+      install_status & status = m_mapUpdated[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
+
+      string strConfiguration = System.get_system_configuration();
+
+      string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
+
+      status.m_bOk = System.::aura::system::is_application_installed(strAppId, strLatestBuildNumber);
+
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
+
+      return status.m_bOk;
+
+   }
+
+
+   bool application::is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      install_status & status = m_mapInstalled[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strAppId);
+
+      string strApplication = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+      string strApp = dir::stage(process_platform_dir_name()) / "application.exe";
+
+      status.m_bOk = file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp));
+
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
+
+      return status.m_bOk;
+
+   }
+
+
+   void application::install_trace(const string & str)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::install::trace_file(this, m_strInstallTraceLabel).print(str);
+
+   }
+
+
+   void application::install_trace(double dRate)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::install::trace_file(this, m_strInstallTraceLabel).print(dRate);
+
+   }
+   bool application::register_spa_file_type()
+   {
+
+#ifdef WINDOWS
+
+      HKEY hkey;
+
+      wstring extension = L".spa";                     // file extension
+      wstring desc = L"spafile";          // file type description
+      wstring content_type = L"application/x-spa";
+
+      wstring app(::dir::stage("x86"));
+
+      wstring icon(app);
+
+      app = L"\"" + app + L"\"" + L" \"%1\"";
+      icon = L"\"" + icon + L"\",107";
+
+      wstring action = L"Open";
+
+      wstring sub = L"\\shell\\";
+
+      wstring path = L"spafile\\shell\\open\\command";
+
+
+      // 1: Create subkey for extension -> HKEY_CLASSES_ROOT\.002
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, extension.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), desc.length() * sizeof(wchar_t)); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), content_type.length() * sizeof(wchar_t)); // default vlaue is description of file extension
+      RegCloseKey(hkey);
+
+
+
+      // 2: Create Subkeys for action ( "Open with my program" )
+      // HKEY_CLASSES_ROOT\.002\Shell\\open with my program\\command
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), app.length() * sizeof(wchar_t));
+      RegCloseKey(hkey);
+
+
+      path = L"spafile\\DefaultIcon";
+
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), icon.length() * sizeof(wchar_t));
+      RegCloseKey(hkey);
+
+      wstring wstr(dir::stage("x86") / "spa_register.txt");
+
+      int iRetry = 9;
+
+      while (!file_exists_dup(u8(wstr.c_str())) && iRetry > 0)
+      {
+
+         dir::mk(dir::name(u8(wstr.c_str())).c_str());
+
+         file_put_contents_dup(u8(wstr.c_str()).c_str(), "");
+
+         iRetry--;
+
+         Sleep(84);
+
+      }
+
+#endif
+
+      return true;
+
+   }
+
+
+   bool application::low_is_app_app_admin_running(string strPlatform)
+   {
+
+      ::install::admin_mutex smutex(strPlatform);
+
+      return smutex.already_exists();
+
+   }
+
+
+   void application::defer_start_program_files_app_app_admin(string strPlatform)
+   {
+
+      if (low_is_app_app_admin_running(strPlatform))
+      {
+
+         return;
+
+      }
+
+      start_program_files_app_app_admin(strPlatform);
+
+   }
+
+
+   void application::start_program_files_app_app_admin(string strPlatform)
+   {
+
+#ifdef WINDOWS
+
+      SHELLEXECUTEINFOW sei = {};
+
+      string str = ::path::app_app_admin(strPlatform);
+
+      if (!::file_exists_dup(str))
+      {
+
+         return;
+
+      }
+
+      ::install::admin_mutex mutexStartup("-startup");
+
+      wstring wstr(str);
+
+      sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+      sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+      sei.lpVerb = L"RunAs";
+      sei.lpFile = wstr.c_str();
+      ::ShellExecuteExW(&sei);
+      DWORD dwGetLastError = GetLastError();
+
+#endif
+
+   }
+
+   
+   string application::install_pick_command_line()
+   {
+
+       throw interface_only_exception(this);
+
+       return "";
+
+   }
+
+
+   string  application::install_get_build()
+   {
+
+      return m_strInstallBuild;
+
+   }
+
+   int application::check_soon_launch(string strCommandLine, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      string strId;
+
+      string wstr = strCommandLine;
+
+      int iFind1 = 0;
+
+      if (wstr[0] == '\"')
+      {
+
+         iFind1 = wstr.find('\"', 1);
+
+      }
+
+      int iFind = wstr.find(" : ", iFind1 + 1);
+
+      if (iFind < 0)
+      {
+
+         string strFile = wstr.substr(iFind1 + 1);
+
+         strFile.trim();
+
+         if (check_soon_file_launch(strFile, bLaunch, dwGoodToCheckAgain))
+         {
+
+            return 1;
+
+         }
+
+      }
+      else
+      {
+
+         string wstrRequest = wstr.substr(iFind + 3);
+
+         string wstrValue;
+
+         if (get_command_line_param(wstrValue, wstrRequest, "install"))
+         {
+
+            if (get_command_line_param(strId, wstrRequest, "enable_desktop_launch") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+
+            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+
+         }
+         else
+         {
+
+            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+         }
+
+      }
+
+      if (strId.empty())
+         return FALSE;
+
+      return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+   }
+
+
+
+   string application::get_app_id(string wstr)
+   {
+
+      if (wstr.length() <= 0)
+      {
+
+         return "";
+
+      }
+
+      wstr.trim();
+
+      ::str::trim_any_quotes(wstr);
+
+      wstr.trim();
+
+      if (wstr.length() <= 0)
+      {
+
+         return "";
+
+      }
+
+      ::xml::document doc(get_app());
+
+      ::string strPath = wstr.c_str();
+
+      ::string strContents = file_as_string_dup(strPath.c_str());
+
+      if (!doc.load(strContents.c_str()))
+      {
+
+         return "";
+
+      }
+
+      sp(xml::node) pnode = doc.get_root();
+
+      if (pnode == NULL)
+      {
+
+         return "";
+
+      }
+
+      const char * psz = pnode->GetChildAttrValue("launch", "app");
+
+      if (psz == NULL || *psz == '\0')
+      {
+
+         return "";
+
+      }
+
+      return psz;
+
+   }
+
+
+   int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch, dwGoodToCheckAgain);
+
+   }
+
+
+
+
+   int application::check_soon_app_id(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (check_soon_app_id1(strId, bLaunch, dwGoodToCheckAgain))
+      {
+
+         return TRUE;
+
+      }
+
+      if (check_soon_app_id2(strId, bLaunch, dwGoodToCheckAgain))
+      {
+
+         return TRUE;
+
+      }
+
+      return FALSE;
+
+   }
+
+
+   int application::check_soon_app_id1(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (strId.length() <= 0)
+      {
+
+         return 0;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strId);
+
+      string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      bool bOk;
+
+      if (bLaunch)
+      {
+
+         bOk = is_application_installed(strId, dwGoodToCheckAgain);
+
+      }
+      else
+      {
+
+         bOk = is_application_updated(strId, dwGoodToCheckAgain);
+
+      }
+
+      if (file_exists_dup(strApp) && bOk)
+      {
+
+         if (!bLaunch)
+         {
+
+            // if dll loads consider good state
+
+            string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+#ifdef WINDOWS
+
+            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+            bool bOk = hmodule != NULL;
+
+            if (bOk)
+            {
+
+               ::FreeLibrary(hmodule);
+
+            }
+
+#endif
+
+            return bOk;
+
+         }
+
+#ifdef WINDOWS
+
+         SHELLEXECUTEINFOW sei = {};
+
+         wstring wstrFile(strApp.c_str());
+
+         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+         sei.lpFile = wstrFile.c_str();
+
+         if (::ShellExecuteExW(&sei))
+         {
+
+            return TRUE;
+
+         }
+
+#endif
+
+      }
+
+      return FALSE;
+
+   }
+
+
+   int application::check_soon_app_id2(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (strId.length() <= 0)
+      {
+
+         return 0;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strId);
+
+      {
+
+         string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+         string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
+
+         bool bOk;
+
+         if (bLaunch)
+         {
+
+            bOk = Application.is_application_installed(strId, dwGoodToCheckAgain);
+
+         }
+         else
+         {
+
+            bOk = Application.is_application_updated(strId, dwGoodToCheckAgain);
+
+         }
+
+         if (file_exists_dup(strDll) && file_exists_dup(strApp) && bOk)
+         {
+
+            if (!bLaunch)
+            {
+
+
+#ifdef WINDOWS
+               // if dll loads consider good state
+
+               HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+               bool bOk = hmodule != NULL;
+
+               if (bOk)
+               {
+
+                  ::FreeLibrary(hmodule);
+
+               }
+#endif
+
+               return bOk;
+
+            }
+
+#ifdef WINDOWS
+
+            wstring wstrParams(": app=" + strId);
+
+            wstring wstrApp(strApp);
+
+            SHELLEXECUTEINFOW sei = {};
+
+            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+            sei.lpFile = wstrApp.c_str();
+
+            sei.lpParameters = wstrParams.c_str();
+
+            if (::ShellExecuteExW(&sei))
+            {
+
+               return TRUE;
+
+            }
+
+#endif
+
+         }
+
+      }
+
+      return FALSE;
+
+   }
+
+
+
+   string application::install_get_title(string strTitle)
+   {
+      static string  s_strTitle;
+
+      if (strTitle.has_char())
+      {
+         s_strTitle = strTitle;
+      }
+
+      return s_strTitle;
+   }
+
+
+   bool application::install_get_admin()
+   {
+
+      throw interface_only_exception(this);
+
+      return false;
+
+   }
+
+
+   string application::install_get_id()
+   {
+
+      throw interface_only_exception(this);
+
+      return "";
+
+   }
+
+
+} // namespace install
+
+
+
 
 
 

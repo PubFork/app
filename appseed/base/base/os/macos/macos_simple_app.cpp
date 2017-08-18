@@ -23,9 +23,6 @@ namespace base
    int32_t app::main()
    {
 
-//      __argc = _init_args();
-  //    __targv = _argv;
-//      _init_file();
 
 //      TCHAR *cmd = GetCommandLine();
 //

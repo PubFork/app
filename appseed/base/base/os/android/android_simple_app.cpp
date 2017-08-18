@@ -22,9 +22,7 @@ namespace base
 	int32_t app::main()
 	{
 
-		//m_argc = _init_args();
-		//m_argv = _argv;
-		//_init_file();
+
 
 		//TCHAR *cmd = GetCommandLine();
 		TCHAR *cmd = NULL;

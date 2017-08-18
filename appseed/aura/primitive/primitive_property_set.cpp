@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 property_set::property_set(::aura::application * papp, bool bAutoAdd, bool bMultiValue) :
@@ -849,7 +849,7 @@ void property_set::parse_http_headers(const char * pszHeaders)
    ::count count = 0;
    for(int32_t i = 0; i < stra.get_count(); i++)
    {
-      count += remove(stra[i]);
+      count += remove_key(stra[i]);
    }
    return count;
 }

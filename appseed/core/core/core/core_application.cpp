@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 #include "base/database/simpledb/simpledb.h"
 
@@ -2400,7 +2400,7 @@ namespace core
    return bResult;
    }
 
-   //#include "framework.h"*/
+   #include "framework.h"*/
 
 
 

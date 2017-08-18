@@ -48,9 +48,7 @@ namespace user
    class message;
    class map_form_window;
    class document_manager;
-   class menu_item;
-   class menu;
-   class button;
+   class mouse;
 
    class interaction_spa;
 
@@ -334,13 +332,12 @@ CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow)
 
 #include "base/base/base_static_start.h"
 
-//#include "axis/graphics/graphics.h"
 
 //#include "base/user/user/user_schema.h"
 
-//#include "base/user/user.h"
 
-//#include "base/database/database.h"
+
+#include "base/database/database.h"
 
 
 //#include "base/base/base_platform_interface.h"
@@ -358,6 +355,13 @@ CLASS_DECL_BASE ::user::interaction_impl * window_from_handle(oswindow oswindow)
 #include "base/base/base_session.h"
 
 #include "base/base/base_system.h"
+
+
+#include "base/user/user.h"
+
+
+#include "base/base/node/node.h"
+
 
 //#include "base/user/user.h"
 

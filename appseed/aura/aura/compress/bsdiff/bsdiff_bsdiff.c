@@ -1,4 +1,4 @@
-//#include"framework.h"
+#include "framework.h"
 //#include"libbsdiff.h"
 //#include"axis/bzip2/bzlib.h"
 

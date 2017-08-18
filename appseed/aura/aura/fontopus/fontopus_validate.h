@@ -156,7 +156,7 @@ namespace fontopus
       virtual void on_login_response(e_result iAuth,const char * pszResponse);
 
 
-      virtual sp(::fontopus::user) get_user(const char * pszHost = NULL,const char * pszSessid = NULL);
+      virtual ::fontopus::user * get_user(const char * pszHost = NULL,const char * pszSessid = NULL);
       virtual auth * get_auth();
       virtual bool get_license(const char * pszId);
 

@@ -1,3 +1,4 @@
+#include "framework.h"
 // Thank you TBS!!
 
 VOID CALLBACK aura_timer_TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired);
@@ -84,6 +85,8 @@ bool timer::impl_restart()
       return false;
    
    }
+
+   return true;
 
 }
 

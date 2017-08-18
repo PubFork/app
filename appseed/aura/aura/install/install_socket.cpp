@@ -130,7 +130,7 @@ namespace install
             if (m_pbootstrap->m_strSpaBootName.has_char())
             {
 
-               response().file().write("install:" + Application.get_id());
+               response().file().write("install:" + Application.install_get_id());
 
             }
             else

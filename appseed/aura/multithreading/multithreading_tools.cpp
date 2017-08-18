@@ -1,3 +1,6 @@
+#include "framework.h"
+
+
 
 thread_tools::thread_tools(::aura::application * papp) :
    ::object(papp)

@@ -1,5 +1,5 @@
-//#include "framework.h"
-//#include "framework.h" // from "axis/net/net_sockets.h"
+#include "framework.h"
+#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "windows_axis_dir.h"
 //#include "windows_factory_exchange.h"
 //#include "windows_port_forward.h"

@@ -1,3 +1,4 @@
+#include "framework.h"
 
 //http://borland.public.cppbuilder.nativeapi.narkive.com/7OPcjHO5/loading-x48-icons-with-extracticonex
 

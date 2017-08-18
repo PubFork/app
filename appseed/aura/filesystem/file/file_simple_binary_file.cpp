@@ -1,4 +1,5 @@
-//#include "framework.h"
+#include "framework.h"
+#include <stdio.h>
 
 //#include <sys/stat.h>
 //////#include <errno.h>

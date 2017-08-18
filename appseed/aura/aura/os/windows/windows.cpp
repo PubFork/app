@@ -1,7 +1,7 @@
-//#include "framework.h"
-//#include "aura/node/windows/windows.h"
-//#include "windows.h"
-//#include <VersionHelpers.h>
+#include "framework.h"
+#include <VersionHelpers.h>
+
+
 #undef new
 #define min MIN
 #define max MAX
@@ -1013,17 +1013,23 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
    if (strAppId.has_char())
    {
 
-      string strLibrary = ::process::app_id_to_app_name(strAppId);
+      HMODULE hmodule = NULL;
 
-      HMODULE hmodule = ::LoadLibrary(strLibrary + ".dll");
+      bool bInApp = strAppId.compare_ci("acid") == 0;
 
-      if (hmodule != NULL)
+      if (!bInApp)
       {
 
+         string strLibrary = ::process::app_id_to_app_name(strAppId);
+
+         hmodule = ::LoadLibrary(strLibrary + ".dll");
+
+      }
+
+      if (hmodule != NULL || bInApp)
+      {
 
          PFN_DEFER_INIT defer_init = NULL;
-
-
 
          if ((hmodule = ::GetModuleHandle("core.dll")) != NULL)
          {

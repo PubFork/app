@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #define AXIS_MEMORY_MANAGEMENT TRUE
@@ -6,7 +6,7 @@
 
 #ifdef MCHECK
 
-#include ""aura_heap_mcheck.cpp"
+#include "aura_heap_mcheck.cpp"
 
 #elif defined(MEMDLEAK)
 

@@ -4,7 +4,7 @@
 #include "aura/filestream.h"
 #include "collection.h"
 
-
+/*
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 ::file::ostream & operator << (::file::ostream & os, const map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > & a)
@@ -20,7 +20,7 @@ template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
    return is;
 }
 
-
+*/
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 ::file::ostream & operator << (::file::ostream & os, const ::property_map & a)

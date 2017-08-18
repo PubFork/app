@@ -78,9 +78,6 @@
     <Filter Include="Source Files\user\simple">
       <UniqueIdentifier>{fb04c812-e242-43c3-a467-9511913b7a4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\userpresence">
-      <UniqueIdentifier>{3f8a874b-39e0-418e-a25f-0fba2d5abbba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\user\hotplugin">
       <UniqueIdentifier>{5930d214-6119-4d3d-84ed-31dcd6f1588c}</UniqueIdentifier>
     </Filter>
@@ -150,14 +147,14 @@
     <Filter Include="Header Files\user\wndfrm\frame">
       <UniqueIdentifier>{b26ce49e-dc20-4147-81fd-34c99bedcba0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\user\simple_ui">
-      <UniqueIdentifier>{1164d5d2-3fc6-424f-b2aa-07ee2f73a22b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\base\install">
       <UniqueIdentifier>{2825e098-dea8-4718-983d-2a4ed062f4c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\base\install">
       <UniqueIdentifier>{d23767a8-c5e0-4b91-961a-0e103a791af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\simple_ui">
+      <UniqueIdentifier>{1164d5d2-3fc6-424f-b2aa-07ee2f73a22b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -368,15 +365,6 @@
     <ClInclude Include="user\user\user_plain_text_data.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_schema.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_schema_layered_frame.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_schema_simple_impl.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_scroll.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -476,12 +464,6 @@
     <ClInclude Include="user\user\user.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\common_user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\core_user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_front_end.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -508,6 +490,33 @@
     </ClInclude>
     <ClInclude Include="base\os\windows\windows_window_buffer.h">
       <Filter>Header Files\base\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="user\aaa_want_to_remove_all.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\aaa_want_to_remove_base.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\aaa_want_to_remove_common_user.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\aaa_want_to_remove_plain_edit.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_mouse.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style_composite.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style_base.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style.h">
+      <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -547,24 +556,6 @@
     <ClCompile Include="user\fontopus\fontopus.cpp">
       <Filter>Source Files\user\fontopus</Filter>
     </ClCompile>
-    <ClCompile Include="user\hotplugin\_hotplugin.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\hotplugin\hotplugin.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\hotplugin\hotplugin_composer.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\hotplugin\hotplugin_host.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
-    <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin_windows.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
@@ -590,25 +581,25 @@
       <Filter>Source Files\user\simple</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_edit_box.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_interaction.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_label.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_message_box.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_password.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_style.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\simple_ui\simple_ui_tap.cpp">
-      <Filter>Source Files\user\user\simple_ui</Filter>
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user.cpp">
       <Filter>Source Files\user\user</Filter>
@@ -625,13 +616,7 @@
     <ClCompile Include="user\user\user_control_event.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_copydesk.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_document.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_elemental.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_form_callback.cpp">
@@ -670,15 +655,6 @@
     <ClCompile Include="user\user\user_interaction_impl_base.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_job.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_keyboard.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_keyboard_layout.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_menu_base.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -698,9 +674,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_plain_text_data.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_print_job.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_schema.cpp">
@@ -742,15 +715,6 @@
     <ClCompile Include="user\user\user_windowing.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\userpresence\userpresence_user_presence.cpp">
-      <Filter>Source Files\user\userpresence</Filter>
-    </ClCompile>
-    <ClCompile Include="user\userpresence\userpresence_userpresence.cpp">
-      <Filter>Source Files\user\userpresence</Filter>
-    </ClCompile>
-    <ClCompile Include="user\_user.cpp">
-      <Filter>Source Files\user</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\windows\windows_system_interaction_impl.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
@@ -769,17 +733,8 @@
     <ClCompile Include="base\os\windows\windows_gdi.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="database\_database.cpp">
-      <Filter>Source Files\database</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\_simpledb.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
     <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp">
       <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
-    <ClCompile Include="database\database\_database_database.cpp">
-      <Filter>Source Files\database\database</Filter>
     </ClCompile>
     <ClCompile Include="base\message\message_user.cpp">
       <Filter>Source Files\base\message</Filter>
@@ -805,31 +760,10 @@
     <ClCompile Include="user\user\user_front_end_schema.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="base\_base_base.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\base\_base_base_base.cpp">
-      <Filter>Source Files\base\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\message\_message.cpp">
-      <Filter>Source Files\base\message</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\_node.cpp">
-      <Filter>Source Files\base\node</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\_os.cpp">
-      <Filter>Source Files\base\os</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp">
       <Filter>Source Files\user\fontopus</Filter>
     </ClCompile>
     <ClCompile Include="base\node\windows\windows_copydesk.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\_windows_node.cpp">
       <Filter>Source Files\base\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="base\node\windows\windows_print_job.cpp">
@@ -838,14 +772,32 @@
     <ClCompile Include="base\install\install_canvas.cpp">
       <Filter>Source Files\base\install</Filter>
     </ClCompile>
-    <ClCompile Include="base\os\windows\_windows_os.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="base\os\windows\windows_window_buffer.cpp">
       <Filter>Source Files\base\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="user\aaa_want_to_remove_framework_user.cpp">
+      <Filter>Header Files\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_composer.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_container_launcher.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_host.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\hotplugin\hotplugin_plugin.cpp">
+      <Filter>Source Files\user\hotplugin</Filter>
+    </ClCompile>
+    <ClCompile Include="user\simple_ui\simple_ui_top.cpp">
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

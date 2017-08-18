@@ -21,6 +21,7 @@
 #ifndef nsSBCSGroupProber_h__
 #define nsSBCSGroupProber_h__
 
+#include "charsetProber.h"
 
 #define NUM_OF_SBCS_PROBERS    10
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -286,7 +286,7 @@ db_long_set::~db_long_set()
 
 }
 
-// Adiciona na matriz System nomes dos diretórios de imagens.
+// Adiciona na matriz System nomes dos diretï¿½rios de imagens.
 bool db_long_set::load(const char * lpKey, int64_t * plValue)
 {
 

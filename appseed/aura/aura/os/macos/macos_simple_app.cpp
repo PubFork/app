@@ -20,9 +20,6 @@ namespace aura
    int32_t app::main()
    {
 
-//      __argc = _init_args();
-  //    __targv = _argv;
-//      _init_file();
 
 //      TCHAR *cmd = System.os().get_command_line();
 //

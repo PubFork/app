@@ -918,9 +918,11 @@ CLASS_DECL_CORE bool defer_core_term();
 
 
 
-#include "core/math/math/math_math.h"
+#include "core/math/math_math.h"
 
 
+#include "core/user/user/user.h"       
+#include "core/user/wndfrm/wndfrm.h"   
 
 
 class service_base;

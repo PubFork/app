@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWS
    //#include <cderr.h>      // Commdlg Error definitions

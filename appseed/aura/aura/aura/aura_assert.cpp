@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <stdio.h>
 
 CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLineNumber);
 

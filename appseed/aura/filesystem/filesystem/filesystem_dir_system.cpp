@@ -1,8 +1,6 @@
 #include "framework.h"
 
 
-#include "zlib.h"
-#include "zutil.h"
 #include "aura/aura/compress/zip/zip.h"
 
 
@@ -1739,6 +1737,14 @@ namespace file
          m_pathCa2Module = System.file().ca2module().folder();
 
          return true;
+
+      }
+
+
+      ::file::path system::get_favorites_folder()
+      {
+
+         return ::dir::favorites();
 
       }
 

@@ -2847,7 +2847,7 @@ namespace axis
 
 
 
-//#include "framework.h" // from "axis/user/user.h"
+#include "framework.h" // from "axis/user/user.h"
 
 namespace axis
 {

@@ -1,4 +1,4 @@
-// #include "framework.h"
+#include "framework.h"
 
 //#include "linux_cross_win_gdi.cpp"
 

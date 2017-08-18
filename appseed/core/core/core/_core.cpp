@@ -1,7 +1,7 @@
 #include "framework.h"
 
-//O volume na unidade Z ‚ eco
-//O N£mero de S‚rie do Volume ‚ 4A91 - 94E4
+//O volume na unidade Z â€š eco
+//O NÂ£mero de Sâ€šrie do Volume â€š 4A91 - 94E4
 //
 //Pasta de Z:\ca2\app\appseed\core\core\core
 
@@ -26,7 +26,7 @@
 //#include "core_timer_callback.cpp"
 //#include "core_timer_listener.cpp"
 //19 arquivo(s)        191.595 bytes
-//0 pasta(s)   65.238.601.728 bytes dispon¡veis
+//0 pasta(s)   65.238.601.728 bytes disponÂ¡veis
 
 
 #include "core_static_start.cpp"

@@ -1,10 +1,23 @@
+#include "framework.h"
+//#include <Shlobj.h>
+
+
+#ifdef WINDOWS
+
+bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
+
+#endif
+
+
 #if defined(METROWIN)
+
    #pragma push_macro("System")
+
    #undef System
+
    using namespace ::Windows::System;
 
    #pragma pop_macro("System")
-
 
    CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
@@ -1459,7 +1472,7 @@ retry:
 
 #ifdef WINDOWSEX
 
-   SHGetSpecialFolderPath(NULL, str, CSIDL_PROFILE, false);
+   ::windows::shell_get_special_folder_path(NULL, str, CSIDL_PROFILE, false);
 
 #elif defined(METROWIN)
 

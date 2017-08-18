@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 not_installed::not_installed(::aura::application * papp, const char * pszAppId, const char * pszConfiguration, const char * pszPlatform, const char * pszLocale, const char * pszSchema) :

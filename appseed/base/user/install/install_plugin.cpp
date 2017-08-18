@@ -1,26 +1,20 @@
+#include "framework.h"
+#include <stdio.h>
 
 
 #if defined(INSTALL_SUBSYSTEM)
 
 
 
-//#include "framework.h"
-//#include "base/user/user.h"
-#include <stdio.h>
 
 
 
 
 
 
-#undef new
-#if defined(WINDOWS)
-#define min MIN
-#define max MAX
-//#include <gdiplus.h>
-#undef min
-#undef max
-#endif
+#include "coated/gdiplus.h"
+
+
 
 
 #ifndef GET_X_LPARAM
@@ -32,10 +26,6 @@
 
 
 
-
-#ifdef WINDOWS
-//#include <process.h>
-#endif
 
 #ifdef WINDOWS
 
@@ -1679,6 +1669,9 @@ restart:
 
 
 
+
+
 #endif
+
 
 

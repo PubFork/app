@@ -18,7 +18,9 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-//#include "framework.h"
+#include "framework.h"
+#include "big5Prober.h"
+
 
 void  nsBig5Prober::Reset(void)
 {

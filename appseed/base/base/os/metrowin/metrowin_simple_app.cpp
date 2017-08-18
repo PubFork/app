@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace base
@@ -27,10 +27,6 @@ namespace base
       //Sleep(15 * 1000);
 
 #ifdef WINDOWSEX
-
-      __argc = _init_args();
-      __targv = _argv;
-      _init_file();
 
       TCHAR *cmd = GetCommandLine();
 

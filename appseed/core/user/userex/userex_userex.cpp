@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWSEX
 #include "core/user/user/user_shell_windows.h"

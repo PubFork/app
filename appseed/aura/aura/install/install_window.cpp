@@ -1,6 +1,8 @@
 #include "framework.h"
 
 
+#define ID_ONE 1
+
 #if defined(INSTALL_SUBSYSTEM)
 
 

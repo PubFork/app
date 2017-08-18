@@ -1,5 +1,6 @@
-//#include "framework.h"
-//#include <fcntl.h>
+#include "framework.h"
+#include <io.h>
+#include <fcntl.h>
 
 
 BEGIN_EXTERN_C

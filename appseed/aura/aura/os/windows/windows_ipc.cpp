@@ -1,3 +1,6 @@
+#include "framework.h"
+
+
 typedef int (WINAPI * LPFN_ChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 
 
@@ -126,7 +129,7 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage,unsigned int dwTimeout)
+      bool tx::send(const char * pszMessage, duration durationTimeout)
       {
 
          if(!is_tx_ok())
@@ -138,7 +141,7 @@ namespace aura
          cds.cbData = (unsigned int)strlen(pszMessage);
          cds.lpData = (void *)pszMessage;
 
-         if(dwTimeout == INFINITE)
+         if(durationTimeout.is_pos_infinity())
          {
 
             SendMessage(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds);
@@ -149,7 +152,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK,dwTimeout,&dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, durationTimeout.get_total_milliseconds(),&dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();
@@ -162,7 +165,7 @@ namespace aura
          return true;
       }
 
-      bool tx::send(int message,void * pdata,int len,unsigned int dwTimeout)
+      bool tx::send(int message, void * pdata, int len, duration durationTimeout)
       {
 
          if(message == 0x80000000)
@@ -177,7 +180,7 @@ namespace aura
          cds.cbData = (unsigned int)MAX(0,len);
          cds.lpData = (void *)pdata;
 
-         if(dwTimeout == INFINITE)
+         if(durationTimeout.is_pos_infinity())
          {
 
             if(message >= WM_APP)
@@ -199,7 +202,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK,dwTimeout,&dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, durationTimeout.get_total_milliseconds(), &dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();

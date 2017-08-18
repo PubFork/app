@@ -1,5 +1,6 @@
 #include "framework.h"
-//#include <stdarg.h>
+#include <stdio.h>
+// #include <stdarg.h>
 
 #if defined(LINUX) || defined(ANDROID)
 //#include <sys/types.h>

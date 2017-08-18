@@ -1,7 +1,6 @@
 #pragma once
 
 
-#include "base_application.h"
 
 
 namespace base

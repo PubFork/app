@@ -1,10 +1,10 @@
-#ifndef __GNUC__
 #pragma once
-#endif
 
 
+#include "zip/zip.h"
 
-//CLASS_DECL_AURA int32_t bzuncompress(LPCSTR lpcszUncompressed, LPCSTR lpcszGzFileCompressed);
 
 #include "compress_department.h"
+
+
 

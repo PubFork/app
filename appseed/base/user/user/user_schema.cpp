@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 
 
 namespace user
@@ -455,12 +455,12 @@ namespace user
    e_translucency schema::_001GetTranslucency(e_translucency etranslucencyDefault)
    {
 
-      e_translucency etranslucency = translucency_underfined;
+      e_translucency etranslucency = translucency_undefined;
 
       if (get_translucency(etranslucency))
       {
 
-         if (etranslucency != translucency_underfined)
+         if (etranslucency != translucency_undefined)
          {
 
             return etranslucency;

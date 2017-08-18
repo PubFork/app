@@ -1,5 +1,5 @@
-//#include "framework.h"
-//#include "framework.h"
+#include "framework.h"
+#include "framework.h"
 
 #include "base/database/simpledb/simpledb.h"
 
@@ -526,25 +526,39 @@ namespace filemanager
 
    void file_list::_001OnFileManagerItemCommand(signal_details * pobj)
    {
-      SCAST_PTR(::aura::command, pcommand, pobj);
+      
+      SCAST_PTR(::user::command, pcommand, pobj);
+
       ::fs::item_array itema;
+
       index iItemRange, iItem;
+
       range range;
+
       _001GetSelection(range);
+
       for(iItemRange = 0;
           iItemRange < range.get_item_count();
           iItemRange++)
       {
+
          item_range itemrange = range.ItemAt(iItemRange);
+
          for(iItem = itemrange.get_lower_bound() ; iItem <= itemrange.get_upper_bound(); iItem ++)
          {
+
             itema.add(canew(::fs::item  (get_fs_mesh_data()->m_itema.get_item(iItem))));
+
          }
+
       }
+
       get_filemanager_data()->OnFileManagerItemCommand(
          pcommand->m_id,
          itema);
+
    }
+
 
    void file_list::_001OnFileManagerItemUpdate(signal_details * pobj)
    {

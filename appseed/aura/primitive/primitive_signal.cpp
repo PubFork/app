@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "signal.h"
 
 mutex * g_pmutexSignal = NULL;

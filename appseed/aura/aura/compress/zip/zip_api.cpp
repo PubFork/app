@@ -1,4 +1,5 @@
-//#include"framework.h"
+#include "framework.h"
+
 
 
 namespace zip
@@ -10,6 +11,7 @@ namespace zip
 
    }
 
+
    api::~api()
    {
 
@@ -18,7 +20,9 @@ namespace zip
 
    unzFile api::unzip_open(memory_file * pfile)
    {
-      unzFile pf = unzOpen2("pad", &pfile->m_filefuncdef);
+
+      unzFile pf = unzOpen2("pad", (zlib_filefunc_def*)pfile->m_pvoidFileFuncDef);
+
       if(pf == NULL)
          return NULL;
 
@@ -31,7 +35,7 @@ namespace zip
 
    unzFile api::unzip_open (file * pfile)
    {
-      unzFile pf = unzOpen2("pad", &pfile->m_filefuncdef);
+      unzFile pf = unzOpen2("pad", (zlib_filefunc_def*)pfile->m_pvoidFileFuncDef);
       if(pf == NULL)
          return NULL;
 
@@ -44,7 +48,7 @@ namespace zip
    
    zipFile api::zip_open(file * pfile)
    {
-      zipFile pf = zipOpen2("pad", APPEND_STATUS_CREATE, NULL, &pfile->m_filefuncdef);
+      zipFile pf = zipOpen2("pad", APPEND_STATUS_CREATE, NULL, (zlib_filefunc_def *) pfile->m_pvoidFileFuncDef);
       if(pf == NULL)
          return NULL;
 

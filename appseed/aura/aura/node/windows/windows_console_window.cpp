@@ -1,5 +1,7 @@
-
-
+#include "framework.h"
+#include <io.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 
 namespace windows

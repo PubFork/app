@@ -1,7 +1,8 @@
-//#include "framework.h"
+#include "framework.h"
+#include <io.h>
 //#include <sys/stat.h>
 //Copy file using mmap()
-//#include <fcntl.h>
+#include <fcntl.h>
 //#include <sys/mman.h>
 //#include <unistd.h>
 #define PACKAGE "mmap"

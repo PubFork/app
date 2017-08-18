@@ -1,5 +1,5 @@
-//#include "framework.h"
-//#include <stdarg.h>
+#include "framework.h"
+#include <stdio.h>
 
 #ifdef DEBUG   // entire file
 

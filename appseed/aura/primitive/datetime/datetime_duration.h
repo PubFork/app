@@ -339,6 +339,18 @@ public:
 
 };
 
+class CLASS_DECL_AURA one_second :
+   public seconds
+{
+public:
+
+
+   one_second() : seconds(1) {}
+
+
+};
+
+
 
 class CLASS_DECL_AURA minutes :
    public seconds
@@ -383,6 +395,17 @@ public:
 
 };
 
+
+class CLASS_DECL_AURA one_hour :
+   public hours
+{
+public:
+
+
+   one_hour() : hours(1) {}
+
+
+};
 
 class CLASS_DECL_AURA days :
    public hours

@@ -1,5 +1,6 @@
-//#include "framework.h" // previously aura/user/user.h
-//#include "aura/user/colorertake5/colorertake5.h"
+#include "framework.h" // previously aura/user/user.h
+#include "aura/user/colorertake5/colorertake5.h"
+#include <stdio.h>
 
 
 namespace colorertake5

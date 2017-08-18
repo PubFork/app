@@ -142,7 +142,7 @@ extern vsstring g_strInstall;
 extern vsstring g_strInstallGz;
 
 extern bool g_bInstallSet;
-extern _FILE * g_ftrace;
+extern FILE * g_ftrace;
 
 
 extern bool Get(const vsstring& url_in, vsstring & doc);
@@ -196,7 +196,7 @@ extern stra_dup g_straTrace;
 extern stra_dup g_strSpa;
 extern stra_dup g_straHost;
 extern int g_iTrace;
-extern _FILE * g_ftrace;
+extern FILE * g_ftrace;
 extern bool g_bForceUpdatedBuild;
 extern bool g_bStarterStart;
 extern int g_iHealingSurface;

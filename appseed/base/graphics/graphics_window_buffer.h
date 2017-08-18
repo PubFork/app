@@ -1,7 +1,6 @@
 #pragma once
 
 
-#include "axis/graphics/visual/visual.h"
 #include "base/graphics/graphics_window_graphics.h"
 
 

@@ -2,10 +2,10 @@
 #include "fiasco_finder.h"
 
 
-//#include "framework.h"
+#include "framework.h"
 
-//O volume na unidade Z ‚ eco
-// O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+// O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 //
 // Pasta de Z:\ca2\app\appseed\axis\axis\message
 
@@ -13,4 +13,4 @@
 #include "message_user.cpp"
 //2015-01-06  04:24                 0 _message.cpp"
                //3 arquivo(s)          8.031 bytes
-               //0 pasta(s)   33.004.011.520 bytes dispon¡veis
+               //0 pasta(s)   33.004.011.520 bytes disponï¿½veis

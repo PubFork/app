@@ -28,10 +28,6 @@ namespace axis
 
 #ifdef WINDOWSEX
 
-      __argc = _init_args();
-      __targv = _argv;
-      _init_file();
-
       TCHAR *cmd = GetCommandLine();
 
       // Skip program name

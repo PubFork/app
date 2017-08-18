@@ -1182,6 +1182,8 @@ typename list < TYPE, ARG_TYPE >::iterator list < TYPE, ARG_TYPE > ::insert_befo
 }
 
 
+
+
 template<class TYPE, class ARG_TYPE>
 typename list < TYPE, ARG_TYPE >::iterator list < TYPE, ARG_TYPE > ::insert_before(iterator i, node * pnode)
 {
@@ -1294,6 +1296,27 @@ POSITION list < TYPE, ARG_TYPE > ::insert(POSITION position, node * pnode) // sa
    return insert_before(position, pnode);
 
 }
+
+
+
+template<class TYPE, class ARG_TYPE>
+POSITION list < TYPE, ARG_TYPE > ::insert(POSITION position, list_data < TYPE, ARG_TYPE > & l) // same as insert before
+{
+
+   return insert_before(position, l);
+
+}
+
+
+template<class TYPE, class ARG_TYPE>
+POSITION list < TYPE, ARG_TYPE > ::insert(POSITION position, iterator first, iterator last) // same as insert before
+{
+
+   return insert_before(position, first, last);
+
+}
+
+
 
 template<class TYPE, class ARG_TYPE>
 POSITION list < TYPE, ARG_TYPE > ::insert_before(POSITION position, node * pnode)

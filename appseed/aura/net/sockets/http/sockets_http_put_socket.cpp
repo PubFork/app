@@ -1,5 +1,6 @@
 #include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
+#include <stdio.h>
 
 
 namespace sockets

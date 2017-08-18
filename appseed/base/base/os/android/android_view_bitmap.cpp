@@ -4,7 +4,7 @@
 // fazer o que, por enquanto global....
 //::android::view_bitmap * g_pandroidbitmapview = NULL;
 //
-////#include "framework.h"
+#include "framework.h"
 ////#include "windows_window_gdi.h"
 //namespace android
 //{

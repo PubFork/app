@@ -1,3 +1,5 @@
+#include "framework.h"
+
 //
 //  core_static_start
 //

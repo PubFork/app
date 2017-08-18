@@ -220,17 +220,12 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 #include "axis/user/user/user_key_enum.h"
 
-#include "axis/axis/message/message_user.h"
-
 #include "axis/user/user/user_keyboard_layout.h"
 
 #include "axis/user/user/user_keyboard.h"
 
 #include "axis/user/user.h"
 
-
-
-//#include "axis/axis/message/message_user.h"
 
 
 //#include "axis/primitive/datetime/datetime_value.h"
@@ -312,11 +307,12 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 
 
-//#include "axis/database/database/database.h"
+#include "axis/database/database/database.h"
+
 //
-//#include "axis/database/sqlitedb/sqlitedb.h"
+#include "axis/database/sqlitedb/sqlitedb.h"
 //
-//#include "axis/database/simpledb/simpledb.h"
+#include "axis/database/simpledb/simpledb.h"
 
 
 #include "axis.inl"

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 #include "metrowin_axis_dir.cpp"
 #include "metrowin_axis_file_system.cpp"

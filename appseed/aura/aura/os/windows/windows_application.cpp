@@ -1,3 +1,5 @@
+#include "framework.h"
+
 
 #define TGA_FAILED 0
 #define TGA_SUCCESS_CLEAN 1

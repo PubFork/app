@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include <time.h>
 
 
@@ -38,7 +38,7 @@ extern "C" CLASS_DECL_AURA time_t timegm(struct tm *tmp)
 
 
 
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 #include <time.h>
 
 #ifdef ANDROID

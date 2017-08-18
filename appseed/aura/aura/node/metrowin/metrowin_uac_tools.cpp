@@ -95,7 +95,7 @@ MODIFICATIONS:
       The first release.
 */
 
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 
 #ifdef IMPLEMENT_VISTA_TOOLS

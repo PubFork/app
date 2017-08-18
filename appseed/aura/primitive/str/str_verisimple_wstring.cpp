@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 const int verisimple_wstring::npos = -1;
 

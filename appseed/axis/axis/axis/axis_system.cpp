@@ -580,7 +580,7 @@ m_visual(this),
 
 
 
-//#include "framework.h" // from "axis/user/user.h"
+#include "framework.h" // from "axis/user/user.h"
 
 //void dappy(const char * psz);
 

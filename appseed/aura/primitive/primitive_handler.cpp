@@ -1,3 +1,5 @@
+#include "framework.h"
+
 
 handler::handler(::thread * pthread) :
    object(pthread->get_app())

@@ -1,6 +1,13 @@
 #pragma once
 
 
+#ifdef WINDOWSEX
+
+#include "windows/windows.h"
+
+#endif
+
+
 void __node_axis_factory_exchange(::aura::application * papp);
 
 

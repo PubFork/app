@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 CLASS_DECL_AURA int32_t __cdecl _CrtReportBlockType(const void * p);
 

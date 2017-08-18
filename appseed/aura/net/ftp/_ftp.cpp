@@ -1,3 +1,5 @@
+#include "framework.h"
+
 // Volume in drive C has no label.
  //Volume Serial Number is EA2A-5F9C
 

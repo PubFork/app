@@ -168,6 +168,15 @@
     <Filter Include="Header Files\user\html\userhtml">
       <UniqueIdentifier>{fe0d4006-5a63-4373-bc1c-4f5f580fdede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\math\kissfft">
+      <UniqueIdentifier>{ecc6db81-01b7-469e-8236-d42e179caf10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\math\NewFilter1">
+      <UniqueIdentifier>{990bff56-4dbc-4bb4-9624-cef040b03dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\math\kissfft">
+      <UniqueIdentifier>{893c9654-3104-435a-a4a1-acd343f54321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user\simple\simple_child_frame.h">
@@ -1088,6 +1097,27 @@
     <ClInclude Include="user\userex\userex_top_toggle_view.h">
       <Filter>Header Files\user\userex</Filter>
     </ClInclude>
+    <ClInclude Include="math\kissfft\kiss_fft.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kissfft\kiss_fft_guts.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kissfft\kiss_ifft.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kissfft\kissfft.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kissfft\kissfft_fftd.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kissfft\kissfft_ifftd.h">
+      <Filter>Header Files\math\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="math\math_math.h">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="user\simple\simple_child_frame.cpp">
@@ -1579,18 +1609,6 @@
     <ClCompile Include="user\wndfrm\frame\wndfrm_frame_work_set_listener.cpp">
       <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
-    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_work_set_listener_array.cpp">
-      <Filter>Source Files\user\wndfrm\frame</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\filemanager\_filemanager.cpp">
-      <Filter>Source Files\filesystem\filemanager</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\userfs\_userfs.cpp">
-      <Filter>Source Files\filesystem\userfs</Filter>
-    </ClCompile>
-    <ClCompile Include="core\core\_core.cpp">
-      <Filter>Source Files\core\core</Filter>
-    </ClCompile>
     <ClCompile Include="core\core\core.cpp">
       <Filter>Source Files\core\core</Filter>
     </ClCompile>
@@ -1632,15 +1650,6 @@
     </ClCompile>
     <ClCompile Include="core\core\core_system.cpp">
       <Filter>Source Files\core\core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\plugin\_plugin.cpp">
-      <Filter>Source Files\core\plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\filehandler\_filehandler.cpp">
-      <Filter>Source Files\filesystem\filehandler</Filter>
-    </ClCompile>
-    <ClCompile Include="user\_user.cpp">
-      <Filter>Source Files\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_slider.cpp">
       <Filter>Source Files\user\user</Filter>
@@ -1696,23 +1705,14 @@
     <ClCompile Include="user\user\user_margin.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\hi5\_hi5.cpp">
-      <Filter>Source Files\user\hi5</Filter>
-    </ClCompile>
     <ClCompile Include="user\hi5\hi5_oauth.cpp">
       <Filter>Source Files\user\hi5</Filter>
     </ClCompile>
     <ClCompile Include="user\hi5\hi5_twit.cpp">
       <Filter>Source Files\user\hi5</Filter>
     </ClCompile>
-    <ClCompile Include="user\netuser\_netuser.cpp">
-      <Filter>Source Files\user\netuser</Filter>
-    </ClCompile>
     <ClCompile Include="user\netuser\netuser_network_configuration.cpp">
       <Filter>Source Files\user\netuser</Filter>
-    </ClCompile>
-    <ClCompile Include="user\databaseuser\_databaseuser.cpp">
-      <Filter>Source Files\user\databaseuser</Filter>
     </ClCompile>
     <ClCompile Include="user\databaseuser\databaseuser_key_mesh_data.cpp">
       <Filter>Source Files\user\databaseuser</Filter>
@@ -1725,9 +1725,6 @@
     </ClCompile>
     <ClCompile Include="user\fontopus\fontopus_view.cpp">
       <Filter>Source Files\user\fontopus</Filter>
-    </ClCompile>
-    <ClCompile Include="user\html\graphics\elemental\_html_elemental.cpp">
-      <Filter>Source Files\user\html\graphics\elemental</Filter>
     </ClCompile>
     <ClCompile Include="user\html\graphics\elemental\html_elemental_cell.cpp">
       <Filter>Source Files\user\html\graphics\elemental</Filter>
@@ -1764,9 +1761,6 @@
     </ClCompile>
     <ClCompile Include="user\html\graphics\elemental\html_elemental_text.cpp">
       <Filter>Source Files\user\html\graphics\elemental</Filter>
-    </ClCompile>
-    <ClCompile Include="user\html\graphics\impl\_html_impl.cpp">
-      <Filter>Source Files\user\html\graphics\impl</Filter>
     </ClCompile>
     <ClCompile Include="user\html\graphics\impl\html_impl.cpp">
       <Filter>Source Files\user\html\graphics\impl</Filter>
@@ -1849,15 +1843,6 @@
     <ClCompile Include="user\html\hi5\hi5_twitter_authorization.cpp">
       <Filter>Source Files\user\html\hi5</Filter>
     </ClCompile>
-    <ClCompile Include="math\_math_math.cpp">
-      <Filter>Source Files\math</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\_user.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\html\user\_userhtml.cpp">
-      <Filter>Source Files\user\html\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\html\user\userhtml_child_frame.cpp">
       <Filter>Source Files\user\html\user</Filter>
     </ClCompile>
@@ -1879,20 +1864,8 @@
     <ClCompile Include="user\html\user\userhtml_view_update_hint.cpp">
       <Filter>Source Files\user\html\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\wndfrm\_wndfrm.cpp">
-      <Filter>Source Files\user\wndfrm</Filter>
-    </ClCompile>
     <ClCompile Include="filesystem\filemanager\filemanager.cpp">
       <Filter>Source Files\filesystem\filemanager</Filter>
-    </ClCompile>
-    <ClCompile Include="user\userex\_userex.cpp">
-      <Filter>Source Files\user\userex</Filter>
-    </ClCompile>
-    <ClCompile Include="user\html\graphics\_html_graphics.cpp">
-      <Filter>Source Files\user\html\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="user\html\_html.cpp">
-      <Filter>Source Files\user\html</Filter>
     </ClCompile>
     <ClCompile Include="user\simple\simple.cpp">
       <Filter>Source Files\user\simple</Filter>
@@ -1914,6 +1887,45 @@
     </ClCompile>
     <ClCompile Include="user\userex\userex_font_view.cpp">
       <Filter>Source Files\user\userex</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_calculator.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_element.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_parser.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_parser_exception.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_plain_edit_view.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_scanner.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\calculator\calculator_value.cpp">
+      <Filter>Source Files\math\calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kissfft\kiss_fft.cpp">
+      <Filter>Source Files\math\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kissfft\kiss_fft_shared.cpp">
+      <Filter>Source Files\math\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kissfft\kiss_ifft.cpp">
+      <Filter>Source Files\math\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kissfft\kissfft_fftd.cpp">
+      <Filter>Source Files\math\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kissfft\kissfft_ifftd.cpp">
+      <Filter>Source Files\math\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_work_set_listener_array.cpp">
+      <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

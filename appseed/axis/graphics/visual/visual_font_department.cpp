@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #define FONTFACENAME_MENU FONT_SANS

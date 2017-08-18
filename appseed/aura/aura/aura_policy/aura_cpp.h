@@ -75,6 +75,13 @@ namespace aura
 } // namespace system
 
 
+namespace install
+{
+
+   class installer;
+
+
+} // namespace install
 
 template<class T>
 struct remove_reference
@@ -228,13 +235,7 @@ namespace url
 } // namespace url
 
 
-namespace axis // only usable from axis.dll and dependants
-{
-
-   class compress_department; // only usable from axis.dll and dependants
-
-
-} // namespace axis // only usable from axis.dll and dependants
+class compress_department; // only usable from axis.dll and dependants
 
 
 
@@ -253,7 +254,7 @@ class var_array;
 class handler;
 class thread;
 class command_target;
-class command_ui;
+class cmd_ui;
 class critical_section;
 class mutex;
 class string;
@@ -1024,10 +1025,10 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_flags.h"
 #include "aura/primitive/primitive_check.h"
 //#include "user/user/user_check_interface.h"
-#include "aura/aura/aura/aura_command.h"
 #include "aura/user/user/user_command.h"
+#include "aura/aura/aura/aura_command_msg.h"
 #include "aura/aura/aura/aura_command_ui.h"
-#include "aura/aura/aura/aura_command_ui_probe.h"
+#include "aura/aura/aura/aura_command_ui_test.h"
 //#include "graphics/visual/visual_const.h"
 //#include "user/user/user_key_enum.h"
 #include "aura/aura/message/message.h"
@@ -1808,6 +1809,7 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 
 #include "aura/graphics/graphics.h"
+
 
 #include "aura/install/install2.h"
 

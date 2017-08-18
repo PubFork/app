@@ -1,5 +1,28 @@
 #pragma once
 
+struct install_status
+{
+
+   int         m_iCheck;
+   //bool        m_bSlopeOk;
+   bool        m_bOk;
+   //DWORD       m_dwLastOk;
+
+   install_status()
+   {
+
+      m_iCheck = 0;
+      //m_bSlopeOk = false;
+      m_bOk = false;
+
+   }
+
+
+   DWORD calc_when_is_good_to_check_again();
+
+};
+
+
 
 namespace multimedia
 {
@@ -17,6 +40,8 @@ namespace multimedia
 
 namespace aura
 {
+
+
 
 
    class CLASS_DECL_AURA application :
@@ -39,6 +64,21 @@ namespace aura
       ::core::application *                           m_pcoreapp; // can be used only from core and upper
       ::core::system *                                m_pcoresystem; // can be used only from core and upper
       ::core::session *                               m_pcoresession; // can be used only from core and upper
+      
+
+      DWORD                                           m_dwInstallGoodToCheckAgain;
+
+      
+      ::install::installer *                          m_pinstaller;
+      string                                          m_strInstallTraceLabel;
+      string                                          m_strInstallBuild;
+
+
+
+
+
+      string_map < install_status >                   m_mapUpdated;
+      string_map < install_status >                   m_mapInstalled;
 
       bool                                            m_bAgreeExit;
       bool                                            m_bAgreeExitOk;
@@ -521,6 +561,11 @@ namespace aura
       void on_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
 
+      virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
+
+      virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
+
+      ::install::installer & installer() { return *m_pinstaller; }
 
       virtual bool check_install();
 
@@ -560,6 +605,34 @@ namespace aura
 
       
       virtual bool on_open_document_file(var varFile);
+
+      virtual void install_trace(const string & str);
+      virtual void install_trace(double dRate);
+      virtual bool register_spa_file_type();
+
+      virtual bool low_is_app_app_admin_running(string strPlatform);
+      virtual void defer_start_program_files_app_app_admin(string strPlatform);
+      virtual void start_program_files_app_app_admin(string strPlatform);
+
+      virtual string install_pick_command_line();
+
+
+      virtual string install_get_title(string strTitle);
+
+      virtual string install_get_build();
+
+      virtual string get_app_id(string wstr);
+      virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+
+
+
+      virtual bool install_get_admin();
+      virtual string install_get_id();
+
 
    };
 

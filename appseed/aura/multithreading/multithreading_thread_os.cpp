@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 //void _on_os_hthread_end();
 //

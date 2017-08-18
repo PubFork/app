@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "core/user/user/user.h"
 ////#include "axis/net/net_sockets.h"
 //#include "charguess.h"

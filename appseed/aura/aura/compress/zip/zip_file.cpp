@@ -1,4 +1,9 @@
-//#include"framework.h"
+#include "framework.h"
+
+
+void * zip_filefuncdef_malloc();
+void zip_filefuncdef_set_file(void * pvoid, ::file::file * pfile);
+
 
 
 namespace zip
@@ -9,14 +14,7 @@ namespace zip
       ::object(papp)
    {
       m_bOwnFile                 = false;
-      m_filefuncdef.opaque       = (voidpf) this;
-      m_filefuncdef.zopen_file   = &c_zip_file_open_file_func;
-      m_filefuncdef.zread_file   = &c_zip_file_read_file_func;
-      m_filefuncdef.zwrite_file  = &c_zip_file_write_file_func;
-      m_filefuncdef.ztell_file   = &c_zip_file_tell_file_func;
-      m_filefuncdef.zseek_file   = &c_zip_file_seek_file_func;
-      m_filefuncdef.zclose_file  = &c_zip_file_close_file_func;
-      m_filefuncdef.zerror_file  = &c_zip_file_testerror_file_func;
+      m_pvoidFileFuncDef = zip_filefuncdef_malloc();
       m_pfUnzip = NULL;
       m_pfZip = NULL;
    }
@@ -31,6 +29,9 @@ namespace zip
       {
          zipClose(m_pfZip, NULL);
       }
+      
+      free(m_pvoidFileFuncDef);
+
    }
 
    bool file::unzip_open(const char * lpcwsz)
@@ -93,7 +94,7 @@ namespace zip
       
       m_pfile = m_pbuffile2;
       
-      m_filefuncdef.opaque = (voidpf) this;
+      zip_filefuncdef_set_file(m_pvoidFileFuncDef, m_pfile);
       
       m_pfUnzip = api::unzip_open(this);
       
@@ -137,7 +138,7 @@ namespace zip
       
       m_pfile = m_pbuffile2;
       
-      m_filefuncdef.opaque = (voidpf) this;
+      zip_filefuncdef_set_file(m_pvoidFileFuncDef, m_pfile);
       
       m_pfZip = api::zip_open(this);
       
@@ -173,6 +174,75 @@ namespace zip
 } // namespace zip
 
 
+//BEGIN_EXTERN_C
+//
+//
+//voidpf fileopen_file_func (voidpf opaque, const char* filename, int32_t mode)
+//{
+//   UNREFERENCED_PARAMETER(mode);
+//   UNREFERENCED_PARAMETER(filename);
+//   ::zip::file * pzipfile = (::zip::file *) opaque;
+//   ::file::file_sp  pfile = pzipfile->m_pfile;
+//   return (voidpf) pfile;
+//}
+//uint_ptr  fileread_file_func (voidpf opaque, voidpf stream, void * buf, uint_ptr size)
+//{
+//   return (uint_ptr)((::zip::file *) opaque)->m_pfile.m_p->read(buf,size);
+//}
+//uint_ptr  filewrite_file_func (voidpf opaque, voidpf stream, const void * buf, uint_ptr size)
+//{
+//   UNREFERENCED_PARAMETER(stream);
+//   ::zip::file * pzipfile = (::zip::file *) opaque;
+//   ::file::file_sp  pfile = pzipfile->m_pfile;
+//   pfile->write(buf, size);
+//   return size;
+//}
+//long   filetell_file_func (voidpf opaque, voidpf stream)
+//{
+//   UNREFERENCED_PARAMETER(stream);
+//   ::zip::file * pzipfile = (::zip::file *) opaque;
+//   ::file::file_sp  pfile = pzipfile->m_pfile;
+//   return (long) pfile->get_position();
+//}
+//
+//long   fileseek_file_func (voidpf opaque, voidpf stream, uint_ptr offset, int32_t origin)
+//{
+//   UNREFERENCED_PARAMETER(stream);
+//   ::zip::file * pzipfile = (::zip::file *) opaque;
+//   ::file::file_sp  pfile = pzipfile->m_pfile;
+//   if(pfile->seek(offset, (::file::e_seek) origin) == 0xffffffff)
+//      return -1;
+//   else
+//      return 0;
+//
+//}
+//
+//int32_t    fileclose_file_func (voidpf opaque, voidpf stream)
+//{
+//   UNREFERENCED_PARAMETER(opaque);
+//   UNREFERENCED_PARAMETER(stream);
+////      ::zip::file * pzipfile = (::zip::file *) opaque;
+////      ::file::file_sp  pfile = pzipfile->m_pfile;
+//   return 1;
+//}
+//
+//int32_t c_zip_file_testerror_file_func (voidpf opaque, voidpf stream)
+//{
+//   UNREFERENCED_PARAMETER(opaque);
+//   UNREFERENCED_PARAMETER(stream);
+////      ::zip::file * pzipfile = (::zip::file *) opaque;
+////      ::file::file_sp  pfile = pzipfile->m_pfile;
+//   //return spfile->IsValid() ? 0 : 1;
+//   return 0;
+//}
+//
+//END_EXTERN_C
+//
+
+
+
+
+
 BEGIN_EXTERN_C
 
 
@@ -180,35 +250,31 @@ voidpf c_zip_file_open_file_func (voidpf opaque, const char* filename, int32_t m
 {
    UNREFERENCED_PARAMETER(mode);
    UNREFERENCED_PARAMETER(filename);
-   ::zip::file * pzipfile = (::zip::file *) opaque;
-   ::file::file_sp  pfile = pzipfile->m_pfile;
+   ::file::file * pfile = (::file::file *) opaque;
    return (voidpf) pfile;
 }
 uint_ptr  c_zip_file_read_file_func (voidpf opaque, voidpf stream, void * buf, uint_ptr size)
 {
-   return (uint_ptr)((::zip::file *) opaque)->m_pfile.m_p->read(buf,size);
+   return (uint_ptr)((::file::file *) opaque)->read(buf,size);
 }
 uint_ptr  c_zip_file_write_file_func (voidpf opaque, voidpf stream, const void * buf, uint_ptr size)
 {
    UNREFERENCED_PARAMETER(stream);
-   ::zip::file * pzipfile = (::zip::file *) opaque;
-   ::file::file_sp  pfile = pzipfile->m_pfile;
+   ::file::file * pfile = (::file::file *) opaque;
    pfile->write(buf, size);
    return size;
 }
 long   c_zip_file_tell_file_func (voidpf opaque, voidpf stream)
 {
    UNREFERENCED_PARAMETER(stream);
-   ::zip::file * pzipfile = (::zip::file *) opaque;
-   ::file::file_sp  pfile = pzipfile->m_pfile;
+   ::file::file * pfile = (::file::file *) opaque;
    return (long) pfile->get_position();
 }
 
 long   c_zip_file_seek_file_func (voidpf opaque, voidpf stream, uint_ptr offset, int32_t origin)
 {
    UNREFERENCED_PARAMETER(stream);
-   ::zip::file * pzipfile = (::zip::file *) opaque;
-   ::file::file_sp  pfile = pzipfile->m_pfile;
+   ::file::file * pfile = (::file::file *) opaque;
    if(pfile->seek(offset, (::file::e_seek) origin) == 0xffffffff)
       return -1;
    else
@@ -236,4 +302,38 @@ int32_t c_zip_file_testerror_file_func (voidpf opaque, voidpf stream)
 }
 
 END_EXTERN_C
+
+
+
+
+
+
+void * zip_filefuncdef_malloc()
+{
+
+   zlib_filefunc_def_s * p = (zlib_filefunc_def_s *)malloc(sizeof(zlib_filefunc_def_s));
+
+   p->zopen_file = &c_zip_file_open_file_func;
+   p->zread_file = &c_zip_file_read_file_func;
+   p->zwrite_file = &c_zip_file_write_file_func;
+   p->ztell_file = &c_zip_file_tell_file_func;
+   p->zseek_file = &c_zip_file_seek_file_func;
+   p->zclose_file = &c_zip_file_close_file_func;
+   p->zerror_file = &c_zip_file_testerror_file_func;
+
+   return p;
+
+}
+
+
+
+void zip_filefuncdef_set_file(void * pvoid, ::file::file * pfile)
+{
+   
+   zlib_filefunc_def_s * p = (zlib_filefunc_def_s *)pvoid;
+
+   p->opaque = (voidpf)pfile;
+
+}
+
 

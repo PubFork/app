@@ -38,8 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <fcntl.h>
 #endif
 ////#include <ctype.h>
+#include <time.h>
 
-#ifdef LINUX
+#ifdef BSD_STYLE_SOCKETS
 #include <openssl/ssl.h>
 #endif
 

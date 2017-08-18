@@ -108,11 +108,11 @@ namespace install
 
       }
 
-      Application.trace("--\r\n");
-      Application.trace(":::::Installing install, app_app_admin, app_core_user_service and installer\r\n");
-      Application.trace("***Installing ca2 Store Installer Application\r\n");
-      Application.trace("Registering spa file handler\r\n");
-      Application.trace(0.0);
+      Application.install_trace("--\r\n");
+      Application.install_trace(":::::Installing install, app_app_admin, app_core_user_service and installer\r\n");
+      Application.install_trace("***Installing ca2 Store Installer Application\r\n");
+      Application.install_trace("Registering spa file handler\r\n");
+      Application.install_trace(0.0);
 
       if (!check_app_app_admin_bin(strPlatform))
       {
@@ -128,7 +128,7 @@ namespace install
 
       }
 
-      Application.trace(0.05);
+      Application.install_trace(0.05);
 
       int iTry = 100;
 
@@ -173,9 +173,9 @@ namespace install
 
       }
 
-      //Application.trace("***Preparing bootstrap.install\r\n");
+      //Application.install_trace("***Preparing bootstrap.install\r\n");
 
-      //Application.trace("Starting bootstrap.install\r\n");
+      //Application.install_trace("Starting bootstrap.install\r\n");
 
       //start_app_install_in_context(strPlatform, true);
 
@@ -194,10 +194,10 @@ namespace install
 
       //            int iUserServiceTry = 500;
 
-      //            while (!check_user_service("Win32", false, Application.m_dwGoodToCheckAgain))
+      //            while (!check_user_service("Win32", false, Application.m_dwInstallGoodToCheckAgain))
       //            {
 
-      //               while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+      //               while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
       //               {
 
       //                  Sleep(100);
@@ -245,10 +245,10 @@ namespace install
 
       //}
 
-      Application.trace(":::::Thank you\r\n");
-      Application.trace("***Thank you\r\n");
-      Application.trace("Thank you\r\n");
-      Application.trace(1.0);
+      Application.install_trace(":::::Thank you\r\n");
+      Application.install_trace("***Thank you\r\n");
+      Application.install_trace("Thank you\r\n");
+      Application.install_trace(1.0);
 
       //end_spa(this);
 
@@ -358,10 +358,10 @@ namespace install
 
       int iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true, Application.m_dwGoodToCheckAgain))
+      while (!check_user_service("Win32", true, Application.m_dwInstallGoodToCheckAgain))
       {
 
-         while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+         while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
          {
 
             Sleep(100);
@@ -384,7 +384,7 @@ namespace install
       while (true)
       {
 
-         string str = Application.pick_command_line();
+         string str = Application.install_pick_command_line();
 
          if (str.is_empty())
          {
@@ -395,7 +395,7 @@ namespace install
 
          m_straCommand.add(str);
 
-         if (Application.check_soon_launch(str, false, Application.m_dwGoodToCheckAgain))
+         if (Application.check_soon_launch(str, false, Application.m_dwInstallGoodToCheckAgain))
          {
 
             continue;
@@ -464,14 +464,14 @@ namespace install
 
             do_app_app(strId, strParams);
 
-            if (Application.is_application_updated(strId, Application.m_dwGoodToCheckAgain))
+            if (Application.is_application_updated(strId, Application.m_dwInstallGoodToCheckAgain))
             {
 
                break;
 
             }
 
-            while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+            while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
             {
 
                Sleep(100);
@@ -491,7 +491,7 @@ namespace install
          for (auto & strCommand : m_straCommand)
          {
 
-            if (!Application.check_soon_launch(strCommand, true, Application.m_dwGoodToCheckAgain))
+            if (!Application.check_soon_launch(strCommand, true, Application.m_dwInstallGoodToCheckAgain))
             {
 
                iCommandFailCount++;
@@ -518,10 +518,10 @@ namespace install
 
       iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true, Application.m_dwGoodToCheckAgain))
+      while (!check_user_service("Win32", true, Application.m_dwInstallGoodToCheckAgain))
       {
 
-         while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+         while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
          {
 
             Sleep(100);
@@ -646,10 +646,10 @@ namespace install
 
       int iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true, Application.m_dwGoodToCheckAgain))
+      while (!check_user_service("Win32", true, Application.m_dwInstallGoodToCheckAgain))
       {
 
-         while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+         while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
          {
 
             Sleep(100);
@@ -673,7 +673,7 @@ namespace install
 
          string strId;
 
-         string wstr(Application.pick_command_line());
+         string wstr(Application.install_pick_command_line());
 
          if (wstr.is_empty())
          {
@@ -684,7 +684,7 @@ namespace install
 
          m_straCommand.add(wstr);
 
-         if (Application.check_soon_launch(wstr, false, Application.m_dwGoodToCheckAgain))
+         if (Application.check_soon_launch(wstr, false, Application.m_dwInstallGoodToCheckAgain))
          {
 
             continue;
@@ -751,14 +751,14 @@ namespace install
 
             do_app_app(strId, strParams);
 
-            if (Application.is_application_updated(strId, Application.m_dwGoodToCheckAgain))
+            if (Application.is_application_updated(strId, Application.m_dwInstallGoodToCheckAgain))
             {
 
                break;
 
             }
 
-            while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+            while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
             {
 
                Sleep(100);
@@ -778,7 +778,7 @@ namespace install
          for (auto & strCommand : m_straCommand)
          {
 
-            if (!Application.check_soon_launch(strCommand, true, Application.m_dwGoodToCheckAgain))
+            if (!Application.check_soon_launch(strCommand, true, Application.m_dwInstallGoodToCheckAgain))
             {
 
                iCommandFailCount++;
@@ -805,10 +805,10 @@ namespace install
 
       iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true, Application.m_dwGoodToCheckAgain))
+      while (!check_user_service("Win32", true, Application.m_dwInstallGoodToCheckAgain))
       {
 
-         while (::get_tick_count() < Application.m_dwGoodToCheckAgain)
+         while (::get_tick_count() < Application.m_dwInstallGoodToCheckAgain)
          {
 
             Sleep(100);
@@ -899,7 +899,7 @@ namespace install
       if (get_admin())
       {
 
-         Application.trace("Downloading\r\n");
+         Application.install_trace("Downloading\r\n");
 
       }
 

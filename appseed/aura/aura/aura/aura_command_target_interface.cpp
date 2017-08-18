@@ -4,7 +4,7 @@
 bool command_target_interface::_001SendCommand(id id)
 {
    
-   ::user::command msg(id);
+   ::aura::cmd_msg msg(id);
 
    msg.m_pcommandtargetSource = this;
    
@@ -13,10 +13,10 @@ bool command_target_interface::_001SendCommand(id id)
 }
 
 
-bool command_target_interface::_001SendUpdateCmdUi(command_ui * pcommandui)
+bool command_target_interface::_001SendUpdateCmdUi(cmd_ui * pcmdui)
 {
    
-   ::user::command msg(pcommandui);
+   ::aura::cmd_msg msg(pcmdui);
    
    msg.m_pcommandtargetSource = this;
 
@@ -25,19 +25,19 @@ bool command_target_interface::_001SendUpdateCmdUi(command_ui * pcommandui)
 }
 
 
-bool command_target_interface::_001OnCmdMsg(::user::command * pcmdmsg)
+bool command_target_interface::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
 {
 
-   if(pcmdmsg->m_etype == ::user::command::type_command)
+   if(pcmdmsg->m_etype == ::aura::cmd_msg::type_command)
    {
 
-      probe_command_ui commandui(get_app());
+      CTestCmdUI cmdui(get_app());
 
-      commandui.m_id = pcmdmsg->m_id;
+      cmdui.m_id = pcmdmsg->m_id;
 
-      if(on_simple_update(&commandui))
+      if(on_simple_update(&cmdui))
       {
-         if(!commandui.m_bEnabled)
+         if(!cmdui.m_bEnabled)
             return false;
       }
 
@@ -48,12 +48,12 @@ bool command_target_interface::_001OnCmdMsg(::user::command * pcmdmsg)
    else
    {
 
-      if(on_simple_update(pcmdmsg->m_pcommandui))
+      if(on_simple_update(pcmdmsg->m_pcmdui))
          return true;
 
-      if(_001HasCommandHandler(pcmdmsg->m_pcommandui->m_id))
+      if(_001HasCommandHandler(pcmdmsg->m_pcmdui->m_id))
       {
-         pcmdmsg->m_pcommandui->Enable();
+         pcmdmsg->m_pcmdui->Enable();
          return true;
       }
 
@@ -82,18 +82,33 @@ command_target_interface::command_target_interface(::aura::application * papp)
 
 bool command_target_interface::on_simple_action(id id)
 {
+   
    ::dispatch::signal_item_ptr_array signalptra;
-   get_command_signal_array(::user::command::type_command,signalptra,id);
+
+   get_command_signal_array(::aura::cmd_msg::type_command,signalptra,id);
+
    bool bOk = false;
+
    for(int32_t i = 0; i < signalptra.get_size(); i++)
    {
-      ::aura::command command(signalptra[i]->m_psignal);
+
+      ::user::command command(signalptra[i]->m_psignal);
+
       command.m_id = id;
+
       signalptra[i]->m_psignal->emit(&command);
-      if(command.m_bRet)
+
+      if (command.m_bRet)
+      {
+
          bOk = true;
+
+      }
+
    }
+
    return bOk;
+
 }
 
 bool command_target_interface::_001HasCommandHandler(id id)
@@ -101,30 +116,30 @@ bool command_target_interface::_001HasCommandHandler(id id)
 
    ::dispatch::signal_item_ptr_array signalptra;
 
-   get_command_signal_array(::user::command::type_command,signalptra,id);
+   get_command_signal_array(::aura::cmd_msg::type_command,signalptra,id);
 
    return signalptra.get_size() > 0;
 
 }
 
 
-bool command_target_interface::on_simple_update(command_ui * pcommandui)
+bool command_target_interface::on_simple_update(cmd_ui * pcmdui)
 {
    
    ::dispatch::signal_item_ptr_array signalptra;
    
-   get_command_signal_array(::user::command::type_command_ui,signalptra,pcommandui->m_id);
+   get_command_signal_array(::aura::cmd_msg::type_cmdui,signalptra,pcmdui->m_id);
    
    bool bOk = false;
    
    for(int32_t i = 0; i < signalptra.get_size(); i++)
    {
       
-      pcommandui->reset(signalptra[i]->m_psignal);
-
-      signalptra[i]->m_psignal->emit(pcommandui);
+      ::aura::cmd_ui cmdui(signalptra[i]->m_psignal);
+      cmdui.m_pcmdui = pcmdui;
+      signalptra[i]->m_psignal->emit(&cmdui);
       
-      if(pcommandui->m_bRet)
+      if(cmdui.m_bRet)
       {
          
          bOk = true;
@@ -134,11 +149,12 @@ bool command_target_interface::on_simple_update(command_ui * pcommandui)
    }
    
    return bOk;
-   
+}
+
 }
 
 
-void command_target_interface::get_command_signal_array(::user::command::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id)
+void command_target_interface::get_command_signal_array(::aura::cmd_msg::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id)
 {
    command_signalid signalid;
    signalid.m_id = id;
@@ -148,11 +164,11 @@ void command_target_interface::get_command_signal_array(::user::command::e_type 
       class signalid * pid = m_signalidaCommand[i];
       if(pid->matches(&signalid))
       {
-         if(etype == ::user::command::type_command)
+         if(etype == ::aura::cmd_msg::type_command)
          {
             m_dispatchCommand.m_signala.GetSignalsById(signalptra,&signalid);
          }
-         else if(etype == ::user::command::type_command_ui)
+         else if(etype == ::aura::cmd_msg::type_cmdui)
          {
             m_dispatchUpdateCmdUi.m_signala.GetSignalsById(signalptra,&signalid);
          }

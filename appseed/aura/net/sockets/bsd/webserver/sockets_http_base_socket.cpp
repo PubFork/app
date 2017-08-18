@@ -1,10 +1,6 @@
 #include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
-//#include "axis/compress/compress.h"
-//#include "zlib.h"
-//#include "zutil.h"
-//#include "axis/compress/zip/zip.h"
-//#include "axis/compress/gzip_stream.h"
+
 
 
 namespace sockets

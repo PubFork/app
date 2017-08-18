@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 //extern thread_pointer < os_thread > t_posthread;
 //extern thread_pointer < hthread > t_hthread;

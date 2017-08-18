@@ -41,20 +41,21 @@ namespace aura
    }
 
 
-   var ipi::call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va, duration durTimeout)
+   var ipi::call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va, duration duration)
    {
 
       ::aura::ipc::tx & txc = tx(strApp,iPid);
 
       string strVara = str_from_va(va);
 
-      txc.send("call " + strObject + "." + strMember + " : " + strVara ,durTimeout.get_total_milliseconds());
+      txc.send("call " + strObject + "." + strMember + " : " + strVara, duration);
 
       return ::var();
 
    }
 
-   int_map < var > ipi::scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,var_array & va, duration durTimeout)
+
+   int_map < var > ipi::scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,var_array & va, duration duration)
    {
 
       int_map < var > map;
@@ -80,7 +81,7 @@ namespace aura
       for(int iPid : iaPid)
       {
 
-         map[iPid] = call(strApp,iPid,strObject,strMember,va, durTimeout);
+         map[iPid] = call(strApp,iPid,strObject,strMember,va, duration);
 
       }
 
@@ -88,7 +89,7 @@ namespace aura
 
    }
 
-   int_map < var > ipi::call(const string & strApp,const string & strObject,const string & strMember,var_array & va)
+   int_map < var > ipi::call(const string & strApp,const string & strObject,const string & strMember,var_array & va, duration durationTimeout)
    {
 
       int_map < var > map;
@@ -98,14 +99,14 @@ namespace aura
       for(int iPid : iaPid)
       {
 
-         map[iPid] = call(strApp, iPid, strObject, strMember, va);
+         map[iPid] = call(strApp, iPid, strObject, strMember, va, durationTimeout);
 
       }
 
       return map;
 
    }
-   int_map < var > ipi::call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va)
+   int_map < var > ipi::call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeout)
    {
 
       int_map < var > map;
@@ -144,7 +145,7 @@ namespace aura
 
          string strApp = straApp2[i];
 
-         map[iPid] = call(strApp, iPid, strObject, strMember, va);
+         map[iPid] = call(strApp, iPid, strObject, strMember, va, durationTimeout);
 
       }
 
@@ -153,7 +154,7 @@ namespace aura
    }
 
 
-   int_map < var > ipi::ecall(const string & strApp,int_array iaExcludePid, const string & strObject,const string & strMember,var_array & va)
+   int_map < var > ipi::ecall(const string & strApp,int_array iaExcludePid, const string & strObject,const string & strMember,var_array & va, duration durationTimeOut)
    {
 
       int_map < var > map;
@@ -165,7 +166,7 @@ namespace aura
       for(int iPid : iaPid)
       {
 
-         map[iPid] = call(strApp,iPid,strObject,strMember,va);
+         map[iPid] = call(strApp,iPid,strObject,strMember,va, durationTimeOut);
 
       }
 

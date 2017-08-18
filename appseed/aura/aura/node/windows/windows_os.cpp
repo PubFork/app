@@ -1,6 +1,7 @@
-//#include "framework.h"
-//#include "windows.h"
-//#include "aura/graphics/draw2d/draw2d.h"
+#include "framework.h"
+#include <wincred.h>
+#include <wtsapi32.h>
+
 
 CREDUIAPI
 BOOL
@@ -1393,7 +1394,7 @@ namespace windows
       if (status.m_mtime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(), status.m_mtime, &lastWriteTime);
+         ::windows::time_to_filetime(get_app(), status.m_mtime, &lastWriteTime);
 
          lpLastWriteTime = &lastWriteTime;
 
@@ -1403,7 +1404,7 @@ namespace windows
       if (status.m_atime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(),status.m_atime, &lastAccessTime);
+         ::windows::time_to_filetime(get_app(),status.m_atime, &lastAccessTime);
 
          lpLastAccessTime = &lastAccessTime;
 
@@ -1413,7 +1414,7 @@ namespace windows
       if (status.m_ctime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(),status.m_ctime, &creationTime);
+         ::windows::time_to_filetime(get_app(),status.m_ctime, &creationTime);
 
          lpCreationTime = &creationTime;
 
@@ -1661,7 +1662,7 @@ namespace windows
 
          ::file::path pathFolder;
 
-         SHGetSpecialFolderPath(NULL, pathFolder, CSIDL_WINDOWS, FALSE);
+         ::windows::shell_get_special_folder_path(NULL, pathFolder, CSIDL_WINDOWS, FALSE);
 
          pathFolder /= "Web/Wallpaper";
 

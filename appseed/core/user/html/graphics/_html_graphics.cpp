@@ -1,13 +1,7 @@
 #include "framework.h"
-//#include "zlib.h"
-//#include "zutil.h"
-//#include "axis/compress/zip/zip.h"
-//#include "axis/compress/compress_gz.h"
 
-//O volume na unidade Z ‚ eco
- //O N£mero de S‚rie do Volume ‚ 4A91-94E4
 
- //Pasta de Z:\netnode\app\appseed\html\graphics
+
 
 #include "html_attribute.cpp"
 #include "html_base.cpp"
@@ -24,4 +18,4 @@
 #include "html_value.cpp"
 //2015-02-03  11:07                 0 _graphics.cpp"
 //              14 arquivo(s)        100.527 bytes
-//               0 pasta(s)   29.002.956.800 bytes dispon¡veis
+//               0 pasta(s)   29.002.956.800 bytes disponï¿½veis

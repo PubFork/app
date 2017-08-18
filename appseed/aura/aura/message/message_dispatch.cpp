@@ -136,7 +136,7 @@ namespace message
 #endif
 
    //bool dispatch::_iguimessageDispatchCommandMessage(
-   // ::aura::command * pcommand,
+   // ::user::command * pcommand,
    //bool & b)
    //{
    /*int32_t & i = m_iHandling;

@@ -2,11 +2,7 @@
 #include <stdio.h>
 
 
-#include "zlib.h"
-#include "zutil.h"
 #include "aura/aura/compress/zip/zip.h"
-
-#undef local
 
 //#ifndef METROWIN
 //#include <openssl/ssl.h>

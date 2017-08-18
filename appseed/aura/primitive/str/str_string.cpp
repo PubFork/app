@@ -1,5 +1,5 @@
-//#include "framework.h"
-
+#include "framework.h"
+#include <stdio.h>
 
 const int string::npos = -1;
 

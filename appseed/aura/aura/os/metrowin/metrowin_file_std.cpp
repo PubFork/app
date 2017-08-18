@@ -7,36 +7,12 @@
 #include "framework.h"
 #include "metrowin.h"
 
-//_flag values (not the ones used by the normal CRT
-
-_FILE __iob[3];
-
-void _init_file()
-{
-	// STDIN
-	//__iob[0]._base = (char *) create_file("C:\\Temp\\pid\\stdin");
-   __iob[0]._base = (char *) INVALID_HANDLE_VALUE;
-	__iob[0]._flag = _FILE_TEXT;
-
-	// STDOUT
-	__iob[1]._base = (char *) INVALID_HANDLE_VALUE;
-	__iob[1]._flag = _FILE_TEXT;
-
-	// STDERR
-	__iob[2]._base = (char *) INVALID_HANDLE_VALUE;
-	__iob[2]._flag = _FILE_TEXT;
-}
-
-_FILE *__iob_func_dup() {return (_FILE*)__iob;}
-
-
-   // used directly by the stdin, stdout, and stderr macros
 
 
 
 
 
-/*int32_t _fileno(_FILE *fp)
+/*int32_t _fileno(FILE *fp)
 {
 	return (int32_t)fp;			// FIXME:  This doesn't work under Win64
 }
@@ -46,7 +22,7 @@ HANDLE _get_osfhandle(int32_t i)
 	return (HANDLE)i;		// FIXME:  This doesn't work under Win64
 }*/
 
-_FILE *fopen_dup(const char *path, const char *attrs)
+FILE *fopen_dup(const char *path, const char *attrs)
 {
 
 
@@ -77,8 +53,8 @@ _FILE *fopen_dup(const char *path, const char *attrs)
 	if (hFile == INVALID_HANDLE_VALUE)
 		return 0;
 
-	_FILE *file = new _FILE;
-	memset_dup(file, 0, sizeof(_FILE));
+	FILE *file = new FILE;
+	memset_dup(file, 0, sizeof(FILE));
 	file->_base = (char *) hFile;
 
 	if (strchr_dup(attrs, 't'))
@@ -90,7 +66,7 @@ _FILE *fopen_dup(const char *path, const char *attrs)
 }
 
 
-_FILE *_wfopen_dup(const unichar *path, const unichar *attrs)
+FILE *_wfopen_dup(const unichar *path, const unichar *attrs)
 {
 
 	uint32_t access, disp;
@@ -109,8 +85,8 @@ _FILE *_wfopen_dup(const unichar *path, const unichar *attrs)
 	if (hFile == INVALID_HANDLE_VALUE)
 		return 0;
 
-	_FILE *file = new _FILE;
-	memset_dup(file, 0, sizeof(_FILE));
+	FILE *file = new FILE;
+	memset_dup(file, 0, sizeof(FILE));
 	file->_base = (char *) hFile;
 
 	if (wcschr_dup(attrs, L't'))
@@ -121,7 +97,7 @@ _FILE *_wfopen_dup(const unichar *path, const unichar *attrs)
 }
 
 
-int32_t fprintf_dup(_FILE *fp, const char *s, ...)
+int32_t fprintf_dup(FILE *fp, const char *s, ...)
 {
 	va_list args;
 	va_start(args, s);
@@ -136,24 +112,24 @@ int32_t fprintf_dup(_FILE *fp, const char *s, ...)
 }
 
 
-int32_t fclose_dup(_FILE *fp)
+int32_t fclose_dup(FILE *fp)
 {
 
-	::CloseHandle((HANDLE)((_FILE*)fp)->_base);
+	::CloseHandle((HANDLE)((FILE*)fp)->_base);
 	delete fp;
 	return 0;
 
 
 }
 
-int32_t feof_dup(_FILE *fp)
+int32_t feof_dup(FILE *fp)
 {
 
 	return (fp->_flag & _FILE_EOF) ? 1 : 0;
 
 }
 
-int32_t fflush_dup(_FILE * fp)
+int32_t fflush_dup(FILE * fp)
 {
 
    ::FlushFileBuffers((HANDLE) fp->_base);
@@ -161,7 +137,7 @@ int32_t fflush_dup(_FILE * fp)
 
 }
 
-file_position_t fseek_dup(_FILE *fp, file_offset_t offset, int32_t origin)
+file_position_t fseek_dup(FILE *fp, file_offset_t offset, int32_t origin)
 {
 
 	uint32_t meth = FILE_BEGIN;
@@ -170,20 +146,20 @@ file_position_t fseek_dup(_FILE *fp, file_offset_t offset, int32_t origin)
 	else if (origin == SEEK_END)
 		meth = FILE_END;
    LONG offsetHigh = (offset >> 32) & 0xffffffffLL;
-	uint32_t dw = ::SetFilePointer((HANDLE)((_FILE*)fp)->_base, offset & 0xffffffff, &offsetHigh, meth);
-	((_FILE*)fp)->_flag &= ~_FILE_EOF;
+	uint32_t dw = ::SetFilePointer((HANDLE)((FILE*)fp)->_base, offset & 0xffffffff, &offsetHigh, meth);
+	((FILE*)fp)->_flag &= ~_FILE_EOF;
 	return (uint64_t) dw | (((uint64_t) offsetHigh) << 32);
 
 }
 
-long ftell_dup(_FILE *fp)
+long ftell_dup(FILE *fp)
 {
 
-	return SetFilePointer((HANDLE) ((_FILE*)fp)->_base, 0, 0, FILE_CURRENT);
+	return SetFilePointer((HANDLE) ((FILE*)fp)->_base, 0, 0, FILE_CURRENT);
 
 }
 
-size_t fread_dup(void *buffer, size_t size, size_t count, _FILE *str)
+size_t fread_dup(void *buffer, size_t size, size_t count, FILE *str)
 {
 
 	if (size*count == 0)
@@ -191,8 +167,8 @@ size_t fread_dup(void *buffer, size_t size, size_t count, _FILE *str)
 	if (feof_dup(str))
 		return 0;
 
-	HANDLE hFile = (HANDLE) ((_FILE*)str)->_base;
-	int32_t textMode = ((_FILE*)str)->_flag & _FILE_TEXT;
+	HANDLE hFile = (HANDLE) ((FILE*)str)->_base;
+	int32_t textMode = ((FILE*)str)->_flag & _FILE_TEXT;
 
    memory buf;
    buf.allocate(size*count);
@@ -204,9 +180,9 @@ size_t fread_dup(void *buffer, size_t size, size_t count, _FILE *str)
 
 	DWORD br;
 	if (!ReadFile(hFile, src, (uint32_t)(size*count), &br, 0))
-		((_FILE*)str)->_flag |= _FILE_ERROR;
+		((FILE*)str)->_flag |= _FILE_ERROR;
 	else if (!br)		// nonzero return value and no bytes read = EOF
-		((_FILE*)str)->_flag |= _FILE_EOF;
+		((FILE*)str)->_flag |= _FILE_EOF;
 
 	if (!br)
 		return 0;
@@ -261,7 +237,7 @@ size_t fread_dup(void *buffer, size_t size, size_t count, _FILE *str)
 
 }
 
-size_t fwrite_dup(const void *buffer, size_t size, size_t count, _FILE *str)
+size_t fwrite_dup(const void *buffer, size_t size, size_t count, FILE *str)
 {
 
 	DWORD bw = 0, bw2 = 0;
@@ -269,8 +245,8 @@ size_t fwrite_dup(const void *buffer, size_t size, size_t count, _FILE *str)
 	if (size*count == 0)
 		return 0;
 
-	HANDLE hFile = (HANDLE) ((_FILE*)str)->_base;
-	int32_t textMode = ((_FILE*)str)->_flag & _FILE_TEXT;
+	HANDLE hFile = (HANDLE) ((FILE*)str)->_base;
+	int32_t textMode = ((FILE*)str)->_flag & _FILE_TEXT;
 
    if(hFile == NULL)
       return 0;
@@ -330,7 +306,7 @@ size_t fwrite_dup(const void *buffer, size_t size, size_t count, _FILE *str)
 
 }
 
-char *fgets_dup(char *str, int32_t n, _FILE *s)
+char *fgets_dup(char *str, int32_t n, FILE *s)
 {
 
 	if (feof_dup(s))
@@ -359,10 +335,10 @@ char *fgets_dup(char *str, int32_t n, _FILE *s)
 
 }
 
-unichar *fgetws_dup(unichar *str, int32_t n, _FILE *s)
+unichar *fgetws_dup(unichar *str, int32_t n, FILE *s)
 {
 	// Text-mode fgetws converts MBCS->Unicode
-	if (((_FILE*)str)->_flag & _FILE_TEXT)
+	if (((FILE*)str)->_flag & _FILE_TEXT)
 	{
       memory buf;
       buf.allocate(n);
@@ -398,7 +374,7 @@ unichar *fgetws_dup(unichar *str, int32_t n, _FILE *s)
 	return str;
 }
 
-int32_t fgetc_dup(_FILE *s)
+int32_t fgetc_dup(FILE *s)
 {
 	if (s == 0 || feof_dup(s))
 		return EOF;
@@ -409,7 +385,7 @@ int32_t fgetc_dup(_FILE *s)
 	return (int32_t)c;
 }
 
-int32_t ungetc_dup(int32_t c, _FILE *s)
+int32_t ungetc_dup(int32_t c, FILE *s)
 {
 	if (s == 0)
 		return EOF;
@@ -419,13 +395,13 @@ int32_t ungetc_dup(int32_t c, _FILE *s)
 	return (int32_t)c;
 }
 
-wint_t fgetwc_dup(_FILE *s)
+wint_t fgetwc_dup(FILE *s)
 {
 	if (s == 0 || feof_dup(s))
 		return (wint_t)EOF;
 
 	// text-mode fgetwc reads and converts MBCS
-	if (((_FILE*)s)->_flag & _FILE_TEXT)
+	if (((FILE*)s)->_flag & _FILE_TEXT)
 	{
 		char ch = (char)fgetc_dup(s);
 		wint_t wch;
@@ -442,7 +418,7 @@ wint_t fgetwc_dup(_FILE *s)
 
 }
 
-wint_t ungetwc_dup(wint_t w, _FILE *s)
+wint_t ungetwc_dup(wint_t w, FILE *s)
 {
 	if (s == 0)
 		return EOF;
@@ -453,7 +429,7 @@ wint_t ungetwc_dup(wint_t w, _FILE *s)
 }
 
 
-int32_t ferror_dup(_FILE *fp)
+int32_t ferror_dup(FILE *fp)
 {
 
    return fp->_flag & _FILE_ERROR;

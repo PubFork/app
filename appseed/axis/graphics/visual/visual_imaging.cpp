@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 #include "freeimage/Source/FreeImage.h"
 #include "visual_FreeImageFileProc.h"
 #ifdef WINDOWSEX

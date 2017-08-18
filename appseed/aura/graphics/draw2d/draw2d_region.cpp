@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "math.h"
 //#include "draw2d_const.h"
 //#include "draw2d_object.h"

@@ -46,6 +46,9 @@
       <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{84517714-2000-419D-A87F-4338C9DDE3FA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

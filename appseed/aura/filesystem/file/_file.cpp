@@ -9,7 +9,7 @@
 
 // Thank you (casey) Thank you Mummi Thank you Carlos. filesystem/file _amalgamation... Visual Studio 2015 Preview seems to need it (too long filename or extension).
 
-//#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWS
 #define SECURITY_WIN32
 #include <Shlobj.h>
@@ -86,8 +86,8 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data)
 #endif
 
 
-//O volume na unidade Z ‚ eco
- //O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+ //O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 
  //Pasta de Z:\nordroid\app\appseed\aura\filesystem\file
 
@@ -137,7 +137,7 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data)
 //
 //     Total de Arquivos na Lista:
 //              48 arquivo(s)        172.623 bytes
-//               0 pasta(s)   36.845.842.432 bytes dispon¡veis
+//               0 pasta(s)   36.845.842.432 bytes disponï¿½veis
 
 
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -71,6 +71,7 @@ namespace windows
    return root() / "local";
 
 }
+
 
 #ifdef WINDOWSEX
 ::file::path dir::roaming_app_data()

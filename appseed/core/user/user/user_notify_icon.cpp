@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 static ::user::notify_icon * g_pnotifyiconLast = NULL;
 

@@ -1,7 +1,3 @@
-#include "zlib.h"
-#include "zutil.h"
-//#include "aura/compress/zip/zip.h"
-//#include "aura/compress/gzip_stream.h"
 
 
 namespace android

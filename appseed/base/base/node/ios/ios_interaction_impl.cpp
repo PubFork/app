@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "ios.h"
 #include "base/user/user/user_interaction.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 #include "base/user/user/user_user.h"
 
 WINBOOL SetWindowRect(oswindow hwnd, LPRECT lprect);

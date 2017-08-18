@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include <winternl.h>
 //#include <VersionHelpers.h>

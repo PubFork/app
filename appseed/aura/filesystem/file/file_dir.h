@@ -34,6 +34,7 @@ namespace dir
    CLASS_DECL_AURA void ls_dir(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA void rls(::file::patha & patha,const ::file::path & path);
    CLASS_DECL_AURA void rls_dir(::file::patha & patha,const ::file::path & path);
+   CLASS_DECL_AURA ::file::path favorites();
    CLASS_DECL_AURA ::file::path home();
    CLASS_DECL_AURA ::file::path ca2_user();
    CLASS_DECL_AURA ::file::path ca2_module();

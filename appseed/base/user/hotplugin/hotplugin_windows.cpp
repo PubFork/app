@@ -1,22 +1,9 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #ifdef HOTPLUGIN_SUBSYSTEM
 
-
-#undef new
-
-#define min MIN
-
-#define max MAX
-
-#ifndef METROWIN
-
-//#include <gdiplus.h>
-
-using namespace Gdiplus;
-
-#endif
+#include "coated/gdiplus.h"
 
 
 namespace hotplugin
