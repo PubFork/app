@@ -96,11 +96,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_fastblur(allocer())
 {
 
-<<<<<<< HEAD
-   m_etranslucency = ::user::translucency_underfined;
-=======
    m_etranslucency = ::user::translucency_undefined;
->>>>>>> feature/stringa_001Explode
 
    m_bShowTask = true;
 
@@ -3066,7 +3062,6 @@ bool simple_frame_window::get_translucency(::user::e_translucency & etranslucenc
 {
 
    if (m_etranslucency != ::user::translucency_undefined)
->>>>>>> feature/stringa_001Explode
    {
 
       etranslucency = m_etranslucency;

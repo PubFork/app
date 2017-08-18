@@ -138,23 +138,23 @@ namespace user
    };
 
    using font_map = map < e_font,e_font,::draw2d::font_sp >;
-   
+
    enum e_flag
    {
-      
+
       flag_none,
       flag_border,
       
    };
-   
-   using flag_map = ::map < e_flag, e_flag, bool, bool >;
+
+   map < e_flag, e_flag, bool, bool > map_flag;
    
    enum e_rect
    {
       
       rect_none,
       rect_menu_margin,
-      
+
    };
    
    using rect_map = ::map < e_rect, e_rect, rect, rect >;

@@ -27,10 +27,7 @@ namespace user
       appearance_up,
       appearance_down,
       appearance_fixed_size,
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/stringa_001Explode
 
    };
 
@@ -38,18 +35,14 @@ namespace user
    enum e_translucency
    {
 
-<<<<<<< HEAD
-      translucency_underfined,
-=======
       translucency_undefined,
->>>>>>> feature/stringa_001Explode
       translucency_none,
       translucency_present,
       translucency_total
 
    };
 
-
+   map < e_element, e_element, e_translucency, e_translucency > map_translucency;
 
    enum e_control_type
    {

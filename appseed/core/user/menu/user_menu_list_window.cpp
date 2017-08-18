@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -11,7 +11,7 @@ namespace user
    menu_list_window::menu_list_window():
       menu_list_window(get_app())
    {
-      
+
       construct_userstyle(style_menu);
 
    }
@@ -98,7 +98,7 @@ namespace user
 
    bool menu_list_window::track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify)
    {
-      
+
       if(!::user::menu::track_popup_menu(puiParent, puiNotify))
       {
        
@@ -128,12 +128,17 @@ namespace user
 
   //    on_layout();
 
-//      rect rectClient;
+      rect rectClient;
 //
 //      pwndParent->GetClientRect(rectClient);
 //
 //
 //      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+
+      puiParent->GetClientRect(rectClient);
+
+
+      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
 
       SetTimer(::user::timer_update_menu_command_ui,300,NULL);
 
@@ -379,7 +384,7 @@ namespace user
    }
 
 
-   void menu_list_window::layout_buttons(sp(menu_item) pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound)
+   void menu_list_window::layout_buttons(menu_item * pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound)
    {
 
       if(pitemParent->m_spitema == NULL)
@@ -404,7 +409,7 @@ namespace user
                continue;
             lprect->bottom = lprect->top + m_iItemHeight - 2;
          }
-         pitem->m_button.SetWindowPos(
+         pitem->m_pui->SetWindowPos(
             0,
             lprect->left + pitem->m_iLevel * g_base_menu_indent,
             lprect->top,
@@ -476,36 +481,36 @@ namespace user
    }
 
 
-   void menu_list_window::_CreateButtons(sp(menu_item) pitemParent)
+   void menu_list_window::create_buttons(menu_item * pitemParent)
    {
       if(pitemParent->m_spitema == NULL)
          return;
       for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
       {
          menu_item * pitem = pitemParent->m_spitema->element_at(i);
-         if(!pitem->m_button.IsWindow())
+         if(!pitem->m_pui->IsWindow())
          {
-            pitem->m_button.create_window(null_rect(), this, pitem->m_id);
-            pitem->m_button.m_id = pitem->m_id;
+            pitem->m_pui->create_window(null_rect(), this, pitem->m_id);
+            pitem->m_pui->m_id = pitem->m_id;
             
-            if(pitem->m_bPopup)
-            {
+            //if(pitem->m_bPopup)
+            //{
 
-               pitem->m_button.m_pschema = m_pschema->m_pschemaPopupButton;
+            //   pitem->m_button.m_pschema = m_pschema->m_pschemaPopupButton;
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-               pitem->m_button.m_pschema = m_pschema->m_pschemaItemButton;
+            //   pitem->m_button.m_pschema = m_pschema->m_pschemaItemButton;
 
-            }
+            //}
 
-            pitem->m_button.m_pitem = pitem;
-            pitem->m_pbase = this;
+            pitem->m_pui->m_pitem = pitem;
+            pitem->m_pmenu = this;
          }
          
-        _CreateButtons(pitem);
+        create_buttons(pitem);
          
       }
       
@@ -529,7 +534,7 @@ namespace user
       if(pevent->m_eevent == ::user::event_button_clicked)
       {
          
-         if(pevent->m_puie == &m_itemClose.m_button)
+         if(pevent->m_puie == m_itemClose.m_pui)
          {
             
             if(m_bAutoClose)
@@ -626,7 +631,7 @@ namespace user
       
       m_uiptraChild.remove_all();
       
-      ::user::menu_base::destroy_menu();
+      ::user::menu::destroy_menu();
       
    }
 

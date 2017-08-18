@@ -1,5 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+//#include "core/user/user/user.h"
 
 
 namespace user
@@ -95,6 +94,7 @@ namespace user
    {
    
       m_bPositionHint = true;
+
       m_ptPositionHint = pt;
       
    }
@@ -245,8 +245,18 @@ namespace user
    {
       
       m_puiParent    = puiParent;
+      if (puiNotify != NULL)
+      {
       
       m_puiNotify    = puiNotify;
+
+      }
+      else if (m_puiNotify == NULL)
+      {
+
+         m_puiNotify = m_puiParent;
+
+      }
       
       m_pmenuParent  = NULL;
       
@@ -955,23 +965,13 @@ namespace user
       }
       
    }
-<<<<<<< HEAD:appseed/core/user/menu/user_menu.cpp
 
 
-   bool menu::get_translucency(::user::e_translucency & etranslucency)
+   bool menu::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
    {
 
       etranslucency = ::user::translucency_present;
 
-=======
-   
-   
-   bool menu::get_translucency(::user::e_translucency & etranslucency)
-   {
-      
-      etranslucency = ::user::translucency_present;
-      
->>>>>>> feature/stringa_001Explode:appseed/base/user/user/user_menu.cpp
       return true;
       
    }
