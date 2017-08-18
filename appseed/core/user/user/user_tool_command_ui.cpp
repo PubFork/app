@@ -2,26 +2,25 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-   // toolbar idle update through tool_cmd_ui class
+   // toolbar idle update through tool_command_ui class
 
 
 
 namespace user
 {
 
-   tool_cmd_ui::tool_cmd_ui(::aura::application * papp) :
-      object(papp),
+   tool_command_ui::tool_command_ui(::aura::application * papp) :
       command_ui(papp)
    {
    }
       
-   tool_cmd_ui::~tool_cmd_ui()
+   tool_command_ui::~tool_command_ui()
    {
    }
 
 
 
-   void tool_cmd_ui::Enable(bool bOn)
+   void tool_command_ui::Enable(bool bOn)
    {
       m_bEnableChanged = TRUE;
       toolbar* pToolBar = dynamic_cast < toolbar * > (m_pOther);
@@ -47,7 +46,7 @@ namespace user
 #endif
    }
 
-   void tool_cmd_ui::SetCheck(int32_t nCheck)
+   void tool_command_ui::SetCheck(int32_t nCheck)
    {
       ASSERT(nCheck >= 0 && nCheck <= 2); // 0=>off, 1=>on, 2=>indeterminate
       toolbar* pToolBar = dynamic_cast < toolbar * > (m_pOther);
@@ -68,7 +67,7 @@ namespace user
 #endif
    }
 
-   void tool_cmd_ui::SetText(const char *)
+   void tool_command_ui::SetText(const char *)
    {
       // ignore it
    }
