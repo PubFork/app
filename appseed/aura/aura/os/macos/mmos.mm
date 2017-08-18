@@ -29,18 +29,6 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
       
       [s_mmos monitorIconForFile];
       
-      //-(void)awakeFromNib
-//      {
-//         [[[NSWorkspace sharedWorkspace] notificationCenter]
-//          addObserver:s_mmos
-//          selector:@selector(applicationActivity:)
-//          name:NSWorkspaceDidActivateApplicationNotification 
-//          object:nil];
-//      }
-//      [[NSDistributedNotificationCenter defaultCenter] addObserver:s_mmos
-//                                                          selector:@selector(desktopImageChanged:)
-//                                                              name:@"com.apple.desktop"
-//                                                            object:nil];
    }
    
    return s_mmos;
