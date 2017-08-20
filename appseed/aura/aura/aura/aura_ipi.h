@@ -75,7 +75,7 @@ namespace aura
 
          va.add(t, args...);
 
-         return scall(bAutoLaunch, strApp, strObject, strMember, var, durationTimeout);
+         return scall(bAutoLaunch, strApp, strObject, strMember, va, durationTimeout);
 
       }
 

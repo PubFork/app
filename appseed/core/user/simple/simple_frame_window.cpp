@@ -2879,16 +2879,18 @@ void simple_frame_window::_011OnDraw(::draw2d::graphics * pgraphics)
       ::user::wndfrm::frame::WorkSetClientInterface::_001OnDraw(pgraphics);
 
    }
-   else if(!_001IsTranslucent())
-   {
+   //else if(!_001IsTranslucent())
+   //{
 
-      rect rect;
+   //   rect rect;
 
-      GetClientRect(rect);
+   //   GetClientRect(rect);
 
-      pgraphics->FillSolidRect(rect, _001GetColor(::user::color_background));
+   //   pgraphics->set_al
 
-   }
+   //   pgraphics->FillSolidRect(rect, _001GetColor(::user::color_background));
+
+   //}
 
 }
 

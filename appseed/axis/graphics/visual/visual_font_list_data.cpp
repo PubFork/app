@@ -51,7 +51,11 @@ namespace visual
 
       m_dib->create(m_size);
 
+      m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
       m_dib->get_graphics()->FillSolidRect(0, 0, m_size.cx, m_size.cy, pdata->m_dwaBg[iBox]);
+
+      m_dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       m_dib->get_graphics()->selectFont(m_font);
 

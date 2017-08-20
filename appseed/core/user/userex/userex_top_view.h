@@ -30,6 +30,10 @@ namespace userex
       virtual bool is_this_visible() override;
 
 
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
+
+
    };
 
 

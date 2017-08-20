@@ -6,6 +6,18 @@ namespace message
 {
 
 
+   base::base(class ::signal * psignal) :
+      signal_details(psignal)
+   {
+
+      m_lresult = 0;
+      m_bDestroyed = false;
+      m_pwnd = NULL;
+      m_plresult = &m_lresult;
+      m_bDoSystemDefault = true;
+
+   }
+
 
    base::base(::aura::application * papp,class ::signal * psignal):
       signal_details(papp, psignal)

@@ -161,6 +161,12 @@ namespace user
       UNREFERENCED_PARAMETER(phint);
    }
 
+   void font_list::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::control::_001OnNcDraw(pgraphics);
+
+   }
 
    void font_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
@@ -313,7 +319,7 @@ namespace user
    }
 
 
-   bool font_list::get_color(COLORREF & cr, e_color ecolor)
+   bool font_list::style_color(COLORREF & cr, e_color ecolor)
    {
 
       if (ecolor == color_background)

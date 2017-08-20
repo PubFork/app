@@ -563,7 +563,7 @@ namespace filemanager
    void file_list::_001OnFileManagerItemUpdate(signal_details * pobj)
    {
 
-      SCAST_PTR(::message::update_cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::message::update_command_ui, pupdatecmdui, pobj);
 
       synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
@@ -582,7 +582,7 @@ namespace filemanager
          }
       }
       get_filemanager_data()->OnFileManagerItemUpdate(
-         pupdatecmdui->m_pcommandui,
+         pupdatecmdui,
          itema);
       pobj->m_bRet = true;
    }

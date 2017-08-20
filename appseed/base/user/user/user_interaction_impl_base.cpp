@@ -1473,7 +1473,16 @@ namespace user
    ::user::interaction * interaction_impl_base::GetCapture()
    {
 
-      return get_wnd()->GetCapture();
+      ::user::interaction * pui = get_wnd();
+
+      if (pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return pui->GetCapture();
 
    }
 

@@ -962,7 +962,7 @@ namespace user
 
       synch_lock slView(m_pmutex);
 
-      //synch_lock slDocument(get_document()->m_pmutex);
+      //synch_lock slDocument(get_document()->m_pmutex);.
 
       _001OnDraw(pgraphics);
 

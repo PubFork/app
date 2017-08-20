@@ -92,6 +92,21 @@ namespace userex
    }
 
 
+   void top_view::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::split_view::_001OnNcDraw(pgraphics);
+
+   }
+
+
+   void top_view::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::split_view::_001OnDraw(pgraphics);
+
+   }
+
 
 } // namespace userex
 

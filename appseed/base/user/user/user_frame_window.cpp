@@ -2160,7 +2160,7 @@ namespace user
    ::user::style * frame_window::userstyle()
    {
 
-      return NULL;
+      return ::user::box::userstyle();
 
    }
    

@@ -6,6 +6,32 @@ namespace user
 {
 
 
+   //key::key() :
+   //   ::message::base(NULL)
+   //{
+
+
+   //}
+
+
+   key::key(::aura::application * papp) :
+      ::message::base(papp)
+   {
+
+
+
+   }
+
+
+   key::key(const ::user::key & key) :
+      ::message::base(key)
+   {
+
+      copy_this(key);
+
+   }
+
+
    void key::copy_this(const key & key)
    {
 

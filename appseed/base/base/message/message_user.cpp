@@ -97,8 +97,7 @@ namespace message
 
 
    key::key(::aura::application * papp):
-
-      ::message::base(papp)
+      ::user::key(papp)
    {
       m_ekey = ::user::key_none;
       m_nScanCode = 0;
@@ -111,7 +110,7 @@ namespace message
 
 
    key::key(const key & key):
-      ::message::base(key)
+      ::user::key(key)
    {
 
       operator = (key);

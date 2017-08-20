@@ -1610,6 +1610,8 @@ namespace user
 
          //}
 
+         draw_select dl(this, pgraphics);
+
          {
 
             synch_lock sl(m_pmutex);
@@ -1949,13 +1951,11 @@ namespace user
       else
       {
 
-         pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
+         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         COLORREF cr = ARGB(255,255,255,255);
+         COLORREF cr = ARGB(200, 255, 255, 255);
 
-         get_color(cr,::user::color_background);
-
-         cr |= (255 << 24);
+         style_color(cr, ::user::color_background);
 
          pgraphics->FillSolidRect(rectClient,cr);
 

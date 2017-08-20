@@ -295,6 +295,10 @@ namespace user
 
       virtual void _001EditDelete();
 
+
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
+
+
    };
 
 

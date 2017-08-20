@@ -1,8 +1,53 @@
 #pragma once
 
 
-class CLASS_DECL_AURA command_ui:
-   virtual public ::signal_details
+namespace message
+{
+
+
+   class CLASS_DECL_AURA base :
+      public signal_details
+   {
+   public:
+
+
+      sp(::user::primitive)      m_pwnd;
+      bool                       m_bConditional;
+      bool                       m_bReflect;
+      bool                       m_bDestroyed;
+      bool                       m_bDoSystemDefault;
+      LRESULT *                  m_plresult;
+      LRESULT                    m_lresult;
+
+
+      base(class ::signal * psignal);
+      base(::aura::application * papp, class ::signal * psignal = NULL);
+      base(::aura::application * papp, ::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult);
+      base(const base & base);
+      virtual ~base();
+
+
+
+      virtual void set_lresult(LRESULT lresult);
+      virtual LRESULT & get_lresult();
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult);
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam);
+
+      base & operator = (const base & base);
+
+      void copy_this(const base & base);
+
+   };
+
+
+
+} // namespace message
+
+
+
+
+class CLASS_DECL_AURA command_ui :
+   public ::message::base
 {
 public:
 
@@ -32,25 +77,25 @@ public:
    command_ui(::aura::application * papp);
    command_ui(class ::signal * psignal);
 
-   
+
    void reset(class ::signal * psignal);
-   
+
 
    // Operations to do in ON_UPDATE_COMMAND_UI
-   virtual void Enable(bool bOn = TRUE,::action::context actioncontext = ::action::source_system);
-   virtual void _001SetCheck(bool bCheck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-   virtual void _001SetCheck(check::e_check echeck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-   virtual void SetRadio(bool bOn = TRUE,::action::context actioncontext = ::action::source_system);
-   virtual void SetText(const char * lpszText,::action::context actioncontext = ::action::source_system);
+   virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
+   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+   virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+   virtual void SetRadio(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
+   virtual void SetText(const char * lpszText, ::action::context actioncontext = ::action::source_system);
 
    // Advanced operation
    void ContinueRouting();
 
 
-   bool DoUpdate(command_target* pTarget,bool bDisableIfNoHndler);
-   
-   
-   
+   bool DoUpdate(command_target* pTarget, bool bDisableIfNoHndler);
+
+
+
 };
 
 

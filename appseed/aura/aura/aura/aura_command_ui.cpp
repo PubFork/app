@@ -2,7 +2,7 @@
 
 
 command_ui::command_ui(::aura::application * papp) :
-   ::signal_details(papp)
+   ::message::base(papp)
 {
    
       m_iIndex                      = 0;
@@ -18,7 +18,7 @@ command_ui::command_ui(::aura::application * papp) :
 }
 
 command_ui::command_ui(class ::signal * psignal):
-   signal_details(psignal)
+   ::message::base(psignal)
 {
 
    

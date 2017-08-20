@@ -632,6 +632,16 @@ namespace userex
    }
 
 
+   void pane_tab_view::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+
+      ::user::tab_view::_001OnNcDraw(pgraphics);
+
+
+   }
+
+
 
    bool pane_tab_view::create_app_options(::user::view_creator_data * pcreatordata)
    {

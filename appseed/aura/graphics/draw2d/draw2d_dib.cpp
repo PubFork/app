@@ -621,129 +621,230 @@ namespace draw2d
       byte * psrc = &((byte *)pdibSrc->m_pcolorref)[scanSrc *  ptSrc.y + ptSrc.x * sizeof(COLORREF)];
 
 #endif
+
+      bool bFontListBlend = true;
       
-      
-      if (bA == 0)
+      if (bFontListBlend)
       {
-         
-      }
-      else if (bA == 255)
-      {
-         
-         for (int y = 0; y < yEnd; y++)
+
+         if (bA == 0)
          {
-            
-            pdst2 = &pdst[scanDst * y];
-            
-            psrc2 = &psrc[scanSrc * y];
-            
-            //memcpy(pdst2, psrc2, xEnd * 4);
-            for (int x = 0; x < xEnd; x++)
+
+         }
+         else if (bA == 255)
+         {
+
+            for (int y = 0; y < yEnd; y++)
             {
-               
-               //*pdst2 = *psrc2;
-               
-               //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
-               //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
-               //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
-               //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
-               byte a = pdst2[3];
-               byte alpha = psrc2[3];
-               if (a == 0)
+
+               pdst2 = &pdst[scanDst * y];
+
+               psrc2 = &psrc[scanSrc * y];
+
+               //memcpy(pdst2, psrc2, xEnd * 4);
+               for (int x = 0; x < xEnd; x++)
                {
-                  
+
+                  //*pdst2 = *psrc2;
+
+                  //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
+                  //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
+                  //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
+                  //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
+                  byte acomplement = ~psrc2[3];
+                  pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
+                  pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
+                  pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
+                  pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
+
+
+
+                  pdst2 += 4;
+
+                  psrc2 += 4;
+
                }
-               else if(alpha == 0)
+               //pdst2 += xEnd;
+               //psrc2 += xEnd;
+
+            }
+         }
+         else
+         {
+            for (int y = 0; y < yEnd; y++)
+            {
+
+               pdst2 = &pdst[scanDst * y];
+
+               psrc2 = &psrc[scanSrc * y];
+
+               //memcpy(pdst2, psrc2, xEnd * 4);
+               for (int x = 0; x < xEnd; x++)
                {
-                  
-                  *((COLORREF *)pdst2) = 0;
-                  
-               }
-               else
-               {
-                  
-                  //int d0 = pdst2[0] * 255 / a;
-                  //int d1 = pdst2[1] * 255 / a;
-                  //int d2 = pdst2[2] * 255 / a;
-                  
-                  //int s0 = psrc2[0] * 255 / alpha;
-                  //int s1 = psrc2[1] * 255 / alpha;
-                  //int s2 = psrc2[2] * 255 / alpha;
-                  
-                  //d0 = ((s0 * a) + (d0 * alpha)) >> 8;
-                  //d1 = ((s1 * a) + (d1 * alpha)) >> 8;
-                  //d2 = ((s2 * a) + (d2 * alpha)) >> 8;
-                  //pdst2[3] = ((psrc2[3] * a) + (pdst2[3] * alpha)) >> 8;
-                  
-                  //pdst[0] = (d0 * pdst2[3]) >> 8;
-                  //pdst[1] = (d1 * pdst2[3]) >> 8;
-                  //pdst[2] = (d2 * pdst2[3]) >> 8;
-                  
+
+                  //*pdst2 = *psrc2;
+
+                  //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
+                  //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
+                  //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
+                  //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
+                  //byte acomplement = (~psrc2[3] * bA) >> 8;
                   //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
                   //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
                   //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
                   //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
-                  
-                  pdst2[0] = (pdst2[0] * alpha) >> 8;
-                  pdst2[1] = (pdst2[1] * alpha) >> 8;
-                  pdst2[2] = (pdst2[2] * alpha) >> 8;
-                  pdst2[3] = (pdst2[3] * alpha) >> 8;
+                  byte acomplement = (~psrc2[3] * bA) >> 8;
+                  pdst2[0] = clip_byte(((psrc2[0] * bA) + (pdst2[0] * acomplement)) >> 8);
+                  pdst2[1] = clip_byte(((psrc2[1] * bA) + (pdst2[1] * acomplement)) >> 8);
+                  pdst2[2] = clip_byte(((psrc2[2] * bA) + (pdst2[2] * acomplement)) >> 8);
+                  pdst2[3] = clip_byte(((psrc2[3] * bA) + (pdst2[3] * acomplement)) >> 8);
+
+
+
+                  pdst2 += 4;
+
+                  psrc2 += 4;
+
                }
-               
-               
-               
-               pdst2 += 4;
-               
-               psrc2 += 4;
-               
+               //pdst2 += xEnd;
+               //psrc2 += xEnd;
+
             }
-            //pdst2 += xEnd;
-            //psrc2 += xEnd;
-            
+
          }
+
+         // bFontListData
+
       }
-      else
+      else 
       {
-         for (int y = 0; y < yEnd; y++)
+
+         // !bFontListData
+         // bBouncingBall...
+
+         if (bA == 0)
          {
-            
-            pdst2 = &pdst[scanDst * y];
-            
-            psrc2 = &psrc[scanSrc * y];
-            
-            //memcpy(pdst2, psrc2, xEnd * 4);
-            for (int x = 0; x < xEnd; x++)
-            {
-               
-               //*pdst2 = *psrc2;
-               
-               //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
-               //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
-               //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
-               //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
-               //byte acomplement = (~psrc2[3] * bA) >> 8;
-               //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
-               //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
-               //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
-               //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
-               byte acomplement = (~psrc2[3] * bA) >> 8;
-               pdst2[0] = clip_byte(((psrc2[0] * bA) + (pdst2[0] * acomplement)) >> 8);
-               pdst2[1] = clip_byte(((psrc2[1] * bA) + (pdst2[1] * acomplement)) >> 8);
-               pdst2[2] = clip_byte(((psrc2[2] * bA) + (pdst2[2] * acomplement)) >> 8);
-               pdst2[3] = clip_byte(((psrc2[3] * bA) + (pdst2[3] * acomplement)) >> 8);
-               
-               
-               
-               pdst2 += 4;
-               
-               psrc2 += 4;
-               
-            }
-            //pdst2 += xEnd;
-            //psrc2 += xEnd;
-            
-         }
          
+         }
+         else if (bA == 255)
+         {
+         
+            for (int y = 0; y < yEnd; y++)
+            {
+            
+               pdst2 = &pdst[scanDst * y];
+            
+               psrc2 = &psrc[scanSrc * y];
+            
+               //memcpy(pdst2, psrc2, xEnd * 4);
+               for (int x = 0; x < xEnd; x++)
+               {
+               
+                  //*pdst2 = *psrc2;
+               
+                  //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
+                  //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
+                  //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
+                  //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
+                  byte a = pdst2[3];
+                  byte alpha = psrc2[3];
+                  if (a == 0)
+                  {
+                  
+                  }
+                  else if(alpha == 0)
+                  {
+                  
+                     *((COLORREF *)pdst2) = 0;
+                  
+                  }
+                  else
+                  {
+                  
+                     //int d0 = pdst2[0] * 255 / a;
+                     //int d1 = pdst2[1] * 255 / a;
+                     //int d2 = pdst2[2] * 255 / a;
+                  
+                     //int s0 = psrc2[0] * 255 / alpha;
+                     //int s1 = psrc2[1] * 255 / alpha;
+                     //int s2 = psrc2[2] * 255 / alpha;
+                  
+                     //d0 = ((s0 * a) + (d0 * alpha)) >> 8;
+                     //d1 = ((s1 * a) + (d1 * alpha)) >> 8;
+                     //d2 = ((s2 * a) + (d2 * alpha)) >> 8;
+                     //pdst2[3] = ((psrc2[3] * a) + (pdst2[3] * alpha)) >> 8;
+                  
+                     //pdst[0] = (d0 * pdst2[3]) >> 8;
+                     //pdst[1] = (d1 * pdst2[3]) >> 8;
+                     //pdst[2] = (d2 * pdst2[3]) >> 8;
+                  
+                     //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
+                     //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
+                     //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
+                     //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
+                  
+                     pdst2[0] = (pdst2[0] * alpha) >> 8;
+                     pdst2[1] = (pdst2[1] * alpha) >> 8;
+                     pdst2[2] = (pdst2[2] * alpha) >> 8;
+                     pdst2[3] = (pdst2[3] * alpha) >> 8;
+                  }
+               
+               
+               
+                  pdst2 += 4;
+               
+                  psrc2 += 4;
+               
+               }
+               //pdst2 += xEnd;
+               //psrc2 += xEnd;
+            
+            }
+         }
+         else
+         {
+            for (int y = 0; y < yEnd; y++)
+            {
+            
+               pdst2 = &pdst[scanDst * y];
+            
+               psrc2 = &psrc[scanSrc * y];
+            
+               //memcpy(pdst2, psrc2, xEnd * 4);
+               for (int x = 0; x < xEnd; x++)
+               {
+               
+                  //*pdst2 = *psrc2;
+               
+                  //pdst2[0] = (psrc2[0] + (pdst2[0] * (255 - psrc2[3])) / 255);
+                  //pdst2[1] = (psrc2[1] + (pdst2[1] * (255 - psrc2[3])) / 255);
+                  //pdst2[2] = (psrc2[2] + (pdst2[2] * (255 - psrc2[3])) / 255);
+                  //pdst2[3] = (psrc2[3] + (pdst2[3] * (255 - psrc2[3])) / 255);
+                  //byte acomplement = (~psrc2[3] * bA) >> 8;
+                  //pdst2[0] = psrc2[0] + ((pdst2[0] * (acomplement)) >> 8);
+                  //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
+                  //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
+                  //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
+                  byte acomplement = (~psrc2[3] * bA) >> 8;
+                  pdst2[0] = clip_byte(((psrc2[0] * bA) + (pdst2[0] * acomplement)) >> 8);
+                  pdst2[1] = clip_byte(((psrc2[1] * bA) + (pdst2[1] * acomplement)) >> 8);
+                  pdst2[2] = clip_byte(((psrc2[2] * bA) + (pdst2[2] * acomplement)) >> 8);
+                  pdst2[3] = clip_byte(((psrc2[3] * bA) + (pdst2[3] * acomplement)) >> 8);
+               
+               
+               
+                  pdst2 += 4;
+               
+                  psrc2 += 4;
+               
+               }
+               //pdst2 += xEnd;
+               //psrc2 += xEnd;
+            
+            }
+         
+         }
+
       }
       
       return true;

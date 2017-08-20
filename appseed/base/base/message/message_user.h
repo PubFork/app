@@ -77,7 +77,8 @@ namespace message
    };
 
 
-   class CLASS_DECL_BASE mouse: public base,
+   class CLASS_DECL_BASE mouse: 
+      public base,
       public ::user::mouse
    {
    public:
@@ -89,8 +90,9 @@ namespace message
       using ::message::base::set;
 
       virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
-      static_function mouse * cast(signal_details * pobj) {
-         return (mouse *)pobj;
+      static_function mouse * cast(signal_details * pobj)
+      {
+         return dynamic_cast < mouse * > (pobj);
       }
 
       virtual unsigned int get_message()
@@ -100,12 +102,17 @@ namespace message
 
    };
 
-   class CLASS_DECL_BASE mouse_wheel: public mouse
+   class CLASS_DECL_BASE mouse_wheel: 
+      public mouse
    {
    public:
 
 
-      mouse_wheel(::aura::application * papp): mouse(papp) {}
+      mouse_wheel(::aura::application * papp): 
+         mouse(papp)
+      {
+      }
+
       UINT     GetFlags();
       int16_t    GetDelta();
       point    GetPoint();
@@ -196,7 +203,6 @@ namespace message
    };
 
    class CLASS_DECL_BASE key:
-      public base,
       public ::user::key
    {
    public:
@@ -248,13 +254,17 @@ namespace message
 
 #endif
 
-   class CLASS_DECL_BASE update_cmd_ui: public base
+   class CLASS_DECL_BASE update_command_ui: 
+      public command_ui
    {
    public:
 
+      update_command_ui(::aura::application * papp) : 
+         ::command_ui(papp)
+      {
+      
+      }
 
-      update_cmd_ui(::aura::application * papp): ::message::base(papp) {}
-      command_ui *    m_pcommandui;
    };
 
    class CLASS_DECL_BASE command: public base

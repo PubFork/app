@@ -403,7 +403,7 @@ namespace user
    
       COLORREF cr;
    
-      if (get_color(cr, ecolor))
+      if (style_color(cr, ecolor))
          return cr;
    
       return 0;

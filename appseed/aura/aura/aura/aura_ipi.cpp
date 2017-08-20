@@ -522,7 +522,7 @@ namespace aura
             Application.on_exclusive_instance_local_conflict(va[0],va[1],va[2]);
 
          }
-         else if(strMember == "on_new_instance")
+         else if (strMember == "on_new_instance")
          {
 
             on_new_instance(va[0], va[1]);
@@ -548,13 +548,13 @@ namespace aura
 
       int_array iaPid;
 
-      #if defined(LINUX) || defined(MACOS)
+#if defined(LINUX) || defined(MACOS)
 
 
-         iaPid = app_get_pid(strApp);
+      iaPid = app_get_pid(strApp);
 
 
-      #else
+#else
 
 #if defined(METROWIN)
 
@@ -566,22 +566,30 @@ namespace aura
 
       ::file::path pathModule;
 
-      pathModule = ::dir::system() /"config/ipi";
+      pathModule = ::dir::system() / "config/ipi";
 
       pathModule /= strApp + ".module_list";
 
       string strModuleList = file_as_string_dup(pathModule);
 
       stra.add_lines(strModuleList);
+      repeat:
+
+      if (stra.get_count() > 32)
+      {
+
+         stra.remove_at(0, 16);
+
+      }
 
       stringa stra2;
 
       int_array iaPid2;
 
-      for(auto & str : stra)
+      for (auto & str : stra)
       {
 
-         if(str.has_char())
+         if (str.has_char())
          {
 
             stringa a;
@@ -613,7 +621,12 @@ namespace aura
 
       }
 
+      if (iaPid.get_count() <= 0 && stra.get_size() > 32)
+      {
 
+      goto repeat;
+
+}
       //for(auto & str : stra2)
       //{
 
@@ -651,6 +664,66 @@ namespace aura
       string strModuleList = file_as_string_dup(pathModule);
 
       m_straModule.add_lines(strModuleList);
+
+      stringa stra2;
+
+      int_array iaPid2;
+
+      for (index i = 0; i < m_straModule.get_count();)
+      {
+
+         string str = m_straModule[i];
+
+         str.trim();
+
+         bool bOk = false;
+
+         if (str.has_char())
+         {
+
+            stringa a;
+
+            a.explode("|", str);
+
+            if (a.get_size() >= 2)
+            {
+
+               stra2.add_unique_ci(a[0]);
+
+               string strPath = module_path_from_pid(atoi_dup(a[1]));
+
+               if (strPath.has_char())
+               {
+
+                  if (strPath.compare_ci(a[0]) == 0)
+                  {
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+         if (bOk)
+         {
+
+            i++;
+
+         }
+         else
+         {
+
+            m_straModule.remove_at(i);
+
+         }
+
+      }
+
+
 
       stringa straUnique;
 

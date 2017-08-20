@@ -121,8 +121,13 @@ namespace user
             strText = pnode->get_value();
             
          }
-         
-         m_pui->set_window_text(strText);
+
+         if (m_pui != NULL)
+         {
+
+            m_pui->set_window_text(strText);
+
+         }
          
       }
       

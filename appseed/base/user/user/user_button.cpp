@@ -129,9 +129,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, m_puserstyle->_001GetColor(color_button_background_hover));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover));
 
-               pgraphics->set_text_color(m_puserstyle->_001GetColor(color_button_text_hover));
+               pgraphics->set_text_color(_001GetColor(color_button_text_hover));
 
             }
             else
@@ -141,9 +141,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, m_puserstyle->_001GetColor(color_button_background_normal));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal));
 
-               pgraphics->set_text_color(m_puserstyle->_001GetColor(color_button_text_normal));
+               pgraphics->set_text_color(_001GetColor(color_button_text_normal));
 
             }
 

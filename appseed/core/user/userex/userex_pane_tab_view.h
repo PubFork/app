@@ -62,6 +62,8 @@ namespace userex
 
       virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint) override;
 
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
+
    };
 
 

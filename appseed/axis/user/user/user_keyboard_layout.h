@@ -45,7 +45,8 @@ namespace user
    public:
    };
 
-   class CLASS_DECL_AXIS key
+   class CLASS_DECL_AXIS key :
+      public ::message::base
    {
    public:
 
@@ -59,6 +60,10 @@ namespace user
       ::user::e_key     m_ekey;
 
       string            m_strText;
+
+      //key();
+      key(::aura::application * papp);
+      key(const ::user::key & key);
 
       void copy_this(const key & key);
 

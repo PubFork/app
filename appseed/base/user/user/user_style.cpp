@@ -594,14 +594,14 @@ namespace user
 
    }
 
-   //
-   //   bool style::on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui)
-   //   {
-   //
-   //      return false;
-   //      
-   //   }
-   //   
+   
+   bool style::on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui)
+   {
+   
+      return false;
+         
+   }
+      
 
 
 

@@ -65,14 +65,19 @@ namespace user
       {
       public:
          
-         interaction * m_pui;
-         ::draw2d::graphics * m_pgraphics;
+         interaction *           m_pui;
+         ::draw2d::graphics *    m_pgraphics;
+         ::user::e_schema        m_eschema;
          
-         draw_select(interaction * pui, ::draw2d::graphics * pgraphics) :
+         draw_select(interaction * pui, ::draw2d::graphics * pgraphics, ::user::e_schema eschema = ::user::schema_default) :
             m_pui(pui),
          m_pgraphics(pgraphics)
          {
+            
+            m_pui->select_user_style(eschema);
+            
             m_pui->select(pgraphics);
+
          }
          
          ~draw_select()

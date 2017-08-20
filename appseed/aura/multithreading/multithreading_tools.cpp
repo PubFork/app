@@ -247,10 +247,15 @@ bool tool_thread::set_pred(::pred_holder_base * ppred)
 int tool_thread::run()
 {
 
-   while (true)
+   while (get_thread_run())
    {
 
-      m_evStart.wait();
+      if(!m_evStart.wait(millis(100)).succeeded())
+      {
+
+            continue;
+
+      }
 
       m_evStart.ResetEvent();
 

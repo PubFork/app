@@ -5076,12 +5076,22 @@ namespace user
       m_brushTextSel.alloc(pedit->allocer());
 
       m_penCaret->create_solid(1.0, pedit->_001GetColor(color_edit_text));
-
+     
       m_brushTextCr->create_solid(pedit->_001GetColor(color_edit_text));
 
       m_brushTextSel->create_solid(pedit->_001GetColor(color_edit_text_selected));
 
    }
+
+
+   void plain_edit::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::control::_001OnNcDraw(pgraphics);
+
+   }
+
+
 
 
 } // namespace core

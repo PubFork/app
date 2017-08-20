@@ -1010,6 +1010,8 @@ error:;
       catch (...)
       {
 
+         throw resource_exception(this, "not good window anymore");
+
       }
 
       return NULL;

@@ -1612,7 +1612,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    ::draw2d::memory_graphics pgraphics(allocer());
 
-   select_font(::user::font_toolbar);
+   select_font(pgraphics, ::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 

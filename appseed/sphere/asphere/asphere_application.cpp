@@ -13,9 +13,9 @@ namespace asphere
    application::application()
    {
 
-      m_mapBg["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
-      m_mapBg["blue"] = ARGB(255, 0xA0, 0xA8, 0xB8);
-      m_mapBg["lite"] = ARGB(255, 0xff, 0xff, 0xff);
+      m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
+      m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
+      m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
 
       m_mapIconGlow["dark"] = ARGB(255, 0x16, 0x19, 0x1e);
       m_mapIconGlow["blue"] = ARGB(255, 0x48, 0x58, 0x88);
@@ -29,8 +29,13 @@ namespace asphere
       m_mapFg["blue"] = ARGB(255, 255, 255, 255);
       m_mapFg["lite"] = ARGB(255, 0, 0, 0);
 
-      m_mapText["lite"] = ARGB(255, 255, 255, 255);
-      m_mapBack["lite"] = ARGB(255, 0, 0, 0);
+      m_mapText["dark"] = ARGB(255, 155, 155, 155);
+      m_mapText["blue"] = ARGB(255, 55, 50, 80);
+      m_mapText["lite"] = ARGB(255, 0, 0, 0);
+      
+      m_mapBack["dark"] = ARGB(160, 0, 0, 0);
+      m_mapBack["blue"] = ARGB(160, 205, 200, 250);
+      m_mapBack["lite"] = ARGB(160, 255, 255, 255);
 
 
    }

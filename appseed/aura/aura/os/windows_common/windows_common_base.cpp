@@ -41,13 +41,13 @@ typedef FN_OutputDebugStringA * PFN_OutputDebugStringA;
 
 typedef FN_OutputDebugStringW * PFN_OutputDebugStringW;
 
-PFN_OutputDebugStringA g_pfnOutputDebugStringA = ::output_debug_string;
+PFN_OutputDebugStringA g_pfnOutputDebugStringA = ::OutputDebugStringA;
 
-PFN_OutputDebugStringW g_pfnOutputDebugStringW = ::output_debug_string;
+PFN_OutputDebugStringW g_pfnOutputDebugStringW = ::OutputDebugStringW;
 
 void set_simple_output_debug_string_a()
 {
-   g_pfnOutputDebugStringA = ::output_debug_string;
+   g_pfnOutputDebugStringA = ::OutputDebugStringA;
 }
 
 void set_extended_output_debug_string_a()
@@ -57,27 +57,36 @@ void set_extended_output_debug_string_a()
 
 void set_simple_output_debug_string_w()
 {
-   g_pfnOutputDebugStringW = ::output_debug_string;
+   g_pfnOutputDebugStringW = ::OutputDebugStringW;
 }
 
 void set_extended_output_debug_string_w()
 {
-   g_pfnOutputDebugStringW = ::output_debug_string_w;
+   g_pfnOutputDebugStringW = ::OutputDebugStringW;
 }
 
 
 void output_debug_string(const char * psz)
 {
+   
    g_pfnOutputDebugStringA(psz);
+
 }
 
 
 void w_output_debug_string(const unichar * pwsz)
 {
+   
    g_pfnOutputDebugStringW(pwsz);
+
 }
 
-void output_debug_string(const char * psz)
+
+void output_debug_string(const unichar * pwsz)
 {
-   g_pfnOutputDebugStringA(psz);
+   
+   g_pfnOutputDebugStringW(pwsz);
+
 }
+
+

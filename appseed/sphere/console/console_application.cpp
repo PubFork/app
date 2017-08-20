@@ -57,7 +57,12 @@ namespace console
             if(pkey->m_ekey == ::user::key_semicolon2 && Session.is_key_pressed(::user::key_shift))
             {
 
-               console_prompt().impact().keyboard_set_focus();
+               if (m_spprompt.is_set())
+               {
+
+                  console_prompt().impact().keyboard_set_focus();
+
+               }
 
             }
          }

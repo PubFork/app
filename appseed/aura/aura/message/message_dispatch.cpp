@@ -147,7 +147,7 @@ namespace message
    Signal & signal = *signalptra[i];
    if(pcommand->m_bHasCommandHandler)
    {
-   update_cmd_ui updatecmdui;
+   update_command_ui updatecmdui;
    updatecmdui.m_pcommandui = (command_ui *)pExtra;
    signal.m_psignal->emit(&updatecmdui);
    b = TRUE;

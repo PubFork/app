@@ -571,8 +571,13 @@ namespace windows
       //::simple_message_box(NULL,"h4.ok","h4.ok",MB_OK);
 
       m_pui = pui;
-      //pui->add_ref();
+      
+      /// this Windows native window "holds" reference to the
+      /// wrapping object.
+      pui->add_ref(); 
+
       return TRUE;
+
    }
 
 
@@ -858,7 +863,15 @@ namespace windows
       m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
       // call special post-cleanup routine
       PostNcDestroy();
+
+      ::user::interaction * pui = m_pui;
+
       m_pui->PostNcDestroy();
+
+
+      // Release the reference let held to this Windows native window.
+      ::release(pui);
+
    }
 
    void interaction_impl::PostNcDestroy()
@@ -1588,7 +1601,7 @@ namespace windows
          pbase->m_uiMessage == WM_MOUSEWHEEL)
       {
 
-         message::mouse * pmouse = (::message::mouse *) pbase;
+         message::mouse * pmouse = dynamic_cast <::message::mouse * > (pbase);
 
          //if(::GetCapture() == m_oswindow)
          //{
@@ -2422,10 +2435,14 @@ namespace windows
       SCAST_PTR(::message::create, pcreate, pobj);
 
       {
+
          DEVMODE dm;
+
          if (EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm))
          {
+
             m_dFps = dm.dmDisplayFrequency;
+
          }
 
       }
@@ -2619,8 +2636,6 @@ namespace windows
       {
 
          pcreate->set_lresult(0);
-
-         pcreate->m_bRet = true;
 
       }
 

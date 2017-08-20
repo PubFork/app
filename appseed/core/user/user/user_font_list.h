@@ -34,11 +34,12 @@ namespace user
       //virtual void assert_valid() const;
       //virtual void dump(dump_context & dumpcontext) const;
 
-      virtual bool get_color(COLORREF & cr, e_color ecolor) override;
+      virtual bool style_color(COLORREF & cr, e_color ecolor) override;
 
 
       virtual void install_message_handling(::message::dispatch * pdispatch);
 
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);

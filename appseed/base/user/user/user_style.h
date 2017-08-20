@@ -61,7 +61,7 @@ namespace user
 
       virtual bool simple_ui_draw_focus_rect(::user::interaction * pui,::draw2d::graphics * pgraphics) override;
 
-//      virtual bool on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui) override;
+      virtual bool on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui) override;
 
       virtual bool _001TabOnDrawSchema01(::draw2d::graphics * pgraphics,tab * ptab) override;
       
