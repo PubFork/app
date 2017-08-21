@@ -13,8 +13,6 @@ namespace user
       
       construct_user_style(schema_menu_button);
       
-      m_pitem = NULL;
-      
    }
    
 
@@ -61,7 +59,7 @@ namespace user
 
       button::_001OnDraw(pgraphics);
 
-      if(m_pitem != NULL && m_pitem->m_bPopup)
+      if(m_pmenuitem != NULL && m_pmenuitem->m_bPopup)
       {
 
          
@@ -132,10 +130,10 @@ namespace user
       
       UINT uiImage = 0xffffffffu;
 
-      if(m_pitem != NULL)
+      if(m_pmenuitem != NULL)
       {
 
-         uiImage = BaseMenuCentral::GetMenuCentral(get_app())->CommandToImage(m_pitem->m_id);
+         uiImage = BaseMenuCentral::GetMenuCentral(get_app())->CommandToImage(m_pmenuitem->m_id);
 
       }
 

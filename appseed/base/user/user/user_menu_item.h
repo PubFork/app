@@ -19,7 +19,8 @@ namespace user
       bool                       m_bPopup;
       int32_t                    m_iLevel;
       ::user::menu *             m_pmenu;
-      
+      string                     m_strTitle;
+
       
       menu_item(::aura::application * papp);
       virtual ~menu_item();
@@ -32,6 +33,10 @@ namespace user
       
       virtual void OnAddRef();
       virtual void OnRelease();
+
+
+      virtual bool create_buttons(menu * pmenu);
+
       
       bool IsPopup();
       menu_item * find(id id);

@@ -566,7 +566,34 @@ namespace user
    style * style_composite::userstyle()
    {
 
-      return m_puserstyle;
+      ::user::style * puserstyle = m_puserstyle;
+
+      if (puserstyle != NULL)
+      {
+
+         return puserstyle;
+
+      }
+
+      puserstyle = Application.m_puserstyle;
+       
+      if (puserstyle != NULL && puserstyle != this)
+      {
+
+         return puserstyle;
+
+      }
+
+      puserstyle = Session.m_puserstyle;
+
+      if (puserstyle != NULL && puserstyle != this)
+      {
+
+         return puserstyle;
+
+      }
+
+      return NULL;
 
    }
 

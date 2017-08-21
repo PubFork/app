@@ -536,22 +536,10 @@ namespace user
    }
 
 
-   bool button::create_control(class control::descriptor * pdescriptor, index iItem)
+   bool button::create_control(class control_descriptor * pdescriptor)
    {
 
-      if(!create_window(
-         NULL,
-         NULL,
-         WS_VISIBLE | WS_CHILD,
-         pdescriptor->m_rect,
-         pdescriptor->m_pform,
-         pdescriptor->m_id))
-      {
-         TRACE("Failed to create control");
-         return false;
-      }
-
-      return control::create_control(pdescriptor, iItem);
+      return control::create_control(pdescriptor);
 
 
    }

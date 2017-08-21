@@ -4596,17 +4596,26 @@ namespace user
    }
 
 
-   bool plain_edit::create_control(class control::descriptor * pdescriptor, index iItem)
+   bool plain_edit::create_control(class control_descriptor * pdescriptor)
    {
+      
       ASSERT(pdescriptor->get_type() == control_type_edit_plain_text);
-      if (!create_window(pdescriptor->m_rect, pdescriptor->m_pform, pdescriptor->m_id))
+
+      if (!::user::control::create_control(pdescriptor))
       {
+
          TRACE("Failed to create control");
+
          return false;
+
       }
+
       ShowWindow(SW_HIDE);
-      m_bMultiLine = pdescriptor->has_function(control::function_edit_multi_line);
-      return control::create_control(pdescriptor, iItem);
+
+      m_bMultiLine = pdescriptor->has_function(control_function_edit_multi_line);
+
+      return true;
+
    }
 
 

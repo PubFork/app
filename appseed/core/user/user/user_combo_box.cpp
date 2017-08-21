@@ -1565,17 +1565,27 @@ namespace user
 
    }
 
-   bool combo_box::create_control(class control::descriptor * pdescriptor, index iItem)
+
+   bool combo_box::create_control(class control_descriptor * pdescriptor)
    {
+
       ASSERT(pdescriptor->get_type() == control_type_combo_box);
-      if (!create_window(pdescriptor->m_rect, pdescriptor->m_pform, pdescriptor->m_id))
+
+      if (!::user::control::create_control(pdescriptor))
       {
+
          TRACE("Failed to create control");
+
          return false;
+
       }
+
       ShowWindow(SW_HIDE);
+
       m_bMultiLine = false;
-      return control::create_control(pdescriptor, iItem);
+
+      return true;
+
    }
 
 

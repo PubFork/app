@@ -39,8 +39,8 @@ namespace user
       
       
       virtual ::user::interaction * create_menu_button() override;
-      //virtual bool prepare_menu(::user::menu_item * pitem) override;
-      //virtual bool prepare_menu_button(::user::menu_item * pitem) override;
+      virtual bool prepare_menu(::user::menu_item * pitem) override;
+      virtual bool prepare_menu_button(::user::menu_item * pitem) override;
       
       
       virtual void initialize_style_menu() override;

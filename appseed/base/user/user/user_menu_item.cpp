@@ -107,19 +107,19 @@ namespace user
          
          if(m_bPopup)
          {
-            
-            m_iLevel = iLevel + 1;
-            
-            strText = pnode->attr("title");
-            
+
+         m_iLevel = iLevel + 1;
+
+         strText = pnode->attr("title");
+
          }
          else
          {
-            
+
             m_iLevel = iLevel;
-            
+
             strText = pnode->get_value();
-            
+
          }
 
          if (m_pui != NULL)
@@ -128,26 +128,96 @@ namespace user
             m_pui->set_window_text(strText);
 
          }
-         
+
+         m_strTitle = strText;
+
       }
-      
-      for(int32_t i = 0; i < iItemCount; i++)
+
+
+
+      for (int32_t i = 0; i < iItemCount; i++)
       {
-            
+
          sp(::xml::node) pnodeChild = pnode->child_at(i);
-            
+
          sp(menu_item) pitemNewChild = canew(menu_item(get_app()));
-            
+
+         pitemNewChild->m_pmenu = m_pmenu;
+
          pitemNewChild->load_menu(pnodeChild);
 
          add_item(pitemNewChild);
-         
+
       }
 
       return true;
-      
+
    }
-   
+
+
+   bool menu_item::create_buttons(menu * pmenu)
+   {
+
+      for (int32_t iItem = 0; iItem < m_spitema->get_size(); iItem++)
+      {
+
+         menu_item * pitem = m_spitema->element_at(iItem);
+
+         if (pitem->m_pui.is_null())
+         {
+
+            pitem->m_pui = m_pmenu->create_menu_button();
+
+         }
+
+         if (pitem->m_pui.is_null())
+         {
+
+            return false;
+
+         }
+
+         if (!pitem->m_pui->IsWindow())
+         {
+
+            {
+
+               control_descriptor descriptor;
+
+               descriptor.m_puiParent = pmenu;
+
+               descriptor.m_id = pitem->m_id;
+
+               descriptor.m_iItem = iItem;
+
+               if (!pitem->m_pui->create_control(&descriptor))
+               {
+
+                  return false;
+
+               }
+
+            }
+
+            pitem->m_pui->m_id = pitem->m_id;
+
+            pitem->m_pui->m_pmenuitem = pitem;
+
+         }
+
+         if (!pitem->m_pui->IsWindow())
+         {
+
+            return false;
+
+         }
+
+         pitem->m_pui->set_window_text(pitem->m_strTitle);
+
+      }
+
+   }
+
    
    bool menu_item::IsPopup()
    {

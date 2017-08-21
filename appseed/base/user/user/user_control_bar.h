@@ -7,6 +7,7 @@
 namespace user
 {
 
+
    class frame_window;
    class control_bar;
 

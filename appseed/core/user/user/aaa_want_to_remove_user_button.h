@@ -70,7 +70,7 @@
 //      button(::aura::application * papp);
 //      virtual ~button();
 //
-//      virtual bool create_control(class control::descriptor * pdescriptor, index iItem = 0);
+//      virtual bool create_control(class control_descriptor * pdescriptor, index iItem = 0);
 //
 //      virtual void resize_to_fit();
 //

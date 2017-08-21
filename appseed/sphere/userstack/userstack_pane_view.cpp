@@ -566,7 +566,7 @@ namespace userstack
 
    void pane_view::_001InitializeFormPreData(::user::form * pform)
    {
-      class user::control::descriptor control;
+      class user::control_descriptor control;
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
@@ -574,7 +574,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_display_bandwidth);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -583,7 +583,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_processing);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -592,7 +592,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_memory);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -601,7 +601,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.bergedge",
             0);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
    }

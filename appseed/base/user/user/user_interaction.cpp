@@ -2975,48 +2975,51 @@ namespace user
 
 #endif
 
-
-   bool interaction::create_window(const RECT & rect, ::user::interaction *pparent,id id)
+   bool interaction::create_control(class control_descriptor * pdescriptor)
    {
 
-      if(IsWindow())
+      try
       {
 
-         DestroyWindow();
+         if (!create_window(pdescriptor->m_rect, pdescriptor->m_puiParent, pdescriptor->m_id))
+         {
+
+            return false;
+
+         }
+
+         return true;
 
       }
-      
-      try {
-         
-         m_bUserElementalOk = true;
-
-      m_signalptra.remove_all();
-
-      m_pimpl = canew(::user::interaction_child(get_app()));
-
-      if(!m_pimpl->create_window(this, rect, pparent,id))
+      catch (...)
       {
 
-         m_bUserElementalOk = false;
-         
-         m_pimpl.release();
+
+      }
+
+      return false;
+
+   }
+
+
+   bool interaction::create_window(const RECT & rect, ::user::interaction * puiParent, id id)
+   {
+      
+      if (!create_window(
+         NULL,
+         NULL,
+         WS_VISIBLE | WS_CHILD,
+         rect,
+         puiParent,
+         id))
+      {
+
+         TRACE("Failed to create control");
 
          return false;
 
       }
-         
-      }
-      catch(...)
-      {
-         
-         m_bUserElementalOk = false;
-         
-         return false;
-         
-      }
-      
-      
-      
+
       return true;
 
    }
@@ -6047,7 +6050,7 @@ restart:
       
       pmenu->hints(iFlags, pt);
       
-      if(!pmenu->track_popup_menu(this, this))
+      if(!pmenu->track_popup_menu(this))
       {
 
          pmenu.release();

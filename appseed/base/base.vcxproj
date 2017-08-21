@@ -207,7 +207,7 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -281,7 +281,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -361,7 +361,7 @@
       </SDLCheck>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -497,7 +497,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
@@ -570,7 +570,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
@@ -649,7 +649,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <SDLCheck>
       </SDLCheck>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -697,7 +697,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
   <ItemGroup>
     <ClCompile Include="base\install\install_canvas.cpp" />
     <ClCompile Include="base\message\message_user.cpp" />
-    <ClCompile Include="base\node\windows\windows_copydesk.cpp" />
     <ClCompile Include="base\node\windows\windows_interaction_impl.cpp" />
     <ClCompile Include="base\node\windows\windows_print_job.cpp" />
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp" />
@@ -745,6 +744,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_button.cpp" />
     <ClCompile Include="user\user\user_control.cpp" />
     <ClCompile Include="user\user\user_control_bar.cpp" />
+    <ClCompile Include="user\user\user_control_descriptor.cpp" />
+    <ClCompile Include="user\user\user_control_descriptor_set.cpp" />
     <ClCompile Include="user\user\user_control_event.cpp" />
     <ClCompile Include="user\user\user_document.cpp" />
     <ClCompile Include="user\user\user_form_callback.cpp" />
@@ -795,7 +796,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     </ClInclude>
     <ClInclude Include="base\node\node.h" />
     <ClInclude Include="base\node\windows\windows.h" />
-    <ClInclude Include="base\node\windows\windows_copydesk.h" />
     <ClInclude Include="base\node\windows\windows_factory_exchange.h" />
     <ClInclude Include="base\node\windows\windows_implementation.h" />
     <ClInclude Include="base\node\windows\windows_interaction_impl.h" />
@@ -879,11 +879,13 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\simple_ui\simple_ui_style.h" />
     <ClInclude Include="user\simple_ui\simple_ui_tap.h" />
     <ClInclude Include="user\user\user.h" />
-    <ClInclude Include="user\user\user_application_as_proxy_document.h" />
     <ClInclude Include="user\user\user_box.h" />
     <ClInclude Include="user\user\user_const.h" />
     <ClInclude Include="user\user\user_control.h" />
     <ClInclude Include="user\user\user_control_bar.h" />
+    <ClInclude Include="user\user\user_control_ddx_dbflags.h" />
+    <ClInclude Include="user\user\user_control_descriptor.h" />
+    <ClInclude Include="user\user\user_control_descriptor_set.h" />
     <ClInclude Include="user\user\user_control_event.h" />
     <ClInclude Include="user\user\user_document.h" />
     <ClInclude Include="user\user\user_document_data_map.h" />
@@ -891,8 +893,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_form_update_hint.h" />
     <ClInclude Include="user\user\user_form_window.h" />
     <ClInclude Include="user\user\user_frame_window.h" />
-    <ClInclude Include="user\user\user_front_end.h" />
-    <ClInclude Include="user\user\user_front_end_schema.h" />
     <ClInclude Include="user\user\user_impact.h" />
     <ClInclude Include="user\user\user_impact_system.h" />
     <ClInclude Include="user\user\user_impact_update_hint.h" />
@@ -903,9 +903,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_interaction_impl.h" />
     <ClInclude Include="user\user\user_interaction_impl_base.h" />
     <ClInclude Include="user\user\user_menu.h" />
-    <ClInclude Include="user\user\user_menu_base.h" />
-    <ClInclude Include="user\user\user_menu_base_item.h" />
-    <ClInclude Include="user\user\user_menu_item.h" />
     <ClInclude Include="user\user\user_message.h" />
     <ClInclude Include="user\user\user_message_queue.h" />
     <ClInclude Include="user\user\user_message_queue_listener.h" />

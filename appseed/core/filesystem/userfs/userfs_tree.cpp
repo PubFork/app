@@ -327,7 +327,7 @@ namespace userfs
       control.set_type(::user::form_control_type_edit);
       control.m_iKey = FILE_MANAGER_ID_FILE_NAME;
       pcontrol->descriptor().m_id = FILE_MANAGER_ID_FILE_NAME;
-      control.set_data_type(::user::form_control::DataTypeString);
+      control.set_data_type(::user::form_control_data_type_string);
 
       int32_t iControl =  _001AddControl(control);
 

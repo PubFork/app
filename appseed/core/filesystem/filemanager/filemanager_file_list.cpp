@@ -1490,7 +1490,7 @@ namespace filemanager
 
    void file_list::_001InsertColumns()
    {
-      class user::control::descriptor control;
+      class user::control_descriptor control;
 
 
       if (get_filemanager_data()->m_bIconView)
@@ -1517,7 +1517,7 @@ namespace filemanager
          control.set_type(user::control_type_button);
          control.m_typeinfo = System.type_info < ::user::button >();
          control.m_id = 1000 + i;
-         control.add_function(user::control::function_action);
+         control.add_function(user::control_function_action);
          index iControl = _001AddControl(control);
 
          column.m_iWidth = 18;
@@ -1557,8 +1557,8 @@ namespace filemanager
       control.set_type(user::control_type_edit_plain_text);
       control.m_dataid = "FILE_MANAGER_ID_FILE_NAME";
       //pcontrol->descriptor().m_id = _vms::FILE_MANAGER_ID_FILE_NAME;
-      control.set_data_type(user::control::DataTypeString);
-      control.add_function(user::control::function_vms_data_edit);
+      control.set_data_type(user::control_data_type_string);
+      control.add_function(user::control_function_vms_data_edit);
       control.m_typeinfo = System.type_info < ::user::plain_edit >();
       //control.m_typeinfo = sp(type)();
       control.m_iSubItem = i;

@@ -1,5 +1,13 @@
 #include "framework.h"
 
+#if defined(_M_IX86)
+CLASS_DECL_AURA void x86_cache_oriented_destroy_all_memory_pools();
+CLASS_DECL_AURA int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolIndex);
+CLASS_DECL_AURA void * x86_cache_oriented_memory_alloc(memory_size_t s);
+CLASS_DECL_AURA void x86_cache_oriented_memory_free(void * p);
+CLASS_DECL_AURA void x86_cache_oriented_memory_reset();
+#endif
+
 
 CLASS_DECL_AURA void * processor_cache_oriented_memory_alloc(size_t s)
 {

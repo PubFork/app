@@ -77,13 +77,13 @@ namespace user
       
       ::user::menu_item * GetSubMenu(int32_t i);
       
-      void layout_menu(point pt);
+      virtual void layout_menu(point pt);
       
       virtual void hint_flags(int iFlags);
       virtual void hint_position(point pt);
       virtual void hints(int iFlags, point pt);
       
-      virtual bool track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify = NULL);
+      virtual bool track_popup_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
       
       void _001OnTimer(::timer * ptimer);
       

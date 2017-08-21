@@ -69,7 +69,7 @@ namespace user
       sp(control) pcontrol = _001GetControl(iItem, iSubItem);
       if(pcontrol != NULL)
       {
-         if(pcontrol->descriptor().has_function(::user::control::function_action))
+         if(pcontrol->descriptor().has_function(::user::control_function_action))
          {
             if(pcontrol->descriptor().get_type() == ::user::control_type_button)
             {
@@ -306,7 +306,7 @@ namespace user
       for(int32_t i = 0; i < m_controldescriptorset.get_count(); i++)
       {
 
-         class ::user::control::descriptor & descriptor = m_controldescriptorset(i);
+         class ::user::control_descriptor & descriptor = m_controldescriptorset(i);
 
          if(descriptor.m_etype == control_type_edit  || descriptor.m_etype == control_type_edit_plain_text)
          {
@@ -431,7 +431,7 @@ namespace user
    //   {
    //      if(m_columna[i]->m_iControl >= 0 && m_columna[i]->m_iControl < m_controldescriptorset.get_size())
    //      {
-   //         class control::descriptor * pdescriptor = m_controldescriptorset.element_at(m_columna[i]->m_iControl);
+   //         class control_descriptor * pdescriptor = m_controldescriptorset.element_at(m_columna[i]->m_iControl);
    //         if(pdescriptor != NULL)
    //         {
    //            if(m_columna[i]->m_iSubItem >= 0)
@@ -462,7 +462,7 @@ namespace user
       //_001GetSelection(range);
       //if(_001DisplayHitTest(pt, iItem, iSubItem))
       //{
-      //class ::user::control::descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
+      //class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
       //if(pcontrol != NULL
       //&& pcontrol->m_pcontrol != NULL
       //&& (pcontrol->m_etype == type_edit
@@ -482,7 +482,7 @@ namespace user
       //_001GetSelection(range);
       //if(_001DisplayHitTest(pt, iItem, iSubItem))
       //{
-      //class ::user::control::descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
+      //class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
       //if(pcontrol != NULL
       //&& pcontrol->m_pcontrol != NULL
       //&& !pcontrol->m_pcontrol->IsWindowVisible()

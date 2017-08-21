@@ -166,6 +166,7 @@ namespace user
       int_border,
       int_element_padding,
       int_menu_button_padding,
+      int_check_box_size
       
    };
    
@@ -177,6 +178,40 @@ namespace user
       timer_update_menu_command_ui = 11225,
       timer_menu
       
+   };
+
+
+   enum e_control_function
+   {
+      // Text got from control m_uiId member
+      control_function_static,
+      // Text got from control m_uiText member
+      control_function_static2,
+      control_function_data_selection,
+      control_function_check_box,
+      control_function_duplicate_on_check_box,
+      control_function_disable_on_check_box,
+      control_function_save_on_change,
+      control_function_vms_data_edit,
+      control_function_action,
+      control_function_edit_multi_line,
+   };
+
+
+   enum e_control_data_type
+   {
+      control_data_type_string,
+      control_data_type_natural,
+   };
+
+
+   enum e_control_ddx
+   {
+      
+      control_ddx_none,
+      control_ddx_flags,
+      control_ddx_dbflags,
+
    };
 
    

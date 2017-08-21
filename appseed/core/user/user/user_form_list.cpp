@@ -81,7 +81,7 @@ namespace user
       if (pcontrol != NULL)
       {
 
-         if (pcontrol->descriptor().has_function(::user::control::function_action))
+         if (pcontrol->descriptor().has_function(::user::control_function_action))
          {
 
             if (pcontrol->descriptor().get_type() == ::user::control_type_button)
@@ -195,7 +195,7 @@ namespace user
       if(pcontrol != NULL)
       {
 
-         if(pcontrol->descriptor().has_function(::user::control::function_action))
+         if(pcontrol->descriptor().has_function(::user::control_function_action))
          {
 
             if(pcontrol->descriptor().get_type() == ::user::control_type_button)
@@ -267,12 +267,12 @@ namespace user
          if (pcolumn.is_set() && pcolumn->m_iControl >= 0)
          {
 
-            sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
+            sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
 
             if (pdescriptor.is_set())
             {
 
-               if (pdescriptor->has_function(::user::control::function_check_box))
+               if (pdescriptor->has_function(::user::control_function_check_box))
                {
 
                   ::check::e_check echeck = _001GetSubItemCheck(iItem, iSubItem);
@@ -298,7 +298,7 @@ namespace user
                      for (auto & pitem : m_controldescriptorset)
                      {
 
-                        if (pitem->has_function(::user::control::function_duplicate_on_check_box))
+                        if (pitem->has_function(::user::control_function_duplicate_on_check_box))
                         {
 
                            if (pitem->m_iSubItemDuplicateCheckBox == iSubItem)
@@ -395,7 +395,7 @@ namespace user
 
       }
 
-      sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset[pcolumn->m_iControl];
+      sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset[pcolumn->m_iControl];
 
       if(pdescriptor.is_null())
       {
@@ -533,7 +533,7 @@ namespace user
       for (auto & pitem : m_controldescriptorset)
       {
 
-         if (pitem->has_function(::user::control::function_duplicate_on_check_box))
+         if (pitem->has_function(::user::control_function_duplicate_on_check_box))
          {
 
             ::count iItemCount = _001GetItemCount();
@@ -605,7 +605,7 @@ namespace user
 
       //}
 
-      if (pcontrol->descriptor().has_function(control::function_vms_data_edit))
+      if (pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
 
          
@@ -692,7 +692,7 @@ namespace user
 
       //}
 
-      if (pcontrol->descriptor().has_function(control::function_data_selection))
+      if (pcontrol->descriptor().has_function(control_function_data_selection))
       {
 
 
@@ -846,8 +846,8 @@ namespace user
          return false;
       }
 
-      if (pcontrol->descriptor().has_function(control::function_vms_data_edit)
-         || pcontrol->descriptor().has_function(control::function_data_selection))
+      if (pcontrol->descriptor().has_function(control_function_vms_data_edit)
+         || pcontrol->descriptor().has_function(control_function_data_selection))
       {
          
          draw_list_item item(this);
@@ -862,7 +862,7 @@ namespace user
 
          on_update(NULL, ::user::impact::hint_control_saved, pcontrol);
 
-         if (pcontrol->descriptor().has_function(::user::control::function_duplicate_on_check_box))
+         if (pcontrol->descriptor().has_function(::user::control_function_duplicate_on_check_box))
          {
 
             if (_001GetSubItemCheck(item.m_iItem, pcontrol->descriptor().m_iSubItemDuplicateCheckBox) == ::check::checked)
@@ -884,7 +884,7 @@ namespace user
                   //if (pcolumn.is_set() && m_controldescriptorset.bounds(pcolumn->m_iControl))
                   //{
 
-                  //   sp(class ::user::control::descriptor) pdescriptorTarget = m_controldescriptorset.sp_at(pcolumn->m_iControl);
+                  //   sp(class ::user::control_descriptor) pdescriptorTarget = m_controldescriptorset.sp_at(pcolumn->m_iControl);
 
                   //   if (pdescriptorTarget.is_set())
                   //   {
@@ -1074,7 +1074,7 @@ namespace user
       //}
       //for(int32_t i = 0; i < m_controldescriptorset.get_count(); i++)
       //{
-      //   class ::user::control::descriptor & descriptor = m_controldescriptorset(i);
+      //   class ::user::control_descriptor & descriptor = m_controldescriptorset(i);
       //   if(control.m_etype == control_type_edit
       //      || control.m_etype == control_type_edit_plain_text)
       //   {
@@ -1180,7 +1180,7 @@ namespace user
          {
             if (m_columna[i]->m_iControl >= 0 && m_columna[i]->m_iControl < m_controldescriptorset.get_size())
             {
-               class control::descriptor * pdescriptor = m_controldescriptorset.element_at(m_columna[i]->m_iControl);
+               class control_descriptor * pdescriptor = m_controldescriptorset.element_at(m_columna[i]->m_iControl);
                if (pdescriptor != NULL)
                {
                   if (m_columna[i]->m_iSubItem >= 0)
@@ -1222,7 +1222,7 @@ namespace user
       //      _001GetSelection(range);
       //      if(_001DisplayHitTest(pt, iItem, iSubItem))
       //      {
-      //      class ::user::control::descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
+      //      class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
       //      if(pcontrol != NULL
       //      && pcontrol->m_pcontrol != NULL
       //      && (pcontrol->m_etype == type_edit
@@ -1242,7 +1242,7 @@ namespace user
       //      _001GetSelection(range);
       //      if(_001DisplayHitTest(pt, iItem, iSubItem))
       //      {
-      //      class ::user::control::descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
+      //      class ::user::control_descriptor * pcontrol = m_controldescriptorset.get_by_sub_item(iSubItem);
       //      if(pcontrol != NULL
       //      && pcontrol->m_pcontrol != NULL
       //      && !pcontrol->m_pcontrol->IsWindowVisible()
@@ -1611,7 +1611,7 @@ namespace user
          if (m_pcontrolEdit == pevent->m_puie)
          {
 
-            if (m_pcontrolEdit->descriptor().has_function(::user::control::function_data_selection))
+            if (m_pcontrolEdit->descriptor().has_function(::user::control_function_data_selection))
             {
                _001SaveEdit(m_pcontrolEdit);
                pevent->m_bRet = true;
@@ -1865,12 +1865,12 @@ namespace user
          if (pdrawitem->m_pcolumn->m_iControl >= 0 && pdrawitem->m_pcolumn->m_iControl < m_controldescriptorset.get_count())
          {
 
-            sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset.sp_at(pdrawitem->m_pcolumn->m_iControl);
+            sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset.sp_at(pdrawitem->m_pcolumn->m_iControl);
 
             if (pdescriptor.is_set())
             {
 
-               if (pdescriptor->has_function(::user::control::function_check_box))
+               if (pdescriptor->has_function(::user::control_function_check_box))
                {
 
                   _001GetElementRect(pdrawitem, ::user::mesh::element_text);
@@ -2003,12 +2003,12 @@ namespace user
       if (pcolumn.is_set() && pcolumn->m_iControl >= 0)
       {
 
-         sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
+         sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
 
          if (pdescriptor.is_set())
          {
 
-            if (pdescriptor->has_function(::user::control::function_check_box))
+            if (pdescriptor->has_function(::user::control_function_check_box))
             {
 
                ::user::mesh_item item(this);
@@ -2060,12 +2060,12 @@ namespace user
       if (pcolumn.is_set() && pcolumn->m_iControl >= 0)
       {
 
-         sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
+         sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
 
          if (pdescriptor.is_set())
          {
 
-            if (pdescriptor->has_function(::user::control::function_check_box))
+            if (pdescriptor->has_function(::user::control_function_check_box))
             {
 
                ::user::mesh_item item(this);
@@ -2104,12 +2104,12 @@ namespace user
       if (pcolumn.is_set() && pcolumn->m_iControl >= 0)
       {
 
-         sp(class ::user::control::descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
+         sp(class ::user::control_descriptor) pdescriptor = m_controldescriptorset.sp_at(pcolumn->m_iControl);
 
          if (pdescriptor.is_set())
          {
 
-            if (pdescriptor->has_function(::user::control::function_disable_on_check_box))
+            if (pdescriptor->has_function(::user::control_function_disable_on_check_box))
             {
 
                if(_001GetSubItemCheck(iItem, pdescriptor->m_iSubItemDisableCheckBox) == ::check::checked)

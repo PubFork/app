@@ -23,18 +23,14 @@ namespace user
    }
 
 
-   index form_window::_001AddControl(class control::descriptor & descriptorParam)
+   index form_window::_001AddControl(class control_descriptor & descriptorParam)
    {
 
-      //index indexNew = m_controldescriptorset.add(new class control::descriptor(descriptorParam));
-
-
-
-      class control::descriptor * pdescriptor = m_controldescriptorset.add(new class control::descriptor(descriptorParam));
+      class control_descriptor * pdescriptor = m_controldescriptorset.add(canew(class control_descriptor(descriptorParam)));
 
       descriptorParam.clear();
 
-      pdescriptor->m_pform = this;
+      pdescriptor->m_puiParent = this;
 
       if(pdescriptor->m_bTransparent)
       {
@@ -117,7 +113,7 @@ namespace user
       {
       case BN_CLICKED:
       {
-         if(pcontrol->descriptor().has_function(control::function_action))
+         if(pcontrol->descriptor().has_function(control_function_action))
          {
             _001OnButtonAction(pcontrol);
             return true;
@@ -228,7 +224,7 @@ namespace user
       {
       case EN_CHANGE:
       {
-         if(pcontrol->descriptor().has_function(control::function_save_on_change))
+         if(pcontrol->descriptor().has_function(control_function_save_on_change))
          {
             _001SaveEdit(pcontrol);
          }
@@ -296,7 +292,7 @@ namespace user
          return false;
       }
 
-      if(pcontrol->descriptor().has_function(control::function_vms_data_edit))
+      if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
          ::database::selection selection;
          _001GetSelection(pcontrol->descriptor().m_dataid,selection);
@@ -380,7 +376,7 @@ namespace user
       if(pcontrol == NULL)
          return;
       ASSERT(pcontrol->descriptor().get_type() == control_type_check_box);
-      ASSERT(pcontrol->descriptor().m_eddx == control::ddx_dbflags);
+      ASSERT(pcontrol->descriptor().m_eddx == control_ddx_dbflags);
       int_ptr_array ia;
       try
       {
@@ -453,7 +449,7 @@ namespace user
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit
          || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
-      if(pcontrol->descriptor().has_function(control::function_vms_data_edit))
+      if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
          var var;
          ::database::selection selection;
@@ -698,7 +694,7 @@ namespace user
          if(pcontrol == NULL)
             continue;
 
-         if(m_controldescriptorset[iControl]->m_eddx == control::ddx_dbflags)
+         if(m_controldescriptorset[iControl]->m_eddx == control_ddx_dbflags)
          {
 
             _001UpdateDbFlags(pcontrol);
@@ -722,9 +718,9 @@ namespace user
       for(int32_t i = 0; i < m_controldescriptorset.get_size(); i++)
       {
 
-         class control::descriptor & descriptor = m_controldescriptorset(i);
+         class control_descriptor & descriptor = m_controldescriptorset(i);
 
-         if(descriptor.has_function(control::function_static))
+         if(descriptor.has_function(control_function_static))
          {
 
             string str;
@@ -734,7 +730,7 @@ namespace user
             descriptor.get_control(this, 0)->set_window_text(str);
 
          }
-         else if(descriptor.has_function(control::function_static2))
+         else if(descriptor.has_function(control_function_static2))
          {
 
             string str;
@@ -845,7 +841,7 @@ namespace user
 
       //for(int32_t i = 0; i < m_controldescriptorset.get_size() ; i++)
       //{
-      //   class control::descriptor & descriptor = m_controldescriptorset(i);
+      //   class control_descriptor & descriptor = m_controldescriptorset(i);
       //   if(descriptor.m_typeinfo)
       //   {
       //      if(descriptor.m_bCreated && descriptor.m_pcontrol != NULL)
@@ -892,7 +888,7 @@ namespace user
    }
 
 
-   bool form_window::create_control(class control::descriptor * pdescriptor, index iIndex)
+   bool form_window::create_control(class control_descriptor * pdescriptor, index iIndex)
    {
 
       if(!normalize_control_descriptor_typeinfo(pdescriptor))
@@ -910,10 +906,11 @@ namespace user
       if(pcontrol == NULL)
       {
          pca.release();
-         TRACE("form_window::create_control: failed to create control, object is not derived from user::control::descriptor");
+         TRACE("form_window::create_control: failed to create control, object is not derived from user::control_descriptor");
          return false;
       }
-      if(!pcontrol->create_control(pdescriptor, iIndex))
+      pdescriptor->m_iItem = iIndex;
+      if(!pcontrol->create_control(pdescriptor))
       {
          pcontrol.release();
          return false;
@@ -1028,12 +1025,12 @@ namespace user
          if(pcontrol == NULL)
             return false;
 
-         class control::descriptor * pdescriptor = pcontrol->m_pdescriptor;
+         class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
             return false;
 
-         if(pdescriptor->has_function(control::function_action))
+         if(pdescriptor->has_function(control_function_action))
          {
             if(pcontrol != NULL)
             {
@@ -1056,12 +1053,12 @@ namespace user
          if(pcontrol == NULL)
             return false;
 
-         class control::descriptor * pdescriptor = pcontrol->m_pdescriptor;
+         class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
             return false;
 
-         if(pdescriptor->m_eddx == control::ddx_dbflags)
+         if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
 
             int_ptr_array ia;
@@ -1140,7 +1137,7 @@ namespace user
 
 
 
-   bool form_window::normalize_control_descriptor_typeinfo(class ::user::control::descriptor * pdescriptor)
+   bool form_window::normalize_control_descriptor_typeinfo(class ::user::control_descriptor * pdescriptor)
    {
 
       if(pdescriptor->m_typeinfo)

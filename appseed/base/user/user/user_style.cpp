@@ -594,14 +594,14 @@ namespace user
 
    }
 
-   
+
    bool style::on_ui_event(e_event eevent, e_object eobject, ::user::interaction * pui)
    {
-   
+
       return false;
-         
+
    }
-      
+
 
 
 
@@ -1051,22 +1051,74 @@ namespace user
    }
 
 
-   //   bool style::prepare_menu(::user::menu_item * pitem)
-   //   {
-   //      
-   //      if(!prepare_menu_button(pitem))
-   //      {
-   //         
-   //         return false;
-   //         
-   //      }
-   //      
-   //      return true;
-   //      
-   //   }
+   bool style::prepare_menu(::user::menu_item * pitem)
+   {
+
+      if (!prepare_menu_button(pitem))
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
 
 
+   bool style::prepare_menu_button(::user::menu_item * pitem)
+   {
 
+      sp(::user::button) pbutton = pitem->m_pui;
+
+      if (pbutton->m_id == "close")
+      {
+
+         pbutton->select_user_style(::user::schema_menu_close);
+
+         pbutton->resize_to_fit();
+
+         pbutton->set_stock_icon(stock_icon_close);
+
+         return true;
+
+      }
+      else
+      {
+
+         pbutton->select_user_style(schema_menu_button);
+
+         int cx = pbutton->width();
+
+         int cy = pbutton->height();
+
+         pbutton->m_pmenuitem = pitem;
+
+         rect rectMargin = pbutton->style_rect(::user::rect_menu_margin);
+
+         int iCheckBoxSize = pbutton->style_int(::user::int_check_box_size);
+
+         int iElementPadding = pbutton->style_int(::user::int_element_padding);
+
+         auto & rectCheckBox = pbutton->m_rectCheckBox;
+
+         rectCheckBox.left = rectMargin.left;
+         rectCheckBox.top = rectMargin.top;
+         rectCheckBox.bottom = cy - rectMargin.bottom;
+         rectCheckBox.right = rectCheckBox.left + iCheckBoxSize;
+
+         auto & rectText = pbutton->m_rectText;
+
+         rectText.left = rectCheckBox.right + iElementPadding;
+         rectText.top = rectMargin.top;
+         rectText.bottom = cy - rectMargin.bottom;
+         rectText.right = cx - rectMargin.right;
+         
+      }
+
+      return true;
+
+   }
 
 
    bool style::create_color(e_color ecolor, COLORREF cr)
@@ -1077,62 +1129,6 @@ namespace user
       return true;
 
    }
-
-
-   //   bool style::prepare_menu_button(::user::menu_item * pitem)
-   //   {
-   //      
-   //      if(!::user::style::prepare_menu_button(pitem))
-   //      {
-   //         
-   //         return false;
-   //         
-   //      }
-   //      
-   //      sp(::user::button) pbutton = pitem->m_pui;
-   //      
-   //      if(pbutton->m_id == "close")
-   //      {
-   //         
-   //         pbutton->select_userstyle(style_system_menu_close);
-   //         
-   //         pbutton->resize_to_fit();
-   //         
-   //         pbutton->set_stock_icon(stock_icon_close);
-   //         
-   //         return true;
-   //         
-   //      }
-   //      else
-   //      {
-   //         
-   //         pbutton->select_userstyle(style_system_menu_button);
-   //         
-   //         int cx = pbutton->width();
-   //         
-   //         int cy = pbutton->height();
-   //         
-   //         pbutton->m_pitem = pitem;
-   //         
-   //         auto & rectCheckBox = style_rect(rect_check_box);
-   //         
-   //         auto & rectCheckBox = style_rect(rect_check_box);
-   //         
-   //         rectCheckBox.left = m_rectItemMargin.left;
-   //         rectCheckBox.top = m_rectItemMargin.top;
-   //         rectCheckBox.bottom = cy - m_rectItemMargin.bottom;
-   //         rectCheckBox.right = pbutton->m_rectCheckBox.left + pitem->m_pmenu->m_iCheckBoxSize;
-   //         
-   //         pbutton->m_rectText.left = pbutton->m_rectCheckBox.right + m_iElementPadding;
-   //         pbutton->m_rectText.top = m_rectItemMargin.top;
-   //         pbutton->m_rectText.bottom = cy - m_rectItemMargin.bottom;
-   //         pbutton->m_rectText.right = cx - m_rectItemMargin.right;
-   //         
-   //      }
-   //      
-   //      return true;
-   //      
-   //   }
 
 
    bool style::has_flag(e_flag eflag)

@@ -132,6 +132,15 @@ namespace user
          m_pitem = Application.alloc(System.type_info < menu_item > ());
          
       }
+
+      if (m_pitem.is_null())
+      {
+
+         return false;
+
+      }
+
+      m_pitem->m_pmenu = this;
       
       return m_pitem->load_menu(lpnode);
 
@@ -239,14 +248,15 @@ namespace user
    
    
    
-   bool menu::track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify)
+   bool menu::track_popup_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
    {
       
       m_puiParent    = puiParent;
+
       if (puiNotify != NULL)
       {
       
-      m_puiNotify    = puiNotify;
+         m_puiNotify    = puiNotify;
 
       }
       else if (m_puiNotify == NULL)
@@ -259,33 +269,52 @@ namespace user
       m_pmenuParent  = NULL;
       
       LPVOID lpvoid  = NULL;
-      
-      if (!create_window_ex(WS_EX_LAYERED | WS_EX_TOOLWINDOW, NULL, NULL, 0, rect(0, 0, 0, 0), Session.get_view(), id(), lpvoid))
+
+      if (!create_window_ex(WS_EX_LAYERED | WS_EX_TOOLWINDOW, NULL, NULL, 0, rect(0, 0, 0, 0), puiParent, id(), lpvoid))
       {
          
          return false;
          
       }
       
-      if(puiParent != NULL)
-      {
-      
-         SetParent(puiParent);
-         
-      }
-      
+      //if(puiParent != NULL)
+      //{
+      //
+      //   SetParent(puiParent);
+      //   
+      //}
+      //
       if(puiNotify != NULL)
       {
          
          SetOwner(puiNotify);
          
       }
-      
-      if (!m_itemClose.m_pui->create_window(null_rect(), this, ChildIdClose))
+
+      if (m_itemClose.m_pui.is_null())
       {
-         
-         return false;
-         
+
+         m_itemClose.m_pui = userstyle()->create_menu_button();
+
+      }
+
+      {
+
+         control_descriptor descriptor;
+
+         descriptor.m_puiParent = this;
+
+         descriptor.m_id = "close";
+
+         descriptor.m_iItem = 65536;
+
+         if (!m_itemClose.m_pui->create_control(&descriptor))
+         {
+
+            return false;
+
+         }
+
       }
       
       m_itemClose.m_pui->set_window_text("r");
@@ -295,6 +324,15 @@ namespace user
        
          Session.get_cursor_pos(m_ptPositionHint);
          
+      }
+
+      if (!m_pitem->create_buttons(this))
+      {
+
+         ASSERT(FALSE);
+
+         return true;
+
       }
       
       layout_menu(m_ptPositionHint);
@@ -309,7 +347,7 @@ namespace user
       
    }
    
-   
+
    void menu::layout_menu(point pt)
    {
       
@@ -430,15 +468,16 @@ namespace user
             
          }
          
-         pitem->m_pui = Application.create_menu_interaction();
+         //pitem->m_pui = Application.create_menu_interaction();
+         //
+         //pitem->m_pmenu = this;
+         //
+         //pitem->m_pui->create_window(null_rect(), this, pitem->m_id);
+         //
          
-         pitem->m_pmenu = this;
-         
-         pitem->m_pui->create_window(null_rect(), this, pitem->m_id);
-         
-         pitem->m_pui->SetWindowPos(0, x, y, cx,cy, SWP_SHOWWINDOW | SWP_NOZORDER);
-         
-         Session.userstyle()->prepare_menu(pitem);
+         prepare_menu(pitem);
+
+         pitem->m_pui->SetWindowPos(0, x, y, cx, cy, SWP_SHOWWINDOW | SWP_NOZORDER);
          
          y += cy;
          
@@ -455,10 +494,10 @@ namespace user
       
       //m_itemClose->m_button.resize_to_fit();
       
-      m_itemClose.m_pui->SetWindowPos(0, 0, 0, 0, 0, SWP_NOSIZE);
-      
       Session.userstyle()->prepare_menu(&m_itemClose);
       
+      m_itemClose.m_pui->MoveWindow(0, 0);
+
       rect rectWindow;
       
       rectWindow.left = pt.x;
@@ -569,7 +608,7 @@ namespace user
             if (puiTarget != NULL)
             {
                
-               m_puiParent->BaseOnControlEvent(&ev);
+               m_puiNotify->BaseOnControlEvent(&ev);
                
             }
             
@@ -834,7 +873,7 @@ namespace user
             commandui.m_id        = spitema->element_at(i)->m_id;
             commandui.m_pOther    = spitema->element_at(i)->m_pui;
             
-            sp(::user::interaction) pwndParent = m_puiParent;
+            sp(::user::interaction) pwndParent = m_puiNotify;
             if(pwndParent != NULL)
             {
                /*
@@ -918,7 +957,7 @@ namespace user
       if (pbutton.is_null())
          return NULL;
       
-      return pbutton->m_pitem;
+      return pbutton->m_pmenuitem;
       
       //if(pbutton.)
       
@@ -978,7 +1017,7 @@ namespace user
    ::user::interaction * menu::get_target_window()
    {
       
-      ::user::interaction * puiTarget = m_puiParent;
+      ::user::interaction * puiTarget = m_puiNotify;
       
       if (puiTarget == NULL)
       {

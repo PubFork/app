@@ -165,7 +165,7 @@ namespace user
       /// represents (this window is a button [a menu button],
       /// this window is a checkbox [a menu checkbox],
       /// this window is a player/view [a menu picture/video/chat?!])
-      sp(menu_item)                       m_pitem;
+      sp(menu_item)                       m_pmenuitem;
 
 
 
@@ -454,6 +454,12 @@ namespace user
       virtual bool subclass_window(oswindow posdata) override;
       virtual oswindow unsubclass_window() override;
 
+
+      /// if you (developer) don't know how to create a control,
+      /// you should be able (control developer pay attention now),
+      /// to build a default control with a default constructed
+      /// ::user::control_descriptor.
+      virtual bool create_control(class ::user::control_descriptor * pdescriptor);
 
       virtual bool create_window(const RECT & rect, ::user::interaction *pparent,id id) override;
       virtual bool create_window(const char * lpszClassName, const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate = NULL) override;

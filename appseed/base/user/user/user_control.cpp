@@ -13,320 +13,6 @@ namespace user
 #endif
 
 
-   control::descriptor::descriptor()
-   {
-
-      clear();
-
-
-   }
-
-
-   control::descriptor::~descriptor()
-   {
-
-      //if(m_pcontrol != NULL)
-      //{
-
-      //   if(m_bCreated)
-      //   {
-
-      //      m_pcontrol->DestroyWindow();
-
-      //   }
-      //   else if(m_bSubclassed)
-      //   {
-
-      //      m_pcontrol->unsubclass_window();
-
-      //   }
-
-      //   m_pcontrol.release();
-
-      //}
-
-   }
-
-
-   void control::descriptor::clear()
-   {
-
-      m_id.is_empty();
-      m_etype                    = control_type_none;
-      m_bTransparent             = false;
-      m_bCreated                 = false;
-      m_edatatype                = DataTypeString;
-      m_flagsfunction.unsignalize_all();
-      m_controlmap.remove_all();
-      m_pform                    = NULL;
-      m_bSubclassed              = false;
-      m_iSubItem                 = -1;
-
-   }
-
-
-   control::descriptor::descriptor(const class descriptor & descriptor)
-   {
-
-      operator =(descriptor);
-
-   }
-
-
-   class control::descriptor & control::descriptor::operator = (const descriptor & descriptor)
-   {
-
-      if(&descriptor == this)
-         return *this;
-
-      m_id                    = descriptor.m_id;
-      m_etype                 = descriptor.m_etype;
-      m_dataid                = descriptor.m_dataid;
-      m_bTransparent          = descriptor.m_bTransparent;
-      m_flagsfunction         = descriptor.m_flagsfunction;
-      m_typeinfo              = descriptor.m_typeinfo;
-      m_bCreated              = descriptor.m_bCreated;
-      m_edatatype             = descriptor.m_edatatype;
-      m_idPrivateDataSection  = descriptor.m_idPrivateDataSection;
-      //m_pcontrol              = descriptor.m_pcontrol;
-      m_controlmap.remove_all();
-      m_eddx                  = descriptor.m_eddx;
-      m_ddx.m_pvoid           = descriptor.m_ddx.m_pvoid;
-      m_pform                 = descriptor.m_pform;
-      m_iSubItem              = descriptor.m_iSubItem;
-      m_setValue = descriptor.m_setValue;
-      m_iSubItemDisableCheckBox = descriptor.m_iSubItemDisableCheckBox;
-      m_iSubItemDuplicateCheckBox = descriptor.m_iSubItemDuplicateCheckBox;
-      m_iaSubItemDuplicate = descriptor.m_iaSubItemDuplicate;
-      m_iaSubItemDisable = descriptor.m_iaSubItemDisable;
-
-      return *this;
-
-   }
-
-
-   bool control::descriptor::operator == (const descriptor & descriptor) const
-   {
-
-      return m_id       == descriptor.m_id
-         && m_etype     == descriptor.m_etype
-         && m_dataid    == descriptor.m_dataid
-         && m_pform     == descriptor.m_pform;
-
-   }
-
-
-   void control::descriptor::add_function(efunction efunction)
-   {
-
-      m_flagsfunction.signalize(efunction);
-
-   }
-
-
-   void control::descriptor::remove_function(efunction efunction)
-   {
-
-      m_flagsfunction.unsignalize(efunction);
-
-   }
-
-
-   bool control::descriptor::has_function(efunction efunction)
-   {
-
-      return m_flagsfunction.is_signalized(efunction);
-
-   }
-
-
-   void control::descriptor::set_data_type(edatatype edatatype)
-   {
-
-      m_edatatype = edatatype;
-
-   }
-
-
-   control::edatatype control::descriptor::get_data_type()
-   {
-
-      return m_edatatype;
-
-   }
-
-
-   void control::descriptor::set_ddx_dbflags(::database::id id, int_ptr value)
-   {
-
-      m_eddx = ::user::control::ddx_dbflags;
-
-      class ::database::key key(NULL, id);
-
-      m_ddx.m_pdbflags = new class ::user::control::ddx_dbflags(key, value);
-
-
-   }
-
-   control * control::descriptor::get_control(::user::form_window * pform,index iItem)
-   {
-
-      //sp(control) & pcontrol = m_controlmap[iItem];
-      sp(control) & pcontrol = m_controlmap[0];
-      if(pcontrol != NULL)
-      {
-         //pcontrol->m_iEditItem = iItem;
-
-         return pcontrol;
-
-      }
-
-      iItem = 0;
-
-      if(!pform->create_control(this,iItem))
-      {
-
-         pcontrol.release();
-
-         return NULL;
-
-      }
-
-      return pcontrol;
-
-   }
-
-   index control::descriptor::find_control(::user::interaction * pui)
-   {
-
-      for(auto pair : m_controlmap)
-      {
-
-         if(pair.m_element2 == pui)
-         {
-          
-            return pair.m_element1;
-
-         }
-
-      }
-
-      return -1;
-
-   }
-
-
-   control::descriptor_set::descriptor_set()
-   {
-
-   }
-
-
-   control::descriptor_set::~descriptor_set()
-   {
-
-   }
-
-
-   sp(control) control::descriptor_set::get_control(::user::form_window * pform, id id, int iItem)
-   {
-
-      for(int32_t i = 0; i < this->get_size(); i++)
-      {
-
-         class descriptor & descriptor = *this->element_at(i);
-
-         if(descriptor.m_id == id)
-         {
-
-            return descriptor.get_control(pform, iItem);
-
-         }
-
-      }
-
-      return NULL;
-
-   }
-
-
-   bool control::descriptor_set::find_control(::user::interaction * pui,index & iItem,index & iSubItem)
-   {
-
-      for(int32_t i = 0; i < this->get_size(); i++)
-      {
-
-         class descriptor & descriptor = *this->element_at(i);
-
-         iItem = descriptor.find_control(pui);
-
-         if(iItem >= 0)
-         {
-
-            iSubItem = descriptor.m_iSubItem;
-
-            return true;
-
-         }
-
-      }
-
-      iItem = -1;
-
-      iSubItem = -1;
-
-      return false;
-
-   }
-
-
-   //class control::descriptor * control::descriptor_set::get(sp(::user::interaction) puie)
-   //{
-
-   //   sp(control) pcontrol =  (puie.m_p);
-
-   //   if(pcontrol == NULL)
-   //      return NULL;
-
-   //   for(int32_t i = 0; i < this->get_size(); i++)
-   //   {
-
-   //      class descriptor & descriptor = *this->element_at(i);
-
-   //      if(descriptor.m_pcontrol == pcontrol)
-   //      {
-
-   //         return &descriptor;
-
-   //      }
-
-   //   }
-
-   //   return NULL;
-
-   //}
-
-
-   class control::descriptor * control::descriptor_set::get_by_sub_item(int32_t iSubItem)
-   {
-
-      for(int32_t i = 0; i < this->get_size(); i++)
-      {
-
-         class descriptor & descriptor = *this->element_at(i);
-
-         if(descriptor.m_iSubItem == iSubItem)
-         {
-
-            return &descriptor;
-
-         }
-
-      }
-
-      return NULL;
-
-   }
 
 
    control::~control()
@@ -411,10 +97,10 @@ namespace user
    }
 
 
-   bool control::operator == (const class descriptor & descriptor) const
+   bool control::operator == (const class control_descriptor & control_descriptor) const
    {
 
-      return *m_pdescriptor == descriptor;
+      return *m_pdescriptor == control_descriptor;
 
    }
 
@@ -427,7 +113,7 @@ namespace user
    }
 
 
-   void control::descriptor::set_type(e_control_type e_type)
+   void control_descriptor::set_type(e_control_type e_type)
    {
       
       m_etype = e_type;
@@ -456,7 +142,7 @@ namespace user
    }
 
 
-   e_control_type control::descriptor::get_type()
+   e_control_type control_descriptor::get_type()
    {
 
       return m_etype;
@@ -475,7 +161,7 @@ namespace user
    index control::GetEditSubItem()
    {
 
-      return descriptor().m_iSubItem;
+      return control_descriptor().m_iSubItem;
 
    }
 
@@ -501,7 +187,7 @@ namespace user
       
       string str;
 
-      if(descriptor().get_type() == control_type_edit)
+      if(control_descriptor().get_type() == control_type_edit)
       {
 
          sp(::user::elemental) ptext = pwnd.m_p;
@@ -524,14 +210,14 @@ namespace user
 
       }
 
-      switch(descriptor().get_data_type())
+      switch(control_descriptor().get_data_type())
       {
-      case DataTypeString:
+      case control_data_type_string:
          {
             var = str;
          }
          return true;
-      case DataTypeNatural:
+      case control_data_type_natural:
          {
             var = atoi(str);
             return true;
@@ -546,11 +232,11 @@ namespace user
    bool control::Validate(string & strParam)
    {
 
-      switch(descriptor().get_data_type())
+      switch(control_descriptor().get_data_type())
       {
-      case DataTypeString:
+      case control_data_type_string:
          return true;
-      case DataTypeNatural:
+      case control_data_type_natural:
          {
             string str = strParam;
             str.trim_left();
@@ -576,10 +262,12 @@ namespace user
    }
 
 
-   control::ddx_dbflags::ddx_dbflags(::database::key key, int_ptr value)
+   control_ddx_dbflags::control_ddx_dbflags(::database::key key, int_ptr value)
    {
+      
       m_key       = key;
       m_value     = value;
+
    }
 
 
@@ -599,10 +287,7 @@ namespace user
    form_window * control::get_form()
    {
 
-      if(m_pdescriptor == NULL)
-         return NULL;
-      else
-         return descriptor().m_pform;
+      return NULL;
 
    }
 
@@ -615,18 +300,47 @@ namespace user
          return NULL;
    }*/
 
-   class control::descriptor & control::descriptor()
+   class control_descriptor & control::descriptor()
    {
       return *m_pdescriptor;
    }
 
-   bool control::create_control(class control::descriptor * pdescriptor, index iItem)
+   
+   bool control::create_control(class control_descriptor * pdescriptorParam)
    {
+
+      sp(control_descriptor) pdescriptor;
+      
+      if (pdescriptorParam->is_heap())
+      {
+
+         pdescriptor = pdescriptorParam;
+
+      }
+      else
+      {
+
+         pdescriptor = canew(control_descriptor(*pdescriptorParam));
+
+      }
+
+      if (!::user::interaction::create_control(pdescriptor))
+      {
+
+         return false;
+
+      }
+
       m_pdescriptor = pdescriptor;
+
       m_pdescriptor->m_bCreated = true;
-      m_pdescriptor->m_controlmap[iItem] = this;
+
+      m_pdescriptor->m_controlmap[m_pdescriptor->m_iItem] = this;
+
       return true;
+
    }
+
 
    bool control::GetWindowRect(LPRECT lprect)
    {

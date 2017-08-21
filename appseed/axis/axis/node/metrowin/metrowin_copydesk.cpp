@@ -87,7 +87,7 @@ namespace metrowin
    }
 
 
-   void copydesk::get_filea(stringa & stra)
+   void copydesk::get_filea(::file::patha & patha)
    {
       int iCount = get_file_count();
       if(iCount <= 0)
@@ -115,7 +115,7 @@ namespace metrowin
 
    }
 
-   void copydesk::set_filea(stringa & stra)
+   void copydesk::set_filea(const ::file::patha & patha)
    {
 #ifdef WINDOWSEX
       ASSERT(m_p->IsWindow());

@@ -23,6 +23,7 @@ namespace windows
       System.factory().creatable          < port_forward                   > (System.type_info < ::net::port_forward         >()  ,    1);
       System.factory().creatable_small    < crypto                         > (System.type_info < ::crypto::crypto            >()  ,    1);
       System.factory().creatable_small    < ip_enum                        > (System.type_info < ::net::ip_enum              >()       );
+      System.factory().creatable_small    < ::windows::copydesk            > (System.type_info < ::user::copydesk            >(), 1);
 
 
 

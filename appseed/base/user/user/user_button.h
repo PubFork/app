@@ -72,9 +72,9 @@ namespace user
       button(::aura::application * papp);
       virtual ~button();
 
-      virtual bool create_control(class control::descriptor * pdescriptor, index iItem = 0);
+      virtual bool create_control(class control_descriptor * pdescriptor) override;
 
-      virtual void resize_to_fit();
+      virtual void resize_to_fit() override;
 
       virtual void install_message_handling(::message::dispatch * pinterface);
 

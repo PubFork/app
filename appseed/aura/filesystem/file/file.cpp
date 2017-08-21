@@ -635,9 +635,11 @@ bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,me
 
 #else
 
-   DWORD dw= 0;
+   DWORD dw = 0;
 
-   WINBOOL bOk = ::WriteFile(hFile,lpBuf,nCount,&dw,NULL);
+   dw = ::fwrite(lpBuf, 1, nCount, file);
+
+   WINBOOL bOk = dw == nCount;
 
    if(puiWritten != NULL)
    {
@@ -646,7 +648,7 @@ bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,me
 
    }
 
-   return bOk && dw == nCount;
+   return bOk;
 
 #endif
 

@@ -54,6 +54,9 @@ namespace user
    class create_context;
    class user;
    class frame_window;
+   class control_ddx_dbflags;
+   class control_descriptor;
+   class control_descriptor_set;
 
    // class form_interface;
    class form_list;

@@ -24,9 +24,6 @@
     <Filter Include="Header Files\primitive\datetime">
       <UniqueIdentifier>{0510e3ff-0079-4cb1-b9e8-2cca759dcb0a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\aura">
-      <UniqueIdentifier>{c884c593-8d0f-465b-8314-98944d5dac4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\user">
       <UniqueIdentifier>{dc109c06-f55b-48ea-ac46-06302b3262f3}</UniqueIdentifier>
     </Filter>
@@ -44,6 +41,21 @@
     </Filter>
     <Filter Include="Header Files\primitive\comparison">
       <UniqueIdentifier>{dc0acada-9c74-46ee-b8d3-4e0427a32162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\comparison">
+      <UniqueIdentifier>{9a0a93c5-d58e-43b1-a174-d908a0b14745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\datetime">
+      <UniqueIdentifier>{f2480041-dd34-48a1-9e82-8e15ce73c20f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\geometry">
+      <UniqueIdentifier>{9ab6e881-1057-497a-b2eb-4ac5abee8395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\math">
+      <UniqueIdentifier>{9c4ef044-8d24-4b30-ac71-c8174d893338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\collection">
+      <UniqueIdentifier>{b3a683c8-c4bd-46a0-9eab-beb79650277e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\filesystem">
       <UniqueIdentifier>{e735cbc7-6be2-44c9-b19a-0c3d6ee00183}</UniqueIdentifier>
@@ -63,6 +75,84 @@
     <Filter Include="Header Files\primitive\str\x">
       <UniqueIdentifier>{edfaa98d-6860-4c70-a837-aa8ee4641806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\primitive\str">
+      <UniqueIdentifier>{48b842bb-d6ab-4f7c-9d21-8c8541d95a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura">
+      <UniqueIdentifier>{225c8e24-bbc5-4bf4-9da8-92ec39a039ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\xml">
+      <UniqueIdentifier>{c4dba712-4a23-4904-b3c1-25fa6f1b24e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os">
+      <UniqueIdentifier>{245e3241-db5a-4886-814d-9434580575d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\cross">
+      <UniqueIdentifier>{f22e1b28-50e1-41b7-ab05-fbf12e97db6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\cross\metrowin">
+      <UniqueIdentifier>{e16bae98-9b4b-4f16-8aea-c1eeeb80d1d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\cross\windows">
+      <UniqueIdentifier>{c2c59a3f-bfe4-4a34-af7d-9cbdd458db15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\windows">
+      <UniqueIdentifier>{a9fa6c5c-4118-45a3-a636-0a71e98bcdb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\ansios">
+      <UniqueIdentifier>{68334ac9-3045-461a-9922-b6f49f0a803d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\exception">
+      <UniqueIdentifier>{376f71e3-e41a-4d8d-8e53-daad53a7e29d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\aura">
+      <UniqueIdentifier>{b15f9423-6971-4587-b04f-ca13192a9bcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\node">
+      <UniqueIdentifier>{57540175-8b21-49ef-a8b9-0ccf5f3f4a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\node\windows">
+      <UniqueIdentifier>{bf60306d-2d73-4340-8890-4402c6ebccab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\message">
+      <UniqueIdentifier>{b9bf68d4-d81e-4040-a63c-b2b470c06acd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\node\ansios">
+      <UniqueIdentifier>{a082445c-e80b-4002-8250-1fd29ecad1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitive\data">
+      <UniqueIdentifier>{b47f1200-db28-45cf-88cd-eaf066d0e7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\simple">
+      <UniqueIdentifier>{e035613e-26d4-49da-a3f4-14a8924d15cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\user\simple">
+      <UniqueIdentifier>{87359dfc-dc8d-48ea-9e7a-cc1bd37769e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\user\colorertake5">
+      <UniqueIdentifier>{220712f8-0893-4938-8b45-7f270991f20b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\user\colorertake5">
+      <UniqueIdentifier>{f5b305ca-65b3-4b2a-918b-250947ae62ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\process">
+      <UniqueIdentifier>{6d592c90-2d43-41e1-a493-c0746f96e320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\cross\ansios">
+      <UniqueIdentifier>{bdcaf82f-4175-4f90-8c9c-7e1517c5b7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\primitive\api">
+      <UniqueIdentifier>{b26a6098-cf09-41e7-9741-3dd479fc2a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multithreading\service">
+      <UniqueIdentifier>{2762f484-eb95-4a1b-a8ed-821742ef3e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multithreading\service">
+      <UniqueIdentifier>{1d2673ac-c466-4eef-a3c2-8d1ac417ee3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura">
+      <UniqueIdentifier>{c884c593-8d0f-465b-8314-98944d5dac4f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\aura\xml">
       <UniqueIdentifier>{42770ef4-1efe-40e5-864d-38ad28249a78}</UniqueIdentifier>
     </Filter>
@@ -78,8 +168,14 @@
     <Filter Include="Header Files\aura\os\windows">
       <UniqueIdentifier>{719bbac6-b1e2-43be-9042-48cec85915ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura">
-      <UniqueIdentifier>{225c8e24-bbc5-4bf4-9da8-92ec39a039ec}</UniqueIdentifier>
+    <Filter Include="Header Files\aura\os\cross">
+      <UniqueIdentifier>{e9b106f1-4ddd-4521-b7c1-6461c701be4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\os\cross\ansios">
+      <UniqueIdentifier>{1ed12af4-cb60-48aa-9d69-eaae021eebd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\os\ansios">
+      <UniqueIdentifier>{d8fdcc30-b719-4944-8c43-76d53cfb6b94}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\aura\node">
       <UniqueIdentifier>{cbc7bdb2-868d-47ca-9594-7ff7e1135989}</UniqueIdentifier>
@@ -87,149 +183,236 @@
     <Filter Include="Header Files\aura\node\windows">
       <UniqueIdentifier>{8a9f35dd-3924-4dfe-bc44-6a823f0200b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\node\ansios">
+      <UniqueIdentifier>{69195050-6ed5-49b9-b26e-60f94ca26561}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\aura\message">
       <UniqueIdentifier>{6ea91d16-af59-4653-ad87-aaa3548a7437}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\primitive\data">
-      <UniqueIdentifier>{ddf01975-333f-459f-a6b4-f5e9fdffa7f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\user\simple">
-      <UniqueIdentifier>{e035613e-26d4-49da-a3f4-14a8924d15cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\user\simple">
-      <UniqueIdentifier>{87359dfc-dc8d-48ea-9e7a-cc1bd37769e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\aura\aura_policy">
       <UniqueIdentifier>{0c0346ef-bd1c-4a0a-85b1-cfd8ef8ec242}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\colorertake5">
-      <UniqueIdentifier>{220712f8-0893-4938-8b45-7f270991f20b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\user\colorertake5">
-      <UniqueIdentifier>{f5b305ca-65b3-4b2a-918b-250947ae62ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\aura\process">
-      <UniqueIdentifier>{5d74699a-06f9-4f48-a523-e566763c1ca8}</UniqueIdentifier>
+      <UniqueIdentifier>{2fedfefb-a349-4ba7-9fa2-f86d10306aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\primitive\data">
+      <UniqueIdentifier>{a96fca9e-248b-448a-b0bd-dee53b174b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\filesystem\filesystem">
+      <UniqueIdentifier>{b9deaaa1-4b3b-4453-a028-8c6f0dbba4e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\filesystem\filesystem">
-      <UniqueIdentifier>{a21bb9bb-eb56-41da-b681-6a1af1e0c2ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\primitive\str">
-      <UniqueIdentifier>{1dccc58a-e09d-4227-ab19-be8f96e04381}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\net">
-      <UniqueIdentifier>{e4c01fe7-604c-4e62-badd-a21137ddc42a}</UniqueIdentifier>
+      <UniqueIdentifier>{a1c58f3a-f4e9-4de5-a300-cf9b6065e04b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\net">
-      <UniqueIdentifier>{6eefab1f-2d4e-45cb-9720-919fa0df4b22}</UniqueIdentifier>
+      <UniqueIdentifier>{fc08dbdc-01f3-40e9-8435-562970350cfe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\os">
-      <UniqueIdentifier>{214091d7-ba72-4f75-8794-8b1eae9f02c9}</UniqueIdentifier>
+    <Filter Include="Source Files\net">
+      <UniqueIdentifier>{8b262521-2560-453a-a362-71363e835ffa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\os\windows">
-      <UniqueIdentifier>{88863203-e2ba-4bbe-a04c-fd1001f4711d}</UniqueIdentifier>
+    <Filter Include="Header Files\user\user">
+      <UniqueIdentifier>{56c22d9d-a50c-4f18-9f8c-b278792cf0d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\exception">
-      <UniqueIdentifier>{0de7baac-641f-4c37-8a79-0a88ffce5142}</UniqueIdentifier>
+    <Filter Include="Source Files\user\user">
+      <UniqueIdentifier>{974dd2df-2d21-488e-b03a-6f7b62219aae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ace">
-      <UniqueIdentifier>{89869236-176b-4a14-898f-a4010cebf230}</UniqueIdentifier>
+    <Filter Include="Source Files\aura\os\metrowin">
+      <UniqueIdentifier>{aa94c437-5144-4e81-9a16-c6b210d0f81c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\primitive\datetime">
-      <UniqueIdentifier>{1b79cb30-9bcd-4135-8215-fb34390b14b4}</UniqueIdentifier>
+    <Filter Include="Header Files\aura\node\metrowin">
+      <UniqueIdentifier>{60f1f6cd-c71a-44fb-a364-ab014a9a5b22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\primitive\math">
-      <UniqueIdentifier>{b27df971-568e-4de4-8bf6-c8bb1399f677}</UniqueIdentifier>
+    <Filter Include="Header Files\aura\pcre">
+      <UniqueIdentifier>{942b4488-8373-417b-9c05-c4a6466254f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\scripting">
-      <UniqueIdentifier>{fc6c2bcb-211d-491d-8d9d-51d04baeeaf2}</UniqueIdentifier>
+    <Filter Include="Source Files\aura\pcre">
+      <UniqueIdentifier>{dfc18c82-d1e9-45cc-8c1f-d49ca75daee1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\scripting\javascript">
-      <UniqueIdentifier>{7aae9105-b1b3-4f5b-8d3b-3cd562c12c6a}</UniqueIdentifier>
+    <Filter Include="Header Files\aura\charguess">
+      <UniqueIdentifier>{d335eba7-97b4-472f-8223-1ee18daefa25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\compress">
-      <UniqueIdentifier>{84ce13e4-d31c-4dca-a79c-c50a8d7aabb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\compress\bsdiff">
-      <UniqueIdentifier>{7c15997d-985e-4f79-8eeb-e72237ca4681}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\compress\zip">
-      <UniqueIdentifier>{eab8a055-7205-4481-aa03-c5b716feb688}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\crypto">
-      <UniqueIdentifier>{30b42070-832a-4303-a569-8b0431a92af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\fontopus">
-      <UniqueIdentifier>{0d69c79c-2f7f-4cf0-942e-f95e28459398}</UniqueIdentifier>
+    <Filter Include="Source Files\aura\charguess">
+      <UniqueIdentifier>{a931ab49-5e35-43a7-8eb2-812357a8895b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\ftp">
-      <UniqueIdentifier>{4ebfef43-7906-4169-811a-cb9cc9ef2ef8}</UniqueIdentifier>
+      <UniqueIdentifier>{0b669073-ca47-4983-866b-aaf68b29ede8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\http">
-      <UniqueIdentifier>{09ee17e6-b310-4a33-80ff-6785beec7de7}</UniqueIdentifier>
+      <UniqueIdentifier>{8ccc8740-7200-47f1-bc57-d56f8cf6eb1c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\http\webserver">
-      <UniqueIdentifier>{cc7261d5-79f2-40e9-a11f-0e91847a0fd5}</UniqueIdentifier>
+      <UniqueIdentifier>{6c8e5cd7-a9de-47ca-a1d1-46fa3252d078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\ftp">
+      <UniqueIdentifier>{8809b4aa-0c02-4365-b792-65aa2046bba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\http">
+      <UniqueIdentifier>{636db5f4-992b-455c-96e6-ea8abeba2c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\http\webserver">
+      <UniqueIdentifier>{de78811e-383b-4c7d-852f-0ec2eba2c936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\mail">
+      <UniqueIdentifier>{92814a3c-6563-448e-a408-a2e4d28b53bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\mail">
-      <UniqueIdentifier>{89c8a2d5-550c-4484-a63c-b2fdfa7c9640}</UniqueIdentifier>
+      <UniqueIdentifier>{b1819f54-3d63-449f-b103-feb5404fc16b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets">
+      <UniqueIdentifier>{4401cdee-0d5d-4c4f-a403-51b21ef6c686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\base">
+      <UniqueIdentifier>{a222d2e1-afb1-4445-83d0-ebab01df8741}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets">
-      <UniqueIdentifier>{7c44ca40-829f-4560-a794-179bc8e5615d}</UniqueIdentifier>
+      <UniqueIdentifier>{d4b785d8-867c-461d-bd3d-4e7f72d1309c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\base">
-      <UniqueIdentifier>{146eb77c-e9c0-49da-a2db-b05f8a50d010}</UniqueIdentifier>
+      <UniqueIdentifier>{6b00ae0c-d0bc-43e1-995d-1be1366db58a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd">
-      <UniqueIdentifier>{7535f157-feef-4acd-9977-917339d5f537}</UniqueIdentifier>
+      <UniqueIdentifier>{1b3a3141-24d8-42f1-99e8-762091be1dc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\asynch_dns">
-      <UniqueIdentifier>{6b982682-57bd-4c40-ba9d-8936e350efa4}</UniqueIdentifier>
+      <UniqueIdentifier>{917ff49f-3332-4bfe-92ac-e77badaa14d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\basic">
-      <UniqueIdentifier>{8c1f17ad-b734-400f-a4cb-fbffff73a8eb}</UniqueIdentifier>
+      <UniqueIdentifier>{5d739ef4-d8f1-4633-bf68-d600ce894e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd">
+      <UniqueIdentifier>{b8cc52c9-6095-405b-91ca-53e8d4cd1fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\asynch_dns">
+      <UniqueIdentifier>{c5df3926-2507-4fa5-b19d-26de35cb3fd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\basic">
+      <UniqueIdentifier>{bf45e163-b53c-4448-844c-1dbddfd72345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\internal">
+      <UniqueIdentifier>{2f1a64dd-5c6c-476c-baa3-51992c6b0ca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\sip">
+      <UniqueIdentifier>{73b90467-d3df-4d18-a0e8-5414d5c5f5ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\sip">
-      <UniqueIdentifier>{069ca9f1-26a5-4f69-8994-b522d299aec2}</UniqueIdentifier>
+      <UniqueIdentifier>{ca46590c-5846-4f20-a6bd-10c0caf9966c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\smtp">
+      <UniqueIdentifier>{8a4d76fd-6ff6-46de-b5e2-6fc84ecaf06c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\timer">
+      <UniqueIdentifier>{553e0570-9178-489f-b5e0-f6415fcf8326}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\timer">
-      <UniqueIdentifier>{11713deb-e6a7-4584-b493-3829e976f567}</UniqueIdentifier>
+      <UniqueIdentifier>{e3374c7b-4e25-4fff-ab46-5b18a87369e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\smtp">
-      <UniqueIdentifier>{b85e98a0-a09a-4350-995e-91c0d9d213d7}</UniqueIdentifier>
+      <UniqueIdentifier>{cc80accb-1f5c-4dca-8491-a4bf910b140f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\sockets\bsd\webserver">
+      <UniqueIdentifier>{f0092b58-5fc7-46a4-8c19-23eb92267ae5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\bsd\webserver">
-      <UniqueIdentifier>{7e4e57a2-d73d-443d-b9b7-afdb1dd7d602}</UniqueIdentifier>
+      <UniqueIdentifier>{054ed6ca-8ff9-45f6-b662-e8393458226b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\sockets\http">
-      <UniqueIdentifier>{d7bd8371-2e0b-4891-b7fe-7bc34c152034}</UniqueIdentifier>
+      <UniqueIdentifier>{a69c2782-0dc3-4525-9945-2b1b16b7712c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\net\sockets\http\NewFilter1">
-      <UniqueIdentifier>{f1554d25-c712-45fd-a090-a4f232ee5b6c}</UniqueIdentifier>
+    <Filter Include="Header Files\net\sockets\http">
+      <UniqueIdentifier>{71f979a2-c1aa-43c2-8776-57ee4508df8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\fontopus">
+      <UniqueIdentifier>{ca0e68c0-a496-4f3b-b792-adb25ea83101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\fontopus">
+      <UniqueIdentifier>{02eca5dc-f9f4-47df-a64e-3f09e9b59eeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\crypto">
+      <UniqueIdentifier>{2dd80a60-2c9c-4ebf-96d6-46e272058645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\crypto">
+      <UniqueIdentifier>{963595c9-967a-4406-8e85-277bb71f1796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\compress">
+      <UniqueIdentifier>{8d9c77c8-630c-4e7d-9309-9c0b2f05d360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting">
+      <UniqueIdentifier>{eb942cc6-8819-4b03-bf04-9ee074ab98af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting\javascript">
+      <UniqueIdentifier>{c3f7c9f9-dab2-4879-8210-cf5f347892ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\scripting">
+      <UniqueIdentifier>{b7c12e87-298c-4d8b-88a7-0a368fc58bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\scripting\javascript">
+      <UniqueIdentifier>{c2a21aba-6f58-4e95-80d5-05ac7efaa7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\compress\zip">
+      <UniqueIdentifier>{583e1e13-492e-4dab-97da-938b834a396a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\compress\bsdiff">
+      <UniqueIdentifier>{c7bed63a-baae-42ec-999e-87877207b3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\compress">
+      <UniqueIdentifier>{14f13a12-9581-47da-a690-a48f3d5b70ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\compress\zip">
+      <UniqueIdentifier>{358f3108-25c6-448d-8ce9-f426f362557b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\netserver">
+      <UniqueIdentifier>{c08b4e8a-1480-46d8-ac58-4cbb5d9bce70}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\net\netserver">
-      <UniqueIdentifier>{a39bbe8a-dd54-4867-895b-d51d50eb83ee}</UniqueIdentifier>
+      <UniqueIdentifier>{3decb257-1b90-4b87-a480-a2e0b4736d84}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{1ebb2c6d-f4e2-47e4-942f-d51ae796ccb9}</UniqueIdentifier>
+      <UniqueIdentifier>{14fc58bd-e136-4919-be5e-6efac6e33bf1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\graphics\draw2d">
-      <UniqueIdentifier>{b2303041-a38c-4f49-800d-77ad07ac425e}</UniqueIdentifier>
+      <UniqueIdentifier>{bbcb5eb9-be41-465a-a232-c4136a47d021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\draw3d">
+      <UniqueIdentifier>{7b756908-fa74-403f-a5ac-88be99a8b8cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\graphics\visual">
-      <UniqueIdentifier>{0e2a8569-25fa-42b6-8ff2-eaccd6c46cd5}</UniqueIdentifier>
+      <UniqueIdentifier>{48e86306-d1ef-43df-9fd8-1904cd963cf4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\graphics">
-      <UniqueIdentifier>{c5e5061a-cabf-4933-9679-38d0c8fe3fc7}</UniqueIdentifier>
+      <UniqueIdentifier>{135cd0e5-e3ef-4c58-83e1-5835355a541d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\os\cross">
-      <UniqueIdentifier>{bc031bfe-e45b-4872-8e57-30db3f4ee8ed}</UniqueIdentifier>
+    <Filter Include="Header Files\graphics\draw2d">
+      <UniqueIdentifier>{84af1efa-bb58-45be-866f-3cb58a47a961}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\os\cross\ansios">
-      <UniqueIdentifier>{dbb82dfc-a90b-4d96-873b-d247b49abc15}</UniqueIdentifier>
+    <Filter Include="Header Files\graphics\draw3d">
+      <UniqueIdentifier>{cb60f64d-82e7-49e9-9d04-a5e35430215f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics\visual">
+      <UniqueIdentifier>{569a4aea-a11c-4d4b-a924-9332f9438354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\aura\os_alloc">
+      <UniqueIdentifier>{44b60fb5-aef1-428e-8b06-002121687ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\aura\install">
+      <UniqueIdentifier>{68917a66-0973-43e5-901b-8538847e6f7e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\aura\install">
-      <UniqueIdentifier>{07d4757e-ceea-4aa0-ae27-975db5d90702}</UniqueIdentifier>
+      <UniqueIdentifier>{cef81474-8eed-4b61-b187-84f47f894aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\install\windows">
+      <UniqueIdentifier>{e6e4f6ba-5849-408a-b6ed-c56ed1cb9eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\sockets\bsd\internal">
+      <UniqueIdentifier>{15a4ac45-87fc-482d-a1cb-b439ac57c64b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\os\windows_common">
+      <UniqueIdentifier>{47304b31-5aaa-4323-a2e1-070743f2f4aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ace">
+      <UniqueIdentifier>{95b750bb-d119-49da-8907-5c0575f3f1f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aqua">
+      <UniqueIdentifier>{0670a989-7029-4467-845b-07ee0f5f5ddf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +521,6 @@
     <ClInclude Include="primitive\primitive_property_set.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_property.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\primitive_object.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
@@ -371,9 +551,6 @@
     <ClInclude Include="primitive\primitive_command_line.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_command_thread.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\primitive_request_signal.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
@@ -397,12 +574,6 @@
     </ClInclude>
     <ClInclude Include="primitive\primitive_check.h">
       <Filter>Header Files\primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="multithreading\multithreading_go_thread.h">
-      <Filter>Header Files\multithreading</Filter>
-    </ClInclude>
-    <ClInclude Include="multithreading\multithreading_simple_thread.h">
-      <Filter>Header Files\multithreading</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection.h">
       <Filter>Header Files\primitive\collection</Filter>
@@ -665,6 +836,63 @@
     <ClInclude Include="filesystem\filesystem.h">
       <Filter>Header Files\filesystem</Filter>
     </ClInclude>
+    <ClInclude Include="filesystem\file\file.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_buffer.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_byte_stream.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_c.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_composite.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_dir.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_exception.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_opened.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_plain_text_stream.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_plain_text_stream_base.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_reader.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_seekable.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_serializable.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_status.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_stream.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_stream_base.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_stream2.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_writer.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_writer_flush.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
     <ClInclude Include="multithreading\multithreading_signal_thread.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
@@ -833,6 +1061,9 @@
     <ClInclude Include="aura\os\os_process.h">
       <Filter>Header Files\aura\os</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\cross\cross.h">
+      <Filter>Header Files\aura\os\cross</Filter>
+    </ClInclude>
     <ClInclude Include="aura\exception\exception.h">
       <Filter>Header Files\aura\exception</Filter>
     </ClInclude>
@@ -965,8 +1196,167 @@
     <ClInclude Include="aura\exception\exception2.h">
       <Filter>Header Files\aura\exception</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_allocate.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_async.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_conv.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_core.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cpu_architecture.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cregexp.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cregexp_util.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_debug.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_definition.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_draw2d.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_enum.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_file_watcher.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_file_watcher_impl.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_file_watcher_listener_thread.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_fixed_alloc.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_fixed_alloc_impl.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_flags.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_id_pool.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_international.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_keep_true.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_launcher.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_library.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_live_signal.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_log.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_lparam.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_machine_event.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_machine_event_central.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_machine_event_data.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_math.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_message_loop.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_muldiv64.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_new.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_number.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_plex.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_plex_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_plex_heap_impl.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_printf.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_session.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_simple_app.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_smart_pointer1.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_smart_pointer2.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_sprintf.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_str.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_trace.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_trace.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_types.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
     <ClInclude Include="aura\os\os_binreloc.h">
       <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_set.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_savings.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_progress.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_scalar.h">
       <Filter>Header Files\primitive\math</Filter>
@@ -974,8 +1364,26 @@
     <ClInclude Include="primitive\math\math_scalar_enum.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_action_context.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_action_source.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
     <ClInclude Include="primitive\primitive_relation_set.h">
       <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\ansios\ansios.h">
+      <Filter>Header Files\aura\os\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\ansios\ansios_file.h">
+      <Filter>Header Files\aura\os\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\ansios\ansios_multithreading.h">
+      <Filter>Header Files\aura\os\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\ansios\ansios_thread.h">
+      <Filter>Header Files\aura\os\ansios</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_mkint_c.h">
       <Filter>Header Files\primitive\math</Filter>
@@ -1019,9 +1427,6 @@
     <ClInclude Include="aura\node\node.h">
       <Filter>Header Files\aura\node</Filter>
     </ClInclude>
-    <ClInclude Include="aura\node\windows\windows_application.h">
-      <Filter>Header Files\aura\node\windows</Filter>
-    </ClInclude>
     <ClInclude Include="aura\node\windows\windows_exception.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
@@ -1055,20 +1460,14 @@
     <ClInclude Include="aura\node\windows\windows_thread.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_file.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_internal.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\windows\windows_base_registry.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="aura\os\windows\windows_file_watcher.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
     <ClInclude Include="aura\node\windows\windows_uac_tools.h">
       <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_signal_details.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\message\message_dispatch.h">
       <Filter>Header Files\aura\message</Filter>
@@ -1082,14 +1481,26 @@
     <ClInclude Include="aura\message\message_cross_windows.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
-    <ClInclude Include="aura\message\message_base.h">
-      <Filter>Header Files\aura\message</Filter>
-    </ClInclude>
     <ClInclude Include="multithreading\multithreading_thread_impl.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_heap_item.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_heap_item_array.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_static_start.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
     <ClInclude Include="primitive\comparison\comparison_compare.h">
       <Filter>Header Files\primitive\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_gudo.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_keep.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\exception\exception_parsing.h">
       <Filter>Header Files\aura\exception</Filter>
@@ -1103,20 +1514,20 @@
     <ClInclude Include="multithreading\multithreading_synch_index_ptr_array.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\data\data_data.h">
-      <Filter>Header Files\primitive\data</Filter>
+    <ClInclude Include="filesystem\file\file_folder_watch.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\data\data_data_container.h">
-      <Filter>Header Files\primitive\data</Filter>
+    <ClInclude Include="aura\aura\aura_net.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\data\data_data_listener.h">
-      <Filter>Header Files\primitive\data</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\data\data_item.h">
-      <Filter>Header Files\primitive\data</Filter>
+    <ClInclude Include="aura\aura\aura_class.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_set.h">
       <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_gudo_application.inl">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\exception\exception_verisimple.h">
       <Filter>Header Files\aura\exception</Filter>
@@ -1289,245 +1700,56 @@
     <ClInclude Include="user\colorertake5\colorertake5_xmldom.h">
       <Filter>Header Files\user\colorertake5</Filter>
     </ClInclude>
-    <ClInclude Include="aura\process\process_bidi_pipe.h">
-      <Filter>Header Files\aura\process</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\process\process_pipe.h">
-      <Filter>Header Files\aura\process</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\process\process_process.h">
-      <Filter>Header Files\aura\process</Filter>
+    <ClInclude Include="aura\node\windows\windows_process.h">
+      <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="aura\node\windows\windows_pipe.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="aura\node\windows\windows_process.h">
-      <Filter>Header Files\aura\node\windows</Filter>
+    <ClInclude Include="aura\exception\exception_cancel.h">
+      <Filter>Header Files\aura\exception</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_complex.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_std_template.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="aura\os\cross\ansios\ansios.h">
+      <Filter>Header Files\aura\os\cross\ansios</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\datetime\datetime_mktime.h">
+      <Filter>Header Files\primitive\datetime</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_action_context.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\datetime\datetime.h">
+      <Filter>Header Files\primitive\datetime</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_action_source.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="user\user.h">
+      <Filter>Header Files\user</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_allocate.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="aura\node\windows\windows.h">
+      <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_application.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\api\api.h">
+      <Filter>Header Files\primitive\api</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_application_signal_details.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\api\api_rotate.h">
+      <Filter>Header Files\primitive\api</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_async.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="multithreading\service\service_plain_service.h">
+      <Filter>Header Files\multithreading\service</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_class.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="multithreading\service\service_thread_pool.h">
+      <Filter>Header Files\multithreading\service</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_command.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\str\str_stdstring.h">
+      <Filter>Header Files\primitive\str</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_target.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="filesystem\file\file_file_stream_base.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_common.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="filesystem\file\file_file_stream.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_conv.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_core.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_cpu_architecture.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_cregexp.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_cregexp_util.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_debug.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_definition.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_draw2d.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_element.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_enum.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_file_watcher.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_file_watcher_impl.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_file_watcher_listener_thread.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_file_watcher_thread.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_fixed_alloc.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_fixed_alloc_impl.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_flags.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_gudo.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_gudo_application.inl">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_heap_item.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_heap_item_array.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_id_pool.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_international.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_keep.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_keep_true.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_launcher.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_library.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_live_object.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_live_signal.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_log.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_lparam.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_machine_event.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_machine_event_central.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_machine_event_data.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_main_init_data.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_math.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_message_loop.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_microtimer.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_muldiv64.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_net.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_new.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_number.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_os.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_plex.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_plex_heap.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_plex_heap_impl.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_printf.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_progress.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_savings.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_session.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_simple_app.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_simple_pixel_font.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_smart_pointer1.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_smart_pointer2.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_sprintf.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_static_start.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_system.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_system_str.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_system_trace.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_trace.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_types.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_url.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="aura\exception\exception_throw.h">
+      <Filter>Header Files\aura\exception</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_application_ptra.h">
       <Filter>Header Files\aura\aura</Filter>
@@ -1535,16 +1757,31 @@
     <ClInclude Include="aura\aura\aura_assert_running_task.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
+    <ClInclude Include="primitive\collection\collection_numeric_array_range.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\aaa_want_to_remove_windows_os.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_data.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_data_container.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_data_listener.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_item.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_timer_array.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_timer_item.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
     <ClInclude Include="aura\aura\aura_aura.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_msg.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui_test.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_create_context.h">
@@ -1556,29 +1793,53 @@
     <ClInclude Include="aura\aura\aura_draw_interface.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_local_memory_map.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_printer.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_str_context.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_template.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_timer_array.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_timer_item.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_user.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\axis.h">
+    <ClInclude Include="primitive\primitive_create.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_base.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_command_target.h">
       <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_command_ui.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\cross\ansios\ansios_file.h">
+      <Filter>Header Files\aura\os\cross\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_local_memory_map.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_str_context.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_application.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_application.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_dir_system.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_system.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_dir.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_file_system.h">
+      <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="net\net.h">
       <Filter>Header Files\net</Filter>
@@ -1586,34 +1847,55 @@
     <ClInclude Include="net\net_url.h">
       <Filter>Header Files\net</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_create.h">
-      <Filter>Header Files\primitive</Filter>
+    <ClInclude Include="aura\aura\aura_allocate_processor_cache_oriented.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\aura\aura_profiler.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_buffer.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="primitive\data\data_simple_item.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_tree.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\data\data_tree_item.h">
+      <Filter>Header Files\primitive\data</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_auto.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cmp.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_path.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_file_path_map.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\datetime\datetime_file_time.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\datetime\datetime_date_span.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\datetime\datetime_time_span.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\datetime\datetime_file_time_span.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\filesystem\filesystem_listing.h">
+      <Filter>Header Files\filesystem\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_restore.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_byte_istream.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_byte_ostream.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_byte_stream.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_c.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_composite.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_dir.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_exception.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_file_istream.h">
@@ -1622,19 +1904,7 @@
     <ClInclude Include="filesystem\file\file_file_ostream.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_file_stream.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_file_stream_base.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_folder_watch.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
     <ClInclude Include="filesystem\file\file_istream.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_opened.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_ostream.h">
@@ -1649,47 +1919,14 @@
     <ClInclude Include="filesystem\file\file_plain_text_ostream.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_plain_text_stream.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="primitive\str\str_sz.h">
+      <Filter>Header Files\primitive\str</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_plain_text_stream_base.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\aura\aura_ipi.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_reader.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_seekable.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_serializable.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_set.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_status.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_stream.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_stream_base.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_stream2.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_writer.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_writer_flush.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\filesystem\filesystem_path.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_path.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\aura\aura_app_core.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_ipc.h">
       <Filter>Header Files\aura\aura</Filter>
@@ -1700,58 +1937,232 @@
     <ClInclude Include="aura\aura\aura_shell_launcher.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\xml\xml_department.h">
-      <Filter>Header Files\aura\xml</Filter>
+    <ClInclude Include="filesystem\file\file_path.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="aura\process\process_department.h">
+    <ClInclude Include="aura\aura\aura_console_window.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_frame.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_primitive.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_comptr.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_speaker.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_tts_speaker.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_console_window.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_timer.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_timer_callback.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_timer_event.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading\multithreading_forking_thread.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin.h">
+      <Filter>Header Files\aura\node\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_file_system.h">
+      <Filter>Header Files\aura\node\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\cross\ansios\ansios_datetime_c.h">
+      <Filter>Header Files\aura\os\cross\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_c_number.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_int_biunique.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_objects.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_std_template.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\geometry\geometry_box.h">
+      <Filter>Header Files\primitive\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry_quaternions.h">
+      <Filter>Header Files\primitive\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\file\file_md5.h">
+      <Filter>Header Files\filesystem\file</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_md5.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_process_env_reader.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\os2.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\primitive_cflag.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\enum.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_ptr_array.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\datetime\datetime_department.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\ansios\ansios.h">
+      <Filter>Header Files\aura\node\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\ansios\ansios_pipe.h">
+      <Filter>Header Files\aura\node\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\ansios\ansios_process.h">
+      <Filter>Header Files\aura\node\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\ansios\ansios_thread_impl.h">
+      <Filter>Header Files\aura\node\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\process\process.h">
       <Filter>Header Files\aura\process</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\process\process_bidi_pipe.h">
+      <Filter>Header Files\aura\process</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\process\process_pipe.h">
+      <Filter>Header Files\aura\process</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\process\process_process.h">
+      <Filter>Header Files\aura\process</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\pcre\pcre.h">
+      <Filter>Header Files\aura\pcre</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\big5Prober.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\charDistribution.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\charsetProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\codingStateMachine.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\config.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\EscCharsetProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\EUCJPProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\EUCKRProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\EUCTWProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\GB2312Prober.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\jpCntx.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\Latin1Prober.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\MBCSGroupProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\pkgInt.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\SBCharsetProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\SBCSGroupProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\SJISProber.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\types.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\universal.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\UTF8Prober.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\charguess.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\charguess_c.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\charguess\charguess_private.h">
+      <Filter>Header Files\aura\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_error.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_heap_memory.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_pointer.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_os.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_department.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_department_container.h">
-      <Filter>Header Files\aura\aura</Filter>
+    <ClInclude Include="primitive\datetime\datetime_zonetime.h">
+      <Filter>Header Files\primitive\datetime</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading\multithreading_go_thread.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading\multithreading_simple_thread.h">
+      <Filter>Header Files\multithreading</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_department.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_binary_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\aura\aura_department_container.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_buffered_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\process\process_department.h">
+      <Filter>Header Files\aura\process</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\file\file_circular_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_common.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_edit_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
+    <ClInclude Include="aura\xml\xml_department.h">
+      <Filter>Header Files\aura\xml</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_file.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_file_base.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_html_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_listing_provider.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_md5.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_memory_file.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_primitive.h">
-      <Filter>Header Files\filesystem\file</Filter>
-    </ClInclude>
-    <ClInclude Include="filesystem\file\file_simple_binary_file.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
     <ClInclude Include="filesystem\file\file_stdio_file.h">
@@ -1766,61 +2177,1756 @@
     <ClInclude Include="filesystem\file\file_transfer_file.h">
       <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_value.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_memory_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_rng.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_html_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_objects.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_edit_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_number_integer.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_primitive.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_number_float.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_binary_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_number_double.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_buffered_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_number.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_simple_binary_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_int_biunique.h">
-      <Filter>Header Files\primitive\math</Filter>
+    <ClInclude Include="filesystem\file\file_circular_file.h">
+      <Filter>Header Files\filesystem\file</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_filestream.h">
+    <ClInclude Include="primitive\math\math_binary_operation.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_classes.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_c_number.h">
+    <ClInclude Include="primitive\math\math_filestream.h">
       <Filter>Header Files\primitive\math</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\math\math_binary_operation.h">
+    <ClInclude Include="primitive\math\math_number.h">
       <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_number_double.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_number_float.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_number_integer.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_rng.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_value.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_client_socket.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_data_types.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_file.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_file_list_parser.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_file_status.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_interface.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_output.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_output_stream.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ftp\ftp_transfer_notification.h">
+      <Filter>Header Files\net\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\webserver\webserver_http_cookie.h">
+      <Filter>Header Files\net\http\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\webserver\webserver_http_form.h">
+      <Filter>Header Files\net\http\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\webserver\webserver_http_request.h">
+      <Filter>Header Files\net\http\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\webserver\webserver_http_response.h">
+      <Filter>Header Files\net\http\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\webserver\webserver_http_transaction.h">
+      <Filter>Header Files\net\http\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_application.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_get_socket.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_http.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_listener.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_ostream.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_signal.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_status.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\http_system.h">
+      <Filter>Header Files\net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\mail.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\mail_pop3.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\pop3_socket.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\simple_pop3.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\base\sockets_base_socket.h">
+      <Filter>Header Files\net\sockets\base</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\base\sockets_base_socket_handler.h">
+      <Filter>Header Files\net\sockets\base</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_http_batch_buffer.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_http_buffer.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_link_out_socket.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_logger.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_link_in_socket.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_trace_logger.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_transfer_socket.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\sockets_websocket_client.h">
+      <Filter>Header Files\net\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sockets.h">
+      <Filter>Header Files\net\sockets\bsd</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sockets_bsd.h">
+      <Filter>Header Files\net\sockets\bsd</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sockets_config.h">
+      <Filter>Header Files\net\sockets\bsd</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sockets_sockets.h">
+      <Filter>Header Files\net\sockets\bsd</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context_map.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_listen_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_net.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_sctp_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_socket_handler.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_ssl_client_context.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_ssl_client_context_map.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_stream_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_sync_socket_handler.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_tcp_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_tls_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\basic\sockets_udp_socket.h">
+      <Filter>Header Files\net\sockets\bsd\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\asynch_dns\resolv_server.h">
+      <Filter>Header Files\net\sockets\bsd\asynch_dns</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\asynch_dns\resolv_socket.h">
+      <Filter>Header Files\net\sockets\bsd\asynch_dns</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\internal\SSLInitializer.h">
+      <Filter>Header Files\net\sockets\bsd\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_base.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_base_client_socket.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_callback.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_client.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_event.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_request.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_response.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_server.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_socket.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_tcp_client_socket.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_transaction.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\sip\sip_udp_client_socket.h">
+      <Filter>Header Files\net\sockets\bsd\sip</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\smtp\smtp_socket.h">
+      <Filter>Header Files\net\sockets\bsd\smtp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\smtp\smtpd_socket.h">
+      <Filter>Header Files\net\sockets\bsd\smtp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\timer\Event.h">
+      <Filter>Header Files\net\sockets\bsd\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\timer\EventHandler.h">
+      <Filter>Header Files\net\sockets\bsd\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\timer\EventTime.h">
+      <Filter>Header Files\net\sockets\bsd\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\timer\IEventHandler.h">
+      <Filter>Header Files\net\sockets\bsd\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\timer\IEventOwner.h">
+      <Filter>Header Files\net\sockets\bsd\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\webserver\ajp13.h">
+      <Filter>Header Files\net\sockets\bsd\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\webserver\Ajp13Socket.h">
+      <Filter>Header Files\net\sockets\bsd\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\webserver\AjpBaseSocket.h">
+      <Filter>Header Files\net\sockets\bsd\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\webserver\http_base_socket.h">
+      <Filter>Header Files\net\sockets\bsd\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\webserver\httpd_socket.h">
+      <Filter>Header Files\net\sockets\bsd\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_address.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_byte_order.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_email.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_email_address.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_email_department.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_ip_enum.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_net.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_open_weather_city.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_port_forward.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_sockets.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_url_department.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\net_url_domain.h">
+      <Filter>Header Files\net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_client_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_debug_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_get_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_listener.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_post_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_put_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_session.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_socket.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\http\sockets_http_tunnel.h">
+      <Filter>Header Files\net\sockets\http</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_authentication_map.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_contact_list.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_fontopus.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_licensing.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_user.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_user_authentication.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_user_set.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_usera.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_validate.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\fontopus\fontopus_validate1.h">
+      <Filter>Header Files\aura\fontopus</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\crypto\crypto.h">
+      <Filter>Header Files\aura\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\crypto\crypto_crypto.h">
+      <Filter>Header Files\aura\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interactive.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\scripting\javascript\javascript.h">
+      <Filter>Header Files\aura\scripting\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\scripting\javascript\javascript_functions.h">
+      <Filter>Header Files\aura\scripting\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\scripting\javascript\javascript_tinyjs.h">
+      <Filter>Header Files\aura\scripting\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\scripting\javascript\javascript_tinyjs_functions.h">
+      <Filter>Header Files\aura\scripting\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress_bz.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress_bzip.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress_gz.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress_gzip.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\bsdiff\libbsdiff.h">
+      <Filter>Header Files\aura\compress\bsdiff</Filter>
+    </ClInclude>
+    <ClInclude Include="net\netserver\netserver_socket.h">
+      <Filter>Header Files\net\netserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\netserver\netserver_socket_handler.h">
+      <Filter>Header Files\net\netserver</Filter>
+    </ClInclude>
+    <ClInclude Include="net\netserver\netserver_socket_thread.h">
+      <Filter>Header Files\net\netserver</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\primitive.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\primitive_property.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\str\str_str3.h">
+      <Filter>Header Files\primitive\str</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\str\str_x.h">
+      <Filter>Header Files\primitive\str</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_os_alloc.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading\multithreading_delay_thread.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_bitmap.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_brush.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_common.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_const.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_dib.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_dibmap.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_dibmap_ex1.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_font.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_fwd.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_graphics.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_igui.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_keep.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_object.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_palette.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_path.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_pen.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw2d\draw2d_region.h">
+      <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw3d\draw3d.h">
+      <Filter>Header Files\graphics\draw3d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\draw3d\draw3d_ortho.h">
+      <Filter>Header Files\graphics\draw3d</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual.h">
+      <Filter>Header Files\graphics\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_const.h">
+      <Filter>Header Files\graphics\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_cursor.h">
+      <Filter>Header Files\graphics\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_icon.h">
+      <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
     <ClInclude Include="graphics\graphics.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="multithreading\multithreading_tools.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\crypto\crypto_openssl.h">
+      <Filter>Header Files\aura\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\cross\ansios\ansios_file_raw.h">
+      <Filter>Header Files\aura\os\cross\ansios</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_application.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_bootstrap.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_focus.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_install.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_install_item.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_installer.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_installer_launcher.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_installer_square.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_launcher.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_module_list.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_resource.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_small_bell.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_socket.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_socket_handler.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_socket_thread.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_tool.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_trace.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_window.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install2.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_simple_log.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_api.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_crypt.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_file.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_impl.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_in_file.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_internal.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_ioapi.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_iowin32.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_memory_buffer.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_unzip.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\zip\zip_util.h">
+      <Filter>Header Files\aura\compress\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_chronometer.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura__c.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_application_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_cmp2.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_session_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_session_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_common.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_system_heap.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\os.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_command.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\compress\compress_department.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_const.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_command.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_command_ui_probe.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="multithreading\multithreading_condition.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_core.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_critical_section.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_event.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_event_base.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_event_collection.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_file_change_event.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_manual_reset_event.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_multi_lock.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_mutex.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_retry_multi_lock.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_retry_single_lock.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_semaphore.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_service_base.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_single_lock.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_socket_event.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_sync_object.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_synch_lock.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_wait_result.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_waitable.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_memory.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_memory_base.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_memory_container.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_shared_memory.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_virtual_memory.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_object.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_factory.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_interlocked_long.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_interlocked_long_pulse.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_edit.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_type.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_var.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_property_set.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_request_interface.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_command.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_command_line.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_application_bias.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_signal.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_request_signal.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_id.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_id_space.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_memory_c.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_bit.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_job.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\comparison\comparison_var_strict.cpp">
+      <Filter>Source Files\primitive\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_duration.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_time.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_point.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_rect.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_size.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_types.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_2d_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_bit_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_class_sort_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_comparable_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_id_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_key_sort_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_map_misc.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_numeric_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_object_list.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_point_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_pointer_list.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_rect_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_sort.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_string_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_string_list.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_string_to_string_map.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_stringa.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_stringl.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_var_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_math.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_binary_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_byte_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_composite.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_dir.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_dir2.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_exception.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_stream_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_reader.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_seekable.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream2.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_writer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_writer_flush.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_color.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_signal_thread.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_value.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_circular_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_buffered_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_base64.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_c.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_ch.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_ch_class.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_core.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_dup.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_format.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_from_integer.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_hex.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_international.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_international_locale_schema.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_istring.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_manager.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_parse.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_simple.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_str.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_string.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_stringtow.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_strw.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_strx.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_to_integer.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_tokenizer.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_verisimple_wstring.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_wtostring.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_attr.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_base_array.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_data.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_disp_option.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_document.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_edit.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_entity.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_exportable.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_importable.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_input_tree.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_node.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_output_tree.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_parse_info.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_property_exchange.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_tree_base.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_tree_schema.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_var_exchange.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_xml.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\xml_xmlite.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_file.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_http.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_process.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_thread.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_archive.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_archive_exception.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_base.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_call_stack.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_debug.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_dump.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_dump_context.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_dump_floating_point.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_dump_output.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_engine.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_error.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_exit.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_hresult.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_installing.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_interface_only.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_invalid_argument.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_invalid_character.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_invalid_handle.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_invalid_index.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_io.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_last_error.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_memory.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_not_implemented.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_not_installed.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_not_licensed.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_not_supported.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_operation_canceled.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_os.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_overflow_error.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_range_error.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_resource.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_runtime_error.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_simple.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_standard_translator.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_temporary.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_todo.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_user.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_void_implementation.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_mid_big.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_system_heap.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_application.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_argcargv.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_assert.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_checked.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_conv.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_cpu_architecture.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_cregexp.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_cregexp_util.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_debug.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_element.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_file_watcher.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_file_watcher_impl.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_file_watcher_listener_thread.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_file_watcher_thread.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_fixed_alloc.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_flags.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_heap.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_international.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_live_object.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_live_signal.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_log.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_machine_event.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_machine_event_central.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_machine_event_data.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_math.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_mktime.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_muldiv64.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_plex_heap.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_printf.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_session.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_sprintf.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_system.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_template.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_trace.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_folder_watch.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_set.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_savings.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_progress.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_scalar.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_action_context.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_relation_set.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_binreloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_cross_win.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_cross_win_file.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_cross_windows_user.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_file_std.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_multithreading.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_natural.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_mkint_c.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_id_pool.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_thread.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_dll.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_error.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_launcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_lock.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_main.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_message_loop.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_multithreading.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_simple_app.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_simple_shell_launcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_small_ipc_channel.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_time.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_util.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_crt.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_datetime.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_error.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_locale.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_shared_memory.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_threading.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_user.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\cross_windows_windows.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\metrowin\cross_metrowin_user.cpp">
+      <Filter>Source Files\aura\os\cross\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_application.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_factory_exchange.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_file.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_file_find.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_folder_watch.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_os.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_registry.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_shell.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_stdio_file.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_thread.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_trace.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_library.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_file_watcher.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_uac_tools.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_dispatch.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_debug.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_thread_impl.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\ansios\ansios_thread_impl.cpp">
+      <Filter>Source Files\aura\node\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_base_file.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_static_start.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_gudo.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_parsing.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_library.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_data.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_data_container.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_data_listener.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_serializable.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_geometry.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_c.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_net.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_verisimple.cpp">
+      <Filter>Source Files\aura\exception</Filter>
     </ClCompile>
     <ClCompile Include="user\simple\simple_message_box.cpp">
       <Filter>Source Files\user\simple</Filter>
     </ClCompile>
-    <ClCompile Include="aura\_aura_aura.cpp">
-      <Filter>Source Files\aura</Filter>
+    <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
     </ClCompile>
-    <ClCompile Include="filesystem\file\_file.cpp">
+    <ClCompile Include="user\colorertake5\colorertake5_colorertake5.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_default_error_handler.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_error_handler_writer.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_exception.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_helpers.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_impl.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_line_regions_compact_support.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_line_regions_support.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_line_source.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_logging.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_outliner.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_parsed_line_writer.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_parser_factory.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_region_handler.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_region_mapper_impl.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_styled_hrd_mapper.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_text_hrd_mapper.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_text_lines.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_text_parser_helpers.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\colorertake5_text_parser_impl.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_process.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\ansios\ansios_process.cpp">
+      <Filter>Source Files\aura\node\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_pipe.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\ansios\ansios_pipe.cpp">
+      <Filter>Source Files\aura\node\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\process\process_pipe.cpp">
+      <Filter>Source Files\aura\process</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\process\process_process.cpp">
+      <Filter>Source Files\aura\process</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\process\process_bidi_pipe.cpp">
+      <Filter>Source Files\aura\process</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_cancel.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_cvt.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_cvt_g.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\ansios\ansios_datetime.cpp">
+      <Filter>Source Files\aura\os\cross\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\service\service_plain_service.cpp">
+      <Filter>Source Files\multithreading\service</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_stream_base.cpp">
       <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_message_loop.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\exception_throw.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi_cursor.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_gdi_icon.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_assert_running_task.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_mktime.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_array.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_item.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_create_context.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_draw_context.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_draw_interface.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_printer.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_create.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_base.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_command_target.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_command_target_interface.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_command_ui.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_local_memory_map.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_local_memory_map.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_local_memory_map.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_str_context.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_ansi_file.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_application.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
@@ -1834,47 +3940,257 @@
     <ClCompile Include="filesystem\filesystem\filesystem_system.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="multithreading\_multithreading.cpp">
-      <Filter>Source Files\multithreading</Filter>
+    <ClCompile Include="aura\node\windows\windows_dir.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\_primitive.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="user\colorertake5\_colorertake5.cpp">
-      <Filter>Source Files\user\colorertake5</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\str\str_ch.cpp">
-      <Filter>Source Files\primitive\str</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\str\str_ch_class.cpp">
-      <Filter>Source Files\primitive\str</Filter>
+    <ClCompile Include="aura\node\windows\windows_file_system.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="net\net_url.cpp">
       <Filter>Source Files\net</Filter>
     </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_x86_cache_oriented.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_processor_cache_oriented.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_profiler.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_simple_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_path.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\windows\windows_ipc.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
+    <ClCompile Include="primitive\datetime\datetime_file_time_span.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
     </ClCompile>
-    <ClCompile Include="aura\exception\exception_engine.cpp">
-      <Filter>Source Files\aura\exception</Filter>
+    <ClCompile Include="primitive\datetime\datetime_file_time.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="primitive\datetime\datetime_time_span.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_date_span.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_listing.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\ace\_ace_new.cpp">
-      <Filter>Source Files\ace</Filter>
+    <ClCompile Include="filesystem\file\file_byte_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="..\ace\ace_alloc.c">
-      <Filter>Source Files\ace</Filter>
+    <ClCompile Include="filesystem\file\file_byte_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="version.cpp">
+    <ClCompile Include="filesystem\file\file_file_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_sz.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_ipi.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_app_core.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_ipc.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_shell_launcher.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_app_launcher.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_console_window.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_frame.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_primitive.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_speaker.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_tts_speaker.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_console_window.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_callback.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_native_buffer.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_file_system.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_int_biunique.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_base.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_box.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_md5.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_md5.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_internal.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_ipc.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_registry.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_process_env_reader.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_lparam.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_new.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_department.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_department_container.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_department.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_department.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\process\process_department.cpp">
+      <Filter>Source Files\aura\process</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\pcre\pcre.cpp">
+      <Filter>Source Files\aura\pcre</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\UTF8Prober.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\universal.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\SJISProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\SBCSGroupProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\SBCharsetProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\MBCSSM.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\MBCSGroupProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\Latin1Prober.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\LangThaiModel.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\LangHungarianModel.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\LangGreekModel.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\LangCyrillicModel.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\LangBulgarianModel.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\jpCntx.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\GB2312Prober.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\EUCTWProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\EUCKRProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\EUCJPProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\EscSM.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\EscCharsetProber.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\charguess.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\charDistribution.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\big5Prober.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_thread_os.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_alloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_os.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\os_debug.cpp">
       <Filter>Source Files\aura\os</Filter>
@@ -1885,125 +4201,62 @@
     <ClCompile Include="aura\os\windows\windows_process.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="_aura.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="multithreading\multithreading_go_thread.cpp">
+      <Filter>Source Files\multithreading</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\datetime\_datetime.cpp">
-      <Filter>Source Files\primitive\datetime</Filter>
+    <ClCompile Include="multithreading\multithreading_simple_thread.cpp">
+      <Filter>Source Files\multithreading</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_value.cpp">
-      <Filter>Source Files\primitive\math</Filter>
+    <ClCompile Include="filesystem\file\file_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_scalar.cpp">
-      <Filter>Source Files\primitive\math</Filter>
+    <ClCompile Include="filesystem\file\file_file_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_rng.cpp">
-      <Filter>Source Files\primitive\math</Filter>
+    <ClCompile Include="filesystem\file\file_stdio_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_number_integer.cpp">
-      <Filter>Source Files\primitive\math</Filter>
+    <ClCompile Include="filesystem\file\file_string_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_number_float.cpp">
-      <Filter>Source Files\primitive\math</Filter>
+    <ClCompile Include="filesystem\file\file_text_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_number_double.cpp">
+    <ClCompile Include="filesystem\file\file_memory_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_edit_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_html_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_simple_binary_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_binary_operation.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
     <ClCompile Include="primitive\math\math_number.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_natural.cpp">
+    <ClCompile Include="primitive\math\math_number_double.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_mkint_c.cpp">
+    <ClCompile Include="primitive\math\math_number_float.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_math.cpp">
+    <ClCompile Include="primitive\math\math_number_integer.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_int_biunique.cpp">
+    <ClCompile Include="primitive\math\math_value.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_department.cpp">
+    <ClCompile Include="primitive\math\math_rng.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\math\math_cvt_g.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\math_cvt.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\math_binary_operation.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\math.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\_math_file.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\_math.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\scripting\javascript\javascript.cpp">
-      <Filter>Source Files\aura\scripting\javascript</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp">
-      <Filter>Source Files\aura\scripting\javascript</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp">
-      <Filter>Source Files\aura\scripting\javascript</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_gz.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_department.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_bz.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\bsdiff\bsdiff.cpp">
-      <Filter>Source Files\aura\compress\bsdiff</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_zip.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_util.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_unzip.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_memory_buffer.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_ioapi.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_in_file.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_api.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\zip\zip_file.cpp">
-      <Filter>Source Files\aura\compress\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\crypto\crypto_crypto.cpp">
-      <Filter>Source Files\aura\crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\crypto\_crypto.cpp">
-      <Filter>Source Files\aura\crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\fontopus\_fontopus.cpp">
-      <Filter>Source Files\aura\fontopus</Filter>
+    <ClCompile Include="aura_keep.cpp">
+      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="net\ftp\ftp_client_socket.cpp">
       <Filter>Source Files\net\ftp</Filter>
@@ -2026,9 +4279,6 @@
     <ClCompile Include="net\ftp\ftp_output_stream.cpp">
       <Filter>Source Files\net\ftp</Filter>
     </ClCompile>
-    <ClCompile Include="net\ftp\_ftp.cpp">
-      <Filter>Source Files\net\ftp</Filter>
-    </ClCompile>
     <ClCompile Include="net\http\http.cpp">
       <Filter>Source Files\net\http</Filter>
     </ClCompile>
@@ -2045,9 +4295,6 @@
       <Filter>Source Files\net\http</Filter>
     </ClCompile>
     <ClCompile Include="net\http\http_status.cpp">
-      <Filter>Source Files\net\http</Filter>
-    </ClCompile>
-    <ClCompile Include="net\http\http_system.cpp">
       <Filter>Source Files\net\http</Filter>
     </ClCompile>
     <ClCompile Include="net\http\webserver\webserver_http_cookie.cpp">
@@ -2074,28 +4321,13 @@
     <ClCompile Include="net\mail\mail_simple_pop3.cpp">
       <Filter>Source Files\net\mail</Filter>
     </ClCompile>
-    <ClCompile Include="net\mail\pop3_format.cpp">
-      <Filter>Source Files\net\mail</Filter>
+    <ClCompile Include="net\sockets\base\sockets_base_socket_handler.cpp">
+      <Filter>Source Files\net\sockets\base</Filter>
     </ClCompile>
-    <ClCompile Include="net\mail\pop3_objects.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\pop3_parsing.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\pop3_queries.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\pop3_session.cpp">
-      <Filter>Source Files\net\mail</Filter>
-    </ClCompile>
-    <ClCompile Include="net\mail\pop3_socket.cpp">
-      <Filter>Source Files\net\mail</Filter>
+    <ClCompile Include="net\sockets\base\sockets_base_socket.cpp">
+      <Filter>Source Files\net\sockets\base</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\sockets_http_batch_buffer.cpp">
-      <Filter>Source Files\net\sockets</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\sockets_http_buffer.cpp">
       <Filter>Source Files\net\sockets</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\sockets_link_in_socket.cpp">
@@ -2112,30 +4344,6 @@
     </ClCompile>
     <ClCompile Include="net\sockets\sockets_websocket_client.cpp">
       <Filter>Source Files\net\sockets</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\_sockets.cpp">
-      <Filter>Source Files\net\sockets</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\base\sockets_base_socket.cpp">
-      <Filter>Source Files\net\sockets\base</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\base\sockets_base_socket_handler.cpp">
-      <Filter>Source Files\net\sockets\base</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\sockets_include.cpp">
-      <Filter>Source Files\net\sockets\bsd</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\sockets_sockets.cpp">
-      <Filter>Source Files\net\sockets\bsd</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\_bsd.cpp">
-      <Filter>Source Files\net\sockets\bsd</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\asynch_dns\sockets_resolv_server.cpp">
-      <Filter>Source Files\net\sockets\bsd\asynch_dns</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\asynch_dns\sockets_resolv_socket.cpp">
-      <Filter>Source Files\net\sockets\bsd\asynch_dns</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\basic\sockets_listen_socket.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
@@ -2158,12 +4366,6 @@
     <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_client_context_map.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
     </ClCompile>
-    <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_server_context.cpp">
-      <Filter>Source Files\net\sockets\bsd\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\basic\sockets_ssl_server_context_map.cpp">
-      <Filter>Source Files\net\sockets\bsd\basic</Filter>
-    </ClCompile>
     <ClCompile Include="net\sockets\bsd\basic\sockets_stream_socket.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
     </ClCompile>
@@ -2178,6 +4380,18 @@
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\basic\sockets_udp_socket.cpp">
       <Filter>Source Files\net\sockets\bsd\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\asynch_dns\sockets_resolv_server.cpp">
+      <Filter>Source Files\net\sockets\bsd\asynch_dns</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\asynch_dns\sockets_resolv_socket.cpp">
+      <Filter>Source Files\net\sockets\bsd\asynch_dns</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\sockets_include.cpp">
+      <Filter>Source Files\net\sockets\bsd</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\sockets_sockets.cpp">
+      <Filter>Source Files\net\sockets\bsd</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\sip\sockets_sip_base.cpp">
       <Filter>Source Files\net\sockets\bsd\sip</Filter>
@@ -2209,6 +4423,12 @@
     <ClCompile Include="net\sockets\bsd\sip\sockets_sip_udp_client_socket.cpp">
       <Filter>Source Files\net\sockets\bsd\sip</Filter>
     </ClCompile>
+    <ClCompile Include="net\sockets\bsd\smtp\sockets_smtp_socket.cpp">
+      <Filter>Source Files\net\sockets\bsd\smtp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\smtp\sockets_smtpd_socket.cpp">
+      <Filter>Source Files\net\sockets\bsd\smtp</Filter>
+    </ClCompile>
     <ClCompile Include="net\sockets\bsd\timer\sockets_Event.cpp">
       <Filter>Source Files\net\sockets\bsd\timer</Filter>
     </ClCompile>
@@ -2221,23 +4441,47 @@
     <ClCompile Include="net\sockets\bsd\timer\sockets_IEventOwner.cpp">
       <Filter>Source Files\net\sockets\bsd\timer</Filter>
     </ClCompile>
-    <ClCompile Include="net\sockets\bsd\smtp\sockets_smtpd_socket.cpp">
-      <Filter>Source Files\net\sockets\bsd\smtp</Filter>
-    </ClCompile>
-    <ClCompile Include="net\sockets\bsd\smtp\sockets_smtp_socket.cpp">
-      <Filter>Source Files\net\sockets\bsd\smtp</Filter>
-    </ClCompile>
     <ClCompile Include="net\sockets\bsd\webserver\sockets_Ajp13Socket.cpp">
       <Filter>Source Files\net\sockets\bsd\webserver</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\bsd\webserver\sockets_AjpBaseSocket.cpp">
       <Filter>Source Files\net\sockets\bsd\webserver</Filter>
     </ClCompile>
+    <ClCompile Include="net\sockets\bsd\webserver\sockets_http_base_socket.cpp">
+      <Filter>Source Files\net\sockets\bsd\webserver</Filter>
+    </ClCompile>
     <ClCompile Include="net\sockets\bsd\webserver\sockets_httpd_socket.cpp">
       <Filter>Source Files\net\sockets\bsd\webserver</Filter>
     </ClCompile>
-    <ClCompile Include="net\sockets\bsd\webserver\sockets_http_base_socket.cpp">
-      <Filter>Source Files\net\sockets\bsd\webserver</Filter>
+    <ClCompile Include="net\net_address.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_email.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_email_address.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_email_department.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_ip_enum.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_net.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_port_forward.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_sockets.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_url_department.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_url_domain.cpp">
+      <Filter>Source Files\net</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\http\sockets_http_client_socket.cpp">
       <Filter>Source Files\net\sockets\http</Filter>
@@ -2266,8 +4510,83 @@
     <ClCompile Include="net\sockets\http\sockets_http_tunnel.cpp">
       <Filter>Source Files\net\sockets\http</Filter>
     </ClCompile>
-    <ClCompile Include="net\_net.cpp">
-      <Filter>Source Files\net</Filter>
+    <ClCompile Include="aura\fontopus\fontopus.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_authentication_map.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_contact_list.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_fontopus.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_licensing.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_user.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_user_authentication.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_user_set.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_usera.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\fontopus_validate.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\crypto\crypto_crypto.cpp">
+      <Filter>Source Files\aura\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interactive.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_zip.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_util.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_unzip.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_memory_buffer.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_ioapi.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_in_file.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_api.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\zip_file.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_gz.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_compress.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_bz.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
     </ClCompile>
     <ClCompile Include="net\netserver\netserver_socket.cpp">
       <Filter>Source Files\net\netserver</Filter>
@@ -2278,20 +4597,209 @@
     <ClCompile Include="net\netserver\netserver_socket_thread.cpp">
       <Filter>Source Files\net\netserver</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="net\http\http_system.cpp">
+      <Filter>Source Files\net\http</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_property.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\simple_log.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_x.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_bitmap.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_brush.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_debug.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_dib.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_dibmap.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_font.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_graphics.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_keep.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
     </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_nanosvg.cpp">
       <Filter>Source Files\graphics\draw2d</Filter>
     </ClCompile>
-    <ClCompile Include="multithreading\service\service_plain_service.cpp">
+    <ClCompile Include="graphics\draw2d\draw2d_object.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_palette.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_path.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_pen.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_region.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw3d\draw3d_ortho.cpp">
+      <Filter>Source Files\graphics\draw3d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_cursor.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_icon.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_application.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_tools.cpp">
       <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_malloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_no_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_WindowsHeapAlloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_module_list.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_launcher.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_focus.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_install.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_installer_launcher.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_installer_square.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_small_bell.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_trace.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\windows\install_windows_boot.cpp">
+      <Filter>Source Files\aura\install\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\windows\install_windows_service.cpp">
+      <Filter>Source Files\aura\install\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\windows\install_windows_win.cpp">
+      <Filter>Source Files\aura\install\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\crypto\crypto_openssl.cpp">
+      <Filter>Source Files\aura\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_install_item.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_installer.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_tool.cpp">
+      <Filter>Source Files\aura\install</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\cross\ansios\ansios_file_raw.cpp">
       <Filter>Source Files\aura\os\cross\ansios</Filter>
     </ClCompile>
-    <ClCompile Include="aura\install\_install.cpp">
+    <ClCompile Include="aura\install\install_application.cpp">
       <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_bootstrap.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_socket.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_socket_handler.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_socket_thread.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_trace_file.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\install_window.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_path.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_base.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_chronometer.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_timer.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_handler.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\internal\sockets_SSLInitializer.cpp">
+      <Filter>Source Files\net\sockets\bsd\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_file.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_command.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_command_ui_probe.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_windowing.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ace\ace_alloc.c">
+      <Filter>Source Files\ace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ace\version.c">
+      <Filter>Source Files\ace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ace\_ace_new.cpp">
+      <Filter>Source Files\ace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\aqua\aqua_graphics_alpha.cpp">
+      <Filter>Source Files\aqua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2303,15 +4811,6 @@
     </None>
     <None Include="primitive\str\str.inl">
       <Filter>Header Files\primitive\str</Filter>
-    </None>
-    <None Include="primitive\collection\collection.inl">
-      <Filter>Header Files\primitive\collection</Filter>
-    </None>
-    <None Include="aura.def">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="aura\message\message.inl">
-      <Filter>Header Files\aura\message</Filter>
     </None>
     <None Include="aura\aura\aura.inl">
       <Filter>Header Files\aura\aura</Filter>
@@ -2334,13 +4833,55 @@
     <None Include="aura\aura\aura_system_xml.inl">
       <Filter>Header Files\aura\aura</Filter>
     </None>
-    <None Include="filesystem\file\file_serializable.inl">
-      <Filter>Header Files\filesystem\file</Filter>
+    <None Include="primitive\collection\collection.inl">
+      <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="aura.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="aura\message\message.inl">
+      <Filter>Header Files\aura\message</Filter>
+    </None>
+    <None Include="primitive\collection\collection_map_impl.inl">
+      <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="primitive\collection\collection_array_impl.inl">
+      <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="primitive\collection\collection_raw_array_impl.inl">
+      <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="primitive\collection\collection_array_base.inl">
+      <Filter>Header Files\primitive\collection</Filter>
+    </None>
+    <None Include="aura\os\windows\windows.inl">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </None>
+    <None Include="primitive\geometry\geometry_size.inl">
+      <Filter>Header Files\primitive\geometry</Filter>
+    </None>
+    <None Include="primitive\primitive.inl">
+      <Filter>Header Files\primitive</Filter>
+    </None>
+    <None Include="filesystem\filesystem.inl">
+      <Filter>Header Files\filesystem</Filter>
+    </None>
+    <None Include="net\net.inl">
+      <Filter>Header Files\net</Filter>
+    </None>
+    <None Include="aura\os\windows\windows_app.inl">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </None>
+    <None Include="aura\os\windows\windows_app_console.inl">
+      <Filter>Header Files\aura\os\windows</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="aura.rc">
-      <Filter>Source Files</Filter>
-    </ResourceCompile>
+    <Text Include="aura\scripting\javascript\from_tiny_js_42.txt">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </Text>
+    <Text Include="aura\compress\zip\zip_algorithm.txt">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </Text>
   </ItemGroup>
 </Project>

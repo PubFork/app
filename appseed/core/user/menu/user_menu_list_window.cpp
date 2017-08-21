@@ -96,10 +96,10 @@ namespace user
 //   }
    
 
-   bool menu_list_window::track_popup_menu(::user::interaction * puiParent, ::user::interaction * puiNotify)
+   bool menu_list_window::track_popup_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
    {
 
-      if(!::user::menu::track_popup_menu(puiParent, puiNotify))
+      if(!::user::menu::track_popup_menu(puiNotify, puiParent))
       {
        
          return false;
@@ -506,8 +506,10 @@ namespace user
 
             //}
 
-            pitem->m_pui->m_pitem = pitem;
+            pitem->m_pui->m_pmenuitem = pitem;
+
             pitem->m_pmenu = this;
+
          }
          
         create_buttons(pitem);
