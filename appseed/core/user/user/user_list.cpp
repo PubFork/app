@@ -148,7 +148,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-     pgraphics->FillSolidRect(rectClient, _001GetColor(color_list_background));
+     //pgraphics->FillSolidRect(rectClient, _001GetColor(color_list_background));
 
 
       //      pgraphics->SetBkMode(TRANSPARENT);

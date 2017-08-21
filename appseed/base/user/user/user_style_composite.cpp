@@ -477,33 +477,40 @@ namespace user
    
       e_schema eschema = get_user_style();
    
-      sp(::user::style) puserstyle = Session.m_puserstyle;
-   
-      if(puserstyle == NULL)
+      sp(::user::style) puserstyle = m_puserstyle;
+         
+      if (puserstyle.is_null())
       {
-      
-         puserstyle = Application.m_puserstyle;
-      
-         if(puserstyle == NULL)
+
+         puserstyle = Session.m_puserstyle;
+
+         if (puserstyle == NULL)
          {
-         
-            puserstyle = Session.m_puserstyle;
-            
-            if(puserstyle == NULL)
+
+            puserstyle = Application.m_puserstyle;
+
+            if (puserstyle == NULL)
             {
-            
-               puserstyle = canew(style(get_app()));
-               
+
+               puserstyle = Session.m_puserstyle;
+
+               if (puserstyle == NULL)
+               {
+
+                  puserstyle = canew(style(get_app()));
+
+               }
+
             }
-            
+
          }
-         
+
       }
       
       if(eschema == schema_default)
       {
     
-         m_puserstyle = puserstyle;
+         m_puserstyleSelect = puserstyle;
       
       }
       else
@@ -514,13 +521,13 @@ namespace user
          if(puserstyleNext.is_set())
          {
       
-            m_puserstyle = puserstyleNext;
+            m_puserstyleSelect = puserstyleNext;
          
          }
          else
          {
          
-            m_puserstyle = puserstyle;
+            m_puserstyleSelect = puserstyle;
          
          }
       
@@ -566,7 +573,7 @@ namespace user
    style * style_composite::userstyle()
    {
 
-      ::user::style * puserstyle = m_puserstyle;
+      ::user::style * puserstyle = m_puserstyleSelect;
 
       if (puserstyle != NULL)
       {

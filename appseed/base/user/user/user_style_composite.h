@@ -17,7 +17,11 @@ namespace user
       
       ::aura::library *       m_plibrary;
       
+
       ::user::style_sp        m_puserstyle;
+
+      ::user::style_sp        m_puserstyleSelect;
+
       
       style_composite();
       virtual ~style_composite();

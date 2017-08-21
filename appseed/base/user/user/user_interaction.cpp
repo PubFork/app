@@ -2101,6 +2101,29 @@ namespace user
 
       }
 
+      if (m_puserstyle.is_null())
+      {
+
+         ::user::interaction * pui = GetParent();
+
+         while (pui != NULL)
+         {
+
+            m_puserstyle = pui->m_puserstyle;
+
+            if (m_puserstyle.is_set())
+            {
+
+               break;
+
+            }
+
+            pui = pui->GetParent();
+
+         }
+
+      }
+
       try
       {
       
