@@ -93,7 +93,14 @@ namespace user
       if (pFrame == NULL)
       {
 
-         string strId = demangle(typeid(*pcreate->m_puiAlloc).name());
+         string strId;
+
+         if (pcreate->m_puiAlloc != NULL)
+         {
+
+            strId = demangle(typeid(*pcreate->m_puiAlloc).name());
+
+         }
          
          if (strId.find_ci("userex::message_box") < 0)
          {

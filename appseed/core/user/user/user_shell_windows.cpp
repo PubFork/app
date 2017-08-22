@@ -1957,7 +1957,12 @@ namespace user
 
                sl.unlock();
 
-               m_evKey.wait();
+               if (!m_evKey.wait(millis(500)).succeeded())
+               {
+
+                  continue;
+
+               }
 
             }
             else
@@ -2058,7 +2063,7 @@ namespace user
 
             }
 
-            if (Application.file().exists(strPath) || Application.dir().is(strPath))
+            //if (Application.file().exists(strPath) || Application.dir().is(strPath))
             {
 
                image_key_store * pstore = new image_key_store(imagekey);
@@ -2078,12 +2083,12 @@ namespace user
                iImage = get_foo_image(NULL, oswindow, imagekey, imagekey.m_cr);
 
             }
-            else
-            {
+            //else
+            //{
 
-               iImage = get_image_foo(oswindow, "", eattribute, eicon, crBk);
+            //   iImage = get_image_foo(oswindow, "", eattribute, eicon, crBk);
 
-            }
+            //}
 
             synch_lock sl(m_pmutex);
 

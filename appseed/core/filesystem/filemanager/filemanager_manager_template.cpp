@@ -169,10 +169,21 @@ namespace filemanager
             
          }
 
-         for (auto str : stra)
+         if (stra.is_empty())
          {
 
-            restore_manager(str, pcreate, pdata, pfilemanagerdata, pcallback);
+            restore_manager("", pcreate, pdata, pfilemanagerdata, pcallback);
+
+         }
+         else
+         {
+
+            for (auto str : stra)
+            {
+
+               restore_manager(str, pcreate, pdata, pfilemanagerdata, pcallback);
+
+            }
 
          }
 

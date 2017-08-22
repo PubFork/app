@@ -1541,6 +1541,20 @@ retry:
 
 
 
+::file::path dir::bergedge()
+{
+
+#ifdef WINDOWS
+
+   return "C:\\bergedge";
+
+#else
+
+   return "/bergedge";
+
+#endif
+
+}
 
 
 

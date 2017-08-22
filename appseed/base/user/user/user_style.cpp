@@ -9,6 +9,10 @@ namespace user
       style(get_app())
    {
 
+      m_puserstyle = NULL;
+
+      m_puserstyleSelect = NULL;
+
       m_eschema = schema_default;
 
       m_pgraphics = NULL;
@@ -19,6 +23,10 @@ namespace user
    style::style(::aura::application * papp) :
       ::object(papp)
    {
+
+      m_puserstyle = NULL;
+
+      m_puserstyleSelect = NULL;
 
       m_eschema = schema_default;
 
@@ -39,9 +47,24 @@ namespace user
    bool style::create_and_select_user_style(e_schema eschema)
    {
 
-      m_map[eschema] = canew(style(get_app()));
+      if (eschema == ::user::schema_default)
+      {
 
-      m_puserstyle = m_map[eschema];
+         m_puserstyle = this;
+
+         m_puserstyleSelect = this;
+
+      }
+      else
+      {
+
+         m_map[eschema] = canew(style(get_app()));
+
+         m_puserstyle = m_map[eschema];
+
+         m_puserstyleSelect = m_puserstyle;
+
+      }
 
       return true;
 
@@ -1158,7 +1181,7 @@ namespace user
    bool style::create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight)
    {
 
-      auto & font = m_puserstyle->m_mapFont[efont];
+      auto & font = userstyle()->m_mapFont[efont];
 
       if (font.is_null())
       {

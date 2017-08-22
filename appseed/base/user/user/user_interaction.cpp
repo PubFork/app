@@ -2101,7 +2101,7 @@ namespace user
 
       }
 
-      if (m_puserstyle.is_null())
+      if (m_puserstyle == NULL)
       {
 
          ::user::interaction * pui = GetParent();
@@ -2111,7 +2111,7 @@ namespace user
 
             m_puserstyle = pui->m_puserstyle;
 
-            if (m_puserstyle.is_set())
+            if (m_puserstyle != NULL)
             {
 
                break;
