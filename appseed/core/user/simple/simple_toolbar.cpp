@@ -114,12 +114,12 @@ void simple_toolbar::install_message_handling(::message::dispatch * pdispatch)
 bool simple_toolbar::create(sp(::user::interaction) pParentWnd, uint32_t dwStyle, id nID)
 {
 
-   return create_window_ex(pParentWnd, 0, dwStyle, rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
+   return create_toolbar(pParentWnd, 0, dwStyle, rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
 
 }
 
 
-bool simple_toolbar::create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle, const RECT & rectBorders, id nID)
+bool simple_toolbar::create_toolbar(::user::interaction * pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle, const RECT & rectBorders, id nID)
 {
 
    ASSERT_VALID(pParentWnd);   // must have a parent

@@ -61,7 +61,7 @@ public:
 
    bool create(sp(::user::interaction) pParentWnd, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_TOP, id nID = "__IDW_TOOLBAR"); 
    using ::user::interaction::create_window_ex;
-   bool create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = ::null_rect(), id nID = "__IDW_TOOLBAR");
+   virtual bool create_toolbar(::user::interaction * pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = ::null_rect(), id nID = "__IDW_TOOLBAR") override;
 
 
    int32_t WrapToolBar(int32_t nCount, int32_t nWidth);

@@ -2172,7 +2172,7 @@ bool simple_frame_window::LoadToolBar(sp(::type) sptype, id idToolBar, const cha
       if(ptoolbar == NULL)
          return false;
 
-      ptoolbar->create_window_ex(this,dwCtrlStyle,dwStyle);
+      ptoolbar->create_toolbar(this,dwCtrlStyle,dwStyle);
 
    }
 
