@@ -56,7 +56,7 @@ namespace user
    }
 
 
-   void notify_icon::install_message_handling(::message::dispatch * pinterface)
+   void notify_icon::install_message_routing(::message::sender * pinterface)
    {
 
 #ifdef WINDOWSEX
@@ -361,7 +361,7 @@ namespace user
    }
 
 
-   void notify_icon::_001OnNotifyIconMessage(signal_details * pobj)
+   void notify_icon::_001OnNotifyIconMessage(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);

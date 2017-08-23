@@ -33,7 +33,7 @@ namespace filemanager
             virtual ~view();
 
 
-            void install_message_handling(::message::dispatch * pinterface);
+            void install_message_routing(::message::sender * pinterface);
 
             void open_file(int64_t iFolder, const char * lpszFileName, const char * pszExt);
             void open_folder(int64_t iFolder);

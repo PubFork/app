@@ -17,12 +17,12 @@ namespace user
    }
 
 
-   void form_list_view::install_message_handling(::message::dispatch * pdispatch)
+   void form_list_view::install_message_routing(::message::sender * psender)
    {
 
-      //::user::form_list::install_message_handling(pdispatch);
-      ::user::show < ::user::form_list >::install_message_handling(pdispatch);
-      //::user::form_view::install_message_handling(pdispatch);
+      //::user::form_list::install_message_routing(pdispatch);
+      ::user::show < ::user::form_list >::install_message_routing(pdispatch);
+      //::user::form_view::install_message_routing(pdispatch);
 
    }
 

@@ -88,7 +88,7 @@ CLASS_DECL_AURA void AfxTryCleanup();
 
 #include "ios_shell.h"
 
-CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, signal_details * pobj);
+CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
 

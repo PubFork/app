@@ -8,7 +8,7 @@ namespace aura
 
 
    class CLASS_DECL_AURA department :
-   virtual public signalizable
+   virtual public ::message::receiver
    {
    public:
 
@@ -34,7 +34,7 @@ namespace aura
       virtual int32_t exit_application();
 
 
-      void on_signal(signal_details * pobj);
+      void on_signal(::message::message * pobj);
 
    };
 

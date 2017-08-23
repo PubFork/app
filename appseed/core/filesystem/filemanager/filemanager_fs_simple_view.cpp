@@ -33,9 +33,9 @@ namespace filemanager
             //  delete m_pinetsession;
          }
 
-         void view::install_message_handling(::message::dispatch * pinterface)
+         void view::install_message_routing(::message::sender * pinterface)
          {
-            ::user::split_view::install_message_handling(pinterface);
+            ::user::split_view::install_message_routing(pinterface);
          }
 
 
@@ -107,10 +107,10 @@ namespace filemanager
          }
 
 
-         void view::on_request_response(signal_details * pobj)
+         void view::on_request_response(::message::message * pobj)
          {
 
-            SCAST_PTR(::http::signal, psignal, pobj);
+            SCAST_PTR(::http_message, psignal, pobj);
 
             string strResponse;
 
@@ -130,7 +130,7 @@ namespace filemanager
          void view::open_folder(int64_t iFolder)
          {
 
-            ::http::signal * psignal = new ::http::signal;
+            ::http_message * psignal = new ::http_message;
 
             (*psignal)()["request"] = "";
 

@@ -90,7 +90,7 @@ namespace message
       using ::message::base::set;
 
       virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
-      static_function mouse * cast(signal_details * pobj)
+      static_function mouse * cast(::message::message * pobj)
       {
          return dynamic_cast < mouse * > (pobj);
       }

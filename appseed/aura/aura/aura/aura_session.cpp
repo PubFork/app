@@ -416,7 +416,7 @@ namespace aura
 
 
 
-   void session::frame_pre_translate_message(signal_details * pobj)
+   void session::frame_pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

@@ -11,6 +11,7 @@ namespace user
    {
       
    }
+
    
    menu::menu(::aura::application * papp) :
    ::object(papp),
@@ -29,6 +30,7 @@ namespace user
       m_pmenuParent        = NULL;
       m_psubmenu           = NULL;
       m_iHoverSubMenu      = -1;
+      m_bInline            = false;
       
    }
    
@@ -49,6 +51,7 @@ namespace user
       m_puserstyle         = NULL;
       m_pitem              = pitem;
       m_bOwnItem           = false;
+      m_bInline            = false;
       
    }
    
@@ -59,12 +62,11 @@ namespace user
    }
 
 
-   void menu::install_message_handling(::message::dispatch * pdispatch)
+   void menu::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_handling(pdispatch);
+      ::user::control::install_message_routing(pdispatch);
       
-      IGUI_WIN_MSG_LINK(MessageDestroyWindow, pdispatch, this, &menu::OnMessageDestroyWindow);
       IGUI_WIN_MSG_LINK(WM_IDLEUPDATECMDUI  , pdispatch, this, &menu::_001OnIdleUpdateCmdUI);
       IGUI_WIN_MSG_LINK(WM_CREATE           , pdispatch, this, &menu::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_DESTROY          , pdispatch, this, &menu::_001OnDestroy);
@@ -175,88 +177,55 @@ namespace user
    }
 
 
-   void menu::destroy_menu()
-   {
-      
-      m_pitem.release();
-      
-   }
-  
-
-   void menu::_001OnShowWindow(signal_details * pobj)
+   void menu::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshow, pobj);
-
-      //if (!pshow->m_bShow)
-      //{
-
-      //   if (m_pmenubaseThis != NULL)
-      //   {
-
-      //      sp(menu) * pthis = m_pmenubaseThis;
-
-      //      m_pmenubaseThis = NULL;
-
-      //      pthis->release();
-
-      //   }
-
-      //}
 
       TRACE("menu::_001OnShowWindow bShow = %d", pshow->m_bShow);
 
    }
 
-   void menu::_001OnDestroy(signal_details * pobj)
+
+   void menu::_001OnDestroy(::message::message * pobj)
    {
        
       if(m_pmenuParent != NULL)
       {
          
-         m_pmenuParent->m_psubmenu = NULL;
-         
-         m_pmenuParent->m_idSubMenu.is_empty();
+         m_pmenuParent->m_psubmenu.release();
          
       }
       
-      if(m_psubmenu != NULL)
+      if(m_psubmenu.is_set() && m_psubmenu->m_pmenuParent != NULL)
       {
          
          m_psubmenu->m_pmenuParent = NULL;
          
       }
-      
-      pobj->m_bRet = false;
-      
 
-
+      m_pitem.release();
+      
    }
 
 
-   
- 
-   
-   
    ::user::menu_item * menu::GetSubMenu(int32_t i)
    {
       
       return get_item()->m_spitema->element_at(i);
       
    }
-   
-   
-   
-   
-   bool menu::track_popup_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
+
+
+   bool menu::create_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
    {
-      
-      m_puiParent    = puiParent;
+
+      m_puiParent = puiParent;
 
       if (puiNotify != NULL)
       {
-      
-         m_puiNotify    = puiNotify;
+
+         m_puiNotify = puiNotify;
 
       }
       else if (m_puiNotify == NULL)
@@ -265,36 +234,84 @@ namespace user
          m_puiNotify = m_puiParent;
 
       }
-      
-      m_pmenuParent  = NULL;
-      
-      LPVOID lpvoid  = NULL;
 
-      if (!create_window_ex(WS_EX_LAYERED | WS_EX_TOOLWINDOW, NULL, NULL, 0, rect(0, 0, 0, 0), puiParent, id(), lpvoid))
+      m_pmenuParent = NULL;
+
+      LPVOID lpvoid = NULL;
+
+      if (m_puserstyle == NULL)
       {
-         
-         return false;
-         
+
+         ::user::interaction * pui = m_puiParent;
+
+         while (pui != NULL)
+         {
+
+            m_puserstyle = pui->m_puserstyle;
+
+            if (m_puserstyle != NULL)
+            {
+
+               break;
+
+            }
+
+            pui = pui->GetParent();
+
+         }
+
+         if (m_puserstyle == NULL)
+         {
+
+            ::user::interaction * pui = m_puiNotify;
+
+            while (pui != NULL)
+            {
+
+               m_puserstyle = pui->m_puserstyle;
+
+               if (m_puserstyle != NULL)
+               {
+
+                  break;
+
+               }
+
+               pui = pui->GetParent();
+
+            }
+
+         }
+
       }
-      
-      //if(puiParent != NULL)
-      //{
-      //
-      //   SetParent(puiParent);
-      //   
-      //}
-      //
-      if(puiNotify != NULL)
+
+      int iStyleEx = 0;
+
+      if (puiParent == NULL)
       {
-         
+
+         iStyleEx = WS_EX_LAYERED | WS_EX_TOOLWINDOW;
+
+      }
+
+      if (!create_window_ex(iStyleEx, NULL, NULL, 0, rect(0, 0, 0, 0), puiParent, id(), lpvoid))
+      {
+
+         return false;
+
+      }
+
+      if (puiNotify != NULL)
+      {
+
          SetOwner(puiNotify);
-         
+
       }
 
       if (m_itemClose.m_pui.is_null())
       {
 
-         m_itemClose.m_pui = userstyle()->create_menu_button();
+         m_itemClose.m_pui = create_menu_button();
 
       }
 
@@ -316,35 +333,104 @@ namespace user
          }
 
       }
-      
+
       m_itemClose.m_pui->set_window_text("r");
-      
-      if(!m_bPositionHint)
-      {
-       
-         Session.get_cursor_pos(m_ptPositionHint);
-         
-      }
 
       if (!m_pitem->create_buttons(this))
       {
 
          ASSERT(FALSE);
 
-         return true;
+         return false;
+
+      }
+
+      return true;
+
+
+   }
+
+
+   
+   bool menu::create_inline_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
+   {
+
+      if (!IsWindow())
+      {
+
+         if (!create_menu(puiNotify, puiParent))
+         {
+
+            return false;
+
+         }
+
+      }
+      else
+      {
+
+         if (GetParent() != puiParent)
+         {
+
+            SetParent(puiParent);
+
+         }
+
+         m_puiNotify = puiNotify;
+
+      }
+
+      m_bInline = true;
+
+      update_command_ui(m_pitem);
+
+      //      create_buttons(m_pitem);
+
+      //on_layout();
+
+      //rect rectClient;
+
+      //puiParent->GetClientRect(rectClient);
+
+      //SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+
+      set_need_layout();
+
+      SetTimer(::user::timer_update_menu_command_ui, 300, NULL);
+
+      return true;
+
+   }
+
+
+   
+   bool menu::track_popup_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
+   {
+
+      if (!create_menu(puiNotify, puiParent))
+      {
+
+         return false;
 
       }
       
+      if (!m_bPositionHint)
+      {
+
+         Session.get_cursor_pos(m_ptPositionHint);
+
+      }
+
       layout_menu(m_ptPositionHint);
-      
+
       SetActiveWindow();
-      
+
       SetForegroundWindow();
-      
+
       BringWindowToTop();
-      
+
       return true;
-      
+
    }
    
 
@@ -572,7 +658,7 @@ namespace user
    
    
    
-   void menu::_001OnLButtonDown(signal_details * pobj)
+   void menu::_001OnLButtonDown(::message::message * pobj)
    {
       
       pobj->previous();
@@ -580,13 +666,29 @@ namespace user
    }
    
    
-   void menu::OnMessageDestroyWindow(signal_details * pobj)
+   void menu::defer_close()
    {
-      
-      UNREFERENCED_PARAMETER(pobj);
-      
-      DestroyWindow();
-      
+
+      ::user::control_event ev;
+
+      ev.m_eevent = ::user::event_context_menu_close;
+
+      ::user::interaction * puiTarget = get_target_window();
+
+      if (puiTarget != NULL)
+      {
+
+         m_puiNotify->BaseOnControlEvent(&ev);
+
+      }
+
+      if (!m_bInline && !ev.m_bRet)
+      {
+
+         post_message(WM_CLOSE);
+
+      }
+
    }
    
    
@@ -598,32 +700,14 @@ namespace user
          
          if(pevent->m_puie == m_itemClose.m_pui)
          {
+
+            defer_close();
             
-            ::user::control_event ev;
-            
-            ev.m_eevent = ::user::event_context_menu_close;
-            
-            ::user::interaction * puiTarget = get_target_window();
-            
-            if (puiTarget != NULL)
-            {
-               
-               m_puiNotify->BaseOnControlEvent(&ev);
-               
-            }
-            
-            post_message(WM_CLOSE);
          }
          else
          {
             
             sp(::user::menu_item) pitem = get_item(pevent->m_puie);
-            
-            //sp(::user::menu_item) pitemThis = get_item();
-            
-            //sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
-            
-            //sp(::user::menu_item) pitem = spitema->find(pevent->m_puie->m_id);
             
             if(pitem != NULL && !pitem->m_bPopup)
             {
@@ -636,7 +720,9 @@ namespace user
                   if (puiTarget != NULL)
                   {
                      
-                     puiTarget->_001SendCommand(pevent->m_puie->m_id);
+                        ::user::command command(idCommand);
+
+                     puiTarget->_001SendCommand(&command);
                      
                   }
                   
@@ -648,14 +734,16 @@ namespace user
                   
                   id id = pevent->m_puie->m_id;
                   
-                  send_message(WM_CLOSE);
+                  defer_close();
                   
                   // this may be destroyed by WM_CLOSE above
                   
                   if (puiTarget != NULL)
                   {
-                     
-                     puiTarget->_001SendCommand(id);
+
+                        ::user::command command(idCommand);
+                        
+                     puiTarget->_001SendCommand(&command);
                      
                   }
                   
@@ -764,6 +852,23 @@ namespace user
       
    }
    
+
+   //void menu_list_window::_001OnTimer(::timer * ptimer)
+   //{
+
+   //   ::user::menu::_001OnTimer(ptimer);
+
+   //   if (ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
+   //   {
+
+   //      update_command_ui(m_pitem);
+
+   //      RedrawWindow();
+
+   //   }
+
+   //}
+
    
    void menu::_001OnTimer(::timer * ptimer)
    {
@@ -812,30 +917,33 @@ namespace user
       }
       else if(ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
       {
-         if(spitema != NULL)
-         {
-            ::user::menu_command_ui commandui(get_app());
-            commandui.m_pitema          = spitema;
-            for(int32_t i = 0; i < spitema->get_size(); i++)
-            {
-               
-               commandui.m_iIndex    = i;
-               commandui.m_id        = spitema->element_at(i)->m_id;
-               commandui.m_pOther    = spitema->element_at(i)->m_pui;
-               
-               sp(::user::interaction) puiTarget = get_target_window();
-               
-               if(puiTarget != NULL)
-               {
-                  /* xxx if(pwndParent->on_simple_action(0,
-                   MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
-                   &commandui, NULL))
-                   continue;*/
-                  if(puiTarget->_001SendUpdateCmdUi(&commandui))
-                     continue;
-               }
-            }
-         }
+         
+         update_command_ui(m_pitem);
+
+         //if(spitema != NULL)
+         //{
+         //   ::user::menu_command_ui commandui(get_app());
+         //   commandui.m_pitema          = spitema;
+         //   for(int32_t i = 0; i < spitema->get_size(); i++)
+         //   {
+         //      
+         //      commandui.m_iIndex    = i;
+         //      commandui.m_id        = spitema->element_at(i)->m_id;
+         //      commandui.m_pOther    = spitema->element_at(i)->m_pui;
+         //      
+         //      sp(::user::interaction) puiTarget = get_target_window();
+         //      
+         //      if(puiTarget != NULL)
+         //      {
+         //         /* xxx if(pwndParent->on_simple_action(0,
+         //          MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+         //          &commandui, NULL))
+         //          continue;*/
+         //         if(puiTarget->_001SendUpdateCmdUi(&commandui))
+         //            continue;
+         //      }
+         //   }
+         //}
       }
       
       
@@ -844,16 +952,18 @@ namespace user
    
    
    
-   void menu::_001OnCreate(signal_details * pobj)
+   void menu::_001OnCreate(::message::message * pobj)
    {
       
+      pobj->previous();
+
       UNREFERENCED_PARAMETER(pobj);
       
    }
    
    
    
-   void menu::_001OnIdleUpdateCmdUI(signal_details * pobj)
+   void menu::_001OnIdleUpdateCmdUI(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -892,20 +1002,20 @@ namespace user
    }
    
    
-   void menu::_001OnEnable(signal_details * pobj)
+   void menu::_001OnEnable(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
    
    
-   void menu::_001OnNcActivate(signal_details * pobj)
+   void menu::_001OnNcActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->m_bRet = true;
       pbase->set_lresult(DefWindowProc(WM_NCACTIVATE, pbase->m_wparam, -1));
    }
    
-   void menu::_001OnNcCalcSize(signal_details * pobj)
+   void menu::_001OnNcCalcSize(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       
@@ -926,7 +1036,20 @@ namespace user
       }
    }
    
-   
+   void menu::_001OnClose(::message::message * pobj)
+   {
+
+      if (!m_bInline)
+      {
+
+         destroy_menu();
+
+      }
+
+      pobj->m_bRet = true;
+
+   }
+
    bool menu::pre_create_window(::user::create_struct& cs)
    {
       
@@ -1044,8 +1167,58 @@ namespace user
       return true;
       
    }
+
+
    
-   
+   void menu::update_command_ui(menu_item * pitemParent)
+   {
+
+      if (m_puiNotify == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pitemParent == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pitemParent->m_spitema == NULL)
+      {
+
+         return;
+
+      }
+
+      ::user::menu_command_ui commandui(get_app());
+
+      commandui.m_pitema = pitemParent->m_spitema;
+
+      for (int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
+      {
+
+         menu_item * pitem = pitemParent->m_spitema->element_at(i);
+
+         commandui.m_iIndex = i;
+         commandui.m_id = pitem->m_id;
+         commandui.m_pOther = pitem->m_pui;
+
+         if (m_puiNotify->on_simple_update(&commandui))
+            continue;
+
+         update_command_ui(pitem);
+
+      }
+
+      set_need_redraw();
+
+   }
+
+
 } // namespace user
 
 

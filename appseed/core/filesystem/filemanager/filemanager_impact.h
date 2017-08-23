@@ -19,7 +19,7 @@ namespace filemanager
       virtual ~impact();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
 
       ::fs::item * get_filemanager_item();

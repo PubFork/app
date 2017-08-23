@@ -235,7 +235,7 @@ namespace metrowin
 
       set_window_long(GWL_EXSTYLE, cs.dwExStyle);
 
-      //m_pui->install_message_handling(dynamic_cast < ::message::dispatch * > (this));
+      //m_pui->install_message_routing(dynamic_cast < ::message::sender * > (this));
 
       send_message(WM_CREATE,0,(LPARAM)&cs);
 
@@ -519,7 +519,7 @@ namespace metrowin
    }
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
       IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
@@ -528,7 +528,7 @@ namespace metrowin
       IGUI_WIN_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
       if(m_pui != NULL)
       {
-         m_pui->install_message_handling(pinterface);
+         m_pui->install_message_routing(pinterface);
       }
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
@@ -539,7 +539,7 @@ namespace metrowin
 //      IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
    }
 
-   void interaction_impl::_001OnMove(signal_details * pobj)
+   void interaction_impl::_001OnMove(::message::message * pobj)
    {
       //throw todo(get_app());
       //UNREFERENCED_PARAMETER(pobj);
@@ -552,7 +552,7 @@ namespace metrowin
       //}
    }
 
-   void interaction_impl::_001OnSize(signal_details * pobj)
+   void interaction_impl::_001OnSize(::message::message * pobj)
    {
 
       //throw todo(get_app());
@@ -590,7 +590,7 @@ namespace metrowin
    }
 
 
-   void interaction_impl::_001OnDestroy(signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
@@ -604,7 +604,7 @@ namespace metrowin
    }
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void interaction_impl::_001OnNcDestroy(signal_details * pobj)
+   void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
       //single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex,TRUE);
       //pobj->m_bRet = true;
@@ -835,8 +835,8 @@ namespace metrowin
       //::user::interaction_impl * pWndPermanent = dynamic_cast < ::user::interaction_impl * > (pMap->lookup_permanent(hWndOrig));;
       //ASSERT(pWndPermanent == NULL);
       //// It is important to call aura class, including ca2 core
-      //// aura classes implementation of install_message_handling
-      //// inside derived class install_message_handling
+      //// aura classes implementation of install_message_routing
+      //// inside derived class install_message_routing
       //#endif
       //}
       //else
@@ -887,7 +887,7 @@ namespace metrowin
 #endif
 
 
-   void interaction_impl::pre_translate_message(signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1277,7 +1277,7 @@ namespace metrowin
    /////////////////////////////////////////////////////////////////////////////
    // main message_handler implementation
 
-   void interaction_impl::message_handler(signal_details * pobj)
+   void interaction_impl::message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
 
@@ -2709,7 +2709,7 @@ return TRUE;
       //return false;
    }
 
-   void interaction_impl::WalkPreTranslateTree(::user::interaction * puiStop,signal_details * pobj)
+   void interaction_impl::WalkPreTranslateTree(::user::interaction * puiStop,::message::message * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -2981,7 +2981,7 @@ return TRUE;
       //return (int)Default();
    }
 
-   void interaction_impl::_001OnCreate(signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
@@ -3246,14 +3246,14 @@ return TRUE;
 #endif
    }
 
-   void interaction_impl::_001OnProdevianSynch(signal_details * pobj)
+   void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      System.get_event(m_pthread)->SetEvent();
       //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
-   void interaction_impl::_001OnPaint(signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
       //lock lock(m_pui, 1984);
@@ -3329,7 +3329,7 @@ return TRUE;
    }
 
 
-   void interaction_impl::_001OnPrint(signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
       throw todo(get_app());
 
@@ -4479,7 +4479,7 @@ ExitModal:
    m_pguieForward = NULL;
    }
 
-   LRESULT guie_message_wnd::message_handler(signal_details * pobj)
+   LRESULT guie_message_wnd::message_handler(::message::message * pobj)
    {
    if(m_pguieForward != NULL)
    {
@@ -5907,7 +5907,7 @@ ExitModal:
 
    }
 
-   void interaction_impl::_001OnSetCursor(signal_details * pobj)
+   void interaction_impl::_001OnSetCursor(::message::message * pobj)
    {
 
       throw todo(get_app());
@@ -6623,7 +6623,7 @@ lCallNextHook:
 #endif
 
 
-   void interaction_impl::_001OnEraseBkgnd(signal_details * pobj)
+   void interaction_impl::_001OnEraseBkgnd(::message::message * pobj)
    {
       SCAST_PTR(::message::erase_bkgnd,perasebkgnd,pobj);
       perasebkgnd->m_bRet = true;

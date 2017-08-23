@@ -20,7 +20,7 @@ namespace user
    {
    }
 
-   void tool_tip_window::relay_event(::user::tool_tip_tool * ptool, signal_details * pobj)
+   void tool_tip_window::relay_event(::user::tool_tip_tool * ptool, ::message::message * pobj)
    {
       if(IsWindow())
          return;

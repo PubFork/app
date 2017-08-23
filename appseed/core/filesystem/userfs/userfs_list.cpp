@@ -24,10 +24,10 @@ namespace userfs
    }
 
 
-   void list::install_message_handling(::message::dispatch * pinterface)
+   void list::install_message_routing(::message::sender * pinterface)
    {
    
-      BASE::install_message_handling(pinterface);
+      BASE::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
       IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
@@ -38,7 +38,7 @@ namespace userfs
    }
 
 
-   void list::_001OnCreate(signal_details * pobj)
+   void list::_001OnCreate(::message::message * pobj)
    {
       pobj->previous();
       if(pobj->m_bRet)
@@ -116,7 +116,7 @@ namespace userfs
 
    }
 
-   void list::_001OnLButtonDblClk(signal_details * pobj)
+   void list::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -130,7 +130,7 @@ namespace userfs
       }*/
    }
 
-   void list::_001OnCancelMode(signal_details * pobj)
+   void list::_001OnCancelMode(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    // trans   ::user::impact::OnCancelMode();
@@ -442,7 +442,7 @@ namespace userfs
       }
    }
 
-   void list::_001OnVScroll(signal_details * pobj)
+   void list::_001OnVScroll(::message::message * pobj)
    {
       //      SCAST_PTR(::message::scroll, pscroll, pobj);
       //m_iCreateImageListStep = pscroll->m_nPos;
@@ -450,7 +450,7 @@ namespace userfs
       pobj->m_bRet = false;
    }
 
-   void list::_001OnHScroll(signal_details * pobj)
+   void list::_001OnHScroll(::message::message * pobj)
    {
       pobj->m_bRet = false;
    }
@@ -493,7 +493,7 @@ namespace userfs
    }
 
 
-   void list::_001OnFileRename(signal_details * pobj)
+   void list::_001OnFileRename(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -516,7 +516,7 @@ namespace userfs
    }
 
 
-   void list::_001OnUpdateFileRename(signal_details * pobj)
+   void list::_001OnUpdateFileRename(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
          range range;
@@ -527,7 +527,7 @@ namespace userfs
       pobj->m_bRet = true;
    }
 
-   void list::_001OnShowWindow(signal_details * pobj)
+   void list::_001OnShowWindow(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::show_window, pshow, pobj);

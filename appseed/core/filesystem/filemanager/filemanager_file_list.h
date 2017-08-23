@@ -86,7 +86,7 @@ namespace filemanager
       virtual bool pre_create_window(::user::create_struct& cs);
 
       bool on_simple_update(command_ui * pcommandui);
-      bool on_simple_action(id id);
+      bool on_simple_action(::user::command * pcommand);
 
       DECL_GEN_SIGNAL(_001OnUpdateOpenWith);
       DECL_GEN_SIGNAL(_001OnEditCopy);
@@ -128,7 +128,7 @@ namespace filemanager
 
       virtual void _001OnAfterSort();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void _001InsertColumns();
 

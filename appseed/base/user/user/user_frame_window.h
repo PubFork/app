@@ -195,7 +195,7 @@ namespace user
       virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
       DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
@@ -279,7 +279,7 @@ namespace user
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
       virtual void DelayUpdateFrameMenu(HMENU hMenuAlt);
       void DelayUpdateFrameTitle();
@@ -317,7 +317,7 @@ namespace user
       LRESULT OnPopMessageString(WPARAM wParam, LPARAM lParam);
       LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);
       LRESULT OnHelpPromptAddr(WPARAM wParam, LPARAM lParam);
-      //void OnIdleUpdateCmdUI(::signal_details * pobj);
+      //void OnIdleUpdateCmdUI(::message::message * pobj);
       void OnEnterIdle(UINT nWhy, sp(::user::interaction) pWho);
       void OnSetFocus(sp(::user::interaction) pOldWnd);
       void OnSize(UINT nType, int32_t cx, int32_t cy);
@@ -369,10 +369,10 @@ namespace user
       virtual void RemoveControlBar(::user::control_bar *pBar);
 
 
-      void data_on_after_change(signal_details * pobj);
+      void data_on_after_change(::message::message * pobj);
 
 
-      virtual bool _001HasCommandHandler(id id);
+      virtual bool _001HasCommandHandler(::user::command * pcommand);
 
 
       virtual bool get_window_minimum_size(::size & sizeMin);

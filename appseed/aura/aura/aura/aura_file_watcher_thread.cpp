@@ -19,16 +19,16 @@ namespace file_watcher
 //
 //   }
 
-   void listener_thread::install_message_handling(::message::dispatch * pdispatch)
+   void listener_thread::install_message_routing(::message::sender * psender)
    {
 
-      ::thread::install_message_handling(pdispatch);
+      ::thread::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(message_add_watch, pdispatch, this, &listener_thread::_001OnAddWatch);
 
    }
 
-   void listener_thread::_001OnAddWatch(signal_details * pobj)
+   void listener_thread::_001OnAddWatch(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);

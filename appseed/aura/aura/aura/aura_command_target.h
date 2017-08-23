@@ -2,125 +2,125 @@
 
 
 class CLASS_DECL_AURA command_target_interface:
-   virtual public signalizable,
-   virtual public ::message::dispatch
+   virtual public ::message::receiver,
+   virtual public ::message::sender
 {
 public:
 
 
-   class CLASS_DECL_AURA command_signalid :
-      public signalid
-   {
-   public:
+   //class CLASS_DECL_AURA command_signalid :
+   //   public signalid
+   //{
+   //public:
 
 
-      id m_id;
+   //   id m_id;
 
 
-      command_signalid() { }
-      virtual ~command_signalid();
+   //   command_signalid() { }
+   //   virtual ~command_signalid();
 
 
-      virtual bool is_equal(signalid * pidParam)
-      {
+   //   virtual bool is_equal(signalid * pidParam)
+   //   {
 
-         command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
+   //      command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
 
-         if(pid == NULL)
-            return false;
+   //      if(pid == NULL)
+   //         return false;
 
-         return pid->m_id == m_id;
+   //      return pid->m_id == m_id;
 
-      };
-
-
-
-      virtual bool matches(signalid * pidParam)
-      {
-         
-         command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
-         
-         if(pid == NULL)
-            return false;
-
-         return pid->m_id == m_id;
-
-      }
-
-      
-      virtual signalid * copy()
-      {
-         
-         command_signalid * pid = canew(command_signalid());
-         
-         pid->m_id = m_id;
-
-         return pid;
-
-      }
-
-   };
+   //   };
 
 
-   class CLASS_DECL_AURA command_signalrange: public signalid
-   {
-   public:
+
+   //   virtual bool matches(signalid * pidParam)
+   //   {
+   //      
+   //      command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
+   //      
+   //      if(pid == NULL)
+   //         return false;
+
+   //      return pid->m_id == m_id;
+
+   //   }
+
+   //   
+   //   virtual signalid * copy()
+   //   {
+   //      
+   //      command_signalid * pid = canew(command_signalid());
+   //      
+   //      pid->m_id = m_id;
+
+   //      return pid;
+
+   //   }
+
+   //};
 
 
-      index m_iStart;
-      index m_iEnd;
+   //class CLASS_DECL_AURA command_signalrange: public signalid
+   //{
+   //public:
 
 
-      command_signalrange() { }
-      virtual ~command_signalrange();
+   //   index m_iStart;
+   //   index m_iEnd;
 
 
-      virtual bool is_equal(signalid * pidParam)
-      {
-         
-         command_signalrange * prange = dynamic_cast < command_signalrange * > (pidParam);
-         
-         if(prange == NULL)
-            return false;
-
-         return prange->m_iStart == m_iStart && prange->m_iEnd == m_iEnd;
-
-      }
+   //   command_signalrange() { }
+   //   virtual ~command_signalrange();
 
 
-      virtual bool matches(signalid * pidParam)
-      {
+   //   virtual bool is_equal(signalid * pidParam)
+   //   {
+   //      
+   //      command_signalrange * prange = dynamic_cast < command_signalrange * > (pidParam);
+   //      
+   //      if(prange == NULL)
+   //         return false;
 
-         command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
+   //      return prange->m_iStart == m_iStart && prange->m_iEnd == m_iEnd;
 
-         if(pid == NULL)
-            return false;
-         return pid->m_id >= m_iStart && pid->m_id <= m_iEnd;
-
-      }
-
-
-      virtual signalid * copy()
-      {
-      
-         command_signalrange * pid = canew(command_signalrange());
-         
-         pid->m_iStart = m_iStart;
-
-         pid->m_iEnd = m_iEnd;
-
-         return pid;
-
-      }
-
-   };
+   //   }
 
 
-   ::signalid_array m_signalidaCommand;
+   //   virtual bool matches(signalid * pidParam)
+   //   {
 
-   
-   ::dispatch  m_dispatchUpdateCmdUi;
-   ::dispatch  m_dispatchCommand;
+   //      command_signalid * pid = dynamic_cast < command_signalid * > (pidParam);
+
+   //      if(pid == NULL)
+   //         return false;
+   //      return pid->m_id >= m_iStart && pid->m_id <= m_iEnd;
+
+   //   }
+
+
+   //   virtual signalid * copy()
+   //   {
+   //   
+   //      command_signalrange * pid = canew(command_signalrange());
+   //      
+   //      pid->m_iStart = m_iStart;
+
+   //      pid->m_iEnd = m_iEnd;
+
+   //      return pid;
+
+   //   }
+
+   //};
+
+
+   //::message::senderid_array m_signalidaCommand;
+
+   //
+   //::dispatch  m_dispatchUpdateCmdUi;
+   //::dispatch  m_dispatchCommand;
 
    
    command_target_interface();
@@ -128,7 +128,7 @@ public:
 
 
    template < class T >
-   bool connect_update_cmd_ui(const char * pszId,void (T::*pfn)(signal_details *))
+   bool connect_update_cmd_ui(const char * pszId,void (T::*pfn)(::message::message *))
    {
 
       return connect_update_cmd_ui(id(pszId),pfn);
@@ -137,7 +137,7 @@ public:
 
 
    template < class T >
-   bool connect_command(const char * pszId,void (T::*pfn)(signal_details *))
+   bool connect_command(const char * pszId,void (T::*pfn)(::message::message *))
    {
 
       return connect_command(id(pszId),pfn);
@@ -146,12 +146,12 @@ public:
 
 
    template < class T >
-   bool connect_update_cmd_ui(id id,void (T::*pfn)(signal_details *))
+   bool connect_update_cmd_ui(id id,void (T::*pfn)(::message::message *))
    {
 
       command_signalid signalid;
 
-      ::signalid * pid;
+      ::message::senderid * pid;
 
       signalid.m_id = id;
 
@@ -170,10 +170,10 @@ public:
 
 
    template < class T >
-   bool connect_command(id id,void (T::*pfn)(signal_details *))
+   bool connect_command(id id,void (T::*pfn)(::message::message *))
    {
       command_signalid signalid;
-      ::signalid * pid;
+      ::message::senderid * pid;
       signalid.m_id = id;
       pid = m_signalidaCommand.get(&signalid);
       if (!m_dispatchCommand.AddMessageHandler(pid, dynamic_cast <T *> (this), pfn, true))
@@ -183,10 +183,10 @@ public:
       return true;
    }
    template < class T >
-   bool connect_update_cmd_ui(id id,T * psignalizable, void (T::*pfn)(signal_details *))
+   bool connect_update_cmd_ui(id id,T * psignalizable, void (T::*pfn)(::message::message *))
    {
       command_signalid signalid;
-      ::signalid * pid;
+      ::message::senderid * pid;
       signalid.m_id = id;
       pid = m_signalidaCommand.get(&signalid);
       if (!m_dispatchUpdateCmdUi.AddMessageHandler(pid, psignalizable, pfn, true))
@@ -198,10 +198,10 @@ public:
    
    
    template < class T >
-   bool connect_command(id id,T * psignalizable,void (T::*pfn)(signal_details *))
+   bool connect_command(id id,T * psignalizable,void (T::*pfn)(::message::message *))
    {
       command_signalid signalid;
-      ::signalid * pid;
+      ::message::senderid * pid;
       signalid.m_id = id;
       pid = m_signalidaCommand.get(&signalid);
       if (!m_dispatchCommand.AddMessageHandler(pid, psignalizable, pfn, true))
@@ -213,10 +213,10 @@ public:
    
    
    template < class T >
-   bool connect_update_cmd_range_ui(int32_t iStart,int32_t iEnd,void (T::*pfn)(signal_details *))
+   bool connect_update_cmd_range_ui(int32_t iStart,int32_t iEnd,void (T::*pfn)(::message::message *))
    {
       command_signalrange signalrange;
-      ::signalid * pid;
+      ::message::senderid * pid;
       signalrange.m_iStart = iStart;
       signalrange.m_iEnd = iEnd;
       pid = m_signalidaCommand.get(&signalrange);
@@ -229,10 +229,10 @@ public:
    
    
    template < class T >
-   bool connect_command_range(int32_t iStart,int32_t iEnd,void (T::*pfn)(signal_details *))
+   bool connect_command_range(int32_t iStart,int32_t iEnd,void (T::*pfn)(::message::message *))
    {
       command_signalrange signalrange;
-      ::signalid * pid;
+      ::message::senderid * pid;
       signalrange.m_iStart = iStart;
       signalrange.m_iEnd = iEnd;
       pid = m_signalidaCommand.get(&signalrange);
@@ -244,21 +244,21 @@ public:
    }
 
    
-   virtual bool _001SendCommand(id id);
-   virtual bool _001SendUpdateCmdUi(command_ui * pcmdUI);
+   virtual void _001SendCommand(::user::command * pcommand);
+   virtual void _001SendUpdateCommand(::user::command * pcommand);
 
-   virtual bool on_simple_action(id id);
-   virtual bool _001HasCommandHandler(id id);
-   virtual bool on_simple_update(command_ui * pcommandui);
+   virtual void on_simple_action(::user::command * pcommand);
+   virtual bool _001HasCommandHandler(::user::command * pcommand);
+   virtual void on_simple_update(command_ui * pcommandui);
 
    //virtual bool on_simple_update(command_ui * pcommandui);
-   virtual bool _001OnCmdMsg(::user::command * pcommand);
+   virtual void _001OnCmdMsg(::user::command * pcommand);
    //virtual bool _001HasCommandHandler(const char * pszId);
 
-   void get_command_signal_array(::user::command::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id);
+   //void get_command_signal_array(::user::command::e_type etype,::dispatch::message::sender_item_ptr_array & signalptra,id id);
 
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
 
 };

@@ -125,7 +125,7 @@ namespace aura
       virtual bool  get_window_minimum_size(LPSIZE lpsize);
 
 
-      virtual void frame_pre_translate_message(signal_details * pobj);
+      virtual void frame_pre_translate_message(::message::message * pobj);
 
 
       

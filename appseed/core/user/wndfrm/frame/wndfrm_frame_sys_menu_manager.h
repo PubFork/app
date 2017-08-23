@@ -35,11 +35,11 @@ namespace user
             virtual ~SysMenuManager();
 
             bool OnLButtonDblClk(UINT nFlags, point point);
-            void relay_event(signal_details * pobj);
+            void relay_event(::message::message * pobj);
 
             bool update(WorkSet * pset);
 
-            void message_handler(sp(::user::interaction) pwnd, signal_details * pobj);
+            void message_handler(sp(::user::interaction) pwnd, ::message::message * pobj);
 
 
          };

@@ -18,11 +18,11 @@ namespace user
       virtual ~menu_list_view();
       
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual bool pre_create_window(::user::create_struct & cs);
 
-      virtual void GuieProc(signal_details * pobj);
+      virtual void GuieProc(::message::message * pobj);
 
       virtual bool _001OnCmdMsg(::user::command * pcommand);
 

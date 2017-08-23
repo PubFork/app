@@ -22,9 +22,9 @@ namespace filemanager
    }
 
 
-   void folder_list::install_message_handling(::message::dispatch * pinterface)
+   void folder_list::install_message_routing(::message::sender * pinterface)
    {
-      ::user::impact::install_message_handling(pinterface);
+      ::user::impact::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &folder_list::_001OnLButtonDblClk);
       IGUI_WIN_MSG_LINK(WM_CANCELMODE, pinterface, this, &folder_list::_001OnCancelMode);
    }
@@ -88,7 +88,7 @@ namespace filemanager
    }
 
 
-   void folder_list::_001OnLButtonDblClk(signal_details * pobj)
+   void folder_list::_001OnLButtonDblClk(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -104,7 +104,7 @@ namespace filemanager
 
    }
 
-   void folder_list::_001OnCancelMode(signal_details * pobj)
+   void folder_list::_001OnCancelMode(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // trans   ::user::impact::OnCancelMode();

@@ -83,7 +83,7 @@ namespace user
 
       DECL_GEN_SIGNAL(_001OnNotifyIconMessage);
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       virtual void __close();
       virtual void __quit();

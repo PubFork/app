@@ -16,10 +16,10 @@ html_form_view::~html_form_view()
 }
 
 
-void html_form_view::install_message_handling(::message::dispatch * pinterface)
+void html_form_view::install_message_routing(::message::sender * pinterface)
 {
 
-   html_form::install_message_handling(pinterface);
+   html_form::install_message_routing(pinterface);
 
    IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &html_form_view::_001OnDestroy);
 //   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &html_form_view::_001OnSize);
@@ -221,7 +221,7 @@ void html_form_view::on_document_complete(const char * pszUrl)
 }
 
 
-void html_form_view::_001OnSetFocus(signal_details * pobj)
+void html_form_view::_001OnSetFocus(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
    if(get_html_data()->m_focusptra.get_size() > 0)
@@ -230,7 +230,7 @@ void html_form_view::_001OnSetFocus(signal_details * pobj)
    }
 }
 
-void html_form_view::_001OnKillFocus(signal_details * pobj)
+void html_form_view::_001OnKillFocus(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);

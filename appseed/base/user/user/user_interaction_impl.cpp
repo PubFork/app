@@ -280,7 +280,7 @@ namespace user
    
 
 
-   void interaction_impl::prio_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::prio_install_message_routing(::message::sender * pinterface)
    {
       
       m_queuethread = canew(queue_thread(this));
@@ -293,23 +293,23 @@ namespace user
 //         
 //      }
       
-      ::user::interaction_impl_base::prio_install_message_handling(pinterface);
+      ::user::interaction_impl_base::prio_install_message_routing(pinterface);
 
    }
 
-   void interaction_impl::last_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::last_install_message_routing(::message::sender * pinterface)
    {
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
 
-      ::user::interaction_impl_base::last_install_message_handling(pinterface);
+      ::user::interaction_impl_base::last_install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
 
    }
 
 
-   void interaction_impl::_000OnMouseLeave(signal_details * pobj)
+   void interaction_impl::_000OnMouseLeave(::message::message * pobj)
    {
 
       m_pui->m_bMouseHover = false;
@@ -447,7 +447,7 @@ namespace user
                if(pbase.is_set())
                {
                   
-                  signal_details * pobj = pbase.cast < ::signal_details >();
+                  ::message::message * pobj = pbase.cast < ::message::message >();
                   
                   if(pobj != NULL)
                   {
@@ -503,7 +503,7 @@ namespace user
    }
    
    
-   void interaction_impl::queue_message_handler(signal_details * pobj)
+   void interaction_impl::queue_message_handler(::message::message * pobj)
    {
       
       sp(::message::base) pbase = pobj;
@@ -622,7 +622,7 @@ namespace user
          try
          {
 
-            (puiCapture->m_pimpl->*puiCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::signal_details *> (pmouse));
+            (puiCapture->m_pimpl->*puiCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
 
          }
          catch (...)
@@ -680,7 +680,7 @@ namespace user
    }
 
 
-   void interaction_impl::_001OnCaptureChanged(signal_details * pobj)
+   void interaction_impl::_001OnCaptureChanged(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -690,10 +690,10 @@ namespace user
    }
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pdispatch)
+   void interaction_impl::install_message_routing(::message::sender * psender)
    {
 
-      ::user::interaction_impl_base::install_message_handling(pdispatch);
+      ::user::interaction_impl_base::install_message_routing(pdispatch);
 
       if (!m_pui->m_bMessageWindow)
       {
@@ -705,7 +705,7 @@ namespace user
    }
 
 
-   void interaction_impl::_001OnDestroy(signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -766,7 +766,7 @@ namespace user
 
 
 
-   void interaction_impl::pre_translate_message(signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
@@ -891,7 +891,7 @@ namespace user
    }
 
 
-   void interaction_impl::_002OnDraw(signal_details * pobj)
+   void interaction_impl::_002OnDraw(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -904,7 +904,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // main message_handler implementation
 
-   void interaction_impl::message_handler(signal_details * pobj)
+   void interaction_impl::message_handler(::message::message * pobj)
    {
 
       ::command_target::message_handler(pobj);
@@ -1186,13 +1186,13 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
-   void interaction_impl::_001OnPaint(signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
    }
 
-   void interaction_impl::_001OnPrint(signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
@@ -2331,7 +2331,7 @@ namespace user
 
    }
 
-   void interaction_impl::_001OnCreate(signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -2355,7 +2355,7 @@ namespace user
    }
 
 
-   void interaction_impl::_001OnShowWindow(signal_details * pobj)
+   void interaction_impl::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -2408,7 +2408,7 @@ namespace user
 #ifdef WINDOWSEX
 
 
-   void interaction_impl::_001OnWindowPosChanged(signal_details * pobj)
+   void interaction_impl::_001OnWindowPosChanged(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2892,7 +2892,7 @@ namespace user
    }
 
 
-   void guie_message_wnd::message_handler(signal_details * pobj)
+   void guie_message_wnd::message_handler(::message::message * pobj)
    {
       if(m_puiForward != NULL)
       {

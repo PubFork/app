@@ -35,7 +35,7 @@ namespace userfs
 #endif //DEBUG
 
 
-   void tree::install_message_handling(::message::dispatch * pinterface)
+   void tree::install_message_routing(::message::sender * pinterface)
    {
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
@@ -95,7 +95,7 @@ namespace userfs
    }
 
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //   int32_t iItem;
@@ -169,7 +169,7 @@ namespace userfs
 
    }*/
 
-   void tree::_001OnContextMenu(signal_details * pobj)
+   void tree::_001OnContextMenu(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -262,7 +262,7 @@ namespace userfs
       pui->SetTimer(1234567, 50, NULL);
    }
 
-   void tree::_001OnShellCommand(signal_details * pobj)
+   void tree::_001OnShellCommand(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -280,7 +280,7 @@ namespace userfs
    }
 
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

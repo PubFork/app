@@ -52,7 +52,7 @@ namespace user
       virtual void _001RemoveControls();
       bool _001Validate(sp(control) pcontrol,var & var);
       bool _001SaveEdit(sp(control) pcontrol);
-      virtual bool on_simple_action(id id);
+      virtual bool on_simple_action(::user::command * pcommand);
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);
       virtual void _001GetSelection(::database::id & key,::database::selection & selection);
@@ -67,7 +67,7 @@ namespace user
       DECL_GEN_SIGNAL(_000OnPosCreate);
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
       virtual void _001InitializeFormPreData();
       virtual void _001OnUpdate(sp(::user::impact) pviewSender,LPARAM lhint,object* phint);
       virtual void _001Update(sp(control) pcontrol);
@@ -108,7 +108,7 @@ namespace user
       //        ::user::form_window(::aura::application * papp);
       //    virtual ~::user::form_window();
 
-      //virtual void install_message_handling(::message::dispatch * pinterface);
+      //virtual void install_message_routing(::message::sender * pinterface);
 
       //      DECL_GEN_SIGNAL(_001OnCreate);
 
@@ -120,7 +120,7 @@ namespace user
       //      DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);
       DECL_GEN_SIGNAL(_001OnUser123);
-      //      virtual void install_message_handling(::message::dispatch * pinterface);
+      //      virtual void install_message_routing(::message::sender * pinterface);
 
 
       

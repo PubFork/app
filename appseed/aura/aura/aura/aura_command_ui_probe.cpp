@@ -38,14 +38,15 @@ void probe_command_ui::_001SetCheck(check::e_check echeck,::action::context)
 
 }
 
+
 void probe_command_ui::SetRadio(bool bOn,::action::context)
 {
 
    m_bRadio = bOn;
    m_bRadioChanged = true;
 
-
 }
+
 
 void probe_command_ui::SetText(const char * lpszText,::action::context)
 {

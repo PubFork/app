@@ -2,7 +2,7 @@
 
 
 class CLASS_DECL_AURA request_signal :
-   public signal_details
+   public ::message::message
 {
 public:
 
@@ -11,7 +11,7 @@ public:
    var         m_varQuery;
 
 
-   request_signal(::aura::application * papp, class ::signal * psignal = NULL);
+   request_signal(::aura::application * papp, class ::message::sender * psignal = NULL);
 
 
 };

@@ -20,7 +20,7 @@ namespace user
    }
 
 
-   void elemental::pre_translate_message(signal_details * pobj)
+   void elemental::pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -43,22 +43,22 @@ namespace user
       UNREFERENCED_PARAMETER(iTimer);
    }
 
-   void elemental::keyboard_focus_OnChar(signal_details * pobj)
+   void elemental::keyboard_focus_OnChar(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void elemental::keyboard_focus_OnSysChar(signal_details * pobj)
+   void elemental::keyboard_focus_OnSysChar(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void elemental::keyboard_focus_OnKeyDown(signal_details * pobj)
+   void elemental::keyboard_focus_OnKeyDown(::message::message * pobj)
    {
 
    }
 
-   void elemental::keyboard_focus_OnKeyUp(signal_details * pobj)
+   void elemental::keyboard_focus_OnKeyUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -252,7 +252,7 @@ namespace user
 
    // mouse focus
 
-   void elemental::mouse_focus_OnLButtonUp(signal_details * pobj)
+   void elemental::mouse_focus_OnLButtonUp(::message::message * pobj)
    {
    }
 

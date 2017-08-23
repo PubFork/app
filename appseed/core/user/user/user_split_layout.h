@@ -60,7 +60,7 @@ namespace user
       virtual ~split_layout();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual int32_t get_normal_dimension();
       virtual int32_t get_ortogonal_dimension();

@@ -104,7 +104,7 @@ public:
    virtual bool create_bars();
    virtual bool on_create_bars();
 
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
    virtual bool on_before_set_parent(sp(::user::interaction) pinterface);
    virtual void on_set_parent(::user::interaction * puiParent) override;
@@ -162,7 +162,7 @@ public:
    virtual void ActivateFrame(int32_t nCmdShow = -1);
    virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
    virtual bool pre_create_window(::user::create_struct& cs);
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void pre_translate_message(::message::message * pobj);
 
    virtual void _000OnDraw(::draw2d::graphics * pgraphics);
    virtual void _010OnDraw(::draw2d::graphics * pgraphics);
@@ -240,7 +240,7 @@ public:
    LRESULT OnDDEExecute(WPARAM wParam, LPARAM lParam);
    LRESULT OnDDETerminate(WPARAM wParam, LPARAM lParam);
 
-   void _001OnQueryEndSession(signal_details * pobj);
+   void _001OnQueryEndSession(::message::message * pobj);
 
    virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -257,7 +257,7 @@ public:
 
    virtual bool _001OnCmdMsg(::user::command * pcommand);
 
-   virtual void data_on_after_change(signal_details * pobj);
+   virtual void data_on_after_change(::message::message * pobj);
 
 
 

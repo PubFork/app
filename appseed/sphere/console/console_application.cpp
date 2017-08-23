@@ -42,7 +42,7 @@ namespace console
    }
 
 
-   void application::pre_translate_message(::signal_details * pobj)
+   void application::pre_translate_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -74,7 +74,7 @@ namespace console
    }
 
 
-   void application::_001OnImpact(::signal_details * pobj)
+   void application::_001OnImpact(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);

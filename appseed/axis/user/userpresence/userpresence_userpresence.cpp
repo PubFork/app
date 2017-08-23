@@ -198,7 +198,7 @@ namespace userpresence
 
    }
 
-   void userpresence::message_queue_message_handler(signal_details * pobj)
+   void userpresence::message_queue_message_handler(::message::message * pobj)
    {
       
       UNREFERENCED_PARAMETER(

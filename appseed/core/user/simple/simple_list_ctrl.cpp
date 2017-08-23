@@ -125,9 +125,9 @@ bool simple_list_control::remove_item(range & range)
 }
 
 
-void simple_list_control::install_message_handling(::message::dispatch * pinterface)
+void simple_list_control::install_message_routing(::message::sender * pinterface)
 {
    UNREFERENCED_PARAMETER(pinterface);
-   ::user::list::install_message_handling(pinterface);
+   ::user::list::install_message_routing(pinterface);
 }
 

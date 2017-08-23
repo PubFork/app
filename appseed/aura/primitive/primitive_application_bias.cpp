@@ -8,7 +8,7 @@ void application_bias::callback::connect_to(::aura::application * papp)
    m_pauraapp->m_psignal->connect(this, &callback::on_call_signal);
 }
 
-void application_bias::callback::on_call_signal(signal_details * pobj)
+void application_bias::callback::on_call_signal(::message::message * pobj)
 {
    SCAST_PTR(::aura::application_signal_details, papplicationsignal, pobj);
    on_application_bias_callback_signal(papplicationsignal);

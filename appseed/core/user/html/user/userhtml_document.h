@@ -36,7 +36,7 @@ public:
    bool on_open_document(var varFile);
 
    virtual bool on_simple_update(command_ui * pcommandui);
-   virtual bool on_simple_action(id id);
+   virtual bool on_simple_action(::user::command * pcommand);
 
    virtual void soft_reload();
 

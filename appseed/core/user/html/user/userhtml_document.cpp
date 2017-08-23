@@ -59,7 +59,7 @@ void html_document::dump(dump_context & dumpcontext) const
 }
 */
 
-void html_document::data_on_after_change(signal_details * pobj)
+void html_document::data_on_after_change(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
 }
@@ -197,7 +197,7 @@ bool html_document::on_simple_update(command_ui * pcommandui)
    return false;
 }
 
-bool html_document::on_simple_action(id id)
+bool html_document::on_simple_action(::user::command * pcommand)
 {
 
    if(id == "viewindefaultbrowser")

@@ -81,7 +81,7 @@ namespace user
       ::str::begins_eat_ci(strDoc, "class ");
       strId += strDoc;
       pdocument->m_dataid = strId;
-      pdocument->install_message_handling(pdocument);
+      pdocument->install_message_routing(pdocument);
    }
 
    void impact_system::remove_document(::user::document * pdocument)

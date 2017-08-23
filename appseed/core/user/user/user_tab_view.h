@@ -63,7 +63,7 @@ namespace user
       virtual void _001OnShowTab(::user::tab * ptab);
       virtual void on_show_view();
       virtual void on_stage_view();
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       void _001OnTabClick(int32_t iTab);
 
@@ -99,7 +99,7 @@ namespace user
       virtual ~tab_drop_target_window();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 

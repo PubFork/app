@@ -10,7 +10,7 @@ namespace database
 
 
    class CLASS_DECL_AXIS change_event :
-      public signal_details
+      public ::message::message
    {
    public:
 

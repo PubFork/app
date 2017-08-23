@@ -41,7 +41,7 @@ namespace ios
       
       static_function const MESSAGE* PASCAL GetCurrentMessage();
       
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
       
       //bool operator==(const ::user::interaction & wnd) const;
       //bool operator!=(const ::user::interaction & wnd) const;
@@ -598,11 +598,11 @@ namespace ios
       virtual void EndModalState() override;
       
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj) override;
+      virtual void pre_translate_message(::message::message * pobj) override;
       
       
       // for processing oswindows messages
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::message * pobj) override;
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
       
       // for handling default processing
@@ -629,7 +629,7 @@ namespace ios
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam) override;
       bool IsTopParentActive() override;
       void ActivateTopParent() override;
-      virtual void WalkPreTranslateTree(::user::interaction *   , signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction *   , ::message::message * pobj);
       static_function ::user::interaction *   PASCAL GetDescendantWindow(::user::interaction *   hWnd, id id);
       static_function void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))

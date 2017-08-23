@@ -92,15 +92,15 @@
 ////#pragma comment(lib, "Msimg32.lib") 
 ////#pragma comment(lib, "Psapi.lib") 
 //
-////CLASS_DECL_BASE void __trace_message(const char * lpszPrefix, signal_details * pobj);
+////CLASS_DECL_BASE void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 ////CLASS_DECL_BASE void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 //
-////CLASS_DECL_BASE bool __cdecl __is_idle_message(signal_details * pobj);
+////CLASS_DECL_BASE bool __cdecl __is_idle_message(::message::message * pobj);
 ////CLASS_DECL_BASE bool __cdecl __is_idle_message(MESSAGE * pMsg);
 //
 //
-//CLASS_DECL_BASE void __process_window_procedure_exception(::exception::base*, signal_details * pobj);
-//CLASS_DECL_BASE void __cdecl __pre_translate_message(signal_details * pobj);
+//CLASS_DECL_BASE void __process_window_procedure_exception(::exception::base*, ::message::message * pobj);
+//CLASS_DECL_BASE void __cdecl __pre_translate_message(::message::message * pobj);
 //
 //#include "metrowin_copydesk.h"
 //

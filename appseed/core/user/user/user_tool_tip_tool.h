@@ -19,7 +19,7 @@ namespace user
       void BaseToolTipSetHandler(tool_tip_window * phandler);
 
       // Message handling
-      void BaseToolTipRelayEvent(signal_details * pobj);
+      void BaseToolTipRelayEvent(::message::message * pobj);
 
       // Overridables
       virtual void BaseToolTipGetRect(LPRECT lprect);

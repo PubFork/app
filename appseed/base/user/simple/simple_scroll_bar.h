@@ -17,8 +17,8 @@ public:
    rect                       m_rectB;
    point                      m_ptaA[4]; // pontos da primeira seta
    point                      m_ptaB[4]; // pontos da segunda seta
-   ::draw2d::region_sp        m_rgnA; // região da primeira seta
-   ::draw2d::region_sp        m_rgnB; // região da segunda seta
+   ::draw2d::region_sp        m_rgnA; // regiï¿½o da primeira seta
+   ::draw2d::region_sp        m_rgnB; // regiï¿½o da segunda seta
    UINT                       m_uiTimer;
    ::user::e_element          m_eelement;
 
@@ -37,9 +37,9 @@ public:
 
 
 
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void pre_translate_message(::message::message * pobj);
    virtual bool create_window(const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,sp(::user::interaction) pParentWnd,UINT nID, ::create * pcreate = NULL);
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
    virtual void _001OnDraw(::draw2d::graphics * pgraphics);
    virtual void _001OnVerisimpleDraw(::draw2d::graphics * pgraphics);

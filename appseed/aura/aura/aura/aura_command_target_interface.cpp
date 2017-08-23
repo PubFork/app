@@ -1,75 +1,96 @@
 #include "framework.h"
 
 
-bool command_target_interface::_001SendCommand(id id)
+void command_target_interface::_001SendCommand(::user::command * pcommand)
 {
    
-   ::user::command msg(id);
+   pcommand->m_pcommandtargetSource = this;
 
-   msg.m_pcommandtargetSource = this;
+   pcommand->m_id.m_etype = ::message::type_command;
    
-   return _001OnCmdMsg(&msg);
+   _001OnCmdMsg(pcommand);
 
 }
 
 
-bool command_target_interface::_001SendUpdateCmdUi(command_ui * pcommandui)
+bool command_target_interface::_001SendUpdateCommand(::user::command * pcommand)
 {
    
-   ::user::command msg(pcommandui);
-   
-   msg.m_pcommandtargetSource = this;
+   pcommand->m_pcommandtargetSource = this;
 
-   return _001OnCmdMsg(&msg);
+   pcommand->m_id.m_etype = ::message::type_command;
+
+   _001OnCmdMsg(pcommand);
 
 }
 
 
-bool command_target_interface::_001OnCmdMsg(::user::command * pcommand)
+void command_target_interface::_001OnCmdMsg(::user::command * pcommand)
 {
 
-   if(pcommand->m_etype == ::user::command::type_command)
+   if(pcommand->m_id.m_etype == ::message::type_command)
    {
 
-      probe_command_ui cmdui(get_app());
-
-      cmdui.m_id = pcommand->m_id;
-
-      if(on_simple_update(&cmdui))
+      if(on_simple_update(pcommand))
       {
-         if(!cmdui.m_bEnabled)
-            return false;
+         
+         if (!pcommand->m_bEnabled)
+         {
+
+            return;
+
+         }
+
       }
 
-      if(on_simple_action(pcommand->m_id))
-         return true;
+      if (on_simple_action(pcommand))
+      {
+
+         return;
+
+      }
+
+   }
+   else if (pcommand->m_id.m_etype == ::message::type_command_update)
+   {
+
+      if (on_simple_update(pcommand))
+      {
+
+         return;
+
+      }
+
+      if (!pcommand->m_bEnableChanged)
+      {
+       
+         if (_001HasCommandHandler(pcommand))
+         {
+
+            pcommand->m_bHasCommandHandler = true;
+
+         }
+
+      }
 
    }
    else
    {
 
-      if(on_simple_update(pcommand->m_pcommandui))
-         return true;
-
-      if(_001HasCommandHandler(pcommand->m_pcommandui->m_id))
-      {
-         pcommand->m_pcommandui->Enable();
-         return true;
-      }
+      throw not_implemented(get_app());
 
    }
 
-   return false;
-
 }
 
-command_target_interface::command_signalid::~command_signalid()
-{
-}
 
-command_target_interface::command_signalrange::~command_signalrange()
-{
-}
+//command_target_interface::command_signalid::~command_signalid()
+//{
+//}
+//
+//command_target_interface::command_signalrange::~command_signalrange()
+//{
+//}
 
 command_target_interface::command_target_interface()
 {
@@ -80,45 +101,46 @@ command_target_interface::command_target_interface(::aura::application * papp)
 {
 }
 
-bool command_target_interface::on_simple_action(id id)
+void command_target_interface::on_simple_action(::user::command * pcommand)
 {
    
-   ::dispatch::signal_item_ptr_array signalptra;
+   route_message(pcommand);
 
-   get_command_signal_array(::user::command::type_command,signalptra,id);
+   //::dispatch::message::sender_item_ptr_array signalptra;
 
-   bool bOk = false;
+   //get_command_signal_array(::user::command::type_command,signalptra,id);
 
-   for(int32_t i = 0; i < signalptra.get_size(); i++)
-   {
+   //bool bOk = false;
 
-      ::user::command command(signalptra[i]->m_psignal);
+   //for(int32_t i = 0; i < signalptra.get_size(); i++)
+   //{
 
-      command.m_id = id;
+   //   ::user::command command(signalptra[i]->m_psignal);
 
-      signalptra[i]->m_psignal->emit(&command);
+   //   command.m_id = id;
 
-      if (command.m_bRet)
-      {
+   //   signalptra[i]->m_psignal->emit(&command);
 
-         bOk = true;
+   //   if (command.m_bRet)
+   //   {
 
-      }
+   //      bOk = true;
 
-   }
+   //   }
 
-   return bOk;
+   //}
+
+   //return bOk;
 
 }
 
-bool command_target_interface::_001HasCommandHandler(id id)
+
+bool command_target_interface::_001HasCommandHandler(::user::command * pcommand)
 {
 
-   ::dispatch::signal_item_ptr_array signalptra;
+   synch_lock sl(m_pmutex);
 
-   get_command_signal_array(::user::command::type_command,signalptra,id);
-
-   return signalptra.get_size() > 0;
+   return m_idroute[pcommand->m_id].has_elements();
 
 }
 
@@ -126,7 +148,7 @@ bool command_target_interface::_001HasCommandHandler(id id)
 bool command_target_interface::on_simple_update(command_ui * pcommandui)
 {
    
-   ::dispatch::signal_item_ptr_array signalptra;
+   ::dispatch::message::sender_item_ptr_array signalptra;
    
    get_command_signal_array(::user::command::type_command_ui,signalptra,pcommandui->m_id);
    
@@ -154,7 +176,7 @@ bool command_target_interface::on_simple_update(command_ui * pcommandui)
 
 
 
-void command_target_interface::get_command_signal_array(::user::command::e_type etype,::dispatch::signal_item_ptr_array & signalptra,id id)
+void command_target_interface::get_command_signal_array(::user::command::e_type etype,::dispatch::message::sender_item_ptr_array & signalptra,id id)
 {
    command_signalid signalid;
    signalid.m_id = id;
@@ -180,7 +202,7 @@ void command_target_interface::get_command_signal_array(::user::command::e_type 
    }
 }
 
-void command_target_interface::install_message_handling(::message::dispatch * pdispatch)
+void command_target_interface::install_message_routing(::message::sender * psender)
 {
 
    UNREFERENCED_PARAMETER(pdispatch);

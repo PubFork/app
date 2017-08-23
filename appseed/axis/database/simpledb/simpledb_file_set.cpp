@@ -22,7 +22,7 @@ namespace simpledb
    }
 
 
-   void file_set::data_on_after_change(signal_details * pobj)
+   void file_set::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event, pchange, pobj);

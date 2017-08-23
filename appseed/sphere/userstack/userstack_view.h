@@ -63,9 +63,9 @@ namespace userstack
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);
       virtual void OnDraw(::draw2d::graphics * pgraphics);
       virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);

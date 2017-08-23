@@ -30,10 +30,10 @@ namespace console
    }
 
 
-   void prompt_impact::install_message_handling(::message::dispatch * pdispatch)
+   void prompt_impact::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_handling(pdispatch);
+      ::user::impact::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&prompt_impact::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_KEYDOWN,pdispatch,this,&prompt_impact::_001OnKeyDown);
@@ -53,7 +53,7 @@ namespace console
    }
 
 
-   void prompt_impact::_001OnShowWindow(::signal_details * pobj)
+   void prompt_impact::_001OnShowWindow(::message::message * pobj)
    {
       SCAST_PTR(::message::show_window,pshowwindow,pobj);
       if(pshowwindow->m_bShow)
@@ -62,7 +62,7 @@ namespace console
          m_bOk = false;
       }
    }
-   void prompt_impact::_001OnCreate(::signal_details * pobj)
+   void prompt_impact::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -102,7 +102,7 @@ namespace console
 
    }
 
-   void prompt_impact::_001OnKeyDown(::signal_details * pobj)
+   void prompt_impact::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
@@ -243,7 +243,7 @@ namespace console
    }
 
 
-   void prompt_impact::_001OnKeyUp(::signal_details * pobj)
+   void prompt_impact::_001OnKeyUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

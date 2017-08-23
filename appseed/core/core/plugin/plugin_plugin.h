@@ -71,7 +71,7 @@ namespace plugin
 
       virtual void open_ca2_string(const char * psz);
 
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 
 //#ifdef WINDOWS
 //

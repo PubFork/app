@@ -39,10 +39,10 @@ namespace user
    }
 
 
-   void button::install_message_handling(::message::dispatch * pinterface)
+   void button::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(pinterface);
 
       USER_MESSAGE_LINK(message_create, pinterface, this, &button::_001OnCreate);
 
@@ -184,7 +184,7 @@ namespace user
    }
 
 
-   void button::_001OnLButtonDown(signal_details * pobj)
+   void button::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
@@ -210,7 +210,7 @@ namespace user
 
    }
 
-   void button::_001OnMButtonDown(signal_details * pobj)
+   void button::_001OnMButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -235,7 +235,7 @@ namespace user
       }
 
    }
-   void button::_001OnMButtonUp(signal_details * pobj)
+   void button::_001OnMButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -266,7 +266,7 @@ namespace user
       return Session.m_puiLastLButtonDown == this;
    }
 
-   void button::_001OnLButtonUp(signal_details * pobj)
+   void button::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -305,7 +305,7 @@ namespace user
 
    }
 
-   void button::_001OnMouseMove(signal_details * pobj)
+   void button::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -351,7 +351,7 @@ namespace user
    }
 
 
-   void button::_001OnMouseLeave(signal_details * pobj)
+   void button::_001OnMouseLeave(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -489,7 +489,7 @@ namespace user
    }
 
 
-   void button::_001OnCreate(signal_details * pobj)
+   void button::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -716,7 +716,7 @@ namespace user
    }
 
 
-   void button::_001OnKeyDown(signal_details * pobj)
+   void button::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
@@ -1043,7 +1043,7 @@ namespace user
 
 
 
-   void button::pre_translate_message(signal_details * pobj)
+   void button::pre_translate_message(::message::message * pobj)
       {
 
          // Relay events from this button to the tool tip tool handler
@@ -1189,7 +1189,7 @@ namespace user
    }
 
 
-   void button::BaseToolTipRelayEvent(class signal_details *)
+   void button::BaseToolTipRelayEvent(class ::message::message *)
    {
    }
 

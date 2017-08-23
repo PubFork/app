@@ -9,7 +9,7 @@ namespace message
 
    class dispatch;
 
-   typedef void (dispatch::*PFN_DISPATCH_MESSAGE_HANDLER)(signal_details * pobj);
+   typedef void (dispatch::*PFN_DISPATCH_MESSAGE_HANDLER)(::message::message * pobj);
 
    class CLASS_DECL_AURA dispatch:
       virtual public ::object
@@ -29,7 +29,7 @@ namespace message
          UINT                    m_uiCode;
          UINT                    m_uiIdStart;
          UINT                    m_uiIdEnd;
-         sp(class ::signal)      m_psignal;
+         sp(class ::message::sender)      m_psignal;
 
          //HandlerItemArray        m_handlera;
 
@@ -66,7 +66,7 @@ namespace message
 
       int32_t                       m_iHandling;
       SignalArray                   m_signala;
-      class ::signal                m_signalInstallMessageHandling;
+      class ::message::sender                m_signalInstallMessageHandling;
       PFN_DISPATCH_MESSAGE_HANDLER  m_pfnDispatchWindowProc;
 
 
@@ -75,31 +75,31 @@ namespace message
 
       virtual sp(::aura::application) calc_app();
 
-      sp(::signal_details) get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
+      sp(::message::message) get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
 
-      sp(::signal_details) get_base(LPMESSAGE lpmsg);
+      sp(::message::message) get_base(LPMESSAGE lpmsg);
 
-      void RemoveMessageHandler(signalizable* psignalizable);
-
-      template < class T >
-      bool AddMessageHandler(UINT message, UINT uiCode, UINT uiIdStart, UINT uiIdEnd, T * psignalizable, void (T::*pfn)(signal_details *), bool bAddUnique = true);
+      void RemoveMessageHandler(::message::receiver* psignalizable);
 
       template < class T >
-      bool RemoveMessageHandler(UINT message,UINT uiCode,UINT uiIdStart,UINT uiIdEnd,T * psignalizable,void (T::*pfn)(signal_details *));
+      bool AddMessageHandler(UINT message, UINT uiCode, UINT uiIdStart, UINT uiIdEnd, T * psignalizable, void (T::*pfn)(::message::message *), bool bAddUnique = true);
+
+      template < class T >
+      bool RemoveMessageHandler(UINT message,UINT uiCode,UINT uiIdStart,UINT uiIdEnd,T * psignalizable,void (T::*pfn)(::message::message *));
 
       virtual e_prototype GetMessagePrototype(UINT uiMessage,UINT uiCode);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void _001ClearMessageHandling();
 
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 
       virtual void _on_start_user_message_handler();
 
-      virtual void _start_user_message_handler(signal_details * pobj);
+      virtual void _start_user_message_handler(::message::message * pobj);
 
-      virtual void _user_message_handler(signal_details * pobj);
+      virtual void _user_message_handler(::message::message * pobj);
 
       virtual PFN_DISPATCH_MESSAGE_HANDLER _calc_user_message_handler();
 
@@ -108,7 +108,7 @@ namespace message
 
 
    template < class T >
-   bool dispatch::AddMessageHandler(UINT message, UINT uiCode, UINT uiIdStart, UINT uiIdEnd, T * psignalizable, void (T::*pfn)(signal_details *), bool bAddUnique)
+   bool dispatch::AddMessageHandler(UINT message, UINT uiCode, UINT uiIdStart, UINT uiIdEnd, T * psignalizable, void (T::*pfn)(::message::message *), bool bAddUnique)
    {
 
       synch_lock sl(m_pmutex);
@@ -124,7 +124,7 @@ namespace message
          psignal->m_uiIdStart = uiIdStart;
          psignal->m_uiIdEnd = uiIdEnd;
          psignal->m_eprototype = GetMessagePrototype(message,0);
-         psignal->m_psignal = canew(class ::signal());
+         psignal->m_psignal = canew(class ::message::sender());
          m_signala.add(psignal);
       }
       else
@@ -143,7 +143,7 @@ namespace message
    }
 
    template < class T >
-   bool dispatch::RemoveMessageHandler(UINT message,UINT uiCode,UINT uiIdStart,UINT uiIdEnd,T * psignalizable,void (T::*pfn)(signal_details *))
+   bool dispatch::RemoveMessageHandler(UINT message,UINT uiCode,UINT uiIdStart,UINT uiIdEnd,T * psignalizable,void (T::*pfn)(::message::message *))
    {
 
       synch_lock sl(m_pmutex);

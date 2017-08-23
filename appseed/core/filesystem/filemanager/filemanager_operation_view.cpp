@@ -19,7 +19,7 @@ namespace filemanager
    }
 
 
-   void operation_view::_001OnCreate(signal_details * pobj)
+   void operation_view::_001OnCreate(::message::message * pobj)
    {
       pobj->previous();
 
@@ -52,9 +52,9 @@ namespace filemanager
 
    }
 
-   void operation_view::install_message_handling(::message::dispatch * pinterface)
+   void operation_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::split_view::install_message_handling(pinterface);
+      ::user::split_view::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&operation_view::_001OnCreate);
       IGUI_WIN_MSG_LINK(MessageMainPost,pinterface,this,&operation_view::_001OnMainPostMessage);
       IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&operation_view::_001OnDestroy);
@@ -65,7 +65,7 @@ namespace filemanager
       return  (::user::impact::get_document());
    }
 
-   void operation_view::_001OnMainPostMessage(signal_details * pobj)
+   void operation_view::_001OnMainPostMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       if(pbase->m_wparam == MessageMainPostFileOperation)
@@ -80,7 +80,7 @@ namespace filemanager
       }
    }
 
-   void operation_view::_001OnDestroy(signal_details *pobj)
+   void operation_view::_001OnDestroy(::message::message *pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }

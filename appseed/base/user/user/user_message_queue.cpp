@@ -29,7 +29,7 @@ namespace user
    }
 
 
-   void message_queue::message_handler(signal_details * pobj)
+   void message_queue::message_handler(::message::message * pobj)
    {
 
       message_queue_message_handler(pobj);
@@ -42,7 +42,7 @@ namespace user
    }
 
 
-   void message_queue::message_queue_message_handler(signal_details * pobj)
+   void message_queue::message_queue_message_handler(::message::message * pobj)
    {
 
       if(m_plistener != NULL)

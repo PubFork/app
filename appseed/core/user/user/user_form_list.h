@@ -69,7 +69,7 @@ namespace user
       virtual bool _001OnMouseActivate(::window_sp pDesktopWnd,UINT nHitTest,UINT message,LRESULT & iResult);
 
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
 
       bool BaseOnControlEvent(::user::control_event * pevent);
 

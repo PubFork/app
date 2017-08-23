@@ -90,11 +90,11 @@ DWORD _AfxGetComCtlVersion();
 #define MAC_THREAD(pthread) (dynamic_cast < ::mac::thread * > (dynamic_cast < ::thread * >(pthread)))
 
 
-CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, signal_details * pobj);
+CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, signal_details * pobj);
-CLASS_DECL_AXIS void __cdecl __pre_translate_message(signal_details * pobj);
+CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 
 
 
@@ -159,8 +159,8 @@ CLASS_DECL_AXIS void AfxResetMsgCache();
 #define MAC_WINDOW(pwnd) (dynamic_cast < ::macos::interaction_impl * > (dynamic_cast < ::user::interaction_impl * >(pwnd)))
 
 
-CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, signal_details * pobj);
-CLASS_DECL_AXIS void __cdecl __pre_translate_message(signal_details * pobj);
+CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 //#include "macos_printer.h"
 //#include "macos_message_queue.h"
 

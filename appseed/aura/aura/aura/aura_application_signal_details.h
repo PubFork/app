@@ -24,7 +24,7 @@ namespace aura
    };
 
    class CLASS_DECL_AURA application_signal_details:
-      public signal_details
+      public ::message::message
    {
    public:
 
@@ -34,7 +34,7 @@ namespace aura
       bool                             m_bOk;
 
 
-      application_signal_details(class ::signal * psignal,e_application_signal esignal);
+      application_signal_details(class ::message::sender * psignal,e_application_signal esignal);
 
 
    };

@@ -17,18 +17,6 @@ namespace user
    public:
       
       
-      enum e_message
-      {
-         
-         MessageDestroyWindow = WM_USER + 128
-         
-      };
-      
-      enum EChildId
-      {
-         ChildIdClose = 0x00800000
-      };
-      
       menu *                                 m_pmenuParent;
       sp(menu_item)                          m_pitem;
       ::user::interaction *                  m_puiParent;
@@ -50,6 +38,7 @@ namespace user
       point                                  m_ptPositionHint;
       int                                    m_iFlags;
       bool                                   m_bPositionHint;
+      bool                                   m_bInline;
       
       
       
@@ -83,13 +72,14 @@ namespace user
       virtual void hint_position(point pt);
       virtual void hints(int iFlags, point pt);
       
+      virtual bool create_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
+      virtual bool create_inline_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
       virtual bool track_popup_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
       
       void _001OnTimer(::timer * ptimer);
       
       void _001OnDraw(::draw2d::graphics * pgraphics);
       
-      DECL_GEN_SIGNAL(OnMessageDestroyWindow);
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);
@@ -98,12 +88,15 @@ namespace user
       DECL_GEN_SIGNAL(_001OnNcCalcSize);
       DECL_GEN_SIGNAL(_001OnEnable);
       DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnClose);
+
+
       
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
       
       bool pre_create_window(::user::create_struct& cs);
       
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       
       sp(::user::menu_item) get_item();
       
@@ -119,7 +112,13 @@ namespace user
       
       virtual bool load_xml_menu(const char * pszMatter);
       
-      virtual void destroy_menu();
+      virtual void update_command_ui(menu_item * pitemParent);
+
+      void calc_size(menu_item * pitem, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
+      void layout_buttons(menu_item * pitem, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound);
+
+
+      virtual void defer_close();
       
    };
 

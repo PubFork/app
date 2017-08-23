@@ -18,11 +18,11 @@ namespace filemanager
    }
    
    
-   void view::install_message_handling(::message::dispatch * pdispatch)
+   void view::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_handling(pdispatch);
-      ::user::split_view::install_message_handling(pdispatch);
+      ::filemanager::impact::install_message_routing(pdispatch);
+      ::user::split_view::install_message_routing(pdispatch);
       
    }
    

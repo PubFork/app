@@ -728,6 +728,8 @@
     </ClCompile>
     <ClCompile Include="aura\install\windows\install_windows_win.cpp">
     </ClCompile>
+    <ClCompile Include="aura\message\message_receiver.cpp" />
+    <ClCompile Include="aura\message\message_sender.cpp" />
     <ClCompile Include="aura\node\windows\windows_timer.cpp" />
     <ClCompile Include="aura\os\ansios\ansios_base.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1225,9 +1227,15 @@
     <ClInclude Include="aura\install\install_window.h" />
     <ClInclude Include="aura\message\message.h" />
     <ClInclude Include="aura\message\message_base.h" />
+    <ClInclude Include="aura\message\message_const.h" />
     <ClInclude Include="aura\message\message_cross_windows.h" />
+    <ClInclude Include="aura\message\message_id.h" />
+    <ClInclude Include="aura\message\message_message.h" />
     <ClInclude Include="aura\message\message_definition.h" />
-    <ClInclude Include="aura\message\message_dispatch.h" />
+    <ClInclude Include="aura\message\message_receiver.h" />
+    <ClInclude Include="aura\message\message_route.h" />
+    <ClInclude Include="aura\message\message_sender.h" />
+    <ClInclude Include="aura\message\message_timer.h" />
     <ClInclude Include="aura\node\ansios\ansios.h">
     </ClInclude>
     <ClInclude Include="aura\node\ansios\ansios_process.h">
@@ -1441,8 +1449,6 @@
     <ClCompile Include="aura\message\message.cpp">
     </ClCompile>
     <ClCompile Include="aura\message\message_base.cpp">
-    </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
     </ClCompile>
     <ClCompile Include="aura\node\ansios\ansios_pipe.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>

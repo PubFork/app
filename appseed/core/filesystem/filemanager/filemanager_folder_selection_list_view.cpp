@@ -24,9 +24,9 @@ namespace filemanager
    }
 
 
-   void folder_selection_list_view::install_message_handling(::message::dispatch * pinterface)
+   void folder_selection_list_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::split_view::install_message_handling(pinterface);
+      ::user::split_view::install_message_routing(pinterface);
    }
 
 
@@ -145,13 +145,13 @@ namespace filemanager
       ::filemanager::impact::on_update(p, l, o);
 
    }
-   void folder_selection_list_view::_001OnAdd(signal_details * pobj)
+   void folder_selection_list_view::_001OnAdd(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       FolderAdd();
    }
 
-   void folder_selection_list_view::_001OnRemove(signal_details * pobj)
+   void folder_selection_list_view::_001OnRemove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       FolderRemove();

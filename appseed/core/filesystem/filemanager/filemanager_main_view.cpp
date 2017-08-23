@@ -23,11 +23,11 @@ namespace filemanager
    }
    
    
-   void main_view::install_message_handling(::message::dispatch * pdispatch)
+   void main_view::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_handling(pdispatch);
-      ::user::split_view::install_message_handling(pdispatch);
+      ::filemanager::impact::install_message_routing(pdispatch);
+      ::user::split_view::install_message_routing(pdispatch);
       
    }
 
@@ -186,7 +186,7 @@ namespace filemanager
       on_layout();
    }
 
-   bool main_view::on_simple_action(id id)
+   bool main_view::on_simple_action(::user::command * pcommand)
    {
       //  int32_t iPos = -1;
       if(id == "change_view")

@@ -22,9 +22,9 @@ namespace user
    {
    }
 
-   void place_holder_container::install_message_handling(::message::dispatch * pdispatch)
+   void place_holder_container::install_message_routing(::message::sender * psender)
    {
-      ::user::interaction::install_message_handling(pdispatch);
+      ::user::interaction::install_message_routing(pdispatch);
    }
 
 

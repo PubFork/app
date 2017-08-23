@@ -187,16 +187,16 @@ namespace prompt
    }
 
 
-   void frame::_001OnClose(signal_details * pobj)
+   void frame::_001OnClose(::message::message * pobj)
    {
       pobj->m_bRet = true;
       ShowWindow(SW_HIDE);
    }
 
 
-   void frame::install_message_handling(::message::dispatch * pinterface)
+   void frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_frame_window::install_message_handling(pinterface);
+      simple_frame_window::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &frame::_001OnClose);
 //      
@@ -205,7 +205,7 @@ namespace prompt
       IGUI_WIN_MSG_LINK(WM_APP + 2000  , pinterface, this, &frame::_001OnApp2000);
    }
 
-   void frame::_001OnCreate(signal_details * pobj)
+   void frame::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -254,7 +254,7 @@ namespace prompt
 
    }
 
-   void frame::_001OnMove(signal_details * pobj)
+   void frame::_001OnMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       /*if(m_workset.GetMovingManager()->IsMoving())
@@ -308,7 +308,7 @@ namespace prompt
       }*/
    }
 
-   void frame::_001OnShowWindow(signal_details * pobj)
+   void frame::_001OnShowWindow(::message::message * pobj)
    {
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
@@ -345,7 +345,7 @@ namespace prompt
          SWP_SHOWWINDOW);
    }
 
-   void frame::message_queue_message_handler(signal_details * pobj)
+   void frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_APP + 2000))
@@ -355,7 +355,7 @@ namespace prompt
       }
    }
 
-   void frame::_001OnApp2000(signal_details * pobj)
+   void frame::_001OnApp2000(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -418,7 +418,7 @@ namespace prompt
    }
 
 
-   bool frame::on_simple_action(id id)
+   bool frame::on_simple_action(::user::command * pcommand)
    {
       if(id == "app_exit")
       {

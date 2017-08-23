@@ -40,7 +40,7 @@ namespace userex
    }
 
 
-   bool pane_view::on_simple_action(id id)
+   bool pane_view::on_simple_action(::user::command * pcommand)
    {
       for(int32_t i = 0; i < m_menua.get_size(); i++)
       {

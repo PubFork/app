@@ -25,7 +25,7 @@ namespace simple_ui
       virtual ~interaction();
 
 
-      virtual      void install_message_handling(::message::dispatch * pdispatch);
+      virtual      void install_message_routing(::message::sender * psender);
 
 
       virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);

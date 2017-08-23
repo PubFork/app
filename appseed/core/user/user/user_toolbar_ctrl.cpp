@@ -55,7 +55,7 @@ namespace user
 #endif
 
 
-   void toolbar_control::_001OnCreate(signal_details * pobj)
+   void toolbar_control::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

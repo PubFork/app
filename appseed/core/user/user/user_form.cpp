@@ -575,7 +575,7 @@ namespace user
       }*/
    }
 
-   void form::_000OnPosCreate(signal_details * pobj)
+   void form::_000OnPosCreate(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::base, pbase, pobj);
@@ -655,9 +655,9 @@ namespace user
       }
    }
 
-   void form::install_message_handling( ::message::dispatch *pinterface)
+   void form::install_message_routing( ::message::sender *pinterface)
    {
-      ::user::form_window::install_message_handling(pinterface);
+      ::user::form_window::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &form::_001OnCreate);
       IGUI_MSG_LINK(::message::message_pos_create, pinterface, this, &form::_000OnPosCreate);
       IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, pinterface, this, &form::_001OnAppLanguage);
@@ -671,13 +671,13 @@ namespace user
       selection.add_item(id);
    }
 
-   bool form::on_simple_action(id id)
+   bool form::on_simple_action(::user::command * pcommand)
    {
       return control::on_simple_action(id);
    }
 
 
-   void form::_001OnNotify(signal_details * pobj)
+   void form::_001OnNotify(::message::message * pobj)
    {
 
 #ifdef WINDOWSEX
@@ -695,7 +695,7 @@ namespace user
    }
 
 
-   void form::_001OnMessageNotify(signal_details * pobj)
+   void form::_001OnMessageNotify(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -737,7 +737,7 @@ namespace user
 
    }
 
-   void form::data_on_after_change(signal_details * pobj)
+   void form::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event, pchange, pobj);
@@ -854,7 +854,7 @@ namespace user
    }
 
 
-   void form::_001OnAppLanguage(signal_details * pobj)
+   void form::_001OnAppLanguage(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -868,7 +868,7 @@ namespace user
    }
 
 
-   void form::_001OnCreate(signal_details * pobj)
+   void form::_001OnCreate(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::create, pcreate, pobj);

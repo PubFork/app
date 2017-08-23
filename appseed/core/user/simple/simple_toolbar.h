@@ -131,7 +131,7 @@ public:
    DECL_GEN_SIGNAL(_001OnNcHitTest);
    DECL_GEN_SIGNAL(_001OnMouseLeave);
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
 
 };

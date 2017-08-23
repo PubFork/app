@@ -531,7 +531,7 @@ namespace user
 
                   m_pimpl = pimplNew;
 
-                  pimplNew->install_message_handling(pimplNew);
+                  pimplNew->install_message_routing(pimplNew);
 
                   on_set_parent(puiParent);
 
@@ -865,7 +865,7 @@ namespace user
 
 
 
-   void interaction::install_message_handling(::message::dispatch * pinterface)
+   void interaction::install_message_routing(::message::sender * pinterface)
    {
 
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction::_001OnCreate);
@@ -897,12 +897,12 @@ namespace user
 
    }
 
-   void interaction::_001OnNcCalcSize(signal_details * pobj)
+   void interaction::_001OnNcCalcSize(::message::message * pobj)
    {
       pobj->m_bRet = true; // avoid any Microsoft-Window-concept-of-non-client-area
    }
 
-   void interaction::_001OnDestroy(signal_details * pobj)
+   void interaction::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -1304,7 +1304,7 @@ namespace user
    }
 
 
-   void interaction::_001OnSize(signal_details * pobj)
+   void interaction::_001OnSize(::message::message * pobj)
    {
 
       SCAST_PTR(::message::size,psize,pobj);
@@ -1440,7 +1440,7 @@ namespace user
    }
 
 
-   void interaction::_001OnMove(signal_details * pobj)
+   void interaction::_001OnMove(::message::message * pobj)
    {
 
       pobj->previous();
@@ -1999,7 +1999,7 @@ namespace user
    }
 
 
-   void interaction::_001OnCreate(signal_details * pobj)
+   void interaction::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -2194,7 +2194,7 @@ namespace user
       {
          if(m_pimpl == NULL)
             return;
-         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <signal_details *> (pdrag));
+         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pdrag));
          if(pdrag->m_bRet)
             return;
       }
@@ -2273,7 +2273,7 @@ namespace user
       {
          if(m_pimpl == NULL)
             return;
-         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <signal_details *> (pmouse));
+         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
          if(pmouse->get_lresult() != 0)
             return;
       }
@@ -2322,7 +2322,7 @@ namespace user
          }
          try
          {
-            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <signal_details *> (pkey));
+            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pkey));
             if(pkey->get_lresult() != 0)
                return;
          }
@@ -2332,7 +2332,7 @@ namespace user
       }
    }
 
-   void interaction::_001OnMouseEnter(signal_details * pobj)
+   void interaction::_001OnMouseEnter(::message::message * pobj)
    {
       /*
       for(int32_t i = 0; i < m_uiptra.get_size(); i++)
@@ -2350,7 +2350,7 @@ namespace user
    }
 
 
-   void interaction::_001OnMouseLeave(signal_details * pobj)
+   void interaction::_001OnMouseLeave(::message::message * pobj)
    {
 
       sp(interaction) pui = top_child();
@@ -2453,7 +2453,7 @@ namespace user
    }
 
 
-   void interaction::_001OnKeyDown(signal_details * pobj)
+   void interaction::_001OnKeyDown(::message::message * pobj)
    {
       //if(Session.get_keyboard_focus() != this
       //   && Session.get_keyboard_focus() != NULL)
@@ -2462,7 +2462,7 @@ namespace user
       //}
    }
 
-   void interaction::_001OnKeyUp(signal_details * pobj)
+   void interaction::_001OnKeyUp(::message::message * pobj)
    {
       //if(Session.get_keyboard_focus() != this
       ///&& Session.get_keyboard_focus() != NULL)
@@ -2471,7 +2471,7 @@ namespace user
       //}
    }
 
-   void interaction::_001OnChar(signal_details * pobj)
+   void interaction::_001OnChar(::message::message * pobj)
    {
       //if(Session.get_keyboard_focus() != this
       // && Session.get_keyboard_focus() != NULL)
@@ -2563,42 +2563,42 @@ namespace user
 
 
 
-   void interaction::_002OnLButtonDown(signal_details * pobj)
+   void interaction::_002OnLButtonDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnLButtonUp(signal_details * pobj)
+   void interaction::_002OnLButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnMouseMove(signal_details * pobj)
+   void interaction::_002OnMouseMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnMouseEnter(signal_details * pobj)
+   void interaction::_002OnMouseEnter(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnMouseLeave(signal_details * pobj)
+   void interaction::_002OnMouseLeave(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnKeyDown(signal_details * pobj)
+   void interaction::_002OnKeyDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnKeyUp(signal_details * pobj)
+   void interaction::_002OnKeyUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction::_002OnTimer(signal_details * pobj)
+   void interaction::_002OnTimer(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -2769,7 +2769,7 @@ namespace user
    }
 
 
-   void interaction::pre_translate_message(signal_details * pobj)
+   void interaction::pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -2929,7 +2929,7 @@ namespace user
             if(pwindowOld != NULL)
             {
 
-               pwindowOld->install_message_handling(pimplOld);
+               pwindowOld->install_message_routing(pimplOld);
 
             }
 
@@ -3274,7 +3274,7 @@ namespace user
 
             return false;
          }
-         //install_message_handling(this);
+         //install_message_routing(this);
          return true;
       }
          
@@ -3973,7 +3973,7 @@ namespace user
       try
       {
 
-         ::signalizable::m_signalptra.remove_all();
+         ::::message::receiver::m_signalptra.remove_all();
 
       }
       catch(...)
@@ -4212,7 +4212,7 @@ namespace user
    }
 
 
-   void interaction::message_handler(signal_details * pobj)
+   void interaction::message_handler(::message::message * pobj)
    {
       if(m_pimpl == NULL)
          return;
@@ -4945,7 +4945,7 @@ ExitModal:
    }
 
 
-   void interaction::GuieProc(signal_details * pobj)
+   void interaction::GuieProc(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -5125,7 +5125,7 @@ ExitModal:
 
 
 
-   void interaction::walk_pre_translate_tree(signal_details * pobj, ::user::interaction * puiStop)
+   void interaction::walk_pre_translate_tree(::message::message * pobj, ::user::interaction * puiStop)
    {
 
       if(puiStop == this)
@@ -5194,7 +5194,7 @@ ExitModal:
       m_ecursor = ecursor;
    }
 
-   void interaction::_001OnMouseMove(signal_details * pobj)
+   void interaction::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse,pmouse,pobj);
       pmouse->m_ecursor = get_cursor();
@@ -5489,7 +5489,7 @@ restart:
       }
    }
 
-   void interaction::_001OnUser184(signal_details * pobj)
+   void interaction::_001OnUser184(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       if(pbase->m_wparam == 0 &&
@@ -5691,7 +5691,7 @@ restart:
    }
 
 
-   void interaction::_001OnClose(signal_details * pobj)
+   void interaction::_001OnClose(::message::message * pobj)
    {
 
       pobj->m_bRet = true;
@@ -5758,7 +5758,7 @@ restart:
 
    }
 
-   void interaction::_001OnCommand(signal_details * pobj)
+   void interaction::_001OnCommand(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -5772,7 +5772,7 @@ restart:
    }
 
 
-   void interaction::_001OnSimpleCommand(signal_details * pobj)
+   void interaction::_001OnSimpleCommand(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -5825,7 +5825,7 @@ restart:
 
    /*
 
-      void interaction::_001OnSetSchema(signal_details * pobj)
+      void interaction::_001OnSetSchema(::message::message * pobj)
       {
 
          SCAST_PTR(::message::base,pbase,pobj);
@@ -5909,7 +5909,7 @@ restart:
 
 
 
-   bool interaction::_001HasCommandHandler(id id)
+   bool interaction::_001HasCommandHandler(::user::command * pcommand)
    {
 
       if(command_target_interface::_001HasCommandHandler(id))
@@ -5964,7 +5964,7 @@ restart:
 
 
 
-   bool interaction::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj)
+   bool interaction::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -5978,7 +5978,7 @@ restart:
    }
 
 
-   bool interaction::track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj)
+   bool interaction::track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -5992,7 +5992,7 @@ restart:
    }
 
 
-   bool interaction::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj)
+   bool interaction::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -7337,7 +7337,7 @@ restart:
    }
 
 
-   void interaction::_001OnBaseWndGetProperty(signal_details * pobj)
+   void interaction::_001OnBaseWndGetProperty(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       pbase->set_lresult(_001BaseWndGetProperty((EProperty)pbase->m_wparam,pbase->m_lparam));
@@ -7563,7 +7563,7 @@ restart:
              || eappearance == ::user::appearance_bottom_left;
    }
 
-   void interaction::_001OnShowWindow(signal_details * pobj)
+   void interaction::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -7580,7 +7580,7 @@ restart:
    }
 
 
-   void interaction::_001OnLButtonDown(signal_details * pobj)
+   void interaction::_001OnLButtonDown(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -7709,7 +7709,7 @@ restart:
       ::message::e_prototype eprototype = ::message::PrototypeNone;
       //if(oswindow != NULL)
       {
-         eprototype = ::message::dispatch::GetMessagePrototype(uiMessage,0);
+         eprototype = ::message::sender::GetMessagePrototype(uiMessage,0);
       }
       switch(eprototype)
       {
@@ -7982,7 +7982,7 @@ restart:
    }
 
 
-   void interaction::keyboard_focus_OnKeyDown(signal_details * pobj)
+   void interaction::keyboard_focus_OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);

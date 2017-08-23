@@ -30,7 +30,7 @@ namespace user
 
 
       using ::user::interaction_base::message_handler;
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::message * pobj) override;
 
       using ::user::interaction_base::SetWindowPos;
       //virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;
@@ -66,9 +66,9 @@ namespace user
 #endif
 
       // as hosting interaction_impl
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
       // as virtual interaction_impl
-      virtual void _002InstallMessageHandling(::message::dispatch * pinterface);
+      virtual void _002InstallMessageHandling(::message::sender * pinterface);
 
 
       virtual bool create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id) override;

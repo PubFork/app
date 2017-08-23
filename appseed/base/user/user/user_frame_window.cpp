@@ -121,7 +121,7 @@ namespace user
    }
 
 
-   void frame_window::_guserbaseOnInitialUpdate(signal_details * pobj)
+   void frame_window::_guserbaseOnInitialUpdate(::message::message * pobj)
    {
 
       guserbaseOnInitialUpdate(pobj);
@@ -129,7 +129,7 @@ namespace user
    }
 
 
-   void frame_window::guserbaseOnInitialUpdate(signal_details * pobj)
+   void frame_window::guserbaseOnInitialUpdate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -137,10 +137,10 @@ namespace user
    }
 
 
-   void frame_window::install_message_handling(::message::dispatch *pinterface)
+   void frame_window::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::box::install_message_handling(pinterface);
+      ::user::box::install_message_routing(pinterface);
       IGUI_MSG_LINK(::message::message_frame_initial_update, pinterface, this, &frame_window::_guserbaseOnInitialUpdate);
       IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
       IGUI_WIN_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
@@ -331,7 +331,7 @@ namespace user
       return hAccelTable;
    }
 
-   void frame_window::pre_translate_message(signal_details * pobj)
+   void frame_window::pre_translate_message(::message::message * pobj)
    {
       ENSURE_ARG(pobj != NULL);
       // check for special cancel modes for combo boxes
@@ -725,7 +725,7 @@ namespace user
    }
 
 
-   void frame_window::_001OnCreate(signal_details * pobj)
+   void frame_window::_001OnCreate(::message::message * pobj)
    {
 
       if (pobj->previous())
@@ -992,7 +992,7 @@ namespace user
       DestroyWindow();*/
    }
 
-   void frame_window::_001OnDestroy(signal_details * pobj)
+   void frame_window::_001OnDestroy(::message::message * pobj)
    {
       
       pobj->previous();
@@ -1058,7 +1058,7 @@ namespace user
 
    }
 
-   void frame_window::_001OnActivate(signal_details * pobj)
+   void frame_window::_001OnActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::activate, pactivate, pobj);
 
@@ -1106,7 +1106,7 @@ namespace user
 
    }
 
-   void frame_window::_001OnNcActivate(signal_details * pobj)
+   void frame_window::_001OnNcActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::nc_activate, pncactivate, pobj);
          // stay active if WF_STAYACTIVE bit is on
@@ -1765,7 +1765,7 @@ namespace user
 
 
 
-   void frame_window::_001OnSysCommand(signal_details * pobj)
+   void frame_window::_001OnSysCommand(::message::message * pobj)
    {
 
 #ifdef WINDOWS
@@ -1883,7 +1883,7 @@ namespace user
 
 
 
-   //void frame_window::_001OnCreate(signal_details * pobj)
+   //void frame_window::_001OnCreate(::message::message * pobj)
    //{
    //   UNREFERENCED_PARAMETER(pobj);
 
@@ -1915,7 +1915,7 @@ namespace user
 
 
    // query end session for main frame will attempt to close it all down
-   void frame_window::_001OnQueryEndSession(signal_details * pobj)
+   void frame_window::_001OnQueryEndSession(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -1926,7 +1926,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Special ::user::impact swapping/activation
 
-   void frame_window::_001OnSetFocus(signal_details * pobj)
+   void frame_window::_001OnSetFocus(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       if (m_pviewActive != NULL)
@@ -1966,7 +1966,7 @@ namespace user
    //   m_nIdleFlags |= idleMenu;
    //}
 
-   //void frame_window::OnIdleUpdateCmdUI(signal_details * pobj)
+   //void frame_window::OnIdleUpdateCmdUI(::message::message * pobj)
    //{
    //   // update menu if necessary
    //   if(m_nIdleFlags & idleMenu)
@@ -2001,7 +2001,7 @@ namespace user
    //}
 
 
-   void frame_window::_001OnIdleUpdateCmdUI(signal_details * pobj)
+   void frame_window::_001OnIdleUpdateCmdUI(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // update menu if necessary
@@ -2036,7 +2036,7 @@ namespace user
 
 
 
-   void frame_window::_001OnSize(signal_details * pobj)
+   void frame_window::_001OnSize(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -2107,7 +2107,7 @@ namespace user
 
 
 
-   bool frame_window::_001HasCommandHandler(id id)
+   bool frame_window::_001HasCommandHandler(::user::command * pcommand)
    {
 
       if (command_target_interface::_001HasCommandHandler(id))

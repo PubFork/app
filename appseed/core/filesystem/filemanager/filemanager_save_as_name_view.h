@@ -18,7 +18,7 @@ namespace filemanager
       save_as_edit_view(::aura::application * papp);
       
       
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void _001OnAfterChangeText(::action::context actioncontext);
 
@@ -40,7 +40,7 @@ namespace filemanager
       save_as_button(::aura::application * papp);
       
       
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       
 
       virtual bool _001OnClick(uint_ptr nFlag, point point) override;
@@ -62,7 +62,7 @@ namespace filemanager
       save_as_view(::aura::application * papp);
 
       
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
 

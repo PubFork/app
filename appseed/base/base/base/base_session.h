@@ -48,7 +48,7 @@ namespace base
 
       virtual index initial_frame_position(LPRECT lprect,const RECT & rect,bool bMove,::user::interaction * pui);
 
-      virtual void frame_pre_translate_message(signal_details * pobj) override;
+      virtual void frame_pre_translate_message(::message::message * pobj) override;
 
       virtual bool process_initialize() override;
 
@@ -85,6 +85,7 @@ namespace base
       virtual void defer_create_user_style(const char * pszUiInteractionLibrary = NULL);
 
       
+      virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText) override;
 
 
    };

@@ -273,7 +273,7 @@ static const __MAP_MESSAGE allMessages[] =
  */
 /////////////////////////////////////////////////////////////////////////////
 
-void __trace_message(const char * lpszPrefix, signal_details * pobj)
+void __trace_message(const char * lpszPrefix, ::message::message * pobj)
 {
    //   ENSURE_ARG(AfxIsValidString(lpszPrefix));
    ENSURE_ARG(pobj != NULL);

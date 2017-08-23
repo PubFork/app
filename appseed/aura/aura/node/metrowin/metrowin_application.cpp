@@ -319,7 +319,7 @@ namespace aura
    {
       return ::metrowin::thread::run();
    }
-   bool application::pre_translate_message(signal_details * pobj)
+   bool application::pre_translate_message(::message::message * pobj)
    {
       return ::metrowin::thread::pre_translate_message(pMsg);
    }

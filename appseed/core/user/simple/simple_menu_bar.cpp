@@ -42,9 +42,9 @@ simple_menu_bar::~simple_menu_bar()
 
 }
 
-void simple_menu_bar::install_message_handling(::message::dispatch * pdispatch)
+void simple_menu_bar::install_message_routing(::message::sender * psender)
 {
-   simple_toolbar::install_message_handling(pdispatch);
+   simple_toolbar::install_message_routing(pdispatch);
    IGUI_WIN_MSG_LINK(WM_MOUSEMOVE      , pdispatch, this, &simple_menu_bar::_001OnMouseMove);
    IGUI_WIN_MSG_LINK(WM_NCMOUSEMOVE    , pdispatch, this, &simple_menu_bar::_001OnNcMouseMove);
    IGUI_WIN_MSG_LINK(WM_CREATE         , pdispatch, this, &simple_menu_bar::_001OnCreate);
@@ -146,7 +146,7 @@ bool simple_menu_bar::_001OnCmdMsg(::user::command * pcommand)
 }
 
 
-void simple_menu_bar::_001OnMouseMove(signal_details * pobj)
+void simple_menu_bar::_001OnMouseMove(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    _001Hover(pmouse->m_pt);
@@ -177,14 +177,14 @@ bool simple_menu_bar::_track_popup_menu(int32_t iItem)
 
 }
 
-void simple_menu_bar::_001OnNcMouseMove(signal_details * pobj)
+void simple_menu_bar::_001OnNcMouseMove(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    _001Hover(pmouse->m_pt);
 // trans   simple_toolbar::OnNcMouseMove(pmouse->m_nFlags, pmouse->m_pt);
 }
 
-void simple_menu_bar::pre_translate_message(signal_details * pobj)
+void simple_menu_bar::pre_translate_message(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    if(pbase->m_uiMessage == WM_USER && pbase->m_pwnd == this)
@@ -198,7 +198,7 @@ void simple_menu_bar::pre_translate_message(signal_details * pobj)
    return simple_toolbar::pre_translate_message(pobj);
 }
 
-void simple_menu_bar::_001OnCreate(signal_details * pobj)
+void simple_menu_bar::_001OnCreate(::message::message * pobj)
 {
 //   SCAST_PTR(::message::create, pcreate, pobj);
    if(pobj->previous())
@@ -278,7 +278,7 @@ bool simple_menu_bar::_track_popup_menu(point point)
 
 }
 
-void simple_menu_bar::_001OnKeyDown(signal_details * pobj)
+void simple_menu_bar::_001OnKeyDown(::message::message * pobj)
 {
    // TODO: add your message handler code here and/or call default
 
@@ -317,7 +317,7 @@ bool simple_menu_bar::CalcSize(CToolBarCtrl & tbc, size & size)
 
 
 
-void simple_menu_bar::_001OnDestroy(signal_details * pobj)
+void simple_menu_bar::_001OnDestroy(::message::message * pobj)
 {
    pobj->previous();
 
@@ -358,7 +358,7 @@ void simple_menu_bar::RemoveAllButtons()
    m_itema.remove_all();
 }
 
-void simple_menu_bar::_001OnMenuChar(signal_details * pobj)
+void simple_menu_bar::_001OnMenuChar(::message::message * pobj)
 {
    pobj->previous();
 }
@@ -595,7 +595,7 @@ bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint3
    return TRUE;
 }
 
-void simple_menu_bar::_001OnLButtonDown(signal_details * pobj)
+void simple_menu_bar::_001OnLButtonDown(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    int32_t iItem = _001HitTest(pmouse->m_pt);
@@ -807,7 +807,7 @@ int32_t simple_menu_bar::_001GetHoverItem()
    }
 }
 
-void simple_menu_bar::_001OnAppLanguage(signal_details * pobj)
+void simple_menu_bar::_001OnAppLanguage(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    send_message(WM_CANCELMODE);

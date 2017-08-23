@@ -27,7 +27,7 @@ namespace userstack
 
 
       frame(::aura::application * papp);
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       DECL_GEN_SIGNAL(_001OnApp1);
       DECL_GEN_SIGNAL(_001OnMouseLeave);
@@ -45,15 +45,15 @@ namespace userstack
       virtual void dump(dump_context & dumpcontext) const;
    #endif
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);
       DECL_GEN_SIGNAL(_001OnApp2000);
 
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
 
 
    };

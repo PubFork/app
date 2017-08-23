@@ -12,7 +12,7 @@ namespace user
       menu_list_window(get_app())
    {
 
-      construct_user_style(schema_menu);
+      set_user_schema(schema_menu);
 
    }
 
@@ -51,10 +51,10 @@ namespace user
    }
 
 
-   void menu_list_window::install_message_handling(::message::dispatch * pinterface)
+   void menu_list_window::install_message_routing(::message::sender * pinterface)
    {
 
-      menu::install_message_handling(pinterface);
+      menu::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &menu_list_window::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &menu_list_window::_001OnDestroy);
@@ -63,7 +63,7 @@ namespace user
    }
 
    
-   void menu_list_window::_001OnCreate(signal_details * pobj)
+   void menu_list_window::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -71,18 +71,18 @@ namespace user
    }
 
    
-   void menu_list_window::_001OnClose(signal_details * pobj)
+   void menu_list_window::_001OnClose(::message::message * pobj)
    {
       
-      destroy_menu();
+      UNREFERENCED_PARAMETER(pobj);
       
    }
 
 
-   void menu_list_window::_001OnDestroy(signal_details * pobj)
+   void menu_list_window::_001OnDestroy(::message::message * pobj)
    {
 
-      pobj->m_bRet = false;
+      UNREFERENCED_PARAMETER(pobj);
 
    }
 
@@ -115,7 +115,7 @@ namespace user
 //         if(!m_itemClose.m_pui->create_window(null_rect(), this, ChildIdClose))
 //            return false;
 //
-//         m_itemClose.m_pui->install_message_handling(this);
+//         m_itemClose.m_pui->install_message_routing(this);
 //
 //         m_itemClose.m_button.set_window_text("r");
 //         m_itemClose.m_button.m_pschema = m_pschema->m_pschemaSysMenuButton;
@@ -146,117 +146,7 @@ namespace user
    }
 
 
-   bool menu_list_window::menu_fill(::user::interaction * puiFill, ::user::interaction * puiNotify)
-   {
 
-      m_puiNotify = puiNotify;
-
-      if(!IsWindow())
-      {
-
-         if(!create_window(NULL,NULL,WS_VISIBLE | WS_CHILD,null_rect(),puiFill,0))
-            return false;
-
-      }
-      else
-      {
-         
-         if(GetParent() != puiFill)
-         {
-            
-            SetParent(puiFill);
-            
-         }
-         
-      }
-      
-      if(m_itemClose.m_pui.is_null())
-      {
-       
-         m_itemClose.m_pui = userstyle()->create_menu_button();
-         
-      }
-
-      if(!m_itemClose.m_pui->IsWindow())
-      {
-         
-         if(!m_itemClose.m_pui->create_window(null_rect(), this, ChildIdClose))
-            return false;
-
-         m_itemClose.m_pui->install_message_handling(this);
-
-         m_itemClose.m_pui->set_window_text("r");
-         
-         m_itemClose.m_pui->select_user_style(::user::schema_system_menu_close);
-         
-         //m_itemClose.m_pui->m_pschema = m_pschema->m_pschemaSysMenuButton;
-         
-      }
-
-      update_command_ui(m_pitem);
-      
-      create_buttons(m_pitem);
-
-      on_layout();
-
-      rect rectClient;
-
-      puiFill->GetClientRect(rectClient);
-
-      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-
-      SetTimer(::user::timer_update_menu_command_ui, 300, NULL);
-
-      return true;
-      
-   }
-   
-
-   void menu_list_window::update_command_ui(menu_item * pitemParent)
-   {
-      
-      if(m_puiNotify == NULL)
-      {
-         
-         return;
-         
-      }
-
-      if (pitemParent == NULL)
-      {
-
-         return;
-
-      }
-
-      if(pitemParent->m_spitema == NULL)
-      {
-         
-         return;
-
-      }
-
-      ::user:: menu_command_ui commandui(get_app());
-
-      commandui.m_pitema = pitemParent->m_spitema;
-
-      for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
-      {
-
-         menu_item * pitem = pitemParent->m_spitema->element_at(i);
-
-         commandui.m_iIndex       = i;
-         commandui.m_id           = pitem->m_id;
-         commandui.m_pOther       = pitem->m_pui;
-
-         if(m_puiNotify->on_simple_update(&commandui))
-            continue;
-
-         update_command_ui(pitem);
-
-      }
-
-   }
 
 
    void menu_list_window::_001OnTimer(::timer * ptimer)
@@ -264,15 +154,6 @@ namespace user
       
       ::user::menu::_001OnTimer(ptimer);
       
-      if(ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
-      {
-         
-         update_command_ui(m_pitem);
-         
-         RedrawWindow();
-         
-      }
-
    }
 
 
@@ -576,7 +457,9 @@ namespace user
                   if (m_puiNotify != NULL)
                   {
 
-                     m_puiNotify->_001SendCommand(pitem->m_id);
+                        ::user::command command(idCommand);
+                        
+                        m_puiNotify->_001SendCommand(&command);
 
                   }
                   

@@ -20,7 +20,7 @@ namespace programming
    }
 
 
-   void application::on_application_signal(signal_details * pobj)
+   void application::on_application_signal(::message::message * pobj)
    {
 
       SCAST_PTR(::aura::application_signal_details, psignal, pobj);

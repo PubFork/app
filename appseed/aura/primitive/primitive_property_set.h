@@ -192,7 +192,7 @@ public:
 };
 
 
-class CLASS_DECL_AURA PropertySignalObject : public signal_details
+class CLASS_DECL_AURA PropertySignalObject : public ::message::message
 {
 public:
 

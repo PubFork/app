@@ -25,7 +25,7 @@ namespace install
    }
 
 
-   void socket_thread::install_message_handling(::message::dispatch * pinterface)
+   void socket_thread::install_message_routing(::message::sender * pinterface)
    {
 
    }

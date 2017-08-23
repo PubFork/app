@@ -98,11 +98,11 @@ namespace hotplugin
    }
 
 
-   void plugin::install_message_handling(::message::dispatch * pdispatch)
+   void plugin::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_handling(pdispatch);
-      ::axis::session::install_message_handling(pdispatch);
+      ::simple_ui::interaction::install_message_routing(pdispatch);
+      ::axis::session::install_message_routing(pdispatch);
 
    }
 
@@ -1061,7 +1061,7 @@ namespace hotplugin
 
    }
 
-   void plugin::message_handler(signal_details * pobj)
+   void plugin::message_handler(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,paxis,pobj);

@@ -21,11 +21,11 @@ namespace user
    }
 
 
-   void control::install_message_handling(::message::dispatch * pdispatch)
+   void control::install_message_routing(::message::sender * psender)
    {
 
-//      ::user::impact::install_message_handling(pdispatch);
-      ::user::box::install_message_handling(pdispatch);
+//      ::user::impact::install_message_routing(pdispatch);
+      ::user::box::install_message_routing(pdispatch);
       IGUI_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &::user::control::_001OnMouseMove);
 
 #ifdef WINDOWS
@@ -89,7 +89,7 @@ namespace user
    }
 
 
-   void control::_003CustomWindowProc(signal_details * pobj)
+   void control::_003CustomWindowProc(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -636,7 +636,8 @@ namespace user
          if(uiMessage == BN_CLICKED)
          {
             //xxx id idCommand = m_commandui.GetControlCommand(wParam & 0xffff);
-            //xxx get_window()->GetParentFrame()->_001SendCommand(idCommand);
+            //::user::command command(idCommand);
+            //xxx get_window()->GetParentFrame()->_001SendCommand(&command);
          }
 
 #endif
@@ -696,7 +697,7 @@ namespace user
    }
 
 
-   void control::_001OnMouseMove(signal_details * pobj)
+   void control::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -719,7 +720,7 @@ namespace user
    }
 
 
-   void control::_001OnMouseLeave(signal_details * pobj)
+   void control::_001OnMouseLeave(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -761,7 +762,7 @@ namespace user
    }
 
 
-   control_cmd_ui::control_cmd_ui(class ::signal * psignal) :
+   control_cmd_ui::control_cmd_ui(class ::message::sender * psignal) :
       ::command_ui(psignal)
    {
    }
@@ -811,7 +812,7 @@ namespace user
 
    }
 
-   bool control::simple_process_system_message(signal_details * pobj,::user::e_event eevent)
+   bool control::simple_process_system_message(::message::message * pobj,::user::e_event eevent)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -852,7 +853,7 @@ namespace user
    }
 
 
-   void control::_001OnKeyDown(::signal_details * pobj)
+   void control::_001OnKeyDown(::message::message * pobj)
    {
 
        UNREFERENCED_PARAMETER(pobj);

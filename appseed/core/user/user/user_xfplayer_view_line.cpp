@@ -1818,7 +1818,7 @@ bool xfplayer_view_line::CalcChar(point pt, strsize &iChar)
 }
 
 
-void xfplayer_view_line::OnMouseMove(signal_details * pobj)
+void xfplayer_view_line::OnMouseMove(::message::message * pobj)
 {
 
    single_lock sl(m_pContainer->m_pmutex);
@@ -1921,7 +1921,7 @@ void xfplayer_view_line::OnMouseMove(signal_details * pobj)
 }
 
 
-void xfplayer_view_line::OnSetCursor(signal_details * pobj)
+void xfplayer_view_line::OnSetCursor(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -1938,7 +1938,7 @@ void xfplayer_view_line::OnSetCursor(signal_details * pobj)
 }
 
 
-void xfplayer_view_line::OnLButtonDown(signal_details * pobj)
+void xfplayer_view_line::OnLButtonDown(::message::message * pobj)
 {
 
    single_lock sl(m_pContainer->m_pmutex);
@@ -1957,7 +1957,7 @@ void xfplayer_view_line::OnLButtonDown(signal_details * pobj)
 }
 
 
-void xfplayer_view_line::OnLButtonUp(signal_details * pobj)
+void xfplayer_view_line::OnLButtonUp(::message::message * pobj)
 {
 
    single_lock sl(m_pContainer->m_pmutex);

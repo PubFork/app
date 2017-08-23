@@ -45,7 +45,7 @@ namespace android
 
       //static_function const MSG* GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::user::interaction_impl& wnd) const;
       bool operator!=(const ::user::interaction_impl& wnd) const;
@@ -570,11 +570,11 @@ namespace android
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -600,7 +600,7 @@ namespace android
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function ::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
       void SendMessageToDescendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))
@@ -657,7 +657,7 @@ namespace android
       virtual oswindow UnsubclassWindow();
 //      virtual void register_drop_target();
 
-      //virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj);
+      //virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       virtual bool SendChildNotifyLastMsg(LRESULT* pResult);
 
       virtual oswindow get_handle() const;

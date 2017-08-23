@@ -64,21 +64,21 @@ void MetaControlBox::_001OnDraw(::draw2d::graphics * pgraphics)
 }
 
 
-void MetaControlBox::_001OnShowWindow(signal_details * pobj)
+void MetaControlBox::_001OnShowWindow(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
 
 }
 
-void MetaControlBox::_001OnLButtonDown(signal_details * pobj)
+void MetaControlBox::_001OnLButtonDown(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
 
 }
 
-void MetaControlBox::_001OnLButtonUp(signal_details * pobj)
+void MetaControlBox::_001OnLButtonUp(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -97,10 +97,10 @@ void MetaControlBox::_001OnTimer(::timer * ptimer)
 }
 
 
-void MetaControlBox::install_message_handling(::message::dispatch *pinterface)
+void MetaControlBox::install_message_routing(::message::sender *pinterface)
 {
    
-   ::user::wndfrm::frame::control_box::install_message_handling(pinterface);
+   ::user::wndfrm::frame::control_box::install_message_routing(pinterface);
 
    IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &MetaControlBox::_001OnShowWindow);
    IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &MetaControlBox::_001OnLButtonDown);

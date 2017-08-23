@@ -515,7 +515,7 @@ namespace user
       }*/
    }
 
-   void form_window::_000OnPosCreate(signal_details * pobj)
+   void form_window::_000OnPosCreate(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -587,10 +587,10 @@ namespace user
       }
    }
 
-   void form_window::install_message_handling(::message::dispatch *pinterface)
+   void form_window::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&form_window::_001OnCreate);
       IGUI_MSG_LINK(::message::message_pos_create,pinterface,this,&form_window::_000OnPosCreate);
       IGUI_WIN_MSG_LINK(::axis::application::APPM_LANGUAGE,pinterface,this,&form_window::_001OnAppLanguage);
@@ -605,13 +605,13 @@ namespace user
       selection.add_item(id);
    }
 
-   bool form_window::on_simple_action(id id)
+   bool form_window::on_simple_action(::user::command * pcommand)
    {
       return control::on_simple_action(id);
    }
 
 
-   void form_window::_001OnNotify(signal_details * pobj)
+   void form_window::_001OnNotify(::message::message * pobj)
    {
 
 #ifdef WINDOWSEX
@@ -629,7 +629,7 @@ namespace user
    }
 
 
-   void form_window::_001OnMessageNotify(signal_details * pobj)
+   void form_window::_001OnMessageNotify(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -669,7 +669,7 @@ namespace user
 
    }
 
-   void form_window::data_on_after_change(signal_details * pobj)
+   void form_window::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event,pchange,pobj);
@@ -777,7 +777,7 @@ namespace user
    }
 
 
-   void form_window::_001OnAppLanguage(signal_details * pobj)
+   void form_window::_001OnAppLanguage(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -791,7 +791,7 @@ namespace user
    }
 
 
-   void form_window::_001OnCreate(signal_details * pobj)
+   void form_window::_001OnCreate(::message::message * pobj)
    {
 
       //      SCAST_PTR(::message::create, pcreate, pobj);
@@ -1193,14 +1193,14 @@ namespace user
 
 
 
-   //void form_window::install_message_handling(::message::dispatch * pinterface)
+   //void form_window::install_message_routing(::message::sender * pinterface)
    //{
-   //   form_window::install_message_handling(pinterface);
+   //   form_window::install_message_routing(pinterface);
 
    //}
 
 
-   //void form_window::_001OnCreate(signal_details * pobj)
+   //void form_window::_001OnCreate(::message::message * pobj)
    //{
    //   pobj->previous();
    //}
@@ -1231,7 +1231,7 @@ namespace user
       }
    }
 
-   void form_window::_001OnUser123(signal_details * pobj)
+   void form_window::_001OnUser123(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       if(pbase->m_wparam == 0x80000001)

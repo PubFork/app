@@ -389,22 +389,22 @@ bool property_set::is_empty(id idName) const
 
 //void property_set::OnBeforePropertyChange(property * pproperty)
 //{
-//   PropertySignalObject signal_details(&m_signal);
-//   signal_details.m_etype = PropertySignalObject::TypeBeforeChange;
-//   signal_details.m_pproperty = pproperty;
-//   signal_details.m_pset = this;
-//   m_signal.emit(&signal_details);
+//   PropertySignalObject ::message::message(&m_signal);
+//   ::message::message.m_etype = PropertySignalObject::TypeBeforeChange;
+//   ::message::message.m_pproperty = pproperty;
+//   ::message::message.m_pset = this;
+//   m_signal.emit(&::message::message);
 //}
 //
 //
 //void property_set::OnAfterPropertyChange(const var & variableOld, property * pproperty)
 //{
 //   UNREFERENCED_PARAMETER(variableOld);
-//   PropertySignalObject signal_details(&m_signal);
-//   signal_details.m_etype = PropertySignalObject::TypeAfterChange;
-//   signal_details.m_pproperty = pproperty;
-//   signal_details.m_pset = this;
-//   m_signal.emit(&signal_details);
+//   PropertySignalObject ::message::message(&m_signal);
+//   ::message::message.m_etype = PropertySignalObject::TypeAfterChange;
+//   ::message::message.m_pproperty = pproperty;
+//   ::message::message.m_pset = this;
+//   m_signal.emit(&::message::message);
 //}
 //
 

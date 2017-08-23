@@ -21,7 +21,7 @@ namespace filemanager
 
    }
 
-   void  frame::_001OnCreate(signal_details * pobj)
+   void  frame::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -37,10 +37,10 @@ namespace filemanager
    }
 
 
-   void  frame::install_message_handling(::message::dispatch * pinterface)
+   void  frame::install_message_routing(::message::sender * pinterface)
    {
 
-      simple_frame_window::install_message_handling(pinterface);
+      simple_frame_window::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_SETTEXT, pinterface, this, &frame::_001OnSetText);
 
@@ -49,7 +49,7 @@ namespace filemanager
    }
 
 
-   void  frame::_001OnSetText(signal_details * pobj)
+   void  frame::_001OnSetText(::message::message * pobj)
    {
       //   SCAST_PTR(::message::base, pbase, pobj);
 

@@ -37,7 +37,7 @@ namespace userex
    
 
       bool on_simple_update(command_ui * pcommandui);
-      bool on_simple_action(id id);
+      bool on_simple_action(::user::command * pcommand);
 
    };
 

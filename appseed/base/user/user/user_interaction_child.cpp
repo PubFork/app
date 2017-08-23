@@ -306,10 +306,10 @@ namespace user
    }
 
 
-   void interaction_child::install_message_handling(::message::dispatch * pinterface)
+   void interaction_child::install_message_routing(::message::sender * pinterface)
    {
 
-      last_install_message_handling(pinterface);
+      last_install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
 
@@ -317,14 +317,14 @@ namespace user
 
       IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
 
-      m_pui->install_message_handling(pinterface);
+      m_pui->install_message_routing(pinterface);
 
-      prio_install_message_handling(pinterface);
+      prio_install_message_routing(pinterface);
 
    }
 
 
-   void interaction_child::_001OnShowWindow(signal_details * pobj)
+   void interaction_child::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -346,7 +346,7 @@ namespace user
    }
 
 
-   void interaction_child::_002InstallMessageHandling(::message::dispatch * pinterface)
+   void interaction_child::_002InstallMessageHandling(::message::sender * pinterface)
    {
       UNREFERENCED_PARAMETER(pinterface);
    }
@@ -556,7 +556,7 @@ namespace user
    }
 
 
-   void interaction_child::message_handler(signal_details * pobj)
+   void interaction_child::message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       //LRESULT lresult = 0;
@@ -623,7 +623,7 @@ namespace user
 
 
 
-   void interaction_child::_001OnDestroy(signal_details * pobj)
+   void interaction_child::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -635,7 +635,7 @@ namespace user
    }
 
 
-   void interaction_child::_001OnNcDestroy(signal_details * pobj)
+   void interaction_child::_001OnNcDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

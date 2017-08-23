@@ -36,7 +36,7 @@ namespace user
    }
 
 
-   void tab_view::_001OnCreate(signal_details * pobj)
+   void tab_view::_001OnCreate(::message::message * pobj)
    {
 //      SCAST_PTR(::message::create, pcreate, pobj);
       if(pobj->previous())
@@ -75,7 +75,7 @@ namespace user
 
    }
 
-   void tab_view::_001OnSetFocus(signal_details * pobj)
+   void tab_view::_001OnSetFocus(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -113,7 +113,7 @@ namespace user
 
    }
 
-   void tab_view::_001OnMenuMessage(signal_details * pobj)
+   void tab_view::_001OnMenuMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 0 && pbase->m_lparam == 0)
@@ -122,10 +122,10 @@ namespace user
       }
    }
 
-   void tab_view::install_message_handling(::message::dispatch * pinterface)
+   void tab_view::install_message_routing(::message::sender * pinterface)
    {
-      impact::install_message_handling(pinterface);
-      ::user::tab::install_message_handling(pinterface);
+      impact::install_message_routing(pinterface);
+      ::user::tab::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_USER + 1122  , pinterface, this, &tab_view::_001OnMenuMessage);
       IGUI_WIN_MSG_LINK(WM_SETFOCUS, pinterface, this, &tab_view::_001OnSetFocus);
@@ -819,9 +819,9 @@ namespace user
    {
    }
 
-   void tab_drop_target_window::install_message_handling(::message::dispatch * pinterface)
+   void tab_drop_target_window::install_message_routing(::message::sender * pinterface)
    {
-      ::user::interaction::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &tab_drop_target_window::_001OnLButtonUp);
    }
 
@@ -907,7 +907,7 @@ namespace user
 
    }
 
-   void tab_drop_target_window::_001OnLButtonUp(signal_details * pobj)
+   void tab_drop_target_window::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 

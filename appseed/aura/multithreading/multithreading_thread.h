@@ -273,13 +273,13 @@ public:
    virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
    // running and idle processing
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void pre_translate_message(::message::message * pobj);
    virtual bool pump_message();     // low level message pump
    virtual bool defer_pump_message();     // deferred message pump
    virtual bool process_message(LPMESSAGE lpmessage);     // route message
    // virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
    virtual bool on_thread_on_idle(::thread * pthread, LONG lCount);
-   virtual bool is_idle_message(signal_details * pobj);  // checks for special messages
+   virtual bool is_idle_message(::message::message * pobj);  // checks for special messages
    virtual bool is_idle_message(LPMESSAGE lpmessage);  // checks for special messages
 
    virtual bool initialize_thread();
@@ -290,9 +290,9 @@ public:
 
    virtual void close_dependent_threads(const ::duration & dur);
 
-   virtual void process_window_procedure_exception(::exception::base*,signal_details * pobj);
+   virtual void process_window_procedure_exception(::exception::base*,::message::message * pobj);
 
-   virtual void process_message_filter(int32_t code, signal_details * pobj);
+   virtual void process_message_filter(int32_t code, ::message::message * pobj);
 
    // virtual void add(::user::primitive * pui);
    //virtual void remove(::user::primitive * pui);
@@ -312,7 +312,7 @@ public:
    virtual void Delete();
    // 'delete this' only if m_bAutoDelete == TRUE
 
-   virtual void dispatch_thread_message(signal_details * pobj);  // helper
+   virtual void dispatch_thread_message(::message::message * pobj);  // helper
 
    virtual int32_t main();
 
@@ -353,7 +353,7 @@ public:
 
    //virtual void defer_add_thread_run_wait(sync_object_ptra & soa);
 
-   virtual void message_queue_message_handler(::signal_details * pobj);
+   virtual void message_queue_message_handler(::message::message * pobj);
 
    //DECL_GEN_SIGNAL(_001OnSendThreadMessage);
    DECL_GEN_SIGNAL(_001OnThreadMessage);
@@ -385,7 +385,7 @@ public:
    
    virtual bool initialize_message_queue();
    
-   virtual void message_handler(signal_details * pobj);
+   virtual void message_handler(::message::message * pobj);
 
    ::handler * handler();
 

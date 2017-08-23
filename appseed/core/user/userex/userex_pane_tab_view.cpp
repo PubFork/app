@@ -126,17 +126,17 @@ namespace userex
    }
 
 
-   void pane_tab_view::install_message_handling(::message::dispatch * pdispatch)
+   void pane_tab_view::install_message_routing(::message::sender * psender)
    {
 
-      ::user::tab_view::install_message_handling(pdispatch);
+      ::user::tab_view::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &pane_tab_view::_001OnCreate);
 
    }
 
 
-   void pane_tab_view::_001OnCreate(::signal_details * pobj)
+   void pane_tab_view::_001OnCreate(::message::message * pobj)
    {
 
       if (pobj->previous())

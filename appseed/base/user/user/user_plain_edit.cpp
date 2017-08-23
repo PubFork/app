@@ -125,10 +125,10 @@ namespace user
    }
 
 
-   void plain_edit::install_message_handling(::message::dispatch * pinterface)
+   void plain_edit::install_message_routing(::message::sender * pinterface)
    {
 
-      control::install_message_handling(pinterface);
+      control::install_message_routing(pinterface);
 
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &plain_edit::_001OnCreate);
@@ -187,7 +187,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnDestroy(signal_details * pobj)
+   void plain_edit::_001OnDestroy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -206,7 +206,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnPaint(signal_details * pobj)
+   void plain_edit::_001OnPaint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -657,7 +657,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnCreate(signal_details * pobj)
+   void plain_edit::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -704,14 +704,14 @@ namespace user
 
    }
 
-   void plain_edit::_001OnContextMenu(signal_details * pobj)
+   void plain_edit::_001OnContextMenu(::message::message * pobj)
    {
       //      SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       //      point point = pcontextmenu->GetPoint();
 
    }
 
-   void plain_edit::_001OnRButtonUp(signal_details * pobj)
+   void plain_edit::_001OnRButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -762,7 +762,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSetCursor(signal_details * pobj)
+   void plain_edit::_001OnSetCursor(::message::message * pobj)
    {
       //pmouse->m_ecursor = ::visual::cursor_arrow;
 
@@ -795,7 +795,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnKeyDown(signal_details * pobj)
+   void plain_edit::_001OnKeyDown(::message::message * pobj)
    {
 
       //synch_lock sl(m_pmutex);
@@ -1011,7 +1011,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnKeyUp(signal_details * pobj)
+   void plain_edit::_001OnKeyUp(::message::message * pobj)
    {
       SCAST_PTR(::message::key, pkey, pobj);
       if (pkey->m_ekey == ::user::key_return)
@@ -1030,7 +1030,7 @@ namespace user
       m_bKeyPressed = false;
    }
 
-   void plain_edit::pre_translate_message(signal_details * pobj)
+   void plain_edit::pre_translate_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -1397,7 +1397,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnLButtonDown(signal_details * pobj)
+   void plain_edit::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1437,7 +1437,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnLButtonUp(signal_details * pobj)
+   void plain_edit::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1468,7 +1468,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnRButtonDown(signal_details * pobj)
+   void plain_edit::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2786,7 +2786,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnMouseMove(signal_details * pobj)
+   void plain_edit::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2848,7 +2848,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnMouseLeave(signal_details * pobj)
+   void plain_edit::_001OnMouseLeave(::message::message * pobj)
    {
 
       m_bActionHover = false;
@@ -3309,7 +3309,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUniChar(signal_details * pobj)
+   void plain_edit::_001OnUniChar(::message::message * pobj)
    {
 
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -3424,7 +3424,7 @@ namespace user
 
    }
 
-   void plain_edit::_001OnChar(signal_details * pobj)
+   void plain_edit::_001OnChar(::message::message * pobj)
    {
 
       bool bUpdate = true;
@@ -3955,7 +3955,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSysChar(signal_details * pobj)
+   void plain_edit::_001OnSysChar(::message::message * pobj)
    {
 
       synch_lock sl(m_pmutex);
@@ -4410,7 +4410,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnKeyDown(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnKeyDown(::message::message * pobj)
    {
 
       _001OnKeyDown(pobj);
@@ -4418,7 +4418,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnKeyUp(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnKeyUp(::message::message * pobj)
    {
 
       _001OnKeyUp(pobj);
@@ -4426,7 +4426,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnChar(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnChar(::message::message * pobj)
    {
 
       _001OnChar(pobj);
@@ -4490,7 +4490,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnVScroll(signal_details * pobj)
+   void plain_edit::_001OnVScroll(::message::message * pobj)
    {
 
    }
@@ -4504,7 +4504,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnHScroll(signal_details * pobj)
+   void plain_edit::_001OnHScroll(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4590,7 +4590,7 @@ namespace user
    }
 
 
-   void plain_edit::_009OnChar(signal_details * pobj)
+   void plain_edit::_009OnChar(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -4677,7 +4677,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditCut(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditCut(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pupdatecmdui, pobj);
@@ -4691,7 +4691,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnEditCut(signal_details * pobj)
+   void plain_edit::_001OnEditCut(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4710,7 +4710,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditCopy(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditCopy(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pupdatecmdui, pobj);
@@ -4724,7 +4724,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnEditCopy(signal_details * pobj)
+   void plain_edit::_001OnEditCopy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4735,7 +4735,7 @@ namespace user
 
    }
 
-   void plain_edit::_001OnUpdateEditPaste(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditPaste(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pupdatecmdui, pobj);
@@ -4744,7 +4744,7 @@ namespace user
 
    }
 
-   void plain_edit::_001OnEditPaste(signal_details * pobj)
+   void plain_edit::_001OnEditPaste(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4761,7 +4761,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditDelete(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditDelete(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pupdatecmdui, pobj);
@@ -4775,7 +4775,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnEditDelete(signal_details * pobj)
+   void plain_edit::_001OnEditDelete(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4793,7 +4793,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSize(signal_details * pobj)
+   void plain_edit::_001OnSize(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

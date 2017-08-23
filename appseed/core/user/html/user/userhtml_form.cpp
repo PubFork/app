@@ -81,7 +81,7 @@ void html_form::_001DrawChildren(::draw2d::graphics * pgraphics)
 }
 
 
-void html_form::_001OnImageLoaded(signal_details * pobj)
+void html_form::_001OnImageLoaded(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
    if(get_html_data() != NULL)
@@ -115,9 +115,9 @@ void html_form::_001OnImageLoaded(signal_details * pobj)
 }
 
 
-void html_form::install_message_handling(::message::dispatch * pinterface)
+void html_form::install_message_routing(::message::sender * pinterface)
 {
-   ::user::form_view::install_message_handling(pinterface);
+   ::user::form_view::install_message_routing(pinterface);
 
    IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnCreate);
 
@@ -182,7 +182,7 @@ void html_form::on_layout()
 }
 
 
-void html_form::_001OnCreate(signal_details * pobj)
+void html_form::_001OnCreate(::message::message * pobj)
 {
    SCAST_PTR(::message::create, pcreate, pobj);
    if(pobj->previous())
@@ -222,7 +222,7 @@ void html_form::on_update(::user::impact * pSender, LPARAM lHint, object* pHint)
 }
 
 
-void html_form::_001OnLButtonDown(signal_details * pobj)
+void html_form::_001OnLButtonDown(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt;
@@ -231,7 +231,7 @@ void html_form::_001OnLButtonDown(signal_details * pobj)
    m_phtmlform->m_pelementalLButtonDown = get_html_data()->m_elemental.hit_test(get_html_data(), pt);
    if(m_phtmlform->m_pelementalLButtonDown != NULL)
    {
-      html::signal signal(pobj->m_psignal);
+      html_message signal(pobj->m_psignal);
       signal.m_pdata = get_html_data();
       signal.m_psignal = pmouse;
       m_phtmlform->m_pelementalLButtonDown->OnLButtonDown(&signal);
@@ -240,7 +240,7 @@ void html_form::_001OnLButtonDown(signal_details * pobj)
    pmouse->set_lresult(1);
 }
 
-void html_form::_001OnMouseMove(signal_details * pobj)
+void html_form::_001OnMouseMove(::message::message * pobj)
 {
 
    SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -277,7 +277,7 @@ void html_form::_001OnMouseMove(signal_details * pobj)
 
       }
 
-      html::signal signal(pobj->m_psignal);
+      html_message signal(pobj->m_psignal);
 
       signal.m_pdata = get_html_data();
 
@@ -312,7 +312,7 @@ void html_form::_001OnMouseMove(signal_details * pobj)
 
 }
 
-void html_form::_001OnMouseLeave(signal_details * pobj)
+void html_form::_001OnMouseLeave(::message::message * pobj)
 {
 
    if(m_phtmlform->m_pelementalHover != NULL)
@@ -331,7 +331,7 @@ void html_form::_001OnMouseLeave(signal_details * pobj)
 
 }
 
-void html_form::_001OnLButtonUp(signal_details * pobj)
+void html_form::_001OnLButtonUp(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt(pmouse->m_pt);
@@ -340,7 +340,7 @@ void html_form::_001OnLButtonUp(signal_details * pobj)
    if(m_phtmlform->m_pelementalLButtonDown != NULL
       && pelemental == m_phtmlform->m_pelementalLButtonDown)
    {
-      html::signal signal(pobj->m_psignal);
+      html_message signal(pobj->m_psignal);
       signal.m_pdata = get_html_data();
       signal.m_psignal = pmouse;
       m_phtmlform->m_pelementalLButtonDown->OnLButtonUp(&signal);
@@ -348,7 +348,7 @@ void html_form::_001OnLButtonUp(signal_details * pobj)
 }
 
 
-void html_form::_001OnDestroy(signal_details * pobj)
+void html_form::_001OnDestroy(::message::message * pobj)
 {
  
    if (get_document() != NULL)
@@ -487,7 +487,7 @@ html_document * html_form::get_document()
 }
 
 
-void html_form::_001OnKeyDown(signal_details * pobj)
+void html_form::_001OnKeyDown(::message::message * pobj)
 {
    SCAST_PTR(::message::key, pkey, pobj);
    if(pkey->m_ekey == ::user::key_tab)

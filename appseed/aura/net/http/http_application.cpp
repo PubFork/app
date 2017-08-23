@@ -71,7 +71,7 @@ namespace http
    }
 
 
-   void application::get(signal_details * pobj)
+   void application::get(::message::message * pobj)
    {
 
       SCAST_PTR(signal, psignal, pobj);

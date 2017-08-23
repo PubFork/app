@@ -119,10 +119,10 @@ namespace core
 
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       //virtual int32_t run();
 
@@ -169,7 +169,7 @@ namespace core
 
       // overrides for implementation
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual void process_window_procedure_exception(::exception::base* e,signal_details * pobj);
+      virtual void process_window_procedure_exception(::exception::base* e,::message::message * pobj);
 
 
       void EnableModelessEx(bool bEnable);
@@ -496,7 +496,7 @@ namespace core
       virtual ::file::file_sp friendly_get_file(var varFile,UINT nOpenFlags);
 
 
-      virtual void data_on_after_change(signal_details * pobj);
+      virtual void data_on_after_change(::message::message * pobj);
 
       virtual void add_document_template(::user::impact_system * ptemplate);
 

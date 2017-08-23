@@ -67,14 +67,13 @@ namespace user
          
          interaction *           m_pui;
          ::draw2d::graphics *    m_pgraphics;
-         ::user::e_schema        m_eschema;
          
-         draw_select(interaction * pui, ::draw2d::graphics * pgraphics, ::user::e_schema eschema = ::user::schema_default) :
+         draw_select(interaction * pui, ::draw2d::graphics * pgraphics) :
             m_pui(pui),
          m_pgraphics(pgraphics)
          {
             
-            m_pui->select_user_style(eschema);
+            m_pui->on_select_user_style();
             
             m_pui->select(pgraphics);
 
@@ -562,7 +561,7 @@ namespace user
       virtual interaction * GetActiveWindow() override;
       virtual interaction * SetActiveWindow() override;
 
-      virtual void walk_pre_translate_tree(signal_details * pobj, ::user::interaction * puiStop = NULL);
+      virtual void walk_pre_translate_tree(::message::message * pobj, ::user::interaction * puiStop = NULL);
 
       virtual interaction * GetDescendantWindow(id id) const override;
 
@@ -574,7 +573,7 @@ namespace user
       
       virtual void _001SetText(const string & str, ::action::context actioncontext);
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
       virtual bool IsWindowVisible() override;
 
       virtual void _000OnMouse(::message::mouse * pmouse);
@@ -624,7 +623,7 @@ namespace user
 
       virtual void OnLinkClick(const char * psz,const char * pszTarget = NULL) override;
 
-      virtual void pre_translate_message(signal_details * pobj) override;
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
       ::user::interaction * get_child_by_name(const char * pszName,int32_t iLevel = -1);
@@ -705,9 +704,9 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam) override;
 
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::message * pobj) override;
       virtual LRESULT message_handler(LPMESSAGE lpmessage) override;
-      virtual void GuieProc(signal_details * pobj) override;
+      virtual void GuieProc(::message::message * pobj) override;
 
       virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 
@@ -802,7 +801,7 @@ namespace user
          return nullptr;
       }
 #endif
-      virtual bool _001HasCommandHandler(id id) override;
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
 
@@ -810,9 +809,9 @@ namespace user
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
 
-      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj) override;
-      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj) override;
-      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj) override;
+      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj) override;
+      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj) override;
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags) override;
@@ -944,7 +943,7 @@ namespace user
       // view support
       virtual void on_update(::user::impact * pSender,LPARAM lHint,::object* pHint);
 
-      virtual void keyboard_focus_OnKeyDown(signal_details * pobj) override;
+      virtual void keyboard_focus_OnKeyDown(::message::message * pobj) override;
       virtual bool keyboard_focus_OnKillFocus() override;
       virtual bool keyboard_focus_OnChildKillFocus() override;
 

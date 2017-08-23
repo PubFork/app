@@ -51,7 +51,7 @@ namespace metrowin
 
       static_function const MSG* GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::user::interaction_impl& wnd) const;
       bool operator!=(const ::user::interaction_impl& wnd) const;
@@ -609,11 +609,11 @@ namespace metrowin
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -642,7 +642,7 @@ namespace metrowin
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       //bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function ::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
       static_function void SendMessageToDescendants(oswindow hWnd, UINT message,
             WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);

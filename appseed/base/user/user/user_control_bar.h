@@ -173,7 +173,7 @@ namespace user
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       
       using ::user::interaction::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
@@ -187,7 +187,7 @@ namespace user
       virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle);
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
       virtual bool pre_create_window(::user::create_struct& cs);
       virtual void PostNcDestroy();
 
@@ -226,7 +226,7 @@ namespace user
       //   DECL_GEN_SIGNAL(_001OnPaint);
       //   virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       friend class ::user::frame_window;
       friend class BaseDockBar;

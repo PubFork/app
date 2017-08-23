@@ -87,7 +87,7 @@ namespace user
       bool CalcRect(::draw2d::graphics * pgraphics, LPRECT lprect, LPCRECT lprectToolScreen, const char * lpcsz);
       void ShowTip(int32_t iTool, bool bForce = false);
       void SetPositionHint(::window_sp pwnd, e_position eposition);
-      void relay_event(tool_tip_tool * pwnd, signal_details * pobj);
+      void relay_event(tool_tip_tool * pwnd, ::message::message * pobj);
 
       void OnPaint();
       void OnTimer(UINT nIDEvent);

@@ -30,30 +30,30 @@ namespace simple_ui
    }
 
 
-   void interaction::install_message_handling(::message::dispatch * pdispatch)
+   void interaction::install_message_routing(::message::sender * psender)
    {
 
-      ::user::interaction::install_message_handling(pdispatch);
+      ::user::interaction::install_message_routing(pdispatch);
 
    }
 
 
-   void interaction::_001OnChar(signal_details * pobj)
-   {
-
-      UNREFERENCED_PARAMETER(pobj);
-
-   }
-
-
-   void interaction::_001OnLButtonDown(signal_details * pobj)
+   void interaction::_001OnChar(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void interaction::_001OnLButtonUp(signal_details * pobj)
+
+   void interaction::_001OnLButtonDown(::message::message * pobj)
+   {
+
+      UNREFERENCED_PARAMETER(pobj);
+
+   }
+
+   void interaction::_001OnLButtonUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -62,7 +62,7 @@ namespace simple_ui
    }
 
 
-   void interaction::_001OnMouseMove(signal_details * pobj)
+   void interaction::_001OnMouseMove(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

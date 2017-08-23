@@ -56,10 +56,10 @@ string get_error_message(DWORD dwError);
 
 //#include "android_shell.h"
 
-//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::signal_details * pobj);
+//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 //CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-//CLASS_DECL_AXIS void __cdecl __pre_translate_message(::signal_details * pobj);
+//CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 
 
 //#include "android_application.h"

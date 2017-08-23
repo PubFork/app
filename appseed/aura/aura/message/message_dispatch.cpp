@@ -5,7 +5,7 @@
 namespace message
 {
 
-   dispatch::SignalArray::SignalArray()
+   dispatch::message::senderArray::message::senderArray()
    {
 
    }
@@ -33,10 +33,10 @@ namespace message
 //      return true;
 //   }
 
-   sp(::signal_details) dispatch::get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam)
+   sp(::message::message) dispatch::get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam)
    {
 
-      sp(::signal_details) pbase;
+      sp(::message::message) pbase;
 
       pbase = canew(::message::base(get_app()));
 
@@ -48,7 +48,7 @@ namespace message
 
    }
 
-   sp(::signal_details) dispatch::get_base(LPMESSAGE lpmsg)
+   sp(::message::message) dispatch::get_base(LPMESSAGE lpmsg)
    {
 
       return m_pauraapp->get_message_base(lpmsg);
@@ -70,7 +70,7 @@ namespace message
    }
 
 
-   void dispatch::message_handler(signal_details * pobj)
+   void dispatch::message_handler(::message::message * pobj)
    {
 
       (this->*m_pfnDispatchWindowProc)(pobj);
@@ -78,13 +78,13 @@ namespace message
    }
 
 
-   void dispatch::_user_message_handler(signal_details * pbase)
+   void dispatch::_user_message_handler(::message::message * pbase)
    {
 
       if(pbase->m_uiMessage == MESSAGE_POST_MESSAGE)
       {
          
-         sp(::signal_details) pbaseCast = pbase->m_lparam;
+         sp(::message::message) pbaseCast = pbase->m_lparam;
          
          message_handler(pbaseCast);
          
@@ -99,7 +99,7 @@ namespace message
       while((pSignal = m_signala.GetSignal(pbase->m_uiMessage,0,0,i)) != NULL)
       {
          
-         class ::signal * psignal = pSignal->m_psignal;
+         class ::message::sender * psignal = pSignal->m_psignal;
          
          pbase->m_psignal = psignal;
          
@@ -120,7 +120,7 @@ namespace message
    ::message::PFN_DISPATCH_MESSAGE_HANDLER dispatch::_calc_user_message_handler()
    {
 
-      return &::message::dispatch::_user_message_handler;
+      return &::message::sender::_user_message_handler;
 
    }
 
@@ -203,7 +203,7 @@ namespace message
    //}
 
 
-   void dispatch::RemoveMessageHandler(signalizable* psignalizable)
+   void dispatch::RemoveMessageHandler(::message::receiver* psignalizable)
    {
       UNREFERENCED_PARAMETER(psignalizable);
       /* xxx     HandlerItemArray & itema = m_handlerset.m_itema;
@@ -226,7 +226,7 @@ namespace message
 
    }
 
-   dispatch::SignalArray::~SignalArray()
+   dispatch::message::senderArray::~SignalArray()
    {
 
       remove_all();
@@ -333,13 +333,13 @@ namespace message
    }
 
 
-   dispatch::Signal::Signal()
+   dispatch::message::sender::message::sender()
    {
 
    }
 
 
-   dispatch::Signal::~Signal()
+   dispatch::message::sender::~Signal()
    {
 
    }
@@ -350,7 +350,7 @@ namespace message
 //   }
 //
 
-   void dispatch::_start_user_message_handler(signal_details * pobj)
+   void dispatch::_start_user_message_handler(::message::message * pobj)
    {
 
 
@@ -371,7 +371,7 @@ namespace message
 
       _on_start_user_message_handler();
 
-      install_message_handling(this);
+      install_message_routing(this);
 
       if(get_app() == NULL)
       {
@@ -388,7 +388,7 @@ namespace message
 
 
 
-   void dispatch::install_message_handling(dispatch * pinterface)
+   void dispatch::install_message_routing(dispatch * pinterface)
    {
       UNREFERENCED_PARAMETER(pinterface);
    }

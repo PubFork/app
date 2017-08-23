@@ -25,10 +25,10 @@ namespace simple_ui
    }
 
 
-   void top::install_message_handling(::message::dispatch * pdispatch)
+   void top::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_handling(pdispatch);
+      ::simple_ui::interaction::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&top::_001OnLButtonDown);
       IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&top::_001OnLButtonUp);
@@ -37,7 +37,7 @@ namespace simple_ui
    }
 
 
-   void top::_001OnCreate(signal_details * pobj)
+   void top::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -48,7 +48,7 @@ namespace simple_ui
    }
 
 
-   void top::_001OnLButtonDown(signal_details * pobj)
+   void top::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -71,7 +71,7 @@ namespace simple_ui
    }
 
 
-   void top::_001OnLButtonUp(signal_details * pobj)
+   void top::_001OnLButtonUp(::message::message * pobj)
    {
 
       m_bLButtonDown = false;
@@ -90,7 +90,7 @@ namespace simple_ui
    }
 
 
-   void top::_001OnMouseMove(signal_details * pobj)
+   void top::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);

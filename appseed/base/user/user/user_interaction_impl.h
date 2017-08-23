@@ -137,10 +137,10 @@ namespace user
       void user_common_construct();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
       
-      virtual void queue_message_handler(signal_details * pobj) override;
+      virtual void queue_message_handler(::message::message * pobj) override;
 
       
 
@@ -160,12 +160,12 @@ namespace user
 #endif
 
 
-      virtual void _000OnMouseLeave(signal_details * pobj);
+      virtual void _000OnMouseLeave(::message::message * pobj);
       virtual void _008OnMouse(::message::mouse * pmouse);
       virtual void _001BaseWndInterfaceMap();
 
-      virtual void prio_install_message_handling(::message::dispatch * pinterface);
-      virtual void last_install_message_handling(::message::dispatch * pinterface);
+      virtual void prio_install_message_routing(::message::sender * pinterface);
+      virtual void last_install_message_routing(::message::sender * pinterface);
 
       bool operator==(const interaction_impl& wnd) const;
       bool operator!=(const interaction_impl& wnd) const;
@@ -716,12 +716,12 @@ namespace user
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
       using ::user::interaction_base::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -829,7 +829,7 @@ namespace user
 
 
       using interaction_impl::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 
 
    }; // guie_message_wnd

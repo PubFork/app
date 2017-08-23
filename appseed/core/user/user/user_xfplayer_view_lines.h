@@ -3,7 +3,7 @@
 
 class CLASS_DECL_CORE xfplayer_view_linea :
    virtual public spa(xfplayer_view_line),
-   virtual public signalizable
+   virtual public ::message::receiver
 {
 public:
 
@@ -31,7 +31,7 @@ public:
 
    user::e_line_hit hit_test(POINT &ptCursor, strsize &iLine, strsize &iChar);
 
-   void InstallMessageHandling(::message::dispatch *pinterface);
+   void InstallMessageHandling(::message::sender *pinterface);
 
    virtual ~xfplayer_view_linea();
 

@@ -34,7 +34,7 @@ namespace plugin
       host_interaction(::aura::application * papp);
       virtual ~host_interaction();
 
-      void install_message_handling(::message::dispatch * pmessage);
+      void install_message_routing(::message::sender * pmessage);
 
       virtual void _000OnDraw(::draw2d::graphics * pgraphics);
 
@@ -61,7 +61,7 @@ namespace plugin
       ::user::interaction * get_os_focus_uie();
 
       void _on_start_user_message_handler();
-      void _user_message_handler(signal_details * pobj);
+      void _user_message_handler(::message::message * pobj);
 
       virtual void _000OnMouse(::message::mouse * pmouse);
 

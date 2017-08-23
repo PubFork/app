@@ -19,7 +19,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);
 
       virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);

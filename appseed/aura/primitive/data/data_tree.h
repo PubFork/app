@@ -7,7 +7,7 @@ namespace data
 
    class CLASS_DECL_AURA tree :
       virtual public ::data::data,
-      virtual public ::signalizable
+      virtual public ::message::receiver
    {
    public:
 

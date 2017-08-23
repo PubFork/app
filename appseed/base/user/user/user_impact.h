@@ -68,7 +68,7 @@ namespace user
       template < class DOCUMENT >
       ::data::data * get_typed_document_data();
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual bool IsSelected(const object* pDocItem) const; // support for OLE
 
@@ -229,11 +229,11 @@ namespace user
       //      virtual bool pre_create_window(::user::create_struct& cs);
 
 
-         //         virtual void install_message_handling(::message::dispatch * pinterface);
+         //         virtual void install_message_routing(::message::sender * pinterface);
 
-         virtual bool _001HasCommandHandler(id id) override;
+         virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
-         virtual void walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop);
+         virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
 
          virtual string calc_data_id() override;
@@ -262,11 +262,11 @@ namespace user
       {
       }
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override
+      virtual void install_message_routing(::message::sender * pinterface) override
       {
          
-         ::user::impact::install_message_handling(pinterface);
-         VIEW::install_message_handling(pinterface);
+         ::user::impact::install_message_routing(pinterface);
+         VIEW::install_message_routing(pinterface);
 
       }
 

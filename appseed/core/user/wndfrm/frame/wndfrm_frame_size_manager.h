@@ -14,7 +14,7 @@ namespace user
 
 
          class CLASS_DECL_CORE SizeManager :
-            virtual public signalizable
+            virtual public ::message::receiver
          {
             friend class WorkSet;
          protected:
@@ -58,7 +58,7 @@ namespace user
             void SizeWindow(sp(::user::interaction) pwnd, point pt, bool bTracking);
             void MoveWindow(sp(::user::interaction) pwnd, const RECT & rect);
 
-            void message_handler(sp(::user::interaction) pwnd, signal_details * pobj);
+            void message_handler(sp(::user::interaction) pwnd, ::message::message * pobj);
          };
 
 

@@ -34,7 +34,7 @@ namespace userstack
       void on_create_view(::user::view_creator_data * pcreatordata);
       void on_show_view();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       void check_3click_dir(const ::file::path & psz);
       void check_menu_dir(const ::file::path & psz);

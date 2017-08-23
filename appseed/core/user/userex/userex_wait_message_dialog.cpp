@@ -24,10 +24,10 @@ namespace userex // ca8 + cube
    }
 
 
-   void wait_message_dialog::install_message_handling(::message::dispatch * pdispatch)
+   void wait_message_dialog::install_message_routing(::message::sender * psender)
    {
 
-      ::dialog::install_message_handling(pdispatch);
+      ::dialog::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &wait_message_dialog::_001OnCreate);
 
@@ -57,7 +57,7 @@ namespace userex // ca8 + cube
    }
 
 
-   void wait_message_dialog::_001OnCreate(signal_details * pobj)
+   void wait_message_dialog::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();

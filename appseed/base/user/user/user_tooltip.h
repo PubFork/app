@@ -25,7 +25,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const override;
 #endif
 
-      void install_message_handling(::message::dispatch * pinterface) override;
+      void install_message_routing(::message::sender * pinterface) override;
 
       ::size CalcSize();
 

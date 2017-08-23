@@ -570,7 +570,7 @@ namespace ios
       }
    }
 
-   void window::install_message_handling(::message::dispatch * pinterface)
+   void window::install_message_routing(::message::sender * pinterface)
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
       IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
@@ -579,7 +579,7 @@ namespace ios
       IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &window::_001OnPrint);
       if(m_pui != NULL && m_pui != this)
       {
-         m_pui->install_message_handling(pinterface);
+         m_pui->install_message_routing(pinterface);
       }
       IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &window::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &window::_001OnSetCursor);
@@ -590,7 +590,7 @@ namespace ios
       //IGUI_WIN_MSG_LINK(WM_TIMER             , pinterface, this, &window::_001OnTimer);
    }
 
-   void window::_001OnMove(signal_details * pobj)
+   void window::_001OnMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       /*      if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
@@ -602,7 +602,7 @@ namespace ios
        }*/
    }
 
-   void window::_001OnSize(signal_details * pobj)
+   void window::_001OnSize(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -636,7 +636,7 @@ namespace ios
 
    }
 
-   void window::_001OnShowWindow(signal_details * pobj)
+   void window::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -655,7 +655,7 @@ namespace ios
 
    }
 
-   void window::_001OnDestroy(signal_details * pobj)
+   void window::_001OnDestroy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
@@ -663,7 +663,7 @@ namespace ios
 
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void window::_001OnNcDestroy(signal_details * pobj)
+   void window::_001OnNcDestroy(::message::message * pobj)
    {
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
@@ -873,8 +873,8 @@ namespace ios
             //            ::window * pWndPermanent = dynamic_cast < ::window * > (pMap->lookup_permanent(hWndOrig));;
             //          ASSERT(pWndPermanent == NULL);
             // It is important to call base class, including ca2 core
-            // base classes implementation of install_message_handling
-            // inside derived class install_message_handling
+            // base classes implementation of install_message_routing
+            // inside derived class install_message_routing
 #endif
          }
          else
@@ -900,7 +900,7 @@ namespace ios
       return 0;
    }
 
-   void window::pre_translate_message(signal_details * pobj)
+   void window::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1234,7 +1234,7 @@ namespace ios
    /////////////////////////////////////////////////////////////////////////////
    // main message_handler implementation
 
-   void window::message_handler(signal_details * pobj)
+   void window::message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -1423,7 +1423,7 @@ namespace ios
                //m_pguieCapture->m_pimpl->SendMessage(pbase);
                try
                {
-                  (m_pguieCapture->m_pimpl->*m_pguieCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
+                  (m_pguieCapture->m_pimpl->*m_pguieCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -1437,7 +1437,7 @@ namespace ios
                //m_pguieCapture->SendMessage(pbase);
                try
                {
-                  (m_pguieCapture->*m_pguieCapture->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
+                  (m_pguieCapture->*m_pguieCapture->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -2745,7 +2745,7 @@ namespace ios
       return false;
    }
 
-   void window::WalkPreTranslateTree(sp(::user::interaction) puiStop, signal_details * pobj)
+   void window::WalkPreTranslateTree(sp(::user::interaction) puiStop, ::message::message * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -3012,7 +3012,7 @@ namespace ios
    }
 
 
-   void window::_001OnCreate(signal_details * pobj)
+   void window::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -3306,7 +3306,7 @@ namespace ios
    }
 
 
-   void window::_001OnPaint(signal_details * pobj)
+   void window::_001OnPaint(::message::message * pobj)
    {
 
       //lock lock(m_pui, 1984);
@@ -3383,7 +3383,7 @@ namespace ios
    }
 
 
-   void window::_001OnPrint(signal_details * pobj)
+   void window::_001OnPrint(::message::message * pobj)
    {
       throw not_implemented(get_app());
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -4367,7 +4367,7 @@ namespace ios
     m_pguieForward = NULL;
     }
 
-    LRESULT guie_message_wnd::message_handler(signal_details * pobj)
+    LRESULT guie_message_wnd::message_handler(::message::message * pobj)
     {
     if(m_pguieForward != NULL)
     {
@@ -5711,7 +5711,7 @@ namespace ios
 
    }
 
-   void window::_001OnSetCursor(signal_details * pobj)
+   void window::_001OnSetCursor(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(Session.get_cursor() != NULL
@@ -6035,7 +6035,7 @@ namespace ios
 
 
 
-   void window::_001OnEraseBkgnd(signal_details * pobj)
+   void window::_001OnEraseBkgnd(::message::message * pobj)
    {
       SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
       perasebkgnd->m_bRet = true;

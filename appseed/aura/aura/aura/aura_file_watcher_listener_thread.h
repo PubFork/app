@@ -57,7 +57,7 @@ namespace file_watcher
 
       }
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
       DECL_GEN_SIGNAL(_001OnAddWatch);
 

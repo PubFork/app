@@ -15,7 +15,7 @@ XfplayerViewLineSelection::~XfplayerViewLineSelection()
 }
 
 
-void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, signal_details * pobj)
+void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
 

@@ -23,7 +23,7 @@ namespace user
 
       bool create_window(const RECT & rect, ::user::interaction * pwndParent, id id);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       void GetStepHoverRect(LPRECT lprect, int64_t iVal, int64_t iMin, int64_t iMax, LPCRECT lpcrectClient);

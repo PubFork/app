@@ -84,8 +84,8 @@ CLASS_DECL_AURA void AfxResetMsgCache();
 #define IOS_WINDOW(pwnd) (dynamic_cast < ::ios::interaction_impl * > (dynamic_cast < ::user::interaction_impl * >(pwnd)))
 
 
-CLASS_DECL_BASE void AfxProcessWndProcException(::exception::base*, signal_details * pobj);
-CLASS_DECL_BASE void __cdecl __pre_translate_message(signal_details * pobj);
+CLASS_DECL_BASE void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+CLASS_DECL_BASE void __cdecl __pre_translate_message(::message::message * pobj);
 
 //#include "ios_printer.h"
 

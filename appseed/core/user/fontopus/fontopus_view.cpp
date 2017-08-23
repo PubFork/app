@@ -78,10 +78,10 @@ namespace fontopus
    }
 
 
-   void view::install_message_handling(::message::dispatch * pdispatch)
+   void view::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_handling(pdispatch);
+      ::simple_ui::interaction::install_message_routing(pdispatch);
 
       IGUI_CREATE(view);
 
@@ -381,7 +381,7 @@ namespace fontopus
 
 
 
-   void view::_001OnCreate(signal_details * pobj)
+   void view::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);

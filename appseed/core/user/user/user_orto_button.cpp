@@ -118,21 +118,21 @@ namespace user
    }
 
 
-   void orto_button::_001OnShowWindow(signal_details * pobj)
+   void orto_button::_001OnShowWindow(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void orto_button::_001OnLButtonDown(signal_details * pobj)
+   void orto_button::_001OnLButtonDown(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void orto_button::_001OnLButtonUp(signal_details * pobj)
+   void orto_button::_001OnLButtonUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -223,9 +223,9 @@ namespace user
 
    }
 
-   void orto_button::install_message_handling(::message::dispatch *pinterface)
+   void orto_button::install_message_routing(::message::sender *pinterface)
    {
-      ::user::button::install_message_handling(pinterface);
+      ::user::button::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &orto_button::_001OnShowWindow);
       IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &orto_button::_001OnLButtonDown);
       IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &orto_button::_001OnLButtonUp);

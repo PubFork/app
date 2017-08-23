@@ -141,10 +141,10 @@ namespace user
    }
 
 
-   void meta_button::install_message_handling(::message::dispatch *pinterface)
+   void meta_button::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::button::install_message_handling(pinterface);
+      ::user::button::install_message_routing(pinterface);
 
    }
 

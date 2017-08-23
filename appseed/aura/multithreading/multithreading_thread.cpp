@@ -268,7 +268,7 @@ HTHREAD thread::get_os_handle() const
 
 
 
-//void thread::_001OnSendThreadMessage(signal_details * pobj)
+//void thread::_001OnSendThreadMessage(::message::message * pobj)
 //{
 //
 //   SCAST_PTR(::message::base,pbase,pobj);
@@ -689,7 +689,7 @@ void thread::close_dependent_threads(const ::duration & dur)
 }
 
 
-void thread::signal_close_dependent_threads()
+void thread::message::sender_close_dependent_threads()
 {
 
    ref_array < thread > threadptraDependent;
@@ -915,7 +915,7 @@ bool thread::get_run_thread()
 //}
 
 
-void thread::message_queue_message_handler(::signal_details * pobj)
+void thread::message_queue_message_handler(::message::message * pobj)
 {
 
     UNREFERENCED_PARAMETER(pobj);
@@ -1060,7 +1060,7 @@ bool thread::on_before_run_thread()
 }
 
 
-void thread::dispatch_thread_message(signal_details * pbase)
+void thread::dispatch_thread_message(::message::message * pbase)
 {
 
 
@@ -1158,7 +1158,7 @@ wait_result thread::wait(const duration & duration)
 }
 
 
-void thread::pre_translate_message(signal_details * pobj)
+void thread::pre_translate_message(::message::message * pobj)
 {
 
    try
@@ -1209,7 +1209,7 @@ void thread::pre_translate_message(signal_details * pobj)
 
 
 
-void thread::process_window_procedure_exception(::exception::base*,signal_details * pobj)
+void thread::process_window_procedure_exception(::exception::base*,::message::message * pobj)
 {
    SCAST_PTR(::message::base,pbase,pobj);
    if(pbase->m_uiMessage == WM_CREATE)
@@ -1233,13 +1233,13 @@ void thread::process_window_procedure_exception(::exception::base*,signal_detail
 namespace thread_util
 {
 
-   inline bool IsEnterKey(signal_details * pobj)
+   inline bool IsEnterKey(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
    }
 
-   inline bool IsButtonUp(signal_details * pobj)
+   inline bool IsButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP;
@@ -1247,7 +1247,7 @@ namespace thread_util
 
 }
 
-void thread::process_message_filter(int32_t code,signal_details * pobj)
+void thread::process_message_filter(int32_t code,::message::message * pobj)
 {
 
    Application.process_message_filter(code,pobj);
@@ -1714,7 +1714,7 @@ void CLASS_DECL_AURA __term_thread(::aura::application * papp)
 }
 
 
-bool thread::is_idle_message(signal_details * pobj)
+bool thread::is_idle_message(::message::message * pobj)
 {
 
    return ::message::is_idle_message(pobj);
@@ -1964,9 +1964,9 @@ int32_t thread::thread_startup(::thread_startup * pstartup)
 
    IGUI_WIN_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
 
-   install_message_handling(this);
+   install_message_routing(this);
 
-   //install_message_handling(pthreadimpl);
+   //install_message_routing(pthreadimpl);
 
    return 0;
 
@@ -2316,7 +2316,7 @@ bool thread::initialize_message_queue()
 //}
 
 
-void thread::message_handler(signal_details * pobj)
+void thread::message_handler(::message::message * pobj)
 {
 
    Application.message_handler(pobj);
@@ -2838,7 +2838,7 @@ bool thread::kick_thread()
 
 
 
-void thread::_001OnThreadMessage(signal_details * pobj)
+void thread::_001OnThreadMessage(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);

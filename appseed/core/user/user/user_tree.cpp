@@ -51,7 +51,7 @@ namespace user
    }
 
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -349,7 +349,7 @@ namespace user
 
 
 
-   void tree::_001OnMouseMove(signal_details * pobj)
+   void tree::_001OnMouseMove(::message::message * pobj)
    {
       track_mouse_leave();
 
@@ -357,14 +357,14 @@ namespace user
       pobj->m_bRet = true;
    }
 
-   void tree::_001OnMouseLeave(signal_details * pobj)
+   void tree::_001OnMouseLeave(::message::message * pobj)
    {
       m_pitemHover = NULL;
       RedrawWindow();
       pobj->m_bRet = true;
    }
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -392,7 +392,7 @@ namespace user
    }
 
 
-   void tree::_001OnLButtonDown(signal_details * pobj)
+   void tree::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -406,7 +406,7 @@ namespace user
    }
 
 
-   void tree::_001OnLButtonUp(signal_details * pobj)
+   void tree::_001OnLButtonUp(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -491,7 +491,7 @@ namespace user
    }
 
 
-   void tree::_001OnRButtonDown(signal_details * pobj)
+   void tree::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -505,7 +505,7 @@ namespace user
    }
 
 
-   void tree::_001OnRButtonUp(signal_details * pobj)
+   void tree::_001OnRButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -606,10 +606,10 @@ namespace user
       return m_iItemHeight;
    }
 
-   void tree::install_message_handling(::message::dispatch * pdispatch)
+   void tree::install_message_routing(::message::sender * psender)
    {
       
-      ::user::control::install_message_handling(pdispatch);
+      ::user::control::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE        , pdispatch, this, &tree::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK , pdispatch, this, &tree::_001OnLButtonDblClk);
@@ -845,7 +845,7 @@ namespace user
 
    }
 
-   void tree::_001OnVScroll(signal_details * pobj)
+   void tree::_001OnVScroll(::message::message * pobj)
    {
 
       pobj->previous();
@@ -854,7 +854,7 @@ namespace user
    }
 
 
-   void tree::_001OnHScroll(signal_details * pobj)
+   void tree::_001OnHScroll(::message::message * pobj)
    {
 
       pobj->previous();
@@ -1487,7 +1487,7 @@ namespace user
 
       }
 
-      ptree->install_message_handling(m_pimpl);
+      ptree->install_message_routing(m_pimpl);
 
       return true;
 

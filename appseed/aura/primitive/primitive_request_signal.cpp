@@ -2,7 +2,7 @@
 
 
 request_signal::request_signal(::aura::application * papp, class signal * psignal) :
-   signal_details(psignal)
+   ::message::message(psignal)
 {
 
 

@@ -327,8 +327,8 @@ namespace draw2d
       virtual void write(::file::ostream & ostream) const;
       virtual void read(::file::istream & istream);
 
-      //virtual bool update_window(::aura::draw_interface * pui,signal_details * pobj,bool bTransferBuffer = true);
-      //virtual bool print_window(::aura::draw_interface * pui,signal_details * pobj);
+      //virtual bool update_window(::aura::draw_interface * pui,::message::message * pobj,bool bTransferBuffer = true);
+      //virtual bool print_window(::aura::draw_interface * pui,::message::message * pobj);
       
 
       static void static_initialize();

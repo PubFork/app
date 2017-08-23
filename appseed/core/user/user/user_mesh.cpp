@@ -108,10 +108,10 @@ namespace user
    }
 
 
-   void mesh::install_message_handling(::message::dispatch * pinterface)
+   void mesh::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&mesh::_001OnSize);
       IGUI_WIN_MSG_LINK(WM_VSCROLL,pinterface,this,&mesh::_001OnVScroll);
@@ -749,7 +749,7 @@ namespace user
    on_layout();
    }*/
 
-   void mesh::_001OnSize(signal_details * pobj)
+   void mesh::_001OnSize(::message::message * pobj)
    {
       SCAST_PTR(::message::size,psize,pobj);
       //on_layout();
@@ -2459,7 +2459,7 @@ namespace user
    //   }
    //}
 
-   void mesh::_001OnKeyDown(signal_details * pobj)
+   void mesh::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key,pkey,pobj);
          if(pkey->previous()) // give chance to child
@@ -2553,7 +2553,7 @@ namespace user
       pobj->m_bRet = false;
    }
 
-   void mesh::_001OnMouseMove(signal_details * pobj)
+   void mesh::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2693,7 +2693,7 @@ namespace user
    }
 
 
-   void mesh::_001OnLButtonDown(signal_details * pobj)
+   void mesh::_001OnLButtonDown(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2849,7 +2849,7 @@ namespace user
    }
 
 
-   void mesh::_001OnLButtonUp(signal_details * pobj)
+   void mesh::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2934,7 +2934,7 @@ namespace user
    }
 
 
-   void mesh::_001OnRButtonDown(signal_details * pobj)
+   void mesh::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2983,7 +2983,7 @@ namespace user
    }
 
    
-   void mesh::_001OnRButtonUp(signal_details * pobj)
+   void mesh::_001OnRButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -3229,7 +3229,7 @@ namespace user
       return -1;
    }
 
-   void mesh::_001OnLButtonDblClk(signal_details * pobj)
+   void mesh::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse,pmouse,pobj);
          m_iClick = 2;
@@ -3990,7 +3990,7 @@ namespace user
       }
    }
 
-   void mesh::_001OnCreate(signal_details * pobj)
+   void mesh::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -5443,7 +5443,7 @@ namespace user
    //   return m_fontHover;
    //}
 
-   void mesh::_001OnMouseLeave(signal_details * pobj)
+   void mesh::_001OnMouseLeave(::message::message * pobj)
    {
       m_iItemHover = -1;
       m_iSubItemHover = -1;
@@ -5628,7 +5628,7 @@ namespace user
    }
 
 
-   void mesh::_001OnVScroll(signal_details * pobj)
+   void mesh::_001OnVScroll(::message::message * pobj)
    {
 
       SCAST_PTR(::message::scroll, pscroll, pobj);
@@ -5662,7 +5662,7 @@ namespace user
 
    }
 
-   void mesh::_001OnHScroll(signal_details * pobj)
+   void mesh::_001OnHScroll(::message::message * pobj)
    {
 
       SCAST_PTR(::message::scroll, pscroll, pobj);
@@ -5881,13 +5881,13 @@ namespace user
       return m_flags.is_signalized(flag_auto_arrange);
    }
 
-   void mesh::_001OnMeshViewAutoArrange(signal_details * pobj)
+   void mesh::_001OnMeshViewAutoArrange(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       auto_arrange(!get_auto_arrange());
    }
 
-   void mesh::_001OnUpdateMeshViewAutoArrange(signal_details * pobj)
+   void mesh::_001OnUpdateMeshViewAutoArrange(::message::message * pobj)
    {
       SCAST_PTR(::command_ui,pcommandui,pobj);
          pcommandui->_001SetCheck(get_auto_arrange());

@@ -17,7 +17,7 @@ namespace user
 
          class CLASS_DECL_CORE appearance :
 //            public CWorkSetDownUpInterface,
-            virtual public signalizable
+            virtual public ::message::receiver
          {
             friend class WorkSet;
          public:

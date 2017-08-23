@@ -254,7 +254,7 @@ namespace html
    }
 
 
-   void data::_001OnKeyDown(signal_details * pobj)
+   void data::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);

@@ -44,7 +44,7 @@ namespace userstack
    }
 #endif //DEBUG
 
-   void pane_view::_001OnCreate(signal_details * pobj)
+   void pane_view::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -269,15 +269,15 @@ namespace userstack
 
 
 
-   void pane_view::_001OnMenuMessage(signal_details * pobj)
+   void pane_view::_001OnMenuMessage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::message::dispatch * pinterface)
+   void pane_view::install_message_routing(::message::sender * pinterface)
    {
-      ::userex::pane_tab_view::install_message_handling(pinterface);
+      ::userex::pane_tab_view::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
       IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
@@ -499,7 +499,7 @@ namespace userstack
       m_iDisplay = iDisplay;
    }
 
-   void pane_view::_001OnRButtonUp(signal_details * pobj)
+   void pane_view::_001OnRButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -544,7 +544,7 @@ namespace userstack
 
 
 
-   void pane_view::_001OnProperties(signal_details * pobj)
+   void pane_view::_001OnProperties(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      if(get_view_id() == ::bergedge::PaneViewWinActionArea)

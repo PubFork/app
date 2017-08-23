@@ -63,7 +63,7 @@ namespace console
    }
    */
 
-   void prompt_document::data_on_after_change(signal_details * pobj)
+   void prompt_document::data_on_after_change(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }

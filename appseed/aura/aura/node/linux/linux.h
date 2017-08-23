@@ -136,8 +136,8 @@ DWORD _AfxGetComCtlVersion();
 
 
 
-CLASS_DECL_AURA void AfxProcessWndProcException(::exception::base*, ::signal_details * pobj);
-CLASS_DECL_AURA void __cdecl __pre_translate_message(::signal_details * pobj);
+CLASS_DECL_AURA void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+CLASS_DECL_AURA void __cdecl __pre_translate_message(::message::message * pobj);
 
 
 #include "linux_application.h"

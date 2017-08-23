@@ -8,6 +8,8 @@ namespace user
    style_composite::style_composite()
    {
 
+      m_puserstyleSelect = NULL;
+
       m_plibrary           = NULL;
 
    }
@@ -573,37 +575,9 @@ namespace user
    style * style_composite::userstyle()
    {
 
-      ::user::style * puserstyle = m_puserstyleSelect;
-
-      if (puserstyle != NULL)
-      {
-
-         return puserstyle;
-
-      }
-
-      puserstyle = Application.m_puserstyle;
-       
-      if (puserstyle != NULL && puserstyle != this)
-      {
-
-         return puserstyle;
-
-      }
-
-      puserstyle = Session.m_puserstyle;
-
-      if (puserstyle != NULL && puserstyle != this)
-      {
-
-         return puserstyle;
-
-      }
-
-      return NULL;
+      return m_puserstyleSelect;
 
    }
-
 
 
    bool style_composite::style_flag(e_flag eflag)

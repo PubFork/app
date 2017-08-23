@@ -649,30 +649,30 @@ namespace ios
 //
 //
 //
-//   void thread::pre_translate_message(signal_details * pobj)
+//   void thread::pre_translate_message(::message::message * pobj)
 //   {
 //      ASSERT_VALID(this);
 //      return AfxInternalPreTranslateMessage(pobj);
 //   }
 //
-//   void thread::ProcessWndProcException(::exception::aura* e, signal_details * pobj)
+//   void thread::ProcessWndProcException(::exception::aura* e, ::message::message * pobj)
 //   {
 //      return AfxInternalProcessWndProcException(e, pobj);
 //   }
 //
-//   __STATIC inline WINBOOL IsEnterKey(signal_details * pobj)
+//   __STATIC inline WINBOOL IsEnterKey(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
 //      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 //   }
 //
-//   __STATIC inline WINBOOL IsButtonUp(signal_details * pobj)
+//   __STATIC inline WINBOOL IsButtonUp(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
 //      return pbase->m_uiMessage == WM_LBUTTONUP;
 //   }
 //
-//   void thread::ProcessMessageFilter(int32_t code, signal_details * pobj)
+//   void thread::ProcessMessageFilter(int32_t code, ::message::message * pobj)
 //   {
 //
 //      if(pobj == NULL)
@@ -760,7 +760,7 @@ namespace ios
 //   }
 //
 //
-//   void thread::message_handler(signal_details * pobj)
+//   void thread::message_handler(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
 //      // special message which identifies the window as using AfxWndProc
@@ -875,7 +875,7 @@ namespace ios
 //      //m_nThreadID = (dword_ptr) iData;
 //   }
 //
-//   void thread::message_queue_message_handler(signal_details * pobj)
+//   void thread::message_queue_message_handler(::message::message * pobj)
 //   {
 //   }
 //
@@ -901,8 +901,8 @@ namespace ios
 //
 ////      ::application* papp = dynamic_cast < ::application * > (get_app());
 //      m_evFinish.ResetEvent();
-//      install_message_handling(pThread);
-//      m_p->install_message_handling(pThread);
+//      install_message_routing(pThread);
+//      m_p->install_message_routing(pThread);
 //
 ////      ::window threadWnd;
 //
@@ -1442,8 +1442,8 @@ namespace ios
 //
 //WINBOOL CLASS_DECL_AURA AfxInternalPumpMessage();
 //LRESULT CLASS_DECL_AURA AfxInternalProcessWndProcException(::exception::aura*, const MESSAGE* pMsg);
-//void AfxInternalPreTranslateMessage(signal_details * pobj);
-//WINBOOL AfxInternalIsIdleMessage(signal_details * pobj);
+//void AfxInternalPreTranslateMessage(::message::message * pobj);
+//WINBOOL AfxInternalIsIdleMessage(::message::message * pobj);
 //WINBOOL AfxInternalIsIdleMessage(LPMESSAGE lpmsg);
 //
 //

@@ -65,6 +65,22 @@ namespace user
             try
             {
 
+               if (m_pworkset->m_pframeschema->m_puserstyle.is_null())
+               {
+
+                  m_pworkset->m_pframeschema->m_puserstyle = m_pworkset->GetWndDraw()->m_puserstyle;
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+            try
+            {
+
                m_pworkset->m_pframeschema->on_initialize_appearance();
 
                return true;

@@ -1400,7 +1400,7 @@ else
    }
 
 
-   void tab::_001OnLButtonDown(signal_details * pobj)
+   void tab::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       class point point = pmouse->m_pt;
@@ -1428,7 +1428,7 @@ else
    }
 
 
-   void tab::_001OnLButtonUp(signal_details * pobj)
+   void tab::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       class point point = pmouse->m_pt;
@@ -1460,7 +1460,7 @@ else
       }
    }
 
-   void tab::_001OnMouseMove(signal_details * pobj)
+   void tab::_001OnMouseMove(::message::message * pobj)
    {
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
 //      class point point = pmouse->m_pt;
@@ -1487,7 +1487,7 @@ else
    }
 
 
-   void tab::_001OnMouseLeave(signal_details * pobj)
+   void tab::_001OnMouseLeave(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       m_iHover = -1;
@@ -1757,7 +1757,7 @@ else
    }
    */
 
-   void tab::_001OnCreate(signal_details * pobj)
+   void tab::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -1844,10 +1844,10 @@ else
    }
 
 
-   void tab::install_message_handling(::message::dispatch *pinterface)
+   void tab::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN , pinterface, this, &tab::_001OnLButtonDown);
       IGUI_WIN_MSG_LINK(WM_LBUTTONUP   , pinterface, this, &tab::_001OnLButtonUp);
@@ -1999,7 +1999,7 @@ else
       return count;
    }
 
-   void tab::_001OnAppLanguage(signal_details * pobj)
+   void tab::_001OnAppLanguage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       on_layout();
@@ -2336,7 +2336,7 @@ else
       }
    }
 
-   void tab::_001ConnectParent(::message::dispatch * pinterface)
+   void tab::_001ConnectParent(::message::sender * pinterface)
    {
       UNREFERENCED_PARAMETER(pinterface);
    }
@@ -2701,7 +2701,7 @@ else
    }
 
 
-   void tab::_001OnStartTabDrag(::signal_details * pobj)
+   void tab::_001OnStartTabDrag(::message::message * pobj)
    {
 
       if(get_data()->m_pcallback != NULL)
@@ -2726,7 +2726,7 @@ else
          try
          {
 
-            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
+            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
 
             if (pmouse->get_lresult() != 0)
             {
@@ -3144,7 +3144,7 @@ else
    }
 
 
-   void tab::_001OnShowWindow(signal_details * pobj)
+   void tab::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);

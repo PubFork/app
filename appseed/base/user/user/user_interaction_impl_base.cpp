@@ -1454,7 +1454,7 @@ namespace user
    }
 
 
-   void interaction_impl_base::pre_translate_message(signal_details * pobj)
+   void interaction_impl_base::pre_translate_message(::message::message * pobj)
    {
 
       m_pui->pre_translate_message(pobj);
@@ -1692,7 +1692,7 @@ namespace user
    }
 
 
-   void interaction_impl_base::_001OnShowWindow(signal_details * pobj)
+   void interaction_impl_base::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -1715,7 +1715,7 @@ namespace user
    }
 
 
-   void interaction_impl_base::prio_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl_base::prio_install_message_routing(::message::sender * pinterface)
    {
 
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
@@ -1723,7 +1723,7 @@ namespace user
    }
 
 
-   void interaction_impl_base::last_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl_base::last_install_message_routing(::message::sender * pinterface)
    {
 
 
@@ -1757,7 +1757,7 @@ namespace user
    }
    
    
-   void interaction_impl_base::queue_message_handler(::signal_details * pobj)
+   void interaction_impl_base::queue_message_handler(::message::message * pobj)
    {
       
       

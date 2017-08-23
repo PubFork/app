@@ -49,7 +49,7 @@ public:
         );
 
    virtual bool _001OnCmdMsg(::user::command * pcommand);
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void pre_translate_message(::message::message * pobj);
    protected:
    virtual bool pre_create_window(::user::create_struct& cs);
 
@@ -100,7 +100,7 @@ public:
 
    DECL_GEN_SIGNAL(_001OnAppLanguage);
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
 
 };

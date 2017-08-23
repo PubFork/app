@@ -39,11 +39,11 @@ namespace user
       virtual ::user::interaction_child * get_user_interaction_child();
 
 
-      virtual void prio_install_message_handling(::message::dispatch * pinterface);
-      virtual void last_install_message_handling(::message::dispatch * pinterface);
+      virtual void prio_install_message_routing(::message::sender * pinterface);
+      virtual void last_install_message_routing(::message::sender * pinterface);
 
       
-      virtual void queue_message_handler(::signal_details * pobj);
+      virtual void queue_message_handler(::message::message * pobj);
       
 
       virtual bool check_need_layout();
@@ -204,7 +204,7 @@ namespace user
       virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       virtual bool SetCapture(::user::interaction * pui = NULL);

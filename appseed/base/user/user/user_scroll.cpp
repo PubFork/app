@@ -119,7 +119,7 @@ namespace user
    }
 
 
-   void scroll_x::_001OnHScroll(signal_details * pobj)
+   void scroll_x::_001OnHScroll(::message::message * pobj)
    {
 
       SCAST_PTR(::message::scroll, pscroll, pobj);
@@ -187,7 +187,7 @@ namespace user
 
 
 
-   void scroll_x::install_message_handling(::message::dispatch * pinterface)
+   void scroll_x::install_message_routing(::message::sender * pinterface)
    {
 
 
@@ -413,7 +413,7 @@ namespace user
    //
    //   }
    //
-   //   void scroll::_001OnCreate(signal_details * pobj)
+   //   void scroll::_001OnCreate(::message::message * pobj)
    //   {
    //
    //      SCAST_PTR(::message::create, pcreate, pobj);
@@ -423,13 +423,13 @@ namespace user
    //
    //   }
    //
-   //   void scroll::_001OnSize(signal_details * pobj)
+   //   void scroll::_001OnSize(::message::message * pobj)
    //   {
    //      pobj->previous();
    //      _001LayoutscrollBars();
    //   }
    //
-   //   void scroll::_001OnUser9654(signal_details * pobj)
+   //   void scroll::_001OnUser9654(::message::message * pobj)
    //   {
    //      SCAST_PTR(::message::base, pbase, pobj);
    //      if(pbase->m_wparam == 0)
@@ -441,7 +441,7 @@ namespace user
    //      }
    //   }
    //
-   //   void scroll::_001OnVScroll(signal_details * pobj)
+   //   void scroll::_001OnVScroll(::message::message * pobj)
    //   {
    //
    //
@@ -464,7 +464,7 @@ namespace user
    //   }
    //
    //
-   //   void scroll::_001OnHScroll(signal_details * pobj)
+   //   void scroll::_001OnHScroll(::message::message * pobj)
    //   {
    //
    //
@@ -504,7 +504,7 @@ namespace user
    //   }
    //
    //
-   //   void scroll::_001OnMouseWheel(signal_details * pobj)
+   //   void scroll::_001OnMouseWheel(::message::message * pobj)
    //   {
    //
    //      SCAST_PTR(::message::mouse_wheel, pmousewheel, pobj);
@@ -619,11 +619,11 @@ namespace user
    //
    //
    //
-   //   void scroll::install_message_handling(::message::dispatch * pinterface)
+   //   void scroll::install_message_routing(::message::sender * pinterface)
    //   {
    //
    //
-   //      control::install_message_handling(pinterface);
+   //      control::install_message_routing(pinterface);
    //
    //      IGUI_WIN_MSG_LINK(WM_CREATE,          pinterface, this, &scroll::_001OnCreate);
    //      IGUI_WIN_MSG_LINK(WM_SIZE,            pinterface, this, &scroll::_001OnSize);
@@ -967,7 +967,7 @@ namespace user
    }
 
 
-   void scroll_y::_001OnVScroll(signal_details * pobj)
+   void scroll_y::_001OnVScroll(::message::message * pobj)
    {
 
 
@@ -1003,7 +1003,7 @@ namespace user
    }
 
 
-   void scroll_y::_001OnMouseWheel(signal_details * pobj)
+   void scroll_y::_001OnMouseWheel(::message::message * pobj)
    {
 
       if (!m_scrolldataVert.m_bScroll || !m_scrolldataVert.m_bScrollEnable)
@@ -1103,10 +1103,10 @@ namespace user
 
 
 
-   void scroll_y::install_message_handling(::message::dispatch * pinterface)
+   void scroll_y::install_message_routing(::message::sender * pinterface)
    {
 
-      interaction::install_message_handling(pinterface);
+      interaction::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &scroll_y::_001OnVScroll);
       IGUI_WIN_MSG_LINK(WM_MOUSEWHEEL, pinterface, this, &scroll_y::_001OnMouseWheel);
@@ -1207,10 +1207,10 @@ namespace user
    {
    }
 
-   void scroll::install_message_handling(::message::dispatch * pinterface)
+   void scroll::install_message_routing(::message::sender * pinterface)
    {
-      scroll_x::install_message_handling(pinterface);
-      scroll_y::install_message_handling(pinterface);
+      scroll_x::install_message_routing(pinterface);
+      scroll_y::install_message_routing(pinterface);
    }
 
    void scroll::on_change_viewport_offset()

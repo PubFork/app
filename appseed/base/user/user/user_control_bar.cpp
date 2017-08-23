@@ -38,9 +38,9 @@ namespace user
       m_nMRUWidth = 32767;
    }
 
-   void control_bar::install_message_handling(::message::dispatch * pinterface)
+   void control_bar::install_message_routing(::message::sender * pinterface)
    {
-      ::user::interaction::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
 #ifdef WINDOWS
       IGUI_WIN_MSG_LINK(WM_CTLCOLOR          , pinterface, this, &control_bar::_001OnCtlColor);
 #endif
@@ -271,7 +271,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Default control bar processing
 
-   void control_bar::pre_translate_message(signal_details * pobj)
+   void control_bar::pre_translate_message(::message::message * pobj)
    {
       ASSERT_VALID(this);
    //trans   ASSERT(get_handle() != NULL);
@@ -322,7 +322,7 @@ namespace user
       // pbase->m_bRet = false;
    }
 
-   void control_bar::message_handler(signal_details * pobj)
+   void control_bar::message_handler(::message::message * pobj)
    {
 
       (this->*m_pfnDispatchWindowProc)(pobj);
@@ -380,7 +380,7 @@ namespace user
       ::user::interaction::message_handler(pobj);
    }
 
-   void control_bar::_001OnHelpHitTest(signal_details * pobj)
+   void control_bar::_001OnHelpHitTest(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::base, pbase, pobj);
@@ -388,13 +388,13 @@ namespace user
 
    }
 
-   void control_bar::_001OnWindowPosChanging(signal_details * pobj)
+   void control_bar::_001OnWindowPosChanging(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
    }
 
-   void control_bar::_001OnCreate(signal_details * pobj)
+   void control_bar::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -416,7 +416,7 @@ namespace user
    }
 
 
-   void control_bar::_001OnDestroy(signal_details * pobj)
+   void control_bar::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -430,7 +430,7 @@ namespace user
    }
 
 
-   void control_bar::_001OnInitialUpdateMessage(signal_details * pobj)
+   void control_bar::_001OnInitialUpdateMessage(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -448,7 +448,7 @@ namespace user
          return ::user::interaction::DestroyWindow();
    }
 
-   void control_bar::_001OnMouseActivate(signal_details * pobj)
+   void control_bar::_001OnMouseActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse_activate, pmouseactivate, pobj);
       // call default when toolbar is not floating
@@ -539,7 +539,7 @@ namespace user
    }
 
 
-   void control_bar::_001OnCtlColor(signal_details * pobj)
+   void control_bar::_001OnCtlColor(::message::message * pobj)
    {
       SCAST_PTR(::message::ctl_color,pctlcolor,pobj);
 
@@ -562,7 +562,7 @@ namespace user
       pctlcolor->m_bRet = true;
    }
 
-   void control_bar::_001OnLButtonDown(signal_details * pobj)
+   void control_bar::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       // only start dragging if clicked in "void" space
@@ -580,7 +580,7 @@ namespace user
       }
    }
 
-   void control_bar::_001OnLButtonUp(signal_details * pobj)
+   void control_bar::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       if(m_bDockTrack)
@@ -590,7 +590,7 @@ namespace user
       pmouse->previous();
    }
 
-   void control_bar::_001OnMouseMove(signal_details * pobj)
+   void control_bar::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       if(m_bDockTrack)
@@ -600,13 +600,13 @@ namespace user
       pmouse->previous();
    }
 
-   void control_bar::_001OnLButtonDblClk(signal_details * pobj)
+   void control_bar::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       pmouse->previous();
    }
 
-   void control_bar::_001OnIdleUpdateCmdUI(signal_details * pobj)
+   void control_bar::_001OnIdleUpdateCmdUI(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       // handle delay hide/show
@@ -690,7 +690,7 @@ namespace user
       return dwStyle; // return new style
    }
 
-   void control_bar::_001OnSizeParent(signal_details * pobj)
+   void control_bar::_001OnSizeParent(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       SIZEPARENTPARAMS * lpLayout = (SIZEPARENTPARAMS *) pbase->m_lparam.m_lparam;

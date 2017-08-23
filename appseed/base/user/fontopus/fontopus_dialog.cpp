@@ -35,10 +35,10 @@ namespace fontopus
    }
 
 
-   void dialog::install_message_handling(::message::dispatch * pdispatch)
+   void dialog::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_handling(pdispatch);
+      ::simple_ui::interaction::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&dialog::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_CHAR,pdispatch,this,&dialog::_001OnChar);
@@ -49,7 +49,7 @@ namespace fontopus
    }
 
 
-   void dialog::_001OnCreate(signal_details * pobj)
+   void dialog::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -85,7 +85,7 @@ namespace fontopus
    }
 
 
-   void dialog::_001OnChar(signal_details * pobj)
+   void dialog::_001OnChar(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -427,7 +427,7 @@ namespace fontopus
    }
 
 
-   void dialog::_001OnLButtonDown(signal_details * pobj)
+   void dialog::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -450,7 +450,7 @@ namespace fontopus
    }
 
 
-   void dialog::_001OnLButtonUp(signal_details * pobj)
+   void dialog::_001OnLButtonUp(::message::message * pobj)
    {
 
       m_bLButtonDown = false;
@@ -469,7 +469,7 @@ namespace fontopus
    }
 
 
-   void dialog::_001OnMouseMove(signal_details * pobj)
+   void dialog::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);

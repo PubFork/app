@@ -23,7 +23,7 @@ namespace user
 
          class CLASS_DECL_CORE WorkSet :
             virtual public ::database::client,
-            virtual public signalizable
+            virtual public ::message::receiver
          {
          public:
             friend class appearance;
@@ -86,7 +86,7 @@ namespace user
 
 
             void AttachFrameSchema(frame * pframeschema);
-            void install_message_handling(::message::dispatch * pdispatch);
+            void install_message_routing(::message::sender * psender);
 
             DECL_GEN_SIGNAL(_001OnLButtonDown);
             DECL_GEN_SIGNAL(_001OnMouseMove);
@@ -110,8 +110,8 @@ namespace user
             void WindowClose();
             void UpdateApperanceMode(bool bFullScreen);
             //void SetDownUpInterface(CWorkSetDownUpInterface *pinterface);
-            void WindowProcBefore(::user::interaction * pwnd, signal_details * pobj);
-            void WindowProcHover(::user::interaction * pwnd, signal_details * pobj);
+            void WindowProcBefore(::user::interaction * pwnd, ::message::message * pobj);
+            void WindowProcHover(::user::interaction * pwnd, ::message::message * pobj);
             DECL_GEN_SIGNAL(_001OnActivate);
                DECL_GEN_SIGNAL(_001OnCommand);
                DECL_GEN_SIGNAL(_001OnNcActivate);
@@ -128,7 +128,7 @@ namespace user
             virtual void OnDock();
             void on_layout();
             bool Hover(bool bHoverActive);
-            void hover_relay_event(signal_details * pobj);
+            void hover_relay_event(::message::message * pobj);
             void ChildWnd(::user::interaction * pwnd, ::user::interaction * pwndParent);
             void FrameWnd(::user::interaction * pwnd);
             bool Start();
@@ -160,8 +160,8 @@ namespace user
             void GetRegionClientRect(LPRECT lprect);
             void get_draw_client_rect(LPRECT lprect);
             //void SetWindow(::user::interaction * pwnd);
-            void relay_event(signal_details * pobj);
-            void message_handler(signal_details * pobj);
+            void relay_event(::message::message * pobj);
+            void message_handler(::message::message * pobj);
 
             void _001OnDraw(::draw2d::graphics * pgraphics);
 

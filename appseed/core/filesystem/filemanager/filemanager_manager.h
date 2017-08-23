@@ -121,7 +121,7 @@ namespace filemanager
       operation_document * get_operation_doc(bool bSwitch);
 
 
-      virtual bool on_simple_action(id id);
+      virtual bool on_simple_action(::user::command * pcommand);
       virtual bool on_simple_update(command_ui * pcommandui);
 
       virtual bool on_new_document();

@@ -26,7 +26,7 @@ namespace user
 
       virtual bool create_window(const RECT & rect, ::user::place_holder_container * pcontainer,id id);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       virtual bool can_merge(::user::interaction * pui);
       virtual bool merge(::user::interaction * pui);

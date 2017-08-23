@@ -26,9 +26,9 @@ namespace user
 
       virtual bool create_message_queue(const char * pszName,::user::message_queue_listener * plistener = NULL);
 
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::message * pobj);
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
 
       virtual bool message_queue_is_initialized();
 

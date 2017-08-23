@@ -90,11 +90,11 @@ sp(::aura::application)     ios_instantiate_application(sp(::aura::application) 
 
 //#include "ios_shell.h"
 
-//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, signal_details * pobj);
+//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 //CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 //
-//CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, signal_details * pobj);
-//CLASS_DECL_AXIS void __cdecl __pre_translate_message(signal_details * pobj);
+//CLASS_DECL_AXIS void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+//CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 
 //#include "ios_printer.h"
 

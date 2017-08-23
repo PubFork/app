@@ -729,7 +729,7 @@ namespace filemanager
 
 
 
-   void tree::_001OnMainPostMessage(signal_details * pobj)
+   void tree::_001OnMainPostMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       switch(pbase->m_wparam)
@@ -758,9 +758,9 @@ namespace filemanager
       pbase->m_bRet = true;
    }
 
-   void tree::install_message_handling(::message::dispatch *pinterface)
+   void tree::install_message_routing(::message::sender *pinterface)
    {
-      ::userfs::tree::install_message_handling(pinterface);
+      ::userfs::tree::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(MessageMainPost, pinterface,  this,  &tree::_001OnMainPostMessage);
 //      //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &tree::_001OnTimer);
 
@@ -1159,27 +1159,27 @@ namespace filemanager
    }
 
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //   int32_t iItem;
 
    }
 
-   void tree::_001OnContextMenu(signal_details * pobj)
+   void tree::_001OnContextMenu(::message::message * pobj)
    {
    }
 
 
 
 
-   void tree::_001OnShellCommand(signal_details * pobj)
+   void tree::_001OnShellCommand(::message::message * pobj)
    {
       SCAST_PTR(::message::command, pcommand, pobj);
       m_contextmenu.OnCommand(pcommand->GetId());
    }
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();

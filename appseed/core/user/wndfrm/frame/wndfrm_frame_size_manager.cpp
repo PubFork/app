@@ -607,7 +607,7 @@ namespace user
             UNREFERENCED_PARAMETER(emode);
          }
 
-         void SizeManager::message_handler(sp(::user::interaction) pwnd, signal_details * pobj)
+         void SizeManager::message_handler(sp(::user::interaction) pwnd, ::message::message * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
 

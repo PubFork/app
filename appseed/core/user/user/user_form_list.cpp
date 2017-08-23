@@ -31,12 +31,12 @@ namespace user
       list::_001GetSelection(key,selection);
    }
 
-   void form_list::install_message_handling(::message::dispatch *pinterface)
+   void form_list::install_message_routing(::message::sender *pinterface)
    {
       IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_list::_001OnKeyDown);
 
-      form_mesh::install_message_handling(pinterface);
-      list::install_message_handling(pinterface);
+      form_mesh::install_message_routing(pinterface);
+      list::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &form_list::_001OnVScroll);
       IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &form_list::_001OnHScroll);
@@ -931,7 +931,7 @@ namespace user
       return m_pcontrolEdit;
    }
 
-   void form_list::_001OnVScroll(signal_details * pobj)
+   void form_list::_001OnVScroll(::message::message * pobj)
    {
       //SCAST_PTR(::message::scroll, pscroll, pobj);
       pobj->previous();
@@ -948,7 +948,7 @@ namespace user
 
    }
 
-   void form_list::_001OnHScroll(signal_details * pobj)
+   void form_list::_001OnHScroll(::message::message * pobj)
    {
       pobj->previous();
       if(pobj->m_bRet)
@@ -974,7 +974,7 @@ namespace user
       return false;
    }
 
-   void form_list::_001OnNotify(signal_details * pobj)
+   void form_list::_001OnNotify(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -984,7 +984,7 @@ namespace user
       list::_001OnTimer(ptimer);
    }
 
-   void form_list::_001OnMessageNotify(signal_details * pobj)
+   void form_list::_001OnMessageNotify(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // linux na verdade revamp
@@ -1093,7 +1093,7 @@ namespace user
    }
 
 
-   void form_list::_001OnKeyDown(signal_details * pobj)
+   void form_list::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key,pkey,pobj);
 
@@ -1291,7 +1291,7 @@ namespace user
       //}
       //try
       //{
-      //   (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <signal_details *> (pmouse));
+      //   (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
       //   if(pmouse->get_lresult() != 0)
       //      return;
       //}

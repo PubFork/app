@@ -17,9 +17,9 @@ namespace filemanager
    {
    }
 
-   void child_frame::install_message_handling(::message::dispatch * pinterface)
+   void child_frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_child_frame::install_message_handling(pinterface);
+      simple_child_frame::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(::core::application::APPM_LANGUAGE, pinterface, this, &child_frame::_001OnAppLanguage);
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &child_frame::_001OnShowWindow);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &child_frame::_001OnCreate);
@@ -67,7 +67,7 @@ namespace filemanager
    }
 
 
-   void child_frame::_001OnCreate(signal_details * pobj)
+   void child_frame::_001OnCreate(::message::message * pobj)
    {
       if (pobj->m_bRet)
          return;
@@ -79,7 +79,7 @@ namespace filemanager
    }
 
 
-   void child_frame::_001OnAppLanguage(signal_details * pobj)
+   void child_frame::_001OnAppLanguage(::message::message * pobj)
    {
 //      CreateBars();
       pobj->m_bRet = false;
@@ -94,7 +94,7 @@ namespace filemanager
       }
    }
 
-   void child_frame::_001OnShowWindow(signal_details * pobj)
+   void child_frame::_001OnShowWindow(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }

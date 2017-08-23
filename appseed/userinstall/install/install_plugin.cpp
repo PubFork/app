@@ -1093,7 +1093,7 @@ namespace install
    }
 
 
-   void plugin::_001OnLButtonUp(signal_details * pobj)
+   void plugin::_001OnLButtonUp(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -1105,7 +1105,7 @@ namespace install
 
 
 
-   void plugin::message_handler(signal_details * pobj)
+   void plugin::message_handler(::message::message * pobj)
    {
 
       if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())

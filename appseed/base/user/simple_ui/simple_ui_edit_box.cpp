@@ -24,10 +24,10 @@ namespace simple_ui
    }
 
 
-   void edit_box::install_message_handling(::message::dispatch * pdispatch)
+   void edit_box::install_message_routing(::message::sender * psender)
    {
 
-      ::user::plain_edit::install_message_handling(pdispatch);
+      ::user::plain_edit::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &edit_box::_001OnKeyDown);
       IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &edit_box::_001OnKeyDown);
@@ -37,7 +37,7 @@ namespace simple_ui
    }
 
 
-   void edit_box::_001OnLButtonDown(signal_details * pobj)
+   void edit_box::_001OnLButtonDown(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -52,7 +52,7 @@ namespace simple_ui
    }
 
 
-   void edit_box::_001OnLButtonUp(signal_details * pobj)
+   void edit_box::_001OnLButtonUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -114,7 +114,7 @@ namespace simple_ui
    }
 
 
-   void edit_box::_001OnKeyDown(signal_details * pobj)
+   void edit_box::_001OnKeyDown(::message::message * pobj)
    {
       pobj->previous();
       pobj->m_bRet = true;

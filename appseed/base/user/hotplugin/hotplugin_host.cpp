@@ -612,7 +612,7 @@ namespace hotplugin
    }
 
 
-   void host::message_handler(signal_details * pobj)
+   void host::message_handler(::message::message * pobj)
    {
 
       if(pobj == NULL)

@@ -1,6 +1,17 @@
 #pragma once
 
 
+namespace user
+{
+
+
+   class tab;
+   class tab_pane;
+
+
+} // namespace user
+
+
 #include "aura/user/user.h"
 
 

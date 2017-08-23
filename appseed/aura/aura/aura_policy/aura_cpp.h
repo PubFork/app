@@ -1024,7 +1024,14 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 //#include "user/user/user_elemental.h"
 #include "aura/aura/aura/aura_flags.h"
 #include "aura/primitive/primitive_check.h"
+
 //#include "user/user/user_check_interface.h"
+
+
+#include "aura/aura/message/message_base.h"
+#include "aura/aura/message/message_timer.h"
+
+
 #include "aura/user/user/user_command.h"
 #include "aura/aura/aura/aura_command_ui.h"
 #include "aura/aura/aura/aura_command_ui_probe.h"

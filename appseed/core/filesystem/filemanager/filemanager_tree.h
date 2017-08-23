@@ -59,7 +59,7 @@ namespace filemanager
       void _001OnTimer(::timer * ptimer);
 
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       // tree_polishing
       //void _polishing_start(::user::tree * pusertree);

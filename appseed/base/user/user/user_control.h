@@ -36,7 +36,7 @@ namespace user
       virtual ~control();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       /// if you (developer) don't know how to create a control,
       /// you should be able (control developer pay attention now),
@@ -60,7 +60,7 @@ namespace user
       virtual void _003CallCustomDraw(::draw2d::graphics * pgraphics, ::aura::draw_context * pitem);
       virtual bool _003CallCustomWindowProc(sp(::user::interaction) pwnd, UINT message, WPARAM wparam, LPARAM lparam, LRESULT & lresult);
       virtual void _003OnCustomDraw(::draw2d::graphics * pgraphics, ::aura::draw_context * pitem);
-      virtual void _003CustomWindowProc(signal_details * pobj);
+      virtual void _003CustomWindowProc(::message::message * pobj);
 
       virtual form_window * get_form();
 
@@ -102,9 +102,9 @@ namespace user
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
-      virtual bool simple_process_system_message(signal_details * pobj, ::user::e_event eevent);
+      virtual bool simple_process_system_message(::message::message * pobj, ::user::e_event eevent);
 
-      //virtual void walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop);
+      //virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
       virtual bool keyboard_focus_OnSetFocus();
       virtual bool keyboard_focus_OnKillFocus();
@@ -120,7 +120,7 @@ namespace user
       id_to_id      m_mapControlCommand;
 
 
-      control_cmd_ui(class ::signal * psignal);
+      control_cmd_ui(class ::message::sender * psignal);
 
 
       virtual void Enable(bool bOn);

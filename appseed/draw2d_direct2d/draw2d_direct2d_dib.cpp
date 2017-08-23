@@ -2895,7 +2895,7 @@ namespace draw2d_direct2d
    //#if defined(WINDOWSEX)
 
 
-   bool dib::update_window(::aura::draw_interface * pwnd, signal_details * pobj, bool bTransferBuffer)
+   bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
    {
 
       rect64 rectWindow;
@@ -3077,7 +3077,7 @@ namespace draw2d_direct2d
 
    /*
 
-   bool dib::print_window(window * pwnd, signal_details * pobj)
+   bool dib::print_window(window * pwnd, ::message::message * pobj)
    {
 
 

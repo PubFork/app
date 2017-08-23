@@ -21,10 +21,10 @@ namespace user
    }
 
 
-   void impact::install_message_handling(::message::dispatch * pinterface)
+   void impact::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::box::install_message_handling(pinterface);
+      ::user::box::install_message_routing(pinterface);
 
 
       IGUI_WIN_MSG_LINK(WM_VIEW, pinterface, this, &impact::_001OnView);
@@ -96,7 +96,7 @@ namespace user
    }
 
 
-   void impact::_001OnCreate(signal_details * pobj)
+   void impact::_001OnCreate(::message::message * pobj)
    {
       SCAST_PTR(::message::create, pcreate, pobj);
 
@@ -150,7 +150,7 @@ namespace user
       pcreate->set_lresult(0);
    }
 
-   void impact::_001OnDestroy(signal_details * pobj)
+   void impact::_001OnDestroy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       sp(::user::frame_window) pFrame = GetParentFrame();
@@ -559,7 +559,7 @@ namespace user
 
 
 
-   void impact::_001OnView(signal_details * pobj)
+   void impact::_001OnView(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if (pbase->m_wparam == 0)
@@ -738,7 +738,7 @@ namespace user
    }
 
 
-   void impact::_001OnLButtonDown(signal_details * pobj)
+   void impact::_001OnLButtonDown(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -754,13 +754,13 @@ namespace user
 
    }
 
-   void impact::_001OnLButtonUp(signal_details * pobj)
+   void impact::_001OnLButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //SCAST_PTR(::message::mouse, pmouse, pobj);
    }
 
-   void impact::_001OnMouseMove(signal_details * pobj)
+   void impact::_001OnMouseMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //   SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -912,7 +912,7 @@ namespace user
    }*/
 
 
-   void impact::_001OnMouseActivate(signal_details * pobj)
+   void impact::_001OnMouseActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse_activate, pmouseactivate, pobj);
       pobj->previous();
@@ -1044,22 +1044,22 @@ namespace user
 
 
 
-   void impact::_001OnUpdateSplitCmd(signal_details * pobj)
+   void impact::_001OnUpdateSplitCmd(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void impact::_001OnSplitCmd(signal_details * pobj)
+   void impact::_001OnSplitCmd(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void impact::_001OnUpdateNextPaneMenu(signal_details * pobj)
+   void impact::_001OnUpdateNextPaneMenu(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void impact::_001OnNextPaneCmd(signal_details * pobj)
+   void impact::_001OnNextPaneCmd(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -1076,13 +1076,13 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // ::user::impact's OnPrintPreview.  Here to force linkage
 
-   void impact::_001OnFilePrintPreview(signal_details * pobj)
+   void impact::_001OnFilePrintPreview(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
 
-   void impact::_001OnFilePrint(signal_details * pobj)
+   void impact::_001OnFilePrint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -1163,7 +1163,7 @@ namespace user
    //}
 
 
-   void impact::_001OnRButtonDown(signal_details * pobj)
+   void impact::_001OnRButtonDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1171,7 +1171,7 @@ namespace user
       GetParentFrame()->SetActiveView((this));
    }
 
-   void impact::_001OnMButtonDown(signal_details * pobj)
+   void impact::_001OnMButtonDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1180,7 +1180,7 @@ namespace user
    }
 
 
-   bool impact::_001HasCommandHandler(id id)
+   bool impact::_001HasCommandHandler(::user::command * pcommand)
    {
 
       if (command_target_interface::_001HasCommandHandler(id))
@@ -1201,7 +1201,7 @@ namespace user
    }
 
 
-   void impact::walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop)
+   void impact::walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop)
    {
 
 
@@ -1267,7 +1267,7 @@ namespace user
    }
 
 
-   void impact::_001OnInitialUpdateMessage(signal_details * pobj)
+   void impact::_001OnInitialUpdateMessage(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

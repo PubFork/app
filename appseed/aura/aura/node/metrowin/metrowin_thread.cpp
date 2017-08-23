@@ -597,7 +597,7 @@ namespace core
 ////      return 0;
 ////   }
 ////
-////   bool thread::is_idle_message(signal_details * pobj)
+////   bool thread::is_idle_message(::message::message * pobj)
 ////   {
 ////      return __internal_is_idle_message(pobj);
 ////   }
@@ -720,24 +720,24 @@ namespace core
 ////
 ////
 ////
-////   void thread::ProcessWndProcException(::exception::aura* e, signal_details * pobj)
+////   void thread::ProcessWndProcException(::exception::aura* e, ::message::message * pobj)
 ////   {
 ////      return __internal_process_wnd_proc_exception(e, pobj);
 ////   }
 ////
-////   __STATIC inline bool IsEnterKey(signal_details * pobj)
+////   __STATIC inline bool IsEnterKey(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
 ////      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 ////   }
 ////
-////   __STATIC inline bool IsButtonUp(signal_details * pobj)
+////   __STATIC inline bool IsButtonUp(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
 ////      return pbase->m_uiMessage == WM_LBUTTONUP;
 ////   }
 ////
-////   void thread::ProcessMessageFilter(int code, signal_details * pobj)
+////   void thread::ProcessMessageFilter(int code, ::message::message * pobj)
 ////   {
 ////
 ////      if(pobj == NULL)
@@ -982,7 +982,7 @@ namespace core
 ////   }
 ////
 ////
-////   void thread::message_handler(signal_details * pobj)
+////   void thread::message_handler(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
 ////      // special message which identifies the window as using __window_procedure
@@ -1112,7 +1112,7 @@ namespace core
 ////      m_nThreadID = (uint32_t) iData;
 ////   }
 ////
-////   void thread::message_queue_message_handler(signal_details * pobj)
+////   void thread::message_queue_message_handler(::message::message * pobj)
 ////   {
 ////      UNREFERENCED_PARAMETER(pobj);
 ////   }
@@ -1213,8 +1213,8 @@ namespace core
 ////
 ////      //      ::application* papp = dynamic_cast < ::aura::application * > (get_app());
 ////      m_evFinish.ResetEvent();
-////      install_message_handling(pThread);
-////      m_p->install_message_handling(pThread);
+////      install_message_routing(pThread);
+////      m_p->install_message_routing(pThread);
 ////
 //////      ::user::interaction_impl threadWnd;
 ////
@@ -1316,8 +1316,8 @@ namespace core
 //////
 //////bool CLASS_DECL_AURA __internal_pump_message();
 //////LRESULT CLASS_DECL_AURA __internal_process_wnd_proc_exception(::exception::aura*, const MSG* pMsg);
-//////void __internal_pre_translate_message(signal_details * pobj);
-//////bool __internal_is_idle_message(signal_details * pobj);
+//////void __internal_pre_translate_message(::message::message * pobj);
+//////bool __internal_is_idle_message(::message::message * pobj);
 //////bool __internal_is_idle_message(LPMSG lpmsg);
 //////
 //////

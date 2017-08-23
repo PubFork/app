@@ -88,17 +88,16 @@ namespace user
       virtual int get_int(e_int eint) override;
 
       
-      
-      
-      
-      
-      virtual void construct_user_style(::user::e_schema eschema);
-      virtual void select_user_style(::user::e_schema eschema);
+      virtual void select_default();
+
+
+      virtual void set_user_schema(::user::e_schema eschema);
+      virtual void select_user_schema();
 
       
       virtual void select(::draw2d::graphics * pgraphics);
-      
-      virtual bool create_and_select_user_style(e_schema eschema);
+
+      virtual void defer_create_user_schema(::user::e_schema eschema);
       virtual bool create_point_font(e_font efont, const char * pszFamilyName, double dFontSize, int iFontWeight = FW_NORMAL);
       virtual bool create_color(e_color eusercolor, COLORREF cr);
       virtual bool create_opaque_color(e_color eusercolor, COLORREF cr);
@@ -117,6 +116,8 @@ namespace user
       virtual ::draw2d::graphics * style_get_graphics() override;
       virtual style * style_get(e_schema eschema);
       
+      virtual style * userstyle() override;
+
       
    };
    

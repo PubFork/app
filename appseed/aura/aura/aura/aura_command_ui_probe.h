@@ -9,29 +9,29 @@
 //   ...
 //
 
-class probe_command_ui: public command_ui
-{
-public:
+// class probe_command_ui: public command_ui
+// {
+// public:
 
 
-   bool                    m_bEnabled;
-   check::e_check          m_echeck;
-   string                  m_strText;
-   bool                    m_bRadio;
-   bool                    m_bRadioChanged;
+//    bool                    m_bEnabled;
+//    check::e_check          m_echeck;
+//    string                  m_strText;
+//    bool                    m_bRadio;
+//    bool                    m_bRadioChanged;
 
 
-   probe_command_ui(::aura::application * papp);
+//    probe_command_ui(::aura::application * papp);
 
 
-   virtual void Enable(bool bOn,::action::context actioncontext = ::action::source_system);
-   virtual void _001SetCheck(bool bCheck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-   virtual void _001SetCheck(check::e_check echeck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-   virtual void SetRadio(bool bOn = TRUE,::action::context actioncontext = ::action::source_system);
-   virtual void SetText(const char * lpszText,::action::context actioncontext = ::action::source_system);
+//    virtual void Enable(bool bOn,::action::context actioncontext = ::action::source_system);
+//    virtual void _001SetCheck(bool bCheck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+//    virtual void _001SetCheck(check::e_check echeck,::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+//    virtual void SetRadio(bool bOn = TRUE,::action::context actioncontext = ::action::source_system);
+//    virtual void SetText(const char * lpszText,::action::context actioncontext = ::action::source_system);
 
 
-};
+// };
 
 
 // special command_ui derived classes are used for other UI paradigms

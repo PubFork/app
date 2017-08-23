@@ -9,14 +9,6 @@ namespace user
       style(get_app())
    {
 
-      m_puserstyle = NULL;
-
-      m_puserstyleSelect = NULL;
-
-      m_eschema = schema_default;
-
-      m_pgraphics = NULL;
-
    }
 
 
@@ -24,13 +16,7 @@ namespace user
       ::object(papp)
    {
 
-      m_puserstyle = NULL;
-
-      m_puserstyleSelect = NULL;
-
       m_eschema = schema_default;
-
-      m_plibrary = NULL;
 
       m_pgraphics = NULL;
 
@@ -44,31 +30,41 @@ namespace user
 
    }
 
-   bool style::create_and_select_user_style(e_schema eschema)
+
+   void style::select_default()
    {
 
-      if (eschema == ::user::schema_default)
+      if (m_puserstyle.is_set())
       {
 
-         m_puserstyle = this;
-
-         m_puserstyleSelect = this;
+         m_puserstyleSelect = m_puserstyle;
 
       }
       else
       {
 
-         m_map[eschema] = canew(style(get_app()));
-
-         m_puserstyle = m_map[eschema];
-
-         m_puserstyleSelect = m_puserstyle;
+         m_puserstyleSelect = this;
 
       }
 
-      return true;
-
    }
+
+
+   //void style::defer_create_user_schema(e_schema eschema)
+   //{
+
+   //   select_default();
+
+   //   if (eschema != ::user::schema_default)
+   //   {
+
+   //      m_puserstyleSelect->m_map[eschema] = canew(style(get_app()));
+
+   //      m_puserstyleSelect = m_puserstyleSelect->m_map[eschema];
+
+   //   }
+
+   //}
 
 
    void style::initialize_style_menu()
@@ -86,7 +82,7 @@ namespace user
    void style::initialize_style_button()
    {
 
-      create_and_select_user_style(schema_button);
+      defer_create_user_schema(schema_button);
 
       create_point_font(font_default, FONT_SANS, 11.0);
 
@@ -107,7 +103,7 @@ namespace user
    void style::initialize_style_menu_button()
    {
 
-      create_and_select_user_style(schema_menu_button);
+      defer_create_user_schema(schema_menu_button);
 
       create_point_font(font_default, FONT_SANS, 12.0);
 
@@ -129,8 +125,7 @@ namespace user
    void style::initialize_style_menu_popup()
    {
 
-
-      create_and_select_user_style(schema_menu_popup);
+      defer_create_user_schema(schema_menu_popup);
 
       create_point_font(font_default, FONT_SANS, 9.0, FW_BOLD);
       create_color(color_text_normal, alpha_color(200, ::color_black));
@@ -150,7 +145,7 @@ namespace user
    void style::initialize_style_system_menu_button()
    {
 
-      create_and_select_user_style(schema_system_menu_button);
+      defer_create_user_schema(schema_system_menu_button);
 
       create_point_font(font_default, "Marlett", 11.0);
 
@@ -171,7 +166,7 @@ namespace user
    void style::initialize_style_system_menu_close()
    {
 
-      create_and_select_user_style(schema_system_menu_close);
+      defer_create_user_schema(schema_system_menu_close);
 
       create_point_font(font_default, "Marlett", 11.0);
       create_color(color_text_normal, ARGB(200, 200, 100, 80));
@@ -191,7 +186,7 @@ namespace user
    void style::initialize_style_system_menu_popup()
    {
 
-      create_and_select_user_style(schema_system_menu_popup);
+      defer_create_user_schema(schema_system_menu_popup);
 
       create_point_font(font_default, "Marlett", 11.0);
 
@@ -345,6 +340,40 @@ namespace user
          {
 
             cr = ARGB(255, 120, 120, 120);
+
+         }
+
+      }
+      else if (ecolor == color_tab_layout_background)
+      {
+
+         if (_001IsTranslucent())
+         {
+
+            cr = ARGB(80, 255, 255, 255);
+
+         }
+         else
+         {
+
+            cr = ARGB(255, 255, 255, 255);
+
+         }
+
+      }
+      else if (ecolor == color_tab_client_background)
+      {
+
+         if (_001IsTranslucent())
+         {
+
+            cr = ARGB(0, 0, 0, 0);
+
+         }
+         else
+         {
+
+            cr = ARGB(255, 255, 255, 255);
 
          }
 
@@ -958,12 +987,7 @@ namespace user
    void style::_001OnTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      if (Session.userstyle() != this)
-      {
-
-         Session.userstyle()->_001OnTabPaneDrawTitle(pane, ptab, pgraphics, lpcrect, brushText);
-
-      }
+      Session._001OnDefaultTabPaneDrawTitle(pane, ptab, pgraphics, lpcrect, brushText);
 
    }
 
@@ -1097,7 +1121,7 @@ namespace user
       if (pbutton->m_id == "close")
       {
 
-         pbutton->select_user_style(::user::schema_menu_close);
+         pbutton->set_user_schema(::user::schema_menu_close);
 
          pbutton->resize_to_fit();
 
@@ -1109,7 +1133,7 @@ namespace user
       else
       {
 
-         pbutton->select_user_style(schema_menu_button);
+         pbutton->set_user_schema(schema_menu_button);
 
          int cx = pbutton->width();
 
@@ -1147,7 +1171,7 @@ namespace user
    bool style::create_color(e_color ecolor, COLORREF cr)
    {
 
-      m_mapColor[ecolor] = cr;
+      userstyle()->m_mapColor[ecolor] = cr;
 
       return true;
 
@@ -1157,7 +1181,7 @@ namespace user
    bool style::has_flag(e_flag eflag)
    {
 
-      return m_mapFlag[eflag];
+      return userstyle()->m_mapFlag[eflag];
 
    }
 
@@ -1165,7 +1189,7 @@ namespace user
    rect style::get_rect(e_rect erect)
    {
 
-      return m_mapRect[erect];
+      return userstyle()->m_mapRect[erect];
 
    }
 
@@ -1173,7 +1197,7 @@ namespace user
    int style::get_int(e_int eint)
    {
 
-      return m_mapInt[eint];
+      return userstyle()->m_mapInt[eint];
 
    }
 
@@ -1265,7 +1289,7 @@ namespace user
    bool style::create_translucency(e_element eelement, e_translucency etranslucency)
    {
 
-      m_puserstyle->m_mapTranslucency[eelement] = etranslucency;
+      userstyle()->m_mapTranslucency[eelement] = etranslucency;
 
       return true;
 
@@ -1275,7 +1299,7 @@ namespace user
    bool style::create_flag(e_flag eflag, bool bFlag)
    {
 
-      m_puserstyle->m_mapFlag[eflag] = bFlag;
+      userstyle()->m_mapFlag[eflag] = bFlag;
 
       return true;
 
@@ -1285,7 +1309,7 @@ namespace user
    bool style::create_rect(e_rect erect, LONG l, LONG t, LONG r, LONG b)
    {
 
-      m_puserstyle->m_mapRect[erect] = rect(l, t, r, b);
+      userstyle()->m_mapRect[erect] = rect(l, t, r, b);
 
       return true;
 
@@ -1294,7 +1318,7 @@ namespace user
    bool style::create_int(e_int eint, int i)
    {
 
-      m_puserstyle->m_mapInt[eint] = i;
+      userstyle()->m_mapInt[eint] = i;
 
       return true;
 
@@ -1309,17 +1333,87 @@ namespace user
    }
 
 
-   void style::select_user_style(::user::e_schema eschema)
+   void style::defer_create_user_schema(::user::e_schema eschema)
    {
 
-      construct_user_style(eschema);
+      ::user::style * puserstyle = m_puserstyle;
 
-      on_select_user_style();
+      if (puserstyle == NULL)
+      {
+
+         puserstyle = this;
+
+      }
+
+      if (eschema == schema_default)
+      {
+
+         m_puserstyleSelect = puserstyle;
+
+      }
+      else
+      {
+
+         auto & spuserstyle = puserstyle->m_map[eschema];
+
+         if (spuserstyle.is_null())
+         {
+
+            spuserstyle = canew(style(get_app()));
+
+         }
+
+         m_puserstyleSelect = spuserstyle;
+
+      }
 
    }
 
 
-   void style::construct_user_style(::user::e_schema eschema)
+   void style::select_user_schema()
+   {
+
+      auto eschema = m_eschema;
+
+      ::user::style * puserstyle = m_puserstyle;
+
+      if (puserstyle == NULL)
+      {
+
+         puserstyle = this;
+
+      }
+
+      if (eschema == schema_default)
+      {
+
+         m_puserstyleSelect = puserstyle;
+
+      }
+      else
+      {
+
+         auto & spuserstyle = puserstyle->m_map[eschema];
+
+         if (spuserstyle.is_set())
+         {
+
+            m_puserstyleSelect = spuserstyle;
+
+         }
+         else
+         {
+
+            m_puserstyleSelect = puserstyle;
+
+         }
+
+      }
+
+   }
+
+
+   void style::set_user_schema(::user::e_schema eschema)
    {
 
       m_eschema = eschema;
@@ -1363,6 +1457,22 @@ namespace user
    {
 
       return m_pgraphics;
+
+   }
+
+   style * style::userstyle()
+   {
+
+      style * puserstyle = style_composite::userstyle();
+
+      if (puserstyle != NULL)
+      {
+
+         return puserstyle;
+
+      }
+
+      return this;
 
    }
 

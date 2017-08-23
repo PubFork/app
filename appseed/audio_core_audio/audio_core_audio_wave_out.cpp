@@ -40,10 +40,10 @@ namespace multimedia
          
       }
       
-      void wave_out::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::install_message_routing(::message::sender * pinterface)
       {
          
-         ::multimedia::audio::wave_out::install_message_handling(pinterface);
+         ::multimedia::audio::wave_out::install_message_routing(pinterface);
          
          //         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
          //       IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
@@ -473,13 +473,13 @@ namespace multimedia
       }
       
       /*
-       void wave_out::OnMultimediaOpen(signal_details * pobj)
+       void wave_out::OnMultimediaOpen(::message::message * pobj)
        {
        UNREFERENCED_PARAMETER(pobj);
        }
        
        
-       void wave_out::OnMultimediaDone(signal_details * pobj)
+       void wave_out::OnMultimediaDone(::message::message * pobj)
        {
        
        SCAST_PTR(::message::base, pbase, pobj);
@@ -492,13 +492,13 @@ namespace multimedia
        
        }
        
-       void wave_out::OnMultimediaClose(signal_details * pobj)
+       void wave_out::OnMultimediaClose(::message::message * pobj)
        {
        UNREFERENCED_PARAMETER(pobj);
        }
        */
       
-      /*void wave_out::wave_out_on_buffer_ready(signal_details * pobj)
+      /*void wave_out::wave_out_on_buffer_ready(::message::message * pobj)
        {
        UNREFERENCED_PARAMETER(pobj);
        }*/

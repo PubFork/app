@@ -20,10 +20,10 @@ namespace filemanager
    }
 
 
-   void impact::install_message_handling(::message::dispatch * pdispatch)
+   void impact::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_handling(pdispatch);
+      ::user::impact::install_message_routing(pdispatch);
       
       connect_update_cmd_ui("edit_paste",&impact::_001OnUpdateEditPaste);
 
@@ -161,7 +161,7 @@ namespace filemanager
 
    }
 
-   void impact::_001OnUpdateEditPaste(signal_details * pobj)
+   void impact::_001OnUpdateEditPaste(::message::message * pobj)
    {
       SCAST_PTR(::command_ui,pcommandui,pobj);
       pcommandui->Enable(Session.copydesk().get_file_count() > 0);
@@ -169,7 +169,7 @@ namespace filemanager
    }
 
 
-   void impact::_001OnEditPaste(signal_details * pobj)
+   void impact::_001OnEditPaste(::message::message * pobj)
    {
       
       UNREFERENCED_PARAMETER(pobj);
@@ -207,7 +207,7 @@ namespace filemanager
    }
 
 
-   void impact::_001OnOperationDocMessage(signal_details * pobj)
+   void impact::_001OnOperationDocMessage(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);

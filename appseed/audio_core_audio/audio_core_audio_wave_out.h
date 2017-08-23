@@ -34,7 +34,7 @@ namespace multimedia
          virtual ~wave_out();
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface);
 
          virtual imedia_time wave_out_get_position_millis();
          imedia_position wave_out_get_position();

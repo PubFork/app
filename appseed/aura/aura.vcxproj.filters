@@ -1463,9 +1463,6 @@
     <ClInclude Include="aura\aura\aura_application_signal_details.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\message\message_dispatch.h">
-      <Filter>Header Files\aura\message</Filter>
-    </ClInclude>
     <ClInclude Include="aura\message\message_definition.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
@@ -2867,6 +2864,27 @@
     <ClInclude Include="aura\aura\aura_command_ui_probe.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
+    <ClInclude Include="aura\message\message_timer.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_message.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_route.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_receiver.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_id.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_sender.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_const.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -3677,9 +3695,6 @@
       <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="aura\message\message.cpp">
-      <Filter>Source Files\aura\message</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\windows\windows_debug.cpp">
@@ -4782,6 +4797,12 @@
     </ClCompile>
     <ClCompile Include="aura\os\os_windowing.cpp">
       <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_sender.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_receiver.cpp">
+      <Filter>Source Files\aura\message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

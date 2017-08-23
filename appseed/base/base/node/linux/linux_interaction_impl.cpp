@@ -618,12 +618,12 @@ namespace linux
 
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
 
-      ::user::interaction_impl::last_install_message_handling(pinterface);
-      ::user::interaction_impl::install_message_handling(pinterface);
+      ::user::interaction_impl::last_install_message_routing(pinterface);
+      ::user::interaction_impl::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
 
@@ -633,7 +633,7 @@ namespace linux
          IGUI_WIN_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
       }
 
-      m_pui->install_message_handling(pinterface);
+      m_pui->install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
 
 
@@ -656,13 +656,13 @@ namespace linux
          //IGUI_WIN_MSG_LINK(WM_SETFOCUS,pinterface,this,&interaction_impl::_001OnSetFocus);
          //IGUI_WIN_MSG_LINK(WM_KILLFOCUS,pinterface,this,&interaction_impl::_001OnKillFocus);
 //         IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
-         ::user::interaction_impl::prio_install_message_handling(pinterface);
+         ::user::interaction_impl::prio_install_message_routing(pinterface);
       }
       IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
 
    }
 
-   void interaction_impl::_001OnShowWindow(::signal_details * pobj)
+   void interaction_impl::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -670,7 +670,7 @@ namespace linux
     }
 
 
-   void interaction_impl::_001OnDestroy(::signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -683,7 +683,7 @@ namespace linux
 
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void interaction_impl::_001OnNcDestroy(::signal_details * pobj)
+   void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
 
       single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
@@ -875,7 +875,7 @@ namespace linux
       return &m_pfnSuper;
    }
 */
-   void interaction_impl::pre_translate_message(::signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1111,7 +1111,7 @@ int iDebugmessage_handlerTime;
 
 DWORD dwLastMouseMove;
 DWORD dwLastPaint;
-   void interaction_impl::message_handler(::signal_details * pobj)
+   void interaction_impl::message_handler(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -2647,7 +2647,7 @@ return 0;
       return false;*/
    }
 
-   void interaction_impl::WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj)
+   void interaction_impl::WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -2865,7 +2865,7 @@ return 0;
 //      return (int32_t)Default();
    }
 
-   void interaction_impl::_001OnCreate(::signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -3167,13 +3167,13 @@ throw not_implemented(get_app());
 //      ::DeleteObject(rgnUpdate);
    }
 
-   void interaction_impl::_001OnProdevianSynch(::signal_details * pobj)
+   void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
 
-   void interaction_impl::_001OnPaint(::signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
       _001UpdateWindow();
@@ -3181,7 +3181,7 @@ throw not_implemented(get_app());
    }
 
 
-   void interaction_impl::_001OnPrint(::signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
 
       _001UpdateWindow();
@@ -4057,7 +4057,7 @@ throw not_implemented(get_app());
    m_puiForward = NULL;
    }
 
-   LRESULT guie_message_wnd::message_handler(::signal_details * pobj)
+   LRESULT guie_message_wnd::message_handler(::message::message * pobj)
    {
    if(m_puiForward != NULL)
    {
@@ -5366,7 +5366,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   void interaction_impl::_001OnSetCursor(::signal_details * pobj)
+   void interaction_impl::_001OnSetCursor(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(Session.get_cursor() != NULL
@@ -5687,7 +5687,7 @@ if(psurface == g_cairosurface)
 
 
 
-//   void interaction_impl::_001OnEraseBkgnd(::signal_details * pobj)
+//   void interaction_impl::_001OnEraseBkgnd(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
 //      perasebkgnd->m_bRet = true;

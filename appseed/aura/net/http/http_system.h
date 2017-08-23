@@ -12,7 +12,7 @@ namespace http
 
 
    class CLASS_DECL_AURA system :
-      virtual public signalizable
+      virtual public ::message::receiver
    {
    public:
 

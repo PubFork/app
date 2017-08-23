@@ -31,7 +31,7 @@ namespace userstack
    }
 
 
-   void frame::_001OnCreate(signal_details * pobj)
+   void frame::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -59,9 +59,9 @@ namespace userstack
    }
 
 
-   void frame::install_message_handling(::message::dispatch * pinterface)
+   void frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_frame_window::install_message_handling(pinterface);
+      simple_frame_window::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
 //      //IGUI_WIN_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
       IGUI_WIN_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
@@ -188,7 +188,7 @@ namespace userstack
       simple_frame_window::_000OnMouse(pmouse);
    }
 
-   void frame::_001OnMouseLeave(signal_details * pobj)
+   void frame::_001OnMouseLeave(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -198,7 +198,7 @@ namespace userstack
 //      bergedgesp(::core::application) papp = dynamic_cast < bergedgesp(::core::application) > (get_app());
    }
 
-   void frame::pre_translate_message(signal_details * pobj)
+   void frame::pre_translate_message(::message::message * pobj)
    {
 //      SCAST_PTR(::message::base, pbase, pobj);
       simple_frame_window::pre_translate_message(pobj);
@@ -217,13 +217,13 @@ namespace userstack
       }
    }
 
-   void frame::message_handler(signal_details * pobj)
+   void frame::message_handler(::message::message * pobj)
    {
       simple_frame_window::message_handler(pobj);
    }
 
 
-   void frame::message_queue_message_handler(signal_details * pobj)
+   void frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_APP + 2000))
@@ -251,7 +251,7 @@ namespace userstack
    }
 
 
-   void frame::_001OnApp2000(signal_details * pobj)
+   void frame::_001OnApp2000(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -408,7 +408,7 @@ namespace userstack
    //}
 
 
-   void frame::_001OnApp1(signal_details * pobj)
+   void frame::_001OnApp1(::message::message * pobj)
    {
 
 #ifdef WINDOWSEX

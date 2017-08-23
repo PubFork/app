@@ -64,12 +64,12 @@ namespace database
 
    }
 
-   void client::data_on_before_change(signal_details * pobj)
+   void client::data_on_before_change(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void client::data_on_after_change(signal_details * pobj)
+   void client::data_on_after_change(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }

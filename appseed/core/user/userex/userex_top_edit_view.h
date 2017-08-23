@@ -21,7 +21,7 @@ namespace userex
 
       void on_update(::user::impact * pSender, LPARAM lHint, object* phint);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       DECL_GEN_SIGNAL(_001OnCreate);
 

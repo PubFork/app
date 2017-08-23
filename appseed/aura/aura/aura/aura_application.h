@@ -103,7 +103,6 @@ namespace aura
       string_map < ::aura::application * >            m_appmap;
       string                                          m_strAppName;
       ::aura::allocatorsp                             m_allocer;
-      sp(class signal)                                m_psignal;
 
       sp(::command::command)                          m_pcommand;
 
@@ -168,7 +167,7 @@ namespace aura
       virtual bool app_data_set(class id id, ::file::serializable & obj);
       virtual bool app_data_get(class id id, ::file::serializable & obj);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
 
       virtual object * alloc(sp(type) info);
@@ -273,7 +272,7 @@ namespace aura
 
 //#endif
 
-      virtual void process_message_filter(int32_t code,signal_details * pobj) override;
+      virtual void process_message_filter(int32_t code,::message::message * pobj) override;
 
       virtual bool on_thread_on_idle(::thread * pthread,LONG lCount) override;
       virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0);
@@ -284,7 +283,7 @@ namespace aura
       virtual LRESULT send_message(::user::primitive * pui, UINT message, WPARAM wparam = 0, lparam lparam = 0);
 
       virtual oswindow get_safe_handle(::user::primitive * pui);
-      virtual void dispatch_user_message(::signal_details * pobj);
+      virtual void dispatch_user_message(::message::message * pobj);
       virtual ::user::primitive * get_parent(::user::primitive * pui);
       virtual bool enable_window(::user::primitive * pui, bool bEnable = true);
       virtual bool set_window_text(::user::primitive * pui, const string & strText);
@@ -401,7 +400,7 @@ namespace aura
       virtual bool _001OnDDECommand(const char * lpcsz);
       virtual void _001EnableShellOpen();
       //virtual ::user::document *  _001OpenDocumentFile(var varFile);
-      virtual void _001OnFileNew(signal_details * pobj);
+      virtual void _001OnFileNew(::message::message * pobj);
 
 
       //virtual bool update_module_paths();
@@ -505,9 +504,9 @@ namespace aura
 
       virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
 
-      virtual void process_message(signal_details * pobj);
+      virtual void process_message(::message::message * pobj);
 
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::message * pobj) override;
 
 
       virtual string get_locale();

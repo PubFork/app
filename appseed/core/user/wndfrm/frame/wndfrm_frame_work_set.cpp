@@ -51,12 +51,12 @@ namespace user
          }
 
 
-         void WorkSet::message_handler(signal_details * pobj)
+         void WorkSet::message_handler(::message::message * pobj)
          {
             relay_event(pobj);
          }
 
-         void WorkSet::relay_event(signal_details * pobj)
+         void WorkSet::relay_event(::message::message * pobj)
          {
             hover_relay_event(pobj);
             if(pobj->m_bRet)
@@ -350,7 +350,7 @@ namespace user
 
             m_psizemanager->SetMinSize(m_pframeschema->GetMinSize());
 
-            install_message_handling(pwndEvent->m_pimpl);
+            install_message_routing(pwndEvent->m_pimpl);
 
             return true;
 
@@ -498,7 +498,7 @@ namespace user
             return FALSE;
          }
 
-         void WorkSet::_001OnCommand(signal_details * pobj)
+         void WorkSet::_001OnCommand(::message::message * pobj)
          {
             SCAST_PTR(::message::base,pbase,pobj);
             if(m_pframeschema == NULL)
@@ -624,7 +624,7 @@ namespace user
          }
 
 
-         void WorkSet::hover_relay_event(signal_details * pobj)
+         void WorkSet::hover_relay_event(::message::message * pobj)
          {
             SCAST_PTR(::message::base,pbase,pobj);
             if(m_bHoverModeOn)
@@ -955,7 +955,7 @@ namespace user
             m_wfla.remove(plistener);
          }
 
-         void WorkSet::WindowProcHover(::user::interaction * pwnd,signal_details * pobj)
+         void WorkSet::WindowProcHover(::user::interaction * pwnd,::message::message * pobj)
          {
             UNREFERENCED_PARAMETER(pwnd);
             SCAST_PTR(::message::base,pbase,pobj);
@@ -986,7 +986,7 @@ namespace user
          }
 
 
-         void WorkSet::WindowProcBefore(::user::interaction * pwnd,signal_details * pobj)
+         void WorkSet::WindowProcBefore(::user::interaction * pwnd,::message::message * pobj)
          {
 
             WindowProcHover(pwnd,pobj);
@@ -1057,7 +1057,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnActivate(signal_details * pobj)
+         void WorkSet::_001OnActivate(::message::message * pobj)
          {
 
             SCAST_PTR(::message::activate,pactivate,pobj);
@@ -1103,7 +1103,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcActivate(signal_details * pobj)
+         void WorkSet::_001OnNcActivate(::message::message * pobj)
          {
             SCAST_PTR(::message::nc_activate,pncactivate,pobj);
             //SetActiveFlag(pncactivate->m_bActive);
@@ -1173,7 +1173,7 @@ namespace user
          }
 
 
-         void WorkSet::install_message_handling(::message::dispatch * pdispatch)
+         void WorkSet::install_message_routing(::message::sender * psender)
          {
 
             IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&WorkSet::_001OnLButtonDown);
@@ -1192,7 +1192,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnLButtonDown(signal_details * pobj)
+         void WorkSet::_001OnLButtonDown(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1208,7 +1208,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnMouseMove(signal_details * pobj)
+         void WorkSet::_001OnMouseMove(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1225,7 +1225,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnLButtonUp(signal_details * pobj)
+         void WorkSet::_001OnLButtonUp(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1241,7 +1241,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnNcLButtonDown(signal_details * pobj)
+         void WorkSet::_001OnNcLButtonDown(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1257,7 +1257,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnNcMouseMove(signal_details * pobj)
+         void WorkSet::_001OnNcMouseMove(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1276,7 +1276,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcLButtonUp(signal_details * pobj)
+         void WorkSet::_001OnNcLButtonUp(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1293,7 +1293,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcHitTest(signal_details * pobj)
+         void WorkSet::_001OnNcHitTest(::message::message * pobj)
          {
             SCAST_PTR(::message::nchittest,pnchittest,pobj);
             if(!m_bEnable)
@@ -1330,7 +1330,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnSize(signal_details * pobj)
+         void WorkSet::_001OnSize(::message::message * pobj)
          {
 
             SCAST_PTR(::message::size,psize,pobj);
@@ -1385,7 +1385,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnMove(signal_details * pobj)
+         void WorkSet::_001OnMove(::message::message * pobj)
          {
             SCAST_PTR(::message::move,pmove,pobj);
             if(!m_bEnable)

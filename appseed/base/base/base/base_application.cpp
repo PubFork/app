@@ -107,7 +107,7 @@ namespace base
    }
 
 
-   void application::process_message_filter(int32_t code,signal_details * pobj)
+   void application::process_message_filter(int32_t code,::message::message * pobj)
    {
 
       if(pobj == NULL)
@@ -627,7 +627,7 @@ namespace base
    }
 
 
-   void application::process_message(signal_details * pobj)
+   void application::process_message(::message::message * pobj)
    {
 
       sp(::message::base) pbase = pobj;

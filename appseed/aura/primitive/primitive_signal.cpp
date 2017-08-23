@@ -3,7 +3,7 @@
 
 mutex * g_pmutexSignal = NULL;
 
-signal_details::signal_details(::aura::application * papp) :
+::message::message::message::message(::aura::application * papp) :
    object(papp)
 {
 
@@ -16,7 +16,7 @@ signal_details::signal_details(::aura::application * papp) :
 }
 
 
-signal_details::signal_details(class signal * psignal) :
+::message::message::message::message(class signal * psignal) :
    object(psignal->get_app())
 {
 
@@ -29,7 +29,7 @@ signal_details::signal_details(class signal * psignal) :
 }
 
 
-void signal_details::reset(class ::signal * psignal)
+void ::message::message::reset(class ::message::sender * psignal)
 {
    
    if(psignal->get_app() != NULL)
@@ -45,7 +45,7 @@ void signal_details::reset(class ::signal * psignal)
    
 }
 
-signal_details::signal_details(::aura::application * papp,class signal * psignal):
+::message::message::message::message(::aura::application * papp,class signal * psignal):
    object(papp)
 {
 
@@ -65,7 +65,7 @@ signal_details::signal_details(::aura::application * papp,class signal * psignal
 }
 
 
-signal_details::~signal_details()
+::message::message::~::message::message()
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -80,7 +80,7 @@ signal_details::~signal_details()
 }
 
 
-property_set & signal_details::operator()()
+property_set & ::message::message::operator()()
 {
 
    if(m_pset == NULL)
@@ -95,7 +95,7 @@ property_set & signal_details::operator()()
 }
 
 
-bool signal_details::all_previous() // returns bRet;
+bool ::message::message::all_previous() // returns bRet;
 {
 
    m_psignal->emit_all_previous(this);
@@ -105,7 +105,7 @@ bool signal_details::all_previous() // returns bRet;
 }
 
 
-bool signal_details::previous() // returns bRet;
+bool ::message::message::previous() // returns bRet;
 {
 
    m_psignal->emit_previous(this);
@@ -115,7 +115,7 @@ bool signal_details::previous() // returns bRet;
 }
 
 
-void signal_details::copy_this(const signal_details & signaldetails)
+void ::message::message::copy_this(const ::message::message & signaldetails)
 {
 
    m_uiMessage = signaldetails.m_uiMessage;
@@ -130,7 +130,7 @@ void signal_details::copy_this(const signal_details & signaldetails)
 }
 
 
-bool signal_details::emit()
+bool ::message::message::emit()
 {
 
    m_psignal->emit(this);
@@ -140,13 +140,13 @@ bool signal_details::emit()
 }
 
 
-signalizable::signalizable()
+::message::receiver::::message::receiver()
 {
 
 }
 
 
-signalizable::~signalizable()
+::message::receiver::~::message::receiver()
 {
 
    signalizable_disconnect_all();
@@ -154,7 +154,7 @@ signalizable::~signalizable()
 }
 
 
-void signalizable::signalizable_disconnect_all()
+void ::message::receiver::message::senderizable_disconnect_all()
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -177,7 +177,7 @@ void signalizable::signalizable_disconnect_all()
 }
 
 
-void signalizable::install_message_handling(::message::dispatch * pdispatch)
+void ::message::receiver::install_message_routing(::message::sender * psender)
 {
 
    UNREFERENCED_PARAMETER(pdispatch);
@@ -185,7 +185,7 @@ void signalizable::install_message_handling(::message::dispatch * pdispatch)
 }
 
 
-void signalizable::register_signal(class signal * psignal)
+void ::message::receiver::register_signal(class signal * psignal)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -195,7 +195,7 @@ void signalizable::register_signal(class signal * psignal)
 }
 
 
-void signalizable::unregister_signal(class signal * psignal)
+void ::message::receiver::unregister_signal(class signal * psignal)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -230,7 +230,7 @@ void signalizable::unregister_signal(class signal * psignal)
 }
 
 
-void signalizable::unregister_target(signalizable* psignalizable)
+void ::message::receiver::unregister_target(::message::receiver* psignalizable)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -258,7 +258,7 @@ void signalizable::unregister_target(signalizable* psignalizable)
 }
 
 
-void signalizable::filter_target(signalizable* psignalizable)
+void ::message::receiver::filter_target(::message::receiver* psignalizable)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -291,7 +291,7 @@ void signalizable::filter_target(signalizable* psignalizable)
 }
 
 
-void signal::signal_delegate::emit(signal_details * pobj)
+void signal::message::sender_delegate::emit(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -299,7 +299,7 @@ void signal::signal_delegate::emit(signal_details * pobj)
 }
 
 
-signal::signal()
+signal::message::sender()
 {
 
 }
@@ -334,7 +334,7 @@ void signal::disconnect_all()
 }
 
 
-void signal::emit(signal_details * pobj)
+void signal::emit(::message::message * pobj)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -384,7 +384,7 @@ void signal::emit(signal_details * pobj)
 }
 
 
-void signal::emit_previous(signal_details * pobj)
+void signal::emit_previous(::message::message * pobj)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -403,7 +403,7 @@ void signal::emit_previous(signal_details * pobj)
 }
 
 
-void signal::emit_all_previous(signal_details * pobj)
+void signal::emit_all_previous(::message::message * pobj)
 {
 
    while(pobj->m_iIndex > 0)
@@ -429,7 +429,7 @@ bool signal::has_handler()
 }
 
 
-void signal::disconnect(signalizable * psignalizable)
+void signal::disconnect(::message::receiver * psignalizable)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -445,7 +445,7 @@ void signal::disconnect(signalizable * psignalizable)
          try
          {
 
-            signalizable * p = psignalizable;
+            ::message::receiver * p = psignalizable;
 
             int64_t c = p->m_countReference;
 
@@ -473,7 +473,7 @@ void signal::disconnect(signalizable * psignalizable)
 }
 
 
-void signal::leave_only(signalizable * psignalizable)
+void signal::leave_only(::message::receiver * psignalizable)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -503,7 +503,7 @@ signalid::~signalid()
 {
 }
 
-signalid_array::signalid_array()
+signalid_array::message::senderid_array()
 {
 
 }
@@ -538,7 +538,7 @@ signalid * signalid_array::get(signalid * pid)
 
 
 
-void signalizable::on_request_signal(request_signal * prequestsignal)
+void ::message::receiver::on_request_signal(request_signal * prequestsignal)
 {
 
    request_file_query(prequestsignal->m_varFile, prequestsignal->m_varQuery);
@@ -557,7 +557,7 @@ dispatch::handler_item_array::~handler_item_array()
 {
 }
 
-bool dispatch::handler_item_array::HasSignalizable(signalizable* psignalizable)
+bool dispatch::handler_item_array::HasSignalizable(::message::receiver* psignalizable)
 {
 
    synch_lock sl(g_pmutexSignal);
@@ -579,7 +579,7 @@ bool dispatch::handler_item_array::HasSignalizable(signalizable* psignalizable)
 }
 
 
-dispatch::signal_item::signal_item()
+dispatch::message::sender_item::message::sender_item()
 {
 
    m_psignal      = NULL;
@@ -589,7 +589,7 @@ dispatch::signal_item::signal_item()
 }
 
 
-dispatch::signal_item::~signal_item()
+dispatch::message::sender_item::~signal_item()
 {
 
    ::aura::del(m_psignal);

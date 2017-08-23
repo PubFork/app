@@ -23,7 +23,7 @@ namespace user
       virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
 
 
 

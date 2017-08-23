@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-void __trace_message(const char * lpszPrefix,signal_details * pobj)
+void __trace_message(const char * lpszPrefix,::message::message * pobj)
 {
    ENSURE_ARG(__is_valid_string(lpszPrefix));
    ENSURE_ARG(pobj != NULL);

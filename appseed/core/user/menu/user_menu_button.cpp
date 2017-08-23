@@ -11,7 +11,7 @@ namespace user
       ::user::button(papp)
    {
       
-      construct_user_style(schema_menu_button);
+      set_user_schema(schema_menu_button);
       
    }
    
@@ -22,10 +22,10 @@ namespace user
    }
    
 
-   void menu_button::install_message_handling(::message::dispatch * pinterface)
+   void menu_button::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::button::install_message_handling(pinterface);
+      ::user::button::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &menu_button::_001OnCreate);
 
@@ -181,7 +181,7 @@ namespace user
       }
 
    }
-   void menu_button::_001OnCreate(::signal_details * pobj)
+   void menu_button::_001OnCreate(::message::message * pobj)
    {
 
 
@@ -191,7 +191,7 @@ namespace user
    }
 
 
-   void menu_button::_001OnMouseMove(::signal_details * pobj)
+   void menu_button::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);

@@ -23,17 +23,17 @@ namespace user
    }
 
    
-   void place_holder::install_message_handling(::message::dispatch * pdispatch)
+   void place_holder::install_message_routing(::message::sender * psender)
    {
       
-      ::user::interaction::install_message_handling(pdispatch);
+      ::user::interaction::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &place_holder::_001OnShowWindow);
 
    }
 
 
-   void place_holder::_001OnShowWindow(::signal_details * pobj)
+   void place_holder::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);

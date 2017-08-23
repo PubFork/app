@@ -23,11 +23,11 @@ namespace userex
    }
 
 
-   void top_toggle_view::install_message_handling(::message::dispatch * pdispatch)
+   void top_toggle_view::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_handling(pdispatch);
-      ::user::button::install_message_handling(pdispatch);
+      ::user::impact::install_message_routing(pdispatch);
+      ::user::button::install_message_routing(pdispatch);
 
    }
 

@@ -32,7 +32,7 @@ namespace user
    //   AllocElements(0, 0);    // destroys existing elements
    }
 
-   void status_bar::install_message_handling(::message::dispatch * pinterface)
+   void status_bar::install_message_routing(::message::sender * pinterface)
    {
       IGUI_WIN_MSG_LINK(WM_NCHITTEST         , pinterface, this, &status_bar::_001OnNcHitTest);
       IGUI_WIN_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &status_bar::_001OnNcCalcSize);
@@ -509,7 +509,7 @@ namespace user
    }
 
 
-   void status_bar::_001OnNcHitTest(signal_details * pobj)
+   void status_bar::_001OnNcHitTest(::message::message * pobj)
    {
       SCAST_PTR(::message::nchittest, pnchittest, pobj);
       UINT nResult = (UINT)Default();
@@ -523,7 +523,7 @@ namespace user
       }
    }
 
-   void status_bar::_001OnNcCalcSize(signal_details * pobj)
+   void status_bar::_001OnNcCalcSize(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -606,7 +606,7 @@ namespace user
    }
 
 
-   void status_bar::_001OnSize(signal_details * pobj)
+   void status_bar::_001OnSize(::message::message * pobj)
    {
       ASSERT_VALID(this);
       ASSERT(IsWindow());
@@ -617,7 +617,7 @@ namespace user
       UpdateAllPanes(TRUE, FALSE);
    }
 
-   void status_bar::_001OnWindowPosChanging(signal_details * pobj)
+   void status_bar::_001OnWindowPosChanging(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::window_pos, pwindowpos, pobj);
@@ -632,7 +632,7 @@ namespace user
 #endif
    }
 
-   void status_bar::_001OnSetText(signal_details * pobj)
+   void status_bar::_001OnSetText(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       ASSERT_VALID(this);
@@ -649,7 +649,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnGetText(signal_details * pobj)
+   void status_bar::_001OnGetText(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       ASSERT_VALID(this);
@@ -680,7 +680,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnGetTextLength(signal_details * pobj)
+   void status_bar::_001OnGetTextLength(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -698,7 +698,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnSetMinHeight(signal_details * pobj)
+   void status_bar::_001OnSetMinHeight(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       LRESULT lResult = Default();

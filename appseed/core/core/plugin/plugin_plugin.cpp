@@ -170,7 +170,7 @@ namespace plugin
 
       m_puiHost = create_host_interaction();
       m_puiHost->m_pplugin = this;
-      m_puiHost->install_message_handling(m_puiHost->m_pimpl);
+      m_puiHost->install_message_routing(m_puiHost->m_pimpl);
 
       if(m_puiHost != NULL)
       {
@@ -1057,7 +1057,7 @@ namespace plugin
    }
 
 
-   void plugin::message_handler(signal_details * pobj)
+   void plugin::message_handler(::message::message * pobj)
    {
 
 

@@ -12,14 +12,14 @@ public:
 
 
    class CLASS_DECL_AURA callback :
-      virtual public signalizable
+      virtual public ::message::receiver
    {
    public:
 
 
       void connect_to(::aura::application * papp);
 
-      void on_call_signal(signal_details * pobj);
+      void on_call_signal(::message::message * pobj);
 
       virtual void on_application_bias_callback_signal(::aura::application_signal_details * pobj);
 

@@ -15,7 +15,7 @@ namespace user
       virtual ~form_list_view();
 
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
 
    };
 

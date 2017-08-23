@@ -698,7 +698,7 @@ namespace core
 
 #endif
 
-   void application::OnAppLanguage(signal_details * pobj)
+   void application::OnAppLanguage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       m_signalAppLanguageChange.emit();
@@ -973,7 +973,7 @@ namespace core
    /////////////////////////////////////////////////////////////////////////////
    // Special exception handling
 
-   void application::process_window_procedure_exception(::exception::base* e, signal_details * pobj)
+   void application::process_window_procedure_exception(::exception::base* e, ::message::message * pobj)
    {
       ENSURE_ARG(e != NULL);
       ENSURE_ARG(pobj != NULL);
@@ -2515,7 +2515,7 @@ namespace core
 
 
 
-   void application::_001OnFileNew(signal_details * pobj)
+   void application::_001OnFileNew(::message::message * pobj)
    {
 
       var varFile;
@@ -2646,9 +2646,9 @@ namespace core
 
 
 
-   void application::install_message_handling(::message::dispatch * pdispatch)
+   void application::install_message_routing(::message::sender * psender)
    {
-      base::application::install_message_handling(pdispatch);
+      base::application::install_message_routing(pdispatch);
    }
 
 
@@ -2853,7 +2853,7 @@ namespace core
 
    }
 
-   void application::pre_translate_message(signal_details * pobj)
+   void application::pre_translate_message(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if (pbase->m_uiMessage == WM_USER + 124 && pbase->m_pwnd == NULL)
@@ -3013,10 +3013,10 @@ namespace core
 
 
 
-   void application::on_application_signal(signal_details * pobj)
+   void application::on_application_signal(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      //      SCAST_PTR(signal_details, psignal, pobj);
+      //      SCAST_PTR(::message::message, psignal, pobj);
       /*if(psignal->m_esignal == signal_exit_instance)
       {
       if(m_copydesk.is_set()
@@ -3400,7 +3400,7 @@ namespace core
    }
 
 
-   void application::data_on_after_change(signal_details * pobj)
+   void application::data_on_after_change(::message::message * pobj)
    {
       SCAST_PTR(::database::change_event, pchange, pobj);
       if (pchange->m_key.m_id == "ca2.savings")

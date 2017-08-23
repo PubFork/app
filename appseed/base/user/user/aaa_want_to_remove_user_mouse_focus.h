@@ -11,7 +11,7 @@
 //      elemental();
 //      virtual ~elemental();
 //
-//      virtual void mouse_focus_OnLButtonUp(signal_details * pobj);
+//      virtual void mouse_focus_OnLButtonUp(::message::message * pobj);
 //   };
 //
 //

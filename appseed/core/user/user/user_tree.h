@@ -116,7 +116,7 @@ namespace user
       virtual void _001OnItemExpand(::data::tree_item * pitem, ::action::context actioncontext);
       virtual void _001OnItemCollapse(::data::tree_item * pitem, ::action::context actioncontext);
       virtual bool _001GetItemElementRect(LPRECT lprect, tree_draw_item & drawitem, ::user::e_tree_element eelement);
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
       int32_t _001GetItemHeight();
       virtual index _001GetIndentation();
 
@@ -216,7 +216,7 @@ namespace user
       tree_window(::aura::application * papp);
       virtual ~tree_window();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
    };
 
    typedef show < tree > tree_view;

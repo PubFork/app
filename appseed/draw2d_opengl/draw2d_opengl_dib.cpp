@@ -1355,7 +1355,7 @@ namespace draw2d_opengl
 
    // too slow for animation on AMD XP gen_hon.
    // TOP SUGGESTION:
-   // The gradient can´t have more then 256 levels of the most bright color
+   // The gradient canï¿½t have more then 256 levels of the most bright color
    // (white). So creating a radial fill of radius 256 and then using fasting
    // stretching algorithms is much faster than calculating radial fill.
 //   void dib::RadialFill(BYTE alpha, BYTE red, BYTE green, BYTE blue, int32_t xCenter, int32_t yCenter, int32_t iRadius)
@@ -2469,7 +2469,7 @@ namespace draw2d_opengl
 
 //#define NO_SCREEN_PRE_MULTIPLY_ALPHA 0
 //
-//   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
+//   bool dib::update_window(::aura::draw_interface * pwnd,::message::message * pobj,bool bTransferBuffer)
 //   {
 //
 //
@@ -2591,7 +2591,7 @@ namespace draw2d_opengl
 //   }
 //
 //
-//   bool dib::print_window(::aura::draw_interface * pwnd,signal_details * pobj)
+//   bool dib::print_window(::aura::draw_interface * pwnd,::message::message * pobj)
 //   {
 //
 //      SCAST_PTR(::message::base, pbase, pobj);

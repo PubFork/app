@@ -14,7 +14,7 @@ public:
    virtual ~simple_printer_list_view();
 
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
    virtual bool _001OnClick(uint_ptr nFlags, point point);
 

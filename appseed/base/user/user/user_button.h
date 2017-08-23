@@ -76,7 +76,7 @@ namespace user
 
       virtual void resize_to_fit() override;
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void _001OnDrawPush(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawList(::draw2d::graphics * pgraphics);
@@ -118,11 +118,11 @@ namespace user
       virtual void on_enter_button_style(e_style estyle);
       virtual void on_exit_button_style(e_style estyle);
 
-      virtual void BaseToolTipRelayEvent(signal_details * pobj);
+      virtual void BaseToolTipRelayEvent(::message::message * pobj);
       virtual void BaseToolTipGetRect(LPRECT lprect);
       virtual int32_t BaseToolTipGetIndex();
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       virtual void on_layout();

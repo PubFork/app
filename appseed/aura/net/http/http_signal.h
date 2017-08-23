@@ -6,7 +6,7 @@ namespace http
 
 
    class CLASS_DECL_AURA signal :
-      public signal_details
+      public ::message::message
    {
    public:
 

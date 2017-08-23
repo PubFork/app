@@ -91,7 +91,7 @@ namespace userex
 
    }
 
-   bool split_view::on_simple_action(id id)
+   bool split_view::on_simple_action(::user::command * pcommand)
    {
       UNREFERENCED_PARAMETER(id);
       return false;

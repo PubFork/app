@@ -565,7 +565,7 @@ namespace metrowin
    }
 
 
-   void directx_application::install_message_handling_2ex()
+   void directx_application::install_message_routing_2ex()
    {
 
       CoreWindow ^ window = m_window.Get();
@@ -599,7 +599,7 @@ namespace metrowin
 
       m_window = window;
 
-      install_message_handling_2ex();
+      install_message_routing_2ex();
 
       m_directx = ref new directx_base(m_psystem);
 

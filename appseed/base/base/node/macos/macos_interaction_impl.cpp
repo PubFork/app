@@ -474,11 +474,11 @@ namespace macos
    }
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
 
-      last_install_message_handling(pinterface);
-      ::user::interaction_impl::install_message_handling(pinterface);
+      last_install_message_routing(pinterface);
+      ::user::interaction_impl::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_NCDESTROY, pinterface, this, &interaction_impl::_001OnNcDestroy);
       if (!m_pui->m_bMessageWindow)
@@ -486,7 +486,7 @@ namespace macos
          IGUI_WIN_MSG_LINK(WM_PAINT, pinterface, this, &interaction_impl::_001OnPaint);
          IGUI_WIN_MSG_LINK(WM_PRINT, pinterface, this, &interaction_impl::_001OnPrint);
       }
-      m_pui->install_message_handling(pinterface);
+      m_pui->install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
       if (!m_pui->m_bMessageWindow)
       {
@@ -500,11 +500,11 @@ namespace macos
          //         IGUI_WIN_MSG_LINK(WM_SETFOCUS,pinterface,this,&interaction_impl::_001OnSetFocus);
          //         IGUI_WIN_MSG_LINK(WM_KILLFOCUS,pinterface,this,&interaction_impl::_001OnKillFocus);
                   //IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
-         prio_install_message_handling(pinterface);
+         prio_install_message_routing(pinterface);
       }
       IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &interaction_impl::_001OnDestroy);
 
-      //      ::user::interaction_impl::install_message_handling(pinterface);
+      //      ::user::interaction_impl::install_message_routing(pinterface);
       //      //m_pbuffer->InstallMessageHandling(pinterface);
       //      IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &interaction_impl::_001OnDestroy);
       //      IGUI_WIN_MSG_LINK(WM_NCDESTROY         , pinterface, this, &interaction_impl::_001OnNcDestroy);
@@ -512,7 +512,7 @@ namespace macos
       //      IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &interaction_impl::_001OnPrint);
       //      if(m_pui != NULL)
       //      {
-      //         m_pui->install_message_handling(pinterface);
+      //         m_pui->install_message_routing(pinterface);
       //      }
       //      IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &interaction_impl::_001OnCreate);
       //      IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &interaction_impl::_001OnSetCursor);
@@ -524,7 +524,7 @@ namespace macos
       ////      //IGUI_WIN_MSG_LINK(WM_TIMER             , pinterface, this, &interaction_impl::_001OnTimer);
    }
 
-   void interaction_impl::_001OnMove(signal_details * pobj)
+   void interaction_impl::_001OnMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       /*      if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
@@ -547,7 +547,7 @@ namespace macos
 
    }
 
-   void interaction_impl::_001OnSize(signal_details * pobj)
+   void interaction_impl::_001OnSize(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -591,7 +591,7 @@ namespace macos
    }
 
 
-   void interaction_impl::_001OnDestroy(signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -624,7 +624,7 @@ namespace macos
 
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void interaction_impl::_001OnNcDestroy(signal_details * pobj)
+   void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
       
       single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
@@ -828,7 +828,7 @@ namespace macos
     return &m_pfnSuper;
     }
     */
-   void interaction_impl::pre_translate_message(signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1107,7 +1107,7 @@ namespace macos
    /////////////////////////////////////////////////////////////////////////////
    // main message_handler implementation
 
-   void interaction_impl::message_handler(signal_details * pobj)
+   void interaction_impl::message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -1965,7 +1965,7 @@ namespace macos
       return false;
    }
 
-   void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, signal_details * pobj)
+   void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, ::message::message * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -2225,7 +2225,7 @@ namespace macos
    }
 
 
-   void interaction_impl::_001OnCreate(signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -2603,14 +2603,14 @@ namespace macos
       //      ::DeleteObject(rgnUpdate);
    }
 
-   void interaction_impl::_001OnProdevianSynch(signal_details * pobj)
+   void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      System.get_event(m_pauraapp->m_pauraapp)->SetEvent();
       //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
-   void interaction_impl::_001OnPaint(signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
       //lock lock(m_pui, 1984);
@@ -2687,7 +2687,7 @@ namespace macos
    }
 
 
-   void interaction_impl::_001OnPrint(signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
       throw not_implemented(get_app());
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -3553,7 +3553,7 @@ namespace macos
     m_pguieForward = NULL;
     }
 
-    LRESULT guie_message_wnd::message_handler(signal_details * pobj)
+    LRESULT guie_message_wnd::message_handler(::message::message * pobj)
     {
     if(m_pguieForward != NULL)
     {
@@ -4967,7 +4967,7 @@ namespace macos
 
    }
 
-   void interaction_impl::_001OnSetCursor(signal_details * pobj)
+   void interaction_impl::_001OnSetCursor(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if (Session.get_cursor() != NULL
@@ -5425,7 +5425,7 @@ namespace macos
 
 
 
-   void interaction_impl::_001OnEraseBkgnd(signal_details * pobj)
+   void interaction_impl::_001OnEraseBkgnd(::message::message * pobj)
    {
       SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
       perasebkgnd->m_bRet = true;

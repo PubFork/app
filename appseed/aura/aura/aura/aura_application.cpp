@@ -69,8 +69,8 @@ namespace aura
 {
 
 
-   application_signal_details::application_signal_details(class ::signal * psignal, e_application_signal esignal) :
-      ::signal_details(psignal)
+   application_signal_details::application_signal_details(class ::message::sender * psignal, e_application_signal esignal) :
+      ::message::message(psignal)
    {
 
       m_esignal = esignal;
@@ -253,12 +253,12 @@ namespace aura
    }
 
 
-   void application::install_message_handling(::message::dispatch * pdispatch)
+   void application::install_message_routing(::message::sender * psender)
    {
 
-      ::message::dispatch::install_message_handling(pdispatch);
-      ::signalizable::install_message_handling(pdispatch);
-      ::thread::install_message_handling(pdispatch);
+      ::message::sender::install_message_routing(pdispatch);
+      ::::message::receiver::install_message_routing(pdispatch);
+      ::thread::install_message_routing(pdispatch);
 
    }
    bool application::app_data_set(class id id, ::file::ostream & os)
@@ -2383,7 +2383,7 @@ namespace aura
    }*/
 
 
-   void application::_001OnFileNew(signal_details * pobj)
+   void application::_001OnFileNew(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(this);
@@ -2909,7 +2909,7 @@ namespace aura
 
       thread * pthread = ::get_thread();
 
-      install_message_handling(pthread);
+      install_message_routing(pthread);
 
       thisok << 1 << m_iReturnCode;
 
@@ -5244,7 +5244,7 @@ namespace aura
    }
    
 
-   void application::process_message_filter(int32_t code, signal_details * pobj)
+   void application::process_message_filter(int32_t code, ::message::message * pobj)
    {
 
       //if(pobj == NULL)
@@ -5336,7 +5336,7 @@ namespace aura
    }
 
 
-   void application::message_handler(signal_details * pobj)
+   void application::message_handler(::message::message * pobj)
    {
 
       ::thread::message_handler(pobj);
@@ -5375,7 +5375,7 @@ namespace aura
    }
 
 
-   void application::dispatch_user_message(::signal_details * pbase)
+   void application::dispatch_user_message(::message::message * pbase)
    {
 
       UNREFERENCED_PARAMETER(pbase);
@@ -5430,7 +5430,7 @@ namespace aura
    }
 
 
-   void application::process_message(signal_details * pobj)
+   void application::process_message(::message::message * pobj)
    {
 
       message_handler(pobj);

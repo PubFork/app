@@ -1928,7 +1928,7 @@ retry_session:
 
 
 
-   void system::get(signal_details * pobj)
+   void system::get(::message::message * pobj)
    {
 
       SCAST_PTR(signal, psignal, pobj);

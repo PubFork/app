@@ -654,7 +654,7 @@ namespace filemanager
    }
 
 
-   bool manager::on_simple_action(id id)
+   bool manager::on_simple_action(::user::command * pcommand)
    {
 
       if (get_filemanager_data() != NULL
@@ -714,7 +714,7 @@ namespace filemanager
    }
    */
 
-   void manager::_001OnUpdateNewManager(signal_details * pobj)
+   void manager::_001OnUpdateNewManager(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -726,7 +726,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnNewManager(signal_details * pobj)
+   void manager::_001OnNewManager(::message::message * pobj)
    {
 
       Session.filemanager().std().add_manager("", canew(::create(Application.handler())));
@@ -736,7 +736,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateDelManager(signal_details * pobj)
+   void manager::_001OnUpdateDelManager(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -748,7 +748,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnDelManager(signal_details * pobj)
+   void manager::_001OnDelManager(::message::message * pobj)
    {
 
       sp(manager) pdoc = this;
@@ -776,7 +776,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateLevelUp(signal_details * pobj)
+   void manager::_001OnUpdateLevelUp(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -799,14 +799,14 @@ namespace filemanager
    }
 
 
-   void manager::_001OnLevelUp(signal_details * pobj)
+   void manager::_001OnLevelUp(::message::message * pobj)
    {
       FileManagerOneLevelUp(::action::source_user);
       pobj->m_bRet = true;
    }
 
 
-   void manager::_001OnUpdateAddLocation(signal_details * pobj)
+   void manager::_001OnUpdateAddLocation(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -818,7 +818,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnAddLocation(signal_details * pobj)
+   void manager::_001OnAddLocation(::message::message * pobj)
    {
 
       update_all_views(NULL, ::user::impact::hint_add_location, NULL);
@@ -828,7 +828,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateReplaceText(signal_details * pobj)
+   void manager::_001OnUpdateReplaceText(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -840,7 +840,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnReplaceText(signal_details * pobj)
+   void manager::_001OnReplaceText(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -852,7 +852,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateNewFolder(signal_details * pobj)
+   void manager::_001OnUpdateNewFolder(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -864,7 +864,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnNewFolder(signal_details * pobj)
+   void manager::_001OnNewFolder(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -876,7 +876,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateEditPaste(signal_details * pobj)
+   void manager::_001OnUpdateEditPaste(::message::message * pobj)
    {
       //      SCAST_PTR(::command_ui, pcommandui, pobj);
 
@@ -884,7 +884,7 @@ namespace filemanager
       pobj->m_bRet = true;
    }
 
-   void manager::_001OnEditPaste(signal_details * pobj)
+   void manager::_001OnEditPaste(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //System.file().paste(get_filemanager_data()->get_filemanager_item().m_strPath, System.m_strCopy);
@@ -892,26 +892,26 @@ namespace filemanager
       //pobj->m_bRet = true;
    }
 
-   void manager::_001OnUpdateFileSaveAs(signal_details * pobj)
+   void manager::_001OnUpdateFileSaveAs(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
    }
 
-   void manager::_001OnUpdateFileImport(signal_details * pobj)
+   void manager::_001OnUpdateFileImport(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
    }
 
-   void manager::_001OnUpdateFileExport(signal_details * pobj)
+   void manager::_001OnUpdateFileExport(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
    }
 
 
-   void manager::_001OnFileSaveAs(signal_details * pobj)
+   void manager::_001OnFileSaveAs(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -925,7 +925,7 @@ namespace filemanager
       pobj->m_bRet = true;
    }
 
-   void manager::_001OnFileImport(signal_details * pobj)
+   void manager::_001OnFileImport(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -940,7 +940,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnFileExport(signal_details * pobj)
+   void manager::_001OnFileExport(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 

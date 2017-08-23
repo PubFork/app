@@ -1433,7 +1433,7 @@ property_ptra::property_ptra(::aura::application * papp):
 
 
 PropertySignalObject::PropertySignalObject(class signal * psignal)
-   : signal_details(psignal)
+   : ::message::message(psignal)
 {
 }
 

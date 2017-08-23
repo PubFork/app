@@ -6742,7 +6742,7 @@ COLORREF o = ARGB(255, uchR, uchG, uchB);
    }
 
    //
-   //   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
+   //   bool dib::update_window(::aura::draw_interface * pwnd,::message::message * pobj,bool bTransferBuffer)
    //   {
    //
    //      UNREFERENCED_PARAMETER(pwnd);
@@ -6759,7 +6759,7 @@ COLORREF o = ARGB(255, uchR, uchG, uchB);
    //   }
 
 
-      //bool dib::print_window(::aura::draw_interface * pwnd,signal_details * pobj)
+      //bool dib::print_window(::aura::draw_interface * pwnd,::message::message * pobj)
       //{
 
       //   UNREFERENCED_PARAMETER(pwnd);

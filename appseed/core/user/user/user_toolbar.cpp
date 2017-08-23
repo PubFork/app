@@ -82,10 +82,10 @@ namespace user
    }
 
 
-   void toolbar::install_message_handling(::message::dispatch * pinterface)
+   void toolbar::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::control_bar::install_message_handling(pinterface);
+      ::user::control_bar::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
       //IGUI_WIN_MSG_LINK(WM_NCPAINT         , pinterface, this, &toolbar::_001On);
@@ -107,11 +107,11 @@ namespace user
 
    bool toolbar::create_window(sp(::user::interaction) pParentWnd,uint32_t dwStyle,UINT nID)
    {
-      return create_window_ex(pParentWnd, 0, dwStyle,
+      return create_toolbar(pParentWnd, 0, dwStyle,
          rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
    }
 
-   bool toolbar::create_window_ex(sp(::user::interaction) pParentWnd,uint32_t dwCtrlStyle,uint32_t dwStyle,const RECT & rectBorders,UINT nID)
+   bool toolbar::create_toolbar(::user::interaction * pParentWnd,uint32_t dwCtrlStyle,uint32_t dwStyle,const RECT & rectBorders, id nID)
    {
       ASSERT_VALID(pParentWnd);   // must have a parent
       ASSERT (!((dwStyle & CBRS_SIZE_FIXED) && (dwStyle & CBRS_SIZE_DYNAMIC)));
@@ -146,7 +146,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // toolbar
 
-   void toolbar::_001OnNcCreate(signal_details * pobj)
+   void toolbar::_001OnNcCreate(::message::message * pobj)
    {
       if(pobj->previous())
          return;
@@ -1143,14 +1143,14 @@ throw todo(get_app());
    }
    */
 
-   void toolbar::_001OnNcHitTest(signal_details * pobj)
+   void toolbar::_001OnNcHitTest(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(HTCLIENT);
       pbase->m_bRet = true;
    }
 
-   void toolbar::_001OnNcCalcSize(signal_details * pobj)
+   void toolbar::_001OnNcCalcSize(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -1201,7 +1201,7 @@ throw todo(get_app());
    }
    */
 
-   void toolbar::_001OnWindowPosChanging(signal_details * pobj)
+   void toolbar::_001OnWindowPosChanging(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::window_pos, pwindowpos, pobj);
@@ -1255,13 +1255,13 @@ throw todo(get_app());
    }
 
 
-   void toolbar::_001OnSetButtonSize(signal_details * pobj)
+   void toolbar::_001OnSetButtonSize(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(OnSetSizeHelper(m_sizeButton, pbase->m_lparam));
    }
 
-   void toolbar::_001OnSetBitmapSize(signal_details * pobj)
+   void toolbar::_001OnSetBitmapSize(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(OnSetSizeHelper(m_sizeImage, pbase->m_lparam));
@@ -1296,7 +1296,7 @@ throw todo(get_app());
       return lResult;
    }
 
-   void toolbar::_001OnPreserveZeroBorderHelper(signal_details * pobj)
+   void toolbar::_001OnPreserveZeroBorderHelper(::message::message * pobj)
    {
       LRESULT lResult = 0;
       SCAST_PTR(::message::base, pbase, pobj);
@@ -1318,7 +1318,7 @@ throw todo(get_app());
       pbase->set_lresult(lResult);
    }
 
-   void toolbar::_001OnSysColorChange(signal_details * pobj)
+   void toolbar::_001OnSysColorChange(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // re-color bitmap for toolbar

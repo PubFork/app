@@ -96,10 +96,10 @@ simple_toolbar::~simple_toolbar()
 }
 
 
-void simple_toolbar::install_message_handling(::message::dispatch * pdispatch)
+void simple_toolbar::install_message_routing(::message::sender * psender)
 {
 
-   ::user::toolbar::install_message_handling(pdispatch);
+   ::user::toolbar::install_message_routing(pdispatch);
 
    IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &simple_toolbar::_001OnCreate);
    IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &simple_toolbar::_001OnMouseMove);
@@ -249,6 +249,10 @@ void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 
    int iHover = _001GetHoverItem();
 
+   set_user_schema(::user::schema_button);
+
+   select_user_schema();
+
    for (int32_t iItem = 0; iItem < m_itema.get_size(); iItem++)
    {
 
@@ -379,7 +383,7 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
 }
 
 
-void simple_toolbar::_001OnCreate(signal_details * pobj)
+void simple_toolbar::_001OnCreate(::message::message * pobj)
 {
    if (pobj->previous())
       return;
@@ -1270,7 +1274,7 @@ void simple_toolbar::on_layout()
 }
 
 
-void simple_toolbar::_001OnMouseMove(signal_details * pobj)
+void simple_toolbar::_001OnMouseMove(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1291,7 +1295,7 @@ void simple_toolbar::_001OnMouseMove(signal_details * pobj)
    }
 }
 
-void simple_toolbar::_001OnLButtonDown(signal_details * pobj)
+void simple_toolbar::_001OnLButtonDown(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1309,7 +1313,7 @@ void simple_toolbar::_001OnLButtonDown(signal_details * pobj)
    pobj->previous();
 }
 
-void simple_toolbar::_001OnLButtonUp(signal_details * pobj)
+void simple_toolbar::_001OnLButtonUp(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1408,7 +1412,10 @@ void simple_toolbar::_001OnTimer(::timer * ptimer)
 void simple_toolbar::_001OnClick(index iItem)
 {
    sp(::user::interaction) pwnd = GetOwner();
-   pwnd->_001SendCommand(m_itema[iItem]->m_id);
+
+   ::user::command command(m_itema[iItem]->m_id);
+   
+   pwnd->_001SendCommand(id);
 }
 
 void simple_toolbar::_001DiscardImageList()
@@ -1573,7 +1580,7 @@ void simple_toolbar::SetButtonStyle(int32_t nIndex, UINT nStyle)
 }
 
 
-void simple_toolbar::_001OnNcCalcSize(signal_details * pobj)
+void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 {
 #if defined(WINDOWSEX) //|| defined(LINUX)
    SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -1594,7 +1601,7 @@ void simple_toolbar::_001OnNcCalcSize(signal_details * pobj)
 }
 
 
-void simple_toolbar::_001OnNcHitTest(signal_details * pobj)
+void simple_toolbar::_001OnNcHitTest(::message::message * pobj)
 {
    SCAST_PTR(::message::nchittest, pnchittest, pobj);
    pnchittest->set_lresult(HTCLIENT);
@@ -2081,7 +2088,7 @@ size simple_toolbar::CalcDynamicLayout(int32_t nLength, uint32_t dwMode)
 }
 
 
-void simple_toolbar::_001OnMouseLeave(signal_details * pobj)
+void simple_toolbar::_001OnMouseLeave(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    m_iHover = 0x80000000;

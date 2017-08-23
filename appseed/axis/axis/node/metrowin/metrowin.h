@@ -102,15 +102,15 @@
 //#pragma comment(lib, "Msimg32.lib") 
 //#pragma comment(lib, "Psapi.lib") 
 //
-//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, signal_details * pobj);
+//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 //CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 //
-//CLASS_DECL_AXIS bool __cdecl __is_idle_message(signal_details * pobj);
+//CLASS_DECL_AXIS bool __cdecl __is_idle_message(::message::message * pobj);
 //CLASS_DECL_AXIS bool __cdecl __is_idle_message(MESSAGE * pMsg);
 //
 //
-//CLASS_DECL_AXIS void __process_window_procedure_exception(::exception::base*, signal_details * pobj);
-//CLASS_DECL_AXIS void __cdecl __pre_translate_message(signal_details * pobj);
+//CLASS_DECL_AXIS void __process_window_procedure_exception(::exception::base*, ::message::message * pobj);
+//CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 //
 //#include "metrowin_copydesk.h"
 #include "metrowin_crypto.h"
@@ -214,15 +214,15 @@ string get_error_message(DWORD dwError);
 //#pragma comment(lib, "Msimg32.lib") 
 //#pragma comment(lib, "Psapi.lib") 
 
-//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, signal_details * pobj);
+//CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 //CLASS_DECL_AXIS void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-//CLASS_DECL_AXIS bool __cdecl __is_idle_message(signal_details * pobj);
+//CLASS_DECL_AXIS bool __cdecl __is_idle_message(::message::message * pobj);
 //CLASS_DECL_AXIS bool __cdecl __is_idle_message(MESSAGE * pMsg);
 
 
-CLASS_DECL_AXIS void __process_window_procedure_exception(::exception::base*,signal_details * pobj);
-CLASS_DECL_AXIS void __cdecl __pre_translate_message(signal_details * pobj);
+CLASS_DECL_AXIS void __process_window_procedure_exception(::exception::base*,::message::message * pobj);
+CLASS_DECL_AXIS void __cdecl __pre_translate_message(::message::message * pobj);
 
 #include "metrowin_copydesk.h"
 

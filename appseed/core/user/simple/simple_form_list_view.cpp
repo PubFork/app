@@ -12,11 +12,11 @@ simple_form_list_view::~simple_form_list_view()
 {
 }
 
-void simple_form_list_view::install_message_handling(::message::dispatch * pinterface)
+void simple_form_list_view::install_message_routing(::message::sender * pinterface)
 {
-   BASE::install_message_handling(pinterface);
-   //::user::impact::install_message_handling(pinterface);
-   //::user::form_list::install_message_handling(pinterface);
+   BASE::install_message_routing(pinterface);
+   //::user::impact::install_message_routing(pinterface);
+   //::user::form_list::install_message_routing(pinterface);
 }
 
 

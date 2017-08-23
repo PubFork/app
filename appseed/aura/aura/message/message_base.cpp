@@ -6,8 +6,8 @@ namespace message
 {
 
 
-   base::base(class ::signal * psignal) :
-      signal_details(psignal)
+   base::base(class ::message::sender * psignal) :
+      ::message::message(psignal)
    {
 
       m_lresult = 0;
@@ -19,8 +19,8 @@ namespace message
    }
 
 
-   base::base(::aura::application * papp,class ::signal * psignal):
-      signal_details(papp, psignal)
+   base::base(::aura::application * papp,class ::message::sender * psignal):
+      ::message::message(papp, psignal)
    {
 
       m_lresult            = 0;
@@ -33,7 +33,7 @@ namespace message
 
 
    base::base(::aura::application * papp,::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult):
-      signal_details(papp)
+      ::message::message(papp)
    {
 
       m_lresult            = 0;

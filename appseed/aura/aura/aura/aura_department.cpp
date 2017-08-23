@@ -101,7 +101,7 @@ namespace aura
 
    }
 
-   void department::on_signal(signal_details * pobj)
+   void department::on_signal(::message::message * pobj)
    {
 
       SCAST_PTR(::aura::application_signal_details,papplicationsignal,pobj);

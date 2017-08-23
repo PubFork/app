@@ -639,7 +639,7 @@ namespace userex
    }
 
 
-   void userex::data_on_after_change(signal_details * pobj)
+   void userex::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event,pchange,pobj);
@@ -714,7 +714,7 @@ namespace userex
    }
 
 
-   void userex::VmsGuiiOnAppLanguage(signal_details * pobject)
+   void userex::VmsGuiiOnAppLanguage(::message::message * pobject)
    {
 
       SendMessageToWindows(::base::application::APPM_LANGUAGE,0,(LPARAM)pobject);

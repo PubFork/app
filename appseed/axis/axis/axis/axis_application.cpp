@@ -854,7 +854,7 @@ namespace axis
    //}
 
 
-   //void application::_001OnFileNew(signal_details * pobj)
+   //void application::_001OnFileNew(::message::message * pobj)
    //{
 
    //   ::exception::throw_interface_only(this);
@@ -1214,7 +1214,7 @@ namespace axis
 
       thread * pthread = ::get_thread();
 
-      install_message_handling(pthread);
+      install_message_routing(pthread);
 
       dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
 
@@ -2861,7 +2861,7 @@ namespace axis
 
 
 
-   void application::process_message_filter(int32_t code,signal_details * pobj)
+   void application::process_message_filter(int32_t code,::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -3265,7 +3265,7 @@ namespace axis
 
    //   thread * pthread = ::get_thread();
 
-   //   install_message_handling(pthread->m_pthreadimpl);
+   //   install_message_routing(pthread->m_pthreadimpl);
 
    //   dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
 

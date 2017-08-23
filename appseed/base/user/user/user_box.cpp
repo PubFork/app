@@ -20,11 +20,11 @@ namespace user
    }
 
 
-   void box::install_message_handling(::message::dispatch * pinterface)
+   void box::install_message_routing(::message::sender * pinterface)
    {
 
-      ::simple_ui::interaction::install_message_handling(pinterface);
-      scroll::install_message_handling(pinterface);
+      ::simple_ui::interaction::install_message_routing(pinterface);
+      scroll::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &box::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &box::_001OnSize);
@@ -33,7 +33,7 @@ namespace user
    }
 
 
-   void box::_001OnCreate(signal_details * pobj)
+   void box::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -55,7 +55,7 @@ namespace user
    }
 
 
-   void box::_001OnSize(signal_details * pobj)
+   void box::_001OnSize(::message::message * pobj)
    {
 
       pobj->previous();
@@ -63,7 +63,7 @@ namespace user
    }
 
 
-   void box::_001OnShowWindow(signal_details * pobj)
+   void box::_001OnShowWindow(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

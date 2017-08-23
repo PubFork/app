@@ -35,10 +35,10 @@ namespace prompt
    }
 
 
-   void primary_view::install_message_handling(::message::dispatch * pinterface)
+   void primary_view::install_message_routing(::message::sender * pinterface)
    {
 
-      BASE::install_message_handling(pinterface);
+      BASE::install_message_routing(pinterface);
 	   IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
 
    }
@@ -167,33 +167,33 @@ namespace prompt
       }
    }
 
-   void primary_view::_001OnUpdateEditCopy(signal_details * pobj)
+   void primary_view::_001OnUpdateEditCopy(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
    }
 
-   void primary_view::_001OnEditCopy(signal_details * pobj)
+   void primary_view::_001OnEditCopy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       clipboard_copy();
    }
 
-   void primary_view::_001OnUpdateEditPaste(signal_details * pobj)
+   void primary_view::_001OnUpdateEditPaste(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
    }
 
 
-   void primary_view::_001OnEditPaste(signal_details * pobj)
+   void primary_view::_001OnEditPaste(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       clipboard_paste();
    }
 
 
-   void primary_view::_001OnContextMenu(signal_details * pobj)
+   void primary_view::_001OnContextMenu(::message::message * pobj)
    {
 
       track_popup_xml_matter_menu("command/popup_primary_verbing.xml", 0, pobj);

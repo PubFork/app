@@ -19,7 +19,7 @@ namespace filemanager
 
       operation_list_view(::aura::application * papp);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       void _001InsertColumns();
 

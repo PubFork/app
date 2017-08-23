@@ -44,11 +44,11 @@ namespace user
       {
       }
 
-      virtual void install_message_handling(::message::dispatch * pinterface)
+      virtual void install_message_routing(::message::sender * pinterface)
       {
 
-         ::user::margin_base::install_message_handling(pinterface);
-         BASE::install_message_handling(pinterface);
+         ::user::margin_base::install_message_routing(pinterface);
+         BASE::install_message_routing(pinterface);
 
       }
 

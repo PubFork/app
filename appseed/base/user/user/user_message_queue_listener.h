@@ -10,7 +10,7 @@ namespace user
    {
    public:
 
-      virtual void message_queue_message_handler(signal_details * pobj) { UNREFERENCED_PARAMETER(pobj); };
+      virtual void message_queue_message_handler(::message::message * pobj) { UNREFERENCED_PARAMETER(pobj); };
 
    };
 

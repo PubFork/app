@@ -5,8 +5,8 @@ namespace html
 {
 
 
-   signal::signal(class ::signal * psignal)
-      : signal_details(psignal)
+   signal::message::sender(class ::message::sender * psignal)
+      : ::message::message(psignal)
    {
 
    }

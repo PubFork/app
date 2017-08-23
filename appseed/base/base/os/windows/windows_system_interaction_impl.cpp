@@ -18,17 +18,17 @@ namespace base
 
    }
 
-   void system_interaction_impl::install_message_handling(::message::dispatch * pdispatch)
+   void system_interaction_impl::install_message_routing(::message::sender * psender)
    {
 
-      ::user::interaction::install_message_handling(pdispatch);
+      ::user::interaction::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_SETTINGCHANGE,pdispatch,this,&system_interaction_impl::_001MessageHub);
       IGUI_WIN_MSG_LINK(WM_DISPLAYCHANGE,pdispatch,this,&system_interaction_impl::_001MessageHub);
 
    }
 
-   void system_interaction_impl::_001MessageHub(signal_details * pobj)
+   void system_interaction_impl::_001MessageHub(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);

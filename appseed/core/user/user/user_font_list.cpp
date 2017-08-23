@@ -40,10 +40,10 @@ namespace user
    }
 
 
-   void font_list::install_message_handling(::message::dispatch * pdispatch)
+   void font_list::install_message_routing(::message::sender * psender)
    {
 
-      ::user::box::install_message_handling(pdispatch);
+      ::user::box::install_message_routing(pdispatch);
 
       IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &font_list::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &font_list::_001OnLButtonDown);
@@ -52,7 +52,7 @@ namespace user
    }
 
 
-   void font_list::_001OnCreate(signal_details * pobj)
+   void font_list::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -90,7 +90,7 @@ namespace user
 
    }
 
-   void font_list::_001OnLButtonDown(signal_details * pobj)
+   void font_list::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -121,7 +121,7 @@ namespace user
 
    }
 
-   void font_list::_001OnMouseMove(signal_details * pobj)
+   void font_list::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);

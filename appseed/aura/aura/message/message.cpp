@@ -4,9 +4,9 @@
 namespace message
 {
 
-   class ::signal * CreateSignal()
+   class ::message::sender * CreateSignal()
    {
-      return new class ::signal();
+      return new class ::message::sender();
    }
 
 
@@ -43,7 +43,7 @@ namespace message
    }
 
 
-   CLASS_DECL_AURA bool is_idle_message(signal_details * pobj)
+   CLASS_DECL_AURA bool is_idle_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);

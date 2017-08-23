@@ -13,7 +13,7 @@ namespace user
    }
 
 
-   void elemental::mouse_focus_OnLButtonUp(signal_details * pobj)
+   void elemental::mouse_focus_OnLButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }*/

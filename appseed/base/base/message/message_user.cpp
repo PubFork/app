@@ -144,7 +144,7 @@ namespace message
       if(this != &key)
       {
 
-         ::signal_details::copy_this(key);
+         ::message::message::copy_this(key);
 
          ::message::base::copy_this(key);
 

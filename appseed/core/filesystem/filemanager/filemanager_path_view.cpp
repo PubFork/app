@@ -16,11 +16,11 @@ namespace filemanager
    }
 
    
-   void path_view::install_message_handling(::message::dispatch * pdispatch)
+   void path_view::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_handling(pdispatch);
-      ::user::plain_edit::install_message_handling(pdispatch);
+      ::filemanager::impact::install_message_routing(pdispatch);
+      ::user::plain_edit::install_message_routing(pdispatch);
       
    }
    

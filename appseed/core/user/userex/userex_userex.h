@@ -56,7 +56,7 @@ namespace userex
       virtual bool get_fs_size(string & strSize, const char * pszPath, bool & bPending);
       virtual bool get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending);
 
-      virtual void data_on_after_change(signal_details * pobj);
+      virtual void data_on_after_change(::message::message * pobj);
 
       class keyboard & keyboard();
 

@@ -40,7 +40,7 @@ CLASS_DECL_AURA void AfxTryCleanup();
 #define MAC_THREAD(pthread) (dynamic_cast < ::mac::thread * > (dynamic_cast < ::thread * >(pthread)))
 
 
-CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, signal_details * pobj);
+CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, ::message::message * pobj);
 CLASS_DECL_AURA void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 WINBOOL PeekMessage(LPMESSAGE lpMsg,oswindow hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg);
 WINBOOL GetMessage(LPMESSAGE lpMsg,oswindow hWnd,UINT wMsgFilterMin,UINT wMsgFilterMax);

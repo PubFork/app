@@ -172,11 +172,11 @@ namespace user
 
       virtual bool get_line_color(COLORREF & crOverride, const string & strLine);
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
       void key_to_char(::message::key * pkey);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual void OnDraw(::draw2d::dib * pdib);      // overridden to draw this ::user::impact
       virtual void _001OnInitialUpdate();
 

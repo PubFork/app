@@ -5,7 +5,7 @@ namespace http
 {
 
 
-   signal::signal()
+   signal::message::sender()
    {
 
       m_pcookies     = NULL;

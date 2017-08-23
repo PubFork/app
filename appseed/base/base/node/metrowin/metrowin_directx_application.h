@@ -58,7 +58,7 @@ namespace metrowin
       
       void init_part_2ex();
 
-      void install_message_handling_2ex();
+      void install_message_routing_2ex();
 
       ::aura::application * get_app() const;
 

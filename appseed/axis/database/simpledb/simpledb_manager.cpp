@@ -64,7 +64,7 @@ namespace simpledb
 
 
 
-   void manager::message_queue_message_handler(signal_details * pobj)
+   void manager::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_uiMessage == WM_APP + 13)

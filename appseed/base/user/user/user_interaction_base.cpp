@@ -26,10 +26,10 @@ namespace user
    }
 
 
-   void interaction_base::install_message_handling(::message::dispatch * pinterface)
+   void interaction_base::install_message_routing(::message::sender * pinterface)
    {
 
-      ::message::dispatch::install_message_handling(pinterface);
+      ::message::sender::install_message_routing(pinterface);
 
    }
 
@@ -848,7 +848,7 @@ Restart:
    }
 
 
-   void interaction_base::pre_translate_message(signal_details * pobj)
+   void interaction_base::pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -1351,7 +1351,7 @@ Restart:
       try
       {
 
-         ::signalizable::m_signalptra.remove_all();
+         ::::message::receiver::m_signalptra.remove_all();
 
       }
       catch(...)
@@ -1594,7 +1594,7 @@ Restart:
 
 
 
-   void interaction_base::message_handler(signal_details * pobj)
+   void interaction_base::message_handler(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1978,7 +1978,7 @@ Restart:
    }
 
 
-   void interaction_base::GuieProc(signal_details * pobj)
+   void interaction_base::GuieProc(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2408,7 +2408,7 @@ Restart:
    }
 
 
-   bool interaction_base::_001HasCommandHandler(id id)
+   bool interaction_base::_001HasCommandHandler(::user::command * pcommand)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2449,7 +2449,7 @@ Restart:
 
 
 
-   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2459,7 +2459,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2469,7 +2469,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2739,7 +2739,7 @@ Restart:
    }
 
 
-   //void interaction_base::_user_message_handler(signal_details * pobj)
+   //void interaction_base::_user_message_handler(::message::message * pobj)
    //{
    //}
 

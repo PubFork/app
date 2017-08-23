@@ -32,9 +32,9 @@ html_view::~html_view()
 {
 }
 
-void html_view::install_message_handling(::message::dispatch * pinterface)
+void html_view::install_message_routing(::message::sender * pinterface)
 {
-   ::user::impact::install_message_handling(pinterface);
+   ::user::impact::install_message_routing(pinterface);
 
    IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &html_view::_001OnDestroy);
    IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &html_view::_001OnSize);
@@ -113,7 +113,7 @@ void html_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
 
 }
 
-void html_view::_001OnDestroy(signal_details * pobj) 
+void html_view::_001OnDestroy(::message::message * pobj) 
 {
    ::user::impact::_001OnDestroy(pobj);
 
@@ -123,7 +123,7 @@ void html_view::_001OnDestroy(signal_details * pobj)
 
 
 
-void html_view::_001OnCreate(signal_details * pobj) 
+void html_view::_001OnCreate(::message::message * pobj) 
 {
    if(pobj->previous())
       return;
@@ -134,7 +134,7 @@ void html_view::_001OnCreate(signal_details * pobj)
 
 
 }
-void html_view::_001OnContextMenu(signal_details * pobj) 
+void html_view::_001OnContextMenu(::message::message * pobj) 
 {
    //   SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
    //   point point = pcontextmenu->GetPoint();
@@ -143,7 +143,7 @@ void html_view::_001OnContextMenu(signal_details * pobj)
 
 
 
-void html_view::_001OnSetCursor(signal_details * pobj) 
+void html_view::_001OnSetCursor(::message::message * pobj) 
 {
 
    SCAST_PTR(::message::mouse, pmouse, pobj);

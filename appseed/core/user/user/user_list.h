@@ -250,7 +250,7 @@ namespace user
 
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       //mesh_data * GetDataInterface();
       void UpdateHover();
@@ -321,7 +321,7 @@ namespace user
       void SetDataInterface(mesh_data * pinterface);
       void CacheHint();
       //void SetCacheInterface(mesh_cache_interface * pinterface);
-      //void AddMessageHandling(::message::dispatch * pinterface);
+      //void AddMessageHandling(::message::sender * pinterface);
       void _001ShowTopText(bool bShow = true);
       void _001LayoutTopText();
       void _001SetTopText(const unichar * lpcwsz);

@@ -74,8 +74,8 @@ namespace draw2d_direct2d
 
 
 //#if defined(WINDOWSEX)
-      virtual bool update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer = true);
-      //virtual bool print_window(window * pwnd, signal_details * pobj);
+      virtual bool update_window(::aura::draw_interface * pwnd,::message::message * pobj,bool bTransferBuffer = true);
+      //virtual bool print_window(window * pwnd, ::message::message * pobj);
 //#endif
 
 
@@ -168,8 +168,8 @@ namespace draw2d_direct2d
       virtual bool is_realized() const;
 
 
-      //virtual bool update_window(::user::interaction_impl * pwnd, signal_details * pobj);
-      //virtual bool print_window(::user::interaction_impl * pwnd, signal_details * pobj);
+      //virtual bool update_window(::user::interaction_impl * pwnd, ::message::message * pobj);
+      //virtual bool print_window(::user::interaction_impl * pwnd, ::message::message * pobj);
 
 
       virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA);

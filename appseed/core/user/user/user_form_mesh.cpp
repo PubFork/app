@@ -32,12 +32,12 @@ namespace user
 
    }
 
-   void form_mesh::install_message_handling(::message::dispatch *pinterface)
+   void form_mesh::install_message_routing(::message::sender *pinterface)
    {
       IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_mesh::_001OnKeyDown);
 
-      form::install_message_handling(pinterface);
-      mesh::install_message_handling(pinterface);
+      form::install_message_routing(pinterface);
+      mesh::install_message_routing(pinterface);
 
    }
 
@@ -166,7 +166,7 @@ namespace user
    }
 
 
-   void form_mesh::_001OnVScroll(signal_details * pobj)
+   void form_mesh::_001OnVScroll(::message::message * pobj)
    {
       
       pobj->previous();
@@ -183,7 +183,7 @@ namespace user
    }
 
 
-   void form_mesh::_001OnHScroll(signal_details * pobj)
+   void form_mesh::_001OnHScroll(::message::message * pobj)
    {
       
       pobj->previous();
@@ -212,7 +212,7 @@ namespace user
       return false;
    }
 
-   void form_mesh::_001OnNotify(signal_details * pobj)
+   void form_mesh::_001OnNotify(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -222,7 +222,7 @@ namespace user
       mesh::_001OnTimer(ptimer);
    }
 
-   void form_mesh::_001OnMessageNotify(signal_details * pobj)
+   void form_mesh::_001OnMessageNotify(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // linux na verdade revamp
@@ -336,7 +336,7 @@ namespace user
    }
 
 
-   void form_mesh::_001OnKeyDown(signal_details * pobj)
+   void form_mesh::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key,pkey,pobj);
 
@@ -531,7 +531,7 @@ namespace user
       //}
       //try
       //{
-      //   (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
+      //   (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
       //   if(pmouse->get_lresult() != 0)
       //      return;
       //}

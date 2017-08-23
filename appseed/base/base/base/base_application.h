@@ -50,7 +50,7 @@ namespace base
       virtual ::user::interaction * main_window();
 
       virtual void on_create_view(::user::view_creator_data * pcreatordata);
-      void process_message_filter(int32_t code,signal_details * pobj);
+      void process_message_filter(int32_t code,::message::message * pobj);
 
       virtual bool get_frame(sp(::user::interaction) & pui);
       virtual void add_frame(::user::interaction * pwnd);
@@ -74,7 +74,7 @@ namespace base
       virtual bool enable_window(::user::primitive * pui,bool bEnable = true);
       virtual bool set_window_text(::user::interaction * pui,const string & strText);
 
-      virtual void process_message(signal_details * pobj);
+      virtual void process_message(::message::message * pobj);
       virtual bool process_message(LPMESSAGE lpmessage);
 
 

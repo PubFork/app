@@ -18,7 +18,7 @@ namespace user
       ::aura::library *       m_plibrary;
       
 
-      ::user::style *         m_puserstyle;
+      ::user::style_sp        m_puserstyle;
 
       ::user::style *         m_puserstyleSelect;
 
@@ -119,7 +119,7 @@ namespace user
       // special utility functions
       // they are very suitable for style containers that contains that style
       // by deriving from this style class
-      virtual ::user::style * userstyle();
+      virtual ::user::style * userstyle() = 0;
       
 
       

@@ -239,7 +239,7 @@ public:
 
 
 
-#include "aura/primitive/primitive_signal.h"
+#include "aura/aura/message/message.h"
 #include "aura/primitive/primitive_property_set.h"
 #include "aura/primitive/primitive_relation_set.h"
 

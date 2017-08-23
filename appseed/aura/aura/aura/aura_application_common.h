@@ -59,7 +59,7 @@ namespace aura
 #include "aura/aura/aura/aura_command_msg.h"
 #include "aura/primitive/primitive_check.h"
 #include "aura/aura/aura/aura_command_ui.h"
-#include "aura/message/message.h"
+#include "aura/aura/message/message.h"
 #include "aura/aura/aura/aura_command_target.h"
 #include "aura/user/user/user_primitive.h"
 #include "aura/multithreading/multithreading_common.h"

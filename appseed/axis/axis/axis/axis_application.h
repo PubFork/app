@@ -194,7 +194,7 @@ namespace axis
       virtual bool do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument);
 
 
-      virtual void process_message_filter(int32_t code, signal_details * pobj) override;
+      virtual void process_message_filter(int32_t code, ::message::message * pobj) override;
 
 
 

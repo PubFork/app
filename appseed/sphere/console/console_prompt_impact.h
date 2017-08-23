@@ -35,7 +35,7 @@ namespace console
       virtual ~prompt_impact();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
 
       virtual int getch();

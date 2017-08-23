@@ -415,7 +415,7 @@ namespace simple_ui
    }
 
 
-   void message_box::pre_translate_message(signal_details * pobj)
+   void message_box::pre_translate_message(::message::message * pobj)
    {
 
       simple_ui::interaction::pre_translate_message(pobj);

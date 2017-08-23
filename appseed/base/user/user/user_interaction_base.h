@@ -142,7 +142,7 @@ namespace user
       //virtual int32_t GetWindowRgn(HRGN hRgn);
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual void _on_start_user_message_handler() override;
 
@@ -183,7 +183,7 @@ namespace user
 
       void _001BaseWndInterfaceMap();
 
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::message * pobj) override;
       virtual LRESULT message_handler(LPMESSAGE lpmessage);
       virtual void on_select();
 
@@ -434,7 +434,7 @@ namespace user
 
 
       virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
-      virtual void pre_translate_message(signal_details * pobj) override;
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
       virtual int32_t get_descendant_level(::user::interaction * pui);
@@ -475,9 +475,9 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam);
 
-//      virtual void message_handler(signal_details * pobj);
+//      virtual void message_handler(::message::message * pobj);
 //      virtual LRESULT message_handler(LPMESSAGE lpmessage);
-      virtual void GuieProc(signal_details * pobj);
+      virtual void GuieProc(::message::message * pobj);
 
       virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 
@@ -529,7 +529,7 @@ namespace user
 
       virtual sp(place_holder) place(::user::interaction * pui);
 
-      virtual bool _001HasCommandHandler(id id) override;
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
 
@@ -537,9 +537,9 @@ namespace user
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags, POINT pt);
 
-      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,signal_details * pobj);
-      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj);
-      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj);
+      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj);
+      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj);
 
       virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags);
@@ -582,7 +582,7 @@ namespace user
       virtual bool is_composite() override;
 
 
-      //virtual void _user_message_handler(signal_details * pobj);
+      //virtual void _user_message_handler(::message::message * pobj);
 
       //virtual PFN_DISPATCH_MESSAGE_HANDLER _calc_user_message_handler();
 

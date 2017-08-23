@@ -17,10 +17,10 @@ namespace user
    }
 
 
-   void menu_list_view::install_message_handling(::message::dispatch * pinterface)
+   void menu_list_view::install_message_routing(::message::sender * pinterface)
    {
 
-      BASE::install_message_handling(pinterface);
+      BASE::install_message_routing(pinterface);
 
    }
 
@@ -52,7 +52,7 @@ namespace user
 
    }
 
-   void menu_list_view::GuieProc(signal_details * pobj)
+   void menu_list_view::GuieProc(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if (pbase->m_uiMessage == m_uiMessage)
@@ -108,7 +108,7 @@ namespace user
       if (!menu_list_window::load_menu(pnode))
          return false;
 
-      menu_fill(this, GetParentFrame());
+      menu_fill(GetParentFrame(), this);
 
       m_puiNotify = puiNotify;
 

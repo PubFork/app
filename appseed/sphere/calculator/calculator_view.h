@@ -24,7 +24,7 @@ namespace calculator
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);
       virtual void _001OnInitialUpdate();
          virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);

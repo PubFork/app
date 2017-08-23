@@ -24,7 +24,7 @@ namespace user
 
          }
 
-         void SysMenuManager::relay_event(signal_details * pobj)
+         void SysMenuManager::relay_event(::message::message * pobj)
          {
 
             SCAST_PTR(::message::base, pbase, pobj);
@@ -55,7 +55,7 @@ namespace user
             }
          }
 
-         void SysMenuManager::message_handler(sp(::user::interaction) pwnd, signal_details * pobj)
+         void SysMenuManager::message_handler(sp(::user::interaction) pwnd, ::message::message * pobj)
          {
             UNREFERENCED_PARAMETER(pwnd);
             SCAST_PTR(::message::base, pbase, pobj);

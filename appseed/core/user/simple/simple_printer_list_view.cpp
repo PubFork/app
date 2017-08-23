@@ -18,16 +18,16 @@ simple_printer_list_view::~simple_printer_list_view()
 }
 
 
-void simple_printer_list_view::install_message_handling(::message::dispatch * pdispatch)
+void simple_printer_list_view::install_message_routing(::message::sender * psender)
 {
 
-   simple_list_view::install_message_handling(pdispatch);
+   simple_list_view::install_message_routing(pdispatch);
    IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &simple_printer_list_view::_001OnCreate);
 
 }
 
 
-void simple_printer_list_view::_001OnCreate(signal_details * pobj)
+void simple_printer_list_view::_001OnCreate(::message::message * pobj)
 {
 //   SCAST_PTR(::message::create, pcreate, pobj);
 

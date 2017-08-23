@@ -129,7 +129,7 @@ namespace asphere
 
    }
 
-   void application::_001OnTheme(signal_details * pobj)
+   void application::_001OnTheme(::message::message * pobj)
    {
 
       if (pobj != NULL)

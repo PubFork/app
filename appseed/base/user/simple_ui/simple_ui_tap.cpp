@@ -47,7 +47,7 @@ namespace simple_ui
 
 
 
-   void tap::_001OnLButtonDown(signal_details * pobj)
+   void tap::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -71,7 +71,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnLButtonUp(signal_details * pobj)
+   void tap::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -89,7 +89,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnMouseMove(signal_details * pobj)
+   void tap::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -104,7 +104,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnMouseLeave(signal_details * pobj)
+   void tap::_001OnMouseLeave(::message::message * pobj)
    {
 
       //SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -412,7 +412,7 @@ namespace simple_ui
    }
 
 
-   void tap::_001OnKeyDown(signal_details * pobj)
+   void tap::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);

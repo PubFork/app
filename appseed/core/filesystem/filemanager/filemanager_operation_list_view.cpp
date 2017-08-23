@@ -13,10 +13,10 @@ namespace filemanager
          m_pcache = &m_listcache;
    }
 
-   void operation_list_view::install_message_handling(::message::dispatch * pinterface)
+   void operation_list_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::impact::install_message_handling(pinterface);
-      ::user::list::install_message_handling(pinterface);
+      ::user::impact::install_message_routing(pinterface);
+      ::user::list::install_message_routing(pinterface);
 //      //IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&operation_list_view::_001OnTimer);
       IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&operation_list_view::_001OnCreate);
    }
@@ -101,7 +101,7 @@ namespace filemanager
       }
    }
 
-   void operation_list_view::_001OnCreate(signal_details * pobj)
+   void operation_list_view::_001OnCreate(::message::message * pobj)
    {
       pobj->previous();
       SetTimer(123,500,NULL);

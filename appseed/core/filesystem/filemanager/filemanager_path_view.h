@@ -18,7 +18,7 @@ namespace filemanager
       path_view(::aura::application * papp);
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       
       virtual void _001OnAfterChangeText(::action::context actioncontext);
 

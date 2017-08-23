@@ -77,7 +77,7 @@ namespace core
       virtual void construct(const char * pszAppId);
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       virtual bool process_initialize_userex();
       virtual bool initialize1_userex();
@@ -201,6 +201,8 @@ namespace core
       virtual ::core::session *             query_bergedge();
 
       virtual void on_user_login(::fontopus::user * puser);
+
+      virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 
 
    };

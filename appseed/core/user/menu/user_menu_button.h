@@ -15,7 +15,7 @@ namespace user
       menu_button(::aura::application * papp);
       virtual ~menu_button();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual void on_layout();
 

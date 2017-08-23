@@ -255,8 +255,8 @@ namespace user
       virtual void get_ends_ci_eat_id(stringa & stra, const char * pszSuffix);
       virtual void get_begins_ends_ci_eat_id(stringa & stra, const char * pszPrefix, const char * pszSuffixed);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
-      virtual void _001ConnectParent(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void _001ConnectParent(::message::sender * pinterface);
 
 
       virtual bool has_restore_tab();

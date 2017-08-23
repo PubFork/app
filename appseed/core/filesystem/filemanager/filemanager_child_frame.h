@@ -15,7 +15,7 @@ namespace filemanager
       child_frame(::aura::application * papp);
       virtual ~child_frame();
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       void OnChangeEditSearch();
 

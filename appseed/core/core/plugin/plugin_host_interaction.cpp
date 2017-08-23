@@ -33,10 +33,10 @@ namespace plugin
 
    }
 
-   void host_interaction::install_message_handling(::message::dispatch * pinterface)
+   void host_interaction::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::interaction::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
       IGUI_WIN_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
@@ -55,7 +55,7 @@ namespace plugin
    }
 
 
-   void host_interaction::_001OnMouseMove(signal_details * pobj)
+   void host_interaction::_001OnMouseMove(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -63,7 +63,7 @@ namespace plugin
    }
 
 
-   void host_interaction::_001OnCreate(signal_details * pobj)
+   void host_interaction::_001OnCreate(::message::message * pobj)
    {
       
       UNREFERENCED_PARAMETER(pobj);
@@ -73,7 +73,7 @@ namespace plugin
    }
 
 
-   void host_interaction::_001OnCheck(signal_details * pobj)
+   void host_interaction::_001OnCheck(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 0)
@@ -259,7 +259,7 @@ namespace plugin
       return System.ui_from_handle(m_pplugin->get_host_window());
    }
 
-   void host_interaction::_user_message_handler(signal_details * pobj)
+   void host_interaction::_user_message_handler(::message::message * pobj)
    {
       ::user::interaction::_user_message_handler(pobj);
       pobj->m_bRet = true;
@@ -268,11 +268,11 @@ namespace plugin
    void host_interaction::_on_start_user_message_handler()
    {
       ::user::interaction::_on_start_user_message_handler();
-      m_pfnDispatchWindowProc = reinterpret_cast < void (::message::dispatch::*)(signal_details * pobj) > (&host_interaction::_user_message_handler);
+      m_pfnDispatchWindowProc = reinterpret_cast < void (::message::sender::*)(::message::message * pobj) > (&host_interaction::_user_message_handler);
    }
 
 
-   void host_interaction::on_ignore_message(signal_details * pobj)
+   void host_interaction::on_ignore_message(::message::message * pobj)
    {
       // avoid host interaction call DefWindowProc for certain Windows messages
 //      SCAST_PTR(::message::base, pbase, pobj);

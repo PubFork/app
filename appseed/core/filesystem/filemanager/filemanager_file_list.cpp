@@ -72,12 +72,12 @@ namespace filemanager
    }
 
 
-   void file_list::install_message_handling(::message::dispatch * pinterface)
+   void file_list::install_message_routing(::message::sender * pinterface)
    {
 
-      impact::install_message_handling(pinterface);
-      ::user::form_list::install_message_handling(pinterface);
-      ::userfs::list::install_message_handling(pinterface);
+      impact::install_message_routing(pinterface);
+      ::user::form_list::install_message_routing(pinterface);
+      ::userfs::list::install_message_routing(pinterface);
       IGUI_WIN_MSG_LINK(MessageMainPost, pinterface, this, &file_list::_001OnMainPostMessage);
       IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &file_list::_001OnHScroll);
       IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &file_list::_001OnVScroll);
@@ -340,7 +340,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnContextMenu(signal_details * pobj)
+   void file_list::_001OnContextMenu(::message::message * pobj)
    {
 
 
@@ -518,13 +518,13 @@ namespace filemanager
       return ::user::impact::_001OnCmdMsg(pcommand);
    }
 
-   void file_list::_001OnShellCommand(signal_details * pobj)
+   void file_list::_001OnShellCommand(::message::message * pobj)
    {
       SCAST_PTR(::message::command, pcommand, pobj);
       m_contextmenu.OnCommand(pcommand->GetId());
    }
 
-   void file_list::_001OnFileManagerItemCommand(signal_details * pobj)
+   void file_list::_001OnFileManagerItemCommand(::message::message * pobj)
    {
 
       SCAST_PTR(::user::command, pcommand, pobj);
@@ -560,7 +560,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnFileManagerItemUpdate(signal_details * pobj)
+   void file_list::_001OnFileManagerItemUpdate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::update_command_ui, pupdatecmdui, pobj);
@@ -644,7 +644,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnFileRename(signal_details * pobj)
+   void file_list::_001OnFileRename(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -667,7 +667,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnUpdateFileRename(signal_details * pobj)
+   void file_list::_001OnUpdateFileRename(::message::message * pobj)
    {
       //      SCAST_PTR(::command_ui, pcommandui, pobj);
         //    pcommandui->Enable(_001GetSelectedItemCount() == 1);
@@ -684,7 +684,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnUpdateEditCopy(signal_details * pobj)
+   void file_list::_001OnUpdateEditCopy(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -700,7 +700,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnEditCopy(signal_details * pobj)
+   void file_list::_001OnEditCopy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -725,7 +725,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnUpdateTrashThatIsNotTrash(signal_details * pobj)
+   void file_list::_001OnUpdateTrashThatIsNotTrash(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       range range;
@@ -735,7 +735,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnTrashThatIsNotTrash(signal_details * pobj)
+   void file_list::_001OnTrashThatIsNotTrash(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -762,7 +762,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnUpdateOpenWith(signal_details * pobj)
+   void file_list::_001OnUpdateOpenWith(::message::message * pobj)
    {
 
       SCAST_PTR(::command_ui, pcommandui, pobj);
@@ -844,7 +844,7 @@ namespace filemanager
       }
    }
 
-   bool file_list::on_simple_action(id id)
+   bool file_list::on_simple_action(::user::command * pcommand)
    {
       if (id == "1000")
       {
@@ -892,7 +892,7 @@ namespace filemanager
 
    }
 
-   void file_list::_001OnUpdateSpafy(signal_details * pobj)
+   void file_list::_001OnUpdateSpafy(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       range range;
@@ -901,7 +901,7 @@ namespace filemanager
       pobj->m_bRet = true;
    }
 
-   void file_list::_001OnSpafy(signal_details * pobj)
+   void file_list::_001OnSpafy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::fs::item_array itema;
@@ -961,14 +961,14 @@ namespace filemanager
 
    }
 
-   void file_list::_001OnUpdateSpafy2(signal_details * pobj)
+   void file_list::_001OnUpdateSpafy2(::message::message * pobj)
    {
       SCAST_PTR(::command_ui, pcommandui, pobj);
       pcommandui->Enable(TRUE);
       pobj->m_bRet = true;
    }
 
-   void file_list::_001OnSpafy2(signal_details * pobj)
+   void file_list::_001OnSpafy2(::message::message * pobj)
    {
 
       synch_lock sl(get_fs_mesh_data()->m_pmutex);
@@ -1053,7 +1053,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnShowWindow(signal_details * pobj)
+   void file_list::_001OnShowWindow(::message::message * pobj)
    {
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
 
@@ -1718,7 +1718,7 @@ namespace filemanager
    }
 
 
-   void file_list::_001OnMainPostMessage(signal_details * pobj)
+   void file_list::_001OnMainPostMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       switch (pbase->m_wparam)
@@ -1987,7 +1987,7 @@ namespace filemanager
       }
    }
 
-   void file_list::_001OnVScroll(signal_details * pobj)
+   void file_list::_001OnVScroll(::message::message * pobj)
    {
       SCAST_PTR(::message::scroll, pscroll, pobj);
       m_iCreateImageListStep = pscroll->m_nPos;
@@ -1995,7 +1995,7 @@ namespace filemanager
       pobj->m_bRet = false;
    }
 
-   void file_list::_001OnHScroll(signal_details * pobj)
+   void file_list::_001OnHScroll(::message::message * pobj)
    {
       pobj->m_bRet = false;
    }

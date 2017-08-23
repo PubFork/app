@@ -40,19 +40,19 @@ namespace user
 
 
 
-   void combo_box::install_message_handling(::message::dispatch * pdispatch)
+   void combo_box::install_message_routing(::message::sender * psender)
    {
 
       if(m_bEdit)
       {
 
-         ::user::plain_edit::install_message_handling(pdispatch);
+         ::user::plain_edit::install_message_routing(pdispatch);
 
       }
       else
       {
 
-         ::user::control::install_message_handling(pdispatch);
+         ::user::control::install_message_routing(pdispatch);
 
       }
 
@@ -549,7 +549,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnShowWindow(signal_details * pobj)
+   void combo_box::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -568,7 +568,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnMove(signal_details * pobj)
+   void combo_box::_001OnMove(::message::message * pobj)
    {
 
       if (is_drop_down())
@@ -585,7 +585,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnKeyDown(signal_details * pobj)
+   void combo_box::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
@@ -605,14 +605,14 @@ namespace user
    }
 
 
-   void combo_box::_001OnKeyUp(signal_details * pobj)
+   void combo_box::_001OnKeyUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
 
    }
 
-   void combo_box::_001OnLButtonDown(signal_details * pobj)
+   void combo_box::_001OnLButtonDown(::message::message * pobj)
    {
 
       //output_debug_string("\nCOMBO_BOX: LBUTTONDOWN\n");
@@ -634,7 +634,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnMouseMove(signal_details * pobj)
+   void combo_box::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -657,7 +657,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnLButtonUp(signal_details * pobj)
+   void combo_box::_001OnLButtonUp(::message::message * pobj)
    {
 
 
@@ -679,7 +679,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnSetFocus(signal_details * pobj)
+   void combo_box::_001OnSetFocus(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::set_focus, pfocus, pobj);
@@ -687,7 +687,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnKillFocus(signal_details * pobj)
+   void combo_box::_001OnKillFocus(::message::message * pobj)
    {
 
       //SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
@@ -1589,7 +1589,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnLButtonDblClk(signal_details * pobj)
+   void combo_box::_001OnLButtonDblClk(::message::message * pobj)
    {
 
       //output_debug_string("\nCOMBO_BOX: DOUBLE CLICK\n");

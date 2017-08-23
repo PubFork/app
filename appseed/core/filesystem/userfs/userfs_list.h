@@ -33,7 +33,7 @@ namespace userfs
       virtual COLORREF get_background_color();
       void add_item(const char * pszPath, const char * pszTitle);
       //virtual void schedule_file_size(const char * psz) = 0;
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       sp(image_list) GetActionButtonImageList(index i);
 
