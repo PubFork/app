@@ -36,25 +36,25 @@ void html_view::install_message_routing(::message::sender * pinterface)
 {
    ::user::impact::install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &html_view::_001OnDestroy);
-   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &html_view::_001OnSize);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &html_view::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &html_view::_001OnContextMenu);
-   IGUI_WIN_MSG_LINK(WM_SETCURSOR, pinterface, this, &html_view::_001OnSetCursor);
+   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &html_view::_001OnDestroy);
+   //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &html_view::_001OnSize);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &html_view::_001OnCreate);
+   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &html_view::_001OnContextMenu);
+   IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &html_view::_001OnSetCursor);
 
-   //   IGUI_WIN_MSG_LINK(WM_USER + 177     , this, this, &html_view::_001OnTabClick);
+   //   IGUI_MSG_LINK(WM_USER + 177     , this, this, &html_view::_001OnTabClick);
    //connect_command(ID_FILE_PRINT, ::user::impact::OnFilePrint)
    //connect_command(ID_FILE_PRINT_DIRECT, ::user::impact::OnFilePrint)
    //connect_command(ID_FILE_PRINT_PREVIEW, ::user::impact::OnFilePrintPreview)
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-   IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+   //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
+   //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
+   //IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
+   //IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
 
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_view::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_view::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_view::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &html_view::_001OnKeyDown);
+   //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_view::_001OnLButtonDown);
+   //IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_view::_001OnMouseMove);
+   //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_view::_001OnLButtonUp);
+   //IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &html_view::_001OnKeyDown);
 
 }
 

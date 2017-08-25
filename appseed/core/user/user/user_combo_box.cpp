@@ -46,26 +46,26 @@ namespace user
       if(m_bEdit)
       {
 
-         ::user::plain_edit::install_message_routing(pdispatch);
+         ::user::plain_edit::install_message_routing(psender);
 
       }
       else
       {
 
-         ::user::control::install_message_routing(pdispatch);
+         ::user::control::install_message_routing(psender);
 
       }
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pdispatch, this, &combo_box::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &combo_box::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &combo_box::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pdispatch,this,&combo_box::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP,pdispatch,this,&combo_box::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS,pdispatch,this,&combo_box::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_KILLFOCUS, pdispatch, this, &combo_box::_001OnKillFocus);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &combo_box::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &combo_box::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_MOVE, pdispatch, this, &combo_box::_001OnMove);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, psender, this, &combo_box::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &combo_box::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &combo_box::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_KEYDOWN,psender,this,&combo_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP,psender,this,&combo_box::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_SETFOCUS,psender,this,&combo_box::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &combo_box::_001OnKillFocus);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &combo_box::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &combo_box::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_MOVE, psender, this, &combo_box::_001OnMove);
 
    }
 
@@ -955,7 +955,7 @@ namespace user
    bool combo_box::OnChildNotify(::message::base * pbase)
    {
 
-      switch (pbase->m_uiMessage)
+      switch (pbase->m_id)
       {
       case WM_DRAWITEM:
 #ifdef WINODWSEX

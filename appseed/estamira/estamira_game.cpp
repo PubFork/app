@@ -33,11 +33,11 @@ namespace estamira
 
    void game::install_message_routing(::message::sender * psender)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &game::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &game::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &game::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &game::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &game::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &game::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &game::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &game::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &game::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &game::_001OnMouseMove);
 
    }
 

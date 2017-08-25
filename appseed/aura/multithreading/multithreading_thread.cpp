@@ -689,7 +689,7 @@ void thread::close_dependent_threads(const ::duration & dur)
 }
 
 
-void thread::message::sender_close_dependent_threads()
+void thread::signal_close_dependent_threads()
 {
 
    ref_array < thread > threadptraDependent;
@@ -1063,29 +1063,30 @@ bool thread::on_before_run_thread()
 void thread::dispatch_thread_message(::message::message * pbase)
 {
 
+   route_message(pbase);
 
    //LRESULT lresult;
 
    //synch_lock sl(m_pmutex);
-   int i = 0;
-   Signal * pSignal;
-   while((pSignal = m_signala.GetSignal(pbase->m_uiMessage,0,0, i)) != NULL)
-   {
-      class signal * psignal = pSignal->m_psignal;
-      message::e_prototype eprototype = pSignal->m_eprototype;
-      if(eprototype == message::PrototypeNone)
-      {
-         //::message::base aura(get_app());
-         pbase->m_psignal = psignal;
-         //lresult = 0;
-         //aura.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
-         psignal->emit(pbase);
-         if(pbase->m_bRet)
-            return;
-      }
-      break;
-      pbase->m_bRet = true;
-   }
+   //int i = 0;
+   //Signal * pSignal;
+   //while((pSignal = m_signala.GetSignal(pbase->m_id,0,0, i)) != NULL)
+   //{
+   //   class signal * psignal = pSignal->m_psignal;
+   //   message::e_prototype eprototype = pSignal->m_eprototype;
+   //   if(eprototype == message::PrototypeNone)
+   //   {
+   //      //::message::base aura(get_app());
+   //      pbase->m_psignal = psignal;
+   //      //lresult = 0;
+   //      //aura.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
+   //      psignal->emit(pbase);
+   //      if(pbase->m_bRet)
+   //         return;
+   //   }
+   //   break;
+   //   pbase->m_bRet = true;
+   //}
 
 
 }
@@ -1211,22 +1212,28 @@ void thread::pre_translate_message(::message::message * pobj)
 
 void thread::process_window_procedure_exception(::exception::base*,::message::message * pobj)
 {
+   
    SCAST_PTR(::message::base,pbase,pobj);
-   if(pbase->m_uiMessage == WM_CREATE)
+
+   if(pbase->m_id == WM_CREATE)
    {
+      
       pbase->set_lresult(-1);
-      return;  // just fail
+      
    }
-   else if(pbase->m_uiMessage == WM_PAINT)
+   else if(pbase->m_id == WM_PAINT)
    {
+      
       // force validation of interaction_impl to prevent getting WM_PAINT again
+      
       #ifdef WIDOWSEX
       ValidateRect(pbase->m_pwnd->get_safe_handle(),NULL);
       #endif
+
       pbase->set_lresult(0);
-      return;
+
    }
-   return;   // sensible default for rest of commands
+
 }
 
 
@@ -1236,13 +1243,13 @@ namespace thread_util
    inline bool IsEnterKey(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
-      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+      return pbase->m_id == WM_KEYDOWN && pbase->m_id == VK_RETURN;
    }
 
    inline bool IsButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
-      return pbase->m_uiMessage == WM_LBUTTONUP;
+      return pbase->m_id == WM_LBUTTONUP;
    }
 
 }
@@ -1962,7 +1969,7 @@ int32_t thread::thread_startup(::thread_startup * pstartup)
 
    //::thread * pthreadimpl = pstartup->m_pthreadimpl;
 
-   IGUI_WIN_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
+   IGUI_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
 
    install_message_routing(this);
 
@@ -2421,7 +2428,7 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
             smart_pointer < ::message::base > spbase;
 
-            spbase = get_base(&msg);
+            spbase = m_pauraapp->get_message_base(&msg);
 
             if(spbase.is_set())
             {

@@ -278,9 +278,9 @@ namespace userstack
    void pane_view::install_message_routing(::message::sender * pinterface)
    {
       ::userex::pane_tab_view::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
       connect_command("properties", &pane_view::_001OnProperties);
    }
 

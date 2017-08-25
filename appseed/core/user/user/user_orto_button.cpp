@@ -226,11 +226,11 @@ namespace user
    void orto_button::install_message_routing(::message::sender *pinterface)
    {
       ::user::button::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &orto_button::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &orto_button::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &orto_button::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &orto_button::_001OnSize);
-      //   //IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&orto_button::_001OnTimer);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &orto_button::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &orto_button::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &orto_button::_001OnLButtonUp);
+      //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &orto_button::_001OnSize);
+      //   //IGUI_MSG_LINK(WM_TIMER,pinterface,this,&orto_button::_001OnTimer);
    }
 
 

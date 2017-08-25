@@ -625,40 +625,40 @@ namespace linux
       ::user::interaction_impl::last_install_message_routing(pinterface);
       ::user::interaction_impl::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
 
       if(!m_pui->m_bMessageWindow)
       {
-         IGUI_WIN_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
-         IGUI_WIN_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
+         IGUI_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
+         IGUI_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
       }
 
       m_pui->install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
 
 
-      //IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
+      //IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
 
       if(!m_pui->m_bMessageWindow)
       {
-         IGUI_WIN_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
-         //IGUI_WIN_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
-         //IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
-         //IGUI_WIN_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction_impl::_001OnNcCalcSize);
+         IGUI_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
+         //IGUI_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
+         //IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
+         //IGUI_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction_impl::_001OnNcCalcSize);
 
          // linux
-         //IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &interaction_impl::_001OnMove);
-         IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
+         //IGUI_MSG_LINK(WM_MOVE              , pinterface, this, &interaction_impl::_001OnMove);
+         IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
 
-         //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING,pinterface,this,&interaction_impl::_001OnWindowPosChanging);
-         //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGED,pinterface,this,&interaction_impl::_001OnWindowPosChanged);
-         //IGUI_WIN_MSG_LINK(WM_GETMINMAXINFO,pinterface,this,&interaction_impl::_001OnGetMinMaxInfo);
-         //IGUI_WIN_MSG_LINK(WM_SETFOCUS,pinterface,this,&interaction_impl::_001OnSetFocus);
-         //IGUI_WIN_MSG_LINK(WM_KILLFOCUS,pinterface,this,&interaction_impl::_001OnKillFocus);
-//         IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
+         //IGUI_MSG_LINK(WM_WINDOWPOSCHANGING,pinterface,this,&interaction_impl::_001OnWindowPosChanging);
+         //IGUI_MSG_LINK(WM_WINDOWPOSCHANGED,pinterface,this,&interaction_impl::_001OnWindowPosChanged);
+         //IGUI_MSG_LINK(WM_GETMINMAXINFO,pinterface,this,&interaction_impl::_001OnGetMinMaxInfo);
+         //IGUI_MSG_LINK(WM_SETFOCUS,pinterface,this,&interaction_impl::_001OnSetFocus);
+         //IGUI_MSG_LINK(WM_KILLFOCUS,pinterface,this,&interaction_impl::_001OnKillFocus);
+//         IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
          ::user::interaction_impl::prio_install_message_routing(pinterface);
       }
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
 
    }
 
@@ -1078,7 +1078,7 @@ namespace linux
 
    bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target_interface::_001OnCmdMsg(pcommand))
+      if(command_target::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1115,18 +1115,18 @@ DWORD dwLastPaint;
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == WM_TIMER)
+      if(pbase->m_id == WM_TIMER)
       {
          //m_pthread->step_timer();
       }
-      else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+      else if(pbase->m_id == WM_LBUTTONDOWN)
       {
 
          TRACE("WM_LBUTTONDOWN (0)");
 
          //g_pwndLastLButtonDown = this;
       }
-      else if(pbase->m_uiMessage == WM_MOUSEMOVE)
+      else if(pbase->m_id == WM_MOUSEMOVE)
       {
 
          TRACE("WM_MOUSEMOVE (0)");
@@ -1153,7 +1153,7 @@ DWORD dwLastPaint;
 
          //g_pwndLastLButtonDown = this;
       }
-      else if(pbase->m_uiMessage == WM_PAINT)
+      else if(pbase->m_id == WM_PAINT)
       {
 
          TRACE("WM_MOUSEMOVE (0)");
@@ -1180,14 +1180,14 @@ DWORD dwLastPaint;
 
          //g_pwndLastLButtonDown = this;
       }
-      else if(pbase->m_uiMessage == WM_LBUTTONUP)
+      else if(pbase->m_id == WM_LBUTTONUP)
       {
 
          TRACE("WM_LBUTTONUP (0)");
 
          //g_pwndLastLButtonDown = this;
       }
-      /*      else if(pbase->m_uiMessage == ca2M_BERGEDGE)
+      /*      else if(pbase->m_id == ca2M_BERGEDGE)
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
@@ -1241,16 +1241,16 @@ DWORD dwLastPaint;
 
 
 
-      if(pbase->m_uiMessage == WM_KEYDOWN ||
-         pbase->m_uiMessage == WM_KEYUP ||
-         pbase->m_uiMessage == WM_CHAR)
+      if(pbase->m_id == WM_KEYDOWN ||
+         pbase->m_id == WM_KEYUP ||
+         pbase->m_id == WM_CHAR)
       {
 
          ::message::key * pkey = (::message::key *) pbase;
 
          Session.keyboard().translate_os_key_message(pkey);
 
-         if(pbase->m_uiMessage == WM_KEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN)
          {
             try
             {
@@ -1260,7 +1260,7 @@ DWORD dwLastPaint;
             {
             }
          }
-         else if(pbase->m_uiMessage == WM_KEYUP)
+         else if(pbase->m_id == WM_KEYUP)
          {
             try
             {
@@ -1275,7 +1275,7 @@ DWORD dwLastPaint;
       }
       pbase->set_lresult(0);
 
-      if(pbase->m_uiMessage == WM_MOUSELEAVE)
+      if(pbase->m_id == WM_MOUSELEAVE)
       {
 
          _000OnMouseLeave(pbase);
@@ -1284,21 +1284,21 @@ DWORD dwLastPaint;
 
       }
 
-      if(pbase->m_uiMessage == WM_LBUTTONDOWN ||
-         pbase->m_uiMessage == WM_LBUTTONUP ||
-         pbase->m_uiMessage == WM_MBUTTONDOWN ||
-         pbase->m_uiMessage == WM_MBUTTONUP ||
-         pbase->m_uiMessage == WM_RBUTTONDOWN ||
-         pbase->m_uiMessage == WM_RBUTTONUP ||
-         pbase->m_uiMessage == WM_MOUSEMOVE ||
-       pbase->m_uiMessage == WM_MOUSEMOVE)
-//         pbase->m_uiMessage == WM_MOUSEWHEEL)
+      if(pbase->m_id == WM_LBUTTONDOWN ||
+         pbase->m_id == WM_LBUTTONUP ||
+         pbase->m_id == WM_MBUTTONDOWN ||
+         pbase->m_id == WM_MBUTTONUP ||
+         pbase->m_id == WM_RBUTTONDOWN ||
+         pbase->m_id == WM_RBUTTONUP ||
+         pbase->m_id == WM_MOUSEMOVE ||
+       pbase->m_id == WM_MOUSEMOVE)
+//         pbase->m_id == WM_MOUSEWHEEL)
       {
 
          if(m_pui->m_bDestroying)
             return;
 
-         if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         if(pbase->m_id == WM_LBUTTONDOWN)
          {
 
                TRACE("WM_LBUTTONDOWN");
@@ -1353,7 +1353,7 @@ DWORD dwLastPaint;
             }
          }
 
-         if(pbase->m_uiMessage == WM_MOUSEMOVE)
+         if(pbase->m_id == WM_MOUSEMOVE)
          {
             // We are at the message_handler procedure.
             // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
@@ -1375,7 +1375,7 @@ DWORD dwLastPaint;
          oswindowa = wnda.get_hwnda();
          user::window_util::SortByZOrder(oswindowa);
 
-         if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         if(pbase->m_id == WM_LBUTTONDOWN)
          {
 
                TRACE("WM_LBUTTONDOWN 2");
@@ -1417,12 +1417,12 @@ DWORD dwLastPaint;
 //            }
 //         }
 //
-//         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+//         pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          return;
       }
-      else if(pbase->m_uiMessage == WM_KEYDOWN ||
-         pbase->m_uiMessage == WM_KEYUP ||
-         pbase->m_uiMessage == WM_CHAR)
+      else if(pbase->m_id == WM_KEYDOWN ||
+         pbase->m_id == WM_KEYUP ||
+         pbase->m_id == WM_CHAR)
       {
 
          ::message::key * pkey = (::message::key *) pbase;
@@ -1450,10 +1450,10 @@ DWORD dwLastPaint;
                   return;
             }*/
          }
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          return;
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+      if(pbase->m_id == ::message::message_event)
       {
          if(m_pui != NULL)
          {
@@ -1476,7 +1476,7 @@ DWORD dwLastPaint;
       return;
       }
       */
-      pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
    }
 
    /*
@@ -1926,9 +1926,9 @@ DWORD dwLastPaint;
       return FALSE;
 
       // make sure command has not become disabled before routing
-      probe_command_ui state;
+      probe_::user::command state;
       state.m_id = nID;
-      _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
+      _001OnCommand(nID, CN_UPDATE_::user::command, &state, NULL);
       if (!state.m_bEnabled)
       {
       TRACE(::ca2::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
@@ -2195,7 +2195,7 @@ DWORD dwLastPaint;
 
    }
 
-   void PASCAL interaction_impl::SendMessageToDescendants(void * hWnd, UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
+   void PASCAL interaction_impl::send_message_to_descendants(void * hWnd, UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       // walk through oswindows to avoid creating temporary interaction_impl objects
       // unless we need to call this function recursively
@@ -2228,7 +2228,7 @@ DWORD dwLastPaint;
             // send to child windows after parent
             try
             {
-               SendMessageToDescendants(hWndChild, message, wparam, lparam,
+               send_message_to_descendants(hWndChild, message, wparam, lparam,
                   bDeep, bOnlyPerm);
             }
             catch(...)
@@ -2840,7 +2840,7 @@ return 0;
 
          const MESSAGE* pMsg = GetCurrentMessage();
 
-         SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
+         send_message_to_descendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
 
       }
 
@@ -3504,7 +3504,7 @@ throw not_implemented(get_app());
 //
 //      // send update message to all controls after all other siblings loaded
 //      if (bSuccess)
-//         SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
+//         send_message_to_descendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
 //
 //      return bSuccess;
    }
@@ -3513,7 +3513,7 @@ throw not_implemented(get_app());
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      command_ui state(get_app());
+      ::user::command state(get_app());
       interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -3536,7 +3536,7 @@ throw not_implemented(get_app());
       }
 
       // check for handlers in the parent interaction_impl
-      if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+      if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_::user::command, &state, NULL))
       continue;
 
       // determine whether to disable when no handler exists
@@ -4613,10 +4613,10 @@ if(psurface == g_cairosurface)
 
    }
 
-   void interaction_impl::SendMessageToDescendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
+   void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
-      //interaction_impl::SendMessageToDescendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
+      //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
       // walk through oswindows to avoid creating temporary interaction_impl objects
       // unless we need to call this function recursively
@@ -4635,7 +4635,7 @@ if(psurface == g_cairosurface)
             // send to child windows after parent
             try
             {
-               pui->SendMessageToDescendants(message, wparam, lparam, bDeep, bOnlyPerm);
+               pui->send_message_to_descendants(message, wparam, lparam, bDeep, bOnlyPerm);
             }
             catch(...)
             {

@@ -21,7 +21,7 @@ public:
 
       void on_call_signal(::message::message * pobj);
 
-      virtual void on_application_bias_callback_signal(::aura::application_signal_details * pobj);
+      virtual void on_application_bias_callback_signal(::aura::application_message * pobj);
 
    };
 

@@ -129,9 +129,9 @@ namespace userex
    void pane_tab_view::install_message_routing(::message::sender * psender)
    {
 
-      ::user::tab_view::install_message_routing(pdispatch);
+      ::user::tab_view::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &pane_tab_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &pane_tab_view::_001OnCreate);
 
    }
 

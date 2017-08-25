@@ -69,10 +69,10 @@ namespace aura
 {
 
 
-   application_signal_details::application_signal_details(class ::message::sender * psignal, e_application_signal esignal) :
-      ::message::message(psignal)
+   application_message::application_message(e_application_message esignal)
    {
 
+      m_id = ::message::type_application;
       m_esignal = esignal;
       m_bOk = true;
 
@@ -181,8 +181,6 @@ namespace aura
 
 
 
-      m_psignal = canew(class signal());
-
       m_phandler = canew(::handler(this));
 
       m_bLicense = false;
@@ -256,11 +254,12 @@ namespace aura
    void application::install_message_routing(::message::sender * psender)
    {
 
-      ::message::sender::install_message_routing(pdispatch);
-      ::::message::receiver::install_message_routing(pdispatch);
-      ::thread::install_message_routing(pdispatch);
+      ::message::receiver::install_message_routing(psender);
+      ::thread::install_message_routing(psender);
 
    }
+
+
    bool application::app_data_set(class id id, ::file::ostream & os)
    {
 
@@ -2895,9 +2894,9 @@ namespace aura
       try
       {
 
-         application_signal_details signal(m_psignal, application_signal_start);
+         application_message message(application_message_start);
 
-         m_psignal->emit(&signal);
+         route_message(&message);
 
       }
       catch (...)
@@ -4253,23 +4252,16 @@ namespace aura
          }
 
 
-         if (m_psignal != NULL)
+         application_message message(application_message_exit_instance);
+
+         try
          {
 
-            application_signal_details signal(m_psignal, application_signal_exit_instance);
+            route_message(&message);
 
-            try
-            {
-
-               m_psignal->emit(&signal);
-
-            }
-            catch (...)
-            {
-
-            }
-
-            m_psignal.release();
+         }
+         catch (...)
+         {
 
          }
 
@@ -4454,9 +4446,11 @@ namespace aura
    bool application::ca_initialize2()
    {
 
-      application_signal_details signal(m_psignal, application_signal_initialize2);
-      m_psignal->emit(&signal);
-      return signal.m_bOk;
+      application_message message(application_message_initialize2);
+
+      route_message(&message);
+
+      return message.m_bOk;
 
    }
 
@@ -4464,9 +4458,11 @@ namespace aura
    bool application::ca_initialize3()
    {
 
-      application_signal_details signal(m_psignal, application_signal_initialize3);
-      m_psignal->emit(&signal);
-      if (!signal.m_bOk)
+      application_message message(application_message_initialize3);
+      
+      route_message(&message);
+
+      if (!message.m_bOk)
          return false;
 
       return true;
@@ -4712,35 +4708,47 @@ namespace aura
 
    bool application::ca_process_initialize()
    {
-      application_signal_details signal(m_psignal, application_signal_process_initialize);
-      m_psignal->emit(&signal);
+
+      application_message message(application_message_process_initialize);
+      
+      route_message(&message);
+   
       return true;
+
    }
+
 
    bool application::ca_initialize1()
    {
-      application_signal_details signal(m_psignal, application_signal_initialize1);
-      m_psignal->emit(&signal);
-      return signal.m_bOk;
+      
+      application_message message(application_message_initialize1);
+
+      route_message(&message);
+
+      return message.m_bOk;
+
    }
 
 
 
    bool application::ca_finalize()
    {
-      application_signal_details signal(m_psignal, application_signal_finalize);
+      
+      application_message message(application_message_finalize);
+
       try
       {
-         m_psignal->emit(&signal);
+
+         route_message(&message);
+
       }
       catch (...)
       {
+
       }
 
+      return message.m_bOk;
 
-
-
-      return signal.m_bOk;
    }
 
 
@@ -5286,7 +5294,7 @@ namespace aura
       //case MSGF_DIALOGBOX:    // handles message boxes as well.
       //   //pMainWnd = __get_main_window();
       //   if(code == MSGF_DIALOGBOX && m_pthread->m_puiActive != NULL &&
-      //      pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+      //      pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
       //   {
       //      //// need to translate messages for the in-place container
       //      //___THREAD_STATE* pThreadState = __get_thread_state();

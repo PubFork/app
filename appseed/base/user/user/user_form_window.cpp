@@ -587,27 +587,35 @@ namespace user
       }
    }
 
-   void form_window::install_message_routing(::message::sender *pinterface)
+
+   void form_window::install_message_routing(::message::sender *psender)
    {
 
-      ::user::control::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&form_window::_001OnCreate);
-      IGUI_MSG_LINK(::message::message_pos_create,pinterface,this,&form_window::_000OnPosCreate);
-      IGUI_WIN_MSG_LINK(::axis::application::APPM_LANGUAGE,pinterface,this,&form_window::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&::user::interaction::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP,pinterface,this,&::user::interaction::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_USER + 123,pinterface,this,&form_window::_001OnUser123);
+      ::user::control::install_message_routing(psender);
+
+      IGUI_MSG_LINK(WM_CREATE                      , psender,this,&form_window::_001OnCreate);
+      IGUI_MSG_LINK(::message::message_pos_create  , psender,this,&form_window::_000OnPosCreate);
+      MSG_TYPE_LINK(::message::type_language       , psender,this,&form_window::_001OnAppLanguage);
+      //IGUI_MSG_LINK(WM_KEYDOWN                     , psender,this,&form_window::_001OnKeyDown);
+      //IGUI_MSG_LINK(WM_KEYUP                       , psender,this,&form_window::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_USER + 123                  , psender,this,&form_window::_001OnUser123);
 
    }
 
+   
    void form_window::_001GetSelection(::database::id & id,::database::selection &selection)
    {
+
       selection.add_item(id);
+
    }
 
-   bool form_window::on_simple_action(::user::command * pcommand)
+
+   void form_window::on_simple_command(::user::command * pcommand)
    {
-      return control::on_simple_action(id);
+
+      control::on_simple_command(pcommand);
+
    }
 
 
@@ -1193,9 +1201,9 @@ namespace user
 
 
 
-   //void form_window::install_message_routing(::message::sender * pinterface)
+   //void form_window::install_message_routing(::message::sender * psender)
    //{
-   //   form_window::install_message_routing(pinterface);
+   //   form_window::install_message_routing(psender);
 
    //}
 

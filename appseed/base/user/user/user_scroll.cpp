@@ -191,7 +191,7 @@ namespace user
    {
 
 
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &scroll_x::_001OnHScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &scroll_x::_001OnHScroll);
 
    }
 
@@ -625,13 +625,13 @@ namespace user
    //
    //      control::install_message_routing(pinterface);
    //
-   //      IGUI_WIN_MSG_LINK(WM_CREATE,          pinterface, this, &scroll::_001OnCreate);
-   //      IGUI_WIN_MSG_LINK(WM_SIZE,            pinterface, this, &scroll::_001OnSize);
-   //      IGUI_WIN_MSG_LINK(WM_VSCROLL,         pinterface, this, &scroll::_001OnVScroll);
-   //      IGUI_WIN_MSG_LINK(WM_HSCROLL,         pinterface, this, &scroll::_001OnHScroll);
-   //      IGUI_WIN_MSG_LINK(WM_MOUSEWHEEL,      pinterface, this, &scroll::_001OnMouseWheel);
+   //      IGUI_MSG_LINK(WM_CREATE,          pinterface, this, &scroll::_001OnCreate);
+   //      IGUI_MSG_LINK(WM_SIZE,            pinterface, this, &scroll::_001OnSize);
+   //      IGUI_MSG_LINK(WM_VSCROLL,         pinterface, this, &scroll::_001OnVScroll);
+   //      IGUI_MSG_LINK(WM_HSCROLL,         pinterface, this, &scroll::_001OnHScroll);
+   //      IGUI_MSG_LINK(WM_MOUSEWHEEL,      pinterface, this, &scroll::_001OnMouseWheel);
    //
-   //      IGUI_WIN_MSG_LINK(WM_USER + 9654,     pinterface, this, &scroll::_001OnUser9654);
+   //      IGUI_MSG_LINK(WM_USER + 9654,     pinterface, this, &scroll::_001OnUser9654);
    //
    //
    //   }
@@ -1108,8 +1108,8 @@ namespace user
 
       interaction::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &scroll_y::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_MOUSEWHEEL, pinterface, this, &scroll_y::_001OnMouseWheel);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &scroll_y::_001OnVScroll);
+      IGUI_MSG_LINK(WM_MOUSEWHEEL, pinterface, this, &scroll_y::_001OnMouseWheel);
 
    }
 

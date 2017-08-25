@@ -78,9 +78,9 @@ namespace fontopus
    void login::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_routing(pdispatch);
+      ::simple_ui::interaction::install_message_routing(psender);
 
-      IGUI_CREATE(login);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &login::_001OnCreate);
 
    }
 

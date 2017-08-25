@@ -10,7 +10,7 @@ namespace user
    {
    public:
 
-      UINT                                m_uiMessage;
+      int64_t                             m_iMessage;
       bool                                m_bAutoClose;
       bool                                m_bAutoDelete;
       bool                                m_bOwnItem;
@@ -38,8 +38,11 @@ namespace user
 
       void _001OnDraw(::draw2d::graphics * pgraphics);
 
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      //bool BaseOnControlEvent(::user::control_event * pevent);
 
+      virtual void calc_size(menu_item * pitemParent, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
+
+      virtual void layout_buttons(menu_item * pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound);
 
 
    };

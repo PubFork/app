@@ -143,7 +143,7 @@ namespace metrowin
       // as above, but returns oswindow
       //::user::interaction *  GetDescendantWindow(id id);
       // like GetDlgItem but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       //::user::frame_window * GetParentFrame();
       //::user::frame_window * EnsureParentFrame();
       //::user::interaction *  GetTopLevelParent();
@@ -644,7 +644,7 @@ namespace metrowin
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function ::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
-      static_function void SendMessageToDescendants(oswindow hWnd, UINT message,
+      static_function void send_message_to_descendants(oswindow hWnd, UINT message,
             WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool is_frame_window(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();

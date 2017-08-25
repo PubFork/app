@@ -17,9 +17,9 @@ namespace userex
 
       virtual bool on_new_view_creator_data(::user::view_creator_data * pcreatordata);
 
-      bool on_simple_update(command_ui * pcommandui);
+      virtual void on_simple_command_probe(::user::command * pcommand) override;
 
-      bool on_simple_action(::user::command * pcommand);
+      virtual void on_simple_command(::user::command * pcommand) override;
 
       bool create_pane(int32_t iPane, bool bFixedSize, ::id id);
 

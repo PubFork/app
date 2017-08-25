@@ -175,7 +175,7 @@ namespace user
    enum e_timer
    {
       
-      timer_update_menu_command_ui = 11225,
+      timer_command_probe = 11225,
       timer_menu
       
    };

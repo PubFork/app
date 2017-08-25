@@ -31,7 +31,7 @@ namespace simpledb
    void socket_thread::install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_APP, pinterface, this, &socket_thread::OnApp);
+      IGUI_MSG_LINK(WM_APP, pinterface, this, &socket_thread::OnApp);
 
    }
 

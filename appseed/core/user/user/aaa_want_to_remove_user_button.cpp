@@ -46,13 +46,13 @@ namespace user
 
       USER_MESSAGE_LINK(message_create, pinterface, this, &button::_001OnCreate);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &button::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &button::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MBUTTONDOWN, pinterface, this, &button::_001OnMButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MBUTTONUP, pinterface, this, &button::_001OnMButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &button::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &button::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&button::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &button::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &button::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MBUTTONDOWN, pinterface, this, &button::_001OnMButtonDown);
+      IGUI_MSG_LINK(WM_MBUTTONUP, pinterface, this, &button::_001OnMButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &button::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &button::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&button::_001OnKeyDown);
 
    }
 

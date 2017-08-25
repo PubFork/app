@@ -52,17 +52,32 @@ namespace aura
 
 } // namespace aura
 
+class tool_thread;
+class thread_tool;
+class thread_tools;
+class thread_toolset;
+//class pred_set;
+//class replace_thread;
+
+class user_interaction_ptr_array;
+
+class thread_startup;
+
+namespace primitive { class command;  }
+
+
 
 #include "aura/primitive/collection/collection_smart_pointer_array.h"
 #include "aura/aura/aura/aura_draw_interface.h"
 #include "aura/primitive/primitive_signal.h"
 #include "aura/aura/aura/aura_command_msg.h"
 #include "aura/primitive/primitive_check.h"
-#include "aura/aura/aura/aura_command_ui.h"
+#include "aura/aura/aura/aura_::user::command.h"
 #include "aura/aura/message/message.h"
 #include "aura/aura/aura/aura_command_target.h"
 #include "aura/user/user/user_primitive.h"
 #include "aura/multithreading/multithreading_common.h"
+#include "aura/multithreading/multithreading_pred_holder.h"
 #include "aura/multithreading/multithreading_thread.h"
 #include "aura/primitive/math/math_scalar_enum.h"
 #include "aura/primitive/math/math_scalar.h"

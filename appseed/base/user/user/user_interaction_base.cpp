@@ -14,7 +14,7 @@ namespace user
 
    interaction_base::interaction_base(::aura::application * papp) :
       ::object(papp),
-      command_target_interface(papp)
+      command_target(papp)
    {
 
    }
@@ -29,7 +29,7 @@ namespace user
    void interaction_base::install_message_routing(::message::sender * pinterface)
    {
 
-      ::message::sender::install_message_routing(pinterface);
+      ::message::receiver::install_message_routing(pinterface);
 
    }
 
@@ -186,14 +186,14 @@ Restart:
    }
 
 
-   void interaction_base::_on_start_user_message_handler()
-   {
+   //void interaction_base::_on_start_user_message_handler()
+   //{
 
-      dispatch::_on_start_user_message_handler();
+   //   dispatch::_on_start_user_message_handler();
 
-      _001BaseWndInterfaceMap();
+   //   _001BaseWndInterfaceMap();
 
-   }
+   //}
 
 
    void interaction_base::_000OnDraw(::draw2d::graphics * pgraphics)
@@ -840,13 +840,19 @@ Restart:
    }
 
 
-   void interaction_base::SendMessageToDescendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
+   void interaction_base::send_message_to_descendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
    {
 
       ::exception::throw_interface_only(get_app());
 
    }
 
+   void interaction_base::route_message_to_descendants(::message::message * pmessage)
+   {
+
+      ::exception::throw_interface_only(get_app());
+
+   }
 
    void interaction_base::pre_translate_message(::message::message * pobj)
    {
@@ -1293,7 +1299,7 @@ Restart:
       try
       {
 
-         signalizable_disconnect_all();
+         remove_all_routes();
 
       }
       catch(...)
@@ -1301,63 +1307,63 @@ Restart:
 
       }
 
-      try
-      {
+      //try
+      //{
 
-         m_signala.remove_all();
+      //   m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
+      //}
 
-      try
-      {
+      //try
+      //{
 
-         m_dispatchUpdateCmdUi.m_signala.remove_all();
+      //   m_dispatchUpdateCmdUi.m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
-
-
-      try
-      {
-
-         m_dispatchCommand.m_signala.remove_all();
-
-      }
-      catch(...)
-      {
-
-      }
+      //}
 
 
+      //try
+      //{
 
-      try
-      {
+      //   m_dispatchCommand.m_signala.remove_all();
 
-         m_signalidaCommand.remove_all();
+      //}
+      //catch(...)
+      //{
 
-      }
-      catch(...)
-      {
+      //}
 
-      }
 
-      try
-      {
 
-         ::::message::receiver::m_signalptra.remove_all();
+      //try
+      //{
 
-      }
-      catch(...)
-      {
+      //   m_signalidaCommand.remove_all();
 
-      }
+      //}
+      //catch(...)
+      //{
+
+      //}
+
+      //try
+      //{
+
+      //   ::::message::receiver::m_signalptra.remove_all();
+
+      //}
+      //catch(...)
+      //{
+
+      //}
 
       //try
       //{
@@ -1664,7 +1670,7 @@ Restart:
    }
 
 
-   void interaction_base::UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHandler)
+   void interaction_base::update_dialog_controls(command_target * ptarget)
    {
 
       //::exception::throw_interface_only(get_app());

@@ -187,20 +187,27 @@ void html_document::soft_reload()
 }
 
 
-bool html_document::on_simple_update(command_ui * pcommandui)
+void html_document::on_simple_command_probe(::user::command * pcommand)
 {
-   if(pcommandui->m_id == "viewindefaultbrowser")
+
+   if(pcommand->m_id == "viewindefaultbrowser")
    {
-      pcommandui->Enable();
-      return true;
+      
+      pcommand->Enable();
+
+      pcommand->m_bRet = true;
+
+      return;
+
    }
-   return false;
+
 }
 
-bool html_document::on_simple_action(::user::command * pcommand)
+
+void html_document::on_simple_command(::user::command * pcommand)
 {
 
-   if(id == "viewindefaultbrowser")
+   if(pcommand->m_id == "viewindefaultbrowser")
    {
 
       property_set propertyset;
@@ -215,11 +222,11 @@ bool html_document::on_simple_action(::user::command * pcommand)
 
 #endif
 
-      return true;
+      pcommand->m_bRet = true;
+
+      return;
 
    }
-
-   return false;
 
 }
 

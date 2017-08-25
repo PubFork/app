@@ -37,13 +37,13 @@ namespace fontopus
    void simple_ui::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::top::install_message_routing(pdispatch);
+      ::simple_ui::top::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&simple_ui::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_CHAR,pdispatch,this,&simple_ui::_001OnChar);
-//      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&simple_ui::_001OnLButtonDown);
-//      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&simple_ui::_001OnLButtonUp);
-//      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&simple_ui::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&simple_ui::_001OnCreate);
+      IGUI_MSG_LINK(WM_CHAR,psender,this,&simple_ui::_001OnChar);
+//      IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&simple_ui::_001OnLButtonDown);
+//      IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&simple_ui::_001OnLButtonUp);
+//      IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&simple_ui::_001OnMouseMove);
 
    }
 

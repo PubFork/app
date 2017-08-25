@@ -135,7 +135,7 @@ namespace macos
       using ::user::interaction_impl::GetDescendantWindow;
       ::user::interaction *  GetDescendantWindow(id id);
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
 
       static_function ::user::interaction * PASCAL GetSafeOwner(::user::interaction * pParent = NULL, oswindow* pWndTop = NULL);
 
@@ -646,7 +646,7 @@ namespace macos
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction *   puiStop, ::message::message * pobj);
       static_function ::user::interaction *   PASCAL GetDescendantWindow(::user::interaction *   hWnd, id id);
-      static_function void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
+      static_function void PASCAL send_message_to_descendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
       static_function bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);

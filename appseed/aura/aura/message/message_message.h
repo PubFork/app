@@ -12,10 +12,11 @@ namespace message
 
 
       id                         m_id;
-      dispatch *                 m_pdispatch;
+      route_array                m_routea;
+      sender *                   m_psender;
       WPARAM                     m_wparam;
       lparam                     m_lparam;
-      index                      m_iIndex;
+      index                      m_iRouteIndex;
       index                      m_iParam;
       bool                       m_bRet;
       
@@ -23,16 +24,24 @@ namespace message
 
 
       message(::aura::application * papp = NULL);
-      message(dispatch * pdispatch);
-      message(::aura::application * papp, class dispatch * pdispatch);
+      message(::message::e_type etype);
+      //message(dispatch * pdispatch);
+      //message(::aura::application * papp, class dispatch * pdispatch);
       virtual ~message();
 
 
-      bool route_message(); // returns m_bRet
+      void common_construct(::message::e_type etype = ::message::type_null);
 
-      bool route_all_previous(); // returns bRet
 
-      bool route_previous(); // returns bRet
+      inline bool is_message() { return m_id.m_emessagetype == ::message::type_message; }
+
+
+      bool route(); // returns m_bRet
+
+      bool all_previous(); // returns bRet
+
+      bool previous(); // returns bRet
+
 
    };
 

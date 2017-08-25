@@ -44,8 +44,10 @@ namespace user
       virtual bool LoadWindowRect_(class ::database::id id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
       virtual bool SaveWindowRect_(class ::database::id id, sp(::user::box) pwindow);
 
-
+      
+      using ::simple_ui::interaction::on_simple_command;
       virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+
 
       virtual void on_set_parent(::user::interaction * puiParent) override;
       virtual bool on_before_set_parent(::user::interaction * pinterface) override;

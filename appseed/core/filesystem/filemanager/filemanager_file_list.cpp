@@ -51,16 +51,16 @@ namespace filemanager
       //#endif
 
 
-      connect_update_cmd_ui("edit_copy", &file_list::_001OnUpdateEditCopy);
+      connect_command_probe("edit_copy", &file_list::_001OnUpdateEditCopy);
       connect_command("edit_copy", &file_list::_001OnEditCopy);
-      connect_update_cmd_ui("trash_that_is_not_trash", &file_list::_001OnUpdateTrashThatIsNotTrash);
+      connect_command_probe("trash_that_is_not_trash", &file_list::_001OnUpdateTrashThatIsNotTrash);
       connect_command("trash_that_is_not_trash", &file_list::_001OnTrashThatIsNotTrash);
-      connect_update_cmd_ui("open_with", &file_list::_001OnUpdateOpenWith);
-      connect_update_cmd_ui("spafy", &file_list::_001OnUpdateSpafy);
+      connect_command_probe("open_with", &file_list::_001OnUpdateOpenWith);
+      connect_command_probe("spafy", &file_list::_001OnUpdateSpafy);
       connect_command("spafy", &file_list::_001OnSpafy);
-      connect_update_cmd_ui("spafy2", &file_list::_001OnUpdateSpafy2);
+      connect_command_probe("spafy2", &file_list::_001OnUpdateSpafy2);
       connect_command("spafy2", &file_list::_001OnSpafy2);
-      connect_update_cmd_ui("file_rename", &file_list::_001OnUpdateFileRename);
+      connect_command_probe("file_rename", &file_list::_001OnUpdateFileRename);
       connect_command("file_rename", &file_list::_001OnFileRename);
 
    }
@@ -78,12 +78,12 @@ namespace filemanager
       impact::install_message_routing(pinterface);
       ::user::form_list::install_message_routing(pinterface);
       ::userfs::list::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(MessageMainPost, pinterface, this, &file_list::_001OnMainPostMessage);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &file_list::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &file_list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &file_list::_001OnContextMenu);
-      connect_command_range(FILEMANAGER_SHELL_COMMAND_FIRST, FILEMANAGER_SHELL_COMMAND_LAST, &file_list::_001OnShellCommand);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &file_list::_001OnShowWindow);
+      IGUI_MSG_LINK(MessageMainPost, pinterface, this, &file_list::_001OnMainPostMessage);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &file_list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &file_list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &file_list::_001OnContextMenu);
+//      connect_command_range(FILEMANAGER_SHELL_COMMAND_FIRST, FILEMANAGER_SHELL_COMMAND_LAST, &file_list::_001OnShellCommand);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &file_list::_001OnShowWindow);
 
    }
 
@@ -509,14 +509,26 @@ namespace filemanager
       //SetTimer(1234567, 50, NULL);
    }
 
-   bool file_list::_001OnCmdMsg(::user::command * pcommand)
+   void file_list::_001OnCmdMsg(::user::command * pcommand)
    {
+
       ::fs::item_array itema;
+
       GetSelected(itema);
+
       if (get_filemanager_manager()->HandleDefaultFileManagerItemCmdMsg(pcommand, itema))
-         return TRUE;
-      return ::user::impact::_001OnCmdMsg(pcommand);
+      {
+
+         pcommand->m_bRet = true;
+
+         return;
+
+      }
+
+      ::user::impact::_001OnCmdMsg(pcommand);
+
    }
+
 
    void file_list::_001OnShellCommand(::message::message * pobj)
    {
@@ -563,7 +575,7 @@ namespace filemanager
    void file_list::_001OnFileManagerItemUpdate(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::update_command_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
@@ -582,7 +594,7 @@ namespace filemanager
          }
       }
       get_filemanager_data()->OnFileManagerItemUpdate(
-         pupdatecmdui,
+         pcommand,
          itema);
       pobj->m_bRet = true;
    }
@@ -669,14 +681,14 @@ namespace filemanager
 
    void file_list::_001OnUpdateFileRename(::message::message * pobj)
    {
-      //      SCAST_PTR(::command_ui, pcommandui, pobj);
-        //    pcommandui->Enable(_001GetSelectedItemCount() == 1);
+      //      SCAST_PTR(::user::command, pcommand, pobj);
+        //    pcommand->Enable(_001GetSelectedItemCount() == 1);
           //  pobj->m_bRet = true;
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
       range range;
       _001GetSelection(range);
-      pcommandui->Enable(
+      pcommand->Enable(
          range.get_item_count() == 1
          && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;
@@ -687,13 +699,13 @@ namespace filemanager
    void file_list::_001OnUpdateEditCopy(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       range range;
 
       _001GetSelection(range);
 
-      pcommandui->Enable(range.get_item_count() > 0);
+      pcommand->Enable(range.get_item_count() > 0);
 
       pobj->m_bRet = true;
 
@@ -727,10 +739,10 @@ namespace filemanager
 
    void file_list::_001OnUpdateTrashThatIsNotTrash(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
       range range;
       _001GetSelection(range);
-      pcommandui->Enable(range.get_item_count() > 0);
+      pcommand->Enable(range.get_item_count() > 0);
       pobj->m_bRet = true;
    }
 
@@ -765,9 +777,9 @@ namespace filemanager
    void file_list::_001OnUpdateOpenWith(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      ::user::menu_command_ui * pmenucommandui = dynamic_cast <::user::menu_command_ui *> (pcommandui);
+      ::user::menu_command * pmenucommandui = dynamic_cast <::user::menu_command *> (pcommand);
 
       if (pmenucommandui != NULL)
       {
@@ -776,10 +788,10 @@ namespace filemanager
 
          ::user::menu * pmenu = pitema->element_at(pmenucommandui->m_iIndex)->m_pmenu;
 
-         pitema->remove_at(pcommandui->m_iIndex);
+         pitema->remove_at(pcommand->m_iIndex);
 
 
-         index iStartIndex = pcommandui->m_iIndex;
+         index iStartIndex = pcommand->m_iIndex;
          index iIndex = iStartIndex;
 
 
@@ -807,9 +819,9 @@ namespace filemanager
             pitema->insert_at(iIndex, pmenuitem);
             iIndex++;
          }
-         pcommandui->m_iIndex = iStartIndex;
+         pcommand->m_iIndex = iStartIndex;
 
-         pcommandui->m_iCount = iIndex;
+         pcommand->m_iCount = iIndex;
 
 
          pmenu->on_layout();
@@ -821,46 +833,75 @@ namespace filemanager
    }
 
 
-   bool file_list::on_simple_update(command_ui * pcommandui)
+   void file_list::on_simple_command_probe(::user::command * pcommand)
    {
+
       int32_t iPos = -1;
+
       for (int32_t i = 0; i < m_straOpenWith.get_size(); i++)
       {
+
          string strId = "open with" + m_straOpenWith[i];
-         if (pcommandui->m_id == strId)
+
+         if (pcommand->m_id == strId)
          {
+
             iPos = i;
+
             break;
+
          }
+
       }
+
       if (iPos >= 0)
       {
-         pcommandui->Enable(TRUE);
-         return true;
+
+         pcommand->Enable(TRUE);
+
+         pcommand->m_bRet = true;
+
+         return;
+
       }
-      else
-      {
-         return ::user::impact::on_simple_update(pcommandui);
-      }
+
+      ::user::impact::on_simple_command_probe(pcommand);
+
    }
 
-   bool file_list::on_simple_action(::user::command * pcommand)
+
+   void file_list::on_simple_command(::user::command * pcommand)
    {
-      if (id == "1000")
+
+      if (pcommand->m_id == "1000")
       {
+         
          //      _017OpenSelected(true, ::action::source_user);
-         return true;
+
+         pcommand->m_bRet = true;
+
+         return;
+
       }
+
       int32_t iPos = -1;
+
       for (int32_t i = 0; i < m_straOpenWith.get_size(); i++)
       {
+
          string strId = "open with" + m_straOpenWith[i];
-         if (id == strId)
+
+         if (pcommand->m_id == strId)
          {
+
             iPos = i;
+
             break;
+
          }
+
       }
+
       if (iPos >= 0)
       {
 
@@ -882,22 +923,23 @@ namespace filemanager
 
 #endif
 
-         return true;
+         pcommand->m_bRet = true;
+
+         return;
 
       }
-      else
-      {
-         return ::user::impact::on_simple_action(id);
-      }
+
+      ::user::impact::on_simple_command(pcommand);
 
    }
 
+
    void file_list::_001OnUpdateSpafy(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
       range range;
       _001GetSelection(range);
-      pcommandui->Enable(range.get_item_count() > 0);
+      pcommand->Enable(range.get_item_count() > 0);
       pobj->m_bRet = true;
    }
 
@@ -963,8 +1005,8 @@ namespace filemanager
 
    void file_list::_001OnUpdateSpafy2(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
       pobj->m_bRet = true;
    }
 

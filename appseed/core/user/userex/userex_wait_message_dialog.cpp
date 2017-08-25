@@ -27,9 +27,9 @@ namespace userex // ca8 + cube
    void wait_message_dialog::install_message_routing(::message::sender * psender)
    {
 
-      ::dialog::install_message_routing(pdispatch);
+      ::dialog::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &wait_message_dialog::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &wait_message_dialog::_001OnCreate);
 
    }
 

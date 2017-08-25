@@ -247,7 +247,7 @@ namespace html
 
       m_elemental.implement(this);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, m_pui, this, &data::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, m_pui, this, &data::_001OnKeyDown);
 
       m_bImplemented = true;
 

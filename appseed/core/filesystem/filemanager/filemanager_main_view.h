@@ -34,7 +34,7 @@ namespace filemanager
 
       void FileManagerBrowse(const char * lpcwstr,::action::context actioncontext);
 
-      bool on_simple_action(::user::command * pcommand);
+      virtual void on_simple_command(::user::command * pcommand) override;
 
       virtual void OpenSelectionProperties();
 

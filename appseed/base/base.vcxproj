@@ -761,7 +761,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_interaction_impl.cpp" />
     <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
     <ClCompile Include="user\user\user_menu.cpp" />
-    <ClCompile Include="user\user\user_menu_command_ui.cpp" />
+    <ClCompile Include="user\user\user_menu_command.cpp" />
     <ClCompile Include="user\user\user_menu_item.cpp" />
     <ClCompile Include="user\user\user_message.cpp" />
     <ClCompile Include="user\user\user_message_queue.cpp" />
@@ -903,6 +903,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_interaction_impl.h" />
     <ClInclude Include="user\user\user_interaction_impl_base.h" />
     <ClInclude Include="user\user\user_menu.h" />
+    <ClInclude Include="user\user\user_menu_command.h" />
+    <ClInclude Include="user\user\user_menu_item.h" />
     <ClInclude Include="user\user\user_message.h" />
     <ClInclude Include="user\user\user_message_queue.h" />
     <ClInclude Include="user\user\user_message_queue_listener.h" />

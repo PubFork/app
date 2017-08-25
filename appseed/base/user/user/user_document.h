@@ -206,7 +206,7 @@ namespace user
       virtual void on_idle();
       virtual void on_final_release();
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
       friend class impact_system;
 
@@ -221,7 +221,7 @@ namespace user
       void on_file_save();
       void on_file_save_as();
       void on_file_send_mail();
-      void on_update_file_send_mail(command_ui* pCmdUI);
+      void on_update_file_send_mail(::user::command* pCmdUI);
 
 
 

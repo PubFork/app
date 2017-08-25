@@ -270,12 +270,12 @@ namespace user
       virtual bool NegotiateBorderSpace(UINT nBorderCmd, LPRECT lpRectBorder);
       virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
       void OnContextHelp();   // for Shift+F1 help
-      void OnUpdateControlBarMenu(command_ui* pCmdUI);
+      void OnUpdateControlBarMenu(::user::command* pCmdUI);
       bool OnBarCheck(UINT nID);
 
       virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
@@ -359,7 +359,7 @@ namespace user
       sp(::user::interaction) WindowDataGetWnd();
 
 
-      DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
+      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
       DECL_GEN_SIGNAL(_001OnSetFocus);
       DECL_GEN_SIGNAL(_001OnSize);
       DECL_GEN_SIGNAL(_001OnQueryEndSession);

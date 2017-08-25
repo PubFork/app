@@ -90,7 +90,7 @@ namespace html
 
       void elemental::OnLButtonDown(::message::message * pobj)
       {
-         SCAST_PTR(::html_message, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          SCAST_PTR(::message::mouse, pmouse, phtml->m_psignal);
          if (has_link())
          {
@@ -102,7 +102,7 @@ namespace html
       void elemental::OnMouseMove(::message::message * pobj)
       {
 
-         SCAST_PTR(::html_message, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
 
          SCAST_PTR(::message::mouse, pmouse, phtml->m_psignal);
 
@@ -164,7 +164,7 @@ namespace html
 
       void elemental::OnLButtonUp(::message::message * pobj)
       {
-         SCAST_PTR(::html_message, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          if (has_link())
          {
             phtml->m_pdata->open_link(link());

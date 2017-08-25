@@ -48,7 +48,7 @@ namespace user
 
       place_holder_container::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_layout::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_layout::_001OnShowWindow);
 
    }
 

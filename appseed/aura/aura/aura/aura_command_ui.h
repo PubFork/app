@@ -13,7 +13,7 @@ namespace message
 
 
 
-// class CLASS_DECL_AURA command_ui :
+// class CLASS_DECL_AURA ::user::command :
 //    public ::message::base
 // {
 // public:
@@ -41,14 +41,14 @@ namespace message
 //    //  (probably a secondary popup menu)
 
 
-//    command_ui(::aura::application * papp);
-//    command_ui(class ::message::sender * psignal);
+//    ::user::command(::aura::application * papp);
+//    ::user::command(class ::message::sender * psignal);
 
 
 //    void reset(class ::message::sender * psignal);
 
 
-//    // Operations to do in ON_UPDATE_COMMAND_UI
+//    // Operations to do in ON_UPDATE_::user::command
 //    virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
 //    virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
 //    virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
@@ -70,8 +70,8 @@ namespace message
 
 
 
-// command_ui
-//inline void command_ui::ContinueRouting()
+// ::user::command
+//inline void ::user::command::ContinueRouting()
 //{
 //
 //   m_bContinueRouting = TRUE;

@@ -81,12 +81,12 @@ namespace filemanager
 
       void FileSize();
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-      bool on_simple_update(command_ui * pcommandui);
-      bool on_simple_action(::user::command * pcommand);
+      virtual void on_simple_command_probe(::user::command * pcommand) override;
+      virtual void on_simple_command(::user::command * pcommand) override;
 
       DECL_GEN_SIGNAL(_001OnUpdateOpenWith);
       DECL_GEN_SIGNAL(_001OnEditCopy);

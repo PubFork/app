@@ -38,9 +38,9 @@ namespace userfs
    void tree::install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
 
    }
 

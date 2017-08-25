@@ -372,7 +372,7 @@ namespace user
       virtual void track_mouse_leave() override;
 
       // dialog support
-      void UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHndler);
+      virtual void update_dialog_controls(command_target * ptarget);
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
       virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
       virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
@@ -659,7 +659,8 @@ namespace user
       virtual ::user::frame_window * GetParentTopLevelFrame() const override;
       virtual ::user::frame_window * EnsureParentFrame() override;
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE) override;
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE) override;
+      virtual void route_message_to_descendants(::message::message * pmessage) override;
 
 
       virtual int32_t get_descendant_level(::user::interaction * pui) override;
@@ -770,7 +771,7 @@ namespace user
       virtual uint32_t get_window_default_style() override;
       virtual e_type get_window_type() override;
 
-
+      using ::user::interaction_base::on_simple_command;
       virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult) override;
 
 

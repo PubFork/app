@@ -22,9 +22,9 @@ namespace filehandler
    {
 
       ::user::form::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
 //
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
 
    }
 

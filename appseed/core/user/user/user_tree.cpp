@@ -609,19 +609,19 @@ namespace user
    void tree::install_message_routing(::message::sender * psender)
    {
       
-      ::user::control::install_message_routing(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE        , pdispatch, this, &tree::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK , pdispatch, this, &tree::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP     , pdispatch, this, &tree::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN   , pdispatch, this, &tree::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP     , pdispatch, this, &tree::_001OnRButtonUp);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN   , pdispatch, this, &tree::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE     , pdispatch, this, &tree::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE    , pdispatch, this, &tree::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL       , pdispatch, this, &tree::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL       , pdispatch, this, &tree::_001OnVScroll);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER         , pdispatch, this, &tree::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE        , psender, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK , psender, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_LBUTTONUP     , psender, this, &tree::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN   , psender, this, &tree::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONUP     , psender, this, &tree::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN   , psender, this, &tree::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE     , psender, this, &tree::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE    , psender, this, &tree::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_HSCROLL       , psender, this, &tree::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL       , psender, this, &tree::_001OnVScroll);
+//      //IGUI_MSG_LINK(WM_TIMER         , psender, this, &tree::_001OnTimer);
 
    }
 

@@ -38,13 +38,13 @@ namespace user
    void static_control::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_routing(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &static_control::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &static_control::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &static_control::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &static_control::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &static_control::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &static_control::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &static_control::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &static_control::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &static_control::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &static_control::_001OnMouseMove);
 
    }
 
@@ -161,7 +161,7 @@ namespace user
    bool static_control::OnChildNotify(::message::base * pbase)
    {
       
-      if (pbase->m_uiMessage != WM_DRAWITEM)
+      if (pbase->m_id != WM_DRAWITEM)
           return ::user::interaction::OnChildNotify(pbase);
 
 #ifdef WINDOWSEX

@@ -8,7 +8,7 @@ namespace user
 
 #ifdef WINDOWSEX
 
-//   const uint32_t control::g_uiMessage = ::RegisterWindowMessage("user::control::g_uiMessage");
+   //   const uint32_t control::g_uiMessage = ::RegisterWindowMessage("user::control::g_uiMessage");
 
 #endif
 
@@ -24,13 +24,13 @@ namespace user
    void control::install_message_routing(::message::sender * psender)
    {
 
-//      ::user::impact::install_message_routing(pdispatch);
-      ::user::box::install_message_routing(pdispatch);
-      IGUI_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &::user::control::_001OnMouseMove);
+      //      ::user::impact::install_message_routing(psender);
+      ::user::box::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &::user::control::_001OnMouseMove);
 
 #ifdef WINDOWS
 
-      IGUI_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &::user::control::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &::user::control::_001OnMouseLeave);
 
 #else
 
@@ -38,7 +38,7 @@ namespace user
 
 #endif
 
-      IGUI_MSG_LINK(WM_KEYDOWN,pdispatch,this,&::user::control::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &::user::control::_001OnKeyDown);
 
    }
 
@@ -46,7 +46,7 @@ namespace user
    void control::_003OnCustomDraw(::draw2d::graphics * pgraphics, ::aura::draw_context * pdrawcontext)
    {
 
-      
+
 
       pgraphics->chain(pdrawcontext);
 
@@ -107,7 +107,7 @@ namespace user
 
    bool control::operator == (const class control & control) const
    {
-      
+
       return operator == (*control.m_pdescriptor);
 
    }
@@ -115,28 +115,28 @@ namespace user
 
    void control_descriptor::set_type(e_control_type e_type)
    {
-      
+
       m_etype = e_type;
 
-      switch(m_etype)
+      switch (m_etype)
       {
       case control_type_edit:
 
-      //         m_typeinfo = System.type_info < CSimpleFormListEdit > ();
+         //         m_typeinfo = System.type_info < CSimpleFormListEdit > ();
 
          break;
 
       case control_type_combo_box:
-         {
+      {
 
-            //throw todo(get_app());
+         //throw todo(get_app());
 
 //            m_data.m_pcombobox = new Ex1FormInterfaceComboBox;
 
-         }
+      }
+      break;
+      default:
          break;
-         default:
-            break;
       }
 
    }
@@ -184,15 +184,15 @@ namespace user
 
    bool control::get_data(sp(::user::interaction)pwnd, var &var)
    {
-      
+
       string str;
 
-      if(control_descriptor().get_type() == control_type_edit)
+      if (control_descriptor().get_type() == control_type_edit)
       {
 
          sp(::user::elemental) ptext = pwnd.m_p;
 
-         if(ptext == NULL)
+         if (ptext == NULL)
             return false;
 
          ptext->_001GetText(str);
@@ -203,26 +203,26 @@ namespace user
 
          sp(::user::elemental) ptext = this;
 
-         if(ptext == NULL)
+         if (ptext == NULL)
             return false;
 
          ptext->_001GetText(str);
 
       }
 
-      switch(control_descriptor().get_data_type())
+      switch (control_descriptor().get_data_type())
       {
       case control_data_type_string:
-         {
-            var = str;
-         }
-         return true;
+      {
+         var = str;
+      }
+      return true;
       case control_data_type_natural:
-         {
-            var = atoi(str);
-            return true;
-         }
-         break;
+      {
+         var = atoi(str);
+         return true;
+      }
+      break;
       default:
          return false;
       }
@@ -232,30 +232,30 @@ namespace user
    bool control::Validate(string & strParam)
    {
 
-      switch(control_descriptor().get_data_type())
+      switch (control_descriptor().get_data_type())
       {
       case control_data_type_string:
          return true;
       case control_data_type_natural:
+      {
+         string str = strParam;
+         str.trim_left();
+         str.trim_right();
+         for (int32_t i = 0; i < str.get_length(); i++)
          {
-            string str = strParam;
-            str.trim_left();
-            str.trim_right();
-            for(int32_t i = 0; i < str.get_length(); i++)
+            if (str[i] >= L'0'
+               && str[i] <= L'9')
             {
-               if(str[i] >= L'0'
-                  && str[i] <= L'9')
-               {
-               }
-               else
-               {
-                  return false;
-               }
-
             }
-            return true;
+            else
+            {
+               return false;
+            }
+
          }
-         break;
+         return true;
+      }
+      break;
       default:
          return true;
       }
@@ -264,9 +264,9 @@ namespace user
 
    control_ddx_dbflags::control_ddx_dbflags(::database::key key, int_ptr value)
    {
-      
-      m_key       = key;
-      m_value     = value;
+
+      m_key = key;
+      m_value = value;
 
    }
 
@@ -305,12 +305,12 @@ namespace user
       return *m_pdescriptor;
    }
 
-   
+
    bool control::create_control(class control_descriptor * pdescriptorParam)
    {
 
       sp(control_descriptor) pdescriptor;
-      
+
       if (pdescriptorParam->is_heap())
       {
 
@@ -344,11 +344,11 @@ namespace user
 
    bool control::GetWindowRect(LPRECT lprect)
    {
-//      if(get_form() != NULL)
-//      {
-//         get_form()->control_get_window_rect(this, lprect);
-//      }
-//      else
+      //      if(get_form() != NULL)
+      //      {
+      //         get_form()->control_get_window_rect(this, lprect);
+      //      }
+      //      else
       {
          return ::user::interaction::GetWindowRect(lprect);
       }
@@ -375,7 +375,7 @@ namespace user
       ScreenToClient(&pt);
       rect rect;
       GetWindowRect(rect);
-      if(rect.contains(pt))
+      if (rect.contains(pt))
          return 0;
       else
          return -1;
@@ -384,12 +384,12 @@ namespace user
 
    control::control()
    {
-      m_pdescriptor                 = NULL;
-      m_iHover                      = -1;
-      m_bControlExCommandEnabled    = true;
-      m_pform                       = NULL;
-      m_pformcallback               = NULL;
-      m_ulFlags                     &= ~object::flag_auto_delete;
+      m_pdescriptor = NULL;
+      m_iHover = -1;
+      m_bControlExCommandEnabled = true;
+      m_pform = NULL;
+      m_pformcallback = NULL;
+      m_ulFlags &= ~object::flag_auto_delete;
       m_bDefaultWalkPreTranslateParentTree = true;
    }
 
@@ -413,18 +413,18 @@ namespace user
    bool control::keyboard_focus_OnSetFocus()
    {
 
-      if(!::user::box::keyboard_focus_OnSetFocus())
+      if (!::user::box::keyboard_focus_OnSetFocus())
       {
 
          return false;
 
-      }                  
+      }
 
       ::user::control_event ev;
 
-      ev.m_puie      = this;
+      ev.m_puie = this;
 
-      ev.m_eevent    = ::user::event_set_focus;
+      ev.m_eevent = ::user::event_set_focus;
 
       BaseOnControlEvent(&ev);
 
@@ -440,9 +440,9 @@ namespace user
 
       ::user::control_event ev;
 
-      ev.m_puie      = this;
+      ev.m_puie = this;
 
-      ev.m_eevent    = ::user::event_kill_focus;
+      ev.m_eevent = ::user::event_kill_focus;
 
       BaseOnControlEvent(&ev);
 
@@ -451,85 +451,112 @@ namespace user
    }
 
 
-
    void control_cmd_ui::Enable(bool bOn)
    {
-       m_bEnableChanged = TRUE;
-       sp(::user::interaction) pwnd = (sp(::user::interaction))m_pOther;
-       ASSERT(pwnd != NULL);
-       ASSERT_KINDOF(::user::interaction, pwnd);
-       //ASSERT(m_nIndex < m_nIndexMax);
+
+      m_bEnableChanged = TRUE;
+
+      sp(::user::interaction) pwnd = m_puiOther;
+
+      ASSERT(pwnd != NULL);
+
+      ASSERT_KINDOF(::user::interaction, pwnd);
 
       sp(::user::interaction) pcontrol = pwnd->get_child_by_id(m_idControl);
-      sp(control) pcontrolex =  (pcontrol.m_p);
-      if(pcontrolex != NULL)
+
+      sp(control) pcontrolex = (pcontrol.m_p);
+
+      if (pcontrolex != NULL)
       {
-         if(bOn)
+
+         if (bOn)
          {
-            if(pwnd->is_window_enabled() &&
-               !pcontrolex->IsControlCommandEnabled())
+
+            if (pwnd->is_window_enabled() && !pcontrolex->IsControlCommandEnabled())
             {
+
                pcontrolex->EnableControlCommand(true);
+
             }
+
          }
          else
          {
-            if(pcontrolex->IsControlCommandEnabled())
+
+            if (pcontrolex->IsControlCommandEnabled())
             {
+
                pcontrolex->EnableControlCommand(false);
+
             }
+
          }
+
       }
       else
       {
-         if(pcontrol != NULL)
+
+         if (pcontrol != NULL)
          {
-            if(bOn)
+
+            if (bOn)
             {
-               if(!pcontrol->is_window_enabled())
+
+               if (!pcontrol->is_window_enabled())
                {
+
                   pcontrol->enable_window();
+
                }
+
             }
             else
             {
-               if(pcontrol->is_window_enabled())
+
+               if (pcontrol->is_window_enabled())
                {
+
                   pcontrol->enable_window(FALSE);
+
                }
+
             }
-          }
+
+         }
+
       }
+
    }
+
 
    void control_cmd_ui::SetCheck(int32_t nCheck)
    {
-       ASSERT(nCheck >= 0 && nCheck <= 2); // 0=>off, 1=>on, 2=>indeterminate
-       /*sp(::user::interaction) pwnd = (sp(::user::interaction))m_pOther;
-       ASSERT(pToolBar != NULL);
-       ASSERT_KINDOF(simple_toolbar, pToolBar);
-       ASSERT(m_nIndex < m_nIndexMax);
+      ASSERT(nCheck >= 0 && nCheck <= 2); // 0=>off, 1=>on, 2=>indeterminate
+      /*sp(::user::interaction) pwnd = (sp(::user::interaction))m_pOther;
+      ASSERT(pToolBar != NULL);
+      ASSERT_KINDOF(simple_toolbar, pToolBar);
+      ASSERT(m_nIndex < m_nIndexMax);
 
-       UINT nNewStyle = pToolBar->GetButtonStyle(m_nIndex) &
-                   ~(TBBS_CHECKED | TBBS_INDETERMINATE);
-       if (nCheck == 1)
-           nNewStyle |= TBBS_CHECKED;
-       else if (nCheck == 2)
-           nNewStyle |= TBBS_INDETERMINATE;
-       ASSERT(!(nNewStyle & TBBS_SEPARATOR));
-       pToolBar->SetButtonStyle(m_nIndex, nNewStyle | TBBS_CHECKBOX);*/
+      UINT nNewStyle = pToolBar->GetButtonStyle(m_nIndex) &
+                  ~(TBBS_CHECKED | TBBS_INDETERMINATE);
+      if (nCheck == 1)
+          nNewStyle |= TBBS_CHECKED;
+      else if (nCheck == 2)
+          nNewStyle |= TBBS_INDETERMINATE;
+      ASSERT(!(nNewStyle & TBBS_SEPARATOR));
+      pToolBar->SetButtonStyle(m_nIndex, nNewStyle | TBBS_CHECKBOX);*/
    }
 
    void control_cmd_ui::SetText(const char *)
    {
-       // ignore it
+      // ignore it
    }
 
 
    id control_cmd_ui::GetControlCommand(id id)
    {
       class id idCommand;
-      if(m_mapControlCommand.Lookup(id, idCommand))
+      if (m_mapControlCommand.Lookup(id, idCommand))
       {
          return id;
       }
@@ -537,116 +564,128 @@ namespace user
    }
 
 
-   LRESULT control_view_impl::BaseControlExOnIdleUpdateCmdUI(WPARAM wParam, LPARAM)
-   {
-      sp(::user::interaction) pview = get_window();
-
-       // handle delay hide/show
-       bool bVis = (pview->GetStyle() & WS_VISIBLE) != 0;
-
-       // the style must be visible
-       if (bVis)
-       {
-           sp(::user::frame_window) pTarget = pview->GetOwner();
-           if (pTarget == NULL)
-               pTarget = pview->GetParentFrame();
-           if (pTarget != NULL)
-               BaseControlExOnUpdateCmdUI(pTarget, wParam != FALSE);
-       }
-       return 0L;
-   }
-
-
-   void control_view_impl::BaseControlExOnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
-   {
-      sp(::user::interaction) pview = get_window();
-
-      command_ui & state = m_commandui;
-      state.m_pOther = pview;
-
-      sp(::user::interaction) pwndIterator = pview->GetTopWindow();
-      sp(::user::interaction) pwnd;
-      sp(control) pcontrolex;
-       for (; pwndIterator != NULL; pwndIterator = pwndIterator->get_next_window())
-       {
-         pwnd = pwndIterator->GetTopLevel();
-         pcontrolex = NULL;
-         if(pwnd != NULL)
-         {
-//#ifdef WINDOWSEX
-//            pwnd->send_message(control::g_uiMessage, control::MessageParamGetBaseControlExPtr, (LPARAM) &pcontrolex);
-//#else
-            throw todo(pwnd->get_app());
+//   LRESULT control_view_impl::BaseControlExOnIdleUpdateCmdUI(WPARAM wParam, LPARAM)
+//   {
+//      sp(::user::interaction) pview = get_window();
+//
+//      // handle delay hide/show
+//      bool bVis = (pview->GetStyle() & WS_VISIBLE) != 0;
+//
+//      // the style must be visible
+//      if (bVis)
+//      {
+//         sp(::user::frame_window) pTarget = pview->GetOwner();
+//         if (pTarget == NULL)
+//            pTarget = pview->GetParentFrame();
+//         if (pTarget != NULL)
+//            BaseControlExOnUpdateCmdUI(pTarget, wParam != FALSE);
+//      }
+//
+//      return 0L;
+//
+//   }
+//
+//
+//   void control_view_impl::BaseControlExOnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
+//   {
+//      
+//      sp(::user::interaction) pview = get_window();
+//
+//      ::user::command & state = m_commandui;
+//
+//      state.m_puiOther = pview;
+//
+//      sp(::user::interaction) pwndIterator = pview->GetTopWindow();
+//
+//      sp(::user::interaction) pwnd;
+//
+//      sp(control) pcontrolex;
+//
+//      for (; pwndIterator != NULL; pwndIterator = pwndIterator->get_next_window())
+//      {
+//
+//         pwnd = pwndIterator->GetTopLevel();
+//
+//         pcontrolex = NULL;
+//
+//         if (pwnd != NULL)
+//         {
+//            //#ifdef WINDOWSEX
+//            //            pwnd->send_message(control::g_uiMessage, control::MessageParamGetBaseControlExPtr, (LPARAM) &pcontrolex);
+//            //#else
+//            throw todo(pwnd->get_app());
+//            //#endif
+//         }
+//         if (pcontrolex != NULL)
+//         {
+//            
+//            id idControl = pwnd->GetDlgCtrlId();
+//
+//            // xxx         state.m_nIndex = uiID;
+//            state.m_iCount = -1;
+//            state.m_id = m_commandui.GetControlCommand(idControl);
+//            state.m_bContinueRouting = FALSE;
+//
+//            // ignore separators
+//            if ((pwnd->GetStyle() & WS_VISIBLE))
+//            {
+//               // allow reflections
+//               if (pview->on_simple_command_probe(&state))
+//               {
+//                  continue;
+//               }
+//
+//               // allow the toolbar itself to have update handlers
+//               if (pview->on_simple_command_probe(&state))
+//                  //               {
+//                    //                state.DoUpdate(pTarget, bDisableIfNoHndler);
+//                  continue;
+//               //           }
+//
+//                          // allow the owner to process the update
+//               state.DoUpdate(pTarget, bDisableIfNoHndler);
+//            }
+//         }
+//      }
+//
+//      // update the dialog controls added to the toolbar
+//  //  UpdateDialogControls(pTarget, bDisableIfNoHndler);
+//   }
+//
+//
+//   sp(::user::interaction) control_view_impl::get_window()
+//   {
+//      return  (this);
+//   }
+//
+//
+//   bool control_view_impl::BaseControlExOnCommand(WPARAM wParam, LPARAM lParam)
+//   {
+//
+//      UNREFERENCED_PARAMETER(lParam);
+//
+//      if (get_window() != NULL)
+//      {
+//
+//#ifdef WINDOWS
+//
+//         UINT uiMessage = ((wParam >> 16) & 0xffff);
+//
+//
+//         if (uiMessage == BN_CLICKED)
+//         {
+//            //xxx id idCommand = m_commandui.GetControlCommand(wParam & 0xffff);
+//            //::user::command command(idCommand);
+//            //xxx get_window()->GetParentFrame()->_001SendCommand(&command);
+//         }
+//
 //#endif
-         }
-         if(pcontrolex != NULL)
-         {
-            id idControl = pwnd->GetDlgCtrlId();
-
-   // xxx         state.m_nIndex = uiID;
-            state.m_iCount = -1;
-            state.m_id = m_commandui.GetControlCommand(idControl);
-            state.m_bContinueRouting = FALSE;
-
-              // ignore separators
-              if ((pwnd->GetStyle() & WS_VISIBLE))
-              {
-                  // allow reflections
-                  if (pview->on_simple_update(&state))
-                  {
-                      continue;
-                  }
-
-                  // allow the toolbar itself to have update handlers
-                  if (pview->on_simple_update(&state))
-   //               {
-     //                state.DoUpdate(pTarget, bDisableIfNoHndler);
-                      continue;
-       //           }
-
-                  // allow the owner to process the update
-                  state.DoUpdate(pTarget, bDisableIfNoHndler);
-              }
-         }
-       }
-
-       // update the dialog controls added to the toolbar
-   //  UpdateDialogControls(pTarget, bDisableIfNoHndler);
-   }
-
-   sp(::user::interaction) control_view_impl::get_window()
-   {
-      return  (this);
-   }
-
-
-   bool control_view_impl::BaseControlExOnCommand(WPARAM wParam, LPARAM lParam)
-   {
-
-      UNREFERENCED_PARAMETER(lParam);
-
-      if(get_window() != NULL)
-      {
-
-#ifdef WINDOWS
-
-         UINT uiMessage = ((wParam >> 16) & 0xffff);
-
-
-         if(uiMessage == BN_CLICKED)
-         {
-            //xxx id idCommand = m_commandui.GetControlCommand(wParam & 0xffff);
-            //::user::command command(idCommand);
-            //xxx get_window()->GetParentFrame()->_001SendCommand(&command);
-         }
-
-#endif
-
-      }
-
-      return FALSE;
-
-   }
+//
+//      }
+//
+//      return FALSE;
+//
+//   }
 
 
 
@@ -663,33 +702,33 @@ namespace user
 
       index iHover = hit_test(ptCursor, eelement);
 
-      if(iHover != -1)
+      if (iHover != -1)
       {
 
-         if(m_iHover != iHover || Session.GetCapture() != pwnd)
+         if (m_iHover != iHover || Session.GetCapture() != pwnd)
          {
-            
+
             m_iHover = iHover;
-            
+
             pwnd->SetCapture();
 
             pwnd->RedrawWindow();
-            
+
          }
 
       }
       else
       {
-         
-         if(m_iHover != -1)
+
+         if (m_iHover != -1)
          {
-            
+
             m_iHover = -1;
 
             Session.ReleaseCapture();
 
             pwnd->RedrawWindow();
-            
+
          }
 
       }
@@ -703,12 +742,12 @@ namespace user
 
       index iHover = hit_test(pmouse->m_pt, m_eelementHover);
 
-      if(m_iHover != iHover)
+      if (m_iHover != iHover)
       {
 
          m_iHover = iHover;
 
-         if(m_iHover >= 0)
+         if (m_iHover >= 0)
          {
             track_mouse_leave();
          }
@@ -742,7 +781,7 @@ namespace user
 
       pwnd->GetWindowRect(rectWindow);
 
-      if(rectWindow.contains(ptScreen))
+      if (rectWindow.contains(ptScreen))
       {
 
          eelement = element_client;
@@ -762,16 +801,16 @@ namespace user
    }
 
 
-   control_cmd_ui::control_cmd_ui(class ::message::sender * psignal) :
-      ::command_ui(psignal)
+   control_cmd_ui::control_cmd_ui()
    {
+
    }
 
 
-   control_view_impl::control_view_impl() :
-      m_commandui(NULL)
-   {
-   }
+   //control_view_impl::control_view_impl() :
+   //   m_commandui(NULL)
+   //{
+   //}
 
 
    bool control::BaseOnControlEvent(::user::control_event * pevent)
@@ -797,14 +836,14 @@ namespace user
       if (pevent->m_bProcessed)
          return true;
 
-      if(get_form() != NULL && !IsAscendant(get_form()))
+      if (get_form() != NULL && !IsAscendant(get_form()))
       {
 
          pevent->m_bProcessed = get_form()->BaseOnControlEvent(pevent);
 
       }
 
-      if(pevent->m_bProcessed)
+      if (pevent->m_bProcessed)
          return true;
 
 
@@ -812,27 +851,27 @@ namespace user
 
    }
 
-   bool control::simple_process_system_message(::message::message * pobj,::user::e_event eevent)
+   bool control::simple_process_system_message(::message::message * pobj, ::user::e_event eevent)
    {
 
-      SCAST_PTR(::message::base,pbase,pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
 
       ::user::control_event ev;
 
-      ev.m_puie      = this;
+      ev.m_puie = this;
 
-      ev.m_eevent    = eevent;
+      ev.m_eevent = eevent;
 
-      ev.m_pobj      = pobj;
+      ev.m_pobj = pobj;
 
       BaseOnControlEvent(&ev);
 
       pobj->m_bRet = ev.m_bRet;
 
-      if(pobj->m_bRet)
+      if (pobj->m_bRet)
       {
 
-         if(pbase != NULL)
+         if (pbase != NULL)
          {
 
             pbase->set_lresult(1);
@@ -856,8 +895,8 @@ namespace user
    void control::_001OnKeyDown(::message::message * pobj)
    {
 
-       UNREFERENCED_PARAMETER(pobj);
-       //      SCAST_PTR(::message::key,pkey,pobj);
+      UNREFERENCED_PARAMETER(pobj);
+      //      SCAST_PTR(::message::key,pkey,pobj);
 
 
    }

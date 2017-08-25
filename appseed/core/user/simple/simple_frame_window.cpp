@@ -141,11 +141,11 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
    ON_WM_SIZE()
    ON_WM_CLOSE()
    ON_WM_NCCALCSIZE()
-   ON_UPDATE_COMMAND_UI(ID_VIEW_STATUS_BAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_STATUS_BAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_STATUS_BAR, OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_TOOLBAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_TOOLBAR, OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_REBAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_REBAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_REBAR, OnBarCheck) */
 //}}__MSG_MAP
 // // END_MESSAGE_MAP()
@@ -156,36 +156,36 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
 void simple_frame_window::install_message_routing(::message::sender * pinterface)
 {
    ::user::frame_window::install_message_routing(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
+   IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
 #ifdef WINDOWSEX
-   IGUI_WIN_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
+   IGUI_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
 #endif
-   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
-   IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
-   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &simple_frame_window::_001OnSize);
-   IGUI_WIN_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &simple_frame_window::_001OnSysCommand);
-   IGUI_WIN_MSG_LINK(WM_GETMINMAXINFO, pinterface, this, &simple_frame_window::_001OnGetMinMaxInfo);
-   IGUI_WIN_MSG_LINK(WM_USER + 184, pinterface, this, &simple_frame_window::_001OnUser184);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
-   IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
+   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
+   IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
+   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &simple_frame_window::_001OnSize);
+   IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &simple_frame_window::_001OnSysCommand);
+   IGUI_MSG_LINK(WM_GETMINMAXINFO, pinterface, this, &simple_frame_window::_001OnGetMinMaxInfo);
+   IGUI_MSG_LINK(WM_USER + 184, pinterface, this, &simple_frame_window::_001OnUser184);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
+   IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
 
-   connect_update_cmd_ui("transparent_frame", &simple_frame_window::_001OnUpdateToggleTransparentFrame);
+   connect_command_probe("transparent_frame", &simple_frame_window::_001OnUpdateToggleTransparentFrame);
    connect_command("transparent_frame", &simple_frame_window::_001OnToggleTransparentFrame);
 
-   connect_update_cmd_ui("view_full_screen", &simple_frame_window::_001OnUpdateViewFullScreen);
+   connect_command_probe("view_full_screen", &simple_frame_window::_001OnUpdateViewFullScreen);
    connect_command("view_full_screen", &simple_frame_window::_001OnViewFullScreen);
 
    connect_command("app_exit", &simple_frame_window::_001OnAppExit);
 
-   IGUI_WIN_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
-   IGUI_WIN_MSG_LINK(WM_ACTIVATEAPP, pinterface, this, &simple_frame_window::_001OnActivateApp);
-   IGUI_WIN_MSG_LINK(WM_ACTIVATE, pinterface, this, &simple_frame_window::_001OnActivate);
+   IGUI_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
+   IGUI_MSG_LINK(WM_ACTIVATEAPP, pinterface, this, &simple_frame_window::_001OnActivateApp);
+   IGUI_MSG_LINK(WM_ACTIVATE, pinterface, this, &simple_frame_window::_001OnActivate);
 
 #ifdef WINDOWSEX
 
-   IGUI_WIN_MSG_LINK(System.m_uiWindowsTaskbarCreatedMessage, pinterface, this, &simple_frame_window::_001OnTaskbarCreated);
+   IGUI_MSG_LINK(System.m_uiWindowsTaskbarCreatedMessage, pinterface, this, &simple_frame_window::_001OnTaskbarCreated);
 
 #endif
 
@@ -1007,10 +1007,10 @@ void simple_frame_window::_001OnMouseMove(::message::message * pobj)
 
 void simple_frame_window::_001OnUpdateViewFullScreen(::message::message * pobj)
 {
-   SCAST_PTR(::command_ui, pcommandui, pobj);
-   pcommandui->Enable();
-   pcommandui->_001SetCheck(WfiIsFullScreen());
-   pcommandui->m_bRet = true;
+   SCAST_PTR(::user::command, pcommand, pobj);
+   pcommand->Enable();
+   pcommand->_001SetCheck(WfiIsFullScreen());
+   pcommand->m_bRet = true;
 }
 
 
@@ -1092,9 +1092,9 @@ void simple_frame_window::_001OnToggleCustomFrame(::message::message * pobj)
 
 void simple_frame_window::_001OnUpdateToggleCustomFrame(::message::message * pobj)
 {
-   SCAST_PTR(::command_ui, pcommandui, pobj);
-   pcommandui->Enable();
-   pcommandui->_001SetCheck(m_bWindowFrame);
+   SCAST_PTR(::user::command, pcommand, pobj);
+   pcommand->Enable();
+   pcommand->_001SetCheck(m_bWindowFrame);
 }
 
 
@@ -1111,9 +1111,9 @@ void simple_frame_window::_001OnToggleTransparentFrame(::message::message * pobj
 void simple_frame_window::_001OnUpdateToggleTransparentFrame(::message::message * pobj)
 {
 
-   SCAST_PTR(::command_ui, pcommandui, pobj);
+   SCAST_PTR(::user::command, pcommand, pobj);
 
-   pcommandui->Enable();
+   pcommand->Enable();
 
    //if (GetTopLevelFrame()->frame_is_transparent())
    //{
@@ -1128,7 +1128,7 @@ void simple_frame_window::_001OnUpdateToggleTransparentFrame(::message::message 
 
    //}
 
-   pcommandui->_001SetCheck(frame_is_transparent());
+   pcommand->_001SetCheck(frame_is_transparent());
 
 }
 
@@ -1477,12 +1477,15 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
 
 }
 
+
 void simple_frame_window::_001OnNcActivate(::message::message * pobj)
 {
+
    SCAST_PTR(::message::nc_activate, pncactivate, pobj);
+
    // stay active if WF_STAYACTIVE bit is on
-   if (m_nFlags & WF_STAYACTIVE)
-      pncactivate->m_bActive = TRUE;
+   //if (m_nFlags & WF_STAYACTIVE)
+   //   pncactivate->m_bActive = TRUE;
 
    // but do not stay active if the window is disabled
    if (!is_window_enabled())
@@ -1564,7 +1567,7 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
    //   LoadAccelTable(MAKEINTRESOURCE(nIDResource));
 
    if (pcreate == NULL)   // send initial update
-      SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+      send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
    return TRUE;
 
@@ -1585,17 +1588,17 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
 
    SCAST_PTR(::message::base, pbase, pobj);
 
-   if(pbase->m_uiMessage == message_display_change)
+   if(pbase->m_id == message_display_change)
    {
 
       Wfi();
 
    }
-   else if (pbase->m_uiMessage == WM_MOUSEMOVE)
+   else if (pbase->m_id == WM_MOUSEMOVE)
    {
 
    }
-   else if(pbase->m_uiMessage == WM_KEYDOWN || pbase->m_uiMessage == WM_SYSKEYDOWN)
+   else if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -1641,7 +1644,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
       }
 
    }
-   else if(pbase->m_uiMessage == WM_KEYUP || pbase->m_uiMessage == WM_SYSKEYUP)
+   else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -2346,61 +2349,131 @@ bool simple_frame_window::create_window(const char * lpszClassName,const char * 
 }
 
 
-
-
-
-bool simple_frame_window::_001OnCmdMsg(::user::command * pcmdmsg)
+void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
 {
 
-   if (m_workset._001OnCmdMsg(pcmdmsg))
-      return true;
+   m_workset._001OnCmdMsg(pcommand);
 
-   if (pcmdmsg->m_pcommandtargetSource == this)
+   if (pcommand->m_bRet)
+   {
+
+      return;
+
+   }
+
+   if (pcommand->m_pcommandtargetSource == this)
    {
 
       // then pump through frame
-      if (::user::frame_window::_001OnCmdMsg(pcmdmsg))
-         return true;
+      ::user::frame_window::_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
 
    }
 
    // pump through current ::user::impact FIRST
    sp(::user::impact) pview = GetActiveView();
-   if (pview != NULL && pview->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
+
+   if (pview != NULL)
+   {
+
+      pview->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
 
    pview = get_child_by_id("pane_first");
-   if (pview != NULL && pview->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
 
-   if (pcmdmsg->m_pcommandtargetSource != this)
+   if (pview != NULL)
+   {
+
+      pview->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
+   if (pcommand->m_pcommandtargetSource != this)
    {
 
       // then pump through frame
-      if (::user::frame_window::_001OnCmdMsg(pcmdmsg))
-         return true;
+      ::user::frame_window::_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
 
    }
 
    // then pump through parent
    sp(::user::interaction) puiParent = GetParent();
-   if (puiParent != NULL && puiParent->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
 
-   // last but not least, pump through cast
-   ::core::application* pApp = get_app()->m_pcoreapp;
-   if (pApp != NULL && pApp->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
-
-   sp(command_target_interface) pcommandtargetinterface = Session.get_keyboard_focus();
-
-   if (pcommandtargetinterface != NULL)
+   if (puiParent != NULL)
    {
-      if (pcommandtargetinterface->_001OnCmdMsg(pcmdmsg))
-         return TRUE;
+
+      puiParent->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
    }
 
-   return FALSE;
+   // last but not least, pump through cast
+   ::aura::application * papp = get_app();
+
+   if (papp != NULL)
+   {
+
+      papp->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
+   sp(command_target) ptarget = Session.get_keyboard_focus();
+
+   if (ptarget != NULL)
+   {
+
+      ptarget->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
 }
 
 
@@ -2603,9 +2676,9 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
       {
          // Excel will try to Activate itself when it receives a
          // WM_NCACTIVATE so we need to keep it from doing that here.
-         m_nFlags |= WF_KEEPMINIACTIVE;
+         //m_nFlags |= WF_KEEPMINIACTIVE;
          pParent->send_message(WM_NCACTIVATE, TRUE);
-         m_nFlags &= ~WF_KEEPMINIACTIVE;
+         //m_nFlags &= ~WF_KEEPMINIACTIVE;
       }
       else
       {
@@ -2707,7 +2780,7 @@ void simple_frame_window::guserbaseOnInitialUpdate(::message::message * pobj)
       if (pfiu->m_bMakeVisible)
       {
          // send initial update to all views (and other controls) in the frame
-         pframe->SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+         pframe->send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
          // give ::user::impact a chance to save the focus (CFormView needs this)
          if (pview != NULL)

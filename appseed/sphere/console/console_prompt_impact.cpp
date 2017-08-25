@@ -33,12 +33,12 @@ namespace console
    void prompt_impact::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_routing(pdispatch);
+      ::user::impact::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&prompt_impact::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pdispatch,this,&prompt_impact::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP,pdispatch,this,&prompt_impact::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW,pdispatch,this,&prompt_impact::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&prompt_impact::_001OnCreate);
+      IGUI_MSG_LINK(WM_KEYDOWN,psender,this,&prompt_impact::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP,psender,this,&prompt_impact::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_SHOWWINDOW,psender,this,&prompt_impact::_001OnShowWindow);
 
    }
 

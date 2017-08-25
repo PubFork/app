@@ -728,6 +728,8 @@
     </ClCompile>
     <ClCompile Include="aura\install\windows\install_windows_win.cpp">
     </ClCompile>
+    <ClCompile Include="aura\message\message_id.cpp" />
+    <ClCompile Include="aura\message\message_message.cpp" />
     <ClCompile Include="aura\message\message_receiver.cpp" />
     <ClCompile Include="aura\message\message_sender.cpp" />
     <ClCompile Include="aura\node\windows\windows_timer.cpp" />
@@ -989,7 +991,7 @@
     <ClInclude Include="aura\aura\aura_application_common.h" />
     <ClInclude Include="aura\aura\aura_application_heap.h" />
     <ClInclude Include="aura\aura\aura_application_ptra.h" />
-    <ClInclude Include="aura\aura\aura_application_signal_details.h" />
+    <ClInclude Include="aura\aura\aura_application_message.h" />
     <ClInclude Include="aura\aura\aura_app_core.h" />
     <ClInclude Include="aura\aura\aura_app_launcher.h" />
     <ClInclude Include="aura\aura\aura_assert_running_task.h" />
@@ -1235,6 +1237,7 @@
     <ClInclude Include="aura\message\message_receiver.h" />
     <ClInclude Include="aura\message\message_route.h" />
     <ClInclude Include="aura\message\message_sender.h" />
+    <ClInclude Include="aura\message\message_listener_smart_pointer_array.h" />
     <ClInclude Include="aura\message\message_timer.h" />
     <ClInclude Include="aura\node\ansios\ansios.h">
     </ClInclude>
@@ -1390,7 +1393,6 @@
     <ClCompile Include="aura\aura\aura_assert_running_task.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui.cpp" />
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
-    <ClCompile Include="aura\aura\aura_command_target_interface.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui_probe.cpp" />
     <ClCompile Include="aura\aura\aura_console_window.cpp" />
     <ClCompile Include="aura\aura\aura_create_context.cpp" />
@@ -1953,7 +1955,7 @@
     <ClInclude Include="primitive\primitive_relation_set.h" />
     <ClInclude Include="primitive\primitive_request_interface.h" />
     <ClInclude Include="primitive\primitive_request_signal.h" />
-    <ClInclude Include="primitive\primitive_signal.h" />
+    <ClInclude Include="primitive\aaa_want_to_remove_primitive_signal.h" />
     <ClInclude Include="primitive\primitive_type.h" />
     <ClInclude Include="primitive\primitive_var2.h" />
     <ClInclude Include="primitive\str\str.h" />
@@ -2703,7 +2705,7 @@
     </ClCompile>
     <ClCompile Include="primitive\primitive_shared_memory.cpp">
     </ClCompile>
-    <ClCompile Include="primitive\primitive_signal.cpp">
+    <ClCompile Include="primitive\aaa_want_to_remove_primitive_signal.cpp">
     </ClCompile>
     <ClCompile Include="primitive\primitive_type.cpp">
     </ClCompile>

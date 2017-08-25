@@ -102,11 +102,11 @@ void MetaControlBox::install_message_routing(::message::sender *pinterface)
    
    ::user::wndfrm::frame::control_box::install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &MetaControlBox::_001OnShowWindow);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &MetaControlBox::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &MetaControlBox::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &MetaControlBox::_001OnSize);
-//   //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &MetaControlBox::_001OnTimer);
+   IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &MetaControlBox::_001OnShowWindow);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &MetaControlBox::_001OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &MetaControlBox::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &MetaControlBox::_001OnSize);
+//   //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &MetaControlBox::_001OnTimer);
 
 }
 

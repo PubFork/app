@@ -131,37 +131,37 @@ namespace user
       control::install_message_routing(pinterface);
 
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &plain_edit::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &plain_edit::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &plain_edit::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &plain_edit::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &plain_edit::_001OnRButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &plain_edit::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &plain_edit::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &plain_edit::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &plain_edit::_001OnKeyUp);
-      //IGUI_WIN_MSG_LINK(WM_CHAR,pinterface,this,&plain_edit::_001OnChar);
-      IGUI_WIN_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &plain_edit::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &plain_edit::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &plain_edit::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &plain_edit::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &plain_edit::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &plain_edit::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &plain_edit::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &plain_edit::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &plain_edit::_001OnKeyUp);
+      //IGUI_MSG_LINK(WM_CHAR,pinterface,this,&plain_edit::_001OnChar);
+      IGUI_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
-
-
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &::user::plain_edit::_001OnHScroll);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
 
 
-      //connect_update_cmd_ui("edit_undo", &plain_edit::_001OnUpdateEditUndo);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &::user::plain_edit::_001OnHScroll);
+
+
+      //connect_command_probe("edit_undo", &plain_edit::_001OnUpdateEditUndo);
       //connect_command("edit_undo", &plain_edit::_001OnEditUndo);
-      //connect_update_cmd_ui("edit_redo", &plain_edit::_001OnUpdateEditRedo);
+      //connect_command_probe("edit_redo", &plain_edit::_001OnUpdateEditRedo);
       //connect_command("edit_redo", &plain_edit::_001OnEditRedo);
 
-      connect_update_cmd_ui("edit_cut", &plain_edit::_001OnUpdateEditCut);
+      connect_command_probe("edit_cut", &plain_edit::_001OnUpdateEditCut);
       connect_command("edit_cut", &plain_edit::_001OnEditCut);
-      connect_update_cmd_ui("edit_copy", &plain_edit::_001OnUpdateEditCopy);
+      connect_command_probe("edit_copy", &plain_edit::_001OnUpdateEditCopy);
       connect_command("edit_copy", &plain_edit::_001OnEditCopy);
-      connect_update_cmd_ui("edit_paste", &plain_edit::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &plain_edit::_001OnUpdateEditPaste);
       connect_command("edit_paste", &plain_edit::_001OnEditPaste);
-      connect_update_cmd_ui("edit_delete", &plain_edit::_001OnUpdateEditDelete);
+      connect_command_probe("edit_delete", &plain_edit::_001OnUpdateEditDelete);
       connect_command("edit_delete", &plain_edit::_001OnEditDelete);
 
    }
@@ -1035,7 +1035,7 @@ namespace user
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      if (pbase->m_uiMessage == WM_KEYDOWN)
+      if (pbase->m_id == WM_KEYDOWN)
       {
 
          pbase->m_bRet = true;
@@ -1043,7 +1043,7 @@ namespace user
          _001OnKeyDown(pbase);
 
       }
-      else if (pbase->m_uiMessage == WM_KEYUP)
+      else if (pbase->m_id == WM_KEYUP)
       {
 
          pbase->m_bRet = true;
@@ -1051,7 +1051,7 @@ namespace user
          _001OnKeyUp(pbase);
 
       }
-      else if (pbase->m_uiMessage == WM_CHAR)
+      else if (pbase->m_id == WM_CHAR)
       {
 
          pbase->m_bRet = true;
@@ -4680,13 +4680,13 @@ namespace user
    void plain_edit::_001OnUpdateEditCut(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 
@@ -4713,13 +4713,13 @@ namespace user
    void plain_edit::_001OnUpdateEditCopy(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 
@@ -4738,9 +4738,9 @@ namespace user
    void plain_edit::_001OnUpdateEditPaste(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pupdatecmdui->Enable(Session.copydesk().get_plain_text().has_char());
+      pcommand->Enable(Session.copydesk().get_plain_text().has_char());
 
    }
 
@@ -4764,13 +4764,13 @@ namespace user
    void plain_edit::_001OnUpdateEditDelete(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 

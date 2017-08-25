@@ -32,7 +32,7 @@ namespace core
 
       ::userfs::userfs *                     m_puserfs;
 
-      class signal                           m_signalAppLanguageChange;
+      // class signal                           m_signalAppLanguageChange;
       string                                 m_strHelpFilePath;
 
 #ifdef WINDOWS
@@ -188,10 +188,10 @@ namespace core
       virtual LRESULT GetPaintMsgProc(int32_t nCode,WPARAM wParam,LPARAM lParam);
 
 
-      void OnUpdateRecentFileMenu(command_ui * pcommandui);
+      void OnUpdateRecentFileMenu(::user::command * pcommand);
 
-      virtual DECL_GEN_SIGNAL(OnAppLanguage);
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      //virtual void send_app_language_changed();
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
 
 

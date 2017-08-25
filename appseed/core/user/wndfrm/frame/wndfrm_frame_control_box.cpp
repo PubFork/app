@@ -343,14 +343,14 @@ namespace user
 
             ::user::interaction::install_message_routing(pinterface);
 
-            IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &control_box::_001OnShowWindow);
-//            //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &control_box::_001OnTimer);
-            IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &control_box::_001OnCreate);
-            IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &control_box::_001OnMouseMove);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &control_box::_001OnLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &control_box::_001OnLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_MOVE, pinterface, this, &control_box::_001OnMove);
-            IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &control_box::_001OnSize);
+            IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &control_box::_001OnShowWindow);
+//            //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &control_box::_001OnTimer);
+            IGUI_MSG_LINK(WM_CREATE, pinterface, this, &control_box::_001OnCreate);
+            IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &control_box::_001OnMouseMove);
+            IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &control_box::_001OnLButtonDown);
+            IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &control_box::_001OnLButtonUp);
+            IGUI_MSG_LINK(WM_MOVE, pinterface, this, &control_box::_001OnMove);
+            IGUI_MSG_LINK(WM_SIZE, pinterface, this, &control_box::_001OnSize);
 
          }
 

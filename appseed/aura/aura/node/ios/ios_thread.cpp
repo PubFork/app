@@ -663,13 +663,13 @@ namespace ios
 //   __STATIC inline WINBOOL IsEnterKey(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
-//      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+//      return pbase->m_id == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 //   }
 //
 //   __STATIC inline WINBOOL IsButtonUp(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
-//      return pbase->m_uiMessage == WM_LBUTTONUP;
+//      return pbase->m_id == WM_LBUTTONUP;
 //   }
 //
 //   void thread::ProcessMessageFilter(int32_t code, ::message::message * pobj)
@@ -764,7 +764,7 @@ namespace ios
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
 //      // special message which identifies the window as using AfxWndProc
-////      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
+////      if(pbase->m_id == WM_QUERYAFXWNDPROC)
 //  //    {
 //    //     pbase->set_lresult(0);
 //      //   return;
@@ -777,7 +777,7 @@ namespace ios
 //
 //       if(pwindow == NULL || IOS_WINDOW(pwindow)->get_handle() != pbase->m_hwnd)
 //       {
-//       pbase->set_lresult(::DefWindowProc(pbase->m_hwnd, pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+//       pbase->set_lresult(::DefWindowProc(pbase->m_hwnd, pbase->m_id, pbase->m_wparam, pbase->m_lparam));
 //       return;
 //       }*/
 //
@@ -790,7 +790,7 @@ namespace ios
 //         // special case for WM_INITDIALOG
 //         rect rectOld;
 //         DWORD dwStyle = 0;
-//         if(pbase->m_uiMessage == WM_INITDIALOG)
+//         if(pbase->m_id == WM_INITDIALOG)
 //            __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 //
 //         // delegate to object's message_handler
@@ -804,7 +804,7 @@ namespace ios
 //         }
 //
 //         // more special case for WM_INITDIALOG
-//         if(pbase->m_uiMessage == WM_INITDIALOG)
+//         if(pbase->m_id == WM_INITDIALOG)
 //            __post_init_dialog(pwindow, rectOld, dwStyle);
 //      }
 //      catch(const ::exception::exception & e)

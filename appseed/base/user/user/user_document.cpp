@@ -46,18 +46,25 @@ namespace user
    }
 
 
-
-   bool document::_001OnCmdMsg(::user::command * pcommand)
+   void document::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target::_001OnCmdMsg(pcommand))
-         return TRUE;
+      
+      command_target::_001OnCmdMsg(pcommand);
+
+      if(pcommand->m_bRet)
+         return;
 
       // otherwise check template
-      if (m_pimpactsystem != NULL &&
-            m_pimpactsystem->_001OnCmdMsg(pcommand))
-         return TRUE;
+      if (m_pimpactsystem != NULL)
+      {
 
-      return FALSE;
+         m_pimpactsystem->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
+            return;
+
+      }
+
    }
 
 

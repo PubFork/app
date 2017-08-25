@@ -23,19 +23,19 @@ namespace programming
    void application::on_application_signal(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::application_signal_details, psignal, pobj);
+      SCAST_PTR(::aura::application_message, psignal, pobj);
 
-      if (psignal->m_esignal == ::aura::application_signal_process_initialize)
+      if (psignal->m_esignal == ::aura::application_message_process_initialize)
       {
 
       }
-      else if (psignal->m_esignal == ::aura::application_signal_initialize1)
+      else if (psignal->m_esignal == ::aura::application_message_initialize1)
       {
 
 
 
       }
-      else  if (psignal->m_esignal == ::aura::application_signal_exit_instance)
+      else  if (psignal->m_esignal == ::aura::application_message_exit_instance)
       {
 
       }

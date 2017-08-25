@@ -655,14 +655,14 @@ namespace user
       }
    }
 
-   void form::install_message_routing( ::message::sender *pinterface)
+   void form::install_message_routing( ::message::sender *psender)
    {
-      ::user::form_window::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &form::_001OnCreate);
-      IGUI_MSG_LINK(::message::message_pos_create, pinterface, this, &form::_000OnPosCreate);
-      IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, pinterface, this, &form::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+      ::user::form_window::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &form::_001OnCreate);
+      IGUI_MSG_LINK(::message::message_pos_create, psender, this, &form::_000OnPosCreate);
+      MSG_TYPE_LINK(::message::type_language, psender, this, &form::_001OnAppLanguage);
+      //IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &::user::interaction::_001OnKeyDown);
+      //IGUI_MSG_LINK(WM_KEYUP, psender, this, &::user::interaction::_001OnKeyUp);
 
    }
 
@@ -671,9 +671,12 @@ namespace user
       selection.add_item(id);
    }
 
-   bool form::on_simple_action(::user::command * pcommand)
+   
+   void form::on_simple_command(::user::command * pcommand)
    {
-      return control::on_simple_action(id);
+      
+      control::on_simple_command(pcommand);
+
    }
 
 

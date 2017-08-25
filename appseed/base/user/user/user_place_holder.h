@@ -48,7 +48,7 @@ namespace user
 
       virtual bool _001IsBackgroundBypass();
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
 
    };

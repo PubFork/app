@@ -23,7 +23,8 @@ namespace message
 
       //base(class ::message::sender * psignal);
       //base(::aura::application * papp, class ::message::sender * psignal = NULL);
-      base(::aura::application * papp);
+      //base();
+      base(::aura::application * papp = NULL);
       base(::aura::application * papp, ::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult);
       base(const base & base);
       virtual ~base();

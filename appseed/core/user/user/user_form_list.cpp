@@ -33,13 +33,13 @@ namespace user
 
    void form_list::install_message_routing(::message::sender *pinterface)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_list::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_list::_001OnKeyDown);
 
       form_mesh::install_message_routing(pinterface);
       list::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &form_list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &form_list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &form_list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &form_list::_001OnHScroll);
 
    }
 

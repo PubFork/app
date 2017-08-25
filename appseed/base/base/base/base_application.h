@@ -56,6 +56,14 @@ namespace base
       virtual void add_frame(::user::interaction * pwnd);
       virtual void remove_frame(::user::interaction * pwnd);
 
+      virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
+      virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
+
+
+      virtual void send_language_change_message();
+
+
+
       //virtual string get_cred(const string & strRequestUrl,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive);
 
       virtual ::user::user * create_user();

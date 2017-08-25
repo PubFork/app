@@ -17,7 +17,7 @@ namespace userfs
    void main_view::install_message_routing(::message::sender * pinterface)
    {
       ::user::split_view::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &main_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &main_view::_001OnCreate);
    }
 
    void main_view::_001OnCreate(::message::message * pobj)

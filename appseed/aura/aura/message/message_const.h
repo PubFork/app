@@ -19,7 +19,8 @@ namespace message
       type_html,
       type_language,
       type_reflect_id,
-      type_user = 1024,
+      type_user,
+      type_attribute
 
 
    };

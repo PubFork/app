@@ -29,8 +29,8 @@ namespace user
       
       USER_MESSAGE_LINK(message_create, pinterface, this, &split_view::_001OnCreate);
 
-      //IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
-      //IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_view::_001OnShowWindow);
+      //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
+      //IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_view::_001OnShowWindow);
 
    }
 

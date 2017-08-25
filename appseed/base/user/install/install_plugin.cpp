@@ -128,9 +128,12 @@ namespace install
    }
 
 
-   IMPL_IMH(plugin,::simple_ui::interaction)
-      MSG_LBUTTONUP
-   END_IMH
+   void plugin::install_message_routing(::message::sender * psender)
+   {
+
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &plugin::_001OnLButtonDown);
+
+   }
 
 
    bool plugin::set_host(::hotplugin::host * phost)

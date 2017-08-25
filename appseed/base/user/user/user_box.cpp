@@ -26,9 +26,9 @@ namespace user
       ::simple_ui::interaction::install_message_routing(pinterface);
       scroll::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &box::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &box::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &box::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &box::_001OnCreate);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &box::_001OnSize);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &box::_001OnShowWindow);
 
    }
 

@@ -65,18 +65,18 @@ namespace user
    void menu::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_routing(pdispatch);
+      ::user::control::install_message_routing(psender);
       
-      IGUI_WIN_MSG_LINK(WM_IDLEUPDATECMDUI  , pdispatch, this, &menu::_001OnIdleUpdateCmdUI);
-      IGUI_WIN_MSG_LINK(WM_CREATE           , pdispatch, this, &menu::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY          , pdispatch, this, &menu::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_NCACTIVATE       , pdispatch, this, &menu::_001OnNcActivate);
-      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE       , pdispatch, this, &menu::_001OnNcCalcSize);
-      IGUI_WIN_MSG_LINK(WM_ENABLE           , pdispatch, this, &menu::_001OnEnable);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW       , pdispatch, this, &menu::_001OnShowWindow);
+      //IGUI_MSG_LINK(WM_IDLEUPDATECMDUI  , psender, this, &menu::_001OnIdleUpdateCmdUI);
+      IGUI_MSG_LINK(WM_CREATE           , psender, this, &menu::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY          , psender, this, &menu::_001OnDestroy);
+      IGUI_MSG_LINK(WM_NCACTIVATE       , psender, this, &menu::_001OnNcActivate);
+      IGUI_MSG_LINK(WM_NCCALCSIZE       , psender, this, &menu::_001OnNcCalcSize);
+      IGUI_MSG_LINK(WM_ENABLE           , psender, this, &menu::_001OnEnable);
+      IGUI_MSG_LINK(WM_SHOWWINDOW       , psender, this, &menu::_001OnShowWindow);
       
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &menu::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pdispatch, this, &menu::_001OnDestroy);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &menu::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_DESTROY, psender, this, &menu::_001OnDestroy);
 
 
    }
@@ -123,6 +123,46 @@ namespace user
       return m_pitem->create_menu(straCommand, straCommandTitle);
 
    }
+
+
+   void menu::destroy_menu()
+   {
+
+      try
+      {
+
+         interaction_spa uiptra = m_uiptraChild;
+
+         for (index i = 0; i < uiptra.get_count(); i++)
+         {
+
+            try
+            {
+
+               uiptra[i]->DestroyWindow();
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      m_uiptraChild.remove_all();
+
+      m_pitem.release();
+
+   }
+
+
 
    
    bool menu::load_menu(::xml::node * lpnode)
@@ -382,7 +422,7 @@ namespace user
 
       m_bInline = true;
 
-      update_command_ui(m_pitem);
+      update_command(m_pitem);
 
       //      create_buttons(m_pitem);
 
@@ -396,7 +436,7 @@ namespace user
 
       set_need_layout();
 
-      SetTimer(::user::timer_update_menu_command_ui, 300, NULL);
+      SetTimer(::user::timer_command_probe, 300, NULL);
 
       return true;
 
@@ -628,7 +668,7 @@ namespace user
       
       SetWindowPos(ZORDER_TOPMOST,rectWindow,SWP_FRAMECHANGED | SWP_SHOWWINDOW);
       
-      SetTimer(::user::timer_update_menu_command_ui,100,NULL);
+      SetTimer(::user::timer_command_probe, 100, NULL);
       
    }
    
@@ -720,7 +760,7 @@ namespace user
                   if (puiTarget != NULL)
                   {
                      
-                        ::user::command command(idCommand);
+                     ::user::command command(pevent->m_puie->m_id);
 
                      puiTarget->_001SendCommand(&command);
                      
@@ -732,7 +772,7 @@ namespace user
                   
                   ::user::interaction * puiTarget = get_target_window();
                   
-                  id id = pevent->m_puie->m_id;
+                  id idCommand = pevent->m_puie->m_id;
                   
                   defer_close();
                   
@@ -858,10 +898,10 @@ namespace user
 
    //   ::user::menu::_001OnTimer(ptimer);
 
-   //   if (ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
+   //   if (ptimer->m_nIDEvent == ::user::timer_update_menu_::user::command)
    //   {
 
-   //      update_command_ui(m_pitem);
+   //      update_::user::command(m_pitem);
 
    //      RedrawWindow();
 
@@ -915,14 +955,14 @@ namespace user
          m_idTimerMenu.is_empty();
          
       }
-      else if(ptimer->m_nIDEvent == ::user::timer_update_menu_command_ui)
+      else if(ptimer->m_nIDEvent == ::user::timer_command_probe)
       {
          
-         update_command_ui(m_pitem);
+         update_command(m_pitem);
 
          //if(spitema != NULL)
          //{
-         //   ::user::menu_command_ui commandui(get_app());
+         //   ::user::command commandui(get_app());
          //   commandui.m_pitema          = spitema;
          //   for(int32_t i = 0; i < spitema->get_size(); i++)
          //   {
@@ -935,8 +975,8 @@ namespace user
          //      
          //      if(puiTarget != NULL)
          //      {
-         //         /* xxx if(pwndParent->on_simple_action(0,
-         //          MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+         //         /* xxx if(pwndParent->on_simple_command(0,
+         //          MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
          //          &commandui, NULL))
          //          continue;*/
          //         if(puiTarget->_001SendUpdateCmdUi(&commandui))
@@ -963,43 +1003,43 @@ namespace user
    
    
    
-   void menu::_001OnIdleUpdateCmdUI(::message::message * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-      //      SCAST_PTR(::message::base, pbase, pobj);
+//    void menu::_001OnIdleUpdateCmdUI(::message::message * pobj)
+//    {
+//       UNREFERENCED_PARAMETER(pobj);
+//       //      SCAST_PTR(::message::base, pbase, pobj);
       
-      sp(::user::menu_item) pitemThis = get_item();
+//       sp(::user::menu_item) pitemThis = get_item();
       
-      sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
+//       sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
       
-      if(spitema != NULL)
-      {
-         ::user::menu_command_ui commandui(get_app());
-         commandui.m_pitema          = spitema;
-         for(int32_t i = 0; i < spitema->get_size(); i++)
-         {
+//       if(spitema != NULL)
+//       {
+//          ::user::command commandui(get_app());
+//          commandui.m_pitema          = spitema;
+//          for(int32_t i = 0; i < spitema->get_size(); i++)
+//          {
             
-            commandui.m_iIndex    = i;
-            commandui.m_id        = spitema->element_at(i)->m_id;
-            commandui.m_pOther    = spitema->element_at(i)->m_pui;
+//             commandui.m_iIndex    = i;
+//             commandui.m_id        = spitema->element_at(i)->m_id;
+//             commandui.m_pOther    = spitema->element_at(i)->m_pui;
             
-            sp(::user::interaction) pwndParent = m_puiNotify;
-            if(pwndParent != NULL)
-            {
-               /*
-                if(pwndParent->on_simple_action(0,
-                MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
-                &commandui, NULL))
-                continue;
-                */
+//             sp(::user::interaction) pwndParent = m_puiNotify;
+//             if(pwndParent != NULL)
+//             {
+//                /*
+//                 if(pwndParent->on_simple_command(0,
+//                 MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
+//                 &commandui, NULL))
+//                 continue;
+//                 */
                
-               if(pwndParent->_001SendUpdateCmdUi(&commandui))
-                  continue;
-            }
+//                if(pwndParent->_001SendUpdateCmdUi(&commandui))
+//                   continue;
+//             }
             
-         }
-      }
-   }
+//          }
+//       }
+//    }
    
    
    void menu::_001OnEnable(::message::message * pobj)
@@ -1042,7 +1082,7 @@ namespace user
       if (!m_bInline)
       {
 
-         destroy_menu();
+         DestroyWindow();
 
       }
 
@@ -1170,7 +1210,7 @@ namespace user
 
 
    
-   void menu::update_command_ui(menu_item * pitemParent)
+   void menu::update_command(menu_item * pitemParent)
    {
 
       if (m_puiNotify == NULL)
@@ -1194,23 +1234,24 @@ namespace user
 
       }
 
-      ::user::menu_command_ui commandui(get_app());
+      ::user::menu_command command(get_app());
 
-      commandui.m_pitema = pitemParent->m_spitema;
+      command.m_pitema = pitemParent->m_spitema;
 
-      for (int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
+      command.m_iCount = pitemParent->m_spitema->get_size();
+
+      for (command.m_iIndex = 0; command.m_iIndex < command.m_iCount; command.m_iIndex++)
       {
 
-         menu_item * pitem = pitemParent->m_spitema->element_at(i);
+         menu_item * pitem = pitemParent->m_spitema->element_at(command.m_iIndex);
 
-         commandui.m_iIndex = i;
-         commandui.m_id = pitem->m_id;
-         commandui.m_pOther = pitem->m_pui;
+         command.m_id = pitem->m_id;
 
-         if (m_puiNotify->on_simple_update(&commandui))
-            continue;
+         command.m_puiOther = pitem->m_pui;
 
-         update_command_ui(pitem);
+         m_puiNotify->on_simple_command_probe(&command);
+
+         pitem->m_pmenu->update_command(pitem);
 
       }
 

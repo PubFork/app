@@ -23,13 +23,13 @@ namespace filemanager
    void impact::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_routing(pdispatch);
+      ::user::impact::install_message_routing(psender);
       
-      connect_update_cmd_ui("edit_paste",&impact::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste",&impact::_001OnUpdateEditPaste);
 
       connect_command("edit_paste",&impact::_001OnEditPaste);
 
-      IGUI_WIN_MSG_LINK(WM_APP + 1024,pdispatch,this,&impact::_001OnOperationDocMessage);
+      IGUI_MSG_LINK(WM_APP + 1024,psender,this,&impact::_001OnOperationDocMessage);
 
    }
 
@@ -163,8 +163,8 @@ namespace filemanager
 
    void impact::_001OnUpdateEditPaste(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui,pcommandui,pobj);
-      pcommandui->Enable(Session.copydesk().get_file_count() > 0);
+      SCAST_PTR(::user::command,pcommand,pobj);
+      pcommand->Enable(Session.copydesk().get_file_count() > 0);
       pobj->m_bRet = true;
    }
 

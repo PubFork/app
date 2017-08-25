@@ -26,9 +26,9 @@ namespace user
    void place_holder::install_message_routing(::message::sender * psender)
    {
       
-      ::user::interaction::install_message_routing(pdispatch);
+      ::user::interaction::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &place_holder::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &place_holder::_001OnShowWindow);
 
    }
 
@@ -297,19 +297,28 @@ namespace user
 
    }
 
-   bool place_holder::_001OnCmdMsg(::user::command * pcommand)
+   
+   void place_holder::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // then pump through frame
-      if(::user::interaction::_001OnCmdMsg(pcommand))
-         return TRUE;
+      ::user::interaction::_001OnCmdMsg(pcommand);
+
+      if(pcommand->m_bRet)
+         return;
 
       // then pump through parent
       sp(::user::interaction) puiParent = GetParent();
-      if(puiParent != NULL && puiParent->_001OnCmdMsg(pcommand))
-         return TRUE;
 
-      return false;
+      if (puiParent != NULL)
+      {
+
+         puiParent->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
+            return;
+
+      }
 
    }
 

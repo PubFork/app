@@ -25,8 +25,8 @@ namespace filemanager
    void folder_list::install_message_routing(::message::sender * pinterface)
    {
       ::user::impact::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &folder_list::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CANCELMODE, pinterface, this, &folder_list::_001OnCancelMode);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &folder_list::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CANCELMODE, pinterface, this, &folder_list::_001OnCancelMode);
    }
 
 

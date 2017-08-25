@@ -5,7 +5,8 @@ namespace user
 {
 
 
-   command::command()
+   command::command(::aura::application * papp) :
+      ::message::base(papp)
    {
 
       common_construct();
@@ -13,48 +14,48 @@ namespace user
    }
 
 
-   command::command(::message::sender * psender) :
-      ::message::message(psender)
-   {
+   //command::command(::message::sender * psender) :
+   //   ::message::message(psender)
+   //{
 
-      common_construct();
+   //   common_construct();
 
-   }
+   //}
 
    command::command(id id)
    {
 
       common_construct();
-      m_etype                       = type_command;
-      m_id.m_etype = ::message::type_command;
+      m_id.m_emessagetype           = ::message::type_command;
+      //m_id.m_etype = ::message::type_command;
       m_id                          = id;
-      m_bCheckChanged               = false;
+      //m_bCheckChanged               = false;
       m_bRadioChanged               = false;
 
    }
 
 
-   command::command(::command_ui * pcommandui)
-   {
+   //command::command(::user::command * pcommand)
+   //{
 
-      m_pcommandui                  = NULL;
-      m_pcommandtargetSource        = NULL;
-      m_etype                       = type_command_ui;
-      m_pcommandui                  = pcommandui;
-      m_bCheckChanged               = false;
-      m_bRadioChanged               = false;
+   //   m_pcommand                  = NULL;
+   //   m_pcommandtargetSource        = NULL;
+   //   m_etype                       = type_::user::command;
+   //   m_pcommand                  = pcommand;
+   //   m_bCheckChanged               = false;
+   //   m_bRadioChanged               = false;
 
-   }
+   //}
 
    void command::common_construct()
    {
 
-      m_estate = state_none;
+      //m_estate = state_none;
       m_pcommandtargetSource = NULL;
-      m_pcommandui = NULL;
+      //m_pcommand = NULL;
       m_iIndex = -1;
       m_iCount = -1;
-      m_bEnabled = false;
+      m_bEnable = false;
       m_echeck = ::check::undefined;
       m_bRadio = false;
       m_bRadioChanged = false;
@@ -85,86 +86,188 @@ namespace user
 
 
 
-   command::command()
+   //command::command()
+   //{
+
+   //   m_ecommand = command_default;
+
+   //}
+
+   //command::command(const ::command::command & command)
+   //{
+
+   //   operator       = (command);
+
+   //}
+
+
+   //command::command(::aura::application * papp) :
+   //   ::object(papp)
+   //{
+
+   //   m_ecommand = command_default;
+
+   //}
+
+   //command::command(::aura::application * papp, e_command ecommand) :
+   //   ::object(papp)
+   //{
+
+   //   m_ecommand = ecommand;
+
+   //}
+
+   //command::~command()
+   //{
+
+   //}
+
+
+   //var command::run()
+   //{
+
+   //   return true;
+
+   //}
+
+
+   //void command::on_request(::create * pcreate)
+   //{
+
+   //   UNREFERENCED_PARAMETER(pcreate);
+
+   //}
+
+
+   //string command::get_description()
+   //{
+
+   //   return "this is a command that was not described";
+
+   //}
+
+   //::command::command & command::operator = (const ::command::command & command)
+   //{
+
+   //   if (this == &command)
+   //   {
+
+   //      return *this;
+
+   //   }
+
+   //   ::object::operator = (command);
+
+   //   m_ecommand = command.m_ecommand;
+   //   m_strCommandLine = command.m_strCommandLine;
+   //   m_varFile = command.m_varFile;
+
+   //   return *this;
+
+   //}
+
+   void command::Enable(bool bOn,::action::context actioncontext)
    {
+   
+      if(m_pmenu != NULL)
+      {
+   
+         ENSURE(m_iIndex < m_iCount);
+   
+      }
+      
+      if(m_puiOther != NULL)
+      {
+   
+         Application.enable_window(m_puiOther, bOn);
+   
+      }
 
-      m_ecommand = command_default;
-
+      m_bEnable = bOn;
+   
+      m_bEnableChanged = true;
+   
    }
-
-   command::command(const ::command::command & command)
+   
+   void ::user::command::_001SetCheck(bool bCheck,::action::context actioncontext)
    {
-
-      operator       = (command);
-
+   
+      _001SetCheck((check::e_check) (bCheck ? check::checked : check::unchecked),actioncontext);
+   
    }
-
-
-   command::command(::aura::application * papp) :
-      ::object(papp)
+   
+   
+   void ::user::command::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
    {
-
-      m_ecommand = command_default;
-
-   }
-
-   command::command(::aura::application * papp, e_command ecommand) :
-      ::object(papp)
-   {
-
-      m_ecommand = ecommand;
-
-   }
-
-   command::~command()
-   {
-
-   }
-
-
-   var command::run()
-   {
-
-      return true;
-
-   }
-
-
-   void command::on_request(::create * pcreate)
-   {
-
-      UNREFERENCED_PARAMETER(pcreate);
-
-   }
-
-
-   string command::get_description()
-   {
-
-      return "this is a command that was not described";
-
-   }
-
-   ::command::command & command::operator = (const ::command::command & command)
-   {
-
-      if (this == &command)
+   
+      if (m_pmenu != NULL)
       {
 
-         return *this;
+         ENSURE(m_iIndex < m_iCount);
 
       }
 
-      ::object::operator = (command);
+      if(m_puiOther != NULL)
+      {
+   
+          Application.send_message(m_puiOther,BM_SETCHECK,nCheck);
+   
+      }
 
-      m_ecommand = command.m_ecommand;
-      m_strCommandLine = command.m_strCommandLine;
-      m_varFile = command.m_varFile;
+      m_echeck = nCheck;
 
-      return *this;
+   }
+   
+   
+   void ::user::command::SetRadio(bool bOn,::action::context actioncontext)
+   {
+      
+      _001SetCheck(bOn,actioncontext);
+
+   }
+   
+   void ::user::command::SetText(const char * lpszText,::action::context actioncontext)
+   {
+      
+      if (m_pmenu != NULL)
+      {
+
+         ENSURE(m_iIndex < m_iCount);
+
+      }
+
+      if (m_puiOther != NULL)
+      {
+
+         Application.set_window_text(m_puiOther, lpszText);
+
+      }
+
+      m_strText = lpszText;
 
    }
 
+   
+   void command::do_probe(command_target * ptarget)
+   {
+
+      if(m_id.is_empty())
+         return;     // ignore invalid IDs
+   
+      ENSURE_VALID(ptarget);
+   
+      m_bEnableChanged  = false;
+
+      m_bRadioChanged   = false;
+
+      m_echeck          = check::undefined;
+
+      ptarget->_001SendCommandProbe(this);
+   
+   }
+   
+   
+   
 
 } // namespace user
 

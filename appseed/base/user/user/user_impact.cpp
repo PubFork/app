@@ -27,30 +27,30 @@ namespace user
       ::user::box::install_message_routing(pinterface);
 
 
-      IGUI_WIN_MSG_LINK(WM_VIEW, pinterface, this, &impact::_001OnView);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &impact::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &impact::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &impact::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &impact::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &impact::_001OnDestroy);
-      //      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN    , pinterface, this, &impact::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MBUTTONDOWN, pinterface, this, &impact::_001OnMButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &impact::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_INITIALUPDATE,pinterface,this,&impact::_001OnInitialUpdateMessage);
+      IGUI_MSG_LINK(WM_VIEW, pinterface, this, &impact::_001OnView);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &impact::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &impact::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &impact::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &impact::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &impact::_001OnDestroy);
+      //      IGUI_MSG_LINK(WM_LBUTTONDOWN    , pinterface, this, &impact::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MBUTTONDOWN, pinterface, this, &impact::_001OnMButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &impact::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_INITIALUPDATE,pinterface,this,&impact::_001OnInitialUpdateMessage);
 
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEACTIVATE, pinterface, this, &impact::_001OnMouseActivate);
-      //      IGUI_WIN_MSG_LINK(WM_DESTROY        , pinterface, this, &impact::_001OnDestroy);
-      //    IGUI_WIN_MSG_LINK(WM_CREATE        , pinterface, this, &impact::_001OnCreate);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE, pinterface, this, &impact::_001OnMouseActivate);
+      //      IGUI_MSG_LINK(WM_DESTROY        , pinterface, this, &impact::_001OnDestroy);
+      //    IGUI_MSG_LINK(WM_CREATE        , pinterface, this, &impact::_001OnCreate);
 
       // Standard commands for split pane
       //  //      connect_command(ID_WINDOW_SPLIT , &impact::_001OnSplitCmd);
-      //    connect_update_cmd_ui(ID_WINDOW_SPLIT ,  &impact::_001OnUpdateSplitCmd);
+      //    connect_command_probe(ID_WINDOW_SPLIT ,  &impact::_001OnUpdateSplitCmd);
 
       // Standard commands for next pane
-      //  connect_update_cmd_ui(ID_NEXT_PANE    , &impact::_001OnUpdateNextPaneMenu);
+      //  connect_command_probe(ID_NEXT_PANE    , &impact::_001OnUpdateNextPaneMenu);
       //connect_command(ID_NEXT_PANE   , &impact::_001OnNextPaneCmd);
-      //      connect_update_cmd_ui(ID_PREV_PANE    , &impact::_001OnUpdateNextPaneMenu);
+      //      connect_command_probe(ID_PREV_PANE    , &impact::_001OnUpdateNextPaneMenu);
       //    connect_command(ID_PREV_PANE    , &impact::_001OnNextPaneCmd);
 
       //}}__MSG_MAP
@@ -61,12 +61,12 @@ namespace user
 
       // Standard commands for split pane
       ON_COMMAND_EX(ID_WINDOW_SPLIT, &impact::OnSplitCmd)
-      ON_UPDATE_COMMAND_UI(ID_WINDOW_SPLIT, &impact::OnUpdateSplitCmd)
+      ON_UPDATE_::user::command(ID_WINDOW_SPLIT, &impact::OnUpdateSplitCmd)
 
       // Standard commands for next pane
-      ON_UPDATE_COMMAND_UI(ID_NEXT_PANE, &impact::OnUpdateNextPaneMenu)
+      ON_UPDATE_::user::command(ID_NEXT_PANE, &impact::OnUpdateNextPaneMenu)
       ON_COMMAND_EX(ID_NEXT_PANE, &impact::OnNextPaneCmd)
-      ON_UPDATE_COMMAND_UI(ID_PREV_PANE, &impact::OnUpdateNextPaneMenu)
+      ON_UPDATE_::user::command(ID_PREV_PANE, &impact::OnUpdateNextPaneMenu)
       ON_COMMAND_EX(ID_PREV_PANE, &impact::OnNextPaneCmd)
       //}}__MSG_MAP
       // special command for Initial Update
@@ -213,15 +213,16 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Command routing
 
-   bool impact::_001OnCmdMsg(::user::command * pcommand)
-
+   void impact::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // first pump through pane
-      if (::user::interaction::_001OnCmdMsg(pcommand))
+      ::user::interaction::_001OnCmdMsg(pcommand);
+
+      if(pcommand->m_bRet)
       {
 
-         return true;
+         return;
 
       }
       
@@ -230,10 +231,12 @@ namespace user
       if (puiParent.cast < ::user::impact > () != NULL)
       {
          
-         if (puiParent->_001OnCmdMsg(pcommand))
+         puiParent->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
          {
 
-            return true;
+            return;
 
          }
 
@@ -243,10 +246,12 @@ namespace user
       if (::user::impact::get_document() != NULL)
       {
          
-         if (::user::impact::get_document()->_001OnCmdMsg(pcommand))
+         ::user::impact::get_document()->_001OnCmdMsg(pcommand);
+
+         if(pcommand->m_bRet)
          {
 
-            return TRUE;
+            return;
 
          }
 
@@ -258,10 +263,12 @@ namespace user
             if (pview != NULL && pview != this && !IsAscendant(pview))
             {
 
-               if (pview->::user::interaction::_001OnCmdMsg(pcommand))
+               pview->::user::interaction::_001OnCmdMsg(pcommand);
+
+               if(pcommand->m_bRet)
                {
 
-                  return true;
+                  return;
 
                }
 
@@ -270,8 +277,6 @@ namespace user
          }
 
       }
-
-      return false;
 
    }
 
@@ -287,18 +292,27 @@ namespace user
       //   trans OnDraw(&spgraphics);
    }
 
+   
    ::user::document * impact::get_document(::user::interaction * pui)
    {
+      
       sp(::user::impact) pview = pui;
+      
       if (pview != NULL)
          return NULL;
+
       return pview->get_document();
+
    }
+
 
    void impact::_001OnInitialUpdate()
    {
+
       on_update(NULL, 0, NULL);        // initial update
+
    }
+
 
    void impact::on_update(::user::impact * pSender, LPARAM lHint, object* pHint)
    {
@@ -481,7 +495,7 @@ namespace user
    }*/
 
 
-   void impact::OnUpdateSplitCmd(command_ui* pCmdUI)
+   void impact::OnUpdateSplitCmd(::user::command* pCmdUI)
    {
       UNREFERENCED_PARAMETER(pCmdUI);
       /*ENSURE_ARG(pCmdUI != NULL);
@@ -500,7 +514,7 @@ namespace user
       return TRUE;    // attempted at least
    }
 
-   void impact::OnUpdateNextPaneMenu(command_ui* pCmdUI)
+   void impact::OnUpdateNextPaneMenu(::user::command* pCmdUI)
    {
       UNREFERENCED_PARAMETER(pCmdUI);
       /*ASSERT(pCmdUI->m_nID == ID_NEXT_PANE ||
@@ -522,17 +536,17 @@ namespace user
       return TRUE;
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Printing support virtual functions (others in viewpr.cpp)
+   ///////////////////////////////////////////////////////////////////////////////
+   //// Printing support virtual functions (others in viewpr.cpp)
 
-   void impact::OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo)
-   {
-      UNREFERENCED_PARAMETER(pInfo);
-      ASSERT_VALID(pgraphics);
-      UNUSED(pgraphics); // unused in release builds
+   //void impact::OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo)
+   //{
+   //   UNREFERENCED_PARAMETER(pInfo);
+   //   ASSERT_VALID(pgraphics);
+   //   UNUSED(pgraphics); // unused in release builds
 
-      // Default to one page printing if doc length not known
-   }
+   //   // Default to one page printing if doc length not known
+   //}
 
 
 
@@ -1183,18 +1197,24 @@ namespace user
    bool impact::_001HasCommandHandler(::user::command * pcommand)
    {
 
-      if (command_target_interface::_001HasCommandHandler(id))
+      if (command_target::_001HasCommandHandler(pcommand))
+      {
+
          return true;
+
+      }
 
       if (get_document() != NULL)
       {
 
-         if (get_document()->_001HasCommandHandler(id))
+         if (get_document()->_001HasCommandHandler(pcommand))
+         {
+
             return true;
 
+         }
+
       }
-
-
 
       return false;
 

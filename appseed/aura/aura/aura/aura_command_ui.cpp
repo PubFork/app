@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-//command_ui::command_ui(::aura::application * papp) :
+//::user::command::user::command(::aura::application * papp) :
 //   ::message::base(papp)
 //{
 //   
@@ -17,7 +17,7 @@
 //   
 //}
 //
-//command_ui::command_ui(class ::message::sender * psignal):
+//::user::command::user::command(class ::message::sender * psignal):
 //   ::message::base(psignal)
 //{
 //
@@ -36,7 +36,7 @@
 //
 //
 //
-//void command_ui::reset(class ::message::sender * psignal)
+//void ::user::command::reset(class ::message::sender * psignal)
 //{
 //
 //   ::message::message::reset(psignal);
@@ -44,8 +44,8 @@
 //}
 //
 //
-//// default command_ui implementation only works for Menu Items
-//void command_ui::Enable(bool bOn,::action::context actioncontext)
+//// default ::user::command implementation only works for Menu Items
+//void ::user::command::Enable(bool bOn,::action::context actioncontext)
 //{
 //
 //   if(m_pMenu != NULL)
@@ -71,7 +71,7 @@
 //
 //}
 //
-//void command_ui::_001SetCheck(bool bCheck,::action::context actioncontext)
+//void ::user::command::_001SetCheck(bool bCheck,::action::context actioncontext)
 //{
 //
 //   _001SetCheck((check::e_check) (bCheck ? check::checked : check::unchecked),actioncontext);
@@ -79,7 +79,7 @@
 //}
 //
 //
-//void command_ui::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
+//void ::user::command::_001SetCheck(check::e_check nCheck,::action::context actioncontext)
 //{
 //
 //   if(m_pMenu != NULL)
@@ -109,7 +109,7 @@
 //
 //__STATIC void __load_dot_bitmap(); // for swap tuning
 //
-//void command_ui::SetRadio(bool bOn,::action::context actioncontext)
+//void ::user::command::SetRadio(bool bOn,::action::context actioncontext)
 //{
 //   _001SetCheck(bOn != FALSE,actioncontext); // this default works for most things as well
 //   if(m_pMenu != NULL)
@@ -126,7 +126,7 @@
 //   }
 //}
 //
-//void command_ui::SetText(const char * lpszText,::action::context actioncontext)
+//void ::user::command::SetText(const char * lpszText,::action::context actioncontext)
 //{
 //   ENSURE_ARG(lpszText != NULL);
 //   ASSERT(__is_valid_string(lpszText));
@@ -137,7 +137,7 @@
 //   }
 //}
 //
-//bool command_ui::DoUpdate(command_target* pTarget,bool bDisableIfNoHndler)
+//bool ::user::command::DoUpdate(command_target* pTarget,bool bDisableIfNoHndler)
 //{
 //   if(m_id.is_empty())
 //      return TRUE;     // ignore invalid IDs

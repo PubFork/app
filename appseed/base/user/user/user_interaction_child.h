@@ -96,7 +96,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnNcDestroy);
       DECL_GEN_SIGNAL(_001OnShowWindow);
 
-      void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
 
       virtual bool post_message(UINT uiMessage,WPARAM wparam,lparam lparam) override;
 

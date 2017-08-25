@@ -22,8 +22,8 @@ namespace multimedia
       void window::install_message_routing(::message::sender * pinterface)
       {
          ::user::interaction::install_message_routing(pinterface);
-         IGUI_WIN_MSG_LINK(MM_MIXM_CONTROL_CHANGE, pinterface, this, &window::_001OnMixerControlChange);
-         IGUI_WIN_MSG_LINK(MM_MIXM_LINE_CHANGE, pinterface, this, &window::_001OnMixerLineChange);
+         IGUI_MSG_LINK(MM_MIXM_CONTROL_CHANGE, pinterface, this, &window::_001OnMixerControlChange);
+         IGUI_MSG_LINK(MM_MIXM_LINE_CHANGE, pinterface, this, &window::_001OnMixerLineChange);
       }
 
       void window::_001OnMixerControlChange(::message::message * pobj)

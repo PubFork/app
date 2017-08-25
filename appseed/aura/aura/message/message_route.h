@@ -12,26 +12,24 @@ namespace message
    public:
 
       receiver *        m_preceiver;
-      void *            m_phandler;
 
       virtual void route_message(message * pmessage) = 0;
 
    };
 
    template < typename PRED >
-   class pred_route
+   class pred_route :
+      public route
    {
    public:
 
       PRED m_pred;
 
-      pred_route(receiver * preceiver, void * phandler, PRED pred) :
-         m_preceiver(preceiver),
-         m_phandler(phandler),
+      pred_route(receiver * preceiver, PRED pred) :
          m_pred(pred)
       {
 
-
+         m_preceiver = preceiver;
 
       }
 
@@ -46,10 +44,10 @@ namespace message
 
    
    template < typename PRED >
-   route * create_pred_route(PRED pred)
+   route * create_pred_route(receiver * preceiver, PRED pred)
    {
 
-      return new pred_route < PRED >(pred);
+      return new pred_route < PRED >(preceiver, pred);
 
    }
 

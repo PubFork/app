@@ -27,12 +27,12 @@ namespace simple_ui
    void edit_box::install_message_routing(::message::sender * psender)
    {
 
-      ::user::plain_edit::install_message_routing(pdispatch);
+      ::user::plain_edit::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &edit_box::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &edit_box::_001OnKeyDown);
-      IGUI_LBUTTONDOWN(edit_box);
-      IGUI_LBUTTONUP(edit_box);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &edit_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &edit_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &edit_box::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &edit_box::_001OnLButtonUp);
 
    }
 

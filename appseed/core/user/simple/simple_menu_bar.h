@@ -48,7 +48,7 @@ public:
         LPARAM lParam   // address of structure with message data
         );
 
-   virtual bool _001OnCmdMsg(::user::command * pcommand);
+   virtual void _001OnCmdMsg(::user::command * pcommand) override;
    virtual void pre_translate_message(::message::message * pobj);
    protected:
    virtual bool pre_create_window(::user::create_struct& cs);
@@ -94,11 +94,12 @@ public:
    DECL_GEN_SIGNAL(_001OnDestroy);
    DECL_GEN_SIGNAL(_001OnMenuChar);
    DECL_GEN_SIGNAL(_001OnLButtonDown);
+   DECL_GEN_SIGNAL(_001OnAppLanguage);
    void _001OnTimer(::timer * ptimer);
 
-   virtual int32_t OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam);
+   //virtual int32_t OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam);
 
-   DECL_GEN_SIGNAL(_001OnAppLanguage);
+   //DECL_GEN_SIGNAL(_001OnAppLanguage);
 
    virtual void install_message_routing(::message::sender * psender);
 

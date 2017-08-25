@@ -151,7 +151,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const;
       void EnableDocking(uint32_t dwDockStyle);
    #endif
-      virtual void OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
+      virtual void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) override;
 
 
       __STATUSPANE* _GetPanePtr(int32_t nIndex);

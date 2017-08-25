@@ -42,21 +42,21 @@ namespace user
    {
       ::user::interaction::install_message_routing(pinterface);
 #ifdef WINDOWS
-      IGUI_WIN_MSG_LINK(WM_CTLCOLOR          , pinterface, this, &control_bar::_001OnCtlColor);
+      IGUI_MSG_LINK(WM_CTLCOLOR          , pinterface, this, &control_bar::_001OnCtlColor);
 #endif
-      IGUI_WIN_MSG_LINK(WM_IDLEUPDATECMDUI   , pinterface, this, &control_bar::_001OnIdleUpdateCmdUI);
-      IGUI_WIN_MSG_LINK(WM_SIZEPARENT        , pinterface, this, &control_bar::_001OnSizeParent);
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &control_bar::_001OnWindowPosChanging);
-   //   IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &control_bar::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &control_bar::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN       , pinterface, this, &control_bar::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP         , pinterface, this, &control_bar::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK     , pinterface, this, &control_bar::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_MOUSEACTIVATE     , pinterface, this, &control_bar::_001OnMouseActivate);
-   //   IGUI_WIN_MSG_LINK(WM_CANCELMODE        , pinterface, this, &control_bar::_001OnCancelMode);
-      IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &control_bar::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &control_bar::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_HELPHITTEST       , pinterface, this, &control_bar::_001OnHelpHitTest);
+//      IGUI_MSG_LINK(WM_IDLEUPDATECMDUI   , pinterface, this, &control_bar::_001OnIdleUpdateCmdUI);
+      IGUI_MSG_LINK(WM_SIZEPARENT        , pinterface, this, &control_bar::_001OnSizeParent);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &control_bar::_001OnWindowPosChanging);
+   //   IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &control_bar::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &control_bar::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN       , pinterface, this, &control_bar::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP         , pinterface, this, &control_bar::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK     , pinterface, this, &control_bar::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE     , pinterface, this, &control_bar::_001OnMouseActivate);
+   //   IGUI_MSG_LINK(WM_CANCELMODE        , pinterface, this, &control_bar::_001OnCancelMode);
+      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &control_bar::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY           , pinterface, this, &control_bar::_001OnDestroy);
+      IGUI_MSG_LINK(WM_HELPHITTEST       , pinterface, this, &control_bar::_001OnHelpHitTest);
    }
 
 
@@ -287,7 +287,7 @@ namespace user
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      UINT message = pbase->m_uiMessage;
+      UINT message = pbase->m_id;
 
       // handle CBRS_FLYBY style (status bar flyby help)
       if (((m_dwStyle & CBRS_FLYBY) ||
@@ -325,7 +325,10 @@ namespace user
    void control_bar::message_handler(::message::message * pobj)
    {
 
-      (this->*m_pfnDispatchWindowProc)(pobj);
+      //(this->*m_pfnDispatchWindowProc)(pobj);
+      
+      route_message(pobj);
+
       if(pobj->m_bRet)
          return;
 
@@ -334,7 +337,10 @@ namespace user
       ASSERT_VALID(this);
 
       LRESULT lResult;
-      switch (pbase->m_uiMessage)
+
+      UINT uiMessage = pbase->m_id;
+
+      switch (uiMessage)
       {
       case WM_NOTIFY:
       case WM_COMMAND:
@@ -350,11 +356,11 @@ namespace user
    //      else
          {
             // try owner next
-            lResult = GetOwner()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam);
+            lResult = GetOwner()->send_message(uiMessage, pbase->m_wparam, pbase->m_lparam);
 
             // special case for TTN_NEEDTEXTA and TTN_NEEDTEXTW
 //#ifdef WINDOWSEX
-//            if(pbase->m_uiMessage == WM_NOTIFY)
+//            if(pbase->m_id == WM_NOTIFY)
 //            {
 //               NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam.m_lparam;
 //               if (pNMHDR->code == TTN_NEEDTEXTA || pNMHDR->code == TTN_NEEDTEXTW)
@@ -606,44 +612,44 @@ namespace user
       pmouse->previous();
    }
 
-   void control_bar::_001OnIdleUpdateCmdUI(::message::message * pobj)
-   {
-      SCAST_PTR(::message::base, pbase, pobj);
-      // handle delay hide/show
-      bool bVis = (GetStyle() & WS_VISIBLE) != 0;
-      UINT swpFlags = 0;
-      if ((m_nStateFlags & delayHide) && bVis)
-         swpFlags = SWP_HIDEWINDOW;
-      else if ((m_nStateFlags & delayShow) && !bVis)
-         swpFlags = SWP_SHOWWINDOW;
-      m_nStateFlags &= ~(delayShow|delayHide);
-      if (swpFlags != 0)
-      {
-         SetWindowPos(0, 0, 0, 0, 0, swpFlags | SWP_NOMOVE|SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
-      }
+//    void control_bar::_001OnIdleUpdateCmdUI(::message::message * pobj)
+//    {
+//       SCAST_PTR(::message::base, pbase, pobj);
+//       // handle delay hide/show
+//       bool bVis = (GetStyle() & WS_VISIBLE) != 0;
+//       UINT swpFlags = 0;
+//       if ((m_nStateFlags & delayHide) && bVis)
+//          swpFlags = SWP_HIDEWINDOW;
+//       else if ((m_nStateFlags & delayShow) && !bVis)
+//          swpFlags = SWP_SHOWWINDOW;
+//       m_nStateFlags &= ~(delayShow|delayHide);
+//       if (swpFlags != 0)
+//       {
+//          SetWindowPos(0, 0, 0, 0, 0, swpFlags | SWP_NOMOVE|SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
+//       }
 
-      // the style must be visible and if it is docked
-      // the dockbar style must also be visible
-      if ((GetStyle() & WS_VISIBLE))
-      {
-         sp(::user::frame_window) pTarget = (GetOwner());
-         if (pTarget == NULL)
-            pTarget = (GetParentFrame());
-         if (pTarget != NULL)
-            OnUpdateCmdUI(pTarget, pbase->m_wparam != FALSE);
-      }
-      pbase->set_lresult(0L);
-   }
+//       // the style must be visible and if it is docked
+//       // the dockbar style must also be visible
+//       if ((GetStyle() & WS_VISIBLE))
+//       {
+//          sp(::user::frame_window) pTarget = (GetOwner());
+//          if (pTarget == NULL)
+//             pTarget = (GetParentFrame());
+//          if (pTarget != NULL)
+//             OnUpdateCmdUI(pTarget, pbase->m_wparam != FALSE);
+//       }
+//       pbase->set_lresult(0L);
+//    }
 
 
    void control_bar::_001OnInitialUpdate()
    {
 
-      // update the indicators before becoming visible
-      ::message::base base(get_app());
-      LRESULT lresult;
-      base.set(this, WM_IDLEUPDATECMDUI, TRUE, (LPARAM) 0, lresult);
-      _001OnIdleUpdateCmdUI(&base);
+      // // update the indicators before becoming visible
+      // ::message::base base(get_app());
+      // LRESULT lresult;
+      // base.set(this, WM_IDLEUPDATECMDUI, TRUE, (LPARAM) 0, lresult);
+      // _001OnIdleUpdateCmdUI(&base);
 
    }
 

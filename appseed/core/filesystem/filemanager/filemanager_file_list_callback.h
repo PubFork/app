@@ -26,7 +26,7 @@ namespace filemanager
 
       virtual bool GetMenuItemCallback(id iId);
       virtual void OnMenuItemAction(id iId, const ::fs::item_array & itema);
-      virtual void GetMenuItemUpdate(id iId, const ::fs::item_array & itema, command_ui * pcommandui);
+      virtual void GetMenuItemUpdate(id iId, const ::fs::item_array & itema, ::user::command * pcommand);
 
    };
 

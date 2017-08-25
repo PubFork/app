@@ -13,40 +13,46 @@ namespace message
       
       id_route    m_idroute;
 
+
+      sender();
+
       
       virtual void remove_receiver(::message::receiver * preceiver);
 
+      virtual void remove_all_routes();
+
 
       template < typename RECEIVER >
-      void add_route(id id, ::message::sender * psender, RECEIVER * preceiver, void (RECEIVER::* phandler)(::message::message * pmessage))
+      void add_route(::message::id id, RECEIVER * preceiver, void (RECEIVER::* phandler)(::message::message * pmessage))
       {
 
-          m_map[id].add(create_pred_route(
-             dynamic_cast < ::message::receiver * > (preceiver),
-             (void *) phandler, 
-             [=](::message * pmessage)
-               {
-
-               preceiver->(*phandler)(pmessage);
-
-               }
-          ));
-
-      }
-
-      virtual void route_message(::message::message * pmessage)
-      {
-
-         auto routea = m_map[pmessage->m_id];
-
-         for (auto proute : routea)
+         auto pred = [=](::message::message * pmessage)
          {
 
-            proute->route_message(pmessage);
+            (preceiver->*phandler)(pmessage);
 
-         }
+         };
+
+         route * proute = create_pred_route(dynamic_cast <::message::receiver *> (preceiver), pred);
+
+         m_idroute[id].add(proute);
 
       }
+
+      template < typename RECEIVER >
+      void add_route(RECEIVER * preceiver, void (RECEIVER::* phandler)(::message::message * pmessage))
+      {
+
+         ::message::id idEmpty;
+
+         add_route(idEmpty, preceiver, phandler);
+   
+      }
+
+      virtual void route_message(::message::message * pmessage);
+
+
+      virtual e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
    };
 

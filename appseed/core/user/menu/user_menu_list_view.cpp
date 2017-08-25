@@ -52,18 +52,21 @@ namespace user
 
    }
 
+
    void menu_list_view::GuieProc(::message::message * pobj)
    {
+      
       SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_uiMessage == m_uiMessage)
+
+      if (pbase->m_id == m_iMessage)
       {
          if (base_class < ::user::place_holder >::bases(GetParent()))
          {
-            pbase->set_lresult(GetParent()->GetParent()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+            pbase->set_lresult(GetParent()->GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          }
          else
          {
-            pbase->set_lresult(GetParent()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+            pbase->set_lresult(GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          }
          
          pbase->m_bRet = true;
@@ -77,16 +80,18 @@ namespace user
    }
    
 
-   bool menu_list_view::_001OnCmdMsg(::user::command * pcommand)
+   void menu_list_view::_001OnCmdMsg(::user::command * pcommand)
    {
       
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
          
-         if (m_puiNotify->_001OnCmdMsg(pcommand))
+         m_puiNotify->_001OnCmdMsg(pcommand);
+
+         if(pcommand->m_bRet)
          {
             
-            return true;
+            return;
             
          }
          
@@ -102,13 +107,13 @@ namespace user
 
       destroy_menu();
 
-      m_uiMessage = uiCallbackMessage;
+      m_iMessage = uiCallbackMessage;
       m_bAutoClose = false;
 
       if (!menu_list_window::load_menu(pnode))
          return false;
 
-      menu_fill(GetParentFrame(), this);
+      //menu_fill(GetParentFrame(), this);
 
       m_puiNotify = puiNotify;
 

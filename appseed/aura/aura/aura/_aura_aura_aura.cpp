@@ -14,8 +14,8 @@
 #endif
 
 
-//O volume na unidade Z ‚ eco
-// O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+// O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 //
 // Pasta de Z:\ca2\app\appseed\aura\aura\aura
 //
@@ -42,8 +42,8 @@
 //#include "aura_command_msg.cpp"
 #include "aura_command_target.cpp"
 #include "aura_command_target_interface.cpp"
-#include "aura_command_ui.cpp"
-#include "aura_command_ui_test.cpp"
+#include "aura_::user::command.cpp"
+#include "aura_::user::command_test.cpp"
 #include "aura_conv.cpp"
 #include "aura_os.cpp"
 //#include "aura_cpu_architecture.cpp"
@@ -105,7 +105,7 @@
 #include "aura_trace.cpp"
 //2015-01-05  07:52                 0 _aura.cpp"
 //              77 arquivo(s)        382.228 bytes
-//               0 pasta(s)   36.251.623.424 bytes dispon¡veis
+//               0 pasta(s)   36.251.623.424 bytes disponï¿½veis
 
 
 #include "aura_console_window.cpp"

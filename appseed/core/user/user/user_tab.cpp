@@ -327,9 +327,9 @@ namespace user
    bool tab::defer_handle_auto_hide_tabs(bool bLayout)
    {
 
-      //sp(::user::wndfrm::frame::WorkSetClientInterface) pinterface = GetTopLevelFrame();
+      //sp(::user::wndfrm::frame::WorkSetClientInterface) psender = GetTopLevelFrame();
       //
-      //if (pinterface != NULL && pinterface->m_bInitialFramePosition)
+      //if (psender != NULL && psender->m_bInitialFramePosition)
       //{
       //   return false;
       //}
@@ -1745,10 +1745,10 @@ else
    }
 
    /*
-   bool tab::create(::user::interaction * pinterface, UINT uiId)
+   bool tab::create(::user::interaction * psender, UINT uiId)
    {
       if(!m_pui->create(
-         pinterface,
+         psender,
          uiId))
          return false;
       m_bCreated = true;
@@ -1844,22 +1844,22 @@ else
    }
 
 
-   void tab::install_message_routing(::message::sender *pinterface)
+   void tab::install_message_routing(::message::sender *psender)
    {
 
-      ::user::control::install_message_routing(pinterface);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN , pinterface, this, &tab::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP   , pinterface, this, &tab::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE   , pinterface, this, &tab::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE  , pinterface, this, &tab::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_CREATE      , pinterface, this, &tab::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW  , pinterface, this, &tab::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, pinterface, this, &tab::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(message_start_tab_drag,pinterface,this,&tab::_001OnStartTabDrag);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN              , psender, this, &tab::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP                , psender, this, &tab::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE                , psender, this, &tab::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE               , psender, this, &tab::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_CREATE                   , psender, this, &tab::_001OnCreate);
+      IGUI_MSG_LINK(WM_SHOWWINDOW               , psender, this, &tab::_001OnShowWindow);
+      MSG_TYPE_LINK(::message::type_language    , psender, this, &tab::_001OnAppLanguage);
+      IGUI_MSG_LINK(message_start_tab_drag      , psender, this,&tab::_001OnStartTabDrag);
 
 
-      ////IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &tab::_001OnTimer);
+      ////IGUI_MSG_LINK(WM_TIMER, psender, this, &tab::_001OnTimer);
 
    }
 
@@ -2336,9 +2336,9 @@ else
       }
    }
 
-   void tab::_001ConnectParent(::message::sender * pinterface)
+   void tab::_001ConnectParent(::message::sender * psender)
    {
-      UNREFERENCED_PARAMETER(pinterface);
+      UNREFERENCED_PARAMETER(psender);
    }
 
    
@@ -2726,7 +2726,7 @@ else
          try
          {
 
-            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
+            m_pimpl->route_message(pmouse);
 
             if (pmouse->get_lresult() != 0)
             {
@@ -2742,7 +2742,7 @@ else
          }
 
       }
-      else if(pmouse->m_uiMessage == WM_MOUSEMOVE)
+      else if(pmouse->m_id == WM_MOUSEMOVE)
       {
 
       }

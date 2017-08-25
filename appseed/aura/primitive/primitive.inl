@@ -114,6 +114,6 @@ template<>
 inline UINT HashKey < const ::message::id &  > (const ::message::id & id)
 {
 
-   return (((int) id.m_etype) << 24) | HashKey(id.m_id);
+   return (((int) id.m_etype) << 24) | HashKey((const ::id & ) id);
 
 }

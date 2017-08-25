@@ -69,7 +69,7 @@
 #include "user/user_interaction_impl_base.cpp"
 #include "user/user_menu.cpp"
 #include "user/user_menu_item.cpp"
-#include "user/user_menu_command_ui.cpp"
+#include "user/user_menu_::user::command.cpp"
 #include "user/user_message.cpp"
 #include "user/user_message_queue.cpp"
 #include "user/user_place_holder.cpp"

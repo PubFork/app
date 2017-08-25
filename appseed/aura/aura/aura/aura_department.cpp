@@ -33,7 +33,7 @@ namespace aura
    void department::connect_to_application_signal()
    {
 
-      m_pauraapp->m_psignal->connect(this,&department::on_signal);
+      m_pauraapp->add_route(this,&department::on_application_message);
 
    }
 
@@ -101,38 +101,38 @@ namespace aura
 
    }
 
-   void department::on_signal(::message::message * pobj)
+   void department::on_application_message(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::application_signal_details,papplicationsignal,pobj);
+      SCAST_PTR(::aura::application_message,papplicationsignal,pobj);
 
       try
       {
-         if(papplicationsignal->m_esignal == ::aura::application_signal_process_initialize)
+         if(papplicationsignal->m_esignal == ::aura::application_message_process_initialize)
          {
             papplicationsignal->m_bOk = process_initialize();
          }
-         else if(papplicationsignal->m_esignal == ::aura::application_signal_initialize)
+         else if(papplicationsignal->m_esignal == ::aura::application_message_initialize)
          {
             papplicationsignal->m_bOk = initialize();
          }
-         else if(papplicationsignal->m_esignal == ::aura::application_signal_initialize1)
+         else if(papplicationsignal->m_esignal == ::aura::application_message_initialize1)
          {
             papplicationsignal->m_bOk = initialize1();
          }
-         else if(papplicationsignal->m_esignal == ::aura::application_signal_initialize2)
+         else if(papplicationsignal->m_esignal == ::aura::application_message_initialize2)
          {
             papplicationsignal->m_bOk = initialize2();
          }
-         else if(papplicationsignal->m_esignal == ::aura::application_signal_initialize3)
+         else if(papplicationsignal->m_esignal == ::aura::application_message_initialize3)
          {
             papplicationsignal->m_bOk = initialize3();
          }
-         //         else if(papplicationsignal->m_esignal == ::aura::application_signal_initialize_instance)
+         //         else if(papplicationsignal->m_esignal == ::aura::application_message_initialize_instance)
          //       {
          //        papplicationsignal->m_bOk = initialize();
          //   }
-         else if(papplicationsignal->m_esignal == ::aura::application_signal_finalize)
+         else if(papplicationsignal->m_esignal == ::aura::application_message_finalize)
          {
             papplicationsignal->m_bOk = finalize();
          }

@@ -5,7 +5,7 @@ namespace message
 {
 
 
-   void message::install_message_routing(::message::sender * psender)
+   void receiver::install_message_routing(::message::sender * psender)
    {
 
    }

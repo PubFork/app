@@ -38,18 +38,18 @@ namespace plugin
 
       ::user::interaction::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
-      IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &host_interaction::_001OnCreate);
+      IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
+      IGUI_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
+      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &host_interaction::_001OnCreate);
 
       /*
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGED  , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &host_interaction::on_ignore_message);
-      //IGUI_WIN_MSG_LINK(WM_TIMER             , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_IME_SETCONTEXT    , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_CHILDACTIVATE     , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGED  , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_MOVE              , pinterface, this, &host_interaction::on_ignore_message);
+      //IGUI_MSG_LINK(WM_TIMER             , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_IME_SETCONTEXT    , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_CHILDACTIVATE     , pinterface, this, &host_interaction::on_ignore_message);
       */
 
    }
@@ -261,15 +261,15 @@ namespace plugin
 
    void host_interaction::_user_message_handler(::message::message * pobj)
    {
-      ::user::interaction::_user_message_handler(pobj);
+      ::user::interaction::message_handler(pobj);
       pobj->m_bRet = true;
    }
 
-   void host_interaction::_on_start_user_message_handler()
-   {
-      ::user::interaction::_on_start_user_message_handler();
-      m_pfnDispatchWindowProc = reinterpret_cast < void (::message::sender::*)(::message::message * pobj) > (&host_interaction::_user_message_handler);
-   }
+//   void host_interaction::_on_start_user_message_handler()
+  // {
+//      ::user::interaction::_on_start_user_message_handler();
+  //    m_pfnDispatchWindowProc = reinterpret_cast < void (::message::sender::*)(::message::message * pobj) > (&host_interaction::_user_message_handler);
+//   }
 
 
    void host_interaction::on_ignore_message(::message::message * pobj)

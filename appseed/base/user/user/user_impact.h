@@ -88,13 +88,13 @@ namespace user
       DROPEFFECT dropDefault, DROPEFFECT dropList, point point);
       virtual DROPEFFECT OnDragScroll(uint32_t dwKeyState, point point);*/
 
-      virtual void OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo = NULL);
+      //virtual void OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo = NULL);
 
       virtual void _001OnInitialUpdate();
 
 
-         // Activation
-         virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView);
+      // Activation
+      virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView);
       virtual void OnActivateFrame(UINT nState, sp(::user::frame_window) pFrameWnd);
 
       // General drawing/updating
@@ -137,7 +137,7 @@ namespace user
       //virtual void on_draw_view(::draw2d::graphics * pgraphics, spa(::data::data) spadata);
       //virtual void defer_draw_view(::draw2d::dib * pdib);
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
       virtual bool pre_create_window(::user::create_struct& cs) override;
       virtual void PostNcDestroy() override;
@@ -168,9 +168,9 @@ namespace user
          void OnPaint();
       //int32_t OnMouseActivate(::window_sp pDesktopWnd, UINT nHitTest, UINT message);
       // commands
-      void OnUpdateSplitCmd(command_ui* pCmdUI);
+      void OnUpdateSplitCmd(::user::command* pCmdUI);
       bool OnSplitCmd(UINT nID);
-      void OnUpdateNextPaneMenu(command_ui* pCmdUI);
+      void OnUpdateNextPaneMenu(::user::command* pCmdUI);
       bool OnNextPaneCmd(UINT nID);
 
       // not mapped commands - must be mapped in derived class

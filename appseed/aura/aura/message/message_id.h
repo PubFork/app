@@ -5,19 +5,51 @@ namespace message
 {
 
 
-   class CLASS_DECL_AURA id
+   class CLASS_DECL_AURA id :
+      public ::id
    {
    public:
 
 
-      e_type         m_etype;
-      ::id           m_id;
+      ::message::e_type         m_emessagetype;
 
 
-      id()
+      id(::message::e_type etype = ::message::type_null)
       {
          
-         m_etype = type_null;
+         m_emessagetype = etype;
+
+      }
+
+
+      id(int64_t i)
+      {
+
+         m_emessagetype = type_message;
+
+         ::id::operator = (i);
+
+      }
+
+
+
+      id(const ::id id)
+      {
+
+         if (id.is_integer())
+         {
+
+            m_emessagetype = type_message;
+
+         }
+         else
+         {
+
+            m_emessagetype = type_command;
+
+         }
+
+         ::id::operator = (id);
 
       }
 
@@ -25,22 +57,36 @@ namespace message
       {
 
          m_etype = id.m_etype;
-         m_id = id.m_id;
+         ::id::operator = (id);
 
       }
 
-      id(::id id, e_type etype = type_id)
+      id(::id id, ::message::e_type etype)
       {
 
-         m_etype = etype;
-         m_id = m_id;
+         m_emessagetype = etype;
+         ::id::operator = (id);
+
+      }
+
+      bool operator == (int64_t i) const
+      {
+
+         return is_integer() && m_i == i;
+
+      }
+
+      bool operator == (int32_t i) const
+      {
+
+         return is_integer() && m_i == i;
 
       }
 
       bool operator == (const id & id) const
       {
 
-         return m_etype == id.m_etype && m_id == m_id;
+         return m_emessagetype == id.m_emessagetype && ::id::operator==(id);
 
       }
 
@@ -50,11 +96,21 @@ namespace message
          if (this != &id)
          {
 
-            m_etype = id.m_etype;
+            m_emessagetype = id.m_emessagetype;
 
-            m_id == m_id;
+            ::id::operator = (id);
 
          }
+
+         return *this;
+
+      }
+
+
+      id & operator = (::message::e_type etype)
+      {
+
+         m_emessagetype = etype;
 
          return *this;
 
@@ -65,3 +121,5 @@ namespace message
 
 
 } // namespace
+
+

@@ -144,7 +144,7 @@ namespace user
 
       virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void _on_start_user_message_handler() override;
+//      virtual void _on_start_user_message_handler() override;
 
 
       virtual void UpdateWindow();
@@ -183,7 +183,7 @@ namespace user
 
       void _001BaseWndInterfaceMap();
 
-      virtual void message_handler(::message::message * pobj) override;
+      virtual void message_handler(::message::message * pobj);
       virtual LRESULT message_handler(LPMESSAGE lpmessage);
       virtual void on_select();
 
@@ -237,7 +237,7 @@ namespace user
       virtual void track_mouse_leave();
 
       // dialog support
-      void UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHndler);
+      virtual void update_dialog_controls(command_target * ptarget);
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL);
       virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL);
       virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL);
@@ -433,7 +433,8 @@ namespace user
 
 
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      virtual void route_message_to_descendants(::message::message * pmessage);
       virtual void pre_translate_message(::message::message * pobj) override;
 
 
@@ -515,6 +516,7 @@ namespace user
       virtual e_type get_window_type();
 
 
+      using ::user::elemental::on_simple_command;
       virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult);
 
 

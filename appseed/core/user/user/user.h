@@ -291,7 +291,7 @@ namespace user
 //#include "user_mdi_child_window.h"
 
 
-#include "user_tool_command_ui.h"
+//#include "user_tool_::user::command.h"
 
 
 #include "user_toolbar_control.h"

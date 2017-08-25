@@ -543,7 +543,7 @@ namespace user
                   try
                   {
 
-                     pimplOld->filter_target(pimplOld);
+                     pimplOld->remove_all_routes();
 
                      pimplOld->m_pui = NULL;
 
@@ -868,31 +868,31 @@ namespace user
    void interaction::install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction::_001OnCreate);
 
       if(m_bMessageWindow)
       {
 
-         //IGUI_WIN_MSG_LINK(WM_DESTROY              , pinterface, this, &interaction::_001OnDestroyMessageWindow);
+         //IGUI_MSG_LINK(WM_DESTROY              , pinterface, this, &interaction::_001OnDestroyMessageWindow);
 
       }
       else
       {
 
-         IGUI_WIN_MSG_LINK(WM_CLOSE,pinterface,this,&interaction::_001OnClose);
-         IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction::_001OnDestroy);
-         IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&interaction::_001OnSize);
-         IGUI_WIN_MSG_LINK(WM_MOVE,pinterface,this,&interaction::_001OnMove);
-         IGUI_WIN_MSG_LINK(WM_USER + 184,pinterface,this,&interaction::_001OnUser184);
-         IGUI_WIN_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction::_001OnNcCalcSize);
-         IGUI_WIN_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction::_001OnShowWindow);
-         IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&interaction::_001OnLButtonDown);
+         IGUI_MSG_LINK(WM_CLOSE,pinterface,this,&interaction::_001OnClose);
+         IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction::_001OnDestroy);
+         IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction::_001OnSize);
+         IGUI_MSG_LINK(WM_MOVE,pinterface,this,&interaction::_001OnMove);
+         IGUI_MSG_LINK(WM_USER + 184,pinterface,this,&interaction::_001OnUser184);
+         IGUI_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction::_001OnNcCalcSize);
+         IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction::_001OnShowWindow);
+         IGUI_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&interaction::_001OnLButtonDown);
 
       }
 
-      IGUI_WIN_MSG_LINK(WM_COMMAND,pinterface,this,&interaction::_001OnCommand);
-      IGUI_WIN_MSG_LINK(message_simple_command,pinterface,this,&interaction::_001OnSimpleCommand);
-      //      IGUI_WIN_MSG_LINK(message_set_schema,pinterface,this,&interaction::_001OnSetSchema);
+      IGUI_MSG_LINK(WM_COMMAND,pinterface,this,&interaction::_001OnCommand);
+      IGUI_MSG_LINK(message_simple_command,pinterface,this,&interaction::_001OnSimpleCommand);
+      //      IGUI_MSG_LINK(message_set_schema,pinterface,this,&interaction::_001OnSetSchema);
 
 
    }
@@ -2141,16 +2141,29 @@ namespace user
 
    void interaction::_000OnDrag(::message::drag_and_drop * pdrag)
    {
+
 #ifdef WINDOWS
-      if(pdrag->m_uiMessage != MESSAGE_OLE_DRAGLEAVE)
+
+      if(pdrag->m_id != MESSAGE_OLE_DRAGLEAVE)
       {
 
          try
          {
-            if(!IsWindowVisible())
+
+            if (!IsWindowVisible())
+            {
+             
                return;
-            if(!_001IsPointInside(point(pdrag->pt.x, pdrag->pt.y)))
+
+            }
+
+            if (!_001IsPointInside(point(pdrag->pt.x, pdrag->pt.y)))
+            {
+
                return;
+
+            }
+
          }
          catch(...)
          {
@@ -2158,50 +2171,89 @@ namespace user
          }
 
       }
+
       // these try catchs are needed for multi threading : multi threaded windows: the hell
       // Now I understand why Microsoft (TM) Windows (R) windows are single threaded.
+
       sp(::user::interaction) pui = top_child();
+
       //      int32_t iSize;
+
       try
       {
+
          while(pui != NULL)
          {
+
             try
             {
-               if(pui->IsWindowVisible() && (pdrag->m_uiMessage == MESSAGE_OLE_DRAGLEAVE || pui->_001IsPointInside(point(pdrag->pt.x,pdrag->pt.y))))
+
+               if(pui->IsWindowVisible() && (pdrag->m_id == MESSAGE_OLE_DRAGLEAVE || pui->_001IsPointInside(point(pdrag->pt.x,pdrag->pt.y))))
                {
+
                   try
                   {
+
                      pui->_000OnDrag(pdrag);
-                     if(pdrag->m_bRet)
+
+                     if (pdrag->m_bRet)
+                     {
+
                         return;
+
+                     }
+
                   }
                   catch(...)
                   {
+
                   }
+
                }
+
                pui = pui->under_sibling();
+
             }
             catch(...)
             {
+
             }
+
          }
+
       }
       catch(...)
       {
+
       }
+
       try
       {
-         if(m_pimpl == NULL)
+
+         if (m_pimpl == NULL)
+         {
+
             return;
-         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pdrag));
-         if(pdrag->m_bRet)
+
+         }
+
+         route_message(pdrag);
+
+         if (pdrag->m_bRet)
+         {
+
             return;
+
+         }
+
       }
       catch(...)
       {
+
       }
+
 #endif
+
    }
 
 
@@ -2269,84 +2321,120 @@ namespace user
       catch(...)
       {
       }
+      
       try
       {
+         
          if(m_pimpl == NULL)
             return;
-         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
+
+         route_message(pmouse);
+
          if(pmouse->get_lresult() != 0)
             return;
+
       }
       catch(...)
       {
+
       }
+
    }
+
 
    void interaction::_000OnKey(::message::key * pkey)
    {
+
       point ptCursor;
+
       Session.get_cursor_pos(&ptCursor);
+
       if(!pkey->m_bRet)
       {
+
          // these try catchs are needed for multi threading : multi threaded windows: the hell
          // Now I understand why Microsoft (TM) Windows (R) windows are single threaded.
+
          ::user::interaction * pui = top_child();
+
          //         int32_t iSize;
+         
          try
          {
+
             while(pui != NULL)
             {
+
                try
                {
+
                   if(pui->IsWindowVisible())
                   {
+
                      try
                      {
+
                         pui->_000OnKey(pkey);
-                        if(pkey->m_bRet)
+
+                        if (pkey->m_bRet)
+                        {
+
                            return;
+
+                        }
+
                      }
                      catch(...)
                      {
+
                      }
+
                   }
+
                   pui = pui->under_sibling();
+
                }
                catch(...)
                {
+
                }
+
             }
+
          }
          catch(...)
          {
+
          }
+
          try
          {
-            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pkey));
-            if(pkey->get_lresult() != 0)
+
+            route_message(pkey);
+
+            if (pkey->get_lresult() != 0)
+            {
+
                return;
+
+            }
+
          }
          catch(...)
          {
+
          }
+
       }
+
    }
+
 
    void interaction::_001OnMouseEnter(::message::message * pobj)
    {
-      /*
-      for(int32_t i = 0; i < m_uiptra.get_size(); i++)
-      {
-      if(m_uiptra[i]->_001IsVisible()
-      && m_uiptra[i]->_001IsPointInside(point)
-      && !m_uiptra[i]->m_bCursorInside)
-      {
-      m_uiptra[i]->m_bCursorInside = true;
-      m_uiptra[i]->_001OnMouseEnter(wparam, lparam, lresult);
-      }
-      }
-      */
+
       pobj->m_bRet = false;
+
    }
 
 
@@ -2759,13 +2847,57 @@ namespace user
    }
 
 
-
-   void interaction::SendMessageToDescendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
+   void interaction::send_message_to_descendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
    {
-      if(m_pimpl == NULL)
+      
+      if (m_pimpl == NULL)
+      {
+
          return;
-      else
-         return m_pimpl->SendMessageToDescendants(message,wparam,lparam,bDeep,bOnlyPerm);
+
+      }
+
+      return m_pimpl->send_message_to_descendants(message,wparam,lparam,bDeep,bOnlyPerm);
+
+   }
+
+
+   void interaction::route_message_to_descendants(::message::message * pmessage)
+   {
+
+      if (m_pimpl == NULL)
+      {
+
+         return;
+
+      }
+
+      interaction_spa uiptraChild;
+
+      {
+
+         synch_lock sl(m_pmutex);
+
+         uiptraChild = m_uiptraChild;
+
+      }
+
+      for(auto & puiChild : uiptraChild)
+      {
+
+         try
+         {
+
+            puiChild->route_message_to_descendants(pmessage);
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
    }
 
 
@@ -2776,7 +2908,7 @@ namespace user
 
       SCAST_PTR(::message::base,pbase,pobj);
 
-      //if(pbase->m_uiMessage == WM_KEYDOWN)
+      //if(pbase->m_id == WM_KEYDOWN)
       //{
 
       //   SCAST_PTR(::message::key,pkey,pobj);
@@ -2897,7 +3029,7 @@ namespace user
 
       }
 
-      m_signalptra.remove_all();
+      remove_all_routes();
 
       sp(interaction_impl_base) pimplOld = m_pimpl;
 
@@ -2922,7 +3054,7 @@ namespace user
 
             pimplOld->m_pui = NULL;
 
-            pimplOld->_001ClearMessageHandling();
+            pimplOld->remove_all_routes();
 
             ::window_sp pwindowOld = pimplOld;
 
@@ -3058,91 +3190,91 @@ namespace user
 
       }
       
-      try {
+      try 
+      {
          
          m_bUserElementalOk = true;
 
-      m_signalptra.remove_all();
+         remove_all_routes();
 
-      sp(interaction_impl_base) pimplNew;
+         sp(interaction_impl_base) pimplNew;
 
-      ::rect rect(rectParam);
+         ::rect rect(rectParam);
 
-      if(rect.area() <= 0)
-      {
-
-         if(pParentWnd != NULL && dynamic_cast <::user::place_holder *> (pParentWnd) != NULL)
+         if(rect.area() <= 0)
          {
 
-            pParentWnd->GetClientRect(rect);
+            if(pParentWnd != NULL && dynamic_cast <::user::place_holder *> (pParentWnd) != NULL)
+            {
+
+               pParentWnd->GetClientRect(rect);
+
+            }
 
          }
-
-      }
 
 
 #if defined(APPLE_IOS) || defined(VSNORD) || defined(METROWIN)
 
-      if(pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
-      {
+         if(pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
+         {
 
-         pParentWnd = System.m_possystemwindow->m_pui;
+            pParentWnd = System.m_possystemwindow->m_pui;
 
-         //if(!Application.defer_initialize_twf())
-         //{
+            //if(!Application.defer_initialize_twf())
+            //{
 
-         //   //m_threadptra.remove_all();
+            //   //m_threadptra.remove_all();
 
-         //   return false;
+            //   return false;
 
-         //}
+            //}
 
-      }
+         }
 
 #endif
 
 
 #if defined(WINDOWSEX) || defined(LINUX)
 
-      if(pParentWnd == NULL || pParentWnd->get_safe_handle() == (oswindow)HWND_MESSAGE)
+         if(pParentWnd == NULL || pParentWnd->get_safe_handle() == (oswindow)HWND_MESSAGE)
 
 #else
 
-      if(pParentWnd == NULL)
+         if(pParentWnd == NULL)
 
 #endif
-      {
-
-         pimplNew = (Application.alloc(System.type_info < interaction_impl >()));
-
-         if(!pimplNew->create_window(this, lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id,pcreate))
          {
 
-            m_pimpl.release();
+            pimplNew = (Application.alloc(System.type_info < interaction_impl >()));
 
-            pimplNew.release();
+            if(!pimplNew->create_window(this, lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id,pcreate))
+            {
+
+               m_pimpl.release();
+
+               pimplNew.release();
+
+            }
 
          }
-
-      }
-      else
-      {
-
-         pimplNew = canew(::user::interaction_child(get_app()));
-
-         if(!pimplNew->create_window(this, lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id, pcreate))
+         else
          {
 
-            pimplNew.release();
+            pimplNew = canew(::user::interaction_child(get_app()));
+
+            if(!pimplNew->create_window(this, lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id, pcreate))
+            {
+
+               pimplNew.release();
             
-            m_bUserElementalOk = false;
+               m_bUserElementalOk = false;
             
-            return false;
+               return false;
+
+            }
 
          }
-
-      }
-
          
       }
       catch(...)
@@ -3169,129 +3301,132 @@ namespace user
 
       }
       
-      try {
+      try
+      {
          
          m_bUserElementalOk = true;
 
-      m_signalptra.remove_all();
+         remove_all_routes();
 
-      //::thread * pthread = ::get_thread();
+         //::thread * pthread = ::get_thread();
 
-      //if(pthread != NULL)
-      //{
+         //if(pthread != NULL)
+         //{
 
-      //   m_threadptra.add(pthread);
+         //   m_threadptra.add(pthread);
 
-      //}
+         //}
 
 #if defined(APPLE_IOS) || defined(VSNORD) || defined(METROWIN)
 
-      if(pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
-      {
-
-         pParentWnd = System.m_possystemwindow->m_pui;
-
-//         if(!Application.defer_initialize_twf())
-//         {
-//
-////            m_threadptra.remove_all();
-//
-//            return false;
-//
-//         }
-
-      }
-
-#endif
-
-      //if(m_threadptra.get_count() <= 0)
-      //{
-
-      //   m_threadptra.add(get_app());
-
-      //}
-#if !defined(METROWIN)
-      if(pParentWnd == NULL)
-      {
-
-         m_pimpl = Application.alloc(System.type_info < interaction_impl >());
-
-         dwStyle &= ~WS_CHILD;
-         
-         if(!m_pimpl->create_window_ex(this, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id,lpParam))
+         if(pParentWnd == NULL || pParentWnd == System.m_possystemwindow->m_pui)
          {
-            
-            m_bUserElementalOk = false;
 
-            m_pimpl.release();
+            pParentWnd = System.m_possystemwindow->m_pui;
 
-            return false;
-            
+   //         if(!Application.defer_initialize_twf())
+   //         {
+   //
+   ////            m_threadptra.remove_all();
+   //
+   //            return false;
+   //
+   //         }
+
          }
 
-         return true;
-         
-      }
-      else
 #endif
-      {
-#if defined(METROWIN) || defined(APPLE_IOS) || defined(VSNORD)
+
+         //if(m_threadptra.get_count() <= 0)
+         //{
+
+         //   m_threadptra.add(get_app());
+
+         //}
+#if !defined(METROWIN)
+
          if(pParentWnd == NULL)
-            pParentWnd = System.m_possystemwindow->m_pui;
-#endif
-
-         ::rect rectFrame(0, 0, 0, 0);
-
-         if(IsRectEmpty(&rect))
          {
 
-            if(rectFrame.is_null() && pParentWnd->is_place_holder())
+            m_pimpl = Application.alloc(System.type_info < interaction_impl >());
+
+            dwStyle &= ~WS_CHILD;
+         
+            if(!m_pimpl->create_window_ex(this, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rect,pParentWnd,id,lpParam))
+            {
+            
+               m_bUserElementalOk = false;
+
+               m_pimpl.release();
+
+               return false;
+            
+            }
+
+            return true;
+         
+         }
+         else
+#endif
+         {
+#if defined(METROWIN) || defined(APPLE_IOS) || defined(VSNORD)
+            if(pParentWnd == NULL)
+               pParentWnd = System.m_possystemwindow->m_pui;
+#endif
+
+            ::rect rectFrame(0, 0, 0, 0);
+
+            if(IsRectEmpty(&rect))
             {
 
-               pParentWnd->GetClientRect(rectFrame);
+               if(rectFrame.is_null() && pParentWnd->is_place_holder())
+               {
+
+                  pParentWnd->GetClientRect(rectFrame);
+
+               }
+
+            }
+            else
+            {
+
+               rectFrame = rect;
 
             }
 
+            //synch_lock sl(pParentWnd == NULL ? NULL : pParentWnd->m_pmutex);
+
+            m_pimpl = canew(::user::interaction_child(get_app()));
+            m_pimpl->m_pui = this;
+            if(!m_pimpl->create_window_ex(this, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rectFrame,pParentWnd,id,lpParam))
+            {
+
+               m_bUserElementalOk = false;
+               //m_threadptra.remove_all();
+
+               m_pimpl.release();
+
+               return false;
+            }
+            
+            //install_message_routing(this);
+
+            return true;
+
          }
-         else
-         {
-
-            rectFrame = rect;
-
-         }
-
-         //synch_lock sl(pParentWnd == NULL ? NULL : pParentWnd->m_pmutex);
-
-         m_pimpl = canew(::user::interaction_child(get_app()));
-         m_pimpl->m_pui = this;
-         if(!m_pimpl->create_window_ex(this, dwExStyle,lpszClassName,lpszWindowName,dwStyle,rectFrame,pParentWnd,id,lpParam))
-         {
-
-            m_bUserElementalOk = false;
-            //m_threadptra.remove_all();
-
-            m_pimpl.release();
-
-            return false;
-         }
-         //install_message_routing(this);
-         return true;
-      }
          
       }
       catch(...)
-         {
+      {
             
-            m_bUserElementalOk = false;
+         m_bUserElementalOk = false;
             
+         return false;
             
-            return false;
-            
-         }
+      }
       
       return true;
       
-
    }
 
 
@@ -3915,7 +4050,7 @@ namespace user
       try
       {
 
-         signalizable_disconnect_all();
+         remove_all_routes();
 
       }
       catch(...)
@@ -3924,62 +4059,62 @@ namespace user
       }
 
 
-      try
-      {
+      //try
+      //{
 
-         m_signala.remove_all();
+      //   m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
+      //}
 
-      try
-      {
+      //try
+      //{
 
-         m_dispatchUpdateCmdUi.m_signala.remove_all();
+      //   m_dispatchUpdateCmdUi.m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
-
-
-      try
-      {
-
-         m_dispatchCommand.m_signala.remove_all();
-
-      }
-      catch(...)
-      {
-
-      }
+      //}
 
 
-      try
-      {
+      //try
+      //{
 
-         m_signalidaCommand.remove_all();
+      //   m_dispatchCommand.m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
+      //}
 
-      try
-      {
 
-         ::::message::receiver::m_signalptra.remove_all();
+      //try
+      //{
 
-      }
-      catch(...)
-      {
+      //   m_signalidaCommand.remove_all();
 
-      }
+      //}
+      //catch(...)
+      //{
+
+      //}
+
+      //try
+      //{
+
+      //   ::::message::receiver::m_signalptra.remove_all();
+
+      //}
+      //catch(...)
+      //{
+
+      //}
 
 
       //try
@@ -4276,13 +4411,21 @@ namespace user
          m_pimpl->ActivateTopParent();
    }
 
-   void interaction::UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHandler)
+   
+   void interaction::update_dialog_controls(command_target * pTarget)
    {
-      if(m_pimpl == NULL)
+      
+      if (m_pimpl.is_null())
+      {
+       
          return;
-      else
-         m_pimpl->UpdateDialogControls(pTarget,bDisableIfNoHandler);
+
+      }
+
+      m_pimpl->update_dialog_controls(pTarget);
+
    }
+
 
    void interaction::UpdateWindow()
    {
@@ -4460,7 +4603,8 @@ namespace user
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
+//      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
+      bool bShowIdle = !(GetStyle() & WS_VISIBLE);
       //      oswindow oswindow_Parent = ::GetParent(get_handle());
       m_iModal = m_iModalCount;
       int32_t iLevel = m_iModal;
@@ -4507,11 +4651,11 @@ namespace user
 //            pthread->step_timer();
 
             // call on_idle while in bIdle state
-            if(!(dwFlags & MLF_NOIDLEMSG) && puieParent != NULL && lIdleCount == 0)
-            {
-               // send WM_ENTERIDLE to the parent
-               //puieParent->send_message(WM_ENTERIDLE,MSGF_DIALOGBOX,(LPARAM)(DWORD_PTR)NULL);
-            }
+            //if(!(dwFlags & MLF_NOIDLEMSG) && puieParent != NULL && lIdleCount == 0)
+            //{
+            //   // send WM_ENTERIDLE to the parent
+            //   //puieParent->send_message(WM_ENTERIDLE,MSGF_DIALOGBOX,(LPARAM)(DWORD_PTR)NULL);
+            //}
             /*if ((dwFlags & MLF_NOKICKIDLE) ||
             !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MESSAGEF_DIALOGBOX, lIdleCount++))
             {
@@ -5058,54 +5202,55 @@ ExitModal:
       try
       {
       
-      m_bUserElementalOk = true;
+         m_bUserElementalOk = true;
 
-      m_signalptra.remove_all();
+         //m_signalptra.remove_all();
 
-      m_pimpl = Application.alloc(System.type_info < interaction_impl >());
+         remove_all_routes();
 
-      if(m_pimpl == NULL)
-      {
+         m_pimpl = Application.alloc(System.type_info < interaction_impl >());
+
+         if(m_pimpl == NULL)
+         {
          
-         m_bUserElementalOk = false;
+            m_bUserElementalOk = false;
          
-         return false;
+            return false;
          
-      }
+         }
 
-      m_bMessageWindow = true;
+         m_bMessageWindow = true;
 
-      m_pimpl->m_pui = this;
+         m_pimpl->m_pui = this;
 
-      //::thread * pthread = ::get_thread();
+         //::thread * pthread = ::get_thread();
 
-      //if(pthread != NULL)
-      //{
+         //if(pthread != NULL)
+         //{
 
-      //   m_threadptra.add(pthread);
+         //   m_threadptra.add(pthread);
 
-      //}
+         //}
 
-      //if(m_threadptra.get_count() <= 0)
-      //{
+         //if(m_threadptra.get_count() <= 0)
+         //{
 
-      //   m_threadptra.add(get_app());
+         //   m_threadptra.add(get_app());
 
-      //}
+         //}
 
-      if(!m_pimpl->create_message_queue(this, pszName))
-      {
+         if(!m_pimpl->create_message_queue(this, pszName))
+         {
 
-         //m_threadptra.remove_all();
+            //m_threadptra.remove_all();
          
-         m_bUserElementalOk = false;
+            m_bUserElementalOk = false;
 
-         m_pimpl.release();
+            m_pimpl.release();
 
-         return false;
+            return false;
 
-      }
-         
+         }
          
       }
       catch(...)
@@ -5113,9 +5258,7 @@ ExitModal:
          
          m_bUserElementalOk = false;
          
-         
          return false;
-         
          
       }
 
@@ -5801,7 +5944,7 @@ restart:
       bool interaction::_008SetSchema(::user::style * pschema)
       {
 
-         SendMessageToDescendants(message_set_schema,0,pschema,true,true);
+         send_message_to_descendants(message_set_schema,0,pschema,true,true);
 
          return true;
 
@@ -5908,24 +6051,32 @@ restart:
    }
 
 
-
    bool interaction::_001HasCommandHandler(::user::command * pcommand)
    {
 
-      if(command_target_interface::_001HasCommandHandler(id))
+      if (command_target::_001HasCommandHandler(pcommand))
+      {
+
          return true;
+
+      }
 
       if(GetParent() != NULL)
       {
 
-         if(GetParent()->_001HasCommandHandler(id))
+         if (GetParent()->_001HasCommandHandler(pcommand))
+         {
+
             return true;
+
+         }
 
       }
 
       return false;
 
    }
+
 
    bool interaction::track_popup_menu(::user::menu_item * pitem,int32_t iFlags)
    {
@@ -7704,18 +7855,23 @@ restart:
    sp(::message::base) interaction::get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam)
    {
 
-//      ::user::interaction * pwnd = this;
       sp(::message::base) pbase;
+      
       ::message::e_prototype eprototype = ::message::PrototypeNone;
-      //if(oswindow != NULL)
+      
       {
+
          eprototype = ::message::sender::GetMessagePrototype(uiMessage,0);
+
       }
+
       switch(eprototype)
       {
       case ::message::PrototypeNone:
          {
+
             pbase = canew(::message::base(get_app()));
+
          }
          break;
       case ::message::PrototypeCreate:

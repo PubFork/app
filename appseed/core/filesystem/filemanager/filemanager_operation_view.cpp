@@ -55,9 +55,9 @@ namespace filemanager
    void operation_view::install_message_routing(::message::sender * pinterface)
    {
       ::user::split_view::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&operation_view::_001OnCreate);
-      IGUI_WIN_MSG_LINK(MessageMainPost,pinterface,this,&operation_view::_001OnMainPostMessage);
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&operation_view::_001OnDestroy);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&operation_view::_001OnCreate);
+      IGUI_MSG_LINK(MessageMainPost,pinterface,this,&operation_view::_001OnMainPostMessage);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&operation_view::_001OnDestroy);
    }
 
    sp(operation_document) operation_view::get_document()

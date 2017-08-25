@@ -20,7 +20,7 @@ namespace console
    bool application::initialize_application()
    {
 
-      IGUI_WIN_MSG_LINK(WM_APP + 3243,this,this,&application::_001OnImpact);
+      IGUI_MSG_LINK(WM_APP + 3243,this,this,&application::_001OnImpact);
 
 
       System.factory().creatable_small < console::prompt_document >();
@@ -49,7 +49,7 @@ namespace console
 
       if(pbase != NULL)
       {
-         if(pbase->m_uiMessage == WM_KEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN)
          {
 
             SCAST_PTR(::message::key,pkey,pobj);

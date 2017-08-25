@@ -213,7 +213,7 @@ namespace user
 
             pui->send_message(message,wparam,lparam);
 
-            pui->SendMessageToDescendants(message,wparam,lparam);
+            pui->send_message_to_descendants(message,wparam,lparam);
 
          }
 

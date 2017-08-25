@@ -22,9 +22,9 @@ namespace userex
    void top_edit_view::install_message_routing(::message::sender * psender)
    {
 
-      ::user::show < ::user::plain_edit >::install_message_routing(pdispatch);
+      ::user::show < ::user::plain_edit >::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &top_edit_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &top_edit_view::_001OnCreate);
 
    }
 

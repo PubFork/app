@@ -97,7 +97,7 @@ namespace message
 
       virtual unsigned int get_message()
       {
-         return m_uiMessage;
+         return m_id;
       }
 
    };
@@ -254,18 +254,18 @@ namespace message
 
 #endif
 
-   class CLASS_DECL_BASE update_command_ui: 
-      public command_ui
-   {
-   public:
+   //class CLASS_DECL_BASE update_::user::command: 
+   //   public ::user::command
+   //{
+   //public:
 
-      update_command_ui(::aura::application * papp) : 
-         ::command_ui(papp)
-      {
-      
-      }
+   //   update_::user::command(::aura::application * papp) : 
+   //      ::user::command(papp)
+   //   {
+   //   
+   //   }
 
-   };
+   //};
 
    class CLASS_DECL_BASE command: public base
    {

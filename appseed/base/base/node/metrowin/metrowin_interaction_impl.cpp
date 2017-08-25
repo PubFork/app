@@ -522,21 +522,21 @@ namespace metrowin
    void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
-      IGUI_WIN_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
-      IGUI_WIN_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
+      IGUI_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
       if(m_pui != NULL)
       {
          m_pui->install_message_routing(pinterface);
       }
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
-      IGUI_WIN_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
-      IGUI_WIN_MSG_LINK(WM_MOVE,pinterface,this,&interaction_impl::_001OnMove);
-      IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
-//      IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
+      IGUI_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
+      IGUI_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
+      IGUI_MSG_LINK(WM_MOVE,pinterface,this,&interaction_impl::_001OnMove);
+      IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
+      IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
+//      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
    }
 
    void interaction_impl::_001OnMove(::message::message * pobj)
@@ -1205,12 +1205,12 @@ namespace metrowin
 
       // cancel any tracking modes
       send_message(WM_CANCELMODE);
-      SendMessageToDescendants(WM_CANCELMODE,0,0,TRUE,TRUE);
+      send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       // need to use top level parent (for the case where get_handle() is in DLL)
       ::user::interaction * pWnd = EnsureTopLevel();
       WIN_WINDOW(pWnd)->send_message(WM_CANCELMODE);
-      WIN_WINDOW(pWnd)->SendMessageToDescendants(WM_CANCELMODE,0,0,TRUE,TRUE);
+      WIN_WINDOW(pWnd)->send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       throw todo(get_app());
       // attempt to cancel capture
@@ -1248,7 +1248,7 @@ namespace metrowin
 
    bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target_interface::_001OnCmdMsg(pcommand))
+      if(command_target::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1303,19 +1303,19 @@ namespace metrowin
       }
 
 
-      if(pbase->m_uiMessage == WM_KEYDOWN ||
-            pbase->m_uiMessage == WM_KEYUP ||
-            pbase->m_uiMessage == WM_CHAR ||
-            pbase->m_uiMessage == WM_SYSKEYDOWN ||
-            pbase->m_uiMessage == WM_SYSKEYUP ||
-            pbase->m_uiMessage == WM_SYSCHAR)
+      if(pbase->m_id == WM_KEYDOWN ||
+            pbase->m_id == WM_KEYUP ||
+            pbase->m_id == WM_CHAR ||
+            pbase->m_id == WM_SYSKEYDOWN ||
+            pbase->m_id == WM_SYSKEYUP ||
+            pbase->m_id == WM_SYSCHAR)
       {
 
          SCAST_PTR(::message::key,pkey,pobj);
 
          //Session.keyboard().translate_os_key_message(pkey);
 
-         if(pbase->m_uiMessage == WM_KEYDOWN || pbase->m_uiMessage == WM_SYSKEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
          {
             try
             {
@@ -1325,7 +1325,7 @@ namespace metrowin
             {
             }
          }
-         else if(pbase->m_uiMessage == WM_KEYUP || pbase->m_uiMessage == WM_SYSKEYUP)
+         else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
          {
             try
             {
@@ -1337,15 +1337,15 @@ namespace metrowin
          }
       }
 
-      if(pbase->m_uiMessage == WM_TIMER)
+      if(pbase->m_id == WM_TIMER)
       {
 //         m_pui->m_pauraapp->step_timer();
       }
-      else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+      else if(pbase->m_id == WM_LBUTTONDOWN)
       {
          //g_pwndLastLButtonDown = m_pui;
       }
-      /*      else if(pbase->m_uiMessage == CA2M_BERGEDGE)
+      /*      else if(pbase->m_id == CA2M_BERGEDGE)
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
@@ -1359,14 +1359,14 @@ namespace metrowin
 
       _000OnMouseLeave(pbase);
 
-      if(pbase->m_uiMessage == WM_LBUTTONDOWN ||
-            pbase->m_uiMessage == WM_LBUTTONUP ||
-            pbase->m_uiMessage == WM_MBUTTONDOWN ||
-            pbase->m_uiMessage == WM_MBUTTONUP ||
-            pbase->m_uiMessage == WM_RBUTTONDOWN ||
-            pbase->m_uiMessage == WM_RBUTTONUP ||
-            pbase->m_uiMessage == WM_MOUSEMOVE ||
-            pbase->m_uiMessage == WM_MOUSEWHEEL)
+      if(pbase->m_id == WM_LBUTTONDOWN ||
+            pbase->m_id == WM_LBUTTONUP ||
+            pbase->m_id == WM_MBUTTONDOWN ||
+            pbase->m_id == WM_MBUTTONUP ||
+            pbase->m_id == WM_RBUTTONDOWN ||
+            pbase->m_id == WM_RBUTTONUP ||
+            pbase->m_id == WM_MOUSEMOVE ||
+            pbase->m_id == WM_MOUSEWHEEL)
       {
          message::mouse * pmouse = (::message::mouse *) pbase;
 
@@ -1425,7 +1425,7 @@ namespace metrowin
             }
          }
 
-         if(pbase->m_uiMessage == WM_MOUSEMOVE)
+         if(pbase->m_id == WM_MOUSEMOVE)
          {
             // We are at the message_handler procedure.
             // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
@@ -1440,9 +1440,9 @@ namespace metrowin
          return;
 
       }
-      else if(pbase->m_uiMessage == WM_KEYDOWN ||
-              pbase->m_uiMessage == WM_KEYUP ||
-              pbase->m_uiMessage == WM_CHAR)
+      else if(pbase->m_id == WM_KEYDOWN ||
+              pbase->m_id == WM_KEYUP ||
+              pbase->m_id == WM_CHAR)
       {
 
          ::message::key * pkey = (::message::key *) pbase;
@@ -1466,10 +1466,10 @@ namespace metrowin
                   return;
             }
          }
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage,pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
          return;
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+      if(pbase->m_id == ::message::message_event)
       {
          if(m_pui != NULL)
          {
@@ -1492,7 +1492,7 @@ namespace metrowin
       return;
       }
       */
-      pbase->set_lresult(DefWindowProc(pbase->m_uiMessage,pbase->m_wparam,pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
    }
 
    /*
@@ -1942,9 +1942,9 @@ return TRUE;
       return FALSE;
 
       // make sure command has not become disabled before routing
-      probe_command_ui state;
+      probe_::user::command state;
       state.m_id = nID;
-      _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
+      _001OnCommand(nID, CN_UPDATE_::user::command, &state, NULL);
       if (!state.m_bEnabled)
       {
       TRACE(::core::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
@@ -2212,7 +2212,7 @@ return TRUE;
       //return NULL;    // not found
    }
 
-   void interaction_impl::SendMessageToDescendants(oswindow hWnd,UINT message,WPARAM wParam,LPARAM lParam,bool bDeep,bool bOnlyPerm)
+   void interaction_impl::send_message_to_descendants(oswindow hWnd,UINT message,WPARAM wParam,LPARAM lParam,bool bDeep,bool bOnlyPerm)
    {
 
       throw todo(::get_thread_app());
@@ -2248,7 +2248,7 @@ return TRUE;
       //      // send to child windows after parent
       //      try
       //      {
-      //         SendMessageToDescendants(hWndChild, message, wParam, lParam,
+      //         send_message_to_descendants(hWndChild, message, wParam, lParam,
       //            bDeep, bOnlyPerm);
       //      }
       //      catch(...)
@@ -2887,7 +2887,7 @@ return TRUE;
 
       // forward this message to all other child windows
       if (!(GetStyle() & WS_CHILD))
-      SendMessageToDescendants(WM_SYSCOLORCHANGE, 0, 0L, TRUE, TRUE);
+      send_message_to_descendants(WM_SYSCOLORCHANGE, 0, 0L, TRUE, TRUE);
 
       Default();*/
    }
@@ -2918,7 +2918,7 @@ return TRUE;
       if (!(GetStyle() & WS_CHILD))
       {
       const MSG* pMsg = GetCurrentMessage();
-      SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam,
+      send_message_to_descendants(pMsg->message, pMsg->wParam, pMsg->lParam,
       TRUE, TRUE);
       }*/
    }
@@ -2958,7 +2958,7 @@ return TRUE;
       if(!(GetStyle() & WS_CHILD))
       {
          const MSG* pMsg = GetCurrentMessage();
-         SendMessageToDescendants(pMsg->message,pMsg->wParam,pMsg->lParam,
+         send_message_to_descendants(pMsg->message,pMsg->wParam,pMsg->lParam,
                                   TRUE,TRUE);
       }
 
@@ -3732,7 +3732,7 @@ return TRUE;
       //
       //      // send update message to all controls after all other siblings loaded
       //      if (bSuccess)
-      //         SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
+      //         send_message_to_descendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
       //
       //      return bSuccess;
    }
@@ -3741,7 +3741,7 @@ return TRUE;
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      command_ui state(get_app());
+      ::user::command state(get_app());
       interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -3764,7 +3764,7 @@ return TRUE;
       }
 
       // check for handlers in the parent interaction_impl
-      if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+      if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_::user::command, &state, NULL))
       continue;
 
       // determine whether to disable when no handler exists
@@ -5021,10 +5021,10 @@ ExitModal:
 
    }
 
-   void interaction_impl::SendMessageToDescendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
+   void interaction_impl::send_message_to_descendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
    {
       ASSERT(::WinIsWindow(get_handle()));
-      //interaction_impl::SendMessageToDescendants(get_handle(), message, wParam, lParam, bDeep, bOnlyPerm);
+      //interaction_impl::send_message_to_descendants(get_handle(), message, wParam, lParam, bDeep, bOnlyPerm);
 
       // walk through HWNDs to avoid creating temporary interaction_impl objects
       // unless we need to call this function recursively
@@ -5043,7 +5043,7 @@ ExitModal:
             // send to child windows after parent
             try
             {
-               pui->SendMessageToDescendants(message,wParam,lParam,bDeep,bOnlyPerm);
+               pui->send_message_to_descendants(message,wParam,lParam,bDeep,bOnlyPerm);
             }
             catch(...)
             {

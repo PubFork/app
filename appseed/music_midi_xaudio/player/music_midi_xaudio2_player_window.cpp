@@ -30,10 +30,10 @@ namespace music
             void window::install_message_routing(::message::sender * pinterface)
             {
                ::user::interaction::install_message_routing(pinterface);
-               IGUI_WIN_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
-               IGUI_WIN_MSG_LINK(::music::midi::player::message_notify_event   , pinterface, this, &window::_001OnNotifyEvent);
-               IGUI_WIN_MSG_LINK(WM_USER                          , pinterface, this, &window::_001OnUserMessage);
-               IGUI_WIN_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
+               IGUI_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
+               IGUI_MSG_LINK(::music::midi::player::message_notify_event   , pinterface, this, &window::_001OnNotifyEvent);
+               IGUI_MSG_LINK(WM_USER                          , pinterface, this, &window::_001OnUserMessage);
+               IGUI_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
             }
 
             void window::_001OnMmsgDone(::message::message * pobj)

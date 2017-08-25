@@ -499,7 +499,7 @@ class multiple_document_template; // MDI support
 
 
                                   // Helper classes
-class command_ui;           // Menu/button enabling
+class ::user::command;           // Menu/button enabling
                         //class CDataExchange;    // Data exchange and validation context
                         //class CCommandLineInfo; // CommandLine parsing helper
 

@@ -184,7 +184,7 @@ bool db_server::create_message_queue()
 
       //SetTimer(1258477, 484, NULL);
 
-      ////IGUI_WIN_MSG_LINK(WM_TIMER, m_pimpl, this, &db_server::_001OnTimer);
+      ////IGUI_MSG_LINK(WM_TIMER, m_pimpl, this, &db_server::_001OnTimer);
 
    }
 

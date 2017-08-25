@@ -61,24 +61,24 @@ namespace user
 
       ::user::mesh::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &list::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &list::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &list::_001OnSize);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &list::_001OnMouseLeave);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &list::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &list::_001OnRButtonDown);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list::_001OnMouseMove);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &list::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &list::_001OnKeyDown);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
-      //      //IGUI_WIN_MSG_LINK(WM_TIMER,           pinterface, this, &list::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
+      //      //IGUI_MSG_LINK(WM_TIMER,           pinterface, this, &list::_001OnTimer);
       connect_command("list_view_auto_arrange", &list::_001OnListViewAutoArrange);
-      connect_update_cmd_ui("list_view_auto_arrange", &list::_001OnUpdateListViewAutoArrange);
+      connect_command_probe("list_view_auto_arrange", &list::_001OnUpdateListViewAutoArrange);
    }
 
    bool list::CreateHeaderCtrl()
@@ -6087,9 +6087,9 @@ namespace user
 
    void list::_001OnUpdateListViewAutoArrange(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->_001SetCheck(get_auto_arrange());
-      pcommandui->Enable();
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->_001SetCheck(get_auto_arrange());
+      pcommand->Enable();
    }
 
    bool list::is_valid_display_item(index iDisplayItem)

@@ -10,17 +10,19 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    ENSURE_ARG(pobj != NULL);
    SCAST_PTR(::message::base,pbase,pobj);
 
-   if(pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE ||
-      pbase->m_uiMessage == WM_NCHITTEST || pbase->m_uiMessage == WM_SETCURSOR ||
-      pbase->m_uiMessage == WM_CTLCOLORBTN ||
-      pbase->m_uiMessage == WM_CTLCOLORDLG ||
-      pbase->m_uiMessage == WM_CTLCOLOREDIT ||
-      pbase->m_uiMessage == WM_CTLCOLORLISTBOX ||
-      pbase->m_uiMessage == WM_CTLCOLORMSGBOX ||
-      pbase->m_uiMessage == WM_CTLCOLORSCROLLBAR ||
-      pbase->m_uiMessage == WM_CTLCOLORSTATIC ||
-      pbase->m_uiMessage == WM_ENTERIDLE || pbase->m_uiMessage == WM_CANCELMODE ||
-      pbase->m_uiMessage == 0x0118)    // WM_SYSTIMER (caret blink)
+   UINT uiMessage = pbase->m_id;
+
+   if(uiMessage == WM_MOUSEMOVE || uiMessage == WM_NCMOUSEMOVE ||
+      uiMessage == WM_NCHITTEST || uiMessage == WM_SETCURSOR ||
+      uiMessage == WM_CTLCOLORBTN ||
+      uiMessage == WM_CTLCOLORDLG ||
+      uiMessage == WM_CTLCOLOREDIT ||
+      uiMessage == WM_CTLCOLORLISTBOX ||
+      uiMessage == WM_CTLCOLORMSGBOX ||
+      uiMessage == WM_CTLCOLORSCROLLBAR ||
+      uiMessage == WM_CTLCOLORSTATIC ||
+      uiMessage == WM_ENTERIDLE || uiMessage == WM_CANCELMODE ||
+      uiMessage == 0x0118)    // WM_SYSTIMER (caret blink)
    {
       // don't report very frequently sent messages
       return;
@@ -30,22 +32,22 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    char szBuf[80];
 
    // find message name
-   if(pbase->m_uiMessage >= 0xC000)
+   if(uiMessage >= 0xC000)
    {
       // Window message registered with 'RegisterWindowMessage'
       //  (actually a USER atom)
-      if(::GetClipboardFormatNameA(pbase->m_uiMessage,szBuf,_countof(szBuf)))
+      if(::GetClipboardFormatNameA(uiMessage,szBuf,_countof(szBuf)))
          lpszMsgName = szBuf;
    }
-   else if(pbase->m_uiMessage >= WM_USER)
+   else if(uiMessage >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X",pbase->m_uiMessage - WM_USER);
+      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X",uiMessage - WM_USER);
       lpszMsgName = szBuf;
    }
    else
    {
-      lpszMsgName = get_windows_message_name(pbase->m_uiMessage);
+      lpszMsgName = get_windows_message_name(uiMessage);
    }
 
    if(lpszMsgName != NULL)
@@ -73,7 +75,7 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
 #endif
    }
 
-   /*if (pbase->m_uiMessage >= WM_DDE_FIRST && pbase->m_uiMessage <= WM_DDE_LAST)
+   /*if (uiMessage >= WM_DDE_FIRST && uiMessage <= WM_DDE_LAST)
    TraceDDE(lpszPrefix, pMsg);*/
 }
 

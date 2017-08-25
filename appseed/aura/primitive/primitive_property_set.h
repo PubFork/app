@@ -210,7 +210,7 @@ public:
    property_set * m_pset;
 
 
-   PropertySignalObject(class signal * psignal);
+   PropertySignalObject();
 
 
 };

@@ -42,9 +42,9 @@ namespace filemanager
 
       simple_frame_window::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SETTEXT, pinterface, this, &frame::_001OnSetText);
+      IGUI_MSG_LINK(WM_SETTEXT, pinterface, this, &frame::_001OnSetText);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
 
    }
 

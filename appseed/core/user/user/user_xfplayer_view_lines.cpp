@@ -132,11 +132,11 @@ index xfplayer_view_linea::FindLine(xfplayer_view_line * pline)
 
 void xfplayer_view_linea::InstallMessageHandling(::message::sender *pinterface)
 {
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &xfplayer_view_linea::OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_SETCURSOR, pinterface, this, &xfplayer_view_linea::OnSetCursor);
-   //IGUI_WIN_MSG_LINK(WM_TIMER,        pinterface, this, &xfplayer_view_linea::OnTimer);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &xfplayer_view_linea::OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &xfplayer_view_linea::OnLButtonUp);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &xfplayer_view_linea::OnMouseMove);
+   IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &xfplayer_view_linea::OnSetCursor);
+   //IGUI_MSG_LINK(WM_TIMER,        pinterface, this, &xfplayer_view_linea::OnTimer);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &xfplayer_view_linea::OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &xfplayer_view_linea::OnLButtonUp);
 }
 
 void xfplayer_view_linea::OnMouseMove(::message::message * pobj)

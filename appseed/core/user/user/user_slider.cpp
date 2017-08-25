@@ -22,12 +22,12 @@ namespace user
 
    void slider::install_message_routing(::message::sender * psender)
    {
-      ::user::interaction::install_message_routing(pdispatch);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&slider::_001OnCreate);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER,pdispatch,this,&slider::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&slider::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&slider::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&slider::_001OnMouseMove);
+      ::user::interaction::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&slider::_001OnCreate);
+//      //IGUI_MSG_LINK(WM_TIMER,psender,this,&slider::_001OnTimer);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&slider::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&slider::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&slider::_001OnMouseMove);
    }
 
    void slider::_001OnCreate(::message::message * pobj)

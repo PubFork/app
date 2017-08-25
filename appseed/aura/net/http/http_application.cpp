@@ -74,32 +74,31 @@ namespace http
    void application::get(::message::message * pobj)
    {
 
-      SCAST_PTR(signal, psignal, pobj);
+      SCAST_PTR(message, pmessage, pobj);
 
       ::url_domain domain;
 
-      domain.create(System.url().get_server(psignal->m_strUrl));
+      domain.create(System.url().get_server(pmessage->m_strUrl));
 
-
-      if(domain.m_strRadix == "ca2" && ::str::begins(System.url().get_object(psignal->m_strUrl),astr.strMatterUri))
+      if(domain.m_strRadix == "ca2" && ::str::begins(System.url().get_object(pmessage->m_strUrl),astr.strMatterUri))
       {
 
-         string strUrl(psignal->m_strUrl);
+         string strUrl(pmessage->m_strUrl);
 
          property_set set(get_app());
 
-         set = psignal->m_set;
+         set = pmessage->m_set;
 
          single_lock sl(System.http().m_pmutexDownload, true);
 
-         if (!(System.http().m_straDownloading.contains(strUrl)) && !exists(psignal->m_strUrl, set))
+         if (!(System.http().m_straDownloading.contains(strUrl)) && !exists(pmessage->m_strUrl, set))
          {
 
             sl.unlock();
 
-            psignal->m_estatusRet = status_fail;
+            pmessage->m_estatusRet = status_fail;
 
-            psignal->m_bRet = false;
+            pmessage->m_bRet = false;
 
             return;
 
@@ -107,7 +106,7 @@ namespace http
 
       }
 
-      psignal->m_set = process_set(psignal->m_set,  psignal->m_strUrl);
+      pmessage->m_set = process_set(pmessage->m_set, pmessage->m_strUrl);
 
       System.http().get(pobj);
 

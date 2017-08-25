@@ -49,7 +49,11 @@ namespace hi5
             return "";
 
          m_pviewAuth->SetTimer(8888, 484, NULL);
-         m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         //m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+
+         m_ptabview->get_wnd()->RunModalLoop();
+
+
          m_ptemplatePane->close_all_documents(FALSE);
          return m_strPin;
       }
@@ -201,7 +205,10 @@ namespace hi5
          m_pdocAuth->get_html_data()->m_propertyset = set;
          m_pdocAuth->on_open_document(Application.dir().matter(pszMatter));
          display_main_frame();
-         m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         //m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         
+         m_ptabview->get_wnd()->RunModalLoop();
+
          m_ptabview->get_wnd()->EndAllModalLoops(IDOK);
       }
 

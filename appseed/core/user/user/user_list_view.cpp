@@ -20,7 +20,7 @@ namespace user
    //void list_view::install_message_routing(::message::sender * psender)
    //{
 
-   //   ::user::show < ::user::list >::install_message_routing(pdispatch);
+   //   ::user::show < ::user::list >::install_message_routing(psender);
 
    //}
 

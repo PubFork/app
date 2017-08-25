@@ -44,8 +44,8 @@ namespace axis
 
 
 
-      static UINT                                     APPM_LANGUAGE;
-      static WPARAM                                   WPARAM_LANGUAGE_UPDATE;
+      //static UINT                                     APPM_LANGUAGE;
+      //static WPARAM                                   WPARAM_LANGUAGE_UPDATE;
 
       ::user::interaction *                           m_pwndMain;
 
@@ -236,7 +236,7 @@ namespace axis
 
       //virtual void draw2d_factory_exchange();
 
-      virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
+      //virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
       virtual ::user::primitive * window_from_os_data(void * pdata);
 
 

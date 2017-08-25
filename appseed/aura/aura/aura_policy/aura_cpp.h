@@ -162,7 +162,7 @@ namespace aura
 
    class application;
    class system;
-   class application_signal_details;
+   class application_message;
 
    class command;
 
@@ -237,8 +237,7 @@ namespace url
 
 class compress_department; // only usable from axis.dll and dependants
 
-
-
+class command_target;
 
 class dump_context;
 //class string_interface;
@@ -254,7 +253,6 @@ class var_array;
 class handler;
 class thread;
 class command_target;
-class command_ui;
 class critical_section;
 class mutex;
 class string;
@@ -292,7 +290,16 @@ class memory;
 //
 //} // namespace plane
 
-class command_ui;
+
+namespace user
+{
+
+   
+   class command;
+
+
+} // namespace user
+
 
 namespace datetime
 {
@@ -1033,8 +1040,8 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 
 
 #include "aura/user/user/user_command.h"
-#include "aura/aura/aura/aura_command_ui.h"
-#include "aura/aura/aura/aura_command_ui_probe.h"
+//#include "aura/aura/aura/aura_::user::command.h"
+//#include "aura/aura/aura/aura_::user::command_probe.h"
 //#include "graphics/visual/visual_const.h"
 //#include "user/user/user_key_enum.h"
 #include "aura/aura/message/message.h"
@@ -1213,7 +1220,7 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_gudo_application.inl"
 
 
-#include "aura/aura/aura/aura_application_signal_details.h"
+#include "aura/aura/aura/aura_application_message.h"
 
 #include "aura/aura/fontopus/fontopus.h"
 

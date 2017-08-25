@@ -151,7 +151,7 @@ namespace base
       case MSGF_DIALOGBOX:    // handles message boxes as well.
          //pMainWnd = __get_main_window();
          if(code == MSGF_DIALOGBOX && m_puiActive != NULL &&
-               pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+               pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
          {
             //// need to translate messages for the in-place container
             //___THREAD_STATE* pThreadState = __get_thread_state();
@@ -304,6 +304,139 @@ namespace base
 
    }
 
+
+
+   bool application::send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->send_message(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->send_message_to_descendants(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return true;
+
+   }
+
+
+   bool application::route_message_to_windows(::message::message * pmessage) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->route_message(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->route_message_to_descendants(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return true;
+
+   }
+
+
+   void application::send_language_change_message()
+   {
+
+      ::message::message message(::message::type_language);
+
+      route_message_to_windows(&message);
+
+   }
 
 
 

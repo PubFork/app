@@ -4,19 +4,29 @@
 
 void application_bias::callback::connect_to(::aura::application * papp)
 {
+   
    set_app(papp);
-   m_pauraapp->m_psignal->connect(this, &callback::on_call_signal);
+   
+   m_pauraapp->add_route(this, &callback::on_call_signal);
+
 }
+
 
 void application_bias::callback::on_call_signal(::message::message * pobj)
 {
-   SCAST_PTR(::aura::application_signal_details, papplicationsignal, pobj);
+   
+   SCAST_PTR(::aura::application_message, papplicationsignal, pobj);
+
    on_application_bias_callback_signal(papplicationsignal);
+
 }
 
-void application_bias::callback::on_application_bias_callback_signal(::aura::application_signal_details * papplicationsignal)
+
+void application_bias::callback::on_application_bias_callback_signal(::aura::application_message * papplicationsignal)
 {
+
    UNREFERENCED_PARAMETER(papplicationsignal);
+
 }
 
 

@@ -30,12 +30,12 @@ namespace user
 
    void step_slider::install_message_routing(::message::sender * psender)
    {
-      ::user::interaction::install_message_routing(pdispatch);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &step_slider::_001OnCreate);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER, pdispatch, this, &step_slider::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &step_slider::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &step_slider::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &step_slider::_001OnMouseMove);
+      ::user::interaction::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &step_slider::_001OnCreate);
+//      //IGUI_MSG_LINK(WM_TIMER, psender, this, &step_slider::_001OnTimer);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &step_slider::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &step_slider::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &step_slider::_001OnMouseMove);
    }
 
    void step_slider::_001OnCreate(::message::message * pobj)

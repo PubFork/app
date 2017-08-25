@@ -117,25 +117,27 @@ void html_form::_001OnImageLoaded(::message::message * pobj)
 
 void html_form::install_message_routing(::message::sender * pinterface)
 {
+   
    ::user::form_view::install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnCreate);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnCreate);
 
-//   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-//   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::html_form::_001OnKeyDown);
-   IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+   //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
+   //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::html_form::_001OnKeyDown);
+   //IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
 
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_form::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_form::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &html_form::_001OnMouseLeave);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_form::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_form::_001OnLButtonDown);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_form::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &html_form::_001OnMouseLeave);
+   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_form::_001OnLButtonUp);
 
-   IGUI_WIN_MSG_LINK(html::message_on_image_loaded, pinterface, this, &html_form::_001OnImageLoaded);
+   IGUI_MSG_LINK(html::message_on_image_loaded, pinterface, this, &html_form::_001OnImageLoaded);
 
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnDestroy);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnDestroy);
 
 }
+
 
 /*
 bool html_form::open_document(const char * lpszPathName)
@@ -231,10 +233,17 @@ void html_form::_001OnLButtonDown(::message::message * pobj)
    m_phtmlform->m_pelementalLButtonDown = get_html_data()->m_elemental.hit_test(get_html_data(), pt);
    if(m_phtmlform->m_pelementalLButtonDown != NULL)
    {
-      html_message signal(pobj->m_psignal);
-      signal.m_pdata = get_html_data();
-      signal.m_psignal = pmouse;
-      m_phtmlform->m_pelementalLButtonDown->OnLButtonDown(&signal);
+
+      ::html::message htmlmessage(get_app());
+
+      htmlmessage.m_pdata = get_html_data();
+      
+      htmlmessage.m_psignal = pmouse;
+
+      htmlmessage.m_psender = pmouse->m_psender;
+
+      m_phtmlform->m_pelementalLButtonDown->OnLButtonDown(&htmlmessage);
+
    }
    pmouse->m_bRet = true;
    pmouse->set_lresult(1);
@@ -277,17 +286,21 @@ void html_form::_001OnMouseMove(::message::message * pobj)
 
       }
 
-      html_message signal(pobj->m_psignal);
+      ::html::message htmlmessage(get_app());
 
-      signal.m_pdata = get_html_data();
+      htmlmessage.m_pdata = get_html_data();
 
-      signal.m_psignal = pmouse;
+      htmlmessage.m_psignal = pmouse;
 
-      signal.m_pui = this;
+      htmlmessage.m_pui = this;
 
-      pelemental->OnMouseMove(&signal);
+      htmlmessage.m_psender = pmouse->m_psender;
+
+      pelemental->OnMouseMove(&htmlmessage);
+
 /*      if(signal.m_bRet)
          m_elementalptraMouseMove.add(pelemental);*/
+
    }
 
    //for(int32_t i = 0; i < m_elementalptraMouseMove.get_count(); )
@@ -340,10 +353,17 @@ void html_form::_001OnLButtonUp(::message::message * pobj)
    if(m_phtmlform->m_pelementalLButtonDown != NULL
       && pelemental == m_phtmlform->m_pelementalLButtonDown)
    {
-      html_message signal(pobj->m_psignal);
-      signal.m_pdata = get_html_data();
-      signal.m_psignal = pmouse;
-      m_phtmlform->m_pelementalLButtonDown->OnLButtonUp(&signal);
+      
+      ::html::message htmlmessage(get_app());
+
+      htmlmessage.m_pdata = get_html_data();
+
+      htmlmessage.m_psignal = pmouse;
+
+      htmlmessage.m_psender = pmouse->m_psender;
+
+      m_phtmlform->m_pelementalLButtonDown->OnLButtonUp(&htmlmessage);
+
    }
 }
 

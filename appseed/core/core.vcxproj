@@ -562,7 +562,7 @@
     <ClCompile Include="user\html\graphics\html_form.cpp" />
     <ClCompile Include="user\html\graphics\html_html.cpp" />
     <ClCompile Include="user\html\graphics\html_reader.cpp" />
-    <ClCompile Include="user\html\graphics\html_signal.cpp" />
+    <ClCompile Include="user\html\graphics\html_message.cpp" />
     <ClCompile Include="user\html\graphics\html_style.cpp" />
     <ClCompile Include="user\html\graphics\html_style_sheet.cpp" />
     <ClCompile Include="user\html\graphics\html_style_sheet_array.cpp" />
@@ -801,7 +801,7 @@
     <ClInclude Include="user\html\graphics\html_html2.h" />
     <ClInclude Include="user\html\graphics\html_point.h" />
     <ClInclude Include="user\html\graphics\html_reader.h" />
-    <ClInclude Include="user\html\graphics\html_signal.h" />
+    <ClInclude Include="user\html\graphics\html_message.h" />
     <ClInclude Include="user\html\graphics\html_size.h" />
     <ClInclude Include="user\html\graphics\html_style.h" />
     <ClInclude Include="user\html\graphics\html_style_sheet.h" />
@@ -922,7 +922,7 @@
     <ClInclude Include="user\user\user_thread.h" />
     <ClInclude Include="user\user\user_toolbar.h" />
     <ClInclude Include="user\user\user_toolbar_control.h" />
-    <ClInclude Include="user\user\user_tool_command_ui.h" />
+    <ClInclude Include="user\user\user_tool_command.h" />
     <ClInclude Include="user\user\user_tool_tip_tool.h" />
     <ClInclude Include="user\user\user_tool_tip_window.h" />
     <ClInclude Include="user\user\user_tree.h" />
@@ -1087,7 +1087,7 @@
     <ClCompile Include="user\user\user_tab_view_update_hint.cpp" />
     <ClCompile Include="user\user\user_toolbar.cpp" />
     <ClCompile Include="user\user\user_toolbar_ctrl.cpp" />
-    <ClCompile Include="user\user\user_tool_command_ui.cpp" />
+    <ClCompile Include="user\user\user_tool_command.cpp" />
     <ClCompile Include="user\user\user_tool_tip_tool.cpp" />
     <ClCompile Include="user\user\user_tool_tip_window.cpp" />
     <ClCompile Include="user\user\user_tree.cpp" />

@@ -210,12 +210,12 @@ namespace console
    void prompt_frame::install_message_routing(::message::sender * pinterface)
    {
       simple_frame_window::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &prompt_frame::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &prompt_frame::_001OnClose);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &prompt_frame::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_MOVE, pinterface, this, &prompt_frame::_001OnMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &prompt_frame::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &prompt_frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &prompt_frame::_001OnClose);
+//      //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &prompt_frame::_001OnTimer);
+      IGUI_MSG_LINK(WM_MOVE, pinterface, this, &prompt_frame::_001OnMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &prompt_frame::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
    }
 
    void prompt_frame::_001OnCreate(::message::message * pobj)
@@ -363,7 +363,7 @@ namespace console
    void prompt_frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == (WM_APP + 2000))
+      if(pbase->m_id == (WM_APP + 2000))
       {
          _001OnApp2000(pbase);
          pbase->m_bRet = true;
@@ -437,7 +437,7 @@ namespace console
    }
 
 
-   bool prompt_frame::on_simple_action(::user::command * pcommand)
+   bool prompt_frame::on_simple_command(::user::command * pcommand)
    {
       
       if(id == "app_exit")
@@ -449,18 +449,18 @@ namespace console
          
       }
       
-      return simple_frame_window::on_simple_action(id);
+      return simple_frame_window::on_simple_command(id);
       
    }
 
    
-   bool prompt_frame::on_simple_update(command_ui * pcommandui)
+   bool prompt_frame::on_simple_command_probe(::user::command * pcommand)
    {
       
-      if(pcommandui->m_id == "app_exit")
+      if(pcommand->m_id == "app_exit")
       {
          
-         pcommandui->Enable();
+         pcommand->Enable();
          
          return true;
          

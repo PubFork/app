@@ -57,13 +57,13 @@ namespace message
          return FALSE;
 
       // redundant WM_MOUSEMOVE and WM_NCMOUSEMOVE
-      if(pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE)
+      if(pbase->is_message() && (pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_NCMOUSEMOVE))
       {
          return TRUE;
       }
 
       // WM_PAINT and WM_SYSTIMER (caret blink)
-      return pbase->m_uiMessage != WM_PAINT && pbase->m_uiMessage != 0x0118;
+      return pbase->m_id != WM_PAINT && pbase->m_id != 0x0118;
 
    }
 

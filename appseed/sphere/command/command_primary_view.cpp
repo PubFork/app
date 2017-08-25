@@ -17,9 +17,9 @@ namespace prompt
 
       m_iCompromised = 0;
 
-      connect_update_cmd_ui("edit_copy", &primary_view::_001OnUpdateEditCopy);
+      connect_command_probe("edit_copy", &primary_view::_001OnUpdateEditCopy);
       connect_command("edit_copy", &primary_view::_001OnEditCopy);
-      connect_update_cmd_ui("edit_paste", &primary_view::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &primary_view::_001OnUpdateEditPaste);
       connect_command("edit_paste", &primary_view::_001OnEditPaste);
 
    }
@@ -39,7 +39,7 @@ namespace prompt
    {
 
       BASE::install_message_routing(pinterface);
-	   IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
+	   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
 
    }
 
@@ -169,8 +169,8 @@ namespace prompt
 
    void primary_view::_001OnUpdateEditCopy(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
    void primary_view::_001OnEditCopy(::message::message * pobj)
@@ -181,8 +181,8 @@ namespace prompt
 
    void primary_view::_001OnUpdateEditPaste(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
 

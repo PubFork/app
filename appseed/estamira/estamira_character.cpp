@@ -26,11 +26,11 @@ namespace estamira
 
    void character::install_message_routing(::message::sender * psender)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &character::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &character::_001OnKeyUp);
-      //IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &character::_001OnLButtonDown);
-      //IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &character::_001OnLButtonUp);
-      //IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &character::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &character::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &character::_001OnKeyUp);
+      //IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &character::_001OnLButtonDown);
+      //IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &character::_001OnLButtonUp);
+      //IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &character::_001OnMouseMove);
 
    }
 

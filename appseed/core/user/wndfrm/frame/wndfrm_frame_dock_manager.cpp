@@ -114,7 +114,7 @@ namespace user
          bool DockManager::Relay(::message::mouse * pmouse)
          {
 
-            ASSERT(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCMOUSEMOVE || pmouse->m_uiMessage == WM_NCLBUTTONUP);
+            ASSERT(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCMOUSEMOVE || pmouse->m_id == WM_NCLBUTTONUP);
             
             if(!m_bDocking)
                return false;
@@ -159,14 +159,14 @@ namespace user
 
             class point ptCursor = pmouse->m_pt;
 
-            if(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_LBUTTONUP)
+            if(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_LBUTTONUP)
             {
 
                //GetEventWindow()->ClientToScreen(&ptCursor);
 
             }
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP)
             {
                if(GetDockWindow().cast < ::user::box >() != NULL)
                {
@@ -349,9 +349,9 @@ namespace user
             if(pinterface == NULL)
                pinterface = m_pworkset->get_draw_window();
 
-            pinterface->WfiOnMove(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_NCMOUSEMOVE);
+            pinterface->WfiOnMove(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_NCMOUSEMOVE);
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCLBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP)
             {
                TRACE("DockManager::message_handler oswindow ReleaseCapture 2 %x\n",Session.GetCapture().m_p);
                index iMatchingMonitor = m_pworkset->GetWndDraw()->good_move(rectEvent,null_rect(),true);
@@ -465,7 +465,7 @@ namespace user
          {
             SCAST_PTR(::message::base,pbase,pobj);
 
-            if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+            if(pbase->m_id == WM_LBUTTONDOWN)
             {
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
                pwnd->ClientToScreen(&ptCursor);
@@ -483,8 +483,8 @@ namespace user
                pbase->m_bRet = true;
                return;
             }
-            else if(pbase->m_uiMessage == WM_MOUSEMOVE ||
-               pbase->m_uiMessage == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE ||
+               pbase->m_id == WM_LBUTTONUP)
             {
                sp(::user::interaction) pWndCapture = Session.GetCapture();
                TRACE("DockManager::message_handler oswindow Capture %x\n",Session.GetCapture().m_p);
@@ -535,7 +535,7 @@ namespace user
                   MoveWindow(GetDockWindow()->get_handle(),pt);
 
                }
-               if(pbase->m_uiMessage == WM_LBUTTONUP)
+               if(pbase->m_id == WM_LBUTTONUP)
                {
                   Session.ReleaseCapture();
                   m_bDocking = false;

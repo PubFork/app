@@ -113,7 +113,7 @@ public:
 //   bool SetButtons(const UINT* lpIDArray, int32_t nIDCount);
    void SetSizes(SIZE sizeButton, SIZE sizeImage);
 
-   void OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
+   void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler);
 
 
    void TransparentEraseNonClient(::draw2d::graphics * pgraphics);

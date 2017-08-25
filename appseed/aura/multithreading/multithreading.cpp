@@ -126,7 +126,8 @@ namespace multithreading
          try
          {
 
-            pthread->m_signala.remove_all();
+            pthread->m_idroute.remove_all();
+//            pthread->m_signala.remove_all();
 
          }
          catch(...)
@@ -134,16 +135,16 @@ namespace multithreading
 
          }
 
-         try
-         {
+         //try
+         //{
 
-            pthread->m_signala.remove_all();
+         //   pthread->m_signala.remove_all();
 
-         }
-         catch(...)
-         {
+         //}
+         //catch(...)
+         //{
 
-         }
+         //}
 
          try
          {

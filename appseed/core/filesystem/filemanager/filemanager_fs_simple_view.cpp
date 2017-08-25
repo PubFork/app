@@ -110,7 +110,7 @@ namespace filemanager
          void view::on_request_response(::message::message * pobj)
          {
 
-            SCAST_PTR(::http_message, psignal, pobj);
+            SCAST_PTR(::http::message, psignal, pobj);
 
             string strResponse;
 
@@ -130,9 +130,9 @@ namespace filemanager
          void view::open_folder(int64_t iFolder)
          {
 
-            ::http_message * psignal = new ::http_message;
+            ::http::message * psignal = new ::http::message;
 
-            (*psignal)()["request"] = "";
+            psignal->oprop("request") = "";
 
             psignal->m_strUrl.Format("http://file.ca2.cc/ifs/ls?id=%I64d", iFolder);
 

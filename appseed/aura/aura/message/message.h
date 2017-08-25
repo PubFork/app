@@ -5,7 +5,7 @@ namespace message
 {
 
    class message;
-   class dispatch;
+   class sender;
    class receiver;
 
 } // namespace message
@@ -23,7 +23,7 @@ namespace message
 #include "message_receiver.h"
 #include "message_base.h"
 #include "message.inl"
-
+#include "message_listener_smart_pointer_array.h"
 
 namespace message
 {

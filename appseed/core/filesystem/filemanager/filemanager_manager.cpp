@@ -157,31 +157,34 @@ namespace filemanager
       ::user::document(papp),
       ::userfs::document(papp)
    {
+      
       m_bFullBrowse = false;
+      
       m_pfilewatcherlistenerthread = NULL;
 
-      command_signalid id;
+      //command_signalid id;
 
-      connect_update_cmd_ui("levelup", &manager::_001OnUpdateLevelUp);
+      connect_command_probe("levelup", &manager::_001OnUpdateLevelUp);
       connect_command("levelup", &manager::_001OnLevelUp);
-      connect_update_cmd_ui("add_location", &manager::_001OnUpdateAddLocation);
+      connect_command_probe("add_location", &manager::_001OnUpdateAddLocation);
       connect_command("add_location", &manager::_001OnAddLocation);
-      connect_update_cmd_ui("replace_text_in_file_system", &manager::_001OnUpdateReplaceText);
+      connect_command_probe("replace_text_in_file_system", &manager::_001OnUpdateReplaceText);
       connect_command("replace_text_in_file_system", &manager::_001OnReplaceText);
-      connect_update_cmd_ui("edit_paste", &manager::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &manager::_001OnUpdateEditPaste);
       connect_command("edit_paste", &manager::_001OnEditPaste);
-      connect_update_cmd_ui("file_save", &manager::_001OnUpdateFileSaveAs);
+      connect_command_probe("file_save", &manager::_001OnUpdateFileSaveAs);
       connect_command("file_save", &manager::_001OnFileSaveAs);
-      connect_update_cmd_ui("cancel", &manager::_001OnUpdateEditPaste);
+      connect_command_probe("cancel", &manager::_001OnUpdateEditPaste);
       connect_command("cancel", &manager::_001OnEditPaste);
-      connect_update_cmd_ui("new_manager", &manager::_001OnUpdateNewManager);
+      connect_command_probe("new_manager", &manager::_001OnUpdateNewManager);
       connect_command("new_manager", &manager::_001OnNewManager);
-      connect_update_cmd_ui("del_manager", &manager::_001OnUpdateDelManager);
+      connect_command_probe("del_manager", &manager::_001OnUpdateDelManager);
       connect_command("del_manager", &manager::_001OnDelManager);
-      connect_update_cmd_ui("new_folder", &manager::_001OnUpdateNewFolder);
+      connect_command_probe("new_folder", &manager::_001OnUpdateNewFolder);
       connect_command("new_folder", &manager::_001OnNewFolder);
 
    }
+
 
    manager::~manager()
    {
@@ -654,41 +657,46 @@ namespace filemanager
    }
 
 
-   bool manager::on_simple_action(::user::command * pcommand)
+   void manager::on_simple_command(::user::command * pcommand)
    {
 
       if (get_filemanager_data() != NULL
          && get_filemanager_template() != NULL)
       {
          //         ::schema * ptemplate = get_filemanager_template();
-         if (id == get_filemanager_template()->m_strLevelUp)
+         if (pcommand->m_id == get_filemanager_template()->m_strLevelUp)
          {
             FileManagerOneLevelUp(::action::source_user);
-            return true;
+            pcommand->m_bRet = true;
+            return;
          }
       }
-      return ::user::document::on_simple_action(id);
+      
+      ::user::document::on_simple_command(pcommand);
+
    }
 
-   bool manager::on_simple_update(command_ui * pcommandui)
+
+   void manager::on_simple_command_probe(::user::command * pcommand)
    {
-      /*if(pcommandui->m_id == get_filemanager_template()->m_strLevelUp)
+      /*if(pcommand->m_id == get_filemanager_template()->m_strLevelUp)
       {
-      FileManagerOnUpdateLevelUp(pcommandui);
+      FileManagerOnUpdateLevelUp(pcommand);
       return true;
       }*/
-      return ::user::document::on_simple_update(pcommandui);
+      ::user::document::on_simple_command_probe(pcommand);
+
    }
 
 
    /*bool manager::_001OnCmdMsg(::user::command * pcommand)
    {
-   if (nCode == CN_UPDATE_COMMAND_UI)
+   if (nCode == CN_UPDATE_::user::command)
    {
-   command_ui * pcommandui = (command_ui *) pExtra;
+   ::user::command * pcommand = (::user::command *) pExtra;
    if(nID == get_filemanager_template()->m_uiLevelUp)
    {
-   FileManagerOnUpdateLevelUp(pcommandui);
+   FileManagerOnUpdateLevelUp(pcommand);
    return TRUE;
    }
    }
@@ -717,9 +725,9 @@ namespace filemanager
    void manager::_001OnUpdateNewManager(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcommandui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -739,9 +747,9 @@ namespace filemanager
    void manager::_001OnUpdateDelManager(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcommandui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -779,18 +787,18 @@ namespace filemanager
    void manager::_001OnUpdateLevelUp(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       if (m_item.is_null() || m_item->m_filepath.is_empty())
       {
 
-         pcommandui->Enable(FALSE);
+         pcommand->Enable(FALSE);
 
       }
       else
       {
 
-         pcommandui->Enable(TRUE);
+         pcommand->Enable(TRUE);
 
       }
 
@@ -809,9 +817,9 @@ namespace filemanager
    void manager::_001OnUpdateAddLocation(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcommandui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -831,9 +839,9 @@ namespace filemanager
    void manager::_001OnUpdateReplaceText(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcommandui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -855,9 +863,9 @@ namespace filemanager
    void manager::_001OnUpdateNewFolder(::message::message * pobj)
    {
 
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcommandui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
@@ -878,9 +886,9 @@ namespace filemanager
 
    void manager::_001OnUpdateEditPaste(::message::message * pobj)
    {
-      //      SCAST_PTR(::command_ui, pcommandui, pobj);
+      //      SCAST_PTR(::user::command, pcommand, pobj);
 
-      //         pcommandui->Enable(System.m_strCopy.is_empty());
+      //         pcommand->Enable(System.m_strCopy.is_empty());
       pobj->m_bRet = true;
    }
 
@@ -894,20 +902,20 @@ namespace filemanager
 
    void manager::_001OnUpdateFileSaveAs(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
    void manager::_001OnUpdateFileImport(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
    void manager::_001OnUpdateFileExport(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
-      pcommandui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
 
@@ -1114,29 +1122,39 @@ namespace filemanager
       update_all_views(NULL, 0, &uh);
    }
 
+   
    bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand, ::fs::item_array & itema)
    {
-      if (pcommand->m_etype == ::user::command::type_command_ui)
+      
+      if (pcommand->m_id.m_emessagetype == ::message::type_command)
       {
-         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcommand->m_pcommandui->m_id, itema))
+
+         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))
          {
-            get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(
-               get_filemanager_data(), pcommand->m_pcommandui, itema);
-            return TRUE;
+
+            get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(get_filemanager_data(), pcommand, itema);
+
+            return true;
+
          }
+
       }
       else
       {
-         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcommand->m_id, itema))
+
+         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))
          {
-            get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(
-               get_filemanager_data(), pcommand->m_id, itema);
+
+            get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(get_filemanager_data(), pcommand->m_id, itema);
+            
             return true;
+
          }
+
       }
+
       return false;
+
    }
 
 

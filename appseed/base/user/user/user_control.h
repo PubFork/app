@@ -112,7 +112,7 @@ namespace user
    };
 
 
-   class control_cmd_ui : public ::command_ui
+   class control_cmd_ui : public ::user::command
    {
    public:
       
@@ -120,7 +120,7 @@ namespace user
       id_to_id      m_mapControlCommand;
 
 
-      control_cmd_ui(class ::message::sender * psignal);
+      control_cmd_ui();
 
 
       virtual void Enable(bool bOn);
@@ -130,22 +130,23 @@ namespace user
 
    };
 
-   class control_view_impl :
-      virtual public ::object
-   {
-   public:
 
-      control_view_impl();
+   //class control_view_impl :
+   //   virtual public ::object
+   //{
+   //public:
 
-      virtual LRESULT BaseControlExOnIdleUpdateCmdUI(WPARAM wParam, LPARAM);
-      virtual void BaseControlExOnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
-      virtual bool BaseControlExOnCommand(WPARAM wParam, LPARAM lParam) ;
-      virtual sp(::user::interaction) get_window();
+   //   control_view_impl();
 
-      control_cmd_ui  m_commandui; // command_ui derived class used to update
-                                    // base_controlex derived controls
-      list<oswindow, oswindow> m_listwndptrBlackList;
-   };
+   //   virtual LRESULT BaseControlExOnIdleUpdateCmdUI(WPARAM wParam, LPARAM);
+   //   virtual void BaseControlExOnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
+   //   virtual bool BaseControlExOnCommand(WPARAM wParam, LPARAM lParam) ;
+   //   virtual sp(::user::interaction) get_window();
+
+   //   control_cmd_ui  m_commandui; // ::user::command derived class used to update
+   //                                 // base_controlex derived controls
+   //   list<oswindow, oswindow> m_listwndptrBlackList;
+   //};
 
 
 

@@ -33,7 +33,7 @@ namespace user
    void main_frame::install_message_routing(::message::sender * pinterface)
    {
       simple_frame_window::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE,         pinterface, this, &main_frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,         pinterface, this, &main_frame::_001OnCreate);
    }
 
    void main_frame::_001OnCreate(::message::message * pobj)

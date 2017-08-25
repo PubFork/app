@@ -1446,10 +1446,10 @@ namespace user
    }
 
 
-   void interaction_impl_base::SendMessageToDescendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
+   void interaction_impl_base::send_message_to_descendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
    {
 
-      return m_pui->SendMessageToDescendants(message, wparam, lparam, bDeep, bOnlyPerm);
+      return m_pui->send_message_to_descendants(message, wparam, lparam, bDeep, bOnlyPerm);
 
    }
 
@@ -1718,7 +1718,7 @@ namespace user
    void interaction_impl_base::prio_install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
 
    }
 

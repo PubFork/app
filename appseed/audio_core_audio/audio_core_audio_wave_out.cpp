@@ -45,11 +45,11 @@ namespace multimedia
          
          ::multimedia::audio::wave_out::install_message_routing(pinterface);
          
-         //         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
-         //       IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
-         //     IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);
+         //         IGUI_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
+         //       IGUI_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
+         //     IGUI_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);
          
-         //         IGUI_WIN_MSG_LINK(message_open, pinterface, this, &wave_out::OnOpen);
+         //         IGUI_MSG_LINK(message_open, pinterface, this, &wave_out::OnOpen);
          
       }
       

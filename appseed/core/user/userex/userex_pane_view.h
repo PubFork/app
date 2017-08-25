@@ -15,8 +15,11 @@ namespace userex
          virtual public object
       {
       public:
+         
          string   m_strMatter;
+         
          id       m_id;
+
       };
 
 
@@ -27,8 +30,6 @@ namespace userex
       virtual ~pane_view();
 
 
-
-
       void on_create_view(::user::view_creator_data * pcreatordata);
 
 
@@ -36,8 +37,9 @@ namespace userex
       void set_menu_info(id id, const char * pszMatter, class id idCommand);
    
 
-      bool on_simple_update(command_ui * pcommandui);
-      bool on_simple_action(::user::command * pcommand);
+      virtual void on_simple_command_probe(::user::command * pcommand) override;
+      virtual void on_simple_command(::user::command * pcommand) override;
+
 
    };
 

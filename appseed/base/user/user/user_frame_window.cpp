@@ -142,15 +142,15 @@ namespace user
 
       ::user::box::install_message_routing(pinterface);
       IGUI_MSG_LINK(::message::message_frame_initial_update, pinterface, this, &frame_window::_guserbaseOnInitialUpdate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame_window::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &frame_window::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_IDLEUPDATECMDUI, pinterface, this, &frame_window::_001OnIdleUpdateCmdUI);
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS, pinterface, this, &frame_window::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_ACTIVATE, pinterface, this, &frame_window::_001OnActivate);
-      IGUI_WIN_MSG_LINK(WM_NCACTIVATE, pinterface, this, &frame_window::_001OnNcActivate);
-      IGUI_WIN_MSG_LINK(WM_QUERYENDSESSION, pinterface, this, &frame_window::_001OnQueryEndSession);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
+      IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &frame_window::_001OnCreate);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &frame_window::_001OnSize);
+      //IGUI_MSG_LINK(WM_IDLEUPDATECMDUI, pinterface, this, &frame_window::_001OnIdleUpdateCmdUI);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &frame_window::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_ACTIVATE, pinterface, this, &frame_window::_001OnActivate);
+      IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &frame_window::_001OnNcActivate);
+      IGUI_MSG_LINK(WM_QUERYENDSESSION, pinterface, this, &frame_window::_001OnQueryEndSession);
 
    }
 
@@ -264,19 +264,19 @@ namespace user
    ON_MESSAGE(WM_HELPHITTEST, &frame_window::OnHelpHitTest)
    ON_MESSAGE(WM_ACTIVATETOPLEVEL, &frame_window::OnActivateTopLevel)
    // turning on and off standard frame gadgetry
-   ON_UPDATE_COMMAND_UI(ID_VIEW_STATUS_BAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_STATUS_BAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_STATUS_BAR, &frame_window::OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_TOOLBAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_TOOLBAR, &frame_window::OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_REBAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_REBAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_REBAR, &frame_window::OnBarCheck)
    // turning on and off standard mode indicators
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_CAPS, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_NUM, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_SCRL, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_KANA, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_CAPS, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_NUM, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_SCRL, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_KANA, &frame_window::OnUpdateKeyIndicator)
    // standard help handling
-   ON_UPDATE_COMMAND_UI(ID_CONTEXT_HELP, &frame_window::OnUpdateContextHelp)
+   ON_UPDATE_::user::command(ID_CONTEXT_HELP, &frame_window::OnUpdateContextHelp)
    // toolbar "tooltip" notification
    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, &frame_window::OnToolTipText)
    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, &frame_window::OnToolTipText)
@@ -617,49 +617,49 @@ namespace user
    void frame_window::OnEnable(bool bEnable)
    {
 
-      if (bEnable && (m_nFlags & WF_STAYDISABLED))
-      {
-
-         // Work around for MAPI support. This makes sure the main interaction_impl
-         // remains disabled even when the mail system is booting.
-
-         enable_window(FALSE);
-
-#ifdef WINDOWSEX
-
-         ::SetFocus(NULL);
-#else
-
-         throw todo(get_app());
-
-#endif
-
-         return;
-
-      }
+//      if (bEnable && (m_nFlags & WF_STAYDISABLED))
+//      {
+//
+//         // Work around for MAPI support. This makes sure the main interaction_impl
+//         // remains disabled even when the mail system is booting.
+//
+//         enable_window(FALSE);
+//
+//#ifdef WINDOWSEX
+//
+//         ::SetFocus(NULL);
+//#else
+//
+//         throw todo(get_app());
+//
+//#endif
+//
+//         return;
+//
+//      }
 
 
       // this causes modal dialogs to be "truly modal"
-      if (!bEnable && !InModalState())
-      {
-         ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
-         m_nFlags |= WF_MODALDISABLE;
-         BeginModalState();
-      }
-      else if (bEnable && (m_nFlags & WF_MODALDISABLE))
-      {
-         m_nFlags &= ~WF_MODALDISABLE;
-         EndModalState();
+      //if (!bEnable && !InModalState())
+      //{
+      //   ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
+      //   m_nFlags |= WF_MODALDISABLE;
+      //   BeginModalState();
+      //}
+      //else if (bEnable && (m_nFlags & WF_MODALDISABLE))
+      //{
+      //   m_nFlags &= ~WF_MODALDISABLE;
+      //   EndModalState();
 
-         // cause normal focus logic to kick in
-         if (System.get_active_ui() == this)
-            send_message(WM_ACTIVATE, WA_ACTIVE);
-      }
+      //   // cause normal focus logic to kick in
+      //   if (System.get_active_ui() == this)
+      //      send_message(WM_ACTIVATE, WA_ACTIVE);
+      //}
 
-      // force WM_NCACTIVATE because Windows may think it is unecessary
-      if (bEnable && (m_nFlags & WF_STAYACTIVE))
-         send_message(WM_NCACTIVATE, TRUE);
-      // force WM_NCACTIVATE for floating windows too
+      //// force WM_NCACTIVATE because Windows may think it is unecessary
+      //if (bEnable && (m_nFlags & WF_STAYACTIVE))
+      //   send_message(WM_NCACTIVATE, TRUE);
+      //// force WM_NCACTIVATE for floating windows too
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -826,7 +826,7 @@ namespace user
       LoadAccelTable(MAKEINTRESOURCE(nIDResource));
 
       if (pContext == NULL)   // send initial update
-      SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, TRUE, TRUE);
+      send_message_to_descendants(WM_INITIALUPDATE, 0, 0, TRUE, TRUE);
 
       return TRUE;*/
    }
@@ -874,7 +874,7 @@ namespace user
          m_bLayoutEnable = true;
 
          // send initial update to all views (and other controls) in the frame
-         SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+         send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
          // give ::user::impact a chance to save the focus (CFormView needs this)
          if (pview != NULL)
@@ -1001,13 +1001,14 @@ namespace user
    }
 
 
-   bool frame_window::_001OnCmdMsg(::user::command * pcommand)
+   void frame_window::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      if(::user::interaction::_001OnCmdMsg(pcommand))
-         return true;
+      ::user::interaction::_001OnCmdMsg(pcommand);
 
-      return false;
+      if(pcommand->m_bRet)
+         return;
+
    }
 
 
@@ -1080,9 +1081,9 @@ namespace user
          (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
          (pActive == pTopLevel ||
          (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
-      pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
-      if (bStayActive)
-         pTopLevel->m_nFlags |= WF_STAYACTIVE;
+      //pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
+      //if (bStayActive)
+      //   pTopLevel->m_nFlags |= WF_STAYACTIVE;
 
       // sync floating windows to the new state
       NotifyFloatingWindows(bStayActive ? FS_ACTIVATE : FS_DEACTIVATE);
@@ -1106,16 +1107,23 @@ namespace user
 
    }
 
+
    void frame_window::_001OnNcActivate(::message::message * pobj)
    {
+
       SCAST_PTR(::message::nc_activate, pncactivate, pobj);
-         // stay active if WF_STAYACTIVE bit is on
-      if (m_nFlags & WF_STAYACTIVE)
-         pncactivate->m_bActive = TRUE;
+
+      //// stay active if WF_STAYACTIVE bit is on
+      //if (m_nFlags & WF_STAYACTIVE)
+      //   pncactivate->m_bActive = TRUE;
 
       // but do not stay active if the interaction_impl is disabled
       if (!is_window_enabled())
+      {
+
          pncactivate->m_bActive = FALSE;
+
+      }
 
    }
 
@@ -1311,57 +1319,84 @@ namespace user
       rMessage.ReleaseBuffer();*/
    }
 
+   
    LRESULT frame_window::OnPopMessageString(WPARAM wParam, LPARAM lParam)
    {
-      if (m_nFlags & WF_NOPOPMSG)
-         return 0;
+
+      //if (m_nFlags & WF_NOPOPMSG)
+      //   return 0;
 
       return send_message(WM_SETMESSAGESTRING, wParam, lParam);
+
    }
+
 
    LRESULT frame_window::OnSetMessageString(WPARAM wParam, LPARAM lParam)
    {
+  
       UINT nIDLast = m_nIDLastMessage;
-      m_nFlags &= ~WF_NOPOPMSG;
+
+//      m_nFlags &= ~WF_NOPOPMSG;
 
       sp(::user::interaction) pMessageBar = GetMessageBar();
+
       if (pMessageBar != NULL)
       {
+
          const char * lpsz = NULL;
+
          string strMessage;
 
          // set the message bar text
+
          if (lParam != 0)
          {
+
             ASSERT(wParam == 0);    // can't have both an ID and a string
+
             lpsz = (const char *)lParam; // set an explicit string
+
          }
          else if (wParam != 0)
          {
+
             // map SC_CLOSE to PREVIEW_CLOSE when in print preview mode
             /*         if (wParam == __IDS_SCCLOSE && m_lpfnCloseProc != NULL)
             wParam = __IDS_PREVIEW_CLOSE;*/
 
             // get message associated with the ID indicated by wParam
             //NT64: Assume IDs are still 32-bit
+            
             GetMessageString((UINT)wParam, strMessage);
+
             lpsz = strMessage;
+
          }
+
          pMessageBar->set_window_text(lpsz);
 
          // update owner of the bar in terms of last message selected
          sp(::user::frame_window) pFrameWnd = pMessageBar->GetParentFrame();
+
          if (pFrameWnd != NULL)
          {
+
             pFrameWnd->m_nIDLastMessage = (UINT)wParam;
+
             pFrameWnd->m_nIDTracking = (UINT)wParam;
+
          }
+
       }
 
       m_nIDLastMessage = (UINT)wParam;    // new ID (or 0)
+
       m_nIDTracking = (UINT)wParam;       // so F1 on toolbar buttons work
+
       return nIDLast;
+
    }
+
 
    LRESULT frame_window::OnHelpPromptAddr(WPARAM, LPARAM)
    {
@@ -1935,14 +1970,17 @@ namespace user
 
 
 
-   void frame_window::OnUpdateControlBarMenu(command_ui * pcommandui)
+   void frame_window::OnUpdateControlBarMenu(::user::command * pcommand)
    {
+   
       /*      ASSERT(ID_VIEW_STATUS_BAR == "status_bar");
       ASSERT(ID_VIEW_TOOLBAR == __IDW_TOOLBAR);
       ASSERT(ID_VIEW_REBAR == __IDW_REBAR);*/
 
-      pcommandui->ContinueRouting();
+      //pcommand->ContinueRouting();
+
    }
+
 
    bool frame_window::OnBarCheck(UINT nID)
    {
@@ -2001,38 +2039,38 @@ namespace user
    //}
 
 
-   void frame_window::_001OnIdleUpdateCmdUI(::message::message * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-      // update menu if necessary
-      if (m_nIdleFlags & idleMenu)
-         OnUpdateFrameMenu(m_hMenuAlt);
+//    void frame_window::_001OnIdleUpdateCmdUI(::message::message * pobj)
+//    {
+//       UNREFERENCED_PARAMETER(pobj);
+//       // update menu if necessary
+//       if (m_nIdleFlags & idleMenu)
+//          OnUpdateFrameMenu(m_hMenuAlt);
 
-      // update title if necessary
-      if (m_nIdleFlags & idleTitle)
-         on_update_frame_title(TRUE);
+//       // update title if necessary
+//       if (m_nIdleFlags & idleTitle)
+//          on_update_frame_title(TRUE);
 
-      // recalc on_layout if necessary
-      if (m_nIdleFlags & idleLayout)
-      {
-         on_layout();
-         UpdateWindow();
-      }
+//       // recalc on_layout if necessary
+//       if (m_nIdleFlags & idleLayout)
+//       {
+//          on_layout();
+//          UpdateWindow();
+//       }
 
-      // set the current message string if necessary
-      if (m_nIDTracking != m_nIDLastMessage)
-      {
-         SetMessageText(m_nIDTracking);
-         ASSERT(m_nIDTracking == m_nIDLastMessage);
-      }
+//       // set the current message string if necessary
+//       if (m_nIDTracking != m_nIDLastMessage)
+//       {
+//          SetMessageText(m_nIDTracking);
+//          ASSERT(m_nIDTracking == m_nIDLastMessage);
+//       }
 
-      for(auto & bar : m_barptra.refa())
-      {
-         bar._001OnIdleUpdateCmdUI(pobj);
-      }
+//       for(auto & bar : m_barptra.refa())
+//       {
+//          bar._001OnIdleUpdateCmdUI(pobj);
+//       }
 
-      m_nIdleFlags = 0;
-   }
+//       m_nIdleFlags = 0;
+//    }
 
 
 
@@ -2106,26 +2144,37 @@ namespace user
    }
 
 
-
    bool frame_window::_001HasCommandHandler(::user::command * pcommand)
    {
 
-      if (command_target_interface::_001HasCommandHandler(id))
+      if (command_target::_001HasCommandHandler(pcommand))
+      {
+
          return true;
+
+      }
 
       if (m_pviewActive != NULL)
       {
 
-         if (m_pviewActive->_001HasCommandHandler(id))
+         if (m_pviewActive->_001HasCommandHandler(pcommand))
+         {
+
             return true;
+
+         }
 
       }
 
       if (GetParent() != NULL)
       {
 
-         if (GetParent()->_001HasCommandHandler(id))
+         if (GetParent()->_001HasCommandHandler(pcommand))
+         {
+
             return true;
+
+         }
 
       }
 

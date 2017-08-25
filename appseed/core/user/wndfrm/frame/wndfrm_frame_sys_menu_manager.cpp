@@ -31,11 +31,11 @@ namespace user
 
             if(m_pworkset->GetEventWindow() == NULL || pbase->m_pwnd != m_pworkset->GetEventWindow())
                return;
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            else if(pbase->m_uiMessage == WM_RBUTTONUP)
+            else if(pbase->m_id == WM_RBUTTONUP)
             {
                if(m_enumState == StateMBDown)
                {
@@ -59,7 +59,7 @@ namespace user
          {
             UNREFERENCED_PARAMETER(pwnd);
             SCAST_PTR(::message::base, pbase, pobj);
-            switch(pbase->m_uiMessage)
+            switch(pbase->m_id)
             {
             case WM_LBUTTONDBLCLK:
             {
@@ -74,15 +74,15 @@ namespace user
             }
             }
 
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            else if(pbase->m_uiMessage == WM_RBUTTONUP)
+            else if(pbase->m_id == WM_RBUTTONUP)
             {
                if(m_enumState == StateMBDown)
                {

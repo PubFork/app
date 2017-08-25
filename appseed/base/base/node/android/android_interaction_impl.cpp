@@ -563,38 +563,38 @@ namespace android
       last_install_message_routing(pinterface);
       ::user::interaction_impl::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
       if(!m_pui->m_bMessageWindow)
       {
-         IGUI_WIN_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
-         IGUI_WIN_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
+         IGUI_MSG_LINK(WM_PAINT,pinterface,this,&interaction_impl::_001OnPaint);
+         IGUI_MSG_LINK(WM_PRINT,pinterface,this,&interaction_impl::_001OnPrint);
       }
       m_pui->install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&interaction_impl::_001OnCreate);
       if(!m_pui->m_bMessageWindow)
       {
 
-         IGUI_WIN_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
+         IGUI_MSG_LINK(WM_SETCURSOR,pinterface,this,&interaction_impl::_001OnSetCursor);
 
-         //IGUI_WIN_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
+         //IGUI_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
 
-         //IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
+         //IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
 
-         //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING,pinterface,this,&interaction_impl::_001OnWindowPosChanging);
-         //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGED,pinterface,this,&interaction_impl::_001OnWindowPosChanged);
-         //IGUI_WIN_MSG_LINK(WM_GETMINMAXINFO,pinterface,this,&interaction_impl::_001OnGetMinMaxInfo);
+         //IGUI_MSG_LINK(WM_WINDOWPOSCHANGING,pinterface,this,&interaction_impl::_001OnWindowPosChanging);
+         //IGUI_MSG_LINK(WM_WINDOWPOSCHANGED,pinterface,this,&interaction_impl::_001OnWindowPosChanged);
+         //IGUI_MSG_LINK(WM_GETMINMAXINFO,pinterface,this,&interaction_impl::_001OnGetMinMaxInfo);
 
-//         IGUI_WIN_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
+//         IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
 
-         //IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
+         //IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
 
          prio_install_message_routing(pinterface);
 
       }
 
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
 
-      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction_impl::_001OnNcCalcSize);
+      IGUI_MSG_LINK(WM_NCCALCSIZE,pinterface,this,&interaction_impl::_001OnNcCalcSize);
 
    }
 
@@ -1173,12 +1173,12 @@ namespace android
 
       // Cancel any tracking modes
       send_message(WM_CANCELMODE);
-      SendMessageToDescendants(WM_CANCELMODE,0,0,TRUE,TRUE);
+      send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       // need to use top level parent (for the case where get_handle() is in DLL)
       sp(::user::interaction) pwindow = EnsureTopLevel();
       pwindow->send_message(WM_CANCELMODE);
-      pwindow->SendMessageToDescendants(WM_CANCELMODE,0,0,TRUE,TRUE);
+      pwindow->send_message_to_descendants(WM_CANCELMODE,0,0,TRUE,TRUE);
 
       // attempt to cancel capture
       oswindow oswindow_Capture = ::GetCapture();
@@ -1215,7 +1215,7 @@ namespace android
 
    bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target_interface::_001OnCmdMsg(pcommand))
+      if(command_target::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1244,7 +1244,7 @@ namespace android
 
       SCAST_PTR(::message::base,pbase,pobj);
 
-      //if(pbase->m_uiMessage == WM_MOUSEMOVE)
+      //if(pbase->m_id == WM_MOUSEMOVE)
       //{
       //
       //   pbase->m_bRet = true;
@@ -1258,26 +1258,26 @@ namespace android
 
 
 
-      if(pbase->m_uiMessage == WM_SIZE || pbase->m_uiMessage == WM_MOVE)
+      if(pbase->m_id == WM_SIZE || pbase->m_id == WM_MOVE)
       {
 
          //win_update_graphics();
 
       }
 
-      if(pbase->m_uiMessage == WM_KEYDOWN ||
-         pbase->m_uiMessage == WM_KEYUP ||
-         pbase->m_uiMessage == WM_CHAR ||
-         pbase->m_uiMessage == WM_SYSKEYDOWN ||
-         pbase->m_uiMessage == WM_SYSKEYUP ||
-         pbase->m_uiMessage == WM_SYSCHAR)
+      if(pbase->m_id == WM_KEYDOWN ||
+         pbase->m_id == WM_KEYUP ||
+         pbase->m_id == WM_CHAR ||
+         pbase->m_id == WM_SYSKEYDOWN ||
+         pbase->m_id == WM_SYSKEYUP ||
+         pbase->m_id == WM_SYSCHAR)
       {
 
          SCAST_PTR(::message::key,pkey,pobj);
 
 
 
-         if(pbase->m_uiMessage == WM_KEYDOWN || pbase->m_uiMessage == WM_SYSKEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
          {
             try
             {
@@ -1287,7 +1287,7 @@ namespace android
             {
             }
          }
-         else if(pbase->m_uiMessage == WM_KEYUP || pbase->m_uiMessage == WM_SYSKEYUP)
+         else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
          {
             try
             {
@@ -1320,11 +1320,11 @@ namespace android
          }
       }
 
-      if(pbase->m_uiMessage == WM_TIMER)
+      if(pbase->m_id == WM_TIMER)
       {
 //         m_pui->m_pauraapp->step_timer();
       }
-      else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+      else if(pbase->m_id == WM_LBUTTONDOWN)
       {
          //::rect rectClient;
          //::GetClientRect(get_handle(),rectClient);
@@ -1346,7 +1346,7 @@ namespace android
          //bool bIconic = ::IsIconic(get_handle()) != FALSE;
          Session.m_puiLastLButtonDown = m_pui;
       }
-      /*      else if(pbase->m_uiMessage == CA2M_BERGEDGE)
+      /*      else if(pbase->m_id == CA2M_BERGEDGE)
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
@@ -1358,7 +1358,7 @@ namespace android
       }*/
       pbase->set_lresult(0);
 
-      if(pbase->m_uiMessage == WM_MOUSELEAVE)
+      if(pbase->m_id == WM_MOUSELEAVE)
       {
          
          _000OnMouseLeave(pbase);
@@ -1367,16 +1367,16 @@ namespace android
 
       }
 
-      if(pbase->m_uiMessage == WM_LBUTTONDOWN ||
-         pbase->m_uiMessage == WM_LBUTTONUP ||
-         pbase->m_uiMessage == WM_MBUTTONDOWN ||
-         pbase->m_uiMessage == WM_MBUTTONUP ||
-         pbase->m_uiMessage == WM_RBUTTONDOWN ||
-         pbase->m_uiMessage == WM_RBUTTONUP ||
-         pbase->m_uiMessage == WM_LBUTTONDBLCLK ||
-         pbase->m_uiMessage == WM_MOUSEMOVE ||
-         pbase->m_uiMessage == WM_NCMOUSEMOVE ||
-         pbase->m_uiMessage == WM_MOUSEWHEEL)
+      if(pbase->m_id == WM_LBUTTONDOWN ||
+         pbase->m_id == WM_LBUTTONUP ||
+         pbase->m_id == WM_MBUTTONDOWN ||
+         pbase->m_id == WM_MBUTTONUP ||
+         pbase->m_id == WM_RBUTTONDOWN ||
+         pbase->m_id == WM_RBUTTONUP ||
+         pbase->m_id == WM_LBUTTONDBLCLK ||
+         pbase->m_id == WM_MOUSEMOVE ||
+         pbase->m_id == WM_NCMOUSEMOVE ||
+         pbase->m_id == WM_MOUSEWHEEL)
       {
 
          message::mouse * pmouse = (::message::mouse *) pbase;
@@ -1425,7 +1425,7 @@ namespace android
             pmouse->m_pt.y += (LONG)rectWindow.top;
          }
 
-         if(pbase->m_uiMessage == WM_MOUSEMOVE)
+         if(pbase->m_id == WM_MOUSEMOVE)
          {
             // We are at the message_handler procedure.
             // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
@@ -1434,7 +1434,7 @@ namespace android
             // handler has set it to another one.
             pmouse->m_ecursor = visual::cursor_default;
          }
-         else if(pbase->m_uiMessage == WM_NCMOUSEMOVE)
+         else if(pbase->m_id == WM_NCMOUSEMOVE)
          {
             // We are at the message_handler procedure.
             // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
@@ -1450,10 +1450,10 @@ namespace android
 
       }
 
-      //if(pbase->m_uiMessage == MESSAGE_OLE_DRAGENTER ||
-      //   pbase->m_uiMessage == MESSAGE_OLE_DRAGOVER ||
-      //   pbase->m_uiMessage == MESSAGE_OLE_DRAGLEAVE ||
-      //   pbase->m_uiMessage == MESSAGE_OLE_DRAGDROP)
+      //if(pbase->m_id == MESSAGE_OLE_DRAGENTER ||
+      //   pbase->m_id == MESSAGE_OLE_DRAGOVER ||
+      //   pbase->m_id == MESSAGE_OLE_DRAGLEAVE ||
+      //   pbase->m_id == MESSAGE_OLE_DRAGDROP)
       //{
 
       //   message::drag_and_drop * pdrag = (::message::drag_and_drop *) pbase;
@@ -1476,12 +1476,12 @@ namespace android
       //   }
       //   return;
       //}
-      if(pbase->m_uiMessage == WM_KEYDOWN ||
-         pbase->m_uiMessage == WM_KEYUP ||
-         pbase->m_uiMessage == WM_CHAR ||
-         pbase->m_uiMessage == WM_SYSKEYDOWN ||
-         pbase->m_uiMessage == WM_SYSKEYUP ||
-         pbase->m_uiMessage == WM_SYSCHAR)
+      if(pbase->m_id == WM_KEYDOWN ||
+         pbase->m_id == WM_KEYUP ||
+         pbase->m_id == WM_CHAR ||
+         pbase->m_id == WM_SYSKEYDOWN ||
+         pbase->m_id == WM_SYSKEYUP ||
+         pbase->m_id == WM_SYSCHAR)
       {
 
          message::key * pkey = (::message::key *) pbase;
@@ -1512,12 +1512,12 @@ namespace android
 
          }
 
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage,pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
 
          return;
 
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+      if(pbase->m_id == ::message::message_event)
       {
          if(m_pui != NULL)
          {
@@ -1531,11 +1531,11 @@ namespace android
          return;
       if(m_pui != NULL)
       {
-         pbase->set_lresult(m_pui->DefWindowProc(pbase->m_uiMessage,pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(m_pui->DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
       }
       else
       {
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage,pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
       }
    }
 
@@ -1662,7 +1662,7 @@ namespace android
       return NULL;    // not found
    }
 
-   //void interaction_impl::SendMessageToDescendants(oswindow oswindow,UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
+   //void interaction_impl::send_message_to_descendants(oswindow oswindow,UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
    //{
    //   // walk through HWNDs to avoid creating temporary interaction_impl objects
    //   // unless we need to call this function recursively
@@ -1694,7 +1694,7 @@ namespace android
    //   //      // send to child android after parent
    //   //      try
    //   //      {
-   //   //         SendMessageToDescendants(oswindow_Child,message,wParam,lParam,
+   //   //         send_message_to_descendants(oswindow_Child,message,wParam,lParam,
    //   //            bDeep,bOnlyPerm);
    //   //      }
    //   //      catch(...)
@@ -2192,7 +2192,7 @@ LRESULT interaction_impl::OnDisplayChange(WPARAM, LPARAM)
 
       //const MESSAGE* pMsg = GetCurrentMessage();
 
-      //SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
+      //send_message_to_descendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
 
    }
 
@@ -2999,7 +2999,7 @@ bool interaction_impl::ExecuteDlgInit(LPVOID lpResource)
    //
    //      // send update message to all controls after all other siblings loaded
    //      if (bSuccess)
-   //         SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
+   //         send_message_to_descendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
    //
    //      return bSuccess;
 }
@@ -3008,7 +3008,7 @@ void interaction_impl::UpdateDialogControls(command_target* pTarget, bool bDisab
 {
    UNREFERENCED_PARAMETER(pTarget);
    UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-   command_ui state(get_app());
+   ::user::command state(get_app());
    //interaction_impl wndTemp;       // very temporary interaction_impl just for CmdUI update
 
                                    // walk all the kids - assume the IDs are for buttons
@@ -3031,7 +3031,7 @@ void interaction_impl::UpdateDialogControls(command_target* pTarget, bool bDisab
                                    }
 
                                    // check for handlers in the parent interaction_impl
-                                   if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+                                   if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_::user::command, &state, NULL))
                                    continue;
 
                                    // determine whether to disable when no handler exists
@@ -4127,10 +4127,10 @@ void interaction_impl::ShowOwnedPopups(bool bShow)
 
 }
 
-void interaction_impl::SendMessageToDescendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
+void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
 {
    ASSERT(::IsWindow((oswindow)get_handle()));
-   //interaction_impl::SendMessageToDescendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
+   //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
    // walk through oswindows to avoid creating temporary interaction_impl objects
    // unless we need to call this function recursively
@@ -4149,7 +4149,7 @@ void interaction_impl::SendMessageToDescendants(UINT message, WPARAM wparam, lpa
          // send to child windows after parent
          try
          {
-            pui->SendMessageToDescendants(message, wparam, lparam, bDeep, bOnlyPerm);
+            pui->send_message_to_descendants(message, wparam, lparam, bDeep, bOnlyPerm);
          }
          catch (...)
          {

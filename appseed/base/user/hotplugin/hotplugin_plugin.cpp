@@ -101,8 +101,8 @@ namespace hotplugin
    void plugin::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_routing(pdispatch);
-      ::axis::session::install_message_routing(pdispatch);
+      ::simple_ui::interaction::install_message_routing(psender);
+      ::axis::session::install_message_routing(psender);
 
    }
 
@@ -1072,7 +1072,7 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      message    = paxis->m_uiMessage;
+      message    = paxis->m_id;
 
       wparam     = paxis->m_wparam;
 

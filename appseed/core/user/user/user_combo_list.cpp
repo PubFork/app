@@ -39,21 +39,21 @@ namespace user
    void combo_list::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_routing(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS, pdispatch, this, &combo_list::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_KILLFOCUS, pdispatch, this, &combo_list::_001OnKillFocus);
-      IGUI_WIN_MSG_LINK(WM_CLOSE, pdispatch, this, &combo_list::_001OnClose);
-      IGUI_WIN_MSG_LINK(WM_ACTIVATE, pdispatch, this, &combo_list::_001OnActivate);
-      IGUI_WIN_MSG_LINK(WM_MOUSEACTIVATE, pdispatch, this, &combo_list::_001OnMouseActivate);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &combo_list::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &combo_list::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &combo_list::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &combo_list::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MBUTTONDOWN, pdispatch, this, &combo_list::_001OnMButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pdispatch, this, &combo_list::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &combo_list::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &combo_list::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SETFOCUS, psender, this, &combo_list::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &combo_list::_001OnKillFocus);
+      IGUI_MSG_LINK(WM_CLOSE, psender, this, &combo_list::_001OnClose);
+      IGUI_MSG_LINK(WM_ACTIVATE, psender, this, &combo_list::_001OnActivate);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE, psender, this, &combo_list::_001OnMouseActivate);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &combo_list::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &combo_list::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &combo_list::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &combo_list::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MBUTTONDOWN, psender, this, &combo_list::_001OnMButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, psender, this, &combo_list::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &combo_list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &combo_list::_001OnShowWindow);
 
    }
 

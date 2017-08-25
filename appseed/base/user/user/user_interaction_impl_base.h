@@ -201,7 +201,7 @@ namespace user
       virtual LRESULT message_call(UINT uiMessage, WPARAM wparam, lparam lparam) override;
 
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 
 
       virtual void pre_translate_message(::message::message * pobj);

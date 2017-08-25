@@ -190,11 +190,11 @@ namespace user
       bool attach(oswindow oswindow_New);
       oswindow detach();
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
       DECL_GEN_SIGNAL(_002OnDraw);
-      DECL_GEN_SIGNAL(_001OnShowWindow);
 
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
 #if (WINVER >= 0x0500) && defined(WINDOWSEX)
 
@@ -238,7 +238,7 @@ namespace user
       // as above, but returns oswindow
       virtual ::user::interaction * GetDescendantWindow(id id) const;
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 
       virtual bool IsWindow() const;
 

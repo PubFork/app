@@ -83,15 +83,13 @@ namespace user
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);
-      DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
+      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
       DECL_GEN_SIGNAL(_001OnNcActivate);
       DECL_GEN_SIGNAL(_001OnNcCalcSize);
       DECL_GEN_SIGNAL(_001OnEnable);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnClose);
 
-
-      
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
       
       bool pre_create_window(::user::create_struct& cs);
@@ -108,11 +106,13 @@ namespace user
       
       virtual bool create_menu(const stringa & straCommand, const stringa & straCommandTitle);
 
+      virtual void destroy_menu();
+
       virtual bool load_menu(::xml::node * pnode);
       
       virtual bool load_xml_menu(const char * pszMatter);
       
-      virtual void update_command_ui(menu_item * pitemParent);
+      virtual void update_command(menu_item * pitemParent);
 
       void calc_size(menu_item * pitem, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight);
       void layout_buttons(menu_item * pitem, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound);

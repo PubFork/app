@@ -17,13 +17,18 @@ namespace filemanager
    {
    }
 
-   void child_frame::install_message_routing(::message::sender * pinterface)
+
+   void child_frame::install_message_routing(::message::sender * psender)
    {
-      simple_child_frame::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(::core::application::APPM_LANGUAGE, pinterface, this, &child_frame::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &child_frame::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &child_frame::_001OnCreate);
+      
+      simple_child_frame::install_message_routing(psender);
+
+      MSG_TYPE_LINK(::message::type_language , psender, this, &child_frame::_001OnAppLanguage);
+      IGUI_MSG_LINK(WM_SHOWWINDOW            , psender, this, &child_frame::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE                , psender, this, &child_frame::_001OnCreate);
+
    }
+
 
    bool child_frame::on_create_bars()
    {
@@ -34,17 +39,22 @@ namespace filemanager
 
    }
 
+   
    bool child_frame::DestroyBars()
    {
+
       return true;
+
    }
 
-   bool child_frame::_001OnCmdMsg(::user::command * pcommand)
+
+   void child_frame::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      //file_list_callback * pcallback = get_filemanager_template()->m_pfilelistcallback;
-      return simple_child_frame::_001OnCmdMsg(pcommand);
+      simple_child_frame::_001OnCmdMsg(pcommand);
+
    }
+
 
    void child_frame::OnChangeEditSearch()
    {

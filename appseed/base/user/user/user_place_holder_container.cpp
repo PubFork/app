@@ -24,7 +24,7 @@ namespace user
 
    void place_holder_container::install_message_routing(::message::sender * psender)
    {
-      ::user::interaction::install_message_routing(pdispatch);
+      ::user::interaction::install_message_routing(psender);
    }
 
 

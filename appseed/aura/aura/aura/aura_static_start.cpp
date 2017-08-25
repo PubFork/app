@@ -7,7 +7,7 @@
 
 #include "framework.h"
 
-extern mutex * g_pmutexSignal;
+//extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
 //CLASS_DECL_AURA void init_draw2d_mutex();
 //CLASS_DECL_AURA void term_draw2d_mutex();
@@ -231,7 +231,7 @@ namespace aura
 
          g_pmapThreadOn = new ::map < IDTHREAD, IDTHREAD, IDTHREAD, IDTHREAD >;
 
-         g_pmutexSignal = new mutex();
+         //g_pmutexSignal = new mutex();
 
          //g_pstrLastStatus = new string();
 
@@ -495,7 +495,7 @@ namespace aura
 
          ::aura::del(g_pmutexSystemHeap);
 
-         ::aura::del(g_pmutexSignal);
+         //::aura::del(g_pmutexSignal);
 
          ::aura::del(g_pmutexThreadOn);
 

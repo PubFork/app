@@ -73,7 +73,7 @@ namespace core
 
       m_pdocmanager = NULL;
 
-      m_psignal->connect(this, &application::on_application_signal);
+      //add_(this, &application::on_application_signal);
 
       m_eexclusiveinstance = ExclusiveInstanceNone;
       m_peventReady = NULL;
@@ -698,64 +698,69 @@ namespace core
 
 #endif
 
-   void application::OnAppLanguage(::message::message * pobj)
+//    void application::send_app_language_changed()
+//    {
+
+//       ::message::message message(this);
+
+//       message.m_id = ::message::type_language;
+
+//       route_message(&message);
+      
+//    }
+
+
+
+   void application::OnUpdateRecentFileMenu(::user::command * pcommand)
    {
-      UNREFERENCED_PARAMETER(pobj);
-      m_signalAppLanguageChange.emit();
-   }
-
-
-
-   void application::OnUpdateRecentFileMenu(command_ui * pcommandui)
-   {
-      UNREFERENCED_PARAMETER(pcommandui);
+      UNREFERENCED_PARAMETER(pcommand);
       /*TRACE("\nCVmsGenApp::OnUpdateRecentFileMenu");
       if(m_pRecentFileList == NULL)
       {
-      pcommandui->Enable(FALSE);
+      pcommand->Enable(FALSE);
       //string str;
       //str.load_string(IDS_RECENT_FILE);
-      //pcommandui->SetText(str);
+      //pcommand->SetText(str);
       for (int32_t iMRU = 1; iMRU < 10; iMRU++)
-      pcommandui->m_pMenu->DeleteMenu(pcommandui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
       return;
       }
 
       ASSERT(m_pRecentFileList->m_arrNames != NULL);
 
-      ::user::menu* pMenu = pcommandui->m_pMenu;
+      ::user::menu* pMenu = pcommand->m_pMenu;
       if (m_pRecentFileList->m_strOriginal.is_empty() && pMenu != NULL)
-      pMenu->GetMenuString(pcommandui->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
+      pMenu->GetMenuString(pcommand->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
 
       if (m_pRecentFileList->m_arrNames[0].is_empty())
       {
       // no MRU files
       if (!m_pRecentFileList->m_strOriginal.is_empty())
-      pcommandui->SetText(m_pRecentFileList->m_strOriginal);
-      pcommandui->Enable(FALSE);
+      pcommand->SetText(m_pRecentFileList->m_strOriginal);
+      pcommand->Enable(FALSE);
       return;
       }
 
-      if (pcommandui->m_pMenu == NULL)
+      if (pcommand->m_pMenu == NULL)
       return;
 
-      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcommandui->m_pMenu, pcommandui->m_nID);
+      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcommand->m_pMenu, pcommand->m_nID);
 
       //if(pmenu == NULL)
       //{
-      // pmenu = pcommandui->m_pMenu;
+      // pmenu = pcommand->m_pMenu;
       //}
 
-      bool bCmdUIMenu = pmenu == pcommandui->m_pMenu;
+      bool bCmdUIMenu = pmenu == pcommand->m_pMenu;
 
       if(!bCmdUIMenu)
       return;
 
-      int32_t nID = pcommandui->m_nID;
+      int32_t nID = pcommand->m_nID;
       int32_t nIndex = CMenuUtil::GetMenuPosition(pmenu, nID);
 
       for (int32_t iMRU = 0; iMRU < m_pRecentFileList->m_nSize; iMRU++)
-      pcommandui->m_pMenu->DeleteMenu(pcommandui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
 
 
 
@@ -791,8 +796,8 @@ namespace core
       char buf[10];
       wsprintf(buf, "&%d ", (iMRU+1+m_pRecentFileList->m_nStart) % 10);
 
-      //      pcommandui->m_pMenu->InsertMenu(pcommandui->m_nIndex++,
-      //         MF_STRING | MF_BYPOSITION, pcommandui->m_nID++,
+      //      pcommand->m_pMenu->InsertMenu(pcommand->m_nIndex++,
+      //         MF_STRING | MF_BYPOSITION, pcommand->m_nID++,
       //         string(buf) + strTemp);
       pmenu->InsertMenu(nIndex,
       MF_STRING | MF_BYPOSITION, nID,
@@ -801,19 +806,19 @@ namespace core
       nID++;
       if(bCmdUIMenu)
       {
-      pcommandui->m_nIndex = nIndex;
-      pcommandui->m_nID = nID;
+      pcommand->m_nIndex = nIndex;
+      pcommand->m_nID = nID;
       }
       }
 
       // update end menu count
       if(bCmdUIMenu)
       {
-      pcommandui->m_nIndex--; // point to last menu added
-      pcommandui->m_nIndexMax = pcommandui->m_pMenu->GetMenuItemCount();
+      pcommand->m_nIndex--; // point to last menu added
+      pcommand->m_nIndexMax = pcommand->m_pMenu->GetMenuItemCount();
       }
 
-      pcommandui->m_bEnableChanged = TRUE;    // all the added items are enabled*/
+      pcommand->m_bEnableChanged = TRUE;    // all the added items are enabled*/
 
    }
 
@@ -979,7 +984,7 @@ namespace core
       ENSURE_ARG(pobj != NULL);
       SCAST_PTR(::message::base, pbase, pobj);
       // handle certain messages in thread
-      switch (pbase->m_uiMessage)
+      switch (pbase->m_id)
       {
       case WM_CREATE:
       case WM_PAINT:
@@ -990,7 +995,7 @@ namespace core
       //linux UINT nIDP = __IDP_INTERNAL_FAILURE;   // generic message string
       const char * nIDP = "Internal Failure";
       pbase->set_lresult(0);        // sensible default
-      if (pbase->m_uiMessage == WM_COMMAND)
+      if (pbase->m_id == WM_COMMAND)
       {
          if (pbase->m_lparam == 0)
             //linux nIDP = __IDP_COMMAND_FAILURE; // command (not from a control)
@@ -1008,12 +1013,12 @@ namespace core
       }
    }
 
-   bool application::_001OnCmdMsg(::user::command * pcommand)
-
+   
+   void application::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target_interface::_001OnCmdMsg(pcommand))
-         return TRUE;
-      return 0;
+      
+      ::base::application::_001OnCmdMsg(pcommand);
+
    }
 
 
@@ -1097,7 +1102,7 @@ namespace core
    // Global File commands
    //   ON_COMMAND(ID_APP_EXIT, &application::OnAppExit)
    // MRU - most recently used file menu
-   //   ON_UPDATE_COMMAND_UI(ID_FILE_MRU_FILE1, &application::OnUpdateRecentFileMenu)
+   //   ON_UPDATE_::user::command(ID_FILE_MRU_FILE1, &application::OnUpdateRecentFileMenu)
    //   ON_COMMAND_EX_RANGE(ID_FILE_MRU_FILE1, ID_FILE_MRU_FILE16, &application::OnOpenRecentFile)
    //}}__MSG_MAP
    // // END_MESSAGE_MAP()
@@ -2648,7 +2653,7 @@ namespace core
 
    void application::install_message_routing(::message::sender * psender)
    {
-      base::application::install_message_routing(pdispatch);
+      base::application::install_message_routing(psender);
    }
 
 
@@ -2856,7 +2861,7 @@ namespace core
    void application::pre_translate_message(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_uiMessage == WM_USER + 124 && pbase->m_pwnd == NULL)
+      if (pbase->m_id == WM_USER + 124 && pbase->m_pwnd == NULL)
       {
          /*      OnMachineEvent((flags < machine_event::e_flag> *) pmsg->lParam);
          delete (flags < machine_event::e_flag> *) pmsg->lParam;*/

@@ -17,8 +17,8 @@ namespace filemanager
    {
       ::user::impact::install_message_routing(pinterface);
       ::user::list::install_message_routing(pinterface);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&operation_list_view::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&operation_list_view::_001OnCreate);
+//      //IGUI_MSG_LINK(WM_TIMER,pinterface,this,&operation_list_view::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&operation_list_view::_001OnCreate);
    }
 
   

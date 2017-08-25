@@ -40,7 +40,7 @@ namespace user
    {
       ::user::interaction::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&tooltip::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&tooltip::_001OnCreate);
       //
 
    }

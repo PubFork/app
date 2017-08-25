@@ -311,11 +311,11 @@ namespace user
 
       last_install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
 
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
 
       m_pui->install_message_routing(pinterface);
 
@@ -560,18 +560,21 @@ namespace user
    {
       SCAST_PTR(::message::base,pbase,pobj);
       //LRESULT lresult = 0;
+
+      UINT uiMessage = pbase->m_id;
+
       if(m_pui != NULL)
       {
          m_pui->GuieProc(pobj);
          if(pobj->m_bRet)
             return;
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+      if(uiMessage == ::message::message_event)
       {
          ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bProcessed = m_pui->BaseOnControlEvent((control_event *)pbase->m_lparam.m_lparam);
          return;
       }
-      (this->*m_pfnDispatchWindowProc)(pobj);
+      route_message(pobj);
    }
 
 
@@ -658,7 +661,7 @@ namespace user
    }
 
 
-   void interaction_child::SendMessageToDescendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
+   void interaction_child::send_message_to_descendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
    {
 
       // walk through HWNDs to avoid creating temporary interaction_impl objects
@@ -682,7 +685,7 @@ namespace user
             // send to child windows after parent
             try
             {
-               pui->SendMessageToDescendants(message,wParam,lParam,bDeep,bOnlyPerm);
+               pui->send_message_to_descendants(message,wParam,lParam,bDeep,bOnlyPerm);
             }
             catch(...)
             {

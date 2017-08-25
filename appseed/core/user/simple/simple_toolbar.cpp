@@ -2,11 +2,11 @@
 
 #define TIMER_HOVER 321654
 
-class simple_tool_command_ui : public command_ui        // class private to this file !
+class simple_tool_command : public ::user::command        // class private to this file !
 {
 public: // re-implementations only
 
-   simple_tool_command_ui(::aura::application * papp);
+   simple_tool_command(::aura::application * papp);
    virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
    //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
    virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
@@ -99,14 +99,14 @@ simple_toolbar::~simple_toolbar()
 void simple_toolbar::install_message_routing(::message::sender * psender)
 {
 
-   ::user::toolbar::install_message_routing(pdispatch);
+   ::user::toolbar::install_message_routing(psender);
 
-   IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &simple_toolbar::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &simple_toolbar::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &simple_toolbar::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &simple_toolbar::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_NCHITTEST, pdispatch, this, &simple_toolbar::_001OnNcHitTest);
-   IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &simple_toolbar::_001OnMouseLeave);
+   IGUI_MSG_LINK(WM_CREATE, psender, this, &simple_toolbar::_001OnCreate);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &simple_toolbar::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &simple_toolbar::_001OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &simple_toolbar::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_NCHITTEST, psender, this, &simple_toolbar::_001OnNcHitTest);
+   IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &simple_toolbar::_001OnMouseLeave);
 
 }
 
@@ -394,44 +394,68 @@ void simple_toolbar::_001OnCreate(::message::message * pobj)
 }
 
 
-void simple_toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
+void simple_toolbar::on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler)
 {
 
-   simple_tool_command_ui state(get_app());
+   simple_tool_command state(get_app());
 
-   state.m_pOther = (this);
+   state.m_puiOther = (this);
 
    state.m_iCount = _001GetItemCount();
 
    for (state.m_iIndex = 0; state.m_iIndex < state.m_iCount; state.m_iIndex++)
    {
 
-      // ignore separators
       if (m_itema[state.m_iIndex]->m_id != "separator")
       {
 
          state.m_id = m_itema[state.m_iIndex]->m_id;
 
-         state.m_bEnableIfHasCommandHandler = m_itema[state.m_iIndex]->m_bEnableIfHasCommandHandler;
-
          // allow reflections
-         //if (::user::interaction::on_simple_action(0,
-         //   MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+         //if (::user::interaction::on_simple_command(0,
+         //   MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
          //   &state, NULL))
          //   continue;
 
+         state.m_bEnableChanged = false;
+
          // allow the toolbar itself to have update handlers
-         if (_001SendUpdateCmdUi(&state))
+         _001SendCommandProbe(&state);
+
+         if (state.m_bRet)
+         {
+
             continue;
 
+         }
+          
+         //if (!state.m_bEnableChanged)
+         //{
+         // 
+         //   if (m_itema[state.m_iIndex]->m_bEnableIfHasCommandHandler)
+         //   {
+
+         //      if (!state.m_bHasCommandHandler)
+         //      {
+
+         //         continue;
+
+
+         //      }
+
+         //   }
+
+         //}
+
          // allow the owner to process the update
-         state.DoUpdate(pTarget, bDisableIfNoHndler);
+         state.do_probe(ptarget);
+
       }
 
    }
 
    // update the dialog controls added to the toolbar
-   UpdateDialogControls(pTarget, bDisableIfNoHndler);
+   update_dialog_controls(ptarget);
 
 }
 
@@ -1335,7 +1359,7 @@ void simple_toolbar::_001OnLButtonUp(::message::message * pobj)
       if (pTarget == NULL)
          pTarget = GetParentFrame();
       if (pTarget != NULL)
-         pTarget->SendMessageToDescendants(WM_IDLEUPDATECMDUI);
+         pTarget->send_message_to_descendants(WM_IDLEUPDATECMDUI);
       m_iButtonPressItem = -1;
       RedrawWindow();
       if (pobj->m_bRet)
@@ -1409,14 +1433,18 @@ void simple_toolbar::_001OnTimer(::timer * ptimer)
    // trans ::user::control_bar::OnTimer(ptimer->m_nIDEvent);
 }
 
+
 void simple_toolbar::_001OnClick(index iItem)
 {
+   
    sp(::user::interaction) pwnd = GetOwner();
 
    ::user::command command(m_itema[iItem]->m_id);
    
-   pwnd->_001SendCommand(id);
+   pwnd->_001SendCommand(&command);
+
 }
+
 
 void simple_toolbar::_001DiscardImageList()
 {
@@ -1484,16 +1512,16 @@ void simple_toolbar::_001OnImageListAttrib()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// simple_toolbar idle update through simple_tool_command_ui class
+// simple_toolbar idle update through simple_tool_command class
 
-simple_tool_command_ui::simple_tool_command_ui(::aura::application * papp) :
-   command_ui(papp)
+simple_tool_command::simple_tool_command(::aura::application * papp) :
+   ::user::command(papp)
 {
 }
-void simple_tool_command_ui::Enable(bool bOn, ::action::context actioncontext)
+void simple_tool_command::Enable(bool bOn, ::action::context actioncontext)
 {
    m_bEnableChanged = TRUE;
-   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_pOther);
+   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
    ASSERT(pToolBar != NULL);
    //   ASSERT_KINDOF(simple_toolbar, pToolBar);
    ASSERT(m_iIndex < m_iCount);
@@ -1511,12 +1539,12 @@ void simple_tool_command_ui::Enable(bool bOn, ::action::context actioncontext)
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle);
 }
 
-void simple_tool_command_ui::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+void simple_tool_command::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
 {
    ASSERT(echeck == check::checked
       || echeck == check::unchecked
       || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
-   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_pOther);
+   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
    ASSERT(pToolBar != NULL);
    ASSERT_KINDOF(simple_toolbar, pToolBar);
    ASSERT(m_iIndex < m_iCount);
@@ -1531,7 +1559,7 @@ void simple_tool_command_ui::_001SetCheck(check::e_check echeck, ::action::conte
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle | TBBS_CHECKBOX);
 }
 
-void simple_tool_command_ui::SetText(const char *, ::action::context)
+void simple_tool_command::SetText(const char *, ::action::context)
 {
    // ignore it
 }

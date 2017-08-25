@@ -55,7 +55,7 @@ namespace filemanager
       void OnFileManagerOpenFile(const ::fs::item_array & itema, ::action::context actioncontext);
       void OnFileManagerOpenFolder(sp(::fs::item)  str, ::action::context actioncontext);
 
-      void OnFileManagerItemUpdate(command_ui * pcommandui, const ::fs::item_array & itema);
+      void OnFileManagerItemUpdate(::user::command * pcommand, const ::fs::item_array & itema);
       void OnFileManagerItemCommand(const char * pszId, const ::fs::item_array & itema);
 
       virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);

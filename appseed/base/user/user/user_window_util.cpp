@@ -611,7 +611,7 @@ namespace user
 
    }
 
-   /*void window_util::SendMessageToDescendants(oswindow oswindow, UINT message,
+   /*void window_util::send_message_to_descendants(oswindow oswindow, UINT message,
    WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm)
    {
    // walk through HWNDs to avoid creating temporary interaction_impl objects
@@ -637,14 +637,14 @@ namespace user
    if (bDeep && ::GetTopWindow(oswindow_Child) != NULL)
    {
    // send to child windows after parent
-   SendMessageToDescendants(oswindow_Child, message, wParam, lParam,
+   send_message_to_descendants(oswindow_Child, message, wParam, lParam,
    bDeep, bOnlyPerm);
    }
    }
    }*/
 
 
-   void window_util::SendMessageToDescendants(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep)
+   void window_util::send_message_to_descendants(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep)
    {
 
 #if defined(WINDOWSEX)
@@ -669,7 +669,7 @@ namespace user
             try
             {
 
-               SendMessageToDescendants(oswindow_Child, message, wParam, lParam, bDeep);
+               send_message_to_descendants(oswindow_Child, message, wParam, lParam, bDeep);
 
             }
             catch (...)
@@ -1226,7 +1226,7 @@ namespace user
       {
          try
          {
-            this->element_at(i)->SendMessageToDescendants(uiMessage, wparam, lparam, bRecursive);
+            this->element_at(i)->send_message_to_descendants(uiMessage, wparam, lparam, bRecursive);
          }
          catch (...)
          {

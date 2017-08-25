@@ -18,7 +18,7 @@ void simple_tree_view::install_message_routing(::message::sender * pinterface)
 
    ::user::impact::install_message_routing(pinterface);
    ::user::tree::install_message_routing(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_tree_view::_001OnCreate);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_tree_view::_001OnCreate);
 
 }
 

@@ -82,19 +82,16 @@ namespace userex
    }
 
 
-   bool split_view::on_simple_update(command_ui * pcommandui)
+   void split_view::on_simple_command_probe(::user::command * pcommand)
    {
-
-      UNREFERENCED_PARAMETER(pcommandui);
-
-      return false;
 
    }
 
-   bool split_view::on_simple_action(::user::command * pcommand)
+
+   void split_view::on_simple_command(::user::command * pcommand)
    {
-      UNREFERENCED_PARAMETER(id);
-      return false;
+
    }
+
 
 } // namespace userex

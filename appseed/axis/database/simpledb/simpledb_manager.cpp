@@ -67,7 +67,7 @@ namespace simpledb
    void manager::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == WM_APP + 13)
+      if(pbase->m_id == WM_APP + 13)
       {
          //if(wparam == 0)
            // ((script *) lparam)->Load(false);
@@ -75,7 +75,7 @@ namespace simpledb
            // ((script *) lparam)->Unload(false);
          pbase->m_bRet = true;
       }
-      else if(pbase->m_uiMessage == WM_APP + 14)
+      else if(pbase->m_id == WM_APP + 14)
       {
       }
    }

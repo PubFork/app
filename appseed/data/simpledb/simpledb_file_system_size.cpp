@@ -337,8 +337,8 @@ FileSystemSizeWnd::FileSystemSizeWnd(::aura::application * papp) :
 void FileSystemSizeWnd::install_message_routing(::message::sender * pinterface)
 {
    m_p->install_message_routing(pinterface);
-   IGUI_WIN_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
-   //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &FileSystemSizeWnd::_001OnTimer);
+   IGUI_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
+   //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &FileSystemSizeWnd::_001OnTimer);
 }
 
 bool FileSystemSizeWnd::CreateClient()

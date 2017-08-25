@@ -2,14 +2,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//   probe_command_ui - used to check for command status
+//   probe_::user::command - used to check for command status
 //
 //   It can be used before dispatching a command
 //   It can be used to update a command button with updated status
 //   ...
 //
 
-// class probe_command_ui: public command_ui
+// class probe_::user::command: public ::user::command
 // {
 // public:
 
@@ -21,7 +21,7 @@
 //    bool                    m_bRadioChanged;
 
 
-//    probe_command_ui(::aura::application * papp);
+//    probe_::user::command(::aura::application * papp);
 
 
 //    virtual void Enable(bool bOn,::action::context actioncontext = ::action::source_system);
@@ -34,7 +34,7 @@
 // };
 
 
-// special command_ui derived classes are used for other UI paradigms
+// special ::user::command derived classes are used for other UI paradigms
 // like toolbar buttons and status indicators
 
 //// pointer to member function

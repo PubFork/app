@@ -655,26 +655,26 @@ namespace userex
 
 
 
-   void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
-   {
+   //void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
+   //{
 
-      sp(::user::interaction) pwnd;
+   //   sp(::user::interaction) pwnd;
 
-      while(Application.get_frame(pwnd))
-      {
+   //   while(Application.get_frame(pwnd))
+   //   {
 
-         if(pwnd != NULL && pwnd->IsWindow())
-         {
+   //      if(pwnd != NULL && pwnd->IsWindow())
+   //      {
 
-            pwnd->send_message(message,wparam,lparam);
+   //         pwnd->send_message(message,wparam,lparam);
 
-            pwnd->SendMessageToDescendants(message,wparam,lparam);
+   //         pwnd->send_message_to_descendants(message,wparam,lparam);
 
-         }
+   //      }
 
-      }
+   //   }
 
-   }
+   //}
 
 
    void  userex::AddToRecentFileList(const char * lpszPathName)
@@ -714,12 +714,6 @@ namespace userex
    }
 
 
-   void userex::VmsGuiiOnAppLanguage(::message::message * pobject)
-   {
-
-      SendMessageToWindows(::base::application::APPM_LANGUAGE,0,(LPARAM)pobject);
-
-   }
 
 
    sp(::user::document) userex::create_form(::aura::application * papp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)

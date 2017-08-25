@@ -20,8 +20,8 @@ namespace filemanager
    void save_as_edit_view::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_routing(pdispatch);
-      ::user::plain_edit::install_message_routing(pdispatch);
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::plain_edit::install_message_routing(psender);
       
    }
 
@@ -151,8 +151,8 @@ namespace filemanager
    void save_as_button::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_routing(pdispatch);
-      ::user::button::install_message_routing(pdispatch);
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::button::install_message_routing(psender);
       
    }
 
@@ -251,8 +251,8 @@ namespace filemanager
    void save_as_view::install_message_routing(::message::sender * psender)
    {
       
-      ::filemanager::impact::install_message_routing(pdispatch);
-      ::user::split_view::install_message_routing(pdispatch);
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
       
    }
 

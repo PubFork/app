@@ -352,7 +352,7 @@ void FileSystemSizeWnd::install_message_routing(::message::sender * pinterface)
    
    m_pui->install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
+   IGUI_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
 
 }
 

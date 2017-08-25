@@ -34,7 +34,7 @@ namespace aura
       virtual int32_t exit_application();
 
 
-      void on_signal(::message::message * pobj);
+      void on_application_message(::message::message * pobj);
 
    };
 

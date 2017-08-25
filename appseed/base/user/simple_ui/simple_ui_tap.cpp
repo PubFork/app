@@ -26,14 +26,29 @@ namespace simple_ui
    }
 
 
-   IMPL_IMH(tap,::simple_ui::interaction)
-      MSG_CREATE
-      MSG_KEYDOWN
-      MSG_LBUTTONDOWN
-      MSG_LBUTTONUP
-      MSG_MOUSEMOVE
-      MSG_MOUSELEAVE
-   END_IMH
+   void tap::install_message_routing(::message::sender * psender)
+   {
+      //IMPL_IMH(tap, ::simple_ui::interaction)
+      //   MSG_CREATE
+      //   MSG_KEYDOWN
+      //   MSG_LBUTTONDOWN
+      //   MSG_LBUTTONUP
+      //   MSG_MOUSEMOVE
+      //   MSG_MOUSELEAVE
+      //   END_IMH
+
+
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &tap::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &tap::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &tap::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &tap::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &tap::_001OnMouseLeave);
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+
+
+   }
 
 
    void tap::_001OnDraw(::draw2d::graphics * pgraphics)
@@ -45,6 +60,15 @@ namespace simple_ui
 
    }
 
+
+   void tap::_001OnCreate(::message::message * pobj)
+   {
+
+      SCAST_PTR(::message::create, pcreate, pobj);
+
+      pobj->previous();
+
+   }
 
 
    void tap::_001OnLButtonDown(::message::message * pobj)

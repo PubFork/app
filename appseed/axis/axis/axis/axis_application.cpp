@@ -1203,8 +1203,11 @@ namespace axis
 
       try
       {
-         ::aura::application_signal_details signal(m_psignal,::aura::application_signal_start);
-         m_psignal->emit(&signal);
+         
+         ::aura::application_message signal(::aura::application_message_start);
+         
+         route_message(&signal);
+
       }
       catch(...)
       {
@@ -1924,9 +1927,9 @@ namespace axis
       m_bAxisInitialize = true;
       m_bAxisInitializeResult = false;
 
-      ::aura::application_signal_details signal(m_psignal,::aura::application_signal_initialize);
+      ::aura::application_message signal(::aura::application_message_initialize);
 
-      m_psignal->emit(&signal);
+      route_message(&signal);
 
       if(!signal.m_bOk)
          return false;
@@ -2103,25 +2106,19 @@ namespace axis
          }
 
 
-         if(m_psignal != NULL)
+         ::aura::application_message signal(::aura::application_message_exit_instance);
+
+         try
          {
 
-            ::aura::application_signal_details signal(m_psignal,::aura::application_signal_exit_instance);
-
-            try
-            {
-
-               m_psignal->emit(&signal);
-
-            }
-            catch(...)
-            {
-
-            }
-
-            m_psignal.release();
+            route_message(&signal);
 
          }
+         catch(...)
+         {
+
+         }
+
 
          //try
          //{
@@ -2853,8 +2850,8 @@ namespace axis
 {
 
 
-   UINT application::APPM_LANGUAGE = WM_APP + 117;
-   WPARAM application::WPARAM_LANGUAGE_UPDATE = 1;
+   //UINT application::APPM_LANGUAGE = WM_APP + 117;
+   //WPARAM application::WPARAM_LANGUAGE_UPDATE = 1;
 
 
 
@@ -3254,7 +3251,7 @@ namespace axis
 
    //   try
    //   {
-   //      ::aura::application_signal_details signal(this,m_psignal,::aura::application_signal_start);
+   //      ::aura::application_message signal(this,m_psignal,::aura::application_message_start);
    //      m_psignal->emit(&signal);
    //   }
    //   catch(...)
@@ -3835,19 +3832,13 @@ namespace axis
 
    }
 
-   sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
-   {
+   
+   //sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
+   //{
 
+   //   return get_message_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
 
-
-      ::thread * pthread = ::get_thread();
-
-      if(pthread != NULL)
-         return pthread->get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
-
-      return get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
-
-   }
+   //}
 
 
 

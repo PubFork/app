@@ -17,7 +17,7 @@ namespace filemanager
 
    void preview::install_message_routing(::message::sender * psender)
    {
-      ::user::impact::install_message_routing(pdispatch);
+      ::user::impact::install_message_routing(psender);
    }
 
 

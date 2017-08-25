@@ -61,7 +61,7 @@ namespace user
 
 #ifdef WINDOWSEX
 
-      IGUI_WIN_MSG_LINK(MessageNotifyIcon, pinterface, this, &notify_icon::_001OnNotifyIconMessage);
+      IGUI_MSG_LINK(MessageNotifyIcon, pinterface, this, &notify_icon::_001OnNotifyIconMessage);
 
 #endif
 

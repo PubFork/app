@@ -62,11 +62,11 @@ namespace userstack
    void frame::install_message_routing(::message::sender * pinterface)
    {
       simple_frame_window::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_APP + 1,        pinterface, this, &frame::_001OnApp1);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE,     pinterface, this, &frame::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
+//      //IGUI_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_APP + 1,        pinterface, this, &frame::_001OnApp1);
+      IGUI_MSG_LINK(WM_MOUSELEAVE,     pinterface, this, &frame::_001OnMouseLeave);
    }
 
 
@@ -226,12 +226,12 @@ namespace userstack
    void frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == (WM_APP + 2000))
+      if(pbase->m_id == (WM_APP + 2000))
       {
          _001OnApp2000(pbase);
          pbase->m_bRet = true;
       }
-      else if(pbase->m_uiMessage == WM_COPYDATA)
+      else if(pbase->m_id == WM_COPYDATA)
       {
 #ifdef WINDOWSEX
          int32_t iEdge = 0;

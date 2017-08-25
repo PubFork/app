@@ -91,11 +91,11 @@ namespace filemanager
       UNREFERENCED_PARAMETER(itema);
    }
 
-   void file_list_callback::GetMenuItemUpdate(id iId, const ::fs::item_array & itema, command_ui * pcommandui)
+   void file_list_callback::GetMenuItemUpdate(id iId, const ::fs::item_array & itema, ::user::command * pcommand)
    {
       UNREFERENCED_PARAMETER(iId);
       UNREFERENCED_PARAMETER(itema);
-      UNREFERENCED_PARAMETER(pcommandui);
+      UNREFERENCED_PARAMETER(pcommand);
    }
 
    sp(image_list) file_list_callback::GetActionButtonImageList(id i)

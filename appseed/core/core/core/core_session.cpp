@@ -88,8 +88,8 @@ namespace core
    void session::install_message_routing(::message::sender * psender)
    {
       
-      core::application::install_message_routing(pdispatch);
-      base::session::install_message_routing(pdispatch);
+      core::application::install_message_routing(psender);
+      base::session::install_message_routing(psender);
 
    }
 
@@ -268,7 +268,7 @@ namespace core
    }
 
 
-   bool session::_001OnCmdMsg(::user::command * pcommand)
+   void session::_001OnCmdMsg(::user::command * pcommand)
    {
 
       return application::_001OnCmdMsg(pcommand);

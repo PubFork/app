@@ -118,10 +118,10 @@ namespace user
          bool MoveManager::Relay(::message::mouse * pmouse)
          {
 
-            ASSERT(pmouse->m_uiMessage == WM_MOUSEMOVE
-                   || pmouse->m_uiMessage == WM_LBUTTONUP
-                   || pmouse->m_uiMessage == WM_NCMOUSEMOVE
-                   || pmouse->m_uiMessage == WM_NCLBUTTONUP);
+            ASSERT(pmouse->m_id == WM_MOUSEMOVE
+                   || pmouse->m_id == WM_LBUTTONUP
+                   || pmouse->m_id == WM_NCMOUSEMOVE
+                   || pmouse->m_id == WM_NCLBUTTONUP);
 
             if(!m_bMoving)
                return false;
@@ -167,7 +167,7 @@ namespace user
 
 #endif
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCLBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP)
             {
                
                m_bMoving = false;
@@ -363,7 +363,7 @@ namespace user
 
             SCAST_PTR(::message::base, pbase, pobj);
 
-            if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+            if(pbase->m_id == WM_LBUTTONDOWN)
             {
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
                pwnd->ClientToScreen(&ptCursor);
@@ -381,8 +381,8 @@ namespace user
                pbase->m_bRet = true;
                return;
             }
-            else if(pbase->m_uiMessage == WM_MOUSEMOVE ||
-                    pbase->m_uiMessage == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE ||
+                    pbase->m_id == WM_LBUTTONUP)
             {
                sp(::user::interaction) pWndCapture = Session.GetCapture();
                TRACE("MoveManager::message_handler oswindow Capture %x\n", Session.GetCapture().m_p);
@@ -432,7 +432,7 @@ namespace user
                   MoveWindow(GetMoveWindow()->get_handle(), pt);
 
                }
-               if(pbase->m_uiMessage == WM_LBUTTONUP)
+               if(pbase->m_id == WM_LBUTTONUP)
                {
                   Session.ReleaseCapture();
                   m_bMoving = false;

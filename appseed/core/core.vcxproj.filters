@@ -989,9 +989,6 @@
     <ClInclude Include="user\html\graphics\html_reader.h">
       <Filter>Header Files\user\html\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="user\html\graphics\html_signal.h">
-      <Filter>Header Files\user\html\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="user\html\graphics\html_size.h">
       <Filter>Header Files\user\html\graphics</Filter>
     </ClInclude>
@@ -1109,7 +1106,10 @@
     <ClInclude Include="math\math_math.h">
       <Filter>Header Files\math</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_tool_command_ui.h">
+    <ClInclude Include="user\html\graphics\html_message.h">
+      <Filter>Header Files\user\html\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_tool_command.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1804,9 +1804,6 @@
     <ClCompile Include="user\html\graphics\html_reader.cpp">
       <Filter>Source Files\user\html\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="user\html\graphics\html_signal.cpp">
-      <Filter>Source Files\user\html\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="user\html\graphics\html_style.cpp">
       <Filter>Source Files\user\html\graphics</Filter>
     </ClCompile>
@@ -1909,7 +1906,10 @@
     <ClCompile Include="user\wndfrm\frame\wndfrm_frame_work_set_listener_array.cpp">
       <Filter>Source Files\user\wndfrm\frame</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_tool_command_ui.cpp">
+    <ClCompile Include="user\html\graphics\html_message.cpp">
+      <Filter>Source Files\user\html\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_tool_command.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
   </ItemGroup>

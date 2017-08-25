@@ -38,13 +38,13 @@ namespace fontopus
    void dialog::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_routing(pdispatch);
+      ::simple_ui::interaction::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&dialog::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_CHAR,pdispatch,this,&dialog::_001OnChar);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&dialog::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&dialog::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&dialog::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&dialog::_001OnCreate);
+      IGUI_MSG_LINK(WM_CHAR,psender,this,&dialog::_001OnChar);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&dialog::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&dialog::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&dialog::_001OnMouseMove);
 
    }
 

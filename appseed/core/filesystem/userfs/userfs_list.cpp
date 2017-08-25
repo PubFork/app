@@ -28,12 +28,12 @@ namespace userfs
    {
    
       BASE::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CANCELMODE, pinterface, this, &list::_001OnCancelMode);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CANCELMODE, pinterface, this, &list::_001OnCancelMode);
 
    }
 
@@ -518,10 +518,10 @@ namespace userfs
 
    void list::_001OnUpdateFileRename(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui, pcommandui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
          range range;
       _001GetSelection(range);
-      pcommandui->Enable(
+      pcommand->Enable(
          range.get_item_count() == 1
          && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;

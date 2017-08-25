@@ -128,7 +128,7 @@ public:
    virtual void ShowControlBars(bool bShow = true, bool bLeaveFullScreenBarsOnHide = false);
 
    virtual bool IsNotifyIconEnabled() override;
-   void OnUpdateControlBarMenu(command_ui * pcommandui);
+   void OnUpdateControlBarMenu(::user::command * pcommand);
 
    virtual sp(::user::wndfrm::frame::frame) create_frame_schema();
 
@@ -255,7 +255,7 @@ public:
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
-   virtual bool _001OnCmdMsg(::user::command * pcommand);
+   virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
    virtual void data_on_after_change(::message::message * pobj);
 

@@ -1931,9 +1931,9 @@ retry_session:
    void system::get(::message::message * pobj)
    {
 
-      SCAST_PTR(signal, psignal, pobj);
+      SCAST_PTR(message, pmessage, pobj);
 
-      if(psignal == NULL)
+      if(pmessage == NULL)
       {
          return;
       }
@@ -1942,81 +1942,82 @@ retry_session:
 
       property_set set;
 
-      set = psignal->m_set;
+      set = pmessage->m_set;
 
-      if (psignal->m_setPost.get_count() > 0)
+      if (pmessage->m_setPost.get_count() > 0)
       {
 
-         set["post"] = psignal->m_setPost;
+         set["post"] = pmessage->m_setPost;
 
       }
 
-      if (psignal->m_setHeaders.get_count() > 0)
+      if (pmessage->m_setHeaders.get_count() > 0)
       {
 
-         set["headers"] = psignal->m_setHeaders;
+         set["headers"] = pmessage->m_setHeaders;
 
       }
 
-      if (psignal->m_pcookies != NULL && psignal->m_pcookies->get_count() > 0)
+      if (pmessage->m_pcookies != NULL && pmessage->m_pcookies->get_count() > 0)
       {
 
-         set["cookies"] = psignal->m_pcookies;
+         set["cookies"] = pmessage->m_pcookies;
 
       }
 
-      if (psignal->m_puser != NULL)
+      if (pmessage->m_puser != NULL)
       {
 
-         set["user"] = psignal->m_puser;
+         set["user"] = pmessage->m_puser;
 
       }
 
-      if (psignal->m_strVersion.has_char())
+      if (pmessage->m_strVersion.has_char())
       {
 
-         set["http_protocol_version"] = psignal->m_strVersion;
+         set["http_protocol_version"] = pmessage->m_strVersion;
 
       }
 
       sp(::sockets::http_client_socket) psocket;
 
-      if(!get(handler, psocket, psignal->m_strUrl, set))
+      if(!get(handler, psocket, pmessage->m_strUrl, set))
       {
 
-         psignal->m_estatusRet = (::http::e_status) set["get_status"].int64();
+         pmessage->m_estatusRet = (::http::e_status) set["get_status"].int64();
 
-         psignal->m_bRet = false;
+         pmessage->m_bRet = false;
 
          return;
 
       }
 
-      psignal->m_estatusRet = (::http::e_status) set["get_status"].int64();
+      pmessage->m_estatusRet = (::http::e_status) set["get_status"].int64();
 
 
       if(psocket->GetDataPtr() != NULL && psocket->GetContentLength() > 0)
       {
 
-         psignal->m_memoryRet.set_data((void *) psocket->GetDataPtr(), psocket->GetContentLength());
+         pmessage->m_memoryRet.set_data((void *) psocket->GetDataPtr(), psocket->GetContentLength());
 
       }
       else
       {
 
-         psignal->m_memoryRet.allocate(0);
+         pmessage->m_memoryRet.allocate(0);
 
       }
 
-      psignal->m_setHeaders = psocket->outheaders();
+      pmessage->m_setHeaders = psocket->outheaders();
 
       int32_t iStatusCode = psocket->outattr("http_status_code");
 
-      psignal->m_bRet = iStatusCode == 200;
+      pmessage->m_bRet = iStatusCode == 200;
 
       return;
 
    }
+
 
    bool system::download(sockets::socket_handler & handler, sp(::sockets::http_session) & psession,const char * pszRequest,var varFile,property_set & set)
    {

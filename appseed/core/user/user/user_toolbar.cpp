@@ -87,20 +87,20 @@ namespace user
 
       ::user::control_bar::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
-      //IGUI_WIN_MSG_LINK(WM_NCPAINT         , pinterface, this, &toolbar::_001On);
-      //IGUI_WIN_MSG_LINK(WM_PAINT           , pinterface, this, &toolbar::_001On);
-      //IGUI_WIN_MSG_LINK(WM_ERASEBKGND      , pinterface, this, &toolbar::_001On);
-      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &toolbar::_001OnNcCalcSize);
-      //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &toolbar::_001OnWindowPosChanging);
-      IGUI_WIN_MSG_LINK(WM_NCCREATE          , pinterface, this, &toolbar::_001OnNcCreate);
+      IGUI_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
+      //IGUI_MSG_LINK(WM_NCPAINT         , pinterface, this, &toolbar::_001On);
+      //IGUI_MSG_LINK(WM_PAINT           , pinterface, this, &toolbar::_001On);
+      //IGUI_MSG_LINK(WM_ERASEBKGND      , pinterface, this, &toolbar::_001On);
+      IGUI_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &toolbar::_001OnNcCalcSize);
+      //IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &toolbar::_001OnWindowPosChanging);
+      IGUI_MSG_LINK(WM_NCCREATE          , pinterface, this, &toolbar::_001OnNcCreate);
 #ifdef WINDOWSEX
-      IGUI_WIN_MSG_LINK(TB_SETBITMAPSIZE     , pinterface, this, &toolbar::_001OnSetBitmapSize);
-      IGUI_WIN_MSG_LINK(TB_SETBUTTONSIZE     , pinterface, this, &toolbar::_001OnSetButtonSize);
+      IGUI_MSG_LINK(TB_SETBITMAPSIZE     , pinterface, this, &toolbar::_001OnSetBitmapSize);
+      IGUI_MSG_LINK(TB_SETBUTTONSIZE     , pinterface, this, &toolbar::_001OnSetButtonSize);
 #endif
-      IGUI_WIN_MSG_LINK(WM_SETTINGCHANGE     , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
-      IGUI_WIN_MSG_LINK(WM_SETFONT           , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
-      IGUI_WIN_MSG_LINK(WM_SYSCOLORCHANGE    , pinterface, this, &toolbar::_001OnSysColorChange);
+      IGUI_MSG_LINK(WM_SETTINGCHANGE     , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
+      IGUI_MSG_LINK(WM_SETFONT           , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
+      IGUI_MSG_LINK(WM_SYSCOLORCHANGE    , pinterface, this, &toolbar::_001OnSysColorChange);
 
    }
 
@@ -1334,7 +1334,7 @@ throw todo(get_app());
    /*
    void toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
    {
-      tool_command_ui state;
+      tool_command state;
       state.m_pOther = this;
 
       state.m_iCount = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
@@ -1349,13 +1349,13 @@ throw todo(get_app());
          if (!(button.fsStyle & TBSTYLE_SEP))
          {
             // allow reflections
-            if (::user::interaction::on_simple_action(0,
-               MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+            if (::user::interaction::on_simple_command(0,
+               MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
                &state, NULL))
                continue;
 
             // allow the toolbar itself to have update handlers
-            if (::user::interaction::on_simple_action(state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+            if (::user::interaction::on_simple_command(state.m_nID, CN_UPDATE_::user::command, &state, NULL))
                continue;
 
             // allow the owner to process the update

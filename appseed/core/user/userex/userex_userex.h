@@ -61,7 +61,7 @@ namespace userex
       class keyboard & keyboard();
 
 
-      virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
+      //virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual void AddToRecentFileList(const char * lpszPathName);
 
@@ -83,7 +83,8 @@ namespace userex
       ::type * default_type_list_header();
       ::type * default_type_list_data();
 
-      DECL_GEN_SIGNAL(VmsGuiiOnAppLanguage);
+      //void send_language_change_message();
+
 
       virtual int32_t exit_application() override;
 

@@ -23,7 +23,7 @@ namespace filemanager
       virtual void OnFileManagerOpenContextMenu(::filemanager::data * pdata, ::action::context actioncontext);
       virtual void OnFileManagerOpenFolder(::filemanager::data * pdata, sp(::fs::item)  item, ::action::context actioncontext);
       virtual bool GetFileManagerItemCallback(::filemanager::data * pdata, id id, const ::fs::item_array & itema);
-      virtual void OnFileManagerItemUpdate(::filemanager::data * pdata, command_ui * pcommandui, const ::fs::item_array & itema);
+      virtual void OnFileManagerItemUpdate(::filemanager::data * pdata, ::user::command * pcommand, const ::fs::item_array & itema);
       virtual void OnFileManagerItemCommand(::filemanager::data * pdata, id pszId, const ::fs::item_array & itema);
       virtual void OnFileManagerInitializeFormPreData(::filemanager::data * pdata, id uiId, ::user::form * pform);
 

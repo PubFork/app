@@ -457,7 +457,7 @@ namespace user
          bool WorkSet::_001OnCmdMsg(::user::command * pcommand)
          {
 
-            if(pcommand->m_etype == ::user::command::type_command && m_pwndCommand != NULL)
+            if(pcommand->m_id.m_emessagetype == ::message::type_command && m_pwndCommand != NULL)
             {
 
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
@@ -675,7 +675,7 @@ namespace user
 
                         }*/
 
-               if(pbase->m_uiMessage == WM_TIMER
+               if(pbase->m_id == WM_TIMER
                   && pbase->m_wparam == 16319
                   && IsHoverModeOn())
                {
@@ -961,7 +961,7 @@ namespace user
             SCAST_PTR(::message::base,pbase,pobj);
             if(m_bHoverModeOn)
             {
-               if(pbase->m_uiMessage == WM_TIMER
+               if(pbase->m_id == WM_TIMER
                   && pbase->m_wparam == 16319
                   && IsHoverModeOn())
                {
@@ -1030,7 +1030,7 @@ namespace user
             SCAST_PTR(::message::base,pbase,pobj);
             pbase->set_lresult(0);
 
-            if(pbase->m_uiMessage == WM_COMMAND)
+            if(pbase->m_id == WM_COMMAND)
             {
                SCAST_PTR(::message::command,pcommand,pobj);
                _001OnCommand(pcommand);
@@ -1040,15 +1040,15 @@ namespace user
                   return;
                }
             }
-            else if(pbase->m_uiMessage == WM_MOVE)
+            else if(pbase->m_id == WM_MOVE)
             {
                OnMove();
             }
-            else if(pbase->m_uiMessage == WM_SIZE)
+            else if(pbase->m_id == WM_SIZE)
             {
                //      OnSizeRegion(wparam, LOWORD(lparam), HIWORD(lparam));
             }
-            else if(pbase->m_uiMessage == WM_ACTIVATE)
+            else if(pbase->m_id == WM_ACTIVATE)
             {
                ASSERT(FALSE);
                //      _001OnActivate();
@@ -1176,18 +1176,18 @@ namespace user
          void WorkSet::install_message_routing(::message::sender * psender)
          {
 
-            IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&WorkSet::_001OnLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&WorkSet::_001OnLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&WorkSet::_001OnMouseMove);
-            IGUI_WIN_MSG_LINK(WM_NCLBUTTONDOWN,pdispatch,this,&WorkSet::_001OnNcLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_NCLBUTTONUP,pdispatch,this,&WorkSet::_001OnNcLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_NCMOUSEMOVE,pdispatch,this,&WorkSet::_001OnNcMouseMove);
-            IGUI_WIN_MSG_LINK(WM_NCHITTEST,pdispatch,this,&WorkSet::_001OnNcHitTest);
-            IGUI_WIN_MSG_LINK(WM_ACTIVATE,pdispatch,this,&WorkSet::_001OnActivate);
-            IGUI_WIN_MSG_LINK(WM_NCACTIVATE,pdispatch,this,&WorkSet::_001OnNcActivate);
-            IGUI_WIN_MSG_LINK(WM_SIZE,pdispatch,this,&WorkSet::_001OnSize);
-            IGUI_WIN_MSG_LINK(WM_COMMAND,pdispatch,this,&WorkSet::_001OnCommand);
-            IGUI_WIN_MSG_LINK(WM_MOVE,pdispatch,this,&WorkSet::_001OnMove);
+            IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&WorkSet::_001OnLButtonDown);
+            IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&WorkSet::_001OnLButtonUp);
+            IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&WorkSet::_001OnMouseMove);
+            IGUI_MSG_LINK(WM_NCLBUTTONDOWN,psender,this,&WorkSet::_001OnNcLButtonDown);
+            IGUI_MSG_LINK(WM_NCLBUTTONUP,psender,this,&WorkSet::_001OnNcLButtonUp);
+            IGUI_MSG_LINK(WM_NCMOUSEMOVE,psender,this,&WorkSet::_001OnNcMouseMove);
+            IGUI_MSG_LINK(WM_NCHITTEST,psender,this,&WorkSet::_001OnNcHitTest);
+            IGUI_MSG_LINK(WM_ACTIVATE,psender,this,&WorkSet::_001OnActivate);
+            IGUI_MSG_LINK(WM_NCACTIVATE,psender,this,&WorkSet::_001OnNcActivate);
+            IGUI_MSG_LINK(WM_SIZE,psender,this,&WorkSet::_001OnSize);
+            IGUI_MSG_LINK(WM_COMMAND,psender,this,&WorkSet::_001OnCommand);
+            IGUI_MSG_LINK(WM_MOVE,psender,this,&WorkSet::_001OnMove);
 
          }
 

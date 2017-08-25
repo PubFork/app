@@ -21,10 +21,10 @@ namespace base
    void system_interaction_impl::install_message_routing(::message::sender * psender)
    {
 
-      ::user::interaction::install_message_routing(pdispatch);
+      ::user::interaction::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_SETTINGCHANGE,pdispatch,this,&system_interaction_impl::_001MessageHub);
-      IGUI_WIN_MSG_LINK(WM_DISPLAYCHANGE,pdispatch,this,&system_interaction_impl::_001MessageHub);
+      IGUI_MSG_LINK(WM_SETTINGCHANGE,psender,this,&system_interaction_impl::_001MessageHub);
+      IGUI_MSG_LINK(WM_DISPLAYCHANGE,psender,this,&system_interaction_impl::_001MessageHub);
 
    }
 
@@ -36,8 +36,8 @@ namespace base
       if(pbase != NULL)
       {
 
-         if(pbase->m_uiMessage == WM_DISPLAYCHANGE ||
-            (pbase->m_uiMessage == WM_SETTINGCHANGE &&
+         if(pbase->m_id == WM_DISPLAYCHANGE ||
+            (pbase->m_id == WM_SETTINGCHANGE &&
             (pbase->m_wparam == SPI_SETWORKAREA)))
          {
 

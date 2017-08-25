@@ -1,12 +1,18 @@
 #pragma once
 
 
+#define MSG_TYPE_LINK(emessagetype, psender, preceiver, phandler) \
+   psender->add_route(::message::id((::message::e_type)(emessagetype)), preceiver, phandler)
 
 #define IGUI_MSG_LINK(message, psender, preceiver, phandler) \
-   psender->add_route(message, preceiver, phandler)
+   psender->add_route((int64_t) (message), preceiver, phandler)
 
 #define USER_MESSAGE_LINK(messageparam, psender, preceiver, phandler) \
    IGUI_MSG_LINK(::message::messageparam, psender, preceiver, phandler)
+
+#define SCAST_MSG(tcast) \
+   ::message::tcast * p##tcast = (::message::tcast *) pmessage;   
+
 
 
 //////namespace message
@@ -208,12 +214,12 @@
 //////
 //////
 //////#if defined(WINDOWS) || defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-//////#define IGUI_WIN_MSG_LINK \
+//////#define IGUI_MSG_LINK \
 //////   ::message::os_connect
 //////#define IGUI_WIN_MSG_UNLINK \
 //////   ::message::os_disconnect
 //////#else
-//////#define IGUI_WIN_MSG_LINK(p1, p2, p3, p4) \
+//////#define IGUI_MSG_LINK(p1, p2, p3, p4) \
 //////   ;
 //////#endif
 //////#ifdef LINUX
@@ -228,13 +234,13 @@
 ////
 //////
 //////
-//////#define IGUI_CREATE(class)       IGUI_MSG_LINK(WM_CREATE, pdispatch, this, &class::_001OnCreate)
-//////#define IGUI_KEYDOWN(class)      IGUI_MSG_LINK(WM_KEYDOWN, pdispatch, this, &class::_001OnKeyDown)
-//////#define IGUI_CHAR(class)         IGUI_MSG_LINK(WM_CHAR, pdispatch, this, &class::_001OnChar)
-//////#define IGUI_LBUTTONDOWN(class)  IGUI_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &class::_001OnLButtonDown)
-//////#define IGUI_LBUTTONUP(class)    IGUI_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &class::_001OnLButtonUp)
-//////#define IGUI_MOUSEMOVE(class)    IGUI_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &class::_001OnMouseMove)
-//////#define IGUI_MOUSELEAVE(class)   IGUI_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &class::_001OnMouseLeave)
+//////#define IGUI_CREATE(class)       IGUI_MSG_LINK(WM_CREATE, psender, this, &class::_001OnCreate)
+//////#define IGUI_KEYDOWN(class)      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &class::_001OnKeyDown)
+//////#define IGUI_CHAR(class)         IGUI_MSG_LINK(WM_CHAR, psender, this, &class::_001OnChar)
+//////#define IGUI_LBUTTONDOWN(class)  IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &class::_001OnLButtonDown)
+//////#define IGUI_LBUTTONUP(class)    IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &class::_001OnLButtonUp)
+//////#define IGUI_MOUSEMOVE(class)    IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &class::_001OnMouseMove)
+//////#define IGUI_MOUSELEAVE(class)   IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &class::_001OnMouseLeave)
 //////
 //////#define MSG_CREATE         IGUI_CREATE(this_class);
 //////#define MSG_KEYDOWN        IGUI_KEYDOWN(this_class);
@@ -257,7 +263,7 @@
 //////{ \
 //////   \
 //////   typedef class this_class; \
-//////   base_class::install_message_routing(pdispatch); \
+//////   base_class::install_message_routing(psender); \
 //////   \
 //////
 //////

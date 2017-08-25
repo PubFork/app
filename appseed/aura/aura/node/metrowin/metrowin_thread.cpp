@@ -643,7 +643,7 @@ namespace core
 ////                  /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
 ////                  WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
 ////                  pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE);
-////                  /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////                  /*   pui->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////                  (WPARAM)TRUE, 0, TRUE, TRUE);*/
 ////               }
 ////            }
@@ -661,7 +661,7 @@ namespace core
 ////         /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
 ////         WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
 ////         /* pMainWnd->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
-////         pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////         pMainWnd->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////         (WPARAM)TRUE, 0, TRUE, TRUE);
 ////         }
 ////         */
@@ -679,7 +679,7 @@ namespace core
 ////         {
 ////         __call_window_procedure(pFrameWnd, pFrameWnd->get_handle(),
 ////         WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
-////         pFrameWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////         pFrameWnd->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////         (WPARAM)TRUE, 0, TRUE, TRUE);
 ////         }
 ////         if (pFrameWnd->m_nShowDelay > SW_HIDE)
@@ -728,13 +728,13 @@ namespace core
 ////   __STATIC inline bool IsEnterKey(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
-////      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+////      return pbase->m_id == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 ////   }
 ////
 ////   __STATIC inline bool IsButtonUp(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
-////      return pbase->m_uiMessage == WM_LBUTTONUP;
+////      return pbase->m_id == WM_LBUTTONUP;
 ////   }
 ////
 ////   void thread::ProcessMessageFilter(int code, ::message::message * pobj)
@@ -780,7 +780,7 @@ namespace core
 ////      case MSGF_DIALOGBOX:    // handles message boxes as well.
 ////         pMainWnd = __get_main_window();
 ////         if (code == MSGF_DIALOGBOX && m_puiActive != NULL &&
-////            pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+////            pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
 ////         {
 ////            // need to translate messages for the in-place container
 ////            ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
@@ -986,7 +986,7 @@ namespace core
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
 ////      // special message which identifies the window as using __window_procedure
-/////*      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
+/////*      if(pbase->m_id == WM_QUERYAFXWNDPROC)
 ////      {
 ////         pbase->set_lresult(0);
 ////         return;
@@ -1002,14 +1002,14 @@ namespace core
 ////
 ////         throw todo(get_app());
 ////
-////         //pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+////         //pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_id, pbase->m_wparam, pbase->m_lparam));
 ////         //return;
 ////      }
 ////
 ////      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
 ////      MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
 ////      //      pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
-////      pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
+////      pThreadState->m_lastSentMsg.message    = pbase->m_id;
 ////      pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
 ////      pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
 ////
@@ -1023,7 +1023,7 @@ namespace core
 ////         // special case for WM_INITDIALOG
 ////         rect rectOld;
 ////         uint32_t dwStyle = 0;
-////         //         if(pbase->m_uiMessage == WM_INITDIALOG)
+////         //         if(pbase->m_id == WM_INITDIALOG)
 ////         //          __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 ////
 ////         // delegate to object's message_handler
@@ -1037,7 +1037,7 @@ namespace core
 ////         }
 ////
 ////         // more special case for WM_INITDIALOG
-////         //         if(pbase->m_uiMessage == WM_INITDIALOG)
+////         //         if(pbase->m_id == WM_INITDIALOG)
 ////         //          __post_init_dialog(pwindow, rectOld, dwStyle);
 ////      }
 ////      catch(const ::exception::exception & e)

@@ -41,8 +41,8 @@ namespace prompt
    
       void ToFront();
 
-      virtual bool on_simple_action(::user::command * pcommand);
-      virtual bool on_simple_update(command_ui * pcommandui);
+      virtual bool on_simple_command(::user::command * pcommand);
+      virtual bool on_simple_command_probe(::user::command * pcommand);
 
 
 

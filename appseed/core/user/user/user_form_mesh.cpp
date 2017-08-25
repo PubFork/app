@@ -34,7 +34,7 @@ namespace user
 
    void form_mesh::install_message_routing(::message::sender *pinterface)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_mesh::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_mesh::_001OnKeyDown);
 
       form::install_message_routing(pinterface);
       mesh::install_message_routing(pinterface);

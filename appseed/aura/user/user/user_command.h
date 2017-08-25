@@ -1,9 +1,6 @@
 #pragma once
 
 
-class command_target_interface;
-
-
 namespace user
 {
 
@@ -14,15 +11,13 @@ namespace user
    public:
 
 
-      ::command_target_interface *                 m_pcommandtargetSource;
-      ::command_ui  *                              m_pcommandui;
-      id                                           m_id;
+      ::command_target *                           m_pcommandtargetSource;
       id                                           m_idControl;     // menu item or other index
       index                                        m_iIndex;
       ::count                                      m_iCount;        // last + 1 for iterating m_iIndex
       ref_array < ::command_target >               m_commandtargetptraHandle;
 
-      bool                                         m_bEnabled;
+      bool                                         m_bEnable;
       check::e_check                               m_echeck; // m_bCheckChanged is similar to m_echeck != undefined
       string                                       m_strText;
       bool                                         m_bRadio;
@@ -44,13 +39,12 @@ namespace user
    
       //  (probably a secondary popup menu)
    
-//      probe_command_ui();
+//      probe_::user::command();
    
    
-      command(::aura::application * papp);
-      command(signal * psignal);
+      command(::aura::application * papp = NULL);
       command(id id);
-      command(::command_ui * pcommandui);
+      //command(::user::command * pcommand);
 
       void common_construct();
 
@@ -59,8 +53,8 @@ namespace user
 
    
    
-      //command_ui(::aura::application * papp);
-      //command_ui(class ::message::sender * psignal);
+      //::user::command(::aura::application * papp);
+      //::user::command(class ::message::sender * psignal);
    
    
       void reset(class ::message::sender * psignal);
@@ -72,7 +66,7 @@ namespace user
       virtual void SetRadio(bool bOn = true,::action::context actioncontext = ::action::source_system);
       virtual void SetText(const char * lpszText,::action::context actioncontext = ::action::source_system);
    
-      // Operations to do in ON_UPDATE_COMMAND_UI
+      // Operations to do in ON_UPDATE_::user::command
       //virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
       //virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
       //virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
@@ -83,7 +77,7 @@ namespace user
       //void ContinueRouting();
    
    
-      bool DoUpdate(command_target* pTarget, bool bDisableIfNoHndler);
+      void do_probe(command_target * ptarget);
    
    
    

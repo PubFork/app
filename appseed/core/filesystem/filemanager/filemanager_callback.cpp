@@ -64,10 +64,10 @@ namespace filemanager
       UNREFERENCED_PARAMETER(itema);
    }
 
-   void callback::OnFileManagerItemUpdate(::filemanager::data * pdata, command_ui * pcommandui, const ::fs::item_array & itema)
+   void callback::OnFileManagerItemUpdate(::filemanager::data * pdata, ::user::command * pcommand, const ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
-      UNREFERENCED_PARAMETER(pcommandui);
+      UNREFERENCED_PARAMETER(pcommand);
       UNREFERENCED_PARAMETER(itema);
    }
 

@@ -19,7 +19,7 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
 {
    SCAST_PTR(::message::base, pbase, pobj);
 
-   UINT message = pbase->m_uiMessage;
+   UINT message = pbase->m_id;
 
    if(message != WM_MOUSEMOVE
       || message != WM_TIMER

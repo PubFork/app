@@ -113,26 +113,26 @@ namespace user
 
       ::user::control::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&mesh::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL,pinterface,this,&mesh::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL,pinterface,this,&mesh::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE,pinterface,this,&mesh::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_SIZE,pinterface,this,&mesh::_001OnSize);
+      IGUI_MSG_LINK(WM_VSCROLL,pinterface,this,&mesh::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL,pinterface,this,&mesh::_001OnHScroll);
+      IGUI_MSG_LINK(WM_MOUSELEAVE,pinterface,this,&mesh::_001OnMouseLeave);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&mesh::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pinterface,this,&mesh::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK,pinterface,this,&mesh::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN,pinterface,this,&mesh::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &mesh::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&mesh::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP,pinterface,this,&mesh::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK,pinterface,this,&mesh::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN,pinterface,this,&mesh::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &mesh::_001OnRButtonUp);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pinterface,this,&mesh::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSEMOVE,pinterface,this,&mesh::_001OnMouseMove);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
       
       connect_command("mesh_view_auto_arrange",&mesh::_001OnMeshViewAutoArrange);
       
-      connect_update_cmd_ui("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
+      connect_command_probe("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
       
    }
 
@@ -5889,9 +5889,9 @@ namespace user
 
    void mesh::_001OnUpdateMeshViewAutoArrange(::message::message * pobj)
    {
-      SCAST_PTR(::command_ui,pcommandui,pobj);
-         pcommandui->_001SetCheck(get_auto_arrange());
-      pcommandui->Enable();
+      SCAST_PTR(::user::command,pcommand,pobj);
+         pcommand->_001SetCheck(get_auto_arrange());
+      pcommand->Enable();
    }
 
    bool mesh::is_valid_display_item(index iDisplayItem)

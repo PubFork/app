@@ -899,7 +899,7 @@ namespace html
 
       void text::OnLButtonDown(::message::message * pobj)
       {
-         SCAST_PTR(::html_message, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          if(m_pelemental->m_pdata->m_bEdit)
          {
             if(m_pelemental->m_elementalptra.get_size() == 1)
@@ -915,7 +915,7 @@ namespace html
 
       void text::OnLButtonUp(::message::message * pobj)
       {
-         SCAST_PTR(::html_message, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          if(m_pelemental->m_pdata->m_bEdit)
          {
             if(m_pelemental->m_elementalptra.get_size() == 1)
@@ -938,7 +938,7 @@ namespace html
          if (m_pelemental->m_pdata->m_bEdit)
          {
 
-            SCAST_PTR(::html_message, phtml, pobj);
+            SCAST_PTR(::html::message, phtml, pobj);
 
             _002OnMouseMove(phtml->m_psignal);
 

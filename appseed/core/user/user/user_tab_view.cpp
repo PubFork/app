@@ -126,9 +126,9 @@ namespace user
    {
       impact::install_message_routing(pinterface);
       ::user::tab::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_USER + 1122  , pinterface, this, &tab_view::_001OnMenuMessage);
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS, pinterface, this, &tab_view::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_USER + 1122  , pinterface, this, &tab_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &tab_view::_001OnSetFocus);
    }
 
 
@@ -781,14 +781,33 @@ namespace user
 
    }
 
-   bool tab_view::_001OnCmdMsg(::user::command * pcommand)
+   
+   void tab_view::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(!handle(pcommand))
-         return false;
-      if(get_view_uie() != NULL)
-         if(get_view_uie()->_001OnCmdMsg(pcommand))
-            return true;
+
+      if (!handle(pcommand))
+      {
+
+         return;
+
+      }
+
+      if (get_view_uie() != NULL)
+      {
+
+         get_view_uie()->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
+         {
+
+            return;
+
+         }
+
+      }
+
       return impact::_001OnCmdMsg(pcommand);
+
    }
 
    void tab_view::set_view_creator(::user::view_creator * pviewcreator)
@@ -822,7 +841,7 @@ namespace user
    void tab_drop_target_window::install_message_routing(::message::sender * pinterface)
    {
       ::user::interaction::install_message_routing(pinterface);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &tab_drop_target_window::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &tab_drop_target_window::_001OnLButtonUp);
    }
 
 
