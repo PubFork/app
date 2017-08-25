@@ -5,16 +5,17 @@ namespace user
 {
 
 
-   class CLASS_DECL_BASE menu_command_ui : public command_ui
+   class CLASS_DECL_BASE menu_command : 
+      public ::user::command
    {
    public:
       
       
-      menu_item_ptra *  m_pitema;
+      menu_item_ptra *     m_pitema;
       menu_item *          m_pitemContainer;
       
       
-      menu_command_ui(::aura::application * papp);
+      menu_command(::aura::application * papp);
       
       
       virtual void Enable(bool bOn, ::action::context actioncontext);

@@ -1,29 +1,32 @@
 #include "framework.h"
-
+#include "user_tool_command.h"
 
 /////////////////////////////////////////////////////////////////////////////
-   // toolbar idle update through tool_command_ui class
+   // toolbar idle update through tool_command class
 
 
 
 namespace user
 {
 
-   tool_command_ui::tool_command_ui(::aura::application * papp) :
-      command_ui(papp)
+   tool_command::tool_command(::aura::application * papp) :
+      ::user::command(papp)
    {
    }
       
-   tool_command_ui::~tool_command_ui()
+   tool_command::~tool_command()
    {
    }
 
 
 
-   void tool_command_ui::Enable(bool bOn)
+   void tool_command::Enable(bool bOn)
    {
+      
       m_bEnableChanged = TRUE;
-      toolbar* pToolBar = dynamic_cast < toolbar * > (m_pOther);
+      
+      toolbar* pToolBar = dynamic_cast < toolbar * > (m_puiOther);
+
       ASSERT(pToolBar != NULL);
       ASSERT_KINDOF(toolbar, pToolBar);
       ASSERT(m_iIndex < m_iCount);
@@ -46,10 +49,10 @@ namespace user
 #endif
    }
 
-   void tool_command_ui::SetCheck(int32_t nCheck)
+   void tool_command::SetCheck(int32_t nCheck)
    {
       ASSERT(nCheck >= 0 && nCheck <= 2); // 0=>off, 1=>on, 2=>indeterminate
-      toolbar* pToolBar = dynamic_cast < toolbar * > (m_pOther);
+      toolbar* pToolBar = dynamic_cast < toolbar * > (m_puiOther);
       ASSERT(pToolBar != NULL);
       ASSERT_KINDOF(toolbar, pToolBar);
       ASSERT(m_iIndex < m_iCount);
@@ -67,7 +70,7 @@ namespace user
 #endif
    }
 
-   void tool_command_ui::SetText(const char *)
+   void tool_command::SetText(const char *)
    {
       // ignore it
    }

@@ -40,7 +40,7 @@ namespace message
 
       pbase = canew(::message::base(get_app()));
 
-      pbase->m_uiMessage = uiMessage;
+      pbase->m_id = uiMessage;
       pbase->m_wparam =wparam;
       pbase->m_lparam = lparam;
 
@@ -81,7 +81,7 @@ namespace message
    void dispatch::_user_message_handler(::message::message * pbase)
    {
 
-      if(pbase->m_uiMessage == MESSAGE_POST_MESSAGE)
+      if(pbase->m_id == MESSAGE_POST_MESSAGE)
       {
          
          sp(::message::message) pbaseCast = pbase->m_lparam;
@@ -96,7 +96,7 @@ namespace message
       
       Signal * pSignal;
       
-      while((pSignal = m_signala.GetSignal(pbase->m_uiMessage,0,0,i)) != NULL)
+      while((pSignal = m_signala.GetSignal(pbase->m_id,0,0,i)) != NULL)
       {
          
          class ::message::sender * psignal = pSignal->m_psignal;
@@ -147,11 +147,11 @@ namespace message
    Signal & signal = *signalptra[i];
    if(pcommand->m_bHasCommandHandler)
    {
-   update_command_ui updatecmdui;
-   updatecmdui.m_pcommandui = (command_ui *)pExtra;
+   update_::user::command updatecmdui;
+   updatecmdui.m_pcommand = (::user::command *)pExtra;
    signal.m_psignal->emit(&updatecmdui);
    b = TRUE;
-   if(updatecmdui.m_pcommandui->m_bEnableChanged)
+   if(updatecmdui.m_pcommand->m_bEnableChanged)
    return true;
    }
    else
@@ -261,7 +261,7 @@ namespace message
       {
                         switch(uiCode)
                         {
-                        case CN_UPDATE_COMMAND_UI:
+                        case CN_UPDATE_::user::command:
                            return PrototypeUpdateCommandUserInterface;
                         default:
                            return PrototypeCommand;

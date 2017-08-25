@@ -4,14 +4,14 @@
 namespace user
 {
 
-   class tool_command_ui :
-      public command_ui        // class private to this file !
+   class tool_command :
+      public ::user::command        // class private to this file !
    {
    public: // re-implementations only
 
 
-      tool_command_ui(::aura::application * papp);
-      virtual ~tool_command_ui();
+      tool_command(::aura::application * papp);
+      virtual ~tool_command();
 
       virtual void Enable(bool bOn);
       virtual void SetCheck(int32_t nCheck);
