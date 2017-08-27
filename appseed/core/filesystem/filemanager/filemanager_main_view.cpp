@@ -192,7 +192,7 @@ namespace filemanager
    }
 
 
-   void main_view::on_simple_command(::user::command * pcommand)
+   void main_view::on_command(::user::command * pcommand)
    {
       
       if(pcommand->m_id == "change_view")

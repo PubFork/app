@@ -401,25 +401,43 @@ namespace user
 
    }
 
-
-
-   bool box::on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult)
+   
+   void box::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      if (::simple_ui::interaction::on_simple_command(ecommand, lparam, lresult))
-         return true;
-
-      switch (ecommand)
+      switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_load_window_rect:
-         WindowDataLoadWindowRect(lparam != FALSE);
+         
+         WindowDataLoadWindowRect(psimplecommand->m_lparam != FALSE);
+         
+         psimplecommand->m_bRet = true;
+
          break;
+
       default:
+
          break;
+
       }
 
+      if (psimplecommand->m_bRet)
+      {
 
-      return false;
+         return;
+
+      }
+
+      ::simple_ui::interaction::on_simple_command(psimplecommand);
+
+   }
+
+
+
+   void box::on_command(::user::command * pcommand)
+   {
+
+      ::simple_ui::interaction::on_command(pcommand);
 
    }
 

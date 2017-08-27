@@ -192,7 +192,8 @@ namespace user
       virtual ::user::interaction::e_type get_window_type();
 
 
-      virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       virtual void install_message_routing(::message::sender * pinterface);

@@ -121,8 +121,8 @@ namespace filemanager
       operation_document * get_operation_doc(bool bSwitch);
 
 
-      virtual void on_simple_command(::user::command * pcommand) override;
-      virtual void on_simple_command_probe(::user::command * pcommand) override;
+      virtual void on_command(::user::command * pcommand) override;
+      virtual void on_command_probe(::user::command * pcommand) override;
 
       virtual bool on_new_document();
       virtual bool on_open_document(var varFile);

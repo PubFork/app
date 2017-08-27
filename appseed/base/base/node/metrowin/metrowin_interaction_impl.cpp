@@ -1126,12 +1126,12 @@ namespace metrowin
       ////ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
       //ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
 
-      //// Note: We call the virtual message_handler for this interaction_impl directly,
+      //// Note: We call the virtual message handler for this interaction_impl directly,
       ////  instead of calling ::ca2::CallWindowProc, so that Default()
       ////  will still work (it will call the Default interaction_impl proc with
       ////  the original Win32 WM_CTLCOLOR message).
       ///*
-      //return message_handler(WM_CTLCOLOR, 0, (LPARAM)&ctl);*/
+      //return message handler(WM_CTLCOLOR, 0, (LPARAM)&ctl);*/
       //return 0;
    }
 
@@ -1274,14 +1274,11 @@ namespace metrowin
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
 
-   void interaction_impl::message_handler(::message::message * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
-      SCAST_PTR(::message::base,pbase,pobj);
 
-      if (pobj == NULL)
+      if (pbase == NULL)
       {
 
          return;
@@ -1290,16 +1287,30 @@ namespace metrowin
 
       if(m_pui != NULL)
       {
-         m_pui->pre_translate_message(pobj);
-         if(pobj->m_bRet)
+
+         m_pui->pre_translate_message(pbase);
+
+         if(pbase->m_bRet)
+         {
+
             return;
+
+         }
+
       }
 
       if(m_plistener != NULL)
       {
-         m_plistener->message_queue_message_handler(pobj);
-         if(pobj->m_bRet)
+
+         m_plistener->message_queue_message_handler(pbase);
+
+         if(pbase->m_bRet)
+         {
+
             return;
+
+         }
+
       }
 
 
@@ -1311,7 +1322,7 @@ namespace metrowin
             pbase->m_id == WM_SYSCHAR)
       {
 
-         SCAST_PTR(::message::key,pkey,pobj);
+         SCAST_PTR(::message::key, pkey, pbase);
 
          //Session.keyboard().translate_os_key_message(pkey);
 
@@ -1427,8 +1438,8 @@ namespace metrowin
 
          if(pbase->m_id == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -4473,28 +4484,14 @@ ExitModal:
       return m_pui->m_id;
    }
 
-   /*   guie_message_wnd::guie_message_wnd(::aura::application * papp) :
-   ::object(papp)
-   {
-   m_pguieForward = NULL;
-   }
-
-   LRESULT guie_message_wnd::message_handler(::message::message * pobj)
-   {
-   if(m_pguieForward != NULL)
-   {
-   return m_pguieForward->message_handler(uiMessage, wparam, lparam);
-   }
-   else
-   {
-   return 0;
-   }
-   }*/
 
    void interaction_impl::_001WindowMaximize()
    {
+
       //::user::interaction::_001WindowMaximize();
+
    }
+
 
    void interaction_impl::_001WindowRestore()
    {
@@ -6423,7 +6420,6 @@ ExitModal:
          if (nMsg == WM_INITDIALOG)
             __pre_init_dialog(pinteraction, &rectOld, &dwStyle);
 
-         // delegate to object's message_handler
          if(pinteraction->m_pui != NULL && pinteraction->m_pui != pinteraction)
          {
             pinteraction->m_pui->message_handler(spbase);

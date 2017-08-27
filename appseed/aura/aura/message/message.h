@@ -16,12 +16,13 @@ namespace message
 
 #include "message_const.h"
 #include "message_id.h"
+#include "message_receiver.h"
 #include "message_route.h"
 #include "message_message.h"
 #include "message_definition.h"
 #include "message_sender.h"
-#include "message_receiver.h"
 #include "message_base.h"
+#include "message_simple_command.h"
 #include "message.inl"
 #include "message_listener_smart_pointer_array.h"
 

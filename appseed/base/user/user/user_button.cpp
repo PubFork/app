@@ -48,8 +48,7 @@ namespace user
 
       ::user::control::install_message_routing(pinterface);
 
-      USER_MESSAGE_LINK(message_create, pinterface, this, &button::_001OnCreate);
-
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &button::_001OnCreate);
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &button::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &button::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_MBUTTONDOWN, pinterface, this, &button::_001OnMButtonDown);

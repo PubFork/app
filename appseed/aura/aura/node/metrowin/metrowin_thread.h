@@ -69,7 +69,7 @@
 //      virtual void set_auto_delete(bool bAutoDelete = true);
 //      virtual void set_run(bool bRun = true);
 //      virtual event & get_finish_event();
-//      virtual bool get_run_thread();
+//      virtual bool thread_get_run();
 //      virtual ::thread * get_app_thread();
 //      virtual sp(::user::interaction) get_active_ui();
 //      virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
@@ -117,7 +117,6 @@
 //      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
 //      virtual bool is_idle_message(::message::message * pobj);  // checks for special messages
 //      virtual bool is_idle_message(LPMESSAGE lpmsg);  // checks for special messages
-//      virtual void message_handler(::message::message * pobj);
 //
 //      // thread termination
 //      virtual int exit_instance(); // default will 'delete this'

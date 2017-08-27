@@ -82,13 +82,13 @@ namespace userex
    }
 
 
-   void split_view::on_simple_command_probe(::user::command * pcommand)
+   void split_view::on_command_probe(::user::command * pcommand)
    {
 
    }
 
 
-   void split_view::on_simple_command(::user::command * pcommand)
+   void split_view::on_command(::user::command * pcommand)
    {
 
    }

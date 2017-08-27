@@ -33,7 +33,7 @@ UINT __axis_x11_thread(void * p)
 
    bool bPending;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->get_run_thread())
+   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
    {
 
 //      ZERO(msg);
@@ -534,7 +534,7 @@ UINT __axis_x11mouse_thread(void * p)
 
    bool bOk;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->get_run_thread())
+   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
    {
 
       bOk = false;

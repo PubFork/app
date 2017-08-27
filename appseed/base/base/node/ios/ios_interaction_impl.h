@@ -602,7 +602,7 @@ namespace ios
       
       
       // for processing oswindows messages
-      virtual void message_handler(::message::message * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
       
       // for handling default processing

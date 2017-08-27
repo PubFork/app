@@ -345,7 +345,7 @@ public:
    virtual void do_events();
    virtual void do_events(const duration & duration);
 
-   virtual bool get_run_thread();
+   virtual bool thread_get_run();
    virtual bool should_enable_thread();
    virtual bool post_quit();
 
@@ -353,7 +353,7 @@ public:
 
    //virtual void defer_add_thread_run_wait(sync_object_ptra & soa);
 
-   virtual void message_queue_message_handler(::message::message * pobj);
+   virtual void message_queue_message_handler(::message::base * pobj);
 
    //DECL_GEN_SIGNAL(_001OnSendThreadMessage);
    DECL_GEN_SIGNAL(_001OnThreadMessage);
@@ -385,7 +385,7 @@ public:
    
    virtual bool initialize_message_queue();
    
-   virtual void message_handler(::message::message * pobj);
+   virtual void message_handler(::message::base * pbase);
 
    ::handler * handler();
 

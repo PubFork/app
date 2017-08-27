@@ -1921,6 +1921,10 @@ namespace core
 
          // put the window at the bottom of zorder, so it isn't activated
          m_puiMain->m_puiThis->zorder(ZORDER_BOTTOM, SWP_NOACTIVATE);
+
+         m_puiMain->m_puiThis->wait_redraw();
+
+
       }
       catch (...)
       {

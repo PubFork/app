@@ -12,8 +12,29 @@ namespace message
    public:
 
       receiver *        m_preceiver;
+      void *            m_pvoidReceiver;
 
-      virtual void route_message(message * pmessage) = 0;
+      route(receiver * preceiver, void * pvoidReceiver) :
+         m_preceiver(preceiver),
+         m_pvoidReceiver(pvoidReceiver)
+      {
+
+
+      }
+
+      virtual ~route()
+      {
+
+
+      }
+
+      virtual void route_message(message * pmessage)
+      {
+
+         throw interface_only_exception(NULL);
+         // has been the pred_route implementation deleted?
+
+      }
 
    };
 
@@ -25,11 +46,16 @@ namespace message
 
       PRED m_pred;
 
-      pred_route(receiver * preceiver, PRED pred) :
+      pred_route(receiver * preceiver, void * pvoidReceiver, PRED pred) :
+         route(preceiver, pvoidReceiver),
          m_pred(pred)
       {
 
-         m_preceiver = preceiver;
+      }
+
+      virtual ~pred_route()
+      {
+
 
       }
 
@@ -44,16 +70,18 @@ namespace message
 
    
    template < typename PRED >
-   route * create_pred_route(receiver * preceiver, PRED pred)
+   route * create_pred_route(receiver * preceiver, void * pvoidReceiver, PRED pred)
    {
 
-      return new pred_route < PRED >(preceiver, pred);
+      return new pred_route < PRED >(preceiver, pvoidReceiver, pred);
 
    }
 
    using route_array = ::ptr_array < route >;
 
-   using id_route = ::map < id, const id &, route_array >;
+   using id_route = ::map < ::message::id, const ::message::id &, route_array >;
+
+   using type_id_route = ::map < e_type, e_type, id_route >;
 
 
 } // namespace message 

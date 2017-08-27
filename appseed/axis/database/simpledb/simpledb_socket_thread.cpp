@@ -121,7 +121,7 @@ namespace simpledb
                   while (true)
                   {
                      select(8,0);
-                     if(!m_pservice-get_run_thread())
+                     if(!m_pservice-thread_get_run())
                         break;
                   }
                   if(!m_pservice->get_run_service())

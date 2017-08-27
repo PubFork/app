@@ -222,7 +222,7 @@ bool get_thread_run()
    try
    {
 
-      return t_pthread->get_run_thread();
+      return t_pthread->thread_get_run();
 
    }
    catch (...)

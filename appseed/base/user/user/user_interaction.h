@@ -519,7 +519,7 @@ namespace user
 
       virtual bool post_message(UINT message,WPARAM wParam = 0,lparam lParam = 0) override;
       virtual bool post_object(UINT message, WPARAM wParam, lparam lParam);
-      virtual bool post_simple_command(e_simple_command ecommand,lparam lParam = 0) override;
+      //virtual bool post_simple_command(e_simple_command ecommand,lparam lParam = 0) override;
 
       virtual bool ShowWindow(int32_t nCmdShow) override;
 
@@ -705,7 +705,7 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam) override;
 
-      virtual void message_handler(::message::message * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
       virtual LRESULT message_handler(LPMESSAGE lpmessage) override;
       virtual void GuieProc(::message::message * pobj) override;
 
@@ -771,8 +771,9 @@ namespace user
       virtual uint32_t get_window_default_style() override;
       virtual e_type get_window_type() override;
 
-      using ::user::interaction_base::on_simple_command;
-      virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult) override;
+      
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
 
       // Window-Management message handler member functions
@@ -906,7 +907,7 @@ namespace user
       */
 
 
-      sp(::message::base) get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
+      sp(::message::base) get_message_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
 
 
       //void transfer_from(::aura::timer_array & ta, interaction * pui);
@@ -1009,6 +1010,11 @@ namespace user
 
       
       virtual void resize_to_fit();
+
+      virtual void wait_redraw();
+
+      virtual bool has_pending_redraw_flags() override;
+
 
    };
 

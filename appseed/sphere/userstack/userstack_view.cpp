@@ -427,11 +427,15 @@ namespace userstack
       }
       try
       {
+         
          if(m_pimpl == NULL)
             return;
-         (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::message::message * > (pmouse));
+         
+         m_pimpl->route_message(pmouse);
+
          if(pmouse->get_lresult() != 0)
             return;
+
       }
       catch(...)
       {

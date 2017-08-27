@@ -358,15 +358,15 @@ namespace user
             m_eborderMask = emask;
          }
 
-         void MoveManager::message_handler(sp(::user::interaction) pwnd, ::message::message * pobj)
-         {
 
-            SCAST_PTR(::message::base, pbase, pobj);
+         void MoveManager::message_handler(::user::interaction * pui, ::message::base * pbase)
+         {
 
             if(pbase->m_id == WM_LBUTTONDOWN)
             {
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               pui->ClientToScreen(&ptCursor);
                m_ptCursorOrigin = ptCursor;
                rect rectWindow;
                GetMoveWindow()->GetWindowRect(rectWindow);
@@ -398,7 +398,7 @@ namespace user
                   return;
                }
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               pui->ClientToScreen(&ptCursor);
                point pt;
                pt = m_ptWindowOrigin + ptCursor - m_ptCursorOrigin;
                //TRACE("m_ptWindowOrigin.x = %d m_ptWindowOrigin = %d\n", m_ptWindowOrigin.x, m_ptWindowOrigin.y);
@@ -439,8 +439,11 @@ namespace user
                }
                pbase->m_bRet = true;
                return;
+               
             }
+
          }
+
 
          bool MoveManager::_000OnTimer(UINT nIDEvent)
          {

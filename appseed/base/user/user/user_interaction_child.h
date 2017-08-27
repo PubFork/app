@@ -28,9 +28,7 @@ namespace user
 
       ::user::interaction_child * get_user_interaction_child() override;
 
-
-      using ::user::interaction_base::message_handler;
-      virtual void message_handler(::message::message * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
 
       using ::user::interaction_base::SetWindowPos;
       //virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;

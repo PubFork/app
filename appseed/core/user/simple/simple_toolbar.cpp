@@ -412,7 +412,7 @@ void simple_toolbar::on_command_probe(::user::frame_window * ptarget, bool bDisa
          state.m_id = m_itema[state.m_iIndex]->m_id;
 
          // allow reflections
-         //if (::user::interaction::on_simple_command(0,
+         //if (::user::interaction::on_command(0,
          //   MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
          //   &state, NULL))
          //   continue;

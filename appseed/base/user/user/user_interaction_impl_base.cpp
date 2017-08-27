@@ -179,6 +179,15 @@ namespace user
 
    }
 
+   bool interaction_impl_base::has_pending_redraw_flags()
+   {
+
+      return m_bZ
+         || m_bShowFlags
+         || m_rectParentClient != m_rectParentClientRequest;
+
+   }
+
 
    void interaction_impl_base::on_layout()
    {
@@ -1419,7 +1428,7 @@ namespace user
 
       smart_pointer < ::message::base > spbase;
 
-      spbase = m_pui->get_base(uiMessage, wparam, lparam);
+      spbase = m_pui->get_message_base(uiMessage, wparam, lparam);
 
       if (m_pui->WfiIsMoving())
       {
@@ -1435,7 +1444,11 @@ namespace user
          m_pui->walk_pre_translate_tree(spbase);
 
          if (spbase->m_bRet)
+         {
+
             return spbase->get_lresult();
+
+         }
 
       }
 
@@ -1757,11 +1770,11 @@ namespace user
    }
    
    
-   void interaction_impl_base::queue_message_handler(::message::message * pobj)
+   void interaction_impl_base::queue_message_handler(::message::base * pbase)
    {
       
       
-      return m_pui->message_handler(pobj);
+      return m_pui->message_handler(pbase);
       
       
    }

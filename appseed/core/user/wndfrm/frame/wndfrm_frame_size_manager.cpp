@@ -607,15 +607,19 @@ namespace user
             UNREFERENCED_PARAMETER(emode);
          }
 
-         void SizeManager::message_handler(sp(::user::interaction) pwnd, ::message::message * pobj)
+
+         void SizeManager::message_handler(::user::interaction * pui, ::message::base * pbase)
          {
-            SCAST_PTR(::message::base, pbase, pobj);
 
             if(pbase->m_id == WM_LBUTTONDOWN)
             {
-               SCAST_PTR(::message::mouse, pmouse, pobj);
+               
+               SCAST_PTR(::message::mouse, pmouse, pbase);
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+
+               pui->ClientToScreen(&ptCursor);
+
                //         UINT uiFlags = pbase->m_wparam;
                m_ptCursorOrigin = ptCursor;
                rect rectWindow;
@@ -641,14 +645,19 @@ namespace user
                   return;
                }
             }
-            else if(pbase->m_id == WM_MOUSEMOVE ||
-               pbase->m_id == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_LBUTTONUP)
             {
-               SCAST_PTR(::message::mouse, pmouse, pobj);
+               
+               SCAST_PTR(::message::mouse, pmouse, pbase);
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+
+               pui->ClientToScreen(&ptCursor);
+
                rect rectEvent;
+
                GetEventWindow()->GetWindowRect(rectEvent);
+
                //sp(::aura::application) pApp = &System;
                bool bSize = false;
                rect rectWindow;

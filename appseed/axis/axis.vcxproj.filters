@@ -266,12 +266,6 @@
     <ClInclude Include="axis\axis\axis_static_start.h">
       <Filter>Header Files\axis\axis</Filter>
     </ClInclude>
-    <ClInclude Include="version.config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="database\database\database.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>
@@ -487,12 +481,6 @@
     </ClInclude>
     <ClInclude Include="filesystem\fs\fs_ftp_file.h">
       <Filter>Header Files\filesystem\fs</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\aaa_want_to_remove_windows_file_set.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\aaa_windows_message_queue.h">
-      <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="axis\node\windows\windows.h">
       <Filter>Header Files\axis\node\windows</Filter>

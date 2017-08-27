@@ -51,7 +51,9 @@ namespace userstack
       void _001OnTimer(::timer * ptimer);
       DECL_GEN_SIGNAL(_001OnApp2000);
 
-      virtual void message_handler(::message::message * pobj);
+      
+      virtual void message_handler(::message::base * pbase);
+
 
       virtual void message_queue_message_handler(::message::message * pobj);
 

@@ -51,10 +51,13 @@ namespace user
          }
 
 
-         void WorkSet::message_handler(::message::message * pobj)
+         void WorkSet::message_handler(::message::base * pbase)
          {
-            relay_event(pobj);
+            
+            relay_event(pbase);
+
          }
+
 
          void WorkSet::relay_event(::message::message * pobj)
          {
@@ -955,94 +958,144 @@ namespace user
             m_wfla.remove(plistener);
          }
 
-         void WorkSet::WindowProcHover(::user::interaction * pwnd,::message::message * pobj)
+
+         void WorkSet::WindowProcHover(::user::interaction * pui,::message::base * pbase)
          {
-            UNREFERENCED_PARAMETER(pwnd);
-            SCAST_PTR(::message::base,pbase,pobj);
+
             if(m_bHoverModeOn)
             {
-               if(pbase->m_id == WM_TIMER
-                  && pbase->m_wparam == 16319
-                  && IsHoverModeOn())
+
+               if(pbase->m_id == WM_TIMER && pbase->m_wparam == 16319 && IsHoverModeOn())
                {
+
                   rect rectWindow;
+
                   sp(::user::interaction) pwnd = GetWndRegion();
+
                   pwnd->GetWindowRect(rectWindow);
+
                   point ptCursor;
+
                   Session.get_cursor_pos(&ptCursor);
+
                   if(rectWindow.contains(ptCursor))
                   {
-                     if(!IsHoverActive())
+
+                     if (!IsHoverActive())
+                     {
+
                         Hover(true);
+
+                     }
+
                   }
-                  else if(!m_pmovemanager->IsMoving() &&
-                     !m_psizemanager->IsSizing())
+                  else if(!m_pmovemanager->IsMoving() && !m_psizemanager->IsSizing())
                   {
-                     if(IsHoverActive())
+
+                     if (IsHoverActive())
+                     {
+
                         Hover(false);
+
+                     }
+
                   }
+
                }
+
             }
+
          }
 
 
-         void WorkSet::WindowProcBefore(::user::interaction * pwnd,::message::message * pobj)
+         void WorkSet::WindowProcBefore(::user::interaction * pui, ::message::base * pbase)
          {
 
-            WindowProcHover(pwnd,pobj);
-            if(pobj->m_bRet)
+            WindowProcHover(pui,pbase);
+
+            if (pbase->m_bRet)
+            {
+
                return;
 
-            if(m_pappearance != NULL &&
-               (!m_pappearance->IsFullScreen()
-               || !m_pappearance->IsZoomed()
-               ))
+            }
+
+            if(m_pappearance != NULL && (!m_pappearance->IsFullScreen() || !m_pappearance->IsZoomed()))
             {
-               if(IsSizingEnabled() &&
-                  m_psizemanager != NULL)
+
+               if(IsSizingEnabled() && m_psizemanager != NULL)
                {
-                  m_psizemanager->message_handler(pwnd,pobj);
-                  if(pobj->m_bRet)
+
+                  m_psizemanager->message_handler(pui, pbase);
+
+                  if (pbase->m_bRet)
+                  {
+
                      return;
+
+                  }
+
                }
 
-               if(IsMovingEnabled() &&
-                  m_pmovemanager != NULL)
+               if(IsMovingEnabled() && m_pmovemanager != NULL)
                {
-                  m_pmovemanager->message_handler(pwnd,pobj);
-                  if(pobj->m_bRet)
+
+                  m_pmovemanager->message_handler(pui, pbase);
+
+                  if (pbase->m_bRet)
+                  {
+
                      return;
+
+                  }
+
                }
 
                if(!m_pappearance->IsFullScreen())
                {
-                  if(IsSysMenuEnabled() &&
-                     m_psystemmenumanager != NULL)
+
+                  if(IsSysMenuEnabled() && m_psystemmenumanager != NULL)
                   {
-                     m_psystemmenumanager->message_handler(pwnd,pobj);
-                     if(pobj->m_bRet)
+
+                     m_psystemmenumanager->message_handler(pui, pbase);
+
+                     if (pbase->m_bRet)
+                     {
+
                         return;
+
+                     }
+
                   }
+
                }
+
             }
 
-
-            SCAST_PTR(::message::base,pbase,pobj);
             pbase->set_lresult(0);
 
             if(pbase->m_id == WM_COMMAND)
             {
-               SCAST_PTR(::message::command,pcommand,pobj);
+
+               SCAST_PTR(::message::command,pcommand,pbase);
+
                _001OnCommand(pcommand);
+
                if(pcommand->m_bRet)
                {
+
                   pcommand->set_lresult(1);
+
                   return;
+
                }
+
             }
             else if(pbase->m_id == WM_MOVE)
             {
+
                OnMove();
+
             }
             else if(pbase->m_id == WM_SIZE)
             {

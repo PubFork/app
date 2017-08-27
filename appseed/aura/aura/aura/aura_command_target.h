@@ -49,31 +49,31 @@ public:
    }
 
    template < class T >
-   void connect_command_probe(id id, T * p, void (T::*pfn)(::message::message *))
+   void connect_command_probe(::id id, T * p, void (T::*pfn)(::message::message *))
    {
       
       ::message::id messageid;
 
       messageid = ::message::type_command_probe;
 
-      messageid = id;
+      messageid.::id::operator=(id);
 
-      add_route(messageid, p, pfn);
+      add_route(p, pfn, messageid);
 
    }
    
    
    template < class T >
-   void connect_command(id id,T * p,void (T::*pfn)(::message::message *))
+   void connect_command(::id id,T * p,void (T::*pfn)(::message::message *))
    {
 
       ::message::id messageid;
 
       messageid = ::message::type_command;
 
-      messageid = id;
+      messageid.::id::operator=(id);
 
-      add_route(messageid, p, pfn);
+      add_route(p, pfn, messageid);
 
    }
    
@@ -113,11 +113,11 @@ public:
    virtual void _001SendCommand(::user::command * pcommand);
    virtual void _001SendCommandProbe(::user::command * pcommand);
 
-   virtual void on_simple_command(::user::command * pcommand);
+   virtual void on_command(::user::command * pcommand);
    virtual bool _001HasCommandHandler(::user::command * pcommand);
-   virtual void on_simple_command_probe(::user::command * pcommand);
+   virtual void on_command_probe(::user::command * pcommand);
 
-   //virtual bool on_simple_command_probe(::user::command * pcommand);
+   //virtual void on_command_probe(::user::command * pcommand);
    virtual void _001OnCmdMsg(::user::command * pcommand);
    //virtual bool _001HasCommandHandler(const char * pszId);
 

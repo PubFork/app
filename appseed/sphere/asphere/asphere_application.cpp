@@ -99,6 +99,8 @@ namespace asphere
 
          }
 
+         TRACE("finished calc theme thread");
+
       });
 
       return true;

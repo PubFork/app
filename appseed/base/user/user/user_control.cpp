@@ -630,13 +630,13 @@ namespace user
 //            if ((pwnd->GetStyle() & WS_VISIBLE))
 //            {
 //               // allow reflections
-//               if (pview->on_simple_command_probe(&state))
+//               if (pview->on_command_probe(&state))
 //               {
 //                  continue;
 //               }
 //
 //               // allow the toolbar itself to have update handlers
-//               if (pview->on_simple_command_probe(&state))
+//               if (pview->on_command_probe(&state))
 //                  //               {
 //                    //                state.DoUpdate(pTarget, bDisableIfNoHndler);
 //                  continue;

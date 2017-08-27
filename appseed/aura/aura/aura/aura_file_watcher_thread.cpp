@@ -60,8 +60,6 @@ namespace file_watcher
 
          }
 
-         padd->m_event.set_event();
-
       }
       catch (...)
       {
@@ -80,7 +78,7 @@ namespace file_watcher
 
          MESSAGE msg;
 
-         while(get_run_thread())
+         while(thread_get_run())
          {
 
             if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))

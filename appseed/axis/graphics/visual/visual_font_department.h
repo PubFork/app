@@ -25,7 +25,7 @@ public:
    virtual ~font_department();
 
 
-   ::visual::font_enumeration *     m_pfontenumeration;
+   sp(::visual::font_enumeration)   m_pfontenumeration;
 
    ::draw2d::font_sp                m_fontCaption;
    ::draw2d::font_sp                m_fontMenu;

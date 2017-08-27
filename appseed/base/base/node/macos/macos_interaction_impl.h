@@ -617,7 +617,7 @@ namespace macos
 
 
       // for processing oswindows messages
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing

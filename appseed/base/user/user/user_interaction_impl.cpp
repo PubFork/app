@@ -421,7 +421,7 @@ namespace user
    int32_t interaction_impl::queue_thread::run()
    {
       
-      while(get_thread_run())
+      while(thread_get_run())
       {
             
          if (m_evNewMessage.wait(seconds(1)).succeeded())
@@ -455,7 +455,7 @@ namespace user
                      try
                      {
                   
-                        m_pimpl->m_pui->message_handler(pobj);
+                        m_pimpl->m_pui->message_handler(pbase);
                   
                      }
                      catch (...)
@@ -503,19 +503,8 @@ namespace user
    }
    
    
-   void interaction_impl::queue_message_handler(::message::message * pobj)
+   void interaction_impl::queue_message_handler(::message::base * pbase)
    {
-      
-      sp(::message::base) pbase = pobj;
-      
-      if(pbase.is_null())
-      {
-         
-         message_handler(pobj);
-         
-         return;
-         
-      }
       
       e_queue_thread equeuethread = message_queue_thread(pbase->m_id);
       
@@ -903,13 +892,10 @@ namespace user
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
-
-   void interaction_impl::message_handler(::message::message * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
 
-      route_message(pobj);
+      route_message(pbase);
 
    }
 
@@ -1631,7 +1617,7 @@ namespace user
 
       ::smart_pointer < ::message::base > spbase;
 
-      spbase = m_pui->get_base(message, wparam, lparam);
+      spbase = m_pui->get_message_base(message, wparam, lparam);
 
       if(m_pui->WfiIsMoving())
       {
@@ -2894,16 +2880,16 @@ namespace user
    }
 
 
-   void guie_message_wnd::message_handler(::message::message * pobj)
+   void guie_message_wnd::message_handler(::message::base * pbase)
    {
+
       if(m_puiForward != NULL)
       {
-         return m_puiForward->message_handler(pobj);
+
+         return m_puiForward->message_handler(pbase);
+
       }
-      else
-      {
-         return;
-      }
+      
    }
 
 

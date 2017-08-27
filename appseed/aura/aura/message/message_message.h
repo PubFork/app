@@ -12,7 +12,7 @@ namespace message
 
 
       id                         m_id;
-      route_array                m_routea;
+      ref_array < route >        m_routea;
       sender *                   m_psender;
       WPARAM                     m_wparam;
       lparam                     m_lparam;
@@ -41,6 +41,9 @@ namespace message
       bool all_previous(); // returns bRet
 
       bool previous(); // returns bRet
+
+
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam);
 
 
    };

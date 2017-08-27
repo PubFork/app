@@ -39,7 +39,7 @@ namespace user
 
             bool update(WorkSet * pset);
 
-            void message_handler(sp(::user::interaction) pwnd, ::message::message * pobj);
+            void message_handler(::user::interaction * pui, ::message::base * pbase);
 
 
          };

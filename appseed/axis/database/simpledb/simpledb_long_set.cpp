@@ -121,7 +121,7 @@ int32_t db_long_sync_queue::run()
    try
    {
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
          try

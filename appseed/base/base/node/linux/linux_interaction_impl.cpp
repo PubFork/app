@@ -1104,17 +1104,15 @@ namespace linux
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
+
    DWORD dwDebugmessage_handlerTime;
 int iDebugmessage_handlerTime;
 
 DWORD dwLastMouseMove;
 DWORD dwLastPaint;
-   void interaction_impl::message_handler(::message::message * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
 
-      SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_id == WM_TIMER)
       {
          //m_pthread->step_timer();
@@ -1206,7 +1204,7 @@ DWORD dwLastPaint;
       if(iDebugmessage_handlerTime > 20)
       {
 
-         writeln("interaction_impl::message_handler flooded?");
+         writeln("interaction_impl::message handler flooded?");
 
       }
       else
@@ -1355,8 +1353,8 @@ DWORD dwLastPaint;
 
          if(pbase->m_id == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -4051,30 +4049,13 @@ throw not_implemented(get_app());
    }
 
 
-   /*   guie_message_wnd::guie_message_wnd(sp(::aura::application) papp) :
-   ::object(papp)
-   {
-   m_puiForward = NULL;
-   }
-
-   LRESULT guie_message_wnd::message_handler(::message::message * pobj)
-   {
-   if(m_puiForward != NULL)
-   {
-   return m_puiForward->message_handler(uiMessage, wparam, lparam);
-   }
-   else
-   {
-   return 0;
-   }
-   }*/
-
    void interaction_impl::_001WindowMaximize()
    {
 
-
       ::user::interaction_impl::_001WindowMaximize();
+
    }
+   
 
    void interaction_impl::_001WindowMinimize()
    {

@@ -54,7 +54,8 @@ namespace message
       PrototypeCommand,
       PrototypeWindowPos,
       PrototypeNcCalcSize,
-      PrototypeOnDraw
+      PrototypeOnDraw,
+      PrototypeSimpleCommand
 
    };
 

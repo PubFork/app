@@ -612,20 +612,20 @@ namespace hotplugin
    }
 
 
-   void host::message_handler(::message::message * pobj)
+   void host::message_handler(::message::base * pbase)
    {
 
-      if(pobj == NULL)
+      if(pbase == NULL)
          return;
 
       if(m_pplugin != NULL)
       {
 
-         m_pplugin->message_handler(pobj);
+         m_pplugin->message_handler(pbase);
 
       }
 
-      ::simple_ui::interaction::message_handler(pobj);
+      ::simple_ui::interaction::message_handler(pbase);
 
    }
 

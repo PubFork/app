@@ -611,10 +611,10 @@ namespace user
    }
 
 
-   void form_window::on_simple_command(::user::command * pcommand)
+   void form_window::on_command(::user::command * pcommand)
    {
 
-      control::on_simple_command(pcommand);
+      control::on_command(pcommand);
 
    }
 

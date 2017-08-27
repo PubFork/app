@@ -672,10 +672,10 @@ namespace user
    }
 
    
-   void form::on_simple_command(::user::command * pcommand)
+   void form::on_command(::user::command * pcommand)
    {
       
-      control::on_simple_command(pcommand);
+      control::on_command(pcommand);
 
    }
 

@@ -46,6 +46,8 @@ namespace message
       if (m_routea.is_empty())
       {
 
+         m_bRet = true;
+
          return true;
 
       }
@@ -60,11 +62,22 @@ namespace message
       if (m_iRouteIndex < 0)
       {
 
+         m_bRet = true;
+
          return true;
 
       }
 
-      m_routea[m_iRouteIndex]->route_message(this);
+      ::message::route * proute = m_routea[m_iRouteIndex];
+
+      ASSERT(proute != NULL);
+
+      if (proute != NULL)
+      {
+
+         proute->route_message(this);
+
+      }
 
       return m_bRet;
 
@@ -102,6 +115,18 @@ namespace message
 
    }
 
+   
+   void message::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam)
+   {
+
+      m_id = ::message::id(::id((int64_t) uiMessage), ::message::type_message);
+
+      m_wparam = wparam;
+
+      m_lparam = lparam;
+
+
+   }
 
 
 } // namespace message

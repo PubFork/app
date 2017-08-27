@@ -437,36 +437,40 @@ namespace console
    }
 
 
-   bool prompt_frame::on_simple_command(::user::command * pcommand)
+   void prompt_frame::on_command(::user::command * pcommand)
    {
       
-      if(id == "app_exit")
+      if(pcommand->m_id == "app_exit")
       {
          
          simple_frame_window::OnClose();
          
-         return true;
+         pcommand->m_bRet = true;
+
+         return;
          
       }
       
-      return simple_frame_window::on_simple_command(id);
+      simple_frame_window::on_command(pcommand);
       
    }
 
    
-   bool prompt_frame::on_simple_command_probe(::user::command * pcommand)
+   void prompt_frame::on_command_probe(::user::command * pcommand)
    {
       
       if(pcommand->m_id == "app_exit")
       {
          
          pcommand->Enable();
+
+         pcommand->m_bRet = true;
          
-         return true;
+         return;
          
       }
-      
-      return false;
+
+      simple_frame_window::on_command_probe(pcommand);
       
    }
 

@@ -708,14 +708,12 @@ namespace base
    }
 
 
-
-
    sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    {
 
-      ::user::interaction * pwnd = NULL;
+      ::user::interaction * pui = NULL;
 
-      if(pwnd == NULL && lpmsg->hwnd != NULL)
+      if(pui == NULL && lpmsg->hwnd != NULL)
       {
 
          if(lpmsg->message == 126)
@@ -733,26 +731,29 @@ namespace base
             try
             {
                
-               pwnd = pimpl->m_pui;
+               pui = pimpl->m_pui;
 
             }
             catch(...)
             {
 
-               pwnd = NULL;
+               pui = NULL;
 
             }
 
          }
 
-         if(pwnd == NULL)
+         if(pui == NULL)
             return NULL;
 
       }
 
+      if (pui != NULL)
+      {
 
-      if(pwnd != NULL)
-         return pwnd->get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
+         return pui->get_message_base(lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      }
 
       return ::axis::application::get_message_base(lpmsg);
 
@@ -760,18 +761,16 @@ namespace base
    }
 
 
-   void application::process_message(::message::message * pobj)
+   void application::process_message(::message::base * pbase)
    {
 
-      sp(::message::base) pbase = pobj;
-
-      if(pbase.is_null() || pbase->m_pwnd == NULL)
+      if(pbase->m_pwnd == NULL)
       {
 
          try
          {
 
-            message_handler(pobj);
+            message_handler(pbase);
 
          }
          catch(const ::exception::exception & e)
@@ -816,7 +815,7 @@ namespace base
       try
       {
 
-         pbase->m_pwnd->m_puiThis->message_handler(pobj);
+         pbase->m_pwnd->m_puiThis->message_handler(pbase);
 
 
       }

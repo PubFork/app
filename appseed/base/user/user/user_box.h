@@ -45,8 +45,8 @@ namespace user
       virtual bool SaveWindowRect_(class ::database::id id, sp(::user::box) pwindow);
 
       
-      using ::simple_ui::interaction::on_simple_command;
-      virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
 
       virtual void on_set_parent(::user::interaction * puiParent) override;

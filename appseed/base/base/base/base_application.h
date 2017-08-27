@@ -82,8 +82,8 @@ namespace base
       virtual bool enable_window(::user::primitive * pui,bool bEnable = true);
       virtual bool set_window_text(::user::interaction * pui,const string & strText);
 
-      virtual void process_message(::message::message * pobj);
-      virtual bool process_message(LPMESSAGE lpmessage);
+      virtual void process_message(::message::base * pbase) override;
+      virtual bool process_message(LPMESSAGE lpmessage) override;
 
 
 #ifdef HOTPLUGIN_SUBSYSTEM

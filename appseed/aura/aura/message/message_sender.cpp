@@ -14,6 +14,23 @@ namespace message
    }
 
 
+   sender::~sender()
+   {
+
+      for (auto & idroute : m_idroute)
+      {
+
+         for (auto & route : idroute.m_element2)
+         {
+
+            route->m_preceiver->m_sendera.remove(this);
+
+         }
+
+      }
+
+   }
+
    void sender::remove_receiver(::message::receiver * preceiver)
    {
 

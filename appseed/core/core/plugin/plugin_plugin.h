@@ -71,21 +71,8 @@ namespace plugin
 
       virtual void open_ca2_string(const char * psz);
 
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
 
-//#ifdef WINDOWS
-//
-//      virtual LRESULT message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam);
-//
-//#elif defined(METROWIN)
-//
-//#elif defined(APPLEOS)
-//      
-//#else
-//
-//      virtual int32_t message_handler(XEvent * pevent);
-//
-//#endif
 
       void start_ca2_login();
       void start_ca2_logout();

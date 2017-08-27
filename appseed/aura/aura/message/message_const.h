@@ -1,5 +1,16 @@
 #pragma once
 
+enum e_simple_command
+{
+
+   simple_command_none,
+   simple_command_load_window_rect,
+   simple_command_update_frame_title,
+   simple_command_set_edit_file,
+   simple_command_layout,
+   simple_command_full_screen
+
+};
 
 
 namespace message
@@ -20,7 +31,8 @@ namespace message
       type_language,
       type_reflect_id,
       type_user,
-      type_attribute
+      type_attribute,
+      type_user_simple_command,
 
 
    };

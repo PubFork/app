@@ -135,7 +135,7 @@ namespace hotplugin
       using ::user::interaction::message_handler;
       virtual int32_t message_handler(XEvent * pevent);
 #endif
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
       virtual void plugin_message_handler(UINT message, WPARAM wparam, LPARAM lparam, bool bEnsureTx);
       virtual void plugin_message_handler(MESSAGE * pmsg,bool bEnsureTx);
 

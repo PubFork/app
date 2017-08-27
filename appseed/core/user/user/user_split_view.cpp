@@ -27,7 +27,7 @@ namespace user
       split_layout::install_message_routing(pinterface);
       impact::install_message_routing(pinterface);
       
-      USER_MESSAGE_LINK(message_create, pinterface, this, &split_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &split_view::_001OnCreate);
 
       //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
       //IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_view::_001OnShowWindow);

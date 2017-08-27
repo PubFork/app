@@ -35,8 +35,8 @@ public:
 
    bool on_open_document(var varFile);
 
-   virtual void on_simple_command_probe(::user::command * pcommand) override;
-   virtual void on_simple_command(::user::command * pcommand) override;
+   virtual void on_command_probe(::user::command * pcommand) override;
+   virtual void on_command(::user::command * pcommand) override;
 
    virtual void soft_reload();
 

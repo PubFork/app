@@ -393,7 +393,7 @@ namespace install
    {
 
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
          m_pplugin->thread_start_ca2_on_idle();
@@ -1108,20 +1108,20 @@ namespace install
 
 
 
-   void plugin::message_handler(::message::message * pobj)
+   void plugin::message_handler(::message::base * pbase)
    {
 
-      if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
+      if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pbase != NULL && !is_installing() && System.install().is_ca2_installed())
       //if(!m_bLogin && (m_bLogged || m_bHasCred) && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
       {
 
-         ::hotplugin::plugin::message_handler(pobj);
+         ::hotplugin::plugin::message_handler(pbase);
 
       }
       else
       {
 
-         ::simple_ui::interaction::message_handler(pobj);
+         ::simple_ui::interaction::message_handler(pbase);
 
       }
 

@@ -110,10 +110,10 @@ inline UINT HashKey<const wchar_t *>(const wchar_t * key)
 }
 
 
-template<>
-inline UINT HashKey < const ::message::id &  > (const ::message::id & id)
-{
-
-   return (((int) id.m_etype) << 24) | HashKey((const ::id & ) id);
-
-}
+//template<>
+//inline UINT HashKey < const ::message::id &  > (const ::message::id & id)
+//{
+//
+//   return (((int) id.m_etype) << 24) | HashKey((const ::id & ) id);
+//
+//}

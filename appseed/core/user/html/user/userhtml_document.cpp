@@ -187,7 +187,7 @@ void html_document::soft_reload()
 }
 
 
-void html_document::on_simple_command_probe(::user::command * pcommand)
+void html_document::on_command_probe(::user::command * pcommand)
 {
 
    if(pcommand->m_id == "viewindefaultbrowser")
@@ -204,7 +204,7 @@ void html_document::on_simple_command_probe(::user::command * pcommand)
 }
 
 
-void html_document::on_simple_command(::user::command * pcommand)
+void html_document::on_command(::user::command * pcommand)
 {
 
    if(pcommand->m_id == "viewindefaultbrowser")

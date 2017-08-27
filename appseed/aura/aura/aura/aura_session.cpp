@@ -104,7 +104,7 @@ namespace aura
 
          papp->post_object(uiMessage, 2, pcreate);
 
-         while (get_run_thread())
+         while (thread_get_run())
          {
 
             if (pcreate->m_spCommandLine->m_eventReady.wait(millis(84)).signaled())
@@ -112,7 +112,7 @@ namespace aura
 
          }
 
-         if (!get_run_thread())
+         if (!thread_get_run())
          {
 
             try

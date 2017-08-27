@@ -12,7 +12,9 @@ enum e_message
    MessageGeneralEvent,
    message_simple_command,
    message_set_schema,
+
 };
+
 
 enum e_system_message
 {

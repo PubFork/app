@@ -61,8 +61,8 @@ namespace simple_ui
 
 //      virtual style * get_style();
 
-
       virtual index hit_test(point point,::user::e_element & eelement);
+
 
    };
 

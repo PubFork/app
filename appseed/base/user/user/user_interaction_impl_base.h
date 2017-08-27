@@ -43,7 +43,7 @@ namespace user
       virtual void last_install_message_routing(::message::sender * pinterface);
 
       
-      virtual void queue_message_handler(::message::message * pobj);
+      virtual void queue_message_handler(::message::base * pbase);
       
 
       virtual bool check_need_layout();
@@ -62,6 +62,9 @@ namespace user
       virtual bool check_need_zorder();
       virtual void clear_need_zorder();
       virtual void on_zorder();
+
+
+      virtual bool has_pending_redraw_flags() override;
 
 
 //      virtual void _001UpdateScreen(bool bUpdateBuffer = true);

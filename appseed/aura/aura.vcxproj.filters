@@ -2888,6 +2888,9 @@
     <ClInclude Include="aura\message\message_listener_smart_pointer_array.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
+    <ClInclude Include="aura\message\message_simple_command.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4808,6 +4811,9 @@
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="aura\message\message_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_simple_command.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
   </ItemGroup>

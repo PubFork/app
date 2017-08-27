@@ -16,7 +16,7 @@ namespace user
 
       rect                             m_rectMargin;
       int                              m_iSel;
-      ::visual::font_list_data *       m_pfontlistdata;
+      sp(::visual::font_list_data)     m_pfontlistdata;
 
 
       font_list();

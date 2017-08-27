@@ -867,7 +867,6 @@
     <ClInclude Include="user\userex\userex_wait_message_dialog.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_00.h" />
-    <ClInclude Include="user\user\user_button.h" />
     <ClInclude Include="user\user\user_check_box.h" />
     <ClInclude Include="user\user\user_combo_box.h" />
     <ClInclude Include="user\user\user_combo_list.h" />

@@ -657,7 +657,7 @@ namespace filemanager
    }
 
 
-   void manager::on_simple_command(::user::command * pcommand)
+   void manager::on_command(::user::command * pcommand)
    {
 
       if (get_filemanager_data() != NULL
@@ -672,19 +672,19 @@ namespace filemanager
          }
       }
       
-      ::user::document::on_simple_command(pcommand);
+      ::user::document::on_command(pcommand);
 
    }
 
 
-   void manager::on_simple_command_probe(::user::command * pcommand)
+   void manager::on_command_probe(::user::command * pcommand)
    {
       /*if(pcommand->m_id == get_filemanager_template()->m_strLevelUp)
       {
       FileManagerOnUpdateLevelUp(pcommand);
       return true;
       }*/
-      ::user::document::on_simple_command_probe(pcommand);
+      ::user::document::on_command_probe(pcommand);
 
    }
 

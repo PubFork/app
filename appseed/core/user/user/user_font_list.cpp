@@ -30,7 +30,7 @@ namespace user
    void font_list::font_list_common_construct()
    {
       //      m_iHoverCalc = -1;
-      m_pfontlistdata = NULL;
+      //m_pfontlistdata = NULL;
    }
 
 

@@ -61,7 +61,7 @@ namespace plugin
       ::user::interaction * get_os_focus_uie();
 
       //void _on_start_user_message_handler();
-      void _user_message_handler(::message::message * pobj);
+      void _user_message_handler(::message::base * pobj);
 
       virtual void _000OnMouse(::message::mouse * pmouse);
 

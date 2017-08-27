@@ -1061,10 +1061,9 @@ namespace hotplugin
 
    }
 
-   void plugin::message_handler(::message::message * pobj)
-   {
 
-      SCAST_PTR(::message::base,paxis,pobj);
+   void plugin::message_handler(::message::base * pbase)
+   {
 
       UINT message;
 
@@ -1072,11 +1071,11 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      message    = paxis->m_id;
+      message    = pbase->m_id;
 
-      wparam     = paxis->m_wparam;
+      wparam     = pbase->m_wparam;
 
-      sp(::message::mouse) spmouse = pobj;
+      sp(::message::mouse) spmouse = pbase;
 
       if(spmouse.is_set())
       {
@@ -1087,11 +1086,11 @@ namespace hotplugin
       else
       {
 
-         lparam     = paxis->m_lparam;
+         lparam     = pbase->m_lparam;
 
       }
 
-      plugin_message_handler(message,wparam,lparam, true);
+      plugin_message_handler(message, wparam, lparam, true);
 
    }
 

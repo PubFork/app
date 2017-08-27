@@ -85,8 +85,8 @@ namespace filemanager
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-      virtual void on_simple_command_probe(::user::command * pcommand) override;
-      virtual void on_simple_command(::user::command * pcommand) override;
+      virtual void on_command_probe(::user::command * pcommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
       DECL_GEN_SIGNAL(_001OnUpdateOpenWith);
       DECL_GEN_SIGNAL(_001OnEditCopy);

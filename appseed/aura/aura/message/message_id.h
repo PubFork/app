@@ -56,7 +56,7 @@ namespace message
       id(const id & id)
       {
 
-         m_etype = id.m_etype;
+         m_emessagetype = id.m_emessagetype;
          ::id::operator = (id);
 
       }
@@ -123,3 +123,12 @@ namespace message
 } // namespace
 
 
+
+
+template <  >
+inline UINT HashKey < const ::message::id & >(const ::message::id & key)
+{
+
+   return ((int64_t)key.m_emessagetype) ^ HashKey < const ::id & >((const ::id &) key);
+
+}

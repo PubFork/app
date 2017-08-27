@@ -34,7 +34,7 @@ namespace message
       virtual void set_lresult(LRESULT lresult);
       virtual LRESULT & get_lresult();
       virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult);
-      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam);
+      virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam) override;
 
       base & operator = (const base & base);
 

@@ -145,7 +145,7 @@ bool timer::call_on_timer()
       while(::PeekMessage(&msg,NULL,0,0,PM_NOREMOVE) != FALSE)
       {
          
-         if(!get_run_thread() || !pump_message())
+         if(!thread_get_run() || !pump_message())
          {
             
             
@@ -159,7 +159,7 @@ bool timer::call_on_timer()
       
       m_bDeal = false;
       
-      if (!m_bPeriodic || m_bKill || !get_run_thread())
+      if (!m_bPeriodic || m_bKill || !thread_get_run())
       {
          
          

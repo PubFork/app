@@ -18,7 +18,7 @@ namespace userex
    }
 
 
-   void pane_view::on_simple_command_probe(::user::command * pcommand)
+   void pane_view::on_command_probe(::user::command * pcommand)
    {
 
       for(int32_t i = 0; i < m_menua.get_size(); i++)
@@ -37,12 +37,12 @@ namespace userex
 
       }
 
-      ::user::impact::on_simple_command_probe(pcommand);
+      ::user::impact::on_command_probe(pcommand);
 
    }
 
 
-   void pane_view::on_simple_command(::user::command * pcommand)
+   void pane_view::on_command(::user::command * pcommand)
    {
 
       for(int32_t i = 0; i < m_menua.get_size(); i++)
@@ -61,7 +61,7 @@ namespace userex
 
       }
       
-      ::user::impact::on_simple_command(pcommand);
+      ::user::impact::on_command(pcommand);
 
    }
 

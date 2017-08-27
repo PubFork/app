@@ -418,24 +418,39 @@ namespace prompt
    }
 
 
-   bool frame::on_simple_command(::user::command * pcommand)
+   void frame::on_command(::user::command * pcommand)
    {
-      if(id == "app_exit")
-      {
-         simple_frame_window::OnClose();
-         return true;
-      }
-      return simple_frame_window::on_simple_command(id);
-   }
 
-   bool frame::on_simple_command_probe(::user::command * pcommand)
-   {
       if(pcommand->m_id == "app_exit")
       {
-         pcommand->Enable();
-         return true;
+         
+         simple_frame_window::OnClose();
+         
+         pcommand->m_bRet = true;
+
+         return;
+
       }
-      return false;
+
+      simple_frame_window::on_command(pcommand);
+
+   }
+
+
+   void frame::on_command_probe(::user::command * pcommand)
+   {
+      
+      if(pcommand->m_id == "app_exit")
+      {
+         
+         pcommand->Enable();
+         
+         pcommand->m_bRet = true;
+         
+         return;
+
+      }
+
    }
 
 

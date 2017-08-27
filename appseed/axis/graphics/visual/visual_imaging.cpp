@@ -6148,23 +6148,25 @@ bool imaging::LoadImageFromFile(::draw2d::dib * pdib, ::file::file * pfile)
 
                   lpbSource_1 = lpbSource ;
 
-
-                  for(int32_t yFilter = iFilterYLowerBound; yFilter < iFilterYUpperBound; yFilter++)
+                  if (*((uint32_t *)lpwDestination) != crSpreadSetColor)
                   {
-                     lpbSource_2 = lpbSource_1 + (wSrc * yFilter);
-                     lpFilter = pFilter + yFilter * iFilterW + iFilterXLowerBound;
-                     for(int32_t xFilter = iFilterXLowerBound; xFilter < iFilterXUpperBound; xFilter++)
+                     for (int32_t yFilter = iFilterYLowerBound; yFilter < iFilterYUpperBound; yFilter++)
                      {
-                        if(*lpFilter >= 1)
+                        lpbSource_2 = lpbSource_1 + (wSrc * yFilter);
+                        lpFilter = pFilter + yFilter * iFilterW + iFilterXLowerBound;
+                        for (int32_t xFilter = iFilterXLowerBound; xFilter < iFilterXUpperBound; xFilter++)
                         {
-                           if(*((uint32_t *)lpbSource_2))
+                           if (*lpFilter >= 1)
                            {
-                              *((uint32_t *)lpwDestination) = crSpreadSetColor;
-                              goto breakFilter;
+                              if (*((uint32_t *)lpbSource_2))
+                              {
+                                 *((uint32_t *)lpwDestination) = crSpreadSetColor;
+                                 goto breakFilter;
+                              }
                            }
+                           lpFilter++;
+                           lpbSource_2 += 4;
                         }
-                        lpFilter++;
-                        lpbSource_2 += 4;
                      }
                   }
                breakFilter:

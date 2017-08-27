@@ -265,8 +265,8 @@ namespace user
       virtual void install_message_routing(::message::sender * pinterface) override
       {
          
-         ::user::impact::install_message_routing(pinterface);
          VIEW::install_message_routing(pinterface);
+         ::user::impact::install_message_routing(pinterface);
 
       }
 

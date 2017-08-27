@@ -48,18 +48,6 @@ namespace user
 
       };
 
-      enum e_simple_command
-      {
-
-         simple_command_load_window_rect,
-         simple_command_update_frame_title,
-         simple_command_set_edit_file,
-         simple_command_layout,
-         simple_command_full_screen
-
-      };
-
-
       enum e_type
       {
 
@@ -150,6 +138,8 @@ namespace user
       virtual void UpdateWindow();
       virtual void Invalidate(bool bErase = TRUE);
 
+      virtual bool has_pending_redraw_flags();
+
 
       virtual bool RedrawOptimize(LPRECT lprectOut,LPCRECT lpcrect1,LPCRECT lpcrect2);
       virtual void RedrawOptimize(rect_array & array);
@@ -183,7 +173,7 @@ namespace user
 
       void _001BaseWndInterfaceMap();
 
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
       virtual LRESULT message_handler(LPMESSAGE lpmessage);
       virtual void on_select();
 
@@ -476,8 +466,6 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam);
 
-//      virtual void message_handler(::message::message * pobj);
-//      virtual LRESULT message_handler(LPMESSAGE lpmessage);
       virtual void GuieProc(::message::message * pobj);
 
       virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
@@ -516,8 +504,8 @@ namespace user
       virtual e_type get_window_type();
 
 
-      using ::user::elemental::on_simple_command;
-      virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult);
+      virtual void on_simple_command(::message::simple_command * psimplecommand);
+      virtual void on_command(::user::command * pcommand) override;
 
 
       // Window-Management message handler member functions

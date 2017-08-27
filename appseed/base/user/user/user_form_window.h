@@ -52,7 +52,7 @@ namespace user
       virtual void _001RemoveControls();
       bool _001Validate(sp(control) pcontrol,var & var);
       bool _001SaveEdit(sp(control) pcontrol);
-      virtual void on_simple_command(::user::command * pcommand) override;
+      virtual void on_command(::user::command * pcommand) override;
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);
       virtual void _001GetSelection(::database::id & key,::database::selection & selection);

@@ -22,7 +22,7 @@ namespace macos
 
       virtual bool create_message_queue(const char * pszName,::user::message_queue_listener * plistener = NULL);
 
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
 
       virtual void message_queue_message_handler(::message::message * pobj);
 

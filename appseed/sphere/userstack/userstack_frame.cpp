@@ -62,7 +62,7 @@ namespace userstack
    void frame::install_message_routing(::message::sender * pinterface)
    {
       simple_frame_window::install_message_routing(pinterface);
-      IGUI_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
+      //IGUI_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
 //      //IGUI_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
       IGUI_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
       IGUI_MSG_LINK(WM_APP + 1,        pinterface, this, &frame::_001OnApp1);
@@ -217,9 +217,12 @@ namespace userstack
       }
    }
 
-   void frame::message_handler(::message::message * pobj)
+   
+   void frame::message_handler(::message::base * pbase)
    {
-      simple_frame_window::message_handler(pobj);
+      
+      simple_frame_window::message_handler(pbase);
+
    }
 
 
@@ -424,13 +427,20 @@ namespace userstack
 
          if(pmsg->message != WM_KICKIDLE)
          {
+            
             ::smart_pointer < ::message::base > spbase;
-            spbase = Application.get_base(pmsg);
+            
+            spbase = Application.get_message_base(pmsg);
+
             pre_translate_message(spbase);
+
             if(!spbase->m_bRet)
             {
+
                send(spbase);
+
             }
+
          }
 
       }

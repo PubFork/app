@@ -5344,10 +5344,10 @@ namespace aura
    }
 
 
-   void application::message_handler(::message::message * pobj)
+   void application::message_handler(::message::base * pbase)
    {
 
-      ::thread::message_handler(pobj);
+      ::thread::message_handler(pbase);
 
    }
 
@@ -5433,15 +5433,22 @@ namespace aura
    sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    {
 
-      return NULL;
+      sp(::message::base) pbase = canew(::message::base(get_app()));
+
+      if (pbase == NULL)
+         return NULL;
+
+      pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      return pbase;
 
    }
 
 
-   void application::process_message(::message::message * pobj)
+   void application::process_message(::message::base * pbase)
    {
 
-      message_handler(pobj);
+      message_handler(pbase);
 
    }
 

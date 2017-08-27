@@ -449,6 +449,10 @@ namespace windows
 
       }
 
+      m_pui = pui;
+
+      install_message_routing(this);
+
       if (!hook_window_create(this))
       {
 
@@ -570,8 +574,6 @@ namespace windows
       }
       //::simple_message_box(NULL,"h4.ok","h4.ok",MB_OK);
 
-      m_pui = pui;
-      
       /// this Windows native window "holds" reference to the
       /// wrapping object.
       pui->add_ref(); 
@@ -1395,13 +1397,9 @@ namespace windows
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
 
-   void interaction_impl::message_handler(::message::message * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
-
-      SCAST_PTR(::message::base, pbase, pobj);
 
       UINT uiMessage = pbase->m_id.int64();
 
@@ -1418,12 +1416,24 @@ namespace windows
       //}
 
 
-      bool bUserElementalOk = !m_pui->m_bUserElementalOk;
+      bool bUserElementalOk = m_pui->m_bUserElementalOk;
 
       if (uiMessage == WM_ENABLE)
       {
 
          TRACE("WM_ENABLE enable = " + string(pbase->m_wparam ? "true" : "false"));
+
+      }
+      if (uiMessage == WM_CREATE)
+      {
+
+         TRACE("WM_CREATE");
+
+      }
+      if (uiMessage == WM_NCCREATE)
+      {
+
+         TRACE("WM_NCCREATE");
 
       }
       if (uiMessage == WM_SIZE || uiMessage == WM_MOVE)
@@ -1441,7 +1451,7 @@ namespace windows
          uiMessage == WM_SYSCHAR)
       {
 
-         SCAST_PTR(::message::key, pkey, pobj);
+         SCAST_PTR(::message::key, pkey, pbase);
 
 
 
@@ -1457,17 +1467,21 @@ namespace windows
          }
          else if (uiMessage == WM_KEYUP || uiMessage == WM_SYSKEYUP)
          {
+
             try
             {
+
                Session.set_key_pressed(pkey->m_ekey, false);
+
             }
             catch (...)
             {
+
             }
+
          }
+
       }
-
-
 
       if (m_pui != NULL)
       {
@@ -1481,8 +1495,10 @@ namespace windows
          }
          else
          {
-            m_pui->pre_translate_message(pobj);
-            if (pobj->m_bRet)
+            
+            m_pui->pre_translate_message(pbase);
+
+            if (pbase->m_bRet)
                return;
 
          }
@@ -1654,8 +1670,8 @@ namespace windows
 
          if (uiMessage == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -1663,8 +1679,8 @@ namespace windows
          }
          else if (uiMessage == WM_NCMOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -1750,18 +1766,18 @@ namespace windows
          return;
       }
       
-      ::user::interaction_impl::message_handler(pobj);
+      ::user::interaction_impl::message_handler(pbase);
       
       //if(pobj->m_bRet && !pbase->m_bDoSystemDefault)
       
-      if (pobj->m_bRet)
+      if (pbase->m_bRet)
       {
 
          return;
 
       }
 
-      if (!bUserElementalOk)
+      if (bUserElementalOk)
       {
          if (m_pui != NULL)
          {
@@ -6183,10 +6199,16 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
    if (message == WM_LBUTTONDOWN)
    {
 
-      output_debug_string("wm_lbuttondown");
+      output_debug_string("WM_LBUTTONDOWN()");
 
    }
 
+   if (message == WM_NCCREATE)
+   {
+
+      output_debug_string("WM_NCCREATE()");
+
+   }
 
    if (::aura::system::g_p == NULL)
    {

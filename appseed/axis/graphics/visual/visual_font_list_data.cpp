@@ -154,18 +154,33 @@ namespace visual
    void font_list_data::update()
    {
 
+      try
       {
 
          synch_lock sl(m_pmutex);
 
-         auto * penum = System.visual().fonts().m_pfontenumeration;
+         if (m_pfontenumeration.is_null())
+         {
 
-         synch_lock slEnum(penum->m_pmutex);
+            m_pfontenumeration = System.visual().fonts().m_pfontenumeration;
 
-         if (penum->m_itema == m_itema)
+         }
+
+         synch_lock slEnum(m_pfontenumeration->m_pmutex);
+
+         if (m_pfontenumeration->m_itema == m_itema)
+         {
+
             return;
 
-         m_itema = penum->m_itema;
+         }
+
+         m_itema = m_pfontenumeration->m_itema;
+
+      }
+      catch (...)
+      {
+
 
       }
 

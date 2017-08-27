@@ -103,8 +103,7 @@ namespace install
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       
-      using ::hotplugin::plugin::message_handler;
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase) override;
 
       virtual void on_paint_progress(::draw2d::graphics * pgraphics, const RECT & lprect);
 

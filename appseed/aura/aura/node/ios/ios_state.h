@@ -263,7 +263,7 @@ public:
 #endif
    
    // other ::window modal data
-   MESSAGE m_lastSentMsg;              // see ::window::message_handler
+   MESSAGE m_lastSentMsg;              
    oswindow m_hTrackingWindow;         // see ::window::track_popup_menu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass

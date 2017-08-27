@@ -259,49 +259,55 @@ namespace plugin
       return System.ui_from_handle(m_pplugin->get_host_window());
    }
 
-   void host_interaction::_user_message_handler(::message::message * pobj)
+   
+   void host_interaction::_user_message_handler(::message::base * pbase)
    {
-      ::user::interaction::message_handler(pobj);
-      pobj->m_bRet = true;
-   }
+      
+      ::user::interaction::message_handler(pbase);
+      
+      pbase->m_bRet = true;
 
-//   void host_interaction::_on_start_user_message_handler()
-  // {
-//      ::user::interaction::_on_start_user_message_handler();
-  //    m_pfnDispatchWindowProc = reinterpret_cast < void (::message::sender::*)(::message::message * pobj) > (&host_interaction::_user_message_handler);
-//   }
+   }
 
 
    void host_interaction::on_ignore_message(::message::message * pobj)
    {
-      // avoid host interaction call DefWindowProc for certain Windows messages
-//      SCAST_PTR(::message::base, pbase, pobj);
 
       pobj->m_bRet = true;
+
    }
 
 
    void host_interaction::_000OnMouse(::message::mouse * pmouse)
    {
+
       if(&Session != NULL)
       {
+
          Session.m_ptCursor = pmouse->m_pt;
+
       }
       else
       {
+
          if(m_uiptraChild.get_size() > 0 && m_uiptraChild[0]->m_pauraapp != NULL && m_uiptraChild[0]->m_pauraapp->m_pbasesession->m_pcoresession != NULL)
          {
+
             set_app(m_uiptraChild[0]->m_pauraapp);
+
          }
+
       }
+
       ::user::interaction::_000OnMouse(pmouse);
+
    }
+
 
    LRESULT host_interaction::DefWindowProc(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
-      if(uiMessage == WM_NCCREATE
-      || uiMessage == WM_CREATE)
+      if (uiMessage == WM_NCCREATE || uiMessage == WM_CREATE)
 /*      || uiMessage == WM_SIZE
       || uiMessage == WM_MOVE
       || uiMessage == WM_WINDOWPOSCHANGING

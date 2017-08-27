@@ -224,6 +224,12 @@ Restart:
 
    }
 
+   bool interaction_base::has_pending_redraw_flags()
+   {
+
+      return false;
+
+   }
 
    bool interaction_base::Redraw(rect_array & recta)
    {
@@ -1596,11 +1602,8 @@ Restart:
 
    }
    
-      
 
-
-
-   void interaction_base::message_handler(::message::message * pobj)
+   void interaction_base::message_handler(::message::base * pbase)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2387,19 +2390,25 @@ Restart:
    }
 
 
-   bool interaction_base::on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult)
+   void interaction_base::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      if(ecommand == simple_command_full_screen)
+      if(psimplecommand->m_esimplecommand == simple_command_full_screen)
       {
 
          WfiFullScreen();
 
-         return true;
+         psimplecommand->m_bRet = true;
 
       }
 
-      return false;
+   }
+   
+
+   void interaction_base::on_command(::user::command * pcommand)
+   {
+
+      ::user::elemental::on_command(pcommand);
 
    }
 

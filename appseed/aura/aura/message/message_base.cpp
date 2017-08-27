@@ -91,10 +91,9 @@ namespace message
    void base::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)
    {
 
+      ::message::message::set(pwnd, uiMessage, wparam, lparam);
+
       m_pwnd            = pwnd;
-      m_id              = uiMessage;
-      m_wparam          = wparam;
-      m_lparam          = lparam;
       m_plresult        = &lresult;
 
    }

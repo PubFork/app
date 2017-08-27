@@ -833,7 +833,7 @@ namespace filemanager
    }
 
 
-   void file_list::on_simple_command_probe(::user::command * pcommand)
+   void file_list::on_command_probe(::user::command * pcommand)
    {
 
       int32_t iPos = -1;
@@ -865,12 +865,12 @@ namespace filemanager
 
       }
 
-      ::user::impact::on_simple_command_probe(pcommand);
+      ::user::impact::on_command_probe(pcommand);
 
    }
 
 
-   void file_list::on_simple_command(::user::command * pcommand)
+   void file_list::on_command(::user::command * pcommand)
    {
 
       if (pcommand->m_id == "1000")
@@ -929,7 +929,7 @@ namespace filemanager
 
       }
 
-      ::user::impact::on_simple_command(pcommand);
+      ::user::impact::on_command(pcommand);
 
    }
 
@@ -1408,10 +1408,10 @@ namespace filemanager
    //      {
    //
    //         //      int32_t iStepSetSleep = 23;
-   //         while (get_run_thread())
+   //         while (thread_get_run())
    //         {
    //            int32_t i = iStepSetCount;
-   //            while (i > 0 && get_run_thread())
+   //            while (i > 0 && thread_get_run())
    //            {
    //               if (!m_plist->_001CreateImageListStep())
    //                  goto endloop;

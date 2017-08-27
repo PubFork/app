@@ -10,6 +10,12 @@ namespace message
    {
    public:
 
+      ref_array < sender >          m_sendera;
+
+      
+      receiver();
+      virtual ~receiver();
+
       virtual void install_message_routing(::message::sender * psender);
 
    };

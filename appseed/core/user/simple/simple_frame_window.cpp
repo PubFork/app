@@ -36,7 +36,7 @@ simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
 int simple_frame_window::helper_task::run()
 {
 
-   while(get_run_thread())
+   while(thread_get_run())
    {
 
 
@@ -3160,17 +3160,21 @@ void simple_frame_window::data_on_after_change(::message::message * pobj)
 
 
 
-bool simple_frame_window::on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult)
+void simple_frame_window::on_command(::user::command * pcommand)
 {
 
-   return ::user::frame_window::on_simple_command(ecommand, lparam, lresult);
+   ::user::frame_window::on_command(pcommand);
 
 }
 
+
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
+
    UNREFERENCED_PARAMETER(dwStyle);
+
    return NULL;
+
 }
 
 

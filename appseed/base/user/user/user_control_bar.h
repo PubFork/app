@@ -100,6 +100,7 @@ public:
    bool SaveState(const char * lpszProfileName, int32_t nIndex);
 };
 
+
 namespace user
 {
 
@@ -172,8 +173,10 @@ namespace user
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       
-      using ::user::interaction::message_handler;
-      virtual void message_handler(::message::message * pobj);
+      
+      virtual void message_handler(::message::base * pbase);
+
+
 #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;

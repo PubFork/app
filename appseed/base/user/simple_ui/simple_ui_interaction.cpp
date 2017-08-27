@@ -597,25 +597,6 @@ namespace simple_ui
    //}
 
 
-   //LRESULT interaction::message_handler(UINT message, WPARAM wparam, LPARAM lparam)
-   //{
-
-   //   UNREFERENCED_PARAMETER(message);
-   //   UNREFERENCED_PARAMETER(wparam);
-   //   UNREFERENCED_PARAMETER(lparam);
-
-
-   //   return 0;
-
-   //}
-   //   bool interaction::on_move(int32_t x, int32_t y)
-   //   {
-   //      return true;
-   //   }
-   //   bool interaction::on_size(int32_t cx, int32_t cy)
-   //   {
-   //      return true;
-   //   }
 
 
       // the value -1 indicates outside the control,

@@ -1625,7 +1625,7 @@ namespace user
 
       //         //int i = 20;
 
-      //         //while (get_run_thread() && i >= 0)
+      //         //while (thread_get_run() && i >= 0)
       //         //{
 
       //         //   Sleep(500);
@@ -1910,15 +1910,23 @@ namespace user
 
             m_bStarted = true;
 
-            m_threadaGetImage = ::fork_proc(get_app(), [&]()
+            //m_threadaGetImage = ::fork_proc(get_app(), [&]()
+            //{
+
+            //   ::multithreading::set_priority(::multithreading::priority_highest);
+
+            //   run();
+
+            //});
+
+            m_threadaGetImage.add(::fork(get_app(), [&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
 
                run();
 
-            });
-
+            }));
 
          }
 

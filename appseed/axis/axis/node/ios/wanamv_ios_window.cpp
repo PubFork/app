@@ -1231,12 +1231,10 @@ namespace ios
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
 
-   void window::message_handler(::message::message * pobj)
+   void window::message_handler(::message::base * pbase)
    {
-      SCAST_PTR(::message::base, pbase, pobj);
+      //SCAST_PTR(::message::base, pbase, pobj);
 
       if(pbase->m_id == WM_SIZE || pbase->m_id == WM_MOVE)
       {
@@ -1405,8 +1403,8 @@ namespace ios
 
          if(pbase->m_id == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -4361,23 +4359,6 @@ namespace ios
       return m_id;
    }
 
-   /*   guie_message_wnd::guie_message_wnd(sp(::aura::application) papp) :
-    ::object(papp)
-    {
-    m_pguieForward = NULL;
-    }
-
-    LRESULT guie_message_wnd::message_handler(::message::message * pobj)
-    {
-    if(m_pguieForward != NULL)
-    {
-    return m_pguieForward->message_handler(uiMessage, wparam, lparam);
-    }
-    else
-    {
-    return 0;
-    }
-    }*/
 
    void window::_001WindowMaximize()
    {

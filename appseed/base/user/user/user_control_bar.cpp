@@ -320,19 +320,21 @@ namespace user
 
       // filter both messages to dialog and from children
       // pbase->m_bRet = false;
+
    }
 
-   void control_bar::message_handler(::message::message * pobj)
+
+   void control_bar::message_handler(::message::base * pbase)
    {
 
-      //(this->*m_pfnDispatchWindowProc)(pobj);
+      ::user::interaction::message_handler(pbase);
       
-      route_message(pobj);
+      if (pbase->m_bRet)
+      {
 
-      if(pobj->m_bRet)
          return;
 
-      SCAST_PTR(::message::base, pbase, pobj);
+      }
 
       ASSERT_VALID(this);
 
@@ -371,7 +373,7 @@ namespace user
 //                     (pNMHDR->code == TTN_NEEDTEXTW && (!pTTTW->lpszText || !*pTTTW->lpszText)))
 //                  {
 //                     // not handled by owner, so let bar itself handle it
-//                     ::user::interaction::message_handler(pobj);
+//                     ::user::interaction::message handler(pobj);
 //                  }
 //               }
 //            }
@@ -383,8 +385,10 @@ namespace user
       }
 
       // otherwise, just handle in default way
-      ::user::interaction::message_handler(pobj);
+      ::user::interaction::message_handler(pbase);
+
    }
+
 
    void control_bar::_001OnHelpHitTest(::message::message * pobj)
    {

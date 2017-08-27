@@ -574,8 +574,8 @@ namespace android
 
 
       // for processing Windows messages
-      virtual void message_handler(::message::message * pobj);
-      //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual void message_handler(::message::base * pbase);
+      
 
       // for handling default processing
       LRESULT Default();

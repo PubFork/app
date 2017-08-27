@@ -779,7 +779,7 @@ namespace user
          state.m_id = _GetPanePtr((int32_t) state.m_iIndex)->m_id;
 
          // allow the statusbar itself to have update handlers
-         ::user::interaction::on_simple_command_probe(&state);
+         ::user::interaction::on_command_probe(&state);
 
          if (state.m_bRet)
          {

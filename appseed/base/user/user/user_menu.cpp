@@ -975,7 +975,7 @@ namespace user
          //      
          //      if(puiTarget != NULL)
          //      {
-         //         /* xxx if(pwndParent->on_simple_command(0,
+         //         /* xxx if(pwndParent->on_command(0,
          //          MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
          //          &commandui, NULL))
          //          continue;*/
@@ -1027,7 +1027,7 @@ namespace user
 //             if(pwndParent != NULL)
 //             {
 //                /*
-//                 if(pwndParent->on_simple_command(0,
+//                 if(pwndParent->on_command(0,
 //                 MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
 //                 &commandui, NULL))
 //                 continue;
@@ -1249,7 +1249,7 @@ namespace user
 
          command.m_puiOther = pitem->m_pui;
 
-         m_puiNotify->on_simple_command_probe(&command);
+         m_puiNotify->on_command_probe(&command);
 
          pitem->m_pmenu->update_command(pitem);
 

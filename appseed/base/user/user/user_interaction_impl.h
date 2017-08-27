@@ -140,7 +140,7 @@ namespace user
       virtual void install_message_routing(::message::sender * psender) override;
 
       
-      virtual void queue_message_handler(::message::message * pobj) override;
+      virtual void queue_message_handler(::message::base * pbase) override;
 
       
 
@@ -720,9 +720,7 @@ namespace user
 
 
       // for processing Windows messages
-      using ::user::interaction_base::message_handler;
-      virtual void message_handler(::message::message * pobj);
-      //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual void message_handler(::message::base * pbase);
 
       // for handling default processing
       virtual LRESULT Default();
@@ -828,8 +826,7 @@ namespace user
       guie_message_wnd(::aura::application * papp);
 
 
-      using interaction_impl::message_handler;
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pbase);
 
 
    }; // guie_message_wnd

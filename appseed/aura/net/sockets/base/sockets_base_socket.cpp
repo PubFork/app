@@ -909,7 +909,7 @@ namespace sockets
 
       socket_handler & h = *m_sphandler;
 
-      while (get_run_thread() && h.get_count())
+      while (thread_get_run() && h.get_count())
       {
 
          try

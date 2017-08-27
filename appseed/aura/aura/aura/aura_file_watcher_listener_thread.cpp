@@ -4,6 +4,13 @@
 namespace file_watcher
 {
 
+   listener_thread::add::add()
+   {
+   
+      m_id = -2; 
+   
+   }
+
    listener_thread::listener_thread(::aura::application * papp) :
       ::object(papp),
       ::file_watcher::file_watcher(papp)
@@ -59,26 +66,34 @@ namespace file_watcher
 
       padd->m_str = directory;
       padd->m_plistener = plistener;
-      padd->m_id = -1;
+      padd->m_id = -2;
       padd->m_bOwn = bOwn;
       padd->m_bRecursive = bRecursive;
 
-      file_watch_id id = padd->m_id;
-
-      padd->m_event.ResetEvent();
-
-      post_object(message_add_watch, 0, padd);
-
-      padd->m_event.wait();
-
-      if (id >= 0)
+      if (!post_object(message_add_watch, 0, padd))
       {
 
-         m_listenerptra.add_unique(plistener);
+         TRACE("Failed to add watch");
+
+         return -1;
 
       }
 
-      return id;
+      for(index i = 0; i < 50 && padd->m_id == -2; i++)
+      {
+
+         Sleep(5 + i);
+
+      }
+
+      if (padd->m_id < 0)
+      {
+
+         return -1;
+
+      }
+
+      return padd->m_id;
 
 #endif
 

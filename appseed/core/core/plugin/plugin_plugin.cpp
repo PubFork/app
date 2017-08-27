@@ -1007,7 +1007,7 @@ namespace plugin
 
          thread * pthread = &System;
 
-         if(pthread->get_run_thread())
+         if(pthread->thread_get_run())
          {
             m_evReady.ResetEvent();
             pthread->m_pevReady = &m_evReady;
@@ -1057,96 +1057,13 @@ namespace plugin
    }
 
 
-   void plugin::message_handler(::message::message * pobj)
+   void plugin::message_handler(::message::base * pobj)
    {
 
 
 
    }
 
-
-//#ifdef WINDOWSEX
-//
-//   LRESULT plugin::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
-//   {
-//
-//      if(m_puiHost != NULL)
-//      {
-//
-//         if(uiMessage >= WM_MOUSEFIRST && uiMessage <= WM_MOUSELAST)
-//         {
-//
-//            point pt = point(lparam);
-//
-//            //pt.x -= m_rect.left;
-//
-//            //pt.y -= m_rect.top;
-//
-//            lparam = pt.lparam();
-//
-//         }
-//
-//         if(uiMessage == WM_MOUSEMOVE)
-//         {
-//
-//            ::window_sp pwindow = m_puiHost->m_pimpl;
-//
-//            pwindow->m_bMouseHover = true; // avoids tracking mouse leave;
-//
-//         }
-//
-//         ::window_sp pwindow = m_puiHost->m_pimpl;
-//
-//         oswindow oswindow = pwindow->get_handle();
-//
-//         bool bIsWindow = ::IsWindow(oswindow) != FALSE;
-//
-//         if(bIsWindow)
-//         {
-//
-//            smart_pointer < message::base > spbase;
-//
-//            spbase = m_puiHost->get_base(uiMessage, wparam, lparam);
-//
-//            m_puiHost->message_handler(spbase);
-//
-//            return spbase->get_lresult();
-//
-//         }
-//         else
-//         {
-//
-//            return 0;
-//
-//         }
-//
-//      }
-//
-//      return 0;
-//
-//   }
-//
-//#elif defined(METROWIN)
-//
-//   LRESULT plugin::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
-//   {
-//
-//      return 0;
-//
-//   }
-//
-//#elif defined(APPLEOS)
-//
-//#else
-//
-//   int32_t plugin::message_handler(XEvent * pevent)
-//   {
-//
-//      return 0;
-//
-//   }
-//
-//#endif
 
    bool plugin::os_native_bergedge_start()
    {

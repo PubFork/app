@@ -1079,7 +1079,7 @@ namespace user
                ASSERT_VALID(pFrame);
                if (nFrames == 1)
                   pFrame->m_nWindow = 0;      // the only one of its kind
-               pFrame->post_simple_command(::user::interaction::simple_command_update_frame_title, TRUE);
+               pFrame->post_simple_command(simple_command_update_frame_title, TRUE);
                iFrame++;
             }
          }

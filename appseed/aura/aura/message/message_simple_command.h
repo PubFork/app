@@ -4,16 +4,17 @@
 namespace message
 {
 
-
-   class CLASS_DECL_AURA timer : virtual public base
+   class CLASS_DECL_AURA simple_command :
+      public base
    {
    public:
 
 
-      UINT m_nIDEvent;
+      e_simple_command           m_esimplecommand;
 
 
-      timer(::aura::application * papp) : ::message::base(papp) {}
+      simple_command(::aura::application * papp);
+
 
       using ::message::base::set;
       virtual void set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam, LRESULT & lresult);
@@ -22,8 +23,6 @@ namespace message
    };
 
 
-
 } // namespace message
-
 
 

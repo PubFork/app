@@ -56,7 +56,9 @@ namespace user
             bool relay_event(MESSAGE * lpMsg);
             bool update(WorkSet * pwf);
 
-            void message_handler(sp(::user::interaction) pwnd,::message::message * pobj);
+            void message_handler(::user::interaction * pui, ::message::base * pbase);
+
+            
          };
 
 

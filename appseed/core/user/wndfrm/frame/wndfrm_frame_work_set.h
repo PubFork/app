@@ -110,12 +110,16 @@ namespace user
             void WindowClose();
             void UpdateApperanceMode(bool bFullScreen);
             //void SetDownUpInterface(CWorkSetDownUpInterface *pinterface);
-            void WindowProcBefore(::user::interaction * pwnd, ::message::message * pobj);
-            void WindowProcHover(::user::interaction * pwnd, ::message::message * pobj);
+            
+            void WindowProcBefore(::user::interaction * pwnd, ::message::base * pobj);
+            
+            void WindowProcHover(::user::interaction * pwnd, ::message::base * pobj);
+
             DECL_GEN_SIGNAL(_001OnActivate);
-               DECL_GEN_SIGNAL(_001OnCommand);
-               DECL_GEN_SIGNAL(_001OnNcActivate);
-               void RemoveListener(WorkSetListener * plistener);
+            DECL_GEN_SIGNAL(_001OnCommand);
+            DECL_GEN_SIGNAL(_001OnNcActivate);
+            
+            void RemoveListener(WorkSetListener * plistener);
             void AddListener(WorkSetListener * plistener);
             void OnSizingGripMove(EGrip egrip);
 
@@ -161,7 +165,7 @@ namespace user
             void get_draw_client_rect(LPRECT lprect);
             //void SetWindow(::user::interaction * pwnd);
             void relay_event(::message::message * pobj);
-            void message_handler(::message::message * pobj);
+            void message_handler(::message::base * pbase);
 
             void _001OnDraw(::draw2d::graphics * pgraphics);
 

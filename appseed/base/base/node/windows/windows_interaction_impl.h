@@ -609,7 +609,7 @@ namespace windows
 
 
       // for processing Windows messages
-      virtual void message_handler(::message::message * pobj);
+      virtual void message_handler(::message::base * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing

@@ -1236,27 +1236,9 @@ namespace android
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
 
-   void interaction_impl::message_handler(::message::message * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
-
-      SCAST_PTR(::message::base,pbase,pobj);
-
-      //if(pbase->m_id == WM_MOUSEMOVE)
-      //{
-      //
-      //   pbase->m_bRet = true;
-      //   //pbase->set_lresult(1);
-      //   // addictive human (camilo, you are classifying yourself human, you're kind respecting yourself, its a good sign...) profiling with PROFILE_MOVE_MANAGER at app_core_miau.vcxproj...
-
-      //   return;
-
-
-      //}
-
-
 
       if(pbase->m_id == WM_SIZE || pbase->m_id == WM_MOVE)
       {
@@ -1427,8 +1409,8 @@ namespace android
 
          if(pbase->m_id == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -1436,8 +1418,8 @@ namespace android
          }
          else if(pbase->m_id == WM_NCMOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -1525,7 +1507,9 @@ namespace android
          }
          return;
       }
-      ::user::interaction_impl::message_handler(pobj);
+      
+      ::user::interaction_impl::message_handler(pbase);
+
       //if(pobj->m_bRet && !pbase->m_bDoSystemDefault)
       if(pobj->m_bRet)
          return;
@@ -3598,23 +3582,7 @@ id interaction_impl::GetDlgCtrlId()
    return m_pui->GetDlgCtrlId();
 }
 
-/*   guie_message_wnd::guie_message_wnd(sp(::aura::application) papp) :
-::object(papp)
-{
-m_puiForward = NULL;
-}
 
-LRESULT guie_message_wnd::message_handler(::message::message * pobj)
-{
-if(m_puiForward != NULL)
-{
-return m_puiForward->message_handler(uiMessage, wparam, lparam);
-}
-else
-{
-return 0;
-}
-}*/
 
 void interaction_impl::_001WindowMaximize()
 {

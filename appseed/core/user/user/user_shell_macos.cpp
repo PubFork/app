@@ -1141,7 +1141,7 @@ namespace user
 
       //         //int i = 20;
 
-      //         //while (get_run_thread() && i >= 0)
+      //         //while (thread_get_run() && i >= 0)
       //         //{
 
       //         //   Sleep(500);

@@ -268,23 +268,6 @@ HTHREAD thread::get_os_handle() const
 
 
 
-//void thread::_001OnSendThreadMessage(::message::message * pobj)
-//{
-//
-//   SCAST_PTR(::message::base,pbase,pobj);
-//
-//   sp(::send_thread_message) pmessage = pbase->m_lparam;
-//
-//   process_message(&pmessage->m_message);
-//
-//   pmessage->m_bOk = true;
-//
-//}
-
-
-
-
-
 
 bool thread::on_after_run_thread()
 {
@@ -359,7 +342,7 @@ int32_t thread::run()
 
    thisstart;
 
-   while(get_run_thread())
+   while(thread_get_run())
    {
 
       if(!defer_pump_message())
@@ -755,7 +738,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       }
 
-      Sleep(284);
+      Sleep(200);
 
    }
 
@@ -900,7 +883,7 @@ bool thread::post_quit()
 }
 
 
-bool thread::get_run_thread()
+bool thread::thread_get_run()
 {
 
    return m_bRunThisThread;
@@ -915,10 +898,10 @@ bool thread::get_run_thread()
 //}
 
 
-void thread::message_queue_message_handler(::message::message * pobj)
+void thread::message_queue_message_handler(::message::base * pbase)
 {
 
-    UNREFERENCED_PARAMETER(pobj);
+    UNREFERENCED_PARAMETER(pbase);
 
 }
 
@@ -1815,7 +1798,7 @@ bool thread::post_object(UINT message, WPARAM wParam, lparam lParam)
 
    }
 
-   if (m_hthread == (HTHREAD)NULL || !get_run_thread())
+   if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
       if (lParam != NULL)
@@ -1866,7 +1849,7 @@ bool thread::send_object(UINT message, WPARAM wParam, lparam lParam, ::duration 
 
    }
 
-   if (m_hthread == (HTHREAD)NULL || !get_run_thread())
+   if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
       if (lParam != NULL)
@@ -2323,10 +2306,10 @@ bool thread::initialize_message_queue()
 //}
 
 
-void thread::message_handler(::message::message * pobj)
+void thread::message_handler(::message::base * pbase)
 {
 
-   Application.message_handler(pobj);
+   Application.message_handler(pbase);
 
 }
 
@@ -2426,7 +2409,7 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
          {
 
-            smart_pointer < ::message::base > spbase;
+            smart_pointer < ::message::message > spbase;
 
             spbase = m_pauraapp->get_message_base(&msg);
 

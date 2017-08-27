@@ -461,18 +461,25 @@ namespace user
             m_edockState= edock;
          }
 
-         void DockManager::message_handler(sp(::user::interaction) pwnd,::message::message * pobj)
+
+         void DockManager::message_handler(::user::interaction * pui, ::message::base * pbase)
          {
-            SCAST_PTR(::message::base,pbase,pobj);
 
             if(pbase->m_id == WM_LBUTTONDOWN)
             {
+               
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               
+               pui->ClientToScreen(&ptCursor);
+
                m_ptCursorOrigin = ptCursor;
+
                rect rectWindow;
+
                GetDockWindow()->GetWindowRect(rectWindow);
+
                sp(::user::interaction) pWndParent = GetDockWindow()->GetParent();
+
                if(pWndParent != NULL)
                {
                   pWndParent->ScreenToClient(rectWindow);
@@ -500,8 +507,11 @@ namespace user
                   return;
                }
                //           uint32_t fwKeys = pbase->m_wparam;        // key flags
+               
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               
+               pui->ClientToScreen(&ptCursor);
+
                point pt;
                pt = m_ptWindowOrigin + ptCursor - m_ptCursorOrigin;
                //TRACE("m_ptWindowOrigin.x = %d m_ptWindowOrigin = %d\n", m_ptWindowOrigin.x, m_ptWindowOrigin.y);

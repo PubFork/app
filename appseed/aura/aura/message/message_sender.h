@@ -15,6 +15,7 @@ namespace message
 
 
       sender();
+      virtual ~sender();
 
       
       virtual void remove_receiver(::message::receiver * preceiver);
@@ -23,31 +24,46 @@ namespace message
 
 
       template < typename RECEIVER >
-      void add_route(::message::id id, RECEIVER * preceiver, void (RECEIVER::* phandler)(::message::message * pmessage))
+      void add_route(RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id = ::message::id())
       {
+
+         void * pvoidReceiver = preceiverDerived;
+
+         if (m_idroute[id].pred_find_first([=](auto proute)
+         {
+            return proute->m_pvoidReceiver == pvoidReceiver;
+         }) >= 0)
+         {
+
+            return;
+         }
+
+         ::message::receiver * preceiver = dynamic_cast < ::message::receiver * >(preceiverDerived);
+
+         if (preceiver == NULL)
+         {
+
+            ASSERT(FALSE);
+
+            return;
+
+         }
 
          auto pred = [=](::message::message * pmessage)
          {
 
-            (preceiver->*phandler)(pmessage);
+            (preceiverDerived->*phandler)(pmessage);
 
          };
 
-         route * proute = create_pred_route(dynamic_cast <::message::receiver *> (preceiver), pred);
+         route * proute = create_pred_route(preceiver, pvoidReceiver, pred);
 
          m_idroute[id].add(proute);
 
+         preceiver->m_sendera.add_unique(this);
+
       }
 
-      template < typename RECEIVER >
-      void add_route(RECEIVER * preceiver, void (RECEIVER::* phandler)(::message::message * pmessage))
-      {
-
-         ::message::id idEmpty;
-
-         add_route(idEmpty, preceiver, phandler);
-   
-      }
 
       virtual void route_message(::message::message * pmessage);
 
@@ -144,8 +160,6 @@ namespace message
    //   virtual void install_message_routing(::message::sender * pinterface);
 
    //   virtual void _001ClearMessageHandling();
-
-   //   virtual void message_handler(::message::message * pobj);
 
    //   virtual void _on_start_user_message_handler();
 

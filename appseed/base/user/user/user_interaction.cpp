@@ -891,7 +891,7 @@ namespace user
       }
 
       IGUI_MSG_LINK(WM_COMMAND,pinterface,this,&interaction::_001OnCommand);
-      IGUI_MSG_LINK(message_simple_command,pinterface,this,&interaction::_001OnSimpleCommand);
+      MSG_TYPE_LINK(message_simple_command,pinterface,this,&interaction::_001OnSimpleCommand);
       //      IGUI_MSG_LINK(message_set_schema,pinterface,this,&interaction::_001OnSetSchema);
 
 
@@ -2328,7 +2328,7 @@ namespace user
          if(m_pimpl == NULL)
             return;
 
-         route_message(pmouse);
+         m_pimpl->route_message(pmouse);
 
          if(pmouse->get_lresult() != 0)
             return;
@@ -3987,56 +3987,24 @@ namespace user
    bool interaction::DestroyWindow()
    {
 
-///      single_lock slTwf(System.wait_twf(), true);
-
-      //single_lock sl1(get_wnd() != NULL && get_wnd() != this ? get_wnd()->m_pmutex : NULL,true);
-
-      //single_lock sl(m_pmutex,true);
-
-      //m_bCreated = false;
-
       if(!IsWindow())
       {
 
-
-         user_interaction_on_destroy();
-
-         return true;
+         return false;
 
       }
 
       m_bUserElementalOk = false;
 
-      //sp(::user::interaction) pui = this; // keep a reference to this while destroying
+      if (m_pimpl == NULL)
+      {
+       
+         return false;
 
-      //{
+      }
 
-      //   synch_lock sl(get_ui_destroyed_mutex());
+      return m_pimpl->DestroyWindow();
 
-      //m_bDestroying = true;
-
-      //   try
-      //   {
-
-      //      for(index i = 0; i < m_bptraTellMeDestroyed.get_count(); i++)
-      //      {
-
-      //         *m_bptraTellMeDestroyed[i] = true;
-
-      //      }
-
-      //   }
-      //   catch(...)
-      //   {
-
-      //   }
-
-      //}
-
-      if(m_pimpl == NULL)
-         return FALSE;
-      else
-         return m_pimpl->DestroyWindow();
    }
 
 
@@ -4347,15 +4315,20 @@ namespace user
    }
 
 
-   void interaction::message_handler(::message::message * pobj)
+   void interaction::message_handler(::message::base * pbase)
    {
-      if(m_pimpl == NULL)
-         return;
-      else
+      
+      if (m_pimpl == NULL)
       {
-         interaction_impl_base * pimpl = m_pimpl;
-         return pimpl->message_handler(pobj);
+
+         return;
+
       }
+
+      interaction_impl_base * pimpl = m_pimpl;
+      
+      pimpl->message_handler(pbase);
+      
    }
 
 
@@ -4743,7 +4716,7 @@ ExitModal:
 
    bool interaction::ContinueModal(int32_t iLevel)
    {
-      return iLevel < m_iModalCount && (::get_thread() == NULL || ::get_thread_run()) && m_pauraapp->get_run_thread();
+      return iLevel < m_iModalCount && (::get_thread() == NULL || ::get_thread_run()) && m_pauraapp->thread_get_run();
    }
 
    void interaction::EndModalLoop(id nResult)
@@ -5892,14 +5865,14 @@ restart:
    }
 
 
-   bool interaction::post_simple_command(e_simple_command ecommand,lparam lparam)
-   {
+   //bool interaction::post_simple_command(e_simple_command ecommand,lparam lparam)
+   //{
 
-      post_message(message_simple_command,(WPARAM)ecommand,lparam);
+   //   post_message(message_simple_command,(WPARAM)ecommand,lparam);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
    void interaction::_001OnCommand(::message::message * pobj)
    {
@@ -5915,16 +5888,12 @@ restart:
    }
 
 
-   void interaction::_001OnSimpleCommand(::message::message * pobj)
+   void interaction::_001OnSimpleCommand(::message::message * pmessage)
    {
+      
+      SCAST_MSG(simple_command);
 
-      SCAST_PTR(::message::base,pbase,pobj);
-
-      LRESULT lresult = 0;
-
-      pbase->m_bRet = on_simple_command((e_simple_command)pbase->m_wparam,pbase->m_lparam,pbase->get_lresult());
-
-      pbase->set_lresult(lresult);
+      on_simple_command(psimple_command);
 
    }
 
@@ -6016,27 +5985,43 @@ restart:
    }
 
 
-   bool interaction::on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult)
+   void interaction::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      UNREFERENCED_PARAMETER(lparam);
-      UNREFERENCED_PARAMETER(lresult);
-
-      if(::user::interaction_base::on_simple_command(ecommand,lparam,lresult))
-         return true;
-
-      switch(ecommand)
+      switch(psimplecommand->m_esimplecommand)
       {
       case simple_command_layout:
          {
+
             on_layout();
+
+            psimplecommand->m_bRet = true;
+
          }
-         return true;
-      default:
          break;
+
+      default:
+
+         break;
+
       }
 
-      return false;
+      if (psimplecommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+      ::user::interaction_base::on_simple_command(psimplecommand);
+
+   }
+
+
+   void interaction::on_command(::user::command * pcommand)
+   {
+
+      ::user::interaction_base::on_command(pcommand);
 
    }
 
@@ -6409,7 +6394,7 @@ restart:
 
       smart_pointer < ::message::base > spbase;
 
-      spbase = get_base(message,wparam,lparam);
+      spbase = get_message_base(message,wparam,lparam);
 
       //__trace_message("window_procedure",spbase);
 
@@ -7852,7 +7837,7 @@ restart:
 
       */
 
-   sp(::message::base) interaction::get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam)
+   sp(::message::base) interaction::get_message_base(UINT uiMessage,WPARAM wparam,LPARAM lparam)
    {
 
       sp(::message::base) pbase;
@@ -7962,14 +7947,24 @@ restart:
             pbase = canew(::message::activate(get_app()));
          }
          break;
+      case ::message::PrototypeSimpleCommand:
+         {
+            pbase = canew(::message::simple_command(get_app()));
+         }
+         break;
       default:
          {
             pbase = canew(::message::base(get_app()));
          }
          break;
       }
-      if(pbase == NULL)
+
+      if (pbase.is_null())
+      {
+
          return NULL;
+
+      }
 
       pbase->set(this,uiMessage,wparam,lparam);
 
@@ -8721,6 +8716,43 @@ restart:
       
    }
 
+
+   void interaction::wait_redraw()
+   {
+
+      while (has_pending_redraw_flags())
+      {
+
+         do_events();
+
+         Sleep(5);
+
+      }
+
+
+   }
+
+
+   bool interaction::has_pending_redraw_flags()
+   {
+
+      if (m_bNeedLayout || m_bRedraw)
+      {
+
+         return true;
+
+      }
+
+      if (m_pimpl == NULL)
+      {
+
+         return false;
+
+      }
+
+      return m_pimpl->has_pending_redraw_flags();
+
+   }
 
 } // namespace user
 

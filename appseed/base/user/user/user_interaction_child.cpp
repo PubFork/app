@@ -70,6 +70,8 @@ namespace user
 
       m_pui->m_id      = id;
 
+      install_message_routing(this);
+
       if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
       {
 
@@ -152,6 +154,8 @@ namespace user
       m_pui->m_pimpl = this;
 
       m_pui->m_id      = id;
+
+      install_message_routing(this);
 
       if(pparent != m_pui && !m_pui->is_descendant(pparent) && ! pparent->is_descendant(m_pui))
       {
@@ -246,6 +250,8 @@ namespace user
       m_pui->m_pimpl    = this;
 
       m_pui->m_id       = id;
+
+      install_message_routing(this);
 
       if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
       {
@@ -556,25 +562,36 @@ namespace user
    }
 
 
-   void interaction_child::message_handler(::message::message * pobj)
+   void interaction_child::message_handler(::message::base * pbase)
    {
-      SCAST_PTR(::message::base,pbase,pobj);
-      //LRESULT lresult = 0;
 
       UINT uiMessage = pbase->m_id;
 
       if(m_pui != NULL)
       {
-         m_pui->GuieProc(pobj);
-         if(pobj->m_bRet)
+         
+         m_pui->GuieProc(pbase);
+
+         if(pbase->m_bRet)
+         {
+         
             return;
+
+         }
+
       }
+
       if(uiMessage == ::message::message_event)
       {
+         
          ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bProcessed = m_pui->BaseOnControlEvent((control_event *)pbase->m_lparam.m_lparam);
+         
          return;
+
       }
-      route_message(pobj);
+
+      route_message(pbase);
+      
    }
 
 
