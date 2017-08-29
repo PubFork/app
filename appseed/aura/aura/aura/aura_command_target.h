@@ -117,7 +117,7 @@ public:
    virtual bool _001HasCommandHandler(::user::command * pcommand);
    virtual void on_command_probe(::user::command * pcommand);
 
-   //virtual void on_command_probe(::user::command * pcommand);
+   //virtual void on_simple_command_probe(::user::command * pcommand);
    virtual void _001OnCmdMsg(::user::command * pcommand);
    //virtual bool _001HasCommandHandler(const char * pszId);
 
