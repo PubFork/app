@@ -550,8 +550,6 @@ namespace user
    };
 
 
-   typedef show < list > list_view;
-
 } // namespace user
 
 

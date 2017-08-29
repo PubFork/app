@@ -19,8 +19,7 @@ namespace user
 
    menu_list_window::menu_list_window(::aura::application * papp) :
       object(papp),
-      menu(papp),
-      m_itemClose(papp)
+      menu(papp)
    {
 
       m_bAutoDelete        = true;
@@ -33,8 +32,7 @@ namespace user
 
    menu_list_window::menu_list_window(::aura::application * papp, menu_item * pitem) :
       object(papp),
-      menu(papp),
-      m_itemClose(papp)
+      menu(papp)
    {
 
       m_puiNotify          = NULL;
@@ -159,6 +157,13 @@ namespace user
 
    void menu_list_window::calc_size(menu_item * pitemParent, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight)
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
       
       if(pitemParent == NULL)
       {
@@ -201,6 +206,13 @@ namespace user
 
    void menu_list_window::on_layout()
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
 
       if(GetParent() == NULL)
       {
@@ -267,6 +279,13 @@ namespace user
 
    void menu_list_window::layout_buttons(menu_item * pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound)
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
 
       if(pitemParent->m_spitema == NULL)
          return;

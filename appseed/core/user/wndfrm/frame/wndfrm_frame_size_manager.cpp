@@ -361,7 +361,9 @@ namespace user
                
                if (pinterface->oprop("ysnap").int32() > 1)
                {
-                  rectWindow.bottom -= rectWindow.bottom % pinterface->oprop("ysnap").int32();
+                  int h = rectWindow.height();
+                  h -= rectWindow.height() % pinterface->oprop("ysnap").int32();
+                  rectWindow.bottom = rectWindow.top + h;
                }
             }
             else if(m_ehittestMode == HitTestSizingBottomLeft)

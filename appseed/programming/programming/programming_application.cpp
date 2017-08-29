@@ -9,7 +9,7 @@ namespace programming
       m_semCompiler(this, MAX(1, ::get_processor_count()), MAX(1, ::get_processor_count()))
    {
 
-      m_pauraapp->m_psignal->connect(this, &application::on_application_signal);
+      m_pauraapp->add_route(this, &application::on_application_signal);
 
    }
 

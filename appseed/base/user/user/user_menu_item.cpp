@@ -214,6 +214,8 @@ namespace user
 
          pitem->m_pui->set_window_text(pitem->m_strTitle);
 
+         pitem->create_buttons(pitem->m_pmenu);
+
       }
 
    }

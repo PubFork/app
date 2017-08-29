@@ -356,14 +356,14 @@ namespace sockets
    }
 
 
-   bool net::convert(struct in6_addr& l, const string & str, int32_t ai_flags)
-   {
+   //bool net::convert(struct in6_addr& l, const string & str, int32_t ai_flags)
+   //{
 
 
-      return from_string(l, str) != FALSE;
+   //   return from_string(l, str) != FALSE;
 
 
-   }
+   //}
 
 
    bool net::convert(string & str, const in_addr & ip)
@@ -666,12 +666,23 @@ namespace sockets
    }*/
 
 
-   /*
    bool net::convert(struct in6_addr & sa, const string & host, int32_t ai_flags)
    {
 
+
+      if (from_string(sa, host))
+      {
+
+         return true;
+
+      }
+
+
       memset(&sa, 0, sizeof(sa));
+#ifdef WINDOWS
+#else
       sa.sin6_family = AF_INET6;
+#endif
 #ifdef NO_GETADDRINFO
       if ((ai_flags & AI_NUMERICHOST) != 0 || isipv6(host))
       {
@@ -746,28 +757,31 @@ namespace sockets
       memset(&hints, 0, sizeof(hints));
       hints.ai_flags = ai_flags;
       hints.ai_family = AF_INET6;
-      hints.ai_socktype = 0;
-      hints.ai_protocol = 0;
+      hints.ai_socktype = SOCK_STREAM;
+      hints.ai_protocol = IPPROTO_TCP;
       struct addrinfo *res;
       if (net::isipv6(host))
          hints.ai_flags |= AI_NUMERICHOST;
       int32_t n = getaddrinfo(host, NULL, &hints, &res);
       if (!n)
       {
-         ref_array <  addrinfo > vec;
+         
+         array <  sockaddr_in6 * > addra;
          struct addrinfo *ai = res;
+         int iSaSize = sizeof(sockaddr_in6);
+         char ipstringbuffer[46];
+         DWORD ipbufferlength = 46;
          while (ai)
          {
-            if (ai -> ai_addrlen == sizeof(sa))
-               vec.add( ai );
+            // The buffer length is changed by each call to WSAAddresstoString
+            // So we need to set it for each iteration through the loop for safety
+            if (ai -> ai_addrlen == iSaSize)
+               addra.add((sockaddr_in6 *)ai->ai_addr);
             ai = ai -> ai_next;
          }
-         if (!vec.get_count())
+         if(addra.is_empty())
             return false;
-         ai = vec[System.math().rnd() % vec.get_count()];
-         {
-            memcpy(&sa, ai -> ai_addr, ai -> ai_addrlen);
-         }
+         memcpy(&sa, &::lemon::array::pick_random(addra)->sin6_addr, sizeof(sa));
          freeaddrinfo(res);
          return true;
       }
@@ -779,7 +793,6 @@ namespace sockets
 #endif // NO_GETADDRINFO
 
    }
-   */
 
 
    bool net::reverse(string & number, const string & hostname, int32_t flags)

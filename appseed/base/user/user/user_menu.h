@@ -39,6 +39,7 @@ namespace user
       int                                    m_iFlags;
       bool                                   m_bPositionHint;
       bool                                   m_bInline;
+      bool                                   m_bMenuOk;
       
       
       

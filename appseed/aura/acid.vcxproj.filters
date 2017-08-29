@@ -524,9 +524,6 @@
     <ClInclude Include="primitive\primitive_object.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_signal.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\primitive_type.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
@@ -1468,9 +1465,6 @@
     </ClInclude>
     <ClInclude Include="aura\aura\aura_application_signal_details.h">
       <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\message\message_dispatch.h">
-      <Filter>Header Files\aura\message</Filter>
     </ClInclude>
     <ClInclude Include="aura\message\message_definition.h">
       <Filter>Header Files\aura\message</Filter>
@@ -2873,6 +2867,33 @@
     <ClInclude Include="aura\aura\aura_command_ui_probe.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
+    <ClInclude Include="aura\message\message_const.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_id.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_listener_smart_pointer_array.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_message.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_receiver.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_route.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_sender.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_simple_command.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_timer.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -2984,9 +3005,6 @@
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\primitive_application_bias.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\primitive_signal.cpp">
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\primitive_request_signal.cpp">
@@ -3685,9 +3703,6 @@
     <ClCompile Include="aura\message\message.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
-      <Filter>Source Files\aura\message</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\windows\windows_debug.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
@@ -3905,9 +3920,6 @@
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_command_target.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\aura_command_target_interface.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_command_ui.cpp">
@@ -4800,6 +4812,21 @@
     </ClCompile>
     <ClCompile Include="..\aqua\aqua_graphics_alpha.cpp">
       <Filter>Source Files\aqua</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_id.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_receiver.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_sender.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_simple_command.cpp">
+      <Filter>Source Files\aura\message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

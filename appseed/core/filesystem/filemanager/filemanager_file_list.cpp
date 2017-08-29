@@ -51,17 +51,6 @@ namespace filemanager
       //#endif
 
 
-      connect_command_probe("edit_copy", &file_list::_001OnUpdateEditCopy);
-      connect_command("edit_copy", &file_list::_001OnEditCopy);
-      connect_command_probe("trash_that_is_not_trash", &file_list::_001OnUpdateTrashThatIsNotTrash);
-      connect_command("trash_that_is_not_trash", &file_list::_001OnTrashThatIsNotTrash);
-      connect_command_probe("open_with", &file_list::_001OnUpdateOpenWith);
-      connect_command_probe("spafy", &file_list::_001OnUpdateSpafy);
-      connect_command("spafy", &file_list::_001OnSpafy);
-      connect_command_probe("spafy2", &file_list::_001OnUpdateSpafy2);
-      connect_command("spafy2", &file_list::_001OnSpafy2);
-      connect_command_probe("file_rename", &file_list::_001OnUpdateFileRename);
-      connect_command("file_rename", &file_list::_001OnFileRename);
 
    }
 
@@ -84,7 +73,20 @@ namespace filemanager
       IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &file_list::_001OnContextMenu);
 //      connect_command_range(FILEMANAGER_SHELL_COMMAND_FIRST, FILEMANAGER_SHELL_COMMAND_LAST, &file_list::_001OnShellCommand);
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &file_list::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &file_list::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &file_list::_001OnKillFocus);
 
+      connect_command_probe("edit_copy", &file_list::_001OnUpdateEditCopy);
+      connect_command("edit_copy", &file_list::_001OnEditCopy);
+      connect_command_probe("trash_that_is_not_trash", &file_list::_001OnUpdateTrashThatIsNotTrash);
+      connect_command("trash_that_is_not_trash", &file_list::_001OnTrashThatIsNotTrash);
+      connect_command_probe("open_with", &file_list::_001OnUpdateOpenWith);
+      connect_command_probe("spafy", &file_list::_001OnUpdateSpafy);
+      connect_command("spafy", &file_list::_001OnSpafy);
+      connect_command_probe("spafy2", &file_list::_001OnUpdateSpafy2);
+      connect_command("spafy2", &file_list::_001OnSpafy2);
+      connect_command_probe("file_rename", &file_list::_001OnUpdateFileRename);
+      connect_command("file_rename", &file_list::_001OnFileRename);
    }
 
 
@@ -2227,6 +2229,23 @@ namespace filemanager
          return ARGB(255, 255, 255, 255);
       }
    }
+
+
+   void file_list::_001OnSetFocus(::message::message * pmessage)
+   {
+
+      TRACE("filemanager::file_list::_001OnSetFocus");
+
+   }
+
+
+   void file_list::_001OnKillFocus(::message::message * pmessage)
+   {
+
+      TRACE("filemanager::file_list::_001OnKillFocus");
+
+   }
+
 
 } // namespace filemanager
 

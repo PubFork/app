@@ -5,7 +5,7 @@
    psender->add_route(preceiver, phandler, ::message::id((::message::e_type)(emessagetype)))
 
 #define IGUI_MSG_LINK(int_message, psender, preceiver, phandler) \
-   psender->add_route(preceiver, phandler, ::message::id(::id((int64_t) (int_message)), ::message::type_message))
+   psender->add_route(preceiver, phandler, ::message::id(::id((int_ptr) (int_message)), ::message::type_message))
 
 //#define USER_MESSAGE_LINK(emessageenum, psender, preceiver, phandler) \
 //   IGUI_MSG_LINK(::message::emessageenum, psender, preceiver, phandler)

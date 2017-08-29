@@ -1538,8 +1538,8 @@ namespace user
 
             ScreenToClient(rectFocus);
 
-            rectFocus.bottom++;
-            rectFocus.right++;
+            //rectFocus.bottom++;
+            //rectFocus.right++;
 
             if (i == 0)
             {
@@ -1842,7 +1842,6 @@ namespace user
          TRACE("Exception: interaction::_000OnDraw _001DrawThis %s", typeid(*this).name());
 
       }
-
 
       if (m_uiptraChild.has_elements())
       {
@@ -5635,6 +5634,9 @@ restart:
    bool interaction::keyboard_focus_OnKillFocus()
    {
 
+
+      send_message(WM_KILLFOCUS);
+
       if(m_pimpl == NULL)
          return true;
 
@@ -7739,9 +7741,9 @@ restart:
 
             output_debug_string("::user::interaction::_001OnLButtonDown Not Focusable\n");
 
-            Session.set_keyboard_focus(NULL);
+            ///Session.set_keyboard_focus(NULL);
 
-            Session.user()->set_mouse_focus_LButtonDown(NULL);
+            ///Session.user()->set_mouse_focus_LButtonDown(NULL);
 
          }
 

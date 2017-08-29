@@ -9,7 +9,7 @@ namespace message
    sender::sender()
    {
 
-      defer_create_mutex();
+      m_pmutexIdRoute = new mutex();
 
    }
 
@@ -28,6 +28,8 @@ namespace message
          }
 
       }
+
+      ::aura::del(m_pmutexIdRoute);
 
    }
 
@@ -54,7 +56,7 @@ namespace message
 
       {
 
-         synch_lock sl(m_pmutex);
+         synch_lock sl(m_pmutexIdRoute);
 
          pmessage->m_routea = m_idroute[pmessage->m_id];
 
@@ -84,7 +86,7 @@ namespace message
    void sender::remove_all_routes()
    {
 
-      synch_lock sl(m_pmutex);
+      synch_lock sl(m_pmutexIdRoute);
 
       m_idroute.remove_all();
 

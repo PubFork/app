@@ -382,8 +382,8 @@ namespace user
          ASSERT(pActivateView == this);
 
          // take the focus if this frame/::user::impact/pane is now active
-         // trans      if (IsTopParentActive())
-         //trans   SetFocus();
+         if (IsTopParentActive())
+            SetFocus();
       }
    }
 

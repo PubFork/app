@@ -24,7 +24,8 @@ namespace fontopus
       m_login.m_pstyle = this;
       m_bLButtonDown = false;
       m_bFontopusSimpleUiLayout = false;
-
+      //m_flagNonClient.signalize(non_client_background);
+      //m_flagNonClient.signalize(non_client_focus_rect);
 
    }
 
@@ -56,6 +57,8 @@ namespace fontopus
 
       if(pcreate->previous())
          return;
+
+      m_puserstyle = this;
 
       if(!m_login.create_window(null_rect(), this,"pane_first"))
       {

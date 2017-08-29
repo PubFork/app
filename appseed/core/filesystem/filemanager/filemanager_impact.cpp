@@ -177,6 +177,13 @@ namespace filemanager
       ::file::listing stra;
 
       Session.copydesk().get_filea(stra);
+
+      if (stra.get_size() <= 0)
+      {
+         pobj->m_bRet = true;
+         return;
+
+      }
       
       string strDir;
 

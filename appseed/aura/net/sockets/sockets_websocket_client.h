@@ -41,6 +41,7 @@ namespace sockets
       byte        m_maskingkey[4];
       int         m_iLastPos;
       mutex       m_mutexWebsocketWrite;
+      string            m_strOrigin;
 
 
       websocket_client(base_socket_handler&);

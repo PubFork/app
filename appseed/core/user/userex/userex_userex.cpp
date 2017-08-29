@@ -19,15 +19,19 @@
 #include "base/database/simpledb/simpledb.h"
 
 
+CLASS_DECL_AURA mutex * get_cred_mutex();
+
 namespace userex
 {
 
+   
 
    userex::userex(::aura::application * papp):
       object(papp),
       ::aura::department(papp)
    {
 
+      
       m_pshell  = NULL;
       m_ptemplateFontSel = NULL;
 
@@ -1319,6 +1323,8 @@ namespace core
 
    string application::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
    {
+
+      synch_lock sl(get_cred_mutex());
 
       string strRet;
 

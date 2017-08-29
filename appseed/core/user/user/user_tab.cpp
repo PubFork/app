@@ -2726,12 +2726,34 @@ else
          try
          {
 
-            m_pimpl->route_message(pmouse);
+            ::rect rectTabScreen(get_data()->m_rectTab);
 
-            if (pmouse->get_lresult() != 0)
+            ClientToScreen(rectTabScreen);
+
+            if ((pmouse->m_id == WM_LBUTTONDOWN || pmouse->m_id == WM_LBUTTONUP) && rectTabScreen.contains(pmouse->m_pt))
             {
 
-               return;
+               m_pimpl->route_message(pmouse);
+
+               if (pmouse->get_lresult() != 0)
+               {
+
+                  return;
+
+               }
+
+            }
+            else if (pmouse->m_id == WM_MOUSEMOVE)
+            {
+
+               m_pimpl->route_message(pmouse);
+
+               if (pmouse->get_lresult() != 0)
+               {
+
+                  return;
+
+               }
 
             }
 

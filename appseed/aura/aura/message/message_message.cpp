@@ -119,7 +119,7 @@ namespace message
    void message::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam)
    {
 
-      m_id = ::message::id(::id((int64_t) uiMessage), ::message::type_message);
+      m_id = ::message::id(::id((int_ptr) uiMessage), ::message::type_message);
 
       m_wparam = wparam;
 

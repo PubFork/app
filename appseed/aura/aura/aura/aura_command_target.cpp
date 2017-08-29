@@ -60,7 +60,7 @@ void command_target::_001SendCommand(::user::command * pcommand)
 
    {
 
-      RESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
+      SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
 
       _001OnCmdMsg(pcommand);
 
@@ -76,7 +76,7 @@ void command_target::_001SendCommandProbe(::user::command * pcommand)
 
    {
 
-      RESTORE(pcommand->m_id.m_emessagetype, ::message::type_command_probe);
+      SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command_probe);
 
       _001OnCmdMsg(pcommand);
 
@@ -153,7 +153,7 @@ void command_target::on_command_probe(::user::command * pcommand)
 
    {
 
-      RESTORE(pcommand->m_id.m_emessagetype, ::message::type_command_probe);
+      SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command_probe);
 
       route_message(pcommand);
 

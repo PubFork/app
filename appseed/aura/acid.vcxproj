@@ -608,9 +608,19 @@
   <ItemGroup>
     <ClCompile Include="..\ace\ace_alloc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\ace\version.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\ace\_ace_new.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">NotUsing</PrecompiledHeader>
@@ -745,6 +755,11 @@
     </ClCompile>
     <ClCompile Include="aura\install\windows\install_windows_win.cpp">
     </ClCompile>
+    <ClCompile Include="aura\message\message_id.cpp" />
+    <ClCompile Include="aura\message\message_message.cpp" />
+    <ClCompile Include="aura\message\message_receiver.cpp" />
+    <ClCompile Include="aura\message\message_sender.cpp" />
+    <ClCompile Include="aura\message\message_simple_command.cpp" />
     <ClCompile Include="aura\node\windows\windows_timer.cpp" />
     <ClCompile Include="aura\os\ansios\ansios_base.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1242,9 +1257,17 @@
     <ClInclude Include="aura\install\install_window.h" />
     <ClInclude Include="aura\message\message.h" />
     <ClInclude Include="aura\message\message_base.h" />
+    <ClInclude Include="aura\message\message_const.h" />
     <ClInclude Include="aura\message\message_cross_windows.h" />
     <ClInclude Include="aura\message\message_definition.h" />
-    <ClInclude Include="aura\message\message_dispatch.h" />
+    <ClInclude Include="aura\message\message_id.h" />
+    <ClInclude Include="aura\message\message_listener_smart_pointer_array.h" />
+    <ClInclude Include="aura\message\message_message.h" />
+    <ClInclude Include="aura\message\message_receiver.h" />
+    <ClInclude Include="aura\message\message_route.h" />
+    <ClInclude Include="aura\message\message_sender.h" />
+    <ClInclude Include="aura\message\message_simple_command.h" />
+    <ClInclude Include="aura\message\message_timer.h" />
     <ClInclude Include="aura\node\ansios\ansios.h">
     </ClInclude>
     <ClInclude Include="aura\node\ansios\ansios_process.h">
@@ -1399,7 +1422,6 @@
     <ClCompile Include="aura\aura\aura_assert_running_task.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui.cpp" />
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
-    <ClCompile Include="aura\aura\aura_command_target_interface.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui_probe.cpp" />
     <ClCompile Include="aura\aura\aura_console_window.cpp" />
     <ClCompile Include="aura\aura\aura_create_context.cpp" />
@@ -1458,8 +1480,6 @@
     <ClCompile Include="aura\message\message.cpp">
     </ClCompile>
     <ClCompile Include="aura\message\message_base.cpp">
-    </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
     </ClCompile>
     <ClCompile Include="aura\node\ansios\ansios_pipe.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1964,7 +1984,6 @@
     <ClInclude Include="primitive\primitive_relation_set.h" />
     <ClInclude Include="primitive\primitive_request_interface.h" />
     <ClInclude Include="primitive\primitive_request_signal.h" />
-    <ClInclude Include="primitive\primitive_signal.h" />
     <ClInclude Include="primitive\primitive_type.h" />
     <ClInclude Include="primitive\primitive_var2.h" />
     <ClInclude Include="primitive\str\str.h" />
@@ -2713,8 +2732,6 @@
     <ClCompile Include="primitive\primitive_request_signal.cpp">
     </ClCompile>
     <ClCompile Include="primitive\primitive_shared_memory.cpp">
-    </ClCompile>
-    <ClCompile Include="primitive\primitive_signal.cpp">
     </ClCompile>
     <ClCompile Include="primitive\primitive_type.cpp">
     </ClCompile>

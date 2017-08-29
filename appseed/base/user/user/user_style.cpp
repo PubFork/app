@@ -454,6 +454,12 @@ namespace user
          cr = ARGB(255, 255, 255, 255);
 
       }
+      else if (ecolor == color_background_press)
+      {
+
+         cr = ARGB(255, 215, 200, 255);
+
+      }
       else if (ecolor == color_text_hover)
       {
 

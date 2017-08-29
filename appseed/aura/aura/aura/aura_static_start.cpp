@@ -6,7 +6,7 @@
 //
 
 #include "framework.h"
-
+mutex * g_pmutexCred = NULL;
 //extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
 //CLASS_DECL_AURA void init_draw2d_mutex();
@@ -253,6 +253,8 @@ namespace aura
 
          s_pmutexMessageDispatch = new mutex();
 
+         g_pmutexCred = new mutex();
+
 
 #if defined(WINDOWSEX)
 
@@ -481,6 +483,9 @@ namespace aura
          //delete g_pmutexTrace;
 
          //g_pmutexTrace = NULL;
+
+         ::aura::del(g_pmutexCred);
+
          ::aura::del(s_pmutexMessageDispatch);
 
          ::aura::del(g_pmutexUiDestroyed);
@@ -611,3 +616,12 @@ namespace aura
 //   ::aura::del(s_pmutexDraw2d);
 //
 //}
+
+
+
+CLASS_DECL_AURA mutex * get_cred_mutex()
+{
+
+   return g_pmutexCred;
+
+}

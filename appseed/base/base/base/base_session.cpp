@@ -1065,6 +1065,8 @@ namespace base
 
          }
 
+         puiFocus->send_message(WM_SETFOCUS);
+
       }
 
 
@@ -1131,6 +1133,7 @@ namespace base
       throw interface_only_exception(this);
 
    }
+
 
 
 } // namespace base

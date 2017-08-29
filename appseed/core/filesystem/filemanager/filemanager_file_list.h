@@ -93,6 +93,9 @@ namespace filemanager
       DECL_GEN_SIGNAL(_001OnUpdateEditCopy);
       DECL_GEN_SIGNAL(_001OnShowWindow);
 
+      DECL_GEN_SIGNAL(_001OnSetFocus);
+      DECL_GEN_SIGNAL(_001OnKillFocus);
+
 
 
 

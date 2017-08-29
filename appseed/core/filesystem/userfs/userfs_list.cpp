@@ -27,7 +27,7 @@ namespace userfs
    void list::install_message_routing(::message::sender * pinterface)
    {
    
-      BASE::install_message_routing(pinterface);
+      ::user::form_list_view::install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
@@ -50,7 +50,7 @@ namespace userfs
    {
 //      UNREFERENCED_PARAMETER(pobj);
 
-      BASE::_001OnTimer(ptimer);
+      ::user::form_list_view::_001OnTimer(ptimer);
 
    }
 
@@ -101,12 +101,12 @@ namespace userfs
 #ifdef DEBUG
    void list::assert_valid() const
    {
-      BASE::assert_valid();
+      ::user::form_list_view::assert_valid();
    }
 
    void list::dump(dump_context & dumpcontext) const
    {
-      BASE::dump(dumpcontext);
+      ::user::form_list_view::dump(dumpcontext);
    }
 #endif //DEBUG
 
@@ -144,7 +144,7 @@ namespace userfs
 
       cs.style |= WS_CLIPCHILDREN;
 
-      return BASE::pre_create_window(cs);
+      return ::user::form_list_view::pre_create_window(cs);
    }
 
    void list::_001InsertColumns()
@@ -207,7 +207,7 @@ namespace userfs
    void list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      BASE::_001OnDraw(pgraphics);
+      ::user::form_list_view::_001OnDraw(pgraphics);
 
    }
 
@@ -672,17 +672,17 @@ namespace userfs
 
    sp(::userfs::document) list::get_document()
    {
-      return  (BASE::get_document());
+      return  (::user::form_list_view::get_document());
    }
 
    void list::_001GetItemText(::user::mesh_item * pitem)
    {
-      return BASE::_001GetItemText(pitem);
+      return ::user::form_list_view::_001GetItemText(pitem);
    }
 
    void list::_001GetItemImage(::user::mesh_item * pitem)
    {
-      return BASE::_001GetItemImage(pitem);
+      return ::user::form_list_view::_001GetItemImage(pitem);
    }
 
 

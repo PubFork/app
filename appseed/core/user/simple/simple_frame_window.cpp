@@ -2852,24 +2852,28 @@ void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
 
          ::draw2d::keep k(pgraphics);
 
-         try
+         //if (0)
          {
-
-            for(auto & pui : uia)
+            try
             {
 
-               if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+               for (auto & pui : uia)
                {
 
-                  pui->_000OnDraw(pgraphics);
+                  if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+                  {
+
+                     pui->_000OnDraw(pgraphics);
+
+                  }
 
                }
 
             }
+            catch (...)
+            {
 
-         }
-         catch (...)
-         {
+            }
 
          }
 
@@ -2879,6 +2883,9 @@ void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
 
       _001DrawThis(pgraphics);
 
+
+
+      if (!m_bTransparentFrame || this == GetActiveWindow())
       {
 
          ::draw2d::keep k(pgraphics);
@@ -3160,10 +3167,10 @@ void simple_frame_window::data_on_after_change(::message::message * pobj)
 
 
 
-void simple_frame_window::on_command(::user::command * pcommand)
+void simple_frame_window::on_simple_command(::message::simple_command * psimplecommand)
 {
 
-   ::user::frame_window::on_command(pcommand);
+   ::user::frame_window::on_simple_command(psimplecommand);
 
 }
 

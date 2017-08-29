@@ -36,7 +36,7 @@ namespace simple_ui
       //   MSG_MOUSEMOVE
       //   MSG_MOUSELEAVE
       //   END_IMH
-
+      ::simple_ui::interaction::install_message_routing(psender);
 
       IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
       IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &tap::_001OnKeyDown);

@@ -41,8 +41,8 @@ namespace prompt
    
       void ToFront();
 
-      virtual void on_simple_command(::user::command * pcommand);
-      virtual void on_simple_command_probe(::user::command * pcommand);
+      virtual void on_command(::user::command * pcommand);
+      virtual void on_command_probe(::user::command * pcommand);
 
 
 

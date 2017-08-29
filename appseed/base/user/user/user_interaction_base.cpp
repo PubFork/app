@@ -1660,9 +1660,18 @@ Restart:
    bool interaction_base::IsTopParentActive()
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::user::interaction * puiTopLevel = GetTopLevel();
 
-      return false;
+      if (puiTopLevel == NULL)
+      {
+
+         return true;
+
+      }
+
+      ::user::interaction * puiActive = puiTopLevel->GetActiveWindow();
+
+      return  puiActive == puiTopLevel;
 
    }
 

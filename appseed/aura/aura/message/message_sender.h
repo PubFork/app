@@ -11,6 +11,7 @@ namespace message
    public:
 
       
+      mutex *     m_pmutexIdRoute;
       id_route    m_idroute;
 
 

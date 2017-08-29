@@ -227,7 +227,7 @@ public:
    virtual void dump(dump_context & dumpcontext) const;
    void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-   virtual void on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+   virtual void on_simple_command(::message::simple_command * psimplecommand);
 
 #ifdef WINDOWSEX
    virtual void OnDropFiles(HDROP hDropInfo);

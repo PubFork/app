@@ -10,14 +10,8 @@ namespace user
    {
    public:
 
-      int64_t                             m_iMessage;
       bool                                m_bAutoClose;
       bool                                m_bAutoDelete;
-      bool                                m_bOwnItem;
-      ::user::menu_item                   m_itemClose;
-      int32_t                             m_iHeaderHeight;
-      int32_t                             m_iItemHeight;
-      size                                m_size;
 
       menu_list_window();
       menu_list_window(::aura::application * papp);

@@ -132,12 +132,20 @@ namespace user
 
             class point ptMove = m_ptWindowOrigin + pmouse->m_pt - m_ptCursorOrigin;
 
+
+
             if(pui->GetParent() != NULL)
             {
 
                pui->ScreenToClient(&ptMove);
 
             }
+
+            if (pui->oprop("ysnap").int32() > 1)
+            {
+               ptMove.y -= ptMove.y % pui->oprop("ysnap").int32();
+            }
+
 
 #ifdef WINDOWSEX
 

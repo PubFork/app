@@ -6,7 +6,7 @@ namespace user
 
 
    class CLASS_DECL_CORE slider:
-      public ::user::interaction
+      virtual public ::user::interaction
    {
    public:
 

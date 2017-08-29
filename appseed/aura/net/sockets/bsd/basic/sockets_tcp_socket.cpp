@@ -409,18 +409,34 @@ namespace sockets
       }
       if(!Handler().ResolverEnabled() || Session.sockets().net().isipv4(host))
       {
-         in_addr l;
-         if(!Session.sockets().net().convert(l,host))
+         goto ipv4_try;
          {
-            thiserr << "Session.sockets().net().convert failed";
-            SetCloseAndDelete();
-            return false;
+            in6_addr l;
+            if (!Session.sockets().net().convert(l, host))
+            {
+               goto ipv4_try;
+            }
+            ::net::address ad(l, port);
+            ::net::address addrLocal;
+            if (!open(ad, addrLocal))
+               goto ipv4_try;;
+            return true;
          }
-         ::net::address ad(l,port);
-         ::net::address addrLocal;
-         if(!open(ad,addrLocal))
-            return false;
-         return true;
+         ipv4_try:
+         {
+            in_addr l;
+            if (!Session.sockets().net().convert(l, host))
+            {
+               thiserr << "Session.sockets().net().convert failed";
+               SetCloseAndDelete();
+               return false;
+            }
+            ::net::address ad(l, port);
+            ::net::address addrLocal;
+            if (!open(ad, addrLocal))
+               return false;
+            return true;
+         }
       }
       // resolve using async resolver thread
       m_resolver_id = Resolve(host,port);

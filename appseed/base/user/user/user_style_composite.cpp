@@ -208,6 +208,13 @@ namespace user
    bool style_composite::get_color(COLORREF & cr,e_color ecolor)
    {
       
+      if (userstyle() == NULL)
+      {
+
+         return false;
+
+      }
+
       return userstyle()->get_color(cr, ecolor);
    
    }

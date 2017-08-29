@@ -7,12 +7,9 @@ namespace userfs
    class main_view;
 
    class CLASS_DECL_CORE list :
-      virtual public ::user::show <  ::user::margin < ::user::form_list > > 
+      virtual public ::user::form_list_view
    {
    public:
-
-
-      typedef ::user::show <  ::user::margin < ::user::form_list >  > BASE;
 
 
       stringa              m_straFileSize;

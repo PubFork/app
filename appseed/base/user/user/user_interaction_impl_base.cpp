@@ -944,6 +944,19 @@ namespace user
    void interaction_impl_base::_001Print(::draw2d::graphics * pgraphics)
    {
 
+      if (GetActiveWindow() == get_wnd())
+      {
+
+         //TRACE("active");
+
+      }
+      else
+      {
+
+         //TRACE("not active");
+
+      }
+
       m_pui->_001Print(pgraphics);
 
    }

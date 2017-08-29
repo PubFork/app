@@ -98,8 +98,8 @@ namespace user
 
                   ScreenToClient(rectFocus);
 
-                  rectFocus.bottom++;
-                  rectFocus.right++;
+                  rectFocus.bottom;
+                  rectFocus.right;
 
                   if (i == 0)
                   {

@@ -174,7 +174,7 @@ public:
 
       str += "\"";
 
-      str += ":";
+      str += ": ";
 
       m_element2.get_json(str, bNewLine);
 

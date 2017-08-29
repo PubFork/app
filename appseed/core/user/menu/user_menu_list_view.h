@@ -22,7 +22,7 @@ namespace user
 
       virtual bool pre_create_window(::user::create_struct & cs);
 
-      virtual void GuieProc(::message::message * pobj);
+      //virtual void GuieProc(::message::message * pobj);
 
       virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
