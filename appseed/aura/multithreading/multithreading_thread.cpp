@@ -2854,7 +2854,7 @@ bool thread::verb()
 }
 
 
-void thread::on_command(::command::command * pcommand)
+void thread::handle_command(::command::command * pcommand)
 {
 
    sp(::create) pcreate = pcommand;

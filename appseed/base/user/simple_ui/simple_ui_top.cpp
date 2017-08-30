@@ -30,6 +30,7 @@ namespace simple_ui
 
       ::simple_ui::interaction::install_message_routing(psender);
 
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &top::_001OnCreate);
       IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&top::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&top::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&top::_001OnMouseMove);
@@ -44,6 +45,8 @@ namespace simple_ui
 
       if(pcreate->previous())
          return;
+
+      m_puserstyle = this;
 
    }
 

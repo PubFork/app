@@ -47,7 +47,7 @@ void handler::handle(::e_command ecommand)
 void handler::on_handle(::command::command * pcommand)
 {
 
-   m_pthread->on_command(pcommand);
+   m_pthread->handle_command(pcommand);
 
 }
 

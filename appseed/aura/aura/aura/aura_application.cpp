@@ -292,7 +292,7 @@ namespace aura
    }
 
 
-   void application::on_command(::command::command * pcommand)
+   void application::handle_command(::command::command * pcommand)
    {
 
       if (pcommand->m_ecommand == ::command_on_agree_exit)
@@ -314,7 +314,7 @@ namespace aura
       else
       {
 
-         ::thread::on_command(pcommand);
+         ::thread::handle_command(pcommand);
 
       }
 

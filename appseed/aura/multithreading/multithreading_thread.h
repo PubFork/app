@@ -389,7 +389,7 @@ public:
 
    ::handler * handler();
 
-   virtual void on_command(::command::command * pcommand);
+   virtual void handle_command(::command::command * pcommand);
 
    virtual void on_create(::create * pcreate);
    

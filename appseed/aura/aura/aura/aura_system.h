@@ -443,7 +443,7 @@ namespace aura
 
       virtual void defer_check_exit();
 
-      virtual void on_command(::command::command * pcommand) override;
+      virtual void handle_command(::command::command * pcommand) override;
 
       virtual void defer_check_openweather_city_list();
 

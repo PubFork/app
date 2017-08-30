@@ -132,6 +132,7 @@ namespace draw2d
       virtual bool precision_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
       virtual bool blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size);
       virtual bool blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
+      virtual bool blend2(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA);
       virtual bool fork_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size);
       virtual bool fork_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
       virtual bool bitmap_blend(::draw2d::graphics * pgraphics, LPCRECT lprect);

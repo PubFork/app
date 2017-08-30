@@ -557,7 +557,8 @@ namespace aura
 
       virtual string lstr(id id,const string & strDefault = (const string &)*((const string *)NULL)) override;
 
-      void on_command(::command::command * pcommand) override;
+      
+      void handle_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
 
       virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
