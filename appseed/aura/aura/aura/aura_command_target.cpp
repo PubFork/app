@@ -129,7 +129,7 @@ void command_target::on_command(::user::command * pcommand)
 
    {
 
-      RESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
+      SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
 
       route_message(pcommand);
 
@@ -142,6 +142,8 @@ bool command_target::_001HasCommandHandler(::user::command * pcommand)
 {
 
    synch_lock sl(m_pmutex);
+
+   SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
 
    return m_idroute[pcommand->m_id].has_elements();
 

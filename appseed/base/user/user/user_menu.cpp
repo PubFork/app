@@ -708,6 +708,8 @@ namespace user
 
       ::user::control_event ev;
 
+      ev.m_bRet = false;
+
       ev.m_eevent = ::user::event_context_menu_close;
 
       ::user::interaction * puiTarget = get_target_window();

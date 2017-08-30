@@ -223,13 +223,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       { 
          
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
          
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -254,13 +254,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       {
 
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -311,13 +311,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       {
 
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -1711,7 +1711,7 @@ namespace user
 
       }
 
-      RedrawWindow();
+      m_pui->set_need_redraw();
 
       return true;
 

@@ -557,8 +557,17 @@ namespace user
 
    bool style_composite::style_color(COLORREF & cr,e_color ecolor)
    {
-   
-      return userstyle()->get_color(cr, ecolor);
+
+      ::user::style * puserstyle = userstyle();
+
+      if (puserstyle != NULL && puserstyle->get_color(cr, ecolor))
+      {
+
+         return true;
+
+      }
+
+      return false;
    
    }
 
