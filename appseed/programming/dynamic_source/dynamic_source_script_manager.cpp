@@ -89,12 +89,12 @@ script_manager::script_manager(::aura::application * papp) :
    m_strNamespace             = "netnode"; // default namespace is linked to outer project netnode
 #ifdef LINUX
    m_strNetnodePath           = "/netnodenet/";
-   m_strNetseedPath           = "/netnodenet/net/netseed/";
-   m_strNetseedDsCa2Path      = "/netnodenet/net/netseed/";
+   m_strNetseedPath           = "/netnodenet/net/";
+   m_strNetseedDsCa2Path      = "/netnodenet/net/";
 #else
    m_strNetnodePath           = "C:\\netnodenet\\";
-   m_strNetseedPath           = "C:\\netnodenet\\net\\netseed\\";
-   m_strNetseedDsCa2Path      = "C:\\netnodenet\\net\\netseed\\";
+   m_strNetseedPath           = "C:\\netnodenet\\net\\";
+   m_strNetseedDsCa2Path      = "C:\\netnodenet\\net\\";
 #endif
 
 
