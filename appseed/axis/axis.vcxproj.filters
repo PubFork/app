@@ -491,9 +491,6 @@
     <ClInclude Include="axis\node\windows\windows_axis_file_system.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="axis\node\windows\windows_crypto.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
     <ClInclude Include="axis\node\windows\windows_factory_exchange.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
@@ -570,9 +567,6 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="axis\node\windows\windows_copydesk.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\aaa_want_to_remove_windows_ip_enum.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
   </ItemGroup>
