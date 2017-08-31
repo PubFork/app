@@ -163,47 +163,49 @@ namespace user
 
          menu_item * pitem = m_spitema->element_at(iItem);
 
-         if (pitem->m_pui.is_null())
+         if (pitem->m_pui == NULL)
          {
 
             pitem->m_pui = m_pmenu->create_menu_button();
 
          }
 
-         if (pitem->m_pui.is_null())
+         if (pitem->m_pui == NULL)
          {
 
             return false;
 
          }
 
-         if (!pitem->m_pui->IsWindow())
+         if (pitem->m_pui->IsWindow())
          {
 
+            pitem->m_pui->DestroyWindow();
+
+         }
+
+         {
+
+            control_descriptor descriptor;
+
+            descriptor.m_puiParent = pmenu;
+
+            descriptor.m_id = pitem->m_id;
+
+            descriptor.m_iItem = iItem;
+
+            if (!pitem->m_pui->create_control(&descriptor))
             {
 
-               control_descriptor descriptor;
-
-               descriptor.m_puiParent = pmenu;
-
-               descriptor.m_id = pitem->m_id;
-
-               descriptor.m_iItem = iItem;
-
-               if (!pitem->m_pui->create_control(&descriptor))
-               {
-
-                  return false;
-
-               }
+               return false;
 
             }
 
-            pitem->m_pui->m_id = pitem->m_id;
-
-            pitem->m_pui->m_pmenuitem = pitem;
-
          }
+
+         pitem->m_pui->m_id = pitem->m_id;
+
+         pitem->m_pui->m_pmenuitem = pitem;
 
          if (!pitem->m_pui->IsWindow())
          {
@@ -212,11 +214,15 @@ namespace user
 
          }
 
+         pitem->m_pmenu = pmenu;
+
          pitem->m_pui->set_window_text(pitem->m_strTitle);
 
-         pitem->create_buttons(pitem->m_pmenu);
+         //pitem->create_buttons(pmenu);
 
       }
+
+      return true;
 
    }
 

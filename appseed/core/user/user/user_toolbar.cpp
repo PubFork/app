@@ -88,12 +88,7 @@ namespace user
       ::user::control_bar::install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
-      //IGUI_MSG_LINK(WM_NCPAINT         , pinterface, this, &toolbar::_001On);
-      //IGUI_MSG_LINK(WM_PAINT           , pinterface, this, &toolbar::_001On);
-      //IGUI_MSG_LINK(WM_ERASEBKGND      , pinterface, this, &toolbar::_001On);
       IGUI_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &toolbar::_001OnNcCalcSize);
-      //IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &toolbar::_001OnWindowPosChanging);
-      IGUI_MSG_LINK(WM_NCCREATE          , pinterface, this, &toolbar::_001OnNcCreate);
 #ifdef WINDOWSEX
       IGUI_MSG_LINK(TB_SETBITMAPSIZE     , pinterface, this, &toolbar::_001OnSetBitmapSize);
       IGUI_MSG_LINK(TB_SETBUTTONSIZE     , pinterface, this, &toolbar::_001OnSetButtonSize);
@@ -143,26 +138,7 @@ namespace user
       return TRUE;
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // toolbar
-
-   void toolbar::_001OnNcCreate(::message::message * pobj)
-   {
-      if(pobj->previous())
-         return;
-
-      // if the owner was set before the toolbar was created, set it now
-#ifdef WINDOWSEX
-      if (m_puiOwner != NULL)
-         DefWindowProc(TB_SETPARENT, (WPARAM)m_puiOwner, 0);
-
-      DefWindowProc(TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
-#else
-      throw todo(get_app());
-
-#endif
-   }
-
+   
    sp(::user::interaction) toolbar::SetOwner(sp(::user::interaction) pOwnerWnd)
    {
 #ifdef WINDOWSEX
@@ -237,79 +213,6 @@ namespace user
       Invalidate();   // just to be nice if called when toolbar is visible
    }
 
-
-   /*bool toolbar::LoadToolBar(const char * lpszResourceName)
-   {
-      ASSERT_VALID(this);
-      ASSERT(lpszResourceName != NULL);
-
-      // determine location of the bitmap in resource fork
-      HINSTANCE hInst = ::core::FindResourceHandle(lpszResourceName, RT_TOOLBAR);
-      HRSRC hRsrc = ::FindResource(hInst, lpszResourceName, RT_TOOLBAR);
-      if (hRsrc == NULL)
-         return FALSE;
-
-      HGLOBAL hGlobal = LoadResource(hInst, hRsrc);
-      if (hGlobal == NULL)
-         return FALSE;
-
-      toolbar_data* pData = (toolbar_data*)LockResource(hGlobal);
-      if (pData == NULL)
-         return FALSE;
-      ASSERT(pData->wVersion == 1);
-
-      UINT* pItems = new UINT[pData->wItemCount];
-      for (int32_t i = 0; i < pData->wItemCount; i++)
-         pItems[i] = pData->items()[i];
-      bool bResult = SetButtons(pItems, pData->wItemCount);
-      delete[] pItems;
-
-
-      if (bResult)
-      {
-
-         // set new sizes of the buttons
-         size sizeImage(pData->wWidth, pData->wHeight);
-         size sizeButton(pData->wWidth + 7, pData->wHeight + 7);
-         SetSizes(sizeButton, sizeImage);
-
-         // load bitmap now that sizes are known by the toolbar control
-         bResult = LoadBitmap(lpszResourceName);
-      }
-
-      UnlockResource(hGlobal);
-      FreeResource(hGlobal);
-
-      return bResult;
-   }*/
-
-   /*bool toolbar::LoadBitmap(const char * lpszResourceName)
-   {
-      ASSERT_VALID(this);
-      ASSERT(lpszResourceName != NULL);
-
-      // determine location of the bitmap in resource fork
-      HINSTANCE hInstImageWell = ::core::FindResourceHandle(lpszResourceName, RT_BITMAP);
-      HRSRC hRsrcImageWell = ::FindResource(hInstImageWell, lpszResourceName, RT_BITMAP);
-      if (hRsrcImageWell == NULL)
-         return FALSE;
-
-      // load the bitmap
-      HBITMAP hbmImageWell;
-   //   hbmImageWell = ::core::LoadSysColorBitmap(hInstImageWell, hRsrcImageWell);
-      ::draw2d::memory_graphics pgraphics(this);
-      hbmImageWell = imaging::LoadSysColorBitmap(pgraphics, hInstImageWell, hRsrcImageWell);
-
-
-      // tell common control toolbar about the new bitmap
-      if (!AddReplaceBitmap(hbmImageWell))
-         return FALSE;
-
-      // remember the resource handles so the bitmap can be recolored if necessary
-      m_hInstImageWell = hInstImageWell;
-      m_hRsrcImageWell = hRsrcImageWell;
-      return TRUE;
-   }*/
 
    bool toolbar::from(HBITMAP hbmImageWell)
    {

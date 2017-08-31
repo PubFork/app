@@ -664,10 +664,21 @@ namespace draw2d
                   //pdst2[1] = psrc2[1] + ((pdst2[1] * (acomplement)) >> 8);
                   //pdst2[2] = psrc2[2] + ((pdst2[2] * (acomplement)) >> 8);
                   //pdst2[3] = psrc2[3] + ((pdst2[3] * (acomplement)) >> 8);
-                  pdst2[0] = (pdst2[0] * alpha *a) >> 16;
-                  pdst2[1] = (pdst2[1] * alpha *a) >> 16;
-                  pdst2[2] = (pdst2[2] * alpha *a) >> 16;
-                  pdst2[3] = (pdst2[3] * alpha *a) >> 16;
+
+                  int r = pdst2[0];
+                  int g = pdst2[1];
+                  int b = pdst2[2];
+
+                  r = (r<<8) / a;
+                  g = (g<<8) / a;
+                  b = (b<<8) /a ;
+                  
+                  int iA = alpha*a;
+
+                  pdst2[0] = (r * iA) >> 16;
+                  pdst2[1] = (g * iA) >> 16;
+                  pdst2[2] = (b * iA) >> 16;
+                  pdst2[3] = iA >> 8;
                }
 
 

@@ -4,11 +4,12 @@
 html_document::html_document(::aura::application * papp) :
    ::object(papp),
    ::data::data_container_base(papp),
+   ::user::controller(papp),
    ::user::document(papp)
 {
 
-
 }
+
 
 bool html_document::on_new_document()
 {

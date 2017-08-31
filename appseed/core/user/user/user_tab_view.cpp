@@ -55,7 +55,7 @@ namespace user
       if (lHint == 0 && pHint == NULL)
       {
 
-         if (get_tab_count() <= 1 && _001GetSel() < 0)
+         if (get_tab_count() >= 1 && _001GetSel() < 0)
          {
 
             _001SetSel(0);

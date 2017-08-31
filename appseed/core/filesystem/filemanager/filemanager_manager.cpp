@@ -154,6 +154,7 @@ namespace filemanager
    manager::manager(::aura::application * papp) :
       object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp),
       ::userfs::document(papp)
    {

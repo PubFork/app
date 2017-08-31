@@ -40,20 +40,19 @@ namespace user
 
    void control_bar::install_message_routing(::message::sender * pinterface)
    {
+      
       ::user::interaction::install_message_routing(pinterface);
+
 #ifdef WINDOWS
       IGUI_MSG_LINK(WM_CTLCOLOR          , pinterface, this, &control_bar::_001OnCtlColor);
 #endif
-//      IGUI_MSG_LINK(WM_IDLEUPDATECMDUI   , pinterface, this, &control_bar::_001OnIdleUpdateCmdUI);
       IGUI_MSG_LINK(WM_SIZEPARENT        , pinterface, this, &control_bar::_001OnSizeParent);
       IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &control_bar::_001OnWindowPosChanging);
-   //   IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &control_bar::_001OnShowWindow);
       IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &control_bar::_001OnMouseMove);
       IGUI_MSG_LINK(WM_LBUTTONDOWN       , pinterface, this, &control_bar::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP         , pinterface, this, &control_bar::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_LBUTTONDBLCLK     , pinterface, this, &control_bar::_001OnLButtonDblClk);
       IGUI_MSG_LINK(WM_MOUSEACTIVATE     , pinterface, this, &control_bar::_001OnMouseActivate);
-   //   IGUI_MSG_LINK(WM_CANCELMODE        , pinterface, this, &control_bar::_001OnCancelMode);
       IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &control_bar::_001OnCreate);
       IGUI_MSG_LINK(WM_DESTROY           , pinterface, this, &control_bar::_001OnDestroy);
       IGUI_MSG_LINK(WM_HELPHITTEST       , pinterface, this, &control_bar::_001OnHelpHitTest);
@@ -410,18 +409,16 @@ namespace user
       if(pobj->previous())
          return;
 
-      sp(::user::frame_window) pFrameWnd = GetParent();
+      sp(::user::frame_window) pframe = GetParent();
 
-      if (pFrameWnd.is_set())
+      if (pframe.is_set())
       {
 
-         m_pDockSite = pFrameWnd;
+         m_pDockSite = pframe;
 
          m_pDockSite->AddControlBar(this);
 
       }
-
-      UpdateWindow();
 
    }
 

@@ -553,9 +553,9 @@ namespace user
          
       }
       
-      m_bCreate = false;
-
       bool bOk = ::user::interaction_impl_base::DestroyWindow();
+
+      m_bCreate = false;
 
       return bOk;
 
@@ -769,15 +769,23 @@ namespace user
 
    void interaction_child::set_viewport_org(::draw2d::graphics * pgraphics)
    {
+      
       // graphics will be already set its view port to the interaction_impl for linux - cairo with xlib
 
+      try
+      {
+
+         rect rectWindow;
+         GetWindowRect(rectWindow);
+         get_wnd()->viewport_screen_to_client(rectWindow);
+         pgraphics->SetViewportOrg(rectWindow.top_left());
+
+      }
+      catch (...)
+      {
 
 
-
-      rect rectWindow;
-      GetWindowRect(rectWindow);
-      get_wnd()->viewport_screen_to_client(rectWindow);
-      pgraphics->SetViewportOrg(rectWindow.top_left());
+      }
 
    }
 

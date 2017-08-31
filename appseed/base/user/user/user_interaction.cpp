@@ -34,6 +34,7 @@ namespace user
 
    void interaction::user_interaction_common_construct()
    {
+
       m_iItemHeight = -1;
       m_flagNonClient.signalize(non_client_background);
       m_flagNonClient.signalize(non_client_focus_rect);
@@ -386,17 +387,6 @@ namespace user
 
    interaction * interaction::GetParent() const
    {
-
-//#if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
-//
-//      if(m_pparent == System.m_possystemwindow->m_pui)
-//      {
-//
-//         return NULL;
-//
-//      }
-//
-//#endif
 
       return m_pparent;
 
@@ -2100,39 +2090,8 @@ namespace user
 
       }
 
-      if (m_puserstyle == NULL)
-      {
 
-         ::user::interaction * pui = GetParent();
-
-         while (pui != NULL)
-         {
-
-            m_puserstyle = pui->m_puserstyle;
-
-            if (m_puserstyle != NULL)
-            {
-
-               break;
-
-            }
-
-            pui = pui->GetParent();
-
-         }
-
-      }
-
-      try
-      {
-      
-         on_select_user_style();
-         
-      }
-      catch (...)
-      {
-      
-      }
+      defer_initialize_userstyle();
 
 
    }
@@ -2814,10 +2773,14 @@ namespace user
    bool interaction::enable_window(bool bEnable)
    {
 
-      if(m_pimpl == NULL)
-         return FALSE;
-      else
-         return m_pimpl->enable_window(bEnable);
+      if (m_pimpl == NULL)
+      {
+       
+         return false;
+
+      }
+
+      return m_pimpl->enable_window(bEnable);
 
    }
 
@@ -4141,6 +4104,13 @@ namespace user
 
    ::user::interaction * interaction::GetOwner() const
    {
+
+      if (m_puiOwner != NULL)
+      {
+
+         return m_puiOwner;
+
+      }
 
       if(m_pimpl == NULL)
          return NULL;
@@ -8755,6 +8725,87 @@ restart:
       return m_pimpl->has_pending_redraw_flags();
 
    }
+
+   void interaction::defer_initialize_userstyle()
+   {
+
+      bool bWasNull = m_puserstyle == NULL;
+
+      initialize_userstyle();
+
+      bool bIsNull = m_puserstyle == NULL;
+
+      if (bWasNull && !bIsNull)
+      {
+
+         try
+         {
+
+            on_select_user_style();
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+   }
+
+
+   void interaction::initialize_userstyle()
+   {
+
+      if (m_puserstyle == NULL)
+      {
+
+         ::user::interaction * pui = GetOwner();
+
+         while (pui != NULL)
+         {
+
+            m_puserstyle = pui->m_puserstyle;
+
+            if (m_puserstyle != NULL)
+            {
+
+               break;
+
+            }
+
+            pui = pui->GetOwner();
+
+         }
+
+      }
+
+
+      if (m_puserstyle == NULL)
+      {
+
+         ::user::interaction * pui = GetParent();
+
+         while (pui != NULL)
+         {
+
+            m_puserstyle = pui->m_puserstyle;
+
+            if (m_puserstyle != NULL)
+            {
+
+               break;
+
+            }
+
+            pui = pui->GetParent();
+
+         }
+
+      }
+
+   }
+
 
 } // namespace user
 

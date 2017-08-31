@@ -15,7 +15,7 @@ namespace user
       sp(menu_item_ptra)         m_spitema;
       int32_t                    m_iFullHeightItemCount;
       int32_t                    m_iSeparatorCount;
-      sp(::user::interaction)    m_pui;
+      ::user::interaction *      m_pui;
       bool                       m_bPopup;
       int32_t                    m_iLevel;
       ::user::menu *             m_pmenu;

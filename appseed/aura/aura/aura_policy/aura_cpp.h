@@ -179,6 +179,7 @@ namespace user
    class primitive;
    class frame;
    class menu;
+   class controller;
    class document;
 
    class impact_system;
@@ -1234,7 +1235,7 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_fixed_alloc_impl.h"
 #include "aura/aura/aura/aura_plex_heap_impl.h"
 #include "aura/primitive/primitive_command_line.h"
-#include "aura/aura/aura/aura_create_context.h"
+#include "aura/user/user/user_create.h"
 #include "aura/primitive/primitive_create.h"
 #include "aura/primitive/primitive_request_signal.h"
 
@@ -1827,6 +1828,8 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 #include "aura/install/install2.h"
 
+
+#include "aura/user/user/user_controller.h"
 
 
 template < typename TYPE >

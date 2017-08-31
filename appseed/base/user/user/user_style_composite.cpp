@@ -575,7 +575,16 @@ namespace user
    bool style_composite::style_font(::draw2d::font_sp & font, e_font efont)
    {
    
-      return userstyle()->get_font(font, efont);
+      ::user::style * puserstyle = userstyle();
+
+      if (puserstyle != NULL && puserstyle->get_font(font, efont))
+      {
+
+         return true;
+
+      }
+
+      return false;
    
    }
 

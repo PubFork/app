@@ -40,6 +40,7 @@ namespace user
       bool                                   m_bPositionHint;
       bool                                   m_bInline;
       bool                                   m_bMenuOk;
+      menu_item *                            m_pmenuitemSub;
       
       
       

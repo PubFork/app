@@ -98,18 +98,20 @@ namespace user
 
    void impact::_001OnCreate(::message::message * pobj)
    {
-      SCAST_PTR(::message::create, pcreate, pobj);
+      SCAST_PTR(::message::create, pmessagecreate, pobj);
 
 
 
       // if ok, wire in the current ::user::document
       ASSERT(::user::impact::get_document() == NULL);
-      sp(::create) pContext = (::create *) pcreate->m_lpcreatestruct->lpCreateParams;
+
+      sp(class ::create) pcreate((::create *) pmessagecreate->m_lpcreatestruct->lpCreateParams);
 
       // A ::user::impact should be created in a given context!
-      if (pContext != NULL && pContext->m_user->m_pCurrentDoc != NULL)
+      if (pcreate != NULL && pcreate->m_pusercreate->m_pdocumentCurrent != NULL)
       {
-         ::user::document * pdoc = pContext->m_user->m_pCurrentDoc;
+
+         sp(::user::document) pdoc = pcreate->m_pusercreate->m_pdocumentCurrent;
          
          pdoc->add_view(this);
 
@@ -130,7 +132,7 @@ namespace user
 
       }
 
-      if(pcreate->previous())
+      if(pmessagecreate->previous())
          return;
 
       {
@@ -147,8 +149,10 @@ namespace user
 
       }
 
-      pcreate->set_lresult(0);
+      pmessagecreate->set_lresult(0);
+
    }
+
 
    void impact::_001OnDestroy(::message::message * pobj)
    {
@@ -275,6 +279,15 @@ namespace user
             }
 
          }
+
+      }
+
+      Application._001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
 
       }
 
@@ -587,17 +600,17 @@ namespace user
    ::user::interaction * impact::create_view(::user::interaction * pimpactAlloc, ::user::view_creator_data * pcreatordata, ::user::interaction * pviewLast)
    {
 
-      sp(::create) cacc(allocer());
+      sp(::create) pcreate(allocer());
 
-      stacker < ::aura::create_context > cc(cacc->m_user);
+      pcreate->m_pusercreate = canew(::user::create);
 
-      cc->m_puiNew = pimpactAlloc;
+      pcreate->m_pusercreate->m_puiNew = pimpactAlloc;
 
-      cc->m_pLastView = pviewLast;
+      pcreate->m_pusercreate->m_puiLastView = pviewLast;
 
-      cc->m_pCurrentDoc = get_document();
+      pcreate->m_pusercreate->m_pdocumentCurrent = get_document();
 
-      return s_create_view(cacc, pcreatordata->m_rectCreate, pcreatordata->m_pholder, pcreatordata->m_id);
+      return s_create_view(pcreate, pcreatordata->m_rectCreate, pcreatordata->m_pholder, pcreatordata->m_id);
 
    }
 
@@ -607,36 +620,42 @@ namespace user
 
       sp(type) info(pinfo);
 
-      sp(::create) cacc(allocer());
+      sp(::create) pcreate(allocer());
 
-      stacker < ::aura::create_context > cc(cacc->m_user);
+      pcreate->m_pusercreate = canew(::user::create);
 
-      cc->m_typeinfoNewView = info;
+      pcreate->m_pusercreate->m_typeinfoNewView = info;
 
-      cc->m_pLastView = pviewLast;
+      pcreate->m_pusercreate->m_puiLastView = pviewLast;
 
       if (pdoc == NULL)
       {
-         cc->m_pCurrentDoc = get_document();
+
+         pcreate->m_pusercreate->m_pdocumentCurrent = get_document();
+
       }
       else
       {
-         cc->m_pCurrentDoc = pdoc;
+
+         pcreate->m_pusercreate->m_pdocumentCurrent = pdoc;
+
       }
 
       if (pwndParent == NULL)
       {
+
          pwndParent = this;
+
       }
 
       if (id.is_empty())
       {
 
-         id = (const ::id &) cc->m_typeinfoNewView->name();
+         id = (const ::id &) pcreate->m_pusercreate->m_typeinfoNewView->name();
 
       }
 
-      return s_create_view(cacc, rect, pwndParent, id);
+      return s_create_view(pcreate, rect, pwndParent, id);
 
    }
 
@@ -646,53 +665,51 @@ namespace user
 
       sp(type) info(pinfo);
 
-      sp(::create) cacc(pdoc->allocer());
+      sp(::create) pcreate(pdoc->allocer());
 
-      stacker < ::aura::create_context > cc(cacc->m_user);
+      pcreate->m_pusercreate = canew(::user::create);
 
-      cc->m_typeinfoNewView = info;
+      pcreate->m_pusercreate->m_typeinfoNewView = info;
 
-      cc->m_pLastView = pviewLast;
+      pcreate->m_pusercreate->m_puiLastView = pviewLast;
 
-      cc->m_pCurrentDoc = pdoc;
+      pcreate->m_pusercreate->m_pdocumentCurrent = pdoc;
 
-      return s_create_view(cacc, rect, pwndParent, id);
+      return s_create_view(pcreate, rect, pwndParent, id);
 
    }
 
-   ::user::interaction * impact::s_create_view(::create * pContext,const RECT & rect, ::user::interaction * pwndParent,id id)
+   ::user::interaction * impact::s_create_view(::create * pcreate,const RECT & rect, ::user::interaction * pwndParent,id id)
    {
 
-      // trans   ASSERT(pwndParent->get_handle() != NULL);
-      // trans   ASSERT(::IsWindow(pwndParent->get_handle()));
+      ASSERT(pcreate != NULL);
 
-      ASSERT(pContext != NULL);
-
-      ASSERT(pContext->m_user->m_typeinfoNewView || pContext->m_user->m_puiNew != NULL);
-
+      ASSERT(pcreate->m_pusercreate->m_typeinfoNewView || pcreate->m_pusercreate->m_puiNew != NULL);
 
       ::aura::application * papp = pwndParent->get_app();
 
       ::user::interaction * pui;
 
-      if (pContext->m_user->m_puiNew != NULL)
+      if (pcreate->m_pusercreate->m_puiNew != NULL)
       {
 
-         pui = dynamic_cast < ::user::interaction * > (pContext->m_user->m_puiNew);
+         pui = dynamic_cast < ::user::interaction * > (pcreate->m_pusercreate->m_puiNew);
 
       }
       else
       {
 
          // Note: can be a ::user::interaction with PostNcDestroy self cleanup
-         pui = App(papp).alloc < ::user::interaction >(pContext->m_user->m_typeinfoNewView);
+         pui = App(papp).alloc < ::user::interaction >(pcreate->m_pusercreate->m_typeinfoNewView);
 
          //::id idProperty = "bk." + string(typeid(*pui).name());
 
          if (pui == NULL)
          {
+
             //         TRACE1("Warning: Dynamic create of ::user::impact type %hs failed.\n", pContext->m_typeinfoNewView.name());
             return NULL;
+
          }
 
       }
@@ -701,7 +718,7 @@ namespace user
 
       
       // views are always created with a border!
-      if (!pui->create_window(NULL, NULL, WS_VISIBLE | WS_CHILD, rect, pwndParent, id, pContext))
+      if (!pui->create_window(NULL, NULL, WS_VISIBLE | WS_CHILD, rect, pwndParent, id, pcreate))
       {
 
          //TRACE0("Warning: could not create ::user::impact for frame.\n");
@@ -719,22 +736,11 @@ namespace user
 
       }
 
-      /*   if (afxData.bWin4 && (pview->GetExStyle() & WS_EX_CLIENTEDGE))
-      {
-      // remove the 3d style from the frame, since the ::user::impact is
-      //  providing it.
-      // make sure to recalc the non-client area
-      ModifyStyleEx(WS_EX_CLIENTEDGE, 0, SWP_FRAMECHANGED);
-      }*/
-
-
       if (pui != NULL)
       {
 
          if (pui->GetParent() != NULL)
          {
-
-
 
             if (pui->GetParent()->is_place_holder())
             {

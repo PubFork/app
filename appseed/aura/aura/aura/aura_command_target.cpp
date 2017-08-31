@@ -141,7 +141,7 @@ void command_target::on_command(::user::command * pcommand)
 bool command_target::_001HasCommandHandler(::user::command * pcommand)
 {
 
-   synch_lock sl(m_pmutex);
+   synch_lock sl(m_pmutexIdRoute);
 
    SRESTORE(pcommand->m_id.m_emessagetype, ::message::type_command);
 

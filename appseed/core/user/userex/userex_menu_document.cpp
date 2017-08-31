@@ -4,6 +4,7 @@
 menu_document::menu_document(::aura::application * papp) :
    object(papp),
    ::data::data_container_base(papp),
+   ::user::controller(papp),
    ::user::document(papp)
 {
 

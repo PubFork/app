@@ -738,7 +738,7 @@ namespace user
    bool frame_window::on_create_client(::user::create_struct *, ::create * pcreate)
    {
 
-      if (pcreate != NULL && (pcreate->m_user->m_typeinfoNewView || pcreate->m_user->m_puiNew != NULL))
+      if (pcreate != NULL && (pcreate->m_pusercreate->m_typeinfoNewView || pcreate->m_pusercreate->m_puiNew != NULL))
       {
 
          if (::user::impact::s_create_view(pcreate, null_rect(), this, "pane_first") == NULL)
@@ -761,15 +761,15 @@ namespace user
       if (pobj->previous())
          return;
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      SCAST_PTR(::message::create, pcreatemessage, pobj);
 
-      ENSURE_ARG(pcreate->m_lpcreatestruct != NULL);
+      ENSURE_ARG(pcreatemessage->m_lpcreatestruct != NULL);
 
-      sp(::create) pContext = (::create *) pcreate->m_lpcreatestruct->lpCreateParams;
+      sp(::create) pcreate((::create *) pcreatemessage->m_lpcreatestruct->lpCreateParams);
 
-      pcreate->set_lresult(OnCreateHelper(pcreate->m_lpcreatestruct, pContext));
+      pcreatemessage->set_lresult(OnCreateHelper(pcreatemessage->m_lpcreatestruct, pcreate));
 
-      pcreate->m_bRet = pcreate->get_lresult() == -1;
+      pcreatemessage->m_bRet = pcreatemessage->get_lresult() == -1;
 
    }
 

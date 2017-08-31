@@ -8,7 +8,8 @@ namespace user
 
    document::document(::aura::application * papp) :
       ::object(papp),
-      ::data::data_container_base(papp)
+      ::data::data_container_base(papp),
+      ::user::controller(papp)
    {
 
       m_pimpactsystem = NULL;

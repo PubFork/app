@@ -2540,6 +2540,13 @@ namespace windows
                            try
                            {
 
+                              if (m_pui == NULL)
+                              {
+
+                                 break;
+
+                              }
+
                               m_pui->on_after_graphical_update();
 
                            }

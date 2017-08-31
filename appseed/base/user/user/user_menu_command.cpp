@@ -16,9 +16,14 @@ namespace user
    void menu_command::Enable(bool bOn, ::action::context actioncontext)
    {
       
-      m_bEnableChanged = TRUE;
+      ::user::command::Enable(bOn, actioncontext);
       
-      m_puiOther->enable_window(bOn != FALSE);
+      if (m_puiOther != NULL)
+      {
+
+         m_puiOther->enable_window(bOn != FALSE);
+
+      }
       
    }
    
@@ -27,8 +32,15 @@ namespace user
    {
       
       ASSERT(echeck == check::checked || echeck == check::unchecked || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
+
+      ::user::command::_001SetCheck(echeck, actioncontext);
       
-      m_puiOther->_001SetCheck(echeck, actioncontext);
+      if (m_puiOther != NULL)
+      {
+
+         m_puiOther->_001SetCheck(echeck, actioncontext);
+
+      }
       
    }
    

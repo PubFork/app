@@ -28,6 +28,8 @@ namespace message
       void add_route(RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id = ::message::id())
       {
 
+         synch_lock sl(m_pmutexIdRoute);
+
          void * pvoidReceiver = preceiverDerived;
 
          if (m_idroute[id].pred_find_first([=](auto proute)

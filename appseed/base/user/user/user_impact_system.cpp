@@ -28,6 +28,8 @@ namespace user
       ::object(papp)
    {
 
+      m_puiOwner = NULL;
+
       m_bQueueDocumentOpening = true;
       m_strMatter = pszMatter;
       m_typeinfoDocument = pDocClass;
@@ -165,44 +167,80 @@ namespace user
       // create a frame wired to the specified ::user::document
 
       ASSERT(m_strMatter.get_length() > 0); // must have a resource ID to load from
-      stacker < ::aura::create_context > context(pcreate->m_user);
-      context->m_pCurrentFrame = pOther;
-      context->m_pCurrentDoc = pdocument;
+      
+      ::user::create usercreate;
+
+      SRESTORE(pcreate->m_pusercreate.m_p, &usercreate);
+
+      usercreate.m_puiCurrentFrame = pOther;
+
+      usercreate.m_pdocumentCurrent = pdocument;
+
       if (pcreate->m_puiAlloc != NULL)
       {
-         context->m_puiNew = pcreate->m_puiAlloc;
+
+         usercreate.m_puiNew = pcreate->m_puiAlloc;
+
       }
       else
       {
-         context->m_typeinfoNewView = m_typeinfoView;
+      
+         usercreate.m_typeinfoNewView = m_typeinfoView;
+
       }
-      context->m_pNewDocTemplate = this;
+
+      usercreate.m_ptemplateNewDocument = this;
 
       if (!m_typeinfoFrame)
       {
-         TRACE(::aura::trace::category_AppMsg, 0, "Error: you must override impact_system::create_new_frame.\n");
-         ASSERT(FALSE);
-         return NULL;
-      }
-      ::aura::application * papp = pcreate->get_app() != NULL ? pcreate->get_app() : get_app();
-      sp(::user::frame_window) pFrame = App(papp).alloc(m_typeinfoFrame);
-      if (pFrame == NULL)
-      {
-         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n",
-               m_typeinfoFrame->name());
-         string strMessage;
-         strMessage.Format("Warning: Dynamic create of frame %hs failed.\n\n(Does allocation was implemented)?",m_typeinfoFrame->name());
-         Application.simple_message_box(NULL, strMessage);
-         return NULL;
-      }
-      ASSERT_KINDOF(frame_window, pFrame);
-      pFrame->m_pdocumenttemplate = this;
 
-      if (!context->m_typeinfoNewView)
+         TRACE(::aura::trace::category_AppMsg, 0, "Error: you must override impact_system::create_new_frame.\n");
+
+         ASSERT(FALSE);
+
+         return NULL;
+
+      }
+
+      ::aura::application * papp = pcreate->get_app() != NULL ? pcreate->get_app() : get_app();
+
+      sp(::user::frame_window) pframe = App(papp).alloc(m_typeinfoFrame);
+
+      if (pframe == NULL)
+      {
+
+         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n", m_typeinfoFrame->name());
+
+         string strMessage;
+         
+         strMessage.Format("Warning: Dynamic create of frame %hs failed.\n\n(Does allocation was implemented)?",m_typeinfoFrame->name());
+
+         Application.simple_message_box(NULL, strMessage);
+
+         return NULL;
+
+      }
+
+      ASSERT_KINDOF(frame_window, pframe);
+
+      pframe->m_pdocumenttemplate = this;
+
+      if (!usercreate.m_typeinfoNewView)
+      {
+
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: creating frame with no default ::user::impact.\n");
 
+      }
+
+      if (m_puiOwner != NULL)
+      {
+
+         pframe->m_puiOwner = m_puiOwner;
+
+      }
+
       // create new from resource
-      if (!pFrame->LoadFrame(m_strMatter,
+      if (!pframe->LoadFrame(m_strMatter,
                              WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,   // default frame styles
                              dynamic_cast < ::user::interaction * > (pcreate->m_puiParent), pcreate))
       {
@@ -215,7 +253,7 @@ namespace user
          
       }
 
-      return pFrame;
+      return pframe;
       
    }
    

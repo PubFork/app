@@ -42,14 +42,14 @@ public:
    ::user::primitive *                                         m_puiAlloc;
    sp(application_bias)                                        m_spApplicationBias;
    command_line_sp                                             m_spCommandLine;
-   stack < ::aura::create_context >                            m_user; 
+   sp(::user::create)                                          m_pusercreate;
    ::handler *                                                 m_phandlerParent;
 
 
    create(::aura::application * papp);
    create(::handler * phandlerParent);
    create(::handler * phandlerParent,var varFile,bool bMakeVisible = true,::user::primitive * puiParent = NULL);
-   create(const create & createcontext);
+   create(const create & create);
    virtual ~create();
 
    

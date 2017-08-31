@@ -982,6 +982,8 @@
     <ClCompile Include="primitive\str\str_x.cpp">
     </ClCompile>
     <ClCompile Include="user\user\user_command.cpp" />
+    <ClCompile Include="user\user\user_controller.cpp" />
+    <ClCompile Include="user\user\user_create.cpp" />
     <ClCompile Include="user\user\user_interactive.cpp">
     </ClCompile>
     <ClInclude Include="aura\aura\aura.h" />
@@ -1013,7 +1015,6 @@
     <ClInclude Include="aura\aura\aura_core.h" />
     <ClInclude Include="aura\aura\aura_os.h" />
     <ClInclude Include="aura\aura\aura_cpu_architecture.h" />
-    <ClInclude Include="aura\aura\aura_create_context.h" />
     <ClInclude Include="aura\aura\aura_cregexp.h" />
     <ClInclude Include="aura\aura\aura_cregexp_util.h" />
     <ClInclude Include="aura\aura\aura_debug.h" />
@@ -1397,7 +1398,6 @@
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui_probe.cpp" />
     <ClCompile Include="aura\aura\aura_console_window.cpp" />
-    <ClCompile Include="aura\aura\aura_create_context.cpp" />
     <ClCompile Include="aura\aura\aura_draw_context.cpp" />
     <ClCompile Include="aura\aura\aura_draw_interface.cpp" />
     <ClCompile Include="aura\aura\aura_gudo.cpp" />
@@ -2205,6 +2205,8 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_timer_event.cpp" />
     <ClInclude Include="user\user\user_command.h" />
+    <ClInclude Include="user\user\user_controller.h" />
+    <ClInclude Include="user\user\user_create.h" />
     <ClInclude Include="version.h" />
     <None Include="aura\os\windows\windows.inl" />
     <None Include="aura\os\windows\windows_app.inl" />

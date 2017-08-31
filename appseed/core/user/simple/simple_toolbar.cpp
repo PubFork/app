@@ -385,12 +385,12 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
 
 void simple_toolbar::_001OnCreate(::message::message * pobj)
 {
+
    if (pobj->previous())
       return;
 
-
-   //m_puserstyle = Session.m_puserstyle;
    m_dibDraft->create(20, 20);
+
 }
 
 

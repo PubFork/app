@@ -1015,6 +1015,9 @@ namespace user
 
       virtual bool has_pending_redraw_flags() override;
 
+      virtual void defer_initialize_userstyle();
+
+      virtual void initialize_userstyle();
 
    };
 

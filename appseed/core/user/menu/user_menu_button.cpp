@@ -62,8 +62,6 @@ namespace user
       if(m_pmenuitem != NULL && m_pmenuitem->m_bPopup)
       {
 
-         
-
          ::draw2d::brush_sp br(allocer(), RGB(0, 0, 0));
 
          ::draw2d::pen_sp pen(allocer());

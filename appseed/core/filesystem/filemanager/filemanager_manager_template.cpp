@@ -518,12 +518,14 @@ namespace filemanager
    }
 
 
-   sp(manager) manager_template::open(id id, ::create * pcreate, ::fs::data * pdata, ::filemanager::data * pfilemanagerdata, callback * pcallback)
+   sp(manager) manager_template::open(id id, ::create * pcreateParam, ::fs::data * pdata, ::filemanager::data * pfilemanagerdata, callback * pcallback)
    {
 
       ::file::path pathFolder;
 
-      if (pcreate == NULL)
+      sp(::create) pcreate(pcreateParam);
+
+      if (pcreate.is_null())
       {
 
          pcreate = canew(::create(Application.handler()));

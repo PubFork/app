@@ -32,7 +32,7 @@ namespace user
       m_iHoverSubMenu = -1;
       m_bInline = false;
       m_bMenuOk = false;
-
+      m_pmenuitemSub = NULL;
    }
 
 
@@ -76,10 +76,8 @@ namespace user
       IGUI_MSG_LINK(WM_NCCALCSIZE   , psender, this, &menu::_001OnNcCalcSize);
       IGUI_MSG_LINK(WM_ENABLE       , psender, this, &menu::_001OnEnable);
       IGUI_MSG_LINK(WM_SHOWWINDOW   , psender, this, &menu::_001OnShowWindow);
-
+      IGUI_MSG_LINK(WM_CLOSE        , psender, this, &menu::_001OnClose);
       IGUI_MSG_LINK(WM_SHOWWINDOW   , psender, this, &menu::_001OnShowWindow);
-      IGUI_MSG_LINK(WM_DESTROY      , psender, this, &menu::_001OnDestroy);
-
 
    }
 
@@ -239,10 +237,12 @@ namespace user
 
       }
 
-      if (m_psubmenu.is_set() && m_psubmenu->m_pmenuParent != NULL)
+      if (m_psubmenu.is_set())
       {
 
-         m_psubmenu->m_pmenuParent = NULL;
+         m_psubmenu->DestroyWindow();
+
+         m_psubmenu.release();
 
       }
 
@@ -276,8 +276,6 @@ namespace user
          m_puiNotify = m_puiParent;
 
       }
-
-      m_pmenuParent = NULL;
 
       LPVOID lpvoid = NULL;
 
@@ -355,7 +353,7 @@ namespace user
 
       }
 
-      if (m_itemClose.m_pui.is_null())
+      if (m_itemClose.m_pui == NULL)
       {
 
          m_itemClose.m_pui = create_menu_button();
@@ -802,35 +800,12 @@ namespace user
             if (!m_bInline)
             {
 
-               if (pevent->m_puie->m_id != m_idSubMenu)
+               if (pevent->m_puie->m_pmenuitem != m_pmenuitemSub)
                {
-                  if (m_psubmenu != NULL
-                     && m_idSubMenu.has_char())
+                  
                   {
-                     m_psubmenu->send_message(WM_CLOSE);
-                     m_psubmenu = NULL;
-                     m_idSubMenu = "";
-                  }
-                  /*
-                   SetTimer(timer_menu, BaseWndMenuTiming, NULL);
-                   if(m_pitem->m_pitema->element_at(pevent->m_pcontrol->m_uiId)->m_bPopup)
-                   {
-                   m_iTimerMenu = pevent->m_pcontrol->m_uiId;
-                   }
-                   else
-                   {
-                   m_iTimerMenu = -1;
-                   }
-                   }
-                   else*/
-                  {
+
                      sp(::user::menu_item) pitem = get_item(pevent->m_puie);
-
-                     //sp(::user::menu_item) pitemThis = get_item();
-
-                     //sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
-
-                     //sp(::user::menu_item) pitem = spitema->find(pevent->m_puie->m_id);
 
                      if (pitem.is_set())
                      {
@@ -838,9 +813,22 @@ namespace user
                         if (pitem->m_bPopup)
                         {
 
-                           m_idSubMenu = pevent->m_puie->m_id;
+                           if (m_psubmenu != NULL)
+                           {
+
+                              m_psubmenu->DestroyWindow();
+
+                              m_psubmenu = NULL;
+
+                              m_pmenuitemSub = NULL;
+
+                           }
+
+                           m_pmenuitemSub = pitem;
 
                            m_psubmenu = canew(menu(get_app(), pitem));
+
+                           m_psubmenu->m_pmenuParent = this;
 
                            rect rect;
 
@@ -848,7 +836,7 @@ namespace user
 
                            m_psubmenu->hint_position(rect.top_right());
 
-                           m_psubmenu->track_popup_menu(this, m_puiNotify);
+                           m_psubmenu->track_popup_menu(m_puiNotify);
 
                         }
                         else
@@ -974,7 +962,13 @@ namespace user
       else if (ptimer->m_nIDEvent == ::user::timer_command_probe)
       {
 
-         update_command(m_pitem);
+         {
+
+            synch_lock sl(m_pmutex);
+
+            update_command(m_pitem);
+
+         }
 
          //if(spitema != NULL)
          //{
@@ -1071,17 +1065,22 @@ namespace user
       pbase->set_lresult(DefWindowProc(WM_NCACTIVATE, pbase->m_wparam, -1));
    }
 
+   
    void menu::_001OnNcCalcSize(::message::message * pobj)
    {
+      
       SCAST_PTR(::message::base, pbase, pobj);
 
       if (pbase->m_wparam == TRUE)
       {
+         
          pbase->m_bRet = true;
          pbase->set_lresult(0);
+
       }
       else
       {
+         
          LPRECT lprect = (LPRECT)pbase->m_lparam.m_lparam;
          lprect->left = m_ptTrack.x;
          lprect->top = m_ptTrack.y;
@@ -1089,14 +1088,24 @@ namespace user
          lprect->bottom = lprect->left + m_size.cx;
          pbase->m_bRet = true;
          pbase->set_lresult(0);
+
       }
+
    }
+
 
    void menu::_001OnClose(::message::message * pobj)
    {
 
       if (!m_bInline)
       {
+
+         if (m_pmenuParent != NULL)
+         {
+
+            m_pmenuParent->post_message(WM_CLOSE);
+
+         }
 
          DestroyWindow();
 
@@ -1105,6 +1114,7 @@ namespace user
       pobj->m_bRet = true;
 
    }
+
 
    bool menu::pre_create_window(::user::create_struct& cs)
    {
@@ -1116,8 +1126,6 @@ namespace user
       return TRUE;
 
    }
-
-
 
 
    sp(::user::menu_item) menu::get_item()
@@ -1134,33 +1142,16 @@ namespace user
       sp(::user::interaction) pbutton = pui;
 
       if (pbutton.is_null())
+      {
+
          return NULL;
+
+      }
 
       return pbutton->m_pmenuitem;
 
-      //if(pbutton.)
-
-
-      //sp(::user::menu_item) pitemThis = get_item();
-
-      //sp(::user::menu_item_ptra) spitema = pitemThis->m_spitema;
-
-
-      //for(auto & pitem : *spitema.m_p)
-      //{
-      //   
-      //   if(&pitem->m_button == pbutton.m_p)
-      //   {
-
-      //      return pitem;
-
-      //   }
-
-      //}
-
-      //return NULL;
-
    }
+
 
    bool menu::get_color(COLORREF & cr, ::user::e_color ecolor)
    {
@@ -1267,7 +1258,12 @@ namespace user
 
          m_puiNotify->on_command_probe(&command);
 
-         pitem->m_pmenu->update_command(pitem);
+         if (pitem->m_pmenu != NULL)
+         {
+
+            pitem->m_pmenu->update_command(pitem);
+
+         }
 
       }
 

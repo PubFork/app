@@ -36,6 +36,15 @@ namespace user
 
    button::~button()
    {
+
+      if (m_pmenuitem.is_set())
+      {
+
+         m_pmenuitem->m_pui = NULL;
+         m_pmenuitem->m_pmenu = NULL;
+
+      }
+
       ::aura::del(m_pbitmap);
       ::aura::del(m_plist);
       set_button_style(style_none);
