@@ -1,4 +1,4 @@
-// #include "framework.h"
+#include "framework.h"
 // #include "float.h"
 
 
@@ -1180,17 +1180,17 @@ namespace html
       return pelemental;
    }
 
-   void elemental::OnLButtonDown(signal_details * pobj)
+   void elemental::OnLButtonDown(::message::message * pobj)
    {
       m_pimpl->OnLButtonDown(pobj);
    }
 
-   void elemental::OnMouseMove(signal_details * pobj)
+   void elemental::OnMouseMove(::message::message * pobj)
    {
       m_pimpl->OnMouseMove(pobj);
    }
 
-   void elemental::OnLButtonUp(signal_details * pobj)
+   void elemental::OnLButtonUp(::message::message * pobj)
    {
       m_pimpl->OnLButtonUp(pobj);
    }

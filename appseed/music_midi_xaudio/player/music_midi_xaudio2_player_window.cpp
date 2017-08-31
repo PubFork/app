@@ -27,16 +27,16 @@ namespace music
             {
             }
 
-            void window::install_message_handling(::message::dispatch * pinterface)
+            void window::install_message_routing(::message::sender * pinterface)
             {
-               ::user::interaction::install_message_handling(pinterface);
-               IGUI_WIN_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
-               IGUI_WIN_MSG_LINK(::music::midi::player::message_notify_event   , pinterface, this, &window::_001OnNotifyEvent);
-               IGUI_WIN_MSG_LINK(WM_USER                          , pinterface, this, &window::_001OnUserMessage);
-               IGUI_WIN_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
+               ::user::interaction::install_message_routing(pinterface);
+               IGUI_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
+               IGUI_MSG_LINK(::music::midi::player::message_notify_event   , pinterface, this, &window::_001OnNotifyEvent);
+               IGUI_MSG_LINK(WM_USER                          , pinterface, this, &window::_001OnUserMessage);
+               IGUI_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
             }
 
-            void window::_001OnMmsgDone(::signal_details * pobj)
+            void window::_001OnMmsgDone(::message::message * pobj)
             {
                SCAST_PTR(::message::base, pbase, pobj);
                if(get_callback() != NULL)
@@ -54,7 +54,7 @@ namespace music
                }
             }
 
-            void window::_001OnNotifyEvent(::signal_details * pobj)
+            void window::_001OnNotifyEvent(::message::message * pobj)
             {
                SCAST_PTR(::message::base, pbase, pobj);
                ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
@@ -92,7 +92,7 @@ namespace music
                return true;
             }
 
-            void window::_001OnUserMessage(::signal_details * pobj)
+            void window::_001OnUserMessage(::message::message * pobj)
             {
                SCAST_PTR(::message::base, pbase, pobj);
                switch(pbase->m_wparam)
@@ -111,7 +111,7 @@ namespace music
                pbase->set_lresult(0);
             }
 
-            void window::_001OnApp3388Message(::signal_details * pobj)
+            void window::_001OnApp3388Message(::message::message * pobj)
             {
                throw not_implemented(get_app());
                SCAST_PTR(::message::base, pbase, pobj);

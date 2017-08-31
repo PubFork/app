@@ -37,7 +37,7 @@ namespace user
       virtual ~static_control();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
 
       virtual bool create_window(const RECT & rect, sp(::user::interaction) puiParent,id id);

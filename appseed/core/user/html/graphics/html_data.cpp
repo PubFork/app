@@ -247,14 +247,14 @@ namespace html
 
       m_elemental.implement(this);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, m_pui, this, &data::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, m_pui, this, &data::_001OnKeyDown);
 
       m_bImplemented = true;
 
    }
 
 
-   void data::_001OnKeyDown(signal_details * pobj)
+   void data::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);

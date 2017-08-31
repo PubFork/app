@@ -20,6 +20,9 @@ namespace filemanager
 
       main_view(::aura::application * papp);
       virtual ~main_view();
+      
+      
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       virtual void assert_valid() const;
@@ -31,7 +34,7 @@ namespace filemanager
 
       void FileManagerBrowse(const char * lpcwstr,::action::context actioncontext);
 
-      bool on_simple_action(id id);
+      virtual void on_command(::user::command * pcommand) override;
 
       virtual void OpenSelectionProperties();
 

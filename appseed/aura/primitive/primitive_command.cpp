@@ -1,8 +1,23 @@
-//#include "framework.h"
+#include "framework.h"
 
 
-namespace primitive
+namespace command
 {
+
+
+   command::command() 
+   {
+
+      m_ecommand = command_default;
+
+   }
+
+   command::command(const command & command)
+   {
+
+      operator = (command);
+
+   }
 
 
    command::command(::aura::application * papp) :
@@ -51,4 +66,26 @@ namespace primitive
    }
 
 
-} // namespace primitive
+   ::command::command & command::operator = (const ::command::command & command)
+   {
+
+      if (this == &command)
+      {
+
+         return *this;
+
+      }
+
+      ::object::operator = (command);
+
+      m_ecommand = command.m_ecommand;
+      m_strCommandLine = command.m_strCommandLine;
+      m_varFile = command.m_varFile;
+
+      return *this;
+
+   }
+
+   
+
+} // namespace command

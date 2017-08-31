@@ -49,7 +49,7 @@ namespace simpledb
       virtual bool initialize_thread() override;
 
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
 
       DECL_GEN_SIGNAL(OnApp);

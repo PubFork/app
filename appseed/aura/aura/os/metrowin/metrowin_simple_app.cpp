@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 
 namespace aura
@@ -24,9 +24,6 @@ namespace aura
 
 #ifdef WINDOWSEX
 
-      __argc = _init_args();
-      __targv = _argv;
-      _init_file();
 
       TCHAR *cmd = GetCommandLine();
 

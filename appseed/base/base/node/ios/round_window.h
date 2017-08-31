@@ -45,6 +45,8 @@ bool m_bDirty;
    virtual void round_window_resized(CGRect rect) = 0;
    virtual void round_window_moved(CGPoint point) = 0;
 
+   virtual void round_window_activate() = 0;
+   virtual void round_window_deactivate() = 0;
    
    virtual void round_window_on_show() = 0;
    virtual void round_window_on_hide() = 0;
@@ -54,11 +56,12 @@ bool m_bDirty;
    virtual void round_window_hide();
    virtual void round_window_redraw();
    
-   virtual void round_window_close();
    virtual void round_window_show_keyboard(bool bShow = true);
    
    virtual void round_window_set_title(const char * pszTitle);
+   virtual void round_window_get_title(char * pszTitle, int iSize);
 
+   virtual void round_window_destroy();
    
 };
 

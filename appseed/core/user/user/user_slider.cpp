@@ -20,18 +20,20 @@ namespace user
    }
 
 
-   void slider::install_message_handling(::message::dispatch * pdispatch)
+   void slider::install_message_routing(::message::sender * psender)
    {
-      ::user::interaction::install_message_handling(pdispatch);
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&slider::_001OnCreate);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER,pdispatch,this,&slider::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&slider::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&slider::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&slider::_001OnMouseMove);
+      ::user::interaction::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&slider::_001OnCreate);
+//      //IGUI_MSG_LINK(WM_TIMER,psender,this,&slider::_001OnTimer);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&slider::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&slider::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&slider::_001OnMouseMove);
    }
 
-   void slider::_001OnCreate(signal_details * pobj)
+   void slider::_001OnCreate(::message::message * pobj)
    {
+
+      pobj->previous();
 
       UNREFERENCED_PARAMETER(pobj);
 
@@ -46,7 +48,7 @@ namespace user
    }
 
 
-   void slider::_001OnLButtonDown(signal_details * pobj)
+   void slider::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -82,7 +84,7 @@ namespace user
 
    }
 
-   void slider::_001OnLButtonUp(signal_details * pobj)
+   void slider::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -107,7 +109,7 @@ namespace user
    }
 
 
-   void slider::_001OnMouseMove(signal_details * pobj)
+   void slider::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);

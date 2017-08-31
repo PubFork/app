@@ -1,4 +1,5 @@
-//#include"framework.h"
+#include "framework.h"
+#include <stdio.h>
 //#include"net/net_sockets.h"
 //#include"geoip.h"
 

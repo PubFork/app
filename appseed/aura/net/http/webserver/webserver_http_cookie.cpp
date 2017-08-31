@@ -1,10 +1,5 @@
 #include "framework.h"
-
-#ifdef LINUX
-
 #include <time.h>
-
-#endif
 
 
 namespace http

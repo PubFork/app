@@ -1,5 +1,5 @@
-//#include "framework.h"
-//#include "framework.h"
+#include "framework.h"
+#include "framework.h"
 
 
 
@@ -21,6 +21,14 @@ namespace filemanager
    }
 
 
+   void folder_list_view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::simple_list_view::install_message_routing(psender);
+      
+   }
+   
    void folder_list_view::Initialize(::database::id  datakey,bool bRecursive)
    {
       

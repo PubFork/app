@@ -24,7 +24,7 @@ namespace user
       bool                          m_bRet;
       bool                          m_bProcessed;
       bool                          m_bOk;
-      signal_details *              m_pobj;
+      ::message::message *              m_pobj;
       ::datetime::time              m_timeOuterBeg;
       ::datetime::time              m_timeOuterEnd;
       ::datetime::time              m_timeBeg;

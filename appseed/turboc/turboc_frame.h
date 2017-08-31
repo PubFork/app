@@ -19,7 +19,7 @@ namespace turboc
 	   virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual bool get_translucency(::user::ETranslucency & etranslucency);
+      virtual bool get_translucency(::user::e_translucency & etranslucency);
       virtual sp(::user::wndfrm::frame::frame) create_frame_schema();
 
 

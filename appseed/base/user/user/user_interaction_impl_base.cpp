@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -179,6 +179,15 @@ namespace user
 
    }
 
+   bool interaction_impl_base::has_pending_redraw_flags()
+   {
+
+      return m_bZ
+         || m_bShowFlags
+         || m_rectParentClient != m_rectParentClientRequest;
+
+   }
+
 
    void interaction_impl_base::on_layout()
    {
@@ -214,13 +223,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       { 
          
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
          
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -245,13 +254,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       {
 
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -302,13 +311,13 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       {
 
-         ShowWindow(SW_SHOW);
+         m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
 
-         ShowWindow(SW_HIDE);
+         m_pui->message_call(WM_SHOWWINDOW, 0);
 
       }
 
@@ -327,7 +336,7 @@ namespace user
    void interaction_impl_base::_001WindowMinimize(bool bNoActivate)
    {
 
-      m_pui->set_appearance(AppearanceIconic);
+      m_pui->set_appearance(appearance_iconic);
 
       rect rectNormal;
 
@@ -338,7 +347,7 @@ namespace user
    }
 
    
-   void interaction_impl_base::_001WindowDock(::user::EAppearance eappearance)
+   void interaction_impl_base::_001WindowDock(::user::e_appearance eappearance)
    {
 
       ASSERT(is_docking_appearance(eappearance));
@@ -356,7 +365,7 @@ namespace user
    void interaction_impl_base::_001WindowMaximize()
    {
 
-      m_pui->set_appearance(AppearanceZoomed);
+      m_pui->set_appearance(appearance_zoomed);
 
       rect rectNormal;
 
@@ -370,7 +379,7 @@ namespace user
    void interaction_impl_base::_001WindowFullScreen()
    {
 
-      m_pui->set_appearance(AppearanceFullScreen);
+      m_pui->set_appearance(appearance_full_screen);
 
       rect rectNormal;
 
@@ -384,7 +393,7 @@ namespace user
    void interaction_impl_base::_001WindowRestore()
    {
 
-      m_pui->set_appearance(AppearanceNormal);
+      m_pui->set_appearance(appearance_normal);
 
       rect rectNormal;
 
@@ -760,8 +769,11 @@ namespace user
 //
 //      }
 //
+      
+      
       *lprect = m_rectParentClient;
-
+      
+     
       return true;
 
    }
@@ -931,6 +943,19 @@ namespace user
 
    void interaction_impl_base::_001Print(::draw2d::graphics * pgraphics)
    {
+
+      if (GetActiveWindow() == get_wnd())
+      {
+
+         //TRACE("active");
+
+      }
+      else
+      {
+
+         //TRACE("not active");
+
+      }
 
       m_pui->_001Print(pgraphics);
 
@@ -1416,7 +1441,7 @@ namespace user
 
       smart_pointer < ::message::base > spbase;
 
-      spbase = m_pui->get_base(uiMessage, wparam, lparam);
+      spbase = m_pui->get_message_base(uiMessage, wparam, lparam);
 
       if (m_pui->WfiIsMoving())
       {
@@ -1432,7 +1457,11 @@ namespace user
          m_pui->walk_pre_translate_tree(spbase);
 
          if (spbase->m_bRet)
+         {
+
             return spbase->get_lresult();
+
+         }
 
       }
 
@@ -1443,15 +1472,15 @@ namespace user
    }
 
 
-   void interaction_impl_base::SendMessageToDescendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
+   void interaction_impl_base::send_message_to_descendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
    {
 
-      return m_pui->SendMessageToDescendants(message, wparam, lparam, bDeep, bOnlyPerm);
+      return m_pui->send_message_to_descendants(message, wparam, lparam, bDeep, bOnlyPerm);
 
    }
 
 
-   void interaction_impl_base::pre_translate_message(signal_details * pobj)
+   void interaction_impl_base::pre_translate_message(::message::message * pobj)
    {
 
       m_pui->pre_translate_message(pobj);
@@ -1470,7 +1499,16 @@ namespace user
    ::user::interaction * interaction_impl_base::GetCapture()
    {
 
-      return get_wnd()->GetCapture();
+      ::user::interaction * pui = get_wnd();
+
+      if (pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return pui->GetCapture();
 
    }
 
@@ -1504,14 +1542,14 @@ namespace user
    bool interaction_impl_base::SetTimer(uint_ptr nIDEvent,UINT nEllapse, PFN_TIMER pfnTimer)
    {
 
-      if(nEllapse < 584)
+      if(nEllapse < 500)
       {
 
-         string str;
-
-         str.Format("creating fast timer: %d\n", nEllapse);
-
-         ::output_debug_string(str);
+//         string str;
+//
+//         str.Format("creating fast timer: %d\n", nEllapse);
+//
+//         ::output_debug_string(str);
 
       }
 
@@ -1673,14 +1711,14 @@ namespace user
 
       }
 
-      RedrawWindow();
+      m_pui->set_need_redraw();
 
       return true;
 
    }
 
 
-   void interaction_impl_base::_001OnShowWindow(signal_details * pobj)
+   void interaction_impl_base::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -1703,15 +1741,15 @@ namespace user
    }
 
 
-   void interaction_impl_base::prio_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl_base::prio_install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl_base::_001OnShowWindow);
 
    }
 
 
-   void interaction_impl_base::last_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl_base::last_install_message_routing(::message::sender * pinterface)
    {
 
 
@@ -1742,6 +1780,16 @@ namespace user
 
       return false;
 
+   }
+   
+   
+   void interaction_impl_base::queue_message_handler(::message::base * pbase)
+   {
+      
+      
+      return m_pui->message_handler(pbase);
+      
+      
    }
 
 

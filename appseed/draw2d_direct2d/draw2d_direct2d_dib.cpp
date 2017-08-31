@@ -1,6 +1,9 @@
 ﻿#include "framework.h"
 
 
+extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
+
+
 namespace draw2d_direct2d
 {
 
@@ -18,9 +21,12 @@ namespace draw2d_direct2d
       m_spgraphics(allocer())
    {
 
+      g_pdiba->add(this);
+
       m_pcolorref = NULL;
       m_bMapped = false;
       m_bTrans = false;
+
    }
 
 
@@ -2443,6 +2449,20 @@ namespace draw2d_direct2d
 
       unmap();
 
+      if (pdib->get_bitmap() == NULL)
+      {
+
+         return;
+
+      }
+
+      if (pdib->get_bitmap()->get_os_data() == NULL)
+      {
+
+         return;
+
+      }
+
       D2D1_RECT_F rectDest = D2D1::RectF(0, 0, (FLOAT)m_size.cx, (FLOAT)m_size.cy);
 
       D2D1_RECT_F rectSource = D2D1::RectF(0, 0, (FLOAT)pdib->m_size.cx, (FLOAT)pdib->m_size.cy);
@@ -2558,7 +2578,7 @@ namespace draw2d_direct2d
       if (m_spbitmapMap.is_null() || m_spbitmap.is_null())
          return;
 
-      dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->SaveClip();
+      //dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->SaveClip();
 
       ((dib *) this)->m_hrEndDraw = ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->EndDraw();
 
@@ -2705,7 +2725,7 @@ namespace draw2d_direct2d
       {
          ((ID2D1DeviceContext *)m_spgraphics->get_os_data())->BeginDraw();
 
-         dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->RestoreClip();
+         ///dynamic_cast <::draw2d_direct2d::graphics *> (((dib *) this)->m_spgraphics.m_p)->RestoreClip();
 
       }
 
@@ -2875,7 +2895,7 @@ namespace draw2d_direct2d
    //#if defined(WINDOWSEX)
 
 
-   bool dib::update_window(::aura::draw_interface * pwnd, signal_details * pobj, bool bTransferBuffer)
+   bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
    {
 
       rect64 rectWindow;
@@ -2894,11 +2914,170 @@ namespace draw2d_direct2d
 
    }
 
+   
+   bool dib::blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size sizeParam, byte bA)
+   {
+
+      //if (bA < 255)
+      {
+
+         return ::draw2d::dib::blend(ptDst, pdibSrc, ptSrc, sizeParam, bA);
+
+      }
+
+      class size size(sizeParam);
+
+      ::draw2d::lock draw2dlock;
+
+      try
+      {
+
+         ::draw2d::graphics * pgraphicsSrc = pdibSrc->get_graphics();
+
+         if (pgraphicsSrc == NULL)
+            return FALSE;
+
+         if (pgraphicsSrc->get_current_bitmap() == NULL)
+            return FALSE;
+
+         if (pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
+            return FALSE;
+
+         if (get_graphics() != NULL && 
+            get_graphics()->get_current_bitmap() != NULL && 
+            get_graphics()->get_current_bitmap()->get_os_data() != NULL)
+         {
+
+            D2D1_SIZE_U sz = ((ID2D1Bitmap *)get_graphics()->get_current_bitmap()->get_os_data())->GetPixelSize();
+
+            if (natural(size.cx + ptDst.x) > sz.width)
+               size.cx = sz.width - ptDst.x;
+
+            if (natural(size.cy + ptDst.y) > sz.height)
+               size.cy = sz.height - ptDst.y;
+
+         }
+
+         bool bSmallerSourceRegion = false;
+
+         ::size sizeSource;
+
+         {
+
+            D2D1_SIZE_U sz = ((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data())->GetPixelSize();
+
+            sizeSource.cx = sz.width;
+
+            sizeSource.cy = sz.height;
+
+            if (natural(size.cx + ptSrc.x) > sz.width)
+            {
+
+               size.cx = sz.width - ptSrc.x;
+
+               bSmallerSourceRegion = true;
+
+            }
+
+            if (natural(size.cy + ptSrc.y) < sz.height)
+            {
+
+               size.cy = sz.height - ptSrc.y;
+
+               bSmallerSourceRegion = true;
+
+            }
+
+         }
+
+         if (ptDst.x > 0 || ptDst.y > 0)
+         {
+
+            bSmallerSourceRegion = true;
+
+         }
+
+         D2D1_RECT_F rectDst = D2D1::RectF((float)ptDst.x, (float)ptDst.y, (float)(ptDst.x + size.cx), (float)(ptDst.y + size.cy));
+
+         D2D1_RECT_F rectSrc = D2D1::RectF((float)ptSrc.x, (float)ptSrc.y, (float)(ptSrc.x + size.cx), (float)(ptSrc.y + size.cy));
+
+         HRESULT hr = ((ID2D1DeviceContext *)pgraphicsSrc->get_os_data())->EndDraw();
+
+         ::draw2d_direct2d::graphics * pgraphicsDst = dynamic_cast <::draw2d_direct2d::graphics *> (get_graphics());
+
+         pgraphicsDst->set_alpha_mode(::draw2d::alpha_mode_set);
+
+         {
+
+            D2D1_POINT_2F p;
+            p.x = rectDst.left;
+            p.y = rectDst.top;
+
+            pgraphicsDst->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(), p, rectSrc, pgraphicsDst->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
+
+         }
+
+         if(bSmallerSourceRegion)
+         {
+
+            ::draw2d::keep k1(pgraphicsDst);
+
+            rect rDst;
+            rDst.left = ptDst.x;
+            rDst.top = ptDst.y;
+            rDst.right = ptDst.x + size.cx;
+            rDst.bottom = ptDst.y + size.cy;
+
+            pgraphicsDst->ExcludeClipRect(rDst);
+
+            D2D1_RECT_F r1;
+            r1.left = ptDst.x;
+            r1.top = ptDst.y;
+            r1.right = ptDst.x + sizeParam.cx;
+            r1.bottom = ptDst.y + sizeParam.cy;
+
+            D2D1_RECT_F r2;
+            r2.left = ptSrc.x;
+            r2.top = ptSrc.y;
+            r2.right = ptSrc.x + sizeParam.cx;
+            r2.bottom = ptSrc.y + sizeParam.cy;
+
+            pgraphicsDst->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphicsDst->m_interpolationmode, r2);
+
+         }
+         else
+         {
+
+            output_debug_string("opt.out.exc.draw");
+
+         }
+
+         //hr = m_prendertarget->Flush();
+         pgraphicsDst->flush();
+
+         if (SUCCEEDED(hr))
+         {
+
+            ((ID2D1DeviceContext *)pgraphicsSrc->get_os_data())->BeginDraw();
+
+            //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->RestoreClip();
+
+         }
+
+         return true;
+
+      }
+      catch (...)
+      {
+         return FALSE;
+      }
+
+   }
 
 
    /*
 
-   bool dib::print_window(window * pwnd, signal_details * pobj)
+   bool dib::print_window(window * pwnd, ::message::message * pobj)
    {
 
 
@@ -2984,6 +3163,38 @@ namespace draw2d_direct2d
 
    //#endif
 
+   void dib::tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B)
+   {
+
+      if (!create(pdib->m_size))
+      {
+
+         return;
+
+      }
+
+      ::rect rectDib1(null_point(), pdib->m_size);
+
+      get_graphics()->FillSolidRect(rectDib1, ARGB(255, R, G, B));
+
+      sp(::draw2d_direct2d::graphics) pgraphicsDib1 = get_graphics();
+
+      sp(::draw2d_direct2d::graphics) pgraphicsDib2 = pdib->get_graphics();
+
+      ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+
+      pgraphicsDib1->m_pdevicecontext->DrawImage(
+         (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+         D2D1::Point2F(0.f, 0.f),
+         d2d1::rectf(rectDib1),
+         D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+         D2D1_COMPOSITE_MODE_DESTINATION_IN);
+
+      set_alpha_mode(::draw2d::alpha_mode_blend);
+
+      ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+
+   }
 
 } // namespace draw2d_direct2d
 

@@ -4,6 +4,9 @@
 #include <Security.h>
 #include <shlobj.h>
 
+
+#include "aura/aura/aura/aura_speaker.h"
+
 #include "windows_exception.h"
 
 
@@ -33,14 +36,14 @@ CLASS_DECL_AURA void __try_cleanup();
 
 
 
-#include "windows_application.h"
+#include "windows_command.h"
 
 
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall();
 void CLASS_DECL_AURA __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 bool CLASS_DECL_AURA __windows_init();
-int32_t CLASS_DECL_AURA __windows_main(sp(::aura::system) psystem, ::windows::main_init_data * pmaininitdata);
+int32_t CLASS_DECL_AURA __windows_main(::aura::system * psystem, ::windows::command * pmaininitdata);
 
 
 #include "windows_console_window.h"
@@ -122,17 +125,17 @@ namespace windows
       int32_t function();
    };
 
-   CLASS_DECL_AURA HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_AURA bool        SHGetSpecialFolderPath(oswindow oswindow,::file::path &str,int32_t csidl,bool fCreate);
-   CLASS_DECL_AURA DWORD       GetFileAttributes(const char * lpFileName);
-   CLASS_DECL_AURA bool        CreateDirectory(const char * lpPathName,LPSECURITY_ATTRIBUTES lpSecurityAttributes);
-   CLASS_DECL_AURA DWORD       GetCurrentDirectory(string & str);
-   CLASS_DECL_AURA DWORD       GetTempPath(string & str);
-   CLASS_DECL_AURA LONG        RegQueryValue(HKEY hkey,const char * lpszSubKey,string & str);
-   CLASS_DECL_AURA HICON       ExtractIcon(HINSTANCE hInst,const char * lpszExeFileName,UINT nIconIndex);
-   CLASS_DECL_AURA bool        DeleteFile(const char * lpFileName);
-   CLASS_DECL_AURA int32_t         GetMenuStringW(HMENU hMenu,UINT uIDItem,string & str,UINT flags);
-   CLASS_DECL_AURA void        TimeToFileTime(::aura::application * papp,const ::datetime::time& time,LPFILETIME pFileTime);
+   CLASS_DECL_AURA HINSTANCE   load_library(const char * lpsz);
+   CLASS_DECL_AURA bool        shell_get_special_folder_path(oswindow oswindow,::file::path &str,int32_t csidl,bool fCreate);
+   CLASS_DECL_AURA DWORD       get_file_attributes(const char * lpFileName);
+   CLASS_DECL_AURA bool        create_directory(const char * lpPathName,LPSECURITY_ATTRIBUTES lpSecurityAttributes);
+   CLASS_DECL_AURA DWORD       get_current_directory(string & str);
+   CLASS_DECL_AURA DWORD       get_temp_path(string & str);
+   CLASS_DECL_AURA LONG        reg_query_value(HKEY hkey,const char * lpszSubKey,string & str);
+   CLASS_DECL_AURA HICON       extract_icon(HINSTANCE hInst,const char * lpszExeFileName,UINT nIconIndex);
+   CLASS_DECL_AURA bool        delete_file(const char * lpFileName);
+   CLASS_DECL_AURA int32_t     get_menu_string(HMENU hMenu,UINT uIDItem,string & str,UINT flags);
+   CLASS_DECL_AURA void        time_to_filetime(::aura::application * papp,const ::datetime::time& time,LPFILETIME pFileTime);
 
 
 } // namespace windows

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userfs
@@ -35,12 +35,12 @@ namespace userfs
 #endif //DEBUG
 
 
-   void tree::install_message_handling(::message::dispatch * pinterface)
+   void tree::install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
 
    }
 
@@ -59,7 +59,7 @@ namespace userfs
             {
                //if (get_filemanager_template()->get_filemanager_data()->m_bTransparentBackground)
                //{
-               //   ::user::tree::m_etranslucency = ::user::tree::TranslucencyPresent;
+               //   ::user::tree::m_etranslucency = ::user::tree::translucency_present;
                //}
                /* xxx _001SetExpandImage(
                   System.LoadIcon(
@@ -95,7 +95,7 @@ namespace userfs
    }
 
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //   int32_t iItem;
@@ -169,7 +169,7 @@ namespace userfs
 
    }*/
 
-   void tree::_001OnContextMenu(signal_details * pobj)
+   void tree::_001OnContextMenu(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -212,7 +212,7 @@ namespace userfs
          }
 
 
-         pPopup->TrackPopupMenu(
+         pPopup->track_popup_menu(
          point.x, point.y,
          (::window_sp) pframe);
          }
@@ -225,7 +225,7 @@ namespace userfs
          ::user::menu* pPopup = menu.GetSubMenu(0);
          ASSERT(pPopup != NULL);
          sp(::user::frame_window) pframe = GetTopLevelFrame();
-         pPopup->TrackPopupMenu(
+         pPopup->track_popup_menu(
          point.x, point.y,
          (::window_sp) pframe);
          }
@@ -262,7 +262,7 @@ namespace userfs
       pui->SetTimer(1234567, 50, NULL);
    }
 
-   void tree::_001OnShellCommand(signal_details * pobj)
+   void tree::_001OnShellCommand(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -280,7 +280,7 @@ namespace userfs
    }
 
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -327,7 +327,7 @@ namespace userfs
       control.set_type(::user::form_control_type_edit);
       control.m_iKey = FILE_MANAGER_ID_FILE_NAME;
       pcontrol->descriptor().m_id = FILE_MANAGER_ID_FILE_NAME;
-      control.set_data_type(::user::form_control::DataTypeString);
+      control.set_data_type(::user::form_control_data_type_string);
 
       int32_t iControl =  _001AddControl(control);
 

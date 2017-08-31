@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -19,7 +19,18 @@ namespace filemanager
    {
 
    }
-
+   
+   
+   void left_view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
+      
+   }
+   
+   
+   
 
    void left_view::assert_valid() const
    {

@@ -230,6 +230,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
             keyCode = APPLE_VK_ISO_Section;
          break;
    }
+   
 #endif
    
    /* Perform keycode correction for all ISO keyboards */
@@ -243,29 +244,30 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    }
    
    return keyCode;
+   
 }
 
 
 @implementation RoundWindowFrameView
 
 
-- (id)initWithFrame:(NSRect)frame andRoundWindow:(RoundWindow *)roundwindow
+- (id) initWithFrame: (NSRect) frame andRoundWindow: (RoundWindow *) roundwindow
 {
 
-   self = [super initWithFrame:frame];
+   self                 = [super initWithFrame:frame];
    
-   appleKeyboardType = mac_detect_keyboard_type();
+   appleKeyboardType    = mac_detect_keyboard_type();
    
-   m_roundwindow =  roundwindow;
+   m_roundwindow        =  roundwindow;
    
-   m_bLShift = false;
-   m_bRShift = false;
-   m_bLControl = false;
-   m_bRControl = false;
-   m_bLAlt = false;
-   m_bRAlt = false;
-   m_bLCommand = false;
-   m_bRCommand = false;
+   m_bLShift            = false;
+   m_bRShift            = false;
+   m_bLControl          = false;
+   m_bRControl          = false;
+   m_bLAlt              = false;
+   m_bRAlt              = false;
+   m_bLCommand          = false;
+   m_bRCommand          = false;
 
    return self;
    
@@ -277,7 +279,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 //
 // Returns the bounds of the resize box.
 //
-- (NSRect)resizeRect
+- (NSRect) resizeRect
 {
    
 	const CGFloat resizeBoxSize = 16.0;
@@ -297,7 +299,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 }
 
 
-- (void)mouseUp:(NSEvent *)event
+- (void) mouseUp: (NSEvent *) event
 {
 
    round_window * p = m_roundwindow->m_pwindow;
@@ -334,12 +336,10 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    
    p->round_window_mouse_up(iButton, x, y);
    
-   return;
-   
 }
 
 
-- (void)mouseMoved:(NSEvent *)event
+- (void) mouseMoved: (NSEvent *) event
 {
 
    round_window * p = m_roundwindow->m_pwindow;
@@ -368,7 +368,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 }
 
 
-- (void)mouseDragged:(NSEvent *)event
+- (void) mouseDragged: (NSEvent *) event
 {
 
    round_window * p = m_roundwindow->m_pwindow;
@@ -407,7 +407,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
 //
 //   Left click only
 //
-- (void)mouseDown:(NSEvent *)event
+- (void) mouseDown: (NSEvent *) event
 {
    
    round_window * p = m_roundwindow->m_pwindow;
@@ -434,8 +434,6 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    int iButton = 0;
    
    p->round_window_mouse_down(iButton, x, y);
-   
-   return;
    
 }
 
@@ -468,8 +466,6 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    
    p->round_window_mouse_up(iButton, x, y);
    
-   return;
-   
 }
 
 
@@ -501,8 +497,6 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    
    p->round_window_mouse_down(iButton, x, y);
    
-   return;
-
 }
 
 
@@ -746,132 +740,102 @@ m_f = true; \
 - (void)keyDown:(NSEvent *)event
 {
 
-   unsigned int uiKeyCode = event_key_code(event);
-//   
-//   
-//   round_window * p = m_roundwindow->m_pwindow;
-//   
-//   if(p == NULL)
-//      return;
-//   
-//   bool bLCommand = [event modifierFlags] & (1 << 4);
-//   bool bRCommand = [event modifierFlags] & (1 << 5);
-//   
-//   DO_FLAG(m_bLCommand, p, bLCommand, 2031)
-//   DO_FLAG(m_bRCommand, p, bRCommand, 2033)
-//   
-//   if(p->round_window_key_down(uiKeyCode))
-//      return;
+   //unsigned int uiKeyCode = event_key_code(event);
    
    round_window * p = m_roundwindow->m_pwindow;
      
    if(p == NULL)
+   {
+      
+      // printf("key_down(0)\n");
+      
+      // [super keyUp:event];
+      
       return;
+      
+   }
    
    DWORD keyCode;
-   DWORD keyFlags;
+   
+   DWORD keyFlags = 0;
+   
    DWORD vkcode;
+   
    DWORD scancode;
+   
    unichar keyChar;
-   NSString* characters;
    
-//   if (!is_connected)
-  //    return;
+   NSString * characters;
    
-//   keyFlags = KBD_FLAGS_DOWN;
-   
-   bool bLCommand = [event modifierFlags] & (1 << 4);
-   bool bRCommand = [event modifierFlags] & (1 << 5);
+   //bool bLCommand = [event modifierFlags] & (1 << 4);
+
+   //bool bRCommand = [event modifierFlags] & (1 << 5);
       
-//   DO_FLAG(m_bLCommand, p, bLCommand, 2031)
-//   DO_FLAG(m_bRCommand, p, bRCommand, 2033)
-   
    keyCode = [event keyCode];
    
    characters = [event charactersIgnoringModifiers];
    
    if ([characters length] > 0)
    {
+      
       keyChar = [characters characterAtIndex:0];
+      
       keyCode = fixKeyCode(keyCode, keyChar, appleKeyboardType);
+      
    }
    
-//   if(uiKeyCode != 0)
-//   {
-//   
-//      vkcode = uiKeyCode;
-//      
-//   }
-//   else
-//   {
-   
-      vkcode = GetVirtualKeyCodeFromKeycode(keyCode + 8, KEYCODE_TYPE_APPLE);
+   vkcode = GetVirtualKeyCodeFromKeycode(keyCode + 8, KEYCODE_TYPE_APPLE);
       
-//   }
    scancode = GetVirtualScanCodeFromVirtualKeyCode(vkcode, 4);
-   keyFlags |= (scancode & KBDEXT) ? KBDEXT : 0;
-   ///scancode &= 0xFF;
-   ///vkcode &= 0xFF;
-   
-#if 0
-   WLog_ERR(TAG,  "keyDown: keyCode: 0x%04X scancode: 0x%04X vkcode: 0x%04X keyFlags: %d name: %s",
-            keyCode, scancode, vkcode, keyFlags, GetVirtualKeyName(vkcode));
-#endif
-   
-   
-   if(p->round_window_key_down(vkcode, scancode))
-      return;
 
-//   freerdp_input_send_keyboard_event(instance->input, keyFlags, scancode);
+   keyFlags |= (scancode & KBDEXT) ? KBDEXT : 0;
    
-   [super keyDown:event];
+   bool bRet = p->round_window_key_down(vkcode, scancode);
+   
+   printf("key_down : %d\n", bRet ? 1 : 0);
+   
+   // [super keyDown:event];
    
 }
 
 
-// end from RoundWindow.mm
 - (void)keyUp:(NSEvent *)event
 {
    
-   unsigned int uiKeyCode = event_key_code(event);
-//   
-//   round_window * p = m_roundwindow->m_pwindow;
-//   
-//   if(p == NULL)
-//      return;
-//   
-//   bool bLCommand = [event modifierFlags] & (1 << 4);
-//   bool bRCommand = [event modifierFlags] & (1 << 5);
-//   
-//   DO_FLAG(m_bLCommand, p, bLCommand, 2031)
-//   DO_FLAG(m_bRCommand, p, bRCommand, 2033)
-//   
-//   if(p->round_window_key_up(uiKeyCode))
-//      return;
-//   
-   DWORD keyCode;
-   DWORD keyFlags;
-   DWORD vkcode;
-   DWORD scancode;
-   unichar keyChar;
-   NSString* characters;
-   
-   //   if (!is_connected)
-   //    return;
-   
-   //   keyFlags = KBD_FLAGS_DOWN;
+   //unsigned int uiKeyCode = event_key_code(event);
 
+   DWORD keyCode;
+   
+   DWORD keyFlags = 0;
+   
+   DWORD vkcode;
+   
+   DWORD scancode;
+   
+   unichar keyChar;
+   
+   NSString * characters;
+   
    round_window * p = m_roundwindow->m_pwindow;
    
    if(p == NULL)
-      return;
-   
-   bool bLCommand = [event modifierFlags] & (1 << 4);
-   bool bRCommand = [event modifierFlags] & (1 << 5);
+   {
       
-//   DO_FLAG(m_bLCommand, p, bLCommand, 2031)
-//   DO_FLAG(m_bRCommand, p, bRCommand, 2033)
+      //printf("key_up(0)\n");
+      
+      //[super keyUp:event];
+
+      return;
+      
+   }
    
+   //bool bLCommand = [event modifierFlags] & (1 << 4);
+   
+   //bool bRCommand = [event modifierFlags] & (1 << 5);
+      
+   //DO_FLAG(m_bLCommand, p, bLCommand, 2031)
+   
+   //DO_FLAG(m_bRCommand, p, bRCommand, 2033)
    
    keyCode = [event keyCode];
    
@@ -879,43 +843,26 @@ m_f = true; \
    
    if ([characters length] > 0)
    {
+      
       keyChar = [characters characterAtIndex:0];
+      
       keyCode = fixKeyCode(keyCode, keyChar, appleKeyboardType);
+      
    }
    
-//   if(uiKeyCode != 0)
-//   {
-//      
-//      vkcode = uiKeyCode;
-//      
-//   }
-//   else
-//   {
-   
-      vkcode = GetVirtualKeyCodeFromKeycode(keyCode + 8, KEYCODE_TYPE_APPLE);
+   vkcode = GetVirtualKeyCodeFromKeycode(keyCode + 8, KEYCODE_TYPE_APPLE);
       
-//   }
    scancode = GetVirtualScanCodeFromVirtualKeyCode(vkcode, 4);
+
    keyFlags |= (scancode & KBDEXT) ? KBDEXT : 0;
-   //scancode &= 0xFF;
-   //vkcode &= 0xFF;
    
-#if 0
-   WLog_ERR(TAG,  "keyDown: keyCode: 0x%04X scancode: 0x%04X vkcode: 0x%04X keyFlags: %d name: %s",
-            keyCode, scancode, vkcode, keyFlags, GetVirtualKeyName(vkcode));
-#endif
+   bool bRet = p->round_window_key_up(vkcode, scancode);
+
+   printf("key_down : %d\n", bRet ? 1 : 0);
    
-   
-   if(p->round_window_key_up(vkcode, scancode))
-      return;
-   
-   //   freerdp_input_send_keyboard_event(instance->input, keyFlags, scancode);
-   
-   [super keyUp:event];
+   // [super keyUp:event];
    
 }
-
-
 
 
 - (void)flagsChanged:(NSEvent *)event
@@ -924,53 +871,65 @@ m_f = true; \
    round_window * p = m_roundwindow->m_pwindow;
    
    if(p == NULL)
+   {
+      
+      printf("flags_changed(0)\n");
+      
+      [super flagsChanged:event];
+      
       return;
+      
+   }
+   
    int key;
-   DWORD keyFlags;
+   
+   DWORD keyFlags = 0;
+   
    DWORD vkcode;
+   
    DWORD scancode;
+   
    DWORD modFlags;
    
-   //if (!is_connected)
-     // return;
-   
-   keyFlags = 0;
    key = [event keyCode] + 8;
+   
    modFlags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
    
    vkcode = GetVirtualKeyCodeFromKeycode(key, KEYCODE_TYPE_APPLE);
+   
    scancode = GetVirtualScanCodeFromVirtualKeyCode(vkcode, 4);
+   
    keyFlags |= (scancode & KBDEXT) ? KBDEXT : 0;
+   
    scancode &= 0xFF;
+   
    vkcode &= 0xFF;
    
 #if 0
-   WLog_DBG(TAG,  "flagsChanged: key: 0x%04X scancode: 0x%04X vkcode: 0x%04X extended: %d name: %s modFlags: 0x%04X",
-            key - 8, scancode, vkcode, keyFlags, GetVirtualKeyName(vkcode), modFlags);
    
    if (modFlags & NSAlphaShiftKeyMask)
-      WLog_DBG(TAG,  "NSAlphaShiftKeyMask");
+      printf("NSAlphaShiftKeyMask");
    
    if (modFlags & NSShiftKeyMask)
-      WLog_DBG(TAG,  "NSShiftKeyMask");
+      printf("NSShiftKeyMask");
    
    if (modFlags & NSControlKeyMask)
-      WLog_DBG(TAG,  "NSControlKeyMask");
+      printf("NSControlKeyMask");
    
    if (modFlags & NSAlternateKeyMask)
-      WLog_DBG(TAG,  "NSAlternateKeyMask");
+      printf("NSAlternateKeyMask");
    
    if (modFlags & NSCommandKeyMask)
-      WLog_DBG(TAG,  "NSCommandKeyMask");
+      printf("NSCommandKeyMask");
    
    if (modFlags & NSNumericPadKeyMask)
-      WLog_DBG(TAG,  "NSNumericPadKeyMask");
+      printf("NSNumericPadKeyMask");
    
    if (modFlags & NSHelpKeyMask)
-      WLog_DBG(TAG,  "NSHelpKeyMask");
+      printf("NSHelpKeyMask");
+   
 #endif
 
-   
    if ((modFlags & NSAlphaShiftKeyMask) && !(kbdModFlags & NSAlphaShiftKeyMask))
       p->round_window_key_down(vkcode, scancode);
    else if (!(modFlags & NSAlphaShiftKeyMask) && (kbdModFlags & NSAlphaShiftKeyMask))
@@ -1006,61 +965,9 @@ m_f = true; \
    else if (!(modFlags & NSHelpKeyMask) && (kbdModFlags & NSHelpKeyMask))
       p->round_window_key_up(vkcode, scancode);
    
-//   if ((modFlags & NSAlphaShiftKeyMask) && !(kbdModFlags & NSAlphaShiftKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSAlphaShiftKeyMask) && (kbdModFlags & NSAlphaShiftKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSShiftKeyMask) && !(kbdModFlags & NSShiftKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSShiftKeyMask) && (kbdModFlags & NSShiftKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSControlKeyMask) && !(kbdModFlags & NSControlKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSControlKeyMask) && (kbdModFlags & NSControlKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSAlternateKeyMask) && !(kbdModFlags & NSAlternateKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSAlternateKeyMask) && (kbdModFlags & NSAlternateKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSCommandKeyMask) && !(kbdModFlags & NSCommandKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSCommandKeyMask) && (kbdModFlags & NSCommandKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSNumericPadKeyMask) && !(kbdModFlags & NSNumericPadKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSNumericPadKeyMask) && (kbdModFlags & NSNumericPadKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-//   
-//   if ((modFlags & NSHelpKeyMask) && !(kbdModFlags & NSHelpKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_DOWN, scancode);
-//   else if (!(modFlags & NSHelpKeyMask) && (kbdModFlags & NSHelpKeyMask))
-//      freerdp_input_send_keyboard_event(instance->input, keyFlags | KBD_FLAGS_RELEASE, scancode);
-   
    kbdModFlags = modFlags;
-   
-//   
-//   unsigned int ui = [event modifierFlags];
-//   bool sl = (ui & 2) != 0;;
-//   bool sr = (ui & 4) != 0;
-//   bool cl = (ui & 1) != 0;;
-//   bool cr = (ui & (1 << 13)) != 0;
-//   bool al = (ui & (1 << 5)) != 0;;
-//   bool ar = (ui & (1 << 6)) != 0;
-//   
-//   
-//   DO_FLAG(m_bLShift, p, sl, 2001)
-//   DO_FLAG(m_bRShift, p, sr, 2003)
-//   DO_FLAG(m_bLControl, p, cl, 2011)
-//   DO_FLAG(m_bRControl, p, cr, 2013)
-//   DO_FLAG(m_bLAlt, p, al, 2021)
-//   DO_FLAG(m_bRAlt, p, ar, 2023)
 
-   [super flagsChanged:event];
+   // [super flagsChanged:event];
    
 }
 

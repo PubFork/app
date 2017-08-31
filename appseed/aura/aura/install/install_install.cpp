@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 #if defined(INSTALL_SUBSYSTEM)
@@ -225,7 +226,10 @@ namespace install
       if (!txchannel.open(::aura::ipc::app_install(System.get_system_platform()), bLaunch ? &launcher : NULL))
          return false;
 
-      txchannel.send(psz, INFINITE);
+      txchannel.send(psz, one_hour());
+      // acceptable time for installation of most ca2 applications
+      // if it is not spa (soon-patch-applier-("even-in-one-hour"))
+      // don't use spa(logo) or current spa backend(install::install)
 
 #endif
 
@@ -250,7 +254,7 @@ namespace install
       if (!txchannel.open("core/spaboot_install_callback"))
          return;
 
-      txchannel.send(param, false);
+      txchannel.send(param, one_hour());
 
 #endif
 

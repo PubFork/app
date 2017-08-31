@@ -2549,7 +2549,7 @@ namespace draw2d_xlib
    //}
 
 
-   bool dib::print_window(::window * pwnd, signal_details * pobj)
+   bool dib::print_window(::window * pwnd, ::message::message * pobj)
    {
 
       return true;
@@ -2559,7 +2559,7 @@ namespace draw2d_xlib
 
 #if defined(WINDOWS)
 
-   bool dib::update_window(::user::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::user::interaction_impl * pwnd, ::message::message * pobj)
    {
 
 
@@ -2580,7 +2580,7 @@ namespace draw2d_xlib
    }
 
 
-   bool dib::print_window(::user::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::print_window(::user::user::interaction_impl * pwnd, ::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -2665,7 +2665,7 @@ namespace draw2d_xlib
 #endif
 
 
-   bool dib::update_window(::window * pwnd, signal_details * pobj)
+   bool dib::update_window(::window * pwnd, ::message::message * pobj)
    {
 
 //      rect64 rectWindow;

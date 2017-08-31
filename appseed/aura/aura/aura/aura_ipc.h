@@ -91,8 +91,8 @@ namespace aura
          bool close();
 
 
-         bool send(const char * pszMessage,unsigned int dwTimeout);
-         bool send(int message,void * pdata,int len,unsigned int dwTimeout);
+         bool send(const char * pszMessage, duration durationTimeout);
+         bool send(int message,void * pdata,int len, duration durationTimeout);
 
 
          bool is_tx_ok();
@@ -195,8 +195,8 @@ namespace aura
 
          virtual void restart_aura_ipc();
 
-         bool ensure_tx(const char * pszMessage,unsigned int dwTimeout = INFINITE);
-         bool ensure_tx(int message,void * pdata,int len,unsigned int dwTimeout = INFINITE);
+         bool ensure_tx(const char * pszMessage, duration durationTimeout = one_hour());
+         bool ensure_tx(int message, void * pdata, int len, duration durationTimeout = one_hour());
 
 
          bool is_rx_tx_ok();

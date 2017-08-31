@@ -2,11 +2,11 @@
 
 #define TIMER_HOVER 321654
 
-class SimpleToolCmdUI : public cmd_ui        // class private to this file !
+class simple_tool_command : public ::user::command        // class private to this file !
 {
 public: // re-implementations only
 
-   SimpleToolCmdUI(::aura::application * papp);
+   simple_tool_command(::aura::application * papp);
    virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
    //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
    virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
@@ -96,17 +96,17 @@ simple_toolbar::~simple_toolbar()
 }
 
 
-void simple_toolbar::install_message_handling(::message::dispatch * pdispatch)
+void simple_toolbar::install_message_routing(::message::sender * psender)
 {
 
-   ::user::toolbar::install_message_handling(pdispatch);
+   ::user::toolbar::install_message_routing(psender);
 
-   IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &simple_toolbar::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &simple_toolbar::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &simple_toolbar::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &simple_toolbar::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_NCHITTEST, pdispatch, this, &simple_toolbar::_001OnNcHitTest);
-   IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &simple_toolbar::_001OnMouseLeave);
+   IGUI_MSG_LINK(WM_CREATE, psender, this, &simple_toolbar::_001OnCreate);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &simple_toolbar::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &simple_toolbar::_001OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &simple_toolbar::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_NCHITTEST, psender, this, &simple_toolbar::_001OnNcHitTest);
+   IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &simple_toolbar::_001OnMouseLeave);
 
 }
 
@@ -114,12 +114,12 @@ void simple_toolbar::install_message_handling(::message::dispatch * pdispatch)
 bool simple_toolbar::create(sp(::user::interaction) pParentWnd, uint32_t dwStyle, id nID)
 {
 
-   return create_window_ex(pParentWnd, 0, dwStyle, rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
+   return create_toolbar(pParentWnd, 0, dwStyle, rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
 
 }
 
 
-bool simple_toolbar::create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle, const RECT & rectBorders, id nID)
+bool simple_toolbar::create_toolbar(::user::interaction * pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle, const RECT & rectBorders, id nID)
 {
 
    ASSERT_VALID(pParentWnd);   // must have a parent
@@ -243,11 +243,15 @@ void simple_toolbar::_001OnDraw(::draw2d::graphics * pgraphics)
 
    //::user::interaction::_001OnDraw(pgraphics);
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
    int iHover = _001GetHoverItem();
+
+   set_user_schema(::user::schema_button);
+
+   select_user_schema();
 
    for (int32_t iItem = 0; iItem < m_itema.get_size(); iItem++)
    {
@@ -379,55 +383,79 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
 }
 
 
-void simple_toolbar::_001OnCreate(signal_details * pobj)
+void simple_toolbar::_001OnCreate(::message::message * pobj)
 {
+
    if (pobj->previous())
       return;
 
-
-   //m_puserschemaSchema = Session.m_puserschemaSchema;
    m_dibDraft->create(20, 20);
+
 }
 
 
-void simple_toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
+void simple_toolbar::on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler)
 {
 
-   SimpleToolCmdUI state(get_app());
+   simple_tool_command state(get_app());
 
-   state.m_pOther = (this);
+   state.m_puiOther = (this);
 
    state.m_iCount = _001GetItemCount();
 
    for (state.m_iIndex = 0; state.m_iIndex < state.m_iCount; state.m_iIndex++)
    {
 
-      // ignore separators
       if (m_itema[state.m_iIndex]->m_id != "separator")
       {
 
          state.m_id = m_itema[state.m_iIndex]->m_id;
 
-         state.m_bEnableIfHasCommandHandler = m_itema[state.m_iIndex]->m_bEnableIfHasCommandHandler;
-
          // allow reflections
-         //if (::user::interaction::on_simple_action(0,
-         //   MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+         //if (::user::interaction::on_command(0,
+         //   MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
          //   &state, NULL))
          //   continue;
 
+         state.m_bEnableChanged = false;
+
          // allow the toolbar itself to have update handlers
-         if (_001SendUpdateCmdUi(&state))
+         _001SendCommandProbe(&state);
+
+         if (state.m_bRet)
+         {
+
             continue;
 
+         }
+          
+         //if (!state.m_bEnableChanged)
+         //{
+         // 
+         //   if (m_itema[state.m_iIndex]->m_bEnableIfHasCommandHandler)
+         //   {
+
+         //      if (!state.m_bHasCommandHandler)
+         //      {
+
+         //         continue;
+
+
+         //      }
+
+         //   }
+
+         //}
+
          // allow the owner to process the update
-         state.DoUpdate(pTarget, bDisableIfNoHndler);
+         state.do_probe(ptarget);
+
       }
 
    }
 
    // update the dialog controls added to the toolbar
-   UpdateDialogControls(pTarget, bDisableIfNoHndler);
+   update_dialog_controls(ptarget);
 
 }
 
@@ -439,8 +467,8 @@ size simple_toolbar::CalcSize(int32_t nCount)
    ASSERT(nCount > 0);
 
    ::draw2d::memory_graphics pgraphics(allocer());
-
-   select_font(pgraphics, ::user::font_toolbar, this);
+   
+   select_font(pgraphics, ::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -615,10 +643,10 @@ size simple_toolbar::CalcSize(int32_t nCount)
 void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawToolbarItem(pgraphics, iItem, this))
+      if (m_puserstyle->_001DrawToolbarItem(pgraphics, iItem, this))
       {
 
          return;
@@ -635,14 +663,16 @@ void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 
 void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
-
+   
+   draw_select ds(this, pgraphics);
+   
    pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
    rect rectItem;
 
    rect rectImage;
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -657,55 +687,87 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
    UINT uiImage = pmenucentral->CommandToImage(item.m_id);
 
    e_element eelement = element_item;
+   
    e_element eelementImage = element_image;
+   
    e_element eelementText = element_text;
+   
    if ((nStyle & TBBS_SEPARATOR) == 0)
    {
+      
       if ((nStyle & TBBS_DISABLED) == 0)
       {
+         
          // item is enabled
          if (m_iButtonPressItem >= 0)
          {
+            
             if (iItem == m_iButtonPressItem)
             {
+               
                if (bHover)
                {
+                  
                   eelement = ElementItemPress;
+                  
                   eelementImage = ElementImagePress;
+                  
                   eelementText = ElementTextPress;
+                  
                }
                else
                {
+                  
                   eelement = ElementItemHover;
+                  
                   eelementImage = ElementImageHover;
+                  
                   eelementText = ElementTextHover;
+                  
                }
+               
             }
+            
          }
          else if (bHover)
          {
+            
             eelement = ElementItemHover;
+            
             eelementImage = ElementImageHover;
+            
             eelementText = ElementTextHover;
+            
          }
+         
       }
       else
       {
+         
          // item is disabled
+         
          eelement = element_item;
+         
          eelementImage = element_image;
+         
          eelementText = element_text;
+         
       }
+      
    }
    else
    {
+      
       eelement = element_item;
+      
       eelementImage = element_image;
+      
       eelementText = element_text;
+      
    }
 
-
    int iOffsetX = 0;
+   
    int iOffsetY = 0;
 
    _001GetElementRect(iItem, rectItem, eelement);
@@ -714,17 +776,26 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    if ((nStyle & TBBS_SEPARATOR) != 0)
    {
+      
       rect rectSeparator;
+      
       rectSeparator.left = (rectImage.left + rectImage.right) / 2 - 1;
+      
       rectSeparator.right = rectSeparator.left + 2;
+      
       rectSeparator.top = rectImage.top;
+      
       rectSeparator.bottom = rectImage.bottom;
+      
       pgraphics->Draw3dRect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
+      
    }
    else
    {
+      
       if (eelement == ElementItemHover)
       {
+         
          if ((nStyle & TBBS_CHECKED) != 0)
          {
 
@@ -743,6 +814,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                   RGB(255, 255, 250), 208);
 
                pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
+               
             }
             
             if (uiImage != 0xffffffffu)
@@ -777,11 +849,17 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             {
 
                ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
+               
                ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
+               
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
+               
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
+               
                pgraphics->Rectangle(rectItem);
+               
                pgraphics->SelectObject(ppenOld);
+               
                pgraphics->SelectObject(pbrushOld);
 
             }
@@ -806,6 +884,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                pmenucentral->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
 
                pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
+               
             }
 
          }
@@ -818,11 +897,17 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          {
 
             ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
+            
             ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
+            
             ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
+            
             ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
+            
             pgraphics->Rectangle(rectItem);
+            
             pgraphics->SelectObject(ppenOld);
+            
             pgraphics->SelectObject(pbrushOld);
 
          }
@@ -899,7 +984,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
    if (item.m_str.has_char())
    {
 
-      select_font(pgraphics, ::user::font_toolbar, this);
+      select_font(::user::font_toolbar);
 
       m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -1140,17 +1225,17 @@ void simple_toolbar::on_layout()
 
    synch_lock ml(m_pmutex);
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = GetTopLevel();
+      m_puserstyle = GetTopLevel();
 
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
    }
 
@@ -1213,7 +1298,7 @@ void simple_toolbar::on_layout()
 }
 
 
-void simple_toolbar::_001OnMouseMove(signal_details * pobj)
+void simple_toolbar::_001OnMouseMove(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1234,7 +1319,7 @@ void simple_toolbar::_001OnMouseMove(signal_details * pobj)
    }
 }
 
-void simple_toolbar::_001OnLButtonDown(signal_details * pobj)
+void simple_toolbar::_001OnLButtonDown(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1252,7 +1337,7 @@ void simple_toolbar::_001OnLButtonDown(signal_details * pobj)
    pobj->previous();
 }
 
-void simple_toolbar::_001OnLButtonUp(signal_details * pobj)
+void simple_toolbar::_001OnLButtonUp(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    point pt = pmouse->m_pt;
@@ -1274,7 +1359,7 @@ void simple_toolbar::_001OnLButtonUp(signal_details * pobj)
       if (pTarget == NULL)
          pTarget = GetParentFrame();
       if (pTarget != NULL)
-         pTarget->SendMessageToDescendants(WM_IDLEUPDATECMDUI);
+         pTarget->send_message_to_descendants(WM_IDLEUPDATECMDUI);
       m_iButtonPressItem = -1;
       RedrawWindow();
       if (pobj->m_bRet)
@@ -1348,11 +1433,18 @@ void simple_toolbar::_001OnTimer(::timer * ptimer)
    // trans ::user::control_bar::OnTimer(ptimer->m_nIDEvent);
 }
 
+
 void simple_toolbar::_001OnClick(index iItem)
 {
+   
    sp(::user::interaction) pwnd = GetOwner();
-   pwnd->_001SendCommand(m_itema[iItem]->m_id);
+
+   ::user::command command(m_itema[iItem]->m_id);
+   
+   pwnd->_001SendCommand(&command);
+
 }
+
 
 void simple_toolbar::_001DiscardImageList()
 {
@@ -1420,17 +1512,16 @@ void simple_toolbar::_001OnImageListAttrib()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// simple_toolbar idle update through SimpleToolCmdUI class
+// simple_toolbar idle update through simple_tool_command class
 
-SimpleToolCmdUI::SimpleToolCmdUI(::aura::application * papp) :
-   object(papp),
-   cmd_ui(papp)
+simple_tool_command::simple_tool_command(::aura::application * papp) :
+   ::user::command(papp)
 {
 }
-void SimpleToolCmdUI::Enable(bool bOn, ::action::context actioncontext)
+void simple_tool_command::Enable(bool bOn, ::action::context actioncontext)
 {
    m_bEnableChanged = TRUE;
-   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_pOther);
+   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
    ASSERT(pToolBar != NULL);
    //   ASSERT_KINDOF(simple_toolbar, pToolBar);
    ASSERT(m_iIndex < m_iCount);
@@ -1448,12 +1539,12 @@ void SimpleToolCmdUI::Enable(bool bOn, ::action::context actioncontext)
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle);
 }
 
-void SimpleToolCmdUI::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
+void simple_tool_command::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
 {
    ASSERT(echeck == check::checked
       || echeck == check::unchecked
       || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
-   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_pOther);
+   simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
    ASSERT(pToolBar != NULL);
    ASSERT_KINDOF(simple_toolbar, pToolBar);
    ASSERT(m_iIndex < m_iCount);
@@ -1468,7 +1559,7 @@ void SimpleToolCmdUI::_001SetCheck(check::e_check echeck, ::action::context acti
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle | TBBS_CHECKBOX);
 }
 
-void SimpleToolCmdUI::SetText(const char *, ::action::context)
+void simple_tool_command::SetText(const char *, ::action::context)
 {
    // ignore it
 }
@@ -1517,7 +1608,7 @@ void simple_toolbar::SetButtonStyle(int32_t nIndex, UINT nStyle)
 }
 
 
-void simple_toolbar::_001OnNcCalcSize(signal_details * pobj)
+void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 {
 #if defined(WINDOWSEX) //|| defined(LINUX)
    SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -1538,7 +1629,7 @@ void simple_toolbar::_001OnNcCalcSize(signal_details * pobj)
 }
 
 
-void simple_toolbar::_001OnNcHitTest(signal_details * pobj)
+void simple_toolbar::_001OnNcHitTest(::message::message * pobj)
 {
    SCAST_PTR(::message::nchittest, pnchittest, pobj);
    pnchittest->set_lresult(HTCLIENT);
@@ -1556,7 +1647,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    ::draw2d::memory_graphics pgraphics(allocer());
 
-   select_font(pgraphics, ::user::font_toolbar, this);
+   select_font(pgraphics, ::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
 
@@ -2025,7 +2116,7 @@ size simple_toolbar::CalcDynamicLayout(int32_t nLength, uint32_t dwMode)
 }
 
 
-void simple_toolbar::_001OnMouseLeave(signal_details * pobj)
+void simple_toolbar::_001OnMouseLeave(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    m_iHover = 0x80000000;

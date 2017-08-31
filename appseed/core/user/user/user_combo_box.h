@@ -56,7 +56,7 @@ namespace user
       virtual ~combo_box();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
@@ -78,7 +78,7 @@ namespace user
       virtual index _001FindListText(const string & str) const;
       virtual count _001GetListCount() const;
 
-      virtual bool create_control(class control::descriptor * pdescriptor, index iItem);
+      virtual bool create_control(class control_descriptor * pdescriptor);
 
       virtual bool get_element_rect(LPRECT lprect, e_element eelement) const;
       virtual e_element hit_test(point pt) const;

@@ -21,7 +21,8 @@
 */
 
 
-//#include "framework.h"
+#include "framework.h"
+#include "SBCharsetProber.h"
 /****************************************************************
 255: Control characters that usually does not exist in any text
 254: Carriage/Return

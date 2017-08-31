@@ -127,8 +127,8 @@ inline void fork_release(::aura::application * papp, sp(T) & t)
 
 }
 
-CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int i);
 
+CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int i);
 
 
 template < typename PRED >

@@ -16,7 +16,7 @@ namespace user
 
       rect                             m_rectMargin;
       int                              m_iSel;
-      ::visual::font_list_data *       m_pfontlistdata;
+      sp(::visual::font_list_data)     m_pfontlistdata;
 
 
       font_list();
@@ -34,11 +34,12 @@ namespace user
       //virtual void assert_valid() const;
       //virtual void dump(dump_context & dumpcontext) const;
 
-      virtual bool get_color(COLORREF & cr, e_color ecolor) override;
+      virtual bool style_color(COLORREF & cr, e_color ecolor) override;
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);

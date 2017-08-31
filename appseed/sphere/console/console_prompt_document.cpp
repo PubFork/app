@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace console
@@ -8,6 +8,7 @@ namespace console
    prompt_document::prompt_document(::aura::application * papp) :
       ::object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp)
    {
 
@@ -63,7 +64,7 @@ namespace console
    }
    */
 
-   void prompt_document::data_on_after_change(signal_details * pobj)
+   void prompt_document::data_on_after_change(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -80,7 +81,7 @@ namespace console
    }
 
 
-} // namespace command
+} // namespace prompt
 
 
 

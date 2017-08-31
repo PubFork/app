@@ -9,7 +9,7 @@ namespace programming
       m_semCompiler(this, MAX(1, ::get_processor_count()), MAX(1, ::get_processor_count()))
    {
 
-      m_pauraapp->m_psignal->connect(this, &application::on_application_signal);
+      m_pauraapp->add_route(this, &application::on_application_signal);
 
    }
 
@@ -20,22 +20,22 @@ namespace programming
    }
 
 
-   void application::on_application_signal(signal_details * pobj)
+   void application::on_application_signal(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::application_signal_details, psignal, pobj);
+      SCAST_PTR(::aura::application_message, psignal, pobj);
 
-      if (psignal->m_esignal == ::aura::application_signal_process_initialize)
+      if (psignal->m_esignal == ::aura::application_message_process_initialize)
       {
 
       }
-      else if (psignal->m_esignal == ::aura::application_signal_initialize1)
+      else if (psignal->m_esignal == ::aura::application_message_initialize1)
       {
 
 
 
       }
-      else  if (psignal->m_esignal == ::aura::application_signal_exit_instance)
+      else  if (psignal->m_esignal == ::aura::application_message_exit_instance)
       {
 
       }

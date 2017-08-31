@@ -1,11 +1,27 @@
+#include "framework.h"
+//#include <Shlobj.h>
+
+
+#ifdef WINDOWS
+
+bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
+
+#endif
+
+
 #if defined(METROWIN)
+
    #pragma push_macro("System")
+
    #undef System
+
    using namespace ::Windows::System;
 
    #pragma pop_macro("System")
-#endif
 
+   CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
+
+#endif
 
 
 ::file::path dir::ca2_module()
@@ -779,26 +795,8 @@ bool dir::is(const ::file::path & path1)
    }
    string strPrefix;
 
-   if (::str::begins_eat_ci(str, "winmetro-Pictures:\\\\"))
-   {
+   auto folderBase = winrt_folder(str, strPrefix);
 
-      strPrefix = "winmetro-Pictures:\\\\";
-
-   }
-
-   if (::str::begins_eat_ci(str, "winmetro-Music:\\\\"))
-   {
-
-      strPrefix = "winmetro-Music:\\\\";
-
-   }
-
-   if (::str::begins_eat_ci(str, "winmetro-Videos:\\\\"))
-   {
-
-      strPrefix = "winmetro-Videos:\\\\";
-
-   }
 
    uint32_t dwFileAttributes = ::GetFileAttributesW(wstring(str));
    if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
@@ -806,6 +804,31 @@ bool dir::is(const ::file::path & path1)
       return true;
    else
    {
+
+      if (folderBase != nullptr)
+      {
+
+         try
+         {
+
+            auto folder = ::wait(folderBase->GetFolderAsync(str));
+
+            if (folder != nullptr)
+            {
+
+               return true;
+
+            }
+
+         }
+         catch (...)
+         {
+
+            return false;
+
+         }
+
+      }
 
       DWORD dwLastError = ::GetLastError();
 
@@ -1449,7 +1472,7 @@ retry:
 
 #ifdef WINDOWSEX
 
-   SHGetSpecialFolderPath(NULL, str, CSIDL_PROFILE, false);
+   ::windows::shell_get_special_folder_path(NULL, str, CSIDL_PROFILE, false);
 
 #elif defined(METROWIN)
 
@@ -1474,9 +1497,9 @@ retry:
 
    string strUserFolderShift;
 
-   /*if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+   /*if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
    {
-   strUserFolderShift = path(strRelative, App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string());
+   strUserFolderShift = path(strRelative, App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string());
    }
    else*/
    {
@@ -1518,6 +1541,20 @@ retry:
 
 
 
+::file::path dir::bergedge()
+{
+
+#ifdef WINDOWS
+
+   return "C:\\bergedge";
+
+#else
+
+   return "/bergedge";
+
+#endif
+
+}
 
 
 

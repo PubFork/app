@@ -104,7 +104,7 @@ namespace aura
 
          papp->post_object(uiMessage, 2, pcreate);
 
-         while (get_run_thread())
+         while (thread_get_run())
          {
 
             if (pcreate->m_spCommandLine->m_eventReady.wait(millis(84)).signaled())
@@ -112,7 +112,7 @@ namespace aura
 
          }
 
-         if (!get_run_thread())
+         if (!thread_get_run())
          {
 
             try
@@ -416,7 +416,7 @@ namespace aura
 
 
 
-   void session::frame_pre_translate_message(signal_details * pobj)
+   void session::frame_pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -468,9 +468,9 @@ namespace aura
          string strApp;
 
          if ((pcreate->m_spCommandLine->m_varQuery["app"].array_get_count() > 1
-            || pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || command()->m_varTopicQuery["show_platform"] == 1)
-            && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)command()->m_varTopicQuery.has_property("client_only"))
-            && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !command()->m_varTopicQuery.has_property("client_only")))
+            || pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || handler()->m_varTopicQuery["show_platform"] == 1)
+            && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
+            && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
          {
             m_bShowPlatform = true;
          }
@@ -558,8 +558,8 @@ namespace aura
                if (papp == NULL)
                {
 
-                  if (System.directrix()->m_spcommandline->m_varQuery["app"].array_get_count() == 1
-                     && System.directrix()->m_spcommandline->m_varQuery["app"] == strApp)
+                  if (System.handler()->m_spcommandline->m_varQuery["app"].array_get_count() == 1
+                     && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
                   {
 
                      ::multithreading::post_quit(&System);
@@ -582,13 +582,18 @@ namespace aura
 
                if (strApp != "bergedge")
                {
+                  
+                  {
+                     
+                     //synch_lock sl(System.m_pmutex);
 
-
-                  //pcreate->m_spCommandLine->m_varQuery["bergedge_callback"] = dynamic_cast < ::aura::application * > (this);
-
+                     //m_appptra.add(papp);
+                     
+                  }
+                  
                   papp->on_start_application();
 
-                  papp->command()->command(pcreate);
+                  papp->handler()->handle(pcreate);
 
                   m_pappCurrent = papp;
 
@@ -611,9 +616,9 @@ namespace aura
 
       m_varCurrentViewFile = pcreate->m_spCommandLine->m_varFile;
 
-      if ((pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || command()->m_varTopicQuery["show_platform"] == 1)
-         && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)command()->m_varTopicQuery.has_property("client_only"))
-         && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !command()->m_varTopicQuery.has_property("client_only")))
+      if ((pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || handler()->m_varTopicQuery["show_platform"] == 1)
+         && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
+         && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
       {
          m_bShowPlatform = true;
       }
@@ -817,8 +822,8 @@ namespace aura
 #elif !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 
 
-      if (((!System.directrix()->m_varTopicQuery.has_property("install")
-         && !System.directrix()->m_varTopicQuery.has_property("uninstall"))
+      if (((!System.handler()->m_varTopicQuery.has_property("install")
+         && !System.handler()->m_varTopicQuery.has_property("uninstall"))
          ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
          && strAppId.has_char()
          && !System.is_application_installed(strAppId, "installed"))
@@ -1075,7 +1080,7 @@ namespace aura
                      || ::str::begins_eat(strCommand, "ca2prompt\n"))
                   {
                      strCommand.trim();
-                     command()->add_fork_uri(strCommand);
+                     handler()->add_fork_uri(strCommand);
                   }
                   return;
                }
@@ -1119,7 +1124,7 @@ namespace aura
                || ::str::begins_eat(strCommand, "ca2prompt\n"))
             {
                strCommand.trim();
-               command()->add_fork_uri(strCommand);
+               handler()->add_fork_uri(strCommand);
                System.m_bDoNotExitIfNoApplications = true;
             }
             return;
@@ -1203,10 +1208,10 @@ namespace aura
    bool session::is_licensed(const char * pszId, bool bInteractive)
    {
 
-      if (directrix()->m_varTopicQuery.has_property("install"))
+      if (handler()->m_varTopicQuery.has_property("install"))
          return true;
 
-      if (directrix()->m_varTopicQuery.has_property("uninstall"))
+      if (handler()->m_varTopicQuery.has_property("uninstall"))
          return true;
 
       if (&licensing() == NULL)

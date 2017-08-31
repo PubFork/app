@@ -49,7 +49,8 @@ namespace aura
          //if(ShouldTraceOutput(dwModule, dwCategory, nLevel, &pCategory, &pmodule))
          if(category.m_estatus == ::aura::trace::status_disabled || nLevel > category.m_uiLevel)
             return;
-         /*      if (nLen >= 0 && nLen < nCount)
+         /*
+         if (nLen >= 0 && nLen < nCount)
          {
          if(g_Allocator.GetProcess()->m_bFileNameAndLineNo)
          {
@@ -72,50 +73,67 @@ namespace aura
          else
          nLen += nTemp;
          }
-         }*/
-         /*if (nLen >= 0 && nLen < nCount)
+         }
+         */
+         /*
+         if (nLen >= 0 && nLen < nCount)
          {
          C_RUNTIME_ERRORCHECK_SPRINTF(_vsnprintf_s(szBuf + nLen, nCount - nLen, nCount - nLen - 1, pszFormat, ptr));
-         }*/
+         }
+         */
 
          string str;
 
          str.FormatV(pszFormat, args);
 
-         ::OutputDebugStringW(::str::international::utf8_to_unicode(str));
+         ::output_debug_string(str);
 
-         /*if(pmodule != NULL)
+         /*
+         if(pmodule != NULL)
          pmodule->DebugReport(_CRT_WARN, NULL, 0, NULL, pszFormat, ptr);
          else
-         OutputDebugStringA(szBuf);*/
+         output_debug_string(szBuf);
+         */
+         
       }
 
 
       category::category()
       {
+         
          m_uiLevel      = 3000;
          m_estatus      = status_enabled;
          m_dwCategory   = 0;
+         
       }
 
       category::~category()
       {
+         
       }
 
 
       void category::SetLevel( UINT nLevel ) throw()
       {
+         
          m_uiLevel = nLevel;
+         
       }
 
+      
       e_status category::GetStatus() const throw()
       {
+         
          return m_estatus;
+         
       }
 
+      
       void category::SetStatus( e_status eStatus ) throw()
       {
+         
          m_estatus = eStatus;
+         
       }
 
 
@@ -124,21 +142,29 @@ namespace aura
          return( m_dwCategory );
       }
 
+
       UINT category::GetLevel() const throw()
       {
+         
          return m_uiLevel;
+         
       }
+      
 
       CLASS_DECL_AURA void raw_trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args)
       {
+         
          UNREFERENCED_PARAMETER(pszFileName);
          UNREFERENCED_PARAMETER(nLine);
          UNREFERENCED_PARAMETER(dwCategory);
          UNREFERENCED_PARAMETER(nLevel);
 
          string str;
+         
          str.FormatV(pszFmt, args);
-         ::OutputDebugStringW(::str::international::utf8_to_unicode(str));
+         
+         ::output_debug_string(str);
+         
       }
 
       /*CLASS_DECL_AURA void system_log_trace_v(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * pszFmt, va_list args)

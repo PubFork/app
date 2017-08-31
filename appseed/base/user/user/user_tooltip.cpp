@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -36,17 +36,17 @@ namespace user
 
 
 #endif //DEBUG
-   void tooltip::install_message_handling(::message::dispatch * pinterface)
+   void tooltip::install_message_routing(::message::sender * pinterface)
    {
-      ::user::interaction::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&tooltip::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&tooltip::_001OnCreate);
       //
 
    }
 
 
-   void tooltip::_001OnCreate(signal_details * pobj)
+   void tooltip::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -66,10 +66,11 @@ namespace user
 
    }
 
-   bool tooltip::get_translucency(::user::ETranslucency  & etranslucency)
+
+   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 

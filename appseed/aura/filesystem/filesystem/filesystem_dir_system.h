@@ -159,6 +159,8 @@ namespace file
 
          virtual bool update_module_path();
 
+         virtual ::file::path get_favorites_folder();
+
          virtual ::file::path get_home_folder();
          virtual ::file::path get_desktop_folder();
          virtual ::file::path get_document_folder();

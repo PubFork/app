@@ -67,7 +67,7 @@ namespace hotplugin
       virtual ~plugin();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       // host should implement
       virtual bool         open_link(const string & strLink,const string & pszTarget);
@@ -135,7 +135,7 @@ namespace hotplugin
       using ::user::interaction::message_handler;
       virtual int32_t message_handler(XEvent * pevent);
 #endif
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
       virtual void plugin_message_handler(UINT message, WPARAM wparam, LPARAM lparam, bool bEnsureTx);
       virtual void plugin_message_handler(MESSAGE * pmsg,bool bEnsureTx);
 

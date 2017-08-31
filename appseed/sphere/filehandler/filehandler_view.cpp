@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filehandler
@@ -18,13 +18,13 @@ namespace filehandler
    }
 
 
-   void view::install_message_handling(::message::dispatch * pinterface)
+   void view::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::form::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
+      ::user::form::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
 //
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
 
    }
 
@@ -60,7 +60,7 @@ namespace filehandler
    }
 
 
-   void view::_001OnCreate(signal_details * pobj)
+   void view::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -70,12 +70,16 @@ namespace filehandler
 
    }
 
+   
    void view::item::parse(const char * pszApp)
    {
+      
       m_strApp = pszApp;
+      
    }
+   
 
-   void view::list::parse(handler * phandler, const char * pszTopic)
+   void view::list::parse(::filehandler::handler * phandler, const char * pszTopic)
    {
 
       remove_all();
@@ -224,7 +228,7 @@ namespace filehandler
 
 
 
-   void view::_001OnLButtonUp(signal_details * pobj)
+   void view::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);

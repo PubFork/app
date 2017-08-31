@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -64,10 +64,10 @@ namespace filemanager
       UNREFERENCED_PARAMETER(itema);
    }
 
-   void callback::OnFileManagerItemUpdate(::filemanager::data * pdata, cmd_ui * pcmdui, const ::fs::item_array & itema)
+   void callback::OnFileManagerItemUpdate(::filemanager::data * pdata, ::user::command * pcommand, const ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
-      UNREFERENCED_PARAMETER(pcmdui);
+      UNREFERENCED_PARAMETER(pcommand);
       UNREFERENCED_PARAMETER(itema);
    }
 

@@ -387,7 +387,7 @@ UINT system_main(LPVOID lp)
       m_psystem->m_iReturnCode = m_psystem->on_run();
       if(m_psystem->m_iReturnCode != 0)
       {
-         ::OutputDebugStringW(L"application::main on_run termination failure");
+         ::output_debug_string(L"application::main on_run termination failure");
       }
       if(m_psystem->is_system())
       {
@@ -441,8 +441,9 @@ namespace metrowin
 
       m_psystem = psystem;
 
+      m_pdxi = new directx_interaction(m_psystem);
 
-      m_psystem->m_pbasesystem->m_possystemwindow->m_pui = new ::user::interaction(m_psystem);
+      m_psystem->m_pbasesystem->m_possystemwindow->m_pui = m_pdxi;
 
       m_psystem->m_pbasesystem->m_possystemwindow->m_pwindow = this;
 
@@ -458,7 +459,7 @@ namespace metrowin
 
       pinitmaindata->m_hInstance             = NULL;
       pinitmaindata->m_hPrevInstance         = NULL;
-      pinitmaindata->m_vssCommandLine        = strId;
+      pinitmaindata->m_strCommandLine        = strId;
       pinitmaindata->m_nCmdShow              = 0;
 
       m_psystem->init_main_data(pinitmaindata);
@@ -517,11 +518,11 @@ namespace metrowin
 
       //m_psystem->m_ptwf->twf_start();
 
-      stringa straLibrary = m_psystem->command()->m_varTopicQuery["app"].stra();
+      stringa straLibrary = m_psystem->handler()->m_varTopicQuery["app"].stra();
 
-      for(int i = 0; i < m_psystem->command()->m_varTopicQuery["app"].get_count(); i++)
+      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
       {
-         string strApp = m_psystem->command()->m_varTopicQuery["app"].stra()[i];
+         string strApp = m_psystem->handler()->m_varTopicQuery["app"].stra()[i];
       }
 
       straLibrary.replace("\\", "_");
@@ -536,12 +537,12 @@ namespace metrowin
          iFind = strLibrary.find("/", iFind + 1);
          if(iFind >= 0)
             strLibrary.Truncate(iFind);
-         m_psystem->m_mapAppLibrary[m_psystem->command()->m_varTopicQuery["app"][i]] = strLibrary;
+         m_psystem->m_mapAppLibrary[m_psystem->handler()->m_varTopicQuery["app"][i]] = strLibrary;
       }
 
-      for(int i = 0; i < m_psystem->command()->m_varTopicQuery["app"].get_count(); i++)
+      for(int i = 0; i < m_psystem->handler()->m_varTopicQuery["app"].get_count(); i++)
       {
-         string strApp = m_psystem->command()->m_varTopicQuery["app"][i];
+         string strApp = m_psystem->handler()->m_varTopicQuery["app"][i];
       }
 
       m_psystem->m_mapAppLibrary["app/ca2/cube"] = "ca2";
@@ -564,7 +565,7 @@ namespace metrowin
    }
 
 
-   void directx_application::install_message_handling_2ex()
+   void directx_application::install_message_routing_2ex()
    {
 
       CoreWindow ^ window = m_window.Get();
@@ -598,7 +599,7 @@ namespace metrowin
 
       m_window = window;
 
-      install_message_handling_2ex();
+      install_message_routing_2ex();
 
       m_directx = ref new directx_base(m_psystem);
 
@@ -1192,6 +1193,150 @@ namespace metrowin
    {
 
       return m_papp;
+
+   }
+
+   
+   directx_interaction::directx_interaction(::aura::application * papp) :
+      ::object(papp),
+      user::interaction(papp)
+   {
+
+
+   }
+   
+   
+   directx_interaction::~directx_interaction()
+   {
+
+
+   }
+
+
+   void directx_interaction::_001DrawThis(::draw2d::graphics * pgraphics)
+   {
+
+      return ::user::interaction::_001DrawThis(pgraphics);
+
+      if (pgraphics == NULL)
+      {
+
+         throw invalid_argument_exception(get_app());
+
+      }
+
+      ::draw2d::keep k(pgraphics);
+
+      try
+      {
+
+         if (!is_custom_draw() && pgraphics != NULL && pgraphics->m_pnext == NULL)
+         {
+
+            set_viewport_org(pgraphics);
+
+         }
+
+         pgraphics->m_dFontFactor = 1.0;
+
+         //try
+         //{
+
+         //   pgraphics->SelectClipRgn(NULL);
+
+         //}
+         //catch(...)
+         //{
+
+         //   throw simple_exception(::get_thread_app(), "no more a window");
+
+         //}
+
+         {
+
+            synch_lock sl(m_pmutex);
+
+            _001OnNcDraw(pgraphics);
+
+         }
+
+         _001OnClip(pgraphics);
+
+         _001CallOnDraw(pgraphics);
+
+
+      }
+      catch (...)
+      {
+
+         TRACE("Exception: interaction::_001DrawThis %s", typeid(*this).name());
+
+      }
+
+      if (m_pparent != NULL)
+      {
+
+         on_after_graphical_update();
+
+      }
+
+
+   }
+
+
+   void directx_interaction::_001DrawChildren(::draw2d::graphics * pgraphics)
+   {
+
+      return ::user::interaction::_001DrawChildren(pgraphics);
+
+      ::draw2d::keep k(pgraphics);
+
+      // while drawing layout can occur and change z-order.
+      // keep this past z-order
+      ::user::interaction_spa uia = m_uiptraChild;
+
+      for (auto & pui : uia)
+      {
+
+         try
+         {
+
+            ::draw2d::keep keep(pgraphics);
+
+            if (!pui->is_custom_draw())
+            {
+
+               pui->_000OnDraw(pgraphics);
+
+            }
+
+         }
+         catch (...)
+         {
+
+            TRACE("\n\nException thrown while drawing user::interaction\n\n");
+
+         }
+
+      }
+
+
+
+   }
+
+
+   void directx_interaction::_000OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::interaction::_000OnDraw(pgraphics);
+
+   }
+
+
+   void directx_interaction::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::interaction::_001OnDraw(pgraphics);
 
    }
 

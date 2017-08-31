@@ -35,7 +35,7 @@ void os_impl_free(void * p)
 
 		uint32_t dw = ::GetLastError();
 
-		::OutputDebugString("system_heap_free : Failed to free memory");
+		::output_debug_string("system_heap_free : Failed to free memory");
 
 	}
 

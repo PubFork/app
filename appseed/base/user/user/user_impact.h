@@ -41,8 +41,10 @@ namespace user
 
          hint_begin = 1984,
          hint_set_edit_file = hint_begin,
+         hint_flush_edit_file,
          hint_add_location,
          hint_save_to_ostream,
+         hint_save_file,
          hint_control_saved,
          hint_end
 
@@ -68,7 +70,7 @@ namespace user
       template < class DOCUMENT >
       ::data::data * get_typed_document_data();
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual bool IsSelected(const object* pDocItem) const; // support for OLE
 
@@ -88,13 +90,13 @@ namespace user
       DROPEFFECT dropDefault, DROPEFFECT dropList, point point);
       virtual DROPEFFECT OnDragScroll(uint32_t dwKeyState, point point);*/
 
-      virtual void OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo = NULL);
+      //virtual void OnPrepareDC(::draw2d::graphics * pgraphics, CPrintInfo* pInfo = NULL);
 
       virtual void _001OnInitialUpdate();
 
 
-         // Activation
-         virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView);
+      // Activation
+      virtual void OnActivateView(bool bActivate, sp(impact) pActivateView, sp(impact) pDeactiveView);
       virtual void OnActivateFrame(UINT nState, sp(::user::frame_window) pFrameWnd);
 
       // General drawing/updating
@@ -137,7 +139,7 @@ namespace user
       //virtual void on_draw_view(::draw2d::graphics * pgraphics, spa(::data::data) spadata);
       //virtual void defer_draw_view(::draw2d::dib * pdib);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg) override;
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
       virtual bool pre_create_window(::user::create_struct& cs) override;
       virtual void PostNcDestroy() override;
@@ -168,9 +170,9 @@ namespace user
          void OnPaint();
       //int32_t OnMouseActivate(::window_sp pDesktopWnd, UINT nHitTest, UINT message);
       // commands
-      void OnUpdateSplitCmd(cmd_ui* pCmdUI);
+      void OnUpdateSplitCmd(::user::command* pCmdUI);
       bool OnSplitCmd(UINT nID);
-      void OnUpdateNextPaneMenu(cmd_ui* pCmdUI);
+      void OnUpdateNextPaneMenu(::user::command* pCmdUI);
       bool OnNextPaneCmd(UINT nID);
 
       // not mapped commands - must be mapped in derived class
@@ -224,16 +226,16 @@ namespace user
 
 
 
-      //      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      //      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       //      virtual bool pre_create_window(::user::create_struct& cs);
 
 
-         //         virtual void install_message_handling(::message::dispatch * pinterface);
+         //         virtual void install_message_routing(::message::sender * pinterface);
 
-         virtual bool _001HasCommandHandler(id id) override;
+         virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
-         virtual void walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop);
+         virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
 
          virtual string calc_data_id() override;
@@ -262,11 +264,11 @@ namespace user
       {
       }
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override
+      virtual void install_message_routing(::message::sender * pinterface) override
       {
          
-         ::user::impact::install_message_handling(pinterface);
-         VIEW::install_message_handling(pinterface);
+         VIEW::install_message_routing(pinterface);
+         ::user::impact::install_message_routing(pinterface);
 
       }
 

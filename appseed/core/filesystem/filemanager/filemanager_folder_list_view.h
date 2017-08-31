@@ -12,13 +12,16 @@ namespace filemanager
    public:
 
 
-      bool m_bRecursive;
+      bool                             m_bRecursive;
 
       bool                             m_bRecursiveColumn;
 
 
       folder_list_view(::aura::application * papp);
       virtual ~folder_list_view();
+      
+      
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       void Initialize(::database::id  datakey,bool bRecursive);

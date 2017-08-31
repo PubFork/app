@@ -98,11 +98,11 @@ namespace gen
    //{
    //   TRACE("throw hresult_exception: hr = 0x%x\n", hr);
    //  throw hresult_exception(hr);
-   /*   ::OutputDebugString("throw hresult_exception");
+   /*   ::output_debug_string("throw hresult_exception");
     char sz[200];
     sprintf(sz, "0x%s", hr);
-    ::OutputDebugString(sz);
-    ::OutputDebugString("\n");
+    ::output_debug_string(sz);
+    ::output_debug_string("\n");
     //TRACE(trace::category_Exception, 0, "throw hresult_exception: hr = 0x%x\n", hr );
     ASSERT( false );
     DWORD dwExceptionCode;

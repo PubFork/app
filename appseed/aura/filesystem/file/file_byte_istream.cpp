@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 // return string length or -1 if UNICODE string is found in the archive
@@ -43,7 +43,7 @@ namespace file
 
    // FindSignature.cpp
    // from 7-zip on 2012-12-23, lunch time
-   ////#include "framework.h"
+   #include "framework.h"
 
    /*//#include "Common/Buffer.h"
 

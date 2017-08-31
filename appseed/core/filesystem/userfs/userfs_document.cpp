@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userfs
@@ -8,6 +8,7 @@ namespace userfs
    document::document(::aura::application * papp) :
       object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp)
    {
 

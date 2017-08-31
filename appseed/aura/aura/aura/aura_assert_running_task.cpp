@@ -26,7 +26,7 @@ namespace aura
    int32_t assert_running_task::run()
    {
 
-      while(get_run_thread())
+      while(thread_get_run())
       {
 
          try

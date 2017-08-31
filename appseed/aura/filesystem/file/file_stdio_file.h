@@ -11,7 +11,7 @@ namespace file
    public:
 
 
-      _FILE *        m_pfile;
+      FILE *        m_pfile;
 
 
       stdio_file();

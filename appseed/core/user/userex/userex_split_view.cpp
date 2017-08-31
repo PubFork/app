@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userex
@@ -82,19 +82,16 @@ namespace userex
    }
 
 
-   bool split_view::on_simple_update(cmd_ui * pcmdui)
+   void split_view::on_command_probe(::user::command * pcommand)
    {
-
-      UNREFERENCED_PARAMETER(pcmdui);
-
-      return false;
 
    }
 
-   bool split_view::on_simple_action(id id)
+
+   void split_view::on_command(::user::command * pcommand)
    {
-      UNREFERENCED_PARAMETER(id);
-      return false;
+
    }
+
 
 } // namespace userex

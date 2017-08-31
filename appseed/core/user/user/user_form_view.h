@@ -6,10 +6,12 @@ namespace user
 
 
    class CLASS_DECL_CORE form_view:
-      virtual public ::user::show < ::user::form >
+      virtual public ::user::show < ::user::margin < ::user::form > >
    {
    public:
 
+
+      using BASE_VIEW = ::user::show < ::user::margin < ::user::form > >;
 
       form_view();
       virtual ~form_view();

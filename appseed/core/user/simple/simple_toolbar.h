@@ -59,10 +59,9 @@ public:
    virtual rect get_bar_border();
    virtual rect get_item_pad();
 
-   using ::user::control_bar::create;
    bool create(sp(::user::interaction) pParentWnd, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_TOP, id nID = "__IDW_TOOLBAR"); 
    using ::user::interaction::create_window_ex;
-   bool create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = ::null_rect(), id nID = "__IDW_TOOLBAR");
+   virtual bool create_toolbar(::user::interaction * pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = ::null_rect(), id nID = "__IDW_TOOLBAR") override;
 
 
    int32_t WrapToolBar(int32_t nCount, int32_t nWidth);
@@ -114,7 +113,7 @@ public:
 //   bool SetButtons(const UINT* lpIDArray, int32_t nIDCount);
    void SetSizes(SIZE sizeButton, SIZE sizeImage);
 
-   void OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
+   void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler);
 
 
    void TransparentEraseNonClient(::draw2d::graphics * pgraphics);
@@ -132,7 +131,7 @@ public:
    DECL_GEN_SIGNAL(_001OnNcHitTest);
    DECL_GEN_SIGNAL(_001OnMouseLeave);
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
 
 };

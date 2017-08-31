@@ -8,9 +8,14 @@
 
 #import "macos_mm.h"
 
+int32_t defer_run_system();
 
-int32_t run_system();
+int32_t defer_run_system(const char * pszFileName);
+
+int32_t defer_run_system(char * * psza, int c);
+
 void macos_on_app_activate();
+
 
 @implementation RoundWindowApp
 
@@ -18,7 +23,9 @@ void macos_on_app_activate();
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
    
-   run_system();
+   //MessageBox(NULL, "applicationDidFinishLaunching", "applicationDidFinishLaunching", MB_OK);
+   
+   defer_run_system();
    
 }
 
@@ -27,12 +34,67 @@ void macos_on_app_activate();
                     hasVisibleWindows:(BOOL)flag
 {
    
+   //MessageBox(NULL, "applicationShouldHandleReopen", "applicationShouldHandleReopen", MB_OK);
+   
    macos_on_app_activate();
 
+   return YES;
+   
+}
+
+
+- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender
+{
+   
+   //MessageBox(NULL, "applicationOpenUntitledFile", "applicationOpenUntitledFile", MB_OK);
+   
+   defer_run_system();
    
    return YES;
    
 }
+
+
+- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename
+{
+   
+   //MessageBox(NULL, "application: openFile", "application: openFile", MB_OK);
+   
+   defer_run_system([filename UTF8String]);
+   
+   return true;
+   
+}
+
+
+
+- (void)application:(NSApplication *)sender openFiles:(NSArray<NSString *> *)filenames
+{
+   
+   unsigned long ulCount = [filenames count];
+   
+   if(ulCount <= 0)
+   {
+      
+      return;
+      
+   }
+   
+   char ** psza = (char **) malloc(ulCount * sizeof(char*));
+   
+   for(unsigned long ul = 0; ul < ulCount; ul++)
+   {
+      
+      psza[ul] = strdup([[filenames objectAtIndex:ul] UTF8String]);
+      
+   }
+   
+   defer_run_system(psza, ulCount);
+   
+   
+}
+
+
 
 //- (void)sendEvent:(NSEvent *)theEvent
 //{

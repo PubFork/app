@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -8,11 +8,12 @@ namespace filemanager
    operation_document::operation_document(::aura::application * papp):
       object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp),
       m_thread(papp)
    {
 
-      }
+   }
 
    bool operation_document::on_new_document()
    {

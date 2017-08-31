@@ -18,12 +18,14 @@ namespace base
       public:
 
          bool                                         m_bWindowSizeChange;
+      
          sp(::user::interaction)                      m_pui;
+         
          ::axis::system_window ^                      m_pwindow;
 
          os_system_window();
 
-   };
+      };
 
 #elif defined(APPLE_IOS)
       
@@ -32,7 +34,6 @@ namespace base
       public:
 
          sp(::user::interaction)                      m_pui;
-
 
       };
 
@@ -43,8 +44,8 @@ namespace base
       public:
 
          sp(::user::interaction)                      m_pui;
-         oswindow                                     m_oswindow;
 
+         oswindow                                     m_oswindow;
 
       };
 
@@ -56,21 +57,11 @@ namespace base
 
 #ifdef WINDOWSEX
 
-
-      ::base::system_interaction_impl *            m_psystemwindow;
+      ::base::system_interaction_impl *      m_psystemwindow;
 
 #endif
 
-      sp(::user::schema)                           m_pschemaLayeredFrame;
-
-
-      os_system_window *                           m_possystemwindow;
-
-
-
-
-
-
+      os_system_window *                     m_possystemwindow;
 
 
       system(::aura::application * papp);

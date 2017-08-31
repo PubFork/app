@@ -102,7 +102,7 @@ namespace user
 
 
 
-      m_bNoTabs = System.directrix()->m_varTopicQuery.has_property("no_tabs");
+      m_bNoTabs = System.handler()->m_varTopicQuery.has_property("no_tabs");
 
 
       //m_rectBorder.set(7, 1, 7, 0);
@@ -327,9 +327,9 @@ namespace user
    bool tab::defer_handle_auto_hide_tabs(bool bLayout)
    {
 
-      //sp(::user::wndfrm::frame::WorkSetClientInterface) pinterface = GetTopLevelFrame();
+      //sp(::user::wndfrm::frame::WorkSetClientInterface) psender = GetTopLevelFrame();
       //
-      //if (pinterface != NULL && pinterface->m_bInitialFramePosition)
+      //if (psender != NULL && psender->m_bInitialFramePosition)
       //{
       //   return false;
       //}
@@ -526,7 +526,7 @@ namespace user
       if(GetTopLevel()->frame_is_transparent())
          return;
 
-      if(m_puserschemaSchema == NULL)
+      if(m_puserstyle == NULL)
       {
 
          _001OnDrawStandard(pgraphics);
@@ -536,7 +536,7 @@ namespace user
       }
       
 
-      if (!m_puserschemaSchema->_001TabOnDrawSchema01(pgraphics, this))
+      if (!m_puserstyle->_001TabOnDrawSchema01(pgraphics, this))
       {
 
          _001OnDrawSchema01(pgraphics);
@@ -1083,24 +1083,24 @@ else
 
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevelFrame();
+         m_puserstyle = GetTopLevelFrame();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
-      if(m_puserschemaSchema != NULL)
+      if(m_puserstyle != NULL)
       {
 
-         if (m_puserschemaSchema->_001OnTabLayout(this))
+         if (m_puserstyle->_001OnTabLayout(this))
          {
 
             return;
@@ -1400,7 +1400,7 @@ else
    }
 
 
-   void tab::_001OnLButtonDown(signal_details * pobj)
+   void tab::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       class point point = pmouse->m_pt;
@@ -1428,7 +1428,7 @@ else
    }
 
 
-   void tab::_001OnLButtonUp(signal_details * pobj)
+   void tab::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       class point point = pmouse->m_pt;
@@ -1460,7 +1460,7 @@ else
       }
    }
 
-   void tab::_001OnMouseMove(signal_details * pobj)
+   void tab::_001OnMouseMove(::message::message * pobj)
    {
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
 //      class point point = pmouse->m_pt;
@@ -1487,7 +1487,7 @@ else
    }
 
 
-   void tab::_001OnMouseLeave(signal_details * pobj)
+   void tab::_001OnMouseLeave(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       m_iHover = -1;
@@ -1745,10 +1745,10 @@ else
    }
 
    /*
-   bool tab::create(::user::interaction * pinterface, UINT uiId)
+   bool tab::create(::user::interaction * psender, UINT uiId)
    {
       if(!m_pui->create(
-         pinterface,
+         psender,
          uiId))
          return false;
       m_bCreated = true;
@@ -1757,7 +1757,7 @@ else
    }
    */
 
-   void tab::_001OnCreate(signal_details * pobj)
+   void tab::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -1779,7 +1779,7 @@ else
 
       get_data()->m_fontUnderline->create_point_font(FONT_SANS, 10, FW_NORMAL, false, true);
 
-      //m_puserschemaSchema = Application.userschema();
+      //m_puserstyle = Application.userstyle();
    //  m_pimagelist = new image_list(get_app());
 
       get_data()->m_bCreated = true;
@@ -1844,22 +1844,22 @@ else
    }
 
 
-   void tab::install_message_handling(::message::dispatch *pinterface)
+   void tab::install_message_routing(::message::sender *psender)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN , pinterface, this, &tab::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP   , pinterface, this, &tab::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE   , pinterface, this, &tab::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE  , pinterface, this, &tab::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_CREATE      , pinterface, this, &tab::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW  , pinterface, this, &tab::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, pinterface, this, &tab::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(message_start_tab_drag,pinterface,this,&tab::_001OnStartTabDrag);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN              , psender, this, &tab::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP                , psender, this, &tab::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE                , psender, this, &tab::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE               , psender, this, &tab::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_CREATE                   , psender, this, &tab::_001OnCreate);
+      IGUI_MSG_LINK(WM_SHOWWINDOW               , psender, this, &tab::_001OnShowWindow);
+      MSG_TYPE_LINK(::message::type_language    , psender, this, &tab::_001OnAppLanguage);
+      IGUI_MSG_LINK(message_start_tab_drag      , psender, this,&tab::_001OnStartTabDrag);
 
 
-      ////IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &tab::_001OnTimer);
+      ////IGUI_MSG_LINK(WM_TIMER, psender, this, &tab::_001OnTimer);
 
    }
 
@@ -1999,7 +1999,7 @@ else
       return count;
    }
 
-   void tab::_001OnAppLanguage(signal_details * pobj)
+   void tab::_001OnAppLanguage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       on_layout();
@@ -2336,9 +2336,9 @@ else
       }
    }
 
-   void tab::_001ConnectParent(::message::dispatch * pinterface)
+   void tab::_001ConnectParent(::message::sender * psender)
    {
-      UNREFERENCED_PARAMETER(pinterface);
+      UNREFERENCED_PARAMETER(psender);
    }
 
    
@@ -2701,7 +2701,7 @@ else
    }
 
 
-   void tab::_001OnStartTabDrag(::signal_details * pobj)
+   void tab::_001OnStartTabDrag(::message::message * pobj)
    {
 
       if(get_data()->m_pcallback != NULL)
@@ -2726,12 +2726,34 @@ else
          try
          {
 
-            (m_pimpl->*m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
+            ::rect rectTabScreen(get_data()->m_rectTab);
 
-            if (pmouse->get_lresult() != 0)
+            ClientToScreen(rectTabScreen);
+
+            if ((pmouse->m_id == WM_LBUTTONDOWN || pmouse->m_id == WM_LBUTTONUP) && rectTabScreen.contains(pmouse->m_pt))
             {
 
-               return;
+               m_pimpl->route_message(pmouse);
+
+               if (pmouse->get_lresult() != 0)
+               {
+
+                  return;
+
+               }
+
+            }
+            else if (pmouse->m_id == WM_MOUSEMOVE)
+            {
+
+               m_pimpl->route_message(pmouse);
+
+               if (pmouse->get_lresult() != 0)
+               {
+
+                  return;
+
+               }
 
             }
 
@@ -2742,7 +2764,7 @@ else
          }
 
       }
-      else if(pmouse->m_uiMessage == WM_MOUSEMOVE)
+      else if(pmouse->m_id == WM_MOUSEMOVE)
       {
 
       }
@@ -3144,7 +3166,7 @@ else
    }
 
 
-   void tab::_001OnShowWindow(signal_details * pobj)
+   void tab::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);

@@ -13,12 +13,12 @@ simple_tree_view::~simple_tree_view()
 
 }
 
-void simple_tree_view::install_message_handling(::message::dispatch * pinterface)
+void simple_tree_view::install_message_routing(::message::sender * pinterface)
 {
 
-   ::user::impact::install_message_handling(pinterface);
-   ::user::tree::install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_tree_view::_001OnCreate);
+   ::user::impact::install_message_routing(pinterface);
+   ::user::tree::install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_tree_view::_001OnCreate);
 
 }
 
@@ -45,7 +45,7 @@ void simple_tree_view::dump(dump_context & dumpcontext) const
 #endif //DEBUG
 
 
-void simple_tree_view::_001OnCreate(signal_details * pobj)
+void simple_tree_view::_001OnCreate(::message::message * pobj)
 {
 
    SCAST_PTR(::message::create, pcreate, pobj);

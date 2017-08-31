@@ -33,10 +33,10 @@ namespace multimedia
 
       }
 
-      void wave_out::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::install_message_routing(::message::sender * pinterface)
       {
 
-         ::multimedia::audio::wave_out::install_message_handling(pinterface);
+         ::multimedia::audio::wave_out::install_message_routing(pinterface);
 
       }
 
@@ -845,12 +845,12 @@ namespace multimedia
       void wave_out::OnBufferEnd(void* pBufferContext)
       {
 
-         if(get_thread_priority() != ::multithreading::priority_time_critical)
-         {
+         //if(get_thread_priority() != ::multithreading::priority_time_critical)
+         //{
 
-            set_thread_priority(::multithreading::priority_time_critical);
+         //   set_thread_priority(::multithreading::priority_time_critical);
 
-         }
+         //}
 
          unsigned __int64 freq;
          QueryPerformanceFrequency((LARGE_INTEGER*)&freq);

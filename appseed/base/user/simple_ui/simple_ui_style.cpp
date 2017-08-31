@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 namespace simple_ui
@@ -9,7 +9,7 @@ namespace simple_ui
       ::object(papp)
    {
 
-      m_eschema = schema_darker;
+      m_etheme = ::user::theme_dark;
 
    }
 
@@ -139,13 +139,13 @@ namespace simple_ui
          || str_begins_ci_dup(m_strSchema, "darker%3B") || str_ends_ci_dup(m_strSchema, "%3Bdarker") || stristr_dup(m_strSchema, "%3Bdarker%3B"))
       {
 
-         m_eschema = schema_darker;
+         m_etheme = ::user::theme_dark;
 
       }
       else
       {
 
-         m_eschema = schema_normal;
+         m_etheme = ::user::theme_lite;
 
       }
 

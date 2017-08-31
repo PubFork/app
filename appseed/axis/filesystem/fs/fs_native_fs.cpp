@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 //#include "aura/node/windows/windows.h"
 #endif
@@ -120,7 +120,7 @@ namespace fs
 //
 //      ::file::path strDesktopFolder;
 //
-//      ::windows::SHGetSpecialFolderPath(
+//      ::windows::shell_get_special_folder_path(
 //         NULL,
 //         strDesktopFolder,
 //         CSIDL_DESKTOP,

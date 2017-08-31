@@ -134,12 +134,12 @@ int32_t db_str_sync_queue::run()
    try
    {
 
-      while(get_run_thread())
+      while(thread_get_run())
       {
 
 repeat:;
 
-      if(!get_run_thread())
+      if(!thread_get_run())
          break;
        {
 

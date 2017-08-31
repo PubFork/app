@@ -6,7 +6,7 @@ namespace html
 
 
    class CLASS_DECL_CORE data :
-      virtual public signalizable,
+      virtual public ::message::receiver,
       virtual public ::data::data
    {
    public:

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWSEX
 #include "core/user/user/user_shell_windows.h"
@@ -19,15 +19,19 @@
 #include "base/database/simpledb/simpledb.h"
 
 
+CLASS_DECL_AURA mutex * get_cred_mutex();
+
 namespace userex
 {
 
+   
 
    userex::userex(::aura::application * papp):
       object(papp),
       ::aura::department(papp)
    {
 
+      
       m_pshell  = NULL;
       m_ptemplateFontSel = NULL;
 
@@ -164,8 +168,8 @@ namespace userex
       System.factory().creatable_small < ::user::combo_list >();
       System.factory().creatable_small < ::user::plain_edit >();
 
-      System.factory().creatable_small < ::user::menu_item >(System.type_info < ::user::menu_base_item >());
-      System.factory().creatable_small < ::user::menu >(System.type_info < ::user::menu_base >());
+      System.factory().creatable_small < ::user::menu_item >(System.type_info < ::user::menu_item >());
+      System.factory().creatable_small < ::user::menu >(System.type_info < ::user::menu >());
 
       System.factory().creatable_small < ::user::button >();
 
@@ -233,7 +237,7 @@ namespace userex
       string strLicense = Application.get_license_id();
 
 
-      var & varTopicQuey = System.directrix()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
       bool bHasInstall = varTopicQuey.has_property("install");
 
@@ -354,10 +358,10 @@ namespace userex
    }
 
 
-   ::user::shell::shell & userex::shell()
+   ::user::shell::shell * userex::shell()
    {
 
-      return *m_pshell;
+      return m_pshell;
 
    }
 
@@ -639,7 +643,7 @@ namespace userex
    }
 
 
-   void userex::data_on_after_change(signal_details * pobj)
+   void userex::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event,pchange,pobj);
@@ -655,26 +659,26 @@ namespace userex
 
 
 
-   void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
-   {
+   //void userex::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
+   //{
 
-      sp(::user::interaction) pwnd;
+   //   sp(::user::interaction) pwnd;
 
-      while(Application.get_frame(pwnd))
-      {
+   //   while(Application.get_frame(pwnd))
+   //   {
 
-         if(pwnd != NULL && pwnd->IsWindow())
-         {
+   //      if(pwnd != NULL && pwnd->IsWindow())
+   //      {
 
-            pwnd->send_message(message,wparam,lparam);
+   //         pwnd->send_message(message,wparam,lparam);
 
-            pwnd->SendMessageToDescendants(message,wparam,lparam);
+   //         pwnd->send_message_to_descendants(message,wparam,lparam);
 
-         }
+   //      }
 
-      }
+   //   }
 
-   }
+   //}
 
 
    void  userex::AddToRecentFileList(const char * lpszPathName)
@@ -690,7 +694,16 @@ namespace userex
    void userex::_001OnFileNew()
    {
       
-      Application.document_manager()._001OnFileNew();
+      ASSERT(Application.document_manager() != NULL);
+      
+      if(Application.document_manager() == NULL)
+      {
+         
+         return;
+         
+      }
+      
+      Application.document_manager()->_001OnFileNew();
 
    }
 
@@ -705,12 +718,6 @@ namespace userex
    }
 
 
-   void userex::VmsGuiiOnAppLanguage(signal_details * pobject)
-   {
-
-      SendMessageToWindows(::base::application::APPM_LANGUAGE,0,(LPARAM)pobject);
-
-   }
 
 
    sp(::user::document) userex::create_form(::aura::application * papp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)
@@ -1041,7 +1048,7 @@ namespace userex
 
          m_mapTemplate[pt] = psystem;
 
-         App(papp).document_manager().add_document_template(psystem);
+         App(papp).document_manager()->add_document_template(psystem);
 
       }
 
@@ -1118,10 +1125,10 @@ namespace userex
    }
 
 
-   bool userex::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool userex::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      UNREFERENCED_PARAMETER(pcmdmsg);
+      UNREFERENCED_PARAMETER(pcommand);
 
       return false;
 
@@ -1316,6 +1323,8 @@ namespace core
 
    string application::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
    {
+
+      synch_lock sl(get_cred_mutex());
 
       string strRet;
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -52,7 +52,7 @@ namespace user
 
          }
 
-         void control_box::_001OnLButtonDown(signal_details * pobj)
+         void control_box::_001OnLButtonDown(::message::message * pobj)
          {
 
             SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -78,7 +78,7 @@ namespace user
          }
 
 
-         void control_box::_001OnLButtonUp(signal_details * pobj)
+         void control_box::_001OnLButtonUp(::message::message * pobj)
          {
 
             SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -101,7 +101,7 @@ namespace user
          }
 
 
-         void control_box::_001OnMouseMove(signal_details * pobj)
+         void control_box::_001OnMouseMove(::message::message * pobj)
          {
 
             SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -159,7 +159,7 @@ namespace user
 
          }
 
-         void control_box::_001OnShowWindow(signal_details * pobj)
+         void control_box::_001OnShowWindow(::message::message * pobj)
          {
 
             SCAST_PTR(::message::show_window, pshow, pobj);
@@ -321,7 +321,7 @@ namespace user
          }
 
 
-         void control_box::_001OnCreate(signal_details * pobj)
+         void control_box::_001OnCreate(::message::message * pobj)
          {
 
             pobj->previous();
@@ -338,19 +338,19 @@ namespace user
          }
 
 
-         void control_box::install_message_handling(::message::dispatch *pinterface)
+         void control_box::install_message_routing(::message::sender *pinterface)
          {
 
-            ::user::interaction::install_message_handling(pinterface);
+            ::user::interaction::install_message_routing(pinterface);
 
-            IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &control_box::_001OnShowWindow);
-//            //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &control_box::_001OnTimer);
-            IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &control_box::_001OnCreate);
-            IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &control_box::_001OnMouseMove);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &control_box::_001OnLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &control_box::_001OnLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_MOVE, pinterface, this, &control_box::_001OnMove);
-            IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &control_box::_001OnSize);
+            IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &control_box::_001OnShowWindow);
+//            //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &control_box::_001OnTimer);
+            IGUI_MSG_LINK(WM_CREATE, pinterface, this, &control_box::_001OnCreate);
+            IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &control_box::_001OnMouseMove);
+            IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &control_box::_001OnLButtonDown);
+            IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &control_box::_001OnLButtonUp);
+            IGUI_MSG_LINK(WM_MOVE, pinterface, this, &control_box::_001OnMove);
+            IGUI_MSG_LINK(WM_SIZE, pinterface, this, &control_box::_001OnSize);
 
          }
 
@@ -976,7 +976,7 @@ namespace user
          }
 
 
-         void control_box::_001OnMove(signal_details * pobj)
+         void control_box::_001OnMove(::message::message * pobj)
          {
 
             ::rect rectWindow;
@@ -1001,7 +1001,7 @@ namespace user
          }
 
 
-         void control_box::_001OnSize(signal_details * pobj)
+         void control_box::_001OnSize(::message::message * pobj)
          {
 
           
@@ -1083,8 +1083,8 @@ namespace user
 
                   ScreenToClient(rectFocus);
 
-                  rectFocus.bottom++;
-                  rectFocus.right++;
+                  rectFocus.bottom;
+                  rectFocus.right;
 
                   if (i == 0)
                   {

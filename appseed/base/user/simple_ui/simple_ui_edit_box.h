@@ -21,7 +21,7 @@ namespace simple_ui
       virtual ~edit_box();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);

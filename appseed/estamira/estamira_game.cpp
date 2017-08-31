@@ -31,13 +31,13 @@ namespace estamira
 
    }
 
-   void game::install_message_handling(::message::dispatch * pdispatch)
+   void game::install_message_routing(::message::sender * psender)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &game::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &game::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &game::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &game::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &game::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &game::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &game::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &game::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &game::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &game::_001OnMouseMove);
 
    }
 
@@ -47,7 +47,7 @@ namespace estamira
 
       m_pui = pui;
 
-      install_message_handling(pui->m_pimpl);
+      install_message_routing(pui->m_pimpl);
 
       m_timer.start(23, true);
 
@@ -136,13 +136,13 @@ namespace estamira
    }
 
 
-   void game::_001OnKeyDown(signal_details * pobj)
+   void game::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key, pkey, pobj);
    
    }
 
-   void game::_001OnKeyUp(signal_details * pobj)
+   void game::_001OnKeyUp(::message::message * pobj)
    {
       SCAST_PTR(::message::key, pkey, pobj);
 
@@ -151,7 +151,7 @@ namespace estamira
 
 
 
-   void game::_001OnLButtonDown(signal_details * pobj)
+   void game::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point pt = pmouse->m_pt;
@@ -178,7 +178,7 @@ namespace estamira
 
    }
 
-   void game::_001OnLButtonUp(signal_details * pobj)
+   void game::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       m_iCurChar = -1;
@@ -193,7 +193,7 @@ namespace estamira
       pmouse->m_bRet = true;
    }
 
-   void game::_001OnMouseMove(signal_details * pobj)
+   void game::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 

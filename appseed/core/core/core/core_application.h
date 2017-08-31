@@ -32,7 +32,7 @@ namespace core
 
       ::userfs::userfs *                     m_puserfs;
 
-      class signal                           m_signalAppLanguageChange;
+      // class signal                           m_signalAppLanguageChange;
       string                                 m_strHelpFilePath;
 
 #ifdef WINDOWS
@@ -51,7 +51,7 @@ namespace core
 
       // Pointer to ::user::document_manager used to manage document templates
       // for this application instance.
-      sp(::object)                             m_pdocmanager;
+      sp(::user::document_manager)           m_pdocmanager;
 
       // Support for Shift+F1 help mode.
       // TRUE if we're in SHIFT+F1 mode.
@@ -74,7 +74,7 @@ namespace core
 
       int32_t                                m_iResourceId;
 
-      sp(::object)                           m_pwndfrm;
+      sp(::user::wndfrm::wndfrm)             m_pwndfrm;
 
 
       stringa                                m_straAppInterest;
@@ -119,10 +119,10 @@ namespace core
 
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       //virtual int32_t run();
 
@@ -169,7 +169,7 @@ namespace core
 
       // overrides for implementation
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual void process_window_procedure_exception(::exception::base* e,signal_details * pobj);
+      virtual void process_window_procedure_exception(::exception::base* e,::message::message * pobj);
 
 
       void EnableModelessEx(bool bEnable);
@@ -188,10 +188,10 @@ namespace core
       virtual LRESULT GetPaintMsgProc(int32_t nCode,WPARAM wParam,LPARAM lParam);
 
 
-      void OnUpdateRecentFileMenu(cmd_ui * pcmdui);
+      void OnUpdateRecentFileMenu(::user::command * pcommand);
 
-      virtual DECL_GEN_SIGNAL(OnAppLanguage);
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      //virtual void send_app_language_changed();
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
 
 
@@ -349,6 +349,7 @@ namespace core
       //      virtual ::core::file_system & file_system();
       virtual bool _001OnDDECommand(const char * lpcsz);
       virtual ::user::document * _001OpenDocumentFile(var varFile);
+      //virtual bool on_open_document_file(var varFile) override;
       DECL_GEN_SIGNAL(_001OnFileNew);
 
 
@@ -359,12 +360,12 @@ namespace core
 
       virtual int32_t run();
 
-      sp(::aura::application) get_system();
+      ::aura::application * get_system();
 
       virtual bool set_keyboard_layout(const char * pszPath,::action::context actioncontext);
 
-      ::user::wndfrm::wndfrm          & wndfrm();
-      ::user::document_manager          & document_manager();
+      ::user::wndfrm::wndfrm * wndfrm();
+      ::user::document_manager * document_manager();
 
 
       string message_box(const char * pszMatter,property_set & propertyset);
@@ -495,7 +496,7 @@ namespace core
       virtual ::file::file_sp friendly_get_file(var varFile,UINT nOpenFlags);
 
 
-      virtual void data_on_after_change(signal_details * pobj);
+      virtual void data_on_after_change(::message::message * pobj);
 
       virtual void add_document_template(::user::impact_system * ptemplate);
 

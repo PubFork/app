@@ -1,7 +1,8 @@
 #pragma once
 
 
-namespace command
+
+namespace prompt
 {
 
 
@@ -25,11 +26,11 @@ namespace command
       virtual int32_t exit_application() override;
 
 
-	   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+	   virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
 
       void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
 
    };
 
-} // namespace command
+} // namespace prompt

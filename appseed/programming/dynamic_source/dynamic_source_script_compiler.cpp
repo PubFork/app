@@ -728,7 +728,7 @@ void script_compiler::compile(ds_script * pscript)
 
    string strLog;
 
-   while(::get_thread_run() && get_run_thread())
+   while(::get_thread_run() && thread_get_run())
    {
 
       strLog += process->read();
@@ -854,7 +854,7 @@ void script_compiler::compile(ds_script * pscript)
 
       string strLog;
 
-      while(::get_thread_run() && get_run_thread())
+      while(::get_thread_run() && thread_get_run())
       {
 
          strLog += process->read();
@@ -994,7 +994,7 @@ void script_compiler::cppize1(ds_script * pscript)
 
    int iTry = 0;
 
-   while ((strSource = Application.file().as_string(pscript->m_strSourcePath)).trimmed().is_empty() && ::get_thread_run() && get_run_thread())
+   while ((strSource = Application.file().as_string(pscript->m_strSourcePath)).trimmed().is_empty() && ::get_thread_run() && thread_get_run())
    {
 
       Sleep(84);
@@ -1146,7 +1146,7 @@ void script_compiler::cppize1(ds_script * pscript)
          { \r\n \
  \r\n \
  \r\n \
-             ::OutputDebugString(\"netnodelite script initializing : " + strCppPath + "!\\n\"); \r\n \
+             ::output_debug_string(\"netnodelite script initializing : " + strCppPath + "!\\n\"); \r\n \
  \r\n \
  \r\n \
          } \r\n \
@@ -1154,7 +1154,7 @@ void script_compiler::cppize1(ds_script * pscript)
          { \r\n \
  \r\n \
  \r\n \
-            ::OutputDebugString(\"netnodelite script terminating : " + strCppPath + "!\\n\"); \r\n \
+            ::output_debug_string(\"netnodelite script terminating : " + strCppPath + "!\\n\"); \r\n \
  \r\n \
  \r\n \
          } \r\n \
@@ -1345,7 +1345,7 @@ void script_compiler::prepare1(const char * lpcszSource, const char * lpcszDest)
 //   //process->write("\n");
 //   uint32_t dwExitCode;
 //   DWORD dwStart = get_tick_count();
-//   while(::get_thread_run() && get_run_thread())
+//   while(::get_thread_run() && thread_get_run())
 //   {
 //
 //      strLog += process->read();
@@ -1750,7 +1750,7 @@ library & script_compiler::lib(const char * pszLibrary)
 
       string strLog;
 
-      while(::get_thread_run() && get_run_thread())
+      while(::get_thread_run() && thread_get_run())
       {
 
          strLog += process->read();
@@ -1897,7 +1897,7 @@ library & script_compiler::lib(const char * pszLibrary)
 
    string strLog;
 
-   while(::get_thread_run() && get_run_thread())
+   while(::get_thread_run() && thread_get_run())
    {
 
       strLog += process->read();

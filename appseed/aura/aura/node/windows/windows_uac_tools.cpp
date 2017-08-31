@@ -95,7 +95,7 @@ v.1.0 (2006-Dec-16, by Andrei Belogortseff)
 The first release.
 */
 
-//#include "framework.h"
+#include "framework.h"
 //#include "windows.h"
 
 #include <VersionHelpers.h>

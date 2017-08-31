@@ -6,20 +6,20 @@ namespace user
 
 
    class CLASS_DECL_AXIS elemental :
-      virtual public ::object
+      virtual public ::user::primitive
    {
    public:
 
 
       DWORD                               m_dwFocusStartTick;
-      bool                                m_bDestroying;
+      bool                                m_bUserElementalOk;
 
 
       elemental();
       virtual ~elemental();
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       virtual ::user::elemental * first_child_elemental();
@@ -33,10 +33,10 @@ namespace user
       // keyboard focus
       virtual bool on_keyboard_focus(::user::elemental * pfocus);
       virtual void keyboard_focus_OnTimer(int32_t iTimer);
-      virtual void keyboard_focus_OnChar(signal_details * pobj);
-      virtual void keyboard_focus_OnSysChar(signal_details * pobj);
-      virtual void keyboard_focus_OnKeyDown(signal_details * pobj);
-      virtual void keyboard_focus_OnKeyUp(signal_details * pobj);
+      virtual void keyboard_focus_OnChar(::message::message * pobj);
+      virtual void keyboard_focus_OnSysChar(::message::message * pobj);
+      virtual void keyboard_focus_OnKeyDown(::message::message * pobj);
+      virtual void keyboard_focus_OnKeyUp(::message::message * pobj);
       virtual ::user::interaction * GetParent() const;
       virtual ::user::elemental * get_parent() const;
       virtual ::user::interaction * get_wnd() const;
@@ -54,7 +54,7 @@ namespace user
 
       // mouse focus
 
-      virtual void mouse_focus_OnLButtonUp(signal_details * pobj);
+      virtual void mouse_focus_OnLButtonUp(::message::message * pobj);
 
       // text interface
 
@@ -80,6 +80,10 @@ namespace user
 
       virtual void on_reset_focus_start_tick();
 
+      
+      virtual bool IsWindow() const;
+      
+      
    };
 
 

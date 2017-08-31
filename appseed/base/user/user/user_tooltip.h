@@ -25,7 +25,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const override;
 #endif
 
-      void install_message_handling(::message::dispatch * pinterface) override;
+      void install_message_routing(::message::sender * pinterface) override;
 
       ::size CalcSize();
 
@@ -34,7 +34,7 @@ namespace user
       void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      bool get_translucency(::user::ETranslucency  & etranslucency) override;
+      bool get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement) override;
 
 
       virtual ::user::interaction::e_type get_window_type() override;

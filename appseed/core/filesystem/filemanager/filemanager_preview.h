@@ -20,7 +20,7 @@ namespace filemanager
       preview(::aura::application * papp);
       virtual ~preview();
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);

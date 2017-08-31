@@ -69,7 +69,7 @@ namespace user
       if (str.has_char())
       {
 
-         select_font(pdrawitem->m_pgraphics, font_list_item, this);
+         select_font(pdrawitem->m_pgraphics, font_list_item);
          //      pgraphics->SetBkMode(TRANSPARENT);
 
          pgraphics->set_text_color(_001GetColor(::user::color_list_header));
@@ -400,16 +400,16 @@ namespace user
    }
 
 
-   void list_header::install_message_handling(::message::dispatch *pinterface)
+   void list_header::install_message_routing(::message::sender *pinterface)
    {
-      ::user::box::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list_header::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list_header::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list_header::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list_header::_001OnMouseMove);
+      ::user::box::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list_header::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list_header::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list_header::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list_header::_001OnMouseMove);
    }
 
-   void list_header::_001OnLButtonDown(signal_details * pobj)
+   void list_header::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point ptCursor = pmouse->m_pt;
@@ -422,7 +422,7 @@ namespace user
       pmouse->m_bRet = false;
    }
 
-   void list_header::_001OnLButtonUp(signal_details * pobj)
+   void list_header::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       list * plist = m_plistctrlinterface;
@@ -478,7 +478,7 @@ namespace user
 
 
 
-   void list_header::_001OnMouseMove(signal_details * pobj)
+   void list_header::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point ptCursor = pmouse->m_pt;
@@ -538,7 +538,7 @@ namespace user
    }
 
 
-   void list_header::_001OnLButtonDblClk(signal_details * pobj)
+   void list_header::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point ptCursor = pmouse->m_pt;

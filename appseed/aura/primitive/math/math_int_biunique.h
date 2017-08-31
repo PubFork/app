@@ -590,6 +590,7 @@ public:
 
 
 
+CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
 
 
 

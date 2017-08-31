@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 dump_context & operator<<(dump_context & dumpcontext,SIZE size)

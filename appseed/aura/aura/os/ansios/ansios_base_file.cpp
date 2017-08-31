@@ -1,7 +1,8 @@
-//#include "framework.h"
+#include "framework.h"
+#include <io.h>
 //#include <sys/stat.h>
 //Copy file using mmap()
-//#include <fcntl.h>
+#include <fcntl.h>
 //#include <sys/mman.h>
 //#include <unistd.h>
 #define PACKAGE "mmap"
@@ -81,24 +82,54 @@ int_bool file_exists_dup(const char * path1)
 
 int_bool file_put_contents_dup(const char * path, const char * contents, ::count len)
 {
-
+   
+   bool bOk = false;
+   
    dir::mk(dir::name(path));
 
    wstring wstr(path);
 
-   HANDLE hfile = ::create_file(path, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-   if(hfile == INVALID_HANDLE_VALUE)
+   FILE * file = fopen_dup(path, "w+");
+   
+   if(file == NULL)
+   {
+      
       return false;
-   count dwWrite;
-   if(len < 0)
-      dwWrite = strlen_dup(contents);
-   else
-      dwWrite = len;
-   uint32_t dwWritten = 0;
-   bool bOk = ::WriteFile(hfile, contents, (uint32_t) dwWrite, &dwWritten, NULL) != FALSE;
-   ::CloseHandle(hfile);
-   return compare::eq(dwWrite, dwWritten) && bOk != FALSE;
+      
+   }
+   
+   try
+   {
+      
+      size_t dwWrite;
+   
+      if(len < 0)
+      {
+       
+         dwWrite = strlen_dup(contents);
+         
+      }
+      else
+      {
+      
+         dwWrite = len;
+         
+      }
+   
+      size_t dwWritten = ::fwrite(contents, 1, (uint32_t) dwWrite, file);
+      
+      bOk = dwWritten == dwWrite;
+      
+   }
+   catch(...)
+   {
+      
+      
+   }
 
+   ::fclose(file);
+   
+   return bOk;
 
 }
 

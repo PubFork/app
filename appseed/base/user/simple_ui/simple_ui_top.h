@@ -25,7 +25,7 @@ namespace simple_ui
       virtual ~top();
 
 
-      void install_message_handling(::message::dispatch * pdispatch) override;
+      void install_message_routing(::message::sender * psender) override;
 
 
       DECL_GEN_SIGNAL(_001OnCreate);

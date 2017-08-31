@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 
 namespace user
 {
@@ -13,7 +13,7 @@ namespace user
    }
 
 
-   void elemental::mouse_focus_OnLButtonUp(signal_details * pobj)
+   void elemental::mouse_focus_OnLButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }*/

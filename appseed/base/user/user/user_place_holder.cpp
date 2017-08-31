@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -23,17 +23,17 @@ namespace user
    }
 
    
-   void place_holder::install_message_handling(::message::dispatch * pdispatch)
+   void place_holder::install_message_routing(::message::sender * psender)
    {
       
-      ::user::interaction::install_message_handling(pdispatch);
+      ::user::interaction::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &place_holder::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &place_holder::_001OnShowWindow);
 
    }
 
 
-   void place_holder::_001OnShowWindow(::signal_details * pobj)
+   void place_holder::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -297,19 +297,28 @@ namespace user
 
    }
 
-   bool place_holder::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   
+   void place_holder::_001OnCmdMsg(::user::command * pcommand)
    {
 
       // then pump through frame
-      if(::user::interaction::_001OnCmdMsg(pcmdmsg))
-         return TRUE;
+      ::user::interaction::_001OnCmdMsg(pcommand);
+
+      if(pcommand->m_bRet)
+         return;
 
       // then pump through parent
       sp(::user::interaction) puiParent = GetParent();
-      if(puiParent != NULL && puiParent->_001OnCmdMsg(pcmdmsg))
-         return TRUE;
 
-      return false;
+      if (puiParent != NULL)
+      {
+
+         puiParent->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
+            return;
+
+      }
 
    }
 

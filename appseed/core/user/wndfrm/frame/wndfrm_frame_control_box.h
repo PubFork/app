@@ -60,7 +60,7 @@ namespace user
             virtual void set_button_color_system_default_001();
 
 
-            virtual void install_message_handling(::message::dispatch *pinterface);
+            virtual void install_message_routing(::message::sender *pinterface);
 
             virtual void _001OnClip(::draw2d::graphics * pgraphics);
 

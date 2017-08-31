@@ -18,7 +18,7 @@ namespace user
          
 
          class CLASS_DECL_CORE MoveManager :
-            virtual public signalizable
+            virtual public ::message::receiver
          {
          public:
 
@@ -54,7 +54,7 @@ namespace user
             bool relay_event(MESSAGE * lpMsg);
             bool update(WorkSet * pwf);
 
-            void message_handler(sp(::user::interaction) pwnd, signal_details * pobj);
+            void message_handler(::user::interaction * pui, ::message::base * pbase);
          };
 
 

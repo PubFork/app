@@ -192,10 +192,11 @@ namespace user
       virtual ::user::interaction::e_type get_window_type();
 
 
-      virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
       DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
@@ -270,16 +271,16 @@ namespace user
       virtual bool NegotiateBorderSpace(UINT nBorderCmd, LPRECT lpRectBorder);
       virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
       void OnContextHelp();   // for Shift+F1 help
-      void OnUpdateControlBarMenu(cmd_ui* pCmdUI);
+      void OnUpdateControlBarMenu(::user::command* pCmdUI);
       bool OnBarCheck(UINT nID);
 
       virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
       virtual void DelayUpdateFrameMenu(HMENU hMenuAlt);
       void DelayUpdateFrameTitle();
@@ -317,7 +318,7 @@ namespace user
       LRESULT OnPopMessageString(WPARAM wParam, LPARAM lParam);
       LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);
       LRESULT OnHelpPromptAddr(WPARAM wParam, LPARAM lParam);
-      //void OnIdleUpdateCmdUI(::signal_details * pobj);
+      //void OnIdleUpdateCmdUI(::message::message * pobj);
       void OnEnterIdle(UINT nWhy, sp(::user::interaction) pWho);
       void OnSetFocus(sp(::user::interaction) pOldWnd);
       void OnSize(UINT nType, int32_t cx, int32_t cy);
@@ -359,7 +360,7 @@ namespace user
       sp(::user::interaction) WindowDataGetWnd();
 
 
-      DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
+      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
       DECL_GEN_SIGNAL(_001OnSetFocus);
       DECL_GEN_SIGNAL(_001OnSize);
       DECL_GEN_SIGNAL(_001OnQueryEndSession);
@@ -369,16 +370,16 @@ namespace user
       virtual void RemoveControlBar(::user::control_bar *pBar);
 
 
-      void data_on_after_change(signal_details * pobj);
+      void data_on_after_change(::message::message * pobj);
 
 
-      virtual bool _001HasCommandHandler(id id);
+      virtual bool _001HasCommandHandler(::user::command * pcommand);
 
 
       virtual bool get_window_minimum_size(::size & sizeMin);
 
 
-      virtual ::user::front_end_schema * get_user_front_end_schema();
+      virtual ::user::style * userstyle();
 
 
    };

@@ -56,29 +56,29 @@ namespace user
    }
 
 
-   void list::install_message_handling(::message::dispatch * pinterface)
+   void list::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::mesh::install_message_handling(pinterface);
+      ::user::mesh::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &list::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &list::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &list::_001OnSize);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &list::_001OnMouseLeave);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &list::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &list::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &list::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &list::_001OnRButtonDown);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &list::_001OnMouseMove);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &list::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &list::_001OnKeyDown);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
-      //      //IGUI_WIN_MSG_LINK(WM_TIMER,           pinterface, this, &list::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
+      //      //IGUI_MSG_LINK(WM_TIMER,           pinterface, this, &list::_001OnTimer);
       connect_command("list_view_auto_arrange", &list::_001OnListViewAutoArrange);
-      connect_update_cmd_ui("list_view_auto_arrange", &list::_001OnUpdateListViewAutoArrange);
+      connect_command_probe("list_view_auto_arrange", &list::_001OnUpdateListViewAutoArrange);
    }
 
    bool list::CreateHeaderCtrl()
@@ -148,7 +148,7 @@ namespace user
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-     pgraphics->FillSolidRect(rectClient, _001GetColor(color_list_background));
+     //pgraphics->FillSolidRect(rectClient, _001GetColor(color_list_background));
 
 
       //      pgraphics->SetBkMode(TRANSPARENT);
@@ -336,7 +336,7 @@ namespace user
       GetClientRect(rectClient);
 
       bool bHoverFont = false;
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
       //pdrawitem->m_pgraphics->SelectObject(pfont);
 
       m_pdrawlistitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
@@ -358,7 +358,7 @@ namespace user
          {
             if (!bHoverFont)
             {
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
                //pdrawitem->m_pgraphics->SelectObject(m_pdrawlistitem->m_pfont);
             }
          }
@@ -368,7 +368,7 @@ namespace user
             {
                //m_pdrawlistitem->m_pfont = pfont;
                //pdrawitem->m_pgraphics->SelectObject(pfont);
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -457,7 +457,7 @@ namespace user
       m_pdrawlistitem->m_iDrawTextFlags = _001GetDrawTextFlags(m_eview);
 
       bool bHoverFont = false;
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
 
       pdrawitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
@@ -496,7 +496,7 @@ namespace user
             if (!bHoverFont)
             {
                bHoverFont = true;
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
             }
          }
          else
@@ -504,7 +504,7 @@ namespace user
             if (bHoverFont)
             {
                bHoverFont = false;
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -679,11 +679,11 @@ namespace user
       //::draw2d::font * pfont;
       if (pdrawitem->m_bListItemHover)
       {
-         select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+         select_font(pdrawitem->m_pgraphics, font_list_hover);
       }
       else
       {
-         select_font(pdrawitem->m_pgraphics, font_list_item, this);
+         select_font(pdrawitem->m_pgraphics, font_list_item);
       }
 //      pdrawitem->m_pgraphics->set_font(pfont);
 
@@ -784,7 +784,7 @@ namespace user
 
 
 
-   void list::_001OnSize(signal_details * pobj)
+   void list::_001OnSize(::message::message * pobj)
    {
 
       SCAST_PTR(::message::size, psize, pobj);
@@ -809,17 +809,17 @@ namespace user
       }
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevelFrame();
+         m_puserstyle = GetTopLevelFrame();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
@@ -1388,7 +1388,7 @@ namespace user
       }
 
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
       size size;
       size = pgraphics->GetTextExtent(unitext("Ág"));
       iItemHeight = 1;
@@ -1732,30 +1732,42 @@ namespace user
       return false;
    }
 
+   
    bool list::_001DisplayHitTest(point point, int_ptr &iItemParam, int_ptr &iSubItemParam)
    {
 
       int_ptr iItem;
+      
       if (!_001DisplayHitTest(point, iItem))
       {
+         
          return false;
+         
       }
+      
       if (m_eview == view_icon || m_eview == view_list)
       {
+         
          iItemParam = iItem;
+         
          if (iItem == -1)
          {
+            
             iSubItemParam = -1;
+            
          }
          else
          {
+            
             iSubItemParam = 0;
+            
          }
+         
          return true;
+         
       }
-      int_ptr iColumnCount = _001GetColumnCount();
 
-      //point ptOffset = get_viewport_offset();
+      int_ptr iColumnCount = _001GetColumnCount();
 
       ::point ptOffset = get_viewport_offset();
 
@@ -1764,29 +1776,59 @@ namespace user
       get_margin_rect(rectMargin);
 
       int_ptr iLeft = (index)-ptOffset.x - (rectMargin.left * 2);
+      
       if (m_bGroup && m_bLateralGroup)
+      {
+         
          iLeft += m_iLateralGroupWidth;
+         
+      }
+      
       int_ptr iRight;
+      
       draw_list_item item(this);
+      
       if (point.x < 0)
+      {
+         
          return false;
+         
+      }
+      
       for (item.m_iColumn = 0; item.m_iColumn < iColumnCount; item.m_iColumn++)
       {
+         
          _001GetColumnWidth(&item);
+         
          if (!item.m_bOk)
+         {
+            
             continue;
+            
+         }
+         
          iRight = iLeft + item.m_iColumnWidth;
+         
          if (iLeft <= point.x && point.x < iRight)
          {
+            
             iItemParam = iItem;
+            
             iSubItemParam = item.m_iSubItem;
+            
             return true;
+            
          }
+         
          iLeft = iRight;
+         
       }
+    
       return false;
+      
    }
 
+   
    bool list::_001DisplayHitTest(POINT pt, int_ptr &iItemParam)
    {
 
@@ -1797,16 +1839,21 @@ namespace user
 
          index iy = pt.y + ptOffset.y + (m_bHeaderCtrl ? -m_iItemHeight : 0);
 
-         if (iy < 0)
-            iy = 0;
-
          index iItem = -1;
 
          if (m_iItemHeight != 0)
+         {
+            
             iItem = iy / m_iItemHeight;
+            
+         }
 
          if (iItem < 0)
+         {
+            
             return false;
+            
+         }
 
          //if(m_bHeaderCtrl)
          //{
@@ -2320,16 +2367,16 @@ namespace user
                if (eelement == ::user::list::element_group_image)
                {
                   pdrawitem->m_rectImage.left = x;
-                  pdrawitem->m_rectImage.right = x + width(&ii.m_rect);
+                  pdrawitem->m_rectImage.right = x + ii.m_rect.width();
                   pdrawitem->m_rectImage.top = pdrawitem->m_rectGroup.top;
-                  pdrawitem->m_rectImage.bottom = pdrawitem->m_rectImage.top + height(&ii.m_rect);
+                  pdrawitem->m_rectImage.bottom = pdrawitem->m_rectImage.top + ii.m_rect.height();
                   return_(pdrawitem->m_bOk, true);
                }
                else
                {
-                  x += width(&ii.m_rect);
+                  x += ii.m_rect.width();
                   x += 2;
-                  iImageBottom += height(&ii.m_rect) + 2;
+                  iImageBottom += ii.m_rect.height() + 2;
                }
             }
             else if (eelement == ::user::list::element_group_image)
@@ -2448,7 +2495,7 @@ namespace user
                      rect rAlign(pdrawitem->m_rectSubItem);
                      rAlign.left = x;
                      rect rIcon;
-                     rIcon.set(0, 0, width(&ii.m_rect), height(&ii.m_rect));
+                     rIcon.set(0, 0, ii.m_rect.width(), ii.m_rect.height());
                      rIcon.Align(align_left_center, rAlign);
                      pdrawitem->m_rectImage = rIcon;
 
@@ -2460,7 +2507,7 @@ namespace user
                   }
                   else
                   {
-                     x += width(&ii.m_rect);
+                     x += ii.m_rect.width();
                      x += m_iImageSpacing;
                   }
                }
@@ -2655,7 +2702,7 @@ namespace user
    }
 
 
-   void list::_001OnKeyDown(signal_details * pobj)
+   void list::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -2757,7 +2804,7 @@ namespace user
    }
 
 
-   void list::_001OnMouseMove(signal_details * pobj)
+   void list::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2774,30 +2821,43 @@ namespace user
 
       if (m_bDrag)
       {
+         
          if (m_iItemMouseDown < 0)
          {
 
             if (m_eview == view_icon)
             {
+               
                class rect rectClient;
+               
                GetClientRect(&rectClient);
+               
                index iIconSize = MAX(32, m_columna[0]->m_sizeIcon.cy);
+               
                index iItemSize = iIconSize * 2;
+               
                ::count iItemColumnCount = MAX(1, rectClient.width() / iItemSize);
+               
                m_ptLButtonUp = pt;
+               
                index iItemStart;
+               
                index iItemEnd;
+               
                if (_001DisplayHitTest(m_ptLButtonDown, iItemStart))
                {
+                  
                   if (_001DisplayHitTest(pt, iItemEnd))
                   {
 
                      index iCol1 = iItemStart % iItemColumnCount;
+                     
                      index iCol2 = iItemEnd % iItemColumnCount;
 
                      ::sort::sort(iCol1, iCol2);
 
                      index iRow1 = iItemStart / iItemColumnCount;
+                     
                      index iRow2 = iItemEnd / iItemColumnCount;
 
                      ::sort::sort(iRow1, iRow2);
@@ -2806,13 +2866,20 @@ namespace user
 
                      for (index i = iRow1; i <= iRow2; i++)
                      {
+                        
                         for (index j = iCol1; j <= iCol2; j++)
                         {
+                           
                            item_range itemrange;
+                           
                            itemrange.set_lower_bound(m_iconlayout.m_iaDisplayToStrict.get_b(i * iItemColumnCount + j));
+                           
                            itemrange.set_upper_bound(m_iconlayout.m_iaDisplayToStrict.get_b(i * iItemColumnCount + j));
+                           
                            m_rangeSelection.add_item(itemrange);
+                           
                         }
+                        
                      }
 
                   }
@@ -2824,54 +2891,13 @@ namespace user
          }
 
       }
-      //   index iItemOld = m_iItemDrop;
-      //   if(!_001DisplayHitTest(pt, m_iItemDrop))
-      //   {
-      //      m_iItemDrop = m_iItemDrag;
-      //   }
-      //   if(iItemOld != m_iItemDrop)
-      //   {
-      //      RedrawWindow();
-      //   }
-      //}
 
       track_mouse_leave();
-
-      //if (m_spmenuPopup.is_null())
-      //{
-
-      //   UpdateHover();
-      //   pobj->m_bRet = true;
-
-
-      //   index iItemEnter;
-      //   index iSubItemEnter;
-      //   point point;
-      //   //Session.get_cursor_pos(&point);
-      //   //ScreenToClient(&point);
-
-      //   if (_001DisplayHitTest(pt, iItemEnter, iSubItemEnter))
-      //   {
-      //      if (m_bHoverSelect &&
-      //         (m_iSubItemEnter != iSubItemEnter ||
-      //         m_iItemEnter != iItemEnter)
-      //         && !m_rangeSelection.has_item(iItemEnter))
-      //      {
-      //         m_iMouseFlagEnter = pmouse->m_nFlags;
-      //         m_iItemEnter = iItemEnter;
-      //         m_iSubItemEnter = iSubItemEnter;
-      //         //SetTimer(12321, 840, NULL);
-      //         SetTimer(12321, 184 + 177 + 151, NULL);
-      //      }
-      //   }
-
-      //}
-
 
    }
 
 
-   void list::_001OnLButtonDown(signal_details * pobj)
+   void list::_001OnLButtonDown(::message::message * pobj)
    {
 
 
@@ -2994,7 +3020,7 @@ namespace user
       pmouse->set_lresult(1);
    }
 
-   void list::_001OnLButtonUp(signal_details * pobj)
+   void list::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -3098,6 +3124,8 @@ namespace user
 
                      }
 
+                     sl.unlock();
+
                      RedrawWindow();
 
                   }
@@ -3121,6 +3149,8 @@ namespace user
 
                      strSort += "-" + m_strDisplay + ".icon_list_view_sort";
 
+                     sl.lock();
+
                      stringa stra;
 
                      for (index a = 0; a <= m_plist->m_iconlayout.m_iaDisplayToStrict.m_iMaxA; a++)
@@ -3133,6 +3163,8 @@ namespace user
                      }
 
                      Application.file().put_contents(strSort, stra.implode("\r\n"));
+
+                     sl.unlock();
 
                      update_icon_list_view_sort();
 
@@ -3148,6 +3180,8 @@ namespace user
 
          if (m_eview == view_report)
          {
+
+            sl.unlock();
 
             pmouse->previous();
 
@@ -3168,6 +3202,8 @@ namespace user
                   if (iItem >= 0)
                   {
 
+                     sl.unlock();
+
                      _001OnItemClick(iItem);
 
                   }
@@ -3179,7 +3215,8 @@ namespace user
          }
          
       }
-      else if (get_tick_count() - g_dwStartLDown > 800)
+      // ***LONG Long Press PhRESSing***
+      else if ((get_tick_count() - m_dwLButtonDownStart) > Session.get_Long_PhRESSing_time())
       {
 
          if (m_bLButtonDown)
@@ -3205,6 +3242,8 @@ namespace user
                      _001AddSelection(itemrange);
 
                   }
+
+                  sl.unlock();
 
                   _001OnClick(pmouse->m_nFlags, pt);
 
@@ -3234,6 +3273,8 @@ namespace user
 
                   if (iItem >= 0)
                   {
+
+                     sl.unlock();
 
                      _001OnItemClick(iItem);
 
@@ -3320,7 +3361,7 @@ namespace user
    }
 
 
-   void list::_001OnRButtonDown(signal_details * pobj)
+   void list::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -3590,7 +3631,7 @@ namespace user
 
    }
 
-   void list::_001OnLButtonDblClk(signal_details * pobj)
+   void list::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       m_iClick = 2;
@@ -4546,7 +4587,7 @@ namespace user
    }
 
 
-   void list::_001OnCreate(signal_details * pobj)
+   void list::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -4653,192 +4694,13 @@ namespace user
 
    void list::_001OnTimer(::timer * ptimer)
    {
-      //      return; //xxxtimer
-      ::user::mesh::_001OnTimer(ptimer);;
-      //      if(ptimer->m_nIDEvent == 12345679) // left click
-      //      {
-      //         KillTimer(12345679);
-      //         if(m_iClick == 1)
-      //         {
-      //            m_iClick = 0;
-      //            if(!_001IsEditing())
-      //            {
-      //               uint_ptr nFlags = m_uiLButtonUpFlags;
-      //               point point = m_ptLButtonUp;
-      //               _001OnClick(nFlags, point);
-      //               Redraw();
-      //
-      //
-      //               /* trans
-      //               window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
-      //               if(wndidNotify == NULL)
-      //               wndidNotify = pwnd->GetParent()->GetSafeoswindow_(); */
-      //
-      ////               LRESULT lresult = 0;
-      //
-      //               /* trans            if(wndidNotify)
-      //               {
-      //               NMLISTVIEW nm;
-      //               nm.hdr.idFrom = pwnd->GetDlgCtrlId();
-      //               nm.hdr.code =   NM_CLICK;
-      //               nm.hdr.oswindowFrom = pwnd->GetSafeoswindow_();
-      //               lresult = ::SendMessage(
-      //               wndidNotify,
-      //               WM_NOTIFY,
-      //               nm.hdr.idFrom,
-      //               (LPARAM) &nm);
-      //               }*/
-      //            }
-      //         }
-      //         else
-      //         {
-      //            m_iClick = 0;
-      //         }
-      //
-      //
-      //      }
-      //      else if(ptimer->m_nIDEvent == 8477) // right click
-      //      {
-      //         KillTimer(8477);
-      //         //if(!_001IsEditing())
-      //         {
-      //            uint_ptr nFlags = m_uiLButtonUpFlags;
-      //            point point = m_ptLButtonUp;
-      //            _001OnRightClick(nFlags, point);
-      //            Redraw();
-      //
-      //
-      //            /* trans
-      //            window_id wndidNotify = pwnd->GetOwner()->GetSafeoswindow_();
-      //            if(wndidNotify == NULL)
-      //            wndidNotify = pwnd->GetParent()->GetSafeoswindow_(); */
-      //
-      ////            LRESULT lresult = 0;
-      //
-      //            /* trans            if(wndidNotify)
-      //            {
-      //            NMLISTVIEW nm;
-      //            nm.hdr.idFrom = pwnd->GetDlgCtrlId();
-      //            nm.hdr.code =   NM_CLICK;
-      //            nm.hdr.oswindowFrom = pwnd->GetSafeoswindow_();
-      //            lresult = ::SendMessage(
-      //            wndidNotify,
-      //            WM_NOTIFY,
-      //            nm.hdr.idFrom,
-      //            (LPARAM) &nm);
-      //            }*/
-      //         }
-      //      }
-      //      else if(ptimer->m_nIDEvent == 0xfffffffe)
-      //      {
-      //         if(!Filter1Step())
-      //            KillTimer(ptimer->m_nIDEvent);
-      //      }
-      //      else if(ptimer->m_nIDEvent == 12345678)
-      //      {
-      //         KillTimer(ptimer->m_nIDEvent);
-      //         m_bDrag = true;
-      //      }
-      //      else if(ptimer->m_nIDEvent == 12321)
-      //      {
-      //         KillTimer(ptimer->m_nIDEvent);
-      //         index iItemSel;
-      //         index iSubItemSel;
-      //         point point;
-      //         Session.get_cursor_pos(&point);
-      //         ScreenToClient(&point);
-      //         try
-      //         {
-      //            if(_001DisplayHitTest(point, iItemSel, iSubItemSel))
-      //            {
-      //               if(m_iSubItemEnter == iSubItemSel &&
-      //                  m_iItemEnter == iItemSel)
-      //               {
-      //                  m_iSubItemEnter = -1;
-      //                  m_iItemEnter = -1;
-      //                  bool bLShiftKeyDown     = Session.is_key_pressed(::user::key_lshift);
-      //                  bool bRShiftKeyDown     = Session.is_key_pressed(::user::key_rshift);
-      //                  bool bLControlKeyDown   = Session.is_key_pressed(::user::key_lcontrol);
-      //                  bool bRControlKeyDown   = Session.is_key_pressed(::user::key_rcontrol);
-      //                  bool bShiftKeyDown      = bLShiftKeyDown     || bRShiftKeyDown;
-      //                  bool bControlKeyDown    = bLControlKeyDown   || bRControlKeyDown;
-      //
-      //                  if(m_bMultiSelect && bShiftKeyDown)
-      //                  {
-      //                     if(bControlKeyDown)
-      //                     {
-      //                        item_range itemrange;
-      //                        itemrange.set(
-      //                           MIN(iItemSel, m_iItemSel),
-      //                           MAX(iItemSel, m_iItemSel),
-      //                           MIN(iSubItemSel, m_iSubItemSel),
-      //                           MAX(iSubItemSel, m_iSubItemSel),
-      //                           -1,
-      //                           -1);
-      //                        _001AddSelection(itemrange);
-      //                     }
-      //                     else
-      //                     {
-      //                        item_range itemrange;
-      //                        itemrange.set(
-      //                           MIN(iItemSel, m_iItemSel),
-      //                           MAX(iItemSel, m_iItemSel),
-      //                           MIN(iSubItemSel, m_iSubItemSel),
-      //                           MAX(iSubItemSel, m_iSubItemSel),
-      //                           -1,
-      //                           -1);
-      //                        range range;
-      //                        range.add_item(itemrange);
-      //                        _001SetSelection(range);
-      //                     }
-      //                  }
-      //                  else if(m_bMultiSelect && bControlKeyDown)
-      //                  {
-      //                     m_iLastItemSel = m_iItemSel;
-      //                     m_iLastSubItemSel = m_iSubItemSel;
-      //                     m_iItemSel = iItemSel;
-      //                     m_iSubItemSel = iSubItemSel;
-      //                     item_range itemrange;
-      //                     itemrange.set(
-      //                        m_iItemSel,
-      //                        m_iItemSel,
-      //                        m_iSubItemSel,
-      //                        m_iSubItemSel,
-      //                        -1,
-      //                        -1);
-      //                     _001AddSelection(itemrange);
-      //                  }
-      //                  else
-      //                  {
-      //                     m_iLastItemSel = m_iItemSel;
-      //                     m_iLastSubItemSel = m_iSubItemSel;
-      //                     m_iItemSel = iItemSel;
-      //                     m_iSubItemSel = iSubItemSel;
-      //                     item_range itemrange;
-      //                     itemrange.set(
-      //                        m_iItemSel,
-      //                        m_iItemSel,
-      //                        m_iSubItemSel,
-      //                        m_iSubItemSel,
-      //                        -1,
-      //                        -1);
-      //                     range range;
-      //                     range.add_item(itemrange);
-      //                     _001SetSelection(range);
-      //                  }
-      //               }
-      //            }
-      //         }
-      //         catch(...)
-      //         {
-      //         }
-      //         m_iSubItemEnter = -1;
-      //         m_iItemEnter = -1;
-      //
-      //      }
-      //
+
+      ::user::mesh::_001OnTimer(ptimer);
+      
       ptimer->m_bRet = false;
+      
    }
+   
 
    bool list::_001IsItemVisible(index iItem)
    {
@@ -4911,7 +4773,7 @@ namespace user
 
       ::draw2d::memory_graphics pgraphics(allocer());
 
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
 
       array < size > sizea;
       m_dcextension.GetTextExtent(pgraphics, m_strTopText, sizea);
@@ -5019,7 +4881,7 @@ namespace user
 
       ::draw2d::memory_graphics pgraphics(allocer());
 
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
 
       index cx = _001CalcItemWidth(pgraphics, iItem, iSubItem);
 
@@ -5778,7 +5640,7 @@ namespace user
    {
       UNREFERENCED_PARAMETER(iColumn);
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
       int32_t iMaxWidth = 0;
       ::count iCount = m_nItemCount;
       int32_t iWidth;
@@ -5907,7 +5769,7 @@ namespace user
    //   return m_fontHover;
    //}
 
-   void list::_001OnMouseLeave(signal_details * pobj)
+   void list::_001OnMouseLeave(::message::message * pobj)
    {
       m_iItemHover = -1;
       m_iSubItemHover = -1;
@@ -6023,7 +5885,7 @@ namespace user
    //}
 
 
-   void list::_001OnVScroll(signal_details * pobj)
+   void list::_001OnVScroll(::message::message * pobj)
    {
       //      SCAST_PTR(::message::scroll, pscroll, pobj);
 
@@ -6031,7 +5893,7 @@ namespace user
 
    }
 
-   void list::_001OnHScroll(signal_details * pobj)
+   void list::_001OnHScroll(::message::message * pobj)
    {
       //      SCAST_PTR(::message::scroll, pscroll, pobj);
 
@@ -6217,17 +6079,17 @@ namespace user
       return m_flags.is_signalized(flag_auto_arrange);
    }
 
-   void list::_001OnListViewAutoArrange(signal_details * pobj)
+   void list::_001OnListViewAutoArrange(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       auto_arrange(!get_auto_arrange());
    }
 
-   void list::_001OnUpdateListViewAutoArrange(signal_details * pobj)
+   void list::_001OnUpdateListViewAutoArrange(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->_001SetCheck(get_auto_arrange());
-      pcmdui->m_pcmdui->Enable();
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->_001SetCheck(get_auto_arrange());
+      pcommand->Enable();
    }
 
    bool list::is_valid_display_item(index iDisplayItem)

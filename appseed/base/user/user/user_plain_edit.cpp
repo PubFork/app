@@ -1,6 +1,6 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
-//#include "aura/user/colorertake5/colorertake5.h"
+#include "aura/user/colorertake5/colorertake5.h"
 
 extern CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -125,43 +125,43 @@ namespace user
    }
 
 
-   void plain_edit::install_message_handling(::message::dispatch * pinterface)
+   void plain_edit::install_message_routing(::message::sender * pinterface)
    {
 
-      control::install_message_handling(pinterface);
+      control::install_message_routing(pinterface);
 
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &plain_edit::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &plain_edit::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &plain_edit::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &plain_edit::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &plain_edit::_001OnRButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &plain_edit::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &plain_edit::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &plain_edit::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &plain_edit::_001OnKeyUp);
-      //IGUI_WIN_MSG_LINK(WM_CHAR,pinterface,this,&plain_edit::_001OnChar);
-      IGUI_WIN_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &plain_edit::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &plain_edit::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &plain_edit::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &plain_edit::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &plain_edit::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &plain_edit::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, pinterface, this, &plain_edit::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &plain_edit::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &plain_edit::_001OnKeyUp);
+      //IGUI_MSG_LINK(WM_CHAR,pinterface,this,&plain_edit::_001OnChar);
+      IGUI_MSG_LINK(WM_UNICHAR, pinterface, this, &plain_edit::_001OnUniChar);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
-
-
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &::user::plain_edit::_001OnHScroll);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &::user::plain_edit::_001OnSize);
 
 
-      //connect_update_cmd_ui("edit_undo", &plain_edit::_001OnUpdateEditUndo);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &::user::plain_edit::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &::user::plain_edit::_001OnHScroll);
+
+
+      //connect_command_probe("edit_undo", &plain_edit::_001OnUpdateEditUndo);
       //connect_command("edit_undo", &plain_edit::_001OnEditUndo);
-      //connect_update_cmd_ui("edit_redo", &plain_edit::_001OnUpdateEditRedo);
+      //connect_command_probe("edit_redo", &plain_edit::_001OnUpdateEditRedo);
       //connect_command("edit_redo", &plain_edit::_001OnEditRedo);
 
-      connect_update_cmd_ui("edit_cut", &plain_edit::_001OnUpdateEditCut);
+      connect_command_probe("edit_cut", &plain_edit::_001OnUpdateEditCut);
       connect_command("edit_cut", &plain_edit::_001OnEditCut);
-      connect_update_cmd_ui("edit_copy", &plain_edit::_001OnUpdateEditCopy);
+      connect_command_probe("edit_copy", &plain_edit::_001OnUpdateEditCopy);
       connect_command("edit_copy", &plain_edit::_001OnEditCopy);
-      connect_update_cmd_ui("edit_paste", &plain_edit::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &plain_edit::_001OnUpdateEditPaste);
       connect_command("edit_paste", &plain_edit::_001OnEditPaste);
-      connect_update_cmd_ui("edit_delete", &plain_edit::_001OnUpdateEditDelete);
+      connect_command_probe("edit_delete", &plain_edit::_001OnUpdateEditDelete);
       connect_command("edit_delete", &plain_edit::_001OnEditDelete);
 
    }
@@ -187,7 +187,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnDestroy(signal_details * pobj)
+   void plain_edit::_001OnDestroy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -206,7 +206,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnPaint(signal_details * pobj)
+   void plain_edit::_001OnPaint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -227,7 +227,7 @@ namespace user
 
    //   }
 
-   //   return ::user::schema::get_font(spfont, efont, pui);
+   //   return ::user::style::get_font(spfont, efont, pui);
 
    //}
 
@@ -357,7 +357,7 @@ namespace user
 
       sort::sort(iSelBeg, iSelEnd);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
       //size size3;
@@ -657,7 +657,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnCreate(signal_details * pobj)
+   void plain_edit::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -704,14 +704,14 @@ namespace user
 
    }
 
-   void plain_edit::_001OnContextMenu(signal_details * pobj)
+   void plain_edit::_001OnContextMenu(::message::message * pobj)
    {
       //      SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       //      point point = pcontextmenu->GetPoint();
 
    }
 
-   void plain_edit::_001OnRButtonUp(signal_details * pobj)
+   void plain_edit::_001OnRButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -762,7 +762,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSetCursor(signal_details * pobj)
+   void plain_edit::_001OnSetCursor(::message::message * pobj)
    {
       //pmouse->m_ecursor = ::visual::cursor_arrow;
 
@@ -795,7 +795,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnKeyDown(signal_details * pobj)
+   void plain_edit::_001OnKeyDown(::message::message * pobj)
    {
 
       //synch_lock sl(m_pmutex);
@@ -1011,7 +1011,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnKeyUp(signal_details * pobj)
+   void plain_edit::_001OnKeyUp(::message::message * pobj)
    {
       SCAST_PTR(::message::key, pkey, pobj);
       if (pkey->m_ekey == ::user::key_return)
@@ -1030,12 +1030,12 @@ namespace user
       m_bKeyPressed = false;
    }
 
-   void plain_edit::pre_translate_message(signal_details * pobj)
+   void plain_edit::pre_translate_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      if (pbase->m_uiMessage == WM_KEYDOWN)
+      if (pbase->m_id == WM_KEYDOWN)
       {
 
          pbase->m_bRet = true;
@@ -1043,7 +1043,7 @@ namespace user
          _001OnKeyDown(pbase);
 
       }
-      else if (pbase->m_uiMessage == WM_KEYUP)
+      else if (pbase->m_id == WM_KEYUP)
       {
 
          pbase->m_bRet = true;
@@ -1051,7 +1051,7 @@ namespace user
          _001OnKeyUp(pbase);
 
       }
-      else if (pbase->m_uiMessage == WM_CHAR)
+      else if (pbase->m_id == WM_CHAR)
       {
 
          pbase->m_bRet = true;
@@ -1397,7 +1397,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnLButtonDown(signal_details * pobj)
+   void plain_edit::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1437,7 +1437,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnLButtonUp(signal_details * pobj)
+   void plain_edit::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1468,7 +1468,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnRButtonDown(signal_details * pobj)
+   void plain_edit::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -1546,7 +1546,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       const int iLenUniText = 14;
 
@@ -1886,17 +1886,17 @@ namespace user
       }
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevel();
+         m_puserstyle = GetTopLevel();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
@@ -1937,7 +1937,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       const int iLenUniText = 14;
 
@@ -2368,7 +2368,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -2510,7 +2510,7 @@ namespace user
 
       ::draw2d::graphics_sp pgraphics = m_pmemorygraphics;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       rect rectClient;
 
@@ -2786,7 +2786,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnMouseMove(signal_details * pobj)
+   void plain_edit::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2848,7 +2848,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnMouseLeave(signal_details * pobj)
+   void plain_edit::_001OnMouseLeave(::message::message * pobj)
    {
 
       m_bActionHover = false;
@@ -3309,7 +3309,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUniChar(signal_details * pobj)
+   void plain_edit::_001OnUniChar(::message::message * pobj)
    {
 
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -3424,7 +3424,7 @@ namespace user
 
    }
 
-   void plain_edit::_001OnChar(signal_details * pobj)
+   void plain_edit::_001OnChar(::message::message * pobj)
    {
 
       bool bUpdate = true;
@@ -3955,7 +3955,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSysChar(signal_details * pobj)
+   void plain_edit::_001OnSysChar(::message::message * pobj)
    {
 
       synch_lock sl(m_pmutex);
@@ -4410,7 +4410,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnKeyDown(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnKeyDown(::message::message * pobj)
    {
 
       _001OnKeyDown(pobj);
@@ -4418,7 +4418,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnKeyUp(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnKeyUp(::message::message * pobj)
    {
 
       _001OnKeyUp(pobj);
@@ -4426,7 +4426,7 @@ namespace user
    }
 
 
-   void plain_edit::keyboard_focus_OnChar(signal_details * pobj)
+   void plain_edit::keyboard_focus_OnChar(::message::message * pobj)
    {
 
       _001OnChar(pobj);
@@ -4490,7 +4490,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnVScroll(signal_details * pobj)
+   void plain_edit::_001OnVScroll(::message::message * pobj)
    {
 
    }
@@ -4504,7 +4504,7 @@ namespace user
    }
 
 
-   void plain_edit::_001OnHScroll(signal_details * pobj)
+   void plain_edit::_001OnHScroll(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4590,23 +4590,32 @@ namespace user
    }
 
 
-   void plain_edit::_009OnChar(signal_details * pobj)
+   void plain_edit::_009OnChar(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
 
-   bool plain_edit::create_control(class control::descriptor * pdescriptor, index iItem)
+   bool plain_edit::create_control(class control_descriptor * pdescriptor)
    {
+      
       ASSERT(pdescriptor->get_type() == control_type_edit_plain_text);
-      if (!create_window(pdescriptor->m_rect, pdescriptor->m_pform, pdescriptor->m_id))
+
+      if (!::user::control::create_control(pdescriptor))
       {
+
          TRACE("Failed to create control");
+
          return false;
+
       }
+
       ShowWindow(SW_HIDE);
-      m_bMultiLine = pdescriptor->has_function(control::function_edit_multi_line);
-      return control::create_control(pdescriptor, iItem);
+
+      m_bMultiLine = pdescriptor->has_function(control_function_edit_multi_line);
+
+      return true;
+
    }
 
 
@@ -4668,21 +4677,21 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditCut(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditCut(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 
 
-   void plain_edit::_001OnEditCut(signal_details * pobj)
+   void plain_edit::_001OnEditCut(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4701,21 +4710,21 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditCopy(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditCopy(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 
 
-   void plain_edit::_001OnEditCopy(signal_details * pobj)
+   void plain_edit::_001OnEditCopy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4726,16 +4735,16 @@ namespace user
 
    }
 
-   void plain_edit::_001OnUpdateEditPaste(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditPaste(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pupdatecmdui->m_pcmdui->Enable(Session.copydesk().get_plain_text().has_char());
+      pcommand->Enable(Session.copydesk().get_plain_text().has_char());
 
    }
 
-   void plain_edit::_001OnEditPaste(signal_details * pobj)
+   void plain_edit::_001OnEditPaste(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4752,21 +4761,21 @@ namespace user
    }
 
 
-   void plain_edit::_001OnUpdateEditDelete(signal_details * pobj)
+   void plain_edit::_001OnUpdateEditDelete(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pupdatecmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       string str;
 
       _001GetSelText(str);
 
-      pupdatecmdui->m_pcmdui->Enable(str.has_char());
+      pcommand->Enable(str.has_char());
 
    }
 
 
-   void plain_edit::_001OnEditDelete(signal_details * pobj)
+   void plain_edit::_001OnEditDelete(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -4784,7 +4793,7 @@ namespace user
 
 
 
-   void plain_edit::_001OnSize(signal_details * pobj)
+   void plain_edit::_001OnSize(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -5076,12 +5085,22 @@ namespace user
       m_brushTextSel.alloc(pedit->allocer());
 
       m_penCaret->create_solid(1.0, pedit->_001GetColor(color_edit_text));
-
+     
       m_brushTextCr->create_solid(pedit->_001GetColor(color_edit_text));
 
       m_brushTextSel->create_solid(pedit->_001GetColor(color_edit_text_selected));
 
    }
+
+
+   void plain_edit::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::control::_001OnNcDraw(pgraphics);
+
+   }
+
+
 
 
 } // namespace core

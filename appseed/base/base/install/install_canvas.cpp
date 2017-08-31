@@ -223,25 +223,39 @@ void canvas::on_paint(::draw2d::graphics * pgraphics, const RECT & rectParam)
       if(rect.bottom - rect.top >= size.cy)
       {
 
-         HANDLE hfile = ::create_file(::path::install_log(process_platform_dir_name2()),GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+         FILE * file = fopen_dup(::path::install_log(process_platform_dir_name2()), "r");
 
-         if(hfile != INVALID_HANDLE_VALUE)
+         if(file != NULL)
          {
-            int32_t iTell = ::SetFilePointer(hfile, 0, NULL, SEEK_END);
+            
+            int32_t iTell = ::fseek(file, 0, SEEK_END);
+
             iTell--;
+
             string strLine;
+
             int32_t iSkip = 0;
-//            ::SetBkMode(hdc, TRANSPARENT);
+
             bool bNormal = false;
+
             bool bBold = false;
+
             bool bPreNormal = false;
+
             bool bStart = false;
+
             while(iTell > 0 && !bStart && !(bNormal && bBold))
             {
-               ::SetFilePointer(hfile, iTell, NULL, SEEK_SET);
+
+               ::fseek(file, iTell, SEEK_SET);
+
                char ch;
-               if(!ReadFile(hfile, &ch,  1, &dwRead, NULL))
+
+               dwRead = fread(&ch, 1, 1, file);
+
+               if(dwRead == 1)
                   break;
+
                if(dwRead <= 0)
                   break;
 
@@ -284,13 +298,21 @@ void canvas::on_paint(::draw2d::graphics * pgraphics, const RECT & rectParam)
                }
                else
                {
+                  
                   strLine = ch + strLine;
+
                }
+
                iTell--;
+
             }
-            ::CloseHandle(hfile);
+            
+            ::fclose(file);
+
          }
+
       }
+
    }
    else if(iMode == 4) // else // !m_bHealingSurface => "Surgery Internals"
    {
@@ -311,19 +333,24 @@ void canvas::on_paint(::draw2d::graphics * pgraphics, const RECT & rectParam)
       if(rect.bottom - rect.top >= size.cy)
       {
 
-         HANDLE hfile = ::create_file(::path::install_log(process_platform_dir_name2()),GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+         FILE * file = ::fopen_dup(::path::install_log(process_platform_dir_name2()), "r");
 
-         if(hfile != INVALID_HANDLE_VALUE)
+         if(file != NULL)
          {
-            int32_t iTell = ::SetFilePointer(hfile, 0, NULL, SEEK_END);
+            int32_t iTell = ::fseek(file, 0, SEEK_END);
             iTell--;
             string strLine;
             int32_t iSkip = 0;
             while(iTell > 0 && iLine >= iLineMin)
             {
-               ::SetFilePointer(hfile, iTell, NULL, SEEK_SET);
+               
+               ::fseek(file, iTell, SEEK_SET);
+               
                char ch;
-               if(!ReadFile(hfile, &ch,  1, &dwRead, NULL))
+               
+               dwRead = fread(&ch, 1, 1, file);
+
+               if(dwRead == 1)
                   break;
                if(dwRead <= 0)
                   break;
@@ -378,12 +405,18 @@ void canvas::on_paint(::draw2d::graphics * pgraphics, const RECT & rectParam)
                }
                iTell--;
             }
-            ::CloseHandle(hfile);
+            
+            ::fclose(file);
+
             if(iLine >= iLineMin && strLine.length() > 0)
             {
+
                iLine--;
+
                pgraphics->text_out(10.0, 10 + iLine * size.cy, strLine);
+
             }
+
          }
       }
    }

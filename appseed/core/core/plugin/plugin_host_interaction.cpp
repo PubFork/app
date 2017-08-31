@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "core/user/user/user.h"
 
 
@@ -33,29 +33,29 @@ namespace plugin
 
    }
 
-   void host_interaction::install_message_handling(::message::dispatch * pinterface)
+   void host_interaction::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::interaction::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
-      IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &host_interaction::_001OnCreate);
+      IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &host_interaction::_001OnMouseMove);
+      IGUI_MSG_LINK(message_check        , pinterface, this, &host_interaction::_001OnCheck);
+      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &host_interaction::_001OnCreate);
 
       /*
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGED  , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &host_interaction::on_ignore_message);
-      //IGUI_WIN_MSG_LINK(WM_TIMER             , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_IME_SETCONTEXT    , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &host_interaction::on_ignore_message);
-      IGUI_WIN_MSG_LINK(WM_CHILDACTIVATE     , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGED  , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_MOVE              , pinterface, this, &host_interaction::on_ignore_message);
+      //IGUI_MSG_LINK(WM_TIMER             , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_IME_SETCONTEXT    , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &host_interaction::on_ignore_message);
+      IGUI_MSG_LINK(WM_CHILDACTIVATE     , pinterface, this, &host_interaction::on_ignore_message);
       */
 
    }
 
 
-   void host_interaction::_001OnMouseMove(signal_details * pobj)
+   void host_interaction::_001OnMouseMove(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -63,7 +63,7 @@ namespace plugin
    }
 
 
-   void host_interaction::_001OnCreate(signal_details * pobj)
+   void host_interaction::_001OnCreate(::message::message * pobj)
    {
       
       UNREFERENCED_PARAMETER(pobj);
@@ -73,7 +73,7 @@ namespace plugin
    }
 
 
-   void host_interaction::_001OnCheck(signal_details * pobj)
+   void host_interaction::_001OnCheck(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 0)
@@ -259,49 +259,55 @@ namespace plugin
       return System.ui_from_handle(m_pplugin->get_host_window());
    }
 
-   void host_interaction::_user_message_handler(signal_details * pobj)
+   
+   void host_interaction::_user_message_handler(::message::base * pbase)
    {
-      ::user::interaction::_user_message_handler(pobj);
-      pobj->m_bRet = true;
+      
+      ::user::interaction::message_handler(pbase);
+      
+      pbase->m_bRet = true;
+
    }
 
-   void host_interaction::_on_start_user_message_handler()
-   {
-      ::user::interaction::_on_start_user_message_handler();
-      m_pfnDispatchWindowProc = reinterpret_cast < void (::message::dispatch::*)(signal_details * pobj) > (&host_interaction::_user_message_handler);
-   }
 
-
-   void host_interaction::on_ignore_message(signal_details * pobj)
+   void host_interaction::on_ignore_message(::message::message * pobj)
    {
-      // avoid host interaction call DefWindowProc for certain Windows messages
-//      SCAST_PTR(::message::base, pbase, pobj);
 
       pobj->m_bRet = true;
+
    }
 
 
    void host_interaction::_000OnMouse(::message::mouse * pmouse)
    {
+
       if(&Session != NULL)
       {
+
          Session.m_ptCursor = pmouse->m_pt;
+
       }
       else
       {
+
          if(m_uiptraChild.get_size() > 0 && m_uiptraChild[0]->m_pauraapp != NULL && m_uiptraChild[0]->m_pauraapp->m_pbasesession->m_pcoresession != NULL)
          {
+
             set_app(m_uiptraChild[0]->m_pauraapp);
+
          }
+
       }
+
       ::user::interaction::_000OnMouse(pmouse);
+
    }
+
 
    LRESULT host_interaction::DefWindowProc(UINT uiMessage, WPARAM wparam, lparam lparam)
    {
 
-      if(uiMessage == WM_NCCREATE
-      || uiMessage == WM_CREATE)
+      if (uiMessage == WM_NCCREATE || uiMessage == WM_CREATE)
 /*      || uiMessage == WM_SIZE
       || uiMessage == WM_MOVE
       || uiMessage == WM_WINDOWPOSCHANGING

@@ -201,12 +201,12 @@ namespace sockets {
 //#elif defined(WINDOWSEX)
 #elif defined(WINDOWS)
 
-// ----------------------------------------
-// Win32
-#ifdef _MSC_VER
+
+#ifdef WINDOWSEX
+
 #pragma comment(lib, "wsock32.lib")
+
 #endif
-//#define strcasecmp _stricmp
 
 
 

@@ -102,12 +102,6 @@
     <Filter Include="Header Files\filesystem\filesystem">
       <UniqueIdentifier>{0b44d419-ef63-428c-950e-f55311b76efa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\axis\message">
-      <UniqueIdentifier>{e9a2cf8e-4ff6-48a6-ae06-99effd65f5b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\axis\message">
-      <UniqueIdentifier>{a6676ac7-785c-4d8a-8606-48757ffcd623}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\filesystem\file">
       <UniqueIdentifier>{ec94a243-1709-44eb-9551-5718edde2734}</UniqueIdentifier>
     </Filter>
@@ -272,12 +266,6 @@
     <ClInclude Include="axis\axis\axis_static_start.h">
       <Filter>Header Files\axis\axis</Filter>
     </ClInclude>
-    <ClInclude Include="version.config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="database\database\database.h">
       <Filter>Header Files\database\database</Filter>
     </ClInclude>
@@ -413,9 +401,6 @@
     <ClInclude Include="filesystem\filesystem\filesystem_axis_system.h">
       <Filter>Header Files\filesystem\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="axis\message\message_user.h">
-      <Filter>Header Files\axis\message</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_enum.h">
       <Filter>Header Files\user</Filter>
     </ClInclude>
@@ -496,12 +481,6 @@
     </ClInclude>
     <ClInclude Include="filesystem\fs\fs_ftp_file.h">
       <Filter>Header Files\filesystem\fs</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\aaa_want_to_remove_windows_file_set.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\aaa_windows_message_queue.h">
-      <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="axis\node\windows\windows.h">
       <Filter>Header Files\axis\node\windows</Filter>
@@ -592,6 +571,9 @@
     </ClInclude>
     <ClInclude Include="graphics\graphics.h">
       <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="axis\node\windows\windows_copydesk.h">
+      <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -739,12 +721,6 @@
     <ClCompile Include="database\simpledb\simpledb_manager.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
-    <ClCompile Include="database\simpledb\simpledb_mysql_database.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\simpledb_mysql_result.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
     <ClCompile Include="database\simpledb\simpledb_record_row.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
@@ -790,18 +766,6 @@
     <ClCompile Include="database\sqlitedb\sqlitedb_set.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
-    <ClCompile Include="database\database\_database.cpp">
-      <Filter>Source Files\database\database</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\_simpledb.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\geoip\_geoip.cpp">
-      <Filter>Source Files\axis\geoip</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\windows\_windows_os.cpp">
-      <Filter>Source Files\axis\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\windows\windows_base_crypto.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
     </ClCompile>
@@ -813,24 +777,6 @@
     </ClCompile>
     <ClCompile Include="axis\os\windows\windows_simple_app.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\windows\_windows_node.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\fs\_fs.cpp">
-      <Filter>Source Files\filesystem\fs</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\axis\_axis_axis_axis.cpp">
-      <Filter>Source Files\axis\axis</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\_axis_axis.cpp">
-      <Filter>Source Files\axis</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\_os.cpp">
-      <Filter>Source Files\axis\os</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\_node.cpp">
-      <Filter>Source Files\axis\node</Filter>
     </ClCompile>
     <ClCompile Include="axis\os\windows\windows.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
@@ -853,29 +799,11 @@
     <ClCompile Include="axis\node\windows\windows_axis_file_system.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
-    <ClCompile Include="axis\message\_message.cpp">
-      <Filter>Source Files\axis\message</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\message\message.cpp">
-      <Filter>Source Files\axis\message</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\message\message_user.cpp">
-      <Filter>Source Files\axis\message</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\windows\windows_trace_message.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="axis\os\ansios\ansios_crypt.cpp">
       <Filter>Source Files\axis\os</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
-      <Filter>Source Files\filesystem\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\_filesystem.cpp">
-      <Filter>Source Files\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="user\_user.cpp">
-      <Filter>Source Files\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_keyboard_layout.cpp">
       <Filter>Source Files\user\user</Filter>
@@ -898,17 +826,8 @@
     <ClCompile Include="user\user\user_elemental.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="axis\node\windows\aaaa_windows_message_queue.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="axis\node\metrowin\metrowin_axis_file_system.cpp">
       <Filter>Source Files\axis\node\metrowin</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\metrowin\_metrowin_node.cpp">
-      <Filter>Source Files\axis\node\metrowin</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\windows\aaa_want_to_remove_windows_file_set.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\file\file.cpp">
       <Filter>Source Files\filesystem</Filter>
@@ -916,16 +835,7 @@
     <ClCompile Include="user\user\user_validate.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="html_lite\html_lite\_html_lite.cpp">
-      <Filter>Source Files\html_lite\html_lite</Filter>
-    </ClCompile>
-    <ClCompile Include="html_lite\html\_html.cpp">
-      <Filter>Source Files\html_lite\html</Filter>
-    </ClCompile>
     <ClCompile Include="html_lite\html_lite\html_lite_html_tag.cpp">
-      <Filter>Source Files\html_lite\html_lite</Filter>
-    </ClCompile>
-    <ClCompile Include="html_lite\html_lite\html_lite_application.cpp">
       <Filter>Source Files\html_lite\html_lite</Filter>
     </ClCompile>
     <ClCompile Include="html_lite\html_lite\html_lite_html_attributes.cpp">
@@ -946,9 +856,6 @@
     <ClCompile Include="filesystem\fs\fs_ftp_file.cpp">
       <Filter>Source Files\filesystem\fs</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\visual\antialias_8bit.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
@@ -959,9 +866,6 @@
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
     <ClCompile Include="graphics\visual\load_gif_frame.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\load_gif_frame2.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_api.cpp">
@@ -1015,14 +919,17 @@
     <ClCompile Include="graphics\visual\visual_water_routine.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\dib_console.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="axis\os\windows\windows_hotplugin.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_job.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\node\windows\windows_copydesk.cpp">
+      <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

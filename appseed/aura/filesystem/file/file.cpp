@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 
@@ -579,7 +579,7 @@ string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
 
 
 
-bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,memory_size_t * puiWritten)
+bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,memory_size_t * puiWritten)
 {
 
 #if OSBIT > 32
@@ -596,8 +596,10 @@ bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,m
    {
 
       dwWrite = (DWORD)MIN(nCount - uiWrittenTotal,0xffffffffu);
+      
+      dw = fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file);
 
-      if(!::WriteFile(hFile,&((byte *)lpBuf)[pos],dwWrite,&dw,NULL))
+      if(dw != dwWrite)
       {
 
          uiWrittenTotal += dw;
@@ -633,9 +635,11 @@ bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,m
 
 #else
 
-   DWORD dw= 0;
+   DWORD dw = 0;
 
-   WINBOOL bOk = ::WriteFile(hFile,lpBuf,nCount,&dw,NULL);
+   dw = ::fwrite(lpBuf, 1, nCount, file);
+
+   WINBOOL bOk = dw == nCount;
 
    if(puiWritten != NULL)
    {
@@ -644,7 +648,7 @@ bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,m
 
    }
 
-   return bOk && dw == nCount;
+   return bOk;
 
 #endif
 
@@ -729,3 +733,63 @@ bool file_append_dup(const string & strFile, const string & str)
    return file_append_dup(strFile, str, str.get_length());
 
 }
+
+
+
+
+
+
+
+//#ifdef WINDOWSEX
+//
+//
+//bool  SHGetSpecialFolderPath(oswindow oswindow, ::file::path & path, int32_t csidl, bool fCreate)
+//{
+//
+//   string str;
+//
+//   if (::SHGetSpecialFolderPathW(oswindow, wtostring(str, MAX_PATH * 8), csidl, fCreate) == FALSE)
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   path = str;
+//
+//   return true;
+//
+//}
+//
+//
+//#endif
+
+
+#ifdef WINDOWS
+
+
+bool __win_file_find_is_dots(WIN32_FIND_DATA & data)
+{
+
+   if (data.cFileName[0] == '.')
+   {
+
+      if (data.cFileName[1] == '\0' ||
+         (data.cFileName[1] == '.' &&
+            data.cFileName[2] == '\0'))
+      {
+
+         return true;
+
+      }
+
+   }
+
+   return false;
+
+}
+
+
+#endif
+
+

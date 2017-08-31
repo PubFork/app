@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "db_str_set.h"
 
 
@@ -78,14 +78,14 @@ bool db_server::initialize_user(::simpledb::database * pmysqldbUser, const char 
 bool db_server::initialize()
 {
 
-   if(System.directrix()->m_varTopicQuery["app"] == "app-core/netnodelite"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/netnodecfg"
-   || System.directrix()->m_varTopicQuery["app"] == "app-core/mydns"
-   || System.directrix()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
-   || System.directrix()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
-   || System.directrix()->m_varTopicQuery.has_property("no_remote_simpledb"))
+   if(System.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg"
+   || System.handler()->m_varTopicQuery["app"] == "app-core/mydns"
+   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
+   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
+   || System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
    {
 
       m_bRemote = false;
@@ -94,7 +94,7 @@ bool db_server::initialize()
 
    m_pdb          = canew(::sqlite::base(get_app()));
 
-   string strAppName = System.directrix()->m_spcommandline->m_strApp;
+   string strAppName = System.handler()->m_spcommandline->m_strApp;
 
    ::file::path str;
 
@@ -135,7 +135,7 @@ bool db_server::initialize()
 
    int32_t iBufferSize = 128 * 1024;
 
-   sp(::command_thread) commandthread = System.command();
+   sp(::handler) commandthread = System.handler();
 
    if(commandthread->m_varTopicQuery.has_property("filesizebuffer"))
    {
@@ -203,7 +203,7 @@ bool db_server::create_message_queue()
 
    //   //SetTimer(1258477, 484, NULL);
 
-   //   ////IGUI_WIN_MSG_LINK(WM_TIMER, m_pimpl, this, &db_server::_001OnTimer);
+   //   ////IGUI_MSG_LINK(WM_TIMER, m_pimpl, this, &db_server::_001OnTimer);
 
    //}
 

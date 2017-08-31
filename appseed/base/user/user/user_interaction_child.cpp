@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -53,12 +53,14 @@ namespace user
    bool interaction_child::create_window_ex(::user::interaction * pui, uint32_t dwExStyle,const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pparent,id id,LPVOID lpParam)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try {
 
       m_bCreate = true;
 
@@ -67,6 +69,8 @@ namespace user
       m_pui->m_pimpl = this;
 
       m_pui->m_id      = id;
+
+      install_message_routing(this);
 
       if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
       {
@@ -113,6 +117,17 @@ namespace user
          ShowWindow(SW_SHOW);
 
       }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         
+         return false;
+         
+         
+      }
 
       return true;
 
@@ -122,12 +137,15 @@ namespace user
    bool interaction_child::create_window(::user::interaction * pui, const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction *  pparent,id id, ::create * pcreate)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try {
+      
 
       m_bCreate = true;
 
@@ -136,6 +154,8 @@ namespace user
       m_pui->m_pimpl = this;
 
       m_pui->m_id      = id;
+
+      install_message_routing(this);
 
       if(pparent != m_pui && !m_pui->is_descendant(pparent) && ! pparent->is_descendant(m_pui))
       {
@@ -166,12 +186,12 @@ namespace user
 
       m_pui->pre_create_window(cs);
 
-      if (!m_pui->m_bCreated)
-      {
+      //if (!m_pui->m_bCreated)
+      //{
 
          m_pui->send_message(WM_CREATE, 0, (lparam)(LPARAM)&cs);
 
-      }
+      //}
 
       ::rect rectChild(rect);
 
@@ -194,6 +214,16 @@ namespace user
          }
 
       }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         return false;
+         
+         
+      }
 
       return true;
 
@@ -203,12 +233,15 @@ namespace user
    bool interaction_child::create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id)
    {
 
-      if(m_bCreate)
+      if(IsWindow())
       {
 
          DestroyWindow();
 
       }
+      
+      try
+      {
 
       m_bCreate         = true;
 
@@ -217,6 +250,8 @@ namespace user
       m_pui->m_pimpl    = this;
 
       m_pui->m_id       = id;
+
+      install_message_routing(this);
 
       if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
       {
@@ -255,6 +290,15 @@ namespace user
          ShowWindow(SW_SHOW);
 
       }
+      }
+      catch(...)
+      {
+         
+         m_bCreate = false;
+         
+         return false;
+         
+      }
 
       return true;
 
@@ -268,25 +312,25 @@ namespace user
    }
 
 
-   void interaction_child::install_message_handling(::message::dispatch * pinterface)
+   void interaction_child::install_message_routing(::message::sender * pinterface)
    {
 
-      last_install_message_handling(pinterface);
+      last_install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
+      IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
 
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
 
-      m_pui->install_message_handling(pinterface);
+      m_pui->install_message_routing(pinterface);
 
-      prio_install_message_handling(pinterface);
+      prio_install_message_routing(pinterface);
 
    }
 
 
-   void interaction_child::_001OnShowWindow(signal_details * pobj)
+   void interaction_child::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -308,7 +352,7 @@ namespace user
    }
 
 
-   void interaction_child::_002InstallMessageHandling(::message::dispatch * pinterface)
+   void interaction_child::_002InstallMessageHandling(::message::sender * pinterface)
    {
       UNREFERENCED_PARAMETER(pinterface);
    }
@@ -503,31 +547,51 @@ namespace user
    {
 
       if(!m_bCreate)
+      {
+         
          return false;
-
+         
+      }
+      
       bool bOk = ::user::interaction_impl_base::DestroyWindow();
+
+      m_bCreate = false;
 
       return bOk;
 
    }
 
 
-   void interaction_child::message_handler(signal_details * pobj)
+   void interaction_child::message_handler(::message::base * pbase)
    {
-      SCAST_PTR(::message::base,pbase,pobj);
-      //LRESULT lresult = 0;
+
+      UINT uiMessage = pbase->m_id;
+
       if(m_pui != NULL)
       {
-         m_pui->GuieProc(pobj);
-         if(pobj->m_bRet)
+         
+         m_pui->GuieProc(pbase);
+
+         if(pbase->m_bRet)
+         {
+         
             return;
+
+         }
+
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+
+      if(uiMessage == ::message::message_event)
       {
+         
          ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bProcessed = m_pui->BaseOnControlEvent((control_event *)pbase->m_lparam.m_lparam);
+         
          return;
+
       }
-      (this->*m_pfnDispatchWindowProc)(pobj);
+
+      route_message(pbase);
+      
    }
 
 
@@ -579,7 +643,7 @@ namespace user
 
 
 
-   void interaction_child::_001OnDestroy(signal_details * pobj)
+   void interaction_child::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -591,7 +655,7 @@ namespace user
    }
 
 
-   void interaction_child::_001OnNcDestroy(signal_details * pobj)
+   void interaction_child::_001OnNcDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -614,7 +678,7 @@ namespace user
    }
 
 
-   void interaction_child::SendMessageToDescendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
+   void interaction_child::send_message_to_descendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
    {
 
       // walk through HWNDs to avoid creating temporary interaction_impl objects
@@ -638,7 +702,7 @@ namespace user
             // send to child windows after parent
             try
             {
-               pui->SendMessageToDescendants(message,wParam,lParam,bDeep,bOnlyPerm);
+               pui->send_message_to_descendants(message,wParam,lParam,bDeep,bOnlyPerm);
             }
             catch(...)
             {
@@ -705,15 +769,23 @@ namespace user
 
    void interaction_child::set_viewport_org(::draw2d::graphics * pgraphics)
    {
+      
       // graphics will be already set its view port to the interaction_impl for linux - cairo with xlib
 
+      try
+      {
+
+         rect rectWindow;
+         GetWindowRect(rectWindow);
+         get_wnd()->viewport_screen_to_client(rectWindow);
+         pgraphics->SetViewportOrg(rectWindow.top_left());
+
+      }
+      catch (...)
+      {
 
 
-
-      rect rectWindow;
-      GetWindowRect(rectWindow);
-      get_wnd()->viewport_screen_to_client(rectWindow);
-      pgraphics->SetViewportOrg(rectWindow.top_left());
+      }
 
    }
 
@@ -744,7 +816,7 @@ namespace user
 
       m_puiOwner = pui;
 
-      return ((::user::interaction *)m_puiOwner->m_pvoidUserInteraction);
+      return m_puiOwner->m_puiThis;
 
    }
 
@@ -755,7 +827,7 @@ namespace user
       if(m_puiOwner != NULL)
       {
 
-         return ((::user::interaction *)m_puiOwner->m_pvoidUserInteraction);
+         return m_puiOwner->m_puiThis;
 
       }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
    class CLASS_DECL_SPHERE view :
@@ -35,7 +35,7 @@ namespace command
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);
 	   virtual void OnDraw(::draw2d::graphics * pgraphics);      // overridden to draw this ::view
       virtual void _001OnInitialUpdate();
@@ -59,6 +59,6 @@ namespace command
    };
 
 
-} // namespace command
+} // namespace prompt
 
 

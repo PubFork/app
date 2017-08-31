@@ -177,7 +177,7 @@ CEF_EXPORT void cef_run_message_loop();
 CEF_EXPORT void cef_quit_message_loop();
 
 ///
-// Set to true (1) before calling Windows APIs like TrackPopupMenu that enter a
+// Set to true (1) before calling Windows APIs like track_popup_menu that enter a
 // modal message loop. Set to false (0) after exiting the modal message loop.
 ///
 CEF_EXPORT void cef_set_osmodal_loop(int osModalLoop);

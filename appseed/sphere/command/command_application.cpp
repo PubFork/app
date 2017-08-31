@@ -1,7 +1,7 @@
-//#include "framework.h"
+#include "framework.h"
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -30,11 +30,11 @@ namespace command
    bool application::initialize_application()
    {
 
-      System.factory().creatable_small < command::document >();
-      System.factory().creatable_small < command::frame >();
-      System.factory().creatable_small < command::view >();
-      System.factory().creatable_small < command::pane_view >();
-      System.factory().creatable_small < command::primary_view >();
+      System.factory().creatable_small < prompt::document >();
+      System.factory().creatable_small < prompt::frame >();
+      System.factory().creatable_small < prompt::view >();
+      System.factory().creatable_small < prompt::pane_view >();
+      System.factory().creatable_small < prompt::primary_view >();
 
       if(!::asphere::application::initialize_application())
          return false;
@@ -48,9 +48,9 @@ namespace command
 	      pDocTemplate = new ::user::single_document_template(
             this,
 		      "system/form",
-		      System.type_info < command::document > (),
-		      System.type_info < command::frame > (),
-		      System.type_info < command::pane_view > ());
+		      System.type_info < prompt::document > (),
+		      System.type_info < prompt::frame > (),
+		      System.type_info < prompt::pane_view > ());
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
@@ -66,11 +66,14 @@ namespace command
       return 0;
    }
 
-   bool application::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
-
+   
+   void application::_001OnCmdMsg(::user::command * pcommand)
    {
-      return ::core::application::_001OnCmdMsg(pcmdmsg);
+
+      ::core::application::_001OnCmdMsg(pcommand);
+
    }
+
 
    void application::OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema)
    {
@@ -98,7 +101,7 @@ namespace command
 
    }
 
-} // namespace command
+} // namespace prompt
 
 
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -16,7 +16,7 @@ namespace filemanager
       defer_create_mutex();
       m_iAnimate = 0;
 
-      m_pimagelist = Session.userex()->shell().GetImageList(16);
+      m_pimagelist = Session.userex()->shell()->GetImageList(16);
 
 
    }
@@ -66,7 +66,7 @@ namespace filemanager
       if(bOnlyParent && strPath.has_char() && find_item(strPath))
          return;
 
-      ::file::listing listing(get_document()->get_fs_data());
+      ::file::listing listing(::userfs::tree::get_document()->get_fs_data());
 
       ::file::path strDir;
 
@@ -135,7 +135,7 @@ namespace filemanager
       
       synch_lock sl(m_pmutex);
       
-      ::file::listing & straRootPath = get_document()->m_listingRoot;
+      ::file::listing & straRootPath = ::userfs::tree::get_document()->m_listingRoot;
 
       ::data::tree_item_ptr_array ptraRemove;
 
@@ -525,7 +525,7 @@ namespace filemanager
 
       {
 
-         ::file::listing & listing = get_document()->m_listingRoot;
+         ::file::listing & listing = ::userfs::tree::get_document()->m_listingRoot;
 
          if (actioncontext &::action::source_system)
          {
@@ -640,7 +640,7 @@ namespace filemanager
 
          string str;
 
-         ::file::listing & listing = get_document()->m_listing;
+         ::file::listing & listing = ::userfs::tree::get_document()->m_listing;
 
          if (!actioncontext.is(::action::source_system))
          {
@@ -693,7 +693,7 @@ namespace filemanager
 
       set_viewport_offset(ptOffset.x, ptOffset.y);
 
-      m_pimagelist = Session.userex()->shell().GetImageList(get_filemanager_data()->m_iIconSize);
+      m_pimagelist = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
 
       m_treeptra.pred_each([](auto & ptree)
       {
@@ -729,15 +729,18 @@ namespace filemanager
 
 
 
-   void tree::_001OnMainPostMessage(signal_details * pobj)
+   void tree::_001OnMainPostMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       switch(pbase->m_wparam)
       {
       case MessageMainPostCreateImageListItemRedraw:
-         {
-            ((::user::interaction *) pbase->m_pwnd->m_pvoidUserInteraction)->RedrawWindow();
-            ((::user::interaction *) pbase->m_pwnd->m_pvoidUserInteraction)->KillTimer(123);
+      {
+            
+         pbase->m_pwnd->m_puiThis->RedrawWindow();
+            
+            pbase->m_pwnd->m_puiThis->KillTimer(123);
+
             /*
             rect rect;
             int32_t iArrange = (int32_t) lparam;
@@ -755,16 +758,16 @@ namespace filemanager
       pbase->m_bRet = true;
    }
 
-   void tree::install_message_handling(::message::dispatch *pinterface)
+   void tree::install_message_routing(::message::sender *pinterface)
    {
-      ::userfs::tree::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(MessageMainPost, pinterface,  this,  &tree::_001OnMainPostMessage);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &tree::_001OnTimer);
+      ::userfs::tree::install_message_routing(pinterface);
+      IGUI_MSG_LINK(MessageMainPost, pinterface,  this,  &tree::_001OnMainPostMessage);
+//      //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &tree::_001OnTimer);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &tree::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &tree::_001OnContextMenu);
+//      //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &tree::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tree::_001OnCreate);
 
       //connect_command_range(FILEMANAGER_SHELL_COMMAND_FIRST, FILEMANAGER_SHELL_COMMAND_LAST, &tree::_001OnShellCommand);
 
@@ -853,7 +856,7 @@ namespace filemanager
 
       sp(::userfs::item) p = pitem->m_pitem;
 
-      if(p.is_set() && get_document()->get_fs_data()->is_link(p->m_filepath))
+      if(p.is_set() && ::userfs::tree::get_document()->get_fs_data()->is_link(p->m_filepath))
       {
 
          string strTarget;
@@ -905,10 +908,10 @@ namespace filemanager
 
    }
 
-   void tree::_017OpenFolder(sp(::fs::item)  item, ::action::context actioncontext)
+   void tree::_017OpenFolder(::fs::item * pitem, ::action::context actioncontext)
    {
 
-      if(get_document()->get_fs_data()->is_link(item->m_filepath))
+      if(::userfs::tree::get_document()->get_fs_data()->is_link(pitem->m_filepath))
       {
 
          string strTarget;
@@ -917,7 +920,7 @@ namespace filemanager
 
          string strParams;
 
-         System.file().resolve_link(strTarget, strFolder, strParams, item->m_filepath);
+         System.file().resolve_link(strTarget, strFolder, strParams, pitem->m_filepath);
 
          get_filemanager_manager()->FileManagerBrowse(strTarget,actioncontext);
 
@@ -925,7 +928,7 @@ namespace filemanager
       else
       {
 
-         get_filemanager_manager()->FileManagerBrowse(item,actioncontext);
+         get_filemanager_manager()->FileManagerBrowse(pitem,actioncontext);
 
       }
 
@@ -1054,11 +1057,11 @@ namespace filemanager
    //            || (estep == step_image_hidden && !pitem->m_pparent->is_expanded())))
    //      {
 
-   //         m_pimagelist = Session.userex()->shell().GetImageList(get_filemanager_data()->m_iIconSize);
+   //         m_pimagelist = Session.userex()->shell()->GetImageList(get_filemanager_data()->m_iIconSize);
    //         try
    //         {
-   //            item->m_iImage = Session.userex()->shell().get_image(m_treeptra[0]->get_handle(), item->m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_normal);
-   //            item->m_iImageSelected = Session.userex()->shell().get_image(m_treeptra[0]->get_handle(), item->m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_open);
+   //            item->m_iImage = Session.userex()->shell()->get_image(m_treeptra[0]->get_handle(), item->m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_normal);
+   //            item->m_iImageSelected = Session.userex()->shell()->get_image(m_treeptra[0]->get_handle(), item->m_filepath, ::user::shell::file_attribute_directory, ::user::shell::icon_open);
    //         }
    //         catch (...)
    //         {
@@ -1156,27 +1159,27 @@ namespace filemanager
    }
 
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //   int32_t iItem;
 
    }
 
-   void tree::_001OnContextMenu(signal_details * pobj)
+   void tree::_001OnContextMenu(::message::message * pobj)
    {
    }
 
 
 
 
-   void tree::_001OnShellCommand(signal_details * pobj)
+   void tree::_001OnShellCommand(::message::message * pobj)
    {
       SCAST_PTR(::message::command, pcommand, pobj);
       m_contextmenu.OnCommand(pcommand->GetId());
    }
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -1189,13 +1192,13 @@ namespace filemanager
    void tree::on_merge_user_tree(::user::tree * pusertree)
    {
 
-      //m_iDefaultImage = Session.userex()->shell().get_image(
+      //m_iDefaultImage = Session.userex()->shell()->get_image(
       //                     pusertree->get_handle(),
       //                     "foo",
       //                     ::user::shell::file_attribute_directory,
       //                     ::user::shell::icon_normal);
 
-      //m_iDefaultImageSelected = Session.userex()->shell().get_image(
+      //m_iDefaultImageSelected = Session.userex()->shell()->get_image(
       //                             pusertree->get_handle(),
       //                             "foo",
       //                             ::user::shell::file_attribute_directory,

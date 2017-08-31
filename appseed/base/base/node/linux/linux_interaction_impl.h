@@ -39,7 +39,7 @@ namespace linux
 
       static_function const MESSAGE* PASCAL GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::user::interaction_impl& wnd) const;
       bool operator!=(const ::user::interaction_impl& wnd) const;
@@ -54,7 +54,7 @@ namespace linux
 
       virtual oswindow get_handle() const;
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -148,7 +148,7 @@ namespace linux
       // as above, but returns oswindow
       ::user::interaction * GetDescendantWindow(id id) const;
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       static_function::user::interaction * PASCAL GetSafeOwner(::user::interaction * pParent = NULL, oswindow* pWndTop = NULL);
 
       virtual bool IsWindow() const;
@@ -569,8 +569,8 @@ namespace linux
          ::user::interaction * pActivateWnd, ::user::interaction * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
    //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
@@ -592,11 +592,11 @@ namespace linux
       virtual void EndModalState();
 
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(::signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing oswindows messages
-      virtual void message_handler(::signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -625,9 +625,9 @@ namespace linux
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
-      static_function void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
+      static_function void PASCAL send_message_to_descendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
 //      bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags);

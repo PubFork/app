@@ -29,18 +29,18 @@ void simple_main_frame::dump(dump_context & dumpcontext) const
 }
 #endif //DEBUG
 
-void simple_main_frame::install_message_handling(::message::dispatch * pinterface)
+void simple_main_frame::install_message_routing(::message::sender * pinterface)
 {
-   simple_frame_window::install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&simple_main_frame::_001OnCreate);
+   simple_frame_window::install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_CREATE,pinterface,this,&simple_main_frame::_001OnCreate);
 }
 
-void simple_main_frame::_001OnCreate(signal_details * pobj)
+void simple_main_frame::_001OnCreate(::message::message * pobj)
 {
 
    //      SCAST_PTR(::message::create, pcreate, pobj);
 
-   m_bWindowFrame = !Application.directrix()->m_varTopicQuery.has_property("client_only");
+   m_bWindowFrame = !Application.handler()->m_varTopicQuery.has_property("client_only");
 
    if(pobj->previous())
       return;

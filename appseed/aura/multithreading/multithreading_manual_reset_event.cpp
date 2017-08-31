@@ -30,7 +30,7 @@ manual_reset_event::manual_reset_event(::aura::application * papp, bool bInitial
 //      Description:    Sets the state of the event to signaled.
 //
 //*****************************************************************************
-/*void manual_reset_event::Signal()
+/*void manual_reset_event::message::sender()
 {
     if (!m_event.SetEvent())
     {

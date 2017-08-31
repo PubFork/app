@@ -108,30 +108,32 @@ namespace user
    }
 
 
-   void mesh::install_message_handling(::message::dispatch * pinterface)
+   void mesh::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::control::install_message_handling(pinterface);
+      ::user::control::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SIZE,pinterface,this,&mesh::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL,pinterface,this,&mesh::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL,pinterface,this,&mesh::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE,pinterface,this,&mesh::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_SIZE,pinterface,this,&mesh::_001OnSize);
+      IGUI_MSG_LINK(WM_VSCROLL,pinterface,this,&mesh::_001OnVScroll);
+      IGUI_MSG_LINK(WM_HSCROLL,pinterface,this,&mesh::_001OnHScroll);
+      IGUI_MSG_LINK(WM_MOUSELEAVE,pinterface,this,&mesh::_001OnMouseLeave);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&mesh::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pinterface,this,&mesh::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK,pinterface,this,&mesh::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN,pinterface,this,&mesh::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &mesh::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN,pinterface,this,&mesh::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP,pinterface,this,&mesh::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK,pinterface,this,&mesh::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN,pinterface,this,&mesh::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, pinterface, this, &mesh::_001OnRButtonUp);
 
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pinterface,this,&mesh::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSEMOVE,pinterface,this,&mesh::_001OnMouseMove);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
-      ////IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&mesh::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
+      
       connect_command("mesh_view_auto_arrange",&mesh::_001OnMeshViewAutoArrange);
-      connect_update_cmd_ui("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
+      
+      connect_command_probe("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
+      
    }
 
 
@@ -314,7 +316,7 @@ namespace user
 
       bool bHoverFont = false;
       
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
 
       m_pdrawmeshitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
@@ -335,14 +337,14 @@ namespace user
          {
             if(!bHoverFont)
             {
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
             }
          }
          else
          {
             if(bHoverFont)
             {
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -443,7 +445,7 @@ namespace user
 
       bool bHoverFont = false;
       
-      select_font(pdrawitem->m_pgraphics, font_list_item, this);
+      select_font(pdrawitem->m_pgraphics, font_list_item);
 
       pdrawitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
 
@@ -482,7 +484,7 @@ namespace user
             if(!bHoverFont)
             {
                bHoverFont = true;
-               select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+               select_font(pdrawitem->m_pgraphics, font_list_hover);
             }
          }
          else
@@ -490,7 +492,7 @@ namespace user
             if(bHoverFont)
             {
                bHoverFont = false;
-               select_font(pdrawitem->m_pgraphics, font_list_item, this);
+               select_font(pdrawitem->m_pgraphics, font_list_item);
             }
          }
 
@@ -520,15 +522,14 @@ namespace user
          (m_eview != view_icon ||
          ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) < m_nItemCount)));
 
-      ::draw2d::font * pfont;
       if(pdrawitem->m_bListItemHover)
       {
          pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectItem,ARGB(128,255,255,255));
-         select_font(pdrawitem->m_pgraphics, font_list_hover, this);
+         select_font(pdrawitem->m_pgraphics, font_list_hover);
       }
       else
       {
-         select_font(pdrawitem->m_pgraphics, font_list_item, this);
+         select_font(pdrawitem->m_pgraphics, font_list_item);
       }
 //      pdrawitem->m_pgraphics->set_font(pfont);
 
@@ -748,7 +749,7 @@ namespace user
    on_layout();
    }*/
 
-   void mesh::_001OnSize(signal_details * pobj)
+   void mesh::_001OnSize(::message::message * pobj)
    {
       SCAST_PTR(::message::size,psize,pobj);
       //on_layout();
@@ -2125,16 +2126,16 @@ namespace user
                if(eelement == ::user::mesh::element_group_image)
                {
                   pdrawitem->m_rectImage.left      = x;
-                  pdrawitem->m_rectImage.right     = x + width(&ii.m_rect);
+                  pdrawitem->m_rectImage.right     = x + ii.m_rect.width();
                   pdrawitem->m_rectImage.top       = pdrawitem->m_rectGroup.top;
-                  pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectImage.top + height(&ii.m_rect);
+                  pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectImage.top + ii.m_rect.height();
                   return_(pdrawitem->m_bOk,true);
                }
                else
                {
-                  x += width(&ii.m_rect);
+                  x += ii.m_rect.width();
                   x += 2;
-                  iImageBottom += height(&ii.m_rect) + 2;
+                  iImageBottom += ii.m_rect.height() + 2;
                }
             }
             else if(eelement == ::user::mesh::element_group_image)
@@ -2248,14 +2249,14 @@ namespace user
             //      if(eelement == ::user::mesh::element_image)
             //      {
             //         pdrawitem->m_rectImage.left      = x;
-            //         pdrawitem->m_rectImage.right     = x + width(&ii.m_rect);
+            //         pdrawitem->m_rectImage.right     = x + ii.m_rect.width();
             //         pdrawitem->m_rectImage.bottom    = pdrawitem->m_rectSubItem.bottom;
-            //         pdrawitem->m_rectImage.top       = pdrawitem->m_rectImage.bottom - height(&ii.m_rect);
+            //         pdrawitem->m_rectImage.top       = pdrawitem->m_rectImage.bottom - ii.m_rect.height();
             //         return_(pdrawitem->m_bOk,true);
             //      }
             //      else
             //      {
-            //         x += width(&ii.m_rect);
+            //         x += ii.m_rect.width();
             //         x += 2;
             //      }
             //   }
@@ -2458,7 +2459,7 @@ namespace user
    //   }
    //}
 
-   void mesh::_001OnKeyDown(signal_details * pobj)
+   void mesh::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key,pkey,pobj);
          if(pkey->previous()) // give chance to child
@@ -2552,7 +2553,7 @@ namespace user
       pobj->m_bRet = false;
    }
 
-   void mesh::_001OnMouseMove(signal_details * pobj)
+   void mesh::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -2653,33 +2654,37 @@ namespace user
 
       track_mouse_leave();
 
-      //if(m_spmenuPopup.is_null())
       {
 
          UpdateHover();
+
          pobj->m_bRet = true;
 
-
          index iItemEnter;
+
          index iSubItemEnter;
+         
          point point;
-         //Session.get_cursor_pos(&point);
-         //ScreenToClient(&point);
 
          if (_001DisplayHitTest(pt, iItemEnter, iSubItemEnter))
          {
+            
             if (m_bSelect && m_bHoverSelect &&
                (m_iSubItemEnter != iSubItemEnter ||
                   m_iItemEnter != iItemEnter)
                && !m_rangeSelection.has_item(iItemEnter))
             {
+               
                m_iMouseFlagEnter = pmouse->m_nFlags;
+               
                m_iItemEnter = iItemEnter;
+               
                m_iSubItemEnter = iSubItemEnter;
-               //SetTimer(12321, 840, NULL);
-               SetTimer(12321, 184 + 177 + 151, NULL);
-               //track_mouse_hover();
+               
+               SetTimer(12321, 800, NULL);
+               
             }
+            
          }
 
       }
@@ -2687,9 +2692,8 @@ namespace user
 
    }
 
-   DWORD g_dwStartLDown;
 
-   void mesh::_001OnLButtonDown(signal_details * pobj)
+   void mesh::_001OnLButtonDown(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2800,33 +2804,52 @@ namespace user
             }
             else
             {
+               
                m_rangeSelection.clear();
+               
                index iItem;
+
                if(_001DisplayHitTest(pt,iItem))
                {
-                  g_dwStartLDown = get_tick_count();
+
                   m_iShiftFirstSelection = iItem;
+
                   m_iItemFocus = iItem;
+
                   _001DisplayHitTest(pt,m_iItemDrag);
+
                   m_iItemDrop = m_iItemDrag;
+
                   m_uiLButtonDownFlags = pmouse->m_nFlags;
+
                   m_ptLButtonDown = pt;
+
                   SetTimer(12345678,800,NULL);
+
                   item_range itemrange;
+
                   itemrange.set(iItem,iItem,0,m_nColumnCount - 1,- 1,-1);
+
                   _001AddSelection(itemrange);
+
                }
+
             }
+
          }
+
       }
 
       RedrawWindow();
+
       pobj->m_bRet = true;
+
       pmouse->set_lresult(1);
+
    }
 
 
-   void mesh::_001OnLButtonUp(signal_details * pobj)
+   void mesh::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2846,21 +2869,26 @@ namespace user
          {
 
             index iItemOld = m_iItemDrop;
+
             if (_001DisplayHitTest(pt, m_iItemDrop))
             {
+
                if (m_iItemDrag != m_iItemDrop && m_iItemDrop != -1)
                {
-                  // swap
-                  index i = m_meshlayout.m_iaDisplayToStrict[m_iItemDrag];
-                  m_meshlayout.m_iaDisplayToStrict[m_iItemDrag] = m_meshlayout.m_iaDisplayToStrict[m_iItemDrop];
-                  m_meshlayout.m_iaDisplayToStrict[m_iItemDrop] = i;
+                  
+                  m_meshlayout.m_iaDisplayToStrict.swap(m_iItemDrag, m_iItemDrop);
+
                   _001OnAfterSort();
+
                }
+
             }
+
          }
 
       }
-      else if (m_bHoverSelect || (get_tick_count() - g_dwStartLDown > 800))
+      // if Hover Select or ***LONG Long Press PhRESSing***
+      else if (m_bHoverSelect || (get_tick_count() - m_dwLButtonDownStart > 800)) 
       {
 
          if (m_bLButtonDown)
@@ -2891,37 +2919,22 @@ namespace user
 
                }
 
-
             }
 
          }
 
       }
-      else
-      {
-//         if ()
-         {
 
-         }
-      }
-      //else
-      //{
-      // commented on 2017-03-28
-      //   m_iClick++;
-      //   m_uiLButtonUpFlags = (UINT)pmouse->m_nFlags;
-      //   m_ptLButtonUp = pt;
-      //   SetTimer(12345679, 500, NULL);
-      //   KillTimer(12345678);
-      //}
       pobj->m_bRet = true;
+
       pmouse->set_lresult(1);
 
       m_bLButtonDown = false;
 
-
    }
 
-   void mesh::_001OnRButtonDown(signal_details * pobj)
+
+   void mesh::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -2970,7 +2983,7 @@ namespace user
    }
 
    
-   void mesh::_001OnRButtonUp(signal_details * pobj)
+   void mesh::_001OnRButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -3216,7 +3229,7 @@ namespace user
       return -1;
    }
 
-   void mesh::_001OnLButtonDblClk(signal_details * pobj)
+   void mesh::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse,pmouse,pobj);
          m_iClick = 2;
@@ -3977,7 +3990,7 @@ namespace user
       }
    }
 
-   void mesh::_001OnCreate(signal_details * pobj)
+   void mesh::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -4102,22 +4115,30 @@ namespace user
 
    void mesh::_001OnTimer(::timer * ptimer)
    {
-      //      return; //xxxtimer
+
       ::user::control::_001OnTimer(ptimer);
+      
       if(ptimer->m_nIDEvent == 12345679) // left click
       {
+         
          KillTimer(12345679);
+         
          if(m_bSelect)
          {
+            
             if(m_bHoverSelect)
             {
+               
             }
 
          }
+         
       }
       else if(ptimer->m_nIDEvent == 8477) // right click
       {
+         
          KillTimer(8477);
+         
          //if(!_001IsEditing())
          {
             uint_ptr nFlags = m_uiRButtonUpFlags;
@@ -4230,24 +4251,31 @@ namespace user
       else if(ptimer->m_nIDEvent == 12321)
       {
 
-
          KillTimer(ptimer->m_nIDEvent);
 
-
          index iItemSel;
+         
          index iSubItemSel;
+         
          point point;
+         
          Session.get_cursor_pos(&point);
+         
          ScreenToClient(&point);
+         
          try
          {
-            if(_001DisplayHitTest(point,iItemSel,iSubItemSel))
+            
+            if(_001DisplayHitTest(point, iItemSel,iSubItemSel))
             {
-               if(m_iSubItemEnter == iSubItemSel &&
-                  m_iItemEnter == iItemSel)
+               
+               if(m_iSubItemEnter == iSubItemSel && m_iItemEnter == iItemSel)
                {
+                  
                   m_iSubItemEnter = -1;
+                  
                   m_iItemEnter = -1;
+                  
                   bool bLShiftKeyDown     = Session.is_key_pressed(::user::key_lshift);
                   bool bRShiftKeyDown     = Session.is_key_pressed(::user::key_rshift);
                   bool bLControlKeyDown   = Session.is_key_pressed(::user::key_lcontrol);
@@ -4257,9 +4285,12 @@ namespace user
 
                   if(m_bMultiSelect && bShiftKeyDown)
                   {
+                     
                      if(bControlKeyDown)
                      {
+                        
                         item_range itemrange;
+                        
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4267,11 +4298,15 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
+                        
                         _001AddSelection(itemrange);
+                        
                      }
                      else
                      {
+                        
                         item_range itemrange;
+                        
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4279,18 +4314,29 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
+                        
                         range range;
+                        
                         range.add_item(itemrange);
+                        
                         _001SetSelection(range);
+                        
                      }
+                     
                   }
                   else if(m_bMultiSelect && bControlKeyDown)
                   {
+                     
                      m_iLastItemSel = m_iItemSel;
+                     
                      m_iLastSubItemSel = m_iSubItemSel;
+                     
                      m_iItemSel = iItemSel;
+                     
                      m_iSubItemSel = iSubItemSel;
+                     
                      item_range itemrange;
+                     
                      itemrange.set(
                         m_iItemSel,
                         m_iItemSel,
@@ -4298,15 +4344,23 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
+                     
                      _001AddSelection(itemrange);
+                     
                   }
                   else
                   {
+                     
                      m_iLastItemSel = m_iItemSel;
+                     
                      m_iLastSubItemSel = m_iSubItemSel;
+                     
                      m_iItemSel = iItemSel;
+                     
                      m_iSubItemSel = iSubItemSel;
+                     
                      item_range itemrange;
+                     
                      itemrange.set(
                         DisplayToStrict(m_iItemSel),
                         DisplayToStrict(m_iItemSel),
@@ -4314,22 +4368,31 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
+                     
                      range range;
+                     
                      range.add_item(itemrange);
+                     
                      _001SetSelection(range);
+                     
                   }
+                  
                }
+               
             }
+            
          }
          catch(...)
          {
+            
          }
+         
          m_iSubItemEnter = -1;
+         
          m_iItemEnter = -1;
 
       }
 
-//      ptimer->m_bRet = false;
    }
 
    bool mesh::_001IsItemVisible(index iItem)
@@ -4403,7 +4466,7 @@ namespace user
    void mesh::_001LayoutTopText()
    {
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(font_list_item);
       array < size > sizea;
       m_dcextension.GetTextExtent(pgraphics,m_strTopText,sizea);
       rect rectClient;
@@ -4508,8 +4571,11 @@ namespace user
 
    int32_t mesh::_001CalcItemWidth(index iItem,index iSubItem)
    {
+      
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+
+      select_font(pgraphics, font_list_item);
+
       index cx = _001CalcItemWidth(pgraphics,iItem,iSubItem);
 
       return (int32_t)cx;
@@ -4522,10 +4588,14 @@ namespace user
    //   return _001CalcItemWidth(pgraphics,iItem,iSubItem);
    //}
 
+
    int32_t mesh::_001CalcItemWidth(::draw2d::graphics * pgraphics,index iItem,index iSubItem)
    {
+
 #ifdef WINDOWSEX
-      select_font(pgraphics, font_list_item, this);
+
+      select_font(pgraphics, font_list_item);
+
       ::image_list::info ii;
       rect rect;
       size size;
@@ -5246,7 +5316,7 @@ namespace user
    {
       UNREFERENCED_PARAMETER(iColumn);
       ::draw2d::memory_graphics pgraphics(allocer());
-      select_font(pgraphics, font_list_item, this);
+      select_font(pgraphics, font_list_item);
       //pgraphics->SelectObject(pfont);
       int32_t iMaxWidth = 0;
       ::count iCount = m_nItemCount;
@@ -5373,7 +5443,7 @@ namespace user
    //   return m_fontHover;
    //}
 
-   void mesh::_001OnMouseLeave(signal_details * pobj)
+   void mesh::_001OnMouseLeave(::message::message * pobj)
    {
       m_iItemHover = -1;
       m_iSubItemHover = -1;
@@ -5558,7 +5628,7 @@ namespace user
    }
 
 
-   void mesh::_001OnVScroll(signal_details * pobj)
+   void mesh::_001OnVScroll(::message::message * pobj)
    {
 
       SCAST_PTR(::message::scroll, pscroll, pobj);
@@ -5592,7 +5662,7 @@ namespace user
 
    }
 
-   void mesh::_001OnHScroll(signal_details * pobj)
+   void mesh::_001OnHScroll(::message::message * pobj)
    {
 
       SCAST_PTR(::message::scroll, pscroll, pobj);
@@ -5811,17 +5881,17 @@ namespace user
       return m_flags.is_signalized(flag_auto_arrange);
    }
 
-   void mesh::_001OnMeshViewAutoArrange(signal_details * pobj)
+   void mesh::_001OnMeshViewAutoArrange(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       auto_arrange(!get_auto_arrange());
    }
 
-   void mesh::_001OnUpdateMeshViewAutoArrange(signal_details * pobj)
+   void mesh::_001OnUpdateMeshViewAutoArrange(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui,pcmdui,pobj);
-         pcmdui->m_pcmdui->_001SetCheck(get_auto_arrange());
-      pcmdui->m_pcmdui->Enable();
+      SCAST_PTR(::user::command,pcommand,pobj);
+         pcommand->_001SetCheck(get_auto_arrange());
+      pcommand->Enable();
    }
 
    bool mesh::is_valid_display_item(index iDisplayItem)

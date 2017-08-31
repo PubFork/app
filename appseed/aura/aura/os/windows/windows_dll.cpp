@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 /*BEGIN_EXTERN_C
 
@@ -28,7 +28,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    if (dwReason == DLL_PROCESS_ATTACH)
    {
 
-      OutputDebugStringW(L"aura.dll initializing!\n");
+      output_debug_string(L"aura.dll initializing!\n");
 
       xxdebug_box("aura.dll DllMain", "box", MB_OK);
       
@@ -39,7 +39,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
 
 
-      OutputDebugStringW(L"aura.dll terminating!\n");
+      output_debug_string(L"aura.dll terminating!\n");
 
 
    }

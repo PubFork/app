@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <stdio.h>
 
 
 blob::blob()
@@ -17,15 +18,25 @@ blob::~blob()
 }
 
 
-void blob::read(HANDLE f)
+void blob::read(FILE * file)
 {
+   
    if(m_pchData != NULL)
+   {
+   
       memory_free_dbg(m_pchData, 0);
-   DWORD dwRead;
-   ::ReadFile(f, &m_sizet, sizeof(m_sizet), &dwRead, NULL);
+      
+   }
+   
+   int iRead;
+   
+   iRead = fread(&m_sizet, 1, sizeof(m_sizet), file);
+   
    if(m_sizet == 0)
    {
+      
       m_pchData = NULL;
+      
    }
    else
    {
@@ -34,37 +45,41 @@ void blob::read(HANDLE f)
       
       size_t sRead = 0;
 
-      while(::ReadFile(f, &m_pchData[sRead], 1024, &dwRead, NULL))
+      while(true)
       {
-         if(dwRead == 0)
+         
+         iRead  = fread(&m_pchData[sRead], 1, 1024, file);
+
+         if(iRead == 0)
             break;
-         sRead += dwRead;
+         
+         sRead += iRead;
+         
       }
 
    }
+   
 }
 
-void blob::write(HANDLE f)
+void blob::write(FILE * file)
 {
-   DWORD dwWritten;
-   ::WriteFile(f, &m_sizet, sizeof(m_sizet), &dwWritten, NULL);
-   if(m_sizet > 0)
+   
+   size_t iWritten = fwrite(&m_sizet, 1, sizeof(m_sizet), file);
+   
+   if(iWritten == sizeof(m_sizet) && m_sizet > 0)
    {
       
-      size_t sWritten = 0;
-
-      while(::WriteFile(f, &m_pchData[sWritten], 1024, &dwWritten, NULL))
+      iWritten = ::fwrite(m_pchData, 1, m_sizet, file);
+      
+      if(iWritten == m_sizet)
       {
-
-         if(dwWritten == 0)
-            break;
-
-         sWritten += dwWritten;
 
       }
 
    }
+   
 }
+
 
 blob & blob::operator = (const char * psz)
 {
@@ -80,16 +95,25 @@ machine_event_data::fixed::fixed()
    m_bSpaUpgrade                 = false;
 }
 
-void machine_event_data::read(HANDLE f)
+
+void machine_event_data::read(FILE * file)
 {
-   DWORD dwRead;
-   ::ReadFile(f, &m_fixed, sizeof(m_fixed), &dwRead, NULL);
-   m_blobCommand.read(f);
+
+   size_t iRead = fread(&m_fixed, 1, sizeof(m_fixed), file);
+   
+   m_blobCommand.read(file);
+   
 }
 
-void machine_event_data::write(HANDLE f)
+
+void machine_event_data::write(FILE * file)
 {
-   DWORD dwWritten;
-   ::WriteFile(f, &m_fixed, sizeof(m_fixed), &dwWritten, NULL);
-   m_blobCommand.write(f);
+   
+   size_t iWritten = fwrite(&m_fixed, 1, sizeof(m_fixed), file);
+   
+   m_blobCommand.write(file);
+   
 }
+
+
+

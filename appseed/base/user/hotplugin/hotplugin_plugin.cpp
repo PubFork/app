@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -72,7 +72,7 @@ namespace hotplugin
       m_ptCursorPhase.x = 0;
       m_ptCursorPhase.y = 0;
 
-      m_eschema         = schema_normal;
+      m_etheme = ::user::theme_lite;
 
       m_pauraapp = this;
       m_pauraapp->m_paxissession = this;
@@ -98,11 +98,11 @@ namespace hotplugin
    }
 
 
-   void plugin::install_message_handling(::message::dispatch * pdispatch)
+   void plugin::install_message_routing(::message::sender * psender)
    {
 
-      ::simple_ui::interaction::install_message_handling(pdispatch);
-      ::axis::session::install_message_handling(pdispatch);
+      ::simple_ui::interaction::install_message_routing(psender);
+      ::axis::session::install_message_routing(psender);
 
    }
 
@@ -1061,10 +1061,9 @@ namespace hotplugin
 
    }
 
-   void plugin::message_handler(signal_details * pobj)
-   {
 
-      SCAST_PTR(::message::base,paxis,pobj);
+   void plugin::message_handler(::message::base * pbase)
+   {
 
       UINT message;
 
@@ -1072,11 +1071,11 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      message    = paxis->m_uiMessage;
+      message    = pbase->m_id;
 
-      wparam     = paxis->m_wparam;
+      wparam     = pbase->m_wparam;
 
-      sp(::message::mouse) spmouse = pobj;
+      sp(::message::mouse) spmouse = pbase;
 
       if(spmouse.is_set())
       {
@@ -1087,11 +1086,11 @@ namespace hotplugin
       else
       {
 
-         lparam     = paxis->m_lparam;
+         lparam     = pbase->m_lparam;
 
       }
 
-      plugin_message_handler(message,wparam,lparam, true);
+      plugin_message_handler(message, wparam, lparam, true);
 
    }
 

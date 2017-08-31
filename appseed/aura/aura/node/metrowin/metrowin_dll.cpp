@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 extern int __abi___threading_model;
 
@@ -15,7 +15,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugString(L"::ca2:: metrowin.dll :: initializing!\n");
+      ::output_debug_string(L"::ca2:: metrowin.dll :: initializing!\n");
       
 
       __abi___threading_model = 0; // avoid further changes
@@ -50,7 +50,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
       {
       } */
 
-      ::OutputDebugStringW(L"::ca2:: metrowin.dll :: terminating!\n");
+      ::output_debug_string(L"::ca2:: metrowin.dll :: terminating!\n");
 
    }
    else if(dwReason == DLL_THREAD_ATTACH)

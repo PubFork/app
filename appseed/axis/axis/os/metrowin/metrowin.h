@@ -91,7 +91,7 @@ namespace base
 #endif
 
 
-//CLASS_DECL_AXIS bool __cdecl __is_idle_message(signal_details * pobj);
+//CLASS_DECL_AXIS bool __cdecl __is_idle_message(::message::message * pobj);
 //CLASS_DECL_AXIS bool __cdecl __is_idle_message(MESSAGE * pMsg);
 
 

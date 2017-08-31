@@ -22,7 +22,7 @@ namespace install
       ~socket_thread();
 
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       void setup_socket(::sockets::listen_socket<socket> & ll);
 

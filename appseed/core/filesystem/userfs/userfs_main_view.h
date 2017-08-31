@@ -14,7 +14,7 @@ namespace userfs
    public:
          
       main_view(::aura::application * papp);
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
       DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);
 

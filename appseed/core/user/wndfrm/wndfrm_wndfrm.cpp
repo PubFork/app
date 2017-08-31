@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -28,7 +28,7 @@ namespace user
 
          string strId(pszUinteractionLibrary);
 
-         string strBuild = System.command()->m_varTopicQuery["build"];
+         string strBuild = System.handler()->m_varTopicQuery["build"];
 
          if(strBuild.is_empty())
          {
@@ -117,10 +117,11 @@ namespace user
 
          sp(::user::wndfrm::interaction) pinteraction = Session.m_mapUinteraction[pszUinteraction];
 
-         if(Session.m_mapUinteraction[pszUinteraction] == NULL)
+         if(Session.m_mapUinteraction[pszUinteraction] == NULL
+            && Session.wndfrm() != NULL)
          {
 
-            Session.m_mapUinteraction[pszUinteraction] = Session.wndfrm().get_new_wndfrm(pszUinteraction);
+            Session.m_mapUinteraction[pszUinteraction] = Session.wndfrm()->get_new_wndfrm(pszUinteraction);
 
             pinteraction = Session.m_mapUinteraction[pszUinteraction];
 
@@ -166,7 +167,7 @@ namespace user
 
          {
 
-            string strConfig = Application.directrix()->m_varTopicQuery["wndfrm"];
+            string strConfig = Application.handler()->m_varTopicQuery["wndfrm"];
 
             if (strConfig.has_char())
             {
@@ -329,9 +330,9 @@ namespace core
 
       }
 
-      wndfrm().construct(this);
+      wndfrm()->construct(this);
 
-      if (!wndfrm().initialize())
+      if (!wndfrm()->initialize())
       {
 
          thiserr << "end failure (2)";
@@ -345,11 +346,12 @@ namespace core
       return true;
 
    }
+   
 
-   ::user::wndfrm::wndfrm          &application::wndfrm()
+   ::user::wndfrm::wndfrm * application::wndfrm()
    {
 
-      return *m_pwndfrm.cast < ::user::wndfrm::wndfrm>();
+      return m_pwndfrm;
 
    }
 

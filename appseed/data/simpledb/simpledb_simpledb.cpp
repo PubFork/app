@@ -92,15 +92,15 @@ namespace simpledb
    bool simpledb::initialize2()
    {
 
-      if(m_pauraapp->m_pcoreapp->command()->m_varTopicQuery["locale"].get_count() > 0)
+      if(m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["locale"].get_count() > 0)
       {
-         string str = m_pauraapp->m_pcoreapp->command()->m_varTopicQuery["locale"].stra()[0];
+         string str = m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["locale"].stra()[0];
          m_pauraapp->m_pbasesession->set_locale(str,::action::source::database());
       }
 
-      if(m_pauraapp->m_pcoreapp->command()->m_varTopicQuery["schema"].get_count() > 0)
+      if(m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["schema"].get_count() > 0)
       {
-         string str = m_pauraapp->m_pcoreapp->command()->m_varTopicQuery["schema"].stra()[0];
+         string str = m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["schema"].stra()[0];
          m_pauraapp->m_pbasesession->set_schema(str,::action::source::database());
       }
 

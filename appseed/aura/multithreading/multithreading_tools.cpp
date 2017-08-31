@@ -1,8 +1,14 @@
+#include "framework.h"
+
+
 
 thread_tools::thread_tools(::aura::application * papp) :
    ::object(papp)
 {
    
+   defer_create_mutex();
+
+
    m_cCount                         = 0;
    m_cIteration                     = 0;
    m_cSpan                          = 0;
@@ -244,10 +250,15 @@ bool tool_thread::set_pred(::pred_holder_base * ppred)
 int tool_thread::run()
 {
 
-   while (true)
+   while (get_thread_run())
    {
 
-      m_evStart.wait();
+      if(!m_evStart.wait(millis(100)).succeeded())
+      {
+
+            continue;
+
+      }
 
       m_evStart.ResetEvent();
 
@@ -313,7 +324,6 @@ thread_toolset::thread_toolset(::thread_tools * ptools) :
    object(ptools->get_app()),
    m_pthreadtools(ptools)
 {
-
 
 }
 

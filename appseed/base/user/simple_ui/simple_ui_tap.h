@@ -21,8 +21,8 @@ namespace simple_ui
       tap(::aura::application * papp);
       virtual ~tap();
 
-      IMH();
-      DRAWDD();
+      virtual void install_message_routing(::message::sender * psender);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
       virtual void simple_ui_draw_simple(::draw2d::graphics * pgraphics);
       virtual void simple_ui_draw_volume(::draw2d::graphics * pgraphics);
@@ -30,11 +30,13 @@ namespace simple_ui
       virtual void simple_ui_draw_text(::draw2d::graphics * pgraphics);
 
 
+      DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnMouseMove);
       DECL_GEN_SIGNAL(_001OnMouseLeave);
+
 
       virtual bool keyboard_focus_is_focusable();
       virtual bool is_hover();

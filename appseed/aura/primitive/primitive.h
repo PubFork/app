@@ -8,7 +8,6 @@
 #include "aura/primitive/primitive_command.h"
 #include "aura/primitive/primitive_command_line.h"
 #include "aura/primitive/primitive_create.h"
-#include "aura/primitive/primitive_command_thread.h"
 #include "aura/primitive/primitive_edit.h"
 #include "aura/primitive/primitive_factory.h"
 #include "aura/primitive/primitive_id.h"

@@ -1,6 +1,6 @@
-//#include "framework.h"
+#include "framework.h"
 
-namespace command
+namespace prompt
 {
 
    form_callback::form_callback()
@@ -31,4 +31,4 @@ namespace command
       return false;
    }
 
-} // namespace command
+} // namespace prompt

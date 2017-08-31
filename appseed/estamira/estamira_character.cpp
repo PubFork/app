@@ -24,13 +24,13 @@ namespace estamira
 
    }
 
-   void character::install_message_handling(::message::dispatch * pdispatch)
+   void character::install_message_routing(::message::sender * psender)
    {
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &character::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &character::_001OnKeyUp);
-      //IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &character::_001OnLButtonDown);
-      //IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &character::_001OnLButtonUp);
-      //IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &character::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &character::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &character::_001OnKeyUp);
+      //IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &character::_001OnLButtonDown);
+      //IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &character::_001OnLButtonUp);
+      //IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &character::_001OnMouseMove);
 
    }
 
@@ -40,7 +40,7 @@ namespace estamira
 
       m_pgame = pgame;
 
-      install_message_handling(pgame->m_pui->m_pimpl);
+      install_message_routing(pgame->m_pui->m_pimpl);
 
       m_pt.x = 0;
       m_pt.y = 0;
@@ -99,7 +99,7 @@ namespace estamira
    }
 
 
-   void character::_001OnKeyDown(signal_details * pobj)
+   void character::_001OnKeyDown(::message::message * pobj)
    {
       
       SCAST_PTR(::message::key, pkey, pobj);
@@ -156,7 +156,7 @@ namespace estamira
 
    }
 
-   void character::_001OnKeyUp(signal_details * pobj)
+   void character::_001OnKeyUp(::message::message * pobj)
    {
       
       SCAST_PTR(::message::key, pkey, pobj);
@@ -267,20 +267,20 @@ namespace estamira
 
 
 
-   void character::_001OnLButtonDown(signal_details * pobj)
+   void character::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
 
    }
 
-   void character::_001OnLButtonUp(signal_details * pobj)
+   void character::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
    }
 
-   void character::_001OnMouseMove(signal_details * pobj)
+   void character::_001OnMouseMove(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       point pt = pmouse->m_pt;

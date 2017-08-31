@@ -17,14 +17,14 @@ namespace user
    //   
    //   edit_plain_text_view(::aura::application * papp);
 
-   //   virtual void install_message_handling(::message::dispatch * pinterface);
+   //   virtual void install_message_routing(::message::sender * pinterface);
 
    //   virtual void _001OnSetText(::action::context actioncontext);
    //   virtual void _001OnUpdate(::action::context actioncontext);
 
    //   virtual void on_layout();
 
-   //   virtual void walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop);
+   //   virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
    //};
 

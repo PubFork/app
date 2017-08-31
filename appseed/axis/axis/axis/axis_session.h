@@ -45,7 +45,7 @@ namespace axis
       
 
 
-      //::user::schema_simple_impl                               m_schemasimple;
+      //::user::style_simple_impl                               m_schemasimple;
 
       ::user::interaction *                                    m_puiMouseMoveCapture;
       ::user::interaction *                                    m_puiLastLButtonDown;
@@ -68,7 +68,7 @@ namespace axis
 
       ::user::copydesk *                                       m_pcopydesk;
 
-
+      DWORD                                                    m_dwLongPhRESSingTime;
 
 
 
@@ -119,6 +119,9 @@ namespace axis
       //virtual bool is_inside_time_dir(const char * pszPath);
       //virtual bool file_is_read_only(const char * pszPath);
 
+      // Long PhRESSing time
+      // time in milliseconds that a pressing is considered a double click
+      virtual DWORD get_Long_PhRESSing_time();
 
       virtual void defer_initialize_user_presence();
 
@@ -183,8 +186,8 @@ namespace axis
 
       virtual void  get_monitor(rect_array & rectaMonitor,rect_array & rectaIntersect,const RECT & rect);
 
-      virtual index get_zoneing(LPRECT lprect,const RECT & rect,::user::EAppearance eappearance);
-      virtual index get_best_zoneing(::user::EAppearance * peappearance,LPRECT lprect,const RECT & rect);
+      virtual index get_zoneing(LPRECT lprect,const RECT & rect,::user::e_appearance eappearance);
+      virtual index get_best_zoneing(::user::e_appearance * peappearance,LPRECT lprect,const RECT & rect);
       virtual index get_best_monitor(LPRECT lprect,const RECT & rect);
       virtual index get_best_wkspace(LPRECT lprect,const RECT & rect);
       virtual index get_good_iconify(LPRECT lprect,const RECT & rect);
@@ -231,6 +234,10 @@ namespace axis
 
 
       virtual string fontopus_get_user_sessid(const string & str) override;
+
+
+      virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
+
 
    };
 

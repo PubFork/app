@@ -1,14 +1,14 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
 
    class CLASS_DECL_SPHERE pane_view : 
       virtual public ::userex::pane_tab_view,
       virtual public ::filemanager::callback,
-      virtual public command::form_callback
+      virtual public prompt::form_callback
    {
    public:
 	   
@@ -22,7 +22,7 @@ namespace command
       void on_create_view(::user::view_creator_data * pcreatordata);
       void on_show_view();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 	   virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);
 	   virtual bool pre_create_window(::user::create_struct& cs);
@@ -43,7 +43,7 @@ namespace command
    };
 
 
-} // namespace command
+} // namespace prompt
 
 
 

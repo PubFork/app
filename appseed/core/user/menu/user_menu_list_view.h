@@ -16,16 +16,17 @@ namespace user
 
       menu_list_view(::aura::application * papp);
       virtual ~menu_list_view();
+      
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       virtual bool pre_create_window(::user::create_struct & cs);
 
-      virtual void GuieProc(signal_details * pobj);
+      //virtual void GuieProc(::message::message * pobj);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-      bool LoadMenu(sp(::xml::node) pnode, sp(::user::interaction) puiNotify, UINT uiCallbackMessage);
+      bool load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage);
          
    #ifdef DEBUG
       virtual void assert_valid() const;

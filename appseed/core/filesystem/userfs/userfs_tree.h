@@ -36,7 +36,7 @@ namespace userfs
 
 
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
 
       virtual void _001OnOpenItem(::data::tree_item * pitem, ::action::context actioncontext);

@@ -17,7 +17,7 @@ namespace user
       virtual ~place_holder_container();
 
 
-      void install_message_handling(::message::dispatch * pdispatch);
+      void install_message_routing(::message::sender * psender);
 
 
       virtual bool create_window(const RECT & rect, ::user::interaction * puiParent,id id);

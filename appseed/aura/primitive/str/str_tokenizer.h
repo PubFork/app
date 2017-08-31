@@ -37,6 +37,7 @@ namespace str
       bool GetNextSmallestToken(string &strToken, stringa & straSeparator, bool bWithSeparator = FALSE);
       // Any of separator character
       bool GetNextTokenEx(string &strToken, const char * lpSeparator, bool bWithSeparator = false, bool bSkipAdjacent = false);
+      bool _001GetNextToken(string & strToken);
 
    };
 

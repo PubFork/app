@@ -1,8 +1,6 @@
 #include "framework.h"
-//#include "zlib.h"
-//#include "zutil.h"
-//#include "axis/compress/zip/zip.h"
-//#include "axis/compress/compress_gz.h"
+
+
 
 
 //#include <math.h>
@@ -14,8 +12,8 @@
 //#endif
 
 
-// O volume na unidade Z ‚ eco
-// O N£mero de S‚rie do Volume ‚ 4A91-94E4
+// O volume na unidade Z ï¿½ eco
+// O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 //
 // Pasta de Z:\nordroid\app\appseed\core\user
 //
@@ -24,10 +22,8 @@
 //
 // Pasta de Z:\nordroid\app\appseed\core\user\menu
 
-#include "menu/user_menu.cpp"
 #include "menu/user_menu_button.cpp"
 #include "menu/user_menu_central.cpp"
-#include "menu/user_menu_item.cpp"
 #include "menu/user_menu_list_view.cpp"
 #include "menu/user_menu_list_window.cpp"
  //              5 arquivo(s)         44.883 bytes

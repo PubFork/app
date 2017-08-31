@@ -7,7 +7,8 @@ namespace base
 
    class CLASS_DECL_BASE application :
       virtual public ::axis::application,
-      virtual public ::user::form_callback
+      virtual public ::user::form_callback,
+      virtual public ::user::style
    {
    public:
 
@@ -49,11 +50,19 @@ namespace base
       virtual ::user::interaction * main_window();
 
       virtual void on_create_view(::user::view_creator_data * pcreatordata);
-      void process_message_filter(int32_t code,signal_details * pobj);
+      void process_message_filter(int32_t code,::message::message * pobj);
 
       virtual bool get_frame(sp(::user::interaction) & pui);
       virtual void add_frame(::user::interaction * pwnd);
       virtual void remove_frame(::user::interaction * pwnd);
+
+      virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
+      virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
+
+
+      virtual void send_language_change_message();
+
+
 
       //virtual string get_cred(const string & strRequestUrl,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive);
 
@@ -73,8 +82,8 @@ namespace base
       virtual bool enable_window(::user::primitive * pui,bool bEnable = true);
       virtual bool set_window_text(::user::interaction * pui,const string & strText);
 
-      virtual void process_message(signal_details * pobj);
-      virtual bool process_message(LPMESSAGE lpmessage);
+      virtual void process_message(::message::base * pbase) override;
+      virtual bool process_message(LPMESSAGE lpmessage) override;
 
 
 #ifdef HOTPLUGIN_SUBSYSTEM
@@ -85,7 +94,7 @@ namespace base
 
       virtual ::user::interaction * FindWindow(const char * lpszClassName,const char * lpszWindowName);
       virtual ::user::interaction * FindWindowEx(oswindow oswindowParent,oswindow oswindowChildAfter,const char * lpszClass,const char * lpszWindow);
-      virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0);
+      virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0) override;
 
 
 
@@ -97,7 +106,9 @@ namespace base
 
       virtual string preferred_userschema();
 
-      virtual ::user::schema * userschema();
+//      virtual ::user::style * userstyle();
+//      
+//      virtual ::user::style * userstyle(::user::e_schema estyle);
 
       //virtual int32_t exit_instance();
       
@@ -113,7 +124,7 @@ namespace base
   
       virtual bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent) override;
 
-
+      virtual ::user::interaction * create_menu_interaction();
 
    };
 

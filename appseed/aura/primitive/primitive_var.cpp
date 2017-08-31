@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include <math.h>
 
 
@@ -4610,3 +4610,39 @@ bool var::is_false() const
 }
 
 
+// try to set string scalar if suitable.
+// no change if source string array is empty
+// and avoid duplicate
+void var::_001Add(const stringa & straParam)
+{
+   
+   if(straParam.get_count() <= 0)
+   {
+    
+      return;
+      
+   }
+   
+   if(straParam.get_count() == 1)
+   {
+      
+      if(get_string().compare_ci(straParam[0]) == 0)
+      {
+      
+         return;
+         
+      }
+      else if(is_empty())
+      {
+         
+         operator = (straParam[0]);
+         
+         return;
+         
+      }
+      
+   }
+
+   stra().add_unique_ci(straParam);
+
+}

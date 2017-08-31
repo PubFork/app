@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
 
@@ -51,12 +51,15 @@ namespace user
          }
 
 
-         void WorkSet::message_handler(signal_details * pobj)
+         void WorkSet::message_handler(::message::base * pbase)
          {
-            relay_event(pobj);
+            
+            relay_event(pbase);
+
          }
 
-         void WorkSet::relay_event(signal_details * pobj)
+
+         void WorkSet::relay_event(::message::message * pobj)
          {
             hover_relay_event(pobj);
             if(pobj->m_bRet)
@@ -195,13 +198,13 @@ namespace user
 
          bool WorkSet::IsMovingEnabled()
          {
-            return m_bMovingEnabled && !IsFullScreen() && GetAppearance() != ::user::AppearanceZoomed;
+            return m_bMovingEnabled && !IsFullScreen() && GetAppearance() != ::user::appearance_zoomed;
          }
 
          bool WorkSet::IsSizingEnabled()
          {
             return m_bSizingEnabled && (m_pappearance == NULL ||
-               m_pappearance->GetAppearance() != AppearanceFixedSize);
+               m_pappearance->GetAppearance() != appearance_fixed_size);
          }
 
          bool WorkSet::IsSysMenuEnabled()
@@ -232,13 +235,13 @@ namespace user
             m_pframeschema->get_window_client_rect(lprect);
          }
 
-         void WorkSet::SetAppearance(::user::EAppearance nMode)
+         void WorkSet::SetAppearance(::user::e_appearance nMode)
          {
             if(m_pappearance != NULL)
                m_pappearance->SetAppearance(nMode);
          }
 
-         ::user::EAppearance WorkSet::GetAppearance()
+         ::user::e_appearance WorkSet::GetAppearance()
          {
             ASSERT(m_pappearance != NULL);
             return m_pappearance->GetAppearance();
@@ -275,7 +278,7 @@ namespace user
             //    m_bFullScreen = bFullScreen;
             if(bFullScreen)
             {
-               m_pappearance->SetAppearance(AppearanceFullScreen);
+               m_pappearance->SetAppearance(appearance_full_screen);
             }
             else
             {
@@ -350,7 +353,7 @@ namespace user
 
             m_psizemanager->SetMinSize(m_pframeschema->GetMinSize());
 
-            install_message_handling(pwndEvent->m_pimpl);
+            install_message_routing(pwndEvent->m_pimpl);
 
             return true;
 
@@ -363,7 +366,7 @@ namespace user
          {
          if(IsFullScreen())
          {
-         m_pappearance->SetAppearance(WorkSet::AppearanceFullScreen);
+         m_pappearance->SetAppearance(WorkSet::appearance_full_screen);
          }
          else
          {
@@ -454,17 +457,17 @@ namespace user
             return false;
          }
 
-         bool WorkSet::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+         bool WorkSet::_001OnCmdMsg(::user::command * pcommand)
          {
 
-            if(pcmdmsg->m_etype == ::aura::cmd_msg::type_command && m_pwndCommand != NULL)
+            if(pcommand->m_id.m_emessagetype == ::message::type_command && m_pwndCommand != NULL)
             {
 
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
                ASSERT(pinterface != NULL);
 
-               ::user::wndfrm::frame::e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pcmdmsg->m_id);
+               ::user::wndfrm::frame::e_button ebutton = m_pframeschema->get_control_box()->get_control_box_button_type(pcommand->m_id);
 
                switch(ebutton)
                {
@@ -498,7 +501,7 @@ namespace user
             return FALSE;
          }
 
-         void WorkSet::_001OnCommand(signal_details * pobj)
+         void WorkSet::_001OnCommand(::message::message * pobj)
          {
             SCAST_PTR(::message::base,pbase,pobj);
             if(m_pframeschema == NULL)
@@ -509,8 +512,8 @@ namespace user
          }
 
 
-         //  define System flags que serão usados para posicionar ou
-         //  dimensionar pelo uso da função SetWindowPos
+         //  define System flags que serï¿½o usados para posicionar ou
+         //  dimensionar pelo uso da funï¿½ï¿½o SetWindowPos
 
          void WorkSet::SetSWPFlags(UINT uiFlags)
          {
@@ -624,7 +627,7 @@ namespace user
          }
 
 
-         void WorkSet::hover_relay_event(signal_details * pobj)
+         void WorkSet::hover_relay_event(::message::message * pobj)
          {
             SCAST_PTR(::message::base,pbase,pobj);
             if(m_bHoverModeOn)
@@ -675,7 +678,7 @@ namespace user
 
                         }*/
 
-               if(pbase->m_uiMessage == WM_TIMER
+               if(pbase->m_id == WM_TIMER
                   && pbase->m_wparam == 16319
                   && IsHoverModeOn())
                {
@@ -955,100 +958,150 @@ namespace user
             m_wfla.remove(plistener);
          }
 
-         void WorkSet::WindowProcHover(::user::interaction * pwnd,signal_details * pobj)
+
+         void WorkSet::WindowProcHover(::user::interaction * pui,::message::base * pbase)
          {
-            UNREFERENCED_PARAMETER(pwnd);
-            SCAST_PTR(::message::base,pbase,pobj);
+
             if(m_bHoverModeOn)
             {
-               if(pbase->m_uiMessage == WM_TIMER
-                  && pbase->m_wparam == 16319
-                  && IsHoverModeOn())
+
+               if(pbase->m_id == WM_TIMER && pbase->m_wparam == 16319 && IsHoverModeOn())
                {
+
                   rect rectWindow;
+
                   sp(::user::interaction) pwnd = GetWndRegion();
+
                   pwnd->GetWindowRect(rectWindow);
+
                   point ptCursor;
+
                   Session.get_cursor_pos(&ptCursor);
+
                   if(rectWindow.contains(ptCursor))
                   {
-                     if(!IsHoverActive())
+
+                     if (!IsHoverActive())
+                     {
+
                         Hover(true);
+
+                     }
+
                   }
-                  else if(!m_pmovemanager->IsMoving() &&
-                     !m_psizemanager->IsSizing())
+                  else if(!m_pmovemanager->IsMoving() && !m_psizemanager->IsSizing())
                   {
-                     if(IsHoverActive())
+
+                     if (IsHoverActive())
+                     {
+
                         Hover(false);
+
+                     }
+
                   }
+
                }
+
             }
+
          }
 
 
-         void WorkSet::WindowProcBefore(::user::interaction * pwnd,signal_details * pobj)
+         void WorkSet::WindowProcBefore(::user::interaction * pui, ::message::base * pbase)
          {
 
-            WindowProcHover(pwnd,pobj);
-            if(pobj->m_bRet)
+            WindowProcHover(pui,pbase);
+
+            if (pbase->m_bRet)
+            {
+
                return;
 
-            if(m_pappearance != NULL &&
-               (!m_pappearance->IsFullScreen()
-               || !m_pappearance->IsZoomed()
-               ))
+            }
+
+            if(m_pappearance != NULL && (!m_pappearance->IsFullScreen() || !m_pappearance->IsZoomed()))
             {
-               if(IsSizingEnabled() &&
-                  m_psizemanager != NULL)
+
+               if(IsSizingEnabled() && m_psizemanager != NULL)
                {
-                  m_psizemanager->message_handler(pwnd,pobj);
-                  if(pobj->m_bRet)
+
+                  m_psizemanager->message_handler(pui, pbase);
+
+                  if (pbase->m_bRet)
+                  {
+
                      return;
+
+                  }
+
                }
 
-               if(IsMovingEnabled() &&
-                  m_pmovemanager != NULL)
+               if(IsMovingEnabled() && m_pmovemanager != NULL)
                {
-                  m_pmovemanager->message_handler(pwnd,pobj);
-                  if(pobj->m_bRet)
+
+                  m_pmovemanager->message_handler(pui, pbase);
+
+                  if (pbase->m_bRet)
+                  {
+
                      return;
+
+                  }
+
                }
 
                if(!m_pappearance->IsFullScreen())
                {
-                  if(IsSysMenuEnabled() &&
-                     m_psystemmenumanager != NULL)
+
+                  if(IsSysMenuEnabled() && m_psystemmenumanager != NULL)
                   {
-                     m_psystemmenumanager->message_handler(pwnd,pobj);
-                     if(pobj->m_bRet)
+
+                     m_psystemmenumanager->message_handler(pui, pbase);
+
+                     if (pbase->m_bRet)
+                     {
+
                         return;
+
+                     }
+
                   }
+
                }
+
             }
 
-
-            SCAST_PTR(::message::base,pbase,pobj);
             pbase->set_lresult(0);
 
-            if(pbase->m_uiMessage == WM_COMMAND)
+            if(pbase->m_id == WM_COMMAND)
             {
-               SCAST_PTR(::message::command,pcommand,pobj);
+
+               SCAST_PTR(::message::command,pcommand,pbase);
+
                _001OnCommand(pcommand);
+
                if(pcommand->m_bRet)
                {
+
                   pcommand->set_lresult(1);
+
                   return;
+
                }
+
             }
-            else if(pbase->m_uiMessage == WM_MOVE)
+            else if(pbase->m_id == WM_MOVE)
             {
+
                OnMove();
+
             }
-            else if(pbase->m_uiMessage == WM_SIZE)
+            else if(pbase->m_id == WM_SIZE)
             {
                //      OnSizeRegion(wparam, LOWORD(lparam), HIWORD(lparam));
             }
-            else if(pbase->m_uiMessage == WM_ACTIVATE)
+            else if(pbase->m_id == WM_ACTIVATE)
             {
                ASSERT(FALSE);
                //      _001OnActivate();
@@ -1057,7 +1110,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnActivate(signal_details * pobj)
+         void WorkSet::_001OnActivate(::message::message * pobj)
          {
 
             SCAST_PTR(::message::activate,pactivate,pobj);
@@ -1103,7 +1156,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcActivate(signal_details * pobj)
+         void WorkSet::_001OnNcActivate(::message::message * pobj)
          {
             SCAST_PTR(::message::nc_activate,pncactivate,pobj);
             //SetActiveFlag(pncactivate->m_bActive);
@@ -1173,26 +1226,26 @@ namespace user
          }
 
 
-         void WorkSet::install_message_handling(::message::dispatch * pdispatch)
+         void WorkSet::install_message_routing(::message::sender * psender)
          {
 
-            IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN,pdispatch,this,&WorkSet::_001OnLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONUP,pdispatch,this,&WorkSet::_001OnLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_MOUSEMOVE,pdispatch,this,&WorkSet::_001OnMouseMove);
-            IGUI_WIN_MSG_LINK(WM_NCLBUTTONDOWN,pdispatch,this,&WorkSet::_001OnNcLButtonDown);
-            IGUI_WIN_MSG_LINK(WM_NCLBUTTONUP,pdispatch,this,&WorkSet::_001OnNcLButtonUp);
-            IGUI_WIN_MSG_LINK(WM_NCMOUSEMOVE,pdispatch,this,&WorkSet::_001OnNcMouseMove);
-            IGUI_WIN_MSG_LINK(WM_NCHITTEST,pdispatch,this,&WorkSet::_001OnNcHitTest);
-            IGUI_WIN_MSG_LINK(WM_ACTIVATE,pdispatch,this,&WorkSet::_001OnActivate);
-            IGUI_WIN_MSG_LINK(WM_NCACTIVATE,pdispatch,this,&WorkSet::_001OnNcActivate);
-            IGUI_WIN_MSG_LINK(WM_SIZE,pdispatch,this,&WorkSet::_001OnSize);
-            IGUI_WIN_MSG_LINK(WM_COMMAND,pdispatch,this,&WorkSet::_001OnCommand);
-            IGUI_WIN_MSG_LINK(WM_MOVE,pdispatch,this,&WorkSet::_001OnMove);
+            IGUI_MSG_LINK(WM_LBUTTONDOWN,psender,this,&WorkSet::_001OnLButtonDown);
+            IGUI_MSG_LINK(WM_LBUTTONUP,psender,this,&WorkSet::_001OnLButtonUp);
+            IGUI_MSG_LINK(WM_MOUSEMOVE,psender,this,&WorkSet::_001OnMouseMove);
+            IGUI_MSG_LINK(WM_NCLBUTTONDOWN,psender,this,&WorkSet::_001OnNcLButtonDown);
+            IGUI_MSG_LINK(WM_NCLBUTTONUP,psender,this,&WorkSet::_001OnNcLButtonUp);
+            IGUI_MSG_LINK(WM_NCMOUSEMOVE,psender,this,&WorkSet::_001OnNcMouseMove);
+            IGUI_MSG_LINK(WM_NCHITTEST,psender,this,&WorkSet::_001OnNcHitTest);
+            IGUI_MSG_LINK(WM_ACTIVATE,psender,this,&WorkSet::_001OnActivate);
+            IGUI_MSG_LINK(WM_NCACTIVATE,psender,this,&WorkSet::_001OnNcActivate);
+            IGUI_MSG_LINK(WM_SIZE,psender,this,&WorkSet::_001OnSize);
+            IGUI_MSG_LINK(WM_COMMAND,psender,this,&WorkSet::_001OnCommand);
+            IGUI_MSG_LINK(WM_MOVE,psender,this,&WorkSet::_001OnMove);
 
          }
 
 
-         void WorkSet::_001OnLButtonDown(signal_details * pobj)
+         void WorkSet::_001OnLButtonDown(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1208,7 +1261,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnMouseMove(signal_details * pobj)
+         void WorkSet::_001OnMouseMove(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1225,7 +1278,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnLButtonUp(signal_details * pobj)
+         void WorkSet::_001OnLButtonUp(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1241,7 +1294,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnNcLButtonDown(signal_details * pobj)
+         void WorkSet::_001OnNcLButtonDown(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1257,7 +1310,7 @@ namespace user
             }
          }
 
-         void WorkSet::_001OnNcMouseMove(signal_details * pobj)
+         void WorkSet::_001OnNcMouseMove(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1276,7 +1329,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcLButtonUp(signal_details * pobj)
+         void WorkSet::_001OnNcLButtonUp(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse,pmouse,pobj);
             if(!m_bEnable)
@@ -1293,7 +1346,7 @@ namespace user
 
          }
 
-         void WorkSet::_001OnNcHitTest(signal_details * pobj)
+         void WorkSet::_001OnNcHitTest(::message::message * pobj)
          {
             SCAST_PTR(::message::nchittest,pnchittest,pobj);
             if(!m_bEnable)
@@ -1330,7 +1383,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnSize(signal_details * pobj)
+         void WorkSet::_001OnSize(::message::message * pobj)
          {
 
             SCAST_PTR(::message::size,psize,pobj);
@@ -1385,7 +1438,7 @@ namespace user
          }
 
 
-         void WorkSet::_001OnMove(signal_details * pobj)
+         void WorkSet::_001OnMove(::message::message * pobj)
          {
             SCAST_PTR(::message::move,pmove,pobj);
             if(!m_bEnable)
@@ -1561,8 +1614,26 @@ namespace user
          return ModeNone;
          }*/
 
-         void WorkSet::AttachFrameSchema(sp(::user::wndfrm::frame::frame) pframeschema)
+         void WorkSet::AttachFrameSchema(::user::wndfrm::frame::frame * pframeschema)
          {
+            
+            if(m_pframeschema != NULL && m_pframeschema != pframeschema)
+            {
+               
+               m_pframeschema->OnDetach();
+               
+               m_pframeschema->m_pworkset = NULL;
+               
+               m_pframeschema = NULL;
+               
+            }
+            
+            if(pframeschema == NULL)
+            {
+               
+               return;
+               
+            }
 
             m_pframeschema = pframeschema;
 
@@ -1571,25 +1642,37 @@ namespace user
             m_pframeschema->OnAttach();
 
          }
+         
 
          ::user::interaction * WorkSet::get_draw_window()
          {
+            
             return m_pwndDraw;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetEventWindow()
          {
+            
             return m_pwndEvent;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetRegionWindow()
          {
+            
             return m_pwndRegion;
+            
          }
+         
 
          ::user::interaction * WorkSet::GetCommandWindow()
          {
+            
             return m_pwndCommand;
+            
          }
 
 

@@ -37,7 +37,7 @@ namespace ios
 
 	  static_function const MESSAGE* PASCAL GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::window& wnd) const;
       bool operator!=(const ::window& wnd) const;
@@ -52,7 +52,7 @@ namespace ios
 
       virtual ::window * get_wnd() const;
 
-      virtual bool _001OnCmdMsg(::base::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::base::cmd_msg * pcommand);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -129,7 +129,7 @@ namespace ios
       using ::user::interaction::GetDescendantWindow;
       sp(::user::interaction) GetDescendantWindow(id id);
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0,
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0,
                                     lparam lParam = NULL, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
 	  static_function::window * PASCAL GetSafeOwner(::window * pParent = NULL, oswindow* pWndTop = NULL);
 
@@ -582,8 +582,8 @@ namespace ios
                          ::window * pActivateWnd, ::window * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
@@ -605,11 +605,11 @@ namespace ios
       virtual void EndModalState();
 
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing oswindows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -638,9 +638,9 @@ namespace ios
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(sp(::user::interaction)  puiStop, signal_details * pobj);
+      virtual void WalkPreTranslateTree(sp(::user::interaction)  puiStop, ::message::message * pobj);
 	  static_function sp(::user::interaction)  PASCAL GetDescendantWindow(sp(::user::interaction)  hWnd, id id);
-	  static_function void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
+	  static_function void PASCAL send_message_to_descendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
 	  static_function bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);

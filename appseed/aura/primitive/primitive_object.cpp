@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 
@@ -427,192 +427,279 @@ bool sync_object::is_locked() const
 }
 
 
-
-
-
-void object::create(::create * pcreate)
+void object::handle(::command::command * pcommand)
 {
+   
+   on_handle(pcommand);
+   
+}
+
+
+void object::handle(::create * pcreate)
+{
+   
    if(pcreate->m_spCommandLine->m_varQuery.has_property("client_only"))
    {
+      
       pcreate->m_bClientOnly = true;
+      
    }
 
    request_create(pcreate);
+   
 }
 
-void object::add_line(const char * pszCommandLine,application_bias * pbiasCreate)
+
+void object::add_line(const char * pszCommandLine, application_bias * pbiasCreate)
 {
-   ::command_thread * commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
-   createcontext->m_spApplicationBias = pbiasCreate;
+   
+   ::command::command command;
+   
+   command.m_strCommandLine = pszCommandLine;
+   
+   add_line(&command, pbiasCreate);
+   
+}
+
+
+void object::add_line(::command::command * pcommand,application_bias * pbiasCreate)
+{
+   
+   ::handler * commandcentral = get_app()->handler();
+   
+   sp(::create) create(canew(::create(commandcentral)));
+   
+   create->m_spApplicationBias = pbiasCreate;
 
    if (Application.m_strAppId == "acid")
    {
 
-      createcontext->m_spCommandLine->m_strApp = "acid";
+      create->m_spCommandLine->m_strApp = "acid";
 
-      createcontext->m_spCommandLine->m_varQuery["app"] = "acid";
+      create->m_spCommandLine->m_varQuery["app"] = "acid";
 
    }
    else
    {
 
-      createcontext->m_spCommandLine->_001ParseCommandLine(pszCommandLine);
+      create->m_spCommandLine->_001ParseCommandLine(pcommand->m_strCommandLine);
 
-      if (createcontext->m_spCommandLine->m_strApp.find_ci("app._.exe") >= 0)
+      if (create->m_spCommandLine->m_strApp.find_ci("app._.exe") >= 0)
          return;
 
-      if (get_app()->command_central()->m_varTopicQuery.has_property("appid"))
+      if (get_app()->handler()->m_varTopicQuery.has_property("appid"))
       {
 
-         if (createcontext->m_spCommandLine->m_varQuery["app"].is_empty())
+         if (create->m_spCommandLine->m_varQuery["app"].is_empty())
          {
 
-            createcontext->m_spCommandLine->m_varQuery["app"] = get_app()->command_central()->m_varTopicQuery["appid"];
+            create->m_spCommandLine->m_varQuery["app"] = get_app()->handler()->m_varTopicQuery["appid"];
 
          }
          else
          {
 
-            createcontext->m_spCommandLine->m_varQuery["app"].stra().insert_at(0, get_app()->command_central()->m_varTopicQuery["appid"].get_string());
+            create->m_spCommandLine->m_varQuery["app"].stra().insert_at(0, get_app()->handler()->m_varTopicQuery["appid"].get_string());
 
          }
 
-         createcontext->m_spCommandLine->m_strApp = createcontext->m_spCommandLine->m_varQuery["app"];
+         create->m_spCommandLine->m_strApp = create->m_spCommandLine->m_varQuery["app"];
 
       }
 
-      if (get_app()->command_central()->m_varTopicQuery["build"].has_char())
+      if (get_app()->handler()->m_varTopicQuery["build"].has_char())
       {
 
-         createcontext->m_spCommandLine->m_varQuery["build"] = get_app()->command_central()->m_varTopicQuery["build"];
+         create->m_spCommandLine->m_varQuery["build"] = get_app()->handler()->m_varTopicQuery["build"];
 
       }
-      else if (createcontext->m_spCommandLine->m_varQuery["build"].is_empty())
+      else if (create->m_spCommandLine->m_varQuery["build"].is_empty())
       {
 
-         if (createcontext->m_spCommandLine->m_strApp.compare_ci("app-core/netnodelite") == 0)
+         if (create->m_spCommandLine->m_strApp.compare_ci("app-core/netnodelite") == 0)
          {
 
-            createcontext->m_spCommandLine->m_varQuery["build"] = "static";
+            create->m_spCommandLine->m_varQuery["build"] = "static";
 
          }
          else
          {
 
-            createcontext->m_spCommandLine->m_varQuery["build"] = "installed";
+            create->m_spCommandLine->m_varQuery["build"] = "installed";
 
          }
 
       }
 
    }
+   
+   create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
 
-   commandcentral->consolidate(createcontext);
-
-   if (commandcentral != System.command())
+   if(!create->m_spCommandLine->m_varFile.is_empty())
    {
 
-      System.command()->consolidate(createcontext);
+      create->m_spCommandLine->m_ecommand = command_line::command_file_open;
 
    }
 
-   create(createcontext);
+   commandcentral->merge(create);
+
+   if (commandcentral != System.handler())
+   {
+
+      System.handler()->merge(create);
+
+   }
+
+   handle(create);
 
 }
 
 
 void object::add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate)
 {
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
-   createcontext->m_spApplicationBias = pbiasCreate;
-   createcontext->m_spCommandLine->_001ParseCommandLineUri(pszCommandLine);
-   commandcentral->consolidate(createcontext);
-   System.command()->consolidate(createcontext);
-   create(createcontext);
+   
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
+   
+   create->m_spApplicationBias = pbiasCreate;
+   
+   create->m_spCommandLine->_001ParseCommandLineUri(pszCommandLine);
+   
+   handler->merge(create);
+   
+   System.handler()->merge(create);
+   
+   handle(create);
+   
 }
 
-void object::add_fork(const char * pszCommandFork,application_bias * pbiasCreate)
+
+void object::add_fork(const char * pszCommandLine, application_bias * pbiasCreate)
 {
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
-   createcontext->m_spApplicationBias = pbiasCreate;
-   createcontext->m_spCommandLine->_001ParseCommandFork(pszCommandFork);
-   commandcentral->consolidate(createcontext);
-   System.command()->consolidate(createcontext);
-   create(createcontext);
+   
+   ::command::command command;
+   
+   command.m_strCommandLine = pszCommandLine;
+   
+   add_fork(&command, pbiasCreate);
+   
 }
+
+
+void object::add_fork(::command::command * pcommand, application_bias * pbiasCreate)
+{
+   
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
+   
+   create->m_spApplicationBias = pbiasCreate;
+   
+   create->m_spCommandLine->_001ParseCommandFork(pcommand->m_strCommandLine);
+   
+   create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
+   
+   handler->merge(create);
+   
+   System.handler()->merge(create);
+   
+   handle(create);
+   
+}
+
 
 void object::add_fork_uri(const char * pszCommandFork,application_bias * pbiasCreate)
 {
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
-   createcontext->m_spApplicationBias = pbiasCreate;
-   createcontext->m_spCommandLine->_001ParseCommandForkUri(pszCommandFork);
-   commandcentral->consolidate(createcontext);
-   System.command()->consolidate(createcontext);
-   create(createcontext);
+   
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
+   
+   create->m_spApplicationBias = pbiasCreate;
+   
+   create->m_spCommandLine->_001ParseCommandForkUri(pszCommandFork);
+   
+   handler->merge(create);
+   
+   System.handler()->merge(create);
+   
+   handle(create);
+   
 }
+
 
 void object::request_file(var & varFile)
 {
 
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
 
-   createcontext->m_spCommandLine->m_varFile              = varFile;
+   create->m_spCommandLine->m_varFile              = varFile;
 
-   request_create(createcontext);
+   request_create(create);
 
-   varFile = createcontext->m_spCommandLine->m_varFile;
+   varFile = create->m_spCommandLine->m_varFile;
 
 }
+
 
 void object::request_file_query(var & varFile,var & varQuery)
 {
 
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
 
-   createcontext->m_spCommandLine->m_varFile              = varFile;
-   createcontext->m_spCommandLine->m_varQuery             = varQuery;
+   create->m_spCommandLine->m_varFile              = varFile;
+   
+   create->m_spCommandLine->m_varQuery             = varQuery;
+   
    if(!varFile.is_empty())
    {
       
-      createcontext->m_spCommandLine->m_ecommand = command_line::command_file_open;
+      create->m_spCommandLine->m_ecommand = command_line::command_file_open;
 
    }
    else if (varQuery["command"] == "new_file")
    {
 
-      createcontext->m_spCommandLine->m_ecommand = command_line::command_file_new;
+      create->m_spCommandLine->m_ecommand = command_line::command_file_new;
 
    }
 
-   request_create(createcontext);
+   request_create(create);
 
-   varFile                       = createcontext->m_spCommandLine->m_varFile;
-   varQuery                      = createcontext->m_spCommandLine->m_varQuery;
+   varFile                       = create->m_spCommandLine->m_varFile;
+   
+   varQuery                      = create->m_spCommandLine->m_varQuery;
 
 }
 
-void object::request_command(sp(command_line) pcommandline)
+
+void object::request_command(command_line * pcommandline)
 {
 
-   sp(::command_thread) commandcentral = get_app()->command_central();
-   sp(::create) createcontext(canew(::create(commandcentral)));
+   sp(::handler) handler = get_app()->handler();
+   
+   sp(::create) create(canew(::create(handler)));
 
-   createcontext->m_spCommandLine = pcommandline;
+   create->m_spCommandLine = pcommandline;
 
-   request_create(createcontext);
+   request_create(create);
 
 }
+
 
 void object::request_create(::create * pcreate)
 {
+   
    on_request(pcreate);
+   
 }
+
 
 void object::on_request(::create * pcreate)
 {
@@ -769,3 +856,28 @@ object & object::operator = (const object & o)
    return *this;
 
 }
+
+
+
+
+void object::on_handle(::command::command * pcommand)
+{
+   
+   
+   
+}
+
+
+
+
+void object::on_handle(::create * pcreate)
+{
+   
+   
+   
+   
+}
+
+
+
+

@@ -192,7 +192,7 @@ namespace process
 
       }
 
-      while(get_run_thread())
+      while(thread_get_run())
       {
 
          strRead = m_spprocess->m_pipe.m_sppipeOut->read();

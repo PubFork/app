@@ -8,11 +8,12 @@ namespace hi5
    namespace twitter
    {
 
+      
       class CLASS_DECL_CORE authorization :
          virtual public ::user::form_callback,
          virtual public ::user::view_creator,
          virtual public ::user::tab_callback,
-         virtual public ::user::schema_simple_impl
+         virtual public ::user::style
       {
       public:
 
@@ -47,6 +48,9 @@ namespace hi5
 
 
          virtual bool BaseOnControlEvent(::user::form_window * pview, ::user::control_event * pevent);
+         
+         virtual bool style_translucency(::user::e_translucency & etranslucency, ::user::e_element);
+         
       };
 
 

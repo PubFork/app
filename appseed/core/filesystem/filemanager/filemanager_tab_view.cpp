@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -31,12 +31,13 @@ namespace filemanager
 
 
 
-   void tab_view::install_message_handling(::message::dispatch * pinterface)
+   void tab_view::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::tab_view::install_message_handling(pinterface);
+      ::user::tab_view::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &tab_view::_001OnCreate);
 
    }
 
@@ -320,7 +321,7 @@ namespace filemanager
    }
 
 
-   void tab_view::_001OnCreate(signal_details * pobj)
+   void tab_view::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();

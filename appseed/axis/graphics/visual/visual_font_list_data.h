@@ -36,6 +36,7 @@ namespace visual
       };
 
 
+      sp(::visual::font_enumeration)            m_pfontenumeration;
       ::draw2d::font::enum_item_array           m_itema;
 
       string                                    m_strText;

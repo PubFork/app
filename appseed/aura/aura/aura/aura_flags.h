@@ -183,7 +183,7 @@ public:
 
 protected:
 
-   class ::signal        m_signal;
+   class ::message::sender        m_signal;
 
 };
 
@@ -252,15 +252,14 @@ bool flags_ex < ENUM > ::unsignalize_all()
 }
 
 class flag_change_signalization :
-   public signal_details
+   public ::message::message
 {
 public:
 
    int32_t m_iEnum;
 
 
-   flag_change_signalization(class ::signal * psignal) :
-      signal_details(psignal)
+   flag_change_signalization()
    {
    }
 
@@ -271,11 +270,11 @@ template < class ENUM >
 void flags_ex < ENUM > ::on_change_signalization(ENUM eenum)
 {
 
-   flag_change_signalization obj(&m_signal);
+   flag_change_signalization obj;
 
    obj.m_iEnum = (int32_t)eenum;
 
-   m_signal.emit(&obj);
+   m_signal.route_message(&obj);
 
 }
 

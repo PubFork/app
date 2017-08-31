@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
@@ -31,15 +31,15 @@ namespace user
 
          /*void SizeManager::_001InstallEventHandling(iguimessage::MessageDispatch * pdispatch)
          {
-         VMSGEN_WINDOW_ON_LBUTTONDOWN_CONDITIONAL(pdispatch, this, _001OnLButtonDown);
-         VMSGEN_WINDOW_ON_LBUTTONUP_CONDITIONAL(pdispatch, this, _001OnLButtonUp);
-         VMSGEN_WINDOW_ON_MOUSEMOVE_CONDITIONAL(pdispatch, this, _001OnMouseMove);
+         VMSGEN_WINDOW_ON_LBUTTONDOWN_CONDITIONAL(psender, this, _001OnLButtonDown);
+         VMSGEN_WINDOW_ON_LBUTTONUP_CONDITIONAL(psender, this, _001OnLButtonUp);
+         VMSGEN_WINDOW_ON_MOUSEMOVE_CONDITIONAL(psender, this, _001OnMouseMove);
          }*/
 
          bool SizeManager::_000OnLButtonDown(::message::mouse * pmouse)
          {
-            ASSERT(pmouse->m_uiMessage == WM_LBUTTONDOWN
-               || pmouse->m_uiMessage == WM_NCLBUTTONDOWN);
+            ASSERT(pmouse->m_id == WM_LBUTTONDOWN
+               || pmouse->m_id == WM_NCLBUTTONDOWN);
 
             if(!m_pworkset->IsSizingEnabled())
                return false;
@@ -130,7 +130,7 @@ namespace user
             if(!m_pworkset->IsSizingEnabled())
                return false;
 
-            ASSERT(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_NCMOUSEMOVE);
+            ASSERT(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_NCMOUSEMOVE);
 
             if(m_ehittestMode != HitTestNone)
             {
@@ -163,7 +163,7 @@ namespace user
          {
             if(!m_pworkset->IsSizingEnabled())
                return false;
-            ASSERT(pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCLBUTTONUP);
+            ASSERT(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP);
             if(m_ehittestMode != HitTestNone)
             {
                pmouse->m_bRet = true;
@@ -361,7 +361,9 @@ namespace user
                
                if (pinterface->oprop("ysnap").int32() > 1)
                {
-                  rectWindow.bottom -= rectWindow.bottom % pinterface->oprop("ysnap").int32();
+                  int h = rectWindow.height();
+                  h -= rectWindow.height() % pinterface->oprop("ysnap").int32();
+                  rectWindow.bottom = rectWindow.top + h;
                }
             }
             else if(m_ehittestMode == HitTestSizingBottomLeft)
@@ -607,15 +609,19 @@ namespace user
             UNREFERENCED_PARAMETER(emode);
          }
 
-         void SizeManager::message_handler(sp(::user::interaction) pwnd, signal_details * pobj)
-         {
-            SCAST_PTR(::message::base, pbase, pobj);
 
-            if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         void SizeManager::message_handler(::user::interaction * pui, ::message::base * pbase)
+         {
+
+            if(pbase->m_id == WM_LBUTTONDOWN)
             {
-               SCAST_PTR(::message::mouse, pmouse, pobj);
+               
+               SCAST_PTR(::message::mouse, pmouse, pbase);
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+
+               pui->ClientToScreen(&ptCursor);
+
                //         UINT uiFlags = pbase->m_wparam;
                m_ptCursorOrigin = ptCursor;
                rect rectWindow;
@@ -641,14 +647,19 @@ namespace user
                   return;
                }
             }
-            else if(pbase->m_uiMessage == WM_MOUSEMOVE ||
-               pbase->m_uiMessage == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_LBUTTONUP)
             {
-               SCAST_PTR(::message::mouse, pmouse, pobj);
+               
+               SCAST_PTR(::message::mouse, pmouse, pbase);
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+
+               pui->ClientToScreen(&ptCursor);
+
                rect rectEvent;
+
                GetEventWindow()->GetWindowRect(rectEvent);
+
                //sp(::aura::application) pApp = &System;
                bool bSize = false;
                rect rectWindow;
@@ -868,10 +879,10 @@ namespace user
                   
                   sp(WorkSetClientInterface) pinterface = m_pworkset->GetEventWindow();
 
-                  pinterface->WfiOnSize(pbase->m_uiMessage == WM_MOUSEMOVE);
+                  pinterface->WfiOnSize(pbase->m_id == WM_MOUSEMOVE);
                   NotifyFramework((EHitTest)m_ehittestMode);
                }
-               if(pbase->m_uiMessage == WM_LBUTTONUP)
+               if(pbase->m_id == WM_LBUTTONUP)
                {
                   if(m_ehittestMode != HitTestNone)
                   {
@@ -881,7 +892,7 @@ namespace user
                      return;
                   }
                }
-               else if(pbase->m_uiMessage == WM_MOUSEMOVE)
+               else if(pbase->m_id == WM_MOUSEMOVE)
                {
                   if(m_ehittestMode != HitTestNone)
                   {

@@ -64,7 +64,7 @@ namespace netserver
 
        
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
          
          try
@@ -98,14 +98,14 @@ namespace netserver
 
                }
 
-               while (m_psockethandler->get_count() > 0 && get_run_thread())
+               while (m_psockethandler->get_count() > 0 && thread_get_run())
                {
 
                   m_psockethandler->select(1, 0);
 
                }
 
-               if (!get_run_thread())
+               if (!thread_get_run())
                {
 
                   break;

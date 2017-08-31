@@ -1,4 +1,4 @@
-//#include "framework.h" // from "axis/net/net_sockets.h"
+#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -313,7 +313,7 @@ namespace fontopus
             if(!bSynch)
                return m_puser;
 
-            while(m_pthreadCreatingUser != NULL && m_pthreadCreatingUser->get_run_thread() && ::get_thread_run())
+            while(m_pthreadCreatingUser != NULL && m_pthreadCreatingUser->thread_get_run() && ::get_thread_run())
             {
 
                do_events(millis(84));
@@ -348,7 +348,7 @@ namespace fontopus
          if(!bSynch)
             return m_puser;
 
-         while(m_pthreadCreatingUser != NULL && m_pthreadCreatingUser->get_run_thread() && ::get_thread_run())
+         while(m_pthreadCreatingUser != NULL && m_pthreadCreatingUser->thread_get_run() && ::get_thread_run())
          {
 
             do_events(millis(84));
@@ -421,8 +421,8 @@ namespace fontopus
 
 #ifdef METROWIN
 
-      //if(!System.directrix()->m_varTopicQuery.has_property("install")
-      //   && !System.directrix()->m_varTopicQuery.has_property("uninstall"))
+      //if(!System.handler()->m_varTopicQuery.has_property("install")
+      //   && !System.handler()->m_varTopicQuery.has_property("uninstall"))
       //{
 
       //   sp(::create) spcreate(allocer());

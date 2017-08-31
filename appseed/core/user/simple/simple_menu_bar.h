@@ -48,8 +48,8 @@ public:
         LPARAM lParam   // address of structure with message data
         );
 
-   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void _001OnCmdMsg(::user::command * pcommand) override;
+   virtual void pre_translate_message(::message::message * pobj);
    protected:
    virtual bool pre_create_window(::user::create_struct& cs);
 
@@ -82,8 +82,8 @@ public:
    //size CalcDynamicLayout(int32_t nLength, uint32_t dwMode);
    //static ::music::e_result CalcSize(::user::toolbar_control & tbc, size & size);
    //static ::music::e_result CalcSize(CToolBarCtrl & tbc, size & size);
-   bool _TrackPopupMenu(point point);
-   bool _TrackPopupMenu(int32_t iItem);
+   bool _track_popup_menu(point point);
+   bool _track_popup_menu(int32_t iItem);
    bool LoadMenuBar(UINT nIDResource);
    void SetMenuID(UINT nIDResource);
 
@@ -94,13 +94,14 @@ public:
    DECL_GEN_SIGNAL(_001OnDestroy);
    DECL_GEN_SIGNAL(_001OnMenuChar);
    DECL_GEN_SIGNAL(_001OnLButtonDown);
+   DECL_GEN_SIGNAL(_001OnAppLanguage);
    void _001OnTimer(::timer * ptimer);
 
-   virtual int32_t OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam);
+   //virtual int32_t OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam);
 
-   DECL_GEN_SIGNAL(_001OnAppLanguage);
+   //DECL_GEN_SIGNAL(_001OnAppLanguage);
 
-   virtual void install_message_handling(::message::dispatch * pdispatch);
+   virtual void install_message_routing(::message::sender * psender);
 
 
 };

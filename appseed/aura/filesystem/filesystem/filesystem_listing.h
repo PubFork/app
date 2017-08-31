@@ -58,7 +58,6 @@ namespace file
       listing(const listing & listing):patha(listing) { m_nGrowBy = 128; }
       virtual ~listing();
 
-
       path  & add_child(const ::file::path & path)
       {
          return add(m_path / path);

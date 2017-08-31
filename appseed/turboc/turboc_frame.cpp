@@ -15,7 +15,7 @@ namespace turboc
 
       WfiEnableFullScreen();
 
-      m_bWindowFrame = !Application.command()->m_varTopicQuery.has_property("client_only");
+      m_bWindowFrame = !Application.handler()->m_varTopicQuery.has_property("client_only");
 
    }
 
@@ -45,9 +45,9 @@ namespace turboc
    sp(::user::wndfrm::frame::frame) frame::create_frame_schema()
    {
 
-      //sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema("wndfrm_core", "001");
+      //sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema("wndfrm_core", "001");
 
-      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema("wndfrm_core","013");
+      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema("wndfrm_core","013");
 
       pschema->set_style("LightBlue");
 
@@ -58,10 +58,10 @@ namespace turboc
    }
 
 
-   bool frame::get_translucency(::user::ETranslucency & etranslucency)
+   bool frame::get_translucency(::user::e_translucency & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 

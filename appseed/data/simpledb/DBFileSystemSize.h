@@ -138,7 +138,7 @@ public:
 
 class CLASS_DECL_CORE FileSystemSizeWnd :
    public ::window_sp,
-   public signalizable
+   public ::message::receiver
 {
 public:
 
@@ -170,7 +170,7 @@ public:
    void ClientStartServer();
    bool get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending);
 
-   void install_message_handling(::message::dispatch * pinterface);
+   void install_message_routing(::message::sender * pinterface);
 
    DECL_GEN_SIGNAL(_001OnCopyData);
    void _001OnTimer(::timer * ptimer);

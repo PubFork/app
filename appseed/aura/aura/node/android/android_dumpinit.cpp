@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -123,13 +123,13 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResul
 //      }
 ///*  xxx     catch(std::__non_rtti_object & e)
 //      {
-//         ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
-//         ::OutputDebugString(e.what());
-//         ::OutputDebugString("\n");
+//         ::output_debug_string("~___DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
+//         ::output_debug_string(e.what());
+//         ::output_debug_string("\n");
 //      } */
 //      catch(...)
 //      {
-//         ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
+//         ::output_debug_string("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
 //      }
 //   }
 //   int32_t nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);

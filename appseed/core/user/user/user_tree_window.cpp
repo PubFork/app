@@ -16,12 +16,12 @@ namespace user
    {
    }
 
-   void tree_window::install_message_handling(::message::dispatch * pinterface)
+   void tree_window::install_message_routing(::message::sender * pinterface)
    {
 
 
-      ::user::interaction::install_message_handling(pinterface);
-      ::user::tree::install_message_handling(pinterface);
+      ::user::interaction::install_message_routing(pinterface);
+      ::user::tree::install_message_routing(pinterface);
 
 
    }

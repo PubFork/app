@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -25,7 +25,7 @@ namespace user
 
    void interaction_impl::user_common_construct()
    {
-
+      
       m_dFps = 60.0;
       m_bIpcCopy = false;
       m_pmutex                               = new mutex(get_app());
@@ -276,28 +276,40 @@ namespace user
       return false;
 
    }
+   
+   
 
 
-   void interaction_impl::prio_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::prio_install_message_routing(::message::sender * pinterface)
    {
-
-      ::user::interaction_impl_base::prio_install_message_handling(pinterface);
+      
+      m_queuethread = canew(queue_thread(this));
+//      for(index i = (index) queue_thread_first; i < (index) queue_thread_end; i++)
+//      {
+//         
+//         e_queue_thread e = (e_queue_thread) i;
+//         
+//         m_mapqueue.set_at(e, canew(queue_thread(this)));
+//         
+//      }
+      
+      ::user::interaction_impl_base::prio_install_message_routing(pinterface);
 
    }
 
-   void interaction_impl::last_install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::last_install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &interaction_impl::_001OnCreate);
 
-      ::user::interaction_impl_base::last_install_message_handling(pinterface);
+      ::user::interaction_impl_base::last_install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_impl::_001OnShowWindow);
 
    }
 
 
-   void interaction_impl::_000OnMouseLeave(signal_details * pobj)
+   void interaction_impl::_000OnMouseLeave(::message::message * pobj)
    {
 
       m_pui->m_bMouseHover = false;
@@ -347,6 +359,8 @@ namespace user
    }
 
    
+   
+   
    void interaction_impl::_001OnTriggerMouseInside()
    {
 
@@ -354,6 +368,166 @@ namespace user
 
    }
 
+
+   interaction_impl::queue_thread::queue_thread(::user::interaction_impl * pimpl) :
+      ::object(pimpl->m_pui->get_app()),
+      ::thread(pimpl->m_pui->get_app()),
+      m_evNewMessage(pimpl->m_pui->get_app()),
+      m_pimpl(pimpl)
+   {
+    
+      if(get_app() != NULL)
+      {
+      
+         begin();
+         
+      }
+      
+   }
+   
+      
+   interaction_impl::queue_thread::~queue_thread()
+   {
+         
+         
+   }
+      
+      
+   void interaction_impl::queue_thread::queue_message_handler(::message::base * pbase)
+   {
+      
+      if(m_hthread == NULL)
+      {
+         
+         m_pimpl->m_pui->message_handler(pbase);
+         
+         return;
+         
+      }
+      
+      {
+            
+         single_lock sl(m_pmutex);
+            
+         m_messagequeue.add(pbase);
+            
+      }
+         
+      m_evNewMessage.SetEvent();
+         
+   }
+      
+      
+   int32_t interaction_impl::queue_thread::run()
+   {
+      
+      while(thread_get_run())
+      {
+            
+         if (m_evNewMessage.wait(seconds(1)).succeeded())
+         {
+                  
+            m_evNewMessage.ResetEvent();
+                  
+         }
+         
+         {
+               
+            synch_lock sl(m_pmutex);
+               
+            if (m_messagequeue.has_elements())
+            {
+                  
+               sp(::message::base) pbase = m_messagequeue.element_at(0);
+                  
+               m_messagequeue.remove_at(0);
+                  
+               sl.unlock();
+               
+               if(pbase.is_set())
+               {
+                  
+                  ::message::message * pobj = pbase.cast < ::message::message >();
+                  
+                  if(pobj != NULL)
+                  {
+                     
+                     try
+                     {
+                  
+                        m_pimpl->m_pui->message_handler(pbase);
+                  
+                     }
+                     catch (...)
+                     {
+               
+                     }
+                     
+                  }
+                  
+               }
+                  
+            }
+            
+         }
+         
+      }
+      
+      return 0;
+         
+   }
+   
+   
+   interaction_impl::e_queue_thread interaction_impl::message_queue_thread(UINT uiMessage)
+   {
+      
+      if (uiMessage == WM_MOUSEMOVE)
+      {
+         
+         return queue_thread_mouse_move;
+         
+      }
+      else if ((uiMessage >= WM_MOUSEFIRST
+                && uiMessage <= WM_MOUSELAST)
+               ||
+               (uiMessage >= WM_KEYFIRST
+                && uiMessage <= WM_KEYLAST))
+      {
+         
+         return queue_thread_input;
+         
+      }
+
+      return queue_thread_other;
+
+   }
+   
+   
+   void interaction_impl::queue_message_handler(::message::base * pbase)
+   {
+      
+      e_queue_thread equeuethread = message_queue_thread(pbase->m_id);
+      
+      if(equeuethread == queue_thread_mouse_move)
+      {
+         
+         DWORD dwNow = get_tick_count();
+         
+         if(dwNow - m_dwLastMouseMove < 10)
+         {
+            
+            return;
+            
+         }
+
+         m_dwLastMouseMove = dwNow;
+         
+      }
+      
+      m_queuethread->queue_message_handler(pbase);
+      
+   }
+   
 
    void interaction_impl::_008OnMouse(::message::mouse * pmouse)
    {
@@ -437,7 +611,9 @@ namespace user
          try
          {
 
-            (puiCapture->m_pimpl->*puiCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::signal_details *> (pmouse));
+            //(puiCapture->m_pimpl->*puiCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
+            
+            puiCapture->m_pimpl->route_message(pmouse);
 
          }
          catch (...)
@@ -463,7 +639,7 @@ namespace user
 
       }
 
-      pmouse->set_lresult(DefWindowProc(pmouse->m_uiMessage, pmouse->m_wparam, pmouse->m_lparam));
+      pmouse->set_lresult(DefWindowProc(pmouse->m_id, pmouse->m_wparam, pmouse->m_lparam));
 
    }
 
@@ -495,7 +671,7 @@ namespace user
    }
 
 
-   void interaction_impl::_001OnCaptureChanged(signal_details * pobj)
+   void interaction_impl::_001OnCaptureChanged(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -505,22 +681,22 @@ namespace user
    }
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pdispatch)
+   void interaction_impl::install_message_routing(::message::sender * psender)
    {
 
-      ::user::interaction_impl_base::install_message_handling(pdispatch);
+      ::user::interaction_impl_base::install_message_routing(psender);
 
       if (!m_pui->m_bMessageWindow)
       {
 
-         IGUI_WIN_MSG_LINK(WM_CAPTURECHANGED, pdispatch, this, &interaction_impl::_001OnCaptureChanged);
+         IGUI_MSG_LINK(WM_CAPTURECHANGED, psender, this, &interaction_impl::_001OnCaptureChanged);
 
       }
 
    }
 
 
-   void interaction_impl::_001OnDestroy(signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -581,7 +757,7 @@ namespace user
 
 
 
-   void interaction_impl::pre_translate_message(signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
@@ -694,19 +870,19 @@ namespace user
 //#endif
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      UNREFERENCED_PARAMETER(pcmdmsg);
+      UNREFERENCED_PARAMETER(pcommand);
 
       ::exception::throw_interface_only(get_app());
 
-      return false;
+//      return false;
 
    }
 
 
-   void interaction_impl::_002OnDraw(signal_details * pobj)
+   void interaction_impl::_002OnDraw(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -716,13 +892,10 @@ namespace user
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
-
-   void interaction_impl::message_handler(signal_details * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
 
-      ::command_target::message_handler(pobj);
+      route_message(pbase);
 
    }
 
@@ -1001,13 +1174,13 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
-   void interaction_impl::_001OnPaint(signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
    }
 
-   void interaction_impl::_001OnPrint(signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       ::exception::throw_interface_only(get_app());
@@ -1444,7 +1617,7 @@ namespace user
 
       ::smart_pointer < ::message::base > spbase;
 
-      spbase = m_pui->get_base(message, wparam, lparam);
+      spbase = m_pui->get_message_base(message, wparam, lparam);
 
       if(m_pui->WfiIsMoving())
       {
@@ -1654,7 +1827,7 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
-   void interaction_impl::SendMessageToDescendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
+   void interaction_impl::send_message_to_descendants(UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm)
    {
       UNREFERENCED_PARAMETER(message);
       UNREFERENCED_PARAMETER(wParam);
@@ -1693,14 +1866,16 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
+   
    bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region * prgnUpdate,UINT flags)
    {
-      UNREFERENCED_PARAMETER(lpRectUpdate);
-      UNREFERENCED_PARAMETER(prgnUpdate);
-      UNREFERENCED_PARAMETER(flags);
-      ::exception::throw_interface_only(get_app());
-      return false;
+   
+      m_pui->set_need_redraw();
+      
+      return true;
+      
    }
+   
 
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags,UINT nArrowFlags)
    {
@@ -2144,7 +2319,7 @@ namespace user
 
    }
 
-   void interaction_impl::_001OnCreate(signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -2168,7 +2343,7 @@ namespace user
    }
 
 
-   void interaction_impl::_001OnShowWindow(signal_details * pobj)
+   void interaction_impl::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -2221,7 +2396,7 @@ namespace user
 #ifdef WINDOWSEX
 
 
-   void interaction_impl::_001OnWindowPosChanged(signal_details * pobj)
+   void interaction_impl::_001OnWindowPosChanged(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2705,16 +2880,16 @@ namespace user
    }
 
 
-   void guie_message_wnd::message_handler(signal_details * pobj)
+   void guie_message_wnd::message_handler(::message::base * pbase)
    {
+
       if(m_puiForward != NULL)
       {
-         return m_puiForward->message_handler(pobj);
+
+         return m_puiForward->message_handler(pbase);
+
       }
-      else
-      {
-         return;
-      }
+      
    }
 
 

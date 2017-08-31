@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userstack
@@ -44,7 +44,7 @@ namespace userstack
    }
 #endif //DEBUG
 
-   void pane_view::_001OnCreate(signal_details * pobj)
+   void pane_view::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -60,24 +60,24 @@ namespace userstack
 
       add_tab("menu", ::userstack::PaneViewContextMenu);
 
-      for(int32_t i = 0; i < Application.directrix()->m_varTopicQuery["app"].stra().get_count(); i++)
+      for(int32_t i = 0; i < Application.handler()->m_varTopicQuery["app"].stra().get_count(); i++)
       {
 
-         string strId = Application.directrix()->m_varTopicQuery["app"].stra()[i];
+         string strId = Application.handler()->m_varTopicQuery["app"].stra()[i];
 
          if(i == 0 && strId == "app/sphere/userstack")
             continue;
 
          add_tab(strId, "app:" + strId);
 
-         set_cur_tab_by_id("app:" + Application.directrix()->m_varTopicQuery["app"].stra()[i]);
+         set_cur_tab_by_id("app:" + Application.handler()->m_varTopicQuery["app"].stra()[i]);
 
       }
 
-      for (int32_t i = 0; i < Application.directrix()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra().get_count(); i++)
+      for (int32_t i = 0; i < Application.handler()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra().get_count(); i++)
       {
 
-         set_cur_tab_by_id("app:" + Application.directrix()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra()[i]);
+         set_cur_tab_by_id("app:" + Application.handler()->m_varTopicQuery["app/sphere/userstack"]["tab"].stra()[i]);
 
       }
 
@@ -218,15 +218,15 @@ namespace userstack
 
             string str;
 
-            if(papp->directrix()->m_varTopicQuery.has_property(strId))
+            if(papp->handler()->m_varTopicQuery.has_property(strId))
             {
 
-               createcontext->m_spCommandLine->m_varQuery.propset().merge(papp->directrix()->m_varTopicQuery[(const char *) strId].propset());
+               createcontext->m_spCommandLine->m_varQuery.propset().merge(papp->handler()->m_varTopicQuery[(const char *) strId].propset());
 
-               if(papp->directrix()->m_varTopicQuery[(const char *) strId].has_property("file"))
+               if(papp->handler()->m_varTopicQuery[(const char *) strId].has_property("file"))
                {
 
-                  createcontext->m_spCommandLine->m_varFile = papp->directrix()->m_varTopicQuery[(const char *) strId]["file"];
+                  createcontext->m_spCommandLine->m_varFile = papp->handler()->m_varTopicQuery[(const char *) strId]["file"];
 
                }
 
@@ -269,18 +269,18 @@ namespace userstack
 
 
 
-   void pane_view::_001OnMenuMessage(signal_details * pobj)
+   void pane_view::_001OnMenuMessage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::message::dispatch * pinterface)
+   void pane_view::install_message_routing(::message::sender * pinterface)
    {
-      ::userex::pane_tab_view::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
+      ::userex::pane_tab_view::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &pane_view::_001OnRButtonUp);
       connect_command("properties", &pane_view::_001OnProperties);
    }
 
@@ -499,7 +499,7 @@ namespace userstack
       m_iDisplay = iDisplay;
    }
 
-   void pane_view::_001OnRButtonUp(signal_details * pobj)
+   void pane_view::_001OnRButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -509,7 +509,7 @@ namespace userstack
          menu.LoadXmlMenu("bergedge\\popup_winactionarea.xml");
          ::user::menu menuPopup(get_app(), menu.GetSubMenu(0));
          GetParentFrame()->SetActiveView(this);
-         menuPopup.TrackPopupMenu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame());
+         menuPopup.track_popup_menu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame());
       }*/
    }
 
@@ -544,7 +544,7 @@ namespace userstack
 
 
 
-   void pane_view::_001OnProperties(signal_details * pobj)
+   void pane_view::_001OnProperties(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      if(get_view_id() == ::bergedge::PaneViewWinActionArea)
@@ -566,7 +566,7 @@ namespace userstack
 
    void pane_view::_001InitializeFormPreData(::user::form * pform)
    {
-      class user::control::descriptor control;
+      class user::control_descriptor control;
 
       control.m_bTransparent = true;
       control.set_type(user::control_type_check_box);
@@ -574,7 +574,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_display_bandwidth);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -583,7 +583,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_processing);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -592,7 +592,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.savings",
             ::aura::resource_memory);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
       control.m_bTransparent = true;
@@ -601,7 +601,7 @@ namespace userstack
       control.set_ddx_dbflags(
             "ca2.bergedge",
             0);
-   //   control.add_function(user::control::function_static);
+   //   control.add_function(user::control_function_static);
       pform->_001AddControl(control);
 
    }

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -53,7 +53,7 @@ namespace user
 
             rect rectWindow;
 
-            if(GetDockWindow()->get_appearance() != ::user::AppearanceNormal)
+            if(GetDockWindow()->get_appearance() != ::user::appearance_normal)
             {
 
                GetDockWindow()->_001WindowRestore();
@@ -114,7 +114,7 @@ namespace user
          bool DockManager::Relay(::message::mouse * pmouse)
          {
 
-            ASSERT(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCMOUSEMOVE || pmouse->m_uiMessage == WM_NCLBUTTONUP);
+            ASSERT(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCMOUSEMOVE || pmouse->m_id == WM_NCLBUTTONUP);
             
             if(!m_bDocking)
                return false;
@@ -159,14 +159,14 @@ namespace user
 
             class point ptCursor = pmouse->m_pt;
 
-            if(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_LBUTTONUP)
+            if(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_LBUTTONUP)
             {
 
                //GetEventWindow()->ClientToScreen(&ptCursor);
 
             }
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP)
             {
                if(GetDockWindow().cast < ::user::box >() != NULL)
                {
@@ -226,24 +226,24 @@ namespace user
                         // ignore
                         if(bMove && rectWindow.top_left() != pt)
                         {
-                           m_eappearanceOrigin = ::user::AppearanceNormal;
-                           GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                           m_eappearanceOrigin = ::user::appearance_normal;
+                           GetDockWindow()->set_appearance(::user::appearance_normal);
                         }
                      }
                      else if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-//                        if(m_eappearanceOrigin != ::user::AppearanceTop)
+//                        if(m_eappearanceOrigin != ::user::appearance_top)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTop);
+                           GetDockWindow()->set_appearance(::user::appearance_top);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width(),rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-  //                      if(m_eappearanceOrigin != ::user::AppearanceBottom)
+  //                      if(m_eappearanceOrigin != ::user::appearance_bottom)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottom);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top + rectWork.height() / 2,rectWork.width(),rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -253,18 +253,18 @@ namespace user
                   {
                      if(ptCursor.x >= screen.left && ptCursor.x - screen.left <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width() / 2,rectWork.height());
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceRight);
+                           GetDockWindow()->set_appearance(::user::appearance_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top,rectWork.width() / 2,rectWork.height());
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -274,18 +274,18 @@ namespace user
                   {
                      if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceTopLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_top_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTopLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_top_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceBottomLeft)
+                        //if(m_eappearanceOrigin != ::user::appearance_bottom_left)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottomLeft);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom_left);
                            ::rect rectDock = rect_dim(rectWork.left,rectWork.top + rectWork.height() / 2,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -295,18 +295,18 @@ namespace user
                   {
                      if(ptCursor.y >= screen.top && ptCursor.y - screen.top <= cx2)
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceTopRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_top_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceTopRight);
+                           GetDockWindow()->set_appearance(::user::appearance_top_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
                      }
                      else
                      {
-                        //if(m_eappearanceOrigin != ::user::AppearanceBottomRight)
+                        //if(m_eappearanceOrigin != ::user::appearance_bottom_right)
                         {
-                           GetDockWindow()->set_appearance(::user::AppearanceBottomRight);
+                           GetDockWindow()->set_appearance(::user::appearance_bottom_right);
                            ::rect rectDock = rect_dim(rectWork.left + rectWork.width() / 2,rectWork.top + rectWork.height() / 2,rectWork.width() / 2,rectWork.height() / 2);
                            GetDockWindow()->SetWindowPos(ZORDER_TOP,rectDock,SWP_SHOWWINDOW);
                         }
@@ -317,8 +317,8 @@ namespace user
                {
                   if(bMove && rectWindow.top_left() != pt)
                   {
-                     m_eappearanceOrigin = ::user::AppearanceNormal;
-                     GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                     m_eappearanceOrigin = ::user::appearance_normal;
+                     GetDockWindow()->set_appearance(::user::appearance_normal);
                   }
                }
             }
@@ -326,13 +326,13 @@ namespace user
             {
                if(bMove && rectWindow.top_left() != pt)
                {
-                  m_eappearanceOrigin = ::user::AppearanceNormal;
-                  GetDockWindow()->set_appearance(::user::AppearanceNormal);
+                  m_eappearanceOrigin = ::user::appearance_normal;
+                  GetDockWindow()->set_appearance(::user::appearance_normal);
                }
             }
 
 
-            if(bMove && rectWindow.top_left() != pt && GetDockWindow()->get_appearance() == ::user::AppearanceNormal)
+            if(bMove && rectWindow.top_left() != pt && GetDockWindow()->get_appearance() == ::user::appearance_normal)
             {
                class point ptMove = pt;
                if(GetDockWindow()->GetParent() != NULL)
@@ -349,9 +349,9 @@ namespace user
             if(pinterface == NULL)
                pinterface = m_pworkset->get_draw_window();
 
-            pinterface->WfiOnMove(pmouse->m_uiMessage == WM_MOUSEMOVE || pmouse->m_uiMessage == WM_NCMOUSEMOVE);
+            pinterface->WfiOnMove(pmouse->m_id == WM_MOUSEMOVE || pmouse->m_id == WM_NCMOUSEMOVE);
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCLBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP)
             {
                TRACE("DockManager::message_handler oswindow ReleaseCapture 2 %x\n",Session.GetCapture().m_p);
                index iMatchingMonitor = m_pworkset->GetWndDraw()->good_move(rectEvent,null_rect(),true);
@@ -461,18 +461,25 @@ namespace user
             m_edockState= edock;
          }
 
-         void DockManager::message_handler(sp(::user::interaction) pwnd,signal_details * pobj)
-         {
-            SCAST_PTR(::message::base,pbase,pobj);
 
-            if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         void DockManager::message_handler(::user::interaction * pui, ::message::base * pbase)
+         {
+
+            if(pbase->m_id == WM_LBUTTONDOWN)
             {
+               
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               
+               pui->ClientToScreen(&ptCursor);
+
                m_ptCursorOrigin = ptCursor;
+
                rect rectWindow;
+
                GetDockWindow()->GetWindowRect(rectWindow);
+
                sp(::user::interaction) pWndParent = GetDockWindow()->GetParent();
+
                if(pWndParent != NULL)
                {
                   pWndParent->ScreenToClient(rectWindow);
@@ -483,8 +490,8 @@ namespace user
                pbase->m_bRet = true;
                return;
             }
-            else if(pbase->m_uiMessage == WM_MOUSEMOVE ||
-               pbase->m_uiMessage == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE ||
+               pbase->m_id == WM_LBUTTONUP)
             {
                sp(::user::interaction) pWndCapture = Session.GetCapture();
                TRACE("DockManager::message_handler oswindow Capture %x\n",Session.GetCapture().m_p);
@@ -500,8 +507,11 @@ namespace user
                   return;
                }
                //           uint32_t fwKeys = pbase->m_wparam;        // key flags
+               
                point ptCursor((int16_t)LOWORD(pbase->m_lparam),(int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               
+               pui->ClientToScreen(&ptCursor);
+
                point pt;
                pt = m_ptWindowOrigin + ptCursor - m_ptCursorOrigin;
                //TRACE("m_ptWindowOrigin.x = %d m_ptWindowOrigin = %d\n", m_ptWindowOrigin.x, m_ptWindowOrigin.y);
@@ -535,7 +545,7 @@ namespace user
                   MoveWindow(GetDockWindow()->get_handle(),pt);
 
                }
-               if(pbase->m_uiMessage == WM_LBUTTONUP)
+               if(pbase->m_id == WM_LBUTTONUP)
                {
                   Session.ReleaseCapture();
                   m_bDocking = false;

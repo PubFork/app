@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
    enum EPaneView
@@ -41,6 +41,6 @@ namespace command
    };
 
 
-} // namespace command
+} // namespace prompt
 
 

@@ -1,8 +1,7 @@
 #pragma once
 
 
-#include "base/user/core_user.h"
-#include "base/user/common_user.h"
+#include "base/user/user.h"
 #include "core/user/user/user_margin.h"
 
 
@@ -101,7 +100,7 @@ protected:
 #include "user_combo_list.h"
 
 
-#include "user_button.h"
+//#include "user_button.h"
 #include "user_check_box.h"
 
 
@@ -279,7 +278,7 @@ namespace user
 
 #include "app/appseed/core/user/fontopus/fontopus_view.h"
 
-#include "user_button.h"
+//#include "user_button.h"
 //#include "user_meta_button.h"
 //#include "user_bitmap_button.h"
 #include "user_combo_box.h"
@@ -292,7 +291,7 @@ namespace user
 //#include "user_mdi_child_window.h"
 
 
-#include "user_tool_cmd_ui.h"
+//#include "user_tool_::user::command.h"
 
 
 #include "user_toolbar_control.h"

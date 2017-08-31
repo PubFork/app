@@ -1,5 +1,7 @@
-//#include"framework.h"
-//#include"axis/compress/compress.h"
+#include "framework.h"
+#include "include/zlib.h"
+#include "zip/zip.h"
+#include "compress.h"
 #include "compress_gzip.h"
 #include "compress_bzip.h"
 
@@ -228,7 +230,7 @@ namespace axis
 
    }
 
-   void compress_department::extract_all(const ::file::path & pszFile, ::aura::application * papp)
+   count compress_department::extract_all(const ::file::path & pszFile, ::aura::application * papp)
    {
 
       string strDir = pszFile;
@@ -237,15 +239,17 @@ namespace axis
 
       Sess(papp).file().copy(strDir, pszFile, false);
 
+      return 0;
+
    }
 
 
-   bool compress_department::zip(::aura::application * papp, const ::file::path & pszZip, const ::file::path & psz)
+   bool compress_department::zip(const ::file::path & pszZip, const ::file::path & psz, ::aura::application * papp)
    {
 
       thisstart;
 
-      zip::InFile infile(papp);
+      zip::in_file infile(papp);
 
       if (!infile.zip_open(pszZip, 0))
       {
@@ -281,7 +285,7 @@ namespace axis
    }
 
 
-   bool compress_department::zip(::aura::application * papp, const ::file::path & psz)
+   bool compress_department::zip(const ::file::path & psz, ::aura::application * papp)
    {
 
       ::file::path pathNoExt;
@@ -308,8 +312,7 @@ namespace axis
 
       }
 
-      return zip(papp, pathZipFileCompressed, psz);
-
+      return zip(pathZipFileCompressed, psz, papp);
 
    }
 
@@ -317,7 +320,7 @@ namespace axis
    bool compress_department::unzip(::aura::application * papp, const ::file::path & pathUncompressed, const ::file::path & pathZipFileCompressed)
    {
       
-      if (!zip::Util().extract(get_app(), pathUncompressed, pathZipFileCompressed))
+      if (!zip::util().extract(get_app(), pathUncompressed, pathZipFileCompressed))
       {
 
          return false;

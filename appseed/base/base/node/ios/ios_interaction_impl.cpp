@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "ios.h"
 #include "base/user/user/user_interaction.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 #include "base/user/user/user_user.h"
 
 WINBOOL SetWindowRect(oswindow hwnd, LPRECT lprect);
@@ -492,7 +492,7 @@ namespace ios
 
       m_oswindow = oswindow_get(new_round_window(this, rect));
       
-      install_message_handling(this);
+      install_message_routing(this);
 
       m_spgraphics.alloc(allocer());
 
@@ -532,46 +532,46 @@ namespace ios
    }
 
 
-   void interaction_impl::install_message_handling(::message::dispatch * pinterface)
+   void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
 
-      last_install_message_handling(pinterface);
+      last_install_message_routing(pinterface);
 
-      ::user::interaction_impl::install_message_handling(pinterface);
+      ::user::interaction_impl::install_message_routing(pinterface);
       //m_pbuffer->InstallMessageHandling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &interaction_impl::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_NCDESTROY         , pinterface, this, &interaction_impl::_001OnNcDestroy);
-      IGUI_WIN_MSG_LINK(WM_PAINT             , pinterface, this, &interaction_impl::_001OnPaint);
-      IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &interaction_impl::_001OnPrint);
+      IGUI_MSG_LINK(WM_DESTROY           , pinterface, this, &interaction_impl::_001OnDestroy);
+      IGUI_MSG_LINK(WM_NCDESTROY         , pinterface, this, &interaction_impl::_001OnNcDestroy);
+      IGUI_MSG_LINK(WM_PAINT             , pinterface, this, &interaction_impl::_001OnPaint);
+      IGUI_MSG_LINK(WM_PRINT             , pinterface, this, &interaction_impl::_001OnPrint);
 
       if(m_pui != NULL)
       {
 
-         m_pui->install_message_handling(pinterface);
+         m_pui->install_message_routing(pinterface);
 
       }
 
-      IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &interaction_impl::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &interaction_impl::_001OnSetCursor);
-      IGUI_WIN_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &interaction_impl::_001OnEraseBkgnd);
-      IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &interaction_impl::_001OnMove);
-      IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
-//      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
-//      IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &interaction_impl::_001OnProdevianSynch);
-      //      //IGUI_WIN_MSG_LINK(WM_TIMER             , pinterface, this, &interaction_impl::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &interaction_impl::_001OnCreate);
+      IGUI_MSG_LINK(WM_SETCURSOR         , pinterface, this, &interaction_impl::_001OnSetCursor);
+      IGUI_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &interaction_impl::_001OnEraseBkgnd);
+      IGUI_MSG_LINK(WM_MOVE              , pinterface, this, &interaction_impl::_001OnMove);
+      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &interaction_impl::_001OnSize);
+//      IGUI_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &interaction_impl::_001OnShowWindow);
+//      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &interaction_impl::_001OnProdevianSynch);
+      //      //IGUI_MSG_LINK(WM_TIMER             , pinterface, this, &interaction_impl::_001OnTimer);
 
-      prio_install_message_handling(pinterface);
+      prio_install_message_routing(pinterface);
 
    }
 
 
-   void interaction_impl::_001OnMove(signal_details * pobj)
+   void interaction_impl::_001OnMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void interaction_impl::_001OnSize(signal_details * pobj)
+   void interaction_impl::_001OnSize(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       
@@ -590,7 +590,7 @@ namespace ios
 
 
 
-   void interaction_impl::_001OnDestroy(signal_details * pobj)
+   void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
       round_window_close();
@@ -603,7 +603,7 @@ namespace ios
 
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void interaction_impl::_001OnNcDestroy(signal_details * pobj)
+   void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
       single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
       pobj->m_bRet = true;
@@ -808,7 +808,7 @@ namespace ios
     return &m_pfnSuper;
     }
     */
-   void interaction_impl::pre_translate_message(signal_details * pobj)
+   void interaction_impl::pre_translate_message(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1013,12 +1013,12 @@ namespace ios
 
        // cancel any tracking modes
        send_message(WM_CANCELMODE);
-       SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
+       send_message_to_descendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
        // need to use top level parent (for the case where get_handle() is in DLL)
        ::user::interaction * pWnd = EnsureTopLevelParent();
        IOS_WINDOW(pWnd)->send_message(WM_CANCELMODE);
-       IOS_WINDOW(pWnd)->SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
+       IOS_WINDOW(pWnd)->send_message_to_descendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
        // attempt to cancel capture
        oswindow hWndCapture = ::GetCapture();
@@ -1053,9 +1053,9 @@ namespace ios
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target_interface::_001OnCmdMsg(pcmdmsg))
+      if(command_target::_001OnCmdMsg(pcommand))
          return TRUE;
 
       //      bool b;
@@ -1064,7 +1064,7 @@ namespace ios
       // return b;
 
       command_target * pcmdtarget = dynamic_cast < command_target * > (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcmdmsg);
+      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
    }
 
 
@@ -1081,30 +1081,28 @@ namespace ios
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // main message_handler implementation
 
-   void interaction_impl::message_handler(signal_details * pobj)
+   void interaction_impl::message_handler(::message::base * pbase)
    {
-      SCAST_PTR(::message::base, pbase, pobj);
 
-      if(pbase->m_uiMessage == WM_SIZE || pbase->m_uiMessage == WM_MOVE)
+
+      if(pbase->m_id == WM_SIZE || pbase->m_id == WM_MOVE)
       {
 
          //         win_update_graphics();
 
       }
 
-      if(pbase->m_uiMessage == WM_KEYDOWN ||
-         pbase->m_uiMessage == WM_KEYUP ||
-         pbase->m_uiMessage == WM_CHAR)
+      if(pbase->m_id == WM_KEYDOWN ||
+         pbase->m_id == WM_KEYUP ||
+         pbase->m_id == WM_CHAR)
       {
 
          SCAST_PTR(::message::key, pkey, pobj);
 
          Session.keyboard().translate_os_key_message(pkey);
 
-         if(pbase->m_uiMessage == WM_KEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN)
          {
             try
             {
@@ -1114,7 +1112,7 @@ namespace ios
             {
             }
          }
-         else if(pbase->m_uiMessage == WM_KEYUP)
+         else if(pbase->m_id == WM_KEYUP)
          {
             try
             {
@@ -1133,19 +1131,19 @@ namespace ios
             return;
       }
 
-      if(pbase->m_uiMessage == WM_TIMER)
+      if(pbase->m_id == WM_TIMER)
       {
          //         m_pauraapp->m_pauraapp->step_timer();
       }
-      else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+      else if(pbase->m_id == WM_LBUTTONDOWN)
       {
          //  g_pwndLastLButtonDown = this;
       }
-      else if(pbase->m_uiMessage == WM_SIZE)
+      else if(pbase->m_id == WM_SIZE)
       {
          m_bUpdateGraphics = true;
       }
-      /*      else if(pbase->m_uiMessage == CA2M_BERGEDGE)
+      /*      else if(pbase->m_id == CA2M_BERGEDGE)
        {
        if(pbase->m_wparam == BERGEDGE_GETAPP)
        {
@@ -1157,7 +1155,7 @@ namespace ios
        }*/
       pbase->set_lresult(0);
 
-       if(pbase->m_uiMessage == WM_MOUSELEAVE)
+       if(pbase->m_id == WM_MOUSELEAVE)
        {
 
           _000OnMouseLeave(pbase);
@@ -1166,17 +1164,17 @@ namespace ios
         
        }
 
-      if(pbase->m_uiMessage == WM_LBUTTONDOWN ||
-         pbase->m_uiMessage == WM_LBUTTONUP ||
-         pbase->m_uiMessage == WM_MBUTTONDOWN ||
-         pbase->m_uiMessage == WM_MBUTTONUP ||
-         pbase->m_uiMessage == WM_RBUTTONDOWN ||
-         pbase->m_uiMessage == WM_RBUTTONUP ||
-         pbase->m_uiMessage == WM_MOUSEMOVE ||
-         pbase->m_uiMessage == WM_MOUSEMOVE)
-         //         pbase->m_uiMessage == WM_MOUSEWHEEL)
+      if(pbase->m_id == WM_LBUTTONDOWN ||
+         pbase->m_id == WM_LBUTTONUP ||
+         pbase->m_id == WM_MBUTTONDOWN ||
+         pbase->m_id == WM_MBUTTONUP ||
+         pbase->m_id == WM_RBUTTONDOWN ||
+         pbase->m_id == WM_RBUTTONUP ||
+         pbase->m_id == WM_MOUSEMOVE ||
+         pbase->m_id == WM_MOUSEMOVE)
+         //         pbase->m_id == WM_MOUSEWHEEL)
       {
-         if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         if(pbase->m_id == WM_LBUTTONDOWN)
          {
 
             //            TRACE("WM_LBUTTONDOWN");
@@ -1241,10 +1239,10 @@ namespace ios
             }
          }
 
-         if(pbase->m_uiMessage == WM_MOUSEMOVE)
+         if(pbase->m_id == WM_MOUSEMOVE)
          {
-            // We are at the message_handler procedure.
-            // mouse messages originated from message_handler and that are mouse move events should end up with the correct cursor.
+            // We are at the message handler procedure.
+            // mouse messages originated from message handler and that are mouse move events should end up with the correct cursor.
             // So the procedure starts by setting to the default cursor,
             // what forces, at the end of message processing, setting the bergedge cursor to the default cursor, if no other
             // handler has set it to another one.
@@ -1256,16 +1254,16 @@ namespace ios
          return;
 
       }
-      else if(pbase->m_uiMessage == WM_KEYDOWN ||
-              pbase->m_uiMessage == WM_KEYUP ||
-              pbase->m_uiMessage == WM_CHAR)
+      else if(pbase->m_id == WM_KEYDOWN ||
+              pbase->m_id == WM_KEYUP ||
+              pbase->m_id == WM_CHAR)
       {
 
          ::message::key * pkey = (::message::key *) pbase;
 
          //         Application.keyboard().translate_os_key_message(pkey);
          /*
-          if(pbase->m_uiMessage == WM_KEYDOWN)
+          if(pbase->m_id == WM_KEYDOWN)
           {
           try
           {
@@ -1275,7 +1273,7 @@ namespace ios
           {
           }
           }
-          else if(pbase->m_uiMessage == WM_KEYUP)
+          else if(pbase->m_id == WM_KEYUP)
           {
           try
           {
@@ -1305,10 +1303,10 @@ namespace ios
                   return;
             }
          }
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
          return;
       }
-      if(pbase->m_uiMessage == ::message::message_event)
+      if(pbase->m_id == ::message::message_event)
       {
          if(m_pui != NULL)
          {
@@ -1331,7 +1329,7 @@ namespace ios
        return;
        }
        */
-      pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
    }
 
    /*
@@ -1780,9 +1778,9 @@ namespace ios
        return FALSE;
 
        // make sure command has not become disabled before routing
-       CTestCmdUI state;
+       probe_::user::command state;
        state.m_id = nID;
-       _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
+       _001OnCommand(nID, CN_UPDATE_::user::command, &state, NULL);
        if (!state.m_bEnabled)
        {
        TRACE(::ca2::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
@@ -2059,7 +2057,7 @@ namespace ios
       return NULL;    // not found
    }
 
-   void PASCAL interaction_impl::SendMessageToDescendants(void * hWnd, UINT message,
+   void PASCAL interaction_impl::send_message_to_descendants(void * hWnd, UINT message,
                                                           WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       // walk through oswindows to avoid creating temporary user::interaction objects
@@ -2093,7 +2091,7 @@ namespace ios
           // send to child windows after parent
           try
           {
-          SendMessageToDescendants(hWndChild, message, wparam, lparam,
+          send_message_to_descendants(hWndChild, message, wparam, lparam,
           bDeep, bOnlyPerm);
           }
           catch(...)
@@ -2542,7 +2540,7 @@ namespace ios
       return false;
    }
 
-   void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, signal_details * pobj)
+   void interaction_impl::WalkPreTranslateTree(::user::interaction *  puiStop, ::message::message * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -2719,7 +2717,7 @@ namespace ios
 
        // forward this message to all other child windows
        if (!(GetStyle() & WS_CHILD))
-       SendMessageToDescendants(WM_SYSCOLORCHANGE, 0, 0L, TRUE, TRUE);
+       send_message_to_descendants(WM_SYSCOLORCHANGE, 0, 0L, TRUE, TRUE);
 
        Default();*/
    }
@@ -2750,7 +2748,7 @@ namespace ios
     if (!(GetStyle() & WS_CHILD))
     {
     const MESSAGE* pMsg = GetCurrentMessage();
-    SendMessageToDescendants(pMsg->message, pMsg->wparam, pMsg->lparam,
+    send_message_to_descendants(pMsg->message, pMsg->wparam, pMsg->lparam,
     TRUE, TRUE);
     }*/
    //}
@@ -2779,7 +2777,7 @@ namespace ios
       if (!(GetStyle() & WS_CHILD))
       {
          const MESSAGE* pMsg = GetCurrentMessage();
-         SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
+         send_message_to_descendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
       }
 
       return Default();
@@ -2802,7 +2800,7 @@ namespace ios
    }
 
 
-   void interaction_impl::_001OnCreate(signal_details * pobj)
+   void interaction_impl::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -3188,12 +3186,12 @@ namespace ios
       //      ::DeleteObject(rgnUpdate);
    }
 
-   void interaction_impl::_001OnProdevianSynch(signal_details * pobj)
+   void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
 
-   void interaction_impl::_001OnPaint(signal_details * pobj)
+   void interaction_impl::_001OnPaint(::message::message * pobj)
    {
 
       //lock lock(m_pui, 1984);
@@ -3270,7 +3268,7 @@ namespace ios
    }
 
 
-   void interaction_impl::_001OnPrint(signal_details * pobj)
+   void interaction_impl::_001OnPrint(::message::message * pobj)
    {
       throw not_implemented(get_app());
       //      SCAST_PTR(::message::base, pbase, pobj);
@@ -3530,7 +3528,7 @@ namespace ios
       //
       //      // send update message to all controls after all other siblings loaded
       //      if (bSuccess)
-      //         SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
+      //         send_message_to_descendants(WM_INITIALUPDATE, 0, 0, FALSE, FALSE);
       //
       //      return bSuccess;
    }
@@ -3539,7 +3537,7 @@ namespace ios
    {
       UNREFERENCED_PARAMETER(pTarget);
       UNREFERENCED_PARAMETER(bDisableIfNoHndler);
-      cmd_ui state(get_app());
+      ::user::command state(get_app());
       user::interaction wndTemp;       // very temporary user::interaction just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
@@ -3562,7 +3560,7 @@ namespace ios
        }
 
        // check for handlers in the parent user::interaction
-       if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+       if (interaction_impl::_001OnCommand((UINT)state.m_nID, CN_UPDATE_::user::command, &state, NULL))
        continue;
 
        // determine whether to disable when no handler exists
@@ -3981,23 +3979,6 @@ namespace ios
 
    }
 
-   /*   guie_message_wnd::guie_message_wnd(::aura::application * papp) :
-    ::object(papp)
-    {
-    m_pguieForward = NULL;
-    }
-
-    LRESULT guie_message_wnd::message_handler(signal_details * pobj)
-    {
-    if(m_pguieForward != NULL)
-    {
-    return m_pguieForward->message_handler(uiMessage, wparam, lparam);
-    }
-    else
-    {
-    return 0;
-    }
-    }*/
 
    void interaction_impl::_001WindowMaximize()
    {
@@ -4006,9 +3987,9 @@ namespace ios
 
    void interaction_impl::_001WindowRestore()
    {
-      m_pui->m_eappearance = user::AppearanceNormal;
+      m_pui->m_eappearance = user::appearance_normal;
       if(m_pui != NULL)
-         m_pui->m_eappearance = user::AppearanceNormal;
+         m_pui->m_eappearance = user::appearance_normal;
       //      ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
@@ -4046,7 +4027,7 @@ namespace ios
       ASSERT(::IsWindow(get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == user::AppearanceIconic;
+         return m_pui->m_eappearance == user::appearance_iconic;
       }
       else
       {
@@ -4057,7 +4038,7 @@ namespace ios
    bool interaction_impl::WfiIsZoomed()
    {
       ASSERT(::IsWindow(get_handle()));
-      return m_pui->m_eappearance == user::AppearanceZoomed;
+      return m_pui->m_eappearance == user::appearance_zoomed;
    }
 
 
@@ -4480,10 +4461,10 @@ namespace ios
 
    }
 
-   void interaction_impl::SendMessageToDescendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
+   void interaction_impl::send_message_to_descendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       ASSERT(::IsWindow(get_handle()));
-      //interaction_impl::SendMessageToDescendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
+      //interaction_impl::send_message_to_descendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
 
       // walk through oswindows to avoid creating temporary user::interaction objects
       // unless we need to call this function recursively
@@ -4502,7 +4483,7 @@ namespace ios
             // send to child windows after parent
             try
             {
-               pui->SendMessageToDescendants(message, wparam, lparam, bDeep, bOnlyPerm);
+               pui->send_message_to_descendants(message, wparam, lparam, bDeep, bOnlyPerm);
             }
             catch(...)
             {
@@ -5360,7 +5341,7 @@ namespace ios
 
    }
 
-   void interaction_impl::_001OnSetCursor(signal_details * pobj)
+   void interaction_impl::_001OnSetCursor(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(Session.get_cursor() != NULL
@@ -5677,7 +5658,7 @@ namespace ios
 
 
 
-   void interaction_impl::_001OnEraseBkgnd(signal_details * pobj)
+   void interaction_impl::_001OnEraseBkgnd(::message::message * pobj)
    {
       SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
       perasebkgnd->m_bRet = true;

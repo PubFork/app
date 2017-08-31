@@ -1,3 +1,5 @@
+#include "framework.h"
+#include <time.h>
 
 
 namespace datetime

@@ -11,7 +11,7 @@ public:
    simple_tree_view(::aura::application * papp);   
    virtual ~simple_tree_view();
 
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
 
    DECL_GEN_SIGNAL(_001OnCreate);

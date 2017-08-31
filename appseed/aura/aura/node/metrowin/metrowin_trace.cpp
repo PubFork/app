@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include "dde.h"
 
@@ -213,7 +213,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       if (!UnpackDDElParam(WM_DDE_EXECUTE, pMsg->lParam,
          &nDummy, (uint_ptr*)&hCommands))
       {
-//         ::OutputDebugString(::core::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_EXECUTE lParam %08lX.\n",
+//         ::output_debug_string(::core::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_EXECUTE lParam %08lX.\n",
   //          pMsg->lParam);
          return;
       }
@@ -221,7 +221,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 
       const char * lpszCommands = (const char *)::GlobalLock(hCommands);
       ENSURE_THROW(lpszCommands != NULL, throw ::memory_exception() );
-//      ::OutputDebugString(::core::trace::category_AppMsg, 0, "%s: Execute '%s'.\n", lpszPrefix, lpszCommands);
+//      ::output_debug_string(::core::trace::category_AppMsg, 0, "%s: Execute '%s'.\n", lpszPrefix, lpszCommands);
       ::GlobalUnlock(hCommands);
    }
    else if (pMsg->message == WM_DDE_ADVISE)
@@ -232,7 +232,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       if (!UnpackDDElParam(WM_DDE_ADVISE, pMsg->lParam,
          (uint_ptr*)&hAdvise, &nItem))
       {
-//         ::OutputDebugString(::core::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_ADVISE lParam %08lX.\n",
+//         ::output_debug_string(::core::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_ADVISE lParam %08lX.\n",
 //            pMsg->lParam);
        return;
       }

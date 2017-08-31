@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -25,7 +25,7 @@ namespace command
 	   frame(::aura::application * papp);
       virtual ~frame();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 	   void ShowControlBars(bool bShow);
 	  
@@ -41,8 +41,8 @@ namespace command
    
       void ToFront();
 
-      virtual bool on_simple_action(id id);
-      virtual bool on_simple_update(cmd_ui * pcmdui);
+      virtual void on_command(::user::command * pcommand);
+      virtual void on_command_probe(::user::command * pcommand);
 
 
 
@@ -55,10 +55,10 @@ namespace command
       DECL_GEN_SIGNAL(_001OnApp2000);
 
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
    };
 
 
-} // namespace command
+} // namespace prompt
 
 

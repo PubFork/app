@@ -1,6 +1,12 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "core/user/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
+
+
+#define MAGIC_PALACE_TAB_SPLT "->:<-"
+#define MAGIC_PALACE_TAB_SIZE "-/-"
+#define MAGIC_PALACE_TAB_TEXT "/"
+
 
 
 namespace core
@@ -79,11 +85,11 @@ namespace core
    }
 
 
-   void session::install_message_handling(::message::dispatch * pdispatch)
+   void session::install_message_routing(::message::sender * psender)
    {
       
-      core::application::install_message_handling(pdispatch);
-      base::session::install_message_handling(pdispatch);
+      core::application::install_message_routing(psender);
+      base::session::install_message_routing(psender);
 
    }
 
@@ -142,8 +148,6 @@ namespace core
 
       if(!::base::session::initialize())
          return false;
-
-      userschema();
 
       return true;
 
@@ -264,10 +268,10 @@ namespace core
    }
 
 
-   bool session::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   void session::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      return application::_001OnCmdMsg(pcmdmsg);
+      return application::_001OnCmdMsg(pcommand);
 
    }
 
@@ -396,7 +400,7 @@ namespace core
 
       }
 
-      papp->m_pcoreapp->::object::create(pcreate);
+      papp->m_pcoreapp->::object::handle(pcreate);
 
       return true;
 
@@ -419,7 +423,7 @@ namespace core
    //      {
    //         /*
    //         ::memory_file file(get_app());
-   //         file.from_string(command()->m_varTopicFile);
+   //         file.from_string(handler()->m_varTopicFile);
    //         COPYDATASTRUCT data;
    //         data.dwData = 1984;
    //         data.cbData = (uint32_t) file.get_length();
@@ -434,7 +438,7 @@ namespace core
    //
    //         if(channel.open("::draw2d::fontopus::message_wnd::session::"))
    //         {
-   //            channel.send(command()->m_varTopicFile, false);
+   //            channel.send(handler()->m_varTopicFile, false);
    //            channel.close();
    //         }
    //
@@ -654,7 +658,7 @@ namespace core
       {
 #ifdef WINDOWSEX
          ::memory_file file(get_app());
-         file.from_string(command()->m_varTopicFile);
+         file.from_string(handler()->m_varTopicFile);
          COPYDATASTRUCT data;
          data.dwData = 1984;
          data.cbData = (uint32_t) file.get_length();
@@ -1027,6 +1031,65 @@ namespace core
 
    }
 
+   
+   void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
+   {
+
+      stringa & straTitle = pane.m_straTitle;
+
+      pgraphics->SelectObject(brushText);
+
+      if (straTitle.get_count() <= 1)
+      {
+
+         pgraphics->_DrawText(pane.get_title(), *lpcrect, DT_LEFT | DT_BOTTOM | DT_NOPREFIX);
+
+      }
+      else
+      {
+
+         ::rect rectText(lpcrect);
+
+         ::draw2d::font_sp font;
+         font = pgraphics->get_current_font();
+         size sSep = ptab->get_data()->m_sizeSep;
+         ::rect rectEmp;
+         for (index i = 0; i < straTitle.get_size(); i++)
+         {
+            string str = straTitle[i];
+            size s = pane.m_sizeaText[i];
+            rectText.right = rectText.left + s.cx;
+            pgraphics->_DrawText(str, rectText, DT_LEFT | DT_BOTTOM | DT_NOPREFIX);
+            rectText.left += s.cx;
+            if (i < straTitle.get_upper_bound())
+            {
+               rectText.right = rectText.left + sSep.cx;
+               rectEmp = rectText;
+               rectEmp.deflate(1, 1);
+               ::draw2d::e_alpha_mode emode = pgraphics->m_ealphamode;
+               pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+               if (ptab->m_eelementHover == (int)::user::element_split + i)
+               {
+                  pgraphics->FillSolidRect(rectEmp, ARGB(128, 149, 184, 255));
+                  pgraphics->SelectObject(ptab->get_data()->m_brushTextHover);
+               }
+               else
+               {
+                  //pgraphics->FillSolidRect(rectEmp,ARGB(128,208,223,233));
+                  pgraphics->SelectObject(ptab->get_data()->m_brushText);
+               }
+               pgraphics->set_font(ptab->get_data()->m_fontBigBold);
+               pgraphics->set_alpha_mode(emode);
+               pgraphics->_DrawText(MAGIC_PALACE_TAB_TEXT, rectText, DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+               rectText.left += sSep.cx;
+               pgraphics->selectFont(font);
+               pgraphics->SelectObject(brushText);
+            }
+         }
+
+      }
+
+   }
 
 
 } // namespace plane

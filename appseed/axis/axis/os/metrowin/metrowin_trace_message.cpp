@@ -1,24 +1,24 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 
 /////////////////////////////////////////////////////////////////////////////
-void __trace_message(const char * lpszPrefix,signal_details * pobj)
+void __trace_message(const char * lpszPrefix,::message::message * pobj)
 {
    ENSURE_ARG(__is_valid_string(lpszPrefix));
    ENSURE_ARG(pobj != NULL);
    SCAST_PTR(::message::base,pbase,pobj);
 
-   if(pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE ||
-      pbase->m_uiMessage == WM_NCHITTEST || pbase->m_uiMessage == WM_SETCURSOR ||
-      pbase->m_uiMessage == WM_CTLCOLORBTN ||
-      pbase->m_uiMessage == WM_CTLCOLORDLG ||
-      pbase->m_uiMessage == WM_CTLCOLOREDIT ||
-      pbase->m_uiMessage == WM_CTLCOLORLISTBOX ||
-      pbase->m_uiMessage == WM_CTLCOLORMSGBOX ||
-      pbase->m_uiMessage == WM_CTLCOLORSCROLLBAR ||
-      pbase->m_uiMessage == WM_CTLCOLORSTATIC ||
-      pbase->m_uiMessage == WM_ENTERIDLE || pbase->m_uiMessage == WM_CANCELMODE ||
-      pbase->m_uiMessage == 0x0118)    // WM_SYSTIMER (caret blink)
+   if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_NCMOUSEMOVE ||
+      pbase->m_id == WM_NCHITTEST || pbase->m_id == WM_SETCURSOR ||
+      pbase->m_id == WM_CTLCOLORBTN ||
+      pbase->m_id == WM_CTLCOLORDLG ||
+      pbase->m_id == WM_CTLCOLOREDIT ||
+      pbase->m_id == WM_CTLCOLORLISTBOX ||
+      pbase->m_id == WM_CTLCOLORMSGBOX ||
+      pbase->m_id == WM_CTLCOLORSCROLLBAR ||
+      pbase->m_id == WM_CTLCOLORSTATIC ||
+      pbase->m_id == WM_ENTERIDLE || pbase->m_id == WM_CANCELMODE ||
+      pbase->m_id == 0x0118)    // WM_SYSTIMER (caret blink)
    {
       // don't report very frequently sent messages
       return;
@@ -28,23 +28,23 @@ void __trace_message(const char * lpszPrefix,signal_details * pobj)
    char szBuf[80];
 
    // find message name
-   if(pbase->m_uiMessage >= 0xC000)
+   if(pbase->m_id >= 0xC000)
    {
       // Window message registered with 'RegisterWindowMessage'
       //  (actually a USER atom)
       /*
-      if (::GetClipboardFormatNameA(pbase->m_uiMessage, szBuf, _countof(szBuf)))
+      if (::GetClipboardFormatNameA(pbase->m_id, szBuf, _countof(szBuf)))
       lpszMsgName = szBuf;*/
    }
-   else if(pbase->m_uiMessage >= WM_USER)
+   else if(pbase->m_id >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X",pbase->m_uiMessage - WM_USER);
+      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X",pbase->m_id - WM_USER);
       lpszMsgName = szBuf;
    }
    else
    {
-      lpszMsgName = get_windows_message_name(pbase->m_uiMessage);
+      lpszMsgName = get_windows_message_name(pbase->m_id);
    }
 
    if(lpszMsgName != NULL)
@@ -54,7 +54,7 @@ void __trace_message(const char * lpszPrefix,signal_details * pobj)
       // lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //pbase->m_wparam, pbase->m_lparam);
 #else
-      //  ::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
+      //  ::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
       //         lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //       pbase->m_wparam, pbase->m_lparam);
 #endif
@@ -62,17 +62,17 @@ void __trace_message(const char * lpszPrefix,signal_details * pobj)
    else
    {
 #ifdef _WIN64
-      //      ::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
+      //      ::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
       //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #else
-      //      ::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+      //      ::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
       //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
       //     pbase->m_wparam, pbase->m_lparam);
 #endif
    }
 
-   /*if (pbase->m_uiMessage >= WM_DDE_FIRST && pbase->m_uiMessage <= WM_DDE_LAST)
+   /*if (pbase->m_id >= WM_DDE_FIRST && pbase->m_id <= WM_DDE_LAST)
    TraceDDE(lpszPrefix, pMsg);*/
 }
 
@@ -127,7 +127,7 @@ void __trace_message(const char * lpszPrefix,LPMESSAGE lpmsg)
       //       lpszPrefix, pMsg->hwnd, lpszMsgName,
       //     pMsg->wParam, pMsg->lParam);
 #else
-      //      ::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
+      //      ::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
       //       lpszPrefix, lpmsg->hwnd, lpszMsgName,
       //     lpmsg->wParam, lpmsg->lParam);
 #endif
@@ -135,11 +135,11 @@ void __trace_message(const char * lpszPrefix,LPMESSAGE lpmsg)
    else
    {
 #ifdef WIN64
-      //::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
+      //::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
       // lpszPrefix, pMsg->hwnd, lpszMsgName,
       //pMsg->wParam, pMsg->lParam);
 #else
-      //::OutputDebugString(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+      //::output_debug_string(::core::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
       // lpszPrefix, lpmsg->hwnd, lpszMsgName,
       //lpmsg->wParam, lpmsg->lParam);
 #endif

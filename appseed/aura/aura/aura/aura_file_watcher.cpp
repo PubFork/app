@@ -97,9 +97,9 @@ namespace file_watcher
 	}
 
 
-//   void file_watcher_pool::install_message_handling(::message::dispatch * pdispatch)
+//   void file_watcher_pool::install_message_routing(::message::sender * psender)
 //   {
-//      IGUI_WIN_MSG_LINK(WM_APP+1000, pdispatch, this, _001OnApp1000)
+//      IGUI_MSG_LINK(WM_APP+1000, psender, this, _001OnApp1000)
 //   }
 //
 //   void file_watcher_pool::add_watch(const char * directory, file_watch_listener * pwatcher, bool bRecursive, bool bOwn)
@@ -117,7 +117,7 @@ namespace file_watcher
 //   }
 //
 //
-//   void file_watcher_pool::_001OnApp1000(signal_details * pobj)
+//   void file_watcher_pool::_001OnApp1000(::message::message * pobj)
 //   {
 //      
 //      SCAST_PTR(::message::base, pbase, pobj);

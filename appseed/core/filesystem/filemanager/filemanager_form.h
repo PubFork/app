@@ -14,6 +14,9 @@ namespace filemanager
       
       
       form(::aura::application * papp);
+      
+      
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       void on_update(::user::impact * pSender,LPARAM lHint,object* phint);

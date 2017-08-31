@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -152,7 +152,7 @@ namespace filemanager
    {
       int32_t iStepSetCount = 84;
       int32_t iStepSetSleep = 23;
-      while(get_run_thread())
+      while(thread_get_run())
       {
          int32_t i = iStepSetCount;
          while(i > 0)

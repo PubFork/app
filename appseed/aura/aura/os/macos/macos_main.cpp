@@ -16,137 +16,192 @@
 
 
 
-uint32_t __run_system_main_param(main_param * pparam)
+//uint32_t __run_system_main_param(main_param * pparam)
+//{
+//   
+//   string strCommandLine;
+//   
+//   bool bColon = false;
+//   
+//   for(int32_t i = 0; i < pparam->argc; i++)
+//   {
+//      
+//      if(i > 0)
+//      {
+//         
+//         strCommandLine += " ";
+//         
+//      }
+//      
+//      if(strcmp(pparam->argv[i], ":") == 0)
+//      {
+//         
+//         strCommandLine     += ":";
+//         
+//         bColon = true;
+//         
+//      }
+//      else if(bColon)
+//      {
+//         
+//         strCommandLine     += pparam->argv[i];
+//         
+//         
+//      }
+//      else
+//      {
+//         
+//         strCommandLine     += "\"";
+//         
+//         strCommandLine     += pparam->argv[i];
+//         
+//         strCommandLine     += "\"";
+//         
+//      }
+//      
+//   }
+//   
+//   
+//   
+//   strCommandLine
+//   
+//   return __run_system_command_line();
+//   
+//}
+
+
+uint32_t __start_system(const stringa & stra);
+
+
+uint32_t __start_system(const char * pszFileName)
 {
    
-   string strCommandLine;
+   string str(pszFileName);
    
-   bool bColon = false;
+   stringa stra;
    
-   for(int32_t i = 0; i < pparam->argc; i++)
-   {
-      
-      if(i > 0)
-      {
-         
-         strCommandLine += " ";
-         
-      }
-      
-      if(strcmp(pparam->argv[i], ":") == 0)
-      {
-         
-         strCommandLine     += ":";
-         
-         bColon = true;
-         
-      }
-      else if(bColon)
-      {
-         
-         strCommandLine     += pparam->argv[i];
-         
-         
-      }
-      else
-      {
-         
-         strCommandLine     += "\"";
-         
-         strCommandLine     += pparam->argv[i];
-         
-         strCommandLine     += "\"";
-         
-      }
-      
-   }
+   stra._001Explode(str);
    
-   return __run_system_command_line(strCommandLine);
+   return __start_system(stra);
    
 }
 
-
-uint32_t __run_system_command_line(const char * pszCommandLine)
+uint32_t __start_system(const stringa & stra)
 {
    
-   int32_t nReturnCode = 0;
+   var varFile;
    
-   ::aura::system * psystem = create_aura_system();
+   string strExtra;
    
-   ::set_thread(psystem);
+   index iFind = stra.find_first(":");
    
-   ::aura::main_init_data * pinitmaindata   = new ::aura::main_init_data;
-   
-   //pinitmaindata->m_hInstance                = NULL;
-   
-   //pinitmaindata->m_hPrevInstance            = NULL;
-   
-   //pinitmaindata->m_strCommandLine           = pszCommandLine;
-   
-   //pinitmaindata->m_vssCommandLine           = pinitmaindata->m_strCommandLine;
-   
-   pinitmaindata->m_vssCommandLine           = pszCommandLine;
-   
-   //pinitmaindata->m_nCmdShow                 = SW_SHOW;
-   
-   
-   psystem->init_main_data(pinitmaindata);
-   
-   //psystem->m_bAutoDelete                    = false;
-   
-   //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
-   
-   bool bOk = true;
-   
-   try
+   if(iFind >= 0)
    {
       
-      if(psystem->begin_synch())
+      if(iFind >= 1)
       {
          
-         bOk = true;
-         
-      }
-      
-   }
-   catch(...)
-   {
-      
-   }
-   
-   try
-   {
-      
-      if(!bOk)
-      {
-         
-         if(psystem->m_iReturnCode == 0)
+         if(iFind == 1)
          {
             
-            return -1;
+            varFile = stra[0];
+            
+         }
+         else
+         {
+            
+            varFile = stra.slice(0, iFind);
             
          }
          
-         return psystem->m_iReturnCode;
-         
       }
       
+      strExtra = stra.implode(" ", 1);
       
+   }
+   
+   strExtra.trim();
+   
+   if(::aura::system::g_p != NULL)
+   {
+      
+      if(!varFile.is_empty())
+      {
+      
+         macos_on_open_file(varFile, strExtra);
+         
+      }
+    
+      return 0;
+      
+   }
+   
+   int32_t nReturnCode = 0;
+   
+   ::aura::system * psystem;
+   
+   psystem = create_aura_system();
+      
+   ::set_thread(psystem);
+      
+   ::command::command * pcommand = new ::command::command;
+      
+   pcommand->m_strCommandLine = g_pszCommandLine;
+   
+   pcommand->m_varFile = varFile;
+      
+   pcommand->m_strExtra = strExtra;
+   
+   psystem->startup_command(pcommand);
+      
+   bool bOk = true;
+      
+   try
+   {
+         
+      if(psystem->begin_synch())
+      {
+            
+         bOk = true;
+            
+      }
+         
    }
    catch(...)
    {
-      
-      return -1;
-      
+         
    }
-   
-  
-   
+      
+   try
+   {
+         
+      if(!bOk)
+      {
+            
+         if(psystem->m_iReturnCode == 0)
+         {
+               
+            return -1;
+               
+         }
+            
+         return psystem->m_iReturnCode;
+            
+      }
+         
+   }
+   catch(...)
+   {
+         
+      return -1;
+         
+   }
+      
    return nReturnCode;
    
-   
-   
 }
+
+
 
 
 

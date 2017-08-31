@@ -28,7 +28,7 @@ namespace userpresence
       virtual bool defer_finalize_user_presence();
 
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
 
       virtual bool is_initialized();
 

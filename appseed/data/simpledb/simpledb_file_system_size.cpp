@@ -334,11 +334,11 @@ FileSystemSizeWnd::FileSystemSizeWnd(::aura::application * papp) :
 {
 }
 
-void FileSystemSizeWnd::install_message_handling(::message::dispatch * pinterface)
+void FileSystemSizeWnd::install_message_routing(::message::sender * pinterface)
 {
-   m_p->install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
-   //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &FileSystemSizeWnd::_001OnTimer);
+   m_p->install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
+   //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &FileSystemSizeWnd::_001OnTimer);
 }
 
 bool FileSystemSizeWnd::CreateClient()
@@ -429,7 +429,7 @@ bool FileSystemSizeWnd::get_fs_size(int64_t & i64Size, const char * pszPath, boo
 }
 
 
-void FileSystemSizeWnd::_001OnCopyData(signal_details * pobj)
+void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
 {
 
 #ifdef WINDOWSEX

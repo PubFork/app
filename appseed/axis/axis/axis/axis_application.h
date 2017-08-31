@@ -44,8 +44,8 @@ namespace axis
 
 
 
-      static UINT                                     APPM_LANGUAGE;
-      static WPARAM                                   WPARAM_LANGUAGE_UPDATE;
+      //static UINT                                     APPM_LANGUAGE;
+      //static WPARAM                                   WPARAM_LANGUAGE_UPDATE;
 
       ::user::interaction *                           m_pwndMain;
 
@@ -194,7 +194,7 @@ namespace axis
       virtual bool do_prompt_file_name(var & varFile, UINT nIDSTitle, uint32_t lFlags, bool bOpenFileDialog, ::user::impact_system * ptemplate, ::user::document * pdocument);
 
 
-      virtual void process_message_filter(int32_t code, signal_details * pobj) override;
+      virtual void process_message_filter(int32_t code, ::message::message * pobj) override;
 
 
 
@@ -236,7 +236,7 @@ namespace axis
 
       //virtual void draw2d_factory_exchange();
 
-      virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
+      //virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
       virtual ::user::primitive * window_from_os_data(void * pdata);
 
 

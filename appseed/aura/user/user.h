@@ -1,13 +1,11 @@
-#ifndef __GNUC__
 #pragma once
-#endif
+
+
+#include "aura/user/user/user_const.h"
+
 
 
 #include "aura/aura/aura/aura.h"
-
-
-
-
 
 
 

@@ -1,7 +1,4 @@
 #include "framework.h"
-//#include "fiasco_finder.h"
-//#include "zlib.h"
-//#include "zutil.h"
 
 #if defined(OPENSSL_CRYPTO) || defined(METROWIN)
 

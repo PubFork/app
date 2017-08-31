@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -15,9 +15,9 @@ namespace filemanager
    {
    }
 
-   void preview::install_message_handling(::message::dispatch * pdispatch)
+   void preview::install_message_routing(::message::sender * psender)
    {
-      ::user::impact::install_message_handling(pdispatch);
+      ::user::impact::install_message_routing(psender);
    }
 
 
@@ -40,7 +40,7 @@ namespace filemanager
                            str.Format("file_list(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
                            if(get_filemanager_data()->m_bTransparentBackground)
                            {
-                           ::user::list::m_etranslucency = ::user::list::TranslucencyPresent;
+                           ::user::list::m_etranslucency = ::user::list::translucency_present;
                            }
                            DISetSection(str);
                            _001UpdateColumns();*/

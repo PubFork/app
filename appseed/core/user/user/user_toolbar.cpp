@@ -82,36 +82,31 @@ namespace user
    }
 
 
-   void toolbar::install_message_handling(::message::dispatch * pinterface)
+   void toolbar::install_message_routing(::message::sender * pinterface)
    {
 
-      ::user::control_bar::install_message_handling(pinterface);
+      ::user::control_bar::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
-      //IGUI_WIN_MSG_LINK(WM_NCPAINT         , pinterface, this, &toolbar::_001On);
-      //IGUI_WIN_MSG_LINK(WM_PAINT           , pinterface, this, &toolbar::_001On);
-      //IGUI_WIN_MSG_LINK(WM_ERASEBKGND      , pinterface, this, &toolbar::_001On);
-      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &toolbar::_001OnNcCalcSize);
-      //IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &toolbar::_001OnWindowPosChanging);
-      IGUI_WIN_MSG_LINK(WM_NCCREATE          , pinterface, this, &toolbar::_001OnNcCreate);
+      IGUI_MSG_LINK(WM_NCHITTEST         , pinterface, this, &toolbar::_001OnNcHitTest);
+      IGUI_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &toolbar::_001OnNcCalcSize);
 #ifdef WINDOWSEX
-      IGUI_WIN_MSG_LINK(TB_SETBITMAPSIZE     , pinterface, this, &toolbar::_001OnSetBitmapSize);
-      IGUI_WIN_MSG_LINK(TB_SETBUTTONSIZE     , pinterface, this, &toolbar::_001OnSetButtonSize);
+      IGUI_MSG_LINK(TB_SETBITMAPSIZE     , pinterface, this, &toolbar::_001OnSetBitmapSize);
+      IGUI_MSG_LINK(TB_SETBUTTONSIZE     , pinterface, this, &toolbar::_001OnSetButtonSize);
 #endif
-      IGUI_WIN_MSG_LINK(WM_SETTINGCHANGE     , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
-      IGUI_WIN_MSG_LINK(WM_SETFONT           , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
-      IGUI_WIN_MSG_LINK(WM_SYSCOLORCHANGE    , pinterface, this, &toolbar::_001OnSysColorChange);
+      IGUI_MSG_LINK(WM_SETTINGCHANGE     , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
+      IGUI_MSG_LINK(WM_SETFONT           , pinterface, this, &toolbar::_001OnPreserveZeroBorderHelper);
+      IGUI_MSG_LINK(WM_SYSCOLORCHANGE    , pinterface, this, &toolbar::_001OnSysColorChange);
 
    }
 
 
    bool toolbar::create_window(sp(::user::interaction) pParentWnd,uint32_t dwStyle,UINT nID)
    {
-      return create_window_ex(pParentWnd, 0, dwStyle,
+      return create_toolbar(pParentWnd, 0, dwStyle,
          rect(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder), nID);
    }
 
-   bool toolbar::create_window_ex(sp(::user::interaction) pParentWnd,uint32_t dwCtrlStyle,uint32_t dwStyle,const RECT & rectBorders,UINT nID)
+   bool toolbar::create_toolbar(::user::interaction * pParentWnd,uint32_t dwCtrlStyle,uint32_t dwStyle,const RECT & rectBorders, id nID)
    {
       ASSERT_VALID(pParentWnd);   // must have a parent
       ASSERT (!((dwStyle & CBRS_SIZE_FIXED) && (dwStyle & CBRS_SIZE_DYNAMIC)));
@@ -143,26 +138,7 @@ namespace user
       return TRUE;
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // toolbar
-
-   void toolbar::_001OnNcCreate(signal_details * pobj)
-   {
-      if(pobj->previous())
-         return;
-
-      // if the owner was set before the toolbar was created, set it now
-#ifdef WINDOWSEX
-      if (m_puiOwner != NULL)
-         DefWindowProc(TB_SETPARENT, (WPARAM)m_puiOwner, 0);
-
-      DefWindowProc(TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
-#else
-      throw todo(get_app());
-
-#endif
-   }
-
+   
    sp(::user::interaction) toolbar::SetOwner(sp(::user::interaction) pOwnerWnd)
    {
 #ifdef WINDOWSEX
@@ -237,79 +213,6 @@ namespace user
       Invalidate();   // just to be nice if called when toolbar is visible
    }
 
-
-   /*bool toolbar::LoadToolBar(const char * lpszResourceName)
-   {
-      ASSERT_VALID(this);
-      ASSERT(lpszResourceName != NULL);
-
-      // determine location of the bitmap in resource fork
-      HINSTANCE hInst = ::core::FindResourceHandle(lpszResourceName, RT_TOOLBAR);
-      HRSRC hRsrc = ::FindResource(hInst, lpszResourceName, RT_TOOLBAR);
-      if (hRsrc == NULL)
-         return FALSE;
-
-      HGLOBAL hGlobal = LoadResource(hInst, hRsrc);
-      if (hGlobal == NULL)
-         return FALSE;
-
-      toolbar_data* pData = (toolbar_data*)LockResource(hGlobal);
-      if (pData == NULL)
-         return FALSE;
-      ASSERT(pData->wVersion == 1);
-
-      UINT* pItems = new UINT[pData->wItemCount];
-      for (int32_t i = 0; i < pData->wItemCount; i++)
-         pItems[i] = pData->items()[i];
-      bool bResult = SetButtons(pItems, pData->wItemCount);
-      delete[] pItems;
-
-
-      if (bResult)
-      {
-
-         // set new sizes of the buttons
-         size sizeImage(pData->wWidth, pData->wHeight);
-         size sizeButton(pData->wWidth + 7, pData->wHeight + 7);
-         SetSizes(sizeButton, sizeImage);
-
-         // load bitmap now that sizes are known by the toolbar control
-         bResult = LoadBitmap(lpszResourceName);
-      }
-
-      UnlockResource(hGlobal);
-      FreeResource(hGlobal);
-
-      return bResult;
-   }*/
-
-   /*bool toolbar::LoadBitmap(const char * lpszResourceName)
-   {
-      ASSERT_VALID(this);
-      ASSERT(lpszResourceName != NULL);
-
-      // determine location of the bitmap in resource fork
-      HINSTANCE hInstImageWell = ::core::FindResourceHandle(lpszResourceName, RT_BITMAP);
-      HRSRC hRsrcImageWell = ::FindResource(hInstImageWell, lpszResourceName, RT_BITMAP);
-      if (hRsrcImageWell == NULL)
-         return FALSE;
-
-      // load the bitmap
-      HBITMAP hbmImageWell;
-   //   hbmImageWell = ::core::LoadSysColorBitmap(hInstImageWell, hRsrcImageWell);
-      ::draw2d::memory_graphics pgraphics(this);
-      hbmImageWell = imaging::LoadSysColorBitmap(pgraphics, hInstImageWell, hRsrcImageWell);
-
-
-      // tell common control toolbar about the new bitmap
-      if (!AddReplaceBitmap(hbmImageWell))
-         return FALSE;
-
-      // remember the resource handles so the bitmap can be recolored if necessary
-      m_hInstImageWell = hInstImageWell;
-      m_hRsrcImageWell = hRsrcImageWell;
-      return TRUE;
-   }*/
 
    bool toolbar::from(HBITMAP hbmImageWell)
    {
@@ -1143,14 +1046,14 @@ throw todo(get_app());
    }
    */
 
-   void toolbar::_001OnNcHitTest(signal_details * pobj)
+   void toolbar::_001OnNcHitTest(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(HTCLIENT);
       pbase->m_bRet = true;
    }
 
-   void toolbar::_001OnNcCalcSize(signal_details * pobj)
+   void toolbar::_001OnNcCalcSize(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -1201,7 +1104,7 @@ throw todo(get_app());
    }
    */
 
-   void toolbar::_001OnWindowPosChanging(signal_details * pobj)
+   void toolbar::_001OnWindowPosChanging(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::window_pos, pwindowpos, pobj);
@@ -1255,13 +1158,13 @@ throw todo(get_app());
    }
 
 
-   void toolbar::_001OnSetButtonSize(signal_details * pobj)
+   void toolbar::_001OnSetButtonSize(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(OnSetSizeHelper(m_sizeButton, pbase->m_lparam));
    }
 
-   void toolbar::_001OnSetBitmapSize(signal_details * pobj)
+   void toolbar::_001OnSetBitmapSize(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       pbase->set_lresult(OnSetSizeHelper(m_sizeImage, pbase->m_lparam));
@@ -1296,7 +1199,7 @@ throw todo(get_app());
       return lResult;
    }
 
-   void toolbar::_001OnPreserveZeroBorderHelper(signal_details * pobj)
+   void toolbar::_001OnPreserveZeroBorderHelper(::message::message * pobj)
    {
       LRESULT lResult = 0;
       SCAST_PTR(::message::base, pbase, pobj);
@@ -1318,7 +1221,7 @@ throw todo(get_app());
       pbase->set_lresult(lResult);
    }
 
-   void toolbar::_001OnSysColorChange(signal_details * pobj)
+   void toolbar::_001OnSysColorChange(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // re-color bitmap for toolbar
@@ -1334,7 +1237,7 @@ throw todo(get_app());
    /*
    void toolbar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
    {
-      tool_cmd_ui state;
+      tool_command state;
       state.m_pOther = this;
 
       state.m_iCount = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
@@ -1349,13 +1252,13 @@ throw todo(get_app());
          if (!(button.fsStyle & TBSTYLE_SEP))
          {
             // allow reflections
-            if (::user::interaction::on_simple_action(0,
-               MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
+            if (::user::interaction::on_command(0,
+               MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
                &state, NULL))
                continue;
 
             // allow the toolbar itself to have update handlers
-            if (::user::interaction::on_simple_action(state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
+            if (::user::interaction::on_command(state.m_nID, CN_UPDATE_::user::command, &state, NULL))
                continue;
 
             // allow the owner to process the update

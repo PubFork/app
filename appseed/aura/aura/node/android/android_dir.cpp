@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "android.h"
 
 
@@ -708,7 +708,7 @@ namespace android
 
    bool dir::name_is(const ::file::path & str, ::aura::application * papp)
    {
-      //OutputDebugString(str);
+      //output_debug_string(str);
       strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
@@ -775,7 +775,7 @@ namespace android
 
       wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
 
-      //OutputDebugStringW(wstrPath);
+      //output_debug_string(wstrPath);
 
       //if(wstrPath.get_length() >= MAX_PATH)
       //{
@@ -1147,9 +1147,9 @@ namespace android
 //
 //	  ::file::path strUserFolderShift;
 //
-//      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+//      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
 //      {
-//         strUserFolderShift = strRelative / App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+//         strUserFolderShift = strRelative / App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
 //      }
 //      else
 //      {

@@ -5,28 +5,32 @@ namespace http
 {
 
 
-   class CLASS_DECL_AURA signal :
-      public signal_details
+   class CLASS_DECL_AURA message :
+      public ::message::message
    {
    public:
 
 
-      memory          m_memoryRet;
+      memory                     m_memoryRet;
       e_status                   m_estatusRet;
 
 
       string                     m_strUrl;
-      property_set          m_setPost;
-      property_set          m_setHeaders;
-      property_set          m_set;
+      property_set               m_setPost;
+      property_set               m_setHeaders;
+      property_set               m_set;
       ::http::cookies *          m_pcookies;
       ::fontopus::user *         m_puser;
       string                     m_strVersion;
 
 
-      signal();
+      message();
 
 
    };
 
-} // namespace http
+
+} // namespace message
+
+
+

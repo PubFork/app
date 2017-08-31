@@ -172,11 +172,11 @@ namespace user
 
       virtual bool get_line_color(COLORREF & crOverride, const string & strLine);
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
       void key_to_char(::message::key * pkey);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual void OnDraw(::draw2d::dib * pdib);      // overridden to draw this ::user::impact
       virtual void _001OnInitialUpdate();
 
@@ -203,7 +203,7 @@ namespace user
       virtual void on_updata_data(::data::simple_data * pdata, int32_t iHint);
 
 
-      virtual bool create_control(class ::user::control::descriptor * pdescriptor, index iItem);
+      virtual bool create_control(class ::user::control_descriptor * pdescriptor);
 
       virtual strsize char_hit_test(int32_t x, int32_t y);
       virtual strsize line_char_hit_test(int32_t x, index iLine);
@@ -294,6 +294,10 @@ namespace user
 
 
       virtual void _001EditDelete();
+
+
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
+
 
    };
 

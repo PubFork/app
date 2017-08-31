@@ -24,7 +24,7 @@ namespace user
       box();
       virtual ~box();
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnSize);
@@ -44,8 +44,10 @@ namespace user
       virtual bool LoadWindowRect_(class ::database::id id, sp(::user::box) pwindow, bool bForceRestore = false, bool bInitialFramePosition = false);
       virtual bool SaveWindowRect_(class ::database::id id, sp(::user::box) pwindow);
 
+      
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
-      virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
 
       virtual void on_set_parent(::user::interaction * puiParent) override;
       virtual bool on_before_set_parent(::user::interaction * pinterface) override;

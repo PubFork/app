@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 //
 //
@@ -347,12 +347,12 @@ FileSystemSizeWnd::FileSystemSizeWnd(::aura::application * papp) :
 }
 
 
-void FileSystemSizeWnd::install_message_handling(::message::dispatch * pinterface)
+void FileSystemSizeWnd::install_message_routing(::message::sender * pinterface)
 {
    
-   m_pui->install_message_handling(pinterface);
+   m_pui->install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
+   IGUI_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
 
 }
 
@@ -452,7 +452,7 @@ bool FileSystemSizeWnd::get_fs_size(int64_t & i64Size, const char * pszPath, boo
 }
 
 
-void FileSystemSizeWnd::_001OnCopyData(signal_details * pobj)
+void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
 {
 
 #ifdef WINDOWSEX

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 //#include <pthread.h>
@@ -139,7 +139,7 @@ FormatMessage(
 
 VOID
 WINAPI
-OutputDebugStringA(
+output_debug_string(
                    LPCSTR lpOutputString
                    )
 {
@@ -158,13 +158,13 @@ OutputDebugStringA(
 
 VOID
 WINAPI
-OutputDebugStringW(
+output_debug_string(
                    LPCWSTR lpOutputString
                    )
 {
 
 
-    OutputDebugStringA(string(lpOutputString));
+    output_debug_string(string(lpOutputString));
 
 
 }

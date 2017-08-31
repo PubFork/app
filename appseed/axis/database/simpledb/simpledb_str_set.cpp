@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "axis/net/net_sockets.h"
 //#include "db_str_set.h"
 #include "sqlite3.h"
@@ -147,15 +147,48 @@ int32_t db_str_sync_queue::run()
    try
    {
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
-         if (&ApplicationUser == NULL)
+         try
          {
 
-            Sleep(5000);
 
-            continue;
+            if (m_pauraapp == NULL)
+            {
+
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession == NULL)
+            {
+
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession->m_pfontopus == NULL)
+            {
+
+               break;
+
+            }
+
+            if (&ApplicationUser == NULL)
+            {
+
+               Sleep(5000);
+
+               continue;
+
+            }
+
+         }
+         catch (...)
+         {
+
+            break;
 
          }
 
@@ -308,7 +341,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
    }
 
-   if (m_pcore->m_pdataserver->m_bRemote && strKey.find(".local://") < 0)
+   if (m_pcore->m_pdataserver->m_bRemote && (strKey.find(".local://") < 0 || strKey.find(".override-local.") >= 0))
    {
 
       // Remote
@@ -515,7 +548,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
 
    }
 
-   if (!m_pcore->m_pdataserver->m_bRemote || strKey.find(".local://") >= 0)
+   if (!m_pcore->m_pdataserver->m_bRemote || !(strKey.find(".local://") < 0 || strKey.find(".override-local.") >= 0))
    {
 
       if (m_pcore->db() == NULL)

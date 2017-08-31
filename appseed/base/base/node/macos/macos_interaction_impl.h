@@ -25,7 +25,7 @@ namespace macos
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
-      ::thread *                       m_pthreadDraw;
+      sp(::thread)                     m_pthreadDraw;
       rect64                           m_rectLastPos;
       uint32_t                         m_dwLastPos;
 
@@ -36,12 +36,15 @@ namespace macos
 
 
       virtual void construct(oswindow hwnd);
+      
+      
+      virtual void release_graphics_resources();
 
 
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
 
 		static_function const MESSAGE* PASCAL GetCurrentMessage();
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       //bool operator==(const ::user::interaction & wnd) const;
       //bool operator!=(const ::user::interaction & wnd) const;
@@ -56,7 +59,7 @@ namespace macos
 
       virtual ::user::interaction * get_wnd() const;
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -132,7 +135,7 @@ namespace macos
       using ::user::interaction_impl::GetDescendantWindow;
       ::user::interaction *  GetDescendantWindow(id id);
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
 
       static_function ::user::interaction * PASCAL GetSafeOwner(::user::interaction * pParent = NULL, oswindow* pWndTop = NULL);
 
@@ -155,10 +158,10 @@ namespace macos
 
 
       // oswindow Text Functions
-      void SetWindowText(const char * lpszString);
-      strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
-      void GetWindowText(string & rString);
-      strsize GetWindowTextLength();
+      void set_window_text(const char * lpszString);
+      //strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
+      void get_window_text(string & str);
+      //strsize GetWindowTextLength();
 //      void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
   //    ::draw2d::font* GetFont();
 
@@ -228,6 +231,11 @@ namespace macos
         virtual bool round_window_key_up(unsigned int vk, unsigned int scan);
         virtual bool round_window_key_down(unsigned int uiKeyCode);
         virtual bool round_window_key_up(unsigned int uiKeyCode);
+      
+      
+      virtual void round_window_activate();
+      virtual void round_window_deactivate();
+
 
        virtual void round_window_resized(CGRect rect);
        virtual void round_window_moved(CGPoint point);
@@ -249,7 +257,9 @@ namespace macos
         virtual ::draw2d::graphics * GetDCEx(::draw2d::region* prgnClip, DWORD flags);
         virtual bool LockWindowUpdate();
         virtual void UnlockWindowUpdate();
-        virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL, ::draw2d::region* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_ERASE);
+//        virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL, ::draw2d::region* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_ERASE);
+      virtual void _001UpdateScreen();
+      //virtual votru8id _001UpdateWindow(bool bUpdateBuffer = false) override;
       // xxx      virtual bool EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
         virtual bool DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
@@ -449,9 +459,6 @@ namespace macos
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
       void CenterWindow(::user::interaction *   pAlternateOwner = NULL);
 
-      // oswindow-Management message handler member functions
-      virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
-      virtual bool OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       void OnActivate(UINT nState, ::user::interaction * pWndOther, bool bMinimized);
       void OnActivateApp(bool bActive, DWORD dwThreadID);
@@ -583,8 +590,8 @@ namespace macos
                          ::user::interaction * pActivateWnd, ::user::interaction * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       //xxx      void OnStyleChanged(int32_t nStyleType, LPSTYLESTRUCT lpStyleStruct);
@@ -606,11 +613,11 @@ namespace macos
       virtual void EndModalState();
 
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing oswindows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -637,9 +644,9 @@ namespace macos
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction *   puiStop, signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction *   puiStop, ::message::message * pobj);
       static_function ::user::interaction *   PASCAL GetDescendantWindow(::user::interaction *   hWnd, id id);
-      static_function void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
+      static_function void PASCAL send_message_to_descendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
       static_function bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
@@ -687,8 +694,6 @@ namespace macos
 
       virtual void _001BaseWndInterfaceMap();
 
-
-      void _001UpdateWindow();
 
       void _001WindowMinimize();
 

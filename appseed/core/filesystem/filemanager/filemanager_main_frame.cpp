@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -18,7 +18,7 @@ namespace filemanager
 
 
 
-   void main_frame::_001OnCreate(signal_details * pobj)
+   void main_frame::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

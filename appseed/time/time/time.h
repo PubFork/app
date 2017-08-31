@@ -1,7 +1,8 @@
 #pragma once
 
 
-#include "math/math/math_math.h"
+#include "core/core/core/core.h"
+#include "core/math/math_math.h"
 
 
 #if defined(_CA2_TIME_DLL)

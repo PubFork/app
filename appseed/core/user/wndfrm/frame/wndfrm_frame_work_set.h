@@ -23,7 +23,7 @@ namespace user
 
          class CLASS_DECL_CORE WorkSet :
             virtual public ::database::client,
-            virtual public signalizable
+            virtual public ::message::receiver
          {
          public:
             friend class appearance;
@@ -85,8 +85,8 @@ namespace user
             SizeManager * GetSizingManager();
 
 
-            void AttachFrameSchema(sp(frame) pframeschema);
-            void install_message_handling(::message::dispatch * pdispatch);
+            void AttachFrameSchema(frame * pframeschema);
+            void install_message_routing(::message::sender * psender);
 
             DECL_GEN_SIGNAL(_001OnLButtonDown);
             DECL_GEN_SIGNAL(_001OnMouseMove);
@@ -110,12 +110,16 @@ namespace user
             void WindowClose();
             void UpdateApperanceMode(bool bFullScreen);
             //void SetDownUpInterface(CWorkSetDownUpInterface *pinterface);
-            void WindowProcBefore(::user::interaction * pwnd, signal_details * pobj);
-            void WindowProcHover(::user::interaction * pwnd, signal_details * pobj);
+            
+            void WindowProcBefore(::user::interaction * pwnd, ::message::base * pobj);
+            
+            void WindowProcHover(::user::interaction * pwnd, ::message::base * pobj);
+
             DECL_GEN_SIGNAL(_001OnActivate);
-               DECL_GEN_SIGNAL(_001OnCommand);
-               DECL_GEN_SIGNAL(_001OnNcActivate);
-               void RemoveListener(WorkSetListener * plistener);
+            DECL_GEN_SIGNAL(_001OnCommand);
+            DECL_GEN_SIGNAL(_001OnNcActivate);
+            
+            void RemoveListener(WorkSetListener * plistener);
             void AddListener(WorkSetListener * plistener);
             void OnSizingGripMove(EGrip egrip);
 
@@ -128,7 +132,7 @@ namespace user
             virtual void OnDock();
             void on_layout();
             bool Hover(bool bHoverActive);
-            void hover_relay_event(signal_details * pobj);
+            void hover_relay_event(::message::message * pobj);
             void ChildWnd(::user::interaction * pwnd, ::user::interaction * pwndParent);
             void FrameWnd(::user::interaction * pwnd);
             bool Start();
@@ -153,15 +157,15 @@ namespace user
             void SetActiveFlag(bool fActive);
             void SetSWPFlags(UINT uiFlags);
 
-            ::user::EAppearance GetAppearance();
-            void SetAppearance(::user::EAppearance nMode);
+            ::user::e_appearance GetAppearance();
+            void SetAppearance(::user::e_appearance nMode);
             void SetAppearance();
 
             void GetRegionClientRect(LPRECT lprect);
             void get_draw_client_rect(LPRECT lprect);
             //void SetWindow(::user::interaction * pwnd);
-            void relay_event(signal_details * pobj);
-            void message_handler(signal_details * pobj);
+            void relay_event(::message::message * pobj);
+            void message_handler(::message::base * pbase);
 
             void _001OnDraw(::draw2d::graphics * pgraphics);
 
@@ -183,7 +187,7 @@ namespace user
             bool IsFullScreen();
             bool ViewFullScreen(bool bFullScreen);
 
-            virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+            virtual bool _001OnCmdMsg(::user::command * pcommand);
 
             virtual void OnSize(UINT nType, int32_t cx, int32_t cy);
 

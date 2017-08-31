@@ -39,10 +39,12 @@ namespace user
       virtual ::user::interaction_child * get_user_interaction_child();
 
 
-      virtual void prio_install_message_handling(::message::dispatch * pinterface);
-      virtual void last_install_message_handling(::message::dispatch * pinterface);
+      virtual void prio_install_message_routing(::message::sender * pinterface);
+      virtual void last_install_message_routing(::message::sender * pinterface);
 
-
+      
+      virtual void queue_message_handler(::message::base * pbase);
+      
 
       virtual bool check_need_layout();
       virtual void clear_need_layout();
@@ -62,6 +64,9 @@ namespace user
       virtual void on_zorder();
 
 
+      virtual bool has_pending_redraw_flags() override;
+
+
 //      virtual void _001UpdateScreen(bool bUpdateBuffer = true);
 //      virtual void _001UpdateBuffer();
       virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
@@ -74,7 +79,7 @@ namespace user
       virtual void _001WindowMaximize();
       virtual void _001WindowFullScreen();
       virtual void _001WindowRestore();
-      virtual void _001WindowDock(::user::EAppearance eappearance);
+      virtual void _001WindowDock(::user::e_appearance eappearance);
 
       virtual void RepositionBars(UINT nIDFirst,UINT nIDLast,id nIdLeftOver,UINT nFlags,LPRECT lpRectParam,LPCRECT lpRectClient,bool bStretch);
 
@@ -199,10 +204,10 @@ namespace user
       virtual LRESULT message_call(UINT uiMessage, WPARAM wparam, lparam lparam) override;
 
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       virtual bool SetCapture(::user::interaction * pui = NULL);

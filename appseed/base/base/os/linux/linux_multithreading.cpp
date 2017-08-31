@@ -33,7 +33,7 @@ UINT __axis_x11_thread(void * p)
 
    bool bPending;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->get_run_thread())
+   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
    {
 
 //      ZERO(msg);
@@ -159,20 +159,20 @@ void process_message(osdisplay_data * pdata, Display * display)
                {
                   output_debug_string("g_xxx");
                }
-               if(pui->m_eappearance == ::user::AppearanceIconic && !msg.hwnd->is_iconic())
+               if(pui->m_eappearance == ::user::appearance_iconic && !msg.hwnd->is_iconic())
                {
 
                   //file_put_contents_dup("/home/camilo/xxx.txt", "");
 
-                  pui->m_eappearance == ::user::AppearanceNone;
+                  pui->m_eappearance == ::user::appearance_none;
 
                   ::fork(pui->get_app(), [=]()
                   {
 
-                     if(pui->m_eappearanceBefore == ::user::AppearanceIconic)
+                     if(pui->m_eappearanceBefore == ::user::appearance_iconic)
                      {
 
-                        pui->_001OnDeiconify(::user::AppearanceNormal);
+                        pui->_001OnDeiconify(::user::appearance_normal);
 
                      }
                      else
@@ -232,20 +232,20 @@ void process_message(osdisplay_data * pdata, Display * display)
                {
                   output_debug_string("g_xxx");
                }
-               if(pui->m_eappearance == ::user::AppearanceIconic)
+               if(pui->m_eappearance == ::user::appearance_iconic)
                {
 
                   //file_put_contents_dup("/home/camilo/xxx.txt", "");
 
-                  pui->m_eappearance == ::user::AppearanceNone;
+                  pui->m_eappearance == ::user::appearance_none;
 
                   ::fork(pui->get_app(), [=]()
                   {
 
-                     if(pui->m_eappearanceBefore == ::user::AppearanceIconic)
+                     if(pui->m_eappearanceBefore == ::user::appearance_iconic)
                      {
 
-                        pui->_001OnDeiconify(::user::AppearanceNormal);
+                        pui->_001OnDeiconify(::user::appearance_normal);
 
                      }
                      else
@@ -534,7 +534,7 @@ UINT __axis_x11mouse_thread(void * p)
 
    bool bOk;
 
-   while(::aura::system::g_p != NULL && ::aura::system::g_p->get_run_thread())
+   while(::aura::system::g_p != NULL && ::aura::system::g_p->thread_get_run())
    {
 
       bOk = false;

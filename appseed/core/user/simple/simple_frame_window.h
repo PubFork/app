@@ -72,7 +72,7 @@ public:
    bool                                m_bCustomFrameBefore;
    rect                                m_FullScreenWindowRect;
    visual::fastblur                    m_fastblur;
-   ::user::ETranslucency               m_etranslucency;
+   ::user::e_translucency               m_etranslucency;
 
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;
@@ -104,7 +104,7 @@ public:
    virtual bool create_bars();
    virtual bool on_create_bars();
 
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
    virtual bool on_before_set_parent(sp(::user::interaction) pinterface);
    virtual void on_set_parent(::user::interaction * puiParent) override;
@@ -113,7 +113,7 @@ public:
 
    virtual bool is_application_main_window();
    
-   virtual bool get_translucency(::user::ETranslucency & etranslucency) override;
+   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
@@ -128,7 +128,7 @@ public:
    virtual void ShowControlBars(bool bShow = true, bool bLeaveFullScreenBarsOnHide = false);
 
    virtual bool IsNotifyIconEnabled() override;
-   void OnUpdateControlBarMenu(cmd_ui * pcmdui);
+   void OnUpdateControlBarMenu(::user::command * pcommand);
 
    virtual sp(::user::wndfrm::frame::frame) create_frame_schema();
 
@@ -162,7 +162,7 @@ public:
    virtual void ActivateFrame(int32_t nCmdShow = -1);
    virtual bool on_create_client(::user::create_struct * lpcs, ::create * pcreate);
    virtual bool pre_create_window(::user::create_struct& cs);
-   virtual void pre_translate_message(signal_details * pobj);
+   virtual void pre_translate_message(::message::message * pobj);
 
    virtual void _000OnDraw(::draw2d::graphics * pgraphics);
    virtual void _010OnDraw(::draw2d::graphics * pgraphics);
@@ -227,7 +227,7 @@ public:
    virtual void dump(dump_context & dumpcontext) const;
    void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-   virtual bool on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult);
+   virtual void on_simple_command(::message::simple_command * psimplecommand);
 
 #ifdef WINDOWSEX
    virtual void OnDropFiles(HDROP hDropInfo);
@@ -240,7 +240,7 @@ public:
    LRESULT OnDDEExecute(WPARAM wParam, LPARAM lParam);
    LRESULT OnDDETerminate(WPARAM wParam, LPARAM lParam);
 
-   void _001OnQueryEndSession(signal_details * pobj);
+   void _001OnQueryEndSession(::message::message * pobj);
 
    virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -251,17 +251,17 @@ public:
    virtual void WfiOnMaximize() override;
    virtual void WfiOnMinimize(bool bNoActivate) override;
    virtual void WfiOnRestore() override;
-   virtual void WfiOnDock(::user::EAppearance eappearance) override;
+   virtual void WfiOnDock(::user::e_appearance eappearance) override;
 
    virtual bool DeferFullScreen(bool bFullScreen, bool bRestore);
 
-   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+   virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-   virtual void data_on_after_change(signal_details * pobj);
+   virtual void data_on_after_change(::message::message * pobj);
 
 
 
-   virtual bool set_appearance(::user::EAppearance eappearance);
+   virtual bool set_appearance(::user::e_appearance eappearance);
 
    virtual void InitialUpdateFrame(::user::document * pDoc,bool bMakeVisible);
 
@@ -296,10 +296,11 @@ public:
 
    virtual void defer_set_icon();
 
-   virtual ::user::front_end_schema * get_user_front_end_schema() override;
+   //virtual ::user::style * get_user_style() override;
 
    virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
 
+   virtual void initialize_userstyle() override;
 
 };
 

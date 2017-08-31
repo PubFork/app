@@ -130,16 +130,16 @@ index xfplayer_view_linea::FindLine(xfplayer_view_line * pline)
 
 }
 
-void xfplayer_view_linea::InstallMessageHandling(::message::dispatch *pinterface)
+void xfplayer_view_linea::InstallMessageHandling(::message::sender *pinterface)
 {
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &xfplayer_view_linea::OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_SETCURSOR, pinterface, this, &xfplayer_view_linea::OnSetCursor);
-   //IGUI_WIN_MSG_LINK(WM_TIMER,        pinterface, this, &xfplayer_view_linea::OnTimer);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &xfplayer_view_linea::OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &xfplayer_view_linea::OnLButtonUp);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &xfplayer_view_linea::OnMouseMove);
+   IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &xfplayer_view_linea::OnSetCursor);
+   //IGUI_MSG_LINK(WM_TIMER,        pinterface, this, &xfplayer_view_linea::OnTimer);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &xfplayer_view_linea::OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &xfplayer_view_linea::OnLButtonUp);
 }
 
-void xfplayer_view_linea::OnMouseMove(signal_details * pobj)
+void xfplayer_view_linea::OnMouseMove(::message::message * pobj)
 {
    synch_lock sl(m_pmutex);
    for (int32_t i = 0; i < this->get_size(); i++)
@@ -152,7 +152,7 @@ void xfplayer_view_linea::OnMouseMove(signal_details * pobj)
    }
 }
 
-void xfplayer_view_linea::OnLButtonDown(signal_details * pobj)
+void xfplayer_view_linea::OnLButtonDown(::message::message * pobj)
 {
    synch_lock sl(m_pmutex);
    for (int32_t i = 0; i < this->get_size(); i++)
@@ -165,7 +165,7 @@ void xfplayer_view_linea::OnLButtonDown(signal_details * pobj)
    }
 }
 
-void xfplayer_view_linea::OnLButtonUp(signal_details * pobj)
+void xfplayer_view_linea::OnLButtonUp(::message::message * pobj)
 {
    synch_lock sl(m_pmutex);
    for (int32_t i = 0; i < this->get_size(); i++)
@@ -187,7 +187,7 @@ void xfplayer_view_linea::_001OnTimer(::timer * ptimer)
    }
 }
 
-void xfplayer_view_linea::OnSetCursor(signal_details * pobj)
+void xfplayer_view_linea::OnSetCursor(::message::message * pobj)
 {
    synch_lock sl(m_pmutex);
    for (int32_t i = 0; i < this->get_size(); i++)

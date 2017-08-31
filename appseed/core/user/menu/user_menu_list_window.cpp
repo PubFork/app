@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -12,38 +12,32 @@ namespace user
       menu_list_window(get_app())
    {
 
+      set_user_schema(schema_menu);
+
    }
 
 
    menu_list_window::menu_list_window(::aura::application * papp) :
       object(papp),
-      menu_base(papp),
-      menu(papp),
-      m_itemClose(papp)
+      menu(papp)
    {
 
-      m_itemClose.m_pbase = this;
       m_bAutoDelete        = true;
       m_bOwnItem           = false;
-      m_puiNotify         = NULL;
-      m_pschema            = NULL;
+      m_puiNotify          = NULL;
       m_bAutoClose         = true;
 
    }
 
 
-   menu_list_window::menu_list_window(::aura::application * papp, sp(menu_item) pitem) :
+   menu_list_window::menu_list_window(::aura::application * papp, menu_item * pitem) :
       object(papp),
-      menu_base(papp, pitem),
-      menu(papp),
-      m_itemClose(papp)
+      menu(papp)
    {
 
-      m_itemClose.m_pbase = this;
-      m_puiNotify         = NULL;
+      m_puiNotify          = NULL;
       m_bAutoClose         = true;
       m_bAutoDelete        = true;
-      m_pschema            = NULL;
       m_bOwnItem           = false;
 
    }
@@ -55,192 +49,102 @@ namespace user
    }
 
 
-   void menu_list_window::install_message_handling(::message::dispatch * pinterface)
+   void menu_list_window::install_message_routing(::message::sender * pinterface)
    {
 
-      control::install_message_handling(pinterface);
+      menu::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &menu_list_window::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &menu_list_window::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &menu_list_window::_001OnClose);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &menu_list_window::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &menu_list_window::_001OnDestroy);
+      IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &menu_list_window::_001OnClose);
 
    }
 
    
-   void menu_list_window::_001OnCreate(signal_details * pobj)
+   void menu_list_window::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
-      m_pschema            = &::user::GetUfeSchema(get_app())->m_menu;
-
    }
 
    
-   void menu_list_window::_001OnClose(signal_details * pobj)
+   void menu_list_window::_001OnClose(::message::message * pobj)
    {
       
-      destroy_menu();
+      UNREFERENCED_PARAMETER(pobj);
       
    }
 
 
-   void menu_list_window::_001OnDestroy(signal_details * pobj)
+   void menu_list_window::_001OnDestroy(::message::message * pobj)
    {
 
-      pobj->m_bRet = false;
+      UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   bool menu_list_window::TrackPopupMenu(sp(::user::interaction) pwndParent, sp(::user::interaction) pwndNotify)
-   {
-      
-      ASSERT(pwndParent != NULL);
-      
-      //_m_pmenu = new menu_list_window(m_pitem);
-      
-      return _TrackPopupMenu(pwndParent, pwndNotify);
-      
-   }
+//   bool menu_list_window::track_popup_menu(::user::interaction * pwndParent, ::user::interaction * pwndNotify)
+//   {
+//      
+//      ASSERT(pwndParent != NULL);
+//      
+//      return _TrackPopupMenu(pwndParent, pwndNotify);
+//      
+//   }
    
 
-   bool menu_list_window::_TrackPopupMenu(sp(::user::interaction) pwndParent, sp(::user::interaction) pwndNotify)
-   {
-
-      m_puiNotify = pwndNotify;
-
-//      LPVOID lpvoid = NULL;
-      if(!IsWindow())
-      {
-
-         if(!create_window(NULL, NULL, WS_VISIBLE | WS_CHILD, null_rect(), pwndParent, 0))
-            return false;
-
-         if(!m_itemClose.m_button.create_window(null_rect(), this, ChildIdClose))
-            return false;
-
-         m_itemClose.m_button.install_message_handling(this);
-
-         m_itemClose.m_button.set_window_text("r");
-         m_itemClose.m_button.m_pschema = m_pschema->m_pschemaSysMenuButton;
-      }
-
-      _UpdateCmdUi(m_pitem);
-      _CreateButtons(m_pitem);
-
-      //user::AppGet()->AddFrame(this);
-
-      on_layout();
-
-      rect rectClient;
-
-      pwndParent->GetClientRect(rectClient);
-
-
-      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-
-      SetTimer(::user::BaseWndMenuCmdUi,300,NULL);
-
-      return true;
-   }
-
-
-   bool menu_list_window::MenuFill(sp(::user::interaction) pwndFill, sp(::user::interaction) pwndNotify)
-   {
-
-      m_puiNotify = pwndNotify;
-
-//      LPVOID lpvoid = NULL;
-      if(!IsWindow())
-      {
-
-         if(!create_window(NULL,NULL,WS_VISIBLE | WS_CHILD,null_rect(),pwndFill,0))
-            return false;
-
-      }
-      else
-      {
-         if(GetParent() != pwndFill)
-         {
-            SetParent(pwndFill);
-         }
-      }
-
-      if(!m_itemClose.m_button.IsWindow())
-      {
-         if(!m_itemClose.m_button.create_window(null_rect(), this, ChildIdClose))
-            return false;
-
-         m_itemClose.m_button.install_message_handling(this);
-
-         m_itemClose.m_button.set_window_text("r");
-         m_itemClose.m_button.m_pschema = m_pschema->m_pschemaSysMenuButton;
-      }
-
-      _UpdateCmdUi(m_pitem);
-      _CreateButtons(m_pitem);
-
-      //user::AppGet()->AddFrame(this);
-
-      on_layout();
-
-      rect rectClient;
-
-      pwndFill->GetClientRect(rectClient);
+//   bool menu_list_window::track_popup_menu(::user::interaction * puiNotify, ::user::interaction * puiParent)
+//   {
+//
+//      if(!::user::menu::track_popup_menu(puiNotify, puiParent))
+//      {
+//       
+//         return false;
+//         
+//      }
+//
+////      if(!IsWindow())
+////      {
+////
+////         if(!create_window(NULL, NULL, WS_VISIBLE | WS_CHILD, null_rect(), pwndParent, 0))
+////            return false;
+////
+////         if(!m_itemClose.m_pui->create_window(null_rect(), this, ChildIdClose))
+////            return false;
+////
+////         m_itemClose.m_pui->install_message_routing(this);
+////
+////         m_itemClose.m_button.set_window_text("r");
+////         m_itemClose.m_button.m_pschema = m_pschema->m_pschemaSysMenuButton;
+////      }
+//
+//      update_::user::command(m_pitem);
+////      _CreateButtons(m_pitem);
+//
+//      //user::AppGet()->AddFrame(this);
+//
+//  //    on_layout();
+//
+//      rect rectClient;
+////
+////      pwndParent->GetClientRect(rectClient);
+////
+////
+////      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+//
+//      puiParent->GetClientRect(rectClient);
+//
+//
+//      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+//
+//      SetTimer(::user::timer_update_menu_::user::command,300,NULL);
+//
+//      return true;
+//   }
 
 
-      SetWindowPos(0, 0, 0, rectClient.width(), rectClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
 
-      SetTimer(::user::BaseWndMenuCmdUi, 300, NULL);
-
-      return true;
-   }
-
-   void menu_list_window::_UpdateCmdUi(sp(menu_item) pitemParent)
-   {
-      
-      if(m_puiNotify == NULL)
-      {
-         
-         return;
-         
-      }
-
-      if (pitemParent == NULL)
-      {
-
-         return;
-
-      }
-
-      if(pitemParent->m_spitema == NULL)
-      {
-         
-         return;
-
-      }
-
-      menu_button_cmd_ui cmdui(get_app());
-
-      cmdui.m_pitema = pitemParent->m_spitema;
-
-      for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
-      {
-
-         menu_item * pitem = pitemParent->m_spitema->element_at(i);
-
-         cmdui.m_iIndex       = i;
-         cmdui.m_id           = pitem->m_id;
-         cmdui.m_pOther       = (sp(::user::interaction)) &pitem->m_button;
-
-         if(m_puiNotify->on_simple_update(&cmdui))
-            continue;
-
-         _UpdateCmdUi(pitem);
-
-      }
-
-   }
 
 
    void menu_list_window::_001OnTimer(::timer * ptimer)
@@ -248,17 +152,18 @@ namespace user
       
       ::user::menu::_001OnTimer(ptimer);
       
-      if(ptimer->m_nIDEvent == ::user::BaseWndMenuCmdUi)
-      {
-         _UpdateCmdUi(m_pitem);
-         RedrawWindow();
-      }
-
    }
 
 
-   void menu_list_window::_CalcSize(sp(menu_item) pitemParent, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight)
+   void menu_list_window::calc_size(menu_item * pitemParent, ::draw2d::graphics * pgraphics, int32_t & iMaxWidth, int32_t & iMaxHeight)
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
       
       if(pitemParent == NULL)
       {
@@ -276,16 +181,24 @@ namespace user
       
       for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
       {
+         
          menu_item * pitem = pitemParent->m_spitema->element_at(i);
-         size size = pgraphics->GetTextExtent(pitem->m_button.get_window_text());
+         
+         size size = pgraphics->GetTextExtent(pitem->m_pui->get_window_text());
+         
          size.cx += pitem->m_iLevel * g_base_menu_indent;
+         
          if(pitem->IsPopup())
             size.cx += 12 + 16;
+         
          if(size.cy > iMaxHeight)
             iMaxHeight = size.cy;
+         
          if(size.cx > iMaxWidth)
             iMaxWidth = size.cx;
-         _CalcSize(pitem, pgraphics, iMaxWidth, iMaxHeight);
+         
+         calc_size(pitem, pgraphics, iMaxWidth, iMaxHeight);
+         
       }
 
    }
@@ -293,6 +206,13 @@ namespace user
 
    void menu_list_window::on_layout()
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
 
       if(GetParent() == NULL)
       {
@@ -316,28 +236,39 @@ namespace user
       
       ::draw2d::memory_graphics pgraphics(allocer());
       
-      pgraphics->SelectObject(m_pschema->m_font);
+      select_font(pgraphics);
+      
       size size = pgraphics->GetTextExtent("XXXMMM");
+      
       int32_t iMaxHeight = size.cy;
+      
       int32_t iMaxWidth = size.cx;
+      
       m_iHeaderHeight = size.cy;
-      _CalcSize(m_pitem, pgraphics, iMaxWidth, iMaxHeight);
+      
+      calc_size(m_pitem, pgraphics, iMaxWidth, iMaxHeight);
+      
       m_iItemHeight = iMaxHeight + 6 + 2;
+      
       m_size.cx = iMaxWidth + 4;
 
       m_size.cy = m_iHeaderHeight + pitem->m_iSeparatorCount * 3 + pitem->m_iFullHeightItemCount * m_iItemHeight + 4;
-   //   int32_t iMaxHeight = 0;
-     // int32_t iMaxWidth = 0;
-      rect rect(4, m_iHeaderHeight + 4, m_size.cx - 8, 4);
-      string str;
-      _LayoutButtons(m_pitem, iMaxWidth + 4, rect, rectClient);
 
-      if(m_itemClose.m_button.IsWindow())
+      rect rect(4, m_iHeaderHeight + 4, m_size.cx - 8, 4);
+      
+      string str;
+      
+      layout_buttons(m_pitem, iMaxWidth + 4, rect, rectClient);
+      
+      auto & puiClose = m_itemClose.m_pui;
+      
+      if(puiClose->IsWindow())
       {
-         m_itemClose.m_button.ResizeToFit();
-         m_itemClose.m_button.GetWindowRect(rect);
-         m_itemClose.m_button.SetWindowPos(0, m_size.cx - rect.width() - 2, 2, 0, 0, SWP_NOSIZE);
-         //m_itemClose.m_button.ShowWindow(SW_NORMAL);
+         
+         puiClose->resize_to_fit();
+         
+         puiClose->MoveWindow(m_size.cx - puiClose->width() - 2, 2);
+
       }
 
 
@@ -346,8 +277,15 @@ namespace user
    }
 
 
-   void menu_list_window::_LayoutButtons(sp(menu_item) pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound)
+   void menu_list_window::layout_buttons(menu_item * pitemParent, int32_t iMaxWidth, LPRECT lprect, LPCRECT lpcrectBound)
    {
+
+      if (!m_bMenuOk)
+      {
+
+         return;
+
+      }
 
       if(pitemParent->m_spitema == NULL)
          return;
@@ -371,7 +309,7 @@ namespace user
                continue;
             lprect->bottom = lprect->top + m_iItemHeight - 2;
          }
-         pitem->m_button.SetWindowPos(
+         pitem->m_pui->SetWindowPos(
             0,
             lprect->left + pitem->m_iLevel * g_base_menu_indent,
             lprect->top,
@@ -380,7 +318,7 @@ namespace user
             0);
 
          lprect->top = lprect->bottom + 2;
-         _LayoutButtons(pitem, iMaxWidth, lprect, lpcrectBound);
+         layout_buttons(pitem, iMaxWidth, lprect, lpcrectBound);
       }
    }
 
@@ -443,159 +381,163 @@ namespace user
    }
 
 
-   void menu_list_window::_CreateButtons(sp(menu_item) pitemParent)
-   {
-      if(pitemParent->m_spitema == NULL)
-         return;
-      for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
-      {
-         menu_item * pitem = pitemParent->m_spitema->element_at(i);
-         if(!pitem->m_button.IsWindow())
-         {
-            pitem->m_button.create_window(null_rect(), this, pitem->m_id);
-            pitem->m_button.m_id = pitem->m_id;
-            
-            if(pitem->m_bPopup)
-            {
+   //void menu_list_window::create_buttons(menu_item * pitemParent)
+   //{
+   //   if(pitemParent->m_spitema == NULL)
+   //      return;
+   //   for(int32_t i = 0; i < pitemParent->m_spitema->get_size(); i++)
+   //   {
+   //      menu_item * pitem = pitemParent->m_spitema->element_at(i);
+   //      if(!pitem->m_pui->IsWindow())
+   //      {
+   //         pitem->m_pui->create_window(null_rect(), this, pitem->m_id);
+   //         pitem->m_pui->m_id = pitem->m_id;
+   //         
+   //         //if(pitem->m_bPopup)
+   //         //{
 
-               pitem->m_button.m_pschema = m_pschema->m_pschemaPopupButton;
+   //         //   pitem->m_button.m_pschema = m_pschema->m_pschemaPopupButton;
 
-            }
-            else
-            {
+   //         //}
+   //         //else
+   //         //{
 
-               pitem->m_button.m_pschema = m_pschema->m_pschemaItemButton;
+   //         //   pitem->m_button.m_pschema = m_pschema->m_pschemaItemButton;
 
-            }
+   //         //}
 
-            pitem->m_button.m_pitem = pitem;
-            pitem->m_pbase = this;
-         }
-         
-        _CreateButtons(pitem);
-         
-      }
-      
-   }
+   //         pitem->m_pui->m_pmenuitem = pitem;
+
+   //         pitem->m_pmenu = this;
+
+   //      }
+   //      
+   //     create_buttons(pitem);
+   //      
+   //   }
+   //   
+   //}
    
 
-   bool menu_list_window::BaseOnControlEvent(::user::control_event * pevent)
-   {
+   //bool menu_list_window::BaseOnControlEvent(::user::control_event * pevent)
+   //{
 
-      sp(menu_item) pitemThis = get_item();
-      
-      sp(menu_item_ptra) spitema;
-      
-      if(pitemThis.is_set())
-      {
-         
-         spitema = pitemThis->m_spitema;
-         
-      }
+   //   sp(menu_item) pitemThis = get_item();
+   //   
+   //   sp(menu_item_ptra) spitema;
+   //   
+   //   if(pitemThis.is_set())
+   //   {
+   //      
+   //      spitema = pitemThis->m_spitema;
+   //      
+   //   }
 
-      if(pevent->m_eevent == ::user::event_button_clicked)
-      {
-         
-         if(pevent->m_puie == &m_itemClose.m_button)
-         {
-            
-            if(m_bAutoClose)
-            {
-               
-               send_message(WM_CLOSE);
-               
-            }
-            
-            if(base_class < ::user::place_holder > ::bases(GetParent()))
-            {
-               
-               GetParent()->GetParent()->send_message(m_uiMessage);
-               
-            }
-            else
-            {
-            
-               GetParent()->send_message(m_uiMessage);
-            
-            }
-            
-            return true;
-            
-         }
-         else
-         {
-            
-            if(pevent->m_puie->m_id != "separator" && pitemThis.is_set())
-            {
+   //   if(pevent->m_eevent == ::user::event_button_clicked)
+   //   {
+   //      
+   //      if(pevent->m_puie == m_itemClose.m_pui)
+   //      {
+   //         
+   //         if(m_bAutoClose)
+   //         {
+   //            
+   //            send_message(WM_CLOSE);
+   //            
+   //         }
+   //         
+   //         if(base_class < ::user::place_holder > ::bases(GetParent()))
+   //         {
+   //            
+   //            GetParent()->GetParent()->send_message(m_iMessage);
+   //            
+   //         }
+   //         else
+   //         {
+   //         
+   //            GetParent()->send_message(m_iMessage);
+   //         
+   //         }
+   //         
+   //         return true;
+   //         
+   //      }
+   //      else
+   //      {
+   //         
+   //         if(pevent->m_puie->m_id != "separator" && pitemThis.is_set())
+   //         {
 
-               menu_item * pitem = pitemThis->find(pevent->m_puie->m_id);
+   //            menu_item * pitem = pitemThis->find(pevent->m_puie->m_id);
 
-               if(pitem != NULL && !pitem->m_bPopup)
-               {
-                  
-                  if (m_puiNotify != NULL)
-                  {
+   //            if(pitem != NULL && !pitem->m_bPopup)
+   //            {
+   //               
+   //               if (m_puiNotify != NULL)
+   //               {
 
-                     m_puiNotify->_001SendCommand(pitem->m_id);
+   //                     ::user::command command(pevent->m_puie->m_id);
+   //                     
+   //                     m_puiNotify->_001SendCommand(&command);
 
-                  }
-                  
-                  if(m_bAutoClose)
-                  {
-                     
-                     send_message(WM_CLOSE);
-                     
-                  }
-                  
-                  if(base_class < ::user::place_holder > ::bases(GetParent()))
-                  {
-                     
-                     GetParent()->GetParent()->send_message(m_uiMessage);
-                     
-                  }
-                  else
-                  {
-                     
-                     GetParent()->send_message(m_uiMessage);
-                     
-                  }
-                  
-                  return true;
+   //               }
+   //               
+   //               //if(m_bAutoClose)
+   //               //{
+   //               //   
+   //               //   send_message(WM_CLOSE);
+   //               //   
+   //               //}
+   //               //
+   //               //if(base_class < ::user::place_holder > ::bases(GetParent()))
+   //               //{
+   //               //   
+   //               //   GetParent()->GetParent()->send_message(m_uiMessage);
+   //               //   
+   //               //}
+   //               //else
+   //               //{
+   //               //   
+   //               //   GetParent()->send_message(m_uiMessage);
+   //               //   
+   //               //}
+   //               //
+   //               //return true;
 
-               }
-               
-            }
-            
-         }
-         
-      }
-      
-      return false;
-      
-   }
+   //            }
+   //            
+   //         }
+   //         
+   //      }
+   //      
+   //   }
+   //   
+   //   return false;
+   //   
+   //}
 
    
-   void menu_list_window::destroy_menu()
-   {
-      
-      {
-      
-         interaction_spa uiptra = m_uiptraChild;
-      
-         for(index i = 0; i < uiptra.get_count(); i++)
-         {
-         
-            uiptra[i]->DestroyWindow();
-         
-         }
-         
-      }
-      
-      m_uiptraChild.remove_all();
-      
-      ::user::menu_base::destroy_menu();
-      
-   }
+   //void menu_list_window::destroy_menu()
+   //{
+   //   
+   //   {
+   //   
+   //      interaction_spa uiptra = m_uiptraChild;
+   //   
+   //      for(index i = 0; i < uiptra.get_count(); i++)
+   //      {
+   //      
+   //         uiptra[i]->DestroyWindow();
+   //      
+   //      }
+   //      
+   //   }
+   //   
+   //   m_uiptraChild.remove_all();
+   //   
+   //   ::user::menu::destroy_menu();
+   //   
+   //}
 
 
 } // namespace user

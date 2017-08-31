@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 #include "base/database/simpledb/simpledb.h"
 
@@ -73,7 +73,7 @@ namespace core
 
       m_pdocmanager = NULL;
 
-      m_psignal->connect(this, &application::on_application_signal);
+      //add_(this, &application::on_application_signal);
 
       m_eexclusiveinstance = ExclusiveInstanceNone;
       m_peventReady = NULL;
@@ -304,16 +304,16 @@ namespace core
             data_set(".local://system_locale", Session.get_locale());
          }
 
-         if (command()->m_varTopicQuery["locale"].get_count() > 0)
+         if (handler()->m_varTopicQuery["locale"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["locale"].stra()[0];
+            str = handler()->m_varTopicQuery["locale"].stra()[0];
             data_set(".local://system_locale", str);
             data_set("locale", str);
             Session.set_locale(str, ::action::source::database());
          }
-         else if (command()->m_varTopicQuery["lang"].get_count() > 0)
+         else if (handler()->m_varTopicQuery["lang"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["lang"].stra()[0];
+            str = handler()->m_varTopicQuery["lang"].stra()[0];
             data_set(".local://system_locale", str);
             data_set(".local://locale", str);
             Session.set_locale(str, ::action::source::database());
@@ -349,9 +349,9 @@ namespace core
             data_set(".local://system_schema", Session.get_schema());
          }
 
-         if (command()->m_varTopicQuery["schema"].get_count() > 0)
+         if (handler()->m_varTopicQuery["schema"].get_count() > 0)
          {
-            str = command()->m_varTopicQuery["schema"].stra()[0];
+            str = handler()->m_varTopicQuery["schema"].stra()[0];
             data_set(".local://system_schema", str);
             data_set(".local://schema", str);
             Session.set_schema(str, ::action::source::database());
@@ -479,7 +479,7 @@ namespace core
       if (!is_session() && !is_system())
       {
 
-         if (directrix()->m_varTopicQuery.has_property("install"))
+         if (handler()->m_varTopicQuery.has_property("install"))
          {
 
             if (is_user_service())
@@ -698,64 +698,69 @@ namespace core
 
 #endif
 
-   void application::OnAppLanguage(signal_details * pobj)
+//    void application::send_app_language_changed()
+//    {
+
+//       ::message::message message(this);
+
+//       message.m_id = ::message::type_language;
+
+//       route_message(&message);
+      
+//    }
+
+
+
+   void application::OnUpdateRecentFileMenu(::user::command * pcommand)
    {
-      UNREFERENCED_PARAMETER(pobj);
-      m_signalAppLanguageChange.emit();
-   }
-
-
-
-   void application::OnUpdateRecentFileMenu(cmd_ui * pcmdui)
-   {
-      UNREFERENCED_PARAMETER(pcmdui);
+      UNREFERENCED_PARAMETER(pcommand);
       /*TRACE("\nCVmsGenApp::OnUpdateRecentFileMenu");
       if(m_pRecentFileList == NULL)
       {
-      pcmdui->Enable(FALSE);
+      pcommand->Enable(FALSE);
       //string str;
       //str.load_string(IDS_RECENT_FILE);
-      //pcmdui->SetText(str);
+      //pcommand->SetText(str);
       for (int32_t iMRU = 1; iMRU < 10; iMRU++)
-      pcmdui->m_pMenu->DeleteMenu(pcmdui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
       return;
       }
 
       ASSERT(m_pRecentFileList->m_arrNames != NULL);
 
-      ::user::menu* pMenu = pcmdui->m_pMenu;
+      ::user::menu* pMenu = pcommand->m_pMenu;
       if (m_pRecentFileList->m_strOriginal.is_empty() && pMenu != NULL)
-      pMenu->GetMenuString(pcmdui->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
+      pMenu->GetMenuString(pcommand->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
 
       if (m_pRecentFileList->m_arrNames[0].is_empty())
       {
       // no MRU files
       if (!m_pRecentFileList->m_strOriginal.is_empty())
-      pcmdui->SetText(m_pRecentFileList->m_strOriginal);
-      pcmdui->Enable(FALSE);
+      pcommand->SetText(m_pRecentFileList->m_strOriginal);
+      pcommand->Enable(FALSE);
       return;
       }
 
-      if (pcmdui->m_pMenu == NULL)
+      if (pcommand->m_pMenu == NULL)
       return;
 
-      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcmdui->m_pMenu, pcmdui->m_nID);
+      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcommand->m_pMenu, pcommand->m_nID);
 
       //if(pmenu == NULL)
       //{
-      // pmenu = pcmdui->m_pMenu;
+      // pmenu = pcommand->m_pMenu;
       //}
 
-      bool bCmdUIMenu = pmenu == pcmdui->m_pMenu;
+      bool bCmdUIMenu = pmenu == pcommand->m_pMenu;
 
       if(!bCmdUIMenu)
       return;
 
-      int32_t nID = pcmdui->m_nID;
+      int32_t nID = pcommand->m_nID;
       int32_t nIndex = CMenuUtil::GetMenuPosition(pmenu, nID);
 
       for (int32_t iMRU = 0; iMRU < m_pRecentFileList->m_nSize; iMRU++)
-      pcmdui->m_pMenu->DeleteMenu(pcmdui->m_nID + iMRU, MF_BYCOMMAND);
+      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
 
 
 
@@ -791,8 +796,8 @@ namespace core
       char buf[10];
       wsprintf(buf, "&%d ", (iMRU+1+m_pRecentFileList->m_nStart) % 10);
 
-      //      pcmdui->m_pMenu->InsertMenu(pcmdui->m_nIndex++,
-      //         MF_STRING | MF_BYPOSITION, pcmdui->m_nID++,
+      //      pcommand->m_pMenu->InsertMenu(pcommand->m_nIndex++,
+      //         MF_STRING | MF_BYPOSITION, pcommand->m_nID++,
       //         string(buf) + strTemp);
       pmenu->InsertMenu(nIndex,
       MF_STRING | MF_BYPOSITION, nID,
@@ -801,19 +806,19 @@ namespace core
       nID++;
       if(bCmdUIMenu)
       {
-      pcmdui->m_nIndex = nIndex;
-      pcmdui->m_nID = nID;
+      pcommand->m_nIndex = nIndex;
+      pcommand->m_nID = nID;
       }
       }
 
       // update end menu count
       if(bCmdUIMenu)
       {
-      pcmdui->m_nIndex--; // point to last menu added
-      pcmdui->m_nIndexMax = pcmdui->m_pMenu->GetMenuItemCount();
+      pcommand->m_nIndex--; // point to last menu added
+      pcommand->m_nIndexMax = pcommand->m_pMenu->GetMenuItemCount();
       }
 
-      pcmdui->m_bEnableChanged = TRUE;    // all the added items are enabled*/
+      pcommand->m_bEnableChanged = TRUE;    // all the added items are enabled*/
 
    }
 
@@ -953,11 +958,11 @@ namespace core
       // call doc-template idle hook
       ::count count = 0;
       if (m_pdocmanager != NULL)
-      count = document_manager().get_template_count();
+      count = document_manager()->get_template_count();
 
       for(index index = 0; index < count; index++)
       {
-      sp(impact_system) ptemplate = document_manager().get_template(index);
+      sp(impact_system) ptemplate = document_manager()->get_template(index);
       ASSERT_KINDOF(impact_system, ptemplate);
       ptemplate->on_idle();
       }
@@ -973,13 +978,13 @@ namespace core
    /////////////////////////////////////////////////////////////////////////////
    // Special exception handling
 
-   void application::process_window_procedure_exception(::exception::base* e, signal_details * pobj)
+   void application::process_window_procedure_exception(::exception::base* e, ::message::message * pobj)
    {
       ENSURE_ARG(e != NULL);
       ENSURE_ARG(pobj != NULL);
       SCAST_PTR(::message::base, pbase, pobj);
       // handle certain messages in thread
-      switch (pbase->m_uiMessage)
+      switch (pbase->m_id)
       {
       case WM_CREATE:
       case WM_PAINT:
@@ -990,7 +995,7 @@ namespace core
       //linux UINT nIDP = __IDP_INTERNAL_FAILURE;   // generic message string
       const char * nIDP = "Internal Failure";
       pbase->set_lresult(0);        // sensible default
-      if (pbase->m_uiMessage == WM_COMMAND)
+      if (pbase->m_id == WM_COMMAND)
       {
          if (pbase->m_lparam == 0)
             //linux nIDP = __IDP_COMMAND_FAILURE; // command (not from a control)
@@ -1008,12 +1013,12 @@ namespace core
       }
    }
 
-   bool application::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
-
+   
+   void application::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target_interface::_001OnCmdMsg(pcmdmsg))
-         return TRUE;
-      return 0;
+      
+      ::base::application::_001OnCmdMsg(pcommand);
+
    }
 
 
@@ -1097,7 +1102,7 @@ namespace core
    // Global File commands
    //   ON_COMMAND(ID_APP_EXIT, &application::OnAppExit)
    // MRU - most recently used file menu
-   //   ON_UPDATE_COMMAND_UI(ID_FILE_MRU_FILE1, &application::OnUpdateRecentFileMenu)
+   //   ON_UPDATE_::user::command(ID_FILE_MRU_FILE1, &application::OnUpdateRecentFileMenu)
    //   ON_COMMAND_EX_RANGE(ID_FILE_MRU_FILE1, ID_FILE_MRU_FILE16, &application::OnOpenRecentFile)
    //}}__MSG_MAP
    // // END_MESSAGE_MAP()
@@ -1701,13 +1706,13 @@ namespace core
          chFirst = strId[0];
       }
       /*      if (m_pdocmanager != NULL)
-      document_manager()._001OnFileNew();*/
+      document_manager()->_001OnFileNew();*/
    }
 
    void application::on_file_open()
    {
       ENSURE(m_pdocmanager != NULL);
-      //document_manager().on_file_open();
+      //document_manager()->on_file_open();
    }
 
 
@@ -1898,7 +1903,7 @@ namespace core
 
       ASSERT(m_puiMain != NULL);
 
-      ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->send_message(WM_CLOSE);
+      m_puiMain->m_puiThis->send_message(WM_CLOSE);
 
    }
 
@@ -1911,12 +1916,15 @@ namespace core
             return;
 
          // hide the application's windows before closing all the documents
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->ShowWindow(SW_HIDE);
+         m_puiMain->m_puiThis->ShowWindow(SW_HIDE);
          // trans    m_puiMain->ShowOwnedPopups(FALSE);
 
          // put the window at the bottom of zorder, so it isn't activated
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->SetWindowPos(ZORDER_BOTTOM, 0, 0, 0, 0,
-               SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+         m_puiMain->m_puiThis->zorder(ZORDER_BOTTOM, SWP_NOACTIVATE);
+
+         m_puiMain->m_puiThis->wait_redraw();
+
+
       }
       catch (...)
       {
@@ -1931,7 +1939,7 @@ namespace core
    bool application::save_all_modified()
    {
       /*      if (m_pdocmanager != NULL)
-      return document_manager().save_all_modified();*/
+      return document_manager()->save_all_modified();*/
       return TRUE;
    }
 
@@ -1940,7 +1948,7 @@ namespace core
    bool application::OnDDECommand(LPTSTR lpszCommand)
    {
       /*      if (m_pdocmanager != NULL)
-      return document_manager().OnDDECommand(lpszCommand);
+      return document_manager()->OnDDECommand(lpszCommand);
       else*/
       return FALSE;
    }
@@ -2044,20 +2052,20 @@ namespace core
    void application::RegisterShellFileTypes(bool bCompat)
    {
       ENSURE(m_pdocmanager != NULL);
-      //      document_manager().RegisterShellFileTypes(bCompat);
+      //      document_manager()->RegisterShellFileTypes(bCompat);
    }
 
    void application::UnregisterShellFileTypes()
    {
       ENSURE(m_pdocmanager != NULL);
-      //    document_manager().UnregisterShellFileTypes();
+      //    document_manager()->UnregisterShellFileTypes();
    }
 
 
    int32_t application::get_open_document_count()
    {
       ENSURE(m_pdocmanager != NULL);
-      //  return document_manager().get_open_document_count();
+      //  return document_manager()->get_open_document_count();
       return 0;
    }
 
@@ -2401,7 +2409,7 @@ namespace core
    return bResult;
    }
 
-   //#include "framework.h"*/
+   #include "framework.h"*/
 
 
 
@@ -2425,16 +2433,24 @@ namespace core
 
    bool application::does_launch_window_on_startup()
    {
+      
       return true;
+      
    }
 
+   
    bool application::activate_app()
    {
+      
       if (m_puiMain != NULL)
       {
-         ((::user::interaction *) m_puiMain->m_pvoidUserInteraction)->ShowWindow(SW_SHOWNORMAL);
+         
+         m_puiMain->m_puiThis->ShowWindow(SW_SHOWNORMAL);
+         
       }
+      
       return true;
+      
    }
 
 
@@ -2508,7 +2524,7 @@ namespace core
 
 
 
-   void application::_001OnFileNew(signal_details * pobj)
+   void application::_001OnFileNew(::message::message * pobj)
    {
 
       var varFile;
@@ -2524,18 +2540,20 @@ namespace core
    }
 
 
+   
+//   bool application::on_open_document_file(var varFile)
+//   {
+//   
+//      return _001OpenDocumentFile(varFile);
+//      
+//   }
+   
    ::user::document * application::_001OpenDocumentFile(var varFile)
    {
-      string strId = m_strId;
-      char chFirst = '\0';
-      if (strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
 
-      return NULL;
+      request_file(varFile);
 
-      //      return m_pimpl->_001OpenDocumentFile(varFile);
+      return varFile["document"].cast < ::user::document >();
 
    }
 
@@ -2622,7 +2640,7 @@ namespace core
 
 
       /*      if (m_pdocmanager != NULL)
-      document_manager().dump(dumpcontext);*/
+      document_manager()->dump(dumpcontext);*/
 
       dumpcontext << "\nm_nWaitCursorCount = " << m_iWaitCursorCount;
       dumpcontext << "\nm_nNumPreviewPages = " << m_nNumPreviewPages;
@@ -2637,9 +2655,9 @@ namespace core
 
 
 
-   void application::install_message_handling(::message::dispatch * pdispatch)
+   void application::install_message_routing(::message::sender * psender)
    {
-      base::application::install_message_handling(pdispatch);
+      base::application::install_message_routing(psender);
    }
 
 
@@ -2759,10 +2777,10 @@ namespace core
       //}
 
       //if(is_system()
-      //   && command_thread()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-gtech/alarm"
-      //   && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+      //   && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
+      //   && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+      //   && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
+      //   && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       //{
       //   System.http().defer_auto_initialize_proxy_configuration();
       //}
@@ -2776,10 +2794,10 @@ namespace core
       //   }
       //
       //   if(is_system()
-      //      && command_thread()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_netnode"
-      //      && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+      //      && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
+      //      && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_netnode"
+      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       //   {
       //      System.http().defer_auto_initialize_proxy_configuration();
       //   }
@@ -2844,10 +2862,10 @@ namespace core
 
    }
 
-   void application::pre_translate_message(signal_details * pobj)
+   void application::pre_translate_message(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_uiMessage == WM_USER + 124 && pbase->m_pwnd == NULL)
+      if (pbase->m_id == WM_USER + 124 && pbase->m_pwnd == NULL)
       {
          /*      OnMachineEvent((flags < machine_event::e_flag> *) pmsg->lParam);
          delete (flags < machine_event::e_flag> *) pmsg->lParam;*/
@@ -2953,7 +2971,7 @@ namespace core
    {
       if (m_strId == "session" || m_strAppName == "session")
       {
-         if (!directrix()->m_varTopicQuery.has_property("session_start"))
+         if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
             ::multithreading::post_quit(&System);
          }
@@ -2987,7 +3005,7 @@ namespace core
 
       if (m_strId == "session")
       {
-         if (!directrix()->m_varTopicQuery.has_property("session_start"))
+         if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
             ::multithreading::post_quit(&System);
          }
@@ -3004,10 +3022,10 @@ namespace core
 
 
 
-   void application::on_application_signal(signal_details * pobj)
+   void application::on_application_signal(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      //      SCAST_PTR(signal_details, psignal, pobj);
+      //      SCAST_PTR(::message::message, psignal, pobj);
       /*if(psignal->m_esignal == signal_exit_instance)
       {
       if(m_copydesk.is_set()
@@ -3189,9 +3207,11 @@ namespace core
 
 
 
-   sp(::aura::application) application::get_system()
+   ::aura::application * application::get_system()
    {
+      
       return new application();
+      
    }
 
 
@@ -3389,7 +3409,7 @@ namespace core
    }
 
 
-   void application::data_on_after_change(signal_details * pobj)
+   void application::data_on_after_change(::message::message * pobj)
    {
       SCAST_PTR(::database::change_event, pchange, pobj);
       if (pchange->m_key.m_id == "ca2.savings")
@@ -3534,10 +3554,7 @@ namespace core
    void application::_001OnFranceExit()
    {
 
-
-      document_manager().close_all_documents(true);
-
-
+      document_manager()->close_all_documents(true);
 
    }
 

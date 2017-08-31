@@ -1,7 +1,6 @@
-//#include "framework.h"
-//#include "axis/net/net_sockets.h"
-//#include "simpledb_socket.h"
-//#include "simpledb_socket_thread.h"
+#include "framework.h"
+#include "simpledb_socket.h"
+#include "simpledb_socket_thread.h"
 
 
 namespace simpledb
@@ -29,10 +28,10 @@ namespace simpledb
    }
 
 
-   void socket_thread::install_message_handling(::message::dispatch * pinterface)
+   void socket_thread::install_message_routing(::message::sender * pinterface)
    {
 
-      IGUI_WIN_MSG_LINK(WM_APP, pinterface, this, &socket_thread::OnApp);
+      IGUI_MSG_LINK(WM_APP, pinterface, this, &socket_thread::OnApp);
 
    }
 
@@ -89,7 +88,7 @@ namespace simpledb
    }
 
 
-   void socket_thread::OnApp(signal_details * pobj)
+   void socket_thread::OnApp(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 0)
@@ -122,7 +121,7 @@ namespace simpledb
                   while (true)
                   {
                      select(8,0);
-                     if(!m_pservice-get_run_thread())
+                     if(!m_pservice-thread_get_run())
                         break;
                   }
                   if(!m_pservice->get_run_service())

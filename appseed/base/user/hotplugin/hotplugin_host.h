@@ -130,7 +130,7 @@ namespace hotplugin
       //virtual bool ShowWindow(int nCmdShow);
       //virtual bool DestroyWindow();
 
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase) override;
       virtual void plugin_message_handler(UINT message,WPARAM wparam,LPARAM lparam, bool bEnsureTx);
       virtual void plugin_message_handler(MESSAGE * pmsg, bool bEnsureTx);
 

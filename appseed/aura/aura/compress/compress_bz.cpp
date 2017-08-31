@@ -295,7 +295,7 @@ bool uncompress_bz::transfer(::file::ostream & ostreamUncompressed, ::file::istr
 //   }
 //   string strUn(lpcszUncompressed);
 //   //   strUn += ".tmp";
-//   _FILE * fileUn = fopen_dup(strUn, "wb+");
+//   FILE * fileUn = fopen_dup(strUn, "wb+");
 //   if (fileUn == NULL)
 //   {
 //      BZ2_bzclose(file);

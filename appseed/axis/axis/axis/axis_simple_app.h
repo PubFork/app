@@ -5,7 +5,7 @@ namespace axis
 {
 
    class CLASS_DECL_AXIS app:
-      virtual public ::axis::system
+      virtual public ::axis::application
    {
    public:
 

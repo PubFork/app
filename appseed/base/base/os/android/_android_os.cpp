@@ -1,8 +1,8 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "windows_window_gdi.h"
 
-//O volume na unidade Z ‚ eco
- //O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+ //O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 
  //Pasta de Z:\ca2\app\appseed\base\base\os\windows
 
@@ -22,4 +22,4 @@
 #endif
 //2015-01-06  04:25                 0 _windows_os.cpp"
 //               7 arquivo(s)         14.693 bytes
-//               0 pasta(s)   33.004.007.424 bytes dispon¡veis
+//               0 pasta(s)   33.004.007.424 bytes disponï¿½veis

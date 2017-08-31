@@ -73,8 +73,8 @@ namespace draw2d_quartz2d
       
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
       
-//      virtual bool update_window(::user::window * pwnd, signal_details * pobj);
-  //    virtual bool print_window(::user::window * pwnd, signal_details * pobj);
+//      virtual bool update_window(::user::window * pwnd, ::message::message * pobj);
+  //    virtual bool print_window(::user::window * pwnd, ::message::message * pobj);
       
       void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
       

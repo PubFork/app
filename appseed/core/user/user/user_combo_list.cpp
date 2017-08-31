@@ -36,24 +36,24 @@ namespace user
    }
 
 
-   void combo_list::install_message_handling(::message::dispatch * pdispatch)
+   void combo_list::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_handling(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS, pdispatch, this, &combo_list::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_KILLFOCUS, pdispatch, this, &combo_list::_001OnKillFocus);
-      IGUI_WIN_MSG_LINK(WM_CLOSE, pdispatch, this, &combo_list::_001OnClose);
-      IGUI_WIN_MSG_LINK(WM_ACTIVATE, pdispatch, this, &combo_list::_001OnActivate);
-      IGUI_WIN_MSG_LINK(WM_MOUSEACTIVATE, pdispatch, this, &combo_list::_001OnMouseActivate);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &combo_list::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &combo_list::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &combo_list::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &combo_list::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MBUTTONDOWN, pdispatch, this, &combo_list::_001OnMButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN, pdispatch, this, &combo_list::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &combo_list::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &combo_list::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SETFOCUS, psender, this, &combo_list::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &combo_list::_001OnKillFocus);
+      IGUI_MSG_LINK(WM_CLOSE, psender, this, &combo_list::_001OnClose);
+      IGUI_MSG_LINK(WM_ACTIVATE, psender, this, &combo_list::_001OnActivate);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE, psender, this, &combo_list::_001OnMouseActivate);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &combo_list::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &combo_list::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &combo_list::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &combo_list::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MBUTTONDOWN, psender, this, &combo_list::_001OnMButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, psender, this, &combo_list::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &combo_list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &combo_list::_001OnShowWindow);
 
    }
 
@@ -128,7 +128,7 @@ namespace user
 
       br->create_solid(ARGB(255, 84, 84, 77));
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -233,7 +233,7 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -340,7 +340,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -442,7 +442,7 @@ namespace user
       //GetFont()->m_eunitFontSize = ::draw2d::unit_pixel;
       //GetFont()->m_bUpdated = false;
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       //pgraphics->SelectObject(br);
 
@@ -506,7 +506,7 @@ namespace user
 
       pgraphics->CreateCompatibleDC(NULL);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -639,7 +639,7 @@ namespace user
       return TRUE;
    }
 
-   void combo_list::_001OnShowWindow(signal_details * pobj)
+   void combo_list::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -655,7 +655,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnKillFocus(signal_details * pobj)
+   void combo_list::_001OnKillFocus(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -668,7 +668,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnSetFocus(signal_details * pobj)
+   void combo_list::_001OnSetFocus(::message::message * pobj)
    {
 
       SCAST_PTR(::message::set_focus, psetfocus, pobj);
@@ -681,7 +681,7 @@ namespace user
 
 
 
-   void combo_list::_001OnActivate(signal_details * pobj)
+   void combo_list::_001OnActivate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::activate, pactivate, pobj);
@@ -740,7 +740,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnMouseActivate(signal_details * pobj)
+   void combo_list::_001OnMouseActivate(::message::message * pobj)
    {
 
       //      SCAST_PTR(::message::mouse_activate, pactivate, pobj);
@@ -748,7 +748,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnLButtonUp(signal_details * pobj)
+   void combo_list::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -757,7 +757,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnKeyDown(signal_details * pobj)
+   void combo_list::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -802,14 +802,14 @@ namespace user
    }
 
 
-   void combo_list::_001OnKeyUp(signal_details * pobj)
+   void combo_list::_001OnKeyUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void combo_list::_001OnLButtonDown(signal_details * pobj)
+   void combo_list::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -844,7 +844,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnMButtonDown(signal_details * pobj)
+   void combo_list::_001OnMButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -870,7 +870,7 @@ namespace user
 
    }
 
-   void combo_list::_001OnRButtonDown(signal_details * pobj)
+   void combo_list::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -897,7 +897,7 @@ namespace user
    }
 
 
-   void combo_list::_001OnMouseMove(signal_details * pobj)
+   void combo_list::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -915,7 +915,7 @@ namespace user
    }
 
 
-   void combo_list::_001OnClose(signal_details * pobj)
+   void combo_list::_001OnClose(::message::message * pobj)
    {
 
       pobj->m_bRet = true;
@@ -1098,7 +1098,7 @@ namespace user
 
    //   }
 
-   //   return ::user::schema::get_font(spfont);
+   //   return ::user::style::get_font(spfont);
 
    //}
 

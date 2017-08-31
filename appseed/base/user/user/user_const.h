@@ -4,6 +4,37 @@
 namespace user
 {
 
+   
+   enum e_element
+   {
+      
+      element_none,
+      element_frame_window,
+      element_tab,
+      element_close_tab_button,
+      element_status_image,
+      element_text,
+      element_icon,
+      element_border,
+      element_client,
+      element_area,
+      element_drop_down,
+      element_item,
+      element_search_edit,
+      element_search_ok,
+      element_scrollbar_rect,
+      element_scrollbar_rectA,
+      element_scrollbar_rectB,
+      element_scrollbar_pageA,
+      element_scrollbar_pageB,
+      
+      element_split = 10000,
+      
+   };
+   
+   using translucency_map = ::map < e_element, e_element, e_translucency, e_translucency >;
+
+   
    enum e_event
    {
       event_initialize_control,
@@ -89,11 +120,13 @@ namespace user
       color_tab_layout_background,
 
    };
+   
+   using color_map = map < e_color,e_color,COLORREF,COLORREF >;
 
    enum e_font
    {
 
-      font_none,
+      font_default,
       font_button,
       font_plain_edit,
       font_tree,
@@ -104,6 +137,83 @@ namespace user
 
    };
 
+   using font_map = map < e_font,e_font,::draw2d::font_sp >;
 
+   enum e_flag
+   {
+
+      flag_none,
+      flag_border,
+      
+   };
+
+   using flag_map = map < e_flag, e_flag, bool, bool >;
+   
+   enum e_rect
+   {
+      
+      rect_none,
+      rect_menu_margin,
+
+   };
+   
+   using rect_map = ::map < e_rect, e_rect, rect, rect >;
+   
+   enum e_int
+   {
+      
+      int_none,
+      int_border,
+      int_element_padding,
+      int_menu_button_padding,
+      int_check_box_size
+      
+   };
+   
+   using int_map = ::map < e_int, e_int, int, int >;
+
+   enum e_timer
+   {
+      
+      timer_command_probe = 11225,
+      timer_menu
+      
+   };
+
+
+   enum e_control_function
+   {
+      // Text got from control m_uiId member
+      control_function_static,
+      // Text got from control m_uiText member
+      control_function_static2,
+      control_function_data_selection,
+      control_function_check_box,
+      control_function_duplicate_on_check_box,
+      control_function_disable_on_check_box,
+      control_function_save_on_change,
+      control_function_vms_data_edit,
+      control_function_action,
+      control_function_edit_multi_line,
+   };
+
+
+   enum e_control_data_type
+   {
+      control_data_type_string,
+      control_data_type_natural,
+   };
+
+
+   enum e_control_ddx
+   {
+      
+      control_ddx_none,
+      control_ddx_flags,
+      control_ddx_dbflags,
+
+   };
+
+   
 } // namespace user
 

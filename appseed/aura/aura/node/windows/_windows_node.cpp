@@ -41,3 +41,10 @@
 
 #include "windows_tts_speaker.cpp"
 #include "windows_console_window.cpp"
+
+
+
+#include "windows_timer.cpp"
+
+
+

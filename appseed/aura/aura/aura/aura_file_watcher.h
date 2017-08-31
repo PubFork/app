@@ -203,7 +203,7 @@ namespace file_watcher
    //   file_watcher_pool() {}
    //   virtual ~file_watcher_pool() {}
 
-   //   virtual void install_message_handling(::message::dispatch * pdispatch);
+   //   virtual void install_message_routing(::message::sender * psender);
 
    //   /// Add a directory watch
    //   /// @exception file_not_found_exception Thrown when the requested directory does not exist

@@ -22,7 +22,7 @@ namespace base
    int32_t app::main()
    {
 
-      _init_file();
+
 
       TCHAR *cmd = GetCommandLine();
 

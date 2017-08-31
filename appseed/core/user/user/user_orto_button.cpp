@@ -80,7 +80,7 @@ namespace user
 
          get_window_text(str);
 
-         select_font(pgraphics, font_button, this);
+         select_font(pgraphics, font_button);
 
          pgraphics->set_text_color(crText);
 
@@ -118,21 +118,21 @@ namespace user
    }
 
 
-   void orto_button::_001OnShowWindow(signal_details * pobj)
+   void orto_button::_001OnShowWindow(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void orto_button::_001OnLButtonDown(signal_details * pobj)
+   void orto_button::_001OnLButtonDown(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
 
    }
 
-   void orto_button::_001OnLButtonUp(signal_details * pobj)
+   void orto_button::_001OnLButtonUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -223,14 +223,14 @@ namespace user
 
    }
 
-   void orto_button::install_message_handling(::message::dispatch *pinterface)
+   void orto_button::install_message_routing(::message::sender *pinterface)
    {
-      ::user::button::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &orto_button::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &orto_button::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &orto_button::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &orto_button::_001OnSize);
-      //   //IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&orto_button::_001OnTimer);
+      ::user::button::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &orto_button::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &orto_button::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &orto_button::_001OnLButtonUp);
+      //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &orto_button::_001OnSize);
+      //   //IGUI_MSG_LINK(WM_TIMER,pinterface,this,&orto_button::_001OnTimer);
    }
 
 

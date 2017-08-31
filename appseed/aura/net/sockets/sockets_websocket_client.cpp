@@ -205,7 +205,7 @@ int client_send(memory & m, int fin, const char* src)
       + 1	//0x00
       + 1;	//0xFF
 
-   if (len >= 127)
+   if (len >= 126)
    {
 
       if (len >= 65536)
@@ -277,10 +277,20 @@ int client_send(memory & m, int fin, const char* src)
 }
 
 
-int client_send(memory & m, const char* src)
+int client_send_text(memory & m, const char* src)
 {
 
-   return client_send(m, 0x82, src);
+   return client_send(m, 0x81, src);
+
+}
+
+
+int client_send_text_masked(memory & m, const char* src)
+{
+
+   memory m2(src, strlen(src));
+
+   return client_send(m, 0x81, m2, true);
 
 }
 
@@ -352,6 +362,8 @@ namespace sockets
       m_bExpectRequest = true;
 
       m_emethod = http_method_get;
+
+      m_dwLastPing = get_tick_count();
 
    }
 
@@ -480,7 +492,8 @@ namespace sockets
          //   inheader(__id(accept_encoding)) = "gzip,deflate";
          //}
          //inheader("Accept-Charset") = "ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-         inheader(__id(user_agent)) = MyUseragent();
+         string strUserAgent = MyUseragent();
+         inheader(__id(user_agent)) = strUserAgent;
       }
       //inheader("Content-Length") = 0;
       inheader("Upgrade") = "websocket";
@@ -488,15 +501,27 @@ namespace sockets
 
       memory m;
 
-      m.random_bytes(32);
+      m.random_bytes(16);
 
       m_strBase64 = System.base64().encode(m);
 
+      int iLen = m_strBase64.get_length();
+
       inheader("Sec-WebSocket-Key") = m_strBase64;
-      inheader("Sec-WebSocket-Protocol") = m_strWebSocketProtocol;
+      if (m_strWebSocketProtocol.has_char())
+      {
+         inheader("Sec-WebSocket-Protocol") = m_strWebSocketProtocol;
+
+      }
       inheader("Sec-WebSocket-Version") = "13";
-      string strOrigin = m_protocol + "://" + m_host;
-      inheader("Origin") = strOrigin;
+      
+      if (m_strOrigin.has_char())
+      {
+
+         inheader("Origin") = m_strOrigin;
+
+      }
+
 
       /*      if (GetUrlPort() != 80 && GetUrlPort() != 443)
       inheader(__id(host)) = GetUrlHost() + ":" + ::str::from(GetUrlPort());
@@ -564,6 +589,15 @@ namespace sockets
 
                   m_strWebSocketProtocol  = outheader("sec-websocket-protocol");
 
+                  output_debug_string("\n\nnow : websocket\n");
+
+                  if (m_strWebSocketProtocol.has_char())
+                  {
+
+                     output_debug_string("Sec-WebSocket-Protocol: "+ m_strWebSocketProtocol +"\n");
+
+                  }
+
                }
 
             }
@@ -595,7 +629,7 @@ namespace sockets
          if(m_bTls)
          {
             InitializeContext("",TLS_client_method());
-            m_strTlsHostName = m_host;
+            //m_strTlsHostName = m_host;
          }
          else
          {
@@ -625,11 +659,11 @@ namespace sockets
 
       string strJson;
 
-      varJson.get_json(strJson, false);
+      varJson.get_json(strJson, true);
 
       memory m;
 
-      client_send(m, strJson);
+      client_send_text_masked(m, strJson);
 
       write(m.get_data(), m.get_size());
 
@@ -936,12 +970,14 @@ namespace sockets
 
       string str((const char *) pdata, len);
 
-      ::fork(get_app(), [=]()
-      {
+      //::fork(get_app(), [=]()
+      //{
          
+         // DO FORK if necessary only in inner loops, 
+         // taking care of only writing to websocket when it is proper.
          on_websocket_data(str);
 
-      });
+      //});
 
       
 

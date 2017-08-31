@@ -1,4 +1,4 @@
-﻿//#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userfs
@@ -24,21 +24,21 @@ namespace userfs
    }
 
 
-   void list::install_message_handling(::message::dispatch * pinterface)
+   void list::install_message_routing(::message::sender * pinterface)
    {
    
-      BASE::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_CANCELMODE, pinterface, this, &list::_001OnCancelMode);
+      ::user::form_list_view::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &list::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &list::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_CANCELMODE, pinterface, this, &list::_001OnCancelMode);
 
    }
 
 
-   void list::_001OnCreate(signal_details * pobj)
+   void list::_001OnCreate(::message::message * pobj)
    {
       pobj->previous();
       if(pobj->m_bRet)
@@ -50,7 +50,7 @@ namespace userfs
    {
 //      UNREFERENCED_PARAMETER(pobj);
 
-      BASE::_001OnTimer(ptimer);
+      ::user::form_list_view::_001OnTimer(ptimer);
 
    }
 
@@ -101,12 +101,12 @@ namespace userfs
 #ifdef DEBUG
    void list::assert_valid() const
    {
-      BASE::assert_valid();
+      ::user::form_list_view::assert_valid();
    }
 
    void list::dump(dump_context & dumpcontext) const
    {
-      BASE::dump(dumpcontext);
+      ::user::form_list_view::dump(dumpcontext);
    }
 #endif //DEBUG
 
@@ -116,7 +116,7 @@ namespace userfs
 
    }
 
-   void list::_001OnLButtonDblClk(signal_details * pobj)
+   void list::_001OnLButtonDblClk(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -130,7 +130,7 @@ namespace userfs
       }*/
    }
 
-   void list::_001OnCancelMode(signal_details * pobj)
+   void list::_001OnCancelMode(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    // trans   ::user::impact::OnCancelMode();
@@ -144,7 +144,7 @@ namespace userfs
 
       cs.style |= WS_CLIPCHILDREN;
 
-      return BASE::pre_create_window(cs);
+      return ::user::form_list_view::pre_create_window(cs);
    }
 
    void list::_001InsertColumns()
@@ -207,7 +207,7 @@ namespace userfs
    void list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      BASE::_001OnDraw(pgraphics);
+      ::user::form_list_view::_001OnDraw(pgraphics);
 
    }
 
@@ -442,7 +442,7 @@ namespace userfs
       }
    }
 
-   void list::_001OnVScroll(signal_details * pobj)
+   void list::_001OnVScroll(::message::message * pobj)
    {
       //      SCAST_PTR(::message::scroll, pscroll, pobj);
       //m_iCreateImageListStep = pscroll->m_nPos;
@@ -450,7 +450,7 @@ namespace userfs
       pobj->m_bRet = false;
    }
 
-   void list::_001OnHScroll(signal_details * pobj)
+   void list::_001OnHScroll(::message::message * pobj)
    {
       pobj->m_bRet = false;
    }
@@ -487,13 +487,13 @@ namespace userfs
    {
       if (i == 0)
       {
-         return   Session.userex()->shell().GetImageList(16);
+         return   Session.userex()->shell()->GetImageList(16);
       }
       return NULL;
    }
 
 
-   void list::_001OnFileRename(signal_details * pobj)
+   void list::_001OnFileRename(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -516,18 +516,18 @@ namespace userfs
    }
 
 
-   void list::_001OnUpdateFileRename(signal_details * pobj)
+   void list::_001OnUpdateFileRename(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
          range range;
       _001GetSelection(range);
-      pcmdui->m_pcmdui->Enable(
+      pcommand->Enable(
          range.get_item_count() == 1
          && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound());
       pobj->m_bRet = true;
    }
 
-   void list::_001OnShowWindow(signal_details * pobj)
+   void list::_001OnShowWindow(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      SCAST_PTR(::message::show_window, pshow, pobj);
@@ -672,17 +672,17 @@ namespace userfs
 
    sp(::userfs::document) list::get_document()
    {
-      return  (BASE::get_document());
+      return  (::user::form_list_view::get_document());
    }
 
    void list::_001GetItemText(::user::mesh_item * pitem)
    {
-      return BASE::_001GetItemText(pitem);
+      return ::user::form_list_view::_001GetItemText(pitem);
    }
 
    void list::_001GetItemImage(::user::mesh_item * pitem)
    {
-      return BASE::_001GetItemImage(pitem);
+      return ::user::form_list_view::_001GetItemImage(pitem);
    }
 
 

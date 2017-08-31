@@ -20,29 +20,26 @@ namespace aura
    int32_t app::main()
    {
 
-//      __argc = _init_args();
-  //    __targv = _argv;
-//      _init_file();
 
-      TCHAR *cmd = GetCommandLine();
-
-      // Skip program name
-      if(*cmd == _T('"'))
-      {
-         while(*cmd && *cmd != _T('"'))
-            cmd++;
-         if(*cmd == _T('"'))
-            cmd++;
-      }
-      else
-      {
-         while(*cmd > _T(' '))
-            cmd++;
-      }
-
-      // Skip any white space
-      while(*cmd && *cmd <= _T(' '))
-         cmd++;
+//      TCHAR *cmd = System.os().get_command_line();
+//
+//      // Skip program name
+//      if(*cmd == _T('"'))
+//      {
+//         while(*cmd && *cmd != _T('"'))
+//            cmd++;
+//         if(*cmd == _T('"'))
+//            cmd++;
+//      }
+//      else
+//      {
+//         while(*cmd > _T(' '))
+//            cmd++;
+//      }
+//
+//      // Skip any white space
+//      while(*cmd && *cmd <= _T(' '))
+//         cmd++;
 
       body();
 

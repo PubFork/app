@@ -78,7 +78,7 @@ namespace sockets
 #include "ftp/ftp.h"
 
 
-
+#include "net_sockets.h"
 
 CLASS_DECL_AURA void thread_touch_sockets();
 CLASS_DECL_AURA int thread_has_sockets();

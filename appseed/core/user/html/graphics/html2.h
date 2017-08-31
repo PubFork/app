@@ -12,7 +12,7 @@
 #include "html_tag.h"
 #include "html_reader.h"
 
-#include "html_signal.h"
+#include "html_message.h"
 
 #include "html_font.h"
 #include "html_style.h"

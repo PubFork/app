@@ -31,7 +31,7 @@ namespace user
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       virtual bool pre_create_window(::user::create_struct& cs);
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
       void UpdateWndRgn();
       //void SetEllipsePens(
       //     ::draw2d::pen * ppen,

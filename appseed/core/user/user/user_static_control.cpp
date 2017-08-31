@@ -35,20 +35,20 @@ namespace user
    }
 
 
-   void static_control::install_message_handling(::message::dispatch * pdispatch)
+   void static_control::install_message_routing(::message::sender * psender)
    {
 
-      ::user::control::install_message_handling(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &static_control::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &static_control::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &static_control::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &static_control::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE, pdispatch, this, &static_control::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &static_control::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &static_control::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &static_control::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &static_control::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &static_control::_001OnMouseMove);
 
    }
 
-   void static_control::_001OnCreate(signal_details * pobj)
+   void static_control::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();
@@ -58,7 +58,7 @@ namespace user
 
    }
 
-   void static_control::_001OnLButtonDown(signal_details * pobj)
+   void static_control::_001OnLButtonDown(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -69,7 +69,7 @@ namespace user
    }
 
 
-   void static_control::_001OnLButtonUp(signal_details * pobj)
+   void static_control::_001OnLButtonUp(::message::message * pobj)
    {
       
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -92,7 +92,7 @@ namespace user
 
    }
 
-   void static_control::_001OnMouseMove(signal_details * pobj)
+   void static_control::_001OnMouseMove(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -100,7 +100,7 @@ namespace user
  }
 
 
-   void static_control::_001OnMouseLeave(signal_details * pobj)
+   void static_control::_001OnMouseLeave(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::mouse, pleave, pobj);
@@ -151,7 +151,7 @@ namespace user
 
       pgraphics->set_text_color(crText);
 
-      select_font(pgraphics, font_static, this);
+      select_font(pgraphics, font_static);
 
       pgraphics->text_out(0, 0, get_window_text());
 
@@ -161,7 +161,7 @@ namespace user
    bool static_control::OnChildNotify(::message::base * pbase)
    {
       
-      if (pbase->m_uiMessage != WM_DRAWITEM)
+      if (pbase->m_id != WM_DRAWITEM)
           return ::user::interaction::OnChildNotify(pbase);
 
 #ifdef WINDOWSEX

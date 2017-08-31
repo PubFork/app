@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include <process.h>    // for _beginthreadex and _endthreadex
 //#include <ddeml.h>  // for MSGF_DDEMGR
@@ -597,7 +597,7 @@ namespace core
 ////      return 0;
 ////   }
 ////
-////   bool thread::is_idle_message(signal_details * pobj)
+////   bool thread::is_idle_message(::message::message * pobj)
 ////   {
 ////      return __internal_is_idle_message(pobj);
 ////   }
@@ -643,7 +643,7 @@ namespace core
 ////                  /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
 ////                  WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
 ////                  pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE);
-////                  /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////                  /*   pui->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////                  (WPARAM)TRUE, 0, TRUE, TRUE);*/
 ////               }
 ////            }
@@ -661,7 +661,7 @@ namespace core
 ////         /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
 ////         WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
 ////         /* pMainWnd->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
-////         pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////         pMainWnd->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////         (WPARAM)TRUE, 0, TRUE, TRUE);
 ////         }
 ////         */
@@ -679,7 +679,7 @@ namespace core
 ////         {
 ////         __call_window_procedure(pFrameWnd, pFrameWnd->get_handle(),
 ////         WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
-////         pFrameWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+////         pFrameWnd->send_message_to_descendants(WM_IDLEUPDATECMDUI,
 ////         (WPARAM)TRUE, 0, TRUE, TRUE);
 ////         }
 ////         if (pFrameWnd->m_nShowDelay > SW_HIDE)
@@ -720,24 +720,24 @@ namespace core
 ////
 ////
 ////
-////   void thread::ProcessWndProcException(::exception::aura* e, signal_details * pobj)
+////   void thread::ProcessWndProcException(::exception::aura* e, ::message::message * pobj)
 ////   {
 ////      return __internal_process_wnd_proc_exception(e, pobj);
 ////   }
 ////
-////   __STATIC inline bool IsEnterKey(signal_details * pobj)
+////   __STATIC inline bool IsEnterKey(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
-////      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+////      return pbase->m_id == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 ////   }
 ////
-////   __STATIC inline bool IsButtonUp(signal_details * pobj)
+////   __STATIC inline bool IsButtonUp(::message::message * pobj)
 ////   {
 ////      SCAST_PTR(::message::base, pbase, pobj);
-////      return pbase->m_uiMessage == WM_LBUTTONUP;
+////      return pbase->m_id == WM_LBUTTONUP;
 ////   }
 ////
-////   void thread::ProcessMessageFilter(int code, signal_details * pobj)
+////   void thread::ProcessMessageFilter(int code, ::message::message * pobj)
 ////   {
 ////
 ////      if(pobj == NULL)
@@ -780,7 +780,7 @@ namespace core
 ////      case MSGF_DIALOGBOX:    // handles message boxes as well.
 ////         pMainWnd = __get_main_window();
 ////         if (code == MSGF_DIALOGBOX && m_puiActive != NULL &&
-////            pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+////            pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
 ////         {
 ////            // need to translate messages for the in-place container
 ////            ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
@@ -973,164 +973,6 @@ namespace core
 ////   }
 ////
 ////
-////
-////
-////   bool thread::on_run_exception(::exception::exception & e)
-////   {
-////      UNREFERENCED_PARAMETER(e);
-////      return false;
-////   }
-////
-////
-////   void thread::message_handler(signal_details * pobj)
-////   {
-////      SCAST_PTR(::message::base, pbase, pobj);
-////      // special message which identifies the window as using __window_procedure
-/////*      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
-////      {
-////         pbase->set_lresult(0);
-////         return;
-////      }
-////*/
-////      // all other messages route through message ::map
-////      sp(::user::interaction) pwindow = pbase->m_pwnd->get_wnd();
-////
-////      ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
-////
-////      if(pwindow == NULL || pwindow != pbase->m_pwnd->m_pimpl)
-////      {
-////
-////         throw todo(get_app());
-////
-////         //pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
-////         //return;
-////      }
-////
-////      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-////      MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-////      //      pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
-////      pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
-////      pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
-////      pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
-////
-////      //      __trace_message("message_handler", pobj);
-////
-////      // Catch exceptions thrown outside the scope of a callback
-////      // in debug builds and warn the ::fontopus::user.
-////      try
-////      {
-////
-////         // special case for WM_INITDIALOG
-////         rect rectOld;
-////         uint32_t dwStyle = 0;
-////         //         if(pbase->m_uiMessage == WM_INITDIALOG)
-////         //          __pre_init_dialog(pwindow, &rectOld, &dwStyle);
-////
-////         // delegate to object's message_handler
-////         if(pwindow->m_pguie != NULL && pwindow->m_pguie != pwindow)
-////         {
-////            pwindow->m_pguie->message_handler(pobj);
-////         }
-////         else
-////         {
-////            pwindow->message_handler(pobj);
-////         }
-////
-////         // more special case for WM_INITDIALOG
-////         //         if(pbase->m_uiMessage == WM_INITDIALOG)
-////         //          __post_init_dialog(pwindow, rectOld, dwStyle);
-////      }
-////      catch(const ::exception::exception & e)
-////      {
-////         if(App(get_app()).on_run_exception((::exception::exception &) e))
-////            goto run;
-////         if(App(get_app()).final_handle_exception((::exception::exception &) e))
-////            goto run;
-////         __post_quit_message(-1);
-////         pbase->set_lresult(-1);
-////         return;
-////      }
-////      catch(::exception::aura * pe)
-////      {
-////         __process_window_procedure_exception(pe, pbase);
-////         TRACE(::core::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
-////         pe->Delete();
-////      }
-////run:
-////      pThreadState->m_lastSentMsg = oldState;
-////   }
-////
-////
-////   thread::operator HANDLE() const
-////   {
-////
-////      return this == NULL ? NULL : m_hThread;
-////
-////   }
-////
-////   bool thread::set_thread_priority(int nPriority)
-////   {
-////      ASSERT(m_hThread != NULL);
-////
-////      return ::SetThreadPriority(m_hThread, nPriority)  != FALSE;
-////
-////   }
-////
-////   int thread::get_thread_priority()
-////   {
-////
-////      ASSERT(m_hThread != NULL);
-////
-////      return ::GetThreadPriority(m_hThread);
-////
-////   }
-////
-////   uint32_t thread::ResumeThread()
-////   {
-////
-////      ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread);
-////
-////   }
-////
-////   uint32_t thread::SuspendThread()
-////   {
-////
-////      throw todo(get_app());
-////
-////      /*ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread);
-////      */
-////   }
-////
-////   void thread::set_os_data(void * pvoidOsData)
-////   {
-////      m_hThread = (HTHREAD) pvoidOsData;
-////
-////   }
-////
-////   void thread::set_os_int(int_ptr iData)
-////   {
-////      m_nThreadID = (uint32_t) iData;
-////   }
-////
-////   void thread::message_queue_message_handler(signal_details * pobj)
-////   {
-////      UNREFERENCED_PARAMETER(pobj);
-////   }
-////
-////
-////   CLASS_DECL_AURA ::thread * get_thread()
-////   {
-////      ::metrowin::thread * pwinthread = __get_thread();
-////      if(pwinthread == NULL)
-////         return NULL;
-////      return pwinthread->m_p;
-////   }
-////
-////   CLASS_DECL_AURA ::thread_state * get_thread_state()
-////   {
-////      return __get_thread_state();
-////   }
-////
 ////   void thread::LockTempMaps()
 ////   {
 ////      ++m_nTempMapLock;
@@ -1213,8 +1055,8 @@ namespace core
 ////
 ////      //      ::application* papp = dynamic_cast < ::aura::application * > (get_app());
 ////      m_evFinish.ResetEvent();
-////      install_message_handling(pThread);
-////      m_p->install_message_handling(pThread);
+////      install_message_routing(pThread);
+////      m_p->install_message_routing(pThread);
 ////
 //////      ::user::interaction_impl threadWnd;
 ////
@@ -1316,8 +1158,8 @@ namespace core
 //////
 //////bool CLASS_DECL_AURA __internal_pump_message();
 //////LRESULT CLASS_DECL_AURA __internal_process_wnd_proc_exception(::exception::aura*, const MSG* pMsg);
-//////void __internal_pre_translate_message(signal_details * pobj);
-//////bool __internal_is_idle_message(signal_details * pobj);
+//////void __internal_pre_translate_message(::message::message * pobj);
+//////bool __internal_is_idle_message(::message::message * pobj);
 //////bool __internal_is_idle_message(LPMSG lpmsg);
 //////
 //////

@@ -1,5 +1,5 @@
-//#include "framework.h"
-
+#include "framework.h"
+#include <stdio.h>
 
 const int string::npos = -1;
 
@@ -187,7 +187,7 @@ void fixed_string_log::OnAllocateSpill(strsize nActualChars,strsize nFixedChars,
 ()nFixedChars;
 ()pData;
 //   TRACE(::aura::trace::category_String, 0, _T( "fixed_string_manager::allocate() spilling to heap.  %d chars (fixed size = %d chars)\n" ), nActualChars, nFixedChars );
-::OutputDebugStringA("fixed_string_log::OnAllocateSpill");
+::output_debug_string("fixed_string_log::OnAllocateSpill");
 }
 
 void fixed_string_log::OnReallocateSpill(strsize nActualChars,strsize nFixedChars,const string_data* pData ) throw()
@@ -196,7 +196,7 @@ void fixed_string_log::OnReallocateSpill(strsize nActualChars,strsize nFixedChar
 ()nFixedChars;
 ()pData;
 //   TRACE(::aura::trace::category_String, 0, _T( "fixed_string_manager::Reallocate() spilling to heap.  %d chars (fixed size = %d chars)\n" ), nActualChars, nFixedChars );
-::OutputDebugStringA("fixed_string_log::OnReallocateSpill");
+::output_debug_string("fixed_string_log::OnReallocateSpill");
 }
 
 */

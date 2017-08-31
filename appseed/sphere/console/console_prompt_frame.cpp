@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace console
@@ -188,7 +188,7 @@ namespace console
    }
 
 
-   void prompt_frame::_001OnClose(signal_details * pobj)
+   void prompt_frame::_001OnClose(::message::message * pobj)
    {
       
       pobj->m_bRet = true;
@@ -207,18 +207,18 @@ namespace console
    }
 
 
-   void prompt_frame::install_message_handling(::message::dispatch * pinterface)
+   void prompt_frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_frame_window::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &prompt_frame::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &prompt_frame::_001OnClose);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &prompt_frame::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_MOVE, pinterface, this, &prompt_frame::_001OnMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &prompt_frame::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
+      simple_frame_window::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &prompt_frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &prompt_frame::_001OnClose);
+//      //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &prompt_frame::_001OnTimer);
+      IGUI_MSG_LINK(WM_MOVE, pinterface, this, &prompt_frame::_001OnMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &prompt_frame::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
    }
 
-   void prompt_frame::_001OnCreate(signal_details * pobj)
+   void prompt_frame::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -267,7 +267,7 @@ namespace console
 
    }
 
-   void prompt_frame::_001OnMove(signal_details * pobj)
+   void prompt_frame::_001OnMove(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       /*if(m_workset.GetMovingManager()->IsMoving())
@@ -321,7 +321,7 @@ namespace console
       }*/
    }
 
-   void prompt_frame::_001OnShowWindow(signal_details * pobj)
+   void prompt_frame::_001OnShowWindow(::message::message * pobj)
    {
       
       //SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -360,17 +360,17 @@ namespace console
          SWP_SHOWWINDOW);
    }
 
-   void prompt_frame::message_queue_message_handler(signal_details * pobj)
+   void prompt_frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == (WM_APP + 2000))
+      if(pbase->m_id == (WM_APP + 2000))
       {
          _001OnApp2000(pbase);
          pbase->m_bRet = true;
       }
    }
 
-   void prompt_frame::_001OnApp2000(signal_details * pobj)
+   void prompt_frame::_001OnApp2000(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -427,39 +427,58 @@ namespace console
       }
       else if(pbase->m_wparam == 33)
       {
+         
          pbase->set_lresult(1);
+         
       }
+      
       pbase->m_bRet = true;
+      
    }
 
 
-   bool prompt_frame::on_simple_action(id id)
+   void prompt_frame::on_command(::user::command * pcommand)
    {
-      if(id == "app_exit")
+      
+      if(pcommand->m_id == "app_exit")
       {
+         
          simple_frame_window::OnClose();
-         return true;
+         
+         pcommand->m_bRet = true;
+
+         return;
+         
       }
-      return simple_frame_window::on_simple_action(id);
+      
+      simple_frame_window::on_command(pcommand);
+      
    }
 
-   bool prompt_frame::on_simple_update(cmd_ui * pcmdui)
+   
+   void prompt_frame::on_command_probe(::user::command * pcommand)
    {
-      if(pcmdui->m_id == "app_exit")
+      
+      if(pcommand->m_id == "app_exit")
       {
-         pcmdui->Enable();
-         return true;
+         
+         pcommand->Enable();
+
+         pcommand->m_bRet = true;
+         
+         return;
+         
       }
-      return false;
+
+      simple_frame_window::on_command_probe(pcommand);
+      
    }
 
    
    sp(::user::wndfrm::frame::frame) prompt_frame::create_frame_schema()
    {
-
-      return simple_frame_window::create_frame_schema();
-
-      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema("wndfrm_core","002");
+      
+      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema("wndfrm_core","002");
 
       return pschema;
 
@@ -473,7 +492,7 @@ namespace console
 
       System.get_monitor_rect(0,&r);
 
-      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::AppearanceNormal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
+      int iHeight = m_workset.m_pframeschema->calc_caption_height(::user::appearance_normal) + m_workset.m_pframeschema->m_rectMarginNormal.top;
 
       r.left += 100;
 
@@ -483,9 +502,9 @@ namespace console
 
       r.right -= 400;
 
-      m_workset.SetAppearance(::user::AppearanceMinimal);
+      m_workset.SetAppearance(::user::appearance_minimal);
 
-      set_appearance(::user::AppearanceMinimal);
+      set_appearance(::user::appearance_minimal);
 
       SetWindowPos(ZORDER_TOP,r,SWP_SHOWWINDOW);
 
@@ -499,10 +518,10 @@ namespace console
 
    }
    
-   bool prompt_frame::get_translucency(::user::ETranslucency & etranslucency)
+   bool prompt_frame::get_translucency(::user::e_translucency & etranslucency)
    {
 
-      etranslucency = ::user::TranslucencyPresent;
+      etranslucency = ::user::translucency_present;
 
       return true;
 
@@ -510,7 +529,7 @@ namespace console
 
 
 
-} // namespace command
+} // namespace prompt
 
 
 

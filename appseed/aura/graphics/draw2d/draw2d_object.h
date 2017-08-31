@@ -25,7 +25,6 @@ namespace draw2d
       virtual void defer_update() const;
       
       virtual bool destroy();
-      using ::object::create;
       virtual bool create();
 
 

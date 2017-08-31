@@ -8,7 +8,8 @@
 
 #include "framework.h"
 //#include <wchar.h>
-//#include <stdarg.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 
 
@@ -37,25 +38,7 @@ int32_t wprintf_dup(const unichar *format, ...)
 int32_t vprintf_dup(const char *format, va_list args)
 {
 
-#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID) || defined(SOLARIS)
-
     return vprintf(format, args);
-
-#elif defined(METROWIN)
-
-    return vprintf(format, args);
-
-#else
-
-	char szBuff[1024];
-
-	int32_t retValue = wvsprintfA(szBuff, format, args);
-
-	fwrite_dup(szBuff, retValue, 1, stdout_dup);
-
-	return retValue;
-
-#endif
 
 }
 
@@ -77,19 +60,9 @@ int32_t vwprintf_dup(const unichar *format, va_list args)
 
     return vwprintf(format, args);
 
-#elif defined(METROWIN)
-
-    return vwprintf(format, args);
-
 #else
-	unichar buf[1024];
-	int32_t ret = wvsprintfW(buf, format, args);
 
-	char ansibuf[1024];
-	WideCharToMultiByte(CP_ACP, 0, buf, -1, ansibuf, sizeof(ansibuf), 0, 0);
-	fwrite_dup(ansibuf, ret, 1, stdout_dup);
-
-	return ret;
+   return vwprintf(format, args);
 
 #endif
 

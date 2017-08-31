@@ -19,16 +19,16 @@ namespace file_watcher
 //
 //   }
 
-   void listener_thread::install_message_handling(::message::dispatch * pdispatch)
+   void listener_thread::install_message_routing(::message::sender * psender)
    {
 
-      ::thread::install_message_handling(pdispatch);
+      ::thread::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(message_add_watch, pdispatch, this, &listener_thread::_001OnAddWatch);
+      IGUI_MSG_LINK(message_add_watch, psender, this, &listener_thread::_001OnAddWatch);
 
    }
 
-   void listener_thread::_001OnAddWatch(signal_details * pobj)
+   void listener_thread::_001OnAddWatch(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -60,8 +60,6 @@ namespace file_watcher
 
          }
 
-         padd->m_event.set_event();
-
       }
       catch (...)
       {
@@ -80,7 +78,7 @@ namespace file_watcher
 
          MESSAGE msg;
 
-         while(get_run_thread())
+         while(thread_get_run())
          {
 
             if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))

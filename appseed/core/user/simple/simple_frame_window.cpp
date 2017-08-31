@@ -36,13 +36,13 @@ simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
 int simple_frame_window::helper_task::run()
 {
 
-   while(get_run_thread())
+   while(thread_get_run())
    {
 
 
       g_pevent->wait(millis(84));
 
-      // the computer maybe blown here, where there is no code (when it is not running)... by falling into a curve in a road from a truck or by the multiverses bramas collapsing into a high energy dot.com... and bubble restarts when the spirtual world decides for restarting the virtual machine - with some pauses - as we does not detect change in time vector, as it is a non-readable, executable/paused/non existent only register in the parent processor... Imagine a overhaul upgrade with much more strings in the chords, why they mantain consitency between virtual machines versions... they like to hinder a lot!! strange, this is a hello 666... // and the time they have to overhaul is infinite, because they can pause our ticker... besides I hope no ones stops their tick counters...
+      // the computer maybe blown here, where there is no code (when it is not running)... by falling into a curve in a road from a truck or by the multiverses bramas collapsing into a high energy dot.com... and bubble restarts when the spirtual world decides for restarting the virtual machine - with some pauses - as we does not detect change in time vector, as it is a non-readable, executable/paused/non existent only register in the parent handler... Imagine a overhaul upgrade with much more strings in the chords, why they mantain consitency between virtual machines versions... they like to hinder a lot!! strange, this is a hello 666... // and the time they have to overhaul is infinite, because they can pause our ticker... besides I hope no ones stops their tick counters...
       if(m_pframe->m_bSizeMove) // not here, any error here (or am i wrong, the OpSys may not have started the FULLStack DevOp).... because it is lInUx... its not ADVENTURE_Clean_NoERRORs_may_be_old_tommorrow_just_EX_OS...
       {
 
@@ -96,7 +96,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_fastblur(allocer())
 {
 
-   m_etranslucency = ::user::TranslucencyUndefined;
+   m_etranslucency = ::user::translucency_undefined;
 
    m_bShowTask = true;
 
@@ -141,11 +141,11 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
    ON_WM_SIZE()
    ON_WM_CLOSE()
    ON_WM_NCCALCSIZE()
-   ON_UPDATE_COMMAND_UI(ID_VIEW_STATUS_BAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_STATUS_BAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_STATUS_BAR, OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_TOOLBAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_TOOLBAR, OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_REBAR, OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_REBAR, OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_REBAR, OnBarCheck) */
 //}}__MSG_MAP
 // // END_MESSAGE_MAP()
@@ -153,39 +153,39 @@ void simple_frame_window::dump(dump_context & dumpcontext) const
 /////////////////////////////////////////////////////////////////////////////
 // simple_frame_window message handlers
 
-void simple_frame_window::install_message_handling(::message::dispatch * pinterface)
+void simple_frame_window::install_message_routing(::message::sender * pinterface)
 {
-   ::user::frame_window::install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
+   ::user::frame_window::install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
+   IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
 #ifdef WINDOWSEX
-   IGUI_WIN_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
+   IGUI_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
 #endif
-   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
-   IGUI_WIN_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
-   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &simple_frame_window::_001OnSize);
-   IGUI_WIN_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &simple_frame_window::_001OnSysCommand);
-   IGUI_WIN_MSG_LINK(WM_GETMINMAXINFO, pinterface, this, &simple_frame_window::_001OnGetMinMaxInfo);
-   IGUI_WIN_MSG_LINK(WM_USER + 184, pinterface, this, &simple_frame_window::_001OnUser184);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
-   IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
+   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
+   IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
+   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &simple_frame_window::_001OnSize);
+   IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &simple_frame_window::_001OnSysCommand);
+   IGUI_MSG_LINK(WM_GETMINMAXINFO, pinterface, this, &simple_frame_window::_001OnGetMinMaxInfo);
+   IGUI_MSG_LINK(WM_USER + 184, pinterface, this, &simple_frame_window::_001OnUser184);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_frame_window::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_DISPLAYCHANGE, pinterface, this, &simple_frame_window::_001OnDisplayChange);
+   IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_frame_window::_001OnShowWindow);
 
-   connect_update_cmd_ui("transparent_frame", &simple_frame_window::_001OnUpdateToggleTransparentFrame);
+   connect_command_probe("transparent_frame", &simple_frame_window::_001OnUpdateToggleTransparentFrame);
    connect_command("transparent_frame", &simple_frame_window::_001OnToggleTransparentFrame);
 
-   connect_update_cmd_ui("view_full_screen", &simple_frame_window::_001OnUpdateViewFullScreen);
+   connect_command_probe("view_full_screen", &simple_frame_window::_001OnUpdateViewFullScreen);
    connect_command("view_full_screen", &simple_frame_window::_001OnViewFullScreen);
 
    connect_command("app_exit", &simple_frame_window::_001OnAppExit);
 
-   IGUI_WIN_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
-   IGUI_WIN_MSG_LINK(WM_ACTIVATEAPP, pinterface, this, &simple_frame_window::_001OnActivateApp);
-   IGUI_WIN_MSG_LINK(WM_ACTIVATE, pinterface, this, &simple_frame_window::_001OnActivate);
+   IGUI_MSG_LINK(WM_APPEXIT, pinterface, this, &simple_frame_window::_001OnAppExit);
+   IGUI_MSG_LINK(WM_ACTIVATEAPP, pinterface, this, &simple_frame_window::_001OnActivateApp);
+   IGUI_MSG_LINK(WM_ACTIVATE, pinterface, this, &simple_frame_window::_001OnActivate);
 
 #ifdef WINDOWSEX
 
-   IGUI_WIN_MSG_LINK(System.m_uiWindowsTaskbarCreatedMessage, pinterface, this, &simple_frame_window::_001OnTaskbarCreated);
+   IGUI_MSG_LINK(System.m_uiWindowsTaskbarCreatedMessage, pinterface, this, &simple_frame_window::_001OnTaskbarCreated);
 
 #endif
 
@@ -210,7 +210,7 @@ sp(::user::interaction) simple_frame_window::WindowDataGetWnd()
 }
 
 
-void simple_frame_window::_001OnDestroy(signal_details * pobj)
+void simple_frame_window::_001OnDestroy(::message::message * pobj)
 {
 
    pobj->previous();
@@ -270,13 +270,17 @@ void simple_frame_window::_001OnDestroy(signal_details * pobj)
 
 sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 {
-
-   sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm().get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
+   
+   if(Application.wndfrm() == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
 
    pschema->set_style(m_varFrame["style"]);
-
-
-
 
    return pschema;
 
@@ -344,7 +348,7 @@ bool load_icon(::visual::dib_sp & d, ::aura::application * papp, stringa & straM
 #endif
 
 
-void simple_frame_window::_001OnCreate(signal_details * pobj)
+void simple_frame_window::_001OnCreate(::message::message * pobj)
 {
 
    SCAST_PTR(::message::create, pcreate, pobj);
@@ -353,13 +357,6 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
    {
 
       m_varFrame = Application.file().as_json("matter://" + m_pdocumenttemplate->m_strMatter + "/frame.json");
-
-   }
-
-   if (pobj->previous())
-   {
-
-      return;
 
    }
 
@@ -398,8 +395,13 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
    }
    else
    {
+      
+      fork([&]()
+      {
 
-      data_get("transparent_frame", m_bTransparentFrame);
+         data_get("transparent_frame", m_bTransparentFrame);
+         
+      });
 
    }
 
@@ -416,7 +418,7 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
    if (m_bAutoWindowFrame)
    {
-      if(Application.command()->m_varTopicQuery.has_property("client_only"))
+      if(Application.handler()->m_varTopicQuery.has_property("client_only"))
       {
          m_bWindowFrame = false;
       }
@@ -430,24 +432,18 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
       }
    }
 
-   if (m_puserschemaSchema == NULL)
+
+   initialize_userstyle();
+
+
+   if (pobj->previous())
    {
 
-      string strSchema = m_varFrame["wndfrm"];
-
-      m_puserschemaSchema = Session.get_user_schema(strSchema, get_app());
+      return;
 
    }
 
-   if (m_puserschemaSchema == NULL)
-   {
 
-      m_puserschemaSchema = Application.userschema();
-
-
-
-
-   }
 
 
    if (m_bWindowFrame)
@@ -469,8 +465,7 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
       try
       {
-
-
+         
          pinteractionframe = create_frame_schema();
 
       }
@@ -492,10 +487,21 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
          return;
 
       }
+      
+      if(pinteractionframe == NULL)
+      {
+         
+         pcreate->m_lresult = -1;
+         
+         pcreate->m_bRet = true;
+         
+         return;
+         
+      }
 
       //frame::FrameSchema * pschema = dynamic_cast < ::frame::FrameSchema * > (pinteractionframe);
 
-      if (pinteractionframe != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+      if (pinteractionframe != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
       {
 
          //pinteractionframe->set_style("BlueRedPurple");
@@ -504,28 +510,28 @@ void simple_frame_window::_001OnCreate(signal_details * pobj)
 
       /*{
          frame::FrameSchemaHardCoded001 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded001 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded001::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded002 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded002 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded002::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded005 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded005 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded005::StyleBlueRedPurple);
          }
          }
          {
          frame::FrameSchemaHardCoded008 * pschemaSpec = dynamic_cast < frame::FrameSchemaHardCoded008 * > (pschema);
-         if(pschemaSpec != NULL && (_ca_is_basis() || Application.command()->m_varTopicQuery["version"] == "basis"))
+         if(pschemaSpec != NULL && (_ca_is_basis() || Application.handler()->m_varTopicQuery["version"] == "basis"))
          {
          pschemaSpec->SetStyle(frame::FrameSchemaHardCoded008::StyleBlueRedPurple);
          }
@@ -698,7 +704,7 @@ void simple_frame_window::defer_set_icon()
 }
 
 
-void simple_frame_window::_001OnShowWindow(signal_details * pobj)
+void simple_frame_window::_001OnShowWindow(::message::message * pobj)
 {
 
    SCAST_PTR(::message::show_window, pshow, pobj);
@@ -727,7 +733,7 @@ void simple_frame_window::_001OnShowWindow(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnDisplayChange(signal_details * pobj)
+void simple_frame_window::_001OnDisplayChange(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
@@ -744,7 +750,7 @@ void simple_frame_window::_001OnDisplayChange(signal_details * pobj)
 
 
 
-void simple_frame_window::_001OnTaskbarCreated(signal_details * pobj)
+void simple_frame_window::_001OnTaskbarCreated(::message::message * pobj)
 {
 
    defer_create_notification_icon();
@@ -752,7 +758,7 @@ void simple_frame_window::_001OnTaskbarCreated(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnSize(signal_details * pobj)
+void simple_frame_window::_001OnSize(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -841,7 +847,7 @@ void simple_frame_window::ViewOnActivateFrame(sp(::user::impact) pview, UINT use
    //      pview->OnActivateFrame(WA_INACTIVE, (sp(::user::simple_frame_window)) pframe);
 }
 
-void simple_frame_window::_001OnGetMinMaxInfo(signal_details * pobj)
+void simple_frame_window::_001OnGetMinMaxInfo(::message::message * pobj)
 {
 #ifdef WINDOWSEX
    SCAST_PTR(::message::base, pbase, pobj);
@@ -942,6 +948,8 @@ bool simple_frame_window::WfiToggleTransparentFrame()
 
    set_need_layout();
 
+   set_need_redraw();
+   
    return true;
 
 }
@@ -965,7 +973,7 @@ void simple_frame_window::WfiOnExitFullScreen()
 }
 
 
-void simple_frame_window::_001OnViewFullScreen(signal_details * pobj)
+void simple_frame_window::_001OnViewFullScreen(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -975,18 +983,18 @@ void simple_frame_window::_001OnViewFullScreen(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnMouseMove(signal_details * pobj)
+void simple_frame_window::_001OnMouseMove(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
    //   SCAST_PTR(::message::mouse, pmouse, pobj);
 }
 
-void simple_frame_window::_001OnUpdateViewFullScreen(signal_details * pobj)
+void simple_frame_window::_001OnUpdateViewFullScreen(::message::message * pobj)
 {
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-   pcmdui->m_pcmdui->Enable();
-   pcmdui->m_pcmdui->_001SetCheck(WfiIsFullScreen());
-   pcmdui->m_bRet = true;
+   SCAST_PTR(::user::command, pcommand, pobj);
+   pcommand->Enable();
+   pcommand->_001SetCheck(WfiIsFullScreen());
+   pcommand->m_bRet = true;
 }
 
 
@@ -1014,7 +1022,7 @@ bool simple_frame_window::_001CanEnterScreenSaver()
    return true;
 }
 
-void simple_frame_window::_001OnSysCommand(signal_details * pobj)
+void simple_frame_window::_001OnSysCommand(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
 
@@ -1060,21 +1068,21 @@ void simple_frame_window::_001OnSysCommand(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnToggleCustomFrame(signal_details * pobj)
+void simple_frame_window::_001OnToggleCustomFrame(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
    SetCustomFrame(!GetCustomFrame());
 }
 
-void simple_frame_window::_001OnUpdateToggleCustomFrame(signal_details * pobj)
+void simple_frame_window::_001OnUpdateToggleCustomFrame(::message::message * pobj)
 {
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-   pcmdui->m_pcmdui->Enable();
-   pcmdui->m_pcmdui->_001SetCheck(m_bWindowFrame);
+   SCAST_PTR(::user::command, pcommand, pobj);
+   pcommand->Enable();
+   pcommand->_001SetCheck(m_bWindowFrame);
 }
 
 
-void simple_frame_window::_001OnToggleTransparentFrame(signal_details * pobj)
+void simple_frame_window::_001OnToggleTransparentFrame(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);
@@ -1084,12 +1092,12 @@ void simple_frame_window::_001OnToggleTransparentFrame(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnUpdateToggleTransparentFrame(signal_details * pobj)
+void simple_frame_window::_001OnUpdateToggleTransparentFrame(::message::message * pobj)
 {
 
-   SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+   SCAST_PTR(::user::command, pcommand, pobj);
 
-   pcmdui->m_pcmdui->Enable();
+   pcommand->Enable();
 
    //if (GetTopLevelFrame()->frame_is_transparent())
    //{
@@ -1104,7 +1112,7 @@ void simple_frame_window::_001OnUpdateToggleTransparentFrame(signal_details * po
 
    //}
 
-   pcmdui->m_pcmdui->_001SetCheck(frame_is_transparent());
+   pcommand->_001SetCheck(frame_is_transparent());
 
 }
 
@@ -1140,7 +1148,7 @@ bool simple_frame_window::GetCustomFrame()
 }
 
 
-void simple_frame_window::_001OnAppExit(signal_details * pobj)
+void simple_frame_window::_001OnAppExit(::message::message * pobj)
 {
 
    if (get_parent() != NULL)
@@ -1174,7 +1182,7 @@ void simple_frame_window::_001OnAppExit(signal_details * pobj)
 }
 
 
-void simple_frame_window::_001OnClose(signal_details * pobj)
+void simple_frame_window::_001OnClose(::message::message * pobj)
 {
 
    if ((bool)m_varFrame["hide_on_close"])
@@ -1257,13 +1265,21 @@ void simple_frame_window::_001OnClose(signal_details * pobj)
    {
       pobj->m_bRet = true;
    }
+   
+   bool bDestroyWindow = false;
+   
+   {
+   
+      {
    // Note: only queries the active document
-   sp(::user::document) pdocument = GetActiveDocument();
+   ::user::document * pdocument = GetActiveDocument();
    if (pdocument != NULL && !pdocument->can_close_frame(this))
    {
       // document can't close right now -- don't close it
       return;
    }
+         
+      }
 
    ::aura::application * papp = &Application;
 
@@ -1295,7 +1311,16 @@ void simple_frame_window::_001OnClose(signal_details * pobj)
    }
    else
    {
+      bDestroyWindow = true;
+   }
+      
+   }
+   
+   if(bDestroyWindow)
+   {
+      
       DestroyWindow();
+      
    }
 
 }
@@ -1318,7 +1343,7 @@ void simple_frame_window::OnNcCalcSize(bool bCalcValidRects, NCCALCSIZE_PARAMS F
 
 #endif
 
-void simple_frame_window::_001OnActivateApp(signal_details * pobj)
+void simple_frame_window::_001OnActivateApp(::message::message * pobj)
 {
    
    SCAST_PTR(::message::base, pbase, pobj);
@@ -1347,7 +1372,7 @@ void simple_frame_window::_001OnActivateApp(signal_details * pobj)
    }
 }
 
-void simple_frame_window::_001OnActivate(signal_details * pobj)
+void simple_frame_window::_001OnActivate(::message::message * pobj)
 {
 
    SCAST_PTR(::message::activate, pactivate, pobj);
@@ -1436,12 +1461,15 @@ void simple_frame_window::_001OnActivate(signal_details * pobj)
 
 }
 
-void simple_frame_window::_001OnNcActivate(signal_details * pobj)
+
+void simple_frame_window::_001OnNcActivate(::message::message * pobj)
 {
+
    SCAST_PTR(::message::nc_activate, pncactivate, pobj);
+
    // stay active if WF_STAYACTIVE bit is on
-   if (m_nFlags & WF_STAYACTIVE)
-      pncactivate->m_bActive = TRUE;
+   //if (m_nFlags & WF_STAYACTIVE)
+   //   pncactivate->m_bActive = TRUE;
 
    // but do not stay active if the window is disabled
    if (!is_window_enabled())
@@ -1523,7 +1551,7 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
    //   LoadAccelTable(MAKEINTRESOURCE(nIDResource));
 
    if (pcreate == NULL)   // send initial update
-      SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+      send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
    return TRUE;
 
@@ -1532,29 +1560,29 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
 
 
 
-void simple_frame_window::_001OnDdeInitiate(signal_details * pobj)
+void simple_frame_window::_001OnDdeInitiate(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    pbase->set_lresult(DefWindowProc((uint32_t)pbase->m_wparam, pbase->m_lparam, pbase->get_lresult()));
 }
 
 
-void simple_frame_window::pre_translate_message(signal_details * pobj)
+void simple_frame_window::pre_translate_message(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
 
-   if(pbase->m_uiMessage == message_display_change)
+   if(pbase->m_id == message_display_change)
    {
 
       Wfi();
 
    }
-   else if (pbase->m_uiMessage == WM_MOUSEMOVE)
+   else if (pbase->m_id == WM_MOUSEMOVE)
    {
 
    }
-   else if(pbase->m_uiMessage == WM_KEYDOWN || pbase->m_uiMessage == WM_SYSKEYDOWN)
+   else if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -1600,7 +1628,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
       }
 
    }
-   else if(pbase->m_uiMessage == WM_KEYUP || pbase->m_uiMessage == WM_SYSKEYUP)
+   else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
    {
 
       SCAST_PTR(::message::key, pkey, pobj);
@@ -1611,7 +1639,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if (IsFullScreen() && Session.is_key_pressed(::user::key_control) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if (WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if (WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -1633,7 +1661,7 @@ void simple_frame_window::pre_translate_message(signal_details * pobj)
          if(IsFullScreen() && Session.is_key_pressed(::user::key_alt) && !m_bFullScreenAlt && !m_bFullScreenCtrl)
          {
 
-            if(WfiRestore(m_eappearanceBefore != ::user::AppearanceFullScreen))
+            if(WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
                pbase->m_bRet = true;
@@ -1663,7 +1691,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    if(m_bFrameMoveEnable)
    {
 
-      if(Application.command()->m_varTopicQuery.has_property("wfi_maximize")
+      if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
             && (GetParent() == NULL
 #if defined(ANDROID) || defined(METROWIN) || defined(APPLE_IOS)
                 || GetParent() == System.m_possystemwindow->m_pui
@@ -1674,8 +1702,8 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
          WfiMaximize();
 
       }
-      else if(Application.command()->m_varTopicQuery.has_property("client_only")
-              || Application.command()->m_varTopicQuery.has_property("full_screen"))
+      else if(Application.handler()->m_varTopicQuery.has_property("client_only")
+              || Application.handler()->m_varTopicQuery.has_property("full_screen"))
       {
 
          if(m_workset.IsAppearanceEnabled())
@@ -1711,7 +1739,7 @@ void simple_frame_window::InitialFramePosition(bool bForceRestore)
    if (m_workset.IsAppearanceEnabled())
    {
 
-      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::AppearanceIconic)
+      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
       {
 
          WfiRestore(false);
@@ -1824,7 +1852,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
    if(dAlpha > 0.0)
    {
 
-      if(m_puserschemaSchema != NULL && m_puserschemaSchema->_001OnDrawMainFrameBackground(pgraphics,this))
+      if(m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics,this))
       {
 
          _001DrawThis(pgraphics);
@@ -2027,7 +2055,7 @@ void simple_frame_window::on_set_parent(::user::interaction * puiParent)
 
       }
 
-      m_workset.install_message_handling(m_pimpl);
+      m_workset.install_message_routing(m_pimpl);
 
       m_workset.m_pframeschema->get_control_box()->set_need_layout();
 
@@ -2134,7 +2162,7 @@ bool simple_frame_window::LoadToolBar(sp(::type) sptype, id idToolBar, const cha
       if(ptoolbar == NULL)
          return false;
 
-      ptoolbar->create_window_ex(this,dwCtrlStyle,dwStyle);
+      ptoolbar->create_toolbar(this,dwCtrlStyle,dwStyle);
 
    }
 
@@ -2204,7 +2232,7 @@ void simple_frame_window::defer_create_notification_icon()
 
    m_pnotifyicon = canew(::user::notify_icon(get_app()));
 
-   m_pnotifyicon->create(1, this, m_piconNotify);
+   m_pnotifyicon->create_notify_icon(1, this, m_piconNotify);
 
    //if (m_workset.m_pframeschema != NULL)
    {
@@ -2217,7 +2245,7 @@ void simple_frame_window::defer_create_notification_icon()
 }
 
 
-void simple_frame_window::_001OnUser184(signal_details * pobj)
+void simple_frame_window::_001OnUser184(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
@@ -2305,61 +2333,131 @@ bool simple_frame_window::create_window(const char * lpszClassName,const char * 
 }
 
 
-
-
-
-bool simple_frame_window::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+void simple_frame_window::_001OnCmdMsg(::user::command * pcommand)
 {
 
-   if (m_workset._001OnCmdMsg(pcmdmsg))
-      return true;
+   m_workset._001OnCmdMsg(pcommand);
 
-   if (pcmdmsg->m_pcommandtargetSource == this)
+   if (pcommand->m_bRet)
+   {
+
+      return;
+
+   }
+
+   if (pcommand->m_pcommandtargetSource == this)
    {
 
       // then pump through frame
-      if (::user::frame_window::_001OnCmdMsg(pcmdmsg))
-         return true;
+      ::user::frame_window::_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
 
    }
 
    // pump through current ::user::impact FIRST
    sp(::user::impact) pview = GetActiveView();
-   if (pview != NULL && pview->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
+
+   if (pview != NULL)
+   {
+
+      pview->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
 
    pview = get_child_by_id("pane_first");
-   if (pview != NULL && pview->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
 
-   if (pcmdmsg->m_pcommandtargetSource != this)
+   if (pview != NULL)
+   {
+
+      pview->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
+   if (pcommand->m_pcommandtargetSource != this)
    {
 
       // then pump through frame
-      if (::user::frame_window::_001OnCmdMsg(pcmdmsg))
-         return true;
+      ::user::frame_window::_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
 
    }
 
    // then pump through parent
    sp(::user::interaction) puiParent = GetParent();
-   if (puiParent != NULL && puiParent->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
 
-   // last but not least, pump through cast
-   ::core::application* pApp = get_app()->m_pcoreapp;
-   if (pApp != NULL && pApp->_001OnCmdMsg(pcmdmsg))
-      return TRUE;
-
-   sp(command_target_interface) pcommandtargetinterface = Session.get_keyboard_focus();
-
-   if (pcommandtargetinterface != NULL)
+   if (puiParent != NULL)
    {
-      if (pcommandtargetinterface->_001OnCmdMsg(pcmdmsg))
-         return TRUE;
+
+      puiParent->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
    }
 
-   return FALSE;
+   // last but not least, pump through cast
+   ::aura::application * papp = get_app();
+
+   if (papp != NULL)
+   {
+
+      papp->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
+   sp(command_target) ptarget = Session.get_keyboard_focus();
+
+   if (ptarget != NULL)
+   {
+
+      ptarget->_001OnCmdMsg(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+   }
+
 }
 
 
@@ -2562,9 +2660,9 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
       {
          // Excel will try to Activate itself when it receives a
          // WM_NCACTIVATE so we need to keep it from doing that here.
-         m_nFlags |= WF_KEEPMINIACTIVE;
+         //m_nFlags |= WF_KEEPMINIACTIVE;
          pParent->send_message(WM_NCACTIVATE, TRUE);
-         m_nFlags &= ~WF_KEEPMINIACTIVE;
+         //m_nFlags &= ~WF_KEEPMINIACTIVE;
       }
       else
       {
@@ -2600,7 +2698,7 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
 
 
 // query end session for main frame will attempt to close it all down
-void simple_frame_window::_001OnQueryEndSession(signal_details * pobj)
+void simple_frame_window::_001OnQueryEndSession(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    if (&System != NULL && System.m_puiMain == this)
@@ -2644,7 +2742,7 @@ string simple_frame_window::get_window_default_matter()
 }
 
 
-void simple_frame_window::guserbaseOnInitialUpdate(signal_details * pobj)
+void simple_frame_window::guserbaseOnInitialUpdate(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    ::user::FrameInitialUpdate * pfiu = (::user::FrameInitialUpdate *)pbase->m_lparam.m_lparam;
@@ -2666,7 +2764,7 @@ void simple_frame_window::guserbaseOnInitialUpdate(signal_details * pobj)
       if (pfiu->m_bMakeVisible)
       {
          // send initial update to all views (and other controls) in the frame
-         pframe->SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+         pframe->send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
          // give ::user::impact a chance to save the focus (CFormView needs this)
          if (pview != NULL)
@@ -2738,24 +2836,28 @@ void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
 
          ::draw2d::keep k(pgraphics);
 
-         try
+         //if (0)
          {
-
-            for(auto & pui : uia)
+            try
             {
 
-               if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+               for (auto & pui : uia)
                {
 
-                  pui->_000OnDraw(pgraphics);
+                  if (!base_class < ::user::wndfrm::frame::control_box > ::bases(pui))
+                  {
+
+                     pui->_000OnDraw(pgraphics);
+
+                  }
 
                }
 
             }
+            catch (...)
+            {
 
-         }
-         catch (...)
-         {
+            }
 
          }
 
@@ -2765,6 +2867,9 @@ void simple_frame_window::_010OnDraw(::draw2d::graphics * pgraphics)
 
       _001DrawThis(pgraphics);
 
+
+
+      if (!m_bTransparentFrame || this == GetActiveWindow())
       {
 
          ::draw2d::keep k(pgraphics);
@@ -2841,16 +2946,18 @@ void simple_frame_window::_011OnDraw(::draw2d::graphics * pgraphics)
       ::user::wndfrm::frame::WorkSetClientInterface::_001OnDraw(pgraphics);
 
    }
-   else if(!_001IsTranslucent())
-   {
+   //else if(!_001IsTranslucent())
+   //{
 
-      rect rect;
+   //   rect rect;
 
-      GetClientRect(rect);
+   //   GetClientRect(rect);
 
-      pgraphics->FillSolidRect(rect, _001GetColor(::user::color_background));
+   //   pgraphics->set_al
 
-   }
+   //   pgraphics->FillSolidRect(rect, _001GetColor(::user::color_background));
+
+   //}
 
 }
 
@@ -2922,7 +3029,7 @@ void simple_frame_window::WfiOnRestore()
 }
 
 
-void simple_frame_window::WfiOnDock(::user::EAppearance eappearance)
+void simple_frame_window::WfiOnDock(::user::e_appearance eappearance)
 {
 
    _001WindowDock(eappearance);
@@ -2999,7 +3106,7 @@ bool simple_frame_window::DeferFullScreen(bool bFullScreen, bool bRestore)
 bool simple_frame_window::calc_layered()
 {
 
-   if (m_bLayered && _001GetTranslucency() != ::user::TranslucencyNone)
+   if (m_bLayered && _001GetTranslucency() != ::user::translucency_none)
    {
       return !Session.savings().is_trying_to_save(::aura::resource_processing)
              && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth);
@@ -3014,10 +3121,10 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::ETranslucency & etranslucency)
+bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
 {
 
-   if (m_etranslucency != ::user::TranslucencyUndefined)
+   if (m_etranslucency != ::user::translucency_undefined)
    {
 
       etranslucency = m_etranslucency;
@@ -3026,12 +3133,12 @@ bool simple_frame_window::get_translucency(::user::ETranslucency & etranslucency
 
    }
 
-   return ::user::frame_window::get_translucency(etranslucency);
+   return ::user::frame_window::get_translucency(etranslucency, eelement);
 
 }
 
 
-void simple_frame_window::data_on_after_change(signal_details * pobj)
+void simple_frame_window::data_on_after_change(::message::message * pobj)
 {
    box::data_on_after_change(pobj);
    SCAST_PTR(database::change_event, phint, pobj);
@@ -3044,17 +3151,21 @@ void simple_frame_window::data_on_after_change(signal_details * pobj)
 
 
 
-bool simple_frame_window::on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult)
+void simple_frame_window::on_simple_command(::message::simple_command * psimplecommand)
 {
 
-   return ::user::frame_window::on_simple_command(ecommand, lparam, lresult);
+   ::user::frame_window::on_simple_command(psimplecommand);
 
 }
+
 
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
+
    UNREFERENCED_PARAMETER(dwStyle);
+
    return NULL;
+
 }
 
 
@@ -3074,7 +3185,7 @@ class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_
 
 
 
-bool simple_frame_window::set_appearance(::user::EAppearance eappearance)
+bool simple_frame_window::set_appearance(::user::e_appearance eappearance)
 {
 
    bool bOk1 = ::user::frame_window::set_appearance(eappearance);
@@ -3264,19 +3375,19 @@ void simple_frame_window::show_task(bool bShow)
 }
 
 
-::user::front_end_schema * simple_frame_window::get_user_front_end_schema()
-{
-
-   if (m_workset.m_pframeschema == NULL)
-   {
-
-      return NULL;
-
-   }
-
-   return m_workset.m_pframeschema->get_user_front_end_schema();
-
-}
+//::user::front_end_schema * simple_frame_window::get_user_front_end_schema()
+//{
+//
+//   if (m_workset.m_pframeschema == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   return m_workset.m_pframeschema->get_user_front_end_schema();
+//
+//}
 
 
 bool simple_frame_window::IsNotifyIconEnabled()
@@ -3307,3 +3418,27 @@ bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
 
 }
 
+
+void simple_frame_window::initialize_userstyle()
+{
+
+   ::user::frame_window::initialize_userstyle();
+
+   if (m_puserstyle == NULL)
+   {
+
+      string strSchema = m_varFrame["wndfrm"];
+
+      m_puserstyle = Session.get_user_style(strSchema, get_app());
+
+   }
+
+   if (m_puserstyle == NULL)
+   {
+
+      m_puserstyle = Application.userstyle();
+
+   }
+
+
+}

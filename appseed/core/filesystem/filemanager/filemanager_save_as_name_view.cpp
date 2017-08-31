@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -14,6 +14,15 @@ namespace filemanager
 
       m_bVoidSync = false;
 
+   }
+   
+   
+   void save_as_edit_view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::plain_edit::install_message_routing(psender);
+      
    }
 
    void save_as_edit_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
@@ -36,7 +45,7 @@ namespace filemanager
                str.Format("file_list(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
                if(get_filemanager_data()->m_bTransparentBackground)
                {
-               ::user::list::m_etranslucency = ::user::list::TranslucencyPresent;
+               ::user::list::m_etranslucency = ::user::list::translucency_present;
                }
                DISetSection(str);
                _001UpdateColumns();*/
@@ -98,7 +107,7 @@ namespace filemanager
             if (Application.dir().is(strName))
             {
 
-               if (get_filemanager_item().m_filepath != strName)
+               if (get_filemanager_item()->m_filepath != strName)
                {
 
                   get_filemanager_manager()->FileManagerBrowse(strName, ::action::source::sync(actioncontext));
@@ -138,6 +147,14 @@ namespace filemanager
 
 
    }
+   
+   void save_as_button::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::button::install_message_routing(psender);
+      
+   }
 
    void save_as_button::on_update(user::impact *p, LPARAM l , object * o)
    {
@@ -164,22 +181,22 @@ namespace filemanager
          strPath = strTitle;
 
       }
-      else if (get_filemanager_manager()->get_fs_data()->is_dir(get_filemanager_item().m_filepath))
+      else if (get_filemanager_manager()->get_fs_data()->is_dir(get_filemanager_item()->m_filepath))
       {
 
-         strPath = get_filemanager_item().m_filepath / strTitle;
+         strPath = get_filemanager_item()->m_filepath / strTitle;
 
       }
       else if (strTitle.has_char())
       {
 
-         strPath = get_filemanager_item().m_filepath / strTitle;
+         strPath = get_filemanager_item()->m_filepath / strTitle;
 
       }
       else
       {
 
-         strPath = get_filemanager_item().m_filepath;
+         strPath = get_filemanager_item()->m_filepath;
 
       }
 
@@ -231,6 +248,13 @@ namespace filemanager
 
    }
 
+   void save_as_view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
+      
+   }
 
    save_as_view::save_as_view(::aura::application * papp) :
       object(papp),
@@ -262,7 +286,7 @@ namespace filemanager
                            str.Format("file_list(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
                            if(get_filemanager_data()->m_bTransparentBackground)
                            {
-                           ::user::list::m_etranslucency = ::user::list::TranslucencyPresent;
+                           ::user::list::m_etranslucency = ::user::list::translucency_present;
                            }
                            DISetSection(str);
                            _001UpdateColumns();*/

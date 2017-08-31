@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 #if defined(LINUX)
 ////#include <ctype.h>
@@ -1432,8 +1432,7 @@ property_ptra::property_ptra(::aura::application * papp):
 
 
 
-PropertySignalObject::PropertySignalObject(class signal * psignal)
-   : signal_details(psignal)
+PropertySignalObject::PropertySignalObject()
 {
 }
 

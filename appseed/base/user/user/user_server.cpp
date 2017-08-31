@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -17,7 +17,7 @@ namespace user
    void server::on_request(::create * pcreate)
    {
 
-      sp(::create) cc(canew(::create(Application.creation(), var(var::type_empty), true, NULL)));
+      sp(::create) cc(canew(::create(Application.handler(), var(var::type_empty), true, NULL)));
 
       if (pcreate == NULL)
       {
@@ -34,7 +34,7 @@ namespace user
    ::user::document * server::open_document_file(var varFile, bool bMakeVisible, ::user::interaction * puiParent)
    {
 
-      sp(::create) cc(canew(::create(Application.creation(), varFile, bMakeVisible, puiParent)));
+      sp(::create) cc(canew(::create(Application.handler(), varFile, bMakeVisible, puiParent)));
 
       request_create(cc);
 

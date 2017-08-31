@@ -30,7 +30,7 @@ Kerr::ManualResetEvent::ManualResetEvent(EventState initialState) :
 //      Description:    Determines whether the event is currently signaled.
 //
 //*****************************************************************************
-bool Kerr::ManualResetEvent::Signaled() const
+bool Kerr::ManualResetEvent::message::sendered() const
 {
     return (WAIT_OBJECT_0 == ::WaitForSingleObject(m_event,
                                                    0));
@@ -42,7 +42,7 @@ bool Kerr::ManualResetEvent::Signaled() const
 //      Description:    Sets the state of the event to signaled.
 //
 //*****************************************************************************
-void Kerr::ManualResetEvent::Signal()
+void Kerr::ManualResetEvent::message::sender()
 {
     if (!m_event.Set())
     {

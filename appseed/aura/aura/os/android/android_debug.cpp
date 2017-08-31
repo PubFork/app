@@ -6,7 +6,7 @@
 //static string * m_pstrOutputDebugStringA = NULL;
 mutex * g_pmutexOutputDebugStringA = NULL;
 
-VOID WINAPI OutputDebugStringA(LPCSTR lpOutputString)
+VOID WINAPI output_debug_string(LPCSTR lpOutputString)
 {
 
    synch_lock sl(g_pmutexOutputDebugStringA);
@@ -37,9 +37,9 @@ VOID WINAPI OutputDebugStringA(LPCSTR lpOutputString)
    //      for (auto str : stra)
    //      {
 
-            //__android_log_print(ANDROID_LOG_INFO, "OutputDebugString", str);
+            //__android_log_print(ANDROID_LOG_INFO, "output_debug_string", str);
 
-   __android_log_print(ANDROID_LOG_INFO,"OutputDebugString", "%s", lpOutputString);
+   __android_log_print(ANDROID_LOG_INFO,"output_debug_string", "%s", lpOutputString);
 
    //      }
 
@@ -60,11 +60,11 @@ CLASS_DECL_AURA void simple_debug_print(const char * psz)
 
 
 
-VOID WINAPI OutputDebugStringW(LPCWSTR lpOutputString)
+VOID WINAPI output_debug_string(LPCWSTR lpOutputString)
 {
 
 
-   OutputDebugStringA(string(lpOutputString));
+   output_debug_string(string(lpOutputString));
 
 
 }

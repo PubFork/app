@@ -215,12 +215,6 @@ void thread::CommonConstruct()
 
    m_nDisablePumpCount  = 0;
 
-   m_pcommandthread = NULL;
-
-   //m_hthread = NULL;
-
-
-
 }
 
 
@@ -271,23 +265,6 @@ HTHREAD thread::get_os_handle() const
    return (HTHREAD)get_os_data();
 
 }
-
-
-
-//void thread::_001OnSendThreadMessage(signal_details * pobj)
-//{
-//
-//   SCAST_PTR(::message::base,pbase,pobj);
-//
-//   sp(::send_thread_message) pmessage = pbase->m_lparam;
-//
-//   process_message(&pmessage->m_message);
-//
-//   pmessage->m_bOk = true;
-//
-//}
-
-
 
 
 
@@ -365,7 +342,7 @@ int32_t thread::run()
 
    thisstart;
 
-   while(get_run_thread())
+   while(thread_get_run())
    {
 
       if(!defer_pump_message())
@@ -761,7 +738,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       }
 
-      Sleep(284);
+      Sleep(200);
 
    }
 
@@ -906,7 +883,7 @@ bool thread::post_quit()
 }
 
 
-bool thread::get_run_thread()
+bool thread::thread_get_run()
 {
 
    return m_bRunThisThread;
@@ -921,10 +898,10 @@ bool thread::get_run_thread()
 //}
 
 
-void thread::message_queue_message_handler(::signal_details * pobj)
+void thread::message_queue_message_handler(::message::base * pbase)
 {
 
-    UNREFERENCED_PARAMETER(pobj);
+    UNREFERENCED_PARAMETER(pbase);
 
 }
 
@@ -1066,32 +1043,33 @@ bool thread::on_before_run_thread()
 }
 
 
-void thread::dispatch_thread_message(signal_details * pbase)
+void thread::dispatch_thread_message(::message::message * pbase)
 {
 
+   route_message(pbase);
 
    //LRESULT lresult;
 
    //synch_lock sl(m_pmutex);
-   int i = 0;
-   Signal * pSignal;
-   while((pSignal = m_signala.GetSignal(pbase->m_uiMessage,0,0, i)) != NULL)
-   {
-      class signal * psignal = pSignal->m_psignal;
-      message::e_prototype eprototype = pSignal->m_eprototype;
-      if(eprototype == message::PrototypeNone)
-      {
-         //::message::base aura(get_app());
-         pbase->m_psignal = psignal;
-         //lresult = 0;
-         //aura.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
-         psignal->emit(pbase);
-         if(pbase->m_bRet)
-            return;
-      }
-      break;
-      pbase->m_bRet = true;
-   }
+   //int i = 0;
+   //Signal * pSignal;
+   //while((pSignal = m_signala.GetSignal(pbase->m_id,0,0, i)) != NULL)
+   //{
+   //   class signal * psignal = pSignal->m_psignal;
+   //   message::e_prototype eprototype = pSignal->m_eprototype;
+   //   if(eprototype == message::PrototypeNone)
+   //   {
+   //      //::message::base aura(get_app());
+   //      pbase->m_psignal = psignal;
+   //      //lresult = 0;
+   //      //aura.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
+   //      psignal->emit(pbase);
+   //      if(pbase->m_bRet)
+   //         return;
+   //   }
+   //   break;
+   //   pbase->m_bRet = true;
+   //}
 
 
 }
@@ -1164,7 +1142,7 @@ wait_result thread::wait(const duration & duration)
 }
 
 
-void thread::pre_translate_message(signal_details * pobj)
+void thread::pre_translate_message(::message::message * pobj)
 {
 
    try
@@ -1215,45 +1193,51 @@ void thread::pre_translate_message(signal_details * pobj)
 
 
 
-void thread::process_window_procedure_exception(::exception::base*,signal_details * pobj)
+void thread::process_window_procedure_exception(::exception::base*,::message::message * pobj)
 {
+   
    SCAST_PTR(::message::base,pbase,pobj);
-   if(pbase->m_uiMessage == WM_CREATE)
+
+   if(pbase->m_id == WM_CREATE)
    {
+      
       pbase->set_lresult(-1);
-      return;  // just fail
+      
    }
-   else if(pbase->m_uiMessage == WM_PAINT)
+   else if(pbase->m_id == WM_PAINT)
    {
+      
       // force validation of interaction_impl to prevent getting WM_PAINT again
+      
       #ifdef WIDOWSEX
       ValidateRect(pbase->m_pwnd->get_safe_handle(),NULL);
       #endif
+
       pbase->set_lresult(0);
-      return;
+
    }
-   return;   // sensible default for rest of commands
+
 }
 
 
 namespace thread_util
 {
 
-   inline bool IsEnterKey(signal_details * pobj)
+   inline bool IsEnterKey(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
-      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+      return pbase->m_id == WM_KEYDOWN && pbase->m_id == VK_RETURN;
    }
 
-   inline bool IsButtonUp(signal_details * pobj)
+   inline bool IsButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::base,pbase,pobj);
-      return pbase->m_uiMessage == WM_LBUTTONUP;
+      return pbase->m_id == WM_LBUTTONUP;
    }
 
 }
 
-void thread::process_message_filter(int32_t code,signal_details * pobj)
+void thread::process_message_filter(int32_t code,::message::message * pobj)
 {
 
    Application.process_message_filter(code,pobj);
@@ -1720,7 +1704,7 @@ void CLASS_DECL_AURA __term_thread(::aura::application * papp)
 }
 
 
-bool thread::is_idle_message(signal_details * pobj)
+bool thread::is_idle_message(::message::message * pobj)
 {
 
    return ::message::is_idle_message(pobj);
@@ -1814,7 +1798,7 @@ bool thread::post_object(UINT message, WPARAM wParam, lparam lParam)
 
    }
 
-   if (m_hthread == (HTHREAD)NULL || !get_run_thread())
+   if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
       if (lParam != NULL)
@@ -1865,7 +1849,7 @@ bool thread::send_object(UINT message, WPARAM wParam, lparam lParam, ::duration 
 
    }
 
-   if (m_hthread == (HTHREAD)NULL || !get_run_thread())
+   if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
       if (lParam != NULL)
@@ -1968,11 +1952,11 @@ int32_t thread::thread_startup(::thread_startup * pstartup)
 
    //::thread * pthreadimpl = pstartup->m_pthreadimpl;
 
-   IGUI_WIN_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
+   IGUI_MSG_LINK(WM_APP + 1000, this, this, &::thread::_001OnThreadMessage);
 
-   install_message_handling(this);
+   install_message_routing(this);
 
-   //install_message_handling(pthreadimpl);
+   //install_message_routing(pthreadimpl);
 
    return 0;
 
@@ -2322,10 +2306,10 @@ bool thread::initialize_message_queue()
 //}
 
 
-void thread::message_handler(signal_details * pobj)
+void thread::message_handler(::message::base * pbase)
 {
 
-   Application.message_handler(pobj);
+   Application.message_handler(pbase);
 
 }
 
@@ -2362,9 +2346,9 @@ bool thread::process_message(LPMESSAGE lpmessage)
          else if (msg.wParam == system_message_command)
          {
 
-            sp(::primitive::command) pcommand((lparam)msg.lParam);
+            sp(::command::command) pcommand((lparam)msg.lParam);
 
-            m_pcommandthread->on_command(pcommand);
+            m_phandler->on_handle(pcommand);
 
          }
          else if (msg.wParam == system_message_pred)
@@ -2425,9 +2409,9 @@ bool thread::process_message(LPMESSAGE lpmessage)
 
          {
 
-            smart_pointer < ::message::base > spbase;
+            smart_pointer < ::message::message > spbase;
 
-            spbase = get_base(&msg);
+            spbase = m_pauraapp->get_message_base(&msg);
 
             if(spbase.is_set())
             {
@@ -2844,7 +2828,7 @@ bool thread::kick_thread()
 
 
 
-void thread::_001OnThreadMessage(signal_details * pobj)
+void thread::_001OnThreadMessage(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
@@ -2853,56 +2837,24 @@ void thread::_001OnThreadMessage(signal_details * pobj)
 
 }
 
-::command_thread * thread::command_central()
-{
-   return m_pcommandthread;
-}
 
-::command_thread * thread::command_thread()
+::handler * thread::handler()
 {
-   return m_pcommandthread;
-}
-
-::command_thread * thread::command()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::guideline()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::directrix()
-{
-   return m_pcommandthread;
-}
-
-::command_thread * thread::axiom()
-{
-   return m_pcommandthread;
+   
+   return m_phandler;
+   
 }
 
 
 bool thread::verb()
 {
 
-//   m_pcommandthread->run();
-
    return true;
 
 }
 
 
-
-::command_thread * thread::creation()
-{
-   return m_pcommandthread;
-}
-
-
-
-void thread::on_command(::primitive::command * pcommand)
+void thread::handle_command(::command::command * pcommand)
 {
 
    sp(::create) pcreate = pcommand;
@@ -2955,6 +2907,14 @@ void thread::on_create(::create * pcreate)
 
 }
 
+
+// a thread transforms a request to create into a request workflow...
+void thread::request_create(::create * pcreate)
+{
+   
+   on_request(pcreate);
+   
+}
 
 
 mutex * g_pmutexThreadOn = NULL;

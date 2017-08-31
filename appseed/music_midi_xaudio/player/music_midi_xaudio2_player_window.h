@@ -39,7 +39,7 @@ namespace music
 
                void set_callback(::music::midi::player::callback_interface * pcallback);
 
-               void install_message_handling(::message::dispatch * pinterface);
+               void install_message_routing(::message::sender * pinterface);
 
                DECL_GEN_SIGNAL(_001OnNotifyEvent)
                   DECL_GEN_SIGNAL(_001OnMmsgDone)

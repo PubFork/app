@@ -44,7 +44,7 @@ namespace multithreading
 
       ::set_thread(pthread);
 
-      processor_cache_oriented_set_thread_memory_pool(0); // set default processor cache oriented thread memory pool index to 0 ("zero") (The First One)
+      processor_cache_oriented_set_thread_memory_pool(0); // set default handler cache oriented thread memory pool index to 0 ("zero") (The First One)
 
       __init_thread();
 
@@ -126,7 +126,8 @@ namespace multithreading
          try
          {
 
-            pthread->m_signala.remove_all();
+            pthread->m_idroute.remove_all();
+//            pthread->m_signala.remove_all();
 
          }
          catch(...)
@@ -134,16 +135,16 @@ namespace multithreading
 
          }
 
-         try
-         {
+         //try
+         //{
 
-            pthread->m_signala.remove_all();
+         //   pthread->m_signala.remove_all();
 
-         }
-         catch(...)
-         {
+         //}
+         //catch(...)
+         //{
 
-         }
+         //}
 
          try
          {
@@ -221,7 +222,7 @@ bool get_thread_run()
    try
    {
 
-      return t_pthread->get_run_thread();
+      return t_pthread->thread_get_run();
 
    }
    catch (...)

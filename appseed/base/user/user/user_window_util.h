@@ -143,9 +143,9 @@ namespace user
       static_function void ExcludeChildren(oswindow oswindow, HRGN hrgn, POINT ptOffset);
       window_util();
       virtual ~window_util();
-      /*static_function void SendMessageToDescendants(oswindow oswindow, UINT message,
+      /*static_function void send_message_to_descendants(oswindow oswindow, UINT message,
       WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);*/
-      static_function void SendMessageToDescendants(oswindow oswindow, UINT message,
+      static_function void send_message_to_descendants(oswindow oswindow, UINT message,
          WPARAM wParam, LPARAM lParam, bool bDeep);
       static_function bool IsAscendant(oswindow oswindowAscendant, oswindow oswindowDescendant);
 

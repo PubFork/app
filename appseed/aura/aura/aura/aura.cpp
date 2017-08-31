@@ -1,6 +1,13 @@
 #include "framework.h"
 #include <stdio.h>
 
+
+
+
+CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
+
+
+
 BEGIN_EXTERN_C
 CLASS_DECL_AURA int g_bAura = 0;
 END_EXTERN_C
@@ -20,7 +27,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
    //if (strstr(pszFormat, "%") == NULL)
    //{
    //
-   //   ::OutputDebugStringW(wstring(pszFormat));
+   //   ::output_debug_string(wstring(pszFormat));
    //
    //   return;
 
@@ -34,7 +41,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
 
    vsnprintf(sz,sizeof(sz),pszFormat,argList);
 
-   ::OutputDebugStringW(wstring(sz));
+   ::output_debug_string(sz);
 
    va_end(argList);
 
@@ -146,9 +153,13 @@ CLASS_DECL_AURA int_bool defer_aura_term()
 
 #ifdef WINDOWS
 
-void set_simple_output_debug_string();
+void set_simple_output_debug_string_a();
 
-void set_extended_output_debug_string();
+void set_extended_output_debug_string_a();
+
+void set_simple_output_debug_string_w();
+
+void set_extended_output_debug_string_w();
 
 #endif
 
@@ -177,7 +188,9 @@ bool aura_init()
 
 #ifdef WINDOWS
 
-   set_extended_output_debug_string();
+   set_extended_output_debug_string_a();
+
+   set_extended_output_debug_string_w();
 
 #endif
 
@@ -208,7 +221,9 @@ bool aura_term()
 
 #ifdef WINDOWS
 
-   set_simple_output_debug_string();
+   set_simple_output_debug_string_a();
+
+   set_simple_output_debug_string_w();
 
 #endif
 
@@ -230,7 +245,7 @@ void dappy(const char * psz)
 
    //debug_print("app._ : %s : %s\n",_argv[2],psz);
    //debug_print("hello!!    : %s\n",psz);
-   //::OutputDebugString("hello!!    : " + string(psz) + "\n");
+   //::output_debug_string("hello!!    : " + string(psz) + "\n");
 
 }
 
@@ -285,3 +300,35 @@ CLASS_DECL_AURA void writeln(const char * psz)
    output_debug_string(string(psz) + "\n");
 
 }
+
+
+
+BEGIN_EXTERN_C
+
+CLASS_DECL_AURA void c_function_call(void * p)
+{
+   
+   const char * psz = (const char *) p;
+
+   
+}
+
+END_EXTERN_C
+
+
+template < >
+CLASS_DECL_AURA void function_call(const ::object * p)
+{
+   
+   const char * psz = reinterpret_cast< const char * > (p);
+   
+}
+
+
+
+
+
+
+
+
+

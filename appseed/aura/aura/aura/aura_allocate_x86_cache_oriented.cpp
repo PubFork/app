@@ -118,7 +118,7 @@ public:
          lpb = (LPBYTE) memory_alloc(c);
          // can use string because messed all with cache out hot hit !!/^`}{{ **!
          DEBUG_ONLY(::aura::application * papp = ::get_thread_app());
-         APPTRACE("processor oriented cache: memory out of cache palace garden (size=%d)", c);
+         APPTRACE("handler oriented cache: memory out of cache palace garden (size=%d)", c);
       }
       return lpb;
       
@@ -152,14 +152,14 @@ public:
 static x86_cache_oriented_memory_pool * s_processororientedmemorypoola[MAX_PROC_CACHE_ORIENTED_MEM_POOL];
 thread_int_ptr < int_ptr > t_iProcessorOrientedMemoryPool;
 
-static_inline x86_cache_oriented_memory_pool * x86_cache_oriented_get_thread_memory_pool()
+CLASS_DECL_AURA x86_cache_oriented_memory_pool * x86_cache_oriented_get_thread_memory_pool()
 {
    
    return s_processororientedmemorypoola[t_iProcessorOrientedMemoryPool];
 
 }
 
-static_inline int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolIndex)
+CLASS_DECL_AURA int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolIndex)
 {
 
    if(iPoolIndex < 0)
@@ -193,7 +193,7 @@ static_inline int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolIndex)
 }
 
 
-static_inline void x86_cache_oriented_destroy_all_memory_pools()
+CLASS_DECL_AURA void x86_cache_oriented_destroy_all_memory_pools()
 {
 
    for(int iPoolIndex = 0; iPoolIndex < MAX_PROC_CACHE_ORIENTED_MEM_POOL; iPoolIndex++)

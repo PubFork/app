@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include <stdarg.h>
 
 #ifdef LINUX
@@ -48,12 +48,14 @@ void dump_context::SetDepth(int32_t nNewDepth)
 
 void dump_context::output_string(const char * lpsz)
 {
-   // use C-runtime/OutputDebugString when m_pfile is NULL
+   // use C-runtime/output_debug_string when m_pfile is NULL
    if (m_pfile == NULL)
    {
-      ::OutputDebugStringW(::str::international::utf8_to_unicode(lpsz));
-      //     TRACE(::aura::trace::category_dumpContext, 0, "%s", lpsz);
+      
+      ::output_debug_string(lpsz);
+      
       return;
+      
    }
 
    ASSERT( lpsz != NULL );

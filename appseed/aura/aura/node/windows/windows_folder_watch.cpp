@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "windows.h"
 string get_volume_path(const char * psz)
 {

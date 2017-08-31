@@ -6,7 +6,7 @@ namespace estamira
 
 
    class CLASS_DECL_ESTAMIRA character :
-      virtual public ::signalizable
+      virtual public ::::message::receiver
    {
    public:
 
@@ -39,7 +39,7 @@ namespace estamira
       character(::aura::application * papp, index iIndex);
       virtual ~character();
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 

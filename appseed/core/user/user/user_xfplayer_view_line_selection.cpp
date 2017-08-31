@@ -15,11 +15,11 @@ XfplayerViewLineSelection::~XfplayerViewLineSelection()
 }
 
 
-void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, signal_details * pobj)
+void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
 
-   UINT message = pbase->m_uiMessage;
+   UINT message = pbase->m_id;
 
    if(message != WM_MOUSEMOVE
       || message != WM_TIMER

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -20,6 +20,15 @@ namespace filemanager
    main_view::~main_view()
    {
 
+   }
+   
+   
+   void main_view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
+      
    }
 
 
@@ -170,33 +179,50 @@ namespace filemanager
       {
          m_ppropform = canew(file_properties_form(get_app()));
       }
+      
       sp(::user::interaction) puie = m_ppropform->open(this,itema);
+
       if(puie == NULL)
          return;
+
       SetPane(1,puie,false);
+
       on_layout();
+
    }
 
-   bool main_view::on_simple_action(id id)
+
+   void main_view::on_command(::user::command * pcommand)
    {
-      //  int32_t iPos = -1;
-      if(id == "change_view")
+      
+      if(pcommand->m_id == "change_view")
       {
+
          if(m_ppreview->IsWindowVisible())
          {
+
             SetPane(1,m_pfilelist,false);
+
             on_layout();
+
             m_ppreview->ShowWindow(SW_HIDE);
+
          }
          else
          {
+            
             SetPane(1,m_ppreview,false);
+            
             on_layout();
+
             m_pfilelist->ShowWindow(SW_HIDE);
+
          }
-         return true;
+         
+         pcommand->m_bRet = true;
+
       }
-      return false;
+      
    }
 
 

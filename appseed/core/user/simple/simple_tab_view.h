@@ -24,12 +24,12 @@ public:
    DECL_GEN_SIGNAL(_001OnSize);
    void on_layout();
 
-   void _001OnCreate(signal_details * pobj);
-   void _001OnDestroy(signal_details * pobj);
+   void _001OnCreate(::message::message * pobj);
+   void _001OnDestroy(::message::message * pobj);
 
    virtual bool GetClientRect(LPRECT lprect);
 
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
    DECL_GEN_SIGNAL(_001OnLButtonUp);
    DECL_GEN_SIGNAL(_001OnMouseMove);

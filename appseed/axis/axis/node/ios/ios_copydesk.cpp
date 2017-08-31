@@ -35,7 +35,7 @@ namespace ios
    }
 
 
-   void copydesk::get_filea(stringa & stra)
+   void copydesk::get_filea(::file::patha & patha)
    {
       int32_t iCount = get_file_count();
       if(iCount <= 0)
@@ -57,7 +57,7 @@ namespace ios
       */
    }
 
-   void copydesk::set_filea(stringa & stra)
+   void copydesk::set_filea(const ::file::patha & patha)
    {
 
 //      ASSERT(m_p->IsWindow());

@@ -148,9 +148,21 @@ void round_window::round_window_show_keyboard(bool bShow)
 void round_window::round_window_set_title(const char * pszTitle)
 {
    
-//   NSString * str = [NSString stringWithUTF8String:pszTitle];
+   NSString * str = [NSString stringWithUTF8String:pszTitle];
    
-  // [((__bridge RoundWindow *)m_proundwindow) setTitle:str];
+   [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] setTitle: str];
+
+   
+}
+
+
+
+void round_window::round_window_get_title(char * pszTitle, int iSize)
+{
+   
+   NSString * str = [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] title];
+
+   strncpy(pszTitle, iSize, [str UTF8String]);
    
 }
 
@@ -211,7 +223,7 @@ void ui_app_run(int argc, char * argv[])
 }
 
 
-void round_window::round_window_close()
+void round_window::round_window_destroy()
 {
    
    [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] close];

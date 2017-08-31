@@ -5,7 +5,7 @@
 #include "core/core/core.h"
 #include "core/filesystem/filemanager/filemanager.h"
 #include "core/user/html/html/html.h"
-#include "math/math/math_math.h"
+#include "core/math/math_math.h"
 
 
 

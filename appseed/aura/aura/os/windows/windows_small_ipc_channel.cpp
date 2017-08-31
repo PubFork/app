@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 typedef int
 (WINAPI * LPFN_ChangeWindowMessageFilter)(

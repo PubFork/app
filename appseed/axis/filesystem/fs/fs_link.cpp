@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 //#include "aura/node/windows/windows.h"
 #endif
@@ -198,58 +198,39 @@ namespace fs
 
    }
 
-   void link::fill_os_user()
+   void link::defer_fill_folder(string strTitle, ::file::path pathFolder)
    {
 
-      ::file::path strSourceFolder;
+      if (strTitle.is_empty() || pathFolder.is_empty())
+      {
 
-#ifdef WINDOWSEX
+         return;
 
-      m_strTitle = "Favoritos";
+      }
       
-      ::windows::SHGetSpecialFolderPath(
-         NULL,
-         strSourceFolder,
-         CSIDL_PROFILE,
-         FALSE);
+      m_strTitle = strTitle;
 
-      m_path = strSourceFolder / "links";
-
-#endif
-
-#ifdef METROWIN
-
-      TRACE("Not filling OS USER!!!! In METRO WIN In WinRT");
-
-#else
+      m_path = pathFolder;
 
       m_pprovider = get_app();
 
       ::file::listing::ls();
 
-#endif
+   }
 
+
+   void link::fill_os_user()
+   {
+
+      defer_fill_folder("Favorites", System.dir().get_favorites_folder());
 
    }
+
 
    void link::fill_os_user_desktop()
    {
 
-#ifdef WINDOWSEX
-
-      m_strTitle = "Área de Trabalho";
-
-      ::windows::SHGetSpecialFolderPath(
-         NULL,
-         m_path,
-         CSIDL_DESKTOP,
-         FALSE);
-
-#endif
-
-      m_pprovider = get_app();
-
-      ::file::listing::ls();
+      defer_fill_folder("Desktop", System.dir().get_desktop_folder());
 
 
    }

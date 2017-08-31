@@ -23,6 +23,11 @@ CLASS_DECL_IMPORT void draw2d_factory_exchange(::aura::application * papp);
 
 #endif
 
+#ifdef MACOS
+
+void ns_app_terminate();
+#endif
+
 #if defined(LINUX)
 #ifdef _GNU_SOURCE
 #undef _GNU_SOURCE
@@ -64,10 +69,10 @@ namespace aura
 {
 
 
-   application_signal_details::application_signal_details(class ::signal * psignal, e_application_signal esignal) :
-      ::signal_details(psignal)
+   application_message::application_message(e_application_message esignal)
    {
 
+      m_id = ::message::type_application;
       m_esignal = esignal;
       m_bOk = true;
 
@@ -176,9 +181,7 @@ namespace aura
 
 
 
-      m_psignal = canew(class signal());
-
-      m_pcommandthread = canew(::command_thread(this));
+      m_phandler = canew(::handler(this));
 
       m_bLicense = false;
 
@@ -193,8 +196,6 @@ namespace aura
 
       m_bAuraInitializeInstance = false;
       m_bAuraInitializeInstanceResult = false;
-
-      m_pinitmaindata = NULL;
 
 #if defined(LINUX)
 
@@ -216,13 +217,6 @@ namespace aura
       {
 
          delete m_peventReady;
-
-      }
-
-      if (m_pinitmaindata != NULL)
-      {
-
-         delete m_pinitmaindata;
 
       }
 
@@ -257,14 +251,15 @@ namespace aura
    }
 
 
-   void application::install_message_handling(::message::dispatch * pdispatch)
+   void application::install_message_routing(::message::sender * psender)
    {
 
-      ::message::dispatch::install_message_handling(pdispatch);
-      ::signalizable::install_message_handling(pdispatch);
-      ::thread::install_message_handling(pdispatch);
+      ::message::receiver::install_message_routing(psender);
+      ::thread::install_message_routing(psender);
 
    }
+
+
    bool application::app_data_set(class id id, ::file::ostream & os)
    {
 
@@ -297,10 +292,10 @@ namespace aura
    }
 
 
-   void application::on_command(::primitive::command * pcommand)
+   void application::handle_command(::command::command * pcommand)
    {
 
-      if (pcommand->m_ecommand == ::primitive::command_on_agree_exit)
+      if (pcommand->m_ecommand == ::command_on_agree_exit)
       {
 
          m_bAgreeExit = _001OnAgreeExit();
@@ -308,7 +303,7 @@ namespace aura
          m_bAgreeExitOk = true;
 
       }
-      else if (pcommand->m_ecommand == ::primitive::command_france_exit)
+      else if (pcommand->m_ecommand == ::command_france_exit)
       {
 
          _001OnFranceExit();
@@ -319,7 +314,7 @@ namespace aura
       else
       {
 
-         ::thread::on_command(pcommand);
+         ::thread::handle_command(pcommand);
 
       }
 
@@ -2387,7 +2382,7 @@ namespace aura
    }*/
 
 
-   void application::_001OnFileNew(signal_details * pobj)
+   void application::_001OnFileNew(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(this);
@@ -2549,86 +2544,184 @@ namespace aura
 
    int32_t application::main()
    {
-
+      
+      
       TRACE(string(typeid(*this).name()) + " main");;
-
+      
       dappy(string(typeid(*this).name()) + " : application::main 1");
-
+      
       try
       {
-
+         
          TRACE(string(typeid(*this).name()) + " on_run");;
          dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
          m_iReturnCode = 0;
          m_bReady = true;
          m_iReturnCode = on_run();
-         if (m_iReturnCode != 0)
+         if(m_iReturnCode != 0)
          {
             dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-            ::output_debug_string("application::main on_run termination failure");
+            ::output_debug_string("application::main on_run termination failure\n");
          }
-
-      }
-      catch (::exit_exception &)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-         ::multithreading::post_quit(&System);
-
-         goto exit_application;
-
-      }
-      catch (...)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run general exception");
-
-         goto exit_application;
-
-      }
-
-      try
-      {
-
-         if (is_system())
-         {
-
-            dappy(string(typeid(*this).name()) + " : quiting main");
-
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-   exit_application:
-
-      try
-      {
-
-         m_iReturnCode = exit_application();
-
+         
       }
       catch(::exit_exception &)
       {
-
+         
+         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+         
          ::multithreading::post_quit(&System);
-
-         m_iReturnCode = -1;
-
+         
+         goto exit_application;
+         
       }
       catch(...)
       {
-
+         
+         dappy(string(typeid(*this).name()) + " : on_run general exception");
+         
+         goto exit_application;
+         
+      }
+      
+      try
+      {
+         
+         if(is_system())
+         {
+            
+            dappy(string(typeid(*this).name()) + " : quiting main");
+            
+            //::aura::post_quit_thread(&System);
+            
+            //Sleep(5000);
+            
+         }
+         
+      }
+      catch(...)
+      {
+         
+      }
+      
+   exit_application:
+      
+      
+      try
+      {
+         
+         m_iReturnCode = exit_thread();
+         
+      }
+      catch(::exit_exception &)
+      {
+         
+         ::multithreading::post_quit(&System);
+         
          m_iReturnCode = -1;
-
+         
+      }
+      catch(...)
+      {
+         
+         m_iReturnCode = -1;
+         
       }
 
+#ifdef MACOS
+
+      ns_app_terminate();
+
+#elif defined(APPLEIOS)
+
+      ui_app_terminate();
+
+#endif
+
       return m_iReturnCode;
+
+//
+//      TRACE(string(typeid(*this).name()) + " main");;
+//
+//      dappy(string(typeid(*this).name()) + " : application::main 1");
+//
+//      try
+//      {
+//
+//         TRACE(string(typeid(*this).name()) + " on_run");;
+//         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
+//         m_iReturnCode = 0;
+//         m_bReady = true;
+//         m_iReturnCode = on_run();
+//         if (m_iReturnCode != 0)
+//         {
+//            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
+//            ::output_debug_string("application::main on_run termination failure");
+//         }
+//
+//      }
+//      catch (::exit_exception &)
+//      {
+//
+//         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+//
+//         ::multithreading::post_quit(&System);
+//
+//         goto exit_application;
+//
+//      }
+//      catch (...)
+//      {
+//
+//         dappy(string(typeid(*this).name()) + " : on_run general exception");
+//
+//         goto exit_application;
+//
+//      }
+//
+//      try
+//      {
+//
+//         if (is_system())
+//         {
+//
+//            dappy(string(typeid(*this).name()) + " : quiting main");
+//
+//
+//         }
+//
+//      }
+//      catch (...)
+//      {
+//
+//      }
+//
+//   exit_application:
+//
+//      try
+//      {
+//
+//         m_iReturnCode = exit_application();
+//
+//      }
+//      catch(::exit_exception &)
+//      {
+//
+//         ::multithreading::post_quit(&System);
+//
+//         m_iReturnCode = -1;
+//
+//      }
+//      catch(...)
+//      {
+//
+//         m_iReturnCode = -1;
+//
+//      }
+//
+//      return m_iReturnCode;
+      
+      
 
    }
 
@@ -2801,9 +2894,9 @@ namespace aura
       try
       {
 
-         application_signal_details signal(m_psignal, application_signal_start);
+         application_message message(application_message_start);
 
-         m_psignal->emit(&signal);
+         route_message(&message);
 
       }
       catch (...)
@@ -2815,7 +2908,7 @@ namespace aura
 
       thread * pthread = ::get_thread();
 
-      install_message_handling(pthread);
+      install_message_routing(pthread);
 
       thisok << 1 << m_iReturnCode;
 
@@ -3306,8 +3399,8 @@ namespace aura
       string strId(pszId);
       string strSystemLocale = System.m_strLocale;
       string strSystemSchema = System.m_strSchema;
-      stringa straLocale = command()->m_varTopicQuery["locale"].stra();
-      stringa straSchema = command()->m_varTopicQuery["schema"].stra();
+      stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
+      stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
 
 #if defined(INSTALL_SUBSYSTEM)
 
@@ -3386,162 +3479,14 @@ namespace aura
 
 
 
-
-   //   void application::construct(const char *pszId)
-   //   {
-   //      //if(m_strAppName.has_char())
-   //      //   return;
-   //      //m_strAppName.Empty();
-   //      //m_strId.Empty();
-   //      if (pszId == NULL)
-   //      {
-   //#ifdef WINDOWSEX
-   //         wstring wstr = ::GetCommandLineW();
-   //         string str = ::str::international::unicode_to_utf8(wstr);
-   //         strsize iFind = str.find(" : ");
-   //         if (iFind >= 0)
-   //         {
-   //            iFind = str.find("app=", iFind);
-   //            if (iFind >= 0)
-   //            {
-   //               strsize iEnd = str.find(" ", iFind);
-   //               if (iEnd < 0)
-   //               {
-   //                  m_strId = str.Mid(iFind + 4);
-   //               }
-   //               else
-   //               {
-   //                  m_strId = str.Mid(iFind + 4, iEnd - iFind - 4);
-   //               }
-   //               ::str::begins_eat(m_strId, "\"");
-   //               ::str::ends_eat(m_strId, "\"");
-   //            }
-   //         }
-   //#endif
-   //      }
-   //      else
-   //      {
-   //         m_strId = pszId;
-   //      }
-   //      if (m_strId.is_empty())
-   //         m_strId = "mplite";
-   //      construct();
-   //      if (m_strAppName.is_empty())
-   //      {
-   //         if (m_strAppId.has_char())
-   //            m_strAppName = m_strAppId;
-   //         else if (m_strInstallToken.has_char())
-   //            m_strAppName = m_strInstallToken;
-   //      }
-   //   }
-
-
-   //void application::construct()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-
-   //   ::core::application::construct();
-
-   //}
-
-
-
-
-   //void application::_001OnFileNew()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   ::core::application::_001OnFileNew(NULL);
-   //}
-
-
-   //bool application::bergedge_start()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::bergedge_start();
-   //}
-
-
-
-   //bool application::on_install()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_install();
-   //}
-
-   //bool application::on_uninstall()
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::on_uninstall();
-   //}
-
-
    void application::on_request(::create * pcreate)
    {
 
       ::object::on_request(pcreate);
 
-      command()->consolidate(pcreate);
+      m_phandler->merge(pcreate);
 
    }
-
-   //bool application::is_serviceable()
-   //{
-
-
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::is_serviceable();
-   //}
-
-   //service_base * application::allocate_new_service()
-   //{
-
-   //   return NULL;
-
-   //}
-
-
-   //::user::document *  application::_001OpenDocumentFile(var varFile)
-   //{
-   //   string strId = m_strId;
-   //   char chFirst = '\0';
-   //   if (strId.get_length() > 0)
-   //   {
-   //      chFirst = strId[0];
-   //   }
-   //   return ::core::application::_001OpenDocumentFile(varFile);
-
-   //}
-
 
    int32_t application::run()
    {
@@ -3549,7 +3494,7 @@ namespace aura
       if (!is_system() && !is_session())
       {
 
-         if (command()->m_varTopicQuery.has_property("service"))
+         if (handler()->m_varTopicQuery.has_property("service"))
          {
 
             create_new_service();
@@ -3557,7 +3502,7 @@ namespace aura
             ::service_base::serve(*m_pservice);
 
          }
-         else if (command()->m_varTopicQuery.has_property("run") || is_serviceable())
+         else if (handler()->m_varTopicQuery.has_property("run") || is_serviceable())
          {
 
             create_new_service();
@@ -3662,7 +3607,7 @@ namespace aura
    bool application::is_installing()
    {
 
-      return directrix()->has_property("install");
+      return handler()->has_property("install");
 
    }
 
@@ -3670,7 +3615,7 @@ namespace aura
    bool application::is_uninstalling()
    {
 
-      return directrix()->has_property("uninstall");
+      return handler()->has_property("uninstall");
 
    }
 
@@ -3859,8 +3804,8 @@ namespace aura
          if (!check_exclusive(bHandled))
          {
 
-            if (!bHandled && (is_debugger_attached() && !System.directrix()->m_varTopicQuery.has_property("install")
-              && !System.directrix()->m_varTopicQuery.has_property("uninstall")))
+            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
+              && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
 
                simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", seconds(5), MB_ICONASTERISK);
@@ -4151,17 +4096,17 @@ namespace aura
       if (strSchemaSystem.has_char())
          strSchema = strSchemaSystem;
 
-      if (Sys(this).directrix()->m_varTopicQuery["locale"].get_count() > 0)
-         strLocale = Sys(this).directrix()->m_varTopicQuery["locale"].stra()[0];
+      if (Sys(this).handler()->m_varTopicQuery["locale"].get_count() > 0)
+         strLocale = Sys(this).handler()->m_varTopicQuery["locale"].stra()[0];
 
-      if (Sys(this).directrix()->m_varTopicQuery["schema"].get_count() > 0)
-         strSchema = Sys(this).directrix()->m_varTopicQuery["schema"].stra()[0];
+      if (Sys(this).handler()->m_varTopicQuery["schema"].get_count() > 0)
+         strSchema = Sys(this).handler()->m_varTopicQuery["schema"].stra()[0];
 
-      if (App(this).directrix()->m_varTopicQuery["locale"].get_count() > 0)
-         strLocale = App(this).directrix()->m_varTopicQuery["locale"].stra()[0];
+      if (App(this).handler()->m_varTopicQuery["locale"].get_count() > 0)
+         strLocale = App(this).handler()->m_varTopicQuery["locale"].stra()[0];
 
-      if (App(this).directrix()->m_varTopicQuery["schema"].get_count() > 0)
-         strSchema = App(this).directrix()->m_varTopicQuery["schema"].stra()[0];
+      if (App(this).handler()->m_varTopicQuery["schema"].get_count() > 0)
+         strSchema = App(this).handler()->m_varTopicQuery["schema"].stra()[0];
 
 
       set_locale(strLocale, ::action::source::database());
@@ -4291,7 +4236,7 @@ namespace aura
 
          release_exclusive();
 
-         m_pcommandthread.release();
+         m_phandler.release();
 
 
          //         if(m_spuiMessage.is_set())
@@ -4307,68 +4252,26 @@ namespace aura
          }
 
 
-         if (m_psignal != NULL)
+         application_message message(application_message_exit_instance);
+
+         try
          {
 
-            application_signal_details signal(m_psignal, application_signal_exit_instance);
-
-            try
-            {
-
-               m_psignal->emit(&signal);
-
-            }
-            catch (...)
-            {
-
-            }
-
-            m_psignal.release();
+            route_message(&message);
 
          }
-
-         //try
-         //{
-         //   if (!is_system())
-         //   {
-         //      System.unregister_bergedge_application(this);
-         //   }
-         //}
-         //catch (...)
-         //{
-         //}
-
-         /*try
-         {
-         ::release(smart_pointer <thread>::m_p);
-         }
-         catch(...)
-         {
-         }*/
-
-
-         if (is_system())
+         catch (...)
          {
 
-            //         try
-            //       {
-            //        if(m_spfilesystem.m_p != NULL)
-            //      {
-            //       ::core::del(m_spfilesystem.m_p);
-            //  }
-            //         }
-            //       catch(...)
-            //     {
-            //   }
          }
 
          if (!is_session() && !is_system())
          {
 
-            if (m_paurasystem != NULL && m_paurasystem->m_pcommandthread != NULL)
+            if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
             {
 
-               m_paurasystem->m_pcommandthread->command(::primitive::command_check_exit);
+               m_paurasystem->m_phandler->handle(::command_check_exit);
 
             }
 
@@ -4543,9 +4446,11 @@ namespace aura
    bool application::ca_initialize2()
    {
 
-      application_signal_details signal(m_psignal, application_signal_initialize2);
-      m_psignal->emit(&signal);
-      return signal.m_bOk;
+      application_message message(application_message_initialize2);
+
+      route_message(&message);
+
+      return message.m_bOk;
 
    }
 
@@ -4553,9 +4458,11 @@ namespace aura
    bool application::ca_initialize3()
    {
 
-      application_signal_details signal(m_psignal, application_signal_initialize3);
-      m_psignal->emit(&signal);
-      if (!signal.m_bOk)
+      application_message message(application_message_initialize3);
+      
+      route_message(&message);
+
+      if (!message.m_bOk)
          return false;
 
       return true;
@@ -4801,35 +4708,47 @@ namespace aura
 
    bool application::ca_process_initialize()
    {
-      application_signal_details signal(m_psignal, application_signal_process_initialize);
-      m_psignal->emit(&signal);
+
+      application_message message(application_message_process_initialize);
+      
+      route_message(&message);
+   
       return true;
+
    }
+
 
    bool application::ca_initialize1()
    {
-      application_signal_details signal(m_psignal, application_signal_initialize1);
-      m_psignal->emit(&signal);
-      return signal.m_bOk;
+      
+      application_message message(application_message_initialize1);
+
+      route_message(&message);
+
+      return message.m_bOk;
+
    }
 
 
 
    bool application::ca_finalize()
    {
-      application_signal_details signal(m_psignal, application_signal_finalize);
+      
+      application_message message(application_message_finalize);
+
       try
       {
-         m_psignal->emit(&signal);
+
+         route_message(&message);
+
       }
       catch (...)
       {
+
       }
 
+      return message.m_bOk;
 
-
-
-      return signal.m_bOk;
    }
 
 
@@ -4911,7 +4830,7 @@ namespace aura
          if (m_pipi != NULL)
          {
 
-            int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.directrix()->m_spcommandline->m_strCommandLine));
+            int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.handler()->m_spcommandline->m_strCommandLine));
 
             if (!map[System.os().get_pid()].is_new())
             {
@@ -4955,12 +4874,12 @@ namespace aura
 
    string application::get_local_mutex_id()
    {
-      return command()->m_varTopicQuery["local_mutex_id"];
+      return handler()->m_varTopicQuery["local_mutex_id"];
    }
 
    string application::get_global_mutex_id()
    {
-      return command()->m_varTopicQuery["global_mutex_id"];
+      return handler()->m_varTopicQuery["global_mutex_id"];
    }
 
    ::mutex * application::get_local_mutex()
@@ -5311,237 +5230,16 @@ namespace aura
       return false;
 
    }
+   
 
-   bool application::init_main_data(main_init_data * pdata)
+   bool application::startup_command(::command::command * pcommand)
    {
 
-      m_pinitmaindata = pdata;
+      m_pcommand = pcommand;
 
       return true;
 
    }
-
-   //bool application::set_main_init_data(main_init_data * pdata)
-   //{
-
-   //   return m_pappimpl->set_main_init_data(pdata);
-
-   //}
-
-
-
-
-
-
-   //void application::dir_matter_ls_file(const string & str,stringa & stra)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //string application::file().as_string(var varFile)
-   //{
-
-   //   return ::file_as_string_dup(varFile.get_string());
-
-   //}
-
-
-   //string application::file().as_string(var varFile,var & varQuery)
-   //{
-
-   //   return file().as_string(varFile);
-
-   //}
-
-
-   //string application::matter_as_string(const char * pszMatter,const char * pszMatter2)
-   //{
-
-   //   var varQuery;
-
-   //   varQuery["disable_ca2_sessid"] = true;
-
-   //   return file().as_string(dir().matter(pszMatter,pszMatter2),varQuery);
-
-   //}
-
-   //string application::dir().matter(const char * pszMatter,const char * pszMatter2)
-   //{
-
-   //   return dir().matter(pszMatter,pszMatter2);
-
-   //}
-
-   //bool application::is_inside_time_dir(const char * pszPath)
-   //{
-   //   throw not_implemented(this);
-   //   return false;
-   //}
-
-   //bool application::file_is_read_only(const char * pszPath)
-   //{
-   //   throw not_implemented(this);
-   //   return false;
-   //}
-
-
-   //bool application::file().exists(const char * pszPath)
-   //{
-
-   //   return ::file_exists_dup(pszPath) != FALSE;
-
-   //}
-
-
-   //bool application::file_is_equal_path(const char * pszPath1,const char * pszPath2)
-   //{
-
-   //   return ::file_is_equal_path_dup(pszPath1,pszPath2) != FALSE;
-
-   //}
-
-
-   //bool application::dir().id(const char * psz)
-   //{
-
-   //   return ::dir::is(psz);
-
-   //}
-
-
-   //bool application::file_del(const char * psz)
-   //{
-
-   //   return file_delete_dup(psz) != FALSE;
-
-   //}
-
-   //string application::file_extension(const char * pszPath)
-   //{
-
-   //   return ::file_extension_dup(pszPath);
-
-   //}
-
-
-   //string application::dir_userappdata(const char * lpcsz,const char * lpcsz2)
-   //{
-
-   //   throw not_implemented(this);
-
-   //}
-
-   //string application::dir_appdata(const char * lpcsz,const char * lpcsz2)
-   //{
-
-   //   throw not_implemented(this);
-
-   //}
-
-
-   //string application::dir_simple_path(const string & str1,const string & str2)
-   //{
-
-   //   return dir_path(str1,str2);
-
-   //}
-
-
-   //string application::dir_path(const char * psz1,const char * psz2,const char * psz3)
-   //{
-
-   //   return ::dir::path(psz1,psz2,psz3);
-
-   //}
-
-
-   //string application::dir_element(const char * psz)
-   //{
-
-   //   return ::dir::path(::dir::element(),psz);
-
-   //}
-
-   //string application::dir_ca2module(const char * psz)
-   //{
-
-   //   return ::dir::path(::dir::ca2_module(),psz);
-
-   //}
-
-   //string application::dir_name(const char * psz)
-   //{
-
-   //   return ::dir::name(psz);
-
-   //}
-
-
-   //void application::dir_ls_dir(const char * lpcsz,::file::patha & patha)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //void application::dir_rls(const char * lpcsz,::file::patha & patha)
-   //{
-
-   //   ::exception::throw_not_implemented(get_app());
-
-   //}
-
-
-   //bool application::dir_mk(const char * psz)
-   //{
-
-   //   return ::dir::mk(psz);
-
-   //}
-
-
-   //string application::file_title(const char * psz)
-   //{
-
-   //   return ::file_title_dup(psz);
-
-   //}
-
-
-   //string application::file().name_(const char * psz)
-   //{
-
-   //   return ::file_name_dup(psz);
-
-   //}
-
-//#ifdef APPLEOS
-//
-//   string application::dir_pathfind(const char * pszEnv, const char * pszTopic, const char * pszMode)
-//   {
-//
-//      ::exception::throw_interface_only(get_app());
-//
-//      return "";
-//
-//   }
-//
-//#endif
-//
-
-   //string application::file_time_square()
-   //{
-
-   //   //return get_temp_file_name_template(
-   //   ::exception::throw_interface_only(get_app());
-
-   //   return "";
-
-   //}
 
 
    string application::http_get_locale_schema(const char * pszUrl, const char * pszLocale, const char * pszSchema)
@@ -5552,23 +5250,9 @@ namespace aura
       return "";
 
    }
-   /*
+   
 
-      ::file::file_sp application::file_get_file(var varFile,uint32_t uiFlags)
-      {
-
-         ::file::file_sp buffer(allocer());
-
-         if(!buffer->open(varFile,uiFlags))
-            return NULL;
-
-         return buffer;
-
-      }
-
-   */
-
-   void application::process_message_filter(int32_t code, signal_details * pobj)
+   void application::process_message_filter(int32_t code, ::message::message * pobj)
    {
 
       //if(pobj == NULL)
@@ -5610,7 +5294,7 @@ namespace aura
       //case MSGF_DIALOGBOX:    // handles message boxes as well.
       //   //pMainWnd = __get_main_window();
       //   if(code == MSGF_DIALOGBOX && m_pthread->m_puiActive != NULL &&
-      //      pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+      //      pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
       //   {
       //      //// need to translate messages for the in-place container
       //      //___THREAD_STATE* pThreadState = __get_thread_state();
@@ -5660,10 +5344,10 @@ namespace aura
    }
 
 
-   void application::message_handler(signal_details * pobj)
+   void application::message_handler(::message::base * pbase)
    {
 
-      ::thread::message_handler(pobj);
+      ::thread::message_handler(pbase);
 
    }
 
@@ -5699,7 +5383,7 @@ namespace aura
    }
 
 
-   void application::dispatch_user_message(::signal_details * pbase)
+   void application::dispatch_user_message(::message::message * pbase)
    {
 
       UNREFERENCED_PARAMETER(pbase);
@@ -5749,15 +5433,22 @@ namespace aura
    sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    {
 
-      return NULL;
+      sp(::message::base) pbase = canew(::message::base(get_app()));
+
+      if (pbase == NULL)
+         return NULL;
+
+      pbase->set(NULL, lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      return pbase;
 
    }
 
 
-   void application::process_message(signal_details * pobj)
+   void application::process_message(::message::base * pbase)
    {
 
-      message_handler(pobj);
+      message_handler(pbase);
 
    }
 
@@ -5920,17 +5611,17 @@ namespace aura
 
       stringa stra;
 
-      stra = Application.directrix()->m_varTopicQuery["locale"].stra();
+      stra = Application.handler()->m_varTopicQuery["locale"].stra();
 
       stra.remove_ci("_std");
 
-      straLocale.add_unique(Application.directrix()->m_varTopicQuery["locale"].stra());
+      straLocale.add_unique(Application.handler()->m_varTopicQuery["locale"].stra());
 
-      stra = Application.directrix()->m_varTopicQuery["schema"].stra();
+      stra = Application.handler()->m_varTopicQuery["schema"].stra();
 
       stra.remove_ci("_std");
 
-      straSchema.add_unique(Application.directrix()->m_varTopicQuery["schema"].stra());
+      straSchema.add_unique(Application.handler()->m_varTopicQuery["schema"].stra());
 
 
       localeschema.m_idLocale = straLocale[0];
@@ -6058,11 +5749,9 @@ namespace aura
 
       papp->m_pbasesystem = m_pbasesystem;
 
-      papp->command_central()->consolidate(System.command_central());
+      papp->handler()->merge(System.handler());
 
-      papp->command_central()->consolidate(command_central());
-
-      //   papp->m_bSystemSynchronizedCursor = m_bSystemSynchronizedCursor;
+      papp->handler()->merge(handler());
 
       if (pbias != NULL)
       {
@@ -6082,8 +5771,8 @@ namespace aura
 
       if ((papp == NULL || papp->m_strAppId != strAppId)
          &&
-         (!Application.command()->m_varTopicQuery.has_property("install")
-            && !Application.command()->m_varTopicQuery.has_property("uninstall")))
+         (!Application.handler()->m_varTopicQuery.has_property("install")
+            && !Application.handler()->m_varTopicQuery.has_property("uninstall")))
       {
 
          TRACE("Failed to instantiate %s, going to try installation through ca2_cube_install", strAppId);
@@ -6531,19 +6220,19 @@ namespace aura
 
          string strAddUp;
 
-         if (System.directrix()->m_varTopicQuery.has_property("enable_desktop_launch"))
+         if (System.handler()->m_varTopicQuery.has_property("enable_desktop_launch"))
          {
 
-            if (System.directrix()->m_varTopicQuery["enable_desktop_launch"].has_char())
+            if (System.handler()->m_varTopicQuery["enable_desktop_launch"].has_char())
             {
 
-               strAddUp = " enable_desktop_launch=" + System.directrix()->m_varTopicQuery["enable_desktop_launch"];
+               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["enable_desktop_launch"];
 
             }
             else
             {
 
-               strAddUp = " enable_desktop_launch=" + System.directrix()->m_varTopicQuery["app"];
+               strAddUp = " enable_desktop_launch=" + System.handler()->m_varTopicQuery["app"];
 
             }
 
@@ -6832,10 +6521,10 @@ namespace aura
 
          string strLibrary;
 
-         if (command()->m_varTopicQuery.has_property("draw2d"))
+         if (handler()->m_varTopicQuery.has_property("draw2d"))
          {
 
-            string strDraw2d = command()->m_varTopicQuery["draw2d"];
+            string strDraw2d = handler()->m_varTopicQuery["draw2d"];
 
             strDraw2d.trim();
 
@@ -6997,8 +6686,640 @@ namespace aura
 
    }
 
+   
+   bool application::on_open_document_file(var varFile)
+   {
+      
+      request_file(varFile);
+      
+      return varFile["document"].cast < ::object > () != NULL;
+      
+   }
+   
 
-} // namespace aura
+   bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (!is_application_installed(strAppId, dwGoodToCheckAgain))
+      {
+
+         return false;
+
+      }
+
+      install_status & status = m_mapUpdated[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
+
+      string strConfiguration = System.get_system_configuration();
+
+      string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
+
+      status.m_bOk = System.::aura::system::is_application_installed(strAppId, strLatestBuildNumber);
+
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
+
+      return status.m_bOk;
+
+   }
+
+
+   bool application::is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      install_status & status = m_mapInstalled[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strAppId);
+
+      string strApplication = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+      string strApp = dir::stage(process_platform_dir_name()) / "application.exe";
+
+      status.m_bOk = file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp));
+
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
+
+      return status.m_bOk;
+
+   }
+
+
+   void application::install_trace(const string & str)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::install::trace_file(this, m_strInstallTraceLabel).print(str);
+
+   }
+
+
+   void application::install_trace(double dRate)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      ::install::trace_file(this, m_strInstallTraceLabel).print(dRate);
+
+   }
+   bool application::register_spa_file_type()
+   {
+
+#ifdef WINDOWS
+
+      HKEY hkey;
+
+      wstring extension = L".spa";                     // file extension
+      wstring desc = L"spafile";          // file type description
+      wstring content_type = L"application/x-spa";
+
+      wstring app(::dir::stage("x86"));
+
+      wstring icon(app);
+
+      app = L"\"" + app + L"\"" + L" \"%1\"";
+      icon = L"\"" + icon + L"\",107";
+
+      wstring action = L"Open";
+
+      wstring sub = L"\\shell\\";
+
+      wstring path = L"spafile\\shell\\open\\command";
+
+
+      // 1: Create subkey for extension -> HKEY_CLASSES_ROOT\.002
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, extension.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), desc.length() * sizeof(wchar_t)); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), content_type.length() * sizeof(wchar_t)); // default vlaue is description of file extension
+      RegCloseKey(hkey);
+
+
+
+      // 2: Create Subkeys for action ( "Open with my program" )
+      // HKEY_CLASSES_ROOT\.002\Shell\\open with my program\\command
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), app.length() * sizeof(wchar_t));
+      RegCloseKey(hkey);
+
+
+      path = L"spafile\\DefaultIcon";
+
+      if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
+      {
+         output_debug_string("Could not create or open a registrty key\n");
+         return 0;
+      }
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), icon.length() * sizeof(wchar_t));
+      RegCloseKey(hkey);
+
+      wstring wstr(dir::stage("x86") / "spa_register.txt");
+
+      int iRetry = 9;
+
+      while (!file_exists_dup(u8(wstr.c_str())) && iRetry > 0)
+      {
+
+         dir::mk(dir::name(u8(wstr.c_str())).c_str());
+
+         file_put_contents_dup(u8(wstr.c_str()).c_str(), "");
+
+         iRetry--;
+
+         Sleep(84);
+
+      }
+
+#endif
+
+      return true;
+
+   }
+
+
+   bool application::low_is_app_app_admin_running(string strPlatform)
+   {
+
+      ::install::admin_mutex smutex(strPlatform);
+
+      return smutex.already_exists();
+
+   }
+
+
+   void application::defer_start_program_files_app_app_admin(string strPlatform)
+   {
+
+      if (low_is_app_app_admin_running(strPlatform))
+      {
+
+         return;
+
+      }
+
+      start_program_files_app_app_admin(strPlatform);
+
+   }
+
+
+   void application::start_program_files_app_app_admin(string strPlatform)
+   {
+
+#ifdef WINDOWS
+
+      SHELLEXECUTEINFOW sei = {};
+
+      string str = ::path::app_app_admin(strPlatform);
+
+      if (!::file_exists_dup(str))
+      {
+
+         return;
+
+      }
+
+      ::install::admin_mutex mutexStartup("-startup");
+
+      wstring wstr(str);
+
+      sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+      sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+      sei.lpVerb = L"RunAs";
+      sei.lpFile = wstr.c_str();
+      ::ShellExecuteExW(&sei);
+      DWORD dwGetLastError = GetLastError();
+
+#endif
+
+   }
+
+   
+   string application::install_pick_command_line()
+   {
+
+       throw interface_only_exception(this);
+
+       return "";
+
+   }
+
+
+   string  application::install_get_build()
+   {
+
+      return m_strInstallBuild;
+
+   }
+
+   int application::check_soon_launch(string strCommandLine, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      string strId;
+
+      string wstr = strCommandLine;
+
+      int iFind1 = 0;
+
+      if (wstr[0] == '\"')
+      {
+
+         iFind1 = wstr.find('\"', 1);
+
+      }
+
+      int iFind = wstr.find(" : ", iFind1 + 1);
+
+      if (iFind < 0)
+      {
+
+         string strFile = wstr.substr(iFind1 + 1);
+
+         strFile.trim();
+
+         if (check_soon_file_launch(strFile, bLaunch, dwGoodToCheckAgain))
+         {
+
+            return 1;
+
+         }
+
+      }
+      else
+      {
+
+         string wstrRequest = wstr.substr(iFind + 3);
+
+         string wstrValue;
+
+         if (get_command_line_param(wstrValue, wstrRequest, "install"))
+         {
+
+            if (get_command_line_param(strId, wstrRequest, "enable_desktop_launch") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+
+            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+
+         }
+         else
+         {
+
+            if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
+            {
+
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+            }
+         }
+
+      }
+
+      if (strId.empty())
+         return FALSE;
+
+      return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
+
+   }
+
+
+
+   string application::get_app_id(string wstr)
+   {
+
+      if (wstr.length() <= 0)
+      {
+
+         return "";
+
+      }
+
+      wstr.trim();
+
+      ::str::trim_any_quotes(wstr);
+
+      wstr.trim();
+
+      if (wstr.length() <= 0)
+      {
+
+         return "";
+
+      }
+
+      ::xml::document doc(get_app());
+
+      ::string strPath = wstr.c_str();
+
+      ::string strContents = file_as_string_dup(strPath.c_str());
+
+      if (!doc.load(strContents.c_str()))
+      {
+
+         return "";
+
+      }
+
+      sp(xml::node) pnode = doc.get_root();
+
+      if (pnode == NULL)
+      {
+
+         return "";
+
+      }
+
+      const char * psz = pnode->GetChildAttrValue("launch", "app");
+
+      if (psz == NULL || *psz == '\0')
+      {
+
+         return "";
+
+      }
+
+      return psz;
+
+   }
+
+
+   int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch, dwGoodToCheckAgain);
+
+   }
+
+
+
+
+   int application::check_soon_app_id(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (check_soon_app_id1(strId, bLaunch, dwGoodToCheckAgain))
+      {
+
+         return TRUE;
+
+      }
+
+      if (check_soon_app_id2(strId, bLaunch, dwGoodToCheckAgain))
+      {
+
+         return TRUE;
+
+      }
+
+      return FALSE;
+
+   }
+
+
+   int application::check_soon_app_id1(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (strId.length() <= 0)
+      {
+
+         return 0;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strId);
+
+      string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      bool bOk;
+
+      if (bLaunch)
+      {
+
+         bOk = is_application_installed(strId, dwGoodToCheckAgain);
+
+      }
+      else
+      {
+
+         bOk = is_application_updated(strId, dwGoodToCheckAgain);
+
+      }
+
+      if (file_exists_dup(strApp) && bOk)
+      {
+
+         if (!bLaunch)
+         {
+
+            // if dll loads consider good state
+
+            string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+#ifdef WINDOWS
+
+            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+            bool bOk = hmodule != NULL;
+
+            if (bOk)
+            {
+
+               ::FreeLibrary(hmodule);
+
+            }
+
+#endif
+
+            return bOk;
+
+         }
+
+#ifdef WINDOWS
+
+         SHELLEXECUTEINFOW sei = {};
+
+         wstring wstrFile(strApp.c_str());
+
+         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+         sei.lpFile = wstrFile.c_str();
+
+         if (::ShellExecuteExW(&sei))
+         {
+
+            return TRUE;
+
+         }
+
+#endif
+
+      }
+
+      return FALSE;
+
+   }
+
+
+   int application::check_soon_app_id2(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (strId.length() <= 0)
+      {
+
+         return 0;
+
+      }
+
+      string strName = ::process::app_id_to_app_name(strId);
+
+      {
+
+         string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+         string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
+
+         bool bOk;
+
+         if (bLaunch)
+         {
+
+            bOk = Application.is_application_installed(strId, dwGoodToCheckAgain);
+
+         }
+         else
+         {
+
+            bOk = Application.is_application_updated(strId, dwGoodToCheckAgain);
+
+         }
+
+         if (file_exists_dup(strDll) && file_exists_dup(strApp) && bOk)
+         {
+
+            if (!bLaunch)
+            {
+
+
+#ifdef WINDOWS
+               // if dll loads consider good state
+
+               HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+               bool bOk = hmodule != NULL;
+
+               if (bOk)
+               {
+
+                  ::FreeLibrary(hmodule);
+
+               }
+#endif
+
+               return bOk;
+
+            }
+
+#ifdef WINDOWS
+
+            wstring wstrParams(": app=" + strId);
+
+            wstring wstrApp(strApp);
+
+            SHELLEXECUTEINFOW sei = {};
+
+            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+            sei.lpFile = wstrApp.c_str();
+
+            sei.lpParameters = wstrParams.c_str();
+
+            if (::ShellExecuteExW(&sei))
+            {
+
+               return TRUE;
+
+            }
+
+#endif
+
+         }
+
+      }
+
+      return FALSE;
+
+   }
+
+
+
+   string application::install_get_title(string strTitle)
+   {
+      static string  s_strTitle;
+
+      if (strTitle.has_char())
+      {
+         s_strTitle = strTitle;
+      }
+
+      return s_strTitle;
+   }
+
+
+   bool application::install_get_admin()
+   {
+
+      throw interface_only_exception(this);
+
+      return false;
+
+   }
+
+
+   string application::install_get_id()
+   {
+
+      throw interface_only_exception(this);
+
+      return "";
+
+   }
+
+
+} // namespace install
+
+
+
 
 
 

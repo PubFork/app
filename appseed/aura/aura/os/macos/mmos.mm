@@ -15,7 +15,7 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
    if(s_mmos == NULL)
    {
       
-      s_mmos = ([[[self alloc] init] autorelease]);
+      s_mmos = ([[self alloc] init]);
       
       s_mmos->m_ppszWallpaper = NULL;
       
@@ -29,18 +29,6 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
       
       [s_mmos monitorIconForFile];
       
-      //-(void)awakeFromNib
-//      {
-//         [[[NSWorkspace sharedWorkspace] notificationCenter]
-//          addObserver:s_mmos
-//          selector:@selector(applicationActivity:)
-//          name:NSWorkspaceDidActivateApplicationNotification 
-//          object:nil];
-//      }
-//      [[NSDistributedNotificationCenter defaultCenter] addObserver:s_mmos
-//                                                          selector:@selector(desktopImageChanged:)
-//                                                              name:@"com.apple.desktop"
-//                                                            object:nil];
    }
    
    return s_mmos;
@@ -332,3 +320,13 @@ const char * ns_user_local_video_folder()
    
 }
 
+
+
+void ns_log(const char * pszLog)
+{
+ 
+   NSString * strLog = [[NSString alloc]initWithUTF8String:pszLog];
+   
+   NSLog(@"%@", strLog);
+   
+}

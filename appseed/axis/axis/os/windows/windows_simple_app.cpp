@@ -5,9 +5,7 @@ namespace axis
 {
 
 
-   app::app():
-      ::aura::system(this, NULL),
-      ::axis::system(this)
+   app::app()
    {
 
    }
@@ -21,7 +19,6 @@ namespace axis
    int32_t app::main()
    {
 
-      _init_file();
 
       TCHAR *cmd = GetCommandLine();
 

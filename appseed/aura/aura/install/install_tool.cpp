@@ -69,7 +69,7 @@ namespace install
       if (!txchannel.open(strChannel, bLaunch ? &launcher : NULL))
          return false;
 
-      txchannel.send(pszParams, INFINITE);
+      txchannel.send(pszParams, one_hour());
 
 #endif
 
@@ -373,9 +373,10 @@ namespace install
    bool tool::get_admin()
    {
 
-      return Application.get_admin();
+      return Application.install_get_admin();
 
    }
+
 
 #ifdef WINDOWSEX
 

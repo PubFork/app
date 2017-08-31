@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -121,15 +121,47 @@ int32_t db_long_sync_queue::run()
    try
    {
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
-         if (&ApplicationUser == NULL)
+         try
          {
 
-            Sleep(5000);
+            if (m_pauraapp == NULL)
+            {
 
-            continue;
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession == NULL)
+            {
+
+               break;
+
+            }
+
+            if (m_pauraapp->m_paurasession->m_pfontopus == NULL)
+            {
+
+               break;
+
+            }
+
+            if (&ApplicationUser == NULL)
+            {
+
+               Sleep(5000);
+
+               continue;
+
+            }
+
+         }
+         catch (...)
+         {
+
+            break;
 
          }
 
@@ -254,13 +286,13 @@ db_long_set::~db_long_set()
 
 }
 
-// Adiciona na matriz System nomes dos diretórios de imagens.
+// Adiciona na matriz System nomes dos diretï¿½rios de imagens.
 bool db_long_set::load(const char * lpKey, int64_t * plValue)
 {
 
    db_long_set_core * pcore = (db_long_set_core *)m_pcore->m_ptopthis;
 
-   if (m_pcore->m_pdataserver->m_bRemote && string(lpKey).find_ci(".local://") < 0)
+   if (m_pcore->m_pdataserver->m_bRemote && (string(lpKey).find(".local://") < 0 || string(lpKey).find(".override-local.") >= 0))
    {
 
       // Remote

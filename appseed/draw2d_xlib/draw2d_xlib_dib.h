@@ -70,8 +70,8 @@ namespace draw2d_xlib
       using ::draw2d::dib::to;
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
 
-      virtual bool update_window(::window * pwnd, signal_details * pobj);
-      virtual bool print_window(::window * pwnd, signal_details * pobj);
+      virtual bool update_window(::window * pwnd, ::message::message * pobj);
+      virtual bool print_window(::window * pwnd, ::message::message * pobj);
 
       void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
 

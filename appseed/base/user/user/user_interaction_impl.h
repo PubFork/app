@@ -84,16 +84,65 @@ namespace user
       ::user::interaction_ptra      m_guieptraMouseHover;
 
       sp(::thread)                  m_pthreadUpdateWindow;
+      
+      
+      enum e_queue_thread
+      {
+         
+         queue_thread_none,
+         queue_thread_first,
+         queue_thread_mouse_move = queue_thread_first,
+         queue_thread_input,
+         queue_thread_other,
+         queue_thread_end,
+         
+      };
+      
+      class queue_thread :
+      virtual public ::thread
+      {
+      public:
+         
+         
+         ::user::interaction_impl *    m_pimpl;
+         manual_reset_event            m_evNewMessage;
+         spa(::message::base)          m_messagequeue;
+         
+         
+         queue_thread(::user::interaction_impl * pimpl);
+         virtual ~queue_thread();
+         
+         
+         virtual void queue_message_handler(::message::base * pbase);
+         
+         
+         virtual int32_t run() override;
+         
+         
+      };
+      
+      
+      //map < e_queue_thread, e_queue_thread, sp(queue_thread) > m_mapqueue;
+      
+      sp(queue_thread)        m_queuethread;
+      DWORD                   m_dwLastMouseMove;
 
 
       interaction_impl();
+      
+      
+      virtual e_queue_thread message_queue_thread(UINT uiMessage);
 
 
       void user_common_construct();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
+      
+      virtual void queue_message_handler(::message::base * pbase) override;
+
+      
 
       virtual mutex * draw_mutex();
 
@@ -111,12 +160,12 @@ namespace user
 #endif
 
 
-      virtual void _000OnMouseLeave(signal_details * pobj);
+      virtual void _000OnMouseLeave(::message::message * pobj);
       virtual void _008OnMouse(::message::mouse * pmouse);
       virtual void _001BaseWndInterfaceMap();
 
-      virtual void prio_install_message_handling(::message::dispatch * pinterface);
-      virtual void last_install_message_handling(::message::dispatch * pinterface);
+      virtual void prio_install_message_routing(::message::sender * pinterface);
+      virtual void last_install_message_routing(::message::sender * pinterface);
 
       bool operator==(const interaction_impl& wnd) const;
       bool operator!=(const interaction_impl& wnd) const;
@@ -141,11 +190,11 @@ namespace user
       bool attach(oswindow oswindow_New);
       oswindow detach();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
       DECL_GEN_SIGNAL(_002OnDraw);
-      DECL_GEN_SIGNAL(_001OnShowWindow);
 
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
 #if (WINVER >= 0x0500) && defined(WINDOWSEX)
 
@@ -189,7 +238,7 @@ namespace user
       // as above, but returns oswindow
       virtual ::user::interaction * GetDescendantWindow(id id) const;
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 
       virtual bool IsWindow() const;
 
@@ -645,8 +694,8 @@ namespace user
 //      void OnMDIActivate(bool bActivate,::window_sp pActivateWnd,::window_sp pDeactivateWnd);
 //
 //      // menu loop notification messages
-//      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-//      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+//      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+//      void OnExitMenuLoop(bool bIstrack_popup_menu);
 //
 //      // Win4 messages
 //#ifdef WINDOWSEX
@@ -667,13 +716,11 @@ namespace user
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      using ::user::interaction_base::message_handler;
-      virtual void message_handler(signal_details * pobj);
-      //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual void message_handler(::message::base * pbase);
 
       // for handling default processing
       virtual LRESULT Default();
@@ -779,14 +826,15 @@ namespace user
       guie_message_wnd(::aura::application * papp);
 
 
-      using interaction_impl::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
 
 
    }; // guie_message_wnd
 
 
 } // namespace user
+
+
 
 
 

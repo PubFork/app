@@ -23,7 +23,7 @@ namespace userex
       pane_tab_view(::aura::application * papp);
       virtual ~pane_tab_view();
      
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
 
@@ -61,6 +61,8 @@ namespace userex
       virtual bool create_app_options(::user::view_creator_data * pcreatordata);
 
       virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint) override;
+
+      virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
 
    };
 

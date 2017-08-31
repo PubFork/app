@@ -1,7 +1,6 @@
 #pragma once
 
 
-#include "zip_ioapi.h"
 #include "zip_unzip.h"
 
 
@@ -20,8 +19,8 @@ namespace zip
       ::file::file_sp            m_pbuffile2;
       unzFile                    m_pfUnzip;
       zipFile                    m_pfZip;
-      zlib_filefunc_def_s        m_filefuncdef;
       bool                       m_bOwnFile;
+      void *                     m_pvoidFileFuncDef;
 
       
       file(::aura::application * papp);

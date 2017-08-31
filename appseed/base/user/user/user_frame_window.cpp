@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -12,11 +12,11 @@ namespace user
 {
 
 
-   frame_window::frame_window():
+   frame_window::frame_window() :
       ::object(get_app()),
       ::user::interaction(get_app())
    {
-      
+
       m_flagNonClient.unsignalize(non_client_background);
       m_flagNonClient.unsignalize(non_client_focus_rect);
 
@@ -87,6 +87,7 @@ namespace user
       UNREFERENCED_PARAMETER(dwFlags);
    }
 
+
    string frame_window::get_window_default_matter()
    {
 
@@ -94,34 +95,63 @@ namespace user
 
    }
 
+
    ::user::interaction::e_type frame_window::get_window_type()
    {
+
       return type_frame;
+
    }
 
 
-   bool frame_window::on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult)
+   void frame_window::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      if (::user::interaction::on_simple_command(ecommand, lparam, lresult))
-         return true;
-
-      switch (ecommand)
+      switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_update_frame_title:
-         on_update_frame_title(lparam != FALSE);
+         
+         on_update_frame_title(psimplecommand->m_lparam != FALSE);
+         
+         psimplecommand->m_bRet = true;
+
          break;
+
       default:
+         
          break;
       }
 
+      if (psimplecommand->m_bRet)
+      {
 
-      return false;
+         return;
+
+      }
+
+      ::user::box::on_simple_command(psimplecommand);
 
    }
 
 
-   void frame_window::_guserbaseOnInitialUpdate(signal_details * pobj)
+   void frame_window::on_command(::user::command * pcommand)
+   {
+
+      ::user::interaction::on_command(pcommand);
+
+      if (pcommand->m_bRet)
+      {
+
+         return;
+
+      }
+
+      ::user::box::on_command(pcommand);
+
+   }
+
+
+   void frame_window::_guserbaseOnInitialUpdate(::message::message * pobj)
    {
 
       guserbaseOnInitialUpdate(pobj);
@@ -129,7 +159,7 @@ namespace user
    }
 
 
-   void frame_window::guserbaseOnInitialUpdate(signal_details * pobj)
+   void frame_window::guserbaseOnInitialUpdate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -137,20 +167,20 @@ namespace user
    }
 
 
-   void frame_window::install_message_handling(::message::dispatch *pinterface)
+   void frame_window::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::box::install_message_handling(pinterface);
+      ::user::box::install_message_routing(pinterface);
       IGUI_MSG_LINK(::message::message_frame_initial_update, pinterface, this, &frame_window::_guserbaseOnInitialUpdate);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
-      IGUI_WIN_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame_window::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &frame_window::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_IDLEUPDATECMDUI, pinterface, this, &frame_window::_001OnIdleUpdateCmdUI);
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS, pinterface, this, &frame_window::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_ACTIVATE, pinterface, this, &frame_window::_001OnActivate);
-      IGUI_WIN_MSG_LINK(WM_NCACTIVATE, pinterface, this, &frame_window::_001OnNcActivate);
-      IGUI_WIN_MSG_LINK(WM_QUERYENDSESSION, pinterface, this, &frame_window::_001OnQueryEndSession);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
+      IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &frame_window::_001OnCreate);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &frame_window::_001OnSize);
+      //IGUI_MSG_LINK(WM_IDLEUPDATECMDUI, pinterface, this, &frame_window::_001OnIdleUpdateCmdUI);
+      IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &frame_window::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_ACTIVATE, pinterface, this, &frame_window::_001OnActivate);
+      IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &frame_window::_001OnNcActivate);
+      IGUI_MSG_LINK(WM_QUERYENDSESSION, pinterface, this, &frame_window::_001OnQueryEndSession);
 
    }
 
@@ -264,19 +294,19 @@ namespace user
    ON_MESSAGE(WM_HELPHITTEST, &frame_window::OnHelpHitTest)
    ON_MESSAGE(WM_ACTIVATETOPLEVEL, &frame_window::OnActivateTopLevel)
    // turning on and off standard frame gadgetry
-   ON_UPDATE_COMMAND_UI(ID_VIEW_STATUS_BAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_STATUS_BAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_STATUS_BAR, &frame_window::OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_TOOLBAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_TOOLBAR, &frame_window::OnBarCheck)
-   ON_UPDATE_COMMAND_UI(ID_VIEW_REBAR, &frame_window::OnUpdateControlBarMenu)
+   ON_UPDATE_::user::command(ID_VIEW_REBAR, &frame_window::OnUpdateControlBarMenu)
    ON_COMMAND_EX(ID_VIEW_REBAR, &frame_window::OnBarCheck)
    // turning on and off standard mode indicators
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_CAPS, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_NUM, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_SCRL, &frame_window::OnUpdateKeyIndicator)
-   ON_UPDATE_COMMAND_UI(ID_INDICATOR_KANA, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_CAPS, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_NUM, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_SCRL, &frame_window::OnUpdateKeyIndicator)
+   ON_UPDATE_::user::command(ID_INDICATOR_KANA, &frame_window::OnUpdateKeyIndicator)
    // standard help handling
-   ON_UPDATE_COMMAND_UI(ID_CONTEXT_HELP, &frame_window::OnUpdateContextHelp)
+   ON_UPDATE_::user::command(ID_CONTEXT_HELP, &frame_window::OnUpdateContextHelp)
    // toolbar "tooltip" notification
    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, &frame_window::OnToolTipText)
    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, &frame_window::OnToolTipText)
@@ -331,7 +361,7 @@ namespace user
       return hAccelTable;
    }
 
-   void frame_window::pre_translate_message(signal_details * pobj)
+   void frame_window::pre_translate_message(::message::message * pobj)
    {
       ENSURE_ARG(pobj != NULL);
       // check for special cancel modes for combo boxes
@@ -340,33 +370,33 @@ namespace user
 
       sp(::message::key) pkey = pobj;
 
-      if(pkey.is_set())
+      if (pkey.is_set())
       {
 
-         if(Session.is_key_pressed(::user::key_alt) && Session.is_key_pressed(::user::key_control))
+         if (Session.is_key_pressed(::user::key_alt) && Session.is_key_pressed(::user::key_control))
          {
-            
-            if(pkey->m_ekey == ::user::key_p)
+
+            if (pkey->m_ekey == ::user::key_p)
             {
-               
+
                sp(::user::interaction_impl) pimpl = m_pimpl;
-               
-               if(pimpl.is_set())
+
+               if (pimpl.is_set())
                {
-                  
+
                   synch_lock sl(pimpl->m_spgraphics->m_pmutex);
-                  
+
                   ::visual::dib_sp dib(allocer());
-                  
+
                   ::rect r;
-                  
+
                   GetWindowRect(r);
 
                   dib->create(r.size());
 
                   ::draw2d::graphics * pgraphics = pimpl->m_spgraphics->on_begin_draw();
 
-                  dib->get_graphics()->BitBlt(0,0,r.width(),r.height(),pgraphics,0,0,SRCCOPY);
+                  dib->get_graphics()->BitBlt(0, 0, r.width(), r.height(), pgraphics, 0, 0, SRCCOPY);
 
                   Session.copydesk().dib_to_desk(dib);
 
@@ -374,9 +404,9 @@ namespace user
 
                   ::visual::dib_sp dib2(allocer());
 
-                  dib2->create(284,r.size().cy * 284 / r.size().cx);
+                  dib2->create(284, r.size().cy * 284 / r.size().cx);
                   dib2->get_graphics()->SetStretchBltMode(HALFTONE);
-                  dib2->get_graphics()->StretchBlt(0,0,dib2->m_size.cx,dib2->m_size.cy,dib->get_graphics(),0,0, r.size().cx,r.size().cy,SRCCOPY);
+                  dib2->get_graphics()->StretchBlt(0, 0, dib2->m_size.cx, dib2->m_size.cy, dib->get_graphics(), 0, 0, r.size().cx, r.size().cy, SRCCOPY);
                   dib2.save_to_file(::dir::system() / "control_alt_p_w284.png");
                   pkey->m_bRet = true;
                   pkey->set_lresult(1);
@@ -463,7 +493,7 @@ namespace user
       ENSURE_VALID(pFrameWnd);
       if (pFrameWnd->m_bHelpMode)
       {
-         
+
          return TRUE;
 
       }
@@ -617,49 +647,49 @@ namespace user
    void frame_window::OnEnable(bool bEnable)
    {
 
-      if (bEnable && (m_nFlags & WF_STAYDISABLED))
-      {
+      //      if (bEnable && (m_nFlags & WF_STAYDISABLED))
+      //      {
+      //
+      //         // Work around for MAPI support. This makes sure the main interaction_impl
+      //         // remains disabled even when the mail system is booting.
+      //
+      //         enable_window(FALSE);
+      //
+      //#ifdef WINDOWSEX
+      //
+      //         ::SetFocus(NULL);
+      //#else
+      //
+      //         throw todo(get_app());
+      //
+      //#endif
+      //
+      //         return;
+      //
+      //      }
 
-         // Work around for MAPI support. This makes sure the main interaction_impl
-         // remains disabled even when the mail system is booting.
 
-         enable_window(FALSE);
+            // this causes modal dialogs to be "truly modal"
+            //if (!bEnable && !InModalState())
+            //{
+            //   ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
+            //   m_nFlags |= WF_MODALDISABLE;
+            //   BeginModalState();
+            //}
+            //else if (bEnable && (m_nFlags & WF_MODALDISABLE))
+            //{
+            //   m_nFlags &= ~WF_MODALDISABLE;
+            //   EndModalState();
 
-#ifdef WINDOWSEX
+            //   // cause normal focus logic to kick in
+            //   if (System.get_active_ui() == this)
+            //      send_message(WM_ACTIVATE, WA_ACTIVE);
+            //}
 
-         ::SetFocus(NULL);
-#else
-
-         throw todo(get_app());
-
-#endif
-
-         return;
-
-      }
-
-
-      // this causes modal dialogs to be "truly modal"
-      if (!bEnable && !InModalState())
-      {
-         ASSERT((m_nFlags & WF_MODALDISABLE) == 0);
-         m_nFlags |= WF_MODALDISABLE;
-         BeginModalState();
-      }
-      else if (bEnable && (m_nFlags & WF_MODALDISABLE))
-      {
-         m_nFlags &= ~WF_MODALDISABLE;
-         EndModalState();
-
-         // cause normal focus logic to kick in
-         if (System.get_active_ui() == this)
-            send_message(WM_ACTIVATE, WA_ACTIVE);
-      }
-
-      // force WM_NCACTIVATE because Windows may think it is unecessary
-      if (bEnable && (m_nFlags & WF_STAYACTIVE))
-         send_message(WM_NCACTIVATE, TRUE);
-      // force WM_NCACTIVATE for floating windows too
+            //// force WM_NCACTIVATE because Windows may think it is unecessary
+            //if (bEnable && (m_nFlags & WF_STAYACTIVE))
+            //   send_message(WM_NCACTIVATE, TRUE);
+            //// force WM_NCACTIVATE for floating windows too
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -684,7 +714,7 @@ namespace user
    }
 
 
-   bool frame_window::create_window(const char * lpszClassName,const char * lpszWindowName,uint32_t dwStyle,const RECT & rect, ::user::interaction * puiParent,const char * lpszMenuName,uint32_t dwExStyle, ::create * pcreate)
+   bool frame_window::create_window(const char * lpszClassName, const char * lpszWindowName, uint32_t dwStyle, const RECT & rect, ::user::interaction * puiParent, const char * lpszMenuName, uint32_t dwExStyle, ::create * pcreate)
    {
 
       UNREFERENCED_PARAMETER(lpszMenuName);
@@ -708,7 +738,7 @@ namespace user
    bool frame_window::on_create_client(::user::create_struct *, ::create * pcreate)
    {
 
-      if (pcreate != NULL && (pcreate->m_user->m_typeinfoNewView || pcreate->m_user->m_puiNew != NULL))
+      if (pcreate != NULL && (pcreate->m_pusercreate->m_typeinfoNewView || pcreate->m_pusercreate->m_puiNew != NULL))
       {
 
          if (::user::impact::s_create_view(pcreate, null_rect(), this, "pane_first") == NULL)
@@ -725,25 +755,25 @@ namespace user
    }
 
 
-   void frame_window::_001OnCreate(signal_details * pobj)
+   void frame_window::_001OnCreate(::message::message * pobj)
    {
 
       if (pobj->previous())
          return;
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      SCAST_PTR(::message::create, pcreatemessage, pobj);
 
-         ENSURE_ARG(pcreate->m_lpcreatestruct != NULL);
+      ENSURE_ARG(pcreatemessage->m_lpcreatestruct != NULL);
 
-      sp(::create) pContext = (::create *) pcreate->m_lpcreatestruct->lpCreateParams;
+      sp(::create) pcreate((::create *) pcreatemessage->m_lpcreatestruct->lpCreateParams);
 
-      pcreate->set_lresult(OnCreateHelper(pcreate->m_lpcreatestruct, pContext));
+      pcreatemessage->set_lresult(OnCreateHelper(pcreatemessage->m_lpcreatestruct, pcreate));
 
-      pcreate->m_bRet = pcreate->get_lresult() == -1;
+      pcreatemessage->m_bRet = pcreatemessage->get_lresult() == -1;
 
    }
 
-   
+
    int32_t frame_window::OnCreateHelper(::user::create_struct * lpcs, ::create * pcreate)
    {
 
@@ -767,24 +797,24 @@ namespace user
 
    }
 
-   
+
    void frame_window::OnInitialFrameUpdate(bool bMakeVisible)
    {
-      
-      if(bMakeVisible)
+
+      if (bMakeVisible)
       {
-      
+
          if (GetParent() == NULL || !GetParent()->is_place_holder())
          {
-         
+
             InitialFramePosition();
-         
+
          }
-         
+
       }
 
    }
-   
+
 
    bool frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultStyle, ::user::interaction * puiParent, ::create * pcreate)
    {
@@ -826,7 +856,7 @@ namespace user
       LoadAccelTable(MAKEINTRESOURCE(nIDResource));
 
       if (pContext == NULL)   // send initial update
-      SendMessageToDescendants(WM_INITIALUPDATE, 0, 0, TRUE, TRUE);
+      send_message_to_descendants(WM_INITIALUPDATE, 0, 0, TRUE, TRUE);
 
       return TRUE;*/
    }
@@ -867,14 +897,14 @@ namespace user
       //   bool bChild =  dwStyle & WS_CHILD;
 
       OnInitialFrameUpdate(bMakeVisible);
-      
+
       if (bMakeVisible)
       {
 
          m_bLayoutEnable = true;
 
          // send initial update to all views (and other controls) in the frame
-         SendMessageToDescendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+         send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
 
          // give ::user::impact a chance to save the focus (CFormView needs this)
          if (pview != NULL)
@@ -898,7 +928,7 @@ namespace user
       if (GetParent() != NULL
          && GetParent()->is_place_holder()
          && (!oprop("should_not_be_automatically_holded_on_initial_update_frame").is_set()
-         || !oprop("should_not_be_automatically_holded_on_initial_update_frame")))
+            || !oprop("should_not_be_automatically_holded_on_initial_update_frame")))
       {
          GetParent()->place(this);
          //GetParent()->on_layout();
@@ -915,7 +945,7 @@ namespace user
       if (m_bFrameMoveEnable)
       {
 
-//         good_restore(NULL, true);
+         //         good_restore(NULL, true);
 
       }
       ActivateTopParent();
@@ -992,22 +1022,23 @@ namespace user
       DestroyWindow();*/
    }
 
-   void frame_window::_001OnDestroy(signal_details * pobj)
+   void frame_window::_001OnDestroy(::message::message * pobj)
    {
-      
+
       pobj->previous();
-      
+
 
    }
 
 
-   bool frame_window::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   void frame_window::_001OnCmdMsg(::user::command * pcommand)
    {
 
-      if(::user::interaction::_001OnCmdMsg(pcmdmsg))
-         return true;
+      ::user::interaction::_001OnCmdMsg(pcommand);
 
-      return false;
+      if (pcommand->m_bRet)
+         return;
+
    }
 
 
@@ -1058,7 +1089,7 @@ namespace user
 
    }
 
-   void frame_window::_001OnActivate(signal_details * pobj)
+   void frame_window::_001OnActivate(::message::message * pobj)
    {
       SCAST_PTR(::message::activate, pactivate, pobj);
 
@@ -1078,11 +1109,11 @@ namespace user
       bool bStayActive =
          (pTopLevel == pActive ||
          (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
-         (pActive == pTopLevel ||
-         (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
-      pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
-      if (bStayActive)
-         pTopLevel->m_nFlags |= WF_STAYACTIVE;
+            (pActive == pTopLevel ||
+            (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
+      //pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
+      //if (bStayActive)
+      //   pTopLevel->m_nFlags |= WF_STAYACTIVE;
 
       // sync floating windows to the new state
       NotifyFloatingWindows(bStayActive ? FS_ACTIVATE : FS_DEACTIVATE);
@@ -1106,16 +1137,23 @@ namespace user
 
    }
 
-   void frame_window::_001OnNcActivate(signal_details * pobj)
+
+   void frame_window::_001OnNcActivate(::message::message * pobj)
    {
+
       SCAST_PTR(::message::nc_activate, pncactivate, pobj);
-         // stay active if WF_STAYACTIVE bit is on
-      if (m_nFlags & WF_STAYACTIVE)
-         pncactivate->m_bActive = TRUE;
+
+      //// stay active if WF_STAYACTIVE bit is on
+      //if (m_nFlags & WF_STAYACTIVE)
+      //   pncactivate->m_bActive = TRUE;
 
       // but do not stay active if the interaction_impl is disabled
       if (!is_window_enabled())
+      {
+
          pncactivate->m_bActive = FALSE;
+
+      }
 
    }
 
@@ -1311,57 +1349,84 @@ namespace user
       rMessage.ReleaseBuffer();*/
    }
 
+
    LRESULT frame_window::OnPopMessageString(WPARAM wParam, LPARAM lParam)
    {
-      if (m_nFlags & WF_NOPOPMSG)
-         return 0;
+
+      //if (m_nFlags & WF_NOPOPMSG)
+      //   return 0;
 
       return send_message(WM_SETMESSAGESTRING, wParam, lParam);
+
    }
+
 
    LRESULT frame_window::OnSetMessageString(WPARAM wParam, LPARAM lParam)
    {
+
       UINT nIDLast = m_nIDLastMessage;
-      m_nFlags &= ~WF_NOPOPMSG;
+
+      //      m_nFlags &= ~WF_NOPOPMSG;
 
       sp(::user::interaction) pMessageBar = GetMessageBar();
+
       if (pMessageBar != NULL)
       {
+
          const char * lpsz = NULL;
+
          string strMessage;
 
          // set the message bar text
+
          if (lParam != 0)
          {
+
             ASSERT(wParam == 0);    // can't have both an ID and a string
+
             lpsz = (const char *)lParam; // set an explicit string
+
          }
          else if (wParam != 0)
          {
+
             // map SC_CLOSE to PREVIEW_CLOSE when in print preview mode
             /*         if (wParam == __IDS_SCCLOSE && m_lpfnCloseProc != NULL)
             wParam = __IDS_PREVIEW_CLOSE;*/
 
             // get message associated with the ID indicated by wParam
             //NT64: Assume IDs are still 32-bit
+
             GetMessageString((UINT)wParam, strMessage);
+
             lpsz = strMessage;
+
          }
+
          pMessageBar->set_window_text(lpsz);
 
          // update owner of the bar in terms of last message selected
          sp(::user::frame_window) pFrameWnd = pMessageBar->GetParentFrame();
+
          if (pFrameWnd != NULL)
          {
+
             pFrameWnd->m_nIDLastMessage = (UINT)wParam;
+
             pFrameWnd->m_nIDTracking = (UINT)wParam;
+
          }
+
       }
 
       m_nIDLastMessage = (UINT)wParam;    // new ID (or 0)
+
       m_nIDTracking = (UINT)wParam;       // so F1 on toolbar buttons work
+
       return nIDLast;
+
    }
+
 
    LRESULT frame_window::OnHelpPromptAddr(WPARAM, LPARAM)
    {
@@ -1511,14 +1576,14 @@ namespace user
          __set_dialog_control_id_(oswindow, "pane_first");
          }*/
 
-/*         on_layout();
+         /*         on_layout();
 
 
-         // show any modeless dialogs, popup windows, float tools, etc
-         ShowOwnedWindows(TRUE);
-      }
-   }
-   */
+                  // show any modeless dialogs, popup windows, float tools, etc
+                  ShowOwnedWindows(TRUE);
+               }
+            }
+            */
 
    void frame_window::DelayUpdateFrameMenu(HMENU hMenuAlt)
    {
@@ -1545,10 +1610,10 @@ namespace user
       m_nIdleFlags &= ~(idleLayout | idleNotify);
       {
 
-//         DWORD dwTime2 = ::get_tick_count();
+         //         DWORD dwTime2 = ::get_tick_count();
 
-         //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-         //TRACE("userframewindow call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+                  //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+                  //TRACE("userframewindow call time1= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
       }
 
@@ -1575,10 +1640,10 @@ namespace user
 
          {
 
-//            DWORD dwTime2 = ::get_tick_count();
+            //            DWORD dwTime2 = ::get_tick_count();
 
-            //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-            //TRACE("userframewindoB call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+                        //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+                        //TRACE("userframewindoB call time2= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
          }
 
@@ -1765,7 +1830,7 @@ namespace user
 
 
 
-   void frame_window::_001OnSysCommand(signal_details * pobj)
+   void frame_window::_001OnSysCommand(::message::message * pobj)
    {
 
 #ifdef WINDOWS
@@ -1883,7 +1948,7 @@ namespace user
 
 
 
-   //void frame_window::_001OnCreate(signal_details * pobj)
+   //void frame_window::_001OnCreate(::message::message * pobj)
    //{
    //   UNREFERENCED_PARAMETER(pobj);
 
@@ -1915,7 +1980,7 @@ namespace user
 
 
    // query end session for main frame will attempt to close it all down
-   void frame_window::_001OnQueryEndSession(signal_details * pobj)
+   void frame_window::_001OnQueryEndSession(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -1926,7 +1991,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Special ::user::impact swapping/activation
 
-   void frame_window::_001OnSetFocus(signal_details * pobj)
+   void frame_window::_001OnSetFocus(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       if (m_pviewActive != NULL)
@@ -1935,14 +2000,17 @@ namespace user
 
 
 
-   void frame_window::OnUpdateControlBarMenu(cmd_ui * pcmdui)
+   void frame_window::OnUpdateControlBarMenu(::user::command * pcommand)
    {
+
       /*      ASSERT(ID_VIEW_STATUS_BAR == "status_bar");
       ASSERT(ID_VIEW_TOOLBAR == __IDW_TOOLBAR);
       ASSERT(ID_VIEW_REBAR == __IDW_REBAR);*/
 
-      pcmdui->ContinueRouting();
+      //pcommand->ContinueRouting();
+
    }
+
 
    bool frame_window::OnBarCheck(UINT nID)
    {
@@ -1966,7 +2034,7 @@ namespace user
    //   m_nIdleFlags |= idleMenu;
    //}
 
-   //void frame_window::OnIdleUpdateCmdUI(signal_details * pobj)
+   //void frame_window::OnIdleUpdateCmdUI(::message::message * pobj)
    //{
    //   // update menu if necessary
    //   if(m_nIdleFlags & idleMenu)
@@ -2001,42 +2069,42 @@ namespace user
    //}
 
 
-   void frame_window::_001OnIdleUpdateCmdUI(signal_details * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-      // update menu if necessary
-      if (m_nIdleFlags & idleMenu)
-         OnUpdateFrameMenu(m_hMenuAlt);
+//    void frame_window::_001OnIdleUpdateCmdUI(::message::message * pobj)
+//    {
+//       UNREFERENCED_PARAMETER(pobj);
+//       // update menu if necessary
+//       if (m_nIdleFlags & idleMenu)
+//          OnUpdateFrameMenu(m_hMenuAlt);
 
-      // update title if necessary
-      if (m_nIdleFlags & idleTitle)
-         on_update_frame_title(TRUE);
+//       // update title if necessary
+//       if (m_nIdleFlags & idleTitle)
+//          on_update_frame_title(TRUE);
 
-      // recalc on_layout if necessary
-      if (m_nIdleFlags & idleLayout)
-      {
-         on_layout();
-         UpdateWindow();
-      }
+//       // recalc on_layout if necessary
+//       if (m_nIdleFlags & idleLayout)
+//       {
+//          on_layout();
+//          UpdateWindow();
+//       }
 
-      // set the current message string if necessary
-      if (m_nIDTracking != m_nIDLastMessage)
-      {
-         SetMessageText(m_nIDTracking);
-         ASSERT(m_nIDTracking == m_nIDLastMessage);
-      }
+//       // set the current message string if necessary
+//       if (m_nIDTracking != m_nIDLastMessage)
+//       {
+//          SetMessageText(m_nIDTracking);
+//          ASSERT(m_nIDTracking == m_nIDLastMessage);
+//       }
 
-      for(auto & bar : m_barptra.refa())
-      {
-         bar._001OnIdleUpdateCmdUI(pobj);
-      }
+//       for(auto & bar : m_barptra.refa())
+//       {
+//          bar._001OnIdleUpdateCmdUI(pobj);
+//       }
 
-      m_nIdleFlags = 0;
-   }
+//       m_nIdleFlags = 0;
+//    }
 
 
 
-   void frame_window::_001OnSize(signal_details * pobj)
+   void frame_window::_001OnSize(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -2089,7 +2157,7 @@ namespace user
 
    }
 
-   
+
    void frame_window::_000OnDraw(::draw2d::graphics * pgraphics)
    {
 
@@ -2106,26 +2174,37 @@ namespace user
    }
 
 
-
-   bool frame_window::_001HasCommandHandler(id id)
+   bool frame_window::_001HasCommandHandler(::user::command * pcommand)
    {
 
-      if (command_target_interface::_001HasCommandHandler(id))
+      if (command_target::_001HasCommandHandler(pcommand))
+      {
+
          return true;
+
+      }
 
       if (m_pviewActive != NULL)
       {
 
-         if (m_pviewActive->_001HasCommandHandler(id))
+         if (m_pviewActive->_001HasCommandHandler(pcommand))
+         {
+
             return true;
+
+         }
 
       }
 
       if (GetParent() != NULL)
       {
 
-         if (GetParent()->_001HasCommandHandler(id))
+         if (GetParent()->_001HasCommandHandler(pcommand))
+         {
+
             return true;
+
+         }
 
       }
 
@@ -2137,7 +2216,7 @@ namespace user
    bool frame_window::get_window_minimum_size(::size & sizeMin)
    {
 
-      if(get_appearance() == ::user::AppearanceMinimal)
+      if (get_appearance() == ::user::appearance_minimal)
       {
 
          sizeMin.cx = 8;
@@ -2156,14 +2235,14 @@ namespace user
 
    }
 
-   
-   ::user::front_end_schema * frame_window::get_user_front_end_schema()
+
+   ::user::style * frame_window::userstyle()
    {
 
-      return NULL;
+      return ::user::box::userstyle();
 
    }
-   
+
 
 } // namespace user
 

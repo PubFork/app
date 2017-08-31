@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -22,6 +22,14 @@ namespace metrowin
 
    os::~os()
    {
+   }
+
+   
+   string os::get_command_line()
+   {
+      
+      return zzz123;
+      
    }
 
 

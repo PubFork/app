@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userfs
@@ -14,13 +14,13 @@ namespace userfs
    {
    }
 
-   void main_view::install_message_handling(::message::dispatch * pinterface)
+   void main_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::split_view::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &main_view::_001OnCreate);
+      ::user::split_view::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &main_view::_001OnCreate);
    }
 
-   void main_view::_001OnCreate(signal_details * pobj)
+   void main_view::_001OnCreate(::message::message * pobj)
    {
       pobj->previous();
       if(pobj->m_bRet)

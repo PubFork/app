@@ -36,9 +36,9 @@ namespace user
       virtual ~combo_list();
 
       
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
-      void _001OnShowWindow(signal_details * pobj);
+      void _001OnShowWindow(::message::message * pobj);
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
       virtual void _001OnDrawVerisimple(::draw2d::graphics * pgraphics);

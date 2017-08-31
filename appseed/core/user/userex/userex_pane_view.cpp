@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userex
@@ -18,39 +18,51 @@ namespace userex
    }
 
 
-   bool pane_view::on_simple_update(cmd_ui * pcmdui)
+   void pane_view::on_command_probe(::user::command * pcommand)
    {
 
       for(int32_t i = 0; i < m_menua.get_size(); i++)
       {
 
-         if(pcmdui->m_id == m_menua[i]->m_id)
+         if(pcommand->m_id == ::message::id(m_menua[i]->m_id, ::message::type_command_probe))
          {
 
-            pcmdui->Enable(TRUE);
+            pcommand->Enable(TRUE);
 
-            return true;
+            pcommand->m_bRet = true;
+
+            return;
 
          }
 
       }
 
-      return on_simple_update(pcmdui);
+      ::user::impact::on_command_probe(pcommand);
 
    }
 
 
-   bool pane_view::on_simple_action(id id)
+   void pane_view::on_command(::user::command * pcommand)
    {
+
       for(int32_t i = 0; i < m_menua.get_size(); i++)
       {
-         if(id == m_menua[i]->m_id)
+
+         if(pcommand->m_id == ::message::id(m_menua[i]->m_id, ::message::type_command))
          {
+            
             // show_view where??
-            return true;
+
+            pcommand->m_bRet = true;
+
+            return;
+
          }
+
       }
-      return ::user::impact::on_simple_action(id);
+      
+      ::user::impact::on_command(pcommand);
+
    }
 
 

@@ -17,7 +17,7 @@ CLASS_DECL_AURA bool file_append_dup(const string & strFile, const char * psz, s
 CLASS_DECL_AURA bool file_append_wait_dup(const string & strFile, const string & str, DWORD dwTimeout = INFINITE);
 CLASS_DECL_AURA bool file_append_wait_dup(const string & strFile, const char * psz, strsize s, DWORD dwTimeout = INFINITE);
 
-
+CLASS_DECL_AURA bool write_memory_to_file(FILE * file, const void * lpBuf, memory_size_t nCount, memory_size_t * puiWritten);
 
 template < class POD >
 inline bool file_put_pod(const char * path, const POD & pod)
@@ -38,11 +38,6 @@ inline bool file_as_pod(POD & pod, const char * path)
 CLASS_DECL_AURA bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite = true);
 
 
-#ifdef WINDOWSEX
-
-bool write_memory_to_file(HANDLE hFile,const void * lpBuf,memory_size_t nCount,memory_size_t * puiWritten);
-
-#endif
 
 
 

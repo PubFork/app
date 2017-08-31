@@ -40,32 +40,32 @@ namespace user
 
 
 
-   void combo_box::install_message_handling(::message::dispatch * pdispatch)
+   void combo_box::install_message_routing(::message::sender * psender)
    {
 
       if(m_bEdit)
       {
 
-         ::user::plain_edit::install_message_handling(pdispatch);
+         ::user::plain_edit::install_message_routing(psender);
 
       }
       else
       {
 
-         ::user::control::install_message_handling(pdispatch);
+         ::user::control::install_message_routing(psender);
 
       }
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pdispatch, this, &combo_box::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &combo_box::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pdispatch, this, &combo_box::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pdispatch,this,&combo_box::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP,pdispatch,this,&combo_box::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_SETFOCUS,pdispatch,this,&combo_box::_001OnSetFocus);
-      IGUI_WIN_MSG_LINK(WM_KILLFOCUS, pdispatch, this, &combo_box::_001OnKillFocus);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &combo_box::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pdispatch, this, &combo_box::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_MOVE, pdispatch, this, &combo_box::_001OnMove);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, psender, this, &combo_box::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &combo_box::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &combo_box::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_KEYDOWN,psender,this,&combo_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP,psender,this,&combo_box::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_SETFOCUS,psender,this,&combo_box::_001OnSetFocus);
+      IGUI_MSG_LINK(WM_KILLFOCUS, psender, this, &combo_box::_001OnKillFocus);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &combo_box::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &combo_box::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_MOVE, psender, this, &combo_box::_001OnMove);
 
    }
 
@@ -109,7 +109,7 @@ namespace user
 
       //rectText.deflate(iMargin, iMargin);
 
-      select_font(pgraphics, font_plain_edit, this);
+      select_font(pgraphics, font_plain_edit);
 
       pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
@@ -549,7 +549,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnShowWindow(signal_details * pobj)
+   void combo_box::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -568,7 +568,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnMove(signal_details * pobj)
+   void combo_box::_001OnMove(::message::message * pobj)
    {
 
       if (is_drop_down())
@@ -585,7 +585,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnKeyDown(signal_details * pobj)
+   void combo_box::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
@@ -605,14 +605,14 @@ namespace user
    }
 
 
-   void combo_box::_001OnKeyUp(signal_details * pobj)
+   void combo_box::_001OnKeyUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
 
    }
 
-   void combo_box::_001OnLButtonDown(signal_details * pobj)
+   void combo_box::_001OnLButtonDown(::message::message * pobj)
    {
 
       //output_debug_string("\nCOMBO_BOX: LBUTTONDOWN\n");
@@ -634,7 +634,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnMouseMove(signal_details * pobj)
+   void combo_box::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -657,7 +657,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnLButtonUp(signal_details * pobj)
+   void combo_box::_001OnLButtonUp(::message::message * pobj)
    {
 
 
@@ -679,7 +679,7 @@ namespace user
 
    }
 
-   void combo_box::_001OnSetFocus(signal_details * pobj)
+   void combo_box::_001OnSetFocus(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::set_focus, pfocus, pobj);
@@ -687,7 +687,7 @@ namespace user
    }
 
 
-   void combo_box::_001OnKillFocus(signal_details * pobj)
+   void combo_box::_001OnKillFocus(::message::message * pobj)
    {
 
       //SCAST_PTR(::message::kill_focus, pkillfocus, pobj);
@@ -726,7 +726,7 @@ namespace user
 
          ::draw2d::font_sp spfont;
 
-         get_font(spfont, font_plain_edit, this);
+         get_font(spfont, font_plain_edit);
 
          m_plist->query_full_size(m_sizeFull);
 
@@ -955,7 +955,7 @@ namespace user
    bool combo_box::OnChildNotify(::message::base * pbase)
    {
 
-      switch (pbase->m_uiMessage)
+      switch (pbase->m_id)
       {
       case WM_DRAWITEM:
 #ifdef WINODWSEX
@@ -1565,21 +1565,31 @@ namespace user
 
    }
 
-   bool combo_box::create_control(class control::descriptor * pdescriptor, index iItem)
+
+   bool combo_box::create_control(class control_descriptor * pdescriptor)
    {
+
       ASSERT(pdescriptor->get_type() == control_type_combo_box);
-      if (!create_window(pdescriptor->m_rect, pdescriptor->m_pform, pdescriptor->m_id))
+
+      if (!::user::control::create_control(pdescriptor))
       {
+
          TRACE("Failed to create control");
+
          return false;
+
       }
+
       ShowWindow(SW_HIDE);
+
       m_bMultiLine = false;
-      return control::create_control(pdescriptor, iItem);
+
+      return true;
+
    }
 
 
-   void combo_box::_001OnLButtonDblClk(signal_details * pobj)
+   void combo_box::_001OnLButtonDblClk(::message::message * pobj)
    {
 
       //output_debug_string("\nCOMBO_BOX: DOUBLE CLICK\n");

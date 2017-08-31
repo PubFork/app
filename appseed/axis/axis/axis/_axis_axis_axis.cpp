@@ -1,12 +1,4 @@
-//#include "framework.h"
-
-//O volume na unidade Z � eco
- //O N�mero de S�rie do Volume � 4A91-94E4
-
- //Pasta de Z:\ca2\app\appseed\axis\axis\axis
-
-#include "zlib.h"
-#include "zutil.h"
+#include "framework.h"
 
 
 #include "axis.cpp"

@@ -10,6 +10,11 @@
 #define _ZLIBIOAPI_H
 
 
+#include "zlib.h"
+
+
+
+
 #define ZLIB_FILEFUNC_SEEK_CUR (1)
 #define ZLIB_FILEFUNC_SEEK_END (2)
 #define ZLIB_FILEFUNC_SEEK_SET (0)

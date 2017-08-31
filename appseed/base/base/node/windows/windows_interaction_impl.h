@@ -31,7 +31,7 @@ namespace windows
 
       WNDPROC                                   m_pfnSuper;          // for subclassing of controls
 
-      ::user::EAppearance                       m_eapperanceLayout;
+      ::user::e_appearance                       m_eapperanceLayout;
       
       //::thread *                                m_pthreadDraw;
       
@@ -83,7 +83,7 @@ namespace windows
 
       //virtual const MSG* GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const interaction_impl& wnd) const;
       bool operator!=(const interaction_impl& wnd) const;
@@ -96,7 +96,7 @@ namespace windows
       //virtual ::user::interaction * get_owner();
       //virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
 
@@ -159,7 +159,7 @@ namespace windows
 //      using ::user::interaction_impl::GetDescendantWindow;
   //    ::user::interaction * GetDescendantWindow(id id) const;
       // like get_child_by_id but recursive
-      void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
 //      virtual ::window_sp get_safe_owner(::window_sp pParent = NULL,oswindow* pWndTop = NULL);
 
       virtual bool IsWindow() const;
@@ -582,8 +582,8 @@ namespace windows
          ::window_sp pActivateWnd,::window_sp pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       void OnStyleChanged(int32_t nStyleType,LPSTYLESTRUCT lpStyleStruct);
@@ -605,11 +605,11 @@ namespace windows
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -636,7 +636,7 @@ namespace windows
       bool IsTopParentActive();
       void ActivateTopParent();
       virtual ::user::interaction * GetDescendantWindow(::user::interaction * pui, id id);
-      virtual void SendMessageToDescendants(oswindow  oswindow,UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm);
+      virtual void send_message_to_descendants(oswindow  oswindow,UINT message,WPARAM wParam,lparam lParam,bool bDeep,bool bOnlyPerm);
       virtual void on_final_release();
       virtual bool ModifyStyle(oswindow oswindow,uint32_t dwRemove,uint32_t dwAdd,UINT nFlags);
       virtual bool ModifyStyleEx(oswindow oswindow,uint32_t dwRemove,uint32_t dwAdd,UINT nFlags);

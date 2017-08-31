@@ -16,18 +16,18 @@ namespace user
    //}
 
 
-   //void edit_plain_text_view::install_message_handling(::message::dispatch * pinterface)
+   //void edit_plain_text_view::install_message_routing(::message::sender * pinterface)
    //{
    //   
    //   
-   //   ::user::plain_edit::install_message_handling(pinterface);
-   //   impact::install_message_handling(pinterface);
-   //   //IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &edit_plain_text_view::_001OnCreate);
-   //   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &::user::plain_edit::_002OnMouseMove);
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::plain_edit::_002OnLButtonDown);
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::plain_edit::_002OnLButtonUp);
-   //   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::plain_edit::_002OnKeyDown);
-   //   IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::plain_edit::_002OnKeyUp);
+   //   ::user::plain_edit::install_message_routing(pinterface);
+   //   impact::install_message_routing(pinterface);
+   //   //IGUI_MSG_LINK(WM_CREATE, pinterface, this, &edit_plain_text_view::_001OnCreate);
+   //   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &::user::plain_edit::_002OnMouseMove);
+   //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::plain_edit::_002OnLButtonDown);
+   //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::plain_edit::_002OnLButtonUp);
+   //   IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::plain_edit::_002OnKeyDown);
+   //   IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::plain_edit::_002OnKeyUp);
 
 
    //}
@@ -66,7 +66,7 @@ namespace user
    //}
 
 
-   //void edit_plain_text_view::walk_pre_translate_tree(signal_details * pobj,sp(::user::interaction) puiStop)
+   //void edit_plain_text_view::walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop)
    //{
 
    //   ::user::impact::walk_pre_translate_tree(pobj,puiStop);

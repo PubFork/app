@@ -1,26 +1,20 @@
+#include "framework.h"
+#include <stdio.h>
 
 
 #if defined(INSTALL_SUBSYSTEM)
 
 
 
-//#include "framework.h"
-//#include "base/user/user.h"
-#include <stdio.h>
 
 
 
 
 
 
-#undef new
-#if defined(WINDOWS)
-#define min MIN
-#define max MAX
-//#include <gdiplus.h>
-#undef min
-#undef max
-#endif
+#include "coated/gdiplus.h"
+
+
 
 
 #ifndef GET_X_LPARAM
@@ -32,10 +26,6 @@
 
 
 
-
-#ifdef WINDOWS
-//#include <process.h>
-#endif
 
 #ifdef WINDOWS
 
@@ -138,9 +128,12 @@ namespace install
    }
 
 
-   IMPL_IMH(plugin,::simple_ui::interaction)
-      MSG_LBUTTONUP
-   END_IMH
+   void plugin::install_message_routing(::message::sender * psender)
+   {
+
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &plugin::_001OnLButtonDown);
+
+   }
 
 
    bool plugin::set_host(::hotplugin::host * phost)
@@ -400,7 +393,7 @@ namespace install
    {
 
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
          m_pplugin->thread_start_ca2_on_idle();
@@ -1022,7 +1015,7 @@ namespace install
 
       if(m_bLogin)
       {
-         //::OutputDebugString("m_bLogin");
+         //::output_debug_string("m_bLogin");
          //get_login().draw(pgraphics);
       }
       else if (System.install().is_installing_ca2())
@@ -1062,7 +1055,7 @@ namespace install
       }
       else
       {
-         //::OutputDebugString("Neither");
+         //::output_debug_string("Neither");
       }
 
 #ifdef WINDOWS
@@ -1096,14 +1089,14 @@ namespace install
       else
       {
 
-         //::OutputDebugString("m_bLogin || !bInstallingCa2");
+         //::output_debug_string("m_bLogin || !bInstallingCa2");
       }
 
 
    }
 
 
-   void plugin::_001OnLButtonUp(signal_details * pobj)
+   void plugin::_001OnLButtonUp(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -1115,20 +1108,20 @@ namespace install
 
 
 
-   void plugin::message_handler(signal_details * pobj)
+   void plugin::message_handler(::message::base * pbase)
    {
 
-      if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
+      if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pbase != NULL && !is_installing() && System.install().is_ca2_installed())
       //if(!m_bLogin && (m_bLogged || m_bHasCred) && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
       {
 
-         ::hotplugin::plugin::message_handler(pobj);
+         ::hotplugin::plugin::message_handler(pbase);
 
       }
       else
       {
 
-         ::simple_ui::interaction::message_handler(pobj);
+         ::simple_ui::interaction::message_handler(pbase);
 
       }
 
@@ -1185,7 +1178,7 @@ namespace install
 
       DWORD dwRead;
 
-      HANDLE hfile = ::create_file(::path::install_log(process_platform_dir_name2()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+      FILE * file = ::fopen_dup(::path::install_log(process_platform_dir_name2()), "r");
 
       double dRate = 0.0;
 
@@ -1193,21 +1186,37 @@ namespace install
 
       bool bStatus = false;
 
-      if(hfile != INVALID_HANDLE_VALUE)
+      if(file != NULL)
       {
 
-         int32_t iTell = ::SetFilePointer(hfile, 0, NULL, SEEK_END);
+         int32_t iTell = ::fseek(file, 0, SEEK_END);
+
          iTell--;
+
          string strLine;
+
          int32_t iSkip = 0;
+
          bool bStatus2 = false;
+
          char ch = '\0';
+
          bool bFirst = true;
+
          while(iTell >= 0)
          {
-            ::SetFilePointer(hfile, iTell, NULL, SEEK_SET);
-            if(!ReadFile(hfile, &ch,  1, &dwRead, NULL))
+
+            ::fseek(file, iTell, SEEK_SET);
+
+            dwRead = fread(&ch, 1, 1, file);
+
+            if (dwRead == 1)
+            {
+
                break;
+
+            }
+
             if(dwRead <= 0)
                break;
 
@@ -1253,16 +1262,25 @@ namespace install
                   break;
 
                strLine = ch;
+
             }
             else
             {
+
                strLine = ch + strLine;
+
             }
+
             iTell--;
+
          }
-         ::CloseHandle(hfile);
+         
+         ::fclose(file);
+
       }
+
       return dRate;
+
    }
 
 
@@ -1679,6 +1697,9 @@ restart:
 
 
 
+
+
 #endif
+
 
 

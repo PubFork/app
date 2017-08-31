@@ -37,8 +37,8 @@ void simple_tab_control::pre_subclass_window()
 }
 
 
-void simple_tab_control::install_message_handling(::message::dispatch * pinterface)
+void simple_tab_control::install_message_routing(::message::sender * pinterface)
 {
-   ::user::interaction::install_message_handling(pinterface);
-   ::user::interaction_base::install_message_handling(pinterface);
+   ::user::interaction::install_message_routing(pinterface);
+   ::user::interaction_base::install_message_routing(pinterface);
 }

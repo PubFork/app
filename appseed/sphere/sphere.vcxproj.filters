@@ -283,11 +283,11 @@
     <ClCompile Include="console\console_prompt_impact.cpp">
       <Filter>Source Files\console</Filter>
     </ClCompile>
-    <ClCompile Include="_sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sphere\sphere_main_frame.cpp">
       <Filter>Source Files\sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

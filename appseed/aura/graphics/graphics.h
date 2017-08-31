@@ -23,13 +23,13 @@
 #endif
 
 
-#include "draw2d/draw2d.h"
+#include "aura/graphics/draw2d/draw2d.h"
 
 
-#include "draw3d/draw3d.h"
+#include "aura/graphics/draw3d/draw3d.h"
 
 
-#include "visual/visual.h"
+#include "aura/graphics/visual/visual.h"
 
 
 //#include "dib_console.h"

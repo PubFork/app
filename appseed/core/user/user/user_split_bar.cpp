@@ -78,17 +78,17 @@ namespace user
    }
 
 
-   void split_bar::install_message_handling(::message::dispatch * pinterface)
+   void split_bar::install_message_routing(::message::sender * pinterface)
    {
-      ::user::interaction::install_message_handling(pinterface);
-      //IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &split_bar::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &split_bar::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &split_bar::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &split_bar::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &split_bar::_001OnMouseMove);
+      ::user::interaction::install_message_routing(pinterface);
+      //IGUI_MSG_LINK(WM_CREATE, pinterface, this, &split_bar::_001OnCreate);
+      //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &split_bar::_001OnSize);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &split_bar::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &split_bar::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &split_bar::_001OnMouseMove);
    }
 
-   void split_bar::_001OnLButtonDown(signal_details * pobj)
+   void split_bar::_001OnLButtonDown(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       cslock sl(&m_pparent->m_mutex);
@@ -103,7 +103,7 @@ namespace user
       }
    }
 
-   void split_bar::_001OnLButtonUp(signal_details * pobj)
+   void split_bar::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
       cslock sl(&m_pparent->m_mutex);
@@ -116,7 +116,7 @@ namespace user
       }
    }
 
-   void split_bar::_001OnMouseMove(signal_details * pobj)
+   void split_bar::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);

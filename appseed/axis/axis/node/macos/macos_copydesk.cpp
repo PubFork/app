@@ -2,6 +2,13 @@
 #include "macos.h"
 
 
+int macos_clipboard_get_file_count();
+
+void macos_clipboard_get_filea(::file::patha & stra);
+
+void macos_clipboard_set_filea(const ::file::patha & stra);
+
+
 namespace macos
 {
 
@@ -19,92 +26,22 @@ namespace macos
    int32_t copydesk::get_file_count()
    {
 
-//      if(!OpenClipboard())
-  //       return 0;
-    //  int32_t iCount = 0;
-      throw todo(get_app());
-      /* xxx HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      if(hdrop != NULL)
-      {
-         iCount = ::DragQueryFile(hdrop , 0xFFFFFFFF, NULL, 0);
-      }
-      ::CloseClipboard(); */
-    //  return iCount;
-      return 0;
+      return macos_clipboard_get_file_count();
+      
    }
 
 
-   void copydesk::get_filea(stringa & stra)
+   void copydesk::get_filea(::file::patha & patha)
    {
-      //int32_t iCount = get_file_count();
-      //if(iCount <= 0)
-        // return;
-      //if(!OpenClipboard())
-        // return;
-      throw todo(get_app());
-      /* HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
-      string str;
-      for(int32_t i = 0; i < iCount; i++)
-      {
-         UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
-         unichar * lpwsz = (unichar *) malloc(sizeof(unichar) * (uiLen + 1));
-         ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
-         stra.add(::str::international::unicode_to_utf8(lpwsz));
-         free(lpwsz);
-      }
-      ::CloseClipboard();
-      */
+
+      macos_clipboard_get_filea(patha);
+      
    }
 
-   void copydesk::set_filea(stringa & stra)
+   void copydesk::set_filea(const ::file::patha & patha)
    {
-
-//      ASSERT(IsWindow());
-
-      strsize iLen = 0;
-
-      for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-         iLen += ::str::international::utf8_to_unicode_count(stra[i]) + 1;
-      }
-
-      throw todo(get_app());
-
-/* xxx
-
-      HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + (iLen + 1) * sizeof(WCHAR));
-      LPDROPFILES pDropFiles = (LPDROPFILES) ::GlobalLock(hglbCopy);
-      pDropFiles->pFiles = sizeof(DROPFILES);
-      pDropFiles->pt.x = pDropFiles->pt.y = 0;
-      pDropFiles->fNC = TRUE;
-      pDropFiles->fWide = TRUE; // ANSI charset
-
-      ASSERT(m_p->IsWindow());
-      LPTSTR lptstrCopy = (char *) pDropFiles;
-      lptstrCopy += pDropFiles->pFiles;
-      unichar * lpwstrCopy = (unichar *) lptstrCopy;
-      for(int32_t i = 0; i < stra.get_size(); i++)
-      {
-         ASSERT(m_p->IsWindow());
-         ::str::international::utf8_to_unicode(lpwstrCopy, ::str::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
-         ASSERT(m_p->IsWindow());
-         lpwstrCopy += (stra[i].get_length() + 1);
-      }
-      ASSERT(m_p->IsWindow());
-      *lpwstrCopy = '\0';    // null character
-      ASSERT(m_p->IsWindow());
-      ::GlobalUnlock(hglbCopy);
-      ASSERT(m_p->IsWindow());
-      if(!m_p->OpenClipboard())
-      {
-         ::GlobalFree(hglbCopy);
-         return;
-      }
-      EmptyClipboard();
-      SetClipboardData(CF_HDROP, hglbCopy);
-      VERIFY(::CloseClipboard());
-
-*/
+      
+      macos_clipboard_set_filea(patha);
 
    }
 

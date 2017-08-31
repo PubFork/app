@@ -4,22 +4,28 @@
 namespace user
 {
 
-   //typedef ::user::show < ::user::list > list_view;
-
-   //class CLASS_DECL_CORE list_view:
-   //   virtual public ::user::show < ::user::list >
-   //{
-   //public:
+   class CLASS_DECL_CORE list_view:
+      virtual public ::user::show < ::user::margin < ::user::list > >
+   {
+   public:
 
 
-   //   list_view();
-   //   virtual ~list_view();
+      using BASE_VIEW = ::user::show < ::user::margin < ::user::list > >;
 
 
-   //   virtual void install_message_handling(::message::dispatch * pdispatch);
+      list_view();
+      virtual ~list_view();
 
 
-   //};
+      virtual void install_message_routing(::message::sender * psender);
+
+
+      virtual void _001OnInitialUpdate() override;
+
+      virtual void _001OnSelectionChange() override;
+
+
+   };
 
 
 } // namespace user

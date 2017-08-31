@@ -46,13 +46,10 @@ namespace aura
 
 
       // calls restart if confirm_tx failed
-      bool ipc::ensure_tx(const char * pszMessage,unsigned int dwTimeout)
+      bool ipc::ensure_tx(const char * pszMessage, duration durationTimeout)
       {
 
-         //if(dwTimeout == INFINITE)
-         //   dwTimeout = m_dwTimeout;
-
-         if(!send(pszMessage,dwTimeout))
+         if(!send(pszMessage, durationTimeout))
          {
 
             restart_aura_ipc();
@@ -66,11 +63,8 @@ namespace aura
       }
 
 
-      bool ipc::ensure_tx(int message,void * pdata,int len,unsigned int dwTimeout)
+      bool ipc::ensure_tx(int message, void * pdata, int len, duration durationTimeout)
       {
-
-         //if(dwTimeout == INFINITE)
-         //   dwTimeout = m_dwTimeout;
 
          if(message == WM_APP + WM_USER)
          {
@@ -85,7 +79,7 @@ namespace aura
             }
 
          }
-         else if(!send(message,pdata,len,dwTimeout))
+         else if(!send(message, pdata, len, durationTimeout))
          {
 
             restart_aura_ipc();

@@ -1,5 +1,7 @@
-
-
+#include "framework.h"
+#include <io.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 
 namespace windows
@@ -163,7 +165,7 @@ namespace windows
    void console::write(const char * psz)
    {
       
-      write_memory_to_file(GetStdHandle(STD_OUTPUT_HANDLE),psz,strlen(psz),NULL);
+      write_memory_to_file(stdout,psz,strlen(psz),NULL);
 
    }
 

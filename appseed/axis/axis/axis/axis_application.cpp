@@ -88,7 +88,7 @@ namespace axis
 
       m_iWaitCursorCount         = 0;
 
-      m_pinitmaindata = NULL;
+      m_pcommand = NULL;
 
    }
 
@@ -391,32 +391,32 @@ namespace axis
    //}
 
 
-   //sp(::command_thread) application::command_central()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::command_thread()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::command()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::guideline()
+   //sp(::handler) application::guideline()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::directrix()
+   //sp(::handler) application::handler()
    //{
    //   return m_pcommandthread;
    //}
 
-   //sp(::command_thread) application::axiom()
+   //sp(::handler) application::axiom()
    //{
    //   return m_pcommandthread;
    //}
@@ -429,7 +429,7 @@ namespace axis
 
    }
 
-   //sp(::command_thread) application::creation()
+   //sp(::handler) application::creation()
    //{
    //   return m_pcommandthread;
    //}
@@ -713,18 +713,20 @@ namespace axis
 
 #else
 
-      char lpPathBuffer[MAX_PATH * 4];
+//      char lpPathBuffer[MAX_PATH * 4];
+//
+//      uint32_t dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
+//
+//      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
+//      {
+//
+//         return FALSE;
+//
+//      }
 
-      uint32_t dwRetVal = GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
-
-      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
-      {
-
-         return FALSE;
-
-      }
-
-      string str(lpPathBuffer);
+//      string str(lpPathBuffer);
+      
+      string str = System.dir().time();
 
 #endif
 
@@ -852,7 +854,7 @@ namespace axis
    //}
 
 
-   //void application::_001OnFileNew(signal_details * pobj)
+   //void application::_001OnFileNew(::message::message * pobj)
    //{
 
    //   ::exception::throw_interface_only(this);
@@ -1122,93 +1124,11 @@ namespace axis
 
 
 
-
    int32_t application::main()
    {
+      
+      return ::aura::application::main();
 
-      TRACE(string(typeid(*this).name()) + " main");;
-
-      dappy(string(typeid(*this).name()) + " : application::main 1");
-
-      try
-      {
-
-         TRACE(string(typeid(*this).name()) + " on_run");;
-         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-         m_iReturnCode = 0;
-         m_bReady = true;
-         m_iReturnCode = on_run();
-         if(m_iReturnCode != 0)
-         {
-            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-            ::output_debug_string("application::main on_run termination failure\n");
-         }
-
-      }
-      catch(::exit_exception &)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-
-         ::multithreading::post_quit(&System);
-
-         goto exit_application;
-
-      }
-      catch(...)
-      {
-
-         dappy(string(typeid(*this).name()) + " : on_run general exception");
-
-         goto exit_application;
-
-      }
-
-      try
-      {
-
-         if(is_system())
-         {
-
-            dappy(string(typeid(*this).name()) + " : quiting main");
-
-            //::aura::post_quit_thread(&System);
-
-            //Sleep(5000);
-
-         }
-
-      }
-      catch(...)
-      {
-
-      }
-
-   exit_application:
-
-
-      try
-      {
-
-         m_iReturnCode = exit_thread();
-
-      }
-      catch(::exit_exception &)
-      {
-
-         ::multithreading::post_quit(&System);
-
-         m_iReturnCode = -1;
-
-      }
-      catch(...)
-      {
-
-         m_iReturnCode = -1;
-
-      }
-
-      return m_iReturnCode;
 
    }
 
@@ -1242,7 +1162,7 @@ namespace axis
    //         m_iReturnCode = -1;
    //         exit_thread();
    //         m_bReady = true;
-   //         ::output_debug_string("exiting on check directrix\n");
+   //         ::output_debug_string("exiting on check handler\n");
    //         return false;
    //      }
 
@@ -1283,8 +1203,11 @@ namespace axis
 
       try
       {
-         ::aura::application_signal_details signal(m_psignal,::aura::application_signal_start);
-         m_psignal->emit(&signal);
+         
+         ::aura::application_message signal(::aura::application_message_start);
+         
+         route_message(&signal);
+
       }
       catch(...)
       {
@@ -1294,7 +1217,7 @@ namespace axis
 
       thread * pthread = ::get_thread();
 
-      install_message_handling(pthread);
+      install_message_routing(pthread);
 
       dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
 
@@ -1470,7 +1393,7 @@ namespace axis
    bool application::check_install()
    {
 
-      if (directrix()->m_varTopicQuery.has_property("install"))
+      if (handler()->m_varTopicQuery.has_property("install"))
       {
 
          if (!on_install())
@@ -1497,7 +1420,7 @@ namespace axis
 
          }
 
-         if (strAppId.has_char() && command()->m_varTopicQuery.has_property("app") && strAppId == command()->m_varTopicQuery["app"])
+         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
          {
 
             system_add_app_install(strAppId, "installed");
@@ -1510,7 +1433,7 @@ namespace axis
             }
 
          }
-         else if (strAppId.has_char() && command()->m_varTopicQuery.has_property("session_start") && strAppId == command()->m_varTopicQuery["session_start"])
+         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
          {
 
             system_add_app_install(strAppId, "installed");
@@ -1538,7 +1461,7 @@ namespace axis
          }
 
       }
-      else if (directrix()->m_varTopicQuery.has_property("uninstall"))
+      else if (handler()->m_varTopicQuery.has_property("uninstall"))
       {
 
          if (!on_uninstall())
@@ -1567,7 +1490,7 @@ namespace axis
 
       string strLicense = get_license_id();
 
-      var & varTopicQuey = System.directrix()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
       bool bHasInstall = varTopicQuey.has_property("install");
 
@@ -1663,7 +1586,7 @@ namespace axis
 
       ::object::on_request(pcreate);
 
-      command()->consolidate(pcreate);
+      handler()->merge(pcreate);
 
    }
 
@@ -1736,7 +1659,7 @@ namespace axis
    //bool application::is_installing()
    //{
 
-   //   return directrix()->has_property("install");
+   //   return handler()->has_property("install");
 
    //}
 
@@ -1744,7 +1667,7 @@ namespace axis
    //bool application::is_uninstalling()
    //{
 
-   //   return directrix()->has_property("uninstall");
+   //   return handler()->has_property("uninstall");
 
    //}
 
@@ -2004,9 +1927,9 @@ namespace axis
       m_bAxisInitialize = true;
       m_bAxisInitializeResult = false;
 
-      ::aura::application_signal_details signal(m_psignal,::aura::application_signal_initialize);
+      ::aura::application_message signal(::aura::application_message_initialize);
 
-      m_psignal->emit(&signal);
+      route_message(&signal);
 
       if(!signal.m_bOk)
          return false;
@@ -2015,27 +1938,37 @@ namespace axis
 
       if(is_system())
       {
-         if(guideline()->m_varTopicQuery.propset().has_property("save_processing"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_processing"))
          {
+            
             Session.savings().save(::aura::resource_processing);
+            
          }
-         if(guideline()->m_varTopicQuery.propset().has_property("save_blur_back"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_blur_back"))
          {
+            
             Session.savings().save(::aura::resource_blur_background);
+            
          }
-         if(guideline()->m_varTopicQuery.propset().has_property("save_transparent_back"))
+         
+         if(handler()->m_varTopicQuery.propset().has_property("save_transparent_back"))
          {
+            
             Session.savings().save(::aura::resource_translucent_background);
+            
          }
+         
       }
 
-      if(directrix()->m_varTopicQuery.propset().has_property("install"))
+      if(handler()->m_varTopicQuery.propset().has_property("install"))
       {
          // core level app install
          if(!Ex2OnAppInstall())
             return false;
       }
-      else if(directrix()->m_varTopicQuery.propset().has_property("uninstall"))
+      else if(handler()->m_varTopicQuery.propset().has_property("uninstall"))
       {
          // core level app uninstall
          if(!Ex2OnAppUninstall())
@@ -2069,10 +2002,10 @@ namespace axis
       m_dwAlive = ::get_tick_count();
 
       if(is_system()
-         && !command_thread()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
-         && command_thread()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-         && command_thread()->m_varTopicQuery["app"] != "app-gtech/alarm"
-         && command_thread()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+         && !handler()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
+         && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+         && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
+         && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       {
          System.http().defer_auto_initialize_proxy_configuration();
       }
@@ -2173,25 +2106,19 @@ namespace axis
          }
 
 
-         if(m_psignal != NULL)
+         ::aura::application_message signal(::aura::application_message_exit_instance);
+
+         try
          {
 
-            ::aura::application_signal_details signal(m_psignal,::aura::application_signal_exit_instance);
-
-            try
-            {
-
-               m_psignal->emit(&signal);
-
-            }
-            catch(...)
-            {
-
-            }
-
-            m_psignal.release();
+            route_message(&signal);
 
          }
+         catch(...)
+         {
+
+         }
+
 
          //try
          //{
@@ -2917,21 +2844,21 @@ namespace axis
 
 
 
-//#include "framework.h" // from "axis/user/user.h"
+#include "framework.h" // from "axis/user/user.h"
 
 namespace axis
 {
 
 
-   UINT application::APPM_LANGUAGE = WM_APP + 117;
-   WPARAM application::WPARAM_LANGUAGE_UPDATE = 1;
+   //UINT application::APPM_LANGUAGE = WM_APP + 117;
+   //WPARAM application::WPARAM_LANGUAGE_UPDATE = 1;
 
 
 
 
 
 
-   void application::process_message_filter(int32_t code,signal_details * pobj)
+   void application::process_message_filter(int32_t code,::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -3183,7 +3110,7 @@ namespace axis
    //      if(m_iReturnCode != 0)
    //      {
    //         dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-   //         ::OutputDebugStringW(L"application::main on_run termination failure");
+   //         ::output_debug_string(L"application::main on_run termination failure");
    //      }
 
    //   }
@@ -3283,7 +3210,7 @@ namespace axis
    //         m_iReturnCode = -1;
    //         exit();
    //         m_bReady = true;
-   //         ::OutputDebugStringW(L"exiting on check directrix");
+   //         ::output_debug_string(L"exiting on check handler");
    //         return false;
    //      }
 
@@ -3296,7 +3223,7 @@ namespace axis
    //         exit();
    //         m_iReturnCode = -1;
    //         m_bReady = true;
-   //         ::OutputDebugStringW(L"application::main os_native_bergedge_start failure");
+   //         ::output_debug_string(L"application::main os_native_bergedge_start failure");
    //         return false;
    //      }
 
@@ -3324,7 +3251,7 @@ namespace axis
 
    //   try
    //   {
-   //      ::aura::application_signal_details signal(this,m_psignal,::aura::application_signal_start);
+   //      ::aura::application_message signal(this,m_psignal,::aura::application_message_start);
    //      m_psignal->emit(&signal);
    //   }
    //   catch(...)
@@ -3335,7 +3262,7 @@ namespace axis
 
    //   thread * pthread = ::get_thread();
 
-   //   install_message_handling(pthread->m_pthreadimpl);
+   //   install_message_routing(pthread->m_pthreadimpl);
 
    //   dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
 
@@ -3696,7 +3623,7 @@ namespace axis
 
    //   ::object::on_request(pcreate);
 
-   //   command()->consolidate(pcreate);
+   //   handler()->consolidate(pcreate);
 
    //}
 
@@ -3905,19 +3832,13 @@ namespace axis
 
    }
 
-   sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
-   {
+   
+   //sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
+   //{
 
+   //   return get_message_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
 
-
-      ::thread * pthread = ::get_thread();
-
-      if(pthread != NULL)
-         return pthread->get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
-
-      return get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
-
-   }
+   //}
 
 
 

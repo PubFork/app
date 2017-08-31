@@ -1,6 +1,6 @@
 #include "framework.h" // from "axis/user/user.h"
 #include "base/user/user/user_windowing.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 #include "base/node/node.h"
 
 
@@ -176,9 +176,6 @@ namespace base
 
       m_bSystemSynchronizedScreen = true;
 
-      m_pschemaLayeredFrame = canew(::user::schema_layered_frame(this));
-
-
    }
 
 
@@ -223,8 +220,6 @@ namespace base
    
       }         
 
-      m_pschemaLayeredFrame.release();
-
 #ifdef WINDOWSEX
 
       try
@@ -245,11 +240,6 @@ namespace base
       axis::system::exit_application();
 
 
-
-
-#ifdef MACOS
-      ns_app_close();
-#endif
 
       return m_iReturnCode;
 
@@ -1019,6 +1009,8 @@ error:;
       }
       catch (...)
       {
+
+         throw resource_exception(this, "not good window anymore");
 
       }
 

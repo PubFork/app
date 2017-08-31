@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userstack
@@ -8,6 +8,7 @@ namespace userstack
    document::document(::aura::application * papp) :
       ::object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp)
    {
 
@@ -29,21 +30,27 @@ namespace userstack
 
    document::~document()
    {
+
    }
 
 
-   #ifdef DEBUG
+#ifdef DEBUG
+
    void document::assert_valid() const
    {
+
       ::user::document::assert_valid();
+
    }
 
    void document::dump(dump_context & dumpcontext) const
    {
-      ::user::document::dump(dumpcontext);
-   }
-   #endif //DEBUG
 
+      ::user::document::dump(dumpcontext);
+
+   }
+
+#endif //DEBUG
 
 
 } // namespace userstack

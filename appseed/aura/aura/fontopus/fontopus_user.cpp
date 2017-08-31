@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace fontopus
@@ -33,7 +33,7 @@ namespace fontopus
    /*
    void user::start_veiev_synch()
    {
-      signal_details * psignal = new signal_details();
+      ::message::message * psignal = new ::message::message();
       ::emit(get_app(), this, &user::on_end_veiev_synch, this, &user::veiev_synch, psignal);
    }
    */
@@ -76,7 +76,7 @@ namespace fontopus
    }
 
    /*
-   void user::veiev_synch(signal_details * pobj)
+   void user::veiev_synch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       int32_t iRestart = 0;
@@ -132,7 +132,7 @@ restart:
 
    }
 
-   void user::on_end_veiev_synch(signal_details * pobj)
+   void user::on_end_veiev_synch(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }

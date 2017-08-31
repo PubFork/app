@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -24,18 +24,18 @@ namespace user
 
          }
 
-         void SysMenuManager::relay_event(signal_details * pobj)
+         void SysMenuManager::relay_event(::message::message * pobj)
          {
 
             SCAST_PTR(::message::base, pbase, pobj);
 
             if(m_pworkset->GetEventWindow() == NULL || pbase->m_pwnd != m_pworkset->GetEventWindow())
                return;
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            else if(pbase->m_uiMessage == WM_RBUTTONUP)
+            else if(pbase->m_id == WM_RBUTTONUP)
             {
                if(m_enumState == StateMBDown)
                {
@@ -44,7 +44,7 @@ namespace user
                   /*            ::user::menu * pmenu = pwnd->GetSystemMenu(FALSE);
                            if(pmenu != NULL)
                            {
-                           pmenu->TrackPopupMenu(
+                           pmenu->track_popup_menu(
                            lpMsg->pt.x, lpMsg->pt.y,
                            pwnd);
                            }*/
@@ -55,11 +55,10 @@ namespace user
             }
          }
 
-         void SysMenuManager::message_handler(sp(::user::interaction) pwnd, signal_details * pobj)
+         void SysMenuManager::message_handler(::user::interaction * pui, ::message::base * pbase)
          {
-            UNREFERENCED_PARAMETER(pwnd);
-            SCAST_PTR(::message::base, pbase, pobj);
-            switch(pbase->m_uiMessage)
+
+            switch(pbase->m_id)
             {
             case WM_LBUTTONDBLCLK:
             {
@@ -74,15 +73,15 @@ namespace user
             }
             }
 
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            if(pbase->m_uiMessage == WM_RBUTTONDOWN)
+            if(pbase->m_id == WM_RBUTTONDOWN)
             {
                m_enumState = StateMBDown;
             }
-            else if(pbase->m_uiMessage == WM_RBUTTONUP)
+            else if(pbase->m_id == WM_RBUTTONUP)
             {
                if(m_enumState == StateMBDown)
                {
@@ -93,7 +92,7 @@ namespace user
                            {
                            point pt(LOWORD(lparam), HIWORD(lparam));
                            pwnd->ClientToScreen(&pt);
-                           pmenu->TrackPopupMenu(
+                           pmenu->track_popup_menu(
                            pt.x, pt.y,
                            pwnd);
                            }*/

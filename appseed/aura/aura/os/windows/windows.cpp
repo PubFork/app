@@ -1,7 +1,7 @@
-//#include "framework.h"
-//#include "aura/node/windows/windows.h"
-//#include "windows.h"
-//#include <VersionHelpers.h>
+#include "framework.h"
+#include <VersionHelpers.h>
+
+
 #undef new
 #define min MIN
 #define max MAX
@@ -18,7 +18,7 @@ int g_iWsaStartup;
 
 
 
-::aura::system * app_common_prelude(int & iError, ::windows::main_init_data * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
+::aura::system * app_common_prelude(int & iError, ::windows::command * & pmaininitdata, app_core & appcore,  HINSTANCE hinstance = NULL, HINSTANCE hinstancePrev = NULL, const char * pszCmdLine = NULL, int nShowCmd = SW_SHOW);
 int app_common_term(int iError, ::aura::system * psystem, app_core & appcore);
 
 
@@ -109,7 +109,7 @@ bool __node_aura_pre_init()
    }
 
 
-   OutputDebugStringW(L"__node_aura_pre_init\n");
+   output_debug_string(L"__node_aura_pre_init\n");
 
    xxdebug_box("__node_aura_pre_init","box",MB_OK);
    g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
@@ -189,7 +189,7 @@ bool __node_aura_pos_term()
    ::aura::del(g_pgdiplusStartupInput);
    ::aura::del(g_pgdiplusStartupOutput);
 
-   OutputDebugStringW(L"aura terminating!\n");
+   output_debug_string(L"aura terminating!\n");
 
    //::CoUninitialize();
 
@@ -770,11 +770,11 @@ namespace core
    //{
    //   TRACE("throw hresult_exception: hr = 0x%x\n", hr);
    //  throw hresult_exception(hr);
-   /*   ::OutputDebugString("throw hresult_exception");
+   /*   ::output_debug_string("throw hresult_exception");
    char sz[200];
    sprintf(sz, "0x%s", hr);
-   ::OutputDebugString(sz);
-   ::OutputDebugString("\n");
+   ::output_debug_string(sz);
+   ::output_debug_string("\n");
    //TRACE(trace::category_Exception, 0, "throw hresult_exception: hr = 0x%x\n", hr );
    ASSERT( false );
    DWORD dwExceptionCode;
@@ -904,7 +904,7 @@ CLASS_DECL_AURA string expand_env(string str)
 #include "aura/node/windows/windows.h"
 
 
-CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::main_init_data * pmaininitdata);
+CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata);
 
 typedef bool DEFER_INIT();
 typedef DEFER_INIT * PFN_DEFER_INIT;
@@ -918,7 +918,7 @@ CLASS_DECL_AURA int32_t app_common_main(HINSTANCE hinstance, HINSTANCE hPrevInst
 
    int iError = 0;
 
-   ::windows::main_init_data * pmaininitdata = NULL;
+   ::windows::command * pmaininitdata = NULL;
 
    ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore, hinstance, hPrevInstance,  lpCmdLine, nCmdShow);
 
@@ -950,7 +950,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
    int iError = 0;
 
-   ::windows::main_init_data * pmaininitdata = NULL;
+   ::windows::command * pmaininitdata = NULL;
 
    ::aura::system * psystem = app_common_prelude(iError, pmaininitdata, appcore);
 
@@ -970,7 +970,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
 
 
-::aura::system * app_common_prelude(int & iError, ::windows::main_init_data * & pmaininitdata, app_core & appcore, HINSTANCE hinstance, HINSTANCE hinstancePrev, const char * pszCmdLine, int nCmdShow)
+::aura::system * app_common_prelude(int & iError, ::windows::command * & pmaininitdata, app_core & appcore, HINSTANCE hinstance, HINSTANCE hinstancePrev, const char * pszCmdLine, int nCmdShow)
 {
 
    string strAppId;
@@ -1013,17 +1013,23 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
    if (strAppId.has_char())
    {
 
-      string strLibrary = ::process::app_id_to_app_name(strAppId);
+      HMODULE hmodule = NULL;
 
-      HMODULE hmodule = ::LoadLibrary(strLibrary + ".dll");
+      bool bInApp = strAppId.compare_ci("acid") == 0;
 
-      if (hmodule != NULL)
+      if (!bInApp)
       {
 
+         string strLibrary = ::process::app_id_to_app_name(strAppId);
+
+         hmodule = ::LoadLibrary(strLibrary + ".dll");
+
+      }
+
+      if (hmodule != NULL || bInApp)
+      {
 
          PFN_DEFER_INIT defer_init = NULL;
-
-
 
          if ((hmodule = ::GetModuleHandle("core.dll")) != NULL)
          {
@@ -1065,7 +1071,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
 
    psystem->m_strAppId = strAppId;
 
-   pmaininitdata = new ::windows::main_init_data;
+   pmaininitdata = new ::windows::command;
 
    pmaininitdata->m_hInstance = hinstance;
    pmaininitdata->m_hPrevInstance = hinstancePrev;
@@ -1074,13 +1080,13 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
    if(pszCmdLine == NULL)
    {
 
-      pmaininitdata->m_vssCommandLine = ::path::module() + " : app=" + psystem->m_strAppId;
+      pmaininitdata->m_strCommandLine = ::path::module() + " : app=" + psystem->m_strAppId;
 
    }
    else
    {
 
-      pmaininitdata->m_vssCommandLine = pszCmdLine;
+      pmaininitdata->m_strCommandLine = pszCmdLine;
 
    }
 

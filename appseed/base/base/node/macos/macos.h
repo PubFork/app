@@ -33,8 +33,8 @@
 //#define MAC_WINDOW(pwnd) (dynamic_cast < ::macos::interaction_impl * > (dynamic_cast < ::user::interaction_impl * >(pwnd)))
 //
 //
-//CLASS_DECL_AURA void AfxProcessWndProcException(::exception::base*, signal_details * pobj);
-//CLASS_DECL_AURA void __cdecl __pre_translate_message(signal_details * pobj);
+//CLASS_DECL_AURA void AfxProcessWndProcException(::exception::base*, ::message::message * pobj);
+//CLASS_DECL_AURA void __cdecl __pre_translate_message(::message::message * pobj);
 //#include "macos_printer.h"
 //#include "macos_message_queue.h"
 //

@@ -56,10 +56,10 @@ namespace multimedia
          return ::thread::exit_thread();
       }
 
-      void thread::install_message_handling(::message::dispatch * pinterface)
+      void thread::install_message_routing(::message::sender * pinterface)
       {
-         IGUI_WIN_MSG_LINK(thread::MessageMixerThread, pinterface, this, &thread::OnMixerMessage);
-         IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &thread::OnUserMessage);
+         IGUI_MSG_LINK(thread::MessageMixerThread, pinterface, this, &thread::OnMixerMessage);
+         IGUI_MSG_LINK(WM_USER, pinterface, this, &thread::OnUserMessage);
       }
 
       // BEGIN_MESSAGE_MAP(thread, thread)
@@ -76,7 +76,7 @@ namespace multimedia
       // thread message handlers
 
 
-      void thread::OnMixerMessage(::signal_details * pobj)
+      void thread::OnMixerMessage(::message::message * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
 
@@ -146,7 +146,7 @@ namespace multimedia
          return ::thread::on_idle(lCount);
       }
 
-      void thread::OnVmsmException(::signal_details * pobj)
+      void thread::OnVmsmException(::message::message * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
          //sp(base_application) pApp = (sp(base_application)) &System;
@@ -154,7 +154,7 @@ namespace multimedia
       }
 
 
-      void thread::OnUserMessage(::signal_details * pobj)
+      void thread::OnUserMessage(::message::message * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
 
@@ -285,7 +285,7 @@ namespace multimedia
             break;
          case 534231:
             {
-               //GetKarWnd()->SendMessageToDescendants(WM_USER, 534231);
+               //GetKarWnd()->send_message_to_descendants(WM_USER, 534231);
             }
             break;
 
@@ -297,7 +297,7 @@ namespace multimedia
       }
 
 
-      void thread::pre_translate_message(::signal_details * pobj)
+      void thread::pre_translate_message(::message::message * pobj)
       {
 
          return ::thread::pre_translate_message(pobj);

@@ -46,11 +46,11 @@
 char * ns_get_default_browser_path()
 {
    
-   CFURLRef appURL = LSCopyDefaultApplicationURLForURL((CFURLRef)[NSURL URLWithString: @"http:"], kLSRolesAll, NULL);
+   CFURLRef appURL = LSCopyDefaultApplicationURLForURL((__bridge CFURLRef)[NSURL URLWithString: @"http:"], kLSRolesAll, NULL);
    
    CFStringRef str = CFURLGetString(appURL);
    
-   char * psz = strdup([(NSString *)str UTF8String]);
+   char * psz = strdup([(__bridge NSString *)str UTF8String]);
    
    CFRelease(appURL);
    
@@ -170,6 +170,7 @@ bool mm1_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
 
 void ns_app_terminate()
 {
+   
    [NSApp terminate:nil];
    
 }

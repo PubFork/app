@@ -23,14 +23,12 @@ simple_menu_bar::simple_menu_bar(::aura::application * papp) :
    m_iTopMenuCount = 0;
    m_iTracking = -1;
 
-   IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, this, this, &simple_menu_bar::_001OnAppLanguage);
-
 }
 
 simple_menu_bar::~simple_menu_bar()
 {
 
-   if(m_pmenu)
+   if (m_pmenu)
    {
 
       delete m_pmenu;
@@ -42,17 +40,23 @@ simple_menu_bar::~simple_menu_bar()
 
 }
 
-void simple_menu_bar::install_message_handling(::message::dispatch * pdispatch)
+
+void simple_menu_bar::install_message_routing(::message::sender * psender)
 {
-   simple_toolbar::install_message_handling(pdispatch);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE      , pdispatch, this, &simple_menu_bar::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_NCMOUSEMOVE    , pdispatch, this, &simple_menu_bar::_001OnNcMouseMove);
-   IGUI_WIN_MSG_LINK(WM_CREATE         , pdispatch, this, &simple_menu_bar::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN        , pdispatch, this, &simple_menu_bar::_001OnKeyDown);
-   IGUI_WIN_MSG_LINK(WM_DESTROY        , pdispatch, this, &simple_menu_bar::_001OnDestroy);
-   IGUI_WIN_MSG_LINK(WM_MENUCHAR       , pdispatch, this, &simple_menu_bar::_001OnMenuChar);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN    , pdispatch, this, &simple_menu_bar::_001OnLButtonDown);
-   //IGUI_WIN_MSG_LINK(WM_ERASEBKGND     , pdispatch, this, *simple_menu_bar::_001On);
+
+   simple_toolbar::install_message_routing(psender);
+
+   IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &simple_menu_bar::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_NCMOUSEMOVE, psender, this, &simple_menu_bar::_001OnNcMouseMove);
+   IGUI_MSG_LINK(WM_CREATE, psender, this, &simple_menu_bar::_001OnCreate);
+   IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &simple_menu_bar::_001OnKeyDown);
+   IGUI_MSG_LINK(WM_DESTROY, psender, this, &simple_menu_bar::_001OnDestroy);
+   IGUI_MSG_LINK(WM_MENUCHAR, psender, this, &simple_menu_bar::_001OnMenuChar);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &simple_menu_bar::_001OnLButtonDown);
+   MSG_TYPE_LINK(::message::type_language, psender, this, &simple_menu_bar::_001OnAppLanguage);
+
+   //IGUI_MSG_LINK(WM_ERASEBKGND               , psender, this, *simple_menu_bar::_001On);
+
 }
 
 
@@ -64,13 +68,13 @@ bool simple_menu_bar::LoadMenuBar(UINT nIDResource)
 
    m_uiResourceID = nIDResource;
 
-/*    m_menu.Initialize(
-      m_pimagelist,
-      m_pimagelistDisabled,
-      m_prel,
-      &m_font);
+   /*    m_menu.Initialize(
+         m_pimagelist,
+         m_pimagelistDisabled,
+         m_prel,
+         &m_font);
 
-   m_menu.LoadMenu(m_uiResourceID);*/
+      m_menu.LoadMenu(m_uiResourceID);*/
 
 
 #ifdef WINDOWSEX
@@ -87,20 +91,20 @@ bool simple_menu_bar::LoadMenuBar(UINT nIDResource)
 
    TBBUTTONINFOW tbbi;
    tbbi.cbSize = sizeof(tbbi);
-   tbbi.dwMask = TBIF_STYLE | TBIF_TEXT ;
+   tbbi.dwMask = TBIF_STYLE | TBIF_TEXT;
 
-/*   m_buttona.set_size(mda.get_size());
-   for(i = 0; i < mda.get_size(); i++)
-   {
-      m_buttona[i].m_wstr = mda.element_at(i).m_wstr;
-   }*/
+   /*   m_buttona.set_size(mda.get_size());
+      for(i = 0; i < mda.get_size(); i++)
+      {
+         m_buttona[i].m_wstr = mda.element_at(i).m_wstr;
+      }*/
 #endif
 
    m_bDelayedButtonLayout = true;
    //_001Layout();
 
    {
-//      smart_pointer_array <SimpleMenu , SimpleMenu &> * psma = NULL;
+      //      smart_pointer_array <SimpleMenu , SimpleMenu &> * psma = NULL;
    }
 
    return true;
@@ -125,8 +129,8 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
   //  m_pwthreadTracking->m_evInitialized.lock();
     //m_pwthreadTracking->m_puiMain->SendMessage(WM_USER, 3, (LPARAM) this);
     //m_pwthreadTracking->m_puiMain->SendMessage(WM_USER, 4, lpnmtb->iItem);
-    TRACE("MenuBarV033::OnDropDown simple_menu_bar::_TrackPopupMenu % d\n", lpnmtb->iItem);
-    _TrackPopupMenu(lpnmtb->iItem);
+    TRACE("MenuBarV033::OnDropDown simple_menu_bar::_track_popup_menu % d\n", lpnmtb->iItem);
+    _track_popup_menu(lpnmtb->iItem);
 
     *result = TBDDRET_DEFAULT;
 }*/
@@ -138,15 +142,15 @@ bool simple_menu_bar::pre_create_window(::user::create_struct& cs)
 }*/
 
 
-bool simple_menu_bar::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+void simple_menu_bar::_001OnCmdMsg(::user::command * pcommand)
 {
-   // TODO: add your specialized code here and/or call the base class
 
-   return simple_toolbar::_001OnCmdMsg(pcmdmsg);
+   simple_toolbar::_001OnCmdMsg(pcommand);
+
 }
 
 
-void simple_menu_bar::_001OnMouseMove(signal_details * pobj)
+void simple_menu_bar::_001OnMouseMove(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    _001Hover(pmouse->m_pt);
@@ -154,131 +158,149 @@ void simple_menu_bar::_001OnMouseMove(signal_details * pobj)
 }
 
 
-bool simple_menu_bar::_TrackPopupMenu(int32_t iItem)
+bool simple_menu_bar::_track_popup_menu(int32_t iItem)
 {
-    TRACE("simple_menu_bar::_TrackPopupMenu % d\n", iItem);
-    m_iTracking = iItem;
-    m_iButtonPressItem = iItem;
-    RedrawWindow();
-    rect rect;
-    _001GetElementRect(iItem, rect, element_item);
-    ClientToScreen(rect);
+   TRACE("simple_menu_bar::_track_popup_menu % d\n", iItem);
+   m_iTracking = iItem;
+   m_iButtonPressItem = iItem;
+   RedrawWindow();
+   rect rect;
+   _001GetElementRect(iItem, rect, element_item);
+   ClientToScreen(rect);
 
-/*#ifdef WINDOWSEX
-    TPMPARAMS tpm;
-    tpm.cbSize = sizeof(TPMPARAMS);
-    tpm.rcExclude.top    = rect.top;
-    tpm.rcExclude.left   = rect.left;
-    tpm.rcExclude.bottom = rect.bottom;
-    tpm.rcExclude.right  = rect.right;
-#endif*/
+   /*#ifdef WINDOWSEX
+       TPMPARAMS tpm;
+       tpm.cbSize = sizeof(TPMPARAMS);
+       tpm.rcExclude.top    = rect.top;
+       tpm.rcExclude.left   = rect.left;
+       tpm.rcExclude.bottom = rect.bottom;
+       tpm.rcExclude.right  = rect.right;
+   #endif*/
 
-    return true;
+   return true;
 
 }
 
-void simple_menu_bar::_001OnNcMouseMove(signal_details * pobj)
+
+void simple_menu_bar::_001OnNcMouseMove(::message::message * pobj)
 {
+
    SCAST_PTR(::message::mouse, pmouse, pobj);
+
    _001Hover(pmouse->m_pt);
-// trans   simple_toolbar::OnNcMouseMove(pmouse->m_nFlags, pmouse->m_pt);
+
+   // trans   simple_toolbar::OnNcMouseMove(pmouse->m_nFlags, pmouse->m_pt);
+
 }
 
-void simple_menu_bar::pre_translate_message(signal_details * pobj)
+
+void simple_menu_bar::pre_translate_message(::message::message * pobj)
 {
+
    SCAST_PTR(::message::base, pbase, pobj);
-   if(pbase->m_uiMessage == WM_USER && pbase->m_pwnd == this)
+
+   if (pbase->m_id == WM_USER && pbase->m_pwnd == this)
    {
-      if(pbase->m_wparam == 33)
+
+      if (pbase->m_wparam == 33)
       {
-         _TrackPopupMenu((int32_t) pbase->m_lparam);
+
+         _track_popup_menu((int32_t)pbase->m_lparam);
+
       }
+
    }
-   TRACE("simple_menu_bar::pre_translate_message messageID=%d wParam=%d lParam=%d\n", pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam);
+
+   TRACE("simple_menu_bar::pre_translate_message messageID=%d wParam=%d lParam=%d\n", pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam);
+
    return simple_toolbar::pre_translate_message(pobj);
+
 }
 
-void simple_menu_bar::_001OnCreate(signal_details * pobj)
+
+void simple_menu_bar::_001OnCreate(::message::message * pobj)
 {
-//   SCAST_PTR(::message::create, pcreate, pobj);
-   if(pobj->previous())
+
+   //   SCAST_PTR(::message::create, pcreate, pobj);
+
+   if (pobj->previous())
+   {
+
       return;
 
-/*   MessageFilterHookManager * lpmfmh = NULL;
-   if(!MessageFilterHookManager::AppGetMessageFilterHookManager(&lpmfmh))
-   {
-      pcreate->set_lresult(-1);
-      pcreate->m_bRet = true;
-      return;
    }
 
-   ASSERT(lpmfmh != NULL);
-   lpmfmh->MessageFilterHook(this);*/
+   /*   MessageFilterHookManager * lpmfmh = NULL;
+      if(!MessageFilterHookManager::AppGetMessageFilterHookManager(&lpmfmh))
+      {
+         pcreate->set_lresult(-1);
+         pcreate->m_bRet = true;
+         return;
+      }
 
-   //m_menuhook.Install((sp(::user::frame_window)) (sp(::user::interaction))this);
+      ASSERT(lpmfmh != NULL);
+      lpmfmh->MessageFilterHook(this);*/
 
-//   SetFont(System.visual().fonts().GetMenuFont());
+      //m_menuhook.Install((sp(::user::frame_window)) (sp(::user::interaction))this);
+
+   //   SetFont(System.visual().fonts().GetMenuFont());
 
    UpdateWindow();
 
 }
 
 
-LRESULT CALLBACK simple_menu_bar::MessageProc(
-  int32_t code,       // hook code
-  WPARAM wParam,  // undefined
-  LPARAM lParam   // address of structure with message data
-)
+LRESULT CALLBACK simple_menu_bar::MessageProc(int32_t code, WPARAM wParam, LPARAM lParam)
 {
+
    UNREFERENCED_PARAMETER(wParam);
-    LPMESSAGE pmsg = (LPMESSAGE) lParam;
 
-    if(code == MSGF_MENU)
-    {
-/*        ASSERT(pmsg->oswindow == m_oswindowFilter);*/
+   LPMESSAGE pmsg = (LPMESSAGE)lParam;
 
-        if(pmsg->message == WM_MOUSEMOVE)
-        {
-            uint32_t fwKeys = (uint32_t) pmsg->wParam;        // key flags
-            int32_t xPos = LOWORD(pmsg->lParam);  // horizontal position of cursor
-            int32_t yPos = HIWORD(pmsg->lParam);
-            TRACE("simple_menu_bar::MessageProc %d %d %d \n", fwKeys, xPos, yPos);
-            point pt(xPos, yPos);
-            ScreenToClient(&pt);
-            _TrackPopupMenu(pt);
+   if (code == MSGF_MENU)
+   {
+      if (pmsg->message == WM_MOUSEMOVE)
+      {
+         uint32_t fwKeys = (uint32_t)pmsg->wParam;        // key flags
+         int32_t xPos = LOWORD(pmsg->lParam);  // horizontal position of cursor
+         int32_t yPos = HIWORD(pmsg->lParam);
+         TRACE("simple_menu_bar::MessageProc %d %d %d \n", fwKeys, xPos, yPos);
+         point pt(xPos, yPos);
+         ScreenToClient(&pt);
+         _track_popup_menu(pt);
 
-        }
-    }
+      }
+   }
 
-    return 0;
+   return 0;
 }
 
 
-bool simple_menu_bar::_TrackPopupMenu(point point)
+bool simple_menu_bar::_track_popup_menu(point point)
 {
-   if(m_bTracking)
+   if (m_bTracking)
    {
       int32_t iItem = _001HitTest(point);
-      if(iItem >= 0 &&
+      if (iItem >= 0 &&
          iItem < m_iTopMenuCount &&
          iItem != m_iTracking)
       {
-         TRACE("simple_menu_bar::OnMouseMove simple_menu_bar::_TrackPopupMenu % d\n", iItem);
+         TRACE("simple_menu_bar::OnMouseMove simple_menu_bar::_track_popup_menu % d\n", iItem);
          //            SendMessage(WM_KEYDOWN, VK_ESCAPE);
          //            if(m_iTracking >= 0)
          //          {
-                send_message(WM_CANCELMODE);
-    //        }
-            send_message(WM_USER, 33, iItem);
-            //return _TrackPopupMenu(iItem);
-        }
-    }
+         send_message(WM_CANCELMODE);
+         //        }
+         send_message(WM_USER, 33, iItem);
+         //return _track_popup_menu(iItem);
+      }
+   }
 
-    return true;
+   return true;
 
 }
 
-void simple_menu_bar::_001OnKeyDown(signal_details * pobj)
+void simple_menu_bar::_001OnKeyDown(::message::message * pobj)
 {
    // TODO: add your message handler code here and/or call default
 
@@ -317,16 +339,16 @@ bool simple_menu_bar::CalcSize(CToolBarCtrl & tbc, size & size)
 
 
 
-void simple_menu_bar::_001OnDestroy(signal_details * pobj)
+void simple_menu_bar::_001OnDestroy(::message::message * pobj)
 {
    pobj->previous();
 
-/*   MessageFilterHookManager * lpmfmh = NULL;
-   if(MessageFilterHookManager::AppGetMessageFilterHookManager(&lpmfmh)
-      && lpmfmh != NULL)
-   {
-      lpmfmh->MessageFilterUnhook(this);
-   }*/
+   /*   MessageFilterHookManager * lpmfmh = NULL;
+      if(MessageFilterHookManager::AppGetMessageFilterHookManager(&lpmfmh)
+         && lpmfmh != NULL)
+      {
+         lpmfmh->MessageFilterUnhook(this);
+      }*/
 }
 
 bool simple_menu_bar::Initialize(
@@ -336,15 +358,15 @@ bool simple_menu_bar::Initialize(
    ::draw2d::font *        pfont)
 {
 
-//   m_menuhook.Initialize(
-  //    pimagelist,
-      //pimagelistDisabled,
-      //prel,
-      //pfont);
+   //   m_menuhook.Initialize(
+     //    pimagelist,
+         //pimagelistDisabled,
+         //prel,
+         //pfont);
 
-   m_pimagelist            = pimagelist;
-   m_pimagelistDisabled    = pimagelistDisabled;
-   m_prel                  = prel;
+   m_pimagelist = pimagelist;
+   m_pimagelistDisabled = pimagelistDisabled;
+   m_prel = prel;
 
    //m_font->operator=(*pfont);
 
@@ -358,7 +380,7 @@ void simple_menu_bar::RemoveAllButtons()
    m_itema.remove_all();
 }
 
-void simple_menu_bar::_001OnMenuChar(signal_details * pobj)
+void simple_menu_bar::_001OnMenuChar(::message::message * pobj)
 {
    pobj->previous();
 }
@@ -368,58 +390,75 @@ void simple_menu_bar::OnUpdateCmdUI(sp(::user::frame_window)pTarget, bool bDisab
    UNREFERENCED_PARAMETER(pTarget);
    UNREFERENCED_PARAMETER(bDisableIfNoHndler);
    return;
-/*   tool_cmd_ui state;
-   state.m_pOther = this;
+   /*   tool_command state;
+      state.m_pOther = this;
 
-   state.m_nIndexMax = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
-   for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax; state.m_nIndex++)
-   {
-      // get buttons state
-      TBBUTTON button;
-      _GetButton(state.m_nIndex, &button);
-      state.m_nID = button.idCommand;
-
-      // ignore separators
-      if (!(button.fsStyle & TBSTYLE_SEP))
+      state.m_nIndexMax = (UINT)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
+      for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax; state.m_nIndex++)
       {
-         // allow reflections
-         if (::user::interaction::on_simple_action(0,
-            MAKELONG((int32_t)CN_UPDATE_COMMAND_UI, WM_COMMAND+WM_REFLECT_BASE),
-            &state, NULL))
-            continue;
+         // get buttons state
+         TBBUTTON button;
+         _GetButton(state.m_nIndex, &button);
+         state.m_nID = button.idCommand;
 
-         // allow the toolbar itself to have update handlers
-         if (::user::interaction::on_simple_action(state.m_nID, CN_UPDATE_COMMAND_UI, &state, NULL))
-            continue;
+         // ignore separators
+         if (!(button.fsStyle & TBSTYLE_SEP))
+         {
+            // allow reflections
+            if (::user::interaction::on_command(0,
+               MAKELONG((int32_t)CN_UPDATE_::user::command, WM_COMMAND+WM_REFLECT_BASE),
+               &state, NULL))
+               continue;
 
-         // allow the owner to process the update
-         state.DoUpdate(pTarget, bDisableIfNoHndler);
+            // allow the toolbar itself to have update handlers
+            if (::user::interaction::on_command(state.m_nID, CN_UPDATE_::user::command, &state, NULL))
+               continue;
+
+            // allow the owner to process the update
+            state.DoUpdate(pTarget, bDisableIfNoHndler);
+         }
       }
-   }
 
-   // update the dialog controls added to the toolbar
-   UpdateDialogControls(pTarget, bDisableIfNoHndler);*/
+      // update the dialog controls added to the toolbar
+      UpdateDialogControls(pTarget, bDisableIfNoHndler);*/
 }
 
 
-int32_t simple_menu_bar::OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam)
+// int32_t simple_menu_bar::OnMessage(MPARAM mparam, NPARAM nparam, OPARAM oparam)
+// {
+//    UNREFERENCED_PARAMETER(nparam);
+//    UNREFERENCED_PARAMETER(oparam);
+//    if(mparam == MX_APPLANGUAGE)
+//    {
+//       ReloadMenuBar();
+//    }
+//    return 0;
+// }
+
+
+
+void simple_menu_bar::_001OnAppLanguage(::message::message * pmessage)
 {
-   UNREFERENCED_PARAMETER(nparam);
-   UNREFERENCED_PARAMETER(oparam);
-   if(mparam == MX_APPLANGUAGE)
-   {
-      ReloadMenuBar();
-   }
-   return 0;
+
+   ReloadMenuBar();
+
 }
+
 
 bool simple_menu_bar::ReloadMenuBar()
 {
-   if(!LoadMenuBar(m_uiResourceID))
+
+   send_message(WM_CANCELMODE);
+
+   if (!LoadMenuBar(m_uiResourceID))
       return false;
 
+   set_need_redraw();
+
    return true;
+
 }
+
 
 /*void simple_menu_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
@@ -553,18 +592,18 @@ int32_t simple_menu_bar::_001HitTest(const POINT *lppoint)
 bool simple_menu_bar::create_window(sp(::user::interaction) pParentWnd, uint32_t dwStyle, UINT nID)
 {
 
-   rect rectBar(m_cxLeftBorder,m_cyTopBorder,m_cxRightBorder,m_cyBottomBorder);
+   rect rectBar(m_cxLeftBorder, m_cyTopBorder, m_cxRightBorder, m_cyBottomBorder);
 
-   return create_window_ex(pParentWnd,0,dwStyle,rectBar, nID);
+   return create_window_ex(pParentWnd, 0, dwStyle, rectBar, nID);
 
 }
 
 
-bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle,const RECT & rect, UINT nID)
+bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle, uint32_t dwStyle, const RECT & rect, UINT nID)
 {
-   
+
    ASSERT_VALID(pParentWnd);   // must have a parent
-   ASSERT (!((dwStyle & CBRS_SIZE_FIXED) && (dwStyle & CBRS_SIZE_DYNAMIC)));
+   ASSERT(!((dwStyle & CBRS_SIZE_FIXED) && (dwStyle & CBRS_SIZE_DYNAMIC)));
 
    SetBorders(rect);
 
@@ -575,15 +614,15 @@ bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint3
 
    dwStyle &= ~CBRS_ALL;
 #ifdef WINDOWSEX
-   dwStyle |= CCS_NOPARENTALIGN|CCS_NOMOVEY|CCS_NODIVIDER|CCS_NORESIZE;
+   dwStyle |= CCS_NOPARENTALIGN | CCS_NOMOVEY | CCS_NODIVIDER | CCS_NORESIZE;
 #endif
    dwStyle |= dwCtrlStyle;
 
-//   ASSERT(gen_ComCtlVersion != -1);
-//   _::core::GetDropDownWidth();
-//   ASSERT(gen_DropDownWidth != -1);
+   //   ASSERT(gen_ComCtlVersion != -1);
+   //   _::core::GetDropDownWidth();
+   //   ASSERT(gen_DropDownWidth != -1);
 
-   // create the oswindow
+      // create the oswindow
    if (!::user::interaction::create_window(NULL, NULL, dwStyle, rect, pParentWnd, nID))
       return FALSE;
 
@@ -595,17 +634,17 @@ bool simple_menu_bar::create_window_ex(sp(::user::interaction) pParentWnd, uint3
    return TRUE;
 }
 
-void simple_menu_bar::_001OnLButtonDown(signal_details * pobj)
+void simple_menu_bar::_001OnLButtonDown(::message::message * pobj)
 {
    SCAST_PTR(::message::mouse, pmouse, pobj);
    int32_t iItem = _001HitTest(pmouse->m_pt);
-   if(iItem >= 0)
+   if (iItem >= 0)
    {
       _001OnDropDown(iItem);
    }
    else
    {
-    // trans  simple_toolbar::OnLButtonDown(pmouse->m_nFlags, pmouse->m_pt);
+      // trans  simple_toolbar::OnLButtonDown(pmouse->m_nFlags, pmouse->m_pt);
    }
 }
 
@@ -719,7 +758,7 @@ size simple_menu_bar::CalcFixedLayout(bool bStretch, bool bHorz)
 
 /*void simple_menu_bar::_001Hover(point pt)
 {
-   _TrackPopupMenu(pt);
+   _track_popup_menu(pt);
    int32_t iHover = -1;
    if(m_iTracking >= 0)
    {
@@ -756,12 +795,12 @@ void simple_menu_bar::_001Hover()
 void simple_menu_bar::_001OnTimer(::timer * ptimer)
 {
    simple_toolbar::_001OnTimer(ptimer);
-   if(ptimer->m_nIDEvent == TIMER_HOVER)
+   if (ptimer->m_nIDEvent == TIMER_HOVER)
    {
       _001Hover();
    }
 
-//   pobj->previous();
+   //   pobj->previous();
 }
 
 /*
@@ -778,7 +817,7 @@ bool simple_menu_bar::OnEraseBkgnd(::draw2d::graphics * pgraphics)
 
 void simple_menu_bar::_001OnDropDown(int32_t iItem)
 {
-   _TrackPopupMenu(iItem);
+   _track_popup_menu(iItem);
 }
 
 void simple_menu_bar::_001OnClick(index iItem)
@@ -789,29 +828,38 @@ void simple_menu_bar::_001OnClick(index iItem)
 
 void simple_menu_bar::OnUpdateHover()
 {
-   if(m_iHover >= 0)
+
+   if (m_iHover >= 0)
    {
-      //_TrackPopupMenu(m_iHover);
+
+      //_track_popup_menu(m_iHover);
+
    }
+
 }
+
 
 int32_t simple_menu_bar::_001GetHoverItem()
 {
-   if(m_iTracking >= 0)
+   
+   if (m_iTracking >= 0)
    {
+
       return m_iTracking;
+
    }
-   else
-   {
-      return simple_toolbar::_001GetHoverItem();
-   }
+
+   return simple_toolbar::_001GetHoverItem();
+   
+
 }
 
-void simple_menu_bar::_001OnAppLanguage(signal_details * pobj)
-{
-   SCAST_PTR(::message::base, pbase, pobj);
-   send_message(WM_CANCELMODE);
-   LoadMenuBar(m_uiResourceID);
-   RedrawWindow();
-   pbase->m_bRet = false;
-}
+
+//void simple_menu_bar::_001OnAppLanguage(::message::message * pobj)
+//{
+//   SCAST_PTR(::message::base, pbase, pobj);
+//   send_message(WM_CANCELMODE);
+//   LoadMenuBar(m_uiResourceID);
+//   RedrawWindow();
+//   pbase->m_bRet = false;
+//}

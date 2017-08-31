@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "windows.h"
 
 
@@ -146,7 +146,7 @@ namespace windows
       {
          DWORD dwLastError = ::GetLastError();
          string strMessage = get_system_error_message(dwLastError);
-         OutputDebugStringW(pwszCommandLine);
+         output_debug_string(pwszCommandLine);
          output_debug_string("\r\n");
          output_debug_string("CreateProcessW Error!!");
          output_debug_string("\r\n");

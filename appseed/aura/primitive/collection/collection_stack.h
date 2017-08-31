@@ -89,6 +89,7 @@ public:
       m_stack(stack)
    {
       m_stack.add_new();
+      m_stack.last() = m_stack.last(-2);
    }
 
    ~stacker()

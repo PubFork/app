@@ -43,6 +43,14 @@ namespace macos
    {
    }
 
+   
+   string os::get_command_line()
+   {
+    
+      return get_command_line_dup();
+      
+   }
+   
 
    bool os::shutdown(bool bIfPowerOff)
    {
@@ -246,23 +254,6 @@ namespace macos
        }*/
    }
 
-   string os::get_module_path(HMODULE hmodule)
-   {
-   //   throw not_implemented(get_app());
-      return "";
-      /*
-       string strPath;
-       DWORD dwSize = 1;
-       while(natural(strPath.get_length() + 1) == dwSize)
-       {
-       dwSize = ::GetModuleFileName(
-       hmodule,
-       strPath.GetBufferSetLength(dwSize + 1024),
-       (dwSize + 1024));
-       strPath.ReleaseBuffer();
-       }
-       return strPath;*/
-   }
 
 
    bool os::connection_settings_get_auto_detect()
@@ -953,7 +944,172 @@ namespace macos
       return strAppReturn;
       
    }
+   
+   
+   void os::on_process_command(::command::command * pcommand)
+   {
+      
+      sp(::handler) phandler = System.handler();
+      
+      if(phandler->m_spcommandline->m_strExe[0] == '/')
+      {
+         
+         ::file::path p;
+         
+         p = ::dir::ca2_user();
+         
+         p /= "mypath" / phandler->m_spcommandline->m_varQuery.propset()["app"].get_string() + ".txt";
+         
+         file_put_contents_dup(p, phandler->m_spcommandline->m_strExe);
+         
+         string strApp = phandler->m_spcommandline->m_strExe;
+         
+         strsize iFind = strApp.find_ci(".app/");
+         
+         if(iFind > 0)
+         {
+            
+            p = ::dir::ca2_user;
+            
+            p /= "mypath" / phandler->m_spcommandline->m_varQuery.propset()["app"].get_string() + "-app";
+            
+            ::file::path p2;
+            
+            p2 = ::dir::ca2_user();
+            
+            p2 /= "mypath" / ::file::path(phandler->m_spcommandline->m_varQuery.propset()["app"].get_string()).folder()/ ::file::path(strApp.Left(iFind + strlen(".app"))).name();
+            
+            ns_create_alias(p2, strApp.Left(iFind + strlen(".app")));
+            
+            if(::dir::is(::dir::local()/"localconfig/desk/2desk"))
+            {
+               
+               ::file::path p3;
+               
+               p3 = ::dir::local()/"localconfig/desk/2desk"/::file::path(strApp.Left(iFind + strlen(".app"))).name();
+               
+               ns_create_alias(p3, strApp.Left(iFind + strlen(".app")));
+               
+            }
+            
+            file_put_contents_dup(p, "open -a \""+strApp.Left(iFind + strlen(".app")) + "\"");
+            
+            chmod(p, 0777);
+            
+         }
+         
+      }
+      
+   }
+   
+   void os::set_file_status(const char * lpszFileName, const ::file::file_status& status)
+   {
+      
+      
+//      DWORD wAttr;
+//      FILETIME creationTime;
+//      FILETIME lastAccessTime;
+//      FILETIME lastWriteTime;
+//      LPFILETIME lpCreationTime = NULL;
+//      LPFILETIME lpLastAccessTime = NULL;
+//      LPFILETIME lpLastWriteTime = NULL;
+//      
+//      wstring wstr(lpszFileName);
+//      
+//      if((wAttr = GetFileAttributesW(wstr)) == (DWORD)-1L)
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//         
+//      }
+//      
+//      if ((DWORD)status.m_attribute != wAttr && (wAttr & ::windows::file::readOnly))
+//      {
+//         
+//         // set file attribute, only if currently readonly.
+//         // This way we will be able to modify the time assuming the
+//         // caller changed the file from readonly.
+//         
+//         if (!SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+//         {
+//            
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            
+//         }
+//         
+//      }
+//      
+//      // last modification time
+//      if (status.m_mtime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(), status.m_mtime, &lastWriteTime);
+//         
+//         lpLastWriteTime = &lastWriteTime;
+//         
+//      }
+//      
+//      // last access time
+//      if (status.m_atime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(),status.m_atime, &lastAccessTime);
+//         
+//         lpLastAccessTime = &lastAccessTime;
+//         
+//      }
+//      
+//      // create time
+//      if (status.m_ctime.get_time() != 0)
+//      {
+//         
+//         ::windows::TimeToFileTime(get_app(),status.m_ctime, &creationTime);
+//         
+//         lpCreationTime = &creationTime;
+//         
+//      }
+//      
+//      HANDLE hFile = ::CreateFileW(wstr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+//      
+//      if(hFile == INVALID_HANDLE_VALUE)
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if(!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if(!::CloseHandle(hFile))
+//      {
+//         
+//         ::windows::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+//         
+//      }
+//      
+//      if ((DWORD)status.m_attribute != wAttr && !(wAttr & ::windows::file::readOnly))
+//      {
+//         
+//         if (!::SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+//         {
+//            
+//            ::windows::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+//            
+//         }
+//         
+//      }
+      
 
+      
+   }
+
+   
+   
 } // namespace macos
 
 

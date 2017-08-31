@@ -21,16 +21,16 @@ namespace user
    }
 
 
-   void split_view::install_message_handling(::message::dispatch * pinterface)
+   void split_view::install_message_routing(::message::sender * pinterface)
    {
       
-      split_layout::install_message_handling(pinterface);
-      impact::install_message_handling(pinterface);
+      split_layout::install_message_routing(pinterface);
+      impact::install_message_routing(pinterface);
       
-      USER_MESSAGE_LINK(message_create, pinterface, this, &split_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &split_view::_001OnCreate);
 
-      //IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
-      //IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_view::_001OnShowWindow);
+      //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &split_view::_001OnSize);
+      //IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_view::_001OnShowWindow);
 
    }
 
@@ -46,7 +46,7 @@ namespace user
       impact::dump(dumpcontext);
    }
 
-   void split_view::_001OnCreate(signal_details * pobj)
+   void split_view::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -119,7 +119,7 @@ namespace user
    }
 
 
-   void split_view::_001OnSize(signal_details * pobj)
+   void split_view::_001OnSize(::message::message * pobj)
    {
       SCAST_PTR(::message::size, psize, pobj);
       psize->previous();
@@ -202,7 +202,7 @@ namespace user
    }
 
 
-   void split_view::_001OnShowWindow(signal_details * pobj)
+   void split_view::_001OnShowWindow(::message::message * pobj)
    {
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
       pshowwindow->previous();

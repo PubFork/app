@@ -51,7 +51,7 @@ namespace metrowin
 
       static_function const MSG* GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::user::interaction_impl& wnd) const;
       bool operator!=(const ::user::interaction_impl& wnd) const;
@@ -66,7 +66,7 @@ namespace metrowin
 
       virtual oswindow _get_handle();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -143,7 +143,7 @@ namespace metrowin
       // as above, but returns oswindow
       //::user::interaction *  GetDescendantWindow(id id);
       // like GetDlgItem but recursive
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       //::user::frame_window * GetParentFrame();
       //::user::frame_window * EnsureParentFrame();
       //::user::interaction *  GetTopLevelParent();
@@ -586,8 +586,8 @@ namespace metrowin
                          ::user::interaction_impl * pActivateWnd, ::user::interaction_impl * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       //      void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
@@ -609,11 +609,11 @@ namespace metrowin
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -642,9 +642,9 @@ namespace metrowin
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       //bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function ::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
-      static_function void SendMessageToDescendants(oswindow hWnd, UINT message,
+      static_function void send_message_to_descendants(oswindow hWnd, UINT message,
             WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool is_frame_window(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();

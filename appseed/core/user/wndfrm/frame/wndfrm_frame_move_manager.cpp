@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
@@ -62,10 +62,10 @@ namespace user
 
             }
 
-            if(GetMoveWindow()->get_appearance() != ::user::AppearanceNormal && GetMoveWindow()->get_appearance() != ::user::AppearanceMinimal)
+            if(GetMoveWindow()->get_appearance() != ::user::appearance_normal && GetMoveWindow()->get_appearance() != ::user::appearance_minimal)
             {
 
-               GetMoveWindow()->set_appearance(::user::AppearanceNormal);
+               GetMoveWindow()->set_appearance(::user::appearance_normal);
 
             }
 
@@ -118,10 +118,10 @@ namespace user
          bool MoveManager::Relay(::message::mouse * pmouse)
          {
 
-            ASSERT(pmouse->m_uiMessage == WM_MOUSEMOVE
-                   || pmouse->m_uiMessage == WM_LBUTTONUP
-                   || pmouse->m_uiMessage == WM_NCMOUSEMOVE
-                   || pmouse->m_uiMessage == WM_NCLBUTTONUP);
+            ASSERT(pmouse->m_id == WM_MOUSEMOVE
+                   || pmouse->m_id == WM_LBUTTONUP
+                   || pmouse->m_id == WM_NCMOUSEMOVE
+                   || pmouse->m_id == WM_NCLBUTTONUP);
 
             if(!m_bMoving)
                return false;
@@ -132,12 +132,20 @@ namespace user
 
             class point ptMove = m_ptWindowOrigin + pmouse->m_pt - m_ptCursorOrigin;
 
+
+
             if(pui->GetParent() != NULL)
             {
 
                pui->ScreenToClient(&ptMove);
 
             }
+
+            if (pui->oprop("ysnap").int32() > 1)
+            {
+               ptMove.y -= ptMove.y % pui->oprop("ysnap").int32();
+            }
+
 
 #ifdef WINDOWSEX
 
@@ -167,7 +175,7 @@ namespace user
 
 #endif
 
-            if(pmouse->m_uiMessage == WM_LBUTTONUP || pmouse->m_uiMessage == WM_NCLBUTTONUP)
+            if(pmouse->m_id == WM_LBUTTONUP || pmouse->m_id == WM_NCLBUTTONUP)
             {
                
                m_bMoving = false;
@@ -358,15 +366,15 @@ namespace user
             m_eborderMask = emask;
          }
 
-         void MoveManager::message_handler(sp(::user::interaction) pwnd, signal_details * pobj)
+
+         void MoveManager::message_handler(::user::interaction * pui, ::message::base * pbase)
          {
 
-            SCAST_PTR(::message::base, pbase, pobj);
-
-            if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+            if(pbase->m_id == WM_LBUTTONDOWN)
             {
+
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               pui->ClientToScreen(&ptCursor);
                m_ptCursorOrigin = ptCursor;
                rect rectWindow;
                GetMoveWindow()->GetWindowRect(rectWindow);
@@ -381,8 +389,8 @@ namespace user
                pbase->m_bRet = true;
                return;
             }
-            else if(pbase->m_uiMessage == WM_MOUSEMOVE ||
-                    pbase->m_uiMessage == WM_LBUTTONUP)
+            else if(pbase->m_id == WM_MOUSEMOVE ||
+                    pbase->m_id == WM_LBUTTONUP)
             {
                sp(::user::interaction) pWndCapture = Session.GetCapture();
                TRACE("MoveManager::message_handler oswindow Capture %x\n", Session.GetCapture().m_p);
@@ -398,7 +406,7 @@ namespace user
                   return;
                }
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
-               pwnd->ClientToScreen(&ptCursor);
+               pui->ClientToScreen(&ptCursor);
                point pt;
                pt = m_ptWindowOrigin + ptCursor - m_ptCursorOrigin;
                //TRACE("m_ptWindowOrigin.x = %d m_ptWindowOrigin = %d\n", m_ptWindowOrigin.x, m_ptWindowOrigin.y);
@@ -432,15 +440,18 @@ namespace user
                   MoveWindow(GetMoveWindow()->get_handle(), pt);
 
                }
-               if(pbase->m_uiMessage == WM_LBUTTONUP)
+               if(pbase->m_id == WM_LBUTTONUP)
                {
                   Session.ReleaseCapture();
                   m_bMoving = false;
                }
                pbase->m_bRet = true;
                return;
+               
             }
+
          }
+
 
          bool MoveManager::_000OnTimer(UINT nIDEvent)
          {

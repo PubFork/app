@@ -28,10 +28,7 @@ string get_user_name()
    return string(wsz);
 }
 #endif
-#ifdef MACOS
-void ns_app_terminate();
-void ns_create_alias(const char * pszTarget, const char * pszSource);
-#endif
+
 namespace aura
 {
 
@@ -223,7 +220,7 @@ namespace aura
       m_mapLibrary["draw2d"] = canew(::aura::library(this));
       m_purldepartment = new url::department(this);
 
-      m_pcompress = new ::axis::compress_department(this);
+      m_pcompress = new ::compress_department(this);
 
       m_pcompress->set_app(this);
 
@@ -288,6 +285,8 @@ namespace aura
 
 
       
+      
+
 
    }
 
@@ -300,7 +299,7 @@ namespace aura
 //
 //      static DWORD dwStart = get_tick_count();
 //
-//      if(directrix()->m_varTopicQuery.has_property("install") && (get_tick_count() - dwStart) > (1000 * 1000))
+//      if(handler()->m_varTopicQuery.has_property("install") && (get_tick_count() - dwStart) > (1000 * 1000))
 //      {
 //
 //         ::output_debug_string("::aura::system::install_uninstall_verb " + demangle(typeid(*this).name()) +
@@ -310,7 +309,7 @@ namespace aura
 //
 //      }
 //
-//      if(directrix()->m_varTopicQuery.has_property("uninstall") && (get_tick_count() - dwStart) > (1000 * 1000))
+//      if(handler()->m_varTopicQuery.has_property("uninstall") && (get_tick_count() - dwStart) > (1000 * 1000))
 //      {
 //
 //         ::output_debug_string("::aura::system::install_uninstall_verb " + demangle(typeid(*this).name()) +
@@ -349,7 +348,7 @@ namespace aura
                   continue;
 
                }
-               else if(appptra[i]->is_serviceable() && appptra[i]->m_strAppId != directrix()->m_varTopicQuery["app"].get_string())
+               else if(appptra[i]->is_serviceable() && appptra[i]->m_strAppId != handler()->m_varTopicQuery["app"].get_string())
                {
 
                   appptra.remove_at(i);
@@ -463,10 +462,12 @@ namespace aura
 
       m_spos.alloc(allocer());
 
-
-      if(!set_main_init_data(m_pinitmaindata))
+      if(!process_command(m_pcommand))
+      {
+         
          return false;
-
+         
+      }
 
       if(is_installing() || is_uninstalling())
       {
@@ -693,7 +694,7 @@ namespace aura
    int32_t system::exit_application()
    {
 
-
+      
       try
       {
          
@@ -888,9 +889,9 @@ namespace aura
       //   m_peengine = NULL;
 
       //}
-#ifdef MACOS
-      ns_app_terminate();
-#endif
+//#ifdef MACOS
+  //    ns_app_terminate();
+//#endif
 
       return iRet;
 
@@ -1475,34 +1476,17 @@ namespace aura
 
    application_ptra system::get_appptra()
    {
-
+      
       application_ptra appptra;
 
-      //try
-      //{
-
-      //   for(index iBaseSession = 0; iBaseSession < m_basesessionptra.get_count(); iBaseSession++)
-      //   {
-
-      //      try
-      //      {
-
-      //         appptra += m_basesessionptra[iBaseSession]->appptra();
-
-      //      }
-      //      catch(...)
-      //      {
-
-      //      }
-
-      //   }
-
-      //}
-      //catch(...)
-      //{
-
-
-      //}
+      
+      {
+      
+         synch_lock sl(m_pmutex);
+      
+         appptra = Session.m_appptra;
+         
+      }
 
       return appptra;
 
@@ -1996,7 +1980,7 @@ namespace aura
 
       on_start_find_applications_from_cache();
 
-      if(directrix()->m_varTopicQuery.has_property("install"))
+      if(handler()->m_varTopicQuery.has_property("install"))
          return true;
 
       ::file::file_sp file = Session.m_spfile->get_file(System.dir().appdata() / "applibcache.bin",::file::type_binary | ::file::mode_read);
@@ -2199,26 +2183,33 @@ namespace aura
    }
 
 
-
-
-   bool system::set_main_init_data(::aura::main_init_data * pdata)
+   bool system::process_command(::command::command * pcommand)
    {
 
-      if(pdata != NULL)
+      if(pcommand != NULL)
       {
-         if(!::aura::application::set_main_init_data(pdata))
+         
+         if(!::aura::application::process_command(pcommand))
+         {
+            
             return false;
+            
+         }
+         
       }
 
-      if(pdata == NULL)
+      if(pcommand == NULL)
          return true;
 
       property_set set(this);
 
       var varFile;
+      
       string strApp;
 
-      set._008ParseCommandFork(pdata->m_vssCommandLine,varFile,strApp);
+      set._008ParseCommandFork(pcommand->m_strCommandLine, varFile, strApp);
+      
+      varFile._001Add(m_pcommand->m_varFile.stra());
 
       string strAppId(strApp);
 
@@ -2236,105 +2227,33 @@ namespace aura
 
       }
 
-
       if((varFile.is_empty() && ((strAppId.is_empty() && !set.has_property("show_platform"))
                                  || strAppId == "bergedge")) &&
             !(set.has_property("install") || set.has_property("uninstall")))
       {
-         //if(!set.has_property("show_platform") || set["show_platform"] == 1)
+         
          if (set["show_platform"] == 1)
          {
-            command()->add_line(" : show_platform=1");
+            
+            handler()->add_line(" : show_platform=1");
+            
          }
+         
       }
       else
       {
-         string strCommandLine = pdata->m_vssCommandLine;
-         //strCommandLine.trim();
-         //if(strCommandLine[0] == '\"')
-         //{
-         //   strsize iFind = strCommandLine.find("\"",1);
-         //   strCommandLine = strCommandLine.Mid(iFind + 1);
-         //}
-         //else
-         //{
-         //   strsize iFind = strCommandLine.find(" ",1);
-         //   strCommandLine = strCommandLine.Mid(iFind + 1);
-         //}
-         command()->add_line(strCommandLine);
 
-
-#if defined(MACOS)
+         handler()->add_line(pcommand);
          
-         if(command()->m_spcommandline->m_strExe[0] == '/')
-         {
-            
-            ::file::path p;
-            
-            p = ::dir::ca2_user();
-            
-            p /= "mypath" / command()->m_spcommandline->m_varQuery.propset()["app"].get_string() + ".txt";
-            
-            file_put_contents_dup(p, command()->m_spcommandline->m_strExe);
-            
-            string strApp = command()->m_spcommandline->m_strExe;
-            
-            strsize iFind = strApp.find_ci(".app/");
-            
-            if(iFind > 0)
-            {
-               
-               p = ::dir::ca2_user;
-            
-               p /= "mypath" / command()->m_spcommandline->m_varQuery.propset()["app"].get_string() + "-app";
-               
-               ::file::path p2;
-               
-               p2 = ::dir::ca2_user();
-            
-               p2 /= "mypath" / ::file::path(command()->m_spcommandline->m_varQuery.propset()["app"].get_string()).folder()/ ::file::path(strApp.Left(iFind + strlen(".app"))).name();
+         os().on_process_command(pcommand);
 
-               ns_create_alias(p2, strApp.Left(iFind + strlen(".app")));
-               
-               
-               if(::dir::is(::dir::local()/"localconfig/desk/2desk"))
-               {
-                  
-                  ::file::path p3;
-                  
-                  p3 = ::dir::local()/"localconfig/desk/2desk"/::file::path(strApp.Left(iFind + strlen(".app"))).name();
-                  
-                  ns_create_alias(p3, strApp.Left(iFind + strlen(".app")));
-
-               }
-            
-               file_put_contents_dup(p, "open -a \""+strApp.Left(iFind + strlen(".app")) + "\"");
-
-               chmod(p, 0777);
-               
-            }
-            
-         }
-
-#endif
-         
       }
-
-      //if(!(set.has_property("install") || set.has_property("uninstall")))
-      //{
-
-      //   m_pfnVerb = &system::common_verb;
-
-      //}
-
-
-      //if(!::core::application::set_main_init_data(pdata))
-      // return false;
 
       return true;
 
    }
 
+   
    void system::request_exit()
    {
 
@@ -2352,7 +2271,7 @@ namespace aura
       for(auto papp : ptra)
       {
 
-         papp->command()->command(::primitive::command_on_agree_exit);
+         papp->handler()->handle(::command_on_agree_exit);
 
       }
 
@@ -2418,7 +2337,7 @@ namespace aura
 
       for(auto papp : ptra)
       {
-         papp->command()->command(::primitive::command_france_exit);
+         papp->handler()->handle(::command_france_exit);
       }
 
       i = 100;
@@ -2462,10 +2381,10 @@ namespace aura
    }
 
 
-   void system::on_command(::primitive::command * pcommand)
+   void system::handle_command(::command::command * pcommand)
    {
 
-      if (pcommand->m_ecommand == ::primitive::command_check_exit)
+      if (pcommand->m_ecommand == ::command_check_exit)
       {
 
          defer_check_exit();
@@ -2474,7 +2393,7 @@ namespace aura
       else
       {
 
-         ::aura::application::on_command(pcommand);
+         ::aura::application::handle_command(pcommand);
 
       }
 
@@ -2935,7 +2854,49 @@ namespace aura
    }
 
 
+   bool system::on_open_file(var varFile, string strExtra)
+   {
+      
+      auto appptra = get_appptra();
+      
+      ::aura::application * papp = NULL;
+      
+      if(appptra.get_size() > 0)
+      {
+         
+         papp = appptra[0];
+         
+      }
+      else
+      {
+         
+         papp = this;
+         
+      }
+      
+      if(papp != NULL)
+      {
+      
+         if(varFile.is_empty())
+         {
 
+            papp->handler()->add_fork("app.exe : open_default " + strExtra);
+            
+         }
+         else
+         {
+
+            papp->handler()->add_fork("app.exe " + varFile.get_file_path() + ::str::has_char(strExtra, " : "));
+            
+         }
+         
+         return true;
+         
+      }
+      
+      return false;
+      
+   }
 
 } // namespace aura
 

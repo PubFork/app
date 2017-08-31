@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 
 namespace user
@@ -20,20 +20,20 @@ namespace user
    }
 
 
-   void box::install_message_handling(::message::dispatch * pinterface)
+   void box::install_message_routing(::message::sender * pinterface)
    {
 
-      ::simple_ui::interaction::install_message_handling(pinterface);
-      scroll::install_message_handling(pinterface);
+      ::simple_ui::interaction::install_message_routing(pinterface);
+      scroll::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &box::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &box::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &box::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &box::_001OnCreate);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &box::_001OnSize);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &box::_001OnShowWindow);
 
    }
 
 
-   void box::_001OnCreate(signal_details * pobj)
+   void box::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -55,7 +55,7 @@ namespace user
    }
 
 
-   void box::_001OnSize(signal_details * pobj)
+   void box::_001OnSize(::message::message * pobj)
    {
 
       pobj->previous();
@@ -63,7 +63,7 @@ namespace user
    }
 
 
-   void box::_001OnShowWindow(signal_details * pobj)
+   void box::_001OnShowWindow(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -173,7 +173,7 @@ namespace user
 
          memstream >> iBefore;
 
-         set_appearance_before((::user::EAppearance)iBefore);
+         set_appearance_before((::user::e_appearance)iBefore);
 
          bool bZoomed = false;
 
@@ -191,7 +191,7 @@ namespace user
 
          memstream >> iAppearance;
 
-         ::user::EAppearance eappearance = (::user::EAppearance) iAppearance;
+         ::user::e_appearance eappearance = (::user::e_appearance) iAppearance;
 
          rect rectWindow;
 
@@ -203,18 +203,18 @@ namespace user
          if (!bForceRestore)
          {
 
-            if (bZoomed || (bInitialFramePosition && m_eappearanceBefore == ::user::AppearanceZoomed))
+            if (bZoomed || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_zoomed))
             {
 
-               pwindow->set_appearance(::user::AppearanceZoomed);
+               pwindow->set_appearance(::user::appearance_zoomed);
 
                pwindow->best_wkspace(NULL, rectWindow, true);
 
             }
-            else if (bFullScreen || (bInitialFramePosition && m_eappearanceBefore == ::user::AppearanceFullScreen))
+            else if (bFullScreen || (bInitialFramePosition && m_eappearanceBefore == ::user::appearance_full_screen))
             {
 
-               pwindow->set_appearance(::user::AppearanceFullScreen);
+               pwindow->set_appearance(::user::appearance_full_screen);
 
                pwindow->best_monitor(NULL, rectWindow, true);
 
@@ -222,7 +222,7 @@ namespace user
             else if (bIconic && !bInitialFramePosition)
             {
 
-               pwindow->set_appearance(::user::AppearanceIconic);
+               pwindow->set_appearance(::user::appearance_iconic);
 
                pwindow->good_iconify(NULL, rectWindow, true);
 
@@ -236,7 +236,7 @@ namespace user
             else
             {
 
-               pwindow->set_appearance(::user::AppearanceNormal);
+               pwindow->set_appearance(::user::appearance_normal);
 
                pwindow->good_restore(NULL, rectWindow, true);
 
@@ -246,7 +246,7 @@ namespace user
          else
          {
 
-            pwindow->set_appearance(::user::AppearanceNormal);
+            pwindow->set_appearance(::user::appearance_normal);
 
             pwindow->good_restore(NULL, rectWindow, true);
 
@@ -307,7 +307,7 @@ namespace user
          }
       }
 
-      EAppearance eappearance = get_appearance_before();
+      e_appearance eappearance = get_appearance_before();
 
       int iBefore = (int)eappearance;
       stream << iBefore;
@@ -319,7 +319,7 @@ namespace user
       stream << bIconic;
       int iAppearance = (int)pwindow->get_appearance();
       stream << iAppearance;
-      if (bGet && (bZoomed || bFullScreen || bIconic || ::user::is_docking_appearance((::user::EAppearance)iAppearance)))
+      if (bGet && (bZoomed || bFullScreen || bIconic || ::user::is_docking_appearance((::user::e_appearance)iAppearance)))
       {
          stream << rectOld;
       }
@@ -336,7 +336,7 @@ namespace user
    void box::_001WindowRestore()
    {
 
-      set_appearance(::user::AppearanceNormal);
+      set_appearance(::user::appearance_normal);
 
       WindowDataLoadWindowRect(true);
 
@@ -401,25 +401,43 @@ namespace user
 
    }
 
-
-
-   bool box::on_simple_command(e_simple_command ecommand, lparam lparam, LRESULT & lresult)
+   
+   void box::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      if (::simple_ui::interaction::on_simple_command(ecommand, lparam, lresult))
-         return true;
-
-      switch (ecommand)
+      switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_load_window_rect:
-         WindowDataLoadWindowRect(lparam != FALSE);
+         
+         WindowDataLoadWindowRect(psimplecommand->m_lparam != FALSE);
+         
+         psimplecommand->m_bRet = true;
+
          break;
+
       default:
+
          break;
+
       }
 
+      if (psimplecommand->m_bRet)
+      {
 
-      return false;
+         return;
+
+      }
+
+      ::simple_ui::interaction::on_simple_command(psimplecommand);
+
+   }
+
+
+
+   void box::on_command(::user::command * pcommand)
+   {
+
+      ::simple_ui::interaction::on_command(pcommand);
 
    }
 

@@ -73,34 +73,57 @@ namespace user
    void multiple_document_template::request_create(::create * pcreate)
    {
 
-      pcreate->m_spCommandLine->m_varQuery["document"] = (sp(object)) NULL;
+      pcreate->m_spCommandLine->m_varQuery["document"] = NULL;
+
       bool bMakeVisible = pcreate->m_bMakeVisible;
-      //   sp(::user::interaction) pwndParent = pcreate->m_spCommandLine->m_varQuery["parent_user_interaction"].cast < ::user::interaction > ();
-      //   sp(::user::impact) pviewAlloc = pcreate->m_spCommandLine->m_varQuery["allocation_view"].cast < ::user::impact > ();
+
       ::user::document * pdocument = create_new_document(pcreate);
+
       if (pdocument == NULL)
       {
+      
          TRACE(::aura::trace::category_AppMsg, 0, "impact_system::create_new_document returned NULL.\n");
-         // linux System.simple_message_box(__IDP_FAILED_TO_CREATE_DOC);
+
+         // TODO Translate
          System.simple_message_box(NULL, "failed to create ::user::document");
+
          return;
+
       }
 
       bool bAutoDelete = pdocument->m_bAutoDelete;
+
       pdocument->m_bAutoDelete = FALSE;   // don't destroy if something goes wrong
+
       sp(::user::frame_window) pFrame = create_new_frame(pdocument, NULL, pcreate);
+
       pdocument->m_bAutoDelete = bAutoDelete;
+
       if (pFrame == NULL)
       {
-         // linux System.simple_message_box(__IDP_FAILED_TO_CREATE_DOC);
-         string strId = typeid(*pcreate->m_puiAlloc).name();
+
+         string strId;
+
+         if (pcreate->m_puiAlloc != NULL)
+         {
+
+            strId = demangle(typeid(*pcreate->m_puiAlloc).name());
+
+         }
+         
          if (strId.find_ci("userex::message_box") < 0)
          {
+            
             System.simple_message_box(NULL, "Failed to create ::user::document");
+            
          }
+         
          remove_document(pdocument);
+         
          return;
+         
       }
+      
       ASSERT_VALID(pFrame);
 
       if(pcreate->m_spCommandLine->m_varFile.is_empty())

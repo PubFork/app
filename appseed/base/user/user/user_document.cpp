@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -8,7 +8,8 @@ namespace user
 
    document::document(::aura::application * papp) :
       ::object(papp),
-      ::data::data_container_base(papp)
+      ::data::data_container_base(papp),
+      ::user::controller(papp)
    {
 
       m_pimpactsystem = NULL;
@@ -46,18 +47,25 @@ namespace user
    }
 
 
-
-   bool document::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   void document::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target::_001OnCmdMsg(pcmdmsg))
-         return TRUE;
+      
+      command_target::_001OnCmdMsg(pcommand);
+
+      if(pcommand->m_bRet)
+         return;
 
       // otherwise check template
-      if (m_pimpactsystem != NULL &&
-            m_pimpactsystem->_001OnCmdMsg(pcmdmsg))
-         return TRUE;
+      if (m_pimpactsystem != NULL)
+      {
 
-      return FALSE;
+         m_pimpactsystem->_001OnCmdMsg(pcommand);
+
+         if (pcommand->m_bRet)
+            return;
+
+      }
+
    }
 
 
@@ -1072,7 +1080,7 @@ namespace user
                ASSERT_VALID(pFrame);
                if (nFrames == 1)
                   pFrame->m_nWindow = 0;      // the only one of its kind
-               pFrame->post_simple_command(::user::interaction::simple_command_update_frame_title, TRUE);
+               pFrame->post_simple_command(simple_command_update_frame_title, TRUE);
                iFrame++;
             }
          }
@@ -1158,7 +1166,7 @@ namespace user
 
    }
 
-   //#include "framework.h"
+   #include "framework.h"
 
 
    /*document::document(::aura::application * papp):

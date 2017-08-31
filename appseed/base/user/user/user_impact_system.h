@@ -58,12 +58,12 @@ namespace user
 
 
 
-
-      bool                    m_bQueueDocumentOpening;
-      property_set       m_set;
-      bool                    m_bAutoDelete;
+      ::user::interaction *            m_puiOwner;
+      bool                             m_bQueueDocumentOpening;
+      property_set                     m_set;
+      bool                             m_bAutoDelete;
       // back pointer to OLE or other server (NULL if none or disabled)
-      object *       m_pAttachedFactory;
+      object *                         m_pAttachedFactory;
 
       // menu & accelerator resources for in-place container
       //HMENU                 m_hMenuInPlace;
@@ -128,7 +128,7 @@ namespace user
       virtual void assert_valid() const;
 
       virtual void on_idle();             // for all documents
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
 
       bool on_open_document(::user::document * pdoc, var varFile);

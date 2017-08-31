@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #define FONTFACENAME_MENU FONT_SANS
@@ -18,7 +18,6 @@ font_department::font_department(::aura::application * papp) :
    m_fontGridCtrl(allocer())
 {
 
-   m_pfontenumeration = NULL;
    m_pfontLyric = NULL;
    m_pfontLyricCompact = NULL;
    m_pH3TitleFonts = NULL;
@@ -322,7 +321,7 @@ void font_department::defer_create_font_enumeration()
    if (m_pfontenumeration == NULL)
    {
 
-      m_pfontenumeration = new ::visual::font_enumeration(get_app());
+      m_pfontenumeration = canew(::visual::font_enumeration(get_app()));
 
    }
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 void dappy(const char * psz);
 
@@ -20,9 +20,6 @@ namespace aura
    int32_t app::main()
    {
 
-//      __argc = _init_args();
-  //    __targv = _argv;
-      _init_file();
 
       TCHAR *cmd = GetCommandLine();
 

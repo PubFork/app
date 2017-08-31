@@ -1,6 +1,4 @@
 #include"framework.h"
-//#include"axis/zlib/zlib.h"
-//#include"axis/zlib/zutil.h"
 #include "zlib.h"
 #include "zutil.h"
 #include "compress_gz.h"
@@ -263,3 +261,9 @@
 
 
    } // namespace axis
+
+
+
+
+
+

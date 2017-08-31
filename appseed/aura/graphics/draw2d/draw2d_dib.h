@@ -132,6 +132,7 @@ namespace draw2d
       virtual bool precision_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
       virtual bool blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size);
       virtual bool blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
+      virtual bool blend2(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA);
       virtual bool fork_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size);
       virtual bool fork_blend(point ptDst, ::draw2d::dib * pdibAlf, point ptAlf, class size size, byte bA);
       virtual bool bitmap_blend(::draw2d::graphics * pgraphics, LPCRECT lprect);
@@ -204,7 +205,6 @@ namespace draw2d
       virtual void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);
       virtual void transparent_color(color color);
 
-      using ::object::create;
       virtual bool create(class size);
       virtual bool create(int32_t iWidth, int32_t iHeight);
       virtual bool host(COLORREF * pcolorref, int iScan, int32_t iWidth, int32_t iHeight);
@@ -328,8 +328,8 @@ namespace draw2d
       virtual void write(::file::ostream & ostream) const;
       virtual void read(::file::istream & istream);
 
-      //virtual bool update_window(::aura::draw_interface * pui,signal_details * pobj,bool bTransferBuffer = true);
-      //virtual bool print_window(::aura::draw_interface * pui,signal_details * pobj);
+      //virtual bool update_window(::aura::draw_interface * pui,::message::message * pobj,bool bTransferBuffer = true);
+      //virtual bool print_window(::aura::draw_interface * pui,::message::message * pobj);
       
 
       static void static_initialize();

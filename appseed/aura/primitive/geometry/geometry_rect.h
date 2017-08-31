@@ -634,6 +634,9 @@ public:
 
 };
 
+inline CLASS_DECL_AURA void null_rect(LPRECT p) { ZEROP(p);}
+inline CLASS_DECL_AURA void null_rect(LPRECT64 p ) { ZEROP(p);}
+
 
 inline CLASS_DECL_AURA ::rect null_rect() { return ::rect(0, 0, 0, 0); }
 inline CLASS_DECL_AURA ::rect64 null_rect64() { return ::rect64(0, 0, 0, 0); }

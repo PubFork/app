@@ -19,7 +19,7 @@ namespace user
       bool                       m_bOnEditUpdate;
       bool                       m_bOnLanguageChange;
       UINT                       m_uiId;
-      control::descriptor_set    m_controldescriptorset;
+      control_descriptor_set    m_controldescriptorset;
       bool                       m_bInitialized;
       form_callback *            m_pcallback;
 
@@ -36,7 +36,6 @@ namespace user
    
 
 
-      using control::create;
       using ::user::control::_001IsPointInside;
       virtual bool _001IsPointInside(sp(control) pcontrol,point64 pt);
       virtual void control_get_window_rect(sp(control) pcontrol,LPRECT lprect);
@@ -53,14 +52,14 @@ namespace user
       virtual void _001RemoveControls();
       bool _001Validate(sp(control) pcontrol,var & var);
       bool _001SaveEdit(sp(control) pcontrol);
-      virtual bool on_simple_action(id id);
+      virtual void on_command(::user::command * pcommand) override;
       DECL_GEN_SIGNAL(_001OnNotify);
       DECL_GEN_SIGNAL(_001OnMessageNotify);
       virtual void _001GetSelection(::database::id & key,::database::selection & selection);
       void Update(bool bSave);
       bool _001SetData(id uiId,bool bData);
       bool _001GetData(id uiId,bool & bData);
-      int_ptr _001AddControl(class control::descriptor & descriptor);
+      int_ptr _001AddControl(class control_descriptor & descriptor);
       void _001FillCombo(sp(control) pcontrol);
 
       virtual void WfiOnClose();
@@ -68,7 +67,7 @@ namespace user
       DECL_GEN_SIGNAL(_000OnPosCreate);
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      virtual void install_message_handling(::message::dispatch *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface);
       virtual void _001InitializeFormPreData();
       virtual void _001OnUpdate(sp(::user::impact) pviewSender,LPARAM lhint,object* phint);
       virtual void _001Update(sp(control) pcontrol);
@@ -92,8 +91,8 @@ namespace user
       DECL_GEN_SIGNAL(data_on_after_change);
 
 
-      virtual bool create_control(class control::descriptor * pdescriptor, index iItem);
-      virtual bool normalize_control_descriptor_typeinfo(class ::user::control::descriptor * pdescriptor);
+      virtual bool create_control(class control_descriptor * pdescriptor, index iItem);
+      virtual bool normalize_control_descriptor_typeinfo(class ::user::control_descriptor * pdescriptor);
 
       bool operator == (const control & control) const;
 
@@ -109,7 +108,7 @@ namespace user
       //        ::user::form_window(::aura::application * papp);
       //    virtual ~::user::form_window();
 
-      //virtual void install_message_handling(::message::dispatch * pinterface);
+      //virtual void install_message_routing(::message::sender * pinterface);
 
       //      DECL_GEN_SIGNAL(_001OnCreate);
 
@@ -121,7 +120,7 @@ namespace user
       //      DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);
       DECL_GEN_SIGNAL(_001OnUser123);
-      //      virtual void install_message_handling(::message::dispatch * pinterface);
+      //      virtual void install_message_routing(::message::sender * pinterface);
 
 
       

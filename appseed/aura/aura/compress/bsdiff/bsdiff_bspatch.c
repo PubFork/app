@@ -27,7 +27,7 @@
 
 //#include "../bzlib_private.h"
 
-//#include"framework.h"
+#include "framework.h"
 #if defined(LINUX) || defined(__APPLE__) || defined(__GNUC__)
 #include<stdarg.h>
 #endif

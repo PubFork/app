@@ -6,7 +6,7 @@ namespace user
 
 
    class CLASS_DECL_CORE slider:
-      public ::user::interaction
+      virtual public ::user::interaction
    {
    public:
 
@@ -24,7 +24,7 @@ namespace user
       virtual ~slider();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);

@@ -10,7 +10,7 @@ public:
    TYPE *  m_pKept;
    bool    m_bKept;
 
-   keep(TYPE * pKept,TYPE keepValue,TYPE keepAwayValue,bool bStartKept);
+   keep(TYPE * pKept,TYPE keepValue,TYPE keepAwayValue,bool bStartKept = true);
    virtual ~keep();
 
    void Keep();
@@ -80,3 +80,5 @@ public:
    ~keep_bool(){}
 
 };
+
+

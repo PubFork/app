@@ -13,6 +13,7 @@
 oswindow_dataptra * g_poswindowdataptra = NULL;
 
 
+
 int oswindow_find(nswindow window)
 {
 
@@ -396,13 +397,36 @@ oswindow GetFocus()
 static oswindow g_oswindowActive = NULL;
 
 
+
 oswindow GetActiveWindow()
 {
+   
    return g_oswindowActive;
+   
 }
+
+void DeactivateWindow(oswindow window)
+{
+   
+   synch_lock sl(g_poswindowdataptra->m_pmutex);
+   
+   if(GetActiveWindow() != window)
+   {
+      
+      return;
+      
+   }
+   
+   SetActiveWindow(NULL);
+   
+}
+
+
 
 oswindow SetActiveWindow(oswindow window)
 {
+   
+   synch_lock sl(g_poswindowdataptra->m_pmutex);
 
    oswindow windowOld(g_oswindowActive);
    
@@ -411,6 +435,8 @@ oswindow SetActiveWindow(oswindow window)
       
       g_oswindowActive = NULL;
       
+      return windowOld;
+      
    }
 
    if(window->window() == NULL)
@@ -418,7 +444,7 @@ oswindow SetActiveWindow(oswindow window)
       
       g_oswindowActive = NULL;
       
-      return NULL;
+      return windowOld;
       
    }
 

@@ -32,17 +32,17 @@ namespace user
    //   AllocElements(0, 0);    // destroys existing elements
    }
 
-   void status_bar::install_message_handling(::message::dispatch * pinterface)
+   void status_bar::install_message_routing(::message::sender * pinterface)
    {
-      IGUI_WIN_MSG_LINK(WM_NCHITTEST         , pinterface, this, &status_bar::_001OnNcHitTest);
-      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &status_bar::_001OnNcCalcSize);
-      IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &status_bar::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &status_bar::_001OnWindowPosChanging);
-      IGUI_WIN_MSG_LINK(WM_SETTEXT           , pinterface, this, &status_bar::_001OnSetText);
-      IGUI_WIN_MSG_LINK(WM_GETTEXT           , pinterface, this, &status_bar::_001OnGetText);
-      IGUI_WIN_MSG_LINK(WM_GETTEXTLENGTH     , pinterface, this, &status_bar::_001OnGetTextLength);
+      IGUI_MSG_LINK(WM_NCHITTEST         , pinterface, this, &status_bar::_001OnNcHitTest);
+      IGUI_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &status_bar::_001OnNcCalcSize);
+      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &status_bar::_001OnSize);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &status_bar::_001OnWindowPosChanging);
+      IGUI_MSG_LINK(WM_SETTEXT           , pinterface, this, &status_bar::_001OnSetText);
+      IGUI_MSG_LINK(WM_GETTEXT           , pinterface, this, &status_bar::_001OnGetText);
+      IGUI_MSG_LINK(WM_GETTEXTLENGTH     , pinterface, this, &status_bar::_001OnGetTextLength);
 #ifdef WINDOWSEX
-      IGUI_WIN_MSG_LINK(SB_SETMINHEIGHT      , pinterface, this, &status_bar::_001OnSetMinHeight);
+      IGUI_MSG_LINK(SB_SETMINHEIGHT      , pinterface, this, &status_bar::_001OnSetMinHeight);
 #endif
    }
 
@@ -509,7 +509,7 @@ namespace user
    }
 
 
-   void status_bar::_001OnNcHitTest(signal_details * pobj)
+   void status_bar::_001OnNcHitTest(::message::message * pobj)
    {
       SCAST_PTR(::message::nchittest, pnchittest, pobj);
       UINT nResult = (UINT)Default();
@@ -523,7 +523,7 @@ namespace user
       }
    }
 
-   void status_bar::_001OnNcCalcSize(signal_details * pobj)
+   void status_bar::_001OnNcCalcSize(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
@@ -574,7 +574,7 @@ namespace user
    bool status_bar::OnChildNotify(::message::base * pbase)
    {
 
-      if (pbase->m_uiMessage != WM_DRAWITEM)
+      if (pbase->m_id != WM_DRAWITEM)
          return ::user::interaction::OnChildNotify(pbase);
 
 #ifdef WINDOWSEX
@@ -606,7 +606,7 @@ namespace user
    }
 
 
-   void status_bar::_001OnSize(signal_details * pobj)
+   void status_bar::_001OnSize(::message::message * pobj)
    {
       ASSERT_VALID(this);
       ASSERT(IsWindow());
@@ -617,7 +617,7 @@ namespace user
       UpdateAllPanes(TRUE, FALSE);
    }
 
-   void status_bar::_001OnWindowPosChanging(signal_details * pobj)
+   void status_bar::_001OnWindowPosChanging(::message::message * pobj)
    {
 #ifdef WINDOWSEX
       SCAST_PTR(::message::window_pos, pwindowpos, pobj);
@@ -632,7 +632,7 @@ namespace user
 #endif
    }
 
-   void status_bar::_001OnSetText(signal_details * pobj)
+   void status_bar::_001OnSetText(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       ASSERT_VALID(this);
@@ -649,7 +649,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnGetText(signal_details * pobj)
+   void status_bar::_001OnGetText(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       ASSERT_VALID(this);
@@ -680,7 +680,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnGetTextLength(signal_details * pobj)
+   void status_bar::_001OnGetTextLength(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -698,7 +698,7 @@ namespace user
       pbase->m_bRet = true;
    }
 
-   void status_bar::_001OnSetMinHeight(signal_details * pobj)
+   void status_bar::_001OnSetMinHeight(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       LRESULT lResult = Default();
@@ -707,30 +707,29 @@ namespace user
    }
 
    /////////////////////////////////////////////////////////////////////////////
-   // status_bar idle update through CStatusCmdUI class
+   // status_bar idle update through status_command class
 
-   class CStatusCmdUI : public cmd_ui      // class private to this file!
+   class status_command : public ::user::command      // class private to this file!
    {
    public: // re-implementations only
 
-      CStatusCmdUI(::aura::application * papp);
+      status_command(::aura::application * papp);
       virtual void Enable(bool bOn);
       virtual void SetCheck(check::e_check echeck = check::checked);
       virtual void SetText(const char * lpszText);
    };
 
-   CStatusCmdUI::CStatusCmdUI(::aura::application * papp) :
-   object(papp),
-      cmd_ui(papp)
-
-
+   status_command::status_command(::aura::application * papp) :
+      ::user::command(papp)
    {
+
    }
 
-   void CStatusCmdUI::Enable(bool bOn)
+
+   void status_command::Enable(bool bOn)
    {
       m_bEnableChanged = TRUE;
-      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
+      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
       ASSERT(pStatusBar != NULL);
       ASSERT_KINDOF(status_bar, pStatusBar);
       ASSERT(m_iIndex < m_iCount);
@@ -741,9 +740,9 @@ namespace user
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
    }
 
-   void CStatusCmdUI::SetCheck(check::e_check echeck) // "checking" will pop out the text
+   void status_command::SetCheck(check::e_check echeck) // "checking" will pop out the text
    {
-      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
+      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
       ASSERT(pStatusBar != NULL);
       ASSERT_KINDOF(status_bar, pStatusBar);
       ASSERT(m_iIndex < m_iCount);
@@ -759,9 +758,9 @@ namespace user
 
    }
 
-   void CStatusCmdUI::SetText(const char * lpszText)
+   void status_command::SetText(const char * lpszText)
    {
-      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_pOther);
+      status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
       ASSERT(pStatusBar != NULL);
       ASSERT_KINDOF(status_bar, pStatusBar);
       ASSERT(m_iIndex < m_iCount);
@@ -770,25 +769,33 @@ namespace user
    }
 
 
-   void status_bar::OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
+   void status_bar::on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler)
    {
-      CStatusCmdUI state(get_app());
-      state.m_pOther = this;
+      status_command state(get_app());
+      state.m_puiOther = this;
       state.m_iCount = (UINT)m_panea.get_count();
       for (state.m_iIndex = 0; state.m_iIndex < state.m_iCount; state.m_iIndex++)
       {
          state.m_id = _GetPanePtr((int32_t) state.m_iIndex)->m_id;
 
          // allow the statusbar itself to have update handlers
-         if (::user::interaction::on_simple_update(&state))
+         ::user::interaction::on_command_probe(&state);
+
+         if (state.m_bRet)
+         {
+
             continue;
 
+         }
+
          // allow target (owner) to handle the remaining updates
-         state.DoUpdate(pTarget, FALSE);
+         state.do_probe(ptarget);
+
       }
 
       // update the dialog controls added to the status bar
-      UpdateDialogControls(pTarget, bDisableIfNoHndler);
+      update_dialog_controls(ptarget);
+
    }
 
 

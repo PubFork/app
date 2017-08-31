@@ -232,21 +232,17 @@ namespace aura
 
 
 
-   bool application::set_main_init_data(::aura::main_init_data * pdata)
+   bool application::process_command(::command::command * pcommand)
    {
 
-      m_pinitmaindata = pdata;
+      m_pcommand = pcommand;
 
-      if(m_pinitmaindata != NULL && is_system())
+      if(m_pcommand != NULL && is_system())
       {
 
-          string strCmdLine          = pdata->m_vssCommandLine;
+         SetCurrentHandles();
 
-          System.m_strCmdLine = strCmdLine;
-
-          SetCurrentHandles();
-
-          __init_thread();
+         __init_thread();
 
       }
 

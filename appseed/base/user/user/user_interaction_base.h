@@ -2,19 +2,16 @@
 
 
 #include "user_window_util.h"
+#include "user_style.h"
 
 
 namespace user
 {
 
    
-   class menu_base_item;
-
-
    class CLASS_DECL_BASE interaction_base :
-      virtual public ::user::primitive,
       virtual public ::user::elemental,
-      virtual public ::user::schema
+      virtual public ::user::style
    {
    public:
 
@@ -51,18 +48,6 @@ namespace user
 
       };
 
-      enum e_simple_command
-      {
-
-         simple_command_load_window_rect,
-         simple_command_update_frame_title,
-         simple_command_set_edit_file,
-         simple_command_layout,
-         simple_command_full_screen
-
-      };
-
-
       enum e_type
       {
 
@@ -87,12 +72,8 @@ namespace user
          adjustOutside = 1
       
       };
-
-      manual_reset_event      m_evNewMessage;
-      spa(::message::base)    m_messagequeue;
-      sp(::thread)            m_pthread;
-
-
+      
+      
       interaction_base();
       interaction_base(::aura::application * papp);
       virtual ~interaction_base();
@@ -149,13 +130,15 @@ namespace user
       //virtual int32_t GetWindowRgn(HRGN hRgn);
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void _on_start_user_message_handler() override;
+//      virtual void _on_start_user_message_handler() override;
 
 
       virtual void UpdateWindow();
       virtual void Invalidate(bool bErase = TRUE);
+
+      virtual bool has_pending_redraw_flags();
 
 
       virtual bool RedrawOptimize(LPRECT lprectOut,LPCRECT lpcrect1,LPCRECT lpcrect2);
@@ -190,8 +173,7 @@ namespace user
 
       void _001BaseWndInterfaceMap();
 
-      virtual void queue_message_handler(signal_details * pobj);
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::base * pbase);
       virtual LRESULT message_handler(LPMESSAGE lpmessage);
       virtual void on_select();
 
@@ -245,7 +227,7 @@ namespace user
       virtual void track_mouse_leave();
 
       // dialog support
-      void UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHndler);
+      virtual void update_dialog_controls(command_target * ptarget);
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL);
       virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL);
       virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL);
@@ -441,8 +423,9 @@ namespace user
 
 
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
-      virtual void pre_translate_message(signal_details * pobj) override;
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE);
+      virtual void route_message_to_descendants(::message::message * pmessage);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
       virtual int32_t get_descendant_level(::user::interaction * pui);
@@ -483,9 +466,7 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam);
 
-//      virtual void message_handler(signal_details * pobj);
-//      virtual LRESULT message_handler(LPMESSAGE lpmessage);
-      virtual void GuieProc(signal_details * pobj);
+      virtual void GuieProc(::message::message * pobj);
 
       virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 
@@ -523,7 +504,8 @@ namespace user
       virtual e_type get_window_type();
 
 
-      virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult);
+      virtual void on_simple_command(::message::simple_command * psimplecommand);
+      virtual void on_command(::user::command * pcommand) override;
 
 
       // Window-Management message handler member functions
@@ -537,19 +519,19 @@ namespace user
 
       virtual sp(place_holder) place(::user::interaction * pui);
 
-      virtual bool _001HasCommandHandler(id id) override;
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags, POINT pt);
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj);
-      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj);
-      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj);
+      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj);
+      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj);
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags);
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags);
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags);
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags);
 
@@ -560,9 +542,9 @@ namespace user
       virtual bool WfiIsZoomed();
       virtual bool WfiIsIconic();
 
-      virtual bool Wfi(EAppearance eapperance = AppearanceCurrent);
+      virtual bool Wfi(e_appearance eapperance = appearance_current);
 
-      virtual bool WfiDock(EAppearance eapperance);
+      virtual bool WfiDock(e_appearance eapperance);
       virtual bool WfiClose();
       virtual bool WfiRestore(bool bForceNormal = false);
       virtual bool WfiMinimize();
@@ -572,11 +554,11 @@ namespace user
       virtual bool WfiDown();
       virtual bool WfiNotifyIcon();
 
-      virtual EAppearance get_appearance();
-      virtual EAppearance get_appearance_before();
+      virtual e_appearance get_appearance();
+      virtual e_appearance get_appearance_before();
 
-      virtual bool set_appearance(EAppearance eappearance);
-      virtual bool set_appearance_before(EAppearance eappearance);
+      virtual bool set_appearance(e_appearance eappearance);
+      virtual bool set_appearance_before(e_appearance eappearance);
 
 
       virtual void show_keyboard(bool bShow = true);
@@ -590,7 +572,7 @@ namespace user
       virtual bool is_composite() override;
 
 
-      //virtual void _user_message_handler(signal_details * pobj);
+      //virtual void _user_message_handler(::message::message * pobj);
 
       //virtual PFN_DISPATCH_MESSAGE_HANDLER _calc_user_message_handler();
 

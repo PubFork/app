@@ -79,14 +79,11 @@ namespace user
 
       bool ModifyIcon(sp(::visual::icon) picon, bool bForce = false);
 
-      #ifdef WINDOWSEX
-      using ::user::interaction::create;
-      #endif
-      bool create(UINT id, notify_icon_listener * plistener, sp(::visual::icon) picon);
+      virtual bool create_notify_icon(UINT id, notify_icon_listener * plistener, ::visual::icon * picon);
 
       DECL_GEN_SIGNAL(_001OnNotifyIconMessage);
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       virtual void __close();
       virtual void __quit();

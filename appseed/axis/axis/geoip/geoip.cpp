@@ -1,4 +1,5 @@
-//#include"framework.h"
+#include "framework.h"
+#include <stdio.h>
 //#include"net/net_sockets.h"
 //#include"geoip.h"
 
@@ -10,7 +11,7 @@
 
 //#include<sys/stat.h>
 
-//static geoipv6_t IPV6_NULL;
+static geoipv6_t IPV6_NULL;
 
 
 #define GEOIPDATADIR "/core/geoip"

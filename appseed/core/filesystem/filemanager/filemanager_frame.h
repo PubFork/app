@@ -21,7 +21,7 @@ namespace filemanager
       virtual bool on_create_bars();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       DECL_GEN_SIGNAL(_001OnSetText);

@@ -23,7 +23,7 @@ namespace android
       static const UINT                         m_nMsgDragList;
       //int32_t                                   m_nModalResult;      // for return values from interaction_impl::RunModalLoop
 
-      ::user::EAppearance                       m_eapperanceLayout;
+      ::user::e_appearance                       m_eapperanceLayout;
       bool                                      m_bEnabled;
       ::thread *                                m_pthreadDraw;
 
@@ -45,7 +45,7 @@ namespace android
 
       //static_function const MSG* GetCurrentMessage();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       bool operator==(const ::user::interaction_impl& wnd) const;
       bool operator!=(const ::user::interaction_impl& wnd) const;
@@ -58,7 +58,7 @@ namespace android
       //virtual ::user::interaction * get_owner();
       //virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       void _002OnDraw(::draw2d::dib * pdib);
 
@@ -547,8 +547,8 @@ namespace android
          ::user::interaction * pActivateWnd,::user::interaction * pDeactivateWnd);
 
       // menu loop notification messages
-      void OnEnterMenuLoop(bool bIsTrackPopupMenu);
-      void OnExitMenuLoop(bool bIsTrackPopupMenu);
+      void OnEnterMenuLoop(bool bIstrack_popup_menu);
+      void OnExitMenuLoop(bool bIstrack_popup_menu);
 
       // Win4 messages
       void OnStyleChanged(int32_t nStyleType,LPSTYLESTRUCT lpStyleStruct);
@@ -570,12 +570,12 @@ namespace android
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(signal_details * pobj);
-      //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual void message_handler(::message::base * pbase);
+      
 
       // for handling default processing
       LRESULT Default();
@@ -600,9 +600,9 @@ namespace android
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       static_function ::user::interaction * GetDescendantWindow(::user::interaction * hWnd, id id);
-      void SendMessageToDescendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0, lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
       static_function bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
@@ -657,7 +657,7 @@ namespace android
       virtual oswindow UnsubclassWindow();
 //      virtual void register_drop_target();
 
-      //virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::signal_details * pobj);
+      //virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::message::message * pobj);
       virtual bool SendChildNotifyLastMsg(LRESULT* pResult);
 
       virtual oswindow get_handle() const;

@@ -4,11 +4,12 @@
 html_document::html_document(::aura::application * papp) :
    ::object(papp),
    ::data::data_container_base(papp),
+   ::user::controller(papp),
    ::user::document(papp)
 {
 
-
 }
+
 
 bool html_document::on_new_document()
 {
@@ -59,7 +60,7 @@ void html_document::dump(dump_context & dumpcontext) const
 }
 */
 
-void html_document::data_on_after_change(signal_details * pobj)
+void html_document::data_on_after_change(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
 }
@@ -187,20 +188,27 @@ void html_document::soft_reload()
 }
 
 
-bool html_document::on_simple_update(cmd_ui * pcmdui)
+void html_document::on_command_probe(::user::command * pcommand)
 {
-   if(pcmdui->m_id == "viewindefaultbrowser")
+
+   if(pcommand->m_id == "viewindefaultbrowser")
    {
-      pcmdui->Enable();
-      return true;
+      
+      pcommand->Enable();
+
+      pcommand->m_bRet = true;
+
+      return;
+
    }
-   return false;
+
 }
 
-bool html_document::on_simple_action(id id)
+
+void html_document::on_command(::user::command * pcommand)
 {
 
-   if(id == "viewindefaultbrowser")
+   if(pcommand->m_id == "viewindefaultbrowser")
    {
 
       property_set propertyset;
@@ -215,11 +223,11 @@ bool html_document::on_simple_action(id id)
 
 #endif
 
-      return true;
+      pcommand->m_bRet = true;
+
+      return;
 
    }
-
-   return false;
 
 }
 

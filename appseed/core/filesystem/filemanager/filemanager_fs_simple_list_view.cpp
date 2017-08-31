@@ -1,5 +1,5 @@
-//#include "framework.h"
-//#include "framework.h"
+#include "framework.h"
+#include "framework.h"
 
 
 
@@ -44,15 +44,15 @@ namespace filemanager
          {
          }
 
-         void list_view::install_message_handling(::message::dispatch * pinterface)
+         void list_view::install_message_routing(::message::sender * pinterface)
          {
-            simple_list_view::install_message_handling(pinterface);
-            IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list_view::_001OnLButtonDblClk);
-//            //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &list_view::_001OnTimer);
-            IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &list_view::_001OnSize);
-            IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &list_view::_001OnContextMenu);
-            IGUI_WIN_MSG_LINK(WM_ERASEBKGND, pinterface, this, &list_view::_001OnEraseBkgnd);
-            IGUI_WIN_MSG_LINK(WM_USER + 1217    , pinterface, this, &list_view::_001OnFillTaskResponse);
+            simple_list_view::install_message_routing(pinterface);
+            IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &list_view::_001OnLButtonDblClk);
+//            //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &list_view::_001OnTimer);
+            IGUI_MSG_LINK(WM_SIZE, pinterface, this, &list_view::_001OnSize);
+            IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &list_view::_001OnContextMenu);
+            IGUI_MSG_LINK(WM_ERASEBKGND, pinterface, this, &list_view::_001OnEraseBkgnd);
+            IGUI_MSG_LINK(WM_USER + 1217    , pinterface, this, &list_view::_001OnFillTaskResponse);
 
          }
 
@@ -201,7 +201,7 @@ namespace filemanager
 
          }
 
-         void list_view::_001OnLButtonDblClk(signal_details * pobj)
+         void list_view::_001OnLButtonDblClk(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse, pmouse, pobj);
                index iItem;
@@ -500,7 +500,7 @@ namespace filemanager
             m_iDisplayItemCount  = -1;
          }
 
-         void list_view::_001OnSize(signal_details * pobj)
+         void list_view::_001OnSize(::message::message * pobj)
          {
             UNREFERENCED_PARAMETER(pobj);
             //m_buildhelper.m_iDisplayItemCount = _001GetDisplayItemCount();
@@ -527,7 +527,7 @@ namespace filemanager
          {
          }*/
 
-         void list_view::_001OnFillTaskResponse(signal_details * pobj)
+         void list_view::_001OnFillTaskResponse(::message::message * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
                m_bKickActive = true;
@@ -584,7 +584,7 @@ namespace filemanager
 
          }
 
-         void list_view::_001OnContextMenu(signal_details * pobj)
+         void list_view::_001OnContextMenu(::message::message * pobj)
          {
 
             SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
@@ -600,7 +600,7 @@ namespace filemanager
             SimpleMenu* pPopup = (SimpleMenu *) menu.GetSubMenu(0);
             ASSERT(pPopup != NULL);
             sp(::user::frame_window) pframe = GetParentFrame()->GetParentFrame();
-            pPopup->TrackPopupMenu(point.x, point.y,
+            pPopup->track_popup_menu(point.x, point.y,
             (::window_sp) pframe);
             }
             }
@@ -612,7 +612,7 @@ namespace filemanager
             ::user::menu* pPopup = menu.GetSubMenu(0);
             ASSERT(pPopup != NULL);
             sp(::user::frame_window) pframe = GetParentFrame()->GetParentFrame();
-            pPopup->TrackPopupMenu(
+            pPopup->track_popup_menu(
             point.x, point.y,
             (::window_sp) pframe);
             }
@@ -739,7 +739,7 @@ namespace filemanager
                m_etype == ItemTypeArtist;
          }
 
-         void list_view::_001OnEraseBkgnd(signal_details * pobj)
+         void list_view::_001OnEraseBkgnd(::message::message * pobj)
          {
             SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
                perasebkgnd->m_bRet = true;

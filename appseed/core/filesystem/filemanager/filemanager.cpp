@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 namespace core
 {
@@ -13,7 +13,7 @@ namespace core
          return Session.m_pfilemanager->do_prompt_file_name(varFile, nIDSTitle, lFlags, bOpenFileDialog, ptemplate, pdocument);
       }
       ENSURE(m_pdocmanager != NULL);
-      /*      return document_manager().do_prompt_file_name(fileName, nIDSTitle, lFlags,
+      /*      return document_manager()->do_prompt_file_name(fileName, nIDSTitle, lFlags,
       bOpenFileDialog, ptemplate);*/
       return FALSE;
    }

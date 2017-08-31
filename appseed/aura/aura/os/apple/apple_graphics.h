@@ -5,17 +5,6 @@
 //  Created by Camilo Sasuke Tsumanuma on 21/07/17.
 //
 //
-
-#pragma once
-
-
-#ifdef __OBJC__
-
-#import "ios_m.h"
-
-#endif
-
-
 #pragma once
 
 

@@ -19,6 +19,14 @@ namespace ios
    {
    }
 
+   
+   string os::get_command_dup()
+   {
+      
+      return get_command_line_dup();
+      
+   }
+
 
    bool os::shutdown(bool bIfPowerOff)
    {

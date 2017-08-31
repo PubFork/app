@@ -33,20 +33,20 @@ namespace macos
    }
 
 
-   void message_queue::message_handler(signal_details * pobj)
+   void message_queue::message_handler(::message::base * pbase)
    {
 
-      message_queue_message_handler(pobj);
+      message_queue_message_handler(pbase);
 
-      if(pobj->m_bRet)
+      if(pbase->m_bRet)
          return;
 
-      return ::user::interaction::message_handler(pobj);
+      ::user::interaction::message_handler(pbase);
 
    }
 
 
-   void message_queue::message_queue_message_handler(signal_details * pobj)
+   void message_queue::message_queue_message_handler(::message::message * pobj)
    {
 
       if(m_plistener != NULL)

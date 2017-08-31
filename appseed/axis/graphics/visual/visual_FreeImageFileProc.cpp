@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 #define _WINDOWS_
 
 #include <stdio.h>

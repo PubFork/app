@@ -10,8 +10,8 @@ simple_scroll_bar::simple_scroll_bar(::aura::application * papp) :
    ::user::interaction(papp),
    m_penDraw(allocer()),
    m_brushDraw(allocer()),
-   m_rgnA(allocer()), // região da primeira seta
-   m_rgnB(allocer()) // região da segunda seta
+   m_rgnA(allocer()), // regiï¿½o da primeira seta
+   m_rgnB(allocer()) // regiï¿½o da segunda seta
 {
    //m_brushNull->CreateStockObject(NULL_BRUSH);
    m_flagNonClient.unsignalize(non_client_background);
@@ -40,16 +40,16 @@ simple_scroll_bar::~simple_scroll_bar()
 }
 
 
-void simple_scroll_bar::install_message_handling(::message::dispatch * pinterface)
+void simple_scroll_bar::install_message_routing(::message::sender * pinterface)
 {
-   ::user::control::install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_scroll_bar::_001OnMouseMove);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &simple_scroll_bar::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &simple_scroll_bar::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_HSCROLL, pinterface, this, &simple_scroll_bar::_001OnHScroll);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_scroll_bar::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_scroll_bar::_001OnShowWindow);
-   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &simple_scroll_bar::_001OnDestroy);
+   ::user::control::install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_scroll_bar::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &simple_scroll_bar::_001OnLButtonDown);
+   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &simple_scroll_bar::_001OnLButtonUp);
+   IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &simple_scroll_bar::_001OnHScroll);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_scroll_bar::_001OnCreate);
+   IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &simple_scroll_bar::_001OnShowWindow);
+   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_scroll_bar::_001OnDestroy);
 
 }
 
@@ -76,7 +76,7 @@ bool simple_scroll_bar::create_window(e_orientation eorientation,uint32_t dwStyl
 }
 
 
-void simple_scroll_bar::_001OnMouseMove(signal_details * pobj)
+void simple_scroll_bar::_001OnMouseMove(::message::message * pobj)
 {
 
    SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -132,7 +132,7 @@ bool simple_scroll_bar::scrollbar_action(::user::e_element eelement, point pt)
 
 }
 
-void simple_scroll_bar::_001OnLButtonDown(signal_details * pobj)
+void simple_scroll_bar::_001OnLButtonDown(::message::message * pobj)
 {
 
    SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -182,7 +182,7 @@ void simple_scroll_bar::_001OnLButtonDown(signal_details * pobj)
 
 }
 
-void simple_scroll_bar::_001OnLButtonUp(signal_details * pobj)
+void simple_scroll_bar::_001OnLButtonUp(::message::message * pobj)
 {
 
    SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -473,7 +473,7 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
 }
 
 
-void simple_scroll_bar::_001OnHScroll(signal_details * pobj)
+void simple_scroll_bar::_001OnHScroll(::message::message * pobj)
 {
    SCAST_PTR(::message::scroll, pscroll, pobj);
       pscroll->m_bRet = false;
@@ -815,24 +815,24 @@ pParentWnd->SendMessage(WM_VSCROLL, MAKEWPARAM(SB_LINEDOWN, m_scrollinfo.nPos), 
 //}
 
 
-void simple_scroll_bar::_001OnCreate(signal_details * pobj)
+void simple_scroll_bar::_001OnCreate(::message::message * pobj)
 {
    
    
    SCAST_PTR(::message::create, pcreate, pobj);
 
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = GetTopLevel();
+      m_puserstyle = GetTopLevel();
 
    }
 
-   if (m_puserschemaSchema == NULL)
+   if (m_puserstyle == NULL)
    {
 
-      m_puserschemaSchema = Application.userschema();
+      m_puserstyle = Application.userstyle();
 
    }
 
@@ -850,14 +850,14 @@ void simple_scroll_bar::OnDisplayChange(int32_t iBitsPerPixel, size sizeScreen)
    UNREFERENCED_PARAMETER(sizeScreen);
 }
 
-void simple_scroll_bar::pre_translate_message(signal_details * pobj)
+void simple_scroll_bar::pre_translate_message(::message::message * pobj)
 {
 
    SCAST_PTR(::message::base, pbase, pobj);
 
    if(pbase->m_pwnd == this)
    {
-      switch(pbase->m_uiMessage)
+      switch(pbase->m_id)
       {
       case WM_DISPLAYCHANGE:
          OnDisplayChange((int32_t) pbase->m_wparam, size(LOWORD(pbase->m_lparam), HIWORD(pbase->m_lparam)));
@@ -994,10 +994,10 @@ public:
 void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 {
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawSimpleScrollBar(pgraphics, this))
+      if (m_puserstyle->_001DrawSimpleScrollBar(pgraphics, this))
       {
 
          return;
@@ -1007,10 +1007,10 @@ void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
    }
 
 
-   if (m_puserschemaSchema != NULL)
+   if (m_puserstyle != NULL)
    {
 
-      if (m_puserschemaSchema->_001DrawScrollBar(pgraphics, this))
+      if (m_puserstyle->_001DrawScrollBar(pgraphics, this))
       {
 
          return;
@@ -1029,7 +1029,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    COLORREF crBackground = 0;
 
-   get_color(crBackground, ::user::color_background);
+   style_color(crBackground, ::user::color_background);
 
    rect rectClient;
 
@@ -1279,7 +1279,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 }
 
 
-void simple_scroll_bar::_001OnShowWindow(signal_details * pobj)
+void simple_scroll_bar::_001OnShowWindow(::message::message * pobj)
 {
    SCAST_PTR(::message::show_window, pshowwindow, pobj);
       pshowwindow->m_bRet = false;
@@ -1287,7 +1287,7 @@ void simple_scroll_bar::_001OnShowWindow(signal_details * pobj)
    // xxx   TwiOnShowWindow(bShow, nStatus);
 }
 
-void simple_scroll_bar::_001OnDestroy(signal_details * pobj)
+void simple_scroll_bar::_001OnDestroy(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
 }

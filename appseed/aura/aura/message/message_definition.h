@@ -10,18 +10,18 @@ namespace message
    enum e_message
    {
 
-      message_null = WM_NULL,
-      message_create = USER_MESSAGE,
+      message_null,
+      message_create = 32768,
       message_drag_and_drop,
-      message_event = WM_APP + 1000,
-      message_property = WM_APP + 1001,
-      message_pos_create = WM_USER + 193,
+      message_event = 65536,
+      message_property,
+      message_pos_create,
       message_frame_initial_update
 
    };
 
 
-   CLASS_DECL_AURA UINT translate_to_os_message(UINT uiMessage);
+   CLASS_DECL_AURA UINT translate_to_os_message(e_message emessage);
 
 
    class base;
@@ -54,12 +54,13 @@ namespace message
       PrototypeCommand,
       PrototypeWindowPos,
       PrototypeNcCalcSize,
-      PrototypeOnDraw
+      PrototypeOnDraw,
+      PrototypeSimpleCommand
 
    };
 
 
-   class ::signal * CreateSignal();
+//   class ::message::sender * CreateSignal();
 
 
 } // namespace message

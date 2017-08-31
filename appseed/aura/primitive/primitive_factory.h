@@ -328,7 +328,6 @@ public:
    void default_cloneable(const type * info,int32_t iCount,bool bOverwrite = true,bool bAligned = false);
 
 
-   using ::object::create;
    virtual object * create(::aura::application *  papp, ::type * ptype);
    
    virtual object * base_clone(object * pobject);

@@ -27,6 +27,8 @@
 		9A331F061D4BE26C00255105 /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331F051D4BE26C00255105 /* libbase.dylib */; };
 		9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A574D2B16AAB99E000CC4EF /* framework.cpp */; };
 		9A57509F16AAB9A1000CC4EF /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A574D2C16AAB99E000CC4EF /* framework.h */; };
+		9A920FC01F3BF61C00CD9D94 /* sphere_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */; };
+		9A920FC11F3BF61C00CD9D94 /* sphere_main_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A920FBF1F3BF61C00CD9D94 /* sphere_main_frame.h */; };
 		9A986D721D226C6C001F4C04 /* _sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF88C11B722B5C00150CC2 /* _sphere.cpp */; };
 		9ACABF2A17BD0516004C3F85 /* asphere.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ACABEAE17BD0515004C3F85 /* asphere.h */; };
 		9ACABF2C17BD0516004C3F85 /* asphere_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ACABEB017BD0515004C3F85 /* asphere_application.h */; };
@@ -147,6 +149,8 @@
 		9A574B9816AAB906000CC4EF /* libsphere.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsphere.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574D2B16AAB99E000CC4EF /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A574D2C16AAB99E000CC4EF /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
+		9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sphere_main_frame.cpp; sourceTree = "<group>"; };
+		9A920FBF1F3BF61C00CD9D94 /* sphere_main_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere_main_frame.h; sourceTree = "<group>"; };
 		9ACABEAE17BD0515004C3F85 /* asphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asphere.h; sourceTree = "<group>"; };
 		9ACABEB017BD0515004C3F85 /* asphere_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asphere_application.h; sourceTree = "<group>"; };
 		9ACABEB317BD0515004C3F85 /* calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calculator.h; sourceTree = "<group>"; };
@@ -365,6 +369,8 @@
 		9ACABF0D17BD0516004C3F85 /* sphere */ = {
 			isa = PBXGroup;
 			children = (
+				9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */,
+				9A920FBF1F3BF61C00CD9D94 /* sphere_main_frame.h */,
 				9ACABF0E17BD0516004C3F85 /* sphere.h */,
 				9ACABF1017BD0516004C3F85 /* sphere_application.h */,
 				9ACABF1217BD0516004C3F85 /* sphere_library.h */,
@@ -430,6 +436,7 @@
 				9ACABF5F17BD0516004C3F85 /* userstack_application.h in Headers */,
 				9ACABF6117BD0516004C3F85 /* userstack_document.h in Headers */,
 				07DA47E61B71F03B006F27E6 /* console_prompt.h in Headers */,
+				9A920FC11F3BF61C00CD9D94 /* sphere_main_frame.h in Headers */,
 				9ACABF6317BD0516004C3F85 /* userstack_form_callback.h in Headers */,
 				9ACABF6517BD0516004C3F85 /* userstack_frame.h in Headers */,
 				9ACABF6717BD0516004C3F85 /* userstack_pane_view.h in Headers */,
@@ -593,6 +600,7 @@
 			files = (
 				9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */,
 				07AF88C21B722B5C00150CC2 /* _sphere.cpp in Sources */,
+				9A920FC01F3BF61C00CD9D94 /* sphere_main_frame.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

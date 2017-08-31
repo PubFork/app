@@ -14,7 +14,7 @@ namespace user
 
 
          class CLASS_DECL_CORE DockManager:
-            virtual public signalizable
+            virtual public ::message::receiver
          {
          public:
 
@@ -26,7 +26,7 @@ namespace user
             point                      m_ptWindowOrigin;
             bool                       m_bDocking;
             UINT                       m_uiSWPFlags;
-            ::user::EAppearance        m_eappearanceOrigin;
+            ::user::e_appearance        m_eappearanceOrigin;
             size                       m_sizeOrigin;
 
 
@@ -56,7 +56,9 @@ namespace user
             bool relay_event(MESSAGE * lpMsg);
             bool update(WorkSet * pwf);
 
-            void message_handler(sp(::user::interaction) pwnd,signal_details * pobj);
+            void message_handler(::user::interaction * pui, ::message::base * pbase);
+
+            
          };
 
 

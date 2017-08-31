@@ -1625,7 +1625,7 @@ namespace user
 
       //         //int i = 20;
 
-      //         //while (get_run_thread() && i >= 0)
+      //         //while (thread_get_run() && i >= 0)
       //         //{
 
       //         //   Sleep(500);
@@ -1910,15 +1910,23 @@ namespace user
 
             m_bStarted = true;
 
-            m_threadaGetImage = ::fork_proc(get_app(), [&]()
+            //m_threadaGetImage = ::fork_proc(get_app(), [&]()
+            //{
+
+            //   ::multithreading::set_priority(::multithreading::priority_highest);
+
+            //   run();
+
+            //});
+
+            m_threadaGetImage.add(::fork(get_app(), [&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
 
                run();
 
-            });
-
+            }));
 
          }
 
@@ -1957,7 +1965,12 @@ namespace user
 
                sl.unlock();
 
-               m_evKey.wait();
+               if (!m_evKey.wait(millis(500)).succeeded())
+               {
+
+                  continue;
+
+               }
 
             }
             else
@@ -2058,7 +2071,7 @@ namespace user
 
             }
 
-            if (Application.file().exists(strPath) || Application.dir().is(strPath))
+            //if (Application.file().exists(strPath) || Application.dir().is(strPath))
             {
 
                image_key_store * pstore = new image_key_store(imagekey);
@@ -2078,12 +2091,12 @@ namespace user
                iImage = get_foo_image(NULL, oswindow, imagekey, imagekey.m_cr);
 
             }
-            else
-            {
+            //else
+            //{
 
-               iImage = get_image_foo(oswindow, "", eattribute, eicon, crBk);
+            //   iImage = get_image_foo(oswindow, "", eattribute, eicon, crBk);
 
-            }
+            //}
 
             synch_lock sl(m_pmutex);
 

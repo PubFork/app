@@ -26,7 +26,7 @@ namespace user
 
       virtual bool create_window(const RECT & rect, ::user::place_holder_container * pcontainer,id id);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       virtual bool can_merge(::user::interaction * pui);
       virtual bool merge(::user::interaction * pui);
@@ -48,7 +48,7 @@ namespace user
 
       virtual bool _001IsBackgroundBypass();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
 
    };

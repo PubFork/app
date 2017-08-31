@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace console
@@ -20,7 +20,7 @@ namespace console
    bool application::initialize_application()
    {
 
-      IGUI_WIN_MSG_LINK(WM_APP + 3243,this,this,&application::_001OnImpact);
+      IGUI_MSG_LINK(WM_APP + 3243,this,this,&application::_001OnImpact);
 
 
       System.factory().creatable_small < console::prompt_document >();
@@ -42,14 +42,14 @@ namespace console
    }
 
 
-   void application::pre_translate_message(::signal_details * pobj)
+   void application::pre_translate_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
 
       if(pbase != NULL)
       {
-         if(pbase->m_uiMessage == WM_KEYDOWN)
+         if(pbase->m_id == WM_KEYDOWN)
          {
 
             SCAST_PTR(::message::key,pkey,pobj);
@@ -57,7 +57,12 @@ namespace console
             if(pkey->m_ekey == ::user::key_semicolon2 && Session.is_key_pressed(::user::key_shift))
             {
 
-               console_prompt().impact().keyboard_set_focus();
+               if (m_spprompt.is_set())
+               {
+
+                  console_prompt().impact().keyboard_set_focus();
+
+               }
 
             }
          }
@@ -69,7 +74,7 @@ namespace console
    }
 
 
-   void application::_001OnImpact(::signal_details * pobj)
+   void application::_001OnImpact(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);

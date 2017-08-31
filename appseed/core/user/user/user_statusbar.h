@@ -151,7 +151,7 @@ namespace user
       virtual void dump(dump_context & dumpcontext) const;
       void EnableDocking(uint32_t dwDockStyle);
    #endif
-      virtual void OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler);
+      virtual void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) override;
 
 
       __STATUSPANE* _GetPanePtr(int32_t nIndex);
@@ -168,7 +168,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnSetMinHeight);
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
    };

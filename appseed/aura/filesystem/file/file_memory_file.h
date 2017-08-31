@@ -34,7 +34,6 @@ public:
    virtual bool IsValid() const;
    memory_size_t remove_begin(void * lpBuf, memory_size_t uiCount);
    void load_string(string & str);
-   using ::object::create;
    void create(memory_size_t iSize = -1);
    file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom);
    file_position_t get_position() const;

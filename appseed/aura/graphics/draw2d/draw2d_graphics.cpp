@@ -1,10 +1,11 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "draw2d.h"
 //#include <math.h>
 
 
 #include "nanosvg.h"
 
+CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba = NULL;
 
 namespace draw2d
 {
@@ -30,6 +31,10 @@ namespace draw2d
       object(papp)
    {
 
+      //if (g_pdiba == NULL)
+      //{
+      //   g_pdiba = new spa(::draw2d::dib);
+      //}
       m_puistrcontext         = NULL;
       m_pdrawcontext          = NULL;
       m_pdibAlphaBlend        = NULL;
@@ -1286,6 +1291,8 @@ namespace draw2d
 
    bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
+   
+      // return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop);
 
       if (m_pdibAlphaBlend != NULL)
       {
@@ -1317,6 +1324,9 @@ namespace draw2d
             {
 
                ::draw2d::dib_sp dib1(allocer());
+//#ifdef METROWIN
+//               g_pdiba->add(dib1);
+//#endif
 
                dib1->create(rectBlt.size());
 
@@ -1566,30 +1576,46 @@ namespace draw2d
       if (m_pdibAlphaBlend != NULL)
       {
 
+         single_lock sl(m_pmutex);
+
+         if (nCount < 0)
+         {
+
+            return false;
+
+         }
+
          // "Reference" implementation for TextOutAlphaBlend
 
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
-         rect rectText(point((int64_t)x, (int64_t)y), ::size(GetTextExtent(lpszString, nCount)));
+         ::size size = ::size(GetTextExtent(lpszString, nCount));
+
+         //size.cx = size.cx * 110 / 100;
+
+         //size.cy = size.cy * 110 / 100;
+
+         rect rectText(point((int64_t)x, (int64_t)y), size);
 
          if (rectIntersect.intersect(rectIntersect, rectText))
          {
 
             ::draw2d::dib_sp dib1(allocer());
+//#ifdef METROWIN
+//            g_pdiba->add(dib1);
+//#endif
 
             dib1->create(rectText.size());
-
-            dib1->Fill(0, 0, 0, 0);
 
             dib1->get_graphics()->SelectObject(get_current_font());
 
             dib1->get_graphics()->SelectObject(get_current_brush());
 
+            dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
             dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
 
             dib1->blend(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
-
-            set_alpha_mode(::draw2d::alpha_mode_blend);
 
             BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
 
@@ -2965,47 +2991,117 @@ namespace draw2d
       throw interface_only_exception(get_app());
    }
 
+   
    void graphics::DPtoLP(LPSIZE lpSize) const
    {
+
       UNREFERENCED_PARAMETER(lpSize);
+
       throw interface_only_exception(get_app());
+
    }
+
 
    ::count graphics::GetEachCharTextExtent(array < size > & sizea, const string & str, strsize iStart, strsize iCount)
    {
 
+      sizea.remove_all();
+
+      if (str.length() <= 0)
+      {
+
+         return 0;
+
+      }
+
+      if (iCount == 0)
+      {
+
+         return 0;
+
+      }
+
+      if (iStart < 0)
+      {
+
+         iStart = 0;
+
+      }
+
+      if (iStart > str.get_length())
+      {
+
+         return 0;
+
+      }
+
       if (iCount < 0)
       {
 
-         iCount += str.get_length() - iStart + 1;
+         iCount = str.get_length() - iStart;
+
+      }
+
+      if (iStart + iCount > str.get_length())
+      {
+
+         iCount = str.get_length() - iStart;
+
+         if (iCount <= 0)
+         {
+
+            return 0;
+
+         }
 
       }
 
       iCount++;
 
-      sizea.remove_all();
-      strsize_array iaLen;
       strsize iRange = 0;
-      strsize i = 0;
+
+      strsize iAsciiCharCount = 0;
+
       strsize iLen;
+
       const char * pszStart = str;
+
       const char * psz = pszStart;
+
       while (*psz && iRange < iStart + iCount)
       {
+
          const char * pszNext = ::str::utf8_inc(psz);
+
+         if (pszNext == NULL)
+         {
+
+            break;
+
+         }
+
+         iLen = pszNext - psz;
+
+         iAsciiCharCount += iLen;
+
          if (iRange >= iStart)
          {
-            sizea.add(GetTextExtent(str, str.get_length(), iRange));
+            
+            sizea.add(GetTextExtent(str, str.get_length(), iAsciiCharCount));
+
          }
-         if (pszNext == NULL)
-            break;
-         iLen = pszNext - psz;
+
          iRange++;
-         i += iLen;
-         iaLen.add(i);
+
          if (*pszNext == '\0')
+         {
+
             break;
+
+         }
+
          psz = pszNext;
+
       }
 
       return sizea.get_size();

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -390,7 +390,7 @@ namespace install
    {
 
 
-      while (get_run_thread())
+      while (thread_get_run())
       {
 
          m_pplugin->thread_start_ca2_on_idle();
@@ -1012,7 +1012,7 @@ namespace install
 
       if(m_bLogin)
       {
-         //::OutputDebugString("m_bLogin");
+         //::output_debug_string("m_bLogin");
          //get_login().draw(pgraphics);
       }
       else if (System.install().is_installing_ca2())
@@ -1052,7 +1052,7 @@ namespace install
       }
       else
       {
-         //::OutputDebugString("Neither");
+         //::output_debug_string("Neither");
       }
 
 #ifdef WINDOWS
@@ -1086,14 +1086,14 @@ namespace install
       else
       {
 
-         //::OutputDebugString("m_bLogin || !bInstallingCa2");
+         //::output_debug_string("m_bLogin || !bInstallingCa2");
       }
 
 
    }
 
 
-   void plugin::_001OnLButtonUp(signal_details * pobj)
+   void plugin::_001OnLButtonUp(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -1105,20 +1105,20 @@ namespace install
 
 
 
-   void plugin::message_handler(signal_details * pobj)
+   void plugin::message_handler(::message::base * pbase)
    {
 
       if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
       //if(!m_bLogin && (m_bLogged || m_bHasCred) && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
       {
 
-         ::hotplugin::plugin::message_handler(pobj);
+         ::hotplugin::plugin::message_handler(pbase);
 
       }
       else
       {
 
-         ::simple_ui::interaction::message_handler(pobj);
+         ::simple_ui::interaction::message_handler(pbase);
 
       }
 

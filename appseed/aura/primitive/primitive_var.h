@@ -650,6 +650,8 @@ public:
    void null();
 
    ::file::path get_file_path() const;
+   
+   void _001Add(const stringa & stra);
 
 };
 
@@ -971,4 +973,6 @@ inline void var::set_string(string && str)
       m_str = ::move(str);
    }
 }
+
+
 

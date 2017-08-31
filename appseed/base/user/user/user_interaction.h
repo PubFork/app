@@ -59,6 +59,33 @@ namespace user
          updown_up,
          updown_down,
       };
+      
+      
+      class draw_select
+      {
+      public:
+         
+         interaction *           m_pui;
+         ::draw2d::graphics *    m_pgraphics;
+         
+         draw_select(interaction * pui, ::draw2d::graphics * pgraphics) :
+            m_pui(pui),
+         m_pgraphics(pgraphics)
+         {
+            
+            m_pui->on_select_user_style();
+            
+            m_pui->select(pgraphics);
+
+         }
+         
+         ~draw_select()
+         {
+            m_pui->select(NULL);
+         }
+         
+      };
+      
 
       flags < e_non_client >              m_flagNonClient;
 
@@ -103,8 +130,8 @@ namespace user
 
       ::user::interaction *               m_pparent;
 
-      EAppearance                         m_eappearance;
-      EAppearance                         m_eappearanceBefore;
+      e_appearance                         m_eappearance;
+      e_appearance                         m_eappearanceBefore;
       sp(interaction_impl_base)           m_pimpl;
 
 
@@ -121,7 +148,7 @@ namespace user
       sp(::axis::session)                 m_psession;
       bool                                m_bMessageWindow;
 
-      bool                                m_bCreated;
+      //bool                                m_bCreated;
 
       string                              m_strWindowText;
 
@@ -132,6 +159,12 @@ namespace user
       int32_t                             m_nModalResult; // for return values from ::interaction_impl::RunModalLoop
 
       sp(interaction)                     m_ptooltip;
+      
+      /// The menu_item this user_interaction (window)
+      /// represents (this window is a button [a menu button],
+      /// this window is a checkbox [a menu checkbox],
+      /// this window is a player/view [a menu picture/video/chat?!])
+      sp(menu_item)                       m_pmenuitem;
 
 
 
@@ -150,6 +183,7 @@ namespace user
       virtual bool check_need_layout();
       virtual void clear_need_layout();
       virtual void set_need_layout(bool bAscendants = true);
+      virtual void set_need_redraw(bool bAscendants = true);
       virtual void layout();
 
       virtual bool defer_check_translation();
@@ -165,7 +199,8 @@ namespace user
       virtual bool defer_check_zorder();
       virtual bool check_need_zorder();
       virtual void clear_need_zorder();
-      virtual void zorder();
+      virtual void do_zorder();
+      virtual void zorder(int ZOrder, int nFlags);
 
       virtual bool create_message_queue(const char * pszName) override;
 
@@ -337,7 +372,7 @@ namespace user
       virtual void track_mouse_leave() override;
 
       // dialog support
-      void UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHndler);
+      virtual void update_dialog_controls(command_target * ptarget);
       virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
       virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
       virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
@@ -365,7 +400,7 @@ namespace user
       virtual void _001WindowMaximize() override;
       virtual void _001WindowFullScreen() override;
       virtual void _001WindowRestore() override;
-      virtual void _001WindowDock(::user::EAppearance eappearance);
+      virtual void _001WindowDock(::user::e_appearance eappearance);
 
       using ::user::interaction_base::GetWindowRect;
       virtual bool GetClientRect(LPRECT lprect) override;
@@ -418,6 +453,12 @@ namespace user
       virtual bool subclass_window(oswindow posdata) override;
       virtual oswindow unsubclass_window() override;
 
+
+      /// if you (developer) don't know how to create a control,
+      /// you should be able (control developer pay attention now),
+      /// to build a default control with a default constructed
+      /// ::user::control_descriptor.
+      virtual bool create_control(class ::user::control_descriptor * pdescriptor);
 
       virtual bool create_window(const RECT & rect, ::user::interaction *pparent,id id) override;
       virtual bool create_window(const char * lpszClassName, const char * lpszWindowName,uint32_t dwStyle,const RECT & rect,::user::interaction * pParentWnd,id id, ::create * pcreate = NULL) override;
@@ -478,7 +519,7 @@ namespace user
 
       virtual bool post_message(UINT message,WPARAM wParam = 0,lparam lParam = 0) override;
       virtual bool post_object(UINT message, WPARAM wParam, lparam lParam);
-      virtual bool post_simple_command(e_simple_command ecommand,lparam lParam = 0) override;
+      //virtual bool post_simple_command(e_simple_command ecommand,lparam lParam = 0) override;
 
       virtual bool ShowWindow(int32_t nCmdShow) override;
 
@@ -520,7 +561,7 @@ namespace user
       virtual interaction * GetActiveWindow() override;
       virtual interaction * SetActiveWindow() override;
 
-      virtual void walk_pre_translate_tree(signal_details * pobj, ::user::interaction * puiStop = NULL);
+      virtual void walk_pre_translate_tree(::message::message * pobj, ::user::interaction * puiStop = NULL);
 
       virtual interaction * GetDescendantWindow(id id) const override;
 
@@ -529,8 +570,10 @@ namespace user
       virtual string get_window_text() override;
       virtual void get_window_text(string & rString) override;
       virtual strsize get_window_text_length() override;
+      
+      virtual void _001SetText(const string & str, ::action::context actioncontext);
 
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
       virtual bool IsWindowVisible() override;
 
       virtual void _000OnMouse(::message::mouse * pmouse);
@@ -580,7 +623,7 @@ namespace user
 
       virtual void OnLinkClick(const char * psz,const char * pszTarget = NULL) override;
 
-      virtual void pre_translate_message(signal_details * pobj) override;
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
       ::user::interaction * get_child_by_name(const char * pszName,int32_t iLevel = -1);
@@ -616,7 +659,8 @@ namespace user
       virtual ::user::frame_window * GetParentTopLevelFrame() const override;
       virtual ::user::frame_window * EnsureParentFrame() override;
 
-      virtual void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE) override;
+      virtual void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = TRUE,bool bOnlyPerm = FALSE) override;
+      virtual void route_message_to_descendants(::message::message * pmessage) override;
 
 
       virtual int32_t get_descendant_level(::user::interaction * pui) override;
@@ -661,9 +705,9 @@ namespace user
 
       virtual LRESULT call_message_handler(UINT message,WPARAM wparam,LPARAM lparam) override;
 
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
       virtual LRESULT message_handler(LPMESSAGE lpmessage) override;
-      virtual void GuieProc(signal_details * pobj) override;
+      virtual void GuieProc(::message::message * pobj) override;
 
       virtual void _001DeferPaintLayeredWindowBackground(::draw2d::graphics * pgraphics) override;
 
@@ -727,8 +771,9 @@ namespace user
       virtual uint32_t get_window_default_style() override;
       virtual e_type get_window_type() override;
 
-
-      virtual bool on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult) override;
+      
+      virtual void on_simple_command(::message::simple_command * psimplecommand) override;
+      virtual void on_command(::user::command * pcommand) override;
 
 
       // Window-Management message handler member functions
@@ -758,19 +803,19 @@ namespace user
          return nullptr;
       }
 #endif
-      virtual bool _001HasCommandHandler(id id) override;
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags, POINT pt) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,POINT pt) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj) override;
-      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj) override;
-      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj) override;
+      virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj) override;
+      virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj) override;
 
-      virtual bool track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags) override;
+      virtual bool track_popup_menu(::user::menu_item * pitem,int32_t iFlags) override;
       virtual bool track_popup_menu(::xml::node * lpnode,int32_t iFlags) override;
       virtual bool track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags) override;
 
@@ -782,9 +827,9 @@ namespace user
       virtual bool WfiIsIconic() override;
 
 
-      virtual bool Wfi(EAppearance eapperance = AppearanceCurrent) override;
+      virtual bool Wfi(e_appearance eapperance = appearance_current) override;
 
-      virtual bool WfiDock(EAppearance eapperance) override;
+      virtual bool WfiDock(e_appearance eapperance) override;
       virtual bool WfiClose() override;
       virtual bool WfiRestore(bool bForceNormal = false) override;
       virtual bool WfiMinimize() override;
@@ -798,11 +843,11 @@ namespace user
       virtual bool WfiIsMoving();
       virtual bool WfiIsSizing();
 
-      virtual EAppearance get_appearance() override;
-      virtual EAppearance get_appearance_before() override;
+      virtual e_appearance get_appearance() override;
+      virtual e_appearance get_appearance_before() override;
 
-      virtual bool set_appearance(EAppearance eappearance) override;
-      virtual bool set_appearance_before(EAppearance eappearance) override;
+      virtual bool set_appearance(e_appearance eappearance) override;
+      virtual bool set_appearance_before(e_appearance eappearance) override;
 
 
       virtual void show_keyboard(bool bShow = true) override;
@@ -811,8 +856,8 @@ namespace user
 
       virtual ::user::interaction * best_top_level_parent(LPRECT lprect);
 
-      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
-      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::EAppearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index make_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
+      virtual index best_zoneing(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,::user::e_appearance * peappearance = NULL,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_monitor(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index best_wkspace(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
       virtual index good_restore(LPRECT lprect,const RECT & rect=::null_rect(),bool bSet = false,UINT uiSwpFlags = SWP_SHOWWINDOW | SWP_FRAMECHANGED,int_ptr iZOrder = ZORDER_TOP);
@@ -842,9 +887,10 @@ namespace user
       virtual int get_final_y_scroll_bar_width();
 
 
+      //virtual ::user::style * get_user_style() override;
+      virtual ::user::style * parent_userstyle() override;
 
-      virtual ::user::schema * get_parent_user_schema() override;
-
+//      bool select_font(::draw2d::graphics * pgraphics, e_font efont);
 
       /*
 
@@ -861,7 +907,7 @@ namespace user
       */
 
 
-      sp(::message::base) get_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
+      sp(::message::base) get_message_base(UINT uiMessage,WPARAM wparam,LPARAM lparam);
 
 
       //void transfer_from(::aura::timer_array & ta, interaction * pui);
@@ -899,7 +945,7 @@ namespace user
       // view support
       virtual void on_update(::user::impact * pSender,LPARAM lHint,::object* pHint);
 
-      virtual void keyboard_focus_OnKeyDown(signal_details * pobj) override;
+      virtual void keyboard_focus_OnKeyDown(::message::message * pobj) override;
       virtual bool keyboard_focus_OnKillFocus() override;
       virtual bool keyboard_focus_OnChildKillFocus() override;
 
@@ -946,7 +992,7 @@ namespace user
       virtual void on_after_graphical_update();
 
 
-      virtual void _001OnDeiconify(::user::EAppearance eappearance);
+      virtual void _001OnDeiconify(::user::e_appearance eappearance);
       
       virtual void on_setting_changed(::aura::e_setting esetting);
       
@@ -954,6 +1000,24 @@ namespace user
 
       virtual bool _001OnClick(uint_ptr nFlag, point point);
       virtual bool _001OnRightClick(uint_ptr nFlag, point point);
+      
+      
+      virtual int width();
+      virtual int height();
+      
+      virtual int client_width();
+      virtual int client_height();
+
+      
+      virtual void resize_to_fit();
+
+      virtual void wait_redraw();
+
+      virtual bool has_pending_redraw_flags() override;
+
+      virtual void defer_initialize_userstyle();
+
+      virtual void initialize_userstyle();
 
    };
 

@@ -649,30 +649,30 @@ namespace ios
 //
 //
 //
-//   void thread::pre_translate_message(signal_details * pobj)
+//   void thread::pre_translate_message(::message::message * pobj)
 //   {
 //      ASSERT_VALID(this);
 //      return AfxInternalPreTranslateMessage(pobj);
 //   }
 //
-//   void thread::ProcessWndProcException(::exception::aura* e, signal_details * pobj)
+//   void thread::ProcessWndProcException(::exception::aura* e, ::message::message * pobj)
 //   {
 //      return AfxInternalProcessWndProcException(e, pobj);
 //   }
 //
-//   __STATIC inline WINBOOL IsEnterKey(signal_details * pobj)
+//   __STATIC inline WINBOOL IsEnterKey(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
-//      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+//      return pbase->m_id == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
 //   }
 //
-//   __STATIC inline WINBOOL IsButtonUp(signal_details * pobj)
+//   __STATIC inline WINBOOL IsButtonUp(::message::message * pobj)
 //   {
 //      SCAST_PTR(::message::aura, pbase, pobj);
-//      return pbase->m_uiMessage == WM_LBUTTONUP;
+//      return pbase->m_id == WM_LBUTTONUP;
 //   }
 //
-//   void thread::ProcessMessageFilter(int32_t code, signal_details * pobj)
+//   void thread::ProcessMessageFilter(int32_t code, ::message::message * pobj)
 //   {
 //
 //      if(pobj == NULL)
@@ -753,80 +753,6 @@ namespace ios
 //
 //
 //
-//   bool thread::on_run_exception(::exception::exception & e)
-//   {
-//      UNREFERENCED_PARAMETER(e);
-//      return false;
-//   }
-//
-//
-//   void thread::message_handler(signal_details * pobj)
-//   {
-//      SCAST_PTR(::message::aura, pbase, pobj);
-//      // special message which identifies the window as using AfxWndProc
-////      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
-//  //    {
-//    //     pbase->set_lresult(0);
-//      //   return;
-//      //}
-//
-//      // all other messages route through message ::collection::map
-//      ::window * pwindow = pbase->m_pwnd->get_wnd();
-//
-//      /*      ASSERT(pwindow == NULL || IOS_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
-//
-//       if(pwindow == NULL || IOS_WINDOW(pwindow)->get_handle() != pbase->m_hwnd)
-//       {
-//       pbase->set_lresult(::DefWindowProc(pbase->m_hwnd, pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
-//       return;
-//       }*/
-//
-//
-//      // Catch exceptions thrown outside the scope of a callback
-//      // in debug builds and warn the ::fontopus::user.
-//      try
-//      {
-//
-//         // special case for WM_INITDIALOG
-//         rect rectOld;
-//         DWORD dwStyle = 0;
-//         if(pbase->m_uiMessage == WM_INITDIALOG)
-//            __pre_init_dialog(pwindow, &rectOld, &dwStyle);
-//
-//         // delegate to object's message_handler
-//         if(pwindow->m_pui != NULL && pwindow->m_pui != pwindow)
-//         {
-//            pwindow->m_pui->message_handler(pobj);
-//         }
-//         else
-//         {
-//            pwindow->message_handler(pobj);
-//         }
-//
-//         // more special case for WM_INITDIALOG
-//         if(pbase->m_uiMessage == WM_INITDIALOG)
-//            __post_init_dialog(pwindow, rectOld, dwStyle);
-//      }
-//      catch(const ::exception::exception & e)
-//      {
-//         if(App(get_app()).on_run_exception((::exception::exception &) e))
-//            goto run;
-//         if(App(get_app()).final_handle_exception((::exception::exception &) e))
-//            goto run;
-//         __post_quit_message(-1);
-//         pbase->set_lresult(-1);
-//         return;
-//      }
-//      catch(::exception::aura * pe)
-//      {
-//         AfxProcessWndProcException(pe, pbase);
-//         TRACE(::core::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
-//         pe->Delete();
-//      }
-//   run:
-//      pThreadState->m_lastSentMsg = oldState;
-//   }
-//
 //
 //   bool thread::set_thread_priority(int32_t epriority)
 //   {
@@ -875,7 +801,7 @@ namespace ios
 //      //m_nThreadID = (dword_ptr) iData;
 //   }
 //
-//   void thread::message_queue_message_handler(signal_details * pobj)
+//   void thread::message_queue_message_handler(::message::message * pobj)
 //   {
 //   }
 //
@@ -901,8 +827,8 @@ namespace ios
 //
 ////      ::application* papp = dynamic_cast < ::application * > (get_app());
 //      m_evFinish.ResetEvent();
-//      install_message_handling(pThread);
-//      m_p->install_message_handling(pThread);
+//      install_message_routing(pThread);
+//      m_p->install_message_routing(pThread);
 //
 ////      ::window threadWnd;
 //
@@ -1442,8 +1368,8 @@ namespace ios
 //
 //WINBOOL CLASS_DECL_AURA AfxInternalPumpMessage();
 //LRESULT CLASS_DECL_AURA AfxInternalProcessWndProcException(::exception::aura*, const MESSAGE* pMsg);
-//void AfxInternalPreTranslateMessage(signal_details * pobj);
-//WINBOOL AfxInternalIsIdleMessage(signal_details * pobj);
+//void AfxInternalPreTranslateMessage(::message::message * pobj);
+//WINBOOL AfxInternalIsIdleMessage(::message::message * pobj);
 //WINBOOL AfxInternalIsIdleMessage(LPMESSAGE lpmsg);
 //
 //

@@ -17,7 +17,7 @@ namespace base
       system_interaction_impl(::aura::application * papp);
       virtual ~system_interaction_impl();
 
-      void install_message_handling(::message::dispatch * pdispath);
+      void install_message_routing(::message::sender * pdispath);
 
       DECL_GEN_SIGNAL(_001MessageHub);
 

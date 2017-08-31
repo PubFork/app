@@ -59,7 +59,7 @@ namespace filemanager
       folder_list (::aura::application * papp);
       virtual ~folder_list ();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
       virtual void OnDraw(::draw2d::graphics * pgraphics);      // overridden to draw this ::user::impact
       virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
       virtual bool pre_create_window(::user::create_struct& cs);
@@ -75,7 +75,7 @@ namespace filemanager
 #endif
 
 
-      ::fs::item & get_filemanager_item();
+      ::fs::item * get_filemanager_item();
 
       virtual void _001GetItemImage(::user::mesh_item * pitem);
       virtual void _001CreateImageList(::user::list_column * column);

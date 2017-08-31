@@ -2,7 +2,7 @@
 //  axis_static_start
 //
 #include "framework.h" // from "axis/user/user.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 
 
 #if defined(APPLEOS)
@@ -93,6 +93,8 @@ namespace base
 #if defined(APPLEOS)
 
          g_poswindowdataptra = new oswindow_dataptra;
+
+         g_poswindowdataptra->defer_create_mutex();
 
 #endif // defined(APPLEOS)
 

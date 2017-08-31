@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace filemanager
@@ -16,6 +16,16 @@ namespace filemanager
    view::~view()
    {
    }
+   
+   
+   void view::install_message_routing(::message::sender * psender)
+   {
+      
+      ::filemanager::impact::install_message_routing(psender);
+      ::user::split_view::install_message_routing(psender);
+      
+   }
+   
 
    void view::assert_valid() const
    {
@@ -49,7 +59,7 @@ namespace filemanager
                   {
                      pframe->m_dataid = str;
                   }
-                  m_puserschemaSchema = get_filemanager_data();
+                  m_puserstyle = get_filemanager_data();
 
                }
                else if (puh->is_type_of(update_hint::TypePop))
@@ -177,7 +187,7 @@ namespace filemanager
       if (get_pane_count() > 0)
          return;
 
-      bool bPathView = !Application.command_thread()->m_varTopicQuery.has_property("no_path_view");
+      bool bPathView = !Application.handler()->m_varTopicQuery.has_property("no_path_view");
 
       SetPaneCount(bPathView ? 2 : 1);
 

@@ -37,7 +37,7 @@ namespace user
       virtual check::e_check _001GetCheck();
       virtual void _001SetCheck(check::e_check check, ::action::context actioncontext);
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnLButtonDown);

@@ -48,7 +48,7 @@ namespace simpledb
       bool handle(socket * psocket);
       bool get_output_internal(const char * lpcszGet, memory & memeory);
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
 
 
    };

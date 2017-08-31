@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace calculator
@@ -22,7 +22,7 @@ namespace calculator
    {
    }
 
-   void frame::_001OnCreate(signal_details * pobj)
+   void frame::_001OnCreate(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);

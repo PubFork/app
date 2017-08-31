@@ -26,11 +26,12 @@ namespace metrowin
 
       enum { hnative_bufferNull = -1 };
 
-      bool              m_bCloseOnDelete;
-      ::file::path      m_strFileName;
-      StorageFile ^     m_file;
-      StorageFolder ^   m_folder;
-      Streams::IRandomAccessStream ^ m_stream;
+      bool                                m_bCloseOnDelete;
+      ::file::path                        m_strFileName;
+      StorageFile ^                       m_file;
+      StorageFolder ^                     m_folder;
+      Streams::IRandomAccessStream ^      m_stream;
+      DWORD                               m_dwAccess;
 
 
       native_buffer(::aura::application * papp);

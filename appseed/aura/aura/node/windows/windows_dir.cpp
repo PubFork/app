@@ -681,7 +681,7 @@ namespace windows
 
    bool dir::name_is(const ::file::path & str, ::aura::application * papp)
    {
-      //OutputDebugString(str);
+      //output_debug_string(str);
       strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
@@ -745,7 +745,7 @@ namespace windows
 
       wstrPath = ::str::international::utf8_to_unicode(str, iLast + 1);
 
-      //OutputDebugStringW(wstrPath);
+      //output_debug_string(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
@@ -1050,12 +1050,12 @@ namespace windows
 
       m_strCa2 -= 3;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          m_strCommonAppData,
          CSIDL_COMMON_APPDATA,
          FALSE);
-      //SHGetSpecialFolderPath(
+      //shell_get_special_folder_path(
         // NULL,
          //m_pathProfile,
          //CSIDL_PROFILE,
@@ -1064,7 +1064,7 @@ namespace windows
       m_pathHome = get_known_folder(FOLDERID_Profile);
 
       m_pathProfile = get_known_folder(FOLDERID_RoamingAppData);
-      //SHGetSpecialFolderPath(
+      //shell_get_special_folder_path(
       //   NULL,
       //   m_strAppData,
       //   CSIDL_APPDATA,
@@ -1074,12 +1074,12 @@ namespace windows
 
       m_strAppData = get_known_folder(FOLDERID_RoamingAppData);
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          m_strPrograms,
          CSIDL_PROGRAMS,
          FALSE);
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          m_strCommonPrograms,
          CSIDL_COMMON_PROGRAMS,
@@ -1154,9 +1154,9 @@ namespace windows
 
 //      ::file::path strUserFolderShift;
 
-//      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
+//      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
 //      {
-//         strUserFolderShift = strRelative / App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string();
+//         strUserFolderShift = strRelative / App(papp).handler()->m_varTopicQuery["user_folder_relative_path"].get_string();
 //      }
 //      else
 //      {
@@ -1382,7 +1382,7 @@ namespace windows
 
       ::file::path path;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          path,
          CSIDL_MYDOCUMENTS,
@@ -1397,7 +1397,7 @@ namespace windows
 
       ::file::path path;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          path,
          CSIDL_DESKTOP,
@@ -1423,7 +1423,7 @@ namespace windows
 
       ::file::path path;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          path,
          CSIDL_MYMUSIC,
@@ -1439,7 +1439,7 @@ namespace windows
 
       ::file::path path;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          path,
          CSIDL_MYVIDEO,
@@ -1455,7 +1455,7 @@ namespace windows
 
       ::file::path path;
 
-      SHGetSpecialFolderPath(
+      shell_get_special_folder_path(
          NULL,
          path,
          CSIDL_MYPICTURES,
@@ -1469,6 +1469,14 @@ namespace windows
 
 
 } // namespace windows
+
+
+::file::path dir::favorites()
+{
+
+   return ::dir::local() / "localconfig/favorites";
+
+}
 
 
 ::file::path dir::home()

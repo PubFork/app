@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 CLASS_DECL_AURA int32_t ca2_main();
@@ -31,22 +31,22 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 //   pinitmaindata->m_hPrevInstance         = NULL;
 //   if(argc > 0)
 //   {
-//      pinitmaindata->m_vssCommandLine     = argv[0];
+//      pinitmaindata->m_strCommandLine     = argv[0];
 //   }
 //   bool bColon = false;
 //   for(int32_t i = 1; i < argc; i++)
 //   {
 //      if(bColon || (bColon = (strcmp(argv[i], ":") == 0)))
 //      {
-//         pinitmaindata->m_vssCommandLine     += " ";
-//         pinitmaindata->m_vssCommandLine     += argv[i];
+//         pinitmaindata->m_strCommandLine     += " ";
+//         pinitmaindata->m_strCommandLine     += argv[i];
 //
 //      }
 //      else
 //      {
-//         pinitmaindata->m_vssCommandLine     += " \"";
-//         pinitmaindata->m_vssCommandLine     += argv[i];
-//         pinitmaindata->m_vssCommandLine     += "\"";
+//         pinitmaindata->m_strCommandLine     += " \"";
+//         pinitmaindata->m_strCommandLine     += argv[i];
+//         pinitmaindata->m_strCommandLine     += "\"";
 //      }
 //   }
 //   pinitmaindata->m_nCmdShow              = SW_SHOW;
@@ -88,7 +88,7 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 //
 //      pinitmaindata->m_hInstance             = hInstance;
 //      pinitmaindata->m_hPrevInstance         = hPrevInstance;
-//      pinitmaindata->m_vssCommandLine        = lpCmdLine;
+//      pinitmaindata->m_strCommandLine        = lpCmdLine;
 //      pinitmaindata->m_nCmdShow              = nCmdShow;
 //
 //      psystem->init_main_data(pinitmaindata);

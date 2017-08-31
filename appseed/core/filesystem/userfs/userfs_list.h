@@ -7,12 +7,9 @@ namespace userfs
    class main_view;
 
    class CLASS_DECL_CORE list :
-      virtual public ::user::show <  ::user::margin < ::user::form_list > > 
+      virtual public ::user::form_list_view
    {
    public:
-
-
-      typedef ::user::show <  ::user::margin < ::user::form_list >  > BASE;
 
 
       stringa              m_straFileSize;
@@ -33,7 +30,7 @@ namespace userfs
       virtual COLORREF get_background_color();
       void add_item(const char * pszPath, const char * pszTitle);
       //virtual void schedule_file_size(const char * psz) = 0;
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       sp(image_list) GetActionButtonImageList(index i);
 
@@ -61,15 +58,12 @@ namespace userfs
       virtual count _001GetItemCount();
 
       DECL_GEN_SIGNAL(_001OnHScroll);
-         DECL_GEN_SIGNAL(_001OnVScroll);
-         DECL_GEN_SIGNAL(_001OnFileRename);
-         DECL_GEN_SIGNAL(_001OnUpdateFileRename);
-         DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnVScroll);
+      DECL_GEN_SIGNAL(_001OnFileRename);
+      DECL_GEN_SIGNAL(_001OnUpdateFileRename);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
 
-
-         virtual void _001InitializeFormPreData();
-
-
+      virtual void _001InitializeFormPreData();
 
       virtual bool query_drop(index iDisplayDrop, index iDisplayDrag);
       virtual bool do_drop(index iDisplayDrop, index iDisplayDrag);

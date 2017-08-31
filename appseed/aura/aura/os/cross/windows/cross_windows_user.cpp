@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#ifdef APPLEOS
 ////#include <iconv.h>
 //#else

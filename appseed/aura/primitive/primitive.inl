@@ -44,48 +44,48 @@ inline ::aura::allocatorsp & object::allocer()
 
 
 
-inline sp(::command_thread) object::command_thread()
+inline sp(::handler) object::handler()
 {
 
-   return m_pauraapp->command_thread();
+   return m_pauraapp->handler();
 
 }
 
 
 
-template < class T >
-inline bool dispatch::AddMessageHandler(
-   signalid * pid,
-   T * psignalizable,
-   void (T::*pfn)(signal_details *),
-   bool bAddUnique)
-{
-
-   synch_lock sl(m_pmutex);
-
-   signal_item * psignal = m_signala.GetSignalById(pid);
-   // If not found a existing Signal, create one
-   if(psignal == NULL)
-   {
-      psignal                    = canew(signal_item);
-      psignal->m_pid             = pid;
-      psignal->m_psignal         = new class ::signal();
-      m_signala.add(psignal);
-   }
-   else
-   {
-      if(bAddUnique && psignal->m_psignal->is_connected(psignalizable,pfn))
-         return false;
-   }
-
-   // connect to the signal.
-   psignal->m_psignal->connect(psignalizable, pfn);
-   handler_item <T> * pitem = canew(handler_item<T>);
-   pitem->m_psignalizable = psignalizable;
-   psignal->m_handlera.add(pitem);
-   m_iHandling++;
-   return true;
-}
+//template < class T >
+//inline bool dispatch::AddMessageHandler(
+//   signalid * pid,
+//   T * psignalizable,
+//   void (T::*pfn)(::message::message *),
+//   bool bAddUnique)
+//{
+//
+//   synch_lock sl(m_pmutex);
+//
+//   signal_item * psignal = m_signala.GetSignalById(pid);
+//   // If not found a existing Signal, create one
+//   if(psignal == NULL)
+//   {
+//      psignal                    = canew(signal_item);
+//      psignal->m_pid             = pid;
+//      psignal->m_psignal         = new class ::message::sender();
+//      m_signala.add(psignal);
+//   }
+//   else
+//   {
+//      if(bAddUnique && psignal->m_psignal->is_connected(psignalizable,pfn))
+//         return false;
+//   }
+//
+//   // connect to the signal.
+//   psignal->m_psignal->connect(psignalizable, pfn);
+//   handler_item <T> * pitem = canew(handler_item<T>);
+//   pitem->m_psignalizable = psignalizable;
+//   psignal->m_handlera.add(pitem);
+//   m_iHandling++;
+//   return true;
+//}
 
 
 
@@ -110,3 +110,10 @@ inline UINT HashKey<const wchar_t *>(const wchar_t * key)
 }
 
 
+//template<>
+//inline UINT HashKey < const ::message::id &  > (const ::message::id & id)
+//{
+//
+//   return (((int) id.m_etype) << 24) | HashKey((const ::id & ) id);
+//
+//}

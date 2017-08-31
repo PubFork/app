@@ -39,7 +39,7 @@ namespace axis
       m_puserstrcontext             = NULL;
 
 
-//      m_puserschema                 = &m_schemasimple;
+//      m_puserstyle                 = &m_schemasimple;
 
   //    m_schemasimple.m_pfont.alloc(allocer());
 
@@ -346,8 +346,8 @@ namespace axis
 
       }
 
-      if(Application.directrix()->m_varTopicQuery.has_property("uninstall")
-         || Application.directrix()->m_varTopicQuery.has_property("install"))
+      if(Application.handler()->m_varTopicQuery.has_property("uninstall")
+         || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
          if(m_pfontopus->create_system_user("system") == NULL)
@@ -680,6 +680,13 @@ namespace axis
 
    }
 
+   
+   DWORD session::get_Long_PhRESSing_time()
+   {
+
+      return m_dwLongPhRESSingTime;
+
+   }
 
 
    void session::defer_initialize_user_presence()
@@ -1132,7 +1139,7 @@ namespace axis
 
    }
 
-   index session::get_zoneing(LPRECT lprect,const RECT & rectParam,::user::EAppearance eappearance)
+   index session::get_zoneing(LPRECT lprect,const RECT & rectParam,::user::e_appearance eappearance)
    {
 
       index iMonitor = get_best_wkspace(lprect,rectParam);
@@ -1158,35 +1165,35 @@ namespace axis
       int midcx = cx / 2;
       int midcy = cy / 2;
 
-      if(eappearance == ::user::AppearanceTop)
+      if(eappearance == ::user::appearance_top)
       {
          *lprect = rect_dim(0,0,cx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceLeft)
+      else if(eappearance == ::user::appearance_left)
       {
          *lprect = rect_dim(0,0,midcx,cy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceRight)
+      else if(eappearance == ::user::appearance_right)
       {
          *lprect = rect_dim(midcx,0,midcx,cy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceBottom)
+      else if(eappearance == ::user::appearance_bottom)
       {
          *lprect = rect_dim(0,midcy,cx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceTopLeft)
+      else if(eappearance == ::user::appearance_top_left)
       {
          *lprect = rect_dim(0,0,midcx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceTopRight)
+      else if(eappearance == ::user::appearance_top_right)
       {
          *lprect = rect_dim(midcx,0,midcx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceBottomLeft)
+      else if(eappearance == ::user::appearance_bottom_left)
       {
          *lprect = rect_dim(0,midcy,midcx,midcy) + top_left(lprect);
       }
-      else if(eappearance == ::user::AppearanceBottomRight)
+      else if(eappearance == ::user::appearance_bottom_right)
       {
          *lprect = rect_dim(midcx,midcy,midcx,midcy) + top_left(lprect);
       }
@@ -1199,7 +1206,7 @@ namespace axis
 
    }
 
-   index session::get_best_zoneing(::user::EAppearance * peappearance,LPRECT lprect,const RECT & rectParam)
+   index session::get_best_zoneing(::user::e_appearance * peappearance,LPRECT lprect,const RECT & rectParam)
    {
 
       index iMonitor = get_best_monitor(lprect,rectParam);
@@ -1210,7 +1217,7 @@ namespace axis
       if(cx <= 0 || cy <= 0)
       {
 
-         *peappearance = ::user::AppearanceZoomed;
+         *peappearance = ::user::appearance_zoomed;
 
          return iMonitor;
 
@@ -1219,7 +1226,7 @@ namespace axis
       if(width(rectParam) <= 0 || height(rectParam) <= 0)
       {
 
-         *peappearance = ::user::AppearanceZoomed;
+         *peappearance = ::user::appearance_zoomed;
 
          return iMonitor;
 
@@ -1230,30 +1237,30 @@ namespace axis
       int midcy = cy / 2;
 
       rect_array recta;
-      array < ::user::EAppearance > aa;
+      array < ::user::e_appearance > aa;
 
-      aa.add(::user::AppearanceTop);
+      aa.add(::user::appearance_top);
       recta.add_dim(0,0,cx,midcy);
 
-      aa.add(::user::AppearanceLeft);
+      aa.add(::user::appearance_left);
       recta.add_dim(0,0,midcx,cy);
 
-      aa.add(::user::AppearanceRight);
+      aa.add(::user::appearance_right);
       recta.add_dim(midcx,0,midcx,cy);
 
-      aa.add(::user::AppearanceBottom);
+      aa.add(::user::appearance_bottom);
       recta.add_dim(0,midcy,cx,midcy);
 
-      aa.add(::user::AppearanceTopLeft);
+      aa.add(::user::appearance_top_left);
       recta.add_dim(0,0,midcx,midcy);
 
-      aa.add(::user::AppearanceTopRight);
+      aa.add(::user::appearance_top_right);
       recta.add_dim(midcx,0,midcx,midcy);
 
-      aa.add(::user::AppearanceBottomLeft);
+      aa.add(::user::appearance_bottom_left);
       recta.add_dim(0,midcy,midcx,midcy);
 
-      aa.add(::user::AppearanceBottomRight);
+      aa.add(::user::appearance_bottom_right);
       recta.add_dim(midcx,midcy,midcx,midcy);
 
       index iFoundAppearance = recta.max_normal_intersect_area(rectParam,*lprect);
@@ -1261,7 +1268,7 @@ namespace axis
       if(iFoundAppearance < 0)
       {
 
-         *peappearance = ::user::AppearanceZoomed;
+         *peappearance = ::user::appearance_zoomed;
 
          return iMonitor;
 
@@ -1800,6 +1807,7 @@ namespace axis
    void session::on_finally_focus_set(::user::elemental * pelementalFocus)
    {
 
+      
 
    }
 
@@ -1823,6 +1831,14 @@ namespace axis
    {
 
       return fontopus()->get_user()->get_sessid(str);
+
+   }
+
+
+   void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
+   {
+      
+      throw interface_only_exception(this);
 
    }
 

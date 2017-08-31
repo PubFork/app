@@ -14,7 +14,7 @@ about the suitability of this software for any purpose.
 It is provided "as is" without express or implied warranty.
 
 */
-//#include "framework.h"
+#include "framework.h"
 
 #if defined(LINUX) || defined(ANDROID)
 
@@ -23,7 +23,11 @@ It is provided "as is" without express or implied warranty.
 #endif
 
 
+#ifdef APPLEOS
 
+void InstallUncaughtExceptionHandler();
+
+#endif
 
 #ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
 //#include <signal.h>
@@ -161,11 +165,7 @@ namespace exception
 
 #endif
 
-#ifdef APPLEOS
 
-   void InstallUncaughtExceptionHandler();
-
-#endif
 
 #ifndef WINDOWS
 

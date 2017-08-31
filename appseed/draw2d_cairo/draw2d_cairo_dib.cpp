@@ -2601,7 +2601,7 @@ namespace draw2d_cairo
 
 #if defined(WINDOWS)
 
-   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
+   bool dib::update_window(::aura::draw_interface * pwnd,::message::message * pobj,bool bTransferBuffer)
    {
 
 
@@ -2622,7 +2622,7 @@ namespace draw2d_cairo
    }
 
 
-   bool dib::print_window(::aura::draw_interface * pwnd, signal_details * pobj)
+   bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -2701,7 +2701,7 @@ namespace draw2d_cairo
 
 
 
-   bool dib::print_window(::aura::draw_interface * pwnd, signal_details * pobj)
+   bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
    {
 
       return true;
@@ -2722,7 +2722,7 @@ namespace draw2d_cairo
 
 
 
-   bool dib::update_window(::aura::draw_interface * pwnd, signal_details * pobj, bool bTransferBuffer)
+   bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
    {
 
 
@@ -2751,7 +2751,7 @@ namespace draw2d_cairo
 
 
 
-bool dib::print_window(::aura::draw_interface * pwnd, signal_details * pobj)
+bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
 {
 
    return true;
@@ -2767,7 +2767,7 @@ bool dib::print_window(::aura::draw_interface * pwnd, signal_details * pobj)
 
 
 
-bool dib::update_window(::aura::draw_interface * pwnd, signal_details * pobj, bool bTransferBuffer)
+bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
 {
 
 

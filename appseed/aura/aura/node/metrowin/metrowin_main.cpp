@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include "sal.h"
 
@@ -45,12 +45,12 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
 
    pinitmaindata->m_hInstance             = NULL;
    pinitmaindata->m_hPrevInstance         = NULL;
-   pinitmaindata->m_vssCommandLine        = "";
+   pinitmaindata->m_strCommandLine        = "";
    pinitmaindata->m_nCmdShow              = 0;
 
    //pinitmaindata->m_hInstance             = hInstance;
    //pinitmaindata->m_hPrevInstance         = hPrevInstance;
-   //pinitmaindata->m_vssCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
+   //pinitmaindata->m_strCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
    //pinitmaindata->m_nCmdShow              = nCmdShow;
 
    
@@ -155,7 +155,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
 //
 //      pinitmaindata->m_hInstance             = hInstance;
 //      pinitmaindata->m_hPrevInstance         = hPrevInstance;
-//      pinitmaindata->m_vssCommandLine        = lpCmdLine;
+//      pinitmaindata->m_strCommandLine        = lpCmdLine;
 //      pinitmaindata->m_nCmdShow              = nCmdShow;
 //
 //

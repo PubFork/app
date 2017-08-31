@@ -26,6 +26,8 @@ namespace fs
       virtual ::file::listing & ls(::file::listing & listing) override;
 
 
+      virtual void defer_fill_folder(string strTitle, ::file::path pathFolder);
+
       // optional if ls_dir is implemented
       virtual bool has_subdir(const ::file::path & pszPath) override;
       virtual int is_dir(const ::file::path & pszPath) override;

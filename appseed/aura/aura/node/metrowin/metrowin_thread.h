@@ -69,7 +69,7 @@
 //      virtual void set_auto_delete(bool bAutoDelete = true);
 //      virtual void set_run(bool bRun = true);
 //      virtual event & get_finish_event();
-//      virtual bool get_run_thread();
+//      virtual bool thread_get_run();
 //      virtual ::thread * get_app_thread();
 //      virtual sp(::user::interaction) get_active_ui();
 //      virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
@@ -112,21 +112,20 @@
 //
 //      // running and idle processing
 //      virtual int run();
-//      virtual void pre_translate_message(signal_details * pobj);
+//      virtual void pre_translate_message(::message::message * pobj);
 //      virtual bool pump_message();     // low level message pump
 //      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-//      virtual bool is_idle_message(signal_details * pobj);  // checks for special messages
+//      virtual bool is_idle_message(::message::message * pobj);  // checks for special messages
 //      virtual bool is_idle_message(LPMESSAGE lpmsg);  // checks for special messages
-//      virtual void message_handler(signal_details * pobj);
 //
 //      // thread termination
 //      virtual int exit_instance(); // default will 'delete this'
 //
 //      // Advanced: exception handling
-//      virtual void ProcessWndProcException(::exception::aura * e, signal_details * pMsg);
+//      virtual void ProcessWndProcException(::exception::aura * e, ::message::message * pMsg);
 //
 //      // Advanced: handling messages sent to message filter hook
-//      virtual void ProcessMessageFilter(int code, signal_details * pobj);
+//      virtual void ProcessMessageFilter(int code, ::message::message * pobj);
 //
 //      // Advanced: virtual access to GetMainWnd()
 //      virtual sp(::user::interaction) GetMainWnd();
@@ -142,8 +141,8 @@
 //
 //
 //
-//      virtual void DispatchThreadMessageEx(signal_details * pobj);  // helper
-//      virtual void message_queue_message_handler(signal_details * pobj);
+//      virtual void DispatchThreadMessageEx(::message::message * pobj);  // helper
+//      virtual void message_queue_message_handler(::message::message * pobj);
 //
 //      virtual void delete_temp();
 //

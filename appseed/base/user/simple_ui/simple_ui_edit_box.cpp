@@ -1,6 +1,6 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
-//#include "aura/user/colorertake5/colorertake5.h"
+#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace simple_ui
@@ -24,20 +24,20 @@ namespace simple_ui
    }
 
 
-   void edit_box::install_message_handling(::message::dispatch * pdispatch)
+   void edit_box::install_message_routing(::message::sender * psender)
    {
 
-      ::user::plain_edit::install_message_handling(pdispatch);
+      ::user::plain_edit::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pdispatch, this, &edit_box::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pdispatch, this, &edit_box::_001OnKeyDown);
-      IGUI_LBUTTONDOWN(edit_box);
-      IGUI_LBUTTONUP(edit_box);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &edit_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, psender, this, &edit_box::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &edit_box::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &edit_box::_001OnLButtonUp);
 
    }
 
 
-   void edit_box::_001OnLButtonDown(signal_details * pobj)
+   void edit_box::_001OnLButtonDown(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -52,7 +52,7 @@ namespace simple_ui
    }
 
 
-   void edit_box::_001OnLButtonUp(signal_details * pobj)
+   void edit_box::_001OnLButtonUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -114,7 +114,7 @@ namespace simple_ui
    }
 
 
-   void edit_box::_001OnKeyDown(signal_details * pobj)
+   void edit_box::_001OnKeyDown(::message::message * pobj)
    {
       pobj->previous();
       pobj->m_bRet = true;

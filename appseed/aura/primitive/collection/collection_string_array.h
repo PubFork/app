@@ -230,6 +230,8 @@ public:
    ::count remove(const string_array & stra);
 
    string_array & explode(const Type & strSeparator,const Type & str);
+   
+   string_array & _001Explode(const Type & str);
 
    // csstidy: Same as explode, but not within a Type
    string_array & csstidy_explode_ws(char sep,const char * psz);
@@ -284,6 +286,9 @@ public:
    void add_smallest_tokens(const char * lpcsz, RawStringArray & straSeparator,bool bAddEmpty = true,bool bWithSeparator = FALSE);
    void add_lines(const Type & str,bool bAddEmpty = true);
 
+   
+   void _001AddTokens(const char * lpcsz);
+   
 
    bool is_empty(::count countMinimum = 1) const;
    bool has_elements(::count countMinimum = 1) const;
@@ -311,6 +316,7 @@ public:
 
    typedef const char * BASE_ARG_TYPE;
 
+   ::array < const char * > c_get() const;
    void c_add(char ** ppsz, ::count iCount);
    void c_add(char ** ppsz);
    void c_add(wchar_t ** ppsz, ::count iCount);
@@ -1558,6 +1564,26 @@ void string_array < Type, RawType > ::add_tokens(const char * lpcsz,const char *
    }
 }
 
+
+
+template < class Type, class RawType >
+void string_array < Type, RawType > ::_001AddTokens(const char * lpcsz)
+{
+   
+   ::str::tokenizer strTokenizer(lpcsz);
+   
+   Type strToken;
+
+   while(strTokenizer._001GetNextToken(strToken))
+   {
+      
+      string_array::add(strToken);
+      
+   }
+   
+}
+
+
 extern int32_t g_add_smallest_tokens;
 
 
@@ -2512,6 +2538,19 @@ string_array < Type, RawType >  & string_array < Type, RawType > ::explode(const
 }
 
 
+template < class Type, class RawType >
+string_array < Type, RawType >  & string_array < Type, RawType > ::_001Explode(const Type & str)
+{
+   
+   this->remove_all();
+   
+   _001AddTokens(str);
+   
+   return * this;
+   
+}
+
+
 
 template < class Type, class RawType >
 string_array < Type, RawType >  & string_array < Type, RawType > ::csstidy_explode_ws(char sep,const char * psz)
@@ -3419,6 +3458,25 @@ void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
    }
 
    free((void *)ppsz);
+   
+}
+
+
+
+template < class Type, class RawType >
+::array < const char * > string_array < Type, RawType > ::c_get() const
+{
+   
+   ::array < const char * > psza;
+   
+   for(index i = 0; i < get_size(); i++)
+   {
+      
+      psza.add((const char *) element_at(i));
+      
+   }
+   
+   return psza;
    
 }
 

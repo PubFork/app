@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -32,7 +32,7 @@ namespace command
    };
 
 
-} // namespace command
+} // namespace prompt
 
 
 

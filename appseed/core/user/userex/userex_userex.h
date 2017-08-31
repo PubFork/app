@@ -40,7 +40,7 @@ namespace userex
       virtual ~userex();
 
 
-      ::user::shell::shell & shell();
+      ::user::shell::shell * shell();
 
       virtual bool initialize1();
       virtual bool initialize2();
@@ -56,18 +56,18 @@ namespace userex
       virtual bool get_fs_size(string & strSize, const char * pszPath, bool & bPending);
       virtual bool get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending);
 
-      virtual void data_on_after_change(signal_details * pobj);
+      virtual void data_on_after_change(::message::message * pobj);
 
       class keyboard & keyboard();
 
 
-      virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
+      //virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual void AddToRecentFileList(const char * lpszPathName);
 
       virtual bool finalize();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
 
       virtual void _001OnFileNew();
@@ -83,7 +83,8 @@ namespace userex
       ::type * default_type_list_header();
       ::type * default_type_list_data();
 
-      DECL_GEN_SIGNAL(VmsGuiiOnAppLanguage);
+      //void send_language_change_message();
+
 
       virtual int32_t exit_application() override;
 

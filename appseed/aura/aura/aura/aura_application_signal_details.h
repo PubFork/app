@@ -7,34 +7,34 @@ namespace aura
 {
 
 
-   enum e_application_signal
+   enum e_application_message
    {
 
-      application_signal_initialize1, // first initialization
-      application_signal_initialize2, // second initialization
-      application_signal_initialize3, // third initialization and so on...
-      application_signal_initialize, // last initialization
-      application_signal_start,
-      application_signal_process_initialize,
-      application_signal_finalize,
-      application_signal_exit_instance,
-      application_signal_init_application,
-      application_signal_none
+      application_message_initialize1, // first initialization
+      application_message_initialize2, // second initialization
+      application_message_initialize3, // third initialization and so on...
+      application_message_initialize, // last initialization
+      application_message_start,
+      application_message_process_initialize,
+      application_message_finalize,
+      application_message_exit_instance,
+      application_message_init_application,
+      application_message_none
 
    };
 
-   class CLASS_DECL_AURA application_signal_details:
-      public signal_details
+   class CLASS_DECL_AURA application_message:
+      public ::message::message
    {
    public:
 
 
-      e_application_signal             m_esignal;
+      e_application_message             m_esignal;
       int32_t                          m_iRet;
       bool                             m_bOk;
 
 
-      application_signal_details(class ::signal * psignal,e_application_signal esignal);
+      application_message(class ::message::sender * psignal,e_application_message esignal);
 
 
    };

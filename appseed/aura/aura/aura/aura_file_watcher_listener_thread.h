@@ -26,11 +26,10 @@ namespace file_watcher
          string                  m_str;
          bool                    m_bRecursive;
          file_watch_listener *   m_plistener;
-         event                   m_event;
          file_watch_id           m_id;
          bool                    m_bOwn;
 
-         add() : m_event(get_thread_app(), false, true) {}
+         add();
 
       };
 
@@ -57,7 +56,7 @@ namespace file_watcher
 
       }
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
       DECL_GEN_SIGNAL(_001OnAddWatch);
 

@@ -11,15 +11,16 @@ namespace filemanager
    {
    public:
 
+      
       bool m_bVoidSync;
 
 
+      path_view(::aura::application * papp);
 
-       path_view(::aura::application * papp);
 
-
+      virtual void install_message_routing(::message::sender * pinterface);
+      
       virtual void _001OnAfterChangeText(::action::context actioncontext);
-
 
       void on_update(::user::impact * pSender, LPARAM lHint, object* phint);
 

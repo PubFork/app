@@ -369,7 +369,7 @@ namespace windows
    void window_buffer::update_window(::draw2d::dib * pdib)
    {
 
-      synch_lock sl(m_pmutex);
+      single_lock sl(m_pmutex);
 
       if (pdib == NULL || pdib->area() <= 0)
       {
@@ -388,7 +388,11 @@ namespace windows
 
       rectWindow.bottom = rectWindow.top + cy;
 
+      sl.lock();
+
       bool bLayered = (::GetWindowLong(m_pimpl->m_oswindow, GWL_EXSTYLE) & WS_EX_LAYERED) != 0;
+
+      sl.unlock();
 
       if (!m_bDibIsHostingBuffer)
       {
@@ -441,8 +445,9 @@ namespace windows
             rectWindow.width(),
             rectWindow.height(),
             (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
-            | m_pimpl->m_iShowFlags
+            | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
             | uiFlags);
+
 
          if (bLayered && !m_pimpl->m_bShowWindow)
          {
@@ -495,6 +500,8 @@ namespace windows
          BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
 
          //::SelectClipRgn(m_hdcScreen, NULL);
+
+         sl.lock();
 
 
          bool bOk = ::UpdateLayeredWindow(m_pimpl->m_oswindow, m_hdcScreen, &pt, &sz, m_hdc, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;

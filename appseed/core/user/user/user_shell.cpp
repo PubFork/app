@@ -1,6 +1,4 @@
 #include "framework.h"
-#include "zlib.h"
-#include "zutil.h"
 #include "aura/compress/zip/zip.h"
 #include "aura/compress/compress_gz.h"
 

@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <stdio.h>
 
 //#ifndef CA2_SPA
 //#define PATH_SEPARATOR "\\"
@@ -77,52 +78,84 @@ string dir_appdata(const char * path = NULL)
 
 #endif*/
 
+
 machine_event::machine_event()
 {
+   
    m_bInitialized = false;
+   
    initialize();
+   
 }
+
 
 machine_event::~machine_event()
 {
+   
 }
+
 
 bool machine_event::initialize()
 {
+   
    if(m_bInitialized)
+   {
+      
       return true;
+      
+   }
+   
    m_bInitialized = true;
+   
    return true;
+   
 }
+
 
 bool machine_event::read(machine_event_data * pdata)
 {
-   HANDLE hfile = ::create_file(dir::appdata(process_platform_dir_name2()) / "machine\\event\\machine_event.bin", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-   if(hfile == INVALID_HANDLE_VALUE)
+   
+   FILE * file = fopen_dup(dir::appdata(process_platform_dir_name2()) / "machine/event/machine_event.bin", "r");
+   
+   if(file == NULL)
    {
-      memset_dup(pdata, 0, sizeof(machine_event_data));
+      
+      ZEROP(pdata);
+      
       return false;
+      
    }
-   else
-   {
-      pdata->read(hfile);
-      ::CloseHandle(hfile);
-      return true;
-   }
+
+   pdata->read(file);
+      
+   ::fclose(file);
+      
+   return true;
+   
 }
+
 
 bool machine_event::write(machine_event_data * pdata)
 {
+   
    if(!dir::mk(dir::element() / "machine\\event"))
       return false;
-   HANDLE hfile = ::create_file(dir::element() / "machine\\event\\machine_event.bin", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);   
-   if(hfile != INVALID_HANDLE_VALUE)
+   
+   FILE * file = fopen_dup(dir::appdata(process_platform_dir_name2()) / "machine/event/machine_event.bin", "w+");
+   
+   if(file == NULL)
    {
-      pdata->write(hfile);
-      ::CloseHandle(hfile);
-      return true;
+
+      return false;
+      
    }
-   return false;
+   
+   pdata->write(file);
+   
+   ::fclose(file);
+   
+   return true;
+   
 }
 
 

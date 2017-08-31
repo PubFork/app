@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 BEGIN_EXTERN_C

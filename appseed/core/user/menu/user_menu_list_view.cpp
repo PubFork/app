@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -7,7 +7,6 @@ namespace user
 
    menu_list_view::menu_list_view(::aura::application * papp) :
       object(papp),
-      menu_base(papp),
       menu(papp),
       menu_list_window(papp)
    {
@@ -18,10 +17,10 @@ namespace user
    }
 
 
-   void menu_list_view::install_message_handling(::message::dispatch * pinterface)
+   void menu_list_view::install_message_routing(::message::sender * pinterface)
    {
 
-      BASE::install_message_handling(pinterface);
+      BASE::install_message_routing(pinterface);
 
    }
 
@@ -53,48 +52,67 @@ namespace user
 
    }
 
-   void menu_list_view::GuieProc(signal_details * pobj)
-   {
-      SCAST_PTR(::message::base, pbase, pobj);
-      if (pbase->m_uiMessage == m_uiMessage)
-      {
-         if (base_class < ::user::place_holder >::bases(GetParent()))
-         {
-            pbase->set_lresult(GetParent()->GetParent()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
-         }
-         else
-         {
-            pbase->set_lresult(GetParent()->send_message(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
-         }
-         pbase->m_bRet = true;
-         return;
-      }
-      return impact::GuieProc(pobj);
-   }
 
-   bool menu_list_view::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   //void menu_list_view::GuieProc(::message::message * pobj)
+   //{
+   //   
+   //   SCAST_PTR(::message::base, pbase, pobj);
+
+   //   if (pbase->m_id == m_iMessage)
+   //   {
+   //      if (base_class < ::user::place_holder >::bases(GetParent()))
+   //      {
+   //         pbase->set_lresult(GetParent()->GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+   //      }
+   //      else
+   //      {
+   //         pbase->set_lresult(GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+   //      }
+   //      
+   //      pbase->m_bRet = true;
+   //      
+   //      return;
+   //      
+   //   }
+   //   
+   //   return impact::GuieProc(pobj);
+   //   
+   //}
+   
+
+   void menu_list_view::_001OnCmdMsg(::user::command * pcommand)
    {
+      
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
-         if (m_puiNotify->_001OnCmdMsg(pcmdmsg))
-            return TRUE;
+         
+         m_puiNotify->_001OnCmdMsg(pcommand);
+
+         if(pcommand->m_bRet)
+         {
+            
+            return;
+            
+         }
+         
       }
-      return impact::_001OnCmdMsg(pcmdmsg);
+      
+      return impact::_001OnCmdMsg(pcommand);
+      
    }
 
 
-   bool menu_list_view::LoadMenu(sp(::xml::node) pnode, sp(::user::interaction) puiNotify, UINT uiCallbackMessage)
+   bool menu_list_view::load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage)
    {
 
       destroy_menu();
 
-      m_uiMessage = uiCallbackMessage;
       m_bAutoClose = false;
 
-      if (!menu_list_window::LoadMenu(pnode))
+      if (!menu_list_window::load_menu(pnode))
          return false;
 
-      MenuFill(this, GetParentFrame());
+      //menu_fill(GetParentFrame(), this);
 
       m_puiNotify = puiNotify;
 

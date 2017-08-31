@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include <math.h>
 
 
@@ -6,7 +6,7 @@
 
 
 
-namespace command
+namespace prompt
 {
 
 
@@ -17,9 +17,9 @@ namespace command
 
       m_iCompromised = 0;
 
-      connect_update_cmd_ui("edit_copy", &primary_view::_001OnUpdateEditCopy);
+      connect_command_probe("edit_copy", &primary_view::_001OnUpdateEditCopy);
       connect_command("edit_copy", &primary_view::_001OnEditCopy);
-      connect_update_cmd_ui("edit_paste", &primary_view::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &primary_view::_001OnUpdateEditPaste);
       connect_command("edit_paste", &primary_view::_001OnEditPaste);
 
    }
@@ -35,11 +35,11 @@ namespace command
    }
 
 
-   void primary_view::install_message_handling(::message::dispatch * pinterface)
+   void primary_view::install_message_routing(::message::sender * pinterface)
    {
 
-      BASE::install_message_handling(pinterface);
-	   IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
+      BASE::install_message_routing(pinterface);
+	   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &primary_view::_001OnContextMenu);
 
    }
 
@@ -167,33 +167,33 @@ namespace command
       }
    }
 
-   void primary_view::_001OnUpdateEditCopy(signal_details * pobj)
+   void primary_view::_001OnUpdateEditCopy(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
-   void primary_view::_001OnEditCopy(signal_details * pobj)
+   void primary_view::_001OnEditCopy(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       clipboard_copy();
    }
 
-   void primary_view::_001OnUpdateEditPaste(signal_details * pobj)
+   void primary_view::_001OnUpdateEditPaste(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
 
-   void primary_view::_001OnEditPaste(signal_details * pobj)
+   void primary_view::_001OnEditPaste(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       clipboard_paste();
    }
 
 
-   void primary_view::_001OnContextMenu(signal_details * pobj)
+   void primary_view::_001OnContextMenu(::message::message * pobj)
    {
 
       track_popup_xml_matter_menu("command/popup_primary_verbing.xml", 0, pobj);
@@ -201,6 +201,6 @@ namespace command
    }
 
 
-} // namespace command
+} // namespace prompt
 
 

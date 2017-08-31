@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "metrowin.h"
 //#include <Shellapi.h>
 //#include <string.h>
@@ -316,15 +316,12 @@ int get_current_process_affinity_order()
 }
 
 
-unsigned long translate_processor_affinity(int i)
+DWORD_PTR translate_processor_affinity(int i)
 {
 
    return 1;
 
-
 }
-
-
 
 
 CLASS_DECL_AURA int ui_open_url(const char * pszUrl)

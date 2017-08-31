@@ -7,6 +7,7 @@
 namespace user
 {
 
+
    class frame_window;
    class control_bar;
 
@@ -99,6 +100,7 @@ public:
    bool SaveState(const char * lpszProfileName, int32_t nIndex);
 };
 
+
 namespace user
 {
 
@@ -167,12 +169,14 @@ namespace user
       void EnableDocking(uint32_t dwDockStyle);
 
       // Overridables
-      virtual void OnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler) = 0;
+      virtual void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) = 0;
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
       
-      using ::user::interaction::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      
+      virtual void message_handler(::message::base * pbase);
+
+
 #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
@@ -186,7 +190,7 @@ namespace user
       virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle);
 
 
-      virtual void pre_translate_message(signal_details * pobj);
+      virtual void pre_translate_message(::message::message * pobj);
       virtual bool pre_create_window(::user::create_struct& cs);
       virtual void PostNcDestroy();
 
@@ -213,7 +217,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnSizeParent);
       DECL_GEN_SIGNAL(_001OnHelpHitTest);
       DECL_GEN_SIGNAL(_001OnInitialUpdateMessage);
-      DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
+      //DECL_GEN_SIGNAL(_001OnIdleUpdateCmdUI);
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
       DECL_GEN_SIGNAL(_001OnMouseActivate);
@@ -225,7 +229,7 @@ namespace user
       //   DECL_GEN_SIGNAL(_001OnPaint);
       //   virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       friend class ::user::frame_window;
       friend class BaseDockBar;

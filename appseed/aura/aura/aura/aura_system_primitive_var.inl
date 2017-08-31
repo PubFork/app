@@ -114,7 +114,9 @@ inline bool var::is_array() const
 
 inline bool CLASS_DECL_AURA operator == (const string & str, const var & var)
 {
+   
    return str == var.get_string();
+
 }
 
 

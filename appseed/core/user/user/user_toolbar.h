@@ -37,6 +37,8 @@ namespace user
       virtual public ::user::control_bar
    {
    public:
+
+
       enum e_element
       {
          element_item,
@@ -49,6 +51,7 @@ namespace user
          ElementTextHover,
          ElementTextPress,
       };
+
 
       spa(toolbar_item)    m_itema;
 
@@ -70,7 +73,7 @@ namespace user
       using ::user::control_bar::create_window;
       virtual bool create_window(sp(::user::interaction) pParentWnd,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_TOP,UINT nID = __IDW_TOOLBAR);
       using ::user::control_bar::create_window_ex;
-      virtual bool create_window_ex(sp(::user::interaction) pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = null_rect(), UINT nID = __IDW_TOOLBAR);
+      virtual bool create_toolbar(::user::interaction * pParentWnd, uint32_t dwCtrlStyle = TBSTYLE_FLAT,uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP,const RECT & rect = null_rect(), id nID = __IDW_TOOLBAR);
 
       void SetSizes(SIZE sizeButton, SIZE sizeImage);
          // button size should be bigger than image
@@ -142,20 +145,17 @@ namespace user
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-      //{{__MSG(toolbar)
       DECL_GEN_SIGNAL(_001OnNcHitTest);
-      //DECL_GEN_SIGNAL(OnNcPaint();
-      //DECL_GEN_SIGNAL(OnPaint();
       DECL_GEN_SIGNAL(_001OnNcCalcSize);
       DECL_GEN_SIGNAL(_001OnWindowPosChanging);
       DECL_GEN_SIGNAL(_001OnSysColorChange);
       DECL_GEN_SIGNAL(_001OnSetButtonSize);
       DECL_GEN_SIGNAL(_001OnSetBitmapSize);
       DECL_GEN_SIGNAL(_001OnPreserveZeroBorderHelper);
-      DECL_GEN_SIGNAL(_001OnNcCreate);
+
       LRESULT OnSetSizeHelper(size& size, LPARAM lParam);
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       virtual int32_t _001GetHoverItem();

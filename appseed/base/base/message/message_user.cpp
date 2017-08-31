@@ -1,5 +1,5 @@
 #include "framework.h" // from "base/user/user.h"
-#include "base/user/core_user.h"
+#include "base/user/user.h"
 
 
 
@@ -97,8 +97,7 @@ namespace message
 
 
    key::key(::aura::application * papp):
-
-      ::message::base(papp)
+      ::user::key(papp)
    {
       m_ekey = ::user::key_none;
       m_nScanCode = 0;
@@ -111,7 +110,7 @@ namespace message
 
 
    key::key(const key & key):
-      ::message::base(key)
+      ::user::key(key)
    {
 
       operator = (key);
@@ -145,7 +144,7 @@ namespace message
       if(this != &key)
       {
 
-         ::signal_details::copy_this(key);
+         ::message::message::copy_this(key);
 
          ::message::base::copy_this(key);
 

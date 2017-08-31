@@ -9,6 +9,7 @@ using namespace Microsoft::WRL;
 using namespace Windows::Graphics::Display;
 using namespace D2D1;
 
+extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
 
 namespace metrowin
 {
@@ -289,7 +290,7 @@ namespace metrowin
          }
 
          System.m_possystemwindow->m_pui->SetWindowPos(ZORDER_TOP, 0, 0, m_size.cx, m_size.cy, SWP_SHOWWINDOW);
-         if (System.directrix()->m_varTopicQuery.has_property("client_only"))
+         if (System.handler()->m_varTopicQuery.has_property("client_only"))
          {
             for (int i = 0; i < System.m_possystemwindow->m_pui->m_uiptraChild.get_count(); i++)
             {
@@ -598,7 +599,7 @@ namespace metrowin
 
             {
 
-               ::draw2d::lock draw2dlock;
+               ::draw2d::device_lock draw2dlock;
 
                // The first argument instructs DXGI to block until VSync, putting the application
                // to sleep until the next VSync. This ensures we don't waste any cycles rendering
@@ -612,6 +613,8 @@ namespace metrowin
 
                // Discard the contents of the depth stencil.
                m_d3dContext->DiscardView(m_d3dDepthStencilView.Get());
+
+               g_pdiba->remove_all();
 
             }
 

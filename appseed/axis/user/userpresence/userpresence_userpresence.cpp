@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -75,33 +75,33 @@ namespace userpresence
       }
 
 
-      string strQuery = Application.command()->m_varTopicQuery["app"];
+      string strQuery = Application.handler()->m_varTopicQuery["app"];
 
-      if(Application.command()->m_varTopicQuery.has_property("install")
-         || Application.command()->m_varTopicQuery.has_property("uninstall"))
+      if(Application.handler()->m_varTopicQuery.has_property("install")
+         || Application.handler()->m_varTopicQuery.has_property("uninstall"))
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "simpledbcfg"
-         || Application.command()->m_varTopicQuery["app"] == "app-core/netnodelite"
-         || Application.command()->m_varTopicQuery["app"] == "netshareclient")
+      if(Application.handler()->m_varTopicQuery["app"] == "simpledbcfg"
+         || Application.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
+         || Application.handler()->m_varTopicQuery["app"] == "netshareclient")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-core/mydns")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-core/mydns")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-core/netnodecfg")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode")
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "app-gtech/sensible_service")
+      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service")
          return true;
 
       // it may not be initialized, due
@@ -139,12 +139,12 @@ namespace userpresence
       if(!is_initialized())
          return true;
 
-      if(Application.command()->m_varTopicQuery.has_property("install")
-         || Application.command()->m_varTopicQuery.has_property("uninstall"))
+      if(Application.handler()->m_varTopicQuery.has_property("install")
+         || Application.handler()->m_varTopicQuery.has_property("uninstall"))
          return true;
 
-      if(Application.command()->m_varTopicQuery["app"] == "simpledbcfg"
-         || Application.command()->m_varTopicQuery["app"] == "app-core/netnodelite")
+      if(Application.handler()->m_varTopicQuery["app"] == "simpledbcfg"
+         || Application.handler()->m_varTopicQuery["app"] == "app-core/netnodelite")
          return true;
 
       if(!is_initialized())
@@ -198,7 +198,7 @@ namespace userpresence
 
    }
 
-   void userpresence::message_queue_message_handler(signal_details * pobj)
+   void userpresence::message_queue_message_handler(::message::message * pobj)
    {
       
       UNREFERENCED_PARAMETER(

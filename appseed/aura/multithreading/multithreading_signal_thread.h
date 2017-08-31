@@ -9,16 +9,16 @@ public:
 
 
    DST * m_psignalizableDst;
-   void (DST::* m_pfnDst)(signal_details *);
+   void (DST::* m_pfnDst)(::message::message *);
    SRC * m_psignalizableSrc;
-   void (SRC::* m_pfnSrc)(signal_details *);
-   signal_details * m_pobj;
+   void (SRC::* m_pfnSrc)(::message::message *);
+   ::message::message * m_pobj;
 
 
    signal_thread(::aura::application * papp,
-      DST * psignalizableDst, void (DST::* pfnDst)(signal_details *),
-      SRC * psignalizableSrc, void (SRC::* pfnSrc)(signal_details *),
-      signal_details * pobj) :
+      DST * psignalizableDst, void (DST::* pfnDst)(::message::message *),
+      SRC * psignalizableSrc, void (SRC::* pfnSrc)(::message::message *),
+      ::message::message * pobj) :
       object(papp),
       thread(papp)
    {
@@ -49,9 +49,9 @@ public:
 
 template < class DST, class SRC >
 void emit(::aura::application * papp,
-   DST * psignalizableDst, void (DST::* pfnDst)(signal_details *),
-   SRC * psignalizableSrc, void (SRC::* pfnSrc)(signal_details *),
-   signal_details * pobj)
+   DST * psignalizableDst, void (DST::* pfnDst)(::message::message *),
+   SRC * psignalizableSrc, void (SRC::* pfnSrc)(::message::message *),
+   ::message::message * pobj)
 {
    signal_thread < DST, SRC > * pthread = new signal_thread < DST, SRC >(papp, psignalizableDst, pfnDst, psignalizableSrc, pfnSrc, pobj);
    pthread->begin();

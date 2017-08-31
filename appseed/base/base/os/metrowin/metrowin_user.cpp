@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 CLASS_DECL_BASE int_bool ui_get_cursor_pos(POINT * ppt)
@@ -55,29 +55,34 @@ CLASS_DECL_BASE WINBOOL GetCursorPos(LPPOINT lppoint)
    if(g_iMouse < 0)
       return FALSE;
 
-   Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
 
-   for(unsigned int ui = 0; ui < deva->Size; ui++)
+   ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([lppoint]()
    {
 
-      Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
+      Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
 
-      if(dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
+      for (unsigned int ui = 0; ui < deva->Size; ui++)
       {
 
-         Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
+         Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
 
-         lppoint->x = (LONG)pointerPoint->RawPosition.X;
+         if (dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
+         {
 
-         lppoint->y = (LONG)pointerPoint->RawPosition.Y;
+            Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
 
-         return TRUE;
+            lppoint->x = (LONG)pointerPoint->RawPosition.X;
+
+            lppoint->y = (LONG)pointerPoint->RawPosition.Y;
+
+         }
 
       }
 
-   }
+   })));
 
-   return FALSE;
+   return TRUE;
 
 }
 

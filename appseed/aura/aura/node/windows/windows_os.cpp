@@ -1,6 +1,7 @@
-//#include "framework.h"
-//#include "windows.h"
-//#include "aura/graphics/draw2d/draw2d.h"
+#include "framework.h"
+#include <wincred.h>
+#include <wtsapi32.h>
+
 
 CREDUIAPI
 BOOL
@@ -33,6 +34,14 @@ namespace windows
 
    os::~os()
    {
+   }
+
+
+   string os::get_command_line()
+   {
+      
+      return GetCommandLineW();
+      
    }
 
 
@@ -1079,7 +1088,7 @@ namespace windows
 
       string strCalling = Sys(papp).dir().module() / strExe + " : service";
 
-      if(System.directrix()->m_varTopicQuery.has_property("no_remote_simpledb"))
+      if(System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
       {
 
          strCalling += " no_remote_simpledb";
@@ -1221,7 +1230,7 @@ namespace windows
       {
          DWORD Ret = ::GetLastError();
          CloseServiceHandle(hdlSCM);
-         if(Ret == 1060) // O serviço já não existe. Service already doesn't exist.
+         if(Ret == 1060) // O serviï¿½o jï¿½ nï¿½o existe. Service already doesn't exist.
             return true; // do self-healing
          return false;
       }
@@ -1387,7 +1396,7 @@ namespace windows
       if (status.m_mtime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(), status.m_mtime, &lastWriteTime);
+         ::windows::time_to_filetime(get_app(), status.m_mtime, &lastWriteTime);
 
          lpLastWriteTime = &lastWriteTime;
 
@@ -1397,7 +1406,7 @@ namespace windows
       if (status.m_atime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(),status.m_atime, &lastAccessTime);
+         ::windows::time_to_filetime(get_app(),status.m_atime, &lastAccessTime);
 
          lpLastAccessTime = &lastAccessTime;
 
@@ -1407,7 +1416,7 @@ namespace windows
       if (status.m_ctime.get_time() != 0)
       {
 
-         ::windows::TimeToFileTime(get_app(),status.m_ctime, &creationTime);
+         ::windows::time_to_filetime(get_app(),status.m_ctime, &creationTime);
 
          lpCreationTime = &creationTime;
 
@@ -1655,7 +1664,7 @@ namespace windows
 
          ::file::path pathFolder;
 
-         SHGetSpecialFolderPath(NULL, pathFolder, CSIDL_WINDOWS, FALSE);
+         ::windows::shell_get_special_folder_path(NULL, pathFolder, CSIDL_WINDOWS, FALSE);
 
          pathFolder /= "Web/Wallpaper";
 

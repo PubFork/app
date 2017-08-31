@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 point3d box::center()

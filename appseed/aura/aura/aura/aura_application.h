@@ -1,12 +1,36 @@
 #pragma once
 
+struct install_status
+{
+
+   int         m_iCheck;
+   //bool        m_bSlopeOk;
+   bool        m_bOk;
+   //DWORD       m_dwLastOk;
+
+   install_status()
+   {
+
+      m_iCheck = 0;
+      //m_bSlopeOk = false;
+      m_bOk = false;
+
+   }
+
+
+   DWORD calc_when_is_good_to_check_again();
+
+};
+
+
+
 namespace multimedia
 {
 
    namespace audio_plugin
    {
 
-   class plugin;
+      class plugin;
 
    } // namespace audio_plugin
 
@@ -16,6 +40,8 @@ namespace multimedia
 
 namespace aura
 {
+
+
 
 
    class CLASS_DECL_AURA application :
@@ -38,6 +64,21 @@ namespace aura
       ::core::application *                           m_pcoreapp; // can be used only from core and upper
       ::core::system *                                m_pcoresystem; // can be used only from core and upper
       ::core::session *                               m_pcoresession; // can be used only from core and upper
+      
+
+      DWORD                                           m_dwInstallGoodToCheckAgain;
+
+      
+      ::install::installer *                          m_pinstaller;
+      string                                          m_strInstallTraceLabel;
+      string                                          m_strInstallBuild;
+
+
+
+
+
+      string_map < install_status >                   m_mapUpdated;
+      string_map < install_status >                   m_mapInstalled;
 
       bool                                            m_bAgreeExit;
       bool                                            m_bAgreeExitOk;
@@ -62,9 +103,8 @@ namespace aura
       string_map < ::aura::application * >            m_appmap;
       string                                          m_strAppName;
       ::aura::allocatorsp                             m_allocer;
-      sp(class signal)                                m_psignal;
 
-      ::aura::main_init_data *                        m_pinitmaindata;
+      sp(::command::command)                          m_pcommand;
 
       ::http::application                             m_http;
 
@@ -127,7 +167,7 @@ namespace aura
       virtual bool app_data_set(class id id, ::file::serializable & obj);
       virtual bool app_data_get(class id id, ::file::serializable & obj);
 
-      virtual void install_message_handling(::message::dispatch * pdispatch) override;
+      virtual void install_message_routing(::message::sender * psender) override;
 
 
       virtual object * alloc(sp(type) info);
@@ -232,7 +272,7 @@ namespace aura
 
 //#endif
 
-      virtual void process_message_filter(int32_t code,signal_details * pobj) override;
+      virtual void process_message_filter(int32_t code,::message::message * pobj) override;
 
       virtual bool on_thread_on_idle(::thread * pthread,LONG lCount) override;
       virtual bool post_user_message(::thread * pthread,::user::primitive * pui,UINT message,WPARAM wparam = 0,lparam lparam = 0);
@@ -243,7 +283,7 @@ namespace aura
       virtual LRESULT send_message(::user::primitive * pui, UINT message, WPARAM wparam = 0, lparam lparam = 0);
 
       virtual oswindow get_safe_handle(::user::primitive * pui);
-      virtual void dispatch_user_message(::signal_details * pobj);
+      virtual void dispatch_user_message(::message::message * pobj);
       virtual ::user::primitive * get_parent(::user::primitive * pui);
       virtual bool enable_window(::user::primitive * pui, bool bEnable = true);
       virtual bool set_window_text(::user::primitive * pui, const string & strText);
@@ -360,7 +400,7 @@ namespace aura
       virtual bool _001OnDDECommand(const char * lpcsz);
       virtual void _001EnableShellOpen();
       //virtual ::user::document *  _001OpenDocumentFile(var varFile);
-      virtual void _001OnFileNew(signal_details * pobj);
+      virtual void _001OnFileNew(::message::message * pobj);
 
 
       //virtual bool update_module_paths();
@@ -456,50 +496,17 @@ namespace aura
 
       virtual bool assert_user_logged_in();
 
-      virtual bool init_main_data(::aura::main_init_data * pdata);
+      virtual bool startup_command(::command::command * pcommand);
 
-      virtual bool set_main_init_data(::aura::main_init_data * pdata);
-
-
-      //virtual void dir_matter_ls_file(const string & str,stringa & stra);
-      //virtual string matter_as_string(const char * pszMatter,const char * pszMatter2 = NULL);
-      //virtual string file().as_string(var varFile);
-      //virtual string file().as_string(var varFile,var & varQuery);
-      //virtual string dir().matter(const char * pszMatter,const char * pszMatter2 = NULL);
-      //virtual bool is_inside_time_dir(const char * pszPath);
-      //virtual bool file_is_read_only(const char * pszPath);
-      //virtual bool file().exists(const char * pszPath);
-      //virtual bool file_is_equal_path(const char * pszPath1,const char * pszPath2);
-      //virtual bool dir().id(const char * psz);
-      //virtual bool file_del(const char * psz);
-      //virtual string file_extension(const char * pszPath);
-      //virtual string dir_path(const char * psz1,const char * psz2,const char * psz3 = NULL);
-      //virtual string dir_element(const char * psz = NULL);
-      //virtual string dir_ca2module(const char * psz = NULL);
-      //virtual string dir_name(const char * psz);
-      //virtual void  dir_ls_dir(const char * lpcsz,::file::patha & patha);
-      //virtual void  dir_rls(const char * lpcsz,::file::patha & patha);
-      //virtual bool dir_mk(const char * psz);
-      //virtual string file_title(const char * psz);
-      //virtual string file().name_(const char * psz);
-      //virtual string file_time_square();
-      //virtual string dir_userappdata(const char * lpcsz = NULL,const char * lpcsz2 = NULL);
-      //virtual string dir_appdata(const char * lpcsz = NULL,const char * lpcsz2 = NULL);
-      //virtual string dir_simple_path(const string & str1,const string & str2);
-
-//#ifdef APPLEOS
-//      virtual CLASS_DECL_AURA string dir_pathfind(const char * pszEnv, const char * pszTopic, const char * pszMode);
-//#endif
-
-      //virtual ::file::file_sp file_get_file(var varFile,uint32_t uiFlags);
+      virtual bool process_command(::command::command * pcommand);
 
       virtual string http_get_locale_schema(const char * pszUrl,const char * pszLocale,const char * pszSchema);
 
       virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
 
-      virtual void process_message(signal_details * pobj);
+      virtual void process_message(::message::base * base);
 
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
 
 
       virtual string get_locale();
@@ -550,9 +557,15 @@ namespace aura
 
       virtual string lstr(id id,const string & strDefault = (const string &)*((const string *)NULL)) override;
 
-      void on_command(::primitive::command * pcommand) override;
+      
+      void handle_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
 
+      virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
+
+      virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
+
+      ::install::installer & installer() { return *m_pinstaller; }
 
       virtual bool check_install();
 
@@ -589,6 +602,36 @@ namespace aura
 
       virtual bool http_download(const char * pszUrl, const char * pszFile);
       virtual string http_get(const char * pszUrl);
+
+      
+      virtual bool on_open_document_file(var varFile);
+
+      virtual void install_trace(const string & str);
+      virtual void install_trace(double dRate);
+      virtual bool register_spa_file_type();
+
+      virtual bool low_is_app_app_admin_running(string strPlatform);
+      virtual void defer_start_program_files_app_app_admin(string strPlatform);
+      virtual void start_program_files_app_app_admin(string strPlatform);
+
+      virtual string install_pick_command_line();
+
+
+      virtual string install_get_title(string strTitle);
+
+      virtual string install_get_build();
+
+      virtual string get_app_id(string wstr);
+      virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+
+
+
+      virtual bool install_get_admin();
+      virtual string install_get_id();
 
 
    };

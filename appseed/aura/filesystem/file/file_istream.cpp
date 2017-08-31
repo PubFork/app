@@ -1,4 +1,6 @@
-//#include "framework.h"
+#include "framework.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 
 
@@ -8,7 +10,7 @@ namespace file
 
    // FindSignature.cpp
    // from 7-zip on 2012-12-23, lunch time
-   ////#include "framework.h"
+   #include "framework.h"
 
    /*//#include "Common/Buffer.h"
 

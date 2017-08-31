@@ -1,6 +1,6 @@
 #include "framework.h" // from "axis/user/user.h"
-#include "base/user/core_user.h"
-#include "base/user/common_user.h"
+#include "base/user/user.h"
+//#include "base/user/common_user.h"
 #include "base/os/windows/windows_system_interaction_impl.h"
 
 
@@ -102,14 +102,12 @@ namespace base
          
       }
       
-      
       return true;
-      
       
    }
 
 
-   void application::process_message_filter(int32_t code,signal_details * pobj)
+   void application::process_message_filter(int32_t code,::message::message * pobj)
    {
 
       if(pobj == NULL)
@@ -153,7 +151,7 @@ namespace base
       case MSGF_DIALOGBOX:    // handles message boxes as well.
          //pMainWnd = __get_main_window();
          if(code == MSGF_DIALOGBOX && m_puiActive != NULL &&
-               pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
+               pbase->m_id >= WM_KEYFIRST && pbase->m_id <= WM_KEYLAST)
          {
             //// need to translate messages for the in-place container
             //___THREAD_STATE* pThreadState = __get_thread_state();
@@ -306,6 +304,139 @@ namespace base
 
    }
 
+
+
+   bool application::send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->send_message(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->send_message_to_descendants(message, wparam, lparam);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return true;
+
+   }
+
+
+   bool application::route_message_to_windows(::message::message * pmessage) // with tbs in <3
+   {
+
+      sp(::user::interaction) pwnd;
+
+      try
+      {
+
+         while (get_frame(pwnd))
+         {
+
+            try
+            {
+
+               if (pwnd != NULL && pwnd->IsWindow())
+               {
+
+                  try
+                  {
+
+                     pwnd->route_message(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+                  }
+
+                  try
+                  {
+
+                     pwnd->route_message_to_descendants(pmessage);
+
+                  }
+                  catch (...)
+                  {
+
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return true;
+
+   }
+
+
+   void application::send_language_change_message()
+   {
+
+      ::message::message message(::message::type_language);
+
+      route_message_to_windows(&message);
+
+   }
 
 
 
@@ -488,7 +619,7 @@ namespace base
 
 #endif
 
-      pmessage->m_pui               = (::user::interaction *) pui->m_pvoidUserInteraction;
+      pmessage->m_pui               = pui->m_puiThis;
       pmessage->m_uiMessage         = message;
       pmessage->m_wparam            = wparam;
       pmessage->m_lparam            = lparam;
@@ -502,21 +633,22 @@ namespace base
    bool application::is_window(::user::primitive * pui)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->IsWindow();
+      return pui->m_puiThis->IsWindow();
 
    }
 
    LRESULT application::send_message(::user::primitive * pui,UINT message,WPARAM wparam,lparam lparam)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->send_message(message,wparam,lparam);
+      return pui->m_puiThis->send_message(message,wparam,lparam);
 
    }
+   
 
    oswindow application::get_safe_handle(::user::primitive * pui)
    {
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->get_safe_handle();
+      return pui->m_puiThis->get_safe_handle();
 
    }
 
@@ -552,16 +684,16 @@ namespace base
       if(!bEnable)
       {
 
-         if(Session.get_focus_ui() == ((::user::interaction *)pui->m_pvoidUserInteraction))
+         if(Session.get_focus_ui() == pui->m_puiThis)
          {
 
-            Application.send_message(Application.get_parent(((::user::interaction *)pui->m_pvoidUserInteraction)),WM_NEXTDLGCTL,0,(LPARAM)FALSE);
+            Application.send_message(pui->m_puiThis->GetParent(), WM_NEXTDLGCTL, 0, (LPARAM)FALSE);
 
          }
 
       }
 
-      return ((::user::interaction *)pui->m_pvoidUserInteraction)->enable_window(bEnable);
+      return pui->m_puiThis->enable_window(bEnable);
 
    }
 
@@ -576,14 +708,12 @@ namespace base
    }
 
 
-
-
    sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    {
 
-      ::user::interaction * pwnd = NULL;
+      ::user::interaction * pui = NULL;
 
-      if(pwnd == NULL && lpmsg->hwnd != NULL)
+      if(pui == NULL && lpmsg->hwnd != NULL)
       {
 
          if(lpmsg->message == 126)
@@ -601,26 +731,29 @@ namespace base
             try
             {
                
-               pwnd = pimpl->m_pui;
+               pui = pimpl->m_pui;
 
             }
             catch(...)
             {
 
-               pwnd = NULL;
+               pui = NULL;
 
             }
 
          }
 
-         if(pwnd == NULL)
+         if(pui == NULL)
             return NULL;
 
       }
 
+      if (pui != NULL)
+      {
 
-      if(pwnd != NULL)
-         return pwnd->get_base(lpmsg->message,lpmsg->wParam,lpmsg->lParam);
+         return pui->get_message_base(lpmsg->message, lpmsg->wParam, lpmsg->lParam);
+
+      }
 
       return ::axis::application::get_message_base(lpmsg);
 
@@ -628,18 +761,16 @@ namespace base
    }
 
 
-   void application::process_message(signal_details * pobj)
+   void application::process_message(::message::base * pbase)
    {
 
-      sp(::message::base) pbase = pobj;
-
-      if(pbase.is_null() || pbase->m_pwnd == NULL)
+      if(pbase->m_pwnd == NULL)
       {
 
          try
          {
 
-            message_handler(pobj);
+            message_handler(pbase);
 
          }
          catch(const ::exception::exception & e)
@@ -684,7 +815,7 @@ namespace base
       try
       {
 
-         ((::user::interaction *)pbase->m_pwnd->m_pvoidUserInteraction)->message_handler(pobj);
+         pbase->m_pwnd->m_puiThis->message_handler(pbase);
 
 
       }
@@ -735,7 +866,7 @@ run:
       if(m_puiMain == NULL)
          return NULL;
 
-      return (::user::interaction *) m_puiMain->m_pvoidUserInteraction;
+      return m_puiMain->m_puiThis;
 
    }
 
@@ -792,19 +923,36 @@ run:
 
    }
 
-   ::user::schema * application::userschema()
-   {
-
-      if (m_pbasesession->m_puserschemaSchema == NULL)
-      {
-
-         m_pbasesession->defer_create_user_schema(preferred_userschema());
-
-      }
-
-      return m_pbasesession->m_puserschemaSchema;
-
-   }
+//   ::user::style_base * application::userstyle()
+//   {
+//
+//      if (m_pbasesession->m_puserstyle == NULL)
+//      {
+//
+//         m_pbasesession->defer_create_user_style(preferred_userschema());
+//
+//      }
+//
+//      return m_pbasesession->m_puserstyle;
+//
+//   }
+//
+//   
+//   ::user::style_base * application::userstyle(::user::e_schema estyle)
+//   {
+//      
+//      ::user::style * puserstyle = userstyle();
+//      
+//      if(puserstyle == NULL)
+//      {
+//       
+//         return NULL;
+//         
+//      }
+//      
+//      return puserstyle->operator[](estyle);
+//      
+//   }
 
 
    void application::on_create_view(::user::view_creator_data * pcreatordata)
@@ -983,6 +1131,14 @@ run:
 
    }
 
+   
+   ::user::interaction * application::create_menu_interaction()
+   {
+      
+      return canew(::user::button);
+      
+   }
+   
 
 } // namespace base
 

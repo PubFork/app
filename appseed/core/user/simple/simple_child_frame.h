@@ -11,13 +11,13 @@ public:
    virtual ~simple_child_frame();
 
    
-   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg); 
+   virtual void _001OnCmdMsg(::user::command * pcommand) override; 
    virtual bool pre_create_window(::user::create_struct& cs);
 
 
    virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-   virtual bool get_translucency(::user::ETranslucency & etranslucency);
+   virtual bool get_translucency(::user::e_translucency & etranslucency);
 
 };
 

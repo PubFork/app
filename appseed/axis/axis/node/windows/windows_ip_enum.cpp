@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <stdio.h>
 #include "aura/net/net_sockets.h"
 #include "windows_ip_enum.h"
 

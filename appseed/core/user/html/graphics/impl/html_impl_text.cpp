@@ -897,9 +897,9 @@ namespace html
 
       }
 
-      void text::OnLButtonDown(signal_details * pobj)
+      void text::OnLButtonDown(::message::message * pobj)
       {
-         SCAST_PTR(::html::signal, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          if(m_pelemental->m_pdata->m_bEdit)
          {
             if(m_pelemental->m_elementalptra.get_size() == 1)
@@ -913,9 +913,9 @@ namespace html
          }
       }
 
-      void text::OnLButtonUp(signal_details * pobj)
+      void text::OnLButtonUp(::message::message * pobj)
       {
-         SCAST_PTR(::html::signal, phtml, pobj);
+         SCAST_PTR(::html::message, phtml, pobj);
          if(m_pelemental->m_pdata->m_bEdit)
          {
             if(m_pelemental->m_elementalptra.get_size() == 1)
@@ -930,7 +930,7 @@ namespace html
 
       }
 
-      void text::OnMouseMove(signal_details * pobj)
+      void text::OnMouseMove(::message::message * pobj)
       {
 
           ::html::impl::elemental::OnMouseMove(pobj);
@@ -938,7 +938,7 @@ namespace html
          if (m_pelemental->m_pdata->m_bEdit)
          {
 
-            SCAST_PTR(::html::signal, phtml, pobj);
+            SCAST_PTR(::html::message, phtml, pobj);
 
             _002OnMouseMove(phtml->m_psignal);
 

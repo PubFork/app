@@ -6,9 +6,21 @@ namespace message
 {
 
 
+   //base::base(::aura::application * papp) :
+   //   ::message::message(psignal)
+   //{
 
-   base::base(::aura::application * papp,class ::signal * psignal):
-      signal_details(papp, psignal)
+   //   m_lresult = 0;
+   //   m_bDestroyed = false;
+   //   m_pwnd = NULL;
+   //   m_plresult = &m_lresult;
+   //   m_bDoSystemDefault = true;
+
+   //}
+
+
+   base::base(::aura::application * papp) :
+      ::message::message(papp)
    {
 
       m_lresult            = 0;
@@ -21,7 +33,7 @@ namespace message
 
 
    base::base(::aura::application * papp,::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult):
-      signal_details(papp)
+      ::message::message(papp)
    {
 
       m_lresult            = 0;
@@ -38,7 +50,7 @@ namespace message
    {
 
       m_pwnd               = base.m_pwnd;
-      m_uiMessage          = base.m_uiMessage;
+      m_id                 = base.m_id;
       m_wparam             = base.m_wparam;
       m_lparam             = base.m_lparam;
       m_bConditional       = base.m_bConditional;
@@ -79,10 +91,9 @@ namespace message
    void base::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)
    {
 
+      ::message::message::set(pwnd, uiMessage, wparam, lparam);
+
       m_pwnd            = pwnd;
-      m_uiMessage       = uiMessage;
-      m_wparam          = wparam;
-      m_lparam          = lparam;
       m_plresult        = &lresult;
 
    }
@@ -127,18 +138,18 @@ namespace message
    }
 
 
-   void base::copy_this(const base & base)
-   {
+   //void base::copy_this(const base & base)
+   //{
 
-      m_pwnd = base.m_pwnd;
-      m_bConditional = base.m_bConditional;
-      m_bReflect = base.m_bReflect;
-      m_bDestroyed = base.m_bDestroyed;
-      m_bDoSystemDefault = base.m_bDoSystemDefault;
-      m_plresult = base.m_plresult;
-      m_lresult = base.m_lresult;
+   //   m_pwnd = base.m_pwnd;
+   //   m_bConditional = base.m_bConditional;
+   //   m_bReflect = base.m_bReflect;
+   //   m_bDestroyed = base.m_bDestroyed;
+   //   m_bDoSystemDefault = base.m_bDoSystemDefault;
+   //   m_plresult = base.m_plresult;
+   //   m_lresult = base.m_lresult;
 
-   }
+   //}
 
 
    void timer::set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult)

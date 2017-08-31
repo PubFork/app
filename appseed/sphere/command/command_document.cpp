@@ -1,13 +1,14 @@
-//#include "framework.h"
+#include "framework.h"
 
 
-namespace command
+namespace prompt
 {
 
 
    document::document(::aura::application * papp) :
       ::object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp)
    {
    }
@@ -58,7 +59,7 @@ namespace command
    }
    */
 
-   void document::data_on_after_change(signal_details * pobj)
+   void document::data_on_after_change(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -75,7 +76,7 @@ namespace command
    }
 
 
-} // namespace command
+} // namespace prompt
 
 
 

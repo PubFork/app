@@ -1,5 +1,5 @@
-
-using namespace Gdiplus;
+#include "framework.h"
+#include "coated/gdiplus.h"
 
 
 namespace hotplugin

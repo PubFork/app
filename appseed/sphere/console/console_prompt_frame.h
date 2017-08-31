@@ -24,7 +24,7 @@ namespace console
       prompt_frame(::aura::application * papp);
       virtual ~prompt_frame();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 	   void ShowControlBars(bool bShow);
 
@@ -43,11 +43,11 @@ namespace console
    
       void ToFront();
 
-      virtual bool on_simple_action(id id);
-      virtual bool on_simple_update(cmd_ui * pcmdui);
+      virtual void on_command(::user::command * pcommand);
+      virtual void on_command_probe(::user::command * pcommand);
 
 
-      virtual bool get_translucency(::user::ETranslucency & etranslucency);
+      virtual bool get_translucency(::user::e_translucency & etranslucency);
 
 
 	   DECL_GEN_SIGNAL(_001OnCreate);
@@ -59,13 +59,13 @@ namespace console
       DECL_GEN_SIGNAL(_001OnApp2000);
 
 
-      virtual void message_queue_message_handler(signal_details * pobj);
+      virtual void message_queue_message_handler(::message::message * pobj);
 
       sp(::user::wndfrm::frame::frame) 
          create_frame_schema();
    };
 
 
-} // namespace command
+} // namespace prompt
 
 

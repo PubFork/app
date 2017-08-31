@@ -20,18 +20,18 @@ simple_list_header_control::~simple_list_header_control()
 
 
 
-void simple_list_header_control::install_message_handling(::message::dispatch * pinterface)
+void simple_list_header_control::install_message_routing(::message::sender * pinterface)
 {
-   ::user::list_header::install_message_handling(pinterface);
+   ::user::list_header::install_message_routing(pinterface);
 #ifdef WINDOWSEX
-   IGUI_WIN_MSG_LINK(HDN_ENDTRACK, pinterface, this, &simple_list_header_control::_001OnEndTrack);
-   IGUI_WIN_MSG_LINK(HDN_TRACK, pinterface, this, &simple_list_header_control::_001OnTrack);
-   IGUI_WIN_MSG_LINK(HDN_ENDDRAG, pinterface, this, &simple_list_header_control::_001OnEndDrag);
+   IGUI_MSG_LINK(HDN_ENDTRACK, pinterface, this, &simple_list_header_control::_001OnEndTrack);
+   IGUI_MSG_LINK(HDN_TRACK, pinterface, this, &simple_list_header_control::_001OnTrack);
+   IGUI_MSG_LINK(HDN_ENDDRAG, pinterface, this, &simple_list_header_control::_001OnEndDrag);
 #endif
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &simple_list_header_control::_001OnCreate);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &simple_list_header_control::_001OnLButtonDown);
-   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &simple_list_header_control::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_list_header_control::_001OnMouseMove);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_list_header_control::_001OnCreate);
+   //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &simple_list_header_control::_001OnLButtonDown);
+   //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &simple_list_header_control::_001OnLButtonUp);
+   //IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &simple_list_header_control::_001OnMouseMove);
 }
 
 /*int32_t simple_list_header_control::GetItemWidth(int32_t iItem)
@@ -51,7 +51,7 @@ void simple_list_header_control::install_message_handling(::message::dispatch * 
 
 }*/
 
-void simple_list_header_control::_001OnEndTrack(signal_details * pobj)
+void simple_list_header_control::_001OnEndTrack(::message::message * pobj)
 {
 #ifdef WINDOWSEX
    SCAST_PTR(::message::notify, pnotify, pobj);
@@ -78,7 +78,7 @@ void simple_list_header_control::_001OnEndTrack(signal_details * pobj)
 #endif
 }
 
-void simple_list_header_control::_001OnTrack(signal_details * pobj)
+void simple_list_header_control::_001OnTrack(::message::message * pobj)
 {
 #ifdef WINDOWSEX
    SCAST_PTR(::message::notify, pnotify, pobj);
@@ -107,7 +107,7 @@ void simple_list_header_control::_001OnTrack(signal_details * pobj)
 }
 
 
-void simple_list_header_control::_001OnCreate(signal_details * pobj) 
+void simple_list_header_control::_001OnCreate(::message::message * pobj) 
 {
 
    SCAST_PTR(::message::create, pcreate, pobj);
@@ -119,7 +119,7 @@ void simple_list_header_control::_001OnCreate(signal_details * pobj)
 }
 
 
-void simple_list_header_control::_001OnEndDrag(signal_details * pobj)
+void simple_list_header_control::_001OnEndDrag(::message::message * pobj)
 {
 #ifdef WINDOWSEX
    SCAST_PTR(::message::notify, pnotify, pobj);

@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 namespace datetime
@@ -7,13 +8,13 @@ namespace datetime
    const char * const szInvalidDateTimeSpan = "Invalid DateTimeSpan";
 
 
-   date_span::date_span()
-   {
-      m_iMonth = 0;
-      m_iYear = 0;
-      m_bConstraintMonth = 0;
+   //date_span::date_span()
+   //{
+   //   m_iMonth = 0;
+   //   m_iYear = 0;
+   //   m_bConstraintMonth = 0;
 
-   }
+   //}
    /////////////////////////////////////////////////////////////////////////////
    // time_span
    /////////////////////////////////////////////////////////////////////////////

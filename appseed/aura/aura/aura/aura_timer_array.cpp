@@ -6,9 +6,10 @@ namespace aura
 
 
    timer_array::timer_array(::aura::application * papp):
-      object(papp),
-      m_mutex(papp)
+      object(papp)
    {
+      
+      defer_create_mutex();
 
    }
 
@@ -25,14 +26,14 @@ namespace aura
    {
 
 
-      if(nEllapse < 884)
+      if(nEllapse < 800)
       {
 
-         string str;
-
-         str.Format("creating fast timer: %d\n", nEllapse);
-
-         ::output_debug_string(str);
+//         string str;
+//
+//         str.Format("creating fast timer: %d\n", nEllapse);
+//
+//         ::output_debug_string(str);
 
       }
 
@@ -40,9 +41,9 @@ namespace aura
 
       delete_timer(nIDEvent);
 
-      synch_lock sl(&m_mutex);
-
-      timer * ptimer = new timer(get_app(),nIDEvent,pfnTimer,pvoidData, &m_mutex);
+      synch_lock sl(m_pmutex);
+      
+      timer * ptimer = new timer(get_app(),nIDEvent,pfnTimer,pvoidData, m_pmutex);
 
       ptimer->m_pcallback = this;
 
@@ -64,11 +65,12 @@ namespace aura
       return true;
 
    }
+   
 
    bool timer_array::delete_timer(uint_ptr nIDEvent)
    {
 
-      synch_lock sl(&m_mutex);
+      synch_lock sl(m_pmutex);
 
       MAP::pair * ppair = m_map.PLookup(nIDEvent);
 
@@ -134,7 +136,6 @@ namespace aura
 
       }
 
-
       return true;
 
    }
@@ -145,6 +146,7 @@ namespace aura
 
    }
 
+   
    void timer_array::delete_all_timers()
    {
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 error_exception::error_exception(::aura::application * papp,const char * pszError):
@@ -34,7 +34,7 @@ bool error_exception::get_error_message(string & str,PUINT pnHelpContext)
 
 
 
-//#include "framework.h"
+#include "framework.h"
 
 
 index_out_of_bounds::index_out_of_bounds(::aura::application * papp, const char * pszError) :

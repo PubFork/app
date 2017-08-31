@@ -16,36 +16,36 @@ html_form_view::~html_form_view()
 }
 
 
-void html_form_view::install_message_handling(::message::dispatch * pinterface)
+void html_form_view::install_message_routing(::message::sender * pinterface)
 {
 
-   html_form::install_message_handling(pinterface);
+   html_form::install_message_routing(pinterface);
 
-   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &html_form_view::_001OnDestroy);
-//   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &html_form_view::_001OnSize);
+   //IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &html_form_view::_001OnDestroy);
+   //IGUI_MSG_LINK(WM_SIZE, pinterface, this, &html_form_view::_001OnSize);
 
-//   IGUI_WIN_MSG_LINK(WM_USER + 177     , this, this, &html_form_view::_001OnTabClick);
+   //IGUI_MSG_LINK(WM_USER + 177     , this, this, &html_form_view::_001OnTabClick);
    //connect_command(ID_FILE_PRINT, html_form::OnFilePrint)
    //connect_command(ID_FILE_PRINT_DIRECT, html_form::OnFilePrint)
    //connect_command(ID_FILE_PRINT_PREVIEW, html_form::OnFilePrintPreview)
-//   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-//   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-   IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+   //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
+   //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
+   //IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
+   //IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
 
-//   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_form_view::_001OnLButtonDown);
-  // IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_form_view::_001OnMouseMove);
-   //IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_form_view::_001OnLButtonUp);
-   IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &html_form_view::_001OnKeyDown);
-   IGUI_WIN_MSG_LINK(WM_SETFOCUS, pinterface, this, &html_form_view::_001OnSetFocus);
-   IGUI_WIN_MSG_LINK(WM_KILLFOCUS, pinterface, this, &html_form_view::_001OnKillFocus);
-//   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &html_form_view::_001OnCreate);
+   //IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &html_form_view::_001OnLButtonDown);
+   //IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &html_form_view::_001OnMouseMove);
+   //IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &html_form_view::_001OnLButtonUp);
+   //IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &html_form_view::_001OnKeyDown);
+   IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &html_form_view::_001OnSetFocus);
+   IGUI_MSG_LINK(WM_KILLFOCUS, pinterface, this, &html_form_view::_001OnKillFocus);
+   //IGUI_MSG_LINK(WM_CREATE, pinterface, this, &html_form_view::_001OnCreate);
 
 }
+
+
 /////////////////////////////////////////////////////////////////////////////
 // html_form_view drawing
-
-
 void html_form_view::OnDraw(::draw2d::graphics * pgraphics)
 {
    
@@ -221,7 +221,7 @@ void html_form_view::on_document_complete(const char * pszUrl)
 }
 
 
-void html_form_view::_001OnSetFocus(signal_details * pobj)
+void html_form_view::_001OnSetFocus(::message::message * pobj)
 {
    UNREFERENCED_PARAMETER(pobj);
    if(get_html_data()->m_focusptra.get_size() > 0)
@@ -230,7 +230,7 @@ void html_form_view::_001OnSetFocus(signal_details * pobj)
    }
 }
 
-void html_form_view::_001OnKillFocus(signal_details * pobj)
+void html_form_view::_001OnKillFocus(::message::message * pobj)
 {
 
    UNREFERENCED_PARAMETER(pobj);

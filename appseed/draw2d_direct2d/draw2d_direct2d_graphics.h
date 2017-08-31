@@ -10,13 +10,23 @@ namespace draw2d_direct2d
    {
    public:
 
-      class state
+      class state :
+         virtual public ::object
       {
       public:
+
+
+
 
          D2D1::Matrix3x2F              m_m;
          array < D2D1::Matrix3x2F >    m_maRegion;
          spa(::draw2d::region)         m_sparegionClip;
+
+         state();
+         virtual ~state();
+
+
+
 
       };
 
@@ -32,8 +42,9 @@ namespace draw2d_direct2d
       Microsoft::WRL::ComPtr<ID2D1Layer>                 m_player;
       Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathgeometryClip;
 
-      array < state >                                    m_statea;
-      state                                              m_state;
+      //int_array                                          m_iaLayering;
+      spa(state)                                         m_statea;
+      sp(state)                                          m_pstate;
 
       bool m_bSaveClip;
 
@@ -66,6 +77,8 @@ namespace draw2d_direct2d
       graphics(::aura::application * papp);
       virtual ~graphics();
 
+      virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount) override;
+      virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop);
 
       //ID2D1Device & d()
       //{

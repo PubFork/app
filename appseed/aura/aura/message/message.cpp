@@ -4,9 +4,9 @@
 namespace message
 {
 
-   class ::signal * CreateSignal()
+   class ::message::sender * CreateSignal()
    {
-      return new class ::signal();
+      return new class ::message::sender();
    }
 
 
@@ -43,7 +43,7 @@ namespace message
    }
 
 
-   CLASS_DECL_AURA bool is_idle_message(signal_details * pobj)
+   CLASS_DECL_AURA bool is_idle_message(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base,pbase,pobj);
@@ -57,13 +57,13 @@ namespace message
          return FALSE;
 
       // redundant WM_MOUSEMOVE and WM_NCMOUSEMOVE
-      if(pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE)
+      if(pbase->is_message() && (pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_NCMOUSEMOVE))
       {
          return TRUE;
       }
 
       // WM_PAINT and WM_SYSTIMER (caret blink)
-      return pbase->m_uiMessage != WM_PAINT && pbase->m_uiMessage != 0x0118;
+      return pbase->m_id != WM_PAINT && pbase->m_id != 0x0118;
 
    }
 

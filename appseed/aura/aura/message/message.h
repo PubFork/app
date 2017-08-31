@@ -1,28 +1,30 @@
 #pragma once
 
 
+namespace message
+{
+
+   class message;
+   class sender;
+   class receiver;
+
+} // namespace message
 
 
-
-#define CN_UPDATE_COMMAND_UI 23
-#define WM_REFLECT_AXIS 2048
-#define MX_APPLANGUAGE 1000
-#define USER_MESSAGE 1024
+#define DECL_GEN_SIGNAL(function) void function(::message::message * pobj)
 
 
-#define MPARAM uint32_t
-#define NPARAM uint32_t
-#define OPARAM uint32_t
-
-
+#include "message_const.h"
+#include "message_id.h"
+#include "message_receiver.h"
+#include "message_route.h"
+#include "message_message.h"
 #include "message_definition.h"
-#include "message_dispatch.h"
-#undef new
+#include "message_sender.h"
 #include "message_base.h"
-//#include "message_user.h"
-#define new AURA_NEW
+#include "message_simple_command.h"
 #include "message.inl"
-
+#include "message_listener_smart_pointer_array.h"
 
 namespace message
 {
@@ -30,7 +32,7 @@ namespace message
 
 
 
-   CLASS_DECL_AURA bool is_idle_message(::signal_details * pobj);
+   CLASS_DECL_AURA bool is_idle_message(::message::message * pobj);
 
 
    CLASS_DECL_AURA bool is_idle_message(MESSAGE* pMsg);
@@ -39,6 +41,7 @@ namespace message
 
 
 } // namespace message
+
 
 
 

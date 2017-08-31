@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -11,8 +11,8 @@ namespace user
       ::aura::department(papp)
    {
 
-      m_pufeschema = NULL;
-      m_pufe = NULL;
+      //m_pufeschema = NULL;
+      //m_pufe = NULL;
 
    }
 
@@ -26,13 +26,13 @@ namespace user
    bool user::initialize1()
    {
 
-      m_pufeschema = new ::user::front_end_schema(get_app());
-      m_pufe = new ::user::front_end();
+      //m_pufeschema = new ::user::front_end_schema(get_app());
+      //m_pufe = new ::user::front_end();
 
 
 
       System.factory().creatable_small < ::user::document >();
-      System.factory().creatable_small < ::user::application_as_proxy_document >();
+     // System.factory().creatable_small < ::user::application_as_proxy_document >();
       System.factory().creatable_small < ::user::message_queue >();
 
 
@@ -104,7 +104,7 @@ namespace user
       string strLicense = Application.get_license_id();
 
 
-      var & varTopicQuey = System.directrix()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
       bool bHasInstall = varTopicQuey.has_property("install");
 
@@ -137,9 +137,10 @@ namespace user
    {
       
 
-      ::aura::del(m_pufeschema);
-
-      ::aura::del(m_pufe);
+      //m_puserstyle.release();
+//      ::aura::del(m_pufeschema);
+//
+//      ::aura::del(m_pufe);
 
 
       try
@@ -212,7 +213,7 @@ namespace user
 
             pui->send_message(message,wparam,lparam);
 
-            pui->SendMessageToDescendants(message,wparam,lparam);
+            pui->send_message_to_descendants(message,wparam,lparam);
 
          }
 
@@ -234,36 +235,57 @@ namespace user
 
 #endif
 
-   ::user::front_end_schema * GetUfeSchema(::aura::application * papp)
-   {
+//   ::user::front_end_schema * GetUfeSchema(::aura::application * papp)
+//   {
+//
+//      if (papp == NULL)
+//      {
+//
+//         return NULL;
+//
+//      }
+//
+//      if (papp->m_pbasesession == NULL)
+//      {
+//
+//         return NULL;
+//
+//      }
+//
+//      if (papp->m_pbasesession->m_puser == NULL)
+//      {
+//
+//         return NULL;
+//
+//      }
+//
+//      return Sess(papp).user()->GetUfeSchema();
+//
+//   }
+//
+//
+//   ::user::front_end * GetUfe(::aura::application * papp)
+//   {
+//
+//      return Sess(papp).user()->GetUfe();
+//
+//   }
 
-      return Sess(papp).user()->GetUfeSchema();
 
-   }
-
-
-   ::user::front_end * GetUfe(::aura::application * papp)
-   {
-
-      return Sess(papp).user()->GetUfe();
-
-   }
-
-
-   ::user::front_end_schema * user::GetUfeSchema()
-   {
-
-      return m_pufeschema;
-
-   }
-
-
-   ::user::front_end * user::GetUfe()
-   {
-
-      return m_pufe;
-
-   }
+//   ::user::front_end_schema * user::GetUfeSchema()
+//   {
+//
+//      return m_pufeschema;
+//
+//   }
+//
+//
+//   ::user::front_end * user::GetUfe()
+//   {
+//
+//      return m_pufe;
+//
+//   }
 
    sp(type) user::controltype_to_typeinfo(::user::e_control_type e_type)
    {
@@ -272,7 +294,21 @@ namespace user
 
    }
 
+   
+//   sp(::user::impact) user::get_view()
+//   {
+//   
+//      return NULL;
+//      
+//   }
 
+   
+//   ::user::style * user::get_user_style()
+//   {
+//      
+//      retu
+//      
+//   }
 
 } //namespace user
 

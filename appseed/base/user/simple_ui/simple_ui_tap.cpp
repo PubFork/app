@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -26,14 +26,29 @@ namespace simple_ui
    }
 
 
-   IMPL_IMH(tap,::simple_ui::interaction)
-      MSG_CREATE
-      MSG_KEYDOWN
-      MSG_LBUTTONDOWN
-      MSG_LBUTTONUP
-      MSG_MOUSEMOVE
-      MSG_MOUSELEAVE
-   END_IMH
+   void tap::install_message_routing(::message::sender * psender)
+   {
+      //IMPL_IMH(tap, ::simple_ui::interaction)
+      //   MSG_CREATE
+      //   MSG_KEYDOWN
+      //   MSG_LBUTTONDOWN
+      //   MSG_LBUTTONUP
+      //   MSG_MOUSEMOVE
+      //   MSG_MOUSELEAVE
+      //   END_IMH
+      ::simple_ui::interaction::install_message_routing(psender);
+
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+      IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &tap::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &tap::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &tap::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &tap::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &tap::_001OnMouseLeave);
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+      //IGUI_MSG_LINK(WM_CREATE, psender, this, &tap::_001OnCreate);
+
+
+   }
 
 
    void tap::_001OnDraw(::draw2d::graphics * pgraphics)
@@ -46,8 +61,17 @@ namespace simple_ui
    }
 
 
+   void tap::_001OnCreate(::message::message * pobj)
+   {
 
-   void tap::_001OnLButtonDown(signal_details * pobj)
+      SCAST_PTR(::message::create, pcreate, pobj);
+
+      pobj->previous();
+
+   }
+
+
+   void tap::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -71,7 +95,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnLButtonUp(signal_details * pobj)
+   void tap::_001OnLButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -89,7 +113,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnMouseMove(signal_details * pobj)
+   void tap::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -104,7 +128,7 @@ namespace simple_ui
 
    }
 
-   void tap::_001OnMouseLeave(signal_details * pobj)
+   void tap::_001OnMouseLeave(::message::message * pobj)
    {
 
       //SCAST_PTR(::message::mouse,pmouse,pobj);
@@ -324,25 +348,25 @@ namespace simple_ui
 
          }
 
-         int32_t iBorderH = height(&rectClient) / 2;
+         int32_t iBorderH = rectClient.height() / 2;
 
          ::draw2d::brush_sp br(allocer());
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top - 1), point(rectClient.left, rectClient.top + iBorderH + 2), crOut, crIn);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)width(&rectClient), iBorderH), br);
+         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + 1, (int32_t)rectClient.width(), iBorderH), br);
 
          br->CreateLinearGradientBrush(point(rectClient.left, rectClient.top + iBorderH - 1), point(rectClient.left, rectClient.top + iBorderH * 2 + 2), crIn, crOut);
 
-         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)width(&rectClient), rectClient.top + iBorderH + iBorderH), br);
+         pgraphics->FillRect(rect(rectClient.left + 1, rectClient.top + iBorderH, rectClient.left + (int32_t)rectClient.width(), rectClient.top + iBorderH + iBorderH), br);
 
          /*Gdiplus::Pen pen1(crBorderOut);
 
-         graphics2.DrawRectangle(&pen1, rectClient.left, rectClient.top, width(&rectClient), iBorderH * 2);*/
+         graphics2.DrawRectangle(&pen1, rectClient.left, rectClient.top, rectClient.width(), iBorderH * 2);*/
 
          ::draw2d::pen_sp pen(pgraphics, 1.0, crBorderIn);
 
-         pgraphics->DrawRect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)width(&rectClient) - 2, rectClient.top + iBorderH * 2 - 2), pen);
+         pgraphics->DrawRect(rect(rectClient.left + 1, rectClient.top + 1, rectClient.left + (int32_t)rectClient.width() - 2, rectClient.top + iBorderH * 2 - 2), pen);
 
       }
 
@@ -395,15 +419,15 @@ namespace simple_ui
 
       pgraphics->SelectObject(b);
 
-      //float fMargin = (height(&rectClient) * ((1.0f - 0.7f) / 2.0f));
+      //float fMargin = (rectClient.height() * ((1.0f - 0.7f) / 2.0f));
 
-      float fMargin = (height(&rectClient) * ((1.0f - 0.84f) / 2.0f));
+      float fMargin = (rectClient.height() * ((1.0f - 0.84f) / 2.0f));
 
       rectClient.deflate((int32_t) fMargin, (int32_t) fMargin);
 
       ::draw2d::font_sp f(allocer());
 
-      f->create_pixel_font(FONT_SANS_EX, (int32_t)height(rectClient)* 0.7);
+      f->create_pixel_font(FONT_SANS_EX, (int32_t)rectClient.height()* 0.7);
 
       pgraphics->SelectObject(f);
 
@@ -412,7 +436,7 @@ namespace simple_ui
    }
 
 
-   void tap::_001OnKeyDown(signal_details * pobj)
+   void tap::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);

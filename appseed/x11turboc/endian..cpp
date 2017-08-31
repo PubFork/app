@@ -32,7 +32,7 @@
   though there's no particular reason for them in Turbo C porting
   (since this functionality would already have to have been handled 
   explicitly anyway -- though not necessarily CORRECTLY if the target
-  processor isn't little-endian).
+  handler isn't little-endian).
 */
 
 #include "TurboC.h"

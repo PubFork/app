@@ -59,7 +59,7 @@ namespace asphere
       virtual void on_change_theme();
 
 
-      virtual void _001OnTheme(signal_details * pobj);
+      virtual void _001OnTheme(::message::message * pobj);
 
       virtual void set_theme(string strTheme);
 

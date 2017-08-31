@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 namespace user
@@ -36,10 +37,11 @@ namespace user
    }
 
 
-   void copydesk::set_filea(stringa & stra)
+   void copydesk::set_filea(const ::file::patha & patha)
    {
 
-      UNREFERENCED_PARAMETER(stra);
+      UNREFERENCED_PARAMETER(patha);
+      
       ::exception::throw_interface_only(get_app());
 
    }

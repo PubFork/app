@@ -40,7 +40,7 @@ namespace user
       virtual ~scroll_x();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
 
@@ -97,7 +97,7 @@ namespace user
       virtual ~scroll_y();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       //virtual void GetScrollRect(LPRECT lprect);
@@ -139,7 +139,7 @@ namespace user
       void on_change_viewport_offset();
       void layout_scroll_bar();
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
 
       //void GetScrollRect(LPRECT lprect);

@@ -28,9 +28,7 @@ namespace user
 
       ::user::interaction_child * get_user_interaction_child() override;
 
-
-      using ::user::interaction_base::message_handler;
-      virtual void message_handler(signal_details * pobj) override;
+      virtual void message_handler(::message::base * pbase) override;
 
       using ::user::interaction_base::SetWindowPos;
       //virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;
@@ -66,9 +64,9 @@ namespace user
 #endif
 
       // as hosting interaction_impl
-      virtual void install_message_handling(::message::dispatch * pinterface) override;
+      virtual void install_message_routing(::message::sender * pinterface) override;
       // as virtual interaction_impl
-      virtual void _002InstallMessageHandling(::message::dispatch * pinterface);
+      virtual void _002InstallMessageHandling(::message::sender * pinterface);
 
 
       virtual bool create_window(::user::interaction * pui, const RECT & rect, ::user::interaction * pparent, id id) override;
@@ -96,7 +94,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnNcDestroy);
       DECL_GEN_SIGNAL(_001OnShowWindow);
 
-      void SendMessageToDescendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
+      void send_message_to_descendants(UINT message,WPARAM wParam = 0,lparam lParam = 0,bool bDeep = true,bool bOnlyPerm = 0) override;
 
       virtual bool post_message(UINT uiMessage,WPARAM wparam,lparam lparam) override;
 

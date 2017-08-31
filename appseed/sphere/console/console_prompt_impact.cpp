@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace console
@@ -30,15 +30,15 @@ namespace console
    }
 
 
-   void prompt_impact::install_message_handling(::message::dispatch * pdispatch)
+   void prompt_impact::install_message_routing(::message::sender * psender)
    {
 
-      ::user::impact::install_message_handling(pdispatch);
+      ::user::impact::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE,pdispatch,this,&prompt_impact::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN,pdispatch,this,&prompt_impact::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP,pdispatch,this,&prompt_impact::_001OnKeyUp);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW,pdispatch,this,&prompt_impact::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE,psender,this,&prompt_impact::_001OnCreate);
+      IGUI_MSG_LINK(WM_KEYDOWN,psender,this,&prompt_impact::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP,psender,this,&prompt_impact::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_SHOWWINDOW,psender,this,&prompt_impact::_001OnShowWindow);
 
    }
 
@@ -53,7 +53,7 @@ namespace console
    }
 
 
-   void prompt_impact::_001OnShowWindow(::signal_details * pobj)
+   void prompt_impact::_001OnShowWindow(::message::message * pobj)
    {
       SCAST_PTR(::message::show_window,pshowwindow,pobj);
       if(pshowwindow->m_bShow)
@@ -62,7 +62,7 @@ namespace console
          m_bOk = false;
       }
    }
-   void prompt_impact::_001OnCreate(::signal_details * pobj)
+   void prompt_impact::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create,pcreate,pobj);
@@ -102,7 +102,7 @@ namespace console
 
    }
 
-   void prompt_impact::_001OnKeyDown(::signal_details * pobj)
+   void prompt_impact::_001OnKeyDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::key,pkey,pobj);
@@ -116,7 +116,7 @@ namespace console
 
          GetTypedParent < prompt_frame > ()->ShowWindow(SW_HIDE);
 
-         ((::user::interaction *) Application.m_puiMain->m_pvoidUserInteraction)->SetActiveWindow();
+         Application.m_puiMain->m_puiThis->SetActiveWindow();
 
          clear();
 
@@ -243,7 +243,7 @@ namespace console
    }
 
 
-   void prompt_impact::_001OnKeyUp(::signal_details * pobj)
+   void prompt_impact::_001OnKeyUp(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -252,7 +252,7 @@ namespace console
 
    void prompt_impact::simple_ui_draw_focus_rect(::draw2d::graphics * pgraphics)
    {
-      //if(GetTypedParent <prompt_frame>()->get_appearance() != ::user::AppearanceMinimal)
+      //if(GetTypedParent <prompt_frame>()->get_appearance() != ::user::appearance_minimal)
       {
          ::user::impact::simple_ui_draw_focus_rect(pgraphics);
       }

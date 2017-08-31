@@ -1,4 +1,4 @@
-//#include "framework.h" // from "axis/net/net_sockets.h"
+#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -85,13 +85,13 @@ namespace fontopus
    {
       m_loginthread.m_strSalt.Empty();
 
-      string strApp = command_thread()->property("app");
+      string strApp = handler()->property("app");
       if(strApp == "simpledbcfg"
-         || (strApp.begins_ci("app-core/netnode") && command_thread()->property("root_handler") == "webserver")
+         || (strApp.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
          || (strApp.begins_ci("app-core/netnode"))
          || strApp == "veievserver"
          || strApp == "simpledbcfg"
-         //|| command_thread()->property("app") == "veriwell_mplite"      // churrasco 2011 m_strLicense
+         //|| handler()->property("app") == "veriwell_mplite"      // churrasco 2011 m_strLicense
          || strApp == "app-core/netnodecfg"
          || strApp == "app-core/netnode_dynamic_web_server"
          || strApp == "app-core/netnode_dynamic_web_server_cfg"
@@ -99,29 +99,29 @@ namespace fontopus
          || strApp == "app-gtech/sensible_service")
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.command()->m_varTopicQuery["systemid"],"-");
+         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_1;
          return m_puser;
       }
-      else if(command_thread()->property("app") == "app-core/mydns"
-         || command_thread()->has_property("install")
-         || command_thread()->has_property("uninstall"))
+      else if(handler()->property("app") == "app-core/mydns"
+         || handler()->has_property("install")
+         || handler()->has_property("uninstall"))
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.command()->m_varTopicQuery["systemid"],"-");
+         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_1;
          return m_puser;
       }
       //else if(!strcmp(System.get_module_name(), "productionapp")
       //   || !strcmp(System.get_module_name(), "productionbasisapp")
       //   || !strcmp(System.get_module_name(), "backupapp")
-      //   || System.command()->m_varTopicQuery["app"] == "production"
+      //   || System.handler()->m_varTopicQuery["app"] == "production"
       //   || System.get_license_id() == "winservice_filesystemsize")
-      else if(command_thread()->property("app") == "backup"
-         || command_thread()->property("app") == "winservice_filesystemsize")
+      else if(handler()->property("app") == "backup"
+         || handler()->property("app") == "winservice_filesystemsize")
       {
          m_puser = Session.fontopus()->allocate_user();
-         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.command()->m_varTopicQuery["systemid"],"-");
+         m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
          m_puser->m_strLogin = system_user_2;
          return m_puser;
       }
@@ -182,19 +182,19 @@ namespace fontopus
          strHost = System.url().get_server(strHost);
       }
 
-      if(straRequestingServer.contains(Application.command_thread()->m_varTopicQuery["fontopus"].get_string())
-         && Application.command_thread()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
+      if(straRequestingServer.contains(Application.handler()->m_varTopicQuery["fontopus"].get_string())
+         && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
       {
          m_loginthread.m_puser = Session.fontopus()->allocate_user();
-         m_loginthread.m_puser->m_sessionidmap[Application.command_thread()->m_varTopicQuery["fontopus"].get_string()] = Application.command_thread()->m_varTopicQuery["sessid"].get_string();
-         m_loginthread.m_puser->m_sessionidmap[strHost] = Application.command_thread()->m_varTopicQuery["sessid"].get_string();
-         m_loginthread.m_puser->m_strFontopusServerSessId = Application.command_thread()->m_varTopicQuery["sessid"].get_string();
+         m_loginthread.m_puser->m_sessionidmap[Application.handler()->m_varTopicQuery["fontopus"].get_string()] = Application.handler()->m_varTopicQuery["sessid"].get_string();
+         m_loginthread.m_puser->m_sessionidmap[strHost] = Application.handler()->m_varTopicQuery["sessid"].get_string();
+         m_loginthread.m_puser->m_strFontopusServerSessId = Application.handler()->m_varTopicQuery["sessid"].get_string();
          m_loginthread.m_puser->m_strRequestingServer = strHost;
          xml::document documentBasicInfo(get_app());
 
          string strApiServer;
 
-         strApiServer = Application.command_thread()->m_varTopicQuery["fontopus"];
+         strApiServer = Application.handler()->m_varTopicQuery["fontopus"];
 
          strApiServer.replace("account","api");
 
@@ -283,13 +283,13 @@ namespace fontopus
       if(strLicense == "netnodeapp"
          || strLicense == "netnodecfgapp"
          || strLicense == "simpledbcfg"
-         || (strLicense.begins_ci("app-core/netnode") && command_thread()->property("root_handler") == "webserver")
+         || (strLicense.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
          || (strLicense.begins_ci("app-core/netnodelite"))
          || strLicense == "veievserver"
          //|| strLicense == "veriwell_mplite"      // churrasco 2011 m_strLicense
          || strLicense == "mydns"
-         || Application.command()->m_varTopicQuery.has_property("install")
-         || Application.command()->m_varTopicQuery.has_property("uninstall")
+         || Application.handler()->m_varTopicQuery.has_property("install")
+         || Application.handler()->m_varTopicQuery.has_property("uninstall")
          || strLicense == "netnode"
          || strLicense == "netnode_dynamic_web_server"
          || strLicense == "app-core/netnodecfg"
@@ -368,10 +368,10 @@ namespace fontopus
 
       }
 
-      if(straRequestingServer.contains(Application.command_thread()->m_varTopicQuery["fontopus"].get_string())
-         && Application.command_thread()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
+      if(straRequestingServer.contains(Application.handler()->m_varTopicQuery["fontopus"].get_string())
+         && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
       {
-         strHost = Application.command_thread()->m_varTopicQuery["fontopus"].get_string();
+         strHost = Application.handler()->m_varTopicQuery["fontopus"].get_string();
       }
 
       string strAuthUrl;

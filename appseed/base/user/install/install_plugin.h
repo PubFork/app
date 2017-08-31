@@ -81,7 +81,7 @@ namespace install
       virtual ~plugin();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
 
 
@@ -103,8 +103,7 @@ namespace install
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       
-      using ::hotplugin::plugin::message_handler;
-      virtual void message_handler(signal_details * pobj);
+      virtual void message_handler(::message::base * pbase) override;
 
       virtual void on_paint_progress(::draw2d::graphics * pgraphics, const RECT & lprect);
 

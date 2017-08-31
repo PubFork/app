@@ -467,7 +467,7 @@ namespace user
       // open format is "[open("%s")]" - no whitespace allowed, one per line
       // print format is "[print("%s")]" - no whitespace allowed, one per line
       // print to format is "[printto("%s","%s","%s","%s")]" - no whitespace allowed, one per line
-      command & cmdInfo = System.command();
+      command & cmdInfo = System.handler();
       command.m_nShellCommand = command_line::FileDDE;
 
       if (strCommand.Left(7) == _T("[open(\""))
@@ -921,7 +921,7 @@ namespace core
 
       //m_pdocmanager->add_ref();
 
-      document_manager().add_document_template(ptemplate);
+      document_manager()->add_document_template(ptemplate);
 
    }
 
@@ -931,7 +931,7 @@ namespace core
       if (m_pdocmanager == NULL)
          return;
 
-      document_manager().remove_document_template(pimpactsystem);
+      document_manager()->remove_document_template(pimpactsystem);
 
    }
 
@@ -945,7 +945,7 @@ namespace core
       
       cc->m_spCommandLine->m_varFile = lpszFileName;
       
-      Application.document_manager().request_create(cc);
+      Application.document_manager()->request_create(cc);
 
       return ::user::get_document(cc);
 

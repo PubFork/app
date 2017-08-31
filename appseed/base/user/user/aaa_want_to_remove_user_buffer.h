@@ -7,7 +7,7 @@ namespace user
 
 
    //class CLASS_DECL_BASE buffer :
-   //   virtual public signalizable
+   //   virtual public ::message::receiver
    //{
    //public:
    //   buffer(::aura::application * papp);
@@ -16,7 +16,7 @@ namespace user
    //   void BitBlt(::draw2d::dib * pdib);
    //   void BitBlt(LPRECT lprect, ::draw2d::graphics * pgraphics);
 
-   //   void InstallMessageHandling(::message::dispatch * pinterface);
+   //   void InstallMessageHandling(::message::sender * pinterface);
 
 
    //   bool UpdateBuffer(int32_t cx, int32_t cy);

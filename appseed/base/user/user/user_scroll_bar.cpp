@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -45,13 +45,13 @@ namespace user
       if(m_eorientation == orientation_horizontal)
       {
 
-         pscroll->m_uiMessage = WM_HSCROLL;
+         pscroll->m_id = WM_HSCROLL;
 
       }
       else
       {
 
-         pscroll->m_uiMessage = WM_VSCROLL;
+         pscroll->m_id = WM_VSCROLL;
 
       }
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 static DWORD nextTlsIndex = 0;
 typedef void_ptra ThreadLocalData;

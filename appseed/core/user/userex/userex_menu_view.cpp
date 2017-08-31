@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 menu_view::menu_view(::aura::application * papp) :
@@ -47,17 +47,17 @@ bool menu_view::BaseOnControlEvent(::user::control_event * pevent)
    }
 }
 
-void menu_view::install_message_handling(::message::dispatch * pinterface)
+void menu_view::install_message_routing(::message::sender * pinterface)
 {
-   ::user::form::install_message_handling(pinterface);
-   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &menu_view::_001OnCreate);
-//   //IGUI_WIN_MSG_LINK(WM_TIMER, pinterface, this, &menu_view::_001OnTimer);
-   IGUI_WIN_MSG_LINK(WM_USER + 123, pinterface, this, &menu_view::_001OnUser123);
+   ::user::form::install_message_routing(pinterface);
+   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &menu_view::_001OnCreate);
+//   //IGUI_MSG_LINK(WM_TIMER, pinterface, this, &menu_view::_001OnTimer);
+   IGUI_MSG_LINK(WM_USER + 123, pinterface, this, &menu_view::_001OnUser123);
 
 }
 
 
-void menu_view::_001OnCreate(signal_details * pobj)
+void menu_view::_001OnCreate(::message::message * pobj)
 {
    pobj->previous();
 }
@@ -88,7 +88,7 @@ void menu_view::_001OnTimer(::timer * ptimer)
    }
 }
 
-void menu_view::_001OnUser123(signal_details * pobj)
+void menu_view::_001OnUser123(::message::message * pobj)
 {
    SCAST_PTR(::message::base, pbase, pobj);
    if(pbase->m_wparam == 0x80000001)

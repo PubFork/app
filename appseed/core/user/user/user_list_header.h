@@ -102,7 +102,7 @@ namespace user
       list_header(::aura::application * papp);
       virtual ~list_header();
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
       void SetBaseListCtrlInterface(list * pinterface);
 
       virtual void _001OnClip(::draw2d::graphics * pgraphics);

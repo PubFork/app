@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 /*
 class sys_message_queue
@@ -122,16 +122,6 @@ bool TranslateMessage(LPMESSAGE lpmessage)
 
 }
 
-
-//LRESULT DispatchMessage(LPMESSAGE lpmessage)
-//{
-//
-//   if(lpmessage->hwnd == NULL)
-//      return false;
-//
-//   return lpmessage->hwnd->get_user_interaction()->message_handler(lpmessage);
-//
-//}
 
 
 /*

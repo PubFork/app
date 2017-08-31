@@ -5,7 +5,7 @@ namespace aura
 {
 
 
-   class CLASS_DECL_AURA ipi:
+   class CLASS_DECL_AURA ipi :
       virtual public object,
       virtual public ::aura::ipc::rx::receiver
    {
@@ -19,68 +19,82 @@ namespace aura
       ::aura::ipc::rx                        m_rx;
       stringa                                m_straModule;
 
-      ipi(::aura::application * papp,const string & strApp);
+      ipi(::aura::application * papp, const string & strApp);
 
       void defer_add_module(const string & strModule, int iPid);
 
 
-      template<typename T,typename... Args>
-      int_map < var > ecall(const string & strApp,int_array iaExcludePid, const string & strObject,const string & strMember,const T & t,Args... args)
+      template<typename T, typename... Args>
+      int_map < var > ecall(const string & strApp, int_array iaExcludePid, const string & strObject, const string & strMember, const T & t, Args... args)
       {
 
          var_array va;
 
-         va.add(t,args...);
+         va.add(t, args...);
 
-         return ecall(strApp,iaExcludePid, strObject,strMember,va);
+         return ecall(strApp, iaExcludePid, strObject, strMember, va);
 
       }
 
-      virtual int_map < var > ecall(const string & strApp,int_array iaExcludePid,const string & strObject,const string & strMember,var_array & va);
+      virtual int_map < var > ecall(const string & strApp, int_array iaExcludePid, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
 
-      template<typename T,typename... Args>
-      int_map < var > call(const string & strApp,const string & strObject,const string & strMember,const T & t,Args... args)
+      template<typename T, typename... Args>
+      int_map < var > call(const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
       {
 
          var_array va;
 
-         va.add(t,args...);
+         va.add(t, args...);
 
-         return call(strApp,strObject,strMember,va);
+         return call(strApp, strObject, strMember, va);
 
       }
 
-      virtual int_map < var > call(const string & strApp,const string & strObject,const string & strMember,var_array & va);
+      virtual int_map < var > call(const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
 
-      virtual int_map < var > call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va);
+      virtual int_map < var > call(const stringa & straApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeOut = one_second());
 
-      template<typename T,typename... Args>
-      int_map < var > scall(bool bAutoLaunch, const string & strApp,const string & strObject,const string & strMember,const T & t,Args... args)
+      template<typename T, typename... Args>
+      int_map < var > scall(bool bAutoLaunch, const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
       {
 
          var_array va;
 
-         va.add(t,args...);
+         va.add(t, args...);
 
-         return scall(bAutoLaunch, strApp,strObject,strMember,va);
+         return scall(bAutoLaunch, strApp, strObject, strMember, va, one_hour());
 
       }
 
-      virtual int_map < var > scall(bool bAutoLaunch,const string & strApp,const string & strObject,const string & strMember,var_array & va);
 
-      template<typename T,typename... Args>
-      var call(const string & strApp,int iPid, const string & strObject,const string & strMember,const T & t,Args... args)
+      template<typename T, typename... Args>
+      int_map < var > scall(bool bAutoLaunch, duration durationTimeout, const string & strApp, const string & strObject, const string & strMember, const T & t, Args... args)
       {
 
          var_array va;
 
-         va.add(t,args...);
+         va.add(t, args...);
 
-         return call(strApp,iPid, strObject,strMember,va);
+         return scall(bAutoLaunch, strApp, strObject, strMember, va, durationTimeout);
 
       }
 
-      virtual var call(const string & strApp,int iPid, const string & strObject,const string & strMember,var_array & va);
+
+      virtual int_map < var > scall(bool bAutoLaunch, const string & strApp, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_second());
+
+      template<typename T, typename... Args>
+      var call(const string & strApp, int iPid, const string & strObject, const string & strMember, const T & t, Args... args)
+      {
+
+         var_array va;
+
+         va.add(t, args...);
+
+         return call(strApp, iPid, strObject, strMember, va);
+
+      }
+
+      virtual var call(const string & strApp, int iPid, const string & strObject, const string & strMember, var_array & va, duration durationTimeout = one_second());
 
       ::aura::ipc::tx & tx(const string & strApp, int iPid);
 
@@ -90,10 +104,10 @@ namespace aura
 
       string str_from_va(var_array & va);
 
-      virtual void on_call(const string & strObject,const string & strMember,var_array & va);
+      virtual void on_call(const string & strObject, const string & strMember, var_array & va);
 
       using ::aura::ipc::rx::receiver::on_receive;
-      virtual void on_receive(::aura::ipc::rx * prx,const char * pszMessage);
+      virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
       virtual bool start(const string & strApp);
 

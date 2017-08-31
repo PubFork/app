@@ -10,59 +10,7 @@ void ns_app_terminate();
 //extern thread_pointer < os_thread > t_posthread;
 
 
-string & get_command_line_string()
-{
-   static string g_strCommandLine;
-   return g_strCommandLine;
-}
 
-wstring & get_command_line_wstring()
-{
-   static wstring g_wstrCommandLine;
-   return g_wstrCommandLine;
-}
-
-
-void SetCommandLineA(const char * psz)
-{
-
-   get_command_line_string()     = psz;
-   get_command_line_wstring()    = psz;
-
-}
-
-void SetCommandLineW(const unichar * pwsz)
-{
-
-   get_command_line_string()     = pwsz;
-      get_command_line_wstring()     = pwsz;
-
-}
-
-
-LPSTR GetCommandLineA()
-{
-
-   return (LPSTR) (LPCSTR) get_command_line_string();
-
-}
-
-LPWSTR GetCommandLineW()
-{
-
-   return (LPWSTR) (LPCWSTR)    get_command_line_wstring() ;
-
-}
-
-
-
-
-void output_debug_string(const char * psz)
-{
-
-   OutputDebugString(psz);
-
-}
 
 
 
@@ -349,10 +297,30 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
 
 
 
-int32_t run_system()
+int32_t defer_run_system()
 {
    
-   return   __run_system_command_line(g_pszCommandLine);
+   return __start_system(NULL);
+   
+}
+
+
+int32_t defer_run_system(const char * pszFileName)
+{
+   
+   return __start_system(pszFileName);
+   
+}
+
+
+int32_t defer_run_system(char * * psza, int c)
+{
+   
+   stringa stra;
+   
+   stra.c_add(psza, c);
+   
+   return __start_system(stra);
    
 }
 
@@ -363,3 +331,21 @@ void macos_on_app_activate()
    ::aura::system::g_p->on_setting_changed(::aura::setting_app_activation);
    
 }
+
+
+void macos_on_new_file()
+{
+   
+   ::aura::system::g_p->on_open_file(var::type_empty, "");
+   
+}
+
+
+void macos_on_open_file(const char * pszFilename, const char * pszExtra)
+{
+   
+   ::aura::system::g_p->on_open_file(pszFilename, pszExtra);
+   
+}
+
+

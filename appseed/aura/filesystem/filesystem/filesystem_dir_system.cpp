@@ -1,8 +1,6 @@
 #include "framework.h"
 
 
-#include "zlib.h"
-#include "zutil.h"
 #include "aura/aura/compress/zip/zip.h"
 
 
@@ -712,7 +710,7 @@ namespace file
       bool system::name_is(const ::file::path & strPath,::aura::application * papp)
       {
 
-         //OutputDebugString(strPath);
+         //output_debug_string(strPath);
          if (::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (::str::ends_ci(strPath, ".zip")))
          {
             m_isdirmap.set(strPath, true, 0);
@@ -1739,6 +1737,14 @@ namespace file
          m_pathCa2Module = System.file().ca2module().folder();
 
          return true;
+
+      }
+
+
+      ::file::path system::get_favorites_folder()
+      {
+
+         return ::dir::favorites();
 
       }
 

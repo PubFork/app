@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include "android.h"
 //#include <dlfcn.h>
 //#include <link.h>
@@ -137,12 +137,12 @@ namespace aura
 
 
 
-   bool application::set_main_init_data(::aura::main_init_data * pdata)
+   bool application::process_command(::aura::main_init_data * pdata)
    {
 
-      m_pinitmaindata =  pdata;
+      m_pcommand =  pdata;
 
-      string strCmdLine          = pdata->m_vssCommandLine;
+      string strCmdLine          = pdata->m_strCommandLine;
 
       SetCurrentHandles();
 

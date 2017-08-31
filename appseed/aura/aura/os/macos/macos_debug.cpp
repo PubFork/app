@@ -80,18 +80,16 @@ FormatMessage(
     
 }
 
+void ns_log(const char * pszLog);
 
 VOID
 WINAPI
-OutputDebugStringA(
+output_debug_string(
                    LPCSTR lpOutputString
                    )
 {
     
-    
-    fprintf(stderr, "%s", lpOutputString);
-    fflush(stderr);
-    //printf("%s", lpOutputString);
+   ns_log(lpOutputString);
     
     
 }
@@ -101,13 +99,13 @@ OutputDebugStringA(
 
 VOID
 WINAPI
-OutputDebugStringW(
+output_debug_string(
                    LPCWSTR lpOutputString
                    )
 {
     
     
-    OutputDebugStringA(string(lpOutputString));
+    output_debug_string(string(lpOutputString));
     
     
 }

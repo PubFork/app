@@ -43,17 +43,17 @@ namespace user
    }
 
 
-   void split_layout::install_message_handling(::message::dispatch * pinterface)
+   void split_layout::install_message_routing(::message::sender * pinterface)
    {
 
-      place_holder_container::install_message_handling(pinterface);
+      place_holder_container::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_layout::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &split_layout::_001OnShowWindow);
 
    }
 
 
-   void split_layout::_001OnShowWindow(signal_details * pobj)
+   void split_layout::_001OnShowWindow(::message::message * pobj)
    {
 
       SCAST_PTR(::message::show_window, pshowwindow, pobj);

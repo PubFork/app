@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -6,8 +6,7 @@ namespace user
 {
 
 
-   interaction_base::interaction_base() :
-      m_evNewMessage(::get_thread_app())
+   interaction_base::interaction_base()
    {
 
    }
@@ -15,8 +14,7 @@ namespace user
 
    interaction_base::interaction_base(::aura::application * papp) :
       ::object(papp),
-      command_target_interface(papp),
-      m_evNewMessage(papp)
+      command_target(papp)
    {
 
    }
@@ -28,10 +26,10 @@ namespace user
    }
 
 
-   void interaction_base::install_message_handling(::message::dispatch * pinterface)
+   void interaction_base::install_message_routing(::message::sender * pinterface)
    {
 
-      ::message::dispatch::install_message_handling(pinterface);
+      ::message::receiver::install_message_routing(pinterface);
 
    }
 
@@ -188,14 +186,14 @@ Restart:
    }
 
 
-   void interaction_base::_on_start_user_message_handler()
-   {
+   //void interaction_base::_on_start_user_message_handler()
+   //{
 
-      dispatch::_on_start_user_message_handler();
+   //   dispatch::_on_start_user_message_handler();
 
-      _001BaseWndInterfaceMap();
+   //   _001BaseWndInterfaceMap();
 
-   }
+   //}
 
 
    void interaction_base::_000OnDraw(::draw2d::graphics * pgraphics)
@@ -226,6 +224,12 @@ Restart:
 
    }
 
+   bool interaction_base::has_pending_redraw_flags()
+   {
+
+      return false;
+
+   }
 
    bool interaction_base::Redraw(rect_array & recta)
    {
@@ -842,15 +846,21 @@ Restart:
    }
 
 
-   void interaction_base::SendMessageToDescendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
+   void interaction_base::send_message_to_descendants(UINT message,WPARAM wparam,lparam lparam,bool bDeep,bool bOnlyPerm)
    {
 
       ::exception::throw_interface_only(get_app());
 
    }
 
+   void interaction_base::route_message_to_descendants(::message::message * pmessage)
+   {
 
-   void interaction_base::pre_translate_message(signal_details * pobj)
+      ::exception::throw_interface_only(get_app());
+
+   }
+
+   void interaction_base::pre_translate_message(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -953,9 +963,7 @@ Restart:
    bool interaction_base::IsWindow() const
    {
 
-      ::exception::throw_interface_only(get_app());
-
-      return false;
+      return ::user::elemental::IsWindow();
 
    }
 
@@ -1297,7 +1305,7 @@ Restart:
       try
       {
 
-         signalizable_disconnect_all();
+         remove_all_routes();
 
       }
       catch(...)
@@ -1305,63 +1313,63 @@ Restart:
 
       }
 
-      try
-      {
+      //try
+      //{
 
-         m_signala.remove_all();
+      //   m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
+      //}
 
-      try
-      {
+      //try
+      //{
 
-         m_dispatchUpdateCmdUi.m_signala.remove_all();
+      //   m_dispatchUpdateCmdUi.m_signala.remove_all();
 
-      }
-      catch(...)
-      {
+      //}
+      //catch(...)
+      //{
 
-      }
-
-
-      try
-      {
-
-         m_dispatchCommand.m_signala.remove_all();
-
-      }
-      catch(...)
-      {
-
-      }
+      //}
 
 
+      //try
+      //{
 
-      try
-      {
+      //   m_dispatchCommand.m_signala.remove_all();
 
-         m_signalidaCommand.remove_all();
+      //}
+      //catch(...)
+      //{
 
-      }
-      catch(...)
-      {
+      //}
 
-      }
 
-      try
-      {
 
-         ::signalizable::m_signalptra.remove_all();
+      //try
+      //{
 
-      }
-      catch(...)
-      {
+      //   m_signalidaCommand.remove_all();
 
-      }
+      //}
+      //catch(...)
+      //{
+
+      //}
+
+      //try
+      //{
+
+      //   ::::message::receiver::m_signalptra.remove_all();
+
+      //}
+      //catch(...)
+      //{
+
+      //}
 
       //try
       //{
@@ -1593,102 +1601,9 @@ Restart:
       return 0;
 
    }
+   
 
-
-   void interaction_base::queue_message_handler(signal_details * pobj)
-   {
-
-      if (m_pthread.is_null())
-      {
-
-         m_evNewMessage.ResetEvent();
-
-         m_pthread = ::fork(get_app(),
-            [&]()
-         {
-
-            m_messagequeue.defer_create_mutex();
-
-            m_evNewMessage.SetEvent();
-
-            while (get_thread_run())
-            {
-
-               if (m_evNewMessage.wait(seconds(1)).succeeded())
-               {
-
-
-                  m_evNewMessage.ResetEvent();
-
-               }
-
-               {
-
-                  single_lock sl(m_messagequeue.m_pmutex);
-
-                  if (m_messagequeue.has_elements())
-                  {
-
-                     smart_pointer < ::message::base > pbase = m_messagequeue.element_at(0);
-
-                     m_messagequeue.remove_at(0);
-
-                     sl.unlock();
-
-                     message_handler(pbase);
-
-                  }
-
-               }
-
-            }
-
-         });
-
-         m_evNewMessage.wait();
-
-      }
-
-
-      smart_pointer < ::message::base > pbase = pobj;
-
-      if (pbase.is_set())
-      {
-
-         if (pbase->m_uiMessage == WM_MOUSEMOVE)
-         {
-
-            {
-
-               single_lock sl(m_messagequeue.m_pmutex);
-
-               m_messagequeue.add(pbase);
-
-            }
-
-            m_evNewMessage.SetEvent();
-
-         }
-         else
-         {
-
-            ::fork(get_app(), [this, pbase]()
-            {
-
-               message_handler(pbase);
-
-            });
-
-         }
-
-      }
-
-
-   }
-
-
-
-   void interaction_base::message_handler(signal_details * pobj)
+   void interaction_base::message_handler(::message::base * pbase)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1745,9 +1660,18 @@ Restart:
    bool interaction_base::IsTopParentActive()
    {
 
-      ::exception::throw_interface_only(get_app());
+      ::user::interaction * puiTopLevel = GetTopLevel();
 
-      return false;
+      if (puiTopLevel == NULL)
+      {
+
+         return true;
+
+      }
+
+      ::user::interaction * puiActive = puiTopLevel->GetActiveWindow();
+
+      return  puiActive == puiTopLevel;
 
    }
 
@@ -1758,7 +1682,7 @@ Restart:
    }
 
 
-   void interaction_base::UpdateDialogControls(command_target* pTarget,bool bDisableIfNoHandler)
+   void interaction_base::update_dialog_controls(command_target * ptarget)
    {
 
       //::exception::throw_interface_only(get_app());
@@ -2072,7 +1996,7 @@ Restart:
    }
 
 
-   void interaction_base::GuieProc(signal_details * pobj)
+   void interaction_base::GuieProc(::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2475,19 +2399,25 @@ Restart:
    }
 
 
-   bool interaction_base::on_simple_command(e_simple_command ecommand,lparam lparam,LRESULT & lresult)
+   void interaction_base::on_simple_command(::message::simple_command * psimplecommand)
    {
 
-      if(ecommand == simple_command_full_screen)
+      if(psimplecommand->m_esimplecommand == simple_command_full_screen)
       {
 
          WfiFullScreen();
 
-         return true;
+         psimplecommand->m_bRet = true;
 
       }
 
-      return false;
+   }
+   
+
+   void interaction_base::on_command(::user::command * pcommand)
+   {
+
+      ::user::elemental::on_command(pcommand);
 
    }
 
@@ -2502,7 +2432,7 @@ Restart:
    }
 
 
-   bool interaction_base::_001HasCommandHandler(id id)
+   bool interaction_base::_001HasCommandHandler(::user::command * pcommand)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2512,7 +2442,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2543,7 +2473,7 @@ Restart:
 
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2553,7 +2483,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_menu(::xml::node * lpnode,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2563,7 +2493,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,signal_details * pobj)
+   bool interaction_base::track_popup_xml_matter_menu(const char * pszMatter,int32_t iFlags,::message::message * pobj)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2573,7 +2503,7 @@ Restart:
    }
 
 
-   bool interaction_base::track_popup_menu(::user::menu_base_item * pitem,int32_t iFlags, POINT pt)
+   bool interaction_base::track_popup_menu(::user::menu_item * pitem,int32_t iFlags, POINT pt)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2628,7 +2558,7 @@ Restart:
       return false;
 
    }
-   bool interaction_base::Wfi(EAppearance eapperance)
+   bool interaction_base::Wfi(e_appearance eapperance)
    {
 
       return false;
@@ -2636,7 +2566,7 @@ Restart:
    }
 
 
-   bool interaction_base::WfiDock(EAppearance eapperance)
+   bool interaction_base::WfiDock(e_appearance eapperance)
    {
 
       return false;
@@ -2714,23 +2644,23 @@ Restart:
    }
 
 
-   EAppearance interaction_base::get_appearance()
+   e_appearance interaction_base::get_appearance()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 
 
-   EAppearance interaction_base::get_appearance_before()
+   e_appearance interaction_base::get_appearance_before()
    {
 
-      return AppearanceNone;
+      return appearance_none;
 
    }
 
 
-   bool interaction_base::set_appearance(EAppearance eappearance)
+   bool interaction_base::set_appearance(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2740,7 +2670,7 @@ Restart:
    }
 
 
-   bool interaction_base::set_appearance_before(EAppearance eappearance)
+   bool interaction_base::set_appearance_before(e_appearance eappearance)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -2833,7 +2763,7 @@ Restart:
    }
 
 
-   //void interaction_base::_user_message_handler(signal_details * pobj)
+   //void interaction_base::_user_message_handler(::message::message * pobj)
    //{
    //}
 

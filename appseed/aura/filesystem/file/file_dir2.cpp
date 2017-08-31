@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 #ifdef WINDOWSEX
@@ -72,16 +72,24 @@ namespace windows
 
 }
 
-#ifdef WINDOWSEX
-::file::path dir::roaming_app_data()
+
+::file::path dir::program_data()
 {
 
-   return ::windows::get_known_folder(FOLDERID_RoamingAppData);
+#ifdef WINDOWSEX
 
-}
+   return ::windows::get_known_folder(FOLDERID_ProgramData);
+
+#else
+
+   return roaming_app_data() / "program_data";
+
 #endif
 
-::file::path dir::root()
+}
+
+
+::file::path dir::roaming_app_data()
 {
 
    ::file::path path;
@@ -90,8 +98,6 @@ namespace windows
 
    path = ::windows::get_known_folder(FOLDERID_RoamingAppData);
 
-   path /= "ca2";
-
 #elif defined(METROWIN)
 
    path = begin(::Windows::Storage::ApplicationData::Current->LocalFolder->Path);
@@ -101,12 +107,12 @@ namespace windows
    path = ::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir;
 
 #elif defined(APPLEOS)
-   
-   path = ::file::path(getenv("HOME")) / "Library/ca2";
-   
+
+   path = ::file::path(getenv("HOME")) / "Application Support/Library";
+
 #else
 
-   path = ::file::path(getenv("HOME")) / ".config/ca2";
+   path = ::file::path(getenv("HOME")) / ".config";
 
 #endif
 
@@ -115,36 +121,18 @@ namespace windows
 }
 
 
+::file::path dir::root()
+{
+
+   return roaming_app_data() / "ca2";
+
+}
+
+
 ::file::path dir::public_root()
 {
 
-   ::file::path path;
-
-#ifdef WINDOWSEX
-
-   path = ::windows::get_known_folder(FOLDERID_ProgramData);
-
-   path /= "ca2";
-
-#elif defined(METROWIN)
-
-   path = begin(::Windows::Storage::ApplicationData::Current->LocalFolder->Path);
-
-#elif defined(VSNORD)
-
-   path = ::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir;
-
-#elif defined(APPLEOS)
-   
-   path = ::file::path(getenv("HOME")) / "Library/ca2";
-
-#else
-
-   path = ::file::path(getenv("HOME")) / ".config/ca2";
-
-#endif
-
-   return path;
+   return program_data() / "ca2";
 
 }
 

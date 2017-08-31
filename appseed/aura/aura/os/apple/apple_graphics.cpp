@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "apple_graphics.h"
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreText/CoreText.h>
 

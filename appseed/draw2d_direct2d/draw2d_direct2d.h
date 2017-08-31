@@ -2,7 +2,7 @@
 
 
 #include "base/base/base.h"
-//#include "aura/graphics/graphics.h"
+
 
 #undef new
 
@@ -28,8 +28,16 @@
 #endif
 
 
-namespace D2D1
+namespace d2d1
 {
+
+
+   inline D2D1_RECT_F rectf(LPCRECT lpcrect)
+   {
+
+      return D2D1::Rect<FLOAT>(lpcrect->left, lpcrect->top, lpcrect->right, lpcrect->bottom);
+
+   }
 
 
    inline D2D1_POINT_2F Point2F(double x = 0.0, double y = 0.0)
@@ -40,7 +48,7 @@ namespace D2D1
    }
 
 
-} // namespace D2D1
+} // namespace d2d1
 
 
 

@@ -1,10 +1,6 @@
 #include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
-//#include "axis/compress/compress.h"
-//#include "zlib.h"
-//#include "zutil.h"
-//#include "axis/compress/zip/zip.h"
-//#include "axis/compress/gzip_stream.h"
+
 
 
 namespace sockets
@@ -82,7 +78,7 @@ namespace sockets
 
       
 #ifndef DEBUG
-      ::OutputDebugString(m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string() + "\n");
+      ::output_debug_string(m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string() + "\n");
 #endif
       TRACE0("\n");
       TRACE0(m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string() + "\n");
@@ -93,28 +89,28 @@ namespace sockets
       if(m_request.headers().has_property(__id(user_agent)))
       {
 #ifndef DEBUG
-         ::OutputDebugString("user-agent: " + m_request.header(__id(user_agent)) + "\n");
+         ::output_debug_string("user-agent: " + m_request.header(__id(user_agent)) + "\n");
 #endif
          TRACE0("user-agent: " + m_request.header(__id(user_agent)) + " :[ " + inattr("remote_addr") + "] \n");
       }
       else
       {
 #ifndef DEBUG
-         ::OutputDebugString("user-agent: " + m_request.header(__id(user_agent)) + "\n");
+         ::output_debug_string("user-agent: " + m_request.header(__id(user_agent)) + "\n");
 #endif
          TRACE0("user-agent: () :[ " + inattr("remote_addr") + " ]\n");
       }
       if(m_request.headers().has_property(__id(from)))
       {
 #ifndef DEBUG
-         ::OutputDebugString("from: " + m_request.header(__id(from)) + "\n");
+         ::output_debug_string("from: " + m_request.header(__id(from)) + "\n");
 #endif
          TRACE0("from: " + m_request.header(__id(from)) + "\n");
       }
       if(m_request.headers().has_property(__id(accept_language)))
       {
 #ifndef DEBUG
-         ::OutputDebugString("accept-language: " + m_request.header(__id(accept_language)) + "\n");
+         ::output_debug_string("accept-language: " + m_request.header(__id(accept_language)) + "\n");
 #endif
          TRACE0("accept-language: " + m_request.header(__id(accept_language)) + "\n");
       }

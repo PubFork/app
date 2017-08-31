@@ -16,10 +16,10 @@ simple_list_view::~simple_list_view()
 }
 
 
-void simple_list_view::install_message_handling(::message::dispatch * pinterface)
+void simple_list_view::install_message_routing(::message::sender * pinterface)
 {
    
-   BASE_TYPE::install_message_handling(pinterface);
+   BASE_TYPE::install_message_routing(pinterface);
    
 }
 

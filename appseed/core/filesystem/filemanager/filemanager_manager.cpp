@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 
@@ -154,34 +154,38 @@ namespace filemanager
    manager::manager(::aura::application * papp) :
       object(papp),
       ::data::data_container_base(papp),
+      ::user::controller(papp),
       ::user::document(papp),
       ::userfs::document(papp)
    {
+      
       m_bFullBrowse = false;
+      
       m_pfilewatcherlistenerthread = NULL;
 
-      command_signalid id;
+      //command_signalid id;
 
-      connect_update_cmd_ui("levelup", &manager::_001OnUpdateLevelUp);
+      connect_command_probe("levelup", &manager::_001OnUpdateLevelUp);
       connect_command("levelup", &manager::_001OnLevelUp);
-      connect_update_cmd_ui("add_location", &manager::_001OnUpdateAddLocation);
+      connect_command_probe("add_location", &manager::_001OnUpdateAddLocation);
       connect_command("add_location", &manager::_001OnAddLocation);
-      connect_update_cmd_ui("replace_text_in_file_system", &manager::_001OnUpdateReplaceText);
+      connect_command_probe("replace_text_in_file_system", &manager::_001OnUpdateReplaceText);
       connect_command("replace_text_in_file_system", &manager::_001OnReplaceText);
-      connect_update_cmd_ui("edit_paste", &manager::_001OnUpdateEditPaste);
+      connect_command_probe("edit_paste", &manager::_001OnUpdateEditPaste);
       connect_command("edit_paste", &manager::_001OnEditPaste);
-      connect_update_cmd_ui("file_save", &manager::_001OnUpdateFileSaveAs);
+      connect_command_probe("file_save", &manager::_001OnUpdateFileSaveAs);
       connect_command("file_save", &manager::_001OnFileSaveAs);
-      connect_update_cmd_ui("cancel", &manager::_001OnUpdateEditPaste);
+      connect_command_probe("cancel", &manager::_001OnUpdateEditPaste);
       connect_command("cancel", &manager::_001OnEditPaste);
-      connect_update_cmd_ui("new_manager", &manager::_001OnUpdateNewManager);
+      connect_command_probe("new_manager", &manager::_001OnUpdateNewManager);
       connect_command("new_manager", &manager::_001OnNewManager);
-      connect_update_cmd_ui("del_manager", &manager::_001OnUpdateDelManager);
+      connect_command_probe("del_manager", &manager::_001OnUpdateDelManager);
       connect_command("del_manager", &manager::_001OnDelManager);
-      connect_update_cmd_ui("new_folder", &manager::_001OnUpdateNewFolder);
+      connect_command_probe("new_folder", &manager::_001OnUpdateNewFolder);
       connect_command("new_folder", &manager::_001OnNewFolder);
 
    }
+
 
    manager::~manager()
    {
@@ -189,7 +193,7 @@ namespace filemanager
    }
 
 
-   bool manager::FileManagerBrowse(sp(::fs::item) item, ::action::context actioncontext)
+   bool manager::FileManagerBrowse(::fs::item * pitem, ::action::context actioncontext)
    {
 
       if (m_fsset->m_spafsdata.is_empty())
@@ -217,7 +221,7 @@ namespace filemanager
       try
       {
 
-         m_item = canew(::fs::item(*item));
+         m_item = canew(::fs::item(*pitem));
 
          if (get_fs_data()->is_link(m_item->m_filepath))
          {
@@ -296,25 +300,25 @@ namespace filemanager
    void manager::FileManagerOneLevelUp(::action::context actioncontext)
    {
 
-      if (get_filemanager_item().m_filepath.is_empty())
+      if (get_filemanager_item()->m_filepath.is_empty())
          return;
 
-      string strParent = get_filemanager_item().m_filepath.up();
+      string strParent = get_filemanager_item()->m_filepath.up();
 
       FileManagerBrowse(strParent, ::action::source::sync(actioncontext));
 
    }
 
 
-   ::fs::item & manager::get_filemanager_item()
+   ::fs::item * manager::get_filemanager_item()
    {
 
-      return *m_item;
+      return m_item;
 
    }
 
 
-   sp(manager_template) manager::get_filemanager_template()
+   manager_template * manager::get_filemanager_template()
    {
 
       return get_filemanager_data()->get_filemanager_template();
@@ -322,7 +326,7 @@ namespace filemanager
    }
 
 
-   sp(::filemanager::data) manager::get_filemanager_data()
+   ::filemanager::data * manager::get_filemanager_data()
    {
 
 
@@ -332,7 +336,7 @@ namespace filemanager
    }
 
 
-   sp(::fs::data) manager::get_fs_data()
+   ::fs::data * manager::get_fs_data()
    {
 
 
@@ -342,7 +346,7 @@ namespace filemanager
    }
 
 
-   sp(manager) manager::get_main_manager()
+   manager * manager::get_main_manager()
    {
 
       sp(tab_view) ptabview = get_typed_view < tab_view >();
@@ -654,41 +658,46 @@ namespace filemanager
    }
 
 
-   bool manager::on_simple_action(id id)
+   void manager::on_command(::user::command * pcommand)
    {
 
       if (get_filemanager_data() != NULL
          && get_filemanager_template() != NULL)
       {
          //         ::schema * ptemplate = get_filemanager_template();
-         if (id == get_filemanager_template()->m_strLevelUp)
+         if (pcommand->m_id == get_filemanager_template()->m_strLevelUp)
          {
             FileManagerOneLevelUp(::action::source_user);
-            return true;
+            pcommand->m_bRet = true;
+            return;
          }
       }
-      return ::user::document::on_simple_action(id);
+      
+      ::user::document::on_command(pcommand);
+
    }
 
-   bool manager::on_simple_update(cmd_ui * pcmdui)
+
+   void manager::on_command_probe(::user::command * pcommand)
    {
-      /*if(pcmdui->m_id == get_filemanager_template()->m_strLevelUp)
+      /*if(pcommand->m_id == get_filemanager_template()->m_strLevelUp)
       {
-      FileManagerOnUpdateLevelUp(pcmdui);
+      FileManagerOnUpdateLevelUp(pcommand);
       return true;
       }*/
-      return ::user::document::on_simple_update(pcmdui);
+      ::user::document::on_command_probe(pcommand);
+
    }
 
 
-   /*bool manager::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+   /*bool manager::_001OnCmdMsg(::user::command * pcommand)
    {
-   if (nCode == CN_UPDATE_COMMAND_UI)
+   if (nCode == CN_UPDATE_::user::command)
    {
-   cmd_ui * pcmdui = (cmd_ui *) pExtra;
+   ::user::command * pcommand = (::user::command *) pExtra;
    if(nID == get_filemanager_template()->m_uiLevelUp)
    {
-   FileManagerOnUpdateLevelUp(pcmdui);
+   FileManagerOnUpdateLevelUp(pcommand);
    return TRUE;
    }
    }
@@ -710,45 +719,45 @@ namespace filemanager
    }
    }
    }*/
-   /*   return ::user::document::_001OnCmdMsg(pcmdmsg);
+   /*   return ::user::document::_001OnCmdMsg(pcommand);
    }
    */
 
-   void manager::_001OnUpdateNewManager(signal_details * pobj)
+   void manager::_001OnUpdateNewManager(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnNewManager(signal_details * pobj)
+   void manager::_001OnNewManager(::message::message * pobj)
    {
 
-      Session.filemanager().std().add_manager("", canew(::create(Application.creation())));
+      Session.filemanager().std().add_manager("", canew(::create(Application.handler())));
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnUpdateDelManager(signal_details * pobj)
+   void manager::_001OnUpdateDelManager(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnDelManager(signal_details * pobj)
+   void manager::_001OnDelManager(::message::message * pobj)
    {
 
       sp(manager) pdoc = this;
@@ -776,21 +785,21 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateLevelUp(signal_details * pobj)
+   void manager::_001OnUpdateLevelUp(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
       if (m_item.is_null() || m_item->m_filepath.is_empty())
       {
 
-         pcmdui->m_pcmdui->Enable(FALSE);
+         pcommand->Enable(FALSE);
 
       }
       else
       {
 
-         pcmdui->m_pcmdui->Enable(TRUE);
+         pcommand->Enable(TRUE);
 
       }
 
@@ -799,26 +808,26 @@ namespace filemanager
    }
 
 
-   void manager::_001OnLevelUp(signal_details * pobj)
+   void manager::_001OnLevelUp(::message::message * pobj)
    {
       FileManagerOneLevelUp(::action::source_user);
       pobj->m_bRet = true;
    }
 
 
-   void manager::_001OnUpdateAddLocation(signal_details * pobj)
+   void manager::_001OnUpdateAddLocation(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnAddLocation(signal_details * pobj)
+   void manager::_001OnAddLocation(::message::message * pobj)
    {
 
       update_all_views(NULL, ::user::impact::hint_add_location, NULL);
@@ -828,19 +837,19 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateReplaceText(signal_details * pobj)
+   void manager::_001OnUpdateReplaceText(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnReplaceText(signal_details * pobj)
+   void manager::_001OnReplaceText(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -852,19 +861,19 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateNewFolder(signal_details * pobj)
+   void manager::_001OnUpdateNewFolder(::message::message * pobj)
    {
 
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      SCAST_PTR(::user::command, pcommand, pobj);
 
-      pcmdui->m_pcmdui->Enable(TRUE);
+      pcommand->Enable(TRUE);
 
       pobj->m_bRet = true;
 
    }
 
 
-   void manager::_001OnNewFolder(signal_details * pobj)
+   void manager::_001OnNewFolder(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -876,15 +885,15 @@ namespace filemanager
    }
 
 
-   void manager::_001OnUpdateEditPaste(signal_details * pobj)
+   void manager::_001OnUpdateEditPaste(::message::message * pobj)
    {
-      //      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
+      //      SCAST_PTR(::user::command, pcommand, pobj);
 
-      //         pcmdui->m_pcmdui->Enable(System.m_strCopy.is_empty());
+      //         pcommand->Enable(System.m_strCopy.is_empty());
       pobj->m_bRet = true;
    }
 
-   void manager::_001OnEditPaste(signal_details * pobj)
+   void manager::_001OnEditPaste(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //System.file().paste(get_filemanager_data()->get_filemanager_item().m_strPath, System.m_strCopy);
@@ -892,26 +901,26 @@ namespace filemanager
       //pobj->m_bRet = true;
    }
 
-   void manager::_001OnUpdateFileSaveAs(signal_details * pobj)
+   void manager::_001OnUpdateFileSaveAs(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
-   void manager::_001OnUpdateFileImport(signal_details * pobj)
+   void manager::_001OnUpdateFileImport(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
-   void manager::_001OnUpdateFileExport(signal_details * pobj)
+   void manager::_001OnUpdateFileExport(::message::message * pobj)
    {
-      SCAST_PTR(::aura::cmd_ui, pcmdui, pobj);
-      pcmdui->m_pcmdui->Enable(TRUE);
+      SCAST_PTR(::user::command, pcommand, pobj);
+      pcommand->Enable(TRUE);
    }
 
 
-   void manager::_001OnFileSaveAs(signal_details * pobj)
+   void manager::_001OnFileSaveAs(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -925,7 +934,7 @@ namespace filemanager
       pobj->m_bRet = true;
    }
 
-   void manager::_001OnFileImport(signal_details * pobj)
+   void manager::_001OnFileImport(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -940,7 +949,7 @@ namespace filemanager
    }
 
 
-   void manager::_001OnFileExport(signal_details * pobj)
+   void manager::_001OnFileExport(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -1064,10 +1073,10 @@ namespace filemanager
    }
 
 
-   void manager::OpenFolder(sp(::fs::item) item, ::action::context actioncontext)
+   void manager::OpenFolder(::fs::item * pitem, ::action::context actioncontext)
    {
 
-      FileManagerBrowse(item, actioncontext);
+      FileManagerBrowse(pitem, actioncontext);
 
    }
 
@@ -1114,33 +1123,43 @@ namespace filemanager
       update_all_views(NULL, 0, &uh);
    }
 
-   bool manager::HandleDefaultFileManagerItemCmdMsg(::aura::cmd_msg * pcmdmsg, ::fs::item_array & itema)
+   
+   bool manager::HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand, ::fs::item_array & itema)
    {
-      if (pcmdmsg->m_etype == ::aura::cmd_msg::type_cmdui)
+      
+      if (pcommand->m_id.m_emessagetype == ::message::type_command)
       {
-         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcmdmsg->m_pcmdui->m_id, itema))
+
+         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))
          {
-            get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(
-               get_filemanager_data(), pcmdmsg->m_pcmdui, itema);
-            return TRUE;
+
+            get_filemanager_data()->m_pcallback->OnFileManagerItemUpdate(get_filemanager_data(), pcommand, itema);
+
+            return true;
+
          }
+
       }
       else
       {
-         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(
-            get_filemanager_data(), pcmdmsg->m_id, itema))
+
+         if (get_filemanager_data()->m_pcallback->GetFileManagerItemCallback(get_filemanager_data(), pcommand->m_id, itema))
          {
-            get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(
-               get_filemanager_data(), pcmdmsg->m_id, itema);
+
+            get_filemanager_data()->m_pcallback->OnFileManagerItemCommand(get_filemanager_data(), pcommand->m_id, itema);
+            
             return true;
+
          }
+
       }
+
       return false;
+
    }
 
 
-   sp(operation_document) manager::get_operation_doc(bool bSwitch)
+   operation_document * manager::get_operation_doc(bool bSwitch)
    {
 
       ::filemanager::tab_view * ptabview = Session.filemanager().std().m_pdoctemplateMain->get_document(0)->get_typed_view < ::filemanager::tab_view >();
@@ -1166,7 +1185,7 @@ namespace filemanager
 
          }
 
-         return ptabview->get("filemanager::operation")->m_pdoc;
+         return dynamic_cast < operation_document * > (ptabview->get("filemanager::operation")->m_pdoc);
 
       }
 

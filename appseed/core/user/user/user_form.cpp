@@ -22,20 +22,20 @@ namespace user
    }
 
 
-   index form::_001AddControl(class control::descriptor & descriptorParam)
+   index form::_001AddControl(class control_descriptor & descriptorParam)
    {
 
-      //index indexNew = m_controldescriptorset.add(new class control::descriptor(descriptorParam));
+      //index indexNew = m_controldescriptorset.add(new class control_descriptor(descriptorParam));
 
 
 
-      class control::descriptor * pdescriptor = canew(class control::descriptor(descriptorParam));
+      class control_descriptor * pdescriptor = canew(class control_descriptor(descriptorParam));
 
       m_controldescriptorset.add(pdescriptor);
 
       descriptorParam.clear();
 
-      pdescriptor->m_pform = this;
+      pdescriptor->m_puiParent = this;
 
       if(pdescriptor->m_bTransparent)
       {
@@ -172,7 +172,7 @@ namespace user
       {
       case BN_CLICKED:
          {
-            if(pcontrol->descriptor().has_function(control::function_action))
+            if(pcontrol->descriptor().has_function(control_function_action))
             {
                _001OnButtonAction(pcontrol);
                return true;
@@ -283,7 +283,7 @@ namespace user
       {
       case EN_CHANGE:
          {
-            if(pcontrol->descriptor().has_function(control::function_save_on_change))
+            if(pcontrol->descriptor().has_function(control_function_save_on_change))
             {
                _001SaveEdit(pcontrol);
             }
@@ -351,7 +351,7 @@ namespace user
          return false;
       }
 
-      if(pcontrol->descriptor().has_function(control::function_vms_data_edit))
+      if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
          ::database::selection selection;
          _001GetSelection(pcontrol->descriptor().m_dataid, selection);
@@ -435,7 +435,7 @@ namespace user
       if(pcontrol == NULL)
          return;
       ASSERT(pcontrol->descriptor().get_type() == control_type_check_box);
-      ASSERT(pcontrol->descriptor().m_eddx == control::ddx_dbflags);
+      ASSERT(pcontrol->descriptor().m_eddx == control_ddx_dbflags);
       int_ptr_array ia;
       try
       {
@@ -508,7 +508,7 @@ namespace user
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit
          || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
-      if(pcontrol->descriptor().has_function(control::function_vms_data_edit))
+      if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
 
          var var;
@@ -575,7 +575,7 @@ namespace user
       }*/
    }
 
-   void form::_000OnPosCreate(signal_details * pobj)
+   void form::_000OnPosCreate(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::base, pbase, pobj);
@@ -655,14 +655,14 @@ namespace user
       }
    }
 
-   void form::install_message_handling( ::message::dispatch *pinterface)
+   void form::install_message_routing( ::message::sender *psender)
    {
-      ::user::form_window::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &form::_001OnCreate);
-      IGUI_MSG_LINK(::message::message_pos_create, pinterface, this, &form::_000OnPosCreate);
-      IGUI_WIN_MSG_LINK(::base::application::APPM_LANGUAGE, pinterface, this, &form::_001OnAppLanguage);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+      ::user::form_window::install_message_routing(psender);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &form::_001OnCreate);
+      IGUI_MSG_LINK(::message::message_pos_create, psender, this, &form::_000OnPosCreate);
+      MSG_TYPE_LINK(::message::type_language, psender, this, &form::_001OnAppLanguage);
+      //IGUI_MSG_LINK(WM_KEYDOWN, psender, this, &::user::interaction::_001OnKeyDown);
+      //IGUI_MSG_LINK(WM_KEYUP, psender, this, &::user::interaction::_001OnKeyUp);
 
    }
 
@@ -671,13 +671,16 @@ namespace user
       selection.add_item(id);
    }
 
-   bool form::on_simple_action(id id)
+   
+   void form::on_command(::user::command * pcommand)
    {
-      return control::on_simple_action(id);
+      
+      control::on_command(pcommand);
+
    }
 
 
-   void form::_001OnNotify(signal_details * pobj)
+   void form::_001OnNotify(::message::message * pobj)
    {
 
 #ifdef WINDOWSEX
@@ -695,7 +698,7 @@ namespace user
    }
 
 
-   void form::_001OnMessageNotify(signal_details * pobj)
+   void form::_001OnMessageNotify(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -737,7 +740,7 @@ namespace user
 
    }
 
-   void form::data_on_after_change(signal_details * pobj)
+   void form::data_on_after_change(::message::message * pobj)
    {
 
       SCAST_PTR(::database::change_event, pchange, pobj);
@@ -759,7 +762,7 @@ namespace user
       for(int32_t iControl = 0; iControl < m_controldescriptorset.get_size(); iControl++)
       {
 
-         sp(class control::descriptor) pdescriptor = m_controldescriptorset[iControl];
+         sp(class control_descriptor) pdescriptor = m_controldescriptorset[iControl];
 
          if(pdescriptor.is_null())
             continue;
@@ -769,7 +772,7 @@ namespace user
          if(pcontrol.is_null())
             continue;
 
-         if(pdescriptor->m_eddx == control::ddx_dbflags)
+         if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
 
             _001UpdateDbFlags(pcontrol);
@@ -795,9 +798,9 @@ namespace user
       for(int32_t i = 0; i < m_controldescriptorset.get_size(); i++)
       {
 
-         class control::descriptor & descriptor = m_controldescriptorset(i);
+         class control_descriptor & descriptor = m_controldescriptorset(i);
 
-         if(descriptor.has_function(control::function_static))
+         if(descriptor.has_function(control_function_static))
          {
 
             string str;
@@ -807,7 +810,7 @@ namespace user
             descriptor.get_control(this)->set_window_text(str);
 
          }
-         else if(descriptor.has_function(control::function_static2))
+         else if(descriptor.has_function(control_function_static2))
          {
 
             string str;
@@ -854,7 +857,7 @@ namespace user
    }
 
 
-   void form::_001OnAppLanguage(signal_details * pobj)
+   void form::_001OnAppLanguage(::message::message * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -868,7 +871,7 @@ namespace user
    }
 
 
-   void form::_001OnCreate(signal_details * pobj)
+   void form::_001OnCreate(::message::message * pobj)
    {
 
 //      SCAST_PTR(::message::create, pcreate, pobj);
@@ -918,7 +921,7 @@ namespace user
 
 //      for(int32_t i = 0; i < m_controldescriptorset.get_size() ; i++)
 //      {
-//         class control::descriptor & descriptor = m_controldescriptorset(i);
+//         class control_descriptor & descriptor = m_controldescriptorset(i);
 //         if(descriptor.m_typeinfo)
 //         {
 //            if(descriptor.m_bCreated && descriptor.m_pcontrol != NULL)
@@ -965,7 +968,7 @@ namespace user
    }
 
 
-   bool form::create_control(class control::descriptor * pdescriptor, index iItem)
+   bool form::create_control(class control_descriptor * pdescriptor, index iItem)
    {
 
       if(!normalize_control_descriptor_typeinfo(pdescriptor))
@@ -995,13 +998,13 @@ namespace user
 
          pca.release();
 
-         TRACE("form::create_control: failed to create control, object is not derived from user::control::descriptor");
+         TRACE("form::create_control: failed to create control, object is not derived from user::control_descriptor");
 
          return false;
 
       }
 
-      if(!pcontrol->create_control(pdescriptor, iItem))
+      if(!pcontrol->create_control(pdescriptor))
       {
 
          pcontrol.release();
@@ -1071,12 +1074,12 @@ namespace user
          if(pcontrol == NULL)
             return false;
 
-         class control::descriptor * pdescriptor = pcontrol->m_pdescriptor;
+         class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
             return false;
 
-         if(pdescriptor->has_function(control::function_action))
+         if(pdescriptor->has_function(control_function_action))
          {
             if(pcontrol != NULL)
             {
@@ -1097,12 +1100,12 @@ namespace user
          if(pcontrol == NULL)
             return false;
 
-         class control::descriptor * pdescriptor = pcontrol->m_pdescriptor;
+         class control_descriptor * pdescriptor = pcontrol->m_pdescriptor;
 
          if(pdescriptor == NULL)
             return false;
 
-         if(pdescriptor->m_eddx == control::ddx_dbflags)
+         if(pdescriptor->m_eddx == control_ddx_dbflags)
          {
             int_ptr_array ia;
             pdescriptor->m_ddx.m_pdbflags->m_key.m_pclient->data_load(
@@ -1166,7 +1169,7 @@ namespace user
 
 
 
-   bool form::normalize_control_descriptor_typeinfo(class ::user::control::descriptor * pdescriptor)
+   bool form::normalize_control_descriptor_typeinfo(class ::user::control_descriptor * pdescriptor)
    {
 
       if(pdescriptor->m_typeinfo)

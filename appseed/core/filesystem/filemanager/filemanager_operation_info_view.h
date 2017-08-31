@@ -26,7 +26,7 @@ namespace filemanager
 
       DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
    };
 

@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -27,6 +27,8 @@ namespace user
    impact_system::impact_system(::aura::application * papp, const char * pszMatter, sp(type) pDocClass, sp(type) pFrameClass, sp(type) pViewClass) :
       ::object(papp)
    {
+
+      m_puiOwner = NULL;
 
       m_bQueueDocumentOpening = true;
       m_strMatter = pszMatter;
@@ -81,7 +83,7 @@ namespace user
       ::str::begins_eat_ci(strDoc, "class ");
       strId += strDoc;
       pdocument->m_dataid = strId;
-      pdocument->install_message_handling(pdocument);
+      pdocument->install_message_routing(pdocument);
    }
 
    void impact_system::remove_document(::user::document * pdocument)
@@ -165,94 +167,96 @@ namespace user
       // create a frame wired to the specified ::user::document
 
       ASSERT(m_strMatter.get_length() > 0); // must have a resource ID to load from
-      stacker < ::aura::create_context > context(pcreate->m_user);
-      context->m_pCurrentFrame = pOther;
-      context->m_pCurrentDoc = pdocument;
+      
+      ::user::create usercreate;
+
+      SRESTORE(pcreate->m_pusercreate.m_p, &usercreate);
+
+      usercreate.m_puiCurrentFrame = pOther;
+
+      usercreate.m_pdocumentCurrent = pdocument;
+
       if (pcreate->m_puiAlloc != NULL)
       {
-         context->m_puiNew = pcreate->m_puiAlloc;
+
+         usercreate.m_puiNew = pcreate->m_puiAlloc;
+
       }
       else
       {
-         context->m_typeinfoNewView = m_typeinfoView;
+      
+         usercreate.m_typeinfoNewView = m_typeinfoView;
+
       }
-      context->m_pNewDocTemplate = this;
+
+      usercreate.m_ptemplateNewDocument = this;
 
       if (!m_typeinfoFrame)
       {
-         TRACE(::aura::trace::category_AppMsg, 0, "Error: you must override impact_system::create_new_frame.\n");
-         ASSERT(FALSE);
-         return NULL;
-      }
-      ::aura::application * papp = pcreate->get_app() != NULL ? pcreate->get_app() : get_app();
-      sp(::user::frame_window) pFrame = App(papp).alloc(m_typeinfoFrame);
-      if (pFrame == NULL)
-      {
-         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n",
-               m_typeinfoFrame->name());
-         string strMessage;
-         strMessage.Format("Warning: Dynamic create of frame %hs failed.\n\n(Does allocation was implemented)?",m_typeinfoFrame->name());
-         Application.simple_message_box(NULL, strMessage);
-         return NULL;
-      }
-      ASSERT_KINDOF(frame_window, pFrame);
-      pFrame->m_pdocumenttemplate = this;
 
-      if (!context->m_typeinfoNewView)
+         TRACE(::aura::trace::category_AppMsg, 0, "Error: you must override impact_system::create_new_frame.\n");
+
+         ASSERT(FALSE);
+
+         return NULL;
+
+      }
+
+      ::aura::application * papp = pcreate->get_app() != NULL ? pcreate->get_app() : get_app();
+
+      sp(::user::frame_window) pframe = App(papp).alloc(m_typeinfoFrame);
+
+      if (pframe == NULL)
+      {
+
+         TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n", m_typeinfoFrame->name());
+
+         string strMessage;
+         
+         strMessage.Format("Warning: Dynamic create of frame %hs failed.\n\n(Does allocation was implemented)?",m_typeinfoFrame->name());
+
+         Application.simple_message_box(NULL, strMessage);
+
+         return NULL;
+
+      }
+
+      ASSERT_KINDOF(frame_window, pframe);
+
+      pframe->m_pdocumenttemplate = this;
+
+      if (!usercreate.m_typeinfoNewView)
+      {
+
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: creating frame with no default ::user::impact.\n");
 
+      }
+
+      if (m_puiOwner != NULL)
+      {
+
+         pframe->m_puiOwner = m_puiOwner;
+
+      }
+
       // create new from resource
-      if (!pFrame->LoadFrame(m_strMatter,
+      if (!pframe->LoadFrame(m_strMatter,
                              WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,   // default frame styles
                              dynamic_cast < ::user::interaction * > (pcreate->m_puiParent), pcreate))
       {
+         
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: impact_system couldn't create a frame.\n");
+         
          // frame will be deleted in PostNcDestroy cleanup
+         
          return NULL;
+         
       }
 
-      // it worked !
-      return pFrame;
+      return pframe;
+      
    }
-
-   /*
-   sp(::user::frame_window) impact_system::CreateOleFrame(::window_sp pParentWnd, ::user::document * pdocument,
-   bool bCreateView)
-   {
-   create_context context;
-   context.m_pCurrentFrame = NULL;
-   context.m_pCurrentDoc = pdocument;
-   context.m_typeinfoNewView = bCreateView ? m_pOleViewClass : NULL;
-   context.m_pNewDocTemplate = this;
-
-   if (m_pOleFrameClass == NULL)
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: pOleFrameClass not specified for doc template.\n");
-   return NULL;
-   }
-
-   ASSERT(!m_strServerMatter.is_empty()); // must have a resource ID to load from
-   sp(::user::frame_window) pFrame = (System.alloc(m_pOleFrameClass));
-   if (pFrame == NULL)
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n",
-   m_pOleFrameClass->name());
-   return NULL;
-   }
-
-   // create new from resource (OLE frames are created as child windows)
-   if (!pFrame->LoadFrame(m_strServerMatter,
-   WS_CHILD|WS_CLIPSIBLINGS, pParentWnd, &context))
-   {
-   TRACE(::aura::trace::category_AppMsg, 0, "Warning: impact_system couldn't create an OLE frame.\n");
-   // frame will be deleted in PostNcDestroy cleanup
-   return NULL;
-   }
-
-   // it worked !
-   return pFrame;
-   }
-   */
+   
 
    void impact_system::InitialUpdateFrame(sp(::user::frame_window) pFrame, ::user::document * pdocument,
                                           bool bMakeVisible)
@@ -312,9 +316,12 @@ namespace user
       }
    }
 
-   bool impact_system::_001OnCmdMsg(::aura::cmd_msg * pcmdmsg)
+
+   void impact_system::_001OnCmdMsg(::user::command * pcommand)
    {
-      return command_target::_001OnCmdMsg(pcmdmsg);
+
+      command_target::_001OnCmdMsg(pcommand);
+
    }
 
 

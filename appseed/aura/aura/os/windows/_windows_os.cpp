@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "aura/node/windows/windows.h"
-//#include "aura/graphics/graphics.h"
+
 #include <fcntl.h>
 #include "windows.h"
 #include <VersionHelpers.h>
@@ -18,8 +18,8 @@
 #include <process.h>    // for _beginthreadex and _endthreadex
 #include <Winsvc.h>
 
-//O volume na unidade Z ‚ eco
-// O N£mero de S‚rie do Volume ‚ 4A91-94E4
+//O volume na unidade Z ï¿½ eco
+// O Nï¿½mero de Sï¿½rie do Volume ï¿½ 4A91-94E4
 //
 // Pasta de Z:\ca2\app\appseed\aura\aura\os\windows
 //
@@ -54,7 +54,7 @@
 #include "windows_utils.cpp"
 //2015-01-05  08:08                 0 _windows_os.cpp"
 //              30 arquivo(s)        121.416 bytes
-//               0 pasta(s)   35.770.142.720 bytes dispon¡veis
+//               0 pasta(s)   35.770.142.720 bytes disponï¿½veis
 
 //#include "windows_console_window.cpp"
 

@@ -31,12 +31,15 @@ class round_window;
    
    
 	NSView                  * childContentView;
-	NSButton                * closeButton;
    NSWindowController      * m_controller;
    
    
 }
 
+-(void)dealloc;
+
 -(void)windowDidExpose;
+
 -(void)windowWillClose;
+
 @end

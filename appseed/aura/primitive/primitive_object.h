@@ -192,11 +192,12 @@ public:
    virtual int64_t dec_ref();
    virtual int64_t release();
 
-   // OBJECT :: object :> is a ::object
-
-   virtual void add_line(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
+   
+   virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);
+   virtual void add_line(const char * pszCommandLine, application_bias * pbiasCreate = NULL);
    virtual void add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
 
+   virtual void add_fork(::command::command * pcommand, application_bias * pbiasCreate = NULL);
    virtual void add_fork(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
    virtual void add_fork_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
 
@@ -204,11 +205,14 @@ public:
    // semantics defined by the requested object - ::object implementator
    virtual void request_file(var & varFile);
    virtual void request_file_query(var & varFile,var & varQuery);
-   virtual void request_command(sp(command_line) pcommandline);
+   virtual void request_command(command_line * pcommandline);
    virtual void request_create(::create * pcreate);
+   
+   virtual void handle(::command::command * pcommand);
+   virtual void handle(::create * pcreate);
 
-   // another name for request
-   virtual void create(::create * pcreate);
+   virtual void on_handle(::command::command * pcommand);
+   virtual void on_handle(::create * pcreate);
 
 
    // main loosely coupled semantics :
@@ -233,7 +237,7 @@ public:
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
 
-   inline sp(::command_thread) command_thread();
+   inline sp(::handler) handler();
 
 
    virtual void keep_alive();
@@ -311,7 +315,7 @@ namespace aura
 //   object & operator = (const object & objectSrc);       // no implementation
 //
 //
-//   inline sp(::command_thread) command_thread();
+//   inline sp(::handler) handler();
 //
 //
 //   DECLARE_AND_IMPLEMENT_DEFAULT_ALLOCATION

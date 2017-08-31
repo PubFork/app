@@ -15,7 +15,7 @@ namespace filemanager
       child_frame(::aura::application * papp);
       virtual ~child_frame();
 
-      void install_message_handling(::message::dispatch * pinterface);
+      void install_message_routing(::message::sender * pinterface);
 
       void OnChangeEditSearch();
 
@@ -26,7 +26,7 @@ namespace filemanager
 
       bool on_create_bars();
       bool DestroyBars();
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnAppLanguage);

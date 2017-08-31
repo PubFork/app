@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -119,9 +119,9 @@ namespace simple_ui
 
       }
 
-      rectFontopus.left = rectDesktop.left + (width(rectDesktop) - w) / 2;
+      rectFontopus.left = rectDesktop.left + (rectDesktop.width() - w) / 2;
 
-      rectFontopus.top = rectDesktop.top + (height(rectDesktop) - h) / 3;
+      rectFontopus.top = rectDesktop.top + (rectDesktop.height() - h) / 3;
 
       rectFontopus.right = rectFontopus.left + w;
 
@@ -415,7 +415,7 @@ namespace simple_ui
    }
 
 
-   void message_box::pre_translate_message(signal_details * pobj)
+   void message_box::pre_translate_message(::message::message * pobj)
    {
 
       simple_ui::interaction::pre_translate_message(pobj);

@@ -13,9 +13,7 @@ namespace user
 
 
    class CLASS_DECL_BASE document :
-      virtual public command_target,
-      virtual public ::data::data_container_base,
-      virtual public ::file::serializable,
+      virtual public ::user::controller,
       virtual public ::user::server,
       virtual public ::database::client,
       virtual public ::user::form_callback
@@ -23,17 +21,9 @@ namespace user
    public:
 
 
-      string                           m_strTitle;
-      ::file::path                     m_filepath;
       ::user::impact_system *          m_pimpactsystem;
       spa(::user::impact)              m_viewspa;
-      bool                             m_bModified;
-      bool                             m_bNew;
-      bool                             m_bAutoDelete;     // TRUE => delete document when no more views
-      bool                             m_bEmbedded;       // TRUE => document is being created by OLE
       ::user::document_data_map        m_datamap;
-      property_set                     m_set;
-      ::file::file_sp                m_file;
 
 
 
@@ -206,7 +196,7 @@ namespace user
       virtual void on_idle();
       virtual void on_final_release();
 
-      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+      virtual void _001OnCmdMsg(::user::command * pcommand);
 
       friend class impact_system;
 
@@ -221,7 +211,7 @@ namespace user
       void on_file_save();
       void on_file_save_as();
       void on_file_send_mail();
-      void on_update_file_send_mail(cmd_ui* pCmdUI);
+      void on_update_file_send_mail(::user::command* pCmdUI);
 
 
 
@@ -236,7 +226,7 @@ namespace user
 //      virtual void dump(dump_context &) const;
   //    virtual void assert_valid() const;
 
-//      virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
+//      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
       template < class DOCUMENT >
       DOCUMENT * get_typed_document()

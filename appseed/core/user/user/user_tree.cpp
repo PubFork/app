@@ -51,7 +51,7 @@ namespace user
    }
 
 
-   void tree::_001OnCreate(signal_details * pobj)
+   void tree::_001OnCreate(::message::message * pobj)
    {
 
       if(pobj->previous())
@@ -333,7 +333,7 @@ namespace user
          //font->operator=(*System.visual().fonts().GetListCtrlFont());
          //font->set_bold();
          //data.m_pdc->set_font(font);
-         select_font(data.m_pdc, font_tree, this);
+         select_font(data.m_pdc, font_tree);
          data.m_pdc->_DrawText(strItem, strItem.get_length(), rect, m_iDrawTextFlags);
 
       }
@@ -349,7 +349,7 @@ namespace user
 
 
 
-   void tree::_001OnMouseMove(signal_details * pobj)
+   void tree::_001OnMouseMove(::message::message * pobj)
    {
       track_mouse_leave();
 
@@ -357,14 +357,14 @@ namespace user
       pobj->m_bRet = true;
    }
 
-   void tree::_001OnMouseLeave(signal_details * pobj)
+   void tree::_001OnMouseLeave(::message::message * pobj)
    {
       m_pitemHover = NULL;
       RedrawWindow();
       pobj->m_bRet = true;
    }
 
-   void tree::_001OnLButtonDblClk(signal_details * pobj)
+   void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -392,7 +392,7 @@ namespace user
    }
 
 
-   void tree::_001OnLButtonDown(signal_details * pobj)
+   void tree::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -406,7 +406,7 @@ namespace user
    }
 
 
-   void tree::_001OnLButtonUp(signal_details * pobj)
+   void tree::_001OnLButtonUp(::message::message * pobj)
    {
       
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -491,7 +491,7 @@ namespace user
    }
 
 
-   void tree::_001OnRButtonDown(signal_details * pobj)
+   void tree::_001OnRButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -505,7 +505,7 @@ namespace user
    }
 
 
-   void tree::_001OnRButtonUp(signal_details * pobj)
+   void tree::_001OnRButtonUp(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -606,22 +606,22 @@ namespace user
       return m_iItemHeight;
    }
 
-   void tree::install_message_handling(::message::dispatch * pdispatch)
+   void tree::install_message_routing(::message::sender * psender)
    {
       
-      ::user::control::install_message_handling(pdispatch);
+      ::user::control::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE        , pdispatch, this, &tree::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDBLCLK , pdispatch, this, &tree::_001OnLButtonDblClk);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP     , pdispatch, this, &tree::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN   , pdispatch, this, &tree::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP     , pdispatch, this, &tree::_001OnRButtonUp);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONDOWN   , pdispatch, this, &tree::_001OnRButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE     , pdispatch, this, &tree::_001OnMouseMove);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE    , pdispatch, this, &tree::_001OnMouseLeave);
-      IGUI_WIN_MSG_LINK(WM_HSCROLL       , pdispatch, this, &tree::_001OnHScroll);
-      IGUI_WIN_MSG_LINK(WM_VSCROLL       , pdispatch, this, &tree::_001OnVScroll);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER         , pdispatch, this, &tree::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE        , psender, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK , psender, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_LBUTTONUP     , psender, this, &tree::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN   , psender, this, &tree::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONUP     , psender, this, &tree::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN   , psender, this, &tree::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE     , psender, this, &tree::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE    , psender, this, &tree::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_HSCROLL       , psender, this, &tree::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL       , psender, this, &tree::_001OnVScroll);
+//      //IGUI_MSG_LINK(WM_TIMER         , psender, this, &tree::_001OnTimer);
 
    }
 
@@ -845,7 +845,7 @@ namespace user
 
    }
 
-   void tree::_001OnVScroll(signal_details * pobj)
+   void tree::_001OnVScroll(::message::message * pobj)
    {
 
       pobj->previous();
@@ -854,7 +854,7 @@ namespace user
    }
 
 
-   void tree::_001OnHScroll(signal_details * pobj)
+   void tree::_001OnHScroll(::message::message * pobj)
    {
 
       pobj->previous();
@@ -909,17 +909,17 @@ namespace user
          return;
 
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = GetTopLevel();
+         m_puserstyle = GetTopLevel();
 
       }
 
-      if (m_puserschemaSchema == NULL)
+      if (m_puserstyle == NULL)
       {
 
-         m_puserschemaSchema = Application.userschema();
+         m_puserstyle = Application.userstyle();
 
       }
 
@@ -1142,7 +1142,7 @@ namespace user
       //font->set_bold();
       //g->set_font(font);
 
-      select_font(g, font_tree, this);
+      select_font(g, font_tree);
 
 
       size size;
@@ -1487,7 +1487,7 @@ namespace user
 
       }
 
-      ptree->install_message_handling(m_pimpl);
+      ptree->install_message_routing(m_pimpl);
 
       return true;
 

@@ -6,7 +6,7 @@
 
 
 
-#include "windows_base_file.h"
+#include "windows_file.h"
 #include "windows_multithreading.h"
 #include "windows_utils.h"
 
@@ -50,6 +50,7 @@ CLASS_DECL_AURA int WinRegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue
 #endif
 
 #include "windows.inl"
+
 
 
 

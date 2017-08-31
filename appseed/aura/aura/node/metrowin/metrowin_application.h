@@ -82,7 +82,7 @@ namespace metrowin
 //
 //      virtual void SetCurrentHandles();
 //
-//      virtual bool set_main_init_data(::aura::main_init_data * pdata);
+//      virtual bool process_command(::aura::main_init_data * pdata);
 //
 //      virtual bool process_initialize();
 //      virtual bool initialize1();
@@ -157,7 +157,7 @@ namespace metrowin
 //
 //      // running and idle processing
 //      virtual int run();
-//      virtual void pre_translate_message(signal_details * pobj);
+//      virtual void pre_translate_message(::message::message * pobj);
 //      virtual bool pump_message();     // low level message pump
 //      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
 //      virtual bool is_idle_message(MSG* pMsg);  // checks for special messages

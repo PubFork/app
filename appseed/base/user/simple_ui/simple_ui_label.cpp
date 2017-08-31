@@ -1,4 +1,4 @@
-//#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -58,11 +58,11 @@ namespace simple_ui
 
       ::draw2d::font_sp f(allocer());
 
-      /*f->create_pixel_font(FONT_SANS_EX, (int32_t)height(rectClient) * 0.7);
+      /*f->create_pixel_font(FONT_SANS_EX, (int32_t)rectClient.height() * 0.7);
 
-      float fMargin = (height(rectClient) * ((1.0f - 0.7f) / 2.0f));*/
+      float fMargin = (rectClient.height() * ((1.0f - 0.7f) / 2.0f));*/
 
-      f->create_pixel_font(FONT_SANS, (int32_t)height(rectClient) * .84);
+      f->create_pixel_font(FONT_SANS, (int32_t)rectClient.height() * .84);
 
       float fMargin = 0.0;
 

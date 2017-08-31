@@ -19,7 +19,7 @@ public:
    using ::user::list_header::create_window;
    virtual bool create_window(UINT nStyle, const RECT & rect, sp(::user::interaction) pwndParent, UINT nID);
 
-   virtual void install_message_handling(::message::dispatch * pinterface);
+   virtual void install_message_routing(::message::sender * pinterface);
 
 
 

@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 //#include <math.h>
 
 
@@ -30,7 +30,7 @@ namespace user
    void font_list::font_list_common_construct()
    {
       //      m_iHoverCalc = -1;
-      m_pfontlistdata = NULL;
+      //m_pfontlistdata = NULL;
    }
 
 
@@ -40,19 +40,19 @@ namespace user
    }
 
 
-   void font_list::install_message_handling(::message::dispatch * pdispatch)
+   void font_list::install_message_routing(::message::sender * psender)
    {
 
-      ::user::box::install_message_handling(pdispatch);
+      ::user::box::install_message_routing(psender);
 
-      IGUI_WIN_MSG_LINK(WM_CREATE, pdispatch, this, &font_list::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pdispatch, this, &font_list::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_MOUSEMOVE, pdispatch, this, &font_list::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &font_list::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &font_list::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &font_list::_001OnMouseMove);
 
    }
 
 
-   void font_list::_001OnCreate(signal_details * pobj)
+   void font_list::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -90,7 +90,7 @@ namespace user
 
    }
 
-   void font_list::_001OnLButtonDown(signal_details * pobj)
+   void font_list::_001OnLButtonDown(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -121,7 +121,7 @@ namespace user
 
    }
 
-   void font_list::_001OnMouseMove(signal_details * pobj)
+   void font_list::_001OnMouseMove(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -161,6 +161,12 @@ namespace user
       UNREFERENCED_PARAMETER(phint);
    }
 
+   void font_list::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      ::user::control::_001OnNcDraw(pgraphics);
+
+   }
 
    void font_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
@@ -313,7 +319,7 @@ namespace user
    }
 
 
-   bool font_list::get_color(COLORREF & cr, e_color ecolor)
+   bool font_list::style_color(COLORREF & cr, e_color ecolor)
    {
 
       if (ecolor == color_background)

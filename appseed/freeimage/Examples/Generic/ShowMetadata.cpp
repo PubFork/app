@@ -2,7 +2,7 @@
 // Simple metadata reader
 //
 // Design and implementation by
-// - Hervé Drolon
+// - Hervï¿½ Drolon
 //
 // This file is part of FreeImage 3
 //

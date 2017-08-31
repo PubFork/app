@@ -1,4 +1,4 @@
-//#include "framework.h"
+#include "framework.h"
 
 
 namespace userstack
@@ -31,7 +31,7 @@ namespace userstack
    }
 
 
-   void frame::_001OnCreate(signal_details * pobj)
+   void frame::_001OnCreate(::message::message * pobj)
    {
 
       SCAST_PTR(::message::create, pcreate, pobj);
@@ -59,14 +59,14 @@ namespace userstack
    }
 
 
-   void frame::install_message_handling(::message::dispatch * pinterface)
+   void frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_frame_window::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
-//      //IGUI_WIN_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
-      IGUI_WIN_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_APP + 1,        pinterface, this, &frame::_001OnApp1);
-      IGUI_WIN_MSG_LINK(WM_MOUSELEAVE,     pinterface, this, &frame::_001OnMouseLeave);
+      simple_frame_window::install_message_routing(pinterface);
+      //IGUI_MSG_LINK(WM_CLOSE,          pinterface, this, &frame::_001OnClose);
+//      //IGUI_MSG_LINK(WM_TIMER,          pinterface, this, &frame::_001OnTimer);
+      IGUI_MSG_LINK(WM_CREATE,         pinterface, this, &frame::_001OnCreate);
+      IGUI_MSG_LINK(WM_APP + 1,        pinterface, this, &frame::_001OnApp1);
+      IGUI_MSG_LINK(WM_MOUSELEAVE,     pinterface, this, &frame::_001OnMouseLeave);
    }
 
 
@@ -188,7 +188,7 @@ namespace userstack
       simple_frame_window::_000OnMouse(pmouse);
    }
 
-   void frame::_001OnMouseLeave(signal_details * pobj)
+   void frame::_001OnMouseLeave(::message::message * pobj)
    {
 
       UNREFERENCED_PARAMETER(pobj);
@@ -198,7 +198,7 @@ namespace userstack
 //      bergedgesp(::core::application) papp = dynamic_cast < bergedgesp(::core::application) > (get_app());
    }
 
-   void frame::pre_translate_message(signal_details * pobj)
+   void frame::pre_translate_message(::message::message * pobj)
    {
 //      SCAST_PTR(::message::base, pbase, pobj);
       simple_frame_window::pre_translate_message(pobj);
@@ -217,21 +217,24 @@ namespace userstack
       }
    }
 
-   void frame::message_handler(signal_details * pobj)
+   
+   void frame::message_handler(::message::base * pbase)
    {
-      simple_frame_window::message_handler(pobj);
+      
+      simple_frame_window::message_handler(pbase);
+
    }
 
 
-   void frame::message_queue_message_handler(signal_details * pobj)
+   void frame::message_queue_message_handler(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == (WM_APP + 2000))
+      if(pbase->m_id == (WM_APP + 2000))
       {
          _001OnApp2000(pbase);
          pbase->m_bRet = true;
       }
-      else if(pbase->m_uiMessage == WM_COPYDATA)
+      else if(pbase->m_id == WM_COPYDATA)
       {
 #ifdef WINDOWSEX
          int32_t iEdge = 0;
@@ -251,7 +254,7 @@ namespace userstack
    }
 
 
-   void frame::_001OnApp2000(signal_details * pobj)
+   void frame::_001OnApp2000(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
@@ -408,7 +411,7 @@ namespace userstack
    //}
 
 
-   void frame::_001OnApp1(signal_details * pobj)
+   void frame::_001OnApp1(::message::message * pobj)
    {
 
 #ifdef WINDOWSEX
@@ -424,13 +427,20 @@ namespace userstack
 
          if(pmsg->message != WM_KICKIDLE)
          {
+            
             ::smart_pointer < ::message::base > spbase;
-            spbase = Application.get_base(pmsg);
+            
+            spbase = Application.get_message_base(pmsg);
+
             pre_translate_message(spbase);
+
             if(!spbase->m_bRet)
             {
+
                send(spbase);
+
             }
+
          }
 
       }

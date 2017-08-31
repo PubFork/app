@@ -30,7 +30,7 @@ namespace user
       virtual ~elastic_slider();
 
 
-      virtual void install_message_handling(::message::dispatch * pdispatch);
+      virtual void install_message_routing(::message::sender * psender);
 
       DECL_GEN_SIGNAL(_001OnCreate);
       void _001OnTimer(::timer * ptimer);

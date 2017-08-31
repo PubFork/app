@@ -6,8 +6,8 @@
 //
 
 #include "framework.h"
-
-extern mutex * g_pmutexSignal;
+mutex * g_pmutexCred = NULL;
+//extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
 //CLASS_DECL_AURA void init_draw2d_mutex();
 //CLASS_DECL_AURA void term_draw2d_mutex();
@@ -231,7 +231,7 @@ namespace aura
 
          g_pmapThreadOn = new ::map < IDTHREAD, IDTHREAD, IDTHREAD, IDTHREAD >;
 
-         g_pmutexSignal = new mutex();
+         //g_pmutexSignal = new mutex();
 
          //g_pstrLastStatus = new string();
 
@@ -252,6 +252,8 @@ namespace aura
          g_pmutexUiDestroyed = new mutex();
 
          s_pmutexMessageDispatch = new mutex();
+
+         g_pmutexCred = new mutex();
 
 
 #if defined(WINDOWSEX)
@@ -330,9 +332,13 @@ namespace aura
 
          g_pmapLibCall = new string_map < sp(::aura::library) >();
 
-#ifndef ANDROID
+#ifdef MEMORY_COUNTERS
 
          g_iMemoryCountersStartable = 1;
+
+#else
+
+        g_iMemoryCountersStartable = 0;
 
 #endif
 
@@ -477,6 +483,9 @@ namespace aura
          //delete g_pmutexTrace;
 
          //g_pmutexTrace = NULL;
+
+         ::aura::del(g_pmutexCred);
+
          ::aura::del(s_pmutexMessageDispatch);
 
          ::aura::del(g_pmutexUiDestroyed);
@@ -491,7 +500,7 @@ namespace aura
 
          ::aura::del(g_pmutexSystemHeap);
 
-         ::aura::del(g_pmutexSignal);
+         //::aura::del(g_pmutexSignal);
 
          ::aura::del(g_pmutexThreadOn);
 
@@ -607,3 +616,12 @@ namespace aura
 //   ::aura::del(s_pmutexDraw2d);
 //
 //}
+
+
+
+CLASS_DECL_AURA mutex * get_cred_mutex()
+{
+
+   return g_pmutexCred;
+
+}

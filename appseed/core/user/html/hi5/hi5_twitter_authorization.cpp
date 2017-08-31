@@ -11,12 +11,13 @@
 namespace hi5
 {
 
+   
    namespace twitter
    {
 
+      
       authorization::authorization(::aura::application * papp, const char * pszAuthorizationUrl, const char * pszForm, bool bAuth, bool bInteractive) :
-         ::object(papp),
-         ::user::schema_simple_impl(papp)
+         ::object(papp)
       {
 
          m_strAuthorizationUrl=pszAuthorizationUrl;
@@ -48,7 +49,11 @@ namespace hi5
             return "";
 
          m_pviewAuth->SetTimer(8888, 484, NULL);
-         m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         //m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+
+         m_ptabview->get_wnd()->RunModalLoop();
+
+
          m_ptemplatePane->close_all_documents(FALSE);
          return m_strPin;
       }
@@ -165,12 +170,8 @@ namespace hi5
          if(pframe != NULL)
          {
 
-            pframe->m_puserschemaSchema = this;
+            pframe->m_puserstyle = this;
             
-            m_etranslucency = ::user::TranslucencyPresent;
-
-            //pframe->m_bblur_Background = true;
-
          }
 
          //if(&Session != NULL && Session.get_document() != NULL && Session.get_document()->get_bergedge_view() != NULL)
@@ -204,7 +205,10 @@ namespace hi5
          m_pdocAuth->get_html_data()->m_propertyset = set;
          m_pdocAuth->on_open_document(Application.dir().matter(pszMatter));
          display_main_frame();
-         m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         //m_ptabview->get_wnd()->RunModalLoop(MLF_NOIDLEMSG | MLF_NOKICKIDLE);
+         
+         m_ptabview->get_wnd()->RunModalLoop();
+
          m_ptabview->get_wnd()->EndAllModalLoops(IDOK);
       }
 
@@ -264,6 +268,16 @@ namespace hi5
          }
          return false;
       }
+      
+      bool authorization::style_translucency(::user::e_translucency & etranslucency, ::user::e_element)
+      {
+         
+         etranslucency = ::user::translucency_present;
+         
+         return true;
+         
+      }
+
 
 
    } // namespace twitter
