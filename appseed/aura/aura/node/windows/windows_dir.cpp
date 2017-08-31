@@ -1125,7 +1125,7 @@ namespace windows
          m_strTimeFolder = appdata() / "time";
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element() / "net/netseed";
+         m_strNetSeedFolder = element() / "net";
 
       mk(m_strTimeFolder,get_app());
       xxdebug_box("win_dir::initialize (m_strTimeFolder)","win_dir::initialize",0);

@@ -1310,7 +1310,7 @@ namespace linux
 #endif
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = element() / "net/netseed";
+         m_strNetSeedFolder = element() / "netd";
 
       mk(m_strTimeFolder, get_app());
 

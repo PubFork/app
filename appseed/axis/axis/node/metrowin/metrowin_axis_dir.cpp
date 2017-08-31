@@ -465,7 +465,7 @@ namespace metrowin
             m_strTimeFolder = appdata() / "time";
 
          if(m_strNetSeedFolder.is_empty())
-            m_strNetSeedFolder = element() / "net/netseed";
+            m_strNetSeedFolder = element() / "net";
 
          mk(m_strTimeFolder, get_app());
 
