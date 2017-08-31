@@ -1778,9 +1778,6 @@
     <ClInclude Include="aura\aura\aura_aura.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_create_context.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_draw_context.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -1803,9 +1800,6 @@
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_command_target.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\os\cross\ansios\ansios_file.h">
@@ -2863,9 +2857,6 @@
     </ClInclude>
     <ClInclude Include="user\user\user_command.h">
       <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui_probe.h">
-      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\message\message_const.h">
       <Filter>Header Files\aura\message</Filter>
