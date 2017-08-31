@@ -53,5 +53,8 @@ typedef struct rsa_st RSA;
 //CLASS_DECL_AURA void memory_to_hex(string & strHex, memory & memory);
 
 
+int32_t crypto_encrypt(memory & storageEncrypt, const memory & storageDecrypt, memory & key);
+int32_t crypto_decrypt(memory & storageDecrypt, const memory & storageEncrypt, memory & key);
+
 
 

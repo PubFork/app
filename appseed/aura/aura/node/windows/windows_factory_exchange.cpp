@@ -31,6 +31,8 @@ namespace aura
 
          System.factory().creatable_small    < ::windows::tts::speaker       >(System.type_info < ::tts::speaker              >());
          System.factory().creatable_small    < ::windows::console            >(System.type_info < ::console::window           >());
+         System.factory().creatable_small < ::windows::crypto                   >(System.type_info < ::crypto::crypto       >(), 1);
+         System.factory().creatable_small < ::windows::ip_enum                  >(System.type_info < ::net::ip_enum         >());
 
 
 

@@ -6506,7 +6506,7 @@ namespace aura
 
    void application::draw2d_factory_exchange()
    {
-      
+
 //#if defined(METROWIN) || defined(CUBE)
 #if defined(CUBE)
 
@@ -6591,7 +6591,8 @@ namespace aura
 
          }
       
-         throw "Could not draw2d_factory_exchange.";
+         output_debug_string("No draw2d pluging available!!.");
+         return;
 
       finalize:
 

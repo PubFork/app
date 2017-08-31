@@ -30,6 +30,8 @@ CLASS_DECL_AURA void __try_cleanup();
 #include "windows_uac_tools.h"
 #include "windows_thread.h"
 #include "windows_file.h"
+#include "windows_crypto.h"
+#include "windows_ip_enum.h"
 
 
 #define NODE_THREAD(pthread) (dynamic_cast < ::windows::thread * > (dynamic_cast < thread * >(pthread)))
