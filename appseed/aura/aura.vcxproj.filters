@@ -3919,9 +3919,6 @@
     <ClCompile Include="aura\aura\aura_command_target.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_command_ui.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\ansios\ansios_local_memory_map.cpp">
       <Filter>Source Files\aura\os\ansios</Filter>
     </ClCompile>

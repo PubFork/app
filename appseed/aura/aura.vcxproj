@@ -1394,7 +1394,6 @@
     <ClCompile Include="aura\aura\aura_allocate_x86_cache_oriented.cpp" />
     <ClCompile Include="aura\aura\aura_app_core.cpp" />
     <ClCompile Include="aura\aura\aura_assert_running_task.cpp" />
-    <ClCompile Include="aura\aura\aura_command_ui.cpp" />
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
     <ClCompile Include="aura\aura\aura_command_ui_probe.cpp" />
     <ClCompile Include="aura\aura\aura_console_window.cpp" />
