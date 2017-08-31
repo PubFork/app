@@ -760,6 +760,8 @@
     <ClCompile Include="aura\message\message_receiver.cpp" />
     <ClCompile Include="aura\message\message_sender.cpp" />
     <ClCompile Include="aura\message\message_simple_command.cpp" />
+    <ClCompile Include="aura\node\windows\windows_crypto.cpp" />
+    <ClCompile Include="aura\node\windows\windows_ip_enum.cpp" />
     <ClCompile Include="aura\node\windows\windows_timer.cpp" />
     <ClCompile Include="aura\os\ansios\ansios_base.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1279,6 +1281,7 @@
     <ClInclude Include="aura\node\windows\windows.h" />
     <ClInclude Include="aura\node\windows\windows_command.h" />
     <ClInclude Include="aura\node\windows\windows_console_window.h" />
+    <ClInclude Include="aura\node\windows\windows_crypto.h" />
     <ClInclude Include="aura\node\windows\windows_dir.h" />
     <ClInclude Include="aura\node\windows\windows_exception.h" />
     <ClInclude Include="aura\node\windows\windows_factory_exchange.h" />
@@ -1286,6 +1289,7 @@
     <ClInclude Include="aura\node\windows\windows_file_find.h" />
     <ClInclude Include="aura\node\windows\windows_file_system.h" />
     <ClInclude Include="aura\node\windows\windows_folder_watch.h" />
+    <ClInclude Include="aura\node\windows\windows_ip_enum.h" />
     <ClInclude Include="aura\node\windows\windows_os.h" />
     <ClInclude Include="aura\node\windows\windows_pipe.h" />
     <ClInclude Include="aura\node\windows\windows_registry.h" />

@@ -2885,6 +2885,12 @@
     <ClInclude Include="aura\message\message_timer.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_crypto.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_ip_enum.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4812,6 +4818,12 @@
     </ClCompile>
     <ClCompile Include="aura\message\message_simple_command.cpp">
       <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_crypto.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_ip_enum.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
