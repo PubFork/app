@@ -377,7 +377,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    else
    {
-      pscript->m_strSourcePath.Format(m_pmanager->m_strNetnodePath / "net\\netseed\\%s",false,strName);
+      pscript->m_strSourcePath.Format(m_pmanager->m_strNetnodePath / "net\\%s",false,strName);
    }
    pscript->m_strSourceDir = pscript->m_strSourcePath.folder();
 
@@ -2979,7 +2979,7 @@ void script_compiler::parse_pstr_set()
 
    ::file::listing straFile(get_app());
 
-   straFile.rls(m_pmanager->m_strNetnodePath / "net/netseed/core/pstr_set");
+   straFile.rls(m_pmanager->m_strNetnodePath / "net/core/pstr_set");
 
    for(int i = 0; i < straFile.get_count(); i++)
    {
