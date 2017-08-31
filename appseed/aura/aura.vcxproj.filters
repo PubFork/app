@@ -2894,6 +2894,12 @@
     <ClInclude Include="user\user\user_create.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_crypto.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\windows\windows_ip_enum.h">
+      <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4818,6 +4824,12 @@
     </ClCompile>
     <ClCompile Include="user\user\user_create.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_crypto.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_ip_enum.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

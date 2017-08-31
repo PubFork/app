@@ -1060,20 +1060,973 @@ namespace file
 
       }
 
-      ::file::path system::matter(::aura::application * papp,const ::file::patha & stra,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
+      ::file::path system::matter(::aura::application * papp,const ::file::patha & stra,bool bDir,const ::file::path & root,const ::file::path & domain)
       {
-         throw interface_only_exception(get_app());
+         ::aura::str_context * pcontext = Sess(papp).str_context();
 
-         return "";
+         ::index j;
+
+         ::count ca = stra.get_count();
+
+         ::file::path strPath;
+
+         string strLocale;
+
+         string strSchema;
+
+         ::file::patha straLs;
+
+         ::file::path strLs;
+
+         ::file::path strFile;
+
+         if (root.has_char() && domain.has_char())
+         {
+
+            ::index j;
+
+            ::count ca = stra.get_count();
+
+            if (ca <= 0)
+               return "";
+
+            ::aura::str_context * pcontext = Sess(papp).str_context();
+
+            ::file::path strFile;
+
+            if (Session.m_bMatterFromHttpCache)
+            {
+
+
+               ::file::patha patha;
+
+               strLocale = pcontext->m_plocaleschema->m_idLocale;
+
+               strSchema = pcontext->m_plocaleschema->m_idSchema;
+
+               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+
+                  strLs = straLs[l];
+
+                  strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+
+                  strsize iFind = strFile.find(DIR_SEPARATOR);
+
+                  if (iFind > 0)
+                  {
+
+                     strFile.replace(":", "_", iFind + 1);
+
+                  }
+
+                  strPath = Application.file().as_string(strFile);
+
+                  if (strPath.has_char())
+                  {
+                     // todo: keep cache timeout information;
+                     return strPath;
+                  }
+
+                  for (j = 0; j < ca; j++)
+                  {
+
+                     patha.add(strLs / stra[j]);
+
+                  }
+
+                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+                  {
+
+                     strLocale = pcontext->localeschema().m_idaLocale[i];
+                     strSchema = pcontext->localeschema().m_idaSchema[i];
+                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+                     for (int k = 0; k < straLs.get_count(); k++)
+                     {
+
+                        ::file::path strLd = straLs[k];
+
+                        for (j = 0; j < ca; j++)
+                        {
+
+                           patha.add(strLs / stra[j]);
+
+                        }
+
+                     }
+
+                  }
+
+                  straLs = locale_schema_matter(papp, "en", "en");
+                  for (int k = 0; k < straLs.get_count(); k++)
+                  {
+
+                     ::file::path strLd = straLs[k];
+
+                     patha.add(strLs / stra[0]);
+
+                  }
+
+                  property_set set(papp);
+
+                  string strCandidate = patha.implode("|");
+
+                  string strParam = System.url().url_encode(strCandidate);
+
+                  if (bDir)
+                  {
+                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+                  }
+                  else
+                  {
+                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+                  }
+
+                  if (strPath.has_char())
+                     goto ret;
+
+               }
+
+            }
+
+            else
+            {
+
+               strLocale = pcontext->m_plocaleschema->m_idLocale;
+               strSchema = pcontext->m_plocaleschema->m_idSchema;
+               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+                  strLs = straLs[l];
+
+                  for (j = 0; j < ca; j++)
+                  {
+
+                     strPath = strLs / stra[j];
+
+                     if (bDir)
+                     {
+                        if (System.dir().is(strPath, get_app()))
+                           return strPath;
+                     }
+                     else
+                     {
+                        if (System.file().exists(strPath, get_app()))
+                           return strPath;
+                     }
+
+                  }
+
+
+                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+                  {
+
+                     strLocale = pcontext->localeschema().m_idaLocale[i];
+                     strSchema = pcontext->localeschema().m_idaSchema[i];
+                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+                     for (index l = 0; l < straLs.get_count(); l++)
+                     {
+                        strLs = straLs[l];
+
+                        for (j = 0; j < ca; j++)
+                        {
+
+                           strPath = strLs / stra[j];
+
+                           if (bDir)
+                           {
+                              if (System.dir().is(strPath, get_app()))
+                                 return strPath;
+                           }
+                           else
+                           {
+                              if (System.file().exists(strPath, get_app()))
+                                 return strPath;
+                           }
+
+                        }
+
+                     }
+
+                  }
+
+               }
+
+            }
+
+
+
+
+            straLs = locale_schema_matter(papp, "en", "en", root, domain);
+
+            for (index l = 0; l < straLs.get_count(); l++)
+            {
+
+               strLs = straLs[l];
+
+               for (j = 0; j < ca; j++)
+               {
+
+                  strPath = strLs / stra[j];
+
+                  if (bDir)
+                  {
+                     if (System.dir().is(strPath, get_app()))
+                        goto ret;
+                  }
+                  else
+                  {
+                     if (System.file().exists(strPath, get_app()))
+                        goto ret;
+                  }
+
+               }
+
+
+            }
+
+
+            if (ca <= 0)
+               return "";
+
+         }
+
+
+         if (Session.m_bMatterFromHttpCache)
+
+         {
+
+
+            ::file::patha patha;
+
+            strLocale = pcontext->m_plocaleschema->m_idLocale;
+            strSchema = pcontext->m_plocaleschema->m_idSchema;
+            straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+            for (index l = 0; l < straLs.get_count(); l++)
+            {
+               strLs = straLs[l];
+
+               strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / stra.implode(",") + ".map_question";
+
+               strsize iFind = strFile.find(DIR_SEPARATOR);
+
+               if (iFind > 0)
+               {
+
+                  strFile.replace(":", "_", iFind + 1);
+
+               }
+
+               strPath = Application.file().as_string(strFile);
+
+               if (strPath.has_char())
+               {
+                  // todo: keep cache timeout information;
+                  return strPath;
+               }
+
+               for (j = 0; j < ca; j++)
+               {
+
+                  patha.add(strLs / stra[j]);
+
+               }
+
+               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+               {
+
+                  strLocale = pcontext->localeschema().m_idaLocale[i];
+                  strSchema = pcontext->localeschema().m_idaSchema[i];
+                  straLs = locale_schema_matter(papp, strLocale, strSchema);
+                  for (int k = 0; k < straLs.get_count(); k++)
+                  {
+
+                     strLs = straLs[k];
+
+                     for (j = 0; j < ca; j++)
+                     {
+
+                        patha.add(strLs / stra[j]);
+
+                     }
+
+                  }
+
+               }
+
+               straLs = locale_schema_matter(papp, "en", "en");
+               for (int k = 0; k < straLs.get_count(); k++)
+               {
+
+                  strLs = straLs[k];
+                  patha.add(strLs / stra[0]);
+               }
+
+               property_set set(papp);
+
+               string strCandidate = patha.implode("|");
+
+               string strParam = System.url().url_encode(strCandidate);
+
+               if (bDir)
+               {
+                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strParam, set);
+               }
+               else
+               {
+                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strParam, set);
+               }
+
+               if (strPath.has_char())
+                  goto ret;
+
+            }
+
+         }
+
+         else
+
+         {
+
+            strLocale = pcontext->m_plocaleschema->m_idLocale;
+            strSchema = pcontext->m_plocaleschema->m_idSchema;
+            straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+
+            for (index l = 0; l < straLs.get_count(); l++)
+            {
+
+               strLs = straLs[l];
+
+               for (j = 0; j < ca; j++)
+               {
+
+                  strPath = strLs / stra[j];
+
+                  if (bDir)
+                  {
+                     if (System.dir().is(strPath, get_app()))
+                        return strPath;
+                  }
+                  else
+                  {
+                     if (System.file().exists(strPath, get_app()))
+                        return strPath;
+                  }
+
+               }
+
+            }
+
+
+            for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+            {
+
+               strLocale = pcontext->localeschema().m_idaLocale[i];
+               strSchema = pcontext->localeschema().m_idaSchema[i];
+               straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+
+                  strLs = straLs[l];
+
+                  for (j = 0; j < ca; j++)
+                  {
+
+                     strPath = strLs / stra[j];
+
+                     if (bDir)
+                     {
+                        if (System.dir().is(strPath, get_app()))
+                           return strPath;
+                     }
+                     else
+                     {
+                        if (System.file().exists(strPath, get_app()))
+                           return strPath;
+                     }
+
+                  }
+
+               }
+
+            }
+
+         }
+
+
+         straLs = locale_schema_matter(papp, "en", "en");
+
+         for (index l = 0; l < straLs.get_count(); l++)
+         {
+
+            strLs = straLs[l];
+
+
+            for (j = 0; j < ca; j++)
+            {
+
+               strPath = strLs / stra[j];
+
+               if (bDir)
+               {
+                  if (System.dir().is(strPath, get_app()))
+                     goto ret;
+               }
+               else
+               {
+                  if (System.file().exists(strPath, get_app()))
+                     goto ret;
+               }
+
+            }
+
+         }
+
+
+         if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
+            (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp)
+         {
+            strPath = matter(papp->m_paurasession, stra, bDir);
+            if (bDir)
+            {
+               if (System.dir().is(strPath, get_app()))
+                  goto ret;
+            }
+            else
+            {
+               if (System.file().exists(strPath, get_app()))
+                  goto ret;
+            }
+         }
+
+         if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
+            (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp->m_paurasession)
+         {
+            strPath = matter(papp->m_paurasystem, stra, bDir);
+            if (bDir)
+            {
+               if (System.dir().is(strPath, get_app()))
+                  goto ret;
+            }
+            else
+            {
+               if (System.file().exists(strPath, get_app()))
+                  goto ret;
+            }
+         }
+
+         strPath = strLs / stra[0];
+
+      ret:
+
+         if (Session.m_bMatterFromHttpCache)
+         {
+            Application.file().put_contents(strFile, strPath);
+         }
+
+         return strPath;
 
       }
 
-      ::file::path system::matter(::aura::application * papp,const ::file::path & path,bool bDir,const ::file::path & pszRoot,const ::file::path & pszApp)
-      {
-         throw interface_only_exception(get_app());
+      //string system::matter(::aura::application * papp, const char * psz, const char * psz2, bool bDir, const char * pszRoot, const char * pszApp)
+      //{
+      //   return matter(papp, string(psz), string(psz2), bDir, pszRoot, pszApp);
+      //}
 
-         return "";
+      //string system::matter(::aura::application * papp, const string & str, const char * psz, bool bDir, const char * pszRoot, const char * pszApp)
+      //{
+      //   return matter(papp, str, string(psz), bDir, pszRoot, pszApp);
+      //}
+
+      //string system::matter(::aura::application * papp, const char * psz, const string & str, bool bDir, const char * pszRoot, const char * pszApp)
+      //{
+      //   return matter(papp, string(psz), str, bDir, pszRoot, pszApp);
+      //}
+
+
+      ::file::path system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
+      {
+
+         ::aura::str_context * pcontext = Sess(papp).str_context();
+
+         string strLocale;
+
+         string strSchema;
+
+         ::file::path strLs;
+
+         ::file::path strPath;
+
+         ::file::path strFile;
+
+         ::file::patha straLs;
+
+         string strExistsQuestion;
+
+         if (root.has_char() && domain.has_char())
+         {
+
+            if (Session.m_bMatterFromHttpCache)
+            {
+
+               ::file::patha patha;
+
+               strLocale = pcontext->m_plocaleschema->m_idLocale;
+               strSchema = pcontext->m_plocaleschema->m_idSchema;
+               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+               strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+
+               strsize iFind = strFile.find(DIR_SEPARATOR);
+
+               if (iFind > 0)
+               {
+
+                  strFile.replace(":", "_", iFind + 1);
+
+               }
+
+               strPath = Application.file().as_string(strFile);
+
+               if (strPath.has_char())
+               {
+                  // todo: keep cache timeout information;
+                  return strPath;
+               }
+
+
+               for (int k = 0; k < straLs.get_count(); k++)
+               {
+
+                  strLs = straLs[k];
+
+                  patha.add(strLs / str);
+               }
+
+               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+               {
+                  strLocale = pcontext->localeschema().m_idaLocale[i];
+                  strSchema = pcontext->localeschema().m_idaSchema[i];
+                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+                  for (int k = 0; k < straLs.get_count(); k++)
+                  {
+
+                     strLs = straLs[k];
+
+                     patha.add(strLs / str);
+                  }
+               }
+
+               straLs = locale_schema_matter(papp, "en", "en");
+               for (int k = 0; k < straLs.get_count(); k++)
+               {
+
+                  strLs = straLs[k];
+
+                  patha.add(strLs / str);
+               }
+
+               property_set set(papp);
+
+               set["raw_http"] = true;
+
+
+               string strCandidate = patha.implode("|");
+
+               string strParam = System.url().url_encode(strCandidate);
+
+               if (bDir)
+               {
+                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
+               }
+               else
+               {
+                  strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
+               }
+
+               strPath.trim();
+
+               if (strPath.has_char())
+                  goto ret;
+
+            }
+
+            else
+
+            {
+
+               strLocale = pcontext->m_plocaleschema->m_idLocale;
+               strSchema = pcontext->m_plocaleschema->m_idSchema;
+               straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+                  strLs = straLs[l];
+
+                  strPath = strLs / str;
+                  if (bDir)
+                  {
+                     if (System.dir().is(strPath, papp))
+                        goto ret;
+                  }
+                  else
+                  {
+                     if (System.file().exists(strPath, papp))
+                        goto ret;
+                  }
+
+               }
+
+
+               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+               {
+
+                  strLocale = pcontext->localeschema().m_idaLocale[i];
+                  strSchema = pcontext->localeschema().m_idaSchema[i];
+                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+
+                  for (index l = 0; l < straLs.get_count(); l++)
+                  {
+                     strLs = straLs[l];
+
+                     strPath = strLs / str;
+                     if (bDir)
+                     {
+                        if (System.dir().is(strPath, papp))
+                           goto ret;
+                     }
+                     else
+                     {
+                        if (System.file().exists(strPath, papp))
+                           goto ret;
+                     }
+                  }
+
+               }
+
+
+               straLs = locale_schema_matter(papp, "en", "en", root, domain);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+                  strLs = straLs[l];
+
+                  strPath = strLs / str;
+                  if (bDir)
+                  {
+                     if (System.dir().is(strPath, papp))
+                        goto ret;
+                  }
+                  else
+                  {
+                     if (System.file().exists(strPath, papp))
+                        goto ret;
+                  }
+               }
+
+            }
+
+
+
+
+         }
+
+
+         if (Session.m_bMatterFromHttpCache)
+         {
+
+
+            ::file::patha patha;
+
+            strLocale = pcontext->m_plocaleschema->m_idLocale;
+            strSchema = pcontext->m_plocaleschema->m_idSchema;
+            straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+            strFile = System.dir().commonappdata() / "cache" / papp->m_paurasession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+
+            strsize iFind = strFile.find(DIR_SEPARATOR);
+
+            if (iFind > 0)
+            {
+
+               strFile.replace(":", "_", iFind + 1);
+
+            }
+
+            strPath = Application.file().as_string(strFile);
+
+            if (strPath.has_char())
+            {
+               // todo: keep cache timeout information;
+               return strPath;
+            }
+
+
+            for (int k = 0; k < straLs.get_count(); k++)
+            {
+
+               strLs = straLs[k];
+
+               patha.add(strLs / str);
+
+            }
+
+            for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+            {
+               strLocale = pcontext->localeschema().m_idaLocale[i];
+               strSchema = pcontext->localeschema().m_idaSchema[i];
+               straLs = locale_schema_matter(papp, strLocale, strSchema);
+               for (int k = 0; k < straLs.get_count(); k++)
+               {
+
+                  strLs = straLs[k];
+
+                  patha.add(strLs / str);
+               }
+            }
+
+            straLs = locale_schema_matter(papp, "en", "en");
+            for (int k = 0; k < straLs.get_count(); k++)
+            {
+
+               strLs = straLs[k];
+
+               patha.add(strLs / str);
+            }
+
+            string strUrl;
+
+            string strCandidate = patha.implode("|");
+
+            string strParam = System.url().url_encode(strCandidate);
+
+            if (bDir)
+            {
+               strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
+            }
+            else
+            {
+               strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
+            }
+
+            property_set set(papp);
+
+            set["raw_http"] = true;
+
+            output_debug_string("\n");
+            output_debug_string(strUrl);
+            output_debug_string("\n");
+
+            auto & http = App(papp).http();
+
+            strPath = http.get(strUrl, set);
+
+            strPath.trim();
+
+            if (strPath.has_char())
+               goto ret;
+
+         }
+
+         else
+
+         {
+
+            strLocale = pcontext->m_plocaleschema->m_idLocale;
+            strSchema = pcontext->m_plocaleschema->m_idSchema;
+            straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+            for (index l = 0; l < straLs.get_count(); l++)
+            {
+               strLs = straLs[l];
+
+               strPath = strLs / str;
+               if (bDir)
+               {
+                  if (System.dir().is(strPath, papp))
+                     goto ret;
+               }
+               else
+               {
+                  if (System.file().exists(strPath, papp))
+                     goto ret;
+               }
+
+            }
+
+
+            for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+            {
+
+               strLocale = pcontext->localeschema().m_idaLocale[i];
+               strSchema = pcontext->localeschema().m_idaSchema[i];
+               straLs = locale_schema_matter(papp, strLocale, strSchema);
+
+               for (index l = 0; l < straLs.get_count(); l++)
+               {
+                  strLs = straLs[l];
+
+                  strPath = strLs / str;
+                  if (bDir)
+                  {
+                     if (System.dir().is(strPath, papp))
+                        goto ret;
+                  }
+                  else
+                  {
+                     if (System.file().exists(strPath, papp))
+                        goto ret;
+                  }
+
+               }
+
+            }
+
+
+            straLs = locale_schema_matter(papp, "en", "en");
+
+            for (index l = 0; l < straLs.get_count(); l++)
+            {
+               strLs = straLs[l];
+
+               strPath = strLs / str;
+               if (bDir)
+               {
+                  if (System.dir().is(strPath, papp))
+                     goto ret;
+               }
+               else
+               {
+                  if (System.file().exists(strPath, papp))
+                     goto ret;
+               }
+
+            }
+
+
+            if (papp->m_paurasession != NULL && papp->m_paurasession != papp &&
+               (sp(::aura::application)) papp->m_paurasystem != (sp(::aura::application)) papp
+               && papp->m_paurasession->m_bAuraInitialize1)
+            {
+               strPath = matter(papp->m_paurasession, str, bDir);
+               if (bDir)
+               {
+                  if (System.dir().is(strPath, papp))
+                     goto ret;
+               }
+               else
+               {
+                  if (System.file().exists(strPath, papp))
+                     goto ret;
+               }
+            }
+
+         }
+
+
+
+         if (papp->m_paurasystem != NULL && papp->m_paurasystem != papp &&
+            dynamic_cast < ::aura::application * >(papp->m_paurasystem) != dynamic_cast < ::aura::application * >(papp->m_paurasession)
+            && papp->m_paurasystem->m_bAuraInitialize1)
+         {
+            strPath = matter(papp->m_paurasystem, str, bDir);
+            if (bDir)
+            {
+               if (System.dir().is(strPath, get_app()))
+                  goto ret;
+            }
+            else
+            {
+               if (System.file().exists(strPath, get_app()))
+                  goto ret;
+            }
+
+         }
+
+         strPath = strLs / str;
+
+      ret:
+
+         if (Session.m_bMatterFromHttpCache)
+
+         {
+            Application.file().put_contents(strFile, strPath);
+
+            strFile = strPath;
+
+            strFile.replace(":", "_");
+            strFile.replace("//", "/");
+            strFile.replace("?", "%19");
+            strFile = System.dir().appdata() / "cache" / strFile + ".exists_question";
+
+            Application.file().put_contents(strFile, "yes");
+
+
+         }
+
+         return strPath;
+
+
+         /*static const string strEn("en");
+         //static const string strStd("_std");
+         //static const string strEmpty("");
+         string strPath;
+         string strLs = locale_schema_matter(papp, strEmpty, strEmpty);
+         strPath = strLs / str;
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strLs = locale_schema_matter(papp, strEn, strEmpty);
+         strPath = strLs / str;
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, strStd, strEmpty), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, strEmpty, App(papp).get_locale()), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, strEmpty, strEn), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, strEmpty, strStd), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strLs = locale_schema_matter(papp, strEn, strEn);
+         strPath = strLs / str;
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, strStd, strStd), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         strPath = path(locale_schema_matter(papp, "se", "se"), str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         if(papp->m_psession != NULL && papp->m_psession != papp &&
+         (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
+         {
+         strPath = matter(papp->m_psession, str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         }
+         if(papp->m_psystem != NULL && papp->m_psystem != papp &&
+         (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
+         {
+         strPath = matter(papp->m_psystem, str);
+         if(System.file().exists(strPath, papp))
+         return strPath;
+         }
+         return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
       }
+
+
 
       ::file::path system::appmatter(string strApp, ::file::path pathRel)
       {
