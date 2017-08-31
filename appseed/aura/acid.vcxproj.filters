@@ -3901,9 +3901,6 @@
     <ClCompile Include="aura\aura\aura_timer_item.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
-    <ClCompile Include="aura\aura\aura_create_context.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="aura\aura\aura_draw_context.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
@@ -3920,9 +3917,6 @@
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_command_target.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\aura_command_ui.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\ansios\ansios_local_memory_map.cpp">
