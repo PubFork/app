@@ -497,9 +497,6 @@
     <ClInclude Include="axis\node\windows\windows_factory_exchange.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="axis\node\windows\windows_ip_enum.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
     <ClInclude Include="axis\node\windows\windows_port_forward.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
@@ -575,6 +572,9 @@
     <ClInclude Include="axis\node\windows\windows_copydesk.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
+    <ClInclude Include="axis\node\windows\aaa_want_to_remove_windows_ip_enum.h">
+      <Filter>Header Files\axis\node\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="filesystem\fs\fs_data.cpp">
@@ -631,13 +631,7 @@
     <ClCompile Include="axis\node\windows\windows_factory_exchange.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
-    <ClCompile Include="axis\node\windows\windows_ip_enum.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="axis\node\windows\windows_port_forward.cpp">
-      <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\windows\windows_crypto.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="axis\axis\axis_application.cpp">
