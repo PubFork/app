@@ -1559,6 +1559,9 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/os/os2.h"
 
 
+#include "aura/aura/aura/aura_speaker.h"
+
+
 #include "app/appseed/aura/aura/node/node.h"
 
 
@@ -1797,9 +1800,6 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 
 #include "aura/user/user.h"
-
-
-#include "aura/aura/aura_speaker.h"
 
 
 #include "aura/pcre/pcre.h"
