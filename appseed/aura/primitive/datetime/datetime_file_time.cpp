@@ -188,7 +188,7 @@ void get_file_time(const char * psz,file_time & time)
 }
 
 
-#ifdef WINDOWS
+#ifdef WINDOWSEX
 
 
 void get_file_time(const char * psz,FILETIME & creation,FILETIME & modified)
@@ -214,16 +214,19 @@ void get_file_time(const char * psz,FILETIME & creation,FILETIME & modified)
 void get_file_time(const char * psz,FILETIME & creation,FILETIME & modified)
 {
 
-         ::Windows::Storage::StorageFile ^ h = get_os_file(psz,GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
-         try
-         {
-            memset(&m_ftCreation,0,sizeof(FILETIME));
-            memset(&m_ftModified,0,sizeof(FILETIME));
-            ::get_file_time(h,&m_ftCreation,NULL,&m_ftModified);
-         }
-         catch(...)
-         {
-         }
+         //::Windows::Storage::StorageFile ^ h = get_os_file(psz,GENERIC_READ,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+   HANDLE h = create_file(psz, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+   try
+   {
+      ZERO(creation);
+      ZERO(modified);
+      ::GetFileTime(h, &creation, NULL, &modified);
+   }
+   catch (...)
+   {
+   }
+
+   ::CloseHandle(h);
 
 
 }
