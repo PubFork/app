@@ -41,12 +41,11 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    int nReturnCode = 0;
 
 
-   ::metrowin::main_init_data * pinitmaindata  = new ::metrowin::main_init_data;
+   ::metrowin::command * pcommand       = canew(::metrowin::command);
 
-   pinitmaindata->m_hInstance             = NULL;
-   pinitmaindata->m_hPrevInstance         = NULL;
-   pinitmaindata->m_strCommandLine        = "";
-   pinitmaindata->m_nCmdShow              = 0;
+//    pcommand->m_hInstance               = NULL;
+//    pcommand->m_hPrevInstance           = NULL;
+//    pcommand->m_nCmdShow                = 0;
 
    //pinitmaindata->m_hInstance             = hInstance;
    //pinitmaindata->m_hPrevInstance         = hPrevInstance;
@@ -54,7 +53,7 @@ int CLASS_DECL_AURA win_main(::aura::system * psystem, ::Array < ::String ^ > ^ 
    //pinitmaindata->m_nCmdShow              = nCmdShow;
 
    
-   psystem->init_main_data(pinitmaindata);
+   psystem->startup_command(pcommand);
 
    //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 

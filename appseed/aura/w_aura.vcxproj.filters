@@ -238,9 +238,6 @@
     <Filter Include="Source Files\aura\os\windows_common">
       <UniqueIdentifier>{60b50081-d6fa-47b8-8d49-21e721dd3aed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\node\windows">
-      <UniqueIdentifier>{4280469b-7403-46cd-a9a5-6b6c1cd213f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\aura\charguess">
       <UniqueIdentifier>{01ea0f06-b472-4bc3-8758-599a8f2944b5}</UniqueIdentifier>
     </Filter>
@@ -2076,6 +2073,9 @@
     <ClInclude Include="aura\os\os_cpp.h">
       <Filter>Header Files\aura\os</Filter>
     </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_command.h">
+      <Filter>Header Files\aura\os\metrowin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -2806,9 +2806,6 @@
     <ClCompile Include="aura\os\os_thread.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\_os.cpp">
-      <Filter>Source Files\aura\os</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\cross\metrowin\cross_metrowin_user.cpp">
       <Filter>Source Files\aura\os\cross\metrowin</Filter>
     </ClCompile>
@@ -3283,12 +3280,6 @@
     <ClCompile Include="net\net_url.cpp">
       <Filter>Source Files\net</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\ansios\ansios_multithreading.cpp">
-      <Filter>Source Files\aura\os\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\windows_common\_windows_common.cpp">
-      <Filter>Source Files\aura\os\windows_common</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\windows_common\windows_common_base.cpp">
       <Filter>Source Files\aura\os\windows_common</Filter>
     </ClCompile>
@@ -3327,9 +3318,6 @@
     </ClCompile>
     <ClCompile Include="aura\pcre\pcre.cpp">
       <Filter>Source Files\aura\pcre</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\node\windows\windows_dir.cpp">
-      <Filter>Source Files\aura\node\windows</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\os_debug.cpp">
       <Filter>Source Files\aura\os</Filter>
@@ -3840,6 +3828,9 @@
     </ClCompile>
     <ClCompile Include="aura\os\os_os.cpp">
       <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_command.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

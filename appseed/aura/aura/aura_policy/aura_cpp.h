@@ -1799,6 +1799,9 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/primitive/primitive.h"
 
 
+#include "aura/aura/os/os_cpp.h"
+
+
 #include "aura/user/user.h"
 
 

@@ -19,6 +19,7 @@ CLASS_DECL_AURA string get_command_line_dup()
 
 }
 
+
 BEGIN_EXTERN_C
 
 

@@ -323,6 +323,7 @@ DWORD_PTR translate_processor_affinity(int i)
 
 }
 
+#undef System
 
 CLASS_DECL_AURA int ui_open_url(const char * pszUrl)
 {

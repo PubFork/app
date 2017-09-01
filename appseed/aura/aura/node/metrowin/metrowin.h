@@ -52,6 +52,7 @@ CLASS_DECL_AURA void __try_cleanup();
 
 
 #include "metrowin1.h"
+#include "metrowin_command.h"
 #include "metrowin_implementation.h"
 #include "metrowin_folder_watch.h"
 #include "metrowin_factory_exchange.h"

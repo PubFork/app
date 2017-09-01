@@ -23,6 +23,7 @@ INT get_registry_locale_info( LPCWSTR value, LPWSTR buffer, INT len );
  *
  * See GetLocaleInfoA.
  */
+#ifndef METROWIN
 #ifdef WINDOWS
 WINAXISAPI
 #endif
@@ -172,7 +173,7 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
     return ret;
 }
 
-
+#endif
 
 
 
@@ -228,7 +229,7 @@ static LCID lcid_LC_TELEPHONE;
 
 
 
-
+#ifndef METROWIN
 
 /***********************************************************************
  *           convert_default_lcid
@@ -386,7 +387,7 @@ LCID convert_default_lcid( LCID lcid, LCTYPE lctype )
 
 
 
-
+#endif
 
 
 
@@ -662,7 +663,7 @@ LCID WINAPI GetSystemDefaultLCID(void)
     return lcid;
 }
 
-
+#ifndef METROWIN
 /******************************************************************************
  *		ConvertDefaultLocale (KERNEL32.@)
  *
@@ -705,7 +706,7 @@ LCID WINAPI ConvertDefaultLocale( LCID lcid )
     }
     return lcid;
 }
-
+#endif
 
 
 
@@ -717,7 +718,11 @@ LCID WINAPI ConvertDefaultLocale( LCID lcid )
 NTSTATUS WINAPI NtQueryDefaultLocale( WINBOOL user, LCID *lcid )
 {
     *lcid = user ? user_lcid : system_lcid;
+#ifdef METROWIN
+    return 0;
+#else
     return STATUS_SUCCESS;
+#endif
 }
 
 
@@ -732,7 +737,11 @@ NTSTATUS WINAPI NtSetDefaultLocale( WINBOOL user, LCID lcid )
         system_lcid = lcid;
         system_ui_language = LANGIDFROMLCID(lcid); /* there is no separate call to set it */
     }
+#ifdef METROWIN
+    return 0;
+#else
     return STATUS_SUCCESS;
+#endif
 }
 
 
