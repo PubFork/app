@@ -13,6 +13,8 @@ namespace str
          object(papp)
       {
 
+            m_idSchema = __id(std);
+            m_idLocale = __id(std);
 
          m_idaLocale.allocate(0, 256);
          m_idaSchema.allocate(0, 256);
