@@ -3268,9 +3268,6 @@
     <ClCompile Include="aura\message\message_base.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
-      <Filter>Source Files\aura\message</Filter>
-    </ClCompile>
     <ClCompile Include="aura\process\process_bidi_pipe.cpp">
       <Filter>Source Files\aura\process</Filter>
     </ClCompile>
@@ -3497,9 +3494,6 @@
       <Filter>Source Files\aura\fontopus</Filter>
     </ClCompile>
     <ClCompile Include="aura\fontopus\fontopus_validate.cpp">
-      <Filter>Source Files\aura\fontopus</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\fontopus\fontopus_validate1.cpp">
       <Filter>Source Files\aura\fontopus</Filter>
     </ClCompile>
     <ClCompile Include="aura\install\install.cpp">
@@ -3825,6 +3819,21 @@
     </ClCompile>
     <ClCompile Include="aura\compress\compress_department.cpp">
       <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_id.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_receiver.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_sender.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_simple_command.cpp">
+      <Filter>Source Files\aura\message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

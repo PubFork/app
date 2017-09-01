@@ -134,7 +134,7 @@ typedef struct
 
 #ifndef NOCRYPT
 #define INCLUDECRYPTINGCODE_IFCRYPTALLOWED
-//#include"crypt.h"
+#include "zip_crypt.h"
 #endif
 
 local linkedlist_datablock_internal* allocate_new_datablock()

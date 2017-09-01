@@ -920,10 +920,6 @@ namespace install
 
 
 
-#endif
-
-
-
 
 
 DWORD install_status::calc_when_is_good_to_check_again()
@@ -986,6 +982,13 @@ DWORD install_status::calc_when_is_good_to_check_again()
    return dwGoodToCheckAgain;
 
 }
+
+
+
+
+
+
+#endif
 
 
 
