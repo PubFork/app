@@ -320,12 +320,20 @@ namespace aura
 
    }
 
+
+#ifdef INSTALL_SUBSYSTEM
+
+
    bool application::check_install()
    {
 
       return true;
 
    }
+
+
+#endif
+
 
    void application::throw_not_installed()
    {
@@ -352,7 +360,11 @@ namespace aura
             if (!is_system() && !is_session())
             {
 
+#ifdef INSTALL_SUBSYSTEM
+
                check_install();
+
+#endif
 
                ::multithreading::post_quit(&System);
 
@@ -6698,6 +6710,8 @@ namespace aura
    }
    
 
+#ifdef INSTALL_SUBSYSTEM
+
    bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
    {
 
@@ -7016,6 +7030,8 @@ namespace aura
    }
 
 
+#endif
+
 
    string application::get_app_id(string wstr)
    {
@@ -7076,14 +7092,15 @@ namespace aura
    }
 
 
+#ifdef INSTALL_SUBSYSTEM
+
+
    int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
       return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch, dwGoodToCheckAgain);
 
    }
-
-
 
 
    int application::check_soon_app_id(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
@@ -7283,7 +7300,6 @@ namespace aura
    }
 
 
-
    string application::install_get_title(string strTitle)
    {
       static string  s_strTitle;
@@ -7315,6 +7331,9 @@ namespace aura
       return "";
 
    }
+
+
+#endif
 
 
 } // namespace install

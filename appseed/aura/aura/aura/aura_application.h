@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef INSTALL_SUBSYSTEM
+
 struct install_status
 {
 
@@ -22,6 +24,7 @@ struct install_status
 
 };
 
+#endif
 
 
 namespace multimedia
@@ -76,9 +79,12 @@ namespace aura
 
 
 
-
+#ifdef INSTALL_SUBSYSTEM
+      
       string_map < install_status >                   m_mapUpdated;
       string_map < install_status >                   m_mapInstalled;
+
+#endif
 
       bool                                            m_bAgreeExit;
       bool                                            m_bAgreeExitOk;
@@ -561,6 +567,9 @@ namespace aura
       void handle_command(::command::command * pcommand) override;
       void on_create(::create * pcreate) override;
 
+
+#ifdef INSTALL_SUBSYSTEM
+
       virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
 
       virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
@@ -568,6 +577,8 @@ namespace aura
       ::install::installer & installer() { return *m_pinstaller; }
 
       virtual bool check_install();
+
+#endif
 
       virtual void dispatch_user_message_object(::object * pobject);
 
@@ -606,6 +617,11 @@ namespace aura
       
       virtual bool on_open_document_file(var varFile);
 
+      virtual string get_app_id(string wstr);
+
+
+#ifdef INSTALL_SUBSYSTEM
+
       virtual void install_trace(const string & str);
       virtual void install_trace(double dRate);
       virtual bool register_spa_file_type();
@@ -621,7 +637,6 @@ namespace aura
 
       virtual string install_get_build();
 
-      virtual string get_app_id(string wstr);
       virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
       virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
       virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
@@ -633,6 +648,7 @@ namespace aura
       virtual bool install_get_admin();
       virtual string install_get_id();
 
+#endif
 
    };
 

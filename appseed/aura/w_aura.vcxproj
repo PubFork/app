@@ -140,6 +140,7 @@
     <ClInclude Include="aura\aura_policy\aura_policy_objc.h" />
     <ClInclude Include="aura\aura_policy\aura_policy_objcpp.h" />
     <ClInclude Include="aura\aura_policy\aura_policy_winrt.h" />
+    <ClInclude Include="aura\compress\compress_department.h" />
     <ClInclude Include="aura\exception\exception.h" />
     <ClInclude Include="aura\exception\exception2.h" />
     <ClInclude Include="aura\exception\exception_assert.h" />
@@ -938,9 +939,8 @@
     <ClCompile Include="aura\charguess\SJISProber.cpp" />
     <ClCompile Include="aura\charguess\universal.cpp" />
     <ClCompile Include="aura\charguess\UTF8Prober.cpp" />
-    <ClCompile Include="aura\compress\compress_bz.cpp" />
-    <ClCompile Include="aura\compress\compress_compress.cpp" />
     <ClCompile Include="aura\compress\compress_department.cpp" />
+    <ClCompile Include="aura\compress\compress_bz.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
     <ClCompile Include="aura\compress\zip\zip_api.cpp" />
     <ClCompile Include="aura\compress\zip\zip_file.cpp" />

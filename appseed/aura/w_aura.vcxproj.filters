@@ -2070,6 +2070,9 @@
     <ClInclude Include="multithreading\multithreading_forking_thread.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
+    <ClInclude Include="aura\compress\compress_department.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -3436,12 +3439,6 @@
     <ClCompile Include="aura\charguess\UTF8Prober.cpp">
       <Filter>Source Files\aura\charguess</Filter>
     </ClCompile>
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_department.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
     <ClCompile Include="aura\compress\zip\zip_api.cpp">
       <Filter>Source Files\aura\compress\zip</Filter>
     </ClCompile>
@@ -3825,6 +3822,9 @@
     </ClCompile>
     <ClCompile Include="graphics\draw3d\draw3d_ortho.cpp">
       <Filter>Source Files\graphics\draw3d</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp">
+      <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
