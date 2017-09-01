@@ -2766,6 +2766,29 @@ namespace aura
    int32_t application::exit_thread()
    {
 
+
+      try
+      {
+
+         Application.signal_close_dependent_threads();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         wait_close_dependent_threads(seconds(60));
+
+      }
+      catch (...)
+      {
+
+      }
+
       bool bErrorFinalize = false;
 
       try

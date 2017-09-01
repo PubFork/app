@@ -17,19 +17,23 @@ public:
 
    sp(object) m_pholdref;
 
-   forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred) :
+   ::object * m_powner;
+
+   forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred, ::object * pojectOwner) :
       object(papp),
       thread(papp),
       m_pholdref(pholdref),
-      m_pred(pred)
+      m_pred(pred),
+      m_powner(pobjectOwner)
    {
 
    }
 
-   forking_thread(::aura::application * papp,PRED pred) :
+   forking_thread(::aura::application * papp,PRED pred,::object * pobjectOwner) :
       object(papp),
       thread(papp),
-      m_pred(pred)
+      m_pred(pred),
+      m_powner(pobjectOwner)
    {
 
    }
@@ -37,7 +41,31 @@ public:
 
    virtual ~forking_thread()
    {
+      
+      try
+      {
+         
+         if (m_powner != NULL)
+         {
 
+            synch_lock sl(m_powner->m_pmutex);
+
+            if (m_powner->m_pthreadptra != NULL)
+            {
+
+               m_powner->m_pthreadptra->remove(this);
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+
+      }
    }
 
    int32_t run()
@@ -73,10 +101,10 @@ template < typename PRED >
 
 
 template < typename PRED >
-::thread * fork(::aura::application * papp, PRED pred)
+::thread * fork(::aura::application * papp, PRED pred, ::object * powner = NULL)
 {
 
-   auto pforkingthread = canew(forking_thread < PRED >(papp, pred));
+   auto pforkingthread = canew(forking_thread < PRED >(papp, pred, powner));
 
    ::thread * pthread = dynamic_cast < ::thread * > (pforkingthread);
 
@@ -91,7 +119,25 @@ template < typename PRED >
 inline ::thread * object::fork(PRED pred)
 {
 
-   return ::fork(get_app(),pred);
+   synch_lock sl(m_pmutex);
+
+   if (m_pthreadptra == NULL)
+   {
+
+      m_pthreadptra = new sp(thread);
+
+   }
+
+   thread * pthread = ::fork(get_app(),pred);
+
+   if (pthread != NULL)
+   {
+
+      m_pthreada->add(pthread);
+
+   }
+
+   return pthread;
 
 }
 
@@ -266,7 +312,7 @@ template < typename PRED >
 CLASS_DECL_AURA uint32_t random_processor_index_generator();
 
 template < typename PRED >
-spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1)
+spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1, ::object * pobjectOwner = NULL)
 {
 
    spa(::thread) threadptra;
@@ -292,7 +338,7 @@ spa(::thread) fork_proc(::aura::application * papp, PRED pred, index iCount = -1
    for (index iProcessor = 0; iProcessor < iCount; iProcessor++)
    {
 
-      auto pforkingthread = canew(forking_thread < PRED >(papp, pred));
+      auto pforkingthread = canew(forking_thread < PRED >(papp, pred, pobjectOwner));
 
       ::thread * pthread = dynamic_cast < ::thread * > (pforkingthread);
 

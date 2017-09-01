@@ -11,6 +11,7 @@ object::object()
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = NULL;
+   m_pthreadrefa        = NULL;
 
 }
 
@@ -48,6 +49,7 @@ object::object(const object& objectSrc)
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = objectSrc.m_pauraapp;
+   m_pthreadrefa        = NULL;
 
 
 }
@@ -62,12 +64,20 @@ object::object(::aura::application * papp)
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = papp;
+   m_pthreadrefa        = NULL;
 
 }
 
 
 object::~object()
 {
+
+   if (m_pthreadrefa != NULL)
+   {
+
+      ::multithreading::post_quit_and_wait(m_pthreadrefa, seconds(60));
+
+   }
 
    ::aura::del(m_pmutex);
 

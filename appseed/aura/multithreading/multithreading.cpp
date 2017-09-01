@@ -269,6 +269,99 @@ namespace multithreading
    }
 
 
+   CLASS_DECL_AURA bool post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
+   {
+
+         if (pthreadptra == NULL)
+         {
+
+            return true;
+
+         }
+
+         bool bOk = true;
+
+         try
+         {
+
+            while (pthreadptra->get_count())
+            {
+
+            restart1:
+
+               for (index i = 0; i < pthreadptra->get_count(); i++)
+               {
+
+                  ::thread * pthread = pthreadptra->element_at(i);
+
+                  try
+                  {
+
+                     pthread->post_quit();
+
+                  }
+                  catch (...)
+                  {
+
+                     pthreadptra->remove_at(i);
+
+                     goto restart1;
+
+                  }
+
+               }
+
+            restart2:
+
+               for (index i = 0; i < pthreadptra->get_count(); i++)
+               {
+
+                  ::thread * pthread = pthreadptra->element_at(i);
+
+                  try
+                  {
+
+                     if (pthread->wait(duration).succeeded())
+                     {
+
+                        pthreadptra->remove_at(i);
+
+                        goto restart2;
+
+                     }
+
+                  }
+                  catch (...)
+                  {
+
+                     pthreadptra->remove_at(i);
+
+                     goto restart2;
+
+                  }
+
+               }
+
+            }
+
+         }
+         catch (...)
+         {
+
+            bOk = false;
+
+         }
+
+         return bOk;
+
+      }
+
+
+
+
+   }
+
+
 } // namespace multithreading
 
 

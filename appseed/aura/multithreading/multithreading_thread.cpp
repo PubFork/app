@@ -724,6 +724,12 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          output_debug_string(string("-------------------------\n"));
 
+         DWORD dwTime = ::get_tick_count() - dwStart;
+
+         string strTime = ::str::from(dwTime);
+
+         output_debug_string(strTime + string("ms\n"));
+         
          for(index i = 0; i < m_threadptraDependent.get_count(); i++)
          {
 
