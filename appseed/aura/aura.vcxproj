@@ -641,8 +641,7 @@
     </ClCompile>
     <ClCompile Include="aura\aura\simple_log.cpp" />
     <ClCompile Include="aura\compress\compress_bz.cpp" />
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
     <ClCompile Include="aura\compress\zip\zip_api.cpp">
     </ClCompile>

@@ -4585,9 +4585,6 @@
     <ClCompile Include="aura\compress\compress_gz.cpp">
       <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
     <ClCompile Include="aura\compress\compress_bz.cpp">
       <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
@@ -4830,6 +4827,9 @@
     </ClCompile>
     <ClCompile Include="aura\node\windows\windows_ip_enum.cpp">
       <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp">
+      <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
