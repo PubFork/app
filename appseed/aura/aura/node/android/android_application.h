@@ -6,7 +6,7 @@ namespace android
 
 
    class CLASS_DECL_AURA main_init_data :
-      public ::aura::main_init_data
+      public ::command::command
    {
    public:
 
@@ -52,7 +52,7 @@ namespace android
 
       virtual void SetCurrentHandles();
 
-      virtual bool process_command(::aura::main_init_data * pdata);
+      virtual bool process_command(::command::command * pdata);
 
       virtual bool process_initialize();
       virtual bool initialize1();

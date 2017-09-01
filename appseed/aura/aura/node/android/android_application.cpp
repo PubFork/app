@@ -137,7 +137,7 @@ namespace aura
 
 
 
-   bool application::process_command(::aura::main_init_data * pdata)
+   bool application::process_command(::command::command * pdata)
    {
 
       m_pcommand =  pdata;

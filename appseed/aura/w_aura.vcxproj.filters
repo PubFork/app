@@ -2073,6 +2073,9 @@
     <ClInclude Include="aura\compress\compress_department.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
+    <ClInclude Include="aura\os\os_cpp.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -3834,6 +3837,9 @@
     </ClCompile>
     <ClCompile Include="aura\message\message_simple_command.cpp">
       <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_os.cpp">
+      <Filter>Source Files\aura\os</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -482,6 +482,7 @@
     <ClInclude Include="aura\os\metrowin\metrowin_user_impl.h" />
     <ClInclude Include="aura\os\os.h" />
     <ClInclude Include="aura\os\os_binreloc.h" />
+    <ClInclude Include="aura\os\os_cpp.h" />
     <ClInclude Include="aura\os\os_process.h" />
     <ClInclude Include="aura\os\os_threading.h" />
     <ClInclude Include="aura\os\os_time.h" />
@@ -1086,6 +1087,7 @@
     <ClCompile Include="aura\os\os_debug.cpp" />
     <ClCompile Include="aura\os\os_file.cpp" />
     <ClCompile Include="aura\os\os_http.cpp" />
+    <ClCompile Include="aura\os\os_os.cpp" />
     <ClCompile Include="aura\os\os_process.cpp" />
     <ClCompile Include="aura\os\os_thread.cpp" />
     <ClCompile Include="aura\os\windows\windows_ansi_file.cpp" />

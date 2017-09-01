@@ -28,7 +28,7 @@ namespace metrowin
    string os::get_command_line()
    {
       
-      return zzz123;
+      return get_command_line_dup();
       
    }
 

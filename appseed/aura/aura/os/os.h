@@ -72,6 +72,10 @@ END_EXTERN_C
 //CLASS_DECL_AURA bool file_copy_dup(const string & strDup,const string & strSrc, bool bOverwrite = true);
 //
 //#endif // __cplusplus
+CLASS_DECL_AURA void set_command_line_dup(const char * psz);
+CLASS_DECL_AURA void get_command_line_dup(char * psz, int iBuffer);
+
+
 
 
 
