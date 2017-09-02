@@ -2509,12 +2509,12 @@ int_bool file_set_length(const char * pszName,size_t iSize)
 
 }
 
-uint64_t flen_dup(FILE *str)
-{
-
-   return fsize_dup(str);
-
-}
+//uint64_t flen_dup(FILE *str)
+//{
+//
+//   return fsize_dup(str);
+//
+//}
 
 
 
@@ -2565,5 +2565,18 @@ bool file_copy_dup(const string & strNew,const string & strSrc,bool bOverwrite)
       ::Windows::Storage::NameCollisionOption::ReplaceExisting :
       ::Windows::Storage::NameCollisionOption::FailIfExists)) ? TRUE : FALSE;
 
+
+}
+
+
+
+uint64_t fsize_dup(HANDLE h)
+{
+
+   DWORD dwHi;
+
+   DWORD dwLo = ::GetFileSize(h, &dwHi);
+
+   return dwLo | (((DWORD64) dwHi) << 32);
 
 }

@@ -234,8 +234,10 @@ bool get_thread_run()
 
 }
 
+
 namespace multithreading
 {
+
 
    CLASS_DECL_AURA bool post_quit()
    {
@@ -253,85 +255,157 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA bool post_quit(::thread * pthread)
+   
+   bool post_quit(::thread * pthread)
    {
 
-      return post_quit<::thread>(pthread);
+      if (pthread == NULL)
+      {
+
+         return true;
+
+      }
+
+      bool bOk = false;
+
+      try
+      {
+
+         bOk = pthread->post_quit();
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
 
    }
 
-
-   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration)
+   
+   bool post_quit_and_wait(::thread * pthread, const duration & duration)
    {
 
-      return post_quit_and_wait<::thread>(pthread, duration);
+      if (pthread == NULL)
+      {
 
-   }
+         return true;
 
+      }
 
-   CLASS_DECL_AURA bool post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
-   {
+      bool bOk = false;
 
-         if (pthreadptra == NULL)
+      try
+      {
+
+         pthread->post_quit();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         if (pthread != NULL)
          {
 
-            return true;
+            bOk = pthread->wait(duration).succeeded();
 
          }
 
-         bool bOk = true;
+      }
+      catch (...)
+      {
 
-         try
+      }
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
+   }
+
+
+   CLASS_DECL_AURA bool do_post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
+   {
+
+      if (pthreadptra == NULL)
+      {
+
+         return true;
+
+      }
+
+      bool bOk = true;
+
+      try
+      {
+
+         while (pthreadptra->get_count())
          {
 
-            while (pthreadptra->get_count())
+         restart1:
+
+            for (index i = 0; i < pthreadptra->get_count(); i++)
             {
 
-            restart1:
+               ::thread * pthread = pthreadptra->element_at(i);
 
-               for (index i = 0; i < pthreadptra->get_count(); i++)
+               try
                {
 
-                  ::thread * pthread = pthreadptra->element_at(i);
+                  pthread->post_quit();
 
-                  try
-                  {
+               }
+               catch (...)
+               {
 
-                     pthread->post_quit();
+                  pthreadptra->remove_at(i);
 
-                  }
-                  catch (...)
-                  {
-
-                     pthreadptra->remove_at(i);
-
-                     goto restart1;
-
-                  }
+                  goto restart1;
 
                }
 
-            restart2:
+            }
 
-               for (index i = 0; i < pthreadptra->get_count(); i++)
+         restart2:
+
+            for (index i = 0; i < pthreadptra->get_count(); i++)
+            {
+
+               ::thread * pthread = pthreadptra->element_at(i);
+
+               try
                {
 
-                  ::thread * pthread = pthreadptra->element_at(i);
-
-                  try
-                  {
-
-                     if (pthread->wait(duration).succeeded())
-                     {
-
-                        pthreadptra->remove_at(i);
-
-                        goto restart2;
-
-                     }
-
-                  }
-                  catch (...)
+                  if (pthread->wait(duration).succeeded())
                   {
 
                      pthreadptra->remove_at(i);
@@ -341,23 +415,28 @@ namespace multithreading
                   }
 
                }
+               catch (...)
+               {
+
+                  pthreadptra->remove_at(i);
+
+                  goto restart2;
+
+               }
 
             }
 
          }
-         catch (...)
-         {
 
-            bOk = false;
+      }
+      catch (...)
+      {
 
-         }
-
-         return bOk;
+         bOk = false;
 
       }
 
-
-
+      return bOk;
 
    }
 

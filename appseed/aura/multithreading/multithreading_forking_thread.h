@@ -50,10 +50,10 @@ public:
 
             synch_lock sl(m_powner->m_pmutex);
 
-            if (m_powner->m_pthreadptra != NULL)
+            if (m_powner->m_pthreadrefa != NULL)
             {
 
-               m_powner->m_pthreadptra->remove(this);
+               m_powner->m_pthreadrefa->remove(this);
 
             }
 

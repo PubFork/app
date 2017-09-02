@@ -3039,3 +3039,25 @@ CLASS_DECL_AURA uint32_t random_processor_index_generator()
    return g_uiRandomProcessorIndexGenerator;
 
 }
+
+
+
+
+thread_refa::thread_refa()
+{
+
+
+
+}
+
+
+
+
+thread_refa::~thread_refa()
+{
+
+
+}
+
+
+

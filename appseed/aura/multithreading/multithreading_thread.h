@@ -417,34 +417,29 @@ public:
 
 
 
+class CLASS_DECL_AURA thread_refa :
+   virtual public ::ref_array < thread >
+{
+public:
+
+
+   thread_refa();
+   virtual ~thread_refa();
+
+
+};
+
+
+
 namespace multithreading
 {
 
 
    template < typename THREAD >
-   inline bool post_quit(THREAD * & pthread)
+   inline bool post_quit(THREAD & pthread)
    {
 
-      if (pthread == NULL)
-      {
-
-         return true;
-
-      }
-
-      bool bOk = false;
-
-      try
-      {
-
-         bOk = pthread->post_quit();
-
-      }
-      catch (...)
-      {
-
-
-      }
+      bool bOk = post_quit((::thread *) pthread);
 
       try
       {
@@ -461,46 +456,13 @@ namespace multithreading
       return bOk;
 
    }
+
 
    template < typename THREAD >
-   inline bool post_quit_and_wait(THREAD * & pthread, const duration & duration)
+   inline bool post_quit_and_wait(THREAD & pthread, const duration & duration)
    {
 
-      if (pthread == NULL)
-      {
-
-         return true;
-
-      }
-
-      bool bOk = false;
-
-      try
-      {
-
-         pthread->post_quit();
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         if (pthread != NULL)
-         {
-
-            bOk = pthread->wait(duration).succeeded();
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
+      bool bOk = post_quit_and_wait((::thread *) pthread, duration);
 
       try
       {
@@ -511,25 +473,11 @@ namespace multithreading
       catch (...)
       {
 
-
       }
 
       return bOk;
 
    }
-
-
-   class CLASS_DECL_AURA thread_refa :
-      virtual public ::ref_array < thread >
-   {
-   public:
-
-
-      thread_refa();
-      virtual ~thread_refa();
-
-
-   };
 
 
    CLASS_DECL_AURA bool post_quit();

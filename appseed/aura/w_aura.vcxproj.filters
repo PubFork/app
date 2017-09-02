@@ -307,6 +307,15 @@
     <Filter Include="Source Files\graphics\draw3d">
       <UniqueIdentifier>{8bce8610-67a0-4abf-9dfb-6ab7a3bc61e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\aura\aura\os_alloc">
+      <UniqueIdentifier>{cbbb5a26-f04c-49e6-9093-7ad9ad604de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting">
+      <UniqueIdentifier>{6304d41b-9c8a-42c6-8b0f-cd396853483f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting\javascript">
+      <UniqueIdentifier>{114292b3-1284-4801-8572-4e4501bb41f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_application_bias.h">
@@ -2749,9 +2758,6 @@
     <ClCompile Include="aura\os\metrowin\metrowin_sockets.cpp">
       <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\metrowin\metrowin_time.cpp">
-      <Filter>Source Files\aura\os\metrowin</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\metrowin\metrowin_user.cpp">
       <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
@@ -3144,9 +3150,6 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_department.cpp">
       <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\aura_department_container.cpp">
-      <Filter>Header Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="primitive\math\math_department.cpp">
       <Filter>Source Files\primitive\math</Filter>
@@ -3786,6 +3789,114 @@
     </ClCompile>
     <ClCompile Include="net\net_url_domain.cpp">
       <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_processor_cache_oriented.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_malloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_no_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_WindowsHeapAlloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_alloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_tools.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_department.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_binreloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_windowing.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_timer.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_file_std.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_callback.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_speaker.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_os.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_native_buffer.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_md5.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_simple_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_time.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_simple_log.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_box.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_dibmap.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_keep.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_event.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_sz.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_department_container.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_file_time.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_file_time_span.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_console_window.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_file_std.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
