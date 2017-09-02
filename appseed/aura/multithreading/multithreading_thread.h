@@ -416,6 +416,18 @@ public:
 //};
 
 
+class CLASS_DECL_AURA thread_refa :
+   virtual public ::ref_array < thread >
+{
+public:
+
+
+   thread_refa();
+   virtual ~thread_refa();
+
+
+};
+
 
 class CLASS_DECL_AURA thread_refa :
    virtual public ::ref_array < thread >
@@ -486,7 +498,7 @@ namespace multithreading
 
    CLASS_DECL_AURA bool post_quit(::thread * pthread);
    CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
-   CLASS_DECL_AURA bool post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration);
+   CLASS_DECL_AURA bool post_quit_and_wait(::array < ::thread * > * pthreadptra, const duration & duration);
 
 
 } // namespace multithreading
