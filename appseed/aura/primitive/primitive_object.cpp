@@ -75,7 +75,7 @@ object::~object()
    if (m_pthreadrefa != NULL)
    {
 
-      ::multithreading::post_quit_and_wait(m_pthreadrefa, seconds(60));
+      ::multithreading::post_quit_and_wait((::array < ::thread * > *) m_pthreadrefa, seconds(60));
 
    }
 

@@ -353,7 +353,7 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA bool do_post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
+   CLASS_DECL_AURA bool post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
    {
 
       if (pthreadptra == NULL)
