@@ -634,6 +634,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='basis|x64'">$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_chronometer.cpp" />
+    <ClCompile Include="aura\aura\aura_simple_log.cpp" />
     <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -666,7 +667,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="aura\aura\simple_log.cpp" />
     <ClCompile Include="aura\compress\compress_bz.cpp" />
     <ClCompile Include="aura\compress\compress_department.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
