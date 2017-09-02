@@ -65,7 +65,7 @@ namespace core
 
       m_iResourceId = 8001;
 
-      ::core::profiler::initialize();
+      ::aura::profiler::initialize();
 
       m_pcoreapp = this;
 

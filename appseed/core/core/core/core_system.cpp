@@ -216,7 +216,7 @@ namespace core
 
       }
 
-      ::core::profiler::initialize();
+      ::aura::profiler::initialize();
 
 #ifdef LINUX
 
