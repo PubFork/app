@@ -378,11 +378,6 @@ namespace user
 
 
 
-#include "core/core/plugin/plugin.h"
-
-
-
-
 #include "app/appseed/core/user/user/user_inline.h"
 
 

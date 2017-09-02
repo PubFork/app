@@ -148,6 +148,7 @@ namespace dynamic_source
 namespace core
 {
 
+   class run_start_installer;
 
    CLASS_DECL_CORE bool init_core();
 
@@ -384,6 +385,13 @@ namespace core
 #include "core_session.h"
 
 #include "core_system.h"
+
+#include "core/core/plugin/plugin.h"
+
+
+
+
+
 
 #include "core.inl"
 

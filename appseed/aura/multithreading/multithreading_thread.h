@@ -1,71 +1,11 @@
 #pragma once
 
 
-class tool_thread;
-class thread_tool;
-class thread_tools;
-class thread_toolset;
-//class pred_set;
 
 
-class CLASS_DECL_AURA pred_holder_base :
-   virtual public object
-{
-public:
-
-   ::tool_thread *      m_ptoolthread;
-   sp(object)           m_pholdref;
-
-   pred_holder_base(::aura::application * papp, sp(object) pholdref = NULL) :
-      object(papp),
-      m_pholdref(pholdref)
-   {
-      
-      m_ptoolthread = NULL;
-
-   }
-
-   virtual void run() {}
-
-};
-
-template < typename PRED >
-class pred_holder :
-   virtual public pred_holder_base
-{
-public:
-
-   PRED m_pred;
-
-   pred_holder(::aura::application * papp, PRED pred) :
-      object(papp),
-      pred_holder_base(papp),
-      m_pred(pred)
-   {
-
-   }
-
-   pred_holder(::aura::application * papp, sp(object) pholdref, PRED pred) :
-      object(papp),
-      pred_holder_base(papp, pholdref),
-      m_pred(pred)
-   {
-
-   }
-
-   virtual void run() { m_pred(); }
-
-};
-//class replace_thread;
-
-class user_interaction_ptr_array;
-
-class thread_startup;
-
-///
-/// \author Camilo Sasuke Tsumanuma
 ///
 /// a thread must be always allocated in the heap
+///
 class CLASS_DECL_AURA thread :
    virtual public command_target
 #ifdef WINDOWS
@@ -131,8 +71,8 @@ public:
    ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
    //property_set                           m_set;
    string                                 m_strWorkUrl;
-   ref_array < thread >                   m_threadptraDependent;
-   ref_array < thread >                   m_threadptraRequired;
+   thread_refa                            m_threadrefaDependent;
+   thread_refa                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
 
    bool                                   m_bZipIsDir;
@@ -415,18 +355,6 @@ public:
 //
 //};
 
-
-class CLASS_DECL_AURA thread_refa :
-   virtual public ::ref_array < thread >
-{
-public:
-
-
-   thread_refa();
-   virtual ~thread_refa();
-
-
-};
 
 
 

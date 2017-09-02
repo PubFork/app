@@ -1286,91 +1286,91 @@ namespace core
       DWORD dwDataLen = sizeof(dwValue);
       DWORD dwType = 0;
 
-      // clear current policy settings.
-      m_dwPolicies = ___SYSPOLICY_NOTINITIALIZED;
+      //// clear current policy settings.
+      //m_dwPolicies = ___SYSPOLICY_NOTINITIALIZED;
 
-      static __system_policy_data rgExplorerData[] =
-      {
-         {"NoRun",___SYSPOLICY_NORUN},
-         {"NoDrives",___SYSPOLICY_NODRIVES},
-         {"RestrictRun",___SYSPOLICY_RESTRICTRUN},
-         {"NoNetConnectDisconnect",___SYSPOLICY_NONETCONNECTDISCONNECTD},
-         {"NoRecentDocsHistory",___SYSPOLICY_NORECENTDOCHISTORY},
-         {"NoClose",___SYSPOLICY_NOCLOSE},
-         {NULL,0}
-      };
+      //static __system_policy_data rgExplorerData[] =
+      //{
+      //   {"NoRun",___SYSPOLICY_NORUN},
+      //   {"NoDrives",___SYSPOLICY_NODRIVES},
+      //   {"RestrictRun",___SYSPOLICY_RESTRICTRUN},
+      //   {"NoNetConnectDisconnect",___SYSPOLICY_NONETCONNECTDISCONNECTD},
+      //   {"NoRecentDocsHistory",___SYSPOLICY_NORECENTDOCHISTORY},
+      //   {"NoClose",___SYSPOLICY_NOCLOSE},
+      //   {NULL,0}
+      //};
 
-      static __system_policy_data rgNetworkData[] =
-      {
-         {"NoEntireNetwork",___SYSPOLICY_NOENTIRENETWORK},
-         {NULL,0}
-      };
+      //static __system_policy_data rgNetworkData[] =
+      //{
+      //   {"NoEntireNetwork",___SYSPOLICY_NOENTIRENETWORK},
+      //   {NULL,0}
+      //};
 
-      static __system_policy_data rgComDlgData[] =
-      {
-         {"NoPlacesBar",___SYSPOLICY_NOPLACESBAR},
-         {"NoBackButton",___SYSPOLICY_NOBACKBUTTON},
-         {"NoFileMru",___SYSPOLICY_NOFILEMRU},
-         {NULL,0}
-      };
+      //static __system_policy_data rgComDlgData[] =
+      //{
+      //   {"NoPlacesBar",___SYSPOLICY_NOPLACESBAR},
+      //   {"NoBackButton",___SYSPOLICY_NOBACKBUTTON},
+      //   {"NoFileMru",___SYSPOLICY_NOFILEMRU},
+      //   {NULL,0}
+      //};
 
-      static __system_policies rgPolicies[] =
-      {
-         {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-            rgExplorerData
-         },
-         {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Network",
-            rgNetworkData
-         },
-         {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Comdlg32",
-            rgComDlgData
-         },
-         {NULL,0}
-      };
+      //static __system_policies rgPolicies[] =
+      //{
+      //   {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      //      rgExplorerData
+      //   },
+      //   {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Network",
+      //      rgNetworkData
+      //   },
+      //   {  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Comdlg32",
+      //      rgComDlgData
+      //   },
+      //   {NULL,0}
+      //};
 
-      __system_policies *pPolicies = rgPolicies;
-      __system_policy_data *pData = NULL;
+      //__system_policies *pPolicies = rgPolicies;
+      //__system_policy_data *pData = NULL;
 
-      while (pPolicies->szPolicyKey != NULL)
-      {
+      //while (pPolicies->szPolicyKey != NULL)
+      //{
 
-         if (ERROR_SUCCESS == ::RegOpenKeyEx(
-                  HKEY_CURRENT_USER,
-                  pPolicies->szPolicyKey,
-                  0,
-                  KEY_QUERY_VALUE,
-                  &hkPolicy
-               ))
-         {
-            pData = pPolicies->pData;
-            while (pData->szPolicyName)
-            {
-               if (ERROR_SUCCESS == ::RegQueryValueEx(
-                        hkPolicy,
-                        pData->szPolicyName,
-                        NULL,
-                        &dwType,
-                        (BYTE*)&dwValue,
-                        &dwDataLen))
-               {
-                  if (dwType == REG_DWORD)
-                  {
-                     if (dwValue != 0)
-                        m_dwPolicies |= pData->dwID;
-                     else
-                        m_dwPolicies &= ~pData->dwID;
-                  }
-               }
-               dwValue = 0;
-               dwDataLen = sizeof(dwValue);
-               dwType = 0;
-               pData++;
-            }
-            ::RegCloseKey(hkPolicy);
-            hkPolicy = NULL;
-         }
-         pPolicies++;
-      };
+      //   if (ERROR_SUCCESS == ::RegOpenKeyEx(
+      //            HKEY_CURRENT_USER,
+      //            pPolicies->szPolicyKey,
+      //            0,
+      //            KEY_QUERY_VALUE,
+      //            &hkPolicy
+      //         ))
+      //   {
+      //      pData = pPolicies->pData;
+      //      while (pData->szPolicyName)
+      //      {
+      //         if (ERROR_SUCCESS == ::RegQueryValueEx(
+      //                  hkPolicy,
+      //                  pData->szPolicyName,
+      //                  NULL,
+      //                  &dwType,
+      //                  (BYTE*)&dwValue,
+      //                  &dwDataLen))
+      //         {
+      //            if (dwType == REG_DWORD)
+      //            {
+      //               if (dwValue != 0)
+      //                  m_dwPolicies |= pData->dwID;
+      //               else
+      //                  m_dwPolicies &= ~pData->dwID;
+      //            }
+      //         }
+      //         dwValue = 0;
+      //         dwDataLen = sizeof(dwValue);
+      //         dwType = 0;
+      //         pData++;
+      //      }
+      //      ::RegCloseKey(hkPolicy);
+      //      hkPolicy = NULL;
+      //   }
+      //   pPolicies++;
+      //};
 
 #endif
 

@@ -1,10 +1,6 @@
 #pragma once
 
 
-#include "core_session.h"
-#include "core_run_start_installer.h"
-
-
 namespace core
 {
 

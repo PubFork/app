@@ -1689,6 +1689,7 @@
     <ClInclude Include="multithreading\multithreading_delay_thread.h" />
     <ClInclude Include="multithreading\multithreading_forking_thread.h" />
     <ClInclude Include="multithreading\multithreading_go_thread.h" />
+    <ClInclude Include="multithreading\multithreading_pred_holder.h" />
     <ClInclude Include="multithreading\multithreading_set_event_on_exit.h" />
     <ClInclude Include="multithreading\multithreading_signal_thread.h" />
     <ClInclude Include="multithreading\multithreading_simple_thread.h" />

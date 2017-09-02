@@ -2900,6 +2900,9 @@
     <ClInclude Include="aura\node\windows\windows_ip_enum.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
+    <ClInclude Include="multithreading\multithreading_pred_holder.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

@@ -626,7 +626,7 @@ void thread::on_register_dependent_thread(::thread * pthreadDependent)
 
       synch_lock slThread(pthreadDependent->m_pmutex);
 
-      pthreadDependent->m_threadptraRequired.add_unique(this);
+      pthreadDependent->m_threadrefaRequired.add_unique(this);
 
    }
 
@@ -634,7 +634,7 @@ void thread::on_register_dependent_thread(::thread * pthreadDependent)
 
       synch_lock sl(m_pmutex);
 
-      m_threadptraDependent.add_unique(pthreadDependent);
+      m_threadrefaDependent.add_unique(pthreadDependent);
 
    }
 
@@ -651,9 +651,9 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    synch_lock sl(s_pmutexDependencies);
 
-   m_threadptraDependent.remove(pthreadDependent);
+   m_threadrefaDependent.remove(pthreadDependent);
 
-   pthreadDependent->m_threadptraRequired.remove(this);
+   pthreadDependent->m_threadrefaRequired.remove(this);
 
    // the system may do some extra processing (like quitting system in case pthreadDependent is the last thread virgin in America (North, most especifically US) ?!?!), so do a kick
    // (do not apply virgin to your self...)
@@ -675,13 +675,13 @@ void thread::close_dependent_threads(const ::duration & dur)
 void thread::signal_close_dependent_threads()
 {
 
-   ref_array < thread > threadptraDependent;
+   thread_refa threadptraDependent;
 
    {
 
       synch_lock sl(m_pmutex);
 
-      threadptraDependent = (m_threadptraDependent);
+      threadptraDependent = m_threadrefaDependent;
 
    }
 
@@ -692,6 +692,13 @@ void thread::signal_close_dependent_threads()
 
       try
       {
+
+         if (pthread == NULL)
+         {
+
+            continue;
+
+         }
 
          pthread->post_quit();
 
@@ -719,7 +726,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          synch_lock sl(m_pmutex);
 
-         if(m_threadptraDependent.get_count() <= 0)
+         if(m_threadrefaDependent.get_count() <= 0)
             break;
 
          output_debug_string(string("-------------------------\n"));
@@ -730,13 +737,13 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          output_debug_string(strTime + string("ms\n"));
          
-         for(index i = 0; i < m_threadptraDependent.get_count(); i++)
+         for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
          {
 
-            ::thread * pthread = m_threadptraDependent[i];
+            ::thread * pthread = m_threadrefaDependent[i];
             output_debug_string(string("---"));
             output_debug_string(string("supporter : ") + typeid(*this).name() + string(" (") + ::str::from((int_ptr) this) + ")");
-            output_debug_string(string("dependent : ") + typeid(*m_threadptraDependent[i]).name() + string(" (") + ::str::from((int_ptr) m_threadptraDependent[i]) + ")\n");
+            output_debug_string(string("dependent : ") + typeid(*m_threadrefaDependent[i]).name() + string(" (") + ::str::from((int_ptr) m_threadrefaDependent[i]) + ")\n");
 
          }
 
@@ -790,13 +797,13 @@ void thread::unregister_from_required_threads()
 
    synch_lock sl(s_pmutexDependencies);
 
-   for(index i = m_threadptraRequired.get_upper_bound(); i >= 0;)
+   for(index i = m_threadrefaRequired.get_upper_bound(); i >= 0;)
    {
 
       try
       {
 
-         ::thread * pthread = m_threadptraRequired[i];
+         ::thread * pthread = m_threadrefaRequired[i];
 
          if (pthread != this)
          {
