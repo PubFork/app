@@ -429,19 +429,6 @@ public:
 };
 
 
-class CLASS_DECL_AURA thread_refa :
-   virtual public ::ref_array < thread >
-{
-public:
-
-
-   thread_refa();
-   virtual ~thread_refa();
-
-
-};
-
-
 
 namespace multithreading
 {

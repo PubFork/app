@@ -262,8 +262,11 @@ namespace axis
 
 
 
+#ifdef INSTALL_SUBSYSTEM
 
       virtual bool check_install() override;
+
+#endif
 
       inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
 
