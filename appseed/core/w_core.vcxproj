@@ -55,6 +55,7 @@
     <ClCompile Include="filesystem\filehandler\filehandler_library.cpp" />
     <ClCompile Include="filesystem\filehandler\filehandler_menu_library.cpp" />
     <ClCompile Include="filesystem\filehandler\filehandler_tree_interface.cpp" />
+    <ClCompile Include="filesystem\filemanager\filemanager.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_callback.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_child_frame.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_context_menu.cpp" />
@@ -67,6 +68,7 @@
     <ClCompile Include="filesystem\filemanager\filemanager_folder_list_data.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_folder_list_view.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_folder_selection_list_view.cpp" />
+    <ClCompile Include="filesystem\filemanager\filemanager_form.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_form_child_frame.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_form_document.cpp" />
     <ClCompile Include="filesystem\filemanager\filemanager_form_update_hint.cpp" />
@@ -135,6 +137,7 @@
     <ClCompile Include="math\kissfft\kiss_ifft.cpp" />
     <ClCompile Include="user\databaseuser\databaseuser_key_mesh_data.cpp" />
     <ClCompile Include="user\databaseuser\databaseuser_mesh_data.cpp" />
+    <ClCompile Include="user\fontopus\fontopus_view.cpp" />
     <ClCompile Include="user\hi5\hi5_oauth.cpp" />
     <ClCompile Include="user\hi5\hi5_twit.cpp" />
     <ClCompile Include="user\html\graphics\elemental\html_elemental_cell.cpp" />
@@ -185,16 +188,21 @@
     <ClCompile Include="user\html\user\userhtml_view_update_hint.cpp" />
     <ClCompile Include="user\menu\user_menu_button.cpp" />
     <ClCompile Include="user\menu\user_menu_central.cpp" />
+    <ClCompile Include="user\menu\user_menu_list_view.cpp" />
     <ClCompile Include="user\menu\user_menu_list_window.cpp" />
     <ClCompile Include="user\netuser\netuser_network_configuration.cpp" />
+    <ClCompile Include="user\simple\simple.cpp" />
     <ClCompile Include="user\simple\simple_child_frame.cpp" />
     <ClCompile Include="user\simple\simple_form_list_view.cpp" />
+    <ClCompile Include="user\simple\simple_form_view.cpp" />
     <ClCompile Include="user\simple\simple_frame_window.cpp" />
     <ClCompile Include="user\simple\simple_list_ctrl.cpp" />
+    <ClCompile Include="user\simple\simple_list_data.cpp" />
     <ClCompile Include="user\simple\simple_list_header_ctrl.cpp" />
     <ClCompile Include="user\simple\simple_list_view.cpp" />
     <ClCompile Include="user\simple\simple_main_frame.cpp" />
     <ClCompile Include="user\simple\simple_menu_bar.cpp" />
+    <ClCompile Include="user\simple\simple_mesh_data.cpp" />
     <ClCompile Include="user\simple\simple_printer_list_view.cpp" />
     <ClCompile Include="user\simple\simple_static.cpp" />
     <ClCompile Include="user\simple\simple_status_bar.cpp" />
@@ -203,6 +211,7 @@
     <ClCompile Include="user\simple\simple_toolbar.cpp" />
     <ClCompile Include="user\simple\simple_tree_view.cpp" />
     <ClCompile Include="user\userex\userex_dialog.cpp" />
+    <ClCompile Include="user\userex\userex_font_view.cpp" />
     <ClCompile Include="user\userex\userex_form_child_frame.cpp" />
     <ClCompile Include="user\userex\userex_form_frame.cpp" />
     <ClCompile Include="user\userex\userex_form_update_hint.cpp" />
@@ -219,6 +228,9 @@
     <ClCompile Include="user\userex\userex_property_page.cpp" />
     <ClCompile Include="user\userex\userex_property_sheet.cpp" />
     <ClCompile Include="user\userex\userex_split_view.cpp" />
+    <ClCompile Include="user\userex\userex_top_edit_view.cpp" />
+    <ClCompile Include="user\userex\userex_top_toggle_view.cpp" />
+    <ClCompile Include="user\userex\userex_top_view.cpp" />
     <ClCompile Include="user\userex\userex_userex.cpp" />
     <ClCompile Include="user\userex\userex_wait_message_dialog.cpp" />
     <ClCompile Include="user\user\user.cpp" />
@@ -402,10 +414,8 @@
     <ClInclude Include="user\hi5\hi5.h" />
     <ClInclude Include="user\hi5\hi5_oauth.h" />
     <ClInclude Include="user\hi5\hi5_twit.h" />
-    <ClInclude Include="user\menu\user_menu.h" />
     <ClInclude Include="user\menu\user_menu_button.h" />
     <ClInclude Include="user\menu\user_menu_central.h" />
-    <ClInclude Include="user\menu\user_menu_item.h" />
     <ClInclude Include="user\menu\user_menu_list_view.h" />
     <ClInclude Include="user\menu\user_menu_list_window.h" />
     <ClInclude Include="user\netuser\netuser.h" />
@@ -448,7 +458,6 @@
     <ClInclude Include="user\userex\userex_wait_message_dialog.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_00.h" />
-    <ClInclude Include="user\user\user_button.h" />
     <ClInclude Include="user\user\user_check_box.h" />
     <ClInclude Include="user\user\user_combo_box.h" />
     <ClInclude Include="user\user\user_combo_list.h" />
@@ -497,7 +506,6 @@
     <ClInclude Include="user\user\user_thread.h" />
     <ClInclude Include="user\user\user_toolbar.h" />
     <ClInclude Include="user\user\user_toolbar_control.h" />
-    <ClInclude Include="user\user\user_tool_cmd_ui.h" />
     <ClInclude Include="user\user\user_tool_tip_tool.h" />
     <ClInclude Include="user\user\user_tool_tip_window.h" />
     <ClInclude Include="user\user\user_tree.h" />

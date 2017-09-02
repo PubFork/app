@@ -677,6 +677,7 @@
     <ClCompile Include="aura\aura\aura_plex_heap.cpp" />
     <ClCompile Include="aura\aura\aura_printer.cpp" />
     <ClCompile Include="aura\aura\aura_printf.cpp" />
+    <ClCompile Include="aura\aura\aura_profiler.cpp" />
     <ClCompile Include="aura\aura\aura_progress.cpp" />
     <ClCompile Include="aura\aura\aura_savings.cpp" />
     <ClCompile Include="aura\aura\aura_session.cpp" />
