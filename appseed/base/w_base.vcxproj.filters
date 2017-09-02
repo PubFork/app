@@ -312,9 +312,6 @@
     <ClInclude Include="graphics\graphics_window_graphics.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_box.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -399,9 +396,6 @@
     <ClInclude Include="user\user\user_tooltip.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_user.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_view_container.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -414,13 +408,25 @@
     <ClInclude Include="user\user\user_wait_cursor.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_window_map.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_window_util.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_windowing.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user_prelude.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_window_map.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user.h">
+      <Filter>Header Files\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_user.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>

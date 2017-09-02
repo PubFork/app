@@ -97,6 +97,7 @@
     <ClInclude Include="user\simple_ui\simple_ui_password.h" />
     <ClInclude Include="user\simple_ui\simple_ui_style.h" />
     <ClInclude Include="user\simple_ui\simple_ui_tap.h" />
+    <ClInclude Include="user\user.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_box.h" />
     <ClInclude Include="user\user\user_control.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="user\user\user_windowing.h" />
     <ClInclude Include="user\user\user_window_map.h" />
     <ClInclude Include="user\user\user_window_util.h" />
+    <ClInclude Include="user\user_prelude.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="base\base\base.inl" />

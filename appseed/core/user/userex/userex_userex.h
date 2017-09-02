@@ -88,7 +88,7 @@ namespace userex
 
       virtual int32_t exit_application() override;
 
-      void LoadStdProfileSettings(UINT nMaxMRU = ___MRU_COUNT);
+      void LoadStdProfileSettings(UINT nMaxMRU = 10);
 
       ::count get_template_count() const;
       sp(impact_system) get_template(index index) const;
