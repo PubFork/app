@@ -59,6 +59,9 @@ public:
 
    single_lock *                          m_pslUser;
    static bool                            s_bAllocReady;
+
+   object_refa                            m_objectrefaDependent;
+
    //mutex *                              m_pmutex;
 
    //thread_impl_sp                       m_pthreadimpl;

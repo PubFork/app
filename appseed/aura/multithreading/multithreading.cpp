@@ -365,10 +365,12 @@ namespace multithreading
 
       bool bOk = true;
 
+      ::datetime::time timeEnd = ::datetime::time::get_current_time() + MIN(2, duration.get_total_seconds());
+
       try
       {
 
-         while (pthreadptra->get_count())
+         while (pthreadptra->get_count() && ::datetime::time::get_current_time() < timeEnd)
          {
 
          restart1:
@@ -405,7 +407,7 @@ namespace multithreading
                try
                {
 
-                  if (pthread->wait(duration).succeeded())
+                  if (pthread->wait(one_second()).succeeded())
                   {
 
                      pthreadptra->remove_at(i);

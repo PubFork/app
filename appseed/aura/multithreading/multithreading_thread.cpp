@@ -221,6 +221,47 @@ void thread::CommonConstruct()
 
 thread::~thread()
 {
+
+   try
+   {
+
+      for (auto * pobject : m_objectrefaDependent)
+      {
+
+         try
+         {
+
+            if (pobject == NULL)
+            {
+
+               continue;
+
+            }
+
+            if (pobject->m_pthreadrefa != NULL)
+            {
+
+               synch_lock sl(pobject->m_pmutex);
+
+               pobject->m_pthreadrefa->remove(this);
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
    memcnts_dec(this);
    //try
    //{

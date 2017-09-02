@@ -111,6 +111,9 @@ namespace multithreading
 } // namespace multithreading
 
 
+
+
+
 class CLASS_DECL_AURA thread_refa :
    virtual public ::ref_array < thread >
 {
@@ -122,6 +125,10 @@ public:
 
 
 };
+
+::object * m_powner;
+
+
 
 
 #include "multithreading_pred_holder.h"

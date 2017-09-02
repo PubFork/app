@@ -17,23 +17,19 @@ public:
 
    sp(object) m_pholdref;
 
-   ::object * m_powner;
-
-   forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred, ::object * pojectOwner) :
+   forking_thread(::aura::application * papp, sp(object) pholdref, PRED pred) :
       object(papp),
       thread(papp),
       m_pholdref(pholdref),
-      m_pred(pred),
-      m_powner(pobjectOwner)
+      m_pred(pred)
    {
 
    }
 
-   forking_thread(::aura::application * papp,PRED pred,::object * pobjectOwner) :
+   forking_thread(::aura::application * papp,PRED pred) :
       object(papp),
       thread(papp),
-      m_pred(pred),
-      m_powner(pobjectOwner)
+      m_pred(pred)
    {
 
    }
@@ -42,30 +38,6 @@ public:
    virtual ~forking_thread()
    {
       
-      try
-      {
-         
-         if (m_powner != NULL)
-         {
-
-            synch_lock sl(m_powner->m_pmutex);
-
-            if (m_powner->m_pthreadrefa != NULL)
-            {
-
-               m_powner->m_pthreadrefa->remove(this);
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-
-
-      }
    }
 
    int32_t run()
@@ -101,12 +73,19 @@ template < typename PRED >
 
 
 template < typename PRED >
-::thread * fork(::aura::application * papp, PRED pred, ::object * powner = NULL)
+::thread * fork(::aura::application * papp, PRED pred, ::object * pobjectDependent = NULL)
 {
 
-   auto pforkingthread = canew(forking_thread < PRED >(papp, pred, powner));
+   auto pforkingthread = canew(forking_thread < PRED >(papp, pred));
 
    ::thread * pthread = dynamic_cast < ::thread * > (pforkingthread);
+
+   if (pobjectDependent != NULL)
+   {
+
+      pthread->m_objectrefaDependent.add(pobjectDependent);
+
+   }
 
    pthread->begin();
 
@@ -128,7 +107,7 @@ inline ::thread * object::fork(PRED pred)
 
    }
 
-   thread * pthread = ::fork(get_app(),pred);
+   thread * pthread = ::fork(get_app(),pred, this);
 
    if (pthread != NULL)
    {
