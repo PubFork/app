@@ -358,6 +358,7 @@ namespace metrowin
 
       ModifyStyle(0, WS_VISIBLE);
 
+      install_message_routing(this);
 
       m_pthreadDraw = ::fork(get_app(), [&]()
       {
@@ -521,6 +522,7 @@ namespace metrowin
 
    void interaction_impl::install_message_routing(::message::sender * pinterface)
    {
+      last_install_message_routing(pinterface);
       //m_pbuffer->InstallMessageHandling(pinterface);
       IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_impl::_001OnDestroy);
       IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_impl::_001OnNcDestroy);
@@ -537,6 +539,7 @@ namespace metrowin
       IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
       //IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
 //      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
+      prio_install_message_routing(pinterface);
    }
 
    void interaction_impl::_001OnMove(::message::message * pobj)

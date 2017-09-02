@@ -1344,7 +1344,14 @@ namespace user
    ::user::interaction * interaction_impl_base::GetOwner() const
    {
 
-      return m_pui->GetOwner();
+      if (m_pui == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      return m_pui->m_puiOwner;
 
    }
 
