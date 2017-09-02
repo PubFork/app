@@ -3070,7 +3070,7 @@ namespace user
 
       }
 
-      m_signalptra.remove_all();
+//      m_signalptra.remove_all();
 
       m_pimpl = (Application.alloc(System.type_info < interaction_impl >()));
 

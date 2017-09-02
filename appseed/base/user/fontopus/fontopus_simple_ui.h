@@ -38,9 +38,9 @@ namespace fontopus
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnChar);
-//      DECL_GEN_SIGNAL(_001OnLButtonDown);
-//      DECL_GEN_SIGNAL(_001OnLButtonUp);
-//      DECL_GEN_SIGNAL(_001OnMouseMove);
+      DECL_GEN_SIGNAL(_001OnLButtonDown);
+      DECL_GEN_SIGNAL(_001OnLButtonUp);
+      DECL_GEN_SIGNAL(_001OnMouseMove);
       void _001OnTimer(::timer * ptimer) override;
 
 

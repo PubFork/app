@@ -65,7 +65,6 @@ namespace windows
 }
 
 
-
 ::file::path dir::local()
 {
 

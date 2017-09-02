@@ -15,5 +15,9 @@ void __node_base_factory_exchange(::aura::application * papp);
 
 #include "windows/windows.h"
 
+#elif defined(METROWIN)
+
+#include "metrowin/metrowin.h"
+
 #endif
 

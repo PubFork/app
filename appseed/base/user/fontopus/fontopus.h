@@ -46,5 +46,8 @@
 #include "fontopus_dialog.h"
 
 
+#include "fontopus_simple_ui.h"
+
+
 
 

@@ -6,9 +6,7 @@ namespace axis
 {
 
 
-   app::app():
-      ::aura::system(this, NULL),
-      ::axis::system(this)
+   app::app()
    {
 
       m_iReturnCode = 0;

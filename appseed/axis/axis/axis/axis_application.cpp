@@ -1390,6 +1390,8 @@ namespace axis
    }
 
 
+#ifdef INSTALL_SUBSYSTEM
+
    bool application::check_install()
    {
 
@@ -1482,6 +1484,9 @@ namespace axis
       return true;
 
    }
+
+
+#endif
 
 
    bool application::initial_check_directrix()

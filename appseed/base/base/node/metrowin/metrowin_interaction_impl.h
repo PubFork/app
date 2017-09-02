@@ -66,9 +66,9 @@ namespace metrowin
 
       virtual oswindow _get_handle();
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
 
@@ -107,15 +107,12 @@ namespace metrowin
       bool ExecuteDlgInit(const char * lpszResourceName);
       bool ExecuteDlgInit(LPVOID lpResource);
 
-      using ::user::interaction_impl::create;
-      // for child windows, views, panes etc
-      virtual bool create(const char * lpszClassName,
+      virtual bool create_window(const char * lpszClassName,
                           const char * lpszWindowName, uint32_t dwStyle,
                           const RECT& rect,
                           ::user::interaction * pParentWnd, id id,
-                          ::create * pContext = NULL);
+                          ::create * pContext = NULL) override;
 
-      // advanced creation (allows access to extended styles)
       virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,
                             const char * lpszWindowName, uint32_t dwStyle,
                             int x, int y, int nWidth, int nHeight,

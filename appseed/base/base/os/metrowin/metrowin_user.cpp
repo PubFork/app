@@ -42,7 +42,7 @@ CLASS_DECL_BASE int_bool ui_get_cursor_pos(POINT * ppt)
 
 
 
-//int g_iMouse = -1;
+extern int g_iMouse;
 
 
 CLASS_DECL_BASE WINBOOL GetCursorPos(LPPOINT lppoint)

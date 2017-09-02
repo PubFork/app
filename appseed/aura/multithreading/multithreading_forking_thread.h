@@ -121,10 +121,10 @@ inline ::thread * object::fork(PRED pred)
 
    synch_lock sl(m_pmutex);
 
-   if (m_pthreadptra == NULL)
+   if (m_pthreadrefa == NULL)
    {
 
-      m_pthreadptra = new sp(thread);
+      m_pthreadrefa = new thread_refa;
 
    }
 
@@ -133,7 +133,7 @@ inline ::thread * object::fork(PRED pred)
    if (pthread != NULL)
    {
 
-      m_pthreada->add(pthread);
+      m_pthreadrefa->add(pthread);
 
    }
 

@@ -330,7 +330,7 @@ namespace metrowin
       return TRUE;
    }
 
-   bool interaction_impl::create(const char * lpszClassName,
+   bool interaction_impl::create_window(const char * lpszClassName,
                                  const char * lpszWindowName,uint32_t dwStyle,
                                  const RECT& rect,
                                  ::user::interaction* pParentWnd,id id,
@@ -535,7 +535,7 @@ namespace metrowin
       IGUI_MSG_LINK(WM_ERASEBKGND,pinterface,this,&interaction_impl::_001OnEraseBkgnd);
       IGUI_MSG_LINK(WM_MOVE,pinterface,this,&interaction_impl::_001OnMove);
       IGUI_MSG_LINK(WM_SIZE,pinterface,this,&interaction_impl::_001OnSize);
-      IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
+      //IGUI_MSG_LINK(WM_SHOWWINDOW,pinterface,this,&interaction_impl::_001OnShowWindow);
 //      IGUI_MSG_LINK(ca2m_PRODEVIAN_SYNCH,pinterface,this,&interaction_impl::_001OnProdevianSynch);
    }
 
@@ -627,12 +627,12 @@ namespace metrowin
       //}
 
       // cleanup tooltip support
-      if(m_pui != NULL)
-      {
-         if(m_pui->m_nFlags & WF_TOOLTIPS)
-         {
-         }
-      }
+      //if(m_pui != NULL)
+      //{
+      //   if(m_pui->m_nFlags & WF_TOOLTIPS)
+      //   {
+      //   }
+      //}
 
 #ifdef WINDOWSEX
       // call default, unsubclass, and detach from the ::map
@@ -649,7 +649,7 @@ namespace metrowin
 #endif
       //      Detach();
       ASSERT(get_handle() == NULL);
-      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
+//      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
       // call special post-cleanup routine
       PostNcDestroy();
       if(m_pui != NULL)
@@ -1246,18 +1246,18 @@ namespace metrowin
 
 #endif
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target::_001OnCmdMsg(pcommand))
-         return TRUE;
+      
+      command_target::_001OnCmdMsg(pcommand);
 
-      //      bool b;
+      if (pcommand->m_bRet)
+      {
 
-      //if(_iguimessageDispatchCommandMessage(pcommand, b))
-      // return b;
+         return;
 
-      command_target * pcmdtarget = dynamic_cast <command_target *> (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
+      }
+
    }
 
 
@@ -1492,9 +1492,17 @@ namespace metrowin
          }
          return;
       }
-      (this->*m_pfnDispatchWindowProc)(pobj);
-      if(pobj->m_bRet)
+      //(this->*m_pfnDispatchWindowProc)(pobj);
+      
+      route_message(pbase);
+
+      if (pbase->m_bRet)
+      {
+
          return;
+
+      }
+
       /*
       if(m_pui != NULL)
       {
@@ -2729,7 +2737,7 @@ return TRUE;
       // walk from the target interaction_impl up to the hWndStop interaction_impl checking
       //  if any interaction_impl wants to translate this message
 
-      for(::user::interaction * pui = (::user::interaction *) pbase->m_pwnd->m_pvoidUserInteraction; pui != NULL; pui->GetParent())
+      for(::user::interaction * pui = pbase->m_pwnd->m_puiThis; pui != NULL; pui->GetParent())
       {
 
          pui->pre_translate_message(pobj);
@@ -3814,7 +3822,8 @@ return TRUE;
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
+//      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
+      bool bShowIdle = !(GetStyle() & WS_VISIBLE);
       oswindow hWndParent = oswindow_get(GetParent()->m_pimpl.cast < ::user::interaction_impl >());
       m_pui->m_iModal = m_pui->m_iModalCount;
       int iLevel = m_pui->m_iModal;
@@ -3844,18 +3853,18 @@ return TRUE;
             }
 
             // call on_idle while in bIdle state
-            if(!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
-            {
-               // send WM_ENTERIDLE to the parent
-               // xxx todo               ::SendMessage(hWndParent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_handle());
-            }
-            if((dwFlags & MLF_NOKICKIDLE))
+            //if(!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
+            //{
+            //   // send WM_ENTERIDLE to the parent
+            //   // xxx todo               ::SendMessage(hWndParent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_handle());
+            //}
+            //if((dwFlags & MLF_NOKICKIDLE))
 
-               // xxx todo    ||           !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
-            {
-               // stop idle processing next time
-               bIdle = FALSE;
-            }
+            //   // xxx todo    ||           !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
+            //{
+            //   // stop idle processing next time
+            //   bIdle = FALSE;
+            //}
 
             get_thread()->m_dwAlive = get_thread()->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
@@ -4651,7 +4660,7 @@ ExitModal:
 
       smart_pointer < ::message::base > spbase;
 
-      spbase = m_pui->get_base(uiMessage,wparam,lparam);
+      spbase = m_pui->get_message_base(uiMessage,wparam,lparam);
 
       /*      try
             {

@@ -453,16 +453,16 @@ namespace metrowin
 
 
 
-      ::metrowin::main_init_data * pinitmaindata  = new ::metrowin::main_init_data;
+      ::metrowin::command * pcommand  = new ::metrowin::command;
 
 
 
-      pinitmaindata->m_hInstance             = NULL;
-      pinitmaindata->m_hPrevInstance         = NULL;
-      pinitmaindata->m_strCommandLine        = strId;
-      pinitmaindata->m_nCmdShow              = 0;
+      //pcommand->m_hInstance             = NULL;
+      //pcommand->m_hPrevInstance         = NULL;
+      pcommand->m_strCommandLine        = strId;
+      //pcommand->m_nCmdShow              = 0;
 
-      m_psystem->init_main_data(pinitmaindata);
+      m_psystem->startup_command(pcommand);
 
 //      m_psystem->m_paxisapp   = m_psystem;
   //    m_psystem->m_psystem    = m_paxissystem;
@@ -794,7 +794,7 @@ namespace metrowin
 
       spbase = pkey;
 
-      pkey->m_uiMessage = WM_CHAR;
+      pkey->m_id = WM_CHAR;
       pkey->m_pwnd = m_psystem->m_possystemwindow->m_pui;
       pkey->m_nChar = keycode_to_char(args->KeyCode);
 //      pkey->m_charrecv = args;
@@ -827,7 +827,7 @@ namespace metrowin
 
       spbase = pkey;
 
-      pkey->m_uiMessage          = WM_KEYDOWN;
+      pkey->m_id          = WM_KEYDOWN;
       pkey->m_pwnd               = m_psystem->m_possystemwindow->m_pui;
       pkey->m_nChar              = virtualkey_to_char(args->VirtualKey);
       pkey->m_ekey               = virtualkey_to_userkey(args->VirtualKey);
@@ -865,7 +865,7 @@ namespace metrowin
          m_bFontopusShift = false;
       }
 
-      pkey->m_uiMessage       = WM_KEYUP;
+      pkey->m_id       = WM_KEYUP;
       pkey->m_pwnd            = m_psystem->m_possystemwindow->m_pui;
       pkey->m_nChar           = virtualkey_to_char(args->VirtualKey);
       pkey->m_ekey               = virtualkey_to_userkey(args->VirtualKey);
@@ -934,7 +934,7 @@ namespace metrowin
 
       pmouse->m_pt.x       = (LONG) pointerPoint->RawPosition.X;
       pmouse->m_pt.y       = (LONG) pointerPoint->RawPosition.Y;
-      pmouse->m_uiMessage  = WM_MOUSEMOVE;
+      pmouse->m_id  = WM_MOUSEMOVE;
       pmouse->m_pwnd       = m_psystem->m_possystemwindow->m_pui;
 
       m_ptLastCursor = pointerPoint->RawPosition;
@@ -973,7 +973,7 @@ namespace metrowin
       if(args->CurrentPoint->Properties->IsLeftButtonPressed && !m_bLeftButton)
       {
 
-         pmouse->m_uiMessage     = WM_LBUTTONDOWN;
+         pmouse->m_id     = WM_LBUTTONDOWN;
 
          m_bLeftButton           = true;
          m_bMiddleButton         = false;
@@ -983,7 +983,7 @@ namespace metrowin
       else if(args->CurrentPoint->Properties->IsRightButtonPressed && !m_bRightButton)
       {
 
-         pmouse->m_uiMessage     = WM_RBUTTONDOWN;
+         pmouse->m_id     = WM_RBUTTONDOWN;
 
          m_bLeftButton           = false;
          m_bMiddleButton         = false;
@@ -993,7 +993,7 @@ namespace metrowin
       else if(args->CurrentPoint->Properties->IsMiddleButtonPressed && !m_bMiddleButton)
       {
 
-         pmouse->m_uiMessage     = WM_MBUTTONDOWN;
+         pmouse->m_id     = WM_MBUTTONDOWN;
 
          m_bLeftButton           = false;
          m_bMiddleButton         = true;
@@ -1033,21 +1033,21 @@ namespace metrowin
       if(m_bLeftButton && !args->CurrentPoint->Properties->IsLeftButtonPressed)
       {
 
-         pmouse->m_uiMessage     = WM_LBUTTONUP;
+         pmouse->m_id     = WM_LBUTTONUP;
          m_bLeftButton           = false;
 
       }
       else if(m_bRightButton && !args->CurrentPoint->Properties->IsRightButtonPressed)
       {
 
-         pmouse->m_uiMessage     = WM_RBUTTONUP;
+         pmouse->m_id     = WM_RBUTTONUP;
          m_bRightButton          = false;
 
       }
       else if(m_bMiddleButton && !args->CurrentPoint->Properties->IsMiddleButtonPressed)
       {
 
-         pmouse->m_uiMessage     = WM_MBUTTONUP;
+         pmouse->m_id     = WM_MBUTTONUP;
          m_bMiddleButton         = false;
 
       }
