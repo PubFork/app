@@ -7,7 +7,7 @@
 #endif
 
 
-namespace core
+namespace aura
 {
 
 
@@ -32,7 +32,7 @@ namespace core
    } // namespace profiler
 
 
-} // namespace core
+} // namespace aura
 
 
 
