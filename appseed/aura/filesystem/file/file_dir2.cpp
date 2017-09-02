@@ -65,12 +65,6 @@ namespace windows
 }
 
 
-::file::path dir::favorites()
-{
-
-   return ::dir::local() / "localconfig/favorites";
-
-}
 
 ::file::path dir::local()
 {
