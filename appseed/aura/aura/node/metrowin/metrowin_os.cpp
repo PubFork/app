@@ -445,7 +445,7 @@ namespace metrowin
       try
       {
 
-         fileSrc = get_os_file(strSrc, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
+         fileSrc = get_os_file(path, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
 
          if (fileSrc == nullptr)
             return false;

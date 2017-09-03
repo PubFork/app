@@ -115,7 +115,9 @@ CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_get_folder(const string
 CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder, string & strPrefix, string & strRelative)
 {
 
-   ::Windows::Storage::StorageFolder ^ folder = winrt_get_folder(strFolder, strPrefix);
+   string strPath = strFolder;
+
+   ::Windows::Storage::StorageFolder ^ folder = winrt_folder(strPath, strPrefix);
 
    if (folder == nullptr)
    {
@@ -135,6 +137,8 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const strin
    strRelative.trim_right("/\\");
 
    ::str::begins_eat_ci(strRelative, strPrefix);
+
+   strRelative.trim_left("/\\");
 
    return folder;
 
