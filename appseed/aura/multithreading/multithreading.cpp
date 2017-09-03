@@ -353,110 +353,6 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA bool post_quit_and_wait(array < thread * > * pthreadptra, const duration & duration)
-   {
-
-      if (pthreadptra == NULL)
-      {
-
-         return true;
-
-      }
-
-      bool bOk = true;
-
-      ::datetime::time timeEnd = ::datetime::time::get_current_time() + MIN(2, duration.get_total_seconds());
-
-      single_lock sl(pthreadptra->m_pmutex);
-
-      try
-      {
-
-         while (pthreadptra->get_count() && ::datetime::time::get_current_time() < timeEnd)
-         {
-
-            sl.lock();
-
-         restart1:
-
-            for (index i = 0; i < pthreadptra->get_count(); i++)
-            {
-
-               ::thread * pthread = pthreadptra->element_at(i);
-
-               sl.unlock();
-
-               try
-               {
-
-                  pthread->post_quit();
-
-               }
-               catch (...)
-               {
-
-                  sl.lock();
-
-                  pthreadptra->remove_at(i);
-
-                  goto restart1;
-
-               }
-
-               sl.lock();
-
-            }
-
-         restart2:
-
-            for (index i = 0; i < pthreadptra->get_count(); i++)
-            {
-
-               ::thread * pthread = pthreadptra->element_at(i);
-
-               sl.unlock();
-
-               try
-               {
-
-                  if (pthread->wait(one_second()).succeeded())
-                  {
-
-                     sl.lock();
-
-                     pthreadptra->remove_at(i);
-
-                     goto restart2;
-
-                  }
-
-               }
-               catch (...)
-               {
-
-                  sl.lock();
-
-                  pthreadptra->remove_at(i);
-
-                  goto restart2;
-
-               }
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-         bOk = false;
-
-      }
-
-      return bOk;
-
-   }
 
 
 } // namespace multithreading
@@ -565,3 +461,103 @@ void do_events(const duration & duration)
 }
 
 
+
+
+
+bool thread_refa::post_quit_and_wait(const duration & duration)
+{
+
+   bool bOk = true;
+
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MIN(2, duration.get_total_seconds());
+
+   single_lock sl(m_pmutex);
+
+   try
+   {
+
+      while (get_count() && ::datetime::time::get_current_time() < timeEnd)
+      {
+
+         sl.lock();
+
+      restart1:
+
+         for (index i = 0; i < get_count(); i++)
+         {
+
+            ::thread * pthread = element_at(i);
+
+            sl.unlock();
+
+            try
+            {
+
+               pthread->post_quit();
+
+            }
+            catch (...)
+            {
+
+               sl.lock();
+
+               remove_at(i);
+
+               goto restart1;
+
+            }
+
+            sl.lock();
+
+         }
+
+      restart2:
+
+         for (index i = 0; i < get_count(); i++)
+         {
+
+            ::thread * pthread = element_at(i);
+
+            sl.unlock();
+
+            try
+            {
+
+               if (pthread->wait(one_second()).succeeded())
+               {
+
+                  sl.lock();
+
+                  remove_at(i);
+
+                  goto restart2;
+
+               }
+
+            }
+            catch (...)
+            {
+
+               sl.lock();
+
+               remove_at(i);
+
+               goto restart2;
+
+            }
+
+         }
+
+      }
+
+   }
+   catch (...)
+   {
+
+      bOk = false;
+
+   }
+
+   return bOk;
+
+}

@@ -85,7 +85,7 @@ object::~object()
 
          sl.unlock();
 
-         ::multithreading::post_quit_and_wait((::array_base < ::thread *, thread * > *) pthreadrefa, seconds(60));
+         pthreadrefa->post_quit_and_wait(seconds(60));
 
          sl.lock();
 

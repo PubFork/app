@@ -124,6 +124,9 @@ public:
    virtual ~thread_refa();
 
 
+   virtual bool post_quit_and_wait(const duration & duration);
+
+
 };
 
 
