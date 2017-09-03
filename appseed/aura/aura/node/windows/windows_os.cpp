@@ -1695,7 +1695,7 @@ namespace windows
 //
 //#else
 
-   bool os::file_open(string str)
+   bool os::file_open(::file::path str)
    {
 
       manual_reset_event ev(get_app());
