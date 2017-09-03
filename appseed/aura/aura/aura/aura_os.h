@@ -83,7 +83,7 @@ namespace aura
 
       virtual bool initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch);
 
-      virtual bool file_open(string str);
+      virtual bool file_open(::file::path path);
 
       virtual string get_default_browser();
 

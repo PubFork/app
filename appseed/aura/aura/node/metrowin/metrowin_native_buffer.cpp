@@ -86,7 +86,18 @@ CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const strin
 
    }
 
-   return wait(folder->GetFolderAsync(strPath));
+   if (strPath.is_empty())
+   {
+
+      return folder;
+
+   }
+   else
+   {
+
+      return wait(folder->GetFolderAsync(strPath));
+
+   }
 
 }
 
@@ -101,6 +112,33 @@ CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_get_folder(const string
 }
 
 
+CLASS_DECL_AURA ::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder, string & strPrefix, string & strRelative)
+{
+
+   ::Windows::Storage::StorageFolder ^ folder = winrt_get_folder(strFolder, strPrefix);
+
+   if (folder == nullptr)
+   {
+
+      return nullptr;
+
+   }
+
+   strRelative = strFolder;
+
+   strPrefix.replace("/", "\\");
+
+   strRelative.replace("/", "\\");
+
+   strPrefix.trim_right("/\\");
+
+   strRelative.trim_right("/\\");
+
+   ::str::begins_eat_ci(strRelative, strPrefix);
+
+   return folder;
+
+}
 
 namespace metrowin
 {

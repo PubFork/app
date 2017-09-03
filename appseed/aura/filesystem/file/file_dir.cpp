@@ -793,44 +793,62 @@ bool dir::is(const ::file::path & path1)
    {
       str = str.substr(0,str.length() - 1);
    }
-   string strPrefix;
-
-   auto folderBase = winrt_folder(str, strPrefix);
-
 
    uint32_t dwFileAttributes = ::GetFileAttributesW(wstring(str));
-   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
-         dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+
+   if (dwFileAttributes != INVALID_FILE_ATTRIBUTES && dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+   {
+
       return true;
+
+   }
    else
    {
 
-      if (folderBase != nullptr)
+      DWORD dwLastError = ::GetLastError();
+
+      string strPrefix;
+
       {
 
-         try
+         string strRelative = str;
+
+         auto folderBase = winrt_folder(strRelative, strPrefix);
+
+         if (folderBase != nullptr)
          {
 
-            auto folder = ::wait(folderBase->GetFolderAsync(str));
+            strRelative.replace("/", "\\");
 
-            if (folder != nullptr)
+            strPrefix.replace("/", "\\");
+
+            ::str::begins_eat_ci(strRelative, strPrefix);
+
+            strRelative.trim("/\\");
+
+            //strPrefix.trim_right("/\\");
+
+            try
             {
 
-               return true;
+               auto folder = ::wait(folderBase->GetFolderAsync(strRelative));
+
+               if (folder != nullptr)
+               {
+
+                  return true;
+
+               }
+
+            }
+            catch (...)
+            {
 
             }
 
          }
-         catch (...)
-         {
-
-            return false;
-
-         }
 
       }
-
-      DWORD dwLastError = ::GetLastError();
 
       auto folder = wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(str));
 

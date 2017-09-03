@@ -52,7 +52,7 @@ namespace windows
 
       virtual bool open_in_ie(const char * lpcsz);
 
-      virtual bool file_open(string str);
+      virtual bool file_open(::file::path path);
 
 
 

@@ -310,7 +310,7 @@ namespace metrowin
    // Allocate all memory resources that change on a window SizeChanged event.
    void directx_base::CreateWindowSizeDependentResources()
    {
-      ::draw2d::lock draw2dlock;
+      ::draw2d::device_lock devicelock;
 
       // Store the window bounds so the next time we get a SizeChanged event we can
       // avoid rebuilding everything if the size is identical.
@@ -599,7 +599,7 @@ namespace metrowin
 
             {
 
-               ::draw2d::device_lock draw2dlock;
+               ::draw2d::device_lock devicelock;
 
                // The first argument instructs DXGI to block until VSync, putting the application
                // to sleep until the next VSync. This ensures we don't waste any cycles rendering

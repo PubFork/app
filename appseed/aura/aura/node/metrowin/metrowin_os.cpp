@@ -436,6 +436,47 @@ namespace metrowin
 
    }
 
+
+   bool os::file_open(::file::path path)
+   {
+
+      ::Windows::Storage::StorageFile ^ fileSrc = nullptr;
+
+      try
+      {
+
+         fileSrc = get_os_file(strSrc, 0, 0, NULL, OPEN_EXISTING, 0, NULL);
+
+         if (fileSrc == nullptr)
+            return false;
+
+      }
+      catch (::Exception ^ ex)
+      {
+
+         return false;
+
+      }
+
+      try
+      {
+
+         bool bOk = ::wait(Launcher::LaunchFileAsync(fileSrc));
+
+         return bOk;
+
+      }
+      catch (::Exception ^ ex)
+      {
+
+      }
+
+      return false;
+
+   }
+
+
+
    bool os::file_extension_get_open_with_list_keys(stringa & straKey, const char * pszExtension)
    {
 
@@ -845,7 +886,9 @@ namespace metrowin
    bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & pszSource, ::user::primitive * puiMessageParentOptional)
    {
 
-      return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
+      return false;
+
+      //return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
 
    }
 

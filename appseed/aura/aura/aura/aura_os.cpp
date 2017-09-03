@@ -456,12 +456,14 @@ namespace aura
 
    }
 
-   bool os::file_open(string str)
+
+   bool os::file_open(::file::path strSrc)
    {
 
       return false;
 
    }
+
 
    string os::get_default_browser()
    {

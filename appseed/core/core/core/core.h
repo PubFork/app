@@ -148,7 +148,11 @@ namespace dynamic_source
 namespace core
 {
 
+#ifdef INSTALL_SUBSYSTEM
+
    class run_start_installer;
+
+#endif
 
    CLASS_DECL_CORE bool init_core();
 

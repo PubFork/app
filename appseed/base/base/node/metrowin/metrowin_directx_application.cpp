@@ -1333,6 +1333,18 @@ namespace metrowin
    }
 
 
+   void directx_interaction::_001OnNcDraw(::draw2d::graphics * pgraphics)
+   {
+
+      rect rectClient;
+
+      GetClientRect(rectClient);
+      
+      pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+
+   }
+
+
    void directx_interaction::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 

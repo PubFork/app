@@ -1986,19 +1986,25 @@ int_bool close_handle(HANDLE h)
 
    ::Windows::Storage::StorageFile ^ file = nullptr;
 
-   ::Windows::Storage::StorageFolder ^ folder = get_os_folder(dir::name(lpcszFileName));
+   string strPrefix;
 
-   if(folder == nullptr)
+   string strRelative;
+
+   ::Windows::Storage::StorageFolder ^ folder = winrt_get_folder(lpcszFileName, strPrefix, strRelative);
+
+   if (folder == nullptr)
+   {
+
       return nullptr;
 
-   ::String ^ strFileName = file_name_dup(lpcszFileName);
+   }
 
    if(dwCreationDisposition == CREATE_ALWAYS)
    {
 
       auto optionNew = ::Windows::Storage::CreationCollisionOption::ReplaceExisting;
 
-      file = wait(folder->CreateFileAsync(strFileName,optionNew));
+      file = wait(folder->CreateFileAsync(strRelative,optionNew));
 
    }
    else if(dwCreationDisposition == CREATE_NEW)
@@ -2006,7 +2012,7 @@ int_bool close_handle(HANDLE h)
 
       auto optionNew = ::Windows::Storage::CreationCollisionOption::FailIfExists;
 
-      file = wait(folder->CreateFileAsync(strFileName,optionNew));
+      file = wait(folder->CreateFileAsync(strRelative,optionNew));
 
    }
    else if(dwCreationDisposition == OPEN_ALWAYS)
@@ -2014,19 +2020,19 @@ int_bool close_handle(HANDLE h)
 
       auto optionNew = ::Windows::Storage::CreationCollisionOption::OpenIfExists;
 
-      file = wait(folder->CreateFileAsync(strFileName,optionNew));
+      file = wait(folder->CreateFileAsync(strRelative,optionNew));
 
    }
    else if(dwCreationDisposition == OPEN_EXISTING)
    {
 
-      file = wait(folder->GetFileAsync(strFileName));
+      file = wait(folder->GetFileAsync(strRelative));
 
    }
    else if(dwCreationDisposition == TRUNCATE_EXISTING)
    {
 
-      file = wait(folder->GetFileAsync(strFileName));
+      file = wait(folder->GetFileAsync(strRelative));
 
       ::Windows::Storage::StorageStreamTransaction ^ transaction = wait(file->OpenTransactedWriteAsync());
 
@@ -2035,7 +2041,6 @@ int_bool close_handle(HANDLE h)
    }
 
    return file;
-
 
 }
 

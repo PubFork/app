@@ -35,7 +35,12 @@ namespace core
 
       class ::core::patch   *                      m_ppatch;
 
+#ifdef INSTALL_SUBSYSTEM
+      
       sp(::core::run_start_installer)              m_prunstartinstaller;
+
+#endif
+
       sp(::core::session::map)                     m_pbergedgemap;
       spa(::core::session)                         m_planesessionptra;
 

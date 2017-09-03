@@ -3874,6 +3874,9 @@
     <ClCompile Include="aura\aura\aura_profiler.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc">
