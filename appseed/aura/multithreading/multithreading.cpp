@@ -367,11 +367,15 @@ namespace multithreading
 
       ::datetime::time timeEnd = ::datetime::time::get_current_time() + MIN(2, duration.get_total_seconds());
 
+      single_lock sl(pthreadptra->m_pmutex);
+
       try
       {
 
          while (pthreadptra->get_count() && ::datetime::time::get_current_time() < timeEnd)
          {
+
+            sl.lock();
 
          restart1:
 
@@ -379,6 +383,8 @@ namespace multithreading
             {
 
                ::thread * pthread = pthreadptra->element_at(i);
+
+               sl.unlock();
 
                try
                {
@@ -389,11 +395,15 @@ namespace multithreading
                catch (...)
                {
 
+                  sl.lock();
+
                   pthreadptra->remove_at(i);
 
                   goto restart1;
 
                }
+
+               sl.lock();
 
             }
 
@@ -404,11 +414,15 @@ namespace multithreading
 
                ::thread * pthread = pthreadptra->element_at(i);
 
+               sl.unlock();
+
                try
                {
 
                   if (pthread->wait(one_second()).succeeded())
                   {
+
+                     sl.lock();
 
                      pthreadptra->remove_at(i);
 
@@ -419,6 +433,8 @@ namespace multithreading
                }
                catch (...)
                {
+
+                  sl.lock();
 
                   pthreadptra->remove_at(i);
 

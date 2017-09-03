@@ -72,16 +72,34 @@ object::object(::aura::application * papp)
 object::~object()
 {
 
-   if (m_pthreadrefa != NULL)
    {
 
-      ::multithreading::post_quit_and_wait((::array < ::thread * > *) m_pthreadrefa, seconds(60));
+      synch_lock sl(m_pmutex);
+
+      if (m_pthreadrefa != NULL)
+      {
+
+         m_pthreadrefa->m_pmutex = m_pmutex;
+
+         ::thread_refa * pthreadrefa = m_pthreadrefa;
+
+         sl.unlock();
+
+         ::multithreading::post_quit_and_wait((::array_base < ::thread *, thread * > *) pthreadrefa, seconds(60));
+
+         sl.lock();
+
+         m_pthreadrefa->m_pmutex = NULL;
+
+         ::aura::del(m_pthreadrefa);
+
+      }
+
+      ::aura::del(m_psetObject);
 
    }
 
    ::aura::del(m_pmutex);
-
-   ::aura::del(m_psetObject);
 
 }
 

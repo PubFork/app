@@ -126,9 +126,6 @@ public:
 
 };
 
-::object * m_powner;
-
-
 
 
 #include "multithreading_pred_holder.h"
