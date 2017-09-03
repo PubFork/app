@@ -1333,6 +1333,8 @@ namespace user
 
       single_lock sl(m_pmutex, true);
 
+      select_user_schema();
+
       on_layout();
 
    }

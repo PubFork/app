@@ -1886,22 +1886,6 @@ namespace user
       }
 
 
-      if (m_puserstyle == NULL)
-      {
-
-         m_puserstyle = GetTopLevel();
-
-      }
-
-      if (m_puserstyle == NULL)
-      {
-
-         m_puserstyle = Application.userstyle();
-
-      }
-
-
-
 
 
       m_pinternal->update(this);
