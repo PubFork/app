@@ -984,7 +984,13 @@ namespace user
 
       //synch_lock slDocument(get_document()->m_pmutex);.
 
-      _001OnDraw(pgraphics);
+      {
+
+         draw_select ds(this, pgraphics);
+
+         _001OnDraw(pgraphics);
+
+      }
 
    }
 

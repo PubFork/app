@@ -97,6 +97,8 @@ namespace user
       m_ptScrollPassword1.y = 0;
       m_palphasource = NULL;
 
+      set_user_schema(::user::schema_default);
+
    }
 
 
@@ -2091,7 +2093,7 @@ namespace user
       }
 
 
-      defer_initialize_userstyle();
+      on_select_user_style();
 
 
    }
@@ -8726,35 +8728,8 @@ restart:
 
    }
 
-   void interaction::defer_initialize_userstyle()
-   {
 
-      bool bWasNull = m_puserstyle == NULL;
-
-      initialize_userstyle();
-
-      bool bIsNull = m_puserstyle == NULL;
-
-      if (bWasNull && !bIsNull)
-      {
-
-         try
-         {
-
-            on_select_user_style();
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-
-   }
-
-
-   void interaction::initialize_userstyle()
+   void interaction::on_select_user_style()
    {
 
       if (m_puserstyle == NULL)
@@ -8801,6 +8776,13 @@ restart:
             pui = pui->GetParent();
 
          }
+
+      }
+
+      if (m_puserstyle == NULL)
+      {
+
+         ::user::style::on_select_user_style();
 
       }
 

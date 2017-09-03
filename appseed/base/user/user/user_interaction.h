@@ -73,7 +73,7 @@ namespace user
          m_pgraphics(pgraphics)
          {
             
-            m_pui->on_select_user_style();
+            m_pui->select_user_schema();
             
             m_pui->select(pgraphics);
 
@@ -1015,9 +1015,7 @@ namespace user
 
       virtual bool has_pending_redraw_flags() override;
 
-      virtual void defer_initialize_userstyle();
-
-      virtual void initialize_userstyle();
+      virtual void on_select_user_style() override;
 
    };
 

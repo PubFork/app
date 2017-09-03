@@ -433,7 +433,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    }
 
 
-   initialize_userstyle();
+   on_select_user_style();
 
 
    if (pobj->previous())
@@ -3419,26 +3419,24 @@ bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
 }
 
 
-void simple_frame_window::initialize_userstyle()
+void simple_frame_window::on_select_user_style()
 {
-
-   ::user::frame_window::initialize_userstyle();
 
    if (m_puserstyle == NULL)
    {
 
       string strSchema = m_varFrame["wndfrm"];
 
-      m_puserstyle = Session.get_user_style(strSchema, get_app());
+      if (strSchema.has_char())
+      {
+
+         m_puserstyle = Session.get_user_style(strSchema, get_app());
+
+      }
 
    }
 
-   if (m_puserstyle == NULL)
-   {
-
-      m_puserstyle = Application.userstyle();
-
-   }
+   ::user::frame_window::on_select_user_style();
 
 
 }

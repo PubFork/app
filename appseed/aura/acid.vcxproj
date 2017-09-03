@@ -992,6 +992,7 @@
     </ClCompile>
     <ClCompile Include="net\sockets\sockets_websocket_client.cpp">
     </ClCompile>
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp" />
     <ClCompile Include="primitive\math\math_binary_operation.cpp">
     </ClCompile>
     <ClCompile Include="primitive\math\math_number.cpp">

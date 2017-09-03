@@ -300,7 +300,7 @@ public:
 
    virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
 
-   virtual void initialize_userstyle() override;
+   virtual void on_select_user_style() override;
 
 };
 
