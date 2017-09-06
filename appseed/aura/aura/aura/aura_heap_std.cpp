@@ -37,7 +37,7 @@ void * aligned_memory_alloc(size_t size)
       if (heap_memory::aligned_provision_get_size(size) == 831
          && heap_memory::aligned_provision_get_size(size) < 1024)
       {
-         output_debug_string("*");
+         //output_debug_string("*");
       }
 
        void * pbase = g_pheap->_alloc(heap_memory::aligned_provision_get_size(size));

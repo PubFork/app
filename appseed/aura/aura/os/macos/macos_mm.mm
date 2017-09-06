@@ -185,3 +185,12 @@ void ns_get_bundle_identifier(char * psz, int iSize)
    strncpy(psz, [bundleIdentifier UTF8String], iSize);
    
 }
+
+
+
+void ns_Sleep(unsigned int uiMillis)
+{
+
+   [NSThread sleepForTimeInterval: ((double) uiMillis / 1000.0) ];
+
+}

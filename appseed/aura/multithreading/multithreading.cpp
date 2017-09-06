@@ -501,7 +501,7 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
                sl.lock();
 
-               remove_at(i);
+               remove(pthread);
 
                goto restart1;
 
@@ -528,7 +528,7 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
                   sl.lock();
 
-                  remove_at(i);
+                  remove(pthread);
 
                   goto restart2;
 
@@ -540,7 +540,7 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
                sl.lock();
 
-               remove_at(i);
+               remove(pthread);
 
                goto restart2;
 

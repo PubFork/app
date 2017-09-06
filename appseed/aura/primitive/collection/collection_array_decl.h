@@ -936,6 +936,15 @@ public:
    inline const TYPE & element_at(index nIndex) const;
    inline TYPE & element_at(index nIndex);
 
+   inline TYPE & first(index n = 0);
+   inline const TYPE & first(index n = 0) const;
+   
+   inline TYPE & last(index n = -1);
+   inline const TYPE & last(index n = -1) const;
+   
+   inline TYPE & middle(index n = 0);
+   inline const TYPE & middle(index n = 0) const;
+   
 
    ::count set_size(index nNewSize,::count nGrowBy = -1); // does not call default constructors on new items/elements
    ::count allocate(index nNewSize,::count nGrowBy = -1); // does not call default constructors on new items/elements
@@ -1224,12 +1233,8 @@ public:
    inline TYPE& get_at(index nIndex);
    inline void set_at(index nIndex, ARG_TYPE newElement);
 
-   inline TYPE & first(index n = 0);
-   inline const TYPE & first(index n = 0) const;
 
-   inline TYPE & last(index n = -1);
-   inline const TYPE & last(index n = -1) const;
-
+   
    inline const TYPE* get_data() const;
    inline TYPE* get_data();
 

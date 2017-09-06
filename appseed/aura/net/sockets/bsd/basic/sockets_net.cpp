@@ -681,7 +681,7 @@ namespace sockets
       memset(&sa, 0, sizeof(sa));
 #ifdef WINDOWS
 #else
-      sa.sin6_family = AF_INET6;
+      //sa.sin6_family = AF_INET6;
 #endif
 #ifdef NO_GETADDRINFO
       if ((ai_flags & AI_NUMERICHOST) != 0 || isipv6(host))

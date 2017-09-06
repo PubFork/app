@@ -5,7 +5,7 @@
 //  Created by Camilo Sasuke Tsumanuma on 2013-09-17.
 //
 //
-#import "framework.h"
+
 #import "macos_windowing.h"
 
 
@@ -362,11 +362,14 @@ bool macos_set_user_wallpaper(const char * psz)
 
    NSString * str = [NSString stringWithUTF8String: psz];
    
-   NSString * path = [NSString stringWithFormat:@"file://localhost%@", str];
+   NSString * path = str;
    
-   NSURL * url = [NSURL URLWithString: path];
+   NSURL * url = [NSURL fileURLWithPath: path];
    
-   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:nil, NSWorkspaceDesktopImageFillColorKey, [NSNumber numberWithBool:NO], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil];
+/*   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:nil, NSWorkspaceDesktopImageFillColorKey, [NSNumber numberWithBool:NO], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil]; */
+   NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSColor colorWithCalibratedRed:0.51 green:0.49 blue:0.89 alpha:1.0], NSWorkspaceDesktopImageFillColorKey,
+                             [NSNumber numberWithBool:YES], NSWorkspaceDesktopImageAllowClippingKey, [NSNumber numberWithInteger:NSImageScaleProportionallyUpOrDown], NSWorkspaceDesktopImageScalingKey, nil];
    
    NSError * error;
    
@@ -376,6 +379,8 @@ bool macos_set_user_wallpaper(const char * psz)
    {
 
       NSScreen * screen = [screenArray objectAtIndex: i];
+      
+      NSURL * u = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen: screen];
       
       error = NULL;
       

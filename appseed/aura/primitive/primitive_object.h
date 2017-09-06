@@ -216,6 +216,8 @@ public:
    virtual void on_handle(::command::command * pcommand);
    virtual void on_handle(::create * pcreate);
 
+   virtual void threadrefa_add(::thread * pthread);
+   virtual void threadrefa_post_quit_and_wait(::duration duration);
 
    // main loosely coupled semantics :
    // varFile   : empty, one file path, many file paths, one file object, one or more file objects, or Url, of cached, downloaded, dowloading or queuing files to be opened

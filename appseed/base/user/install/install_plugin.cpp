@@ -10,9 +10,11 @@
 
 
 
-
+#ifdef WINDOWSEX
 
 #include "coated/gdiplus.h"
+
+#endif
 
 
 

@@ -1,6 +1,9 @@
 #include "framework.h"
 //#include <Shlobj.h>
-
+#if defined(MACOS)
+#include <sys/stat.h>
+#include <dirent.h>
+#endif
 
 #ifdef WINDOWS
 
@@ -1672,9 +1675,7 @@ retry:
 
 
 
-#ifdef METROWIN
-
-
+#if defined(METROWIN) || defined(MACOS)
 
 ::file::path dir::favorites()
 {
@@ -1683,7 +1684,9 @@ retry:
 
 }
 
+#endif
 
+#ifdef METROWIN
 
 ::file::path dir::home()
 {

@@ -1,7 +1,9 @@
 #include "framework.h"
 #include <stdio.h>
 
-//#include <sys/stat.h>
+#if defined(MACOS)
+#include <sys/stat.h>
+#endif
 //////#include <errno.h>
 ////#include <io.h>
 ////#include <fcntl.h>

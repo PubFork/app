@@ -88,11 +88,17 @@
    }
    else if(pitem == quitItem)
    {
-      [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
+      //[NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
       m_pbridge->notify_icon_play("quit");
    }
 }
 
-
+- (void)close
+{
+ 
+   
+   [[NSStatusBar systemStatusBar] removeStatusItem: statusItem];
+   
+}
 
 @end

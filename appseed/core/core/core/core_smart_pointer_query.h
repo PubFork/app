@@ -3,7 +3,7 @@
 
 template < class T >
 class smart_pointer_query :
-   virtual object
+virtual public ::object
 {
 public:
 

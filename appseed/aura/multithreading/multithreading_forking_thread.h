@@ -97,24 +97,14 @@ template < typename PRED >
 template < typename PRED >
 inline ::thread * object::fork(PRED pred)
 {
+   
+   defer_create_mutex();
 
    synch_lock sl(m_pmutex);
 
-   if (m_pthreadrefa == NULL)
-   {
-
-      m_pthreadrefa = new thread_refa;
-
-   }
-
    thread * pthread = ::fork(get_app(),pred, this);
-
-   if (pthread != NULL)
-   {
-
-      m_pthreadrefa->add(pthread);
-
-   }
+   
+   threadrefa_add(pthread);
 
    return pthread;
 

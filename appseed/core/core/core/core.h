@@ -11,6 +11,8 @@
 #endif
 
 
+#ifndef __PARTIAL_CPP
+
 class image_list;
 
 
@@ -399,6 +401,9 @@ namespace core
 
 #include "core.inl"
 
+
+
+#endif
 
 
 

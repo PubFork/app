@@ -67,7 +67,7 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage,DWORD dwTimeout)
+      bool tx::send(const char * pszMessage,::duration durationTimeout)
       {
          
          if(m_port == NULL)
@@ -83,9 +83,9 @@ namespace aura
          
          CFDataRef data = m.get_os_cf_data();
          
-         CFTimeInterval sendTimeout = (double) dwTimeout / 1000.0;
+         CFTimeInterval sendTimeout = (double) durationTimeout.get_total_milliseconds() / 1000.0;
          
-         CFTimeInterval rcvimeout = (double) dwTimeout / 1000.0;
+         CFTimeInterval rcvimeout = (double) durationTimeout.get_total_milliseconds() / 1000.0;
 
          SInt32 status =
          CFMessagePortSendRequest(m_port,
@@ -114,7 +114,7 @@ namespace aura
       }
 
 
-      bool tx::send(int message,void * pdata,int len,DWORD dwTimeout)
+      bool tx::send(int message,void * pdata,int len,duration durationTimeout)
       {
 
          if(message == 0x80000000)
@@ -135,8 +135,8 @@ namespace aura
          CFMessagePortSendRequest(m_port,
                                   message,
                                   m.get_os_cf_data(),
-                                  dwTimeout / 1000.0,
-                                  dwTimeout / 1000.0,
+                                  (double) durationTimeout.get_total_milliseconds() / 1000.0,
+                                  (double) durationTimeout.get_total_milliseconds() / 1000.0,
                                   NULL,
                                   NULL);
          if (status == kCFMessagePortSuccess) {

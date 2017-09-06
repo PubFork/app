@@ -1,5 +1,4 @@
 
-#import "framework.h"
 #include <CoreFoundation/CoreFoundation.h>
 
 void macos_desktop_image_changed();

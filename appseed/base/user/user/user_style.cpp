@@ -5,10 +5,13 @@ namespace user
 {
 
 
-   style::style() :
-      style(get_app())
+   style::style()
    {
-
+      
+      m_eschema = schema_default;
+      
+      m_pgraphics = NULL;
+      
    }
 
 

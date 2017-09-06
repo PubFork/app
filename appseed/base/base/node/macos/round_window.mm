@@ -112,8 +112,6 @@ void round_window::round_window_hide()
     
    [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:TRUE] orderOut : m_proundwindow];
    
-   [m_proundwindow windowWillClose];
-    
 }
 
 void round_window::round_window_order_front()

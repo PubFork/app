@@ -939,6 +939,22 @@ bool thread::post_quit()
 
 bool thread::thread_get_run()
 {
+   
+   try
+   {
+   
+      if(!get_app()->m_bRunThisThread)
+      {
+       
+         return false;
+         
+      }
+      
+   }
+   catch (...)
+   {
+   
+   }
 
    return m_bRunThisThread;
 

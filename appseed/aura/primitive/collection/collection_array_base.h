@@ -621,10 +621,21 @@ public:
    inline bool empty(::count countMinimum = 1) const;
    inline bool has_elements(::count countMinimum = 1) const;
    inline index get_upper_bound(index i = -1) const;
+   inline index get_middle_index(index i = 0) const;
 
 
-   TYPE * element_at(index i) const { return &m_pData[i]; }
+   inline const TYPE & element_at(index nIndex) const;
+   inline TYPE & element_at(index nIndex);
+   
+   inline const TYPE& first(index index = 0) const;
+   inline TYPE& first(index index = 0);
+   
+   inline const TYPE& last(index index = -1) const;
+   inline TYPE& last(index index = -1);
 
+   inline const TYPE& middle(index index = 0) const;
+   inline TYPE& middle(index index = 0);
+   
 
    ::count set_size(index nNewSize, ::count nGrowBy = -1); // does not call default constructors on new items/elements
    ::count allocate(index nNewSize, ::count nGrowBy = -1); // does not call default constructors on new items/elements

@@ -845,7 +845,7 @@ namespace filemanager
 
          string strId = "open with" + m_straOpenWith[i];
 
-         if (pcommand->m_id == strId)
+         if (pcommand->m_id.m_psz == strId)
          {
 
             iPos = i;
@@ -893,7 +893,7 @@ namespace filemanager
 
          string strId = "open with" + m_straOpenWith[i];
 
-         if (pcommand->m_id == strId)
+         if (pcommand->m_id.m_psz == strId)
          {
 
             iPos = i;

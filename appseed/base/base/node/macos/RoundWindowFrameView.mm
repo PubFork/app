@@ -361,6 +361,7 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    
    int y = H - point.y;
    
+   
    p->round_window_mouse_moved(x, y);
    
    return;

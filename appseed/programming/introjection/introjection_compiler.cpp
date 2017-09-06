@@ -961,7 +961,9 @@ namespace introjection
       //process->create_child_process(strCmd,false,NULL,::multithreading::priority_highest);
 
       {
-
+         ::chdir(strSrcFolder);
+         strSrcFolder.trim();
+         strSrcFolder.replace(" ", "\\ ");
          string str2 = Application.file().as_string(strCmd);
          str2.replace("%TARGET_PATH%", strTargetPath);
          str2.replace("%DSYM_PATH%", strDsymPath);
@@ -969,7 +971,13 @@ namespace introjection
          str2.replace("%SRC_FOLDER%", strSrcFolder);
          str2.replace("%SRC_NAME%", strSrcName);
          Application.file().put_contents(strCmd + "2", str2);
-         ::system(strCmd + "2");
+         
+         
+         
+         //chmod(strCmd + "2", 0777);
+         
+         
+         ::system(str2);
 
       }
 
@@ -1132,7 +1140,8 @@ namespace introjection
             str2.replace("%SRC_FOLDER%", strSrcFolder);
             str2.replace("%SRC_NAME%", strSrcName);
             Application.file().put_contents(strLCmd + "2", str2);
-            ::system(strLCmd + "2");
+            //::system(strLCmd + "2");
+            ::system(str2);
 
             if(!::str::begins_ci(System.dir().module(), "/Applications/"))
             {
@@ -1143,7 +1152,8 @@ namespace introjection
                str2.replace("%SRC_FOLDER%", strSrcFolder);
                str2.replace("%SRC_NAME%", strSrcName);
                Application.file().put_contents(strDCmd + "2", str2);
-               ::system(strDCmd + "2");
+               //              ::system(strDCmd + "2");
+               ::system(str2);
             }
 
          }

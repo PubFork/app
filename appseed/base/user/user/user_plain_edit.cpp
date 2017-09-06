@@ -2162,7 +2162,7 @@ namespace user
          if (m_daExtent[m_iLineStart + i].get_size() <= 0)
          {
 
-            m_daExtent[m_iLineStart + i].set_size(strLine.get_length());
+            m_daExtent[m_iLineStart + i].set_size(strLine.get_length() + 1);
 
             while (*pszNext != '\0')
             {
@@ -2205,15 +2205,9 @@ namespace user
 
                size = pgraphics->GetTextExtent(strLineGraphics, strLineGraphics.get_length());
 
-               for (int j = 0; j < iLen; j++)
-               {
-
-                  m_daExtent[m_iLineStart + i][(index) (psz - pszStart)] = size.cx;
-
-               }
+               m_daExtent[m_iLineStart + i][(index) (psz - pszStart)] = size.cx;
 
             }
-
 
             if (size.cx > m_sizeTotal.cx)
             {

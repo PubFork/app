@@ -6,7 +6,7 @@
 //  Copyright © 2017 Camilo Sasuke Tsumanuma. All rights reserved.
 //
 
-#include "macos_file_raw.h"
+#include "macos.h"
 #include <sys/sysctl.h>
 
 

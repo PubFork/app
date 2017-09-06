@@ -7,6 +7,8 @@
 #include <mach/clock.h>
 #include <mach/mach.h>
 
+void ns_Sleep(unsigned int uiMillis);
+
 uint64_t get_nanos()
 {
     
@@ -20,5 +22,10 @@ uint64_t get_nanos()
     
 }
 
+CLASS_DECL_AURA void sleep(const duration & duration)
+{
 
+   ns_Sleep(duration.get_total_milliseconds());
+   
+}
 

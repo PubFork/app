@@ -364,6 +364,14 @@ public:
 namespace multithreading
 {
 
+   
+   CLASS_DECL_AURA bool post_quit();
+   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
+   
+   
+   CLASS_DECL_AURA bool post_quit(::thread * pthread);
+   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
+
 
    template < typename THREAD >
    inline bool post_quit(THREAD & pthread)
@@ -410,12 +418,6 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA bool post_quit();
-   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
-
-
-   CLASS_DECL_AURA bool post_quit(::thread * pthread);
-   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
 
 
 } // namespace multithreading

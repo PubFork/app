@@ -665,7 +665,7 @@ namespace filemanager
          && get_filemanager_template() != NULL)
       {
          //         ::schema * ptemplate = get_filemanager_template();
-         if (pcommand->m_id == get_filemanager_template()->m_strLevelUp)
+         if (pcommand->m_id.m_psz == get_filemanager_template()->m_strLevelUp)
          {
             FileManagerOneLevelUp(::action::source_user);
             pcommand->m_bRet = true;

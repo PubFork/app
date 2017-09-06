@@ -82,16 +82,12 @@ FormatMessage(
 
 void ns_log(const char * pszLog);
 
-VOID
-WINAPI
-output_debug_string(
-                   LPCSTR lpOutputString
-                   )
+
+void output_debug_string(const char * pszOutputString)
 {
     
-   ns_log(lpOutputString);
-    
-    
+   wprintf(L"%s", wstring(pszOutputString).c_str());
+   
 }
 
 

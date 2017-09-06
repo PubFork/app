@@ -3233,28 +3233,40 @@ namespace draw2d
 
       if(nFormat & DT_RIGHT)
       {
+         
          dx = lpRect.right - lpRect.left - sz.cx;
+         
       }
       else if(nFormat & DT_CENTER)
       {
+         
          dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
+         
       }
       else
       {
+         
          dx = 0.;
+         
       }
 
       if(nFormat & DT_BOTTOM)
       {
+         
          dy = lpRect.bottom - lpRect.top - sz.cy;
+         
       }
       else if(nFormat & DT_VCENTER)
       {
+         
          dy = ((lpRect.bottom - lpRect.top) - (sz.cy)) / 2.0;
+         
       }
       else
       {
+         
          dy = 0.;
+         
       }
 
       if(nFormat & DT_EXPANDTABS)

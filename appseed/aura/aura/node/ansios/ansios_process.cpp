@@ -15,7 +15,7 @@ extern char **environ;
 #elif defined(APPLEOS)
 //#include <sys/wait.h>
 //#include <unistd.h>
-//#include <spawn.h>
+#include <spawn.h>
 //#include <pthread.h>
 //#include <stdlib.h>
 extern char * const * environ;

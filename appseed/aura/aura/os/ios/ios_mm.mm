@@ -6,7 +6,6 @@
 //
 //
 
-#include "framework.h"
 
 bool GetImagePixelData(unsigned int * pcr, int cx, int cy, int iScan, CGImageRef inImage);;
 

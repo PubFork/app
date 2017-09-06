@@ -256,10 +256,38 @@ CLASS_DECL_AURA mutex * g_pmutexFactory = NULL;
 CLASS_DECL_AURA bool safe_destroy_element(object * pelement)
 {
 
+   mutex * pmutex = NULL;
+   
    try
    {
+      
+      pmutex = pelement->m_pmutex;
+      
+   }
+   catch(...)
+   {
+      
+   }
+
+   try
+   {
+      
+      synch_lock sl(pmutex);
+      
+      try
+      {
+         
+         pelement->m_pmutex = NULL;
+         
+      }
+      catch(...)
+      {
+         
+      }
 
       pelement->~object();
+      
+      ::aura::del(pmutex);
 
    }
    catch(...)

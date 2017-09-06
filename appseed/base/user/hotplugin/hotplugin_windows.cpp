@@ -3,7 +3,12 @@
 
 #ifdef HOTPLUGIN_SUBSYSTEM
 
+
+#ifdef WINDOWSEX
+
 #include "coated/gdiplus.h"
+
+#endif
 
 
 namespace hotplugin

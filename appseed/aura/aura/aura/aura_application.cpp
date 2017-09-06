@@ -951,25 +951,7 @@ namespace aura
 
       pathDir = path.folder();
 
-#ifdef WINDOWSEX
-
-      ::file::path pathAppDataDir(getenv("APPDATA"));
-
-#else
-
-      ::file::path pathAppDataDir(getenv("HOME"));
-
-#ifdef MACOS
-
-      pathAppDataDir /= "Library";
-
-#elif defined(LINUX)
-
-      pathAppDataDir /= ".config";
-
-#endif
-
-#endif
+      ::file::path pathAppDataDir(::dir::root());
 
       ::file::path pathProfile;
 
@@ -1138,7 +1120,7 @@ namespace aura
 
          bool bFound = false;
 
-         pathProfile = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfile;
+         pathProfile = pathAppDataDir / strBrowserProfile / "Profile" / strProfile;
 
 #ifdef WINDOWSEX
 

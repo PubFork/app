@@ -4,7 +4,7 @@
 
 #include <sys/stat.h>
 #include <ctype.h>
-
+#include <mach-o/dyld.h> 
 
 struct PROCESS_INFO_t
 {

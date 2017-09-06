@@ -26,6 +26,8 @@ public:
    ::count get_count() const;
    index get_lower_bound(index i = 0) const;
    index get_upper_bound(index i = -1) const;
+   index get_middle_index(index i = 0) const;
+   
    //void set_size(::count nNewSize, ::count nGrowBy = -1);
 
    //::count size() const;
@@ -595,6 +597,9 @@ template < class Type, class RawType >
 inline index string_array < Type, RawType >::get_upper_bound(index count) const
    { return this->m_nSize + count; }
 
+template < class Type, class RawType >
+inline index string_array < Type, RawType >::get_middle_index(index i) const
+{ return get_upper_bound() / 2 + i; }
 
 
 
@@ -3456,8 +3461,13 @@ void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
       free((void *)ppsz[i]);
 
    }
+   
+   if(ppsz != NULL)
+   {
 
-   free((void *)ppsz);
+      free((void *)ppsz);
+      
+   }
    
 }
 
@@ -3499,8 +3509,13 @@ void string_array < Type, RawType > ::c_add(char ** ppszParam)
       ppsz++;
 
    }
+   
+   if(ppsz != NULL)
+   {
 
-   free((void *)ppsz);
+      free((void *)ppsz);
+      
+   }
 
 }
 
@@ -3517,8 +3532,13 @@ void string_array < Type, RawType > ::c_add(wchar_t ** ppsz, ::count c)
       free((void *) ppsz[i]);
 
    }
+   
+   if(ppsz != NULL)
+   {
 
-   free((void *)ppsz);
+      free((void *)ppsz);
+      
+   }
 
 }
 /// expect strings allocated with malloc (sic, not memory_alloc) or wcsdup and array allocated with malloc (sic, not memory_alloc)
@@ -3540,8 +3560,13 @@ void string_array < Type, RawType > ::c_add(wchar_t ** ppszParam)
       ppsz++;
 
    }
+   
+   if(ppsz != NULL)
+   {
 
-   free((void *)ppsz);
+      free((void *)ppsz);
+      
+   }
 
 }
 

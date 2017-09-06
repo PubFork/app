@@ -35,6 +35,12 @@ namespace file
             ostream << a.element_at(index);
          }
       }
+      
+      template < class TYPE >
+      void defer_alloc(TYPE & t)
+      {
+         
+      }
 
       template < class ARRAY >
       void read(istream & istream,ARRAY & a)
@@ -51,6 +57,37 @@ namespace file
          a.allocate(count);
          for(index index = 0; index < count; index++)
          {
+            defer_alloc(a.element_at(index));
+            istream >> a.element_at(index);
+            if(istream.fail())
+            {
+               return;
+            }
+         }
+         a.on_after_read();
+      }
+
+      template < typename TYPE >
+      void read(istream & istream, sp(TYPE) & a)
+      {
+         ::count count;
+         //istream >> count;
+         istream.read_arbitrary(count);
+         
+         if(istream.fail())
+         {
+            return;
+         }
+         
+         a.allocate(count);
+         for(index index = 0; index < count; index++)
+         {
+            if(a.is_null())
+            {
+             
+               a = canew(TYPE);
+               
+            }
             istream >> a.element_at(index);
             if(istream.fail())
             {

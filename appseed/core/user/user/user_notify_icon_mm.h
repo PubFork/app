@@ -33,6 +33,8 @@ class user_notify_icon_mm_bridge;
 ;
 - (void)play:(NSString *)strIconFile;
 
+- (void) close;
+
 @end
 
 #endif /* user_notify_icon_mm_h */

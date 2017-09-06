@@ -6,7 +6,6 @@
 //
 //
 
-#import "framework.h"
 
 int ui_MessageBoxA(void * oswindow, const char * pszMessageParam, const char * pszHeaderParam, unsigned int uType )
 {

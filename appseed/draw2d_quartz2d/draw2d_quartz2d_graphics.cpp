@@ -21,7 +21,7 @@ namespace draw2d_quartz2d
       
       m_iSaveDC = 0;
 
-      m_pmutex                = new mutex(papp);
+      defer_create_mutex();
 
       m_bPrinting       = FALSE;
       m_pdibAlphaBlend  = NULL;
@@ -74,48 +74,17 @@ namespace draw2d_quartz2d
    graphics::~graphics()
    {
 
-      /*      HDC hdc = Detach();
-
-       if(hdc != NULL)
-       {
-       bool bDeleted = ::DeleteDC(hdc) != FALSE;
-       if(!bDeleted)
-       {
-       TRACE("Failed to delete GDI device context");
-       }
-       }*/
-
-//      if(m_pdc != NULL)
-  //    {
-    //     cairo_destroy(m_pdc);
-      //   m_pdc = NULL;
-      //}
-
-      /*      if(m_ppath != NULL)
-       {
-       delete m_ppath;
-       m_ppath = NULL;
-       }
-
-       if(m_ppathPaint != NULL)
-       {
-       delete m_ppathPaint;
-       m_ppathPaint = NULL;
-       }*/
 
    }
 
-
-   /*   ::user::window * graphics::GetWindow() const
-    {
-    ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1()));
-    }
-    */
 
    bool graphics::IsPrinting() const
    {
+      
       return m_bPrinting;
+      
    }
+   
 
    bool graphics::CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
@@ -1915,15 +1884,17 @@ namespace draw2d_quartz2d
                dib0->create(rectText.size());
                dib0->get_graphics()->set_text_color(RGB(255, 255, 255));
                dib0->get_graphics()->SelectObject(get_current_font());
-//               dib0->get_graphics()->SetBkMode(TRANSPARENT);
+               
                dib0->get_graphics()->text_out(0, 0, str);
+               
                dib0->ToAlpha(0);
                ::draw2d::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->get_graphics()->set_text_color(m_spbrush->m_cr);
                dib1->get_graphics()->SelectObject(get_current_font());
-//               dib1->get_graphics()->SetBkMode(TRANSPARENT);
+
                dib1->get_graphics()->text_out(0, 0, str);
+               
                dib1->channel_from(visual::rgba::channel_alpha, dib0);
                ::draw2d::dib_sp dib2(allocer());
                dib2->create(rectText.size());
@@ -2085,86 +2056,16 @@ namespace draw2d_quartz2d
       throw not_implemented(get_app());
       return 0;
 
-      //      ASSERT(get_handle2() != NULL);
-      //      int32_t nResult = ::GetTextFace(get_handle2(), 256, rString.GetBuffer(256)); rString.ReleaseBuffer();
-      //      return nResult;
-
    }
 
-    bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
+   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
-//      //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics);
-//      /*wstring wstr(L"123AWZwmc");
-//       Gdiplus::RectF rect;
-//       Gdiplus::RectF rect2;
-//       Gdiplus::PointF origin(0, 0);
-//       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect);
-//
-//       wstr = L"123AWZwmcpQçg";
-//       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);
-//
-//       lpMetrics->tmAveCharWidth = rect.width / (double) wstr.get_length();
-//       lpMetrics->tmAscent = rect.height;
-//       lpMetrics->tmDescent = rect2.height - rect.height;*/
-//
-//
-//      //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
-//
-//      ((::lnx::graphics *) this)->set(&m_fontxyz);
-//
-//      cairo_font_extents_t e;
-//
-//      cairo_font_extents(m_pdc, &e);
-//
-//      //Gdiplus::FontFamily family;
-//
-//
-//      //if(((graphics * )this)->gdiplus_font() == NULL)
-//      //   return FALSE;
-//
-//      //((graphics * )this)->gdiplus_font()->GetFamily(&family);
-//
-//      //double dHeight = family.GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle());
-//
-//      //lpMetrics->tmAscent              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
-//      //lpMetrics->tmDescent             = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
-//      //lpMetrics->tmHeight              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize());
-//      lpMetrics->tmAscent              = (LONG) e.ascent;
-//      lpMetrics->tmDescent             = (LONG) e.descent;
-//      lpMetrics->tmHeight              = (LONG) e.height;
-//
-//      lpMetrics->tmfLeading     = (LONG) lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
-//      lpMetrics->tmExternalLeading     = (LONG) (e.height * 0.25);
-//      //                                                (e.family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle())
-//      //                                              - family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle())
-//      //                                            - family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle())) / dHeight);
-//
-//      //      m_spfont->
-//
-//      //     ::Gdiplus::Font font2(pfamilyMono, pfamilyMono->GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle()));
-//      //
-//      string str(L"123AWZwmc123AWZwmcpQçg");
-//      /*      Gdiplus::RectF rect;
-//       Gdiplus::RectF rect2;
-//       Gdiplus::PointF origin(0, 0);
-//
-//       m_pgraphics->MeasureString(wstr, (INT) wstr.get_length(), ((graphics * )this)->gdiplus_font(), origin, &rect);*/
-//
-//      ::size size = GetTextExtent(str);
-//
-//
-//      /*wstr = L"";
-//       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);*/
-//
-//      lpMetrics->tmAveCharWidth        = (LONG) (size.cx * m_fontxyz.m_dFontWidth / (double) str.get_length());
-//
-//
 
       string str(L"123AWZwmc123AWZwmcpQçg");
 
       CGFloat ascent, descent, leading, width;
-
-      const_cast < graphics * > (this)->internal_show_text(0, 0, str, (int) str.get_length(), kCGTextInvisible, false, &ascent, &descent, &leading, &width);
+      
+      const_cast < graphics * > (this)->internal_show_text(0, 0, 0, DT_TOPLEFT, str, (int) str.get_length(), kCGTextInvisible, false, &ascent, &descent, &leading, &width);
 
       lpMetrics->tmAscent              = ascent;
       lpMetrics->tmDescent             = descent;
@@ -2225,16 +2126,16 @@ namespace draw2d_quartz2d
 
    }
 
+
    DWORD graphics::GetFontLanguageInfo() const
    {
 
       throw not_implemented(get_app());
+      
       return 0;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::GetFontLanguageInfo(get_handle1());
-
    }
+   
 
    /*
 
@@ -2317,122 +2218,38 @@ namespace draw2d_quartz2d
       throw not_implemented(get_app());
       return 0;
 
-      //      ASSERT(get_handle2() != NULL);
-      //      return ::GetBoundsRect(get_handle2(), lpRectBounds, flags);
-
    }
 
-   /*
-
-    bool graphics::ResetDC(const DEVMODE* lpDevMode)
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //    ASSERT(get_handle2() != NULL);
-    //    return ::ResetDC(get_handle2(), lpDevMode) != NULL;
-
-    }
-
-    UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle2() != NULL);
-    //      return ::GetOutlineTextMetrics(get_handle2(), cbData, lpotm);
-
-    }
-
-    bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //      ASSERT(get_handle2() != NULL);
-    //      return ::GetCharABCWidths(get_handle2(), nFirstChar, nLastChar, lpabc) != FALSE;
-
-    }
-
-    */
 
    DWORD graphics::GetFontData(DWORD dwTable, DWORD dwOffset, LPVOID lpData, DWORD cbData) const
    {
 
       throw not_implemented(get_app());
-      return 0;
 
-      //      ASSERT(get_handle2() != NULL);
-      //      return ::GetFontData(get_handle2(), dwTable, dwOffset, lpData, cbData);
+      return 0;
 
    }
 
-   /*
-
-    int32_t graphics::GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle2() != NULL);
-    //      return ::GetKerningPairs(get_handle2(), nPairs, lpkrnpair);
-
-    }
-
-    DWORD graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm, DWORD cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle2() != NULL);
-    //      return ::GetGlyphOutline(get_handle2(), nChar, nFormat, lpgm, cbBuffer, lpBuffer, lpmat2);
-
-    }
-
-    */
-
-   /*
-
-    // ::userbase::document handling functions
-    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::StartDoc(get_handle1(), lpDocInfo);
-
-    }
-
-    */
 
    int32_t graphics::StartPage()
    {
 
       throw not_implemented(get_app());
+   
       return 0;
-
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::StartPage(get_handle1());
 
    }
 
+   
    int32_t graphics::EndPage()
    {
 
       throw not_implemented(get_app());
+      
       return 0;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::EndPage(get_handle1());
-
    }
+
 
    int32_t graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int32_t))
    {
@@ -2591,6 +2408,7 @@ namespace draw2d_quartz2d
 
    }
 
+   
    ::draw2d::font_sp graphics::get_current_font() const
    {
 
@@ -2598,6 +2416,7 @@ namespace draw2d_quartz2d
 
    }
 
+   
    ::draw2d::bitmap_sp graphics::get_current_bitmap() const
    {
 
@@ -3170,119 +2989,8 @@ namespace draw2d_quartz2d
       throw not_implemented(get_app());
       return false;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::GradientFill(get_handle1(), pVertices, nVertices, pMesh, nMeshElements, dwMode) != FALSE;
-
    }
 
-   // This is ca2 API library.
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-
-   // Always Inline. Functions only in Win98/Win2K or later
-
-   /*
-
-    COLORREF graphics::GetDCBrushColor() const
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::GetDCBrushColor(get_handle1());
-
-    }
-
-    COLORREF graphics::SetDCBrushColor(COLORREF crColor)
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::SetDCBrushColor(get_handle1(), crColor);
-
-    }
-
-    COLORREF graphics::GetDCPenColor() const
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //       ASSERT(get_handle1() != NULL);
-    //       return ::GetDCPenColor(get_handle1());
-    }
-
-    COLORREF graphics::SetDCPenColor(COLORREF crColor)
-    {
-
-    throw not_implemented(get_app());
-    return 0;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::SetDCPenColor(get_handle1(), crColor);
-
-    }
-
-    bool graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::GetCharABCWidthsI(get_handle1(), giFirst, cgi, pgi, lpabc) != FALSE;
-
-    }
-
-    bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::GetCharWidthI(get_handle1(), giFirst, cgi, pgi, lpBuffer) != FALSE;
-
-    }
-
-    bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int32_t cgi, int32_t nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //      ENSURE(lpSize != NULL);
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::GetTextExtentExPointI(get_handle1(), pgiIn, cgi, nMaxExtent, lpnFit, alpDx, lpSize) != FALSE;
-
-    }
-    bool graphics::GetTextExtentPointI(LPWORD pgiIn, int32_t cgi, LPSIZE lpSize) const
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-    //      ENSURE(lpSize != NULL);
-    //      ASSERT(get_handle1() != NULL);
-    //      return ::GetTextExtentPointI(get_handle1(), pgiIn, cgi, lpSize) != FALSE;
-
-    }
-
-
-    */
-
-
-   /////////////////////////////////////////////////////////////////////////////
-   // More coordinate transforms (in separate file to avoid transitive refs)
 
 #define HIMETRIC_INCH   2540    // HIMETRIC units per inch
 
@@ -3791,24 +3499,9 @@ namespace draw2d_quartz2d
 
    }
 
-   ::draw2d::font* graphics::SelectObject(::draw2d::font* pfont)
+
+   ::draw2d::font* graphics::SelectObject(::draw2d::font * pfont)
    {
-      /*      HGDIOBJ hOldObj = NULL;
-       if(pFont == NULL)
-       return NULL;
-       if(get_handle1() != NULL && get_handle1() != get_handle2())
-       hOldObj = ::SelectObject(get_handle1(), pFont->get_os_data());
-       if(get_handle2() != NULL)
-       hOldObj = ::SelectObject(get_handle2(), pFont->get_os_data());
-       return dynamic_cast < ::draw2d::font * > (::win::object::from_handle(get_app(), hOldObj));*/
-
-      /*ASSERT(pFont != NULL);
-
-       if(pFont == NULL)
-       return NULL;
-
-       m_fontxyz = *pFont;
-       return &m_fontxyz;*/
 
       if(!select_font(pfont))
          return NULL;
@@ -3816,8 +3509,9 @@ namespace draw2d_quartz2d
       return m_spfont;
 
    }
+   
 
-   int32_t graphics::SelectObject(::draw2d::region* pRgn)
+   int32_t graphics::SelectObject(::draw2d::region * pRgn)
    {
 
       throw not_implemented(get_app());
@@ -4695,128 +4389,6 @@ namespace draw2d_quartz2d
 
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Special handling for metafile playback
-   /*
-    int32_t CALLBACK __enum_meta_file_procedure(HDC hDC,
-    HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int32_t nHandles, LPARAM lParam)
-    {
-    ::draw2d::graphics * pgraphics = (::draw2d::graphics *)lParam;
-    ASSERT_VALID(pgraphics);
-
-    switch (pMetaRec->rdFunction)
-    {
-    // these records have effects different for each graphics derived class
-    case META_SETMAPMODE:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SETWINDOWEXT:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SETWINDOWORG:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SETVIEWPORTEXT:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SETVIEWPORTORG:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SCALEWINDOWEXT:
-    (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
-    (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SCALEVIEWPORTEXT:
-    (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
-    (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_OFFSETVIEWPORTORG:
-    (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
-    (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SAVEDC:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
-    break;
-    case META_RESTOREDC:
-    (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(short)pMetaRec->rdParm[0]);
-    break;
-    case META_SETBKCOLOR:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-    break;
-    case META_SETTEXTCOLOR:
-    (dynamic_cast<::win::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-    break;
-
-    // need to watch out for SelectObject(HFONT), for custom font mapping
-    case META_SELECTOBJECT:
-    {
-    HGDIOBJ hObject = pHandleTable->objectHandle[pMetaRec->rdParm[0]];
-    UINT nObjType = GetObjectType(hObject);
-    if (nObjType == 0)
-    {
-    // object type is unknown, determine if it is a font
-    HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-    HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hStockFont);
-    HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObject);
-    if (hObjOld == hStockFont)
-    {
-    // got the stock object back, so must be selecting a font
-    throw not_implemented(::get_thread_app());
-    //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-    break;  // don't play the default record
-    }
-    else
-    {
-    // didn't get the stock object back, so restore everything
-    ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hFontOld);
-    ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObjOld);
-    }
-    // and fall through to PlayMetaFileRecord...
-    }
-    else if (nObjType == OBJ_FONT)
-    {
-    // play back as graphics::SelectObject(::draw2d::font*)
-    //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-    throw not_implemented(::get_thread_app());
-    break;  // don't play the default record
-    }
-    }
-    // fall through...
-
-    default:
-    ::PlayMetaFileRecord(hDC, pHandleTable, pMetaRec, nHandles);
-    break;
-    }
-
-    return 1;
-    }*/
-
-   /*
-
-    bool graphics::PlayMetaFile(HMETAFILE hMF)
-    {
-
-    throw not_implemented(get_app());
-    return false;
-
-
-    if (::GetDeviceCaps(get_handle1(), TECHNOLOGY) == DT_METAFILE)
-    {
-    // playing metafile in metafile, just use core windows API
-    return ::PlayMetaFile(get_handle1(), hMF) != FALSE;
-    }
-
-    // for special playback, lParam == pgraphics
-    return ::EnumMetaFile(get_handle1(), hMF, __enum_meta_file_procedure, (LPARAM)this) != FALSE;
-    */
-
-   //   }
 
    /////////////////////////////////////////////////////////////////////////////
    // Coordinate transforms
@@ -4844,194 +4416,43 @@ namespace draw2d_quartz2d
       throw not_implemented(get_app());
       return;
 
-      /*
-       ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
-
-       size sizeWinExt = GetWindowExt();
-       size sizeVpExt = GetViewportExt();
-       lpSize->cx = MulDiv(lpSize->cx, abs(sizeWinExt.cx), abs(sizeVpExt.cx));
-       lpSize->cy = MulDiv(lpSize->cy, abs(sizeWinExt.cy), abs(sizeVpExt.cy));
-       */
-
    }
 
 
 
    int32_t graphics::draw_text(const char * lpszString, int32_t nCount, const RECT & lpRect, UINT nFormat)
    {
-      /*if(get_handle1() == NULL)
-       return -1;
-       // these flags would modify the string
-       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-       wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
-       return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
 
    }
 
+
    int32_t graphics::draw_text(const string & str, const RECT & lpRect, UINT nFormat)
    {
 
-      /*if(get_handle1() == NULL)
-       return -1;
-       // these flags would modify the string
-       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-       wstring wstr = ::str::international::utf8_to_unicode(str);
-       return ::DrawTextW(get_handle1(), (const unichar *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
-
-      /*
-       try
-       {
-
-       if(m_pgraphics == NULL)
-       return FALSE;
-
-       switch(m_etextrendering)
-       {
-       case ::draw2d::text_rendering_anti_alias:
-       m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-       m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-       break;
-       case ::draw2d::text_rendering_anti_alias_grid_fit:
-       m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-       m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-       break;
-       case ::draw2d::text_rendering_single_bit_per_pixel:
-       m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-       m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-       break;
-       case ::draw2d::text_rendering_clear_type_grid_fit:
-       m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-       m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-       break;
-       }
-
-       }
-       catch(...)
-       {
-       }
-       */
-
-
-//      visual::graphics_extension e(get_app());
       ::draw2d::graphics::draw_text(str, lpRect, nFormat);
-
-      //_DrawText(this, str, lpRect, nFormat);
-
-      /*
-
-       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
-
-
-       format.SetFormatFlags(format.GetFormatFlags()
-       | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-       | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
-
-       if(nFormat & DT_LEFT)
-       {
-       format.SetAlignment(Gdiplus::StringAlignmentNear);
-       }
-       else if(nFormat & DT_RIGHT)
-       {
-       format.SetAlignment(Gdiplus::StringAlignmentFar);
-       }
-       else if(nFormat & DT_CENTER)
-       {
-       format.SetAlignment(Gdiplus::StringAlignmentCenter);
-       }
-       else
-       {
-       format.SetAlignment(Gdiplus::StringAlignmentNear);
-       }
-
-       if(nFormat & DT_BOTTOM)
-       {
-       format.SetLineAlignment(Gdiplus::StringAlignmentFar);
-       }
-       else if(nFormat & DT_TOP)
-       {
-       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
-       }
-       else if(nFormat & DT_VCENTER)
-       {
-       format.SetLineAlignment(Gdiplus::StringAlignmentCenter);
-       }
-       else
-       {
-       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
-       }
-
-       //m_dFontSize             = fontSrc.m_dFontSize;
-
-       Gdiplus::Matrix m;
-       m_pgraphics->GetTransform(&m);
-
-       Gdiplus::Matrix * pmNew = m.Clone();
-
-       pmNew->Translate((Gdiplus::REAL) lpRect.left, (Gdiplus::REAL) lpRect.top);
-       pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
-
-       Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) ((lpRect.right - lpRect.left) * m_fontxyz.m_dFontWidth), (Gdiplus::REAL) (lpRect.bottom - lpRect.top));
-
-       m_pgraphics->SetTransform(pmNew);
-
-       m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
-
-       m_pgraphics->SetTransform(&m);
-
-       delete pmNew;*/
-//
-//      cairo_translate(m_pdc, lpRect.left, lpRect.top);
-//
-//      cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
-//
-//      set(m_spfont);
-//
-//      cairo_show_text(m_pdc, str);
-//
-//      cairo_scale(m_pdc, 1.0 / m_fontxyz.m_dFontWidth, 1.0);
-//
-//      cairo_translate(m_pdc, -lpRect.left, -lpRect.top);
-//
 
       return 1;
 
    }
 
+   
    int32_t graphics::draw_text_ex(LPTSTR lpszString, int32_t nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       throw not_implemented(get_app());
-      return 0 ;
 
-      /*
-       if(get_handle1() == NULL)
-       return -1;
-       // these flags would modify the string
-       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-       wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
-       return ::DrawTextExW(get_handle1(), const_cast<unichar *>((const unichar *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams);
-       */
+      return 0;
+
    }
+   
 
    int32_t graphics::draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       throw not_implemented(get_app());
       return 0;
-
-      /*
-       ASSERT(get_handle1() != NULL);
-       // these flags would modify the string
-       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-       wstring wstr = ::str::international::utf8_to_unicode(str);
-       return ::DrawTextExW(get_handle1(), const_cast<unichar *>((const unichar *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams);
-       */
 
    }
 
@@ -5059,32 +4480,6 @@ namespace draw2d_quartz2d
 
       return ::size(sized.cx, sized.cy);
 
-      /*wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
-
-       Gdiplus::RectF box;
-
-       Gdiplus::PointF origin(0, 0);
-
-       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
-
-       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
-       | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-       | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
-
-       m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
-
-       return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));*/
-
-      /*if(get_handle2() == NULL)
-       return size(0, 0);
-       SIZE size;
-       string str(lpszString, nCount);
-       wstring wstr = ::str::international::utf8_to_unicode(str);
-       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
-       {
-       return class size(0, 0);
-       }
-       return size;*/
    }
 
 
@@ -5107,30 +4502,15 @@ namespace draw2d_quartz2d
       throw not_implemented(get_app());
       return ::size(0, 0);
 
-      /*
-       ASSERT(get_handle1() != NULL);
-       SIZE size;
-       string str(lpszString, nCount);
-       wstring wstr = ::str::international::utf8_to_unicode(str);
-       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
-       return size;
-       */
-
    }
 
+   
    size graphics::GetOutputTextExtent(const string & str) const
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
-      /*
-       ASSERT(get_handle1() != NULL);
-       SIZE size;
-       wstring wstr = ::str::international::utf8_to_unicode(str);
-       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
-       return size;
-       */
    }
 
 
@@ -5150,9 +4530,9 @@ namespace draw2d_quartz2d
       for(auto str : stra)
       {
       
-         const_cast < graphics * > (this)->internal_show_text(0, 0, str, str.get_length(), kCGTextInvisible, false, &ascent, &descent, &leading, &width);
+         const_cast < graphics * > (this)->internal_show_text(0, 0, 0, DT_TOPLEFT, str, (int32_t) str.get_length(), kCGTextInvisible, false, &ascent, &descent, &leading, &width);
 
-         size.cy +=ascent + descent + leading;
+         size.cy += ascent + descent + leading;
          
          if(leading <= 0)
          {
@@ -5169,7 +4549,7 @@ namespace draw2d_quartz2d
 
    }
 
-
+   
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount) const
    {
 
@@ -5231,17 +4611,15 @@ namespace draw2d_quartz2d
    bool graphics::TextOutRaw(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      return internal_show_text(x, y, lpszString, nCount, kCGTextFill);
-
-      return true;
+      return internal_show_text(x, y, 0, DT_TOPLEFT, lpszString, nCount, kCGTextFill);
 
    }
 
 
-   bool graphics::internal_show_text(double x, double y, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth, ::draw2d::pen * ppen, ::draw2d::brush * pbrush, ::draw2d::font * pfont)
+   bool graphics::internal_show_text(double x, double y, double wAlign, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth, ::draw2d::pen * ppen, ::draw2d::brush * pbrush, ::draw2d::font * pfont)
    {
 
-      return internal_show_text(pfont == NULL ? m_spfont.m_p : pfont, pbrush == NULL ? m_spbrush.m_p : pbrush, ppen == NULL ? m_sppen.m_p : ppen, x, y, lpszString, nCount, emode, bDraw, pascent,pdescent, pleading, pwidth);
+      return internal_show_text(pfont == NULL ? m_spfont.m_p : pfont, pbrush == NULL ? m_spbrush.m_p : pbrush, ppen == NULL ? m_sppen.m_p : ppen, x, y, wAlign, nFormat, lpszString, nCount, emode, bDraw, pascent,pdescent, pleading, pwidth);
 
    }
 
@@ -5514,11 +4892,9 @@ namespace draw2d_quartz2d
 
    }
 
+
    bool graphics::SelectFont(::draw2d::font * pfont)
    {
-      // SIOOT - Should implemennt one of them
-      // OASOWO - otherwise a stack overflow will occur
-      // BTAIOM - because these are interface only methods
 
       m_spfont = pfont;
 
@@ -5526,33 +4902,7 @@ namespace draw2d_quartz2d
 
    }
 
-   bool graphics::set(const ::draw2d::font * pfont)
-   {
-
-      if(pfont == NULL)
-      {
-
-         CGContextSelectFont(m_pdc, FONT_SANS, 16.0 * m_dFontFactor, kCGEncodingFontSpecific);
-
-      }
-      else if(pfont->m_strFontFamilyName == FONT_SANS)
-      {
-
-         CGContextSelectFont(m_pdc, FONT_SANS, pfont->m_dFontSize * m_dFontFactor, kCGEncodingFontSpecific);
-
-      }
-      else
-      {
-
-         CGContextSelectFont(m_pdc, FONT_SANS, pfont->m_dFontSize * m_dFontFactor, kCGEncodingFontSpecific);
-
-      }
-
-      return true;
-
-   }
-
-
+   
    bool graphics::fill_and_draw()
    {
 
@@ -5883,197 +5233,99 @@ namespace draw2d_quartz2d
       return true;
 
    }
+   
+   
    bool graphics::draw_inline(const ::draw2d_quartz2d::path::string_path & stringpath, ::draw2d::pen * ppen)
    {
 
-      
       string str(stringpath.m_strText);
       
       synch_lock ml(m_pmutex);
-      
-      size sz = GetTextExtent(str);
       
       double dx;
       
       double dy;
       
-//      if(nFormat & DT_RIGHT)
-//      {
-//         dx = lpRect.right - lpRect.left - sz.cx;
-//      }
-//      else if(nFormat & DT_CENTER)
-//      {
-//         dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
-//      }
-//      else
-      {
-         dx = 0.;
-      }
+      dx = 0.;
+
+      dy = 0.;
+
+      str.replace("\t", "        ");
+
+      stringa stra;
+         
+      stra.add_lines(str);
+         
+      int offsety = 0;
       
-//      if(nFormat & DT_BOTTOM)
-//      {
-//         dy = lpRect.bottom - lpRect.top - sz.cy;
-//      }
-//      else if(nFormat & DT_VCENTER)
-//      {
-//         dy = ((lpRect.bottom - lpRect.top) - (sz.cy)) / 2.0;
-//      }
-      //else
-      {
-         dy = 0.;
-      }
+      CGFloat ascent, descent, leading, width;
       
-//      if(nFormat & DT_EXPANDTABS)
+      for(auto str : stra)
       {
+            
+         internal_show_text(stringpath.m_x + dx,stringpath.m_y + dy + offsety, 0, DT_TOPLEFT, str, (int)str.get_length(), kCGTextStroke, true, &ascent, &descent, &leading, &width, ppen, NULL, stringpath.m_spfont);
+            
+         offsety += ascent + descent + leading;
          
-         str.replace("\t", "        ");
-         
-      }
-//      else
-//      {
-//         
-//         str.replace("\t", "");
-//         
-//      }
-//      
-//      if(nFormat & DT_SINGLELINE)
-//      {
-//         
-//         str.replace("\r", "");
-//         
-//         str.replace("\n", "");
-//         
-//         //text_out(lpRect.left + dx,lpRect.top + dy,str);
-//         
-//         internal_show_text(lpRect.left + dx,lpRect.top + dy, str, (int)str.get_length(), kCGTextStroke, true, NULL, NULL, NULL, NULL, ppen, NULL, stringpath.m_spfont);
-//
-//         
-//      }
-      //else
-      {
-         
-         size s = GetTextExtent(str);
-         
-         stringa stra;
-         
-         stra.add_lines(str);
-         
-         int offsety = 0;
-         
-         for(auto str : stra)
+         if(leading <= 0)
          {
             
-            size s1 = GetTextExtent(str);
-            
-            internal_show_text(stringpath.m_x + dx,stringpath.m_y + dy + offsety, str, (int)str.get_length(), kCGTextStroke, true, NULL, NULL, NULL, NULL, ppen, NULL, stringpath.m_spfont);
-            
-            offsety += s1.cy;
+            offsety += descent;
             
          }
          
-         
       }
-      
-
+         
       return true;
 
    }
+   
+   
    bool graphics::fill_inline(const ::draw2d_quartz2d::path::string_path & stringpath, ::draw2d::brush * pbrush)
    {
+      
       string str(stringpath.m_strText);
       
       synch_lock ml(m_pmutex);
-      
-      size sz = GetTextExtent(str);
       
       double dx;
       
       double dy;
       
-      //      if(nFormat & DT_RIGHT)
-      //      {
-      //         dx = lpRect.right - lpRect.left - sz.cx;
-      //      }
-      //      else if(nFormat & DT_CENTER)
-      //      {
-      //         dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
-      //      }
-      //      else
-      {
-         dx = 0.;
-      }
+      dx = 0.;
+
+      dy = 0.;
+
+      str.replace("\t", "        ");
+         
+      stringa stra;
+         
+      stra.add_lines(str);
+         
+      int offsety = 0;
       
-      //      if(nFormat & DT_BOTTOM)
-      //      {
-      //         dy = lpRect.bottom - lpRect.top - sz.cy;
-      //      }
-      //      else if(nFormat & DT_VCENTER)
-      //      {
-      //         dy = ((lpRect.bottom - lpRect.top) - (sz.cy)) / 2.0;
-      //      }
-      //else
-      {
-         dy = 0.;
-      }
+      CGFloat ascent, descent, leading, width;
       
-      //      if(nFormat & DT_EXPANDTABS)
+      for(auto str : stra)
       {
+            
+         internal_show_text(stringpath.m_x + dx, stringpath.m_y + dy + offsety, 0, DT_TOPLEFT,  str, (int)str.get_length(), kCGTextFill, true, &ascent, &descent, &leading, &width, NULL, pbrush, stringpath.m_spfont);
+            
+         offsety += ascent + descent + leading;
          
-         str.replace("\t", "        ");
-         
-      }
-      //      else
-      //      {
-      //
-      //         str.replace("\t", "");
-      //
-      //      }
-      //
-      //      if(nFormat & DT_SINGLELINE)
-      //      {
-      //
-      //         str.replace("\r", "");
-      //
-      //         str.replace("\n", "");
-      //
-      //         //text_out(lpRect.left + dx,lpRect.top + dy,str);
-      //
-      //         internal_show_text(lpRect.left + dx,lpRect.top + dy, str, (int)str.get_length(), kCGTextStroke, true, NULL, NULL, NULL, NULL, ppen, NULL, stringpath.m_spfont);
-      //
-      //
-      //      }
-      //else
-      {
-         
-         size s = GetTextExtent(str);
-         
-         stringa stra;
-         
-         stra.add_lines(str);
-         
-         int offsety = 0;
-         
-         for(auto str : stra)
+         if(leading <= 0)
          {
             
-            size s1 = GetTextExtent(str);
-            
-            //internal_show_text(stringpath.m_x + dx,stringpath.m_y + dy + offsety, str, (int)str.get_length(), kCGTextStroke, true, NULL, NULL, NULL, NULL, ppen, NULL, stringpath.m_spfont);
-                  internal_show_text(stringpath.m_x + dx, stringpath.m_y + dy + offsety, str, (int)str.get_length(), kCGTextFill, true, NULL, NULL, NULL, NULL, NULL, pbrush, stringpath.m_spfont);
-            
-            offsety += s1.cy;
+            offsety += descent;
             
          }
          
-         
       }
       
-      
       return true;
-      //      internal_show_text(stringpath.m_x, stringpath.m_y, stringpath.m_strText, (int)stringpath.m_strText.get_length(), kCGTextFill, true, NULL, NULL, NULL, NULL, NULL, pbrush, stringpath.m_spfont);
-      //return true;
 
    }
+
 
    bool graphics::fill()
    {
@@ -6100,7 +5352,6 @@ namespace draw2d_quartz2d
    }
 
 
-   
    void graphics::enum_fonts(::draw2d::font::enum_item_array & itema)
    {
       
@@ -6108,7 +5359,7 @@ namespace draw2d_quartz2d
       
       unsigned long c = apple_get_fonts(&p);
       
-      if(c >0)
+      if(c > 0)
       {
          
          for(unsigned long ui = 0; ui < c; ui++)
@@ -6134,143 +5385,483 @@ namespace draw2d_quartz2d
       
    }
 
-
-
-   bool graphics::internal_show_text(::draw2d::font_sp spfont,::draw2d::brush_sp spbrush,::draw2d::pen_sp sppen, double x, double y, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth)
-{
-
-   CGContextRef pgraphics = m_pdc;
-   string str(lpszString, nCount);
-
-   CFStringRef string = CFStringCreateWithCString(NULL, str, kCFStringEncodingUTF8);
-
-   if(string == NULL)
-      return false;
    
-   CGContextSaveGState(pgraphics);
-
-   //CGContextBeginPath(pgraphics);
-
-   ::string strFontName;
-
-   if(spfont.is_null())
+   int32_t graphics::draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat)
    {
-
-      strFontName = FONT_SANS;
-
-   }
-   else if(spfont->m_strFontFamilyName == FONT_SANS)
-   {
-
-      strFontName = FONT_SANS;
-
-   }
-   else
-   {
-
-      strFontName = spfont->m_strFontFamilyName;
-
-   }
-
-   CFStringRef fontName = CFStringCreateWithCString(NULL, strFontName, kCFStringEncodingUTF8);
-
-   double dFontSize;
-
-   if(spfont.is_null())
-   {
-
-      dFontSize = 12.0;
-
-   }
-   else
-   {
-
-      dFontSize = spfont->m_dFontSize;
-
-   }
-
-   CTFontDescriptorRef fontD = CTFontDescriptorCreateWithNameAndSize(fontName, 0.f);
-
-   CTFontRef font =  CTFontCreateWithFontDescriptor(fontD, dFontSize, NULL);
-
-   array < CFStringRef>    pkeys;
-   array < CFTypeRef >     pvals;
-   array < CFTypeRef >     cfrel;
-   array < CGColorRef >    crrel;
-
-   pkeys.add(kCTFontAttributeName);
-   pvals.add(font);
-
-   COLORREF cr;
-
-   if(emode != kCGTextInvisible && bDraw)
-   {
-
-      CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-
-      CGFloat components[4];
-
-      if(emode == kCGTextFill || emode == kCGTextFillStroke)
+      
+      string str(strParam);
+      
+      synch_lock ml(m_pmutex);
+      
+      double dx;
+      
+      double dy;
+      
+      
+      if(nFormat & DT_EXPANDTABS)
       {
          
-         if(spbrush.is_set() &&
-            (spbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color
-             || spbrush->m_etype == ::draw2d::brush::type_radial_gradient_color
-            || spbrush->m_etype == ::draw2d::brush::type_pattern))
+         str.replace("\t", "        ");
+         
+      }
+      else
+      {
+         
+         str.replace("\t", "");
+         
+      }
+      
+      
+      double y;
+      
+      if(nFormat & DT_BOTTOM)
+      {
+       
+         y = lpRect.bottom;
+         
+      }
+      else if(nFormat & DT_VCENTER)
+      {
+         
+         y = lpRect.top + ::height(lpRect) / 2.0;
+         
+      }
+      else
+      {
+         
+         y = lpRect.top;
+         
+      }
+      
+         
+      
+      if(nFormat & DT_SINGLELINE)
+      {
+         
+         str.replace("\r\n", " ");
+         
+         str.replace("\n", " ");
+         
+         str.replace("\r", " ");
+         
+         internal_show_text(
+                            lpRect.left,
+                            y,
+                            ::width(lpRect),
+                            nFormat,
+                            str,
+                            (int) str.get_length(),
+                            kCGTextFill,
+                            true,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            m_spbrush,
+                            m_spfont);
+
+      }
+      else
+      {
+         
+         stringa stra;
+         
+         stra.add_lines(str);
+         
+         CGFloat ascent, descent, leading, width;
+         
+         if(nFormat & DT_TOP)
          {
+         
+            for(auto str : stra)
+            {
             
-            emode = kCGTextClip;
+               internal_show_text(
+                               lpRect.left,
+                               y,
+                               ::width(lpRect),
+                               nFormat,
+                               str,
+                               (int) str.get_length(),
+                               kCGTextFill,
+                               true,
+                               &ascent,
+                               &descent,
+                               &leading,
+                               NULL,
+                               NULL,
+                               m_spbrush,
+                               m_spfont);
+            
+               y += ascent + descent + leading;
+            
+               if(leading <= 0)
+               {
+               
+                  y += descent;
+               
+               }
+               
+            }
             
          }
-         else
+         else if(nFormat & DT_BOTTOM)
          {
-
-            cr = spbrush.is_null() ? ARGB(255, 0, 0, 0) : spbrush->m_cr;
+               
+            for(auto str : stra)
+            {
+                  
+               internal_show_text(
+                                  lpRect.left,
+                                  y,
+                                  ::width(lpRect),
+                                  nFormat,
+                                  str,
+                                  (int) str.get_length(),
+                                  kCGTextFill,
+                                  true,
+                                  &ascent,
+                                  &descent,
+                                  &leading,
+                                  NULL,
+                                  NULL,
+                                  m_spbrush,
+                                  m_spfont);
+                  
+                  y -= ascent + descent + leading;
+                  
+                  if(leading <= 0)
+                  {
+                     
+                     y -= descent;
+                     
+                  }
+                  
+               }
             
-            components[0] = argb_get_r_value(cr) / 255.f;
-            components[1] = argb_get_g_value(cr) / 255.f;
-            components[2] = argb_get_b_value(cr) / 255.f;
-            components[3] = argb_get_a_value(cr) / 255.f;
+            }
+            else if(nFormat & DT_VCENTER)
+            {
+               
+               rectd rectUpper(lpRect);
+
+               rectd rectLower(lpRect);
+               
+               rectUpper.bottom = y;
+               
+               rectLower.top = y;
+
+               if(stra.get_count() % 2 == 1)
+               {
+                  
+                  internal_show_text(
+                                     lpRect.left,
+                                     y,
+                                     ::width(lpRect),
+                                     nFormat,
+                                     stra[stra.get_middle_index()],
+                                     (int) str.get_length(),
+                                     kCGTextFill,
+                                     true,
+                                     &ascent,
+                                     &descent,
+                                     &leading,
+                                     NULL,
+                                     NULL,
+                                     m_spbrush,
+                                     m_spfont);
+                  
+                  double dy = ascent + descent + leading;
+                  
+                  if(leading <= 0)
+                  {
+                     
+                     dy += descent;
+                     
+                  }
+                  
+                  rectUpper.bottom -= dy/2.0;
+                  
+                  rectLower.top += dy/2.0;
+                  
+               }
+              
+               if(stra.get_count() >= 2)
+               {
+                  
+                  draw_text(
+                            stra.implode("\n", 0, stra.get_middle_index() + 1),
+                            rectUpper,
+                            (nFormat & ~DT_VCENTER) | DT_BOTTOM);
+                  
+                  draw_text(
+                            stra.implode("\n", stra.get_middle_index() + 1),
+                            rectLower,
+                            (nFormat & ~DT_VCENTER) | DT_TOP);
+                  
+               }
+               
+            }
+            
+         }
+         
+      return 1;
+      
+   }
+
+
+   bool graphics::internal_show_text(::draw2d::font_sp spfont,::draw2d::brush_sp spbrush,::draw2d::pen_sp sppen, double x, double y, double wAlign, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth)
+   {
+
+      CGContextRef pgraphics = m_pdc;
+   
+      string str(lpszString, nCount);
+   
+      sp(::draw2d_quartz2d::font) f = spfont;
+      
+      synch_lock sl(spfont->m_pmutex);
+      
+      bool bFill = false;
+      
+      bool bStroke = false;
+      
+      COLORREF crFill;
+      
+      COLORREF crStroke;
+      
+      ::draw2d::brush * pbrush = NULL;
+      
+      bool bCacheLine = false;
+      
+      if(bDraw)
+      {
+         
+         if(emode == kCGTextFill || emode == kCGTextFillStroke)
+         {
+            
+            if(spbrush.is_set() &&
+               (spbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color
+                || spbrush->m_etype == ::draw2d::brush::type_radial_gradient_color
+                || spbrush->m_etype == ::draw2d::brush::type_pattern))
+            {
+               
+               pbrush = spbrush;
+               
+               emode = kCGTextClip;
+               
+            }
+            else
+            {
+               
+               bFill = true;
+               
+               crFill = spbrush.is_null() ? ARGB(255, 0, 0, 0) : spbrush->m_cr;
+
+            }
+            
+            if(emode == kCGTextStroke|| emode == kCGTextFillStroke)
+            {
+
+               bStroke = true;
+               
+               crStroke = sppen.is_null() ? ARGB(255, 0, 0, 0) : sppen->m_cr;
+               
+            }
+            
+         }
+         
+      }
+   
+      if(!f->m_bUpdated)
+      {
+         
+         if(f->m_fontName != NULL)
+         {
+            
+            CFRelease(f->m_fontName);
+            
+            f->m_fontName = NULL;
+            
+         }
+         
+         if(f->m_fontD != NULL)
+         {
+            
+            CFRelease(f->m_fontD);
+         
+            f->m_fontD = NULL;
+            
+         }
+         
+         if(f->m_font != NULL)
+         {
+         
+            CFRelease(f->m_font);
+         
+            f->m_font = NULL;
+            
+         }
+         
+         f->m_mapMetrics.remove_all();
+         
+      }
+      else if(!bDraw)
+      {
+         
+         auto passoc = f->m_mapMetrics.PLookup(str);
+         
+         if(passoc != NULL)
+         {
+            
+            ::draw2d_quartz2d::font::metrics & m = passoc->m_element2;
+            
+            m.get(pascent, pdescent, pleading, pwidth);
+            
+            return true;
+            
+         }
+                                   
+      }
+      else if(strpbrk(str, "0123456789") == NULL)
+      {
+           
+         auto passoc = f->m_mapMetrics.PLookup(str);
+            
+         if(passoc != NULL)
+         {
+            
+            ::draw2d_quartz2d::font::metrics & m = passoc->m_element2;
+               
+            CTLineRef line = m.m_map[emode][crFill][crStroke];
+               
+            if(line != NULL)
+            {
+               
+               m.align(x, y, wAlign, nFormat);
+                  
+               internal_draw_text(emode, x, y + m.ascent, line, pbrush);
+               
+               m.get(pascent, pdescent, pleading, pwidth);
+                                     
+               return true;
+                  
+            }
+               
+         }
+
+         bCacheLine = true;
+         
+      }
+      
+      ::draw2d_quartz2d::font::metrics & m = f->m_mapMetrics[str];
+      
+      CFStringRef string = CFStringCreateWithCString(NULL, str, kCFStringEncodingUTF8);
+
+      if(string == NULL)
+      {
+         
+         return false;
+         
+      }
+   
+      CGContextSaveGState(pgraphics);
+
+      if(f->m_fontName == NULL)
+      {
+
+         f->m_fontName = CFStringCreateWithCString(NULL, f->m_strFontFamilyName, kCFStringEncodingUTF8);
+      
+      }
+   
+      if(f->m_fontD == NULL)
+      {
+
+         f->m_fontD = CTFontDescriptorCreateWithNameAndSize(f->m_fontName, 0.f);
+      
+      }
+   
+      double dFontSize;
+   
+      if(spfont.is_null())
+      {
+      
+         dFontSize = 12.0;
+      
+      }
+      else
+      {
+      
+         dFontSize = spfont->m_dFontSize;
+      
+      }
+   
+      if(f->m_font == NULL)
+      {
+   
+         f->m_font =  CTFontCreateWithFontDescriptor(f->m_fontD, dFontSize, NULL);
+      
+      }
+
+      array < CFStringRef>    pkeys;
+      array < CFTypeRef >     pvals;
+      array < CFTypeRef >     cfrel;
+      array < CGColorRef >    crrel;
+
+      pkeys.add(kCTFontAttributeName);
+      pvals.add(f->m_font);
+
+      if(emode != kCGTextInvisible && bDraw)
+      {
+
+         CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+
+         CGFloat components[4];
+
+         if(bFill)
+         {
+         
+            components[0] = argb_get_r_value(crFill) / 255.f;
+            components[1] = argb_get_g_value(crFill) / 255.f;
+            components[2] = argb_get_b_value(crFill) / 255.f;
+            components[3] = argb_get_a_value(crFill) / 255.f;
 
             pkeys.add(kCTForegroundColorAttributeName);
             pvals.add(CGColorCreate(rgbColorSpace, components));
             crrel.add((CGColorRef)pvals.last());
 
          }
+      
+         if(bStroke)
+         {
+
+            double dStroke = sppen.is_null() ? 3.0 : sppen->m_dWidth * 100.0 / dFontSize;
+
+            pkeys.add(kCTStrokeWidthAttributeName);
+            pvals.add(CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
+            cfrel.add(pvals.last());
+
+            components[0] = argb_get_r_value(crStroke) / 255.f;
+            components[1] = argb_get_g_value(crStroke) / 255.f;
+            components[2] = argb_get_b_value(crStroke) / 255.f;
+            components[3] = argb_get_a_value(crStroke) / 255.f;
+
+            pkeys.add(kCTStrokeColorAttributeName);
+            pvals.add(CGColorCreate(rgbColorSpace, components));
+            crrel.add((CGColorRef)pvals.last());
+
+         }
+
+         CGColorSpaceRelease(rgbColorSpace);
 
       }
-      if(emode == kCGTextStroke|| emode == kCGTextFillStroke)
-      {
 
-         cr = sppen.is_null() ? ARGB(255, 0, 0, 0) : sppen->m_cr;
+      ::count iCount = pkeys.count();
 
-         double dStroke = sppen.is_null() ? 3.0 : sppen->m_dWidth * 100.0 / dFontSize;
+      CFStringRef * &   keys = (CFStringRef * &) pkeys.m_pData;
+      CFTypeRef * &     vals = (CFTypeRef * &) pvals.m_pData;
 
-         pkeys.add(kCTStrokeWidthAttributeName);
-         pvals.add(CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &dStroke));
-         cfrel.add(pvals.last());
-
-         components[0] = argb_get_r_value(cr) / 255.f;
-         components[1] = argb_get_g_value(cr) / 255.f;
-         components[2] = argb_get_b_value(cr) / 255.f;
-         components[3] = argb_get_a_value(cr) / 255.f;
-
-         pkeys.add(kCTStrokeColorAttributeName);
-         pvals.add(CGColorCreate(rgbColorSpace, components));
-         crrel.add((CGColorRef)pvals.last());
-
-      }
-
-      CGColorSpaceRelease(rgbColorSpace);
-
-   }
-
-   ::count iCount = pkeys.count();
-
-   CFStringRef * &   keys = (CFStringRef * &) pkeys.m_pData;
-   CFTypeRef * &     vals = (CFTypeRef * &) pvals.m_pData;
-
-   CFDictionaryRef attributes = CFDictionaryCreate(
+      CFDictionaryRef attributes = CFDictionaryCreate(
                       kCFAllocatorDefault,
                       (const void**) keys,
                       (const void**) vals,
@@ -6278,93 +5869,84 @@ namespace draw2d_quartz2d
                       &kCFTypeDictionaryKeyCallBacks,
                       &kCFTypeDictionaryValueCallBacks);
 
+      CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, string, attributes);
 
-   CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, string, attributes);
+      CFRelease(string);
 
-   CFRelease(string);
+      CFRelease(attributes);
 
-   CFRelease(attributes);
+      CTLineRef line = CTLineCreateWithAttributedString(attrString);
 
-   CTLineRef line = CTLineCreateWithAttributedString(attrString);
+      m.width = CTLineGetTypographicBounds(line, &m.ascent,  &m.descent, &m.leading);
 
-   CGFloat ascent, descent, leading, width;
+      if(bDraw)
+      {
+         
+         m.align(x, y, wAlign, nFormat);
 
-   width = CTLineGetTypographicBounds(line, &ascent,  &descent, &leading);
+         internal_draw_text(emode, x, y + m.ascent, line, pbrush);
+         
+      }
+      
+      if(!bCacheLine)
+      {
 
-   //      double dRate = dFontSize / (ascent + descent + leading);
+         CFRelease(line);
+         
+      }
 
-   if(bDraw)
+      for(index i = 0; i < cfrel.count(); i++)
+      {
+      
+         CFRelease(cfrel[i]);
+   
+      }
+
+      for(index i = 0; i < crrel.count(); i++)
+      {
+      
+         CGColorRelease(crrel[i]);
+   
+      }
+
+      m.get(pascent, pdescent, pleading, pwidth);
+   
+      CGContextRestoreGState(pgraphics);
+   
+      if(bCacheLine)
+      {
+            
+         m.m_map[emode][crFill][crStroke] = line;
+            
+      }
+      
+      f->m_bUpdated = true;
+   
+      return true;
+
+   }
+   
+   
+   void graphics::internal_draw_text(CGTextDrawingMode emode, double x, double y, CTLineRef line, ::draw2d::brush * pbrush)
    {
-
+      
+      CGContextRef pgraphics = m_pdc;
+      
       CGContextSetTextDrawingMode(pgraphics, emode);
-
-      CGContextSetTextMatrix(pgraphics, CGAffineTransformScale(CGAffineTransformMakeTranslation(x, y + ascent), 1.f, -1.f));
-
+   
+      CGContextSetTextMatrix(pgraphics, CGAffineTransformScale(CGAffineTransformMakeTranslation(x, y), 1.f, -1.f));
+   
       CTLineDraw(line,pgraphics);
+   
+      if(pbrush != NULL)
+      {
+      
+         fill(pbrush);
+      
+      }
 
    }
    
-   if(emode == kCGTextClip && (spbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color
-                               || spbrush->m_etype == ::draw2d::brush::type_radial_gradient_color
-      || spbrush->m_etype == ::draw2d::brush::type_pattern))
-   {
-      
-      fill(spbrush);
-      
-   }
-
-   CFRelease(line);
-
-   for(index i = 0; i < cfrel.count(); i++)
-   {
-      CFRelease(cfrel[i]);
-   }
-
-   for(index i = 0; i < crrel.count(); i++)
-   {
-      CGColorRelease(crrel[i]);
-   }
-
-   CFRelease(fontName);
-
-   CFRelease(fontD);
-
-   CFRelease(font);
-
-   if(pascent != NULL)
-   {
-
-      *pascent = ascent;
-
-   }
-
-   if(pdescent != NULL)
-   {
-
-      *pdescent = descent;
-
-   }
-
-   if(pleading != NULL)
-   {
-
-      *pleading = leading;
-
-   }
-
-   if(pwidth != NULL)
-   {
-
-      *pwidth = width;
-
-   }
-   
-   CGContextRestoreGState(pgraphics);
-
-   return true;
-
-}
-
 
 } // namespace draw2d_quartz2d
 

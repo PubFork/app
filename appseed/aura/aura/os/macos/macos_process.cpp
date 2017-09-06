@@ -4,7 +4,10 @@
 #include <signal.h>
 #include <errno.h>
 #include <string.h>
+#include <spawn.h>
 
+
+extern char ** environ;
 
 int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 {

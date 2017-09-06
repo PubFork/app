@@ -3427,7 +3427,7 @@ void simple_frame_window::on_select_user_style()
 
       string strSchema = m_varFrame["wndfrm"];
 
-      if (strSchema.has_char())
+      if (strSchema.has_char() || GetParent() == NULL)
       {
 
          m_puserstyle = Session.get_user_style(strSchema, get_app());

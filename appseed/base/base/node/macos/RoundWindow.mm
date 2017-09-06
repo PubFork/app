@@ -70,7 +70,7 @@
    
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector (windowDidMove:) name: NSWindowDidMoveNotification object: self];
 
-   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowWillClose:) name: NSWindowWillCloseNotification object: self];
+   //[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowWillClose:) name: NSWindowWillCloseNotification object: self];
 
    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(windowDidExpose:) name: NSWindowDidExposeNotification object: self];
 
@@ -80,7 +80,7 @@
  
    [self create_view];
    
-	return self;
+      return self;
    
 }
 
@@ -328,21 +328,21 @@
 
 
 
--(void)windowWillClose
-{
-   
-   try
-   {
-      
-      m_pwindow->round_window_on_hide();
-
-   }
-   catch (...)
-   {
-
-   }
-   
-}
+//-(void)windowWillClose
+//{
+//   
+//   try
+//   {
+//      
+//      m_pwindow->round_window_on_hide();
+//
+//   }
+//   catch (...)
+//   {
+//
+//   }
+//   
+//}
 
 
 @end

@@ -7,7 +7,6 @@
 //
 
 
-#include "framework.h"
 
 
 void * get_thread_ptr(const char * pszKey)

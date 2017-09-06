@@ -109,43 +109,7 @@ inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at(index nIndex, ARG_TY
    // else
    //  throw invalid_argument_exception(get_app());
 }
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::element_at(index nIndex) const
-{
-   //   if(nIndex >= 0 && nIndex < m_nSize)
-   return get_data()[nIndex];
-   // throw invalid_argument_exception(get_app());
-}
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::element_at(index nIndex)
-{
-   //   if(nIndex >= 0 && nIndex < m_nSize)
-   return get_data()[nIndex];
-   // throw invalid_argument_exception(get_app());
-}
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::first(index nIndex) const
-{
-   return this->element_at(nIndex);
-}
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::first(index nIndex)
-{
-   return this->element_at(nIndex);
-}
 
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::last(index index) const
-{
-   return element_at(this->get_upper_bound(index));
-}
-
-
-template<class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::last(index index)
-{
-   return element_at(this->get_upper_bound(index));
-}
 
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
@@ -183,11 +147,15 @@ inline index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::add_new(::count count)
    return this->get_upper_bound();
 }
 
+
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE & raw_array < TYPE, ARG_TYPE, ALLOCATOR >::add_new()
 {
+   
    this->allocate(this->m_nSize + 1);
-   return last();
+   
+   return this->last();
+   
 }
 
 
@@ -197,7 +165,7 @@ inline TYPE raw_array < TYPE, ARG_TYPE, ALLOCATOR >::pop(index n)
 
    index i = this->get_upper_bound(n);
 
-   TYPE t = element_at(i);
+   TYPE t = this->element_at(i);
 
    this->remove_at(i);
 
@@ -229,13 +197,18 @@ inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::push_back(ARG_TYPE newEleme
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::operator[](index nIndex) const
 {
-   return element_at(nIndex);
+   
+   return this->element_at(nIndex);
+   
 }
+
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::operator[](index nIndex)
 {
+   
    return this->element_at(nIndex);
+   
 }
 
 
@@ -320,13 +293,17 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(ARG_TYPE t, ::count n)
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 raw_array < TYPE, ARG_TYPE, ALLOCATOR >::raw_array(TYPE * ptypea, ::count n)
 {
+   
    this->allocate(n);
+   
    for(int i = 0; i < n; i++)
    {
-      element_at(i) = ptypea[i];
+      
+      this->element_at(i) = ptypea[i];
+      
    }
+   
 }
-
 
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >

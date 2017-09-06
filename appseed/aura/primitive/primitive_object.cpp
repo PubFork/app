@@ -72,33 +72,12 @@ object::object(::aura::application * papp)
 object::~object()
 {
 
-   {
+   threadrefa_post_quit_and_wait(one_minute());
 
-      synch_lock sl(m_pmutex);
-
-      if (m_pthreadrefa != NULL)
-      {
-
-         m_pthreadrefa->m_pmutex = m_pmutex;
-
-         ::thread_refa * pthreadrefa = m_pthreadrefa;
-
-         sl.unlock();
-
-         pthreadrefa->post_quit_and_wait(seconds(60));
-
-         sl.lock();
-
-         m_pthreadrefa->m_pmutex = NULL;
-
-         ::aura::del(m_pthreadrefa);
-
-      }
-
-      ::aura::del(m_psetObject);
-
-   }
-
+   ::aura::del(m_pthreadrefa);
+   
+   ::aura::del(m_psetObject);
+   
    ::aura::del(m_pmutex);
 
 }
@@ -906,6 +885,55 @@ void object::on_handle(::create * pcreate)
    
 }
 
+
+void object::threadrefa_post_quit_and_wait(::duration duration)
+{
+   
+   if (m_pthreadrefa != NULL)
+   {
+      
+      synch_lock sl(m_pmutex);
+      
+      m_pthreadrefa->m_pmutex = m_pmutex;
+      
+      ::thread_refa * pthreadrefa = m_pthreadrefa;
+      
+      sl.unlock();
+      
+      pthreadrefa->post_quit_and_wait(seconds(60));
+      
+      sl.lock();
+      
+      m_pthreadrefa->m_pmutex = NULL;
+      
+   }
+   
+}
+
+
+
+void object::threadrefa_add(::thread * pthread)
+{
+   
+   defer_create_mutex();
+   
+   synch_lock sl(m_pmutex);
+   
+   if (m_pthreadrefa == NULL)
+   {
+   
+      m_pthreadrefa = new thread_refa;
+   
+   }
+
+   if (pthread != NULL)
+   {
+   
+      m_pthreadrefa->add(pthread);
+   
+   }
+   
+}
 
 
 

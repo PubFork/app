@@ -1116,14 +1116,21 @@ namespace user
    void interaction::user_interaction_on_destroy()
    {
 
+      user_interaction_on_hide();
+      
       single_lock sl(get_wnd() == NULL || get_wnd()->m_pimpl.is_null()
                      || get_wnd()->m_pimpl.cast < ::user::interaction_impl >()==NULL ? NULL : get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->draw_mutex(), true);
 
       //single_lock sl(m_pmutex,true);
 
       m_bUserElementalOk = false;
-
-      user_interaction_on_hide();
+      
+      if(m_pthreadrefa != NULL)
+      {
+      
+         ::multithreading::post_quit_and_wait(m_pthreadrefa, one_minute());
+         
+      }
 
       try
       {
@@ -1154,28 +1161,6 @@ namespace user
       }
 
       ref_array <  ::user::interaction  > uiptra;
-
-      {
-
-         if (GetParent() != NULL)
-         {
-
-            try
-            {
-
-               single_lock sl(GetParent()->m_pmutex, true);
-
-               GetParent()->m_uiptraChild.remove(this);
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
 
       {
 
@@ -1246,52 +1231,10 @@ namespace user
          }
          catch(...)
          {
+            
          }
 
       }
-
-      //try
-      //{
-      //
-      //    m_pauraapp->remove(this);
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
-
-      //try
-      //{
-
-      //   while(m_threadptra.has_elements())
-      //   {
-      //      ::thread * pthread = m_threadptra[0];
-      //      if (pthread == NULL)
-      //      {
-      //         m_threadptra.remove_at(0);
-      //      }
-      //      else
-      //      {
-      //         {
-      //            synch_lock sl(&pthread->m_mutexUiPtra);
-      //            if (pthread->m_spuiptra.is_set())
-      //            {
-      //               pthread->m_spuiptra->remove(this);
-      //            }
-      //         }
-      //         m_threadptra.remove(pthread);
-      //      }
-
-      //   }
-
-      //}
-      //catch(...)
-      //{
-
-      //}
-
 
    }
 
@@ -4063,6 +4006,28 @@ namespace user
       //}
 
 
+      {
+         
+         if (GetParent() != NULL)
+         {
+            
+            try
+            {
+               
+               single_lock sl(GetParent()->m_pmutex, true);
+               
+               GetParent()->m_uiptraChild.remove(this);
+               
+            }
+            catch (...)
+            {
+               
+            }
+            
+         }
+         
+      }
+      
       {
 
          m_pimpl.release();
@@ -8471,6 +8436,8 @@ restart:
    {
 
       m_bTransparentMouseEvents = true;
+      
+#ifdef WINDOWSEX
 
       ::fork(get_app(), [=]()
       {
@@ -8487,6 +8454,8 @@ restart:
          }
 
       });
+      
+#endif
 
    }
 

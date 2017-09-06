@@ -17,8 +17,8 @@ namespace draw2d_quartz2d
    class CLASS_DECL_DRAW2D_QUARTZ2D graphics :
       virtual public ::draw2d::graphics
    {
-      // // DECLARE_DYNCREATE(::draw2d::graphics_sp)
    public:
+
       
       int m_iSaveDC;
 //#ifdef __MM
@@ -365,8 +365,14 @@ namespace draw2d_quartz2d
        BLENDFUNCTION blend);*/
       
       // Text Functions
-      virtual bool internal_show_text(double x, double y, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw = true, CGFloat * pascent = NULL, CGFloat * pdescent = NULL, CGFloat * pleading = NULL, CGFloat * pwidth = NULL, ::draw2d::pen * ppen=NULL, ::draw2d::brush * pbrush = NULL, ::draw2d::font * pfont = NULL);
+      virtual bool internal_show_text(double x, double y, double w, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw = true, CGFloat * pascent = NULL, CGFloat * pdescent = NULL, CGFloat * pleading = NULL, CGFloat * pwidth = NULL, ::draw2d::pen * ppen=NULL, ::draw2d::brush * pbrush = NULL, ::draw2d::font * pfont = NULL);
+      
+      virtual bool internal_show_text(::draw2d::font_sp spfont,::draw2d::brush_sp spbrush,::draw2d::pen_sp sppen, double x, double y, double w, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw = true, CGFloat * pascent = NULL, CGFloat * pdescent = NULL, CGFloat * pleading = NULL, CGFloat * pwidth = NULL);
+      
+      void internal_draw_text(CGTextDrawingMode emode, double x, double y, CTLineRef line, ::draw2d::brush * pbrush);
+      
       virtual bool text_out(int32_t x, int32_t y, const char * lpszString, strsize nCount) override;
+      
       virtual bool text_out(int32_t x, int32_t y, const string & str) override;
       virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount);
       virtual bool text_out(double x, double y, const string & str) override;
@@ -380,7 +386,8 @@ namespace draw2d_quartz2d
                          int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
       
       virtual int32_t draw_text(const char * lpszString, int32_t nCount, const RECT & lpRect, UINT nFormat);
-      virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat);
+      virtual int32_t draw_text(const string & str, const RECT & lpRect, UINT nFormat) override;
+      virtual int32_t draw_text(const string & strParam,const RECTD & lpRect,UINT nFormat) override;
       
       virtual int32_t draw_text_ex(LPTSTR lpszString, int32_t nCount, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
       virtual int32_t draw_text_ex(const string & str, const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
@@ -542,11 +549,6 @@ namespace draw2d_quartz2d
       
       bool blur(bool bExpand, double dRadius, const RECT & lpcrect);
       
-      //protected:
-      // used for implementation of non-virtual SelectObject calls
-      //static ::draw2d::object* PASCAL SelectGdiObject(::base::application * papp, HDC hDC, HGDIOBJ h);
-      
-      bool internal_show_text(::draw2d::font_sp spfont,::draw2d::brush_sp spbrush,::draw2d::pen_sp sppen, double x, double y, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw = true, CGFloat * pascent = NULL, CGFloat * pdescent = NULL, CGFloat * pleading = NULL, CGFloat * pwidth = NULL);
      
       
       // platform-specific or platform-internals
@@ -554,7 +556,7 @@ namespace draw2d_quartz2d
       bool add_path(const ::draw2d::region * pregion);
       bool set(const ::draw2d::brush * pbrush);
       bool set(const ::draw2d::pen * ppen);
-      bool set(const ::draw2d::font * pfont);
+      //bool set(const ::draw2d::font * pfont);
       bool set(const ::draw2d::path * ppath);
       bool set(const ::draw2d::path::element & e);
       bool set(const ::draw2d::path::arc & arc);

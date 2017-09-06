@@ -15,7 +15,7 @@ FILE *fopen_dup(const char *path, const char *attrs)
 
    return _wfopen(wstring(path), wstring(attrs));
 
-#elif
+#else
 
    return fopen(path, attrs);
 

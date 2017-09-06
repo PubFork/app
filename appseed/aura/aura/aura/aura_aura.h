@@ -14,6 +14,7 @@
 
 #define __MM
 
+#define __PARTIAL_CPP
 
 #else
 
@@ -75,4 +76,6 @@
 
 
 #define static_function static
+
+
 

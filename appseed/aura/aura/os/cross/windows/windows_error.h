@@ -3195,7 +3195,7 @@
 //
 // There was error [%2] processing the driver database.
 //
-#define ERROR_DRIVER_DATAAXIS_ERROR      652L
+#define ERROR_DRIVER_DATABASE_ERROR      652L
 
 //
 // MessageId: ERROR_SYSTEM_HIVE_TOO_LARGE
@@ -3552,7 +3552,7 @@
 // {Image ReloCAted}
 // An image file could not be mapped at the address specified in the image file. LoCAl fixups must be performed on this image.
 //
-#define ERROR_IMAGE_NOT_AT_AXIS          700L
+#define ERROR_IMAGE_NOT_AT_BASE          700L
 
 //
 // MessageId: ERROR_RXACT_STATE_CREATED

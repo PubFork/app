@@ -5,18 +5,8 @@
 //  Created by Camilo Sasuke Tsumanuma on 2013-09-17.
 //
 //
-#import "framework.h"
 
 
-//
-//  macos_user.mm
-//  base
-//
-//  Created by Camilo Sasuke Tsumanuma on 2013-09-17.
-//
-//
-//#import "framework.h"
-//#import "macos_windowing.h"
 
 
 WINBOOL get_nswindow_rect(oswindow oswindow, LPRECT lprect);

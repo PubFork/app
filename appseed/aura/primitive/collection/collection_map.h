@@ -1634,8 +1634,11 @@ template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 
 
 
+template < class KEY, class VALUE, class ARG_VALUE = const VALUE & >
+using isomap = map < KEY, KEY, VALUE, ARG_VALUE >;
 
-
+template < class VALUE, class ARG_VALUE = const VALUE & >
+using colorrefmap = isomap < COLORREF, VALUE, ARG_VALUE >;
 
 
 template < class VALUE, class ARG_VALUE = const VALUE & >

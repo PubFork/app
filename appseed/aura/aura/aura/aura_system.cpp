@@ -2886,7 +2886,7 @@ namespace aura
          else
          {
 
-            papp->handler()->add_fork("app.exe " + varFile.get_file_path() + ::str::has_char(strExtra, " : "));
+            papp->handler()->add_fork("app.exe \"" + varFile.get_file_path() + "\" " + ::str::has_char(strExtra, " : "));
             
          }
          

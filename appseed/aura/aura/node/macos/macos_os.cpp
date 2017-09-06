@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "macos.h"
 
+#if defined(MACOS)
+#include <sys/stat.h>
+#endif
 
 #undef USERNAME_LENGTH // mysql one
 

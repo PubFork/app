@@ -26,6 +26,8 @@ public:
    
    virtual void notify_icon_init(const char * strIconFile);
    virtual void notify_icon_play(const char * action) = 0;
+   
+   virtual void notify_icon_destroy();
    virtual bool notify_icon_frame_is_opened() = 0;
    
 };

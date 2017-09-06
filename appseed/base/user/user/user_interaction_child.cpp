@@ -315,13 +315,13 @@ namespace user
    void interaction_child::install_message_routing(::message::sender * pinterface)
    {
 
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
+      
       last_install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
 
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
-
-      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
 
       m_pui->install_message_routing(pinterface);
 
@@ -649,7 +649,7 @@ namespace user
       UNREFERENCED_PARAMETER(pobj);
 
       m_bCreate = false;
-
+      
       pobj->previous();
 
    }
@@ -661,7 +661,7 @@ namespace user
       UNREFERENCED_PARAMETER(pobj);
 
       ::user::interaction * puie = m_pui;
-
+      
       m_pui = NULL;
 
       PostNcDestroy();

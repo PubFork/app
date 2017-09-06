@@ -4,7 +4,7 @@
 #include <sys/time.h>
 
 
-string ca2_module_folder_dup();
+
 
 //namespace macos
 namespace aura

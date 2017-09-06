@@ -1,9 +1,15 @@
 #include "framework.h"
+
+#ifdef WINDOWS
 #include <io.h>
-//#include <sys/stat.h>
+#else
+#include <sys/stat.h>
 //Copy file using mmap()
+#include <sys/mman.h>
+#endif
+
 #include <fcntl.h>
-//#include <sys/mman.h>
+
 //#include <unistd.h>
 #define PACKAGE "mmap"
 //#include <wchar.h>

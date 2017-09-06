@@ -10,6 +10,14 @@ string get_error_message(DWORD dwError);
 
 ::aura::application *     macos_instantiate_application(::aura::application * pappSystem, const char * pszId);
 
+
+
+CLASS_DECL_AURA void vfxThrowFileException(sp(::aura::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);
+
+CLASS_DECL_AURA ::file::exception * get_FileException(::aura::application * papp, ::file::exception::e_cause cause, LONG lOsError, const char * lpszFileName = NULL);
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
 

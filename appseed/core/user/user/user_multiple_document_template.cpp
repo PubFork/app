@@ -73,7 +73,7 @@ namespace user
    void multiple_document_template::request_create(::create * pcreate)
    {
 
-      pcreate->m_spCommandLine->m_varQuery["document"] = NULL;
+      pcreate->m_spCommandLine->m_varQuery["document"] = (::object *)NULL;
 
       bool bMakeVisible = pcreate->m_bMakeVisible;
 

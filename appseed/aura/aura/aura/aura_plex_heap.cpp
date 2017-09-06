@@ -849,7 +849,7 @@ inline plex_heap_alloc * plex_heap_alloc_array::find(size_t nAllocSize)
 
 
 
-inline void * plex_heap_alloc_array::_alloc(size_t size)
+void * plex_heap_alloc_array::_alloc(size_t size)
 {
 
    plex_heap_alloc * palloc = find(size);

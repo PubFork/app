@@ -108,7 +108,7 @@ namespace windows
 
 #elif defined(APPLEOS)
 
-   path = ::file::path(getenv("HOME")) / "Application Support/Library";
+   path = ::file::path(getenv("HOME")) / "Library/Application Support";
 
 #else
 

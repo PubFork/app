@@ -439,7 +439,7 @@ namespace draw2d
       e->m_stringpath.m_x            = x;
       e->m_stringpath.m_y            = y;
       e->m_stringpath.m_strText      = strText;
-      e->m_stringpath.m_spfont       = ::clone(spfont);
+      e->m_stringpath.m_spfont       = spfont;
 
       m_elementa.add(e);
 

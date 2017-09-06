@@ -70,8 +70,8 @@ var::var(uint64_t ui )
 #ifdef OS64BIT
 var::var(long l)
 {
-   m_etype = type_uint64;
-   m_ui64 = (uint64_t) l;
+   m_etype = type_int64;
+   m_i64 = (int64_t) l;
 }
 #endif
 #endif
@@ -897,6 +897,11 @@ void var::read(::file::istream & is)
          is >> m_i64;
       }
       break;
+   case type_uint64:
+      {
+         is >> m_ui64;
+      }
+         break;
    case type_bool:
       {
          is >> m_b;

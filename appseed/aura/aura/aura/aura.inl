@@ -423,3 +423,62 @@ void memcnts_dec(T * pthis)
    }
 
 }
+
+
+namespace message
+{
+   
+
+   template < typename RECEIVER >
+   void sender::add_route (RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id)
+   {
+   
+      synch_lock sl(m_pmutexIdRoute);
+   
+      void * pvoidReceiver = preceiverDerived;
+      
+      sp(type) ptypeReceiver = System.type_info < RECEIVER >();
+   
+      if (m_idroute[id].pred_find_first([=](auto proute)
+                                     {
+                                        return proute->m_pvoidReceiver == pvoidReceiver
+                                        && proute->m_ptypeReceiver == ptypeReceiver;
+                                     }) >= 0)
+      {
+      
+         return;
+   
+      }
+   
+      ::message::receiver * preceiver = dynamic_cast < ::message::receiver * >(preceiverDerived);
+   
+      if (preceiver == NULL)
+      {
+      
+         ASSERT(FALSE);
+      
+         return;
+      
+      }
+   
+      auto pred = [=](::message::message * pmessage)
+      {
+      
+         (preceiverDerived->*phandler)(pmessage);
+      
+      };
+   
+      route * proute = create_pred_route(preceiver, pvoidReceiver, pred, ptypeReceiver);
+   
+      m_idroute[id].add(proute);
+   
+      preceiver->m_sendera.add_unique(this);
+      
+   }
+
+
+
+} // namespace message
+
+
+
