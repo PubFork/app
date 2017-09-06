@@ -25,47 +25,7 @@ namespace message
 
 
       template < typename RECEIVER >
-      void add_route(RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id = ::message::id())
-      {
-
-         synch_lock sl(m_pmutexIdRoute);
-
-         void * pvoidReceiver = preceiverDerived;
-
-         if (m_idroute[id].pred_find_first([=](auto proute)
-         {
-            return proute->m_pvoidReceiver == pvoidReceiver;
-         }) >= 0)
-         {
-
-            return;
-         }
-
-         ::message::receiver * preceiver = dynamic_cast < ::message::receiver * >(preceiverDerived);
-
-         if (preceiver == NULL)
-         {
-
-            ASSERT(FALSE);
-
-            return;
-
-         }
-
-         auto pred = [=](::message::message * pmessage)
-         {
-
-            (preceiverDerived->*phandler)(pmessage);
-
-         };
-
-         route * proute = create_pred_route(preceiver, pvoidReceiver, pred);
-
-         m_idroute[id].add(proute);
-
-         preceiver->m_sendera.add_unique(this);
-
-      }
+      void add_route(RECEIVER * preceiverDerived, void (RECEIVER::* phandler)(::message::message * pmessage), ::message::id id = ::message::id());
 
 
       virtual void route_message(::message::message * pmessage);
