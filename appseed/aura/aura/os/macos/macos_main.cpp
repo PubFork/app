@@ -117,6 +117,22 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
       stringa stra;
       
       stra.c_add((char **) pszaFile, iCount);
+      ::count c= stra.get_count();
+      
+      for(index i = 0; i < c; i++)
+      {
+         
+         string str = stra[i];
+         
+         int iFindColon = str.find(':');
+         
+         if(iFindColon == 0)
+         {
+            stra.remove_at(i, stra.get_count() - i);
+            break;
+         }
+         
+      }
       
       varFile = stra;
       
