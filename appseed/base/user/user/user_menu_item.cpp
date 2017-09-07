@@ -218,7 +218,12 @@ namespace user
 
          pitem->m_pui->set_window_text(pitem->m_strTitle);
 
-         //pitem->create_buttons(pmenu);
+         if(pmenu->m_bInline)
+         {
+         
+            pitem->create_buttons(pmenu);
+            
+         }
 
       }
 

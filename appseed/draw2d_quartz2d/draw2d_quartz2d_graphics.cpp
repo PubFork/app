@@ -1465,7 +1465,7 @@ namespace draw2d_quartz2d
    {
       
       synch_lock sl(m_pmutex);
-
+      
       try
       {
 
@@ -1477,25 +1477,11 @@ namespace draw2d_quartz2d
          }
          
          synch_lock slSrc(pgraphicsSrc->m_pmutex);
-
-         if(pgraphicsSrc->m_pdib != NULL)
-         {
-            
-            pgraphicsSrc->m_pdib->unmap();
-
-         }
-
+         
          if(pgraphicsSrc->get_os_data() == NULL)
          {
 
             return false;
-
-         }
-
-         if(m_pdib != NULL)
-         {
-
-            m_pdib->unmap();
 
          }
 
@@ -1731,61 +1717,99 @@ namespace draw2d_quartz2d
 
    }
 
+   
    COLORREF graphics::GetPixel(POINT point) const
    {
 
       throw not_implemented(get_app());
+
       return false;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::GetPixel(get_handle1(), point.x, point.y);
-
    }
+   
 
    COLORREF graphics::SetPixel(int32_t x, int32_t y, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
+
       return false;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::SetPixel(get_handle1(), x, y, crColor);
-
    }
+   
 
    COLORREF graphics::SetPixel(POINT point, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
-      return false;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::SetPixel(get_handle1(), point.x, point.y, crColor);
+      return false;
 
    }
 
+   
    bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
-      return false;
 
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::FloodFill(get_handle1(), x, y, crColor) != FALSE;
+      return false;
 
    }
 
+   
    bool graphics::ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType)
    {
 
       throw not_implemented(get_app());
+      
       return false;
-
-      //      ASSERT(get_handle1() != NULL);
-      //      return ::ExtFloodFill(get_handle1(), x, y, crColor, nFillType) != FALSE;
 
    }
 
+   
+   bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   {
+      
+      if (m_pdibAlphaBlend != NULL)
+      {
+         
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+         
+         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
+         
+         if (rectIntersect.intersect(rectIntersect, rectBlt))
+         {
+            
+            ::draw2d::dib_sp dib1(allocer());
+            
+            dib1->create(rectBlt.size());
+               
+            dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+               
+            if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+            {
+               
+               return false;
+               
+            }
+            
+            dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size());
+            
+            set_alpha_mode(::draw2d::alpha_mode_blend);
+               
+            BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
+               
+            return true;
+            
+         }
+         
+      }
+      
+      return false;
+      
+   }
+   
 
    // true blend
    // COLOR_DEST = SRC_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA) * COLOR_DST
@@ -1809,84 +1833,42 @@ namespace draw2d_quartz2d
             rectText.bottom = rectText.top + rectText.height() * 2;
             
             ::draw2d::dib_sp dib1(allocer());
+            
             dib1->create(rectText.size());
             dib1->Fill(0, 0, 0, 0);
             dib1->get_graphics()->SelectObject(get_current_font());
             dib1->get_graphics()->SelectObject(get_current_brush());
             dib1->get_graphics()->text_out(0, 0, str);
             
-            
-            // The following commented out code does not work well when there is clipping
-            // and some calculations are not precise
-            //::rect rectClip;
-            
-            //GetClipBox(rectClip);
-            
-            //if (m_pdib != NULL && rectClip.is_null())
-            //{
-            
-            //   point ptOff = GetViewportOrg();
-            
-            //   x += ptOff.x;
-            
-            //   y += ptOff.y;
-            
-            //   m_pdib->blend(point((int)x, (int)y), dib1, point(0, 0), m_pdibAlphaBlend, point((int)(m_ptAlphaBlend.x - x), (int) (m_ptAlphaBlend.y - y)), rectText.size());
-            
-            //}
-            //else
-            {
+            dib1->blend(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
                
-               dib1->blend(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
+            set_alpha_mode(::draw2d::alpha_mode_blend);
                
-               set_alpha_mode(::draw2d::alpha_mode_blend);
-               
-               keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-               
-               BitBlt((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
-               
-            }
+            BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
             
-            /*
-             ::draw2d::pen_sp p(allocer());
-             
-             p->create_solid(1.0, ARGB(255, 255, 0, 0));
-             SelectObject(p);
-             MoveTo(0., y);
-             LineTo(500., y);
-             p->create_solid(1.0, ARGB(255, 0, 255, 0));
-             SelectObject(p);
-             MoveTo(0, m_ptAlphaBlend.y);
-             LineTo(500, m_ptAlphaBlend.y);
-             p->create_solid(1.0, ARGB(255, 0, 255, 255));
-             SelectObject(p);
-             MoveTo(0, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
-             LineTo(500, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
-             */
-            
-            return true;
          }
          
       }
-
-      //ASSERT(get_handle1() != NULL);
-      //wstring wstr = ::str::international::utf8_to_unicode(str);
+      
       return text_out(x, y, str, (int32_t) str.get_length());
 
-   } // call virtual
+   }
    
 
    bool graphics::text_out(double x, double y, const string & str)
    {
+      
       if(m_pdibAlphaBlend != NULL)
       {
-         if(GetBkMode() == TRANSPARENT)
-         {
-            //   return TRUE;
+
+         //   return TRUE;
             rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
             rect rectText(point((int64_t) x, (int64_t) y), ::size(GetTextExtent(str)));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
+               
+               return true;
+               
                ::draw2d::dib_sp dib0(allocer());
                dib0->create(rectText.size());
                dib0->get_graphics()->set_text_color(RGB(255, 255, 255));
@@ -1925,7 +1907,6 @@ namespace draw2d_quartz2d
                 rectText.width(), rectText.height(), WIN_HDC(dib1->get_graphics()), 0, 0, rectText.width(),
                 rectText.height(), bf) != FALSE; */
             }
-         }
       }
 
       //ASSERT(get_handle1() != NULL);

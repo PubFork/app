@@ -401,15 +401,15 @@ namespace user
    {
 
       m_bMenuOk = false;
-
+      
+      m_bInline = true;
+      
       if (!create_menu(puiNotify, puiParent))
       {
 
          return false;
 
       }
-
-      m_bInline = true;
 
       update_command(m_pitem);
 

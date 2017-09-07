@@ -371,6 +371,9 @@ namespace draw2d_quartz2d
       
       void internal_draw_text(CGTextDrawingMode emode, double x, double y, CTLineRef line, ::draw2d::brush * pbrush);
       
+      virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop) override;
+      
+      
       virtual bool text_out(int32_t x, int32_t y, const char * lpszString, strsize nCount) override;
       
       virtual bool text_out(int32_t x, int32_t y, const string & str) override;

@@ -67,13 +67,17 @@ namespace file_watcher
 //		return strcmp(((EntryStruct*)(((KEvent*)(ke1))->udata))->m_strFileName, ((EntryStruct*)(((KEvent*)(ke2))->udata))->m_strFileName);
 //	}
 	
-	struct watch_struct
+   class watch_struct :
+      virtual public ::object
 	{
-      ::aura::application * m_papp;
-		id m_id;
-		string m_strDirName;
-		file_watch_listener* m_plistener;
-      thread * m_pthread;
+   public:
+      
+      
+		id                      m_id;
+		string                  m_strDirName;
+		file_watch_listener *   m_plistener;
+      thread *                m_pthread;
+      bool                    m_bRecursive;
 		
 		// index 0 is always the directory
 		//KEvent m_keventaChange[MAX_CHANGE_EVENT_SIZE];
@@ -81,10 +85,14 @@ namespace file_watcher
       FSEventStreamRef m_stream;
 		//size_t m_iChangeCount;
 		
-      watch_struct(::aura::application * papp, id watchid, const char * dirname, file_watch_listener* listener)
-		: m_papp(papp), m_id(watchid), m_strDirName(dirname), m_plistener(listener)
+      watch_struct(::aura::application * papp, id watchid, const char * dirname, file_watch_listener* listener, bool bRecursive) :
+      ::object(papp),
+      m_id(watchid),
+      m_strDirName(dirname),
+      m_plistener(listener)
 		{
          m_stream = NULL;
+         m_bRecursive = bRecursive;
 			//m_iChangeCount = 0;
 			addAll();
 		}
@@ -236,22 +244,45 @@ namespace file_watcher
          char **paths = (char **) eventPaths;
          watch_struct * pstruct =(watch_struct *)clientCallBackInfo;
          // printf("Callback called\n");
+         
+         ::file::path pathFolder1;
+         
+         pathFolder1 = pstruct->m_strDirName;
+         
          for (i=0; i<numEvents; i++)
          {
             
+            ::file::path path =paths[i];
+            
+            if(!pstruct->m_bRecursive)
+            {
+               
+               ::file::path pathFolder2;
+               
+               pathFolder2 = path.folder();
+               
+               if(pathFolder2.get_length() > pathFolder1.get_length())
+               {
+                  
+                  continue;
+                  
+               }
+               
+            }
+            
             if(eventFlags[i] & kFSEventStreamEventFlagItemRenamed)
                {
-                  pstruct->handle_action(paths[i], action_modify);
+                  pstruct->handle_action(path, action_modify);
                   
                }
             if(eventFlags[i] & kFSEventStreamEventFlagItemModified)
             {
-               pstruct->handle_action(paths[i], action_modify);
+               pstruct->handle_action(path, action_modify);
                
             }
             if(eventFlags[i] & kFSEventStreamEventFlagItemCreated)
             {
-               pstruct->handle_action(paths[i], action_add);
+               pstruct->handle_action(path, action_add);
                
             }
             //int count;
@@ -289,10 +320,10 @@ namespace file_watcher
          
          CFRelease(mypath);
          CFRelease(pathsToWatch);
-         m_pthread = ::fork(m_papp, [&]()
-                            {
-         FSEventStreamScheduleWithRunLoop(m_stream,CFRunLoopGetCurrent(),kCFRunLoopCommonModes);
-         FSEventStreamStart(m_stream);
+         m_pthread = fork([&]()
+         {
+            FSEventStreamScheduleWithRunLoop(m_stream,CFRunLoopGetCurrent(),kCFRunLoopCommonModes);
+            FSEventStreamStart(m_stream);
                                
                                //while(m_bRun && ::get_thread_run())
                                // Set up an autorelease pool here if not using garbage collection.
@@ -483,7 +514,7 @@ namespace file_watcher
 			   0, (void*)"testing");
 */
 		
-		watch_struct* watch = new watch_struct(get_app(), ++mLastWatchID, directory, watcher);
+		watch_struct* watch = new watch_struct(get_app(), ++mLastWatchID, directory, watcher, bRecursive);
 		m_watchmap.set_at(mLastWatchID, watch);
 		return mLastWatchID;
 	}

@@ -184,6 +184,13 @@ namespace user
          
          menu_item * pitem = pitemParent->m_spitema->element_at(i);
          
+         if(pitem->m_pui == NULL)
+         {
+          
+            continue;
+            
+         }
+         
          size size = pgraphics->GetTextExtent(pitem->m_pui->get_window_text());
          
          size.cx += pitem->m_iLevel * g_base_menu_indent;
@@ -308,6 +315,11 @@ namespace user
             if(pitem->m_id == "separator")
                continue;
             lprect->bottom = lprect->top + m_iItemHeight - 2;
+         }
+         
+         if(pitem->m_pui == NULL)
+         {
+            continue;
          }
          pitem->m_pui->SetWindowPos(
             0,
