@@ -26,6 +26,7 @@
 		9A331F061D4BE26C00255105 /* libbase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331F051D4BE26C00255105 /* libbase.dylib */; };
 		9A57509E16AAB9A1000CC4EF /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A574D2B16AAB99E000CC4EF /* framework.cpp */; };
 		9A57509F16AAB9A1000CC4EF /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A574D2C16AAB99E000CC4EF /* framework.h */; };
+		9A7B1F521F61FA3F007D2345 /* sphere_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */; };
 		9A8C493D1F60695E004A5BA4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8C493C1F60695E004A5BA4 /* libace.dylib */; };
 		9A920FC01F3BF61C00CD9D94 /* sphere_main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A920FBE1F3BF61C00CD9D94 /* sphere_main_frame.cpp */; };
 		9A920FC11F3BF61C00CD9D94 /* sphere_main_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A920FBF1F3BF61C00CD9D94 /* sphere_main_frame.h */; };
@@ -688,6 +689,7 @@
 				07DA480F1B71F081006F27E6 /* framework.cpp in Sources */,
 				9A9D7F0E1F5D8211009EC103 /* asphere_application.cpp in Sources */,
 				9A9D7F0F1F5D8211009EC103 /* asphere_asphere.cpp in Sources */,
+				9A7B1F521F61FA3F007D2345 /* sphere_main_frame.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

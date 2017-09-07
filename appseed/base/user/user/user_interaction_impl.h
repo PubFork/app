@@ -86,52 +86,52 @@ namespace user
       sp(::thread)                  m_pthreadUpdateWindow;
       
       
-      enum e_queue_thread
-      {
-         
-         queue_thread_none,
-         queue_thread_first,
-         queue_thread_mouse_move = queue_thread_first,
-         queue_thread_input,
-         queue_thread_other,
-         queue_thread_end,
-         
-      };
-      
-      class queue_thread :
-      virtual public ::thread
-      {
-      public:
-         
-         
-         ::user::interaction_impl *    m_pimpl;
-         manual_reset_event            m_evNewMessage;
-         spa(::message::base)          m_messagequeue;
-         
-         
-         queue_thread(::user::interaction_impl * pimpl);
-         virtual ~queue_thread();
-         
-         
-         virtual void queue_message_handler(::message::base * pbase);
-         
-         
-         virtual int32_t run() override;
-         
-         
-      };
+//      enum e_queue_thread
+//      {
+//         
+//         queue_thread_none,
+//         queue_thread_first,
+//         queue_thread_mouse_move = queue_thread_first,
+//         queue_thread_input,
+//         queue_thread_other,
+//         queue_thread_end,
+//         
+//      };
+//      
+//      class queue_thread :
+//      virtual public ::thread
+//      {
+//      public:
+//         
+//         
+//         ::user::interaction_impl *    m_pimpl;
+//         manual_reset_event            m_evNewMessage;
+//         spa(::message::base)          m_messagequeue;
+//         
+//         
+//         queue_thread(::user::interaction_impl * pimpl);
+//         virtual ~queue_thread();
+//         
+//         
+//         virtual void queue_message_handler(::message::base * pbase);
+//         
+//         
+//         virtual int32_t run() override;
+//         
+//         
+//      };
       
       
       //map < e_queue_thread, e_queue_thread, sp(queue_thread) > m_mapqueue;
       
-      sp(queue_thread)        m_queuethread;
-      DWORD                   m_dwLastMouseMove;
+      //sp(queue_thread)        m_queuethread;
+      //DWORD                   m_dwLastMouseMove;
 
 
       interaction_impl();
       
       
-      virtual e_queue_thread message_queue_thread(UINT uiMessage);
+      //virtual e_queue_thread message_queue_thread(UINT uiMessage);
 
 
       void user_common_construct();
@@ -140,7 +140,7 @@ namespace user
       virtual void install_message_routing(::message::sender * psender) override;
 
       
-      virtual void queue_message_handler(::message::base * pbase) override;
+      //virtual void queue_message_handler(::message::base * pbase) override;
 
       
 
@@ -149,11 +149,11 @@ namespace user
       virtual ::user::interaction_impl * get_user_interaction_impl() override;
 
 
-      virtual bool check_need_layout();
-      virtual void clear_need_layout();
-      virtual void set_need_layout();
+      virtual bool check_need_layout() override;
+      virtual void clear_need_layout() override;
+      virtual void set_need_layout() override;
 
-      virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
+      virtual bool create_message_queue(::user::interaction * pui, const char * pszName) override;
 
 #if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
       virtual bool initialize_native_window(::user::native_window_initialize * pinitialize) = 0;
