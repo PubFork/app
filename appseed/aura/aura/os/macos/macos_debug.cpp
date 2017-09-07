@@ -85,8 +85,18 @@ void ns_log(const char * pszLog);
 
 void output_debug_string(const char * pszOutputString)
 {
-    
-   wprintf(L"%s", wstring(pszOutputString).c_str());
+   
+   string strOutputString(pszOutputString);
+   
+   strOutputString.replace("\r\n", "\n");
+   
+   strOutputString.replace("\n", "\r");
+   
+   unichar32 * pusz = utf8_to_utf32(strOutputString);
+   
+   wprintf(L"%S", pusz);
+   
+   memory_free(pusz);
    
 }
 

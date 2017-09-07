@@ -1463,13 +1463,20 @@ namespace draw2d_quartz2d
 
    bool graphics::BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, DWORD dwRop)
    {
-
+      
+      synch_lock sl(m_pmutex);
 
       try
       {
 
          if(pgraphicsSrc == NULL)
+         {
+            
             return false;
+            
+         }
+         
+         synch_lock slSrc(pgraphicsSrc->m_pmutex);
 
          if(pgraphicsSrc->m_pdib != NULL)
          {
@@ -4618,6 +4625,15 @@ namespace draw2d_quartz2d
 
    bool graphics::internal_show_text(double x, double y, double wAlign, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth, ::draw2d::pen * ppen, ::draw2d::brush * pbrush, ::draw2d::font * pfont)
    {
+      
+      if(pfont == NULL && m_spfont.is_null())
+      {
+       
+         m_spfont.alloc(allocer());
+         
+         m_spfont->create_pixel_font(FONT_SANS, 16.0);
+         
+      }
 
       return internal_show_text(pfont == NULL ? m_spfont.m_p : pfont, pbrush == NULL ? m_spbrush.m_p : pbrush, ppen == NULL ? m_sppen.m_p : ppen, x, y, wAlign, nFormat, lpszString, nCount, emode, bDraw, pascent,pdescent, pleading, pwidth);
 
@@ -5613,6 +5629,8 @@ namespace draw2d_quartz2d
 
    bool graphics::internal_show_text(::draw2d::font_sp spfont,::draw2d::brush_sp spbrush,::draw2d::pen_sp sppen, double x, double y, double wAlign, UINT nFormat, const char * lpszString, int32_t nCount, CGTextDrawingMode emode, bool bDraw, CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth)
    {
+      
+      synch_lock sl(m_pmutex);
 
       CGContextRef pgraphics = m_pdc;
    
@@ -5620,7 +5638,7 @@ namespace draw2d_quartz2d
    
       sp(::draw2d_quartz2d::font) f = spfont;
       
-      synch_lock sl(spfont->m_pmutex);
+      synch_lock slFont(spfont->m_pmutex);
       
       bool bFill = false;
       
@@ -5660,17 +5678,17 @@ namespace draw2d_quartz2d
 
             }
             
-            if(emode == kCGTextStroke|| emode == kCGTextFillStroke)
-            {
-
-               bStroke = true;
-               
-               crStroke = sppen.is_null() ? ARGB(255, 0, 0, 0) : sppen->m_cr;
-               
-            }
-            
          }
          
+         if(emode == kCGTextStroke|| emode == kCGTextFillStroke)
+         {
+
+            bStroke = true;
+               
+            crStroke = sppen.is_null() ? ARGB(255, 0, 0, 0) : sppen->m_cr;
+               
+         }
+            
       }
    
       if(!f->m_bUpdated)

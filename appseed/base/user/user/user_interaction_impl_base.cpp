@@ -181,6 +181,17 @@ namespace user
 
    bool interaction_impl_base::has_pending_redraw_flags()
    {
+      
+      bool bNeedLayout = m_pui->m_bNeedLayout;
+      
+      bool bNeedRedraw = m_pui->m_bRedraw;
+      
+      if(bNeedLayout || bNeedRedraw)
+      {
+         
+         return true;
+         
+      }
 
       return m_bZ
          || m_bShowFlags

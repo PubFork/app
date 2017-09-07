@@ -8,7 +8,7 @@
 @public   int m_cyIcon;
 @public   int m_iScanIcon;
 @public  const char * m_pszIcon;
-
+@public NSRecursiveLock *theLock;
 }
 
 + (id)get;

@@ -458,22 +458,23 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Closing documents or views
 
-   void document::on_changed_view_list(single_lock * psl)
+   void document::on_changed_view_list()
    {
-      single_lock sl(m_pmutex, false);
-      if (psl == NULL || psl->m_pobjectSync != m_pmutex)
-         psl = &sl;
-      psl->lock();
+
       // if no more views on the document_interface, delete ourself
       // not called if directly closing the document_interface or terminating the cast
       if (m_viewspa.is_empty() && m_bAutoDelete)
       {
-         on_close_document(psl);
+         
+         on_close_document();
+         
          return;
+         
       }
 
       // update the frame counts as needed
-      update_frame_counts(psl);
+      update_frame_counts();
+      
    }
 
 
@@ -636,41 +637,56 @@ namespace user
    }
 
 
-   void document::on_close_document(single_lock * psl)
+   void document::on_close_document()
    // must close all views now (no prompting) - usually destroys this
    {
-      single_lock sl(m_pmutex, false);
-      if (psl == NULL || psl->m_pobjectSync != m_pmutex)
-         psl = &sl;
-      psl->lock();
+
       pre_close_document();
+      
       // destroy all frames viewing this document_interface
       // the last destroy may destroy us
-      bool bAutoDelete = m_bAutoDelete;
-      m_bAutoDelete = FALSE;  // don't destroy document_interface while closing views
-      for (index index = 0; index < m_viewspa.get_count(); index++)
+      sp(::object) pthis = this; // don't destroy document_interface while closing views
+      
       {
-         // get frame attached to the ::user::impact
-         sp(::user::impact) pview = m_viewspa[index];
-         ASSERT_VALID(pview);
-         sp(::user::frame_window) pFrame = pview->GetParentFrame();
-
-         if (pFrame != NULL)
+      
+         synch_lock sl(m_pmutex);
+      
+         for (index index = 0; index < m_viewspa.get_count(); index++)
          {
-            // and close it
-            pre_close_frame(pFrame);
-            pFrame->DestroyWindow();
-            // will destroy the ::user::impact as well
-         }
-      }
-      m_viewspa.remove_all();
-      m_bAutoDelete = bAutoDelete;
-      psl->unlock();
+         
+            // get frame attached to the ::user::impact
+            ::user::impact * pview = m_viewspa[index];
 
+            sl.unlock();
+
+            ASSERT_VALID(pview);
+         
+            ::user::frame_window * pframe = pview->GetParentFrame();
+
+            if (pframe != NULL)
+            {
+            
+               // and close it
+               pre_close_frame(pframe);
+            
+               pframe->DestroyWindow();
+            
+               // will destroy the ::user::impact as well
+            
+            }
+         
+            sl.lock();
+         
+         }
+      
+         m_viewspa.remove_all();
+      
+      }
+   
       // clean up contents of document_interface before destroying the document_interface itself
+
       delete_contents();
 
-      //release();
    }
 
 
@@ -798,32 +814,47 @@ namespace user
    }
 
 
-   bool document::can_close_frame(sp(::user::frame_window) pFrameArg)
+   bool document::can_close_frame(::user::frame_window * pframeParam)
    // permission to close all views using this frame
    //  (at least one of our views must be in this frame)
    {
-      single_lock sl(m_pmutex, true);
-      ASSERT_VALID(pFrameArg);
-      UNUSED(pFrameArg);   // unused in release builds
+      
+      synch_lock sl(m_pmutex);
+      
+      ASSERT_VALID(pframeParam);
+      
+      UNUSED(pframeParam);   // unused in release builds
 
       ::count count = get_view_count();
+      
       for (index index = 0; index < count; index++)
       {
+         
          sp(::user::impact) pview = get_view(index);
+         
          ASSERT_VALID(pview);
-         sp(::user::frame_window) pFrame = pview->GetParentFrame();
+         
+         sp(::user::frame_window) pframe = pview->GetParentFrame();
+         
          // assume frameless views are ok to close
-         if (pFrame != NULL)
+         if (pframe != NULL)
          {
+            
             // assumes 1 document_interface per frame
-            ASSERT_VALID(pFrame);
-            if (pFrame->m_nWindow > 0)
-               return TRUE;        // more than one frame refering to us
+            ASSERT_VALID(pframe);
+            
+            if (pframe->m_nWindow > 0)
+               return true;        // more than one frame refering to us
+            
          }
+         
       }
+      
       sl.unlock();
+
       // otherwise only one frame that we know about
       return save_modified();
+      
    }
 
 
@@ -874,9 +905,11 @@ namespace user
    }
 
 
-   void document::pre_close_frame(sp(::user::frame_window) /*pFrameArg*/)
+   void document::pre_close_frame(::user::frame_window * pframe)
    {
+      
       // default does nothing
+      
    }
 
 
@@ -1016,76 +1049,107 @@ namespace user
 
    }
 
-   void document::update_frame_counts(single_lock * psl)
+   void document::update_frame_counts()
    // assumes 1 doc per frame
    {
-      single_lock sl(m_pmutex, false);
-      if (psl == NULL || psl->m_pobjectSync != m_pmutex)
-         psl = &sl;
-      psl->lock();
+
       // walk all frames of views (mark and sweep approach)
       ::count count = get_view_count();
+      
       index index;
+      
       for (index = 0; index < count; index++)
       {
+         
          ::user::impact * pview = get_view(index);
+         
          ASSERT_VALID(pview);
-         // trans      ASSERT(::IsWindow(pview->get_handle()));
-         if (pview->IsWindowVisible())   // Do not ::count invisible windows.
+         
+         if (pview->IsWindowVisible())
          {
-            ::user::frame_window * pFrame = pview->GetParentFrame();
-            if (pFrame != NULL)
-               pFrame->m_nWindow = -1;     // unknown
+          
+            ::user::frame_window * pframe = pview->GetParentFrame();
+            
+            if (pframe != NULL)
+            {
+               
+               pframe->m_nWindow = -1;
+               
+            }
+            
          }
+         
       }
 
       // now do it again counting the unique ones
       int32_t nFrames = 0;
+      
       count = get_view_count();
+      
       for (index = 0; index < count; index++)
       {
 
          ::user::impact * pview = get_view(index);
 
          ASSERT_VALID(pview);
-         // trans      ASSERT(::IsWindow(pview->get_handle()));
-         if (pview->IsWindowVisible())   // Do not ::count invisible windows.
+         
+         if (pview->IsWindowVisible())
          {
 
-            ::user::frame_window * pFrame = pview->GetParentFrame();
+            ::user::frame_window * pframe = pview->GetParentFrame();
 
-            if (pFrame != NULL && pFrame->m_nWindow == -1)
+            if (pframe != NULL && pframe->m_nWindow == -1)
             {
-               ASSERT_VALID(pFrame);
+               
+               ASSERT_VALID(pframe);
+               
                // not yet counted (give it a 1 based number)
-               pFrame->m_nWindow = ++nFrames;
+               pframe->m_nWindow = ++nFrames;
+               
             }
+            
          }
+         
       }
 
       // lastly walk the frames and update titles (assume same order)
       // go through frames updating the appropriate one
       int32_t iFrame = 1;
+      
       count = get_view_count();
+      
       for (index = 0; index < count; index++)
       {
+         
          ::user::impact * pview = get_view(index);
+         
          ASSERT_VALID(pview);
-         // trans      ASSERT(::IsWindow(pview->get_handle()));
+         
          if (pview->IsWindowVisible())   // Do not ::count invisible windows.
          {
-            ::user::frame_window * pFrame = pview->GetParentFrame();
-            if (pFrame != NULL && pFrame->m_nWindow == iFrame)
+            
+            ::user::frame_window * pframe = pview->GetParentFrame();
+            
+            if (pframe != NULL && pframe->m_nWindow == iFrame)
             {
-               ASSERT_VALID(pFrame);
+               
+               ASSERT_VALID(pframe);
+               
                if (nFrames == 1)
-                  pFrame->m_nWindow = 0;      // the only one of its kind
-               pFrame->post_simple_command(simple_command_update_frame_title, TRUE);
+                  pframe->m_nWindow = 0;      // the only one of its kind
+               
+               pframe->post_simple_command(simple_command_update_frame_title, TRUE);
+               
                iFrame++;
+               
             }
+            
          }
+         
       }
+      
    }
+   
 
    HMENU document::GetDefaultMenu()
    {

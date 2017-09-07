@@ -1127,8 +1127,20 @@ namespace user
       
       if(m_pthreadrefa != NULL)
       {
+         
+         duration durationWait;
+         
+#ifdef DEBUG
+         
+         durationWait = minutes(5);
+         
+#else
       
-         ::multithreading::post_quit_and_wait(m_pthreadrefa, one_minute());
+         durationWait = one_minute();
+         
+#endif
+      
+         threadrefa_post_quit_and_wait(durationWait);
          
       }
 
@@ -4008,15 +4020,17 @@ namespace user
 
       {
          
-         if (GetParent() != NULL)
+         ::user::interaction * puiParent = GetParent();
+         
+         if (puiParent != NULL)
          {
             
             try
             {
                
-               single_lock sl(GetParent()->m_pmutex, true);
+               single_lock sl(puiParent->m_pmutex, true);
                
-               GetParent()->m_uiptraChild.remove(this);
+               puiParent->m_uiptraChild.remove(this);
                
             }
             catch (...)
@@ -8680,13 +8694,6 @@ restart:
 
    bool interaction::has_pending_redraw_flags()
    {
-
-      if (m_bNeedLayout || m_bRedraw)
-      {
-
-         return true;
-
-      }
 
       if (m_pimpl == NULL)
       {

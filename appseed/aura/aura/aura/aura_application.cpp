@@ -3798,69 +3798,6 @@ namespace aura
 
       m_bAuraInitializeInstanceResult = false;
 
-      xxdebug_box("check_exclusive", "check_exclusive", MB_ICONINFORMATION);
-
-      if (!is_system() && !is_session())
-      {
-
-         try
-         {
-
-            m_pipi = create_ipi();
-
-         }
-         catch (...)
-         {
-
-         }
-
-         thisok << 0.1;
-
-         bool bHandled = false;
-
-         if (!check_exclusive(bHandled))
-         {
-
-            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
-              && !System.handler()->m_varTopicQuery.has_property("uninstall")))
-            {
-
-               simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", seconds(5), MB_ICONASTERISK);
-
-            }
-
-            thisfail << 0.2;
-
-            return false;
-
-         }
-
-         thisok << 0.2;
-
-         if (m_pipi != NULL)
-         {
-
-            try
-            {
-
-               for (index i = 0; i < 1; i++)
-               {
-
-                  m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_new_instance", System.file().module(), System.os().get_pid());
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-
-      xxdebug_box("check_exclusive ok", "check_exclusive ok", MB_ICONINFORMATION);
 
       m_dwAlive = ::get_tick_count();
 
@@ -3872,6 +3809,81 @@ namespace aura
          return false;
       }
 
+      xxdebug_box("check_exclusive", "check_exclusive", MB_ICONINFORMATION);
+      
+      if (!is_system() && !is_session())
+      {
+         
+         try
+         {
+            
+            m_pipi = create_ipi();
+            
+         }
+         catch (...)
+         {
+            
+         }
+         
+         thisok << 0.1;
+         
+         bool bHandled = false;
+         
+         if (!check_exclusive(bHandled))
+         {
+            
+            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
+                              && !System.handler()->m_varTopicQuery.has_property("uninstall")))
+            {
+
+                  duration durationTimeout;
+
+                  #ifdef DEBUG
+
+                  durationTimeout = minutes(5);
+
+                  #else
+
+                  durationTimeout = seconds(15);
+
+                  #endif
+               
+               simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", durationTimeout, MB_ICONASTERISK);
+               
+            }
+            
+            thisfail << 0.2;
+            
+            return false;
+            
+         }
+         
+         thisok << 0.2;
+         
+         if (m_pipi != NULL)
+         {
+            
+            try
+            {
+               
+               for (index i = 0; i < 1; i++)
+               {
+                  
+                  m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_new_instance", System.file().module(), System.os().get_pid());
+                  
+               }
+               
+            }
+            catch (...)
+            {
+               
+            }
+            
+         }
+         
+      }
+      
+      xxdebug_box("check_exclusive ok", "check_exclusive ok", MB_ICONINFORMATION);
 
 
       //::simple_message_box(NULL,"e3","e3",MB_OK);

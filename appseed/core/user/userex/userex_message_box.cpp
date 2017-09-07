@@ -11,22 +11,36 @@ namespace userex // ca8 + cube
       dialog(papp),
       wait_message_dialog(papp)
    {
+      
    }
 
-   void message_box::on_show(const char * pszMatter, property_set & propertyset)
+   
+   void message_box::on_show(const char * pszMatter, property_set * ppropertyset)
    {
-      if(!propertyset.has_property("application_name"))
-         propertyset["application_name"] = System.m_strAppName;
-      if(propertyset.has_property("simple_message_box_timeout_ms"))
+      
+      if(!ppropertyset->has_property("application_name"))
       {
-         m_dwDelay = propertyset.has_property("simple_message_box_timeout_ms");
+       
+         ppropertyset->operator[]("application_name") = System.m_strAppName;
+         
+      }
+      
+      if(ppropertyset->has_property("simple_message_box_timeout_ms"))
+      {
+         
+         m_dwDelay = ppropertyset->operator[]("simple_message_box_timeout_ms");
+         
          if(m_dwDelay > 0)
          {
-//            m_pdocument->get_html_data()->m_propertyset["simple_message_box_timeout"] = (int32_t) (m_dwDelay / 1000);
+            
          }
+         
       }
-      wait_message_dialog::on_show(pszMatter, propertyset);
+      
+      wait_message_dialog::on_show(pszMatter, ppropertyset);
+      
    }
+   
 
    bool message_box::on_timeout()
    {

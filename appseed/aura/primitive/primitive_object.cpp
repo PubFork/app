@@ -892,19 +892,7 @@ void object::threadrefa_post_quit_and_wait(::duration duration)
    if (m_pthreadrefa != NULL)
    {
       
-      synch_lock sl(m_pmutex);
-      
-      m_pthreadrefa->m_pmutex = m_pmutex;
-      
-      ::thread_refa * pthreadrefa = m_pthreadrefa;
-      
-      sl.unlock();
-      
-      pthreadrefa->post_quit_and_wait(seconds(60));
-      
-      sl.lock();
-      
-      m_pthreadrefa->m_pmutex = NULL;
+      m_pthreadrefa->post_quit_and_wait(duration);
       
    }
    
@@ -914,11 +902,14 @@ void object::threadrefa_post_quit_and_wait(::duration duration)
 
 void object::threadrefa_add(::thread * pthread)
 {
-   
-   defer_create_mutex();
-   
-   synch_lock sl(m_pmutex);
-   
+
+   if (pthread == NULL)
+   {
+    
+      return;
+      
+   }
+
    if (m_pthreadrefa == NULL)
    {
    
@@ -926,11 +917,37 @@ void object::threadrefa_add(::thread * pthread)
    
    }
 
-   if (pthread != NULL)
    {
+      
+      synch_lock sl(m_pthreadrefa->m_pmutex);
    
       m_pthreadrefa->add(pthread);
+      
+      pthread->m_objectrefaDependent.add(this);
    
+   }
+   
+}
+
+void object::threadrefa_remove(::thread * pthread)
+{
+   
+   if (m_pthreadrefa == NULL)
+   {
+      
+      return;
+      
+   }
+   
+   synch_lock sl(m_pthreadrefa->m_pmutex);
+   
+   if (pthread != NULL)
+   {
+      
+      m_pthreadrefa->remove(pthread);
+      
+      pthread->m_objectrefaDependent.remove(this);
+      
    }
    
 }

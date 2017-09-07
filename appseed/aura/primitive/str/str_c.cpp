@@ -1473,6 +1473,8 @@ strsize utf8_to_utf32_len(const char * psz, strsize srclen)
 {
 
    strsize len;
+   
+   strsize utf32len = 0;
 
    while(srclen != 0 && psz != NULL && *psz != '\0')
    {
@@ -1481,11 +1483,13 @@ strsize utf8_to_utf32_len(const char * psz, strsize srclen)
 
       psz += len;
 
+      utf32len++;
+      
       srclen--;
 
    }
 
-   return len;
+   return utf32len;
 
 }
 

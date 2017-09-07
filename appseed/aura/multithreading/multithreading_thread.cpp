@@ -312,6 +312,19 @@ HTHREAD thread::get_os_handle() const
 
 bool thread::on_after_run_thread()
 {
+   
+   {
+    
+      synch_lock sl(m_objectrefaDependent.m_pmutex);
+      
+      for(auto pobject : m_objectrefaDependent)
+      {
+       
+         pobject->threadrefa_remove(this);
+         
+      }
+      
+   }
 
    close_dependent_threads(minutes(1));
 
@@ -665,7 +678,7 @@ void thread::on_register_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock slThread(pthreadDependent->m_pmutex);
+      synch_lock slThread(pthreadDependent->m_threadrefaRequired.m_pmutex);
 
       pthreadDependent->m_threadrefaRequired.add_unique(this);
 
@@ -673,7 +686,7 @@ void thread::on_register_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock sl(m_pmutex);
+      synch_lock sl(m_threadrefaDependent.m_pmutex);
 
       m_threadrefaDependent.add_unique(pthreadDependent);
 
@@ -690,11 +703,21 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    string strDependentThread = string(demangle(typeid(*pthreadDependent).name()));
 
-   synch_lock sl(s_pmutexDependencies);
+   {
+   
+      synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-   m_threadrefaDependent.remove(pthreadDependent);
+      m_threadrefaDependent.remove(pthreadDependent);
+      
+   }
+   
+   {
+      
+      synch_lock sl(pthreadDependent->m_threadrefaRequired.m_pmutex);
 
-   pthreadDependent->m_threadrefaRequired.remove(this);
+      pthreadDependent->m_threadrefaRequired.remove(this);
+      
+   }
 
    // the system may do some extra processing (like quitting system in case pthreadDependent is the last thread virgin in America (North, most especifically US) ?!?!), so do a kick
    // (do not apply virgin to your self...)
@@ -716,20 +739,14 @@ void thread::close_dependent_threads(const ::duration & dur)
 void thread::signal_close_dependent_threads()
 {
 
-   thread_refa threadptraDependent;
+   synch_lock sl(m_threadrefaDependent.m_pmutex);
 
+   for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
    {
 
-      synch_lock sl(m_pmutex);
-
-      threadptraDependent = m_threadrefaDependent;
-
-   }
-
-   for(index i = 0; i < threadptraDependent.get_count(); i++)
-   {
-
-      thread * pthread = threadptraDependent[i];
+      thread * pthread = m_threadrefaDependent[i];
+      
+      sl.unlock();
 
       try
       {
@@ -749,6 +766,8 @@ void thread::signal_close_dependent_threads()
 
       }
 
+      sl.lock();
+      
    }
 
 
@@ -765,7 +784,7 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       {
 
-         synch_lock sl(m_pmutex);
+         synch_lock sl(m_threadrefaDependent.m_pmutex);
 
          if(m_threadrefaDependent.get_count() <= 0)
             break;
@@ -782,10 +801,30 @@ void thread::wait_close_dependent_threads(const duration & duration)
          {
 
             ::thread * pthread = m_threadrefaDependent[i];
-            output_debug_string(string("---"));
-            output_debug_string(string("supporter : ") + typeid(*this).name() + string(" (") + ::str::from((int_ptr) this) + ")");
-            output_debug_string(string("dependent : ") + typeid(*m_threadrefaDependent[i]).name() + string(" (") + ::str::from((int_ptr) m_threadrefaDependent[i]) + ")\n");
+            
+            string strSupporter;
+            
+            string strDependent;
+            
+            try
+            {
+            
+               strSupporter.Format("supporter : %s (%d)\n", typeid(*this).name(), (int_ptr) this);
+               
+               strDependent.Format("dependent : %s (%d)\n", typeid(*pthread).name(), (int_ptr) pthread);
+               
+            }
+            catch(...)
+            {
+               
+            }
 
+            output_debug_string("---\n");
+            
+            output_debug_string(strSupporter);
+            
+            output_debug_string(strDependent);
+                                                          
          }
 
          output_debug_string(string("-------------------------\n\n"));
@@ -798,45 +837,81 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
 }
 
-void thread::register_at_required_threads()
+
+bool thread::register_at_required_threads()
 {
 
    if(is_system())
-      return;
+   {
+      
+      return true;
+      
+   }
 
    // register default dependencies
-
-   if(&System != NULL)
+   
+   try
    {
 
-      System.register_dependent_thread(this);
+      if(&System != NULL)
+      {
+         
+         if(!System.m_bRunThisThread)
+         {
+          
+            return false;
+            
+         }
 
+         System.register_dependent_thread(this);
+
+      }
+
+      if(&Session != NULL)
+      {
+
+         if(!Session.m_bRunThisThread)
+         {
+            
+            return false;
+            
+         }
+         
+         Session.register_dependent_thread(this);
+
+      }
+
+      if(&Application != NULL)
+      {
+
+         if(!Application.m_bRunThisThread)
+         {
+            
+            return false;
+            
+         }
+         
+         Application.register_dependent_thread(this);
+
+      }
+      
+      return true;
+      
    }
-
-   if(&Session != NULL)
+   catch(...)
    {
-
-      Session.register_dependent_thread(this);
-
+      
    }
 
-   if(&Application != NULL)
-   {
-
-      Application.register_dependent_thread(this);
-
-   }
-
-
+   return false;
 
 }
-
 
 
 void thread::unregister_from_required_threads()
 {
 
-   synch_lock sl(s_pmutexDependencies);
+   synch_lock sl(m_threadrefaRequired.m_pmutex);
 
    for(index i = m_threadrefaRequired.get_upper_bound(); i >= 0;)
    {
@@ -848,8 +923,12 @@ void thread::unregister_from_required_threads()
 
          if (pthread != this)
          {
+            
+            sl.unlock();
 
             pthread->unregister_dependent_thread(this);
+            
+            sl.lock();
 
          }
 
@@ -1106,7 +1185,12 @@ bool thread::initialize_thread()
 bool thread::on_before_run_thread()
 {
 
-   register_at_required_threads();
+   if(!register_at_required_threads())
+   {
+    
+      return false;
+      
+   }
 
    return true;
 
@@ -3110,7 +3194,7 @@ CLASS_DECL_AURA uint32_t random_processor_index_generator()
 thread_refa::thread_refa()
 {
 
-
+   defer_create_mutex();
 
 }
 
@@ -3123,5 +3207,37 @@ thread_refa::~thread_refa()
 
 }
 
+
+
+
+
+CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
+{
+   
+   int iTenths = (dwMillis / 1000) * 10;
+   
+   int iMillis = dwMillis % 1000;
+   
+   while(iTenths > 0)
+   {
+      
+      if(!::get_thread_run())
+      {
+         
+         return false;
+         
+      }
+      
+      Sleep(100);
+      
+      iTenths--;
+      
+   }
+   
+   Sleep(iMillis);
+   
+   return ::get_thread_run();
+   
+}
 
 

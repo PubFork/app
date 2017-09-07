@@ -64,6 +64,21 @@ namespace user
       return this;
 
    }
+   
+   
+   bool interaction_impl::has_pending_redraw_flags()
+   {
+    
+      if(m_pthreadUpdateWindow.is_null())
+      {
+       
+         return false;
+         
+      }
+      
+      return ::user::interaction_impl_base::has_pending_redraw_flags();
+      
+   }
 
 
    bool interaction_impl::check_need_layout()
@@ -381,6 +396,8 @@ namespace user
       
          begin();
          
+         m_pimpl->m_pui->threadrefa_add(this);
+         
       }
       
    }
@@ -473,6 +490,8 @@ namespace user
          
       }
       
+      m_pimpl->m_queuethread.release();
+      
       return 0;
          
    }
@@ -524,7 +543,12 @@ namespace user
          
       }
       
-      m_queuethread->queue_message_handler(pbase);
+      if(m_pui->m_bUserElementalOk && m_queuethread != NULL)
+      {
+      
+         m_queuethread->queue_message_handler(pbase);
+         
+      }
       
    }
    
@@ -2498,7 +2522,19 @@ namespace user
       update_graphics_resources();
 
       if (m_spgraphics.is_null())
+      {
+         
          return;
+         
+      }
+      
+      
+      if(!m_pui->IsWindowVisible())
+      {
+       
+         return;
+         
+      }
 
       bool bUpdateBuffer = true;
 

@@ -182,6 +182,7 @@ namespace user
       //virtual ::user::interaction * get_owner();
       virtual void set_owner(::user::interaction * pOwnerWnd);
 
+      virtual bool has_pending_redraw_flags() override;
 
 
       virtual ::user::interaction_impl * from_os_data(void * pdata);

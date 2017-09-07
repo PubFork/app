@@ -347,9 +347,9 @@ DWORD fixKeyCode(DWORD keyCode, unichar keyChar, enum APPLE_KEYBOARD_TYPE type)
    if(p == NULL)
       return;
    
-    NSRect e = [m_roundwindow frame];
+   NSRect e = [m_roundwindow frame];
     
-    NSPoint point = [event locationInWindow];
+   NSPoint point = [event locationInWindow];
     
    point.x = point.x + e.origin.x;
    

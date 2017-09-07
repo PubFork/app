@@ -405,10 +405,24 @@ long long mm_get_user_wallpaper(char *** ppp)
 {
    
    mmos * p = [mmos get];
-
-   *ppp = p->m_ppszWallpaper;
+   
+   [p->theLock lock];
+   
+   long long ll = p->m_llWallpaper;
+   
+   *ppp = (char**) malloc(sizeof(char *) * ll);
+   
+   for(long long i = 0; i < ll; i++)
+   {
+   
+      (*ppp)[i] = strdup(p->m_ppszWallpaper[i]);
       
-   return p->m_llWallpaper;
+   }
+   
+   [p->theLock unlock];
+   
+   return ll;
+                         
    
 }
 

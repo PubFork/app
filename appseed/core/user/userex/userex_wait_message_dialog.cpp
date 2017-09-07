@@ -34,13 +34,11 @@ namespace userex // ca8 + cube
    }
 
 
-   void wait_message_dialog::on_show(const char * pszMatter, property_set & propertyset)
+   void wait_message_dialog::on_show(const char * pszMatter, property_set * ppropertyset)
    {
 
-      UNREFERENCED_PARAMETER(pszMatter);
-
-      UNREFERENCED_PARAMETER(propertyset);
-
+      ::dialog::on_show(pszMatter, ppropertyset);
+      
    }
 
 
@@ -157,6 +155,8 @@ namespace userex // ca8 + cube
          //m_pdocument->soft_reload();
 
       }
+      
+      set_need_redraw();
 
    }
 

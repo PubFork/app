@@ -47,3 +47,21 @@ int get_processor_count()
    // return sysconf(_SC_NPROCESSORS_ONLN);
    //#endif
 }
+
+
+//
+//#undef new
+//
+//#include <chrono>
+//#include <thread>
+//
+//void Sleep(unsigned int dwMillis)
+//{
+//   
+//
+//      std::this_thread::sleep_for (std::chrono::milliseconds(dwMillis));
+//      
+//   
+//}
+//
+

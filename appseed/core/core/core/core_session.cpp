@@ -1090,6 +1090,33 @@ namespace core
       }
 
    }
+   
+   
+   stringa session::get_user_wallpaper()
+   {
+      
+      stringa stra;
+      
+      stringa straSource = ::user::get_wallpaper();
+      
+      for(string str : straSource)
+      {
+
+         if(::str::begins_eat_ci(str, "file://"))
+         {
+          
+            str = System.url().url_decode(str);
+            
+         }
+         
+         stra.add(str.c_str());
+         
+      }
+      
+      return stra;
+      
+   }
+   
 
 
 } // namespace plane

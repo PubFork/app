@@ -398,9 +398,10 @@ namespace macos
          
          bOk = false;
          
-         ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
+         threadrefa_post_quit_and_wait(one_minute());
+         //::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
          
-         ::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
+         //::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
          
          //for(auto & pthread : m_mapqueue)
          {
@@ -613,15 +614,15 @@ namespace macos
       
       delete_all_timers();
       
-      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
-      
-      //for(auto & pthread : m_mapqueue)
-      {
-         
-        // ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
-          ::multithreading::post_quit_and_wait(m_queuethread, millis(5));
-         
-      }
+//      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
+//      
+//      //for(auto & pthread : m_mapqueue)
+//      {
+//         
+//        // ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
+//          ::multithreading::post_quit_and_wait(m_queuethread, millis(5));
+//         
+//      }
 
       
    }
@@ -2253,7 +2254,7 @@ namespace macos
       else
       {
 
-         m_pthreadDraw = ::fork(get_app(), [&]()
+         m_pthreadUpdateWindow = m_pui->fork([&]()
          {
 
             DWORD dwStart;
@@ -2277,9 +2278,22 @@ namespace macos
                   
                   if (!m_pui->m_bLockWindowUpdate)
                   {
+                     
+                     bool bUpdateBuffer = m_pui->check_need_layout()
+                     || m_pui->check_need_zorder() || m_pui->check_show_flags();
+                     
+                     if(bUpdateBuffer)
+                     {
+                        
+                     }
+                     else if(m_pui->IsWindowVisible())
+                     {
+                        
+                        bUpdateBuffer = m_pui->has_pending_graphical_update();
+                        
+                     }
 
-                     if (m_pui->has_pending_graphical_update()
-                         || m_pui->check_need_layout())
+                     if(bUpdateBuffer)
                      {
 
                         _001UpdateBuffer();
@@ -2321,6 +2335,8 @@ namespace macos
             }
             
             output_debug_string("m_pthreadDraw has finished!");
+            
+            m_pthreadUpdateWindow.release();
             
             release_graphics_resources();
             

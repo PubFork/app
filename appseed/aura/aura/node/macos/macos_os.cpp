@@ -1112,6 +1112,15 @@ namespace macos
    }
 
    
+   bool os::file_open(::file::path path)
+   {
+      
+      ns_open_file(path.c_str());
+      
+      return true;
+      
+   }
+   
    
 } // namespace macos
 

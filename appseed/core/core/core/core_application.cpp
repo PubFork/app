@@ -3126,10 +3126,19 @@ namespace core
 
    bool application::_001CloseApplicationByUser(sp(::user::interaction) pwndExcept)
    {
-
+      
+      // Closing just this application.
+      // It is different of a system exit.
+      // System (a single ca2 process) can host
+      // multiple ca2 application objects.
+      
       // attempt to save all documents
       if (!save_all_modified())
+      {
+         
          return false;     // don't close it
+         
+      }
 
       // hide the application's windows before closing all the documents
       HideApplication();

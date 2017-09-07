@@ -159,7 +159,7 @@ namespace user
 
       // Overridables
       // Special notifications
-      virtual void on_changed_view_list(single_lock * psl = NULL); // after add or remove ::user::impact
+      virtual void on_changed_view_list(); // after add or remove ::user::impact
       virtual void delete_contents(); // delete doc items etc
 
 
@@ -167,15 +167,15 @@ namespace user
       virtual bool on_new_document();
       virtual bool on_open_document(var varFile);
       virtual bool on_save_document(var varFile);
-      virtual void on_close_document(single_lock * psl = NULL);
+      virtual void on_close_document();
       virtual void pre_close_document();
       virtual void close_document();
       virtual void report_save_load_exception(const char * lpszPathName, ::exception::base* e, bool bSaving, const char * nIDPDefault);
 
       // advanced overridables, closing down frame/doc, etc.
-      virtual bool can_close_frame(sp(::user::frame_window) pFrame);
+      virtual bool can_close_frame(::user::frame_window * pframe);
       virtual bool save_modified(); // return TRUE if ok to continue
-      virtual void pre_close_frame(sp(::user::frame_window) pFrame);
+      virtual void pre_close_frame(::user::frame_window * pframe);
 
 
       virtual void dump(dump_context &) const;
@@ -186,7 +186,7 @@ namespace user
       virtual bool on_filemanager_save(::filemanager::manager * pmanager, var varFile, bool bReplace = true);
       virtual bool do_save(var varFile, bool bReplace = true);
       virtual bool do_file_save();
-      virtual void update_frame_counts(single_lock * psl = NULL);
+      virtual void update_frame_counts();
       virtual void disconnect_views();
       virtual void call_initial_update();
 

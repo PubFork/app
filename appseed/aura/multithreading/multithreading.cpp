@@ -469,14 +469,18 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
    bool bOk = true;
 
-   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MIN(2, duration.get_total_seconds());
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
 
    single_lock sl(m_pmutex);
 
    try
    {
+      
+      ::count cCount = get_count();
+      
+      ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-      while (get_count() && ::datetime::time::get_current_time() < timeEnd)
+      while (cCount &&  timeNow < timeEnd)
       {
 
          sl.lock();
@@ -547,6 +551,10 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
             }
 
          }
+         
+         timeNow = ::datetime::time::get_current_time();
+         
+         cCount = get_count();
 
       }
 

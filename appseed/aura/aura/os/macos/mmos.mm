@@ -16,6 +16,8 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
       
       s_mmos = ([[self alloc] init]);
       
+      s_mmos->theLock = [[NSRecursiveLock alloc] init];
+      
       s_mmos->m_ppszWallpaper = NULL;
       
       s_mmos->m_llWallpaper = 0;
@@ -132,6 +134,8 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
    
    [self get_user_wallpaper: (void *) &ppsz getCount: (void *) &ll];
    
+   [self->theLock lock];
+   
    char ** ppszOld = self->m_ppszWallpaper;
    
    long long llOld = self->m_llWallpaper;
@@ -155,7 +159,11 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
       
    }
 
+   [self->theLock unlock];
+   
 }
+
+
 -(void)monitorIconForFile
 {
    

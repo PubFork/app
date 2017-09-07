@@ -571,7 +571,7 @@ wait_result mutex::wait(const duration & duration)
       return wait();
 
    }
-
+   
 #if defined(MUTEX_NAMED_POSIX)
 
    if (m_psem != SEM_FAILED)

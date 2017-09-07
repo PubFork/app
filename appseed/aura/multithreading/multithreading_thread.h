@@ -282,7 +282,7 @@ public:
    virtual void on_unregister_dependent_thread(::thread * pthread);
    virtual void signal_close_dependent_threads();
    virtual void wait_close_dependent_threads(const duration & duration);
-   virtual void register_at_required_threads();
+   virtual bool register_at_required_threads();
    virtual void unregister_from_required_threads();
 
    virtual void do_events();
@@ -426,5 +426,10 @@ namespace multithreading
 CLASS_DECL_AURA bool is_thread_on(IDTHREAD id);
 CLASS_DECL_AURA void set_thread_on(IDTHREAD id);
 CLASS_DECL_AURA void set_thread_off(IDTHREAD id);
+
+
+
+
+CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis);
 
 

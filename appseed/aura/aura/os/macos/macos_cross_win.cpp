@@ -16,36 +16,3 @@ DWORD SetLastError(DWORD dwLastError)
 }
 
 
-void Sleep(DWORD dwMillis)
-{
-
-   DWORD dwSeconds = dwMillis / 1000;
-
-   dwMillis %= 1000;
-
-   if(dwSeconds > 0)
-   {
-    
-      if(dwMillis > 500)
-      {
-         
-         dwMillis = 0;
-         
-         dwSeconds++;
-         
-      }
-      
-      sleep(dwMillis);
-      
-   }
-   else
-   {
-   
-      usleep(dwMillis / 1000);
-      
-   }
-   
-}
-
-
-

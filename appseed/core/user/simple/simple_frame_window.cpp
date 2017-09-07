@@ -1567,25 +1567,23 @@ void simple_frame_window::_001OnDdeInitiate(::message::message * pobj)
 }
 
 
-void simple_frame_window::pre_translate_message(::message::message * pobj)
+void simple_frame_window::pre_translate_message(::message::message * pmessage)
 {
 
-   SCAST_PTR(::message::base, pbase, pobj);
-
-   if(pbase->m_id == message_display_change)
+   if(pmessage->m_id == message_display_change)
    {
 
       Wfi();
 
    }
-   else if (pbase->m_id == WM_MOUSEMOVE)
+   else if (pmessage->m_id == WM_MOUSEMOVE)
    {
 
    }
-   else if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
+   else if(pmessage->m_id == WM_KEYDOWN || pmessage->m_id == WM_SYSKEYDOWN)
    {
 
-      SCAST_PTR(::message::key, pkey, pobj);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       if(pkey->m_ekey == ::user::key_alt || pkey->m_ekey == ::user::key_lalt || pkey->m_ekey == ::user::key_ralt)
       {
@@ -1615,7 +1613,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
                if (DeferFullScreen(true, false))
                {
 
-                  pbase->m_bRet = true;
+                  pmessage->m_bRet = true;
 
                   return;
 
@@ -1628,10 +1626,10 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
       }
 
    }
-   else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
+   else if(pmessage->m_id == WM_KEYUP || pmessage->m_id == WM_SYSKEYUP)
    {
 
-      SCAST_PTR(::message::key, pkey, pobj);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       if(pkey->m_ekey == ::user::key_alt || pkey->m_ekey == ::user::key_lalt || pkey->m_ekey == ::user::key_ralt)
       {
@@ -1642,7 +1640,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
             if (WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
-               pbase->m_bRet = true;
+               pmessage->m_bRet = true;
 
                m_bFullScreenAlt = false;
 
@@ -1664,7 +1662,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
             if(WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
-               pbase->m_bRet = true;
+               pmessage->m_bRet = true;
 
                m_bFullScreenAlt = false;
 
@@ -1680,7 +1678,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
 
    }
 
-   return ::user::frame_window::pre_translate_message(pobj);
+   return ::user::frame_window::pre_translate_message(pmessage);
 
 }
 

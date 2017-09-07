@@ -6,6 +6,23 @@
 //
 
 #include "framework.h"
+
+
+#ifdef MACOS
+
+// http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x
+// http://stackoverflow.com/users/346736/jbenet
+
+//#include <mach/clock.h>
+//#include <mach/mach.h>
+#include <mach/mach_time.h>
+
+//clock_serv_t   g_cclock;
+double g_machtime_conversion_factor;
+//   clock_get_time(cclock, &mts);
+   
+#endif
+
 mutex * g_pmutexCred = NULL;
 //extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
@@ -159,8 +176,19 @@ namespace aura
 #ifdef WINDOWS
 
          QueryPerformanceFrequency(&g_freq);
+         
+#elif defined(MACOS)
+
+         
+         {
+            mach_timebase_info_data_t timebase;
+            mach_timebase_info(&timebase);
+            g_machtime_conversion_factor = (double)timebase.numer / (double)timebase.denom;
+         }
 
 #endif
+         
+
 
          g_firstNano = get_nanos();
 
@@ -325,6 +353,12 @@ namespace aura
 
          // Only draw2d implementations needing "big" synch should init_draw2d_mutex();
          // init_draw2d_mutex();
+
+#ifdef MACOS
+         
+         //mach_port_deallocate(mach_task_self(), g_cclock);
+
+#endif
 
          aura_auto_debug_teste();
 

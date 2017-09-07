@@ -4,7 +4,7 @@
 
 object_refa::object_refa()
 {
-
+   defer_create_mutex();
 }
 
 
