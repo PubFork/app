@@ -4,33 +4,54 @@
 namespace sort
 {
 
-   template <class T> void sort( T & t1, T & t2)
+
+   inline void sort(auto & t1, auto & t2)
    {
+
       if(t1 > t2)
       {
-         T t = t2;
+
+         auto t = t2;
+
          t2 = t1;
+
          t1 = t;
+
       }
+
    }
 
-   template <class T> void sort_non_negative(T & t1, T & t2)
+
+   inline void sort_non_negative(auto & t1, auto & t2)
    {
-      if (t1 < ::numeric_info<T>::null())
+
+      if (t1 < ::numeric_info<typename remove_reference<decltype(t1)>::TYPE >::null())
       {
+
          return;
+
       }
-      if (t2 < ::numeric_info<T>::null())
+
+      if (t2 < ::numeric_info<typename remove_reference<decltype(t2)>::TYPE>::null())
       {
+
          return;
+
       }
+
       if (t1 > t2)
       {
-         T t = t2;
+
+         auto t = t2;
+
          t2 = t1;
+
          t1 = t;
+
       }
+
    }
+
 
    template <class TYPE>
    static index NumericCompare(const TYPE * ptA, const TYPE * ptB);
@@ -1321,9 +1342,9 @@ namespace sort
       {
 
          index_array stackLowerBound;
-         
+
          index_array stackUpperBound;
-         
+
          index iLowerBound;
 
          index iUpperBound;
@@ -1332,20 +1353,20 @@ namespace sort
 
          if (a.get_size() >= 2)
          {
-            
+
             stackLowerBound.push(0);
-            
+
             stackUpperBound.push(a.get_size() - 1);
 
             while (true)
             {
-               
+
                iLowerBound = stackLowerBound.pop();
-               
+
                iUpperBound = stackUpperBound.pop();
-               
+
                iLPos = iLowerBound;
-               
+
                iMPos = iLowerBound;
 
                iUPos = iUpperBound;
@@ -1365,9 +1386,9 @@ namespace sort
 
                      if (pred(a[iUPos], a[iMPos]))
                      {
-                        
+
                         a.swap(iMPos, iUPos);
-                        
+
                         break;
 
                      }
@@ -1375,7 +1396,7 @@ namespace sort
                      iUPos--;
 
                   }
-                  
+
                   iMPos = iUPos;
 
                   while (true)
@@ -1390,7 +1411,7 @@ namespace sort
 
                      if (pred(a[iMPos], a[iLPos]))
                      {
-                        
+
                         a.swap(iLPos, iMPos);
 
                         break;
@@ -1409,22 +1430,22 @@ namespace sort
 
                if (iLowerBound < iMPos - 1)
                {
-                  
+
                   stackLowerBound.push(iLowerBound);
-                  
+
                   stackUpperBound.push(iMPos - 1);
 
                }
 
                if (iMPos + 1 < iUpperBound)
                {
-                  
+
                   stackLowerBound.push(iMPos + 1);
 
                   stackUpperBound.push(iUpperBound);
 
                }
-               
+
                if (stackLowerBound.get_size() == 0)
                {
 
@@ -1661,9 +1682,7 @@ namespace sort
 
    template <class TYPE, class ARG_TYPE, class ARRAY_TYPE, typename PRED>
    void pred_quick_sort_descending(comparable_list < TYPE, ARG_TYPE, ARRAY_TYPE > & list, PRED pred)
-   {
-
-      pred_quick_sort(list, [&](auto & a, auto & b) { return pred(b, a); });
+   {      pred_quick_sort(list, [&](auto & a, auto & b) { return pred(b, a); });
 
    }
 
@@ -1673,7 +1692,7 @@ namespace sort
 
       if (bAscendent)
       {
-         
+
          pred_quick_sort(list, [](auto & a, auto & b) { return a < b; });
 
       }
@@ -1919,9 +1938,9 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 template < typename PRED >
 void array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_sort(PRED pred)
 {
-   
+
    ::sort::array::pred_sort(*this, pred);
-   
+
 }
 
 
@@ -1929,18 +1948,18 @@ void array_base < TYPE, ARG_TYPE, ALLOCATOR >::pred_sort(PRED pred)
 template < typename TYPE >
 void numeric_array < TYPE >::sort(bool bAsc)
 {
-   
+
    if (bAsc)
    {
-      
+
       sort::QuickSortAsc(*this);
-      
+
    }
    else
    {
-      
+
       sort::QuickSortDesc(*this);
-      
+
    }
-   
+
 }

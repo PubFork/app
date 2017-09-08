@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 namespace android
@@ -1072,7 +1073,7 @@ namespace android
 
 		//}
 
-      
+
 
 	} // namespace axis
 

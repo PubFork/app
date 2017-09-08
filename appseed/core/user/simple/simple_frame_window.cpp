@@ -270,14 +270,14 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
 
 sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 {
-   
+
    if(Application.wndfrm() == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
 
    pschema->set_style(m_varFrame["style"]);
@@ -366,7 +366,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
       m_varFrame["schema"] = "005";
 
    }
-   
+
    if (m_varFrame["style"].is_empty())
    {
 
@@ -395,12 +395,12 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    }
    else
    {
-      
+
       fork([&]()
       {
 
          data_get("transparent_frame", m_bTransparentFrame);
-         
+
       });
 
    }
@@ -465,7 +465,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
       try
       {
-         
+
          pinteractionframe = create_frame_schema();
 
       }
@@ -487,16 +487,16 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          return;
 
       }
-      
+
       if(pinteractionframe == NULL)
       {
-         
+
          pcreate->m_lresult = -1;
-         
+
          pcreate->m_bRet = true;
-         
+
          return;
-         
+
       }
 
       //frame::FrameSchema * pschema = dynamic_cast < ::frame::FrameSchema * > (pinteractionframe);
@@ -669,7 +669,7 @@ void simple_frame_window::defer_set_icon()
 
       stringa straMatter;
 
-      if (strMatter.name(0).is_equal("system"))
+      if (strMatter.name(0) == "system")
       {
 
          straMatter.add("main");
@@ -949,7 +949,7 @@ bool simple_frame_window::WfiToggleTransparentFrame()
    set_need_layout();
 
    set_need_redraw();
-   
+
    return true;
 
 }
@@ -1265,11 +1265,11 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
    {
       pobj->m_bRet = true;
    }
-   
+
    bool bDestroyWindow = false;
-   
+
    {
-   
+
       {
    // Note: only queries the active document
    ::user::document * pdocument = GetActiveDocument();
@@ -1278,7 +1278,7 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
       // document can't close right now -- don't close it
       return;
    }
-         
+
       }
 
    ::aura::application * papp = &Application;
@@ -1313,14 +1313,14 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
    {
       bDestroyWindow = true;
    }
-      
+
    }
-   
+
    if(bDestroyWindow)
    {
-      
+
       DestroyWindow();
-      
+
    }
 
 }
@@ -1345,7 +1345,7 @@ void simple_frame_window::OnNcCalcSize(bool bCalcValidRects, NCCALCSIZE_PARAMS F
 
 void simple_frame_window::_001OnActivateApp(::message::message * pobj)
 {
-   
+
    SCAST_PTR(::message::base, pbase, pobj);
 
    pbase->previous();
@@ -1448,8 +1448,8 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
       //
 
 //         if (!bMinimized && !WfiIsIconic())
-//         { 
-//         
+//         {
+//
 ////            WfiMinimize();
 //
 //         }
@@ -2180,7 +2180,7 @@ bool simple_frame_window::LoadToolBar(sp(::type) sptype, id idToolBar, const cha
 
    if(!ptoolbar->LoadXmlToolBar(strXml))
    {
-      
+
       return false;
 
    }
@@ -2473,7 +2473,7 @@ void simple_frame_window::OnDropFiles(HDROP hDropInfo)
    wchar_t szFileName[_MAX_PATH];
    for (UINT iFile = 0; iFile < nFiles; iFile++)
    {
-      
+
       if (::DragQueryFileW(hDropInfo, iFile, szFileName, _MAX_PATH))
       {
 

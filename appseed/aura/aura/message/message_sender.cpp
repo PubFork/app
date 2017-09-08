@@ -5,7 +5,7 @@
 namespace message
 {
 
-   
+
    sender::sender()
    {
 
@@ -16,50 +16,50 @@ namespace message
 
    sender::~sender()
    {
-      
+
       try
       {
-      
+
          synch_lock sl(m_pmutexIdRoute);
 
          for (auto & idroute : m_idroute)
          {
-            
+
             try
             {
 
                for (auto & route : idroute.m_element2)
                {
-               
+
                   try
                   {
-               
+
                      synch_lock sl(route->m_preceiver->m_pmutex);
-                  
+
                      route->m_preceiver->m_sendera.remove(this);
-                  
+
                   }
                   catch(...)
                   {
-               
+
                   }
 
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
 
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
       ::aura::del(m_pmutexIdRoute);
 
    }
@@ -78,12 +78,12 @@ namespace message
          });
 
       }
-      
+
       preceiver->m_sendera.remove(this);
 
    }
 
-   
+
    void sender::route_message(::message::message * pmessage)
    {
 
@@ -102,7 +102,7 @@ namespace message
       for(;pmessage->m_iRouteIndex >= 0; pmessage->m_iRouteIndex--)
       {
 
-         pmessage->route();
+         pmessage->route_message();
 
          if (pmessage->m_bRet)
          {
@@ -115,22 +115,22 @@ namespace message
 
    }
 
-   
+
    void sender::remove_all_routes()
    {
 
       synch_lock sl(m_pmutexIdRoute);
-      
+
       for (auto & id_route_array : m_idroute)
       {
-         
+
          id_route_array.m_element2.pred_each([=](auto & pitem)
                                                {
-                                                  
+
                                                   pitem->m_preceiver->m_sendera.remove(this);
-                                                  
+
                                                });
-         
+
       }
 
    }

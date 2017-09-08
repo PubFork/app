@@ -54,9 +54,9 @@ namespace linux
 
       virtual oswindow get_handle() const;
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
 

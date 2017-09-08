@@ -1,5 +1,5 @@
 #include "framework.h"
-#ifdef APPLEOS
+#if defined(APPLEOS) || defined(LINUX)
 #include <iconv.h>
 #else
 //#include "atom/iconv/include/iconv.h"
@@ -267,7 +267,7 @@ MultiByteToWideChar(
          lpWideCharStr = lpsz;
 
          iconv_t iconvPlease = iconv_open("UTF-16LE", iconv_charset_from_windows_code_page(CodePage));
-         
+
          size_t sOutIn = sOut;
 
          iconv(iconvPlease, (char **) &lpMultiByteStr, &sIn, (char **) &lpsz, &sOut);

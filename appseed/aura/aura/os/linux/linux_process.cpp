@@ -1,7 +1,10 @@
 #include "framework.h"
 
-//#include <signal.h>
-//#include <unistd.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <spawn.h>
+#include <sys/stat.h>
 
 
 CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, const char * pszDll)
@@ -74,7 +77,7 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
          if(*psz == ' ')
          {
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
          }
          else if(*psz == '\"')
@@ -82,9 +85,9 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 
             quote = '\"';
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
-            argv[argc++] = psz;
+            argv[argc++] =(char *) psz;
 
             e = state_quote;
 
@@ -94,9 +97,9 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 
             quote = '\'';
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
-            argv[argc++] = psz;
+            argv[argc++] = (char *) psz;
 
             e = state_quote;
 
@@ -104,9 +107,9 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
          else
          {
 
-            argv[argc++] = psz;
+            argv[argc++] = (char *) psz;
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
             e = state_non_space;
 
@@ -121,13 +124,13 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 
             memmove(psz, psz + 1, strlen(psz));
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
          }
          else if(*psz == quote)
          {
 
-            p = ::str::utf8_inc(psz);
+            p = (char *) ::str::utf8_inc(psz);
 
             *psz = '\0';
 
@@ -139,7 +142,7 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
          else
          {
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
          }
 
@@ -150,7 +153,7 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
          if(*psz == ' ')
          {
 
-            p = ::str::utf8_inc(psz);
+            p = (char *) ::str::utf8_inc(psz);
 
             *psz = '\0';
 
@@ -162,7 +165,7 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
          else
          {
 
-            psz = ::str::utf8_inc(psz);
+            psz = (char *) ::str::utf8_inc(psz);
 
          }
 
@@ -288,7 +291,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             if(*psz == ' ')
             {
 
-               psz = ::str::utf8_inc(psz);
+               psz = (char *) ::str::utf8_inc(psz);
 
             }
             else if(*psz == '\"')
@@ -296,7 +299,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
 
                quote = '\"';
 
-               psz = ::str::utf8_inc(psz);
+               psz =(char *)  ::str::utf8_inc(psz);
 
                argv[argc++] = psz;
 
@@ -308,7 +311,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
 
                quote = '\'';
 
-               psz = ::str::utf8_inc(psz);
+               psz = (char *) ::str::utf8_inc(psz);
 
                argv[argc++] = psz;
 
@@ -320,7 +323,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
 
                argv[argc++] = psz;
 
-               psz = ::str::utf8_inc(psz);
+               psz = (char *) ::str::utf8_inc(psz);
 
                e = state_non_space;
 
@@ -333,7 +336,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             if(*psz == quote)
             {
 
-               p = ::str::utf8_inc(psz);
+               p = (char *) ::str::utf8_inc(psz);
 
                *psz = '\0';
 
@@ -345,7 +348,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             else
             {
 
-               psz = ::str::utf8_inc(psz);
+               psz = (char *) ::str::utf8_inc(psz);
 
             }
 
@@ -356,7 +359,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             if(*psz == ' ')
             {
 
-               p = ::str::utf8_inc(psz);
+               p = (char *) ::str::utf8_inc(psz);
 
                *psz = '\0';
 
@@ -368,7 +371,7 @@ int32_t create_process2(const char * _cmd_line, int32_t * pprocessId)
             else
             {
 
-               psz = ::str::utf8_inc(psz);
+               psz =(char *)  ::str::utf8_inc(psz);
 
             }
 
@@ -417,7 +420,7 @@ CLASS_DECL_AURA int32_t call_async(
                             const char * pszDir,
                             int32_t iShow,
 		            bool bPrivileged,
-		            unsigned int * puiPid = NULL)
+		            unsigned int * puiPid)
 {
     string strCmdLine;
 
@@ -552,7 +555,7 @@ retry:
 #endif
    mem.allocate(iSize);
 
-   s = readlink (str, mem.get_data(), iSize);
+   s = readlink (str, (char *) mem.get_data(), iSize);
 
    if(s > sb.st_size)
    {
@@ -740,4 +743,34 @@ stringa cmdline_from_pid(unsigned int iPid)
 }
 
 
+
+
+
+
+
+bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration durationTimeout )
+{
+
+   return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, durationTimeout.get_total_milliseconds());
+
+}
+
+
+
+
+
+CLASS_DECL_AURA bool is_shared_library_busy(uint32_t processid, const stringa & stra)
+{
+
+   return false;
+
+}
+
+
+CLASS_DECL_AURA bool is_shared_library_busy(const stringa & stra)
+{
+
+   return false;
+
+}
 

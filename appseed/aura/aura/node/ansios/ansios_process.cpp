@@ -8,9 +8,9 @@
 //#include <pthread.h>
 //#include <stdlib.h>
 #elif defined(LINUX)
-//#include <sys/wait.h>
-//#include <unistd.h>
-//#include <spawn.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <spawn.h>
 extern char **environ;
 #elif defined(APPLEOS)
 //#include <sys/wait.h>

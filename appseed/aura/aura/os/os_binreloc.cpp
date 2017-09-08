@@ -17,8 +17,8 @@
 #define __BINRELOC_C__
 
 #ifdef ENABLE_BINRELOC
-	//#include <sys/stat.h>
-   //#include <unistd.h>
+	#include <sys/stat.h>
+   #include <unistd.h>
 #endif /* ENABLE_BINRELOC */
 
 #ifdef __cplusplus

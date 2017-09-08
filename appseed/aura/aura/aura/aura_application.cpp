@@ -1,6 +1,12 @@
 #include "framework.h"
 
 
+#ifdef LINUX
+#include <sys/stat.h>
+#include <fcntl.h>
+#endif
+
+
 extern "C"
 {
 
@@ -2538,15 +2544,15 @@ namespace aura
 
    int32_t application::main()
    {
-      
-      
+
+
       TRACE(string(typeid(*this).name()) + " main");;
-      
+
       dappy(string(typeid(*this).name()) + " : application::main 1");
-      
+
       try
       {
-         
+
          TRACE(string(typeid(*this).name()) + " on_run");;
          dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
          m_iReturnCode = 0;
@@ -2557,69 +2563,69 @@ namespace aura
             dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
             ::output_debug_string("application::main on_run termination failure\n");
          }
-         
+
       }
       catch(::exit_exception &)
       {
-         
+
          dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-         
+
          ::multithreading::post_quit(&System);
-         
+
          goto exit_application;
-         
+
       }
       catch(...)
       {
-         
+
          dappy(string(typeid(*this).name()) + " : on_run general exception");
-         
+
          goto exit_application;
-         
+
       }
-      
+
       try
       {
-         
+
          if(is_system())
          {
-            
+
             dappy(string(typeid(*this).name()) + " : quiting main");
-            
+
             //::aura::post_quit_thread(&System);
-            
+
             //Sleep(5000);
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
    exit_application:
-      
-      
+
+
       try
       {
-         
+
          m_iReturnCode = exit_thread();
-         
+
       }
       catch(::exit_exception &)
       {
-         
+
          ::multithreading::post_quit(&System);
-         
+
          m_iReturnCode = -1;
-         
+
       }
       catch(...)
       {
-         
+
          m_iReturnCode = -1;
-         
+
       }
 
 #ifdef MACOS
@@ -2714,8 +2720,8 @@ namespace aura
 //      }
 //
 //      return m_iReturnCode;
-      
-      
+
+
 
    }
 
@@ -3590,7 +3596,7 @@ namespace aura
 
 
 
-   
+
 
 
 
@@ -3810,28 +3816,28 @@ namespace aura
       }
 
       xxdebug_box("check_exclusive", "check_exclusive", MB_ICONINFORMATION);
-      
+
       if (!is_system() && !is_session())
       {
-         
+
          try
          {
-            
+
             m_pipi = create_ipi();
-            
+
          }
          catch (...)
          {
-            
+
          }
-         
+
          thisok << 0.1;
-         
+
          bool bHandled = false;
-         
+
          if (!check_exclusive(bHandled))
          {
-            
+
             if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
                               && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
@@ -3847,42 +3853,42 @@ namespace aura
                   durationTimeout = seconds(15);
 
                   #endif
-               
+
                simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", durationTimeout, MB_ICONASTERISK);
-               
+
             }
-            
+
             thisfail << 0.2;
-            
+
             return false;
-            
+
          }
-         
+
          thisok << 0.2;
-         
+
          if (m_pipi != NULL)
          {
-            
+
             try
             {
-               
+
                for (index i = 0; i < 1; i++)
                {
-                  
+
                   m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_new_instance", System.file().module(), System.os().get_pid());
-                  
+
                }
-               
+
             }
             catch (...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
-      
+
       xxdebug_box("check_exclusive ok", "check_exclusive ok", MB_ICONINFORMATION);
 
 
@@ -4488,7 +4494,7 @@ namespace aura
    {
 
       application_message message(application_message_initialize3);
-      
+
       route_message(&message);
 
       if (!message.m_bOk)
@@ -4739,9 +4745,9 @@ namespace aura
    {
 
       application_message message(application_message_process_initialize);
-      
+
       route_message(&message);
-   
+
       return true;
 
    }
@@ -4749,7 +4755,7 @@ namespace aura
 
    bool application::ca_initialize1()
    {
-      
+
       application_message message(application_message_initialize1);
 
       route_message(&message);
@@ -4762,7 +4768,7 @@ namespace aura
 
    bool application::ca_finalize()
    {
-      
+
       application_message message(application_message_finalize);
 
       try
@@ -5259,7 +5265,7 @@ namespace aura
       return false;
 
    }
-   
+
 
    bool application::startup_command(::command::command * pcommand)
    {
@@ -5279,7 +5285,7 @@ namespace aura
       return "";
 
    }
-   
+
 
    void application::process_message_filter(int32_t code, ::message::message * pobj)
    {
@@ -5809,9 +5815,9 @@ namespace aura
          string strCommand;
 
          strCommand = "app=" + strAppId;
-         
+
          strCommand += " locale=" + Session.m_strLocale;
-         
+
          strCommand += " style=" + Session.m_strSchema;
 
          strCommand += " install";
@@ -6161,7 +6167,7 @@ namespace aura
             //
             //               }
             //else
-            
+
             int iRet = IDNO;
 
             output_debug_string("\n not_installed parameters: " + strParam + "\n");
@@ -6187,7 +6193,7 @@ namespace aura
 
 #ifdef LINUX
 
-                     dwExitCode = System.process().synch(string(strPath) + strParam, SW_HIDE, durationWait, &bTimedOut);
+                     dwExitCode = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
 
 #else
 
@@ -6524,7 +6530,7 @@ namespace aura
 
    }
 
-   
+
    string application::get_executable_appid()
    {
 
@@ -6619,7 +6625,7 @@ namespace aura
                goto finalize;
 
          }
-      
+
          output_debug_string("No draw2d pluging available!!.");
          return;
 
@@ -6675,7 +6681,7 @@ namespace aura
 
    }
 
-   
+
    bool application::sys_set(string strPath, string strValue)
    {
 
@@ -6683,7 +6689,7 @@ namespace aura
 
    }
 
-   
+
    string application::sys_get(string strPath, string strDefault)
    {
 
@@ -6700,7 +6706,7 @@ namespace aura
 
    }
 
-   
+
    bool application::app_set(string strPath, string strValue)
    {
 
@@ -6708,7 +6714,7 @@ namespace aura
 
    }
 
-   
+
    string application::app_get(string strPath, string strDefault)
    {
 
@@ -6716,16 +6722,16 @@ namespace aura
 
    }
 
-   
+
    bool application::on_open_document_file(var varFile)
    {
-      
+
       request_file(varFile);
-      
+
       return varFile["document"].cast < ::object > () != NULL;
-      
+
    }
-   
+
 
 #ifdef INSTALL_SUBSYSTEM
 
@@ -6950,7 +6956,7 @@ namespace aura
 
    }
 
-   
+
    string application::install_pick_command_line()
    {
 

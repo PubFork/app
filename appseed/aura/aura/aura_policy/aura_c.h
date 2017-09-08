@@ -90,7 +90,7 @@ CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNu
 #define REASSEMBLE_ARGB(a, r, g, b)      ARGB(a, r, g, b)
 #endif
 
-
+CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s);
 
 // risky
 //#ifdef __cpluplus

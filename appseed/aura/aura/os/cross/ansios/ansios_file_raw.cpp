@@ -7,12 +7,31 @@
 int_bool file_exists_raw(const char * path1)
 {
 
+#ifdef WINDOWS
+
    uint32_t dwFileAttributes = GetFileAttributesA(path1);
 
    if (dwFileAttributes == INVALID_FILE_ATTRIBUTES || (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
       return FALSE;
 
    return TRUE;
+
+   #else
+
+
+   // dedicaverse stat -> Sir And Arthur - Cesar Serenato
+
+   struct stat st;
+
+   if(stat(path1, &st))
+      return false;
+
+   if((st.st_mode & S_IFDIR))
+      return false;
+
+   return true;
+
+   #endif
 
 }
 
@@ -82,8 +101,16 @@ void file_beg_contents_raw(const char * path, const char * psz)
 uint64_t file_length_raw(const char * path)
 {
 
+#ifdef WINDOWS
    struct _stat st;
    ::_stat(path, &st);
    return st.st_size;
+
+   #else
+   struct stat st;
+   ::stat(path, &st);
+   return st.st_size;
+
+   #endif
 
 }

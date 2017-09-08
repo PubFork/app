@@ -26,7 +26,7 @@ static geoipv6_t IPV6_NULL;
 #if defined(APPLEOS) || defined(LINUX)
 
 #include<arpa/inet.h>
-//#include<sys/time.h>
+#include<sys/time.h>
 
 #endif
 

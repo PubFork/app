@@ -46,7 +46,6 @@ namespace aura
 
 
    class ipi;
-   class main_init_data;
    class application_heap;
 
 

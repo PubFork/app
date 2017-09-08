@@ -3,6 +3,11 @@
 #if defined(APPLEOS)
 #include <sys/stat.h>
 #include <dirent.h>
+#elif defined(LINUX)
+#include <dlfcn.h>
+#include <link.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
 
 #ifdef WINDOWS
@@ -1675,7 +1680,7 @@ retry:
 
 
 
-#if defined(METROWIN) || defined(MACOS)
+#if defined(METROWIN) || defined(APPLEOS) || defined(LINUX)
 
 ::file::path dir::favorites()
 {

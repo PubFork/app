@@ -5,20 +5,6 @@ namespace linux
 {
 
 
-   class CLASS_DECL_AURA main_init_data :
-      public ::command::command
-   {
-   public:
-
-
-      HINSTANCE   m_hInstance;
-      HINSTANCE   m_hPrevInstance;
-      int32_t         m_nCmdShow;
-
-
-   };
-
-
    class CLASS_DECL_AURA application :
       virtual public ::aura::application
    {
@@ -28,8 +14,6 @@ namespace linux
 
       WINUSHORT               m_atomApp;
       WINUSHORT               m_atomSystemTopic;
-
-      main_init_data *     m_pmaininitdata;
 
 
       application(sp(::aura::application) papp);
@@ -60,7 +44,7 @@ namespace linux
 
 
 
-      virtual bool win_init(main_init_data * pdata);
+      virtual bool startup_command(::command::command * pdata);
 
 //	  virtual bool update_module_paths();
 

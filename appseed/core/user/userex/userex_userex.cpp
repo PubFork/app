@@ -24,14 +24,14 @@ CLASS_DECL_AURA mutex * get_cred_mutex();
 namespace userex
 {
 
-   
+
 
    userex::userex(::aura::application * papp):
       object(papp),
       ::aura::department(papp)
    {
 
-      
+
       m_pshell  = NULL;
       m_ptemplateFontSel = NULL;
 
@@ -40,7 +40,7 @@ namespace userex
 
    userex::~userex()
    {
-      
+
    }
 
 
@@ -48,7 +48,7 @@ namespace userex
    {
 
       System.factory().creatable_small < keyboard_layout >();
-      
+
 
       System.factory().creatable_small < top_edit_view >();
       System.factory().creatable_small < top_toggle_view >();
@@ -67,13 +67,13 @@ namespace userex
          m_pshell = canew(::user::shell::windows(get_app()));
 
 #elif defined(MACOS)
-         
+
          m_pshell = canew(::user::shell::macos(get_app()));
-         
+
 #elif defined(APPLE_IOS)
-         
+
          m_pshell = canew(::user::shell::ios(get_app()));
-         
+
 #elif defined(ANDROID)
 
          m_pshell = canew(::user::shell::android(get_app()));
@@ -81,6 +81,10 @@ namespace userex
 #elif defined(METROWIN)
 
          m_pshell = canew(::user::shell::metrowin(get_app()));
+
+#elif defined(LINUX)
+
+         m_pshell = canew(::user::shell::linux(get_app()));
 
 #else
 
@@ -448,20 +452,20 @@ namespace userex
       }
       else if(box.m_strResponse == "no")
       {
-         
+
          return IDNO;
 
       }
       else if(box.m_strResponse == "cancel")
       {
-         
+
          return IDCANCEL;
 
       }
 
       if(fuStyle & MB_YESNOCANCEL)
       {
-      
+
          return IDCANCEL;
 
       }
@@ -483,13 +487,13 @@ namespace userex
       class ::userex::message_box box(papp == NULL ? get_app() : papp);
 
       property_set propertyset;
-      
+
       propertyset["message"] = pszMessage;
-      
+
       box.m_dwDelay = (DWORD) durationTimeout.get_total_milliseconds();
 
       string strMatter;
-      
+
       if(fuStyle & MB_YESNOCANCEL)
       {
 
@@ -518,39 +522,39 @@ namespace userex
       }
       else if(box.m_strResponse == "yes")
       {
-         
+
          return IDYES;
 
       }
       else if(box.m_strResponse == "no")
       {
-         
+
          return IDNO;
 
       }
       else if(box.m_strResponse == "cancel")
       {
-         
+
          return IDCANCEL;
 
       }
-      
+
       if(fuStyle & MB_YESNOCANCEL)
       {
-      
+
          return IDCANCEL;
 
       }
       else
       {
-         
+
          return 0;
 
       }
 
    }
 
-   
+
    int32_t userex::track_popup_menu(const char * pszMatter,point pt,sp(::user::interaction) puie)
    {
 
@@ -565,7 +569,7 @@ namespace userex
 
    bool userex::get_fs_size(string & strSize,const char * pszPath,bool & bPending)
    {
-      
+
       int64_t i64Size;
 
       if(!get_fs_size(i64Size,pszPath,bPending))
@@ -603,13 +607,13 @@ namespace userex
       }
       else if(i64Size > 0)
       {
-         
+
          strSize.Format("1 KB");
 
       }
       else
       {
-         
+
          strSize.Format("0 KB");
 
       }
@@ -693,21 +697,21 @@ namespace userex
 
    void userex::_001OnFileNew()
    {
-      
+
       ASSERT(Application.document_manager() != NULL);
-      
+
       if(Application.document_manager() == NULL)
       {
-         
+
          return;
-         
+
       }
-      
+
       Application.document_manager()->_001OnFileNew();
 
    }
 
-   
+
 
 
    int32_t userex::exit_application()
@@ -1410,36 +1414,36 @@ namespace core
 
    int32_t session::exit_application()
    {
-      
+
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pcoresession == this)
                {
-                  
+
                   pair.m_element2->m_pcoresession = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
-      }       
+
+      }
 
       try
       {
@@ -1568,7 +1572,7 @@ namespace core
       }
 
    }
-   
+
    ::user::document * session::userex_on_request(::create * pcreate)
    {
 

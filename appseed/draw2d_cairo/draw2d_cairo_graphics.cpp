@@ -5885,6 +5885,9 @@ namespace draw2d_cairo
       fs = FcFontList(g_fcConfig, pat, os);
 
       printf("Total fonts: %d", fs->nfont);
+
+      ::draw2d::font::enum_item item;
+
       for (i = 0; fs && i < fs->nfont; i++)
       {
 
@@ -5910,22 +5913,24 @@ namespace draw2d_cairo
 
             //printf("Filename: %s", file);
 
-            straFile.add((const char *)file);
+            item.m_strFile = (const char *)file;
 
          }
          else
          {
 
-            straFile.add(str);
+            item.m_strFile = str;
 
          }
 
          //printf("Font: %s\n", str.c_str());
          //printf("Font: %s\n", s);
 
-         stra.add(str);
+         item.m_strName = str;
 
-         csa.add(::draw2d::font::cs_default);
+         item.m_ecs = ::draw2d::font::cs_default;
+
+         itema.add(item);
 
          free(s);
 
@@ -5939,12 +5944,10 @@ namespace draw2d_cairo
       }
 
 
-      ::sort::quick_sort(stra,[&](index i1, index i2)
+      itema.pred_sort([&](auto & i1, auto & i2)
       {
 
-         straFile.swap(i1, i2);
-
-         csa.swap(i1, i2);
+         return i1.m_strName < i2.m_strName;
 
       });
 
@@ -5991,9 +5994,9 @@ namespace draw2d_cairo
 
          stringa stra;
 
-         ::draw2d::font::csa csa;
+         ::draw2d::font::enum_item_array itema;
 
-         enum_fonts(straPath, stra, csa);
+         enum_fonts(itema);
 
          if (str == "TakaoPGothic")
          {

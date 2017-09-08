@@ -143,7 +143,7 @@ namespace user
 
          strFolder += "/";
 
-         string str1 = hicon->m_strAppTrayIcon;
+         string str1 = pvisualicon->m_strAppTrayIcon;
 
          str1.replace("-", "_");
 
@@ -349,11 +349,11 @@ namespace user
       }
 
 #elif defined(MACOS)
-      
+
       notify_icon_destroy();
-      
+
 #else
-      
+
 
       throw todo(get_app());
 

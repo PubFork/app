@@ -19,7 +19,7 @@ namespace message
       index                      m_iRouteIndex;
       index                      m_iParam;
       bool                       m_bRet;
-      
+
 
 
 
@@ -36,7 +36,7 @@ namespace message
       inline bool is_message() { return m_id.m_emessagetype == ::message::type_message; }
 
 
-      bool route(); // returns m_bRet
+      bool route_message(); // returns m_bRet
 
       bool all_previous(); // returns bRet
 

@@ -702,21 +702,9 @@ namespace linux
 
       }
 
-      if(m_pui != NULL)
-      {
-
-         if (m_pui->m_nFlags & WF_TOOLTIPS)
-         {
-
-         }
-
-      }
-
       Detach();
 
       ASSERT(get_handle() == NULL);
-
-      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
 
       PostNcDestroy();
 
@@ -1076,18 +1064,11 @@ namespace linux
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target::_001OnCmdMsg(pcommand))
-         return TRUE;
 
-      //      bool b;
+      command_target::_001OnCmdMsg(pcommand);
 
-      //if(_iguimessageDispatchCommandMessage(pcommand, b))
-      // return b;
-
-      command_target * pcmdtarget = dynamic_cast < command_target * > (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
    }
 
 
@@ -1229,9 +1210,9 @@ DWORD dwLastPaint;
       if(m_pui != NULL)
       {
 
-         m_pui->pre_translate_message(pobj);
+         m_pui->pre_translate_message(pbase);
 
-         if(pobj->m_bRet)
+         if(pbase->m_bRet)
             return;
 
       }
@@ -1293,7 +1274,7 @@ DWORD dwLastPaint;
 //         pbase->m_id == WM_MOUSEWHEEL)
       {
 
-         if(m_pui->m_bDestroying)
+         if(!m_pui->m_bUserElementalOk)
             return;
 
          if(pbase->m_id == WM_LBUTTONDOWN)
@@ -1463,19 +1444,16 @@ DWORD dwLastPaint;
          }
          return;
       }
-      (this->*m_pfnDispatchWindowProc)(pobj);
-      if(pobj->m_bRet)
+
+      route_message(pbase);
+
+      if(pbase->m_bRet)
          return;
-      /*
-      if(m_pui != NULL && m_pui != this)
-      {
-      m_pui->_user_message_handler(pobj);
-      if(pobj->m_bRet)
-      return;
-      }
-      */
+
       pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+
    }
+
 
    /*
    bool interaction_impl::OnWndMsg(UINT message, WPARAM wparam, LPARAM lparam, LRESULT* pResult)
@@ -4055,7 +4033,7 @@ throw not_implemented(get_app());
       ::user::interaction_impl::_001WindowMaximize();
 
    }
-   
+
 
    void interaction_impl::_001WindowMinimize()
    {

@@ -1,6 +1,9 @@
+#include "framework.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <dlfcn.h>
+#include <link.h>
 
 
 struct PROCESS_INFO_t

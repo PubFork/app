@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 
 Display * x11_get_display();
+void wm_toolwindow(oswindow w,bool bToolWindow);
 
 
 struct MWMHints
@@ -61,9 +62,6 @@ oswindow_data::~oswindow_data()
 
 
 
-#define CA2_CCVOTAGUS_WINDOW_LONG "ca2_ccvotagus_fontopu_window_long"
-#define CA2_CCVOTAGUS_WINDOW_LONG_STYLE "ca2_ccvotagus_fontopu_window_long_style"
-#define CA2_CCVOTAGUS_WINDOW_LONG_STYLE_EX "ca2_ccvotagus_fontopu_window_long_style_ex"
 
 oswindow_dataptra * oswindow_data::s_pdataptra = NULL;
 mutex * oswindow_data::s_pmutex = NULL;
@@ -1209,7 +1207,7 @@ bool oswindow_data::is_destroying()
    if(m_pimpl == NULL)
       return true;
 
-   if(m_pimpl->m_pui->m_bDestroying)
+   if(!m_pimpl->m_pui->m_bUserElementalOk)
       return true;
 
    return false;
@@ -1248,7 +1246,7 @@ bool IsWindow(oswindow oswindow)
 
    }
 
-   if(oswindow->m_pimpl->m_pui->m_bDestroying)
+   if(!oswindow->m_pimpl->m_pui->m_bUserElementalOk)
    {
 
       return false;
@@ -2249,5 +2247,29 @@ bool wm_set_icon(oswindow w, stringa & straMatter)
    }
 
    return false;
+
+}
+
+
+
+
+CLASS_DECL_BASE ::user::interaction * oswindow_interaction(oswindow oswindow)
+{
+
+   if (is_ptr_null(oswindow, sizeof(*oswindow)))
+   {
+
+      return NULL;
+
+   }
+
+   if (is_ptr_null(oswindow->m_pimpl, sizeof(*oswindow->m_pimpl)))
+   {
+
+      return NULL;
+
+   }
+
+   return oswindow->m_pimpl->m_pui;
 
 }
