@@ -848,7 +848,6 @@ namespace file
 
 
 #include "aura/primitive/collection/collection_decl.h"
-#include "aura/primitive/collection/collection_array_decl.h"
 #include "aura/primitive/collection/collection_raw_array_decl.h"
 #include "aura/primitive/collection/collection_lemon_array_decl.h"
 #include "aura/primitive/collection/collection_smart_pointer_array.h"
@@ -1118,7 +1117,9 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_department_container.h"
 #include "aura/aura/xml/xml.h"
 
+
 #include "aura/aura/aura/aura_live_signal.h"
+#include "aura/multithreading/multithreading_pred_holder.h"
 #include "aura/multithreading/multithreading_thread.h"
 #include "aura/multithreading/multithreading_forking_thread.h"
 #include "aura/multithreading/multithreading_delay_thread.h"

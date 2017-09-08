@@ -77,6 +77,12 @@ inline index array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_upper_bound(index in
 }
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline index array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_middle_index(index index) const
+{
+   return (m_nSize / 2) + index;
+}
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::bounds(index index) const
 {
    return index >= 0 && index < m_nSize;
