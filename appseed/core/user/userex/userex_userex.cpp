@@ -1,21 +1,4 @@
 #include "framework.h"
-
-#ifdef WINDOWSEX
-#include "core/user/user/user_shell_windows.h"
-#elif defined(MACOS)
-#include "core/user/user/user_shell_macos.h"
-#elif defined(APPLE_IOS)
-#include "core/user/user/user_shell_ios.h"
-#elif defined(LINUX)
-#include "core/user/user/user_shell_linux.h"
-#elif defined(ANDROID)
-#include "core/user/user/user_shell_android.h"
-#elif defined(METROWIN)
-#include "core/user/user/user_shell_metrowin.h"
-#else
-#error "Implement here"
-#endif
-
 #include "base/database/simpledb/simpledb.h"
 
 
@@ -56,43 +39,14 @@ namespace userex
 
 
 
-
-
-
-      if (m_pshell.is_null())
+      if(!create_user_shell())
       {
 
-#ifdef WINDOWSEX
-
-         m_pshell = canew(::user::shell::windows(get_app()));
-
-#elif defined(MACOS)
-
-         m_pshell = canew(::user::shell::macos(get_app()));
-
-#elif defined(APPLE_IOS)
-
-         m_pshell = canew(::user::shell::ios(get_app()));
-
-#elif defined(ANDROID)
-
-         m_pshell = canew(::user::shell::android(get_app()));
-
-#elif defined(METROWIN)
-
-         m_pshell = canew(::user::shell::metrowin(get_app()));
-
-#elif defined(LINUX)
-
-         m_pshell = canew(::user::shell::linux(get_app()));
-
-#else
-
-         #error "Implement for your platform."
-
-#endif
+         return false;
 
       }
+
+
 
       if (!::aura::department::initialize1())
       {

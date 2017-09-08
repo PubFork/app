@@ -582,15 +582,15 @@ namespace aura
 
                if (strApp != "bergedge")
                {
-                  
+
                   {
-                     
+
                      //synch_lock sl(System.m_pmutex);
 
                      //m_appptra.add(papp);
-                     
+
                   }
-                  
+
                   papp->on_start_application();
 
                   papp->handler()->handle(pcreate);

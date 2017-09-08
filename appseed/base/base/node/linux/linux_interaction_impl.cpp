@@ -324,6 +324,8 @@ namespace linux
 
       }
 
+      install_message_routing(this);
+
       //hook_window_create(this);
 
       if(cs.hwndParent == (oswindow) HWND_MESSAGE)
@@ -589,15 +591,13 @@ namespace linux
    }
 
 
-   bool interaction_impl::create_message_queue(
-      ::user::interaction * pui,
-      const char * pszName)
+   bool interaction_impl::create_message_queue(::user::interaction * pui, const char * pszName)
    {
 
       if(IsWindow())
       {
 
-         SetWindowText(pszName);
+         set_window_text(pszName);
 
       }
       else
@@ -870,13 +870,9 @@ namespace linux
    }
 
 
-   void interaction_impl::GetWindowText(string & rString)
+   void interaction_impl::get_window_text(string & rString)
    {
-      /*ASSERT(::IsWindow((oswindow) get_handle()));
 
-      int32_t nLen = ::GetWindowTextLength(get_handle());
-      ::GetWindowText(get_handle(), rString.GetBufferSetLength(nLen), nLen+1);
-      rString.ReleaseBuffer();*/
       rString = m_strWindowText;
 
    }
@@ -2857,7 +2853,7 @@ return 0;
       else
       {
 
-         m_pthreadDraw = ::fork(get_app(), [&]()
+         m_pthreadDraw = fork([&]()
          {
 
             DWORD dwStart;
@@ -2873,13 +2869,16 @@ return 0;
                   if (m_pui->has_pending_graphical_update() || m_pui->check_need_layout())
                   {
 
-                     RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOERASE);
+                     _001UpdateBuffer();
 
                      m_pui->on_after_graphical_update();
 
                   }
 
                }
+
+
+               _001UpdateScreen();
 
                DWORD dwDiff = ::get_tick_count() - dwStart;
 
@@ -4235,7 +4234,7 @@ m_pui->SetOwner((pOwnerWnd));
    }
 
 
-   void interaction_impl::SetWindowText(const char * lpszString)
+   void interaction_impl::set_window_text(const char * lpszString)
    {
 
       m_strWindowText = lpszString;
@@ -4247,25 +4246,25 @@ m_pui->SetOwner((pOwnerWnd));
    }
 
 
-   strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
-   {
+//   strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
+//   {
+//
+//      strncpy(lpszString, m_strWindowText, nMaxCount);
+//
+//      return MIN(nMaxCount, m_strWindowText.get_length());
+//
+//   }
 
-      strncpy(lpszString, m_strWindowText, nMaxCount);
-
-      return MIN(nMaxCount, m_strWindowText.get_length());
-
-   }
-
-
-   strsize interaction_impl::GetWindowTextLength()
-   {
-
-      throw not_implemented(get_app());
-      //ASSERT(::IsWindow((oswindow) get_handle()));
-
-      //return ::GetWindowTextLength(get_handle());
-
-   }
+//
+//   strsize interaction_impl::GetWindowTextLength()
+//   {
+//
+//      throw not_implemented(get_app());
+//      //ASSERT(::IsWindow((oswindow) get_handle()));
+//
+//      //return ::GetWindowTextLength(get_handle());
+//
+//   }
 
 
    void interaction_impl::SetFont(::draw2d::font* pfont, bool bRedraw)

@@ -93,13 +93,17 @@ namespace userex
       ::count get_template_count() const;
       sp(impact_system) get_template(index index) const;
 
-      
+
       sp(::user::document)   create_form(::aura::application * papp, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var = ::var(::var::type_empty_argument));
       sp(::user::document)   create_form(::aura::application * papp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var = ::var(::var::type_empty_argument));
       sp(::user::document)   create_child_form(::aura::application * papp, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var = ::var(::var::type_empty_argument));
       sp(::user::document)   create_child_form(::aura::application * papp, sp(::type) pt, sp(::user::interaction) pwndParent, var var = ::var(::var::type_empty_argument));
       sp(::user::document)   create_child_form(::aura::application * papp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var = ::var(::var::type_empty_argument));
       ::user::document * hold(sp(::user::interaction) pui);
+
+
+      virtual bool create_user_shell();
+
 
    };
 

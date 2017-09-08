@@ -38,7 +38,7 @@ namespace core
       m_paurasystem->m_pcoresession       = this;
 
       m_paxissession                      = this;
-         
+
       m_pbasesession                      = this;
 
       m_pcoresession                      = this;
@@ -48,7 +48,7 @@ namespace core
       m_paxisapp                          = this;
 
       m_pbaseapp                          = this;
-      
+
       m_pcoreapp                          = this;
 
       m_pcoresession                      = this;
@@ -87,7 +87,7 @@ namespace core
 
    void session::install_message_routing(::message::sender * psender)
    {
-      
+
       core::application::install_message_routing(psender);
       base::session::install_message_routing(psender);
 
@@ -153,13 +153,13 @@ namespace core
 
    }
 
-   
+
    bool session::initialize2()
    {
-      
+
       if(!::core::application::initialize2())
          return false;
-      
+
       if(!::base::session::initialize2())
          return false;
 
@@ -705,7 +705,7 @@ namespace core
 
       if(m_pbasesession->m_mapApplication.Lookup(string(pszAppId),papp))
       {
-         
+
          return papp;
 
       }
@@ -762,7 +762,7 @@ namespace core
             return NULL;
 
          }
-         
+
          m_pbasesession->m_mapApplication.set_at(string(pszAppId), papp);
 
          return papp;
@@ -867,8 +867,8 @@ namespace core
       return this;
 
    }
-   
-   
+
+
 
    bool session::is_serviceable()
    {
@@ -926,7 +926,7 @@ namespace core
 
    ::visual::cursor * session::get_cursor()
    {
-      
+
       if(m_pbasesession->m_ecursor == ::visual::cursor_none)
          return NULL;
       else if(m_pbasesession->m_ecursor == ::visual::cursor_default)
@@ -939,7 +939,7 @@ namespace core
 
    ::visual::cursor * session::get_default_cursor()
    {
-      
+
       return System.visual().get_cursor(m_pbasesession->m_ecursorDefault);
 
    }
@@ -1031,7 +1031,7 @@ namespace core
 
    }
 
-   
+
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
@@ -1090,33 +1090,33 @@ namespace core
       }
 
    }
-   
-   
+
+
    stringa session::get_user_wallpaper()
    {
-      
+
       stringa stra;
-      
+
       stringa straSource = ::user::get_wallpaper();
-      
+
       for(string str : straSource)
       {
 
          if(::str::begins_eat_ci(str, "file://"))
          {
-          
+
             str = System.url().url_decode(str);
-            
+
          }
-         
+
          stra.add(str.c_str());
-         
+
       }
-      
+
       return stra;
-      
+
    }
-   
+
 
 
 } // namespace plane

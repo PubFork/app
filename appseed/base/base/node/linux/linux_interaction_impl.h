@@ -172,10 +172,10 @@ namespace linux
 
 
       // oswindow Text Functions
-      void SetWindowText(const char * lpszString);
-      strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
-      void GetWindowText(string & rString);
-      strsize GetWindowTextLength();
+      void set_window_text(const char * lpszString);
+      //strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
+      void get_window_text(string & str);
+      //strsize GetWindowTextLength();
       void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
       ::draw2d::font* GetFont();
 
