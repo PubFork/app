@@ -2528,6 +2528,7 @@ namespace user
          
       }
       
+
       
       if(!m_pui->IsWindowVisible())
       {

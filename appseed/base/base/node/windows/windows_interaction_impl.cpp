@@ -2483,7 +2483,7 @@ namespace windows
          if (m_pthreadUpdateWindow.is_null())
          {
 
-            m_pthreadUpdateWindow = ::fork(get_app(), [&]()
+            m_pthreadUpdateWindow = fork([&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_time_critical);
@@ -2530,7 +2530,18 @@ namespace windows
 
                         synch_lock sl(m_pui->m_pmutex);
 
-                        if (m_pui->has_pending_graphical_update() || m_pui->check_need_layout())
+                        bool bUpdateBuffer = m_pui->check_need_layout()
+                           || m_pui->m_bRedraw
+                           || m_pui->check_show_flags();
+
+                        if (!bUpdateBuffer && m_pui->IsWindowVisible())
+                        {
+
+                           bUpdateBuffer = m_pui->has_pending_graphical_update();
+
+                        }
+
+                        if (bUpdateBuffer)
                         {
 
                            sl.unlock();
@@ -4545,6 +4556,13 @@ namespace windows
 
    bool interaction_impl::IsWindowVisible()
    {
+
+      if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
+      {
+
+         return true;
+
+      }
 
       try
       {
