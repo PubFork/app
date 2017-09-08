@@ -1,7 +1,7 @@
 #include "framework.h"
 #include <stdio.h>
 
-#if defined(MACOS)
+#if defined(APPLEOS)
 #include <sys/stat.h>
 #endif
 //////#include <errno.h>

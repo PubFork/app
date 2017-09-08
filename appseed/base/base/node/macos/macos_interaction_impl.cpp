@@ -636,7 +636,6 @@ namespace macos
       
       pobj->m_bRet = true;
       
-      // cleanup main and active windows
       ::thread* pthread = ::get_thread();
       
       if (pthread != NULL)
@@ -657,20 +656,6 @@ namespace macos
       
       ASSERT(get_handle() == NULL);
       
-//      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
-
-  //    signalizable_disconnect_all();
-      
-      
-
-//      if (m_pui != NULL)
-//      {
-//
-//         m_pui->signalizable_disconnect_all();
-//
-//      }
-
-      // call special m_pui->send-cleanup routine
       PostNcDestroy();
 
       if (m_pui != NULL)

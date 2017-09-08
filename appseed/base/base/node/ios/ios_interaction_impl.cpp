@@ -519,7 +519,9 @@ namespace ios
    {
       if(IsWindow())
       {
-         SetWindowText(pszName);
+         
+         set_window_text(pszName);
+         
       }
       else
       {
@@ -593,8 +595,6 @@ namespace ios
    void interaction_impl::_001OnDestroy(::message::message * pobj)
    {
 
-      round_window_close();
-
       UNREFERENCED_PARAMETER(pobj);
 
       Default();
@@ -605,39 +605,31 @@ namespace ios
    // WM_NCDESTROY is the absolute LAST message sent.
    void interaction_impl::_001OnNcDestroy(::message::message * pobj)
    {
+      
       single_lock sl(m_pauraapp == NULL ? NULL : m_pauraapp->m_pmutex, TRUE);
+
       pobj->m_bRet = true;
-      // cleanup main and active windows
+   
       ::thread* pThread = ::get_thread();
+      
       if (pThread != NULL)
       {
+         
          if (pThread->get_active_ui() == m_pui)
-            pThread->set_active_ui(NULL);
-      }
-
-      // cleanup tooltip support
-      if(m_pui != NULL)
-      {
-         if (m_pui->m_nFlags & WF_TOOLTIPS)
          {
+            
+            pThread->set_active_ui(NULL);
+            
          }
+         
       }
 
+      round_window_destroy();
 
       Detach();
+      
       ASSERT(get_handle() == NULL);
-      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
-
-      signalizable_disconnect_all();
-
-      if(m_pui != NULL)
-      {
-
-         m_pui->signalizable_disconnect_all();
-
-      }
-
-      // call special post-cleanup routine
+      
       PostNcDestroy();
 
       if(m_pui != NULL)
@@ -649,6 +641,7 @@ namespace ios
 
    }
 
+   
    void interaction_impl::PostNcDestroy()
    {
       //set_handle(NULL);
@@ -815,50 +808,29 @@ namespace ios
    }
 
 
-   void interaction_impl::GetWindowText(string & rString)
+   void interaction_impl::get_window_text(string & rString)
    {
-      /*ASSERT(::IsWindow(get_handle()));
 
-       int32_t nLen = ::GetWindowTextLength(get_handle());
-       ::GetWindowText(get_handle(), rString.GetBufferSetLength(nLen), nLen+1);
-       rString.ReleaseBuffer();*/
       rString = m_strWindowText;
 
    }
-
-   /*
-    int32_t interaction_impl::GetDlgItemText(int32_t nID, string & rString) const
-    {
-    ASSERT(::IsWindow(get_handle()));
-    rString = "";    // is_empty without deallocating
-
-    oswindow hWnd = ::GetDlgItem(get_handle(), nID);
-    if (hWnd != NULL)
-    {
-    int32_t nLen = ::GetWindowTextLength(hWnd);
-    ::GetWindowText(hWnd, rString.GetBufferSetLength(nLen), nLen+1);
-    rString.ReleaseBuffer();
-    }
-
-    return (int32_t)rString.get_length();
-    }
-    */
+   
 
    bool interaction_impl::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl)
    {
-      /*    ASSERT(::IsWindow(get_handle()));
-       lpwndpl->length = sizeof(WINDOWPLACEMENT);
-       return ::GetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
+
       return false;
+      
    }
+   
 
    bool interaction_impl::SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl)
    {
-      /*      ASSERT(::IsWindow(get_handle()));
-       ((WINDOWPLACEMENT*)lpwndpl)->length = sizeof(WINDOWPLACEMENT);
-       return ::SetWindowPlacement(get_handle(), lpwndpl) != FALSE;*/
+
       return false;
+      
    }
+   
 
    /////////////////////////////////////////////////////////////////////////////
    // user::interaction will delegate owner draw messages to self drawing controls
@@ -1052,26 +1024,21 @@ namespace ios
    //}
 
 
-
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if(command_target::_001OnCmdMsg(pcommand))
-         return TRUE;
 
-      //      bool b;
-
-      //if(_iguimessageDispatchCommandMessage(pcommand, b))
-      // return b;
-
-      command_target * pcmdtarget = dynamic_cast < command_target * > (this);
-      return pcmdtarget->command_target::_001OnCmdMsg(pcommand);
+      command_target::_001OnCmdMsg(pcommand);
+      
    }
 
 
    bool interaction_impl::BaseOnControlEvent(::user::control_event * pevent)
    {
+      
       UNREFERENCED_PARAMETER(pevent);
+      
       return false;
+      
    }
 
    void interaction_impl::_002OnDraw(::draw2d::graphics * pgraphics)
@@ -1093,42 +1060,54 @@ namespace ios
 
       }
 
-      if(pbase->m_id == WM_KEYDOWN ||
-         pbase->m_id == WM_KEYUP ||
-         pbase->m_id == WM_CHAR)
+      if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_KEYUP || pbase->m_id == WM_CHAR)
       {
 
-         SCAST_PTR(::message::key, pkey, pobj);
+         SCAST_PTR(::message::key, pkey, pbase);
 
          Session.keyboard().translate_os_key_message(pkey);
 
          if(pbase->m_id == WM_KEYDOWN)
          {
+            
             try
             {
+               
                Session.set_key_pressed(pkey->m_ekey, true);
+               
             }
             catch(...)
             {
+               
             }
+            
          }
          else if(pbase->m_id == WM_KEYUP)
          {
+            
             try
             {
+               
                Session.set_key_pressed(pkey->m_ekey, false);
+               
             }
             catch(...)
             {
+               
             }
+            
          }
+         
       }
 
       if(m_pui != NULL)
       {
-         m_pui->pre_translate_message(pobj);
-         if(pobj->m_bRet)
+         
+         m_pui->pre_translate_message(pbase);
+         
+         if(pbase->m_bRet)
             return;
+         
       }
 
       if(pbase->m_id == WM_TIMER)
@@ -1318,19 +1297,16 @@ namespace ios
          }
          return;
       }
-      (this->*m_pfnDispatchWindowProc)(pobj);
-      if(pobj->m_bRet)
+      
+      route_message(pbase);
+      
+      if(pbase->m_bRet)
          return;
-      /*
-       if(m_pui != NULL && m_pui != this)
-       {
-       m_pui->_user_message_handler(pobj);
-       if(pobj->m_bRet)
-       return;
-       }
-       */
+      
       pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+      
    }
+   
 
    /*
     bool interaction_impl::OnWndMsg(UINT message, WPARAM wparam, LPARAM lparam, LRESULT* pResult)
@@ -4171,27 +4147,35 @@ namespace ios
 
    }
 
-   void interaction_impl::SetWindowText(const char * lpszString)
+   
+   void interaction_impl::set_window_text(const char * lpszString)
    {
+      
       m_strWindowText = lpszString;
+      
    }
 
-   strsize interaction_impl::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
+   /*
+   strsize interaction_impl::get_window_text(char * lpszString, strsize nMaxCount)
    {
+      
       strncpy(lpszString, m_strWindowText, nMaxCount);
+    
       return MIN(nMaxCount, m_strWindowText.get_length());
+      
    }
 
-   strsize interaction_impl::GetWindowTextLength()
+   strsize interaction_impl::get_window_text_length()()
    {
 
-      throw not_implemented(get_app());
-      //ASSERT(::IsWindow(get_handle()));
-
-      //return ::GetWindowTextLength(get_handle());
+      return m_strWindowText.get_length();
 
    }
 
+   */
+   
+   
+   
    /*
 
     void interaction_impl::SetFont(::draw2d::font* pfont, bool bRedraw)
@@ -5801,7 +5785,7 @@ namespace ios
 
       ::message::key * pkey = canew(::message::key(get_app()));
 
-      pkey->m_uiMessage = WM_KEYDOWN;
+      pkey->m_id = WM_KEYDOWN;
 
       pkey->m_ekey = ekey;
 
@@ -5821,7 +5805,7 @@ namespace ios
 
       ::message::key * pkey = canew(::message::key(get_app()));
 
-      pkey->m_uiMessage = WM_KEYUP;
+      pkey->m_id = WM_KEYUP;
       pkey->m_ekey = ekey;
 
       spbase = pkey;
@@ -5840,7 +5824,7 @@ namespace ios
 
       ::message::key * pkey = canew(::message::key(get_app()));
 
-      pkey->m_uiMessage = WM_KEYDOWN;
+      pkey->m_id = WM_KEYDOWN;
 
       if(pszText == NULL || strlen(pszText) <= 0)
       {
@@ -5905,7 +5889,7 @@ namespace ios
 
             ::message::mouse_activate * pmouseactivate = canew(::message::mouse_activate(get_app()));
 
-            pmouseactivate->m_uiMessage = WM_MOUSEACTIVATE;
+            pmouseactivate->m_id = WM_MOUSEACTIVATE;
 
             spbase = pmouseactivate;
 
@@ -5916,7 +5900,7 @@ namespace ios
 
                ::message::activate * pactivate = canew(::message::activate(get_app()));
 
-               pactivate->m_uiMessage = WM_ACTIVATE;
+               pactivate->m_id = WM_ACTIVATE;
                pactivate->m_wparam = WA_CLICKACTIVE;
                pactivate->m_nState = WA_CLICKACTIVE;
                pactivate->m_bMinimized = false;
@@ -5938,7 +5922,7 @@ namespace ios
 
          ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-         pmouse->m_uiMessage = WM_LBUTTONDOWN;
+         pmouse->m_id = WM_LBUTTONDOWN;
          pmouse->m_pt.x = (LONG) x;
          pmouse->m_pt.y = (LONG) y;
          pmouse->m_bTranslated = true;
@@ -5960,7 +5944,7 @@ namespace ios
 
       ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-      pmouse->m_uiMessage = WM_LBUTTONUP;
+      pmouse->m_id = WM_LBUTTONUP;
       pmouse->m_pt.x = (LONG) x;
       pmouse->m_pt.y = (LONG) y;
       pmouse->m_bTranslated = true;
@@ -5980,7 +5964,7 @@ namespace ios
 
       ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-      pmouse->m_uiMessage = WM_MOUSEMOVE;
+      pmouse->m_id = WM_MOUSEMOVE;
       pmouse->m_pt.x = (LONG) x;
       pmouse->m_pt.y = (LONG) y;
       pmouse->m_bTranslated = true;
@@ -6000,7 +5984,7 @@ namespace ios
 
       ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-      pmouse->m_uiMessage = WM_MOUSEMOVE;
+      pmouse->m_id = WM_MOUSEMOVE;
       pmouse->m_pt.x = (LONG) x;
       pmouse->m_pt.y = (LONG) y;
       pmouse->m_bTranslated = true;
@@ -6095,6 +6079,26 @@ namespace ios
       
    }
 
+   
+   void interaction_impl::round_window_activate()
+   {
+      
+      ::SetActiveWindow(get_handle());
+      
+      m_pui->RedrawWindow();
+      
+   }
+   
+   
+   void interaction_impl::round_window_deactivate()
+   {
+      
+      ::DeactivateWindow(get_handle());
+      
+      m_pui->RedrawWindow();
+      
+   }
+   
    bool interaction_impl::has_pending_graphical_update()
    {
       

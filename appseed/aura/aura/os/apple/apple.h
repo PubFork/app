@@ -6,9 +6,10 @@
 //
 //
 
-
+#ifdef __OBJC__
 #include "NSObject+DDExtensions.h"
 #include "DDInvocationGrabber.h"
+#endif
 
 
 #include "apple_graphics.h"

@@ -65,7 +65,7 @@ namespace aura
       }
       
       
-      bool tx::send(const char * pszMessage,DWORD dwTimeout)
+      bool tx::send(const char * pszMessage,duration durationTimeout)
       {
          
          if(m_port == NULL)
@@ -86,8 +86,8 @@ namespace aura
          CFMessagePortSendRequest(m_port,
                                   0x80000000,
                                   data,
-                                  dwTimeout / 1000.0,
-                                  dwTimeout / 1000.0,
+                                  durationTimeout.get_total_milliseconds() / 1000.0,
+                                  durationTimeout.get_total_milliseconds() / 1000.0,
                                   NULL,
                                   NULL);
          if (status == kCFMessagePortSuccess) {
@@ -102,7 +102,7 @@ namespace aura
       }
       
       
-      bool tx::send(int message,void * pdata,int len,DWORD dwTimeout)
+      bool tx::send(int message,void * pdata,int len,duration durationTimeout)
       {
          
          if(message == 0x80000000)
@@ -123,8 +123,8 @@ namespace aura
          CFMessagePortSendRequest(m_port,
                                   message,
                                   m.get_os_cf_data(),
-                                  dwTimeout / 1000.0,
-                                  dwTimeout / 1000.0,
+                                  durationTimeout.get_total_milliseconds() / 1000.0,
+                                  durationTimeout.get_total_milliseconds() / 1000.0,
                                   NULL,
                                   NULL);
          if (status == kCFMessagePortSuccess) {

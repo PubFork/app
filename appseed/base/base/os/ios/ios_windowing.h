@@ -198,4 +198,4 @@ inline int32_t IsWindowVisible(::oswindow oswindow)
 oswindow GetWindow(oswindow window, int iParentHood);
 
 
-
+void DeactivateWindow(oswindow window);

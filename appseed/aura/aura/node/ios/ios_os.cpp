@@ -20,7 +20,7 @@ namespace ios
    }
 
    
-   string os::get_command_dup()
+   string os::get_command_line()
    {
       
       return get_command_line_dup();

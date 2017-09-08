@@ -1,8 +1,6 @@
 #pragma once
 
 
-#include "aura/aura/aura/aura.h"
-
 #include "setup/debug.h"
 
 #define CA2_AURA

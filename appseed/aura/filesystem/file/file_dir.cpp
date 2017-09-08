@@ -1,6 +1,6 @@
 #include "framework.h"
 //#include <Shlobj.h>
-#if defined(MACOS)
+#if defined(APPLEOS)
 #include <sys/stat.h>
 #include <dirent.h>
 #endif

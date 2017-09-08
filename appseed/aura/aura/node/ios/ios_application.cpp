@@ -332,7 +332,7 @@ namespace aura
          
          string strCmdLine          = pdata->m_strCommandLine;
          
-         System.m_strCmdLine = strCmdLine;
+//         System.m_strCmdLine = strCmdLine;
          
          SetCurrentHandles();
          

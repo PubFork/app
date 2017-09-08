@@ -75,7 +75,7 @@ plane_system::plane_system(const char * pszId)
    
    pinitmaindata->m_strCommandLine        = pszId;
    
-   m_psystem->init_main_data(pinitmaindata);
+   m_psystem->startup_command(pinitmaindata);
    
 }
 
