@@ -2,6 +2,8 @@
 #include <wincred.h>
 #include <wtsapi32.h>
 
+#include <shobjidl.h> 
+
 
 CREDUIAPI
 BOOL
@@ -2073,6 +2075,239 @@ namespace windows
 	   return true;
 
    }
+
+   
+
+   string os::get_file_open(oswindow oswindowOwner, string strFolder)
+   {
+
+	   string str;
+
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, FALSE);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+		   defer_co_initialize_ex(false);
+
+		   IFileOpenDialog *pFileOpen;
+
+		   // Create the FileOpenDialog object.
+		   HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
+			   IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
+
+		   if (SUCCEEDED(hr))
+		   {
+			   if (strFolder.has_char())
+			   {
+				   wstring wstr(strFolder);
+				   IShellItem *psi = NULL;
+				   hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+				   if (SUCCEEDED(hr))
+				   {
+
+					   pFileOpen->SetFolder(psi);
+
+				   }
+				   if (psi != NULL)
+				   {
+					   psi->Release();
+				   }
+			   }
+
+
+			   pFileOpen->SetOptions(FOS_PICKFOLDERS);
+
+
+			   // Show the Open dialog box.
+			   //hr = pFileOpen->Show(pframe->get_handle());
+			   hr = pFileOpen->Show(NULL);
+
+			   if (SUCCEEDED(hr))
+			   {
+
+
+				   // Get the file name from the dialog box.
+				   if (SUCCEEDED(hr))
+				   {
+					   IShellItem *pItem;
+					   hr = pFileOpen->GetResult(&pItem);
+					   if (SUCCEEDED(hr))
+					   {
+						   PWSTR pszFilePath;
+						   hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+						   // Display the file name to the user.
+						   if (SUCCEEDED(hr))
+						   {
+							   str = pszFilePath;
+							   CoTaskMemFree(pszFilePath);
+						   }
+						   pItem->Release();
+					   }
+				   }
+			   }
+			   pFileOpen->Release();
+		   }
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, TRUE);
+
+		   ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+		   ::SetForegroundWindow(oswindowOwner);
+
+		   ::BringWindowToTop(oswindowOwner);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   return str;
+   }
+
+
+
+   string os::get_file_save(oswindow oswindowOwner, string strFolder)
+   {
+	   string str;
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, FALSE);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+		   IFileSaveDialog *pFileSave;
+
+		   // Create the FileSaveDialog object.
+		   HRESULT hr = CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL,
+			   IID_IFileSaveDialog, reinterpret_cast<void**>(&pFileSave));
+
+		   if (SUCCEEDED(hr))
+		   {
+
+			   COMDLG_FILTERSPEC rgSpec[] =
+			   {
+				   { L"CSV files", L"*.csv" },
+				   { L"Text files", L"*.txt" },
+				   { L"All files", L"*.*" },
+			   };
+
+			   pFileSave->SetFileTypes(3, rgSpec);
+
+
+			   pFileSave->SetDefaultExtension(L"csv");
+
+			   pFileSave->SetFileName(L"Twitter Automator Export");
+
+			   if (strFolder.has_char())
+			   {
+				   wstring wstr(strFolder);
+				   IShellItem *psi = NULL;
+				   hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+				   if (SUCCEEDED(hr))
+				   {
+
+					   pFileSave->SetFolder(psi);
+
+				   }
+				   if (psi != NULL)
+				   {
+					   psi->Release();
+				   }
+			   }
+
+
+			   // Show the Save dialog box.
+			   //hr = pFileSave->Show(pframe->get_handle());
+			   hr = pFileSave->Show(NULL);
+
+			   if (SUCCEEDED(hr))
+			   {
+
+
+				   // Get the file name from the dialog box.
+				   if (SUCCEEDED(hr))
+				   {
+					   IShellItem *pItem;
+					   hr = pFileSave->GetResult(&pItem);
+					   if (SUCCEEDED(hr))
+					   {
+						   PWSTR pszFilePath;
+						   hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+						   // Display the file name to the user.
+						   if (SUCCEEDED(hr))
+						   {
+							   str = pszFilePath;
+							   CoTaskMemFree(pszFilePath);
+						   }
+						   pItem->Release();
+					   }
+				   }
+			   }
+			   pFileSave->Release();
+		   }
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, TRUE);
+
+		   ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+		   ::SetForegroundWindow(oswindowOwner);
+
+		   ::BringWindowToTop(oswindowOwner);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   return str;
+
+   }
+
 
 } // namespace windows
 

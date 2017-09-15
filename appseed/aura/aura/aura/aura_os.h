@@ -99,6 +99,9 @@ namespace aura
        
       virtual void on_process_command(::command::command * pcommand);
 
+	  virtual string get_file_open(oswindow oswindowOwner, string strFolder);
+	  virtual string get_file_save(oswindow oswindowOwner, string strFolder);
+
 
    };
 

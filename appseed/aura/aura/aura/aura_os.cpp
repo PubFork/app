@@ -539,7 +539,25 @@ namespace aura
       UNREFERENCED_PARAMETER(pcommand);
       
    }
-   
+
+   string os::get_file_open(oswindow oswindowOwner, string strFolder)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return "";
+
+   }
+
+   string os::get_file_save(oswindow oswindowOwner, string strFolder)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return "";
+
+   }
+
 
 } // namespace core
 

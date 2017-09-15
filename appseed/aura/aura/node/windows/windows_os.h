@@ -54,7 +54,8 @@ namespace windows
 
       virtual bool file_open(::file::path path);
 
-
+	  virtual string get_file_open(oswindow oswindowOwner, string strFolder) override;
+	  virtual string get_file_save(oswindow oswindowOwner, string strFolder) override;
 
       virtual bool create_service(::aura::application * papp);
       virtual bool remove_service(::aura::application * papp);

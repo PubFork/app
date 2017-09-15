@@ -9,7 +9,7 @@ namespace user
       button(get_app())
    {
 
-      set_user_schema(schema_button);
+      //set_user_schema(schema_button);
       
    }
 
@@ -19,7 +19,7 @@ namespace user
       ::user::interaction(papp)
    {
       
-      set_user_schema(schema_button);
+      //set_user_schema(schema_button);
 
       m_estockicon      = stock_icon_none;
 
