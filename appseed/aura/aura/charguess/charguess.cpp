@@ -79,11 +79,12 @@ extern "C" void CharGuessDestroy(charguess_det p)
 
 #ifdef _DEBUG
 
+/*
 #define TEST_LATIN1 "Aucun fichier ou r�pertoire de ce type"
 #define TEST_UTF8   "料理に合わせた美味しいワインの選び方。"
 #define TEST_SJIS   "�����ɍ��킹�������������C���̑I�ѕ��B"
 #define TEST_JIS    "$BNAM}$K9g$o$;$?H~L#$7$$%o%$%s$NA*$SJ}!#(B"
-
+*/
 void _debug_charguess()
 {
 

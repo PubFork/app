@@ -327,18 +327,6 @@ namespace aura
    }
 
 
-#ifdef INSTALL_SUBSYSTEM
-
-
-   bool application::check_install()
-   {
-
-      return true;
-
-   }
-
-
-#endif
 
 
    void application::throw_not_installed()
@@ -1799,7 +1787,7 @@ namespace aura
       else if (strId == "commander")
       {
 
-         if (m_strAppName == "commander")
+         if (m_strAppName == "app-core/commander")
          {
 
             chromium(strUrl, strBrowser, strId, System.os().get_app_path("chrome"), strProfile, strParam);
@@ -3349,10 +3337,156 @@ namespace aura
 
 
 
+#ifdef INSTALL_SUBSYSTEM
+
+   bool application::check_install()
+   {
+
+	   if (handler()->m_varTopicQuery.has_property("install"))
+	   {
+
+		   if (!on_install())
+		   {
+
+			   ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
+
+			   System.m_iReturnCode = -1;
+
+			   return false;
+
+		   }
+
+		   string strBuild;
+
+		   string strAppId = m_strAppId;
+
+		   xxdebug_box("on_install1", strAppId, 0);
+
+		   if (strAppId.is_empty())
+		   {
+
+			   strAppId = m_strAppName;
+
+		   }
+
+		   if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
+		   {
+
+			   system_add_app_install(strAppId, "installed");
+
+			   if (strBuild.has_char())
+			   {
+
+				   system_add_app_install(strAppId, strBuild);
+
+			   }
+
+		   }
+		   else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
+		   {
+
+			   system_add_app_install(strAppId, "installed");
+
+			   if (strBuild.has_char())
+			   {
+
+				   system_add_app_install(strAppId, strBuild);
+
+			   }
+
+		   }
+		   else if (m_strInstallToken.has_char())
+		   {
+
+			   system_add_app_install(m_strInstallToken, "installed");
+
+			   if (strBuild.has_char())
+			   {
+
+				   system_add_app_install(m_strInstallToken, strBuild);
+
+			   }
+
+		   }
+
+	   }
+	   else if (handler()->m_varTopicQuery.has_property("uninstall"))
+	   {
+
+		   if (!on_uninstall())
+		   {
+
+			   return false;
+
+		   }
+
+#ifdef INSTALL_SUBSYSTEM
+
+		   System.install().remove_spa_start(m_strAppId);
+
+#endif
+
+	   }
+
+	   return true;
+
+   }
+
+
+#endif
+
+
    bool application::initial_check_directrix()
    {
 
-      return true;
+
+	   string strLicense = get_license_id();
+
+	   var & varTopicQuey = System.handler()->m_varTopicQuery;
+
+	   bool bHasInstall = varTopicQuey.has_property("install");
+
+	   bool bHasUninstall = varTopicQuey.has_property("uninstall");
+
+	   if (!(bHasInstall || bHasUninstall)
+		   && m_bLicense
+		   && strLicense.has_char())
+	   {
+
+		   if (!Session.assert_user_logged_in())
+		   {
+			   return false;
+		   }
+
+		   // call application's is_licensed function
+		   // because if delay is needed for authentication -
+		   // or either asking for authentication -
+		   // current application startup won't be
+		   // exited by timeout.
+
+		   int32_t iRetry = 1;
+
+	   retry_license:
+
+		   iRetry--;
+
+		   if (!Session.is_licensed(strLicense))
+		   {
+
+			   if (iRetry > 0)
+				   goto retry_license;
+
+			   return false;
+
+		   }
+
+	   }
+
+
+	   ::output_debug_string("initial_check_directrix : ok (" + string(typeid(*this).name()) + ")" + m_strAppId + "\n\n");
+
+
+	   return true;
 
    }
 

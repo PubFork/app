@@ -90,6 +90,8 @@ namespace windows
 
       virtual ::file::path get_app_path(const string & strApp) override;
 
+	  virtual bool set_default_browser(::aura::application * papp) override;
+
    };
 
 
