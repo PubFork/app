@@ -234,3 +234,83 @@ namespace windows
 
 
 
+
+template < typename POINTER_TYPE >
+class co_task_pointer
+{
+public:
+
+
+   POINTER_TYPE m_p;
+
+
+   co_task_pointer()
+   {
+
+      m_p = NULL;
+
+   }
+
+
+   ~co_task_pointer()
+   {
+
+      if (m_p != NULL)
+      {
+
+         ::CoTaskMemFree(m_p);
+
+      }
+
+   }
+
+
+   operator POINTER_TYPE()
+   {
+
+      return m_p;
+
+   }
+
+   operator const POINTER_TYPE() const
+   {
+
+      return m_p;
+
+   }
+
+
+   POINTER_TYPE operator ->()
+   {
+
+      return m_p;
+
+   }
+
+
+   const POINTER_TYPE operator ->() const
+   {
+
+      return m_p;
+
+   }
+
+   POINTER_TYPE * operator &()
+   {
+
+      return &m_p;
+
+   }
+
+   const POINTER_TYPE * operator &() const
+   {
+
+      return &m_p;
+
+   }
+
+
+};
+
+
+#define cotaskp(POINTER_TYPE) co_task_pointer < POINTER_TYPE > 

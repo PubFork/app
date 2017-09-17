@@ -540,21 +540,33 @@ namespace aura
       
    }
 
-   string os::get_file_open(oswindow oswindowOwner, string strFolder)
+
+   bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
    {
 
 	   throw interface_only_exception(get_app());
 
-	   return "";
+	   return false;
 
    }
 
-   string os::get_file_save(oswindow oswindowOwner, string strFolder)
+   
+   bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
    {
 
 	   throw interface_only_exception(get_app());
 
-	   return "";
+	   return false;
+
+   }
+
+
+   bool os::browse_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return false;
 
    }
 

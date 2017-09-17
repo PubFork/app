@@ -118,7 +118,7 @@ namespace user
       color_split_layout_background,
       color_tab_client_background,
       color_tab_layout_background,
-
+      color_action_hover_border_color,
    };
    
    using color_map = map < e_color,e_color,COLORREF,COLORREF >;

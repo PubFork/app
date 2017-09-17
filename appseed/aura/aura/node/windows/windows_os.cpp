@@ -4,7 +4,6 @@
 
 #include <shobjidl.h> 
 
-
 CREDUIAPI
 BOOL
 WINAPI
@@ -2077,11 +2076,337 @@ namespace windows
    }
 
    
+   bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
+   {
+	   
+      bool bOk = false;
 
-   string os::get_file_open(oswindow oswindowOwner, string strFolder)
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, FALSE);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+         defer_co_initialize_ex(false);
+
+		   comptr < IFileOpenDialog > pfileopen;
+
+		   HRESULT hr = pfileopen.CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL);
+
+		   if (SUCCEEDED(hr))
+		   {
+
+			   array < COMDLG_FILTERSPEC > rgSpec;
+
+			   array < wstring > wstraSpecs;
+
+			   ::lemon::array::copy(wstraSpecs, set["file_filter_specs"].stra());
+
+			   array < wstring > wstraNames;
+
+			   ::lemon::array::copy(wstraNames, set["file_filter_names"].stra());
+
+			   rgSpec.set_size(MIN(wstraSpecs.get_size(), wstraNames.get_size()));
+
+			   for (index i = 0; i < rgSpec.get_size(); i++)
+			   {
+
+				   rgSpec[i].pszName = wstraNames[i];
+
+               rgSpec[i].pszSpec = wstraSpecs[i];
+			   
+				   //{ L"CSV files", L"*.csv" },
+				   //{ L"Text files", L"*.txt" },
+				   //{ L"All files", L"*.*" },
+
+			   }
+
+            if (rgSpec.get_size() > 0)
+            {
+
+               pfileopen->SetFileTypes(rgSpec.get_size(), rgSpec.get_data());
+
+            }
+
+            if (set["default_file_extension"].get_string().get_length() > 0)
+            {
+
+               pfileopen->SetDefaultExtension(wstring(set["default_file_extension"].get_string()));
+
+            }
+
+            if (set["file_name"].get_string().get_length() > 0)
+            {
+
+               pfileopen->SetFileName(wstring(set["file_name"].get_string()));
+
+            }
+
+            if (set["folder"].get_string().get_length() > 0)
+			   {
+				   
+               wstring wstr(set["folder"].get_string());
+				   
+               comptr < IShellItem > psi;
+				   
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+				   
+               if (SUCCEEDED(hr))
+				   {
+
+                  pfileopen->SetFolder(psi);
+
+				   }
+
+			   }
+
+			   // Show the Save dialog box.
+			   hr = pfileopen->Show(NULL);
+
+			   if (SUCCEEDED(hr))
+			   {
+
+				   // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+					hr = pfileopen->GetResult(&pitem);
+
+					if (SUCCEEDED(hr))
+					{
+
+						cotaskp(PWSTR) pwszFilePath;
+
+						hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+						// Display the file name to the user.
+						if (SUCCEEDED(hr))
+						{
+
+							set["file_name"] = string((PWSTR) pwszFilePath);
+
+                     bOk = true;
+
+						}
+
+               }
+
+			   }
+
+		   }
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   try
+	   {
+
+		   ::EnableWindow(oswindowOwner, TRUE);
+
+		   ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+		   ::SetForegroundWindow(oswindowOwner);
+
+		   ::BringWindowToTop(oswindowOwner);
+
+	   }
+	   catch (...)
+	   {
+
+
+	   }
+
+	   return bOk;
+
+   }
+
+
+   bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
    {
 
-	   string str;
+      bool bOk = false;
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, FALSE);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         defer_co_initialize_ex(false);
+
+         comptr < IFileSaveDialog > pfilesave;
+
+         // Create the FileSaveDialog object.
+         HRESULT hr = pfilesave.CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL);
+
+         if (SUCCEEDED(hr))
+         {
+
+            //COMDLG_FILTERSPEC rgSpec[] =
+            //{
+            // { L"CSV files", L"*.csv" },
+            // { L"Text files", L"*.txt" },
+            // { L"All files", L"*.*" },
+            //};
+
+            //pFileSave->SetFileTypes(3, rgSpec);
+
+
+            //pFileSave->SetDefaultExtension(L"csv");
+
+            //pFileSave->SetFileName(L"Twitter Automator Export");
+
+            array < COMDLG_FILTERSPEC > rgSpec;
+
+            array < wstring > wstraSpecs;
+
+            ::lemon::array::copy(wstraSpecs, set["file_filter_specs"].stra());
+
+            array < wstring > wstraNames;
+
+            ::lemon::array::copy(wstraNames, set["file_filter_names"].stra());
+
+            rgSpec.set_size(MIN(wstraSpecs.get_size(), wstraNames.get_size()));
+
+            for (index i = 0; i < rgSpec.get_size(); i++)
+            {
+
+               rgSpec[i].pszName = wstraNames[i];
+
+               rgSpec[i].pszSpec = wstraSpecs[i];
+
+               //{ L"CSV files", L"*.csv" },
+               //{ L"Text files", L"*.txt" },
+               //{ L"All files", L"*.*" },
+
+            }
+
+            if (rgSpec.get_size() > 0)
+            {
+
+               pfilesave->SetFileTypes(rgSpec.get_size(), rgSpec.get_data());
+
+            }
+
+            if (set["default_file_extension"].get_string().get_length() > 0)
+            {
+
+               pfilesave->SetDefaultExtension(wstring(set["default_file_extension"].get_string()));
+
+            }
+
+            if (set["file_name"].get_string().get_length() > 0)
+            {
+
+               pfilesave->SetFileName(wstring(set["file_name"].get_string()));
+
+            }
+
+            if (set["folder"].get_string().get_length() > 0)
+            {
+
+               wstring wstr(set["folder"].get_string());
+
+               comptr < IShellItem > psi;
+
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  pfilesave->SetFolder(psi);
+
+               }
+
+            }
+
+            // Show the Save dialog box.
+            hr = pfilesave->Show(NULL);
+
+            if (SUCCEEDED(hr))
+            {
+
+               // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+               hr = pfilesave->GetResult(&pitem);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  cotaskp(PWSTR) pwszFilePath;
+
+                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+
+                     set["file_name"] = (PWSTR) pwszFilePath;
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, TRUE);
+
+         ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+         ::SetForegroundWindow(oswindowOwner);
+
+         ::BringWindowToTop(oswindowOwner);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return bOk;
+
+   }
+
+
+   bool os::browse_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+	   bool bOk = false;
 
 	   try
 	   {
@@ -2100,70 +2425,71 @@ namespace windows
 
 		   defer_co_initialize_ex(false);
 
-		   IFileOpenDialog *pFileOpen;
+		   comptr < IFileOpenDialog > pfileopen;
 
 		   // Create the FileOpenDialog object.
-		   HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
-			   IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
+		   HRESULT hr = pfileopen.CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL);
 
 		   if (SUCCEEDED(hr))
 		   {
-			   if (strFolder.has_char())
-			   {
-				   wstring wstr(strFolder);
-				   IShellItem *psi = NULL;
-				   hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
-				   if (SUCCEEDED(hr))
-				   {
 
-					   pFileOpen->SetFolder(psi);
+            if (set["folder"].get_string().get_length() > 0)
+            {
 
-				   }
-				   if (psi != NULL)
-				   {
-					   psi->Release();
-				   }
-			   }
+               wstring wstr(set["folder"].get_string());
 
+               comptr < IShellItem > psi;
 
-			   pFileOpen->SetOptions(FOS_PICKFOLDERS);
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
 
+               if (SUCCEEDED(hr))
+               {
+
+                  pfileopen->SetFolder(psi);
+
+               }
+
+            }
+
+			   pfileopen->SetOptions(FOS_PICKFOLDERS);
 
 			   // Show the Open dialog box.
-			   //hr = pFileOpen->Show(pframe->get_handle());
-			   hr = pFileOpen->Show(NULL);
+			   hr = pfileopen->Show(NULL);
 
 			   if (SUCCEEDED(hr))
 			   {
 
-
 				   // Get the file name from the dialog box.
-				   if (SUCCEEDED(hr))
-				   {
-					   IShellItem *pItem;
-					   hr = pFileOpen->GetResult(&pItem);
-					   if (SUCCEEDED(hr))
-					   {
-						   PWSTR pszFilePath;
-						   hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+					comptr < IShellItem > pitem;
 
-						   // Display the file name to the user.
-						   if (SUCCEEDED(hr))
-						   {
-							   str = pszFilePath;
-							   CoTaskMemFree(pszFilePath);
-						   }
-						   pItem->Release();
-					   }
-				   }
+					hr = pfileopen->GetResult(&pitem);
+
+					if (SUCCEEDED(hr))
+					{
+
+						cotaskp(PWSTR) pwszFilePath;
+
+						hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+						// Display the file name to the user.
+						if (SUCCEEDED(hr))
+						{
+
+							set["folder"] = string((PWSTR) pwszFilePath);
+
+                     bOk = true;
+
+						}
+
+               }
+
 			   }
-			   pFileOpen->Release();
+
 		   }
 
 	   }
 	   catch (...)
 	   {
-
 
 	   }
 
@@ -2185,126 +2511,7 @@ namespace windows
 
 	   }
 
-	   return str;
-   }
-
-
-
-   string os::get_file_save(oswindow oswindowOwner, string strFolder)
-   {
-	   string str;
-	   try
-	   {
-
-		   ::EnableWindow(oswindowOwner, FALSE);
-
-	   }
-	   catch (...)
-	   {
-
-
-	   }
-
-	   try
-	   {
-
-		   IFileSaveDialog *pFileSave;
-
-		   // Create the FileSaveDialog object.
-		   HRESULT hr = CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL,
-			   IID_IFileSaveDialog, reinterpret_cast<void**>(&pFileSave));
-
-		   if (SUCCEEDED(hr))
-		   {
-
-			   COMDLG_FILTERSPEC rgSpec[] =
-			   {
-				   { L"CSV files", L"*.csv" },
-				   { L"Text files", L"*.txt" },
-				   { L"All files", L"*.*" },
-			   };
-
-			   pFileSave->SetFileTypes(3, rgSpec);
-
-
-			   pFileSave->SetDefaultExtension(L"csv");
-
-			   pFileSave->SetFileName(L"Twitter Automator Export");
-
-			   if (strFolder.has_char())
-			   {
-				   wstring wstr(strFolder);
-				   IShellItem *psi = NULL;
-				   hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
-				   if (SUCCEEDED(hr))
-				   {
-
-					   pFileSave->SetFolder(psi);
-
-				   }
-				   if (psi != NULL)
-				   {
-					   psi->Release();
-				   }
-			   }
-
-
-			   // Show the Save dialog box.
-			   //hr = pFileSave->Show(pframe->get_handle());
-			   hr = pFileSave->Show(NULL);
-
-			   if (SUCCEEDED(hr))
-			   {
-
-
-				   // Get the file name from the dialog box.
-				   if (SUCCEEDED(hr))
-				   {
-					   IShellItem *pItem;
-					   hr = pFileSave->GetResult(&pItem);
-					   if (SUCCEEDED(hr))
-					   {
-						   PWSTR pszFilePath;
-						   hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
-
-						   // Display the file name to the user.
-						   if (SUCCEEDED(hr))
-						   {
-							   str = pszFilePath;
-							   CoTaskMemFree(pszFilePath);
-						   }
-						   pItem->Release();
-					   }
-				   }
-			   }
-			   pFileSave->Release();
-		   }
-	   }
-	   catch (...)
-	   {
-
-
-	   }
-
-	   try
-	   {
-
-		   ::EnableWindow(oswindowOwner, TRUE);
-
-		   ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
-
-		   ::SetForegroundWindow(oswindowOwner);
-
-		   ::BringWindowToTop(oswindowOwner);
-
-	   }
-	   catch (...)
-	   {
-
-
-	   }
-
-	   return str;
+	   return bOk;
 
    }
 

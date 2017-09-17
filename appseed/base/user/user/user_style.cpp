@@ -589,6 +589,12 @@ namespace user
          cr = ARGB(127, 127, 127, 127);
 
       }
+      else if (ecolor == color_action_hover_border_color)
+      {
+
+         cr = ARGB(255, 83, 104, 255);
+
+      }
       else
       {
 
