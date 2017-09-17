@@ -35,6 +35,8 @@ namespace user
    void interaction::user_interaction_common_construct()
    {
 
+      m_econtroltype = control_type_none;
+
       m_iItemHeight = -1;
       m_flagNonClient.signalize(non_client_background);
       m_flagNonClient.signalize(non_client_focus_rect);
@@ -1854,8 +1856,6 @@ namespace user
    void interaction::draw_control_background(::draw2d::graphics * pgraphics)
    {
 
-
-
       ::aura::draw_context * pdrawcontext = pgraphics->::core::simple_chain < ::aura::draw_context >::get_last();
 
       rect rectClient;
@@ -1873,18 +1873,18 @@ namespace user
 
       }
 
-      if(_001IsBackgroundBypass())
-      {
-      }
-      else if(_001IsTranslucent())
+      if(_001IsBackgroundBypass(this))
       {
 
+      }
+      else if(_001IsTranslucent(this))
+      {
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
          COLORREF cr = ARGB(184,255,255,255);
 
-         get_color(cr, ::user::color_background);
+         get_color(cr, ::user::color_background, this);
 
          if (cr != 0)
 
@@ -8763,6 +8763,206 @@ restart:
          ::user::style::on_select_user_style();
 
       }
+
+   }
+
+
+   bool interaction::get_color(COLORREF & cr, e_color ecolor)
+   {
+
+      return get_color(cr, ecolor, this);
+
+   }
+
+
+   bool interaction::get_font(::draw2d::font_sp & sp, e_font efont)
+   {
+
+      return get_font(sp, efont, this);
+
+   }
+
+
+   bool interaction::get_translucency(e_translucency & etranslucency, e_element eelement)
+   {
+
+      return get_translucency(etranslucency, eelement, this);
+
+   }
+
+
+   bool interaction::has_flag(::user::e_flag eflag)
+   {
+
+      return has_flag(eflag, this);
+
+   }
+
+
+   rect interaction::get_rect(::user::e_rect erect)
+   {
+
+      return get_rect(erect, this);
+
+   }
+
+
+   int interaction::get_int(::user::e_int eint)
+   {
+
+      return get_int(eint, this);
+
+   }
+
+
+   bool interaction::select_text_color(::draw2d::graphics * pgraphics, e_color ecolor)
+   {
+
+      return select_text_color(pgraphics, this, ecolor);
+   
+   }
+
+
+   bool interaction::select_solid_brush(::draw2d::graphics * pgraphics, e_color ecolor)
+   {
+
+      return select_solid_brush(pgraphics, this, ecolor);
+
+   }
+
+
+   bool interaction::select_font(::draw2d::graphics * pgraphics, e_font efont)
+   {
+
+      return select_font(pgraphics, this, efont);
+
+   }
+
+
+   bool interaction::select_text_color(e_color ecolor)
+   {
+
+      return select_text_color(this, ecolor);
+
+   }
+
+
+   bool interaction::select_solid_brush(e_color ecolor)
+   {
+
+      return select_solid_brush(ecolor, this);
+
+   }
+
+
+   bool interaction::select_font(e_font efont)
+   {
+
+      return select_font(this, efont);
+
+   }
+
+
+   COLORREF interaction::_001GetColor(e_color ecolor, COLORREF crDefault)
+   {
+
+      return _001GetColor(ecolor, this, crDefault);
+
+   }
+
+
+   COLORREF interaction::_001GetColor(e_color ecolor)
+   {
+
+      return _001GetColor(ecolor, this);
+
+   }
+
+
+   e_translucency interaction::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
+   {
+
+      return _001GetTranslucency(this, eelement, etranslucencyDefault);
+
+   }
+
+
+   bool interaction::_001IsBackgroundBypass(e_element eelement)
+   {
+
+      return _001IsBackgroundBypass(this, eelement);
+
+   }
+
+
+   bool interaction::_001IsTransparent(e_element eelement)
+   {
+
+      return _001IsTransparent(this, eelement);
+
+   }
+
+
+   bool interaction::_001IsTranslucent(e_element eelement)
+   {
+
+      return _001IsTranslucent(this, eelement);
+
+   }
+
+
+   bool interaction::_001HasTranslucency(e_element eelement)
+   {
+
+      return _001HasTranslucency(this, eelement);
+
+   }
+
+   // e_style composition
+   bool interaction::style_color(COLORREF & cr, e_color ecolor)
+   {
+
+      return style_color(cr, ecolor, this);
+
+   }
+
+
+   bool interaction::style_font(::draw2d::font_sp & sp, e_font efont)
+   {
+
+      return style_font(sp, efont, this);
+
+   }
+
+
+   bool interaction::style_translucency(e_translucency & etranslucency, e_element eelement)
+   {
+
+      return style_translucency(etranslucency, eelement, this);
+
+   }
+
+
+   bool interaction::style_flag(::user::e_flag eflag)
+   {
+
+      return style_flag(eflag, this);
+
+   }
+
+
+   rect interaction::style_rect(::user::e_rect erect)
+   {
+
+      return style_rect(erect, this);
+
+   }
+
+
+   int interaction::style_int(::user::e_int eint)
+   {
+
+      return style_int(eint, this);
 
    }
 

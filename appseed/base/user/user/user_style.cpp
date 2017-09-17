@@ -262,7 +262,7 @@ namespace user
    }
 
 
-   bool style::get_color(COLORREF & cr, e_color ecolor)
+   bool style::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
    {
 
       if (m_mapColor.Lookup(ecolor, cr))
@@ -299,7 +299,7 @@ namespace user
       else if (ecolor == color_background)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(60, 255, 255, 255);
@@ -316,7 +316,7 @@ namespace user
       else if (ecolor == color_face)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(120, 0, 0, 0);
@@ -333,7 +333,7 @@ namespace user
       else if (ecolor == color_face_lite)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(80, 0, 0, 0);
@@ -350,7 +350,7 @@ namespace user
       else if (ecolor == color_tab_layout_background)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(80, 255, 255, 255);
@@ -367,7 +367,7 @@ namespace user
       else if (ecolor == color_tab_client_background)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(0, 0, 0, 0);
@@ -384,7 +384,7 @@ namespace user
       else if (ecolor == color_background_selected)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(184, 0, 0, 127);
@@ -401,7 +401,7 @@ namespace user
       else if (ecolor == color_background_selected)
       {
 
-         if (_001IsTranslucent())
+         if (_001IsTranslucent(pui))
          {
 
             cr = ARGB(184, 0, 0, 127);
@@ -484,49 +484,49 @@ namespace user
       else if (ecolor == color_button_background_disabled)
       {
 
-         return get_color(cr, color_background_disabled);
+         return get_color(cr, color_background_disabled, pui);
 
       }
       else if (ecolor == color_button_background_hover)
       {
 
-         return get_color(cr, color_background_hover);
+         return get_color(cr, color_background_hover, pui);
 
       }
       else if (ecolor == color_button_background_normal)
       {
 
-         return get_color(cr, color_background_normal);
+         return get_color(cr, color_background_normal, pui);
 
       }
       else if (ecolor == color_button_background_press)
       {
 
-         return get_color(cr, color_background_press);
+         return get_color(cr, color_background_press, pui);
 
       }
       else if (ecolor == color_button_text_disabled)
       {
 
-         return get_color(cr, color_text_disabled);
+         return get_color(cr, color_text_disabled, pui);
 
       }
       else if (ecolor == color_button_text_hover)
       {
 
-         return get_color(cr, color_text_hover);
+         return get_color(cr, color_text_hover, pui);
 
       }
       else if (ecolor == color_button_text_normal)
       {
 
-         return get_color(cr, color_text_normal);
+         return get_color(cr, color_text_normal, pui);
 
       }
       else if (ecolor == color_button_text_press)
       {
 
-         return get_color(cr, color_text_press);
+         return get_color(cr, color_text_press, pui);
 
       }
       else if (ecolor == color_edit_background)
@@ -610,7 +610,7 @@ namespace user
    }
 
 
-   bool style::get_font(::draw2d::font_sp & font, e_font efont)
+   bool style::get_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui)
    {
 
       if (m_mapFont.Lookup(efont, font))
@@ -638,7 +638,7 @@ namespace user
 
 
 
-   bool style::get_translucency(e_translucency & etranslucency, e_element eelement)
+   bool style::get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui)
    {
 
       if (!m_mapTranslucency.Lookup(eelement, etranslucency)
@@ -1193,7 +1193,7 @@ namespace user
    }
 
 
-   bool style::has_flag(e_flag eflag)
+   bool style::has_flag(e_flag eflag, ::user::interaction * pui)
    {
 
       return userstyle()->m_mapFlag[eflag];
@@ -1201,7 +1201,7 @@ namespace user
    }
 
 
-   rect style::get_rect(e_rect erect)
+   rect style::get_rect(e_rect erect, ::user::interaction * pui)
    {
 
       return userstyle()->m_mapRect[erect];
@@ -1209,7 +1209,7 @@ namespace user
    }
 
 
-   int style::get_int(e_int eint)
+   int style::get_int(e_int eint, ::user::interaction * pui)
    {
 
       return userstyle()->m_mapInt[eint];

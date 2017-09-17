@@ -67,7 +67,7 @@ namespace user
    }
 
 
-   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement)
+   bool tooltip::get_translucency(::user::e_translucency  & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
    {
 
       etranslucency = ::user::translucency_present;

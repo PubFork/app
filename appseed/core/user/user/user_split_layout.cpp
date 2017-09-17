@@ -12,6 +12,8 @@ namespace user
       split_layout(get_app())
    {
 
+      m_econtroltype = control_type_split;
+
       m_flagNonClient.unsignalize(non_client_background);
       m_flagNonClient.unsignalize(non_client_focus_rect);
 

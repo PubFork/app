@@ -3396,14 +3396,14 @@ bool simple_frame_window::IsNotifyIconEnabled()
 }
 
 
-bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
+bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
 {
 
    if (m_workset.m_pframeschema != NULL)
    {
 
 
-      if (m_workset.m_pframeschema->get_color(cr, ecolor))
+      if (m_workset.m_pframeschema->get_color(cr, ecolor, pui))
       {
 
          return true;
@@ -3412,7 +3412,7 @@ bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
 
    }
 
-   return ::user::frame_window::get_color(cr, ecolor);
+   return ::user::frame_window::get_color(cr, ecolor, pui);
 
 }
 
@@ -3435,6 +3435,5 @@ void simple_frame_window::on_select_user_style()
    }
 
    ::user::frame_window::on_select_user_style();
-
 
 }

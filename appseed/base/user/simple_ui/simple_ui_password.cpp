@@ -41,10 +41,10 @@ namespace simple_ui
       COLORREF cr;
 
 
-      cr          = _001GetColor(::user::color_text);
-      crBk        = _001GetColor(::user::color_background);
-      crSel       = _001GetColor(::user::color_text_selected);
-      crBkSel     = _001GetColor(::user::color_background_selected);
+      cr          = _001GetColor(::user::color_text, this);
+      crBk        = _001GetColor(::user::color_background, this);
+      crSel       = _001GetColor(::user::color_text_selected, this);
+      crBkSel     = _001GetColor(::user::color_background_selected, this);
 
 
       ::job * pjob = pgraphics->m_pjob;
@@ -186,7 +186,7 @@ namespace simple_ui
       _001GetViewSel(iSelStart,iSelEnd);
       strsize iCursor = iSelEnd;
       sort::sort(iSelStart,iSelEnd);
-      select_font(pgraphics, ::user::font_plain_edit);
+      select_font(pgraphics, this, ::user::font_plain_edit);
       size size3;
       size3 = pgraphics->GetTextExtent(unitext("gGYIﾍ"));
       int32_t iLineHeight = size3.cy;

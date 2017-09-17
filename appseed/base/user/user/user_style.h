@@ -80,12 +80,12 @@ namespace user
       virtual bool _001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar) override;
 
       
-      virtual bool get_color(COLORREF & cr, e_color eusercolor) override;
-      virtual bool get_font(::draw2d::font_sp & sp, e_font efont) override;
-      virtual bool get_translucency(e_translucency & etranslucency, e_element element) override;
-      virtual bool has_flag(e_flag eflag) override;
-      virtual rect get_rect(e_rect erect) override;
-      virtual int get_int(e_int eint) override;
+      virtual bool get_color(COLORREF & cr, e_color eusercolor, ::user::interaction * pui) override;
+      virtual bool get_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui) override;
+      virtual bool get_translucency(e_translucency & etranslucency, e_element element, ::user::interaction * pui) override;
+      virtual bool has_flag(e_flag eflag, ::user::interaction * pui) override;
+      virtual rect get_rect(e_rect erect, ::user::interaction * pui) override;
+      virtual int get_int(e_int eint, ::user::interaction * pui) override;
 
       
       virtual void select_default();

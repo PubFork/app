@@ -1029,7 +1029,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 
    COLORREF crBackground = 0;
 
-   style_color(crBackground, ::user::color_background);
+   style_color(crBackground, ::user::color_background, this);
 
    rect rectClient;
 

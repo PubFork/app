@@ -58,9 +58,9 @@ namespace filemanager
       void OnFileManagerItemUpdate(::user::command * pcommand, const ::fs::item_array & itema);
       void OnFileManagerItemCommand(const char * pszId, const ::fs::item_array & itema);
 
-      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
-      virtual bool get_font(::draw2d::font_sp & font);
-      virtual bool get_translucency(::user::e_translucency & etranslucency);
+      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
+      virtual bool get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui) override;
+      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
 
       virtual sp(::filemanager::manager_template) get_filemanager_template();

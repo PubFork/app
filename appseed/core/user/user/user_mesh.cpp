@@ -22,6 +22,8 @@ namespace user
       m_dcextension(get_app())
    {
 
+      m_econtroltype = control_type_mesh;
+
       m_iItemHeight = 32;
       m_plist = NULL;
       m_piaFilterIcon = new index_biunique();

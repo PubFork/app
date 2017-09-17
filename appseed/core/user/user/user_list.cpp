@@ -15,6 +15,8 @@ namespace user
       m_columna(get_app())
    {
 
+      m_econtroltype = control_type_list;
+
       m_iImageSpacing = 2;
       m_dIconSaturation = 1.0;
 

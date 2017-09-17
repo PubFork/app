@@ -137,9 +137,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover, this));
 
-               pgraphics->set_text_color(_001GetColor(color_button_text_hover));
+               pgraphics->set_text_color(_001GetColor(color_button_text_hover, this));
 
             }
             else
@@ -149,9 +149,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal, this));
 
-               pgraphics->set_text_color(_001GetColor(color_button_text_normal));
+               pgraphics->set_text_color(_001GetColor(color_button_text_normal, this));
 
             }
 
@@ -568,19 +568,19 @@ namespace user
       COLORREF crBk;
       if(!is_window_enabled())
       {
-         crBk = m_puserstyle->_001GetColor(color_button_background_disabled);
+         crBk = _001GetColor(color_button_background_disabled);
       }
       else if(is_pressed())
       {
-         crBk = m_puserstyle->_001GetColor(color_button_background_press);
+         crBk = _001GetColor(color_button_background_press);
       }
       else if(m_iHover >= 0)
       {
-         crBk = m_puserstyle->_001GetColor(color_button_background_hover);
+         crBk = _001GetColor(color_button_background_hover);
       }
       else
       {
-         crBk = m_puserstyle->_001GetColor(color_button_background_normal);
+         crBk = _001GetColor(color_button_background_normal);
       }
 
 
@@ -649,22 +649,22 @@ namespace user
       if(!is_window_enabled())
       {
 //         pgraphics->set_text_color(m_puserstyle->m_crTextDisabled);
-         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_disabled));
+         brushText->create_solid(_001GetColor(color_button_text_disabled));
       }
       else if(is_pressed())
       {
 //         pgraphics->set_text_color(m_puserstyle->m_crTextPress);
-         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_press));
+         brushText->create_solid(_001GetColor(color_button_text_press));
       }
       else if(m_iHover >= 0)
       {
 //         pgraphics->set_text_color(m_puserstyle->m_crTextHover);
-         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_hover));
+         brushText->create_solid(_001GetColor(color_button_text_hover));
       }
       else
       {
 //         pgraphics->set_text_color(m_puserstyle->m_crTextNormal);
-         brushText->create_solid(m_puserstyle->_001GetColor(color_button_text_normal));
+         brushText->create_solid(_001GetColor(color_button_text_normal));
       }
 
       pgraphics->SelectObject(brushText);
@@ -676,6 +676,7 @@ namespace user
       pgraphics->draw_text(strText, rectText, DT_LEFT | DT_TOP);
 
    }
+
 
    bool button::keyboard_focus_is_focusable()
    {
@@ -763,7 +764,7 @@ namespace user
       else
       {
 
-         color.set_rgb(m_puserstyle->_001GetColor(::user::color_button_background_normal));
+         color.set_rgb(_001GetColor(::user::color_button_background_normal));
 
       }
 

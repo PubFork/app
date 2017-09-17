@@ -514,14 +514,14 @@ namespace user
 
          size.cx += rectMargin.right;
 
-         size.cx += m_puserstyle->get_int(int_menu_button_padding);
+         size.cx += style_int(int_menu_button_padding);
 
          size.cx += m_iCheckBoxSize;
 
          if (spitema->element_at(i)->IsPopup())
          {
 
-            size.cx += m_puserstyle->get_int(int_menu_button_padding);
+            size.cx += style_int(int_menu_button_padding);
 
             size.cx += m_iCheckBoxSize;
 

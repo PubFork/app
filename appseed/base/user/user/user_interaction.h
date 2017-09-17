@@ -86,7 +86,7 @@ namespace user
          
       };
       
-
+      e_control_type                      m_econtroltype;
       flags < e_non_client >              m_flagNonClient;
 
       bool                                m_bMouseHover;
@@ -1016,6 +1016,82 @@ namespace user
       virtual bool has_pending_redraw_flags() override;
 
       virtual void on_select_user_style() override;
+
+
+
+      using style::get_color;
+      virtual bool get_color(COLORREF & cr, e_color ecolor);
+      using style::get_font;
+      virtual bool get_font(::draw2d::font_sp & sp, e_font efont);
+      using style::get_translucency;
+      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement);
+      using style::has_flag;
+      virtual bool has_flag(::user::e_flag eflag);
+      using style::get_rect;
+      virtual rect get_rect(::user::e_rect erect);
+      using style::get_int;
+      virtual int get_int(::user::e_int eint);
+      //virtual e_style get_style() override;
+      // these are exception of rule above
+      //      virtual sp(style) & operator[](e_style estyle) override;
+      //      virtual bool impl_get_color(COLORREF & cr, e_color eusercolor) = 0;
+      //      virtual bool impl_get_font(::draw2d::font_sp & sp, e_font efont) = 0;
+      //      virtual bool impl_get_translucency(e_translucency & etranslucency, e_element element) = 0;
+      //      virtual bool impl_has_flag(e_flag eflag) = 0;
+      //      virtual rect impl_get_rect(e_rect erect) = 0;
+      //      virtual int impl_get_int(e_int eint) = 0;
+
+      // these are utility functions
+      // the utility functions should be based on this class functions
+      // specially the style_base pure function overrides
+      // that way, if some styled class overriding any style_base pure function
+      // will affect the return of the utility function.
+      // so, it should be very avoided using the m_pstylebase compositor
+      // to implement the utility functions
+      //virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency);
+      using style::select_text_color;
+      virtual bool select_text_color(::draw2d::graphics * pgraphics, e_color ecolor = color_text);
+      using style::select_solid_brush;
+      virtual bool select_solid_brush(::draw2d::graphics * pgraphics, e_color ecolor);
+      using style::select_font;
+      virtual bool select_font(::draw2d::graphics * pgraphics, e_font efont = font_default);
+
+      virtual bool select_text_color(e_color ecolor = color_text);
+      virtual bool select_solid_brush(e_color ecolor);
+      virtual bool select_font(e_font efont = font_default);
+
+
+
+      using style::_001GetColor;
+      virtual COLORREF        _001GetColor(e_color ecolor, COLORREF crDefault);
+      virtual COLORREF        _001GetColor(e_color ecolor);
+      using style::_001GetTranslucency;
+      virtual e_translucency   _001GetTranslucency(e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
+
+      using style::_001IsBackgroundBypass;
+      virtual bool _001IsBackgroundBypass(e_element eelement = element_none);
+      using style::_001IsTransparent;
+      virtual bool _001IsTransparent(e_element eelement = element_none);
+      using style::_001IsTranslucent;
+      virtual bool _001IsTranslucent(e_element eelement = element_none);
+      using style::_001HasTranslucency;
+      virtual bool _001HasTranslucency(e_element eelement = element_none);
+
+      // e_style composition
+      using style::style_color;
+      virtual bool style_color(COLORREF & cr, e_color ecolor);
+      using style::style_font;
+      virtual bool style_font(::draw2d::font_sp & sp, e_font efont);
+      using style::style_translucency;
+      virtual bool style_translucency(e_translucency & etranslucency, e_element eelement);
+      using style::style_flag;
+      virtual bool style_flag(::user::e_flag eflag);
+      using style::style_rect;
+      virtual rect style_rect(::user::e_rect erect);
+      using style::style_int;
+      virtual int style_int(::user::e_int eint);
+
+
 
    };
 

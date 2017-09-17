@@ -220,7 +220,7 @@ namespace simple_ui
    COLORREF interaction::get_action_hover_border_color()
    {
 
-      return _001GetColor(::user::color_action_hover_border_color);
+      return _001GetColor(::user::color_action_hover_border_color, this);
 
    }
 

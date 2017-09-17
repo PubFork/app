@@ -205,7 +205,7 @@ namespace user
    }
    
    
-   bool style_composite::get_color(COLORREF & cr,e_color ecolor)
+   bool style_composite::get_color(COLORREF & cr,e_color ecolor, ::user::interaction * pui)
    {
       
       if (userstyle() == NULL)
@@ -215,17 +215,17 @@ namespace user
 
       }
 
-      return userstyle()->get_color(cr, ecolor);
+      return userstyle()->get_color(cr, ecolor, pui);
    
    }
    
    
-   bool style_composite::get_font(::draw2d::font_sp & font, e_font efont)
+   bool style_composite::get_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui)
    {
       
       ::user::style * puserstyle = userstyle();
       
-      if(puserstyle != NULL && puserstyle->get_font(font, efont))
+      if(puserstyle != NULL && puserstyle->get_font(font, efont, pui))
       {
        
          return true;
@@ -237,45 +237,45 @@ namespace user
    }
    
 
-   bool style_composite::get_translucency(e_translucency & etranslucency, e_element eelement)
+   bool style_composite::get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui)
    {
    
-      return userstyle()->get_translucency(etranslucency, eelement);
+      return userstyle()->get_translucency(etranslucency, eelement, pui);
    
    }
    
    
-   bool style_composite::has_flag(e_flag eflag)
-   {
-      
-      
-      return userstyle()->has_flag(eflag);
-   
-   }
-   
-   
-   rect style_composite::get_rect(e_rect erect)
-   {
-
-      return userstyle()->get_rect(erect);
-   
-   }
-   
-
-   int style_composite::get_int(e_int eint)
+   bool style_composite::has_flag(e_flag eflag, ::user::interaction * pui)
    {
       
-      return userstyle()->get_int(eint);
+      
+      return userstyle()->has_flag(eflag, pui);
+   
+   }
+   
+   
+   rect style_composite::get_rect(e_rect erect, ::user::interaction * pui)
+   {
+
+      return userstyle()->get_rect(erect, pui);
+   
+   }
+   
+
+   int style_composite::get_int(e_int eint, ::user::interaction * pui)
+   {
+      
+      return userstyle()->get_int(eint, pui);
    
    }
 
 
-   bool style_composite::select_text_color(::draw2d::graphics * pgraphics,e_color ecolor)
+   bool style_composite::select_text_color(::draw2d::graphics * pgraphics, ::user::interaction * pui, e_color ecolor)
    {
    
       COLORREF cr;
    
-      if(!style_color(cr, ecolor))
+      if(!style_color(cr, ecolor, pui))
       {
       
          return false;
@@ -289,12 +289,12 @@ namespace user
    }
 
 
-   bool style_composite::select_solid_brush(::draw2d::graphics * pgraphics,e_color ecolor)
+   bool style_composite::select_solid_brush(::draw2d::graphics * pgraphics, ::user::interaction * pui, e_color ecolor)
    {
    
       COLORREF cr;
    
-      if(!style_color(cr, ecolor))
+      if(!style_color(cr, ecolor, pui))
       {
       
          return false;
@@ -312,12 +312,12 @@ namespace user
    }
 
 
-   bool style_composite::select_font(::draw2d::graphics * pgraphics, e_font efont)
+   bool style_composite::select_font(::draw2d::graphics * pgraphics, ::user::interaction * pui, e_font efont)
    {
    
       ::draw2d::font_sp font;
    
-      if(!style_font(font, efont))
+      if(!style_font(font, efont, pui))
       {
       
          font.alloc(allocer());
@@ -338,7 +338,7 @@ namespace user
    }
 
    
-   bool style_composite::select_text_color(e_color ecolor)
+   bool style_composite::select_text_color(::user::interaction * pui, e_color ecolor)
    {
       
       ::draw2d::graphics * pgraphics = style_get_graphics();
@@ -350,12 +350,12 @@ namespace user
          
       }
       
-      return select_text_color(pgraphics, ecolor);
+      return select_text_color(pgraphics, pui, ecolor);
       
    }
    
    
-   bool style_composite::select_solid_brush(e_color ecolor)
+   bool style_composite::select_solid_brush(e_color ecolor, ::user::interaction * pui)
    {
       
       ::draw2d::graphics * pgraphics = style_get_graphics();
@@ -367,12 +367,12 @@ namespace user
          
       }
       
-      return select_solid_brush(pgraphics, ecolor);
+      return select_solid_brush(pgraphics, pui, ecolor);
       
    }
    
    
-   bool style_composite::select_font(e_font efont)
+   bool style_composite::select_font(::user::interaction * pui, e_font efont)
    {
       
       ::draw2d::graphics * pgraphics = style_get_graphics();
@@ -384,18 +384,18 @@ namespace user
          
       }
       
-      return select_font(pgraphics, efont);
+      return select_font(pgraphics, pui, efont);
       
    }
    
    
 
-   COLORREF style_composite::_001GetColor(e_color ecolor, COLORREF crDefault)
+   COLORREF style_composite::_001GetColor(e_color ecolor, ::user::interaction * pui, COLORREF crDefault)
    {
    
       COLORREF cr;
    
-      if (get_color(cr, ecolor))
+      if (get_color(cr, ecolor, pui))
          return cr;
    
       return crDefault;
@@ -416,12 +416,12 @@ namespace user
 //   }
 
 
-   COLORREF style_composite::_001GetColor(e_color ecolor)
+   COLORREF style_composite::_001GetColor(e_color ecolor, ::user::interaction * pui)
    {
    
       COLORREF cr;
    
-      if (style_color(cr, ecolor))
+      if (style_color(cr, ecolor, pui))
          return cr;
    
       return 0;
@@ -429,12 +429,12 @@ namespace user
    }
    
    
-   e_translucency style_composite::_001GetTranslucency(e_element eelement, e_translucency etranslucencyDefault)
+   e_translucency style_composite::_001GetTranslucency(::user::interaction * pui, e_element eelement, e_translucency etranslucencyDefault)
    {
       
       e_translucency etranslucency = translucency_undefined;
       
-      if (get_translucency(etranslucency, eelement))
+      if (get_translucency(etranslucency, eelement, pui))
       {
          
          if (etranslucency != translucency_undefined)
@@ -451,38 +451,38 @@ namespace user
    }
    
    
-   bool style_composite::_001IsTranslucent(e_element eelement)
+   bool style_composite::_001IsTranslucent(::user::interaction * pui, e_element eelement)
    {
       
-      e_translucency etranslucency = _001GetTranslucency(eelement);
+      e_translucency etranslucency = _001GetTranslucency(pui, eelement);
       
       return etranslucency == translucency_present || etranslucency == translucency_total;
       
    }
    
    
-   bool style_composite::_001IsBackgroundBypass(e_element eelement)
+   bool style_composite::_001IsBackgroundBypass(::user::interaction * pui, e_element eelement)
    {
       
-      return _001GetTranslucency(eelement) == translucency_total;
+      return _001GetTranslucency(pui, eelement) == translucency_total;
       
    }
    
    
-   bool style_composite::_001HasTranslucency(e_element eelement)
+   bool style_composite::_001HasTranslucency(::user::interaction * pui, e_element eelement)
    {
       
-      e_translucency etranslucency = _001GetTranslucency(eelement);
+      e_translucency etranslucency = _001GetTranslucency(pui, eelement);
       
       return etranslucency == translucency_present || etranslucency == translucency_total;
       
    }
    
    
-   bool style_composite::_001IsTransparent(e_element eelement)
+   bool style_composite::_001IsTransparent(::user::interaction * pui, e_element eelement)
    {
       
-      return _001GetTranslucency(eelement) == translucency_total;
+      return _001GetTranslucency(pui, eelement) == translucency_total;
       
    }
    
@@ -564,12 +564,12 @@ namespace user
 
 
 
-   bool style_composite::style_color(COLORREF & cr,e_color ecolor)
+   bool style_composite::style_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
    {
 
       ::user::style * puserstyle = userstyle();
 
-      if (puserstyle != NULL && puserstyle->get_color(cr, ecolor))
+      if (puserstyle != NULL && puserstyle->get_color(cr, ecolor, pui))
       {
 
          return true;
@@ -581,12 +581,12 @@ namespace user
    }
 
 
-   bool style_composite::style_font(::draw2d::font_sp & font, e_font efont)
+   bool style_composite::style_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui)
    {
    
       ::user::style * puserstyle = userstyle();
 
-      if (puserstyle != NULL && puserstyle->get_font(font, efont))
+      if (puserstyle != NULL && puserstyle->get_font(font, efont, pui))
       {
 
          return true;
@@ -598,10 +598,10 @@ namespace user
    }
 
 
-   bool style_composite::style_translucency(e_translucency & etranslucency, e_element eelement)
+   bool style_composite::style_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui)
    {
    
-      return userstyle()->get_translucency(etranslucency, eelement);
+      return userstyle()->get_translucency(etranslucency, eelement, pui);
    
    }
 
@@ -614,26 +614,26 @@ namespace user
    }
 
 
-   bool style_composite::style_flag(e_flag eflag)
+   bool style_composite::style_flag(e_flag eflag, ::user::interaction * pui)
    {
    
-      return userstyle()->has_flag(eflag);
+      return userstyle()->has_flag(eflag, pui);
    
    }
 
 
-   rect style_composite::style_rect(e_rect erect)
+   rect style_composite::style_rect(e_rect erect, ::user::interaction * pui)
    {
    
-      return userstyle()->get_rect(erect);
+      return userstyle()->get_rect(erect, pui);
    
    }
 
 
-   int style_composite::style_int(e_int eint)
+   int style_composite::style_int(e_int eint, ::user::interaction * pui)
    {
    
-      return userstyle()->get_int(eint);
+      return userstyle()->get_int(eint, pui);
    
    }
 

@@ -36,6 +36,8 @@ namespace user
 
       ASSERT(get_app() != NULL);
 
+      m_econtroltype = control_type_tree;
+
       m_bHoverStart = false;
 
       m_pitemFirstVisible        = NULL;

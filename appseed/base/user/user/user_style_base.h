@@ -44,12 +44,12 @@ namespace user
       virtual bool _001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar) = 0;
       
       
-      virtual bool get_color(COLORREF & cr,e_color ecolor) = 0;
-      virtual bool get_font(::draw2d::font_sp & sp, e_font efont) = 0;
-      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement) = 0;
-      virtual bool has_flag(::user::e_flag eflag) = 0;
-      virtual rect get_rect(::user::e_rect erect) = 0;
-      virtual int get_int(::user::e_int eint) = 0;
+      virtual bool get_color(COLORREF & cr,e_color ecolor, ::user::interaction * pui) = 0;
+      virtual bool get_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui) = 0;
+      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui) = 0;
+      virtual bool has_flag(::user::e_flag eflag, ::user::interaction * pui) = 0;
+      virtual rect get_rect(::user::e_rect erect, ::user::interaction * pui) = 0;
+      virtual int get_int(::user::e_int eint, ::user::interaction * pui) = 0;
 
       virtual e_schema get_user_style() = 0;
       
