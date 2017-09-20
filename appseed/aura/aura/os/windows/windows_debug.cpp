@@ -1,6 +1,7 @@
 #include "framework.h"
 //#include "windows_registry.h"
-
+#include <stdio.h>
+#include <stdarg.h>
 
 
 int __node_is_debugger_attached()
@@ -40,3 +41,13 @@ CLASS_DECL_AURA void windows_install_crash_dump_reporting(::aura::application * 
 
 }
 
+
+
+CLASS_DECL_AURA void __cdecl __trace(const char * pszFormat, ...)
+{
+   va_list ap;
+   va_start(ap, pszFormat);
+   vprintf(pszFormat, ap);
+   va_end(ap);
+
+}
