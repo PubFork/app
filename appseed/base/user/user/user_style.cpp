@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 
 namespace user
@@ -503,7 +503,7 @@ namespace user
             {
 
                //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 108, 149, 255));
-               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 84, 77));
+               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 90, 80));
 
                pgraphics->DrawRect(rectClient, pen);
 
@@ -686,7 +686,7 @@ namespace user
          else
          {
 
-            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 84, 77, 255));
+            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 90, 80, 255));
 
             pgraphics->DrawRect(rectClient, pen);
 

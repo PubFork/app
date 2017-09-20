@@ -1,4 +1,4 @@
-#include "framework.h" // from ""axis/user/user.h"
+﻿#include "framework.h" // from ""axis/user/user.h"
 #include <X11/Xatom.h>
 #include <sys/stat.h>
 
@@ -1388,7 +1388,7 @@ Retrieved from: http://en.literateprograms.org/Hello_World_(C,_Cairo)?oldid=1038
 void message_box_paint(::draw2d::graphics * pgraphics, stringa & stra, bool_array  & baTab, int_array  & ya,SIZE * psize)
 {
 
-	pgraphics->FillSolidRect(0, 0, psize->cx, psize->cy, RGB(84, 84, 77));
+	pgraphics->FillSolidRect(0, 0, psize->cx, psize->cy, RGB(84, 90, 80));
 
    draw2d::brush_sp pen(pgraphics->allocer());
 

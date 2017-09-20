@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace sphere
@@ -176,13 +176,13 @@ namespace sphere
       else if (ecolor == ::user::color_border_normal)
       {
 
-         cr = ARGB(255, 84, 84, 77);
+         cr = ARGB(255, 84, 90, 80);
 
       }
       else if (ecolor == ::user::color_border_hover)
       {
 
-         cr = ARGB(255, 84, 184, 77);
+         cr = ARGB(255, 84, 190, 80);
 
       }
       else if (ecolor == ::user::color_text_hover)

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userfs
@@ -460,7 +460,7 @@ namespace userfs
       }
       /*      else if(get_filemanager_template()->get_filemanager_data()->is_saving())
       {
-      return RGB(255, 177, 84);
+      return RGB(255, 180, 90);
       }*/
       else
       {

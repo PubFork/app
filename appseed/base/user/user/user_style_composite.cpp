@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 
 namespace user
@@ -1101,13 +1101,13 @@ namespace user
       else if (ecolor == color_border_normal)
       {
 
-         cr = ARGB(255, 84, 84, 77);
+         cr = ARGB(255, 84, 90, 80);
 
       }
       else if (ecolor == color_border_hover)
       {
 
-         cr = ARGB(255, 84, 184, 77);
+         cr = ARGB(255, 84, 190, 80);
 
       }
       else if (ecolor == color_text_hover)

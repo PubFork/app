@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #if defined(INSTALL_SUBSYSTEM)
@@ -106,7 +106,7 @@ namespace install
 
          ::draw2d::pen_sp pen(allocer());
 
-         pen->create_solid(1.0, ARGB(255, 84, 84, 77));
+         pen->create_solid(1.0, ARGB(255, 84, 90, 80));
 
          if(iMode == 1 || iMode == 2)
          {

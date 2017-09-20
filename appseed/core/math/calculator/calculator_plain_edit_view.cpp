@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "core/user/user/user.h"
 
 
@@ -290,7 +290,7 @@ namespace calculator
 /*         if(m_ptopview != NULL)
          {
 
-            m_ptopview->m_pview->post_message(WM_VIEW_UPDATE);
+            m_ptopview->m_pview->post_message(message_view_update);
 
          }*/
 

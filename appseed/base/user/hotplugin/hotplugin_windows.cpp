@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #ifdef HOTPLUGIN_SUBSYSTEM
@@ -29,7 +29,7 @@ namespace hotplugin
 
    //HBRUSH hbrushBack = (HBRUSH) ::CreatePatternBrush(hbm);
    //::DeleteObject(hbm);
-   //HBRUSH hbrushDark = ::CreateSolidBrush(RGB(84,84,77));
+   //HBRUSH hbrushDark = ::CreateSolidBrush(RGB(90, 90, 80));
    //HBRUSH hbrushLate = ::CreateSolidBrush(RGB(84 + 49,84 + 49,77 + 42));
    //HBRUSH hbrushLite = ::CreateSolidBrush(RGB(255,255,250));
    //HBRUSH hbrushGren = ::CreateSolidBrush(RGB(77,184,123));

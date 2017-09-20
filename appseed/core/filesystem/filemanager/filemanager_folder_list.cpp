@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 
@@ -374,7 +374,7 @@ namespace filemanager
          if (m_pmanager->m_emode == manager::mode_saving)
          {
 
-            cr = ARGB(184, 255, 177, 84);
+            cr = ARGB(184, 255, 180, 90);
 
          }
          else if (m_pmanager->m_emode == manager::mode_import)

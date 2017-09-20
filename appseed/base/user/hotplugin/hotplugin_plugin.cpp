@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -664,7 +664,7 @@ namespace hotplugin
 
             rectP.right    = rectWindow.right;
 
-            pgraphics->FillSolidRect(rectP, ARGB(84, 84, 84, 77));
+            pgraphics->FillSolidRect(rectP, ARGB(84, 84, 90, 80));
 
          }
 

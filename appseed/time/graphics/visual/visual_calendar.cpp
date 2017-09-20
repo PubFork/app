@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace visual
@@ -71,7 +71,7 @@ namespace visual
       if(timeNow.GetMonth() == iMonth
          && timeNow.GetYear() == iYear)
       {
-         crBorder = RGB(84,84,77);
+         crBorder = RGB(90, 90, 80);
          GetRectDay(timeNow,rectDay);
          rectDay.inflate(m_iColWidth / 10,m_iColWidth / 10);
          pgraphics->FillSolidRect(rectDay,RGB(220,220,210));

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -1896,7 +1896,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 177, 84));
+         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -1908,7 +1908,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 177, 84));
+         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 

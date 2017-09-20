@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 
 namespace user
@@ -141,7 +141,7 @@ namespace user
    //      
    //      m_pfont.alloc(allocer());
    //      m_pfont->create_point_font("Marlett",11.0);
-   //      set_color(color_text_normal,ARGB(184,184,84,77));
+   //      set_color(color_text_normal,ARGB(184,190, 90, 80));
    //      set_color(color_text_press,ARGB(223,255,0,0));
    //      set_color(color_text_disabled,ARGB(184,127,127,127));
    //      set_color(color_text_hover,ARGB(184,255,49,49));
@@ -485,13 +485,13 @@ namespace user
    //      else if (ecolor == color_border_normal)
    //      {
    //
-   //         return ARGB(255, 84, 84, 77);
+   //         return ARGB(255, 84, 90, 80);
    //
    //      }
    //      else if (ecolor == color_border_hover)
    //      {
    //
-   //         return ARGB(255, 84, 184, 77);
+   //         return ARGB(255, 84, 190, 80);
    //
    //      }
    //      else if (ecolor == color_text_hover)
@@ -829,7 +829,7 @@ namespace user
    //            {
    //
    //               //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 108, 149, 255));
-   //               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 84, 77));
+   //               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 90, 80));
    //
    //               pgraphics->DrawRect(rectClient, pen);
    //
@@ -1012,7 +1012,7 @@ namespace user
    //         else
    //         {
    //
-   //            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 84, 77, 255));
+   //            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 90, 80, 255));
    //
    //            pgraphics->DrawRect(rectClient, pen);
    //

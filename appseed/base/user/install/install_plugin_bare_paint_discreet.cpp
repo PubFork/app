@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -35,7 +35,7 @@ namespace hotplugin
 
       ::draw2d::pen_sp pen(allocer());
 
-      pen->create_solid(1.0, RGB(84, 84, 77));
+      pen->create_solid(1.0, RGB(84, 90, 80));
 
       ::draw2d::brush_sp brush(allocer());
 
@@ -236,7 +236,7 @@ namespace hotplugin
 
       //pgraphics->replace_clip(rectClip);
 
-      br->create_solid(ARGB(84, 84, 84, 77));
+      br->create_solid(ARGB(84, 84, 90, 80));
 
       RECT r1;
 

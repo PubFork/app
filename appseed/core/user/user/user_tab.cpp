@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //#ifdef WINDOWS
 //#undef new
@@ -48,7 +48,7 @@ namespace user
       m_brushClose->create_solid(ARGB(163, 0, 0, 0));
       m_penBorderHover->create_solid(1.0, ARGB(255, 0, 0, 0));
       m_penBorderSel->create_solid(1.0, ARGB(255, 0, 0, 0));
-      m_penBorder->create_solid(1.0, ARGB(163, 84, 84, 77));
+      m_penBorder->create_solid(1.0, ARGB(163, 84, 90, 80));
 
       m_bEnableCloseAll = false;
       m_rectTabClient.set(0,0,0,0);

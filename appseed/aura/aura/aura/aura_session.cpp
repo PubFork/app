@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 ::aura::PFN_GET_NEW_LIBRARY g_pfnNewLibrary = NULL;
@@ -149,7 +149,7 @@ namespace aura
       case COLOR_3DSHADOW:
          return ARGB(127, 138, 138, 130);
       case COLOR_3DDKSHADOW:
-         return ARGB(127, 84, 84, 77);
+         return ARGB(127, 84, 90, 80);
       default:
          break;
       }
