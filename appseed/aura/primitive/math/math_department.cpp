@@ -17,6 +17,7 @@ namespace math
    {
       // initial rng seed
       dPi = atan(1.0) * 4.0;
+      fPi = atanf(1.0f) * 4.0f;
 
 #ifdef WINDOWSEX
       hCryptProv = NULL;
@@ -297,6 +298,12 @@ namespace math
    double math::GetPi()
    {
       return dPi;
+   }
+
+
+   float math::get_pi_f()
+   {
+      return fPi;
    }
 
 

@@ -6,7 +6,7 @@ namespace datetime
 {
 
 
-   ::datetime::zonetime WINAPI zonetime::get_current_time(int iZoneOffset) throw()
+   ::datetime::zonetime WINAPI zonetime::get_current_time(__time64_t iZoneOffset) throw()
    {
 
       zonetime t;

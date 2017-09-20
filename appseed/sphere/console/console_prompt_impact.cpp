@@ -128,9 +128,9 @@ namespace console
 
       }
       else if(key.m_ekey == ::user::key_shift || key.m_ekey == ::user::key_lshift || key.m_ekey == ::user::key_rshift
-         || key.m_ekey == ::user::key_control || key.m_ekey == ::user::key_lcontrol || key.m_ekey == ::user::key_rcontrol
-         || key.m_ekey == ::user::key_alt || key.m_ekey == ::user::key_lalt || key.m_ekey == ::user::key_ralt
-         )
+              || key.m_ekey == ::user::key_control || key.m_ekey == ::user::key_lcontrol || key.m_ekey == ::user::key_rcontrol
+              || key.m_ekey == ::user::key_alt || key.m_ekey == ::user::key_lalt || key.m_ekey == ::user::key_ralt
+             )
       {
 
 
@@ -268,7 +268,7 @@ namespace console
 
       m_evNewChar.wait();
 
-      return m_iNewChar;
+      return (int) m_iNewChar;
 
    }
 
@@ -340,7 +340,7 @@ namespace console
 
          ::rect rectCaret;
 
-         rectCaret.left = iLeftMargin+m_sizeChar.cx * m_iCursor;
+         convert(rectCaret.left, iLeftMargin+m_sizeChar.cx * m_iCursor);
          rectCaret.right = rectCaret.left + m_sizeChar.cx;
          rectCaret.top = m_sizeChar.cy - 3;
          rectCaret.bottom = m_sizeChar.cy;

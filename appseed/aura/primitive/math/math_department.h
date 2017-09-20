@@ -12,6 +12,7 @@ namespace math
 
 
          double         dPi;
+         float          fPi;
          //#if WINVER >= 0x500
 #ifdef WINDOWSEX
          HCRYPTPROV     hCryptProv;
@@ -53,6 +54,7 @@ namespace math
             double dValueMin,
             double dValueMax);
          double GetPi();
+         float get_pi_f();
 
          static bool IsPowerOfTwo(uint64_t uiValue);
          static uint32_t ReverseBits(uint32_t index, uint32_t NumBits);

@@ -37,9 +37,9 @@ namespace userstack
       SCAST_PTR(::message::create, pcreate, pobj);
 
       m_bWindowFrame = true;
-      
+
 #ifdef HOTPLUGIN_SUBSYSTEM
-      
+
       m_bWindowFrame = GetTypedParent < ::plugin::host_interaction >() == NULL;
 
 #endif
@@ -98,14 +98,16 @@ namespace userstack
 
    void frame::_001OnTimer(::timer * ptimer)
    {
-      
+
       simple_frame_window::_001OnTimer(ptimer);;
 
-      UINT nIDEvent = ptimer->m_nIDEvent;
+      auto nIDEvent = ptimer->m_nIDEvent;
+
       static float theta;
+
       if(nIDEvent == 3)
       {
-         
+
       }
       else if(nIDEvent == 1000)
       {
@@ -134,7 +136,7 @@ namespace userstack
          {
             m_bHoverMouse = false;
          }
-            theta += 2.0f;
+         theta += 2.0f;
 
       }
    }
@@ -160,31 +162,31 @@ namespace userstack
       Session.m_ptCursor = pmouse->m_pt;
 //      ::aspheresp(::core::application) pappParent = &App(Application.m_pauraapp->m_pcoreapp);
 //      ::aspheresp(::core::application) papp = &Application;
-/*      if(pmouse->m_uiMessage == WM_MOUSEMOVE
-      && m_pdocument != NULL
-      && m_pdocument->m_pplatformdocument != NULL
-      && m_pdocument->m_pplatformdocument->get_platform_frame() != NULL)
-      {
-         rect rectClient;
-         GetClientRect(rectClient);
-         point pt = pmouse->m_pt;
-         ScreenToClient(&pt);
-         if(rectClient.contains(pt))
-         {
-            get_wnd()->set_capture();
-            if(!m_bMouseOver)
+      /*      if(pmouse->m_uiMessage == WM_MOUSEMOVE
+            && m_pdocument != NULL
+            && m_pdocument->m_pplatformdocument != NULL
+            && m_pdocument->m_pplatformdocument->get_platform_frame() != NULL)
             {
-               m_bMouseOver = true;
-               m_pdocument->m_pplatformdocument->get_platform_frame()->super_dock_on_bergedge();
-            }
-         }
-         else
-         {
-            get_wnd()->release_capture();
-            m_bMouseOver = false;
-            m_pdocument->m_pplatformdocument->get_platform_frame()->super_dock_on_bergedge();
-         }
-      }*/
+               rect rectClient;
+               GetClientRect(rectClient);
+               point pt = pmouse->m_pt;
+               ScreenToClient(&pt);
+               if(rectClient.contains(pt))
+               {
+                  get_wnd()->set_capture();
+                  if(!m_bMouseOver)
+                  {
+                     m_bMouseOver = true;
+                     m_pdocument->m_pplatformdocument->get_platform_frame()->super_dock_on_bergedge();
+                  }
+               }
+               else
+               {
+                  get_wnd()->release_capture();
+                  m_bMouseOver = false;
+                  m_pdocument->m_pplatformdocument->get_platform_frame()->super_dock_on_bergedge();
+               }
+            }*/
       simple_frame_window::_000OnMouse(pmouse);
    }
 
@@ -209,7 +211,7 @@ namespace userstack
    {
       if(WfiIsFullScreen())
       {
-   //      bergedge::get_app()->show_platform();
+         //      bergedge::get_app()->show_platform();
       }
       else
       {
@@ -217,10 +219,10 @@ namespace userstack
       }
    }
 
-   
+
    void frame::message_handler(::message::base * pbase)
    {
-      
+
       simple_frame_window::message_handler(pbase);
 
    }
@@ -263,7 +265,7 @@ namespace userstack
       {
          if(pbase->m_lparam == 2)
          {
-           //OnHoverAction(true);
+            //OnHoverAction(true);
             ShowWindow(SW_SHOW);
             SetWindowPos(ZORDER_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
             WfiFullScreen();
@@ -275,7 +277,7 @@ namespace userstack
             ::GetWindowRect(::GetDesktopWindow(), rect);
             point pt = rect.center();
             if(!IsWindowVisible()
-            || ::WindowFromPoint(pt) != get_safe_handle())
+                  || ::WindowFromPoint(pt) != get_safe_handle())
             {
                ShowWindow(SW_SHOW);
                SetWindowPos(ZORDER_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
@@ -291,23 +293,23 @@ namespace userstack
 #endif
          }
       }
-/*         else if(pbase->m_lparam == 1)
-         {
-            m_bTimerOn = true;
-            SetTimer(1000, 23, NULL);
-         }
-         else if(pbase->m_lparam == 0)
-         {
-            KillTimer(1000);
-            m_bTimerOn = false;
-         }
-         else if(pbase->m_lparam == 3)
-         {
-           ShowWindow(SW_HIDE);
-         }
-  */
-    /*  }
-*/
+      /*         else if(pbase->m_lparam == 1)
+               {
+                  m_bTimerOn = true;
+                  SetTimer(1000, 23, NULL);
+               }
+               else if(pbase->m_lparam == 0)
+               {
+                  KillTimer(1000);
+                  m_bTimerOn = false;
+               }
+               else if(pbase->m_lparam == 3)
+               {
+                 ShowWindow(SW_HIDE);
+               }
+        */
+      /*  }
+      */
       else if(pbase->m_wparam == 1)
       {
          pbase->set_lresult(2);
@@ -321,7 +323,7 @@ namespace userstack
          if(pbase->m_lparam == 6)
          {
             GetTopLevelFrame()->ShowWindow(SW_HIDE);
-  //          m_pwinutilview->KillTimer(21977);
+            //          m_pwinutilview->KillTimer(21977);
             __post_quit_message(36);
          }
       }
@@ -367,47 +369,47 @@ namespace userstack
       pbase->m_bRet = true;
    }
 
-      /*else if(pbase->m_wparam == 1)
+   /*else if(pbase->m_wparam == 1)
+   {
+      pbase->set_lresult(2);
+   }
+   else if(pbase->m_wparam == 2)
+   {
+      pbase->set_lresult(4);
+   }
+   else if(pbase->m_wparam == 3)
+   {
+      if(pbase->m_lparam == 6)
       {
-         pbase->set_lresult(2);
+         GetTopLevelFrame()->ShowWindow(SW_HIDE);
+         __post_quit_message(36);
       }
-      else if(pbase->m_wparam == 2)
-      {
-         pbase->set_lresult(4);
-      }
-      else if(pbase->m_wparam == 3)
-      {
-         if(pbase->m_lparam == 6)
-         {
-            GetTopLevelFrame()->ShowWindow(SW_HIDE);
-            __post_quit_message(36);
-         }
-      }
-      else if(pbase->m_wparam == 4)
-      {
-         pbase->set_lresult(5);
-      }
-      else if(pbase->m_wparam == 5)
-      {
-         pbase->set_lresult(8);
-      }
-      else if(pbase->m_wparam == 8)
-      {
-         pbase->set_lresult(11);
-      }
-      else if(pbase->m_wparam == 11)
-      {
-         pbase->set_lresult(23);
-      }
-      else if(pbase->m_wparam == 23)
-      {
-         pbase->set_lresult(33);
-      }
-      else if(pbase->m_wparam == 33)
-      {
-         pbase->set_lresult(68);
-      }
-      pbase->m_bRet = true;*/
+   }
+   else if(pbase->m_wparam == 4)
+   {
+      pbase->set_lresult(5);
+   }
+   else if(pbase->m_wparam == 5)
+   {
+      pbase->set_lresult(8);
+   }
+   else if(pbase->m_wparam == 8)
+   {
+      pbase->set_lresult(11);
+   }
+   else if(pbase->m_wparam == 11)
+   {
+      pbase->set_lresult(23);
+   }
+   else if(pbase->m_wparam == 23)
+   {
+      pbase->set_lresult(33);
+   }
+   else if(pbase->m_wparam == 33)
+   {
+      pbase->set_lresult(68);
+   }
+   pbase->m_bRet = true;*/
    //}
 
 
@@ -427,9 +429,9 @@ namespace userstack
 
          if(pmsg->message != WM_KICKIDLE)
          {
-            
+
             ::smart_pointer < ::message::base > spbase;
-            
+
             spbase = Application.get_message_base(pmsg);
 
             pre_translate_message(spbase);

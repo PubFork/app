@@ -265,6 +265,11 @@ namespace comparison
    }
 
 
+   template < >
+   inline bool ge(unsigned long ul, int i)
+   {
+      return i < 0 ? true : ul >= (unsigned long)i;
+   }
 
 
    template < >
