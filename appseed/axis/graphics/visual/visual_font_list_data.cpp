@@ -87,7 +87,7 @@ namespace visual
             continue;
 
          }
-         
+
          int iBox;
 
          if (i == m_iSel)
@@ -104,14 +104,14 @@ namespace visual
          {
             iBox = BOX;
          }
-         
+
          text_box * pbox = &m_itemptra[i]->m_box[iBox];
 
 
 
          if (!pbox->m_bOk)
          {
-            
+
             pbox->update(this, iBox, m_itemptra[i]->m_strSample);
 
          }
@@ -192,7 +192,7 @@ namespace visual
 
       }
 
-      int nextx;
+      //int nextx;
 
       index i = 0;
       index iCount = m_itema.get_count();
@@ -289,7 +289,7 @@ namespace visual
 
                      string strSample;
                      int maxarea = 0;
-                     ::draw2d::font::e_cs ecs;
+                     //::draw2d::font::e_cs ecs;
                      ::draw2d::font::e_cs ecsFound = pbox->m_font->m_ecs;
                      size sSample;
 
@@ -307,7 +307,7 @@ namespace visual
                            if (sSample.area() > maxarea)
                            {
 
-                              maxarea = sSample.area();
+                              convert(maxarea, sSample.area());
 
                               strText = strSample;
 
@@ -332,7 +332,7 @@ namespace visual
                            if (sSample.area() > maxarea)
                            {
 
-                              maxarea = sSample.area();
+                              convert(maxarea, sSample.area());
 
                               strText = strSample;
 
@@ -381,7 +381,7 @@ namespace visual
          }
 
       }
-            );
+                  );
 
       output_debug_string("End");
       /*
@@ -397,143 +397,146 @@ namespace visual
       */
 
 
-         }
+   }
 
-         void font_list_data::on_layout()
+   void font_list_data::on_layout()
+   {
+
+      synch_lock sl(m_pmutex);
+
+      string strText = m_strTextLayout;
+
+      size s;
+
+      int x = 0;
+
+      int y = 0;
+
+      int h = 0;
+
+      sl.lock();
+
+      int nextx;
+
+      for (int i = 0; i < m_itemptra.get_count(); i++)
+      {
+
+         item * pitem = m_itemptra[i];
+
+         if (pitem == NULL)
          {
 
-            synch_lock sl(m_pmutex);
+            continue;
 
-            string strText = m_strTextLayout;
+         }
 
-            size s;
+         size & s = pitem->m_box[0].m_size;
 
-            int x = 0;
+         rect & r = pitem->m_box[0].m_rect;
 
-            int y = 0;
+         nextx = x + s.cx;
 
-            int h = 0;
+         if (nextx >= m_rectClient.width())
+         {
+            x = 0;
+            nextx = s.cx;
+            y += h;
+            h = 0;
+         }
 
-            sl.lock();
+         //pgraphics->text_out(x + m_rectMargin.left,y + m_rectMargin.top,strText);
 
-            int nextx;
+         r.left = x;
+         r.top = y;
+         r.right = r.left + s.cx;
+         r.bottom = r.top + s.cy;
 
-            for (int i = 0; i < m_itemptra.get_count(); i++)
+         x = nextx;
+
+         h = MAX(h, s.cy);
+
+         for (index j = 1; j < 3; j++)
+         {
+
+            size & s2 = pitem->m_box[j].m_size;
+            rect & r2 = pitem->m_box[j].m_rect;
+
+            int dw = (s2.cx - s.cx) / 2;
+            int dh = (s2.cy - s.cy) / 2;
+
+            r2.left = r.left - dw;
+            r2.top = r.top - dh;
+            r2.right = r2.left + s2.cx;
+            r2.bottom = r2.top + s2.cy;
+
+         }
+
+      }
+
+   }
+
+
+
+
+   index font_list_data::hit_test(point pt)
+   {
+
+      synch_lock sl(m_pmutex);
+
+      for (index i = 0; i < m_itemptra.get_size(); i++)
+      {
+
+         if (m_itemptra[i] == NULL)
+         {
+
+            continue;
+
+         }
+
+         if (i == m_iSel)
+         {
+            if (m_itemptra[i]->m_box[BOX_SEL].m_rect.contains(pt))
             {
 
-               item * pitem = m_itemptra[i];
-
-               if (pitem == NULL)
-               {
-
-                  continue;
-
-               }
-
-               size & s = pitem->m_box[0].m_size;
-
-               rect & r = pitem->m_box[0].m_rect;
-
-               nextx = x + s.cx;
-
-               if (nextx >= m_rectClient.width())
-               {
-                  x = 0;
-                  nextx = s.cx;
-                  y += h;
-                  h = 0;
-               }
-
-               //pgraphics->text_out(x + m_rectMargin.left,y + m_rectMargin.top,strText);
-
-               r.left = x;
-               r.top = y;
-               r.right = r.left + s.cx;
-               r.bottom = r.top + s.cy;
-
-               x = nextx;
-
-               h = MAX(h, s.cy);
-
-               for (index j = 1; j < 3; j++)
-               {
-
-                  size & s2 = pitem->m_box[j].m_size;
-                  rect & r2 = pitem->m_box[j].m_rect;
-
-                  int dw = (s2.cx - s.cx) / 2;
-                  int dh = (s2.cy - s.cy) / 2;
-
-                  r2.left = r.left - dw;
-                  r2.top = r.top - dh;
-                  r2.right = r2.left + s2.cx;
-                  r2.bottom = r2.top + s2.cy;
-
-               }
-
+               return i;
             }
-
          }
-
-
-
-
-         index font_list_data::hit_test(point pt)
+         else if(i == m_iHover)
          {
-
-            synch_lock sl(m_pmutex);
-
-            for (index i = 0; i < m_itemptra.get_size(); i++)
+            if (m_itemptra[i]->m_box[BOX_HOVER].m_rect.contains(pt))
             {
 
-               if (m_itemptra[i] == NULL)
-               {
-
-                  continue;
-
-               }
-
-               if (i == m_iSel)
-               {
-                  if (m_itemptra[i]->m_box[BOX_SEL].m_rect.contains(pt))
-                  {
-
-                     return i;
-                  }
-               }
-               else if(i == m_iHover)
-               {
-                  if (m_itemptra[i]->m_box[BOX_HOVER].m_rect.contains(pt))
-                  {
-
-                     return i;
-                  }
-               }
-               else
-               {
-                  if (m_itemptra[i]->m_box[BOX].m_rect.contains(pt))
-                  {
-
-                     return i;
-                  }
-               }
-
+               return i;
             }
-
-            return -1;
          }
-
-
-         index font_list_data::find_name(string str)
+         else
          {
+            if (m_itemptra[i]->m_box[BOX].m_rect.contains(pt))
+            {
 
-            return m_itemptra.pred_find_first([&](item *pitem) {return pitem->m_strName.compare_ci(str) == 0;  });
-
+               return i;
+            }
          }
 
+      }
+
+      return -1;
+   }
 
 
-      } // namespace user
+   index font_list_data::find_name(string str)
+   {
+
+      return m_itemptra.pred_find_first([&](item *pitem)
+      {
+         return pitem->m_strName.compare_ci(str) == 0;
+      });
+
+   }
+
+
+
+} // namespace user
 
 
 

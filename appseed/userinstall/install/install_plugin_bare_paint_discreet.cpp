@@ -60,7 +60,7 @@ namespace hotplugin
       if (iPhase == 0 && (get_tick_count() - m_dwSync) > 1977)
       {
 
-         m_iDelta = 1984 + (get_tick_count() % ((5000) * 2));
+         m_iDelta = 2000 + (get_tick_count() % ((5000) * 2));
          m_dwSync = get_tick_count();
 
       }

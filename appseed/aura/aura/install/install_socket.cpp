@@ -156,8 +156,8 @@ namespace install
          else if (::str::begins(m_request.m_strRequestUri, "/is_user_service_installed/"))
          {
 
-            string strKey = inheader("sec-websocket-key");// 
-                                                          //string strKey = "dGhlIHNhbXBsZSBub25jZQ==";
+            string strKey = inheader("sec-websocket-key");//
+            //string strKey = "dGhlIHNhbXBsZSBub25jZQ==";
             strKey.trim();
             strKey += "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
             memory mem;
@@ -176,7 +176,7 @@ namespace install
             string strMessage = "yes_fontopus_com";
             m.allocate(strMessage.get_length() + 2);
             m.get_data()[0] = 0x81;
-            m.get_data()[1] = strMessage.get_length();
+            convert(m.get_data()[1], strMessage.get_length());
             memcpy(&m.get_data()[2], strMessage.c_str(), strMessage.get_length());
             write(m.get_data(), m.get_size());
             return;

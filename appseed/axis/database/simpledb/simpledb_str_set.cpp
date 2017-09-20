@@ -5,11 +5,11 @@
 
 class CLASS_DECL_AXIS db_str_set_item
 {
-public:
+   public:
 
 
-   uint32_t          m_dwTimeout;
-   string            m_str;
+      uint32_t          m_dwTimeout;
+      string            m_str;
 
 
 };
@@ -18,28 +18,31 @@ public:
 class CLASS_DECL_AXIS db_str_set_queue_item :
    virtual public object
 {
-public:
+   public:
 
-   string            m_strKey;
-   uint32_t          m_dwTimeout;
-   string            m_str;
-
-
-   db_str_set_queue_item() {}
-   db_str_set_queue_item(const db_str_set_queue_item & item) { operator =(item); }
-   virtual ~db_str_set_queue_item() {  }
+      string            m_strKey;
+      uint32_t          m_dwTimeout;
+      string            m_str;
 
 
-   db_str_set_queue_item & operator = (const db_str_set_queue_item & item)
-   {
-      if (this != &item)
+      db_str_set_queue_item() {}
+      db_str_set_queue_item(const db_str_set_queue_item & item)
       {
-         m_strKey = item.m_strKey;
-         m_dwTimeout = item.m_dwTimeout;
-         m_str = item.m_str;
+         operator =(item);
       }
-      return *this;
-   }
+      virtual ~db_str_set_queue_item() {  }
+
+
+      db_str_set_queue_item & operator = (const db_str_set_queue_item & item)
+      {
+         if (this != &item)
+         {
+            m_strKey = item.m_strKey;
+            m_dwTimeout = item.m_dwTimeout;
+            m_str = item.m_str;
+         }
+         return *this;
+      }
 
 
 
@@ -49,55 +52,55 @@ public:
 class CLASS_DECL_AXIS db_str_set_core :
    virtual public ::db_set
 {
-public:
+   public:
 
 
-   sockets::socket_handler                      m_handler;
-   sp(sockets::http_session)                    m_phttpsession;
-   string_map < db_str_set_item >               m_map;
-   bool                                         m_bIndexed;
-   ::simpledb::database *                          m_psimpledbUser;
-   string                                       m_strUser;
+      sockets::socket_handler                      m_handler;
+      sp(sockets::http_session)                    m_phttpsession;
+      string_map < db_str_set_item >               m_map;
+      bool                                         m_bIndexed;
+      ::simpledb::database *                          m_psimpledbUser;
+      string                                       m_strUser;
 
-   sp(class db_str_sync_queue)                    m_pqueue;
-   sqlite3_stmt *                               m_pstmtSelect;
-   sqlite3_stmt *                               m_pstmtUpdate;
-
-
+      sp(class db_str_sync_queue)                    m_pqueue;
+      sqlite3_stmt *                               m_pstmtSelect;
+      sqlite3_stmt *                               m_pstmtUpdate;
 
 
 
-   db_str_set_core(db_server * pserver) :
-      ::object(pserver->get_app()),
-      db_set(pserver, "stringtable"),
-      m_handler(get_app()),
-      m_phttpsession(NULL),
-      m_pqueue(NULL),
-      m_psimpledbUser(pserver->m_psimpledbUser),
-      m_strUser(pserver->m_strUser)
-   {
-      m_pstmtSelect = NULL;
-      m_pstmtUpdate = NULL;
-      m_ptopthis = this;
-      defer_create_mutex();
 
-   }
 
-   ~db_str_set_core()
-   {
-      if (m_pstmtSelect != NULL)
+      db_str_set_core(db_server * pserver) :
+         ::object(pserver->get_app()),
+         db_set(pserver, "stringtable"),
+         m_handler(get_app()),
+         m_phttpsession(NULL),
+         m_pqueue(NULL),
+         m_psimpledbUser(pserver->m_psimpledbUser),
+         m_strUser(pserver->m_strUser)
       {
-
-         sqlite3_finalize(m_pstmtSelect);
          m_pstmtSelect = NULL;
-      }
-      if (m_pstmtUpdate != NULL)
-      {
-
-         sqlite3_finalize(m_pstmtUpdate);
          m_pstmtUpdate = NULL;
+         m_ptopthis = this;
+         defer_create_mutex();
+
       }
-   }
+
+      ~db_str_set_core()
+      {
+         if (m_pstmtSelect != NULL)
+         {
+
+            sqlite3_finalize(m_pstmtSelect);
+            m_pstmtSelect = NULL;
+         }
+         if (m_pstmtUpdate != NULL)
+         {
+
+            sqlite3_finalize(m_pstmtUpdate);
+            m_pstmtUpdate = NULL;
+         }
+      }
 
 
 };
@@ -106,31 +109,31 @@ public:
 class CLASS_DECL_AXIS db_str_sync_queue :
    public simple_thread
 {
-public:
+   public:
 
-   mutex                                              m_mutex;
-   db_str_set *                                       m_pset;
-   sockets::socket_handler                            m_handler;
-   sp(sockets::http_session)                          m_phttpsession;
+      mutex                                              m_mutex;
+      db_str_set *                                       m_pset;
+      sockets::socket_handler                            m_handler;
+      sp(sockets::http_session)                          m_phttpsession;
 
-   smart_pointer_array < db_str_set_queue_item >      m_itema;
-
-
-   db_str_sync_queue(::aura::application * papp) :
-      ::object(papp),
-      thread(papp),
-      simple_thread(papp),
-      m_handler(papp),
-      m_mutex(papp),
-      m_phttpsession(NULL)
-   { }
-
-   virtual ~db_str_sync_queue() {}
+      smart_pointer_array < db_str_set_queue_item >      m_itema;
 
 
-   virtual int32_t run();
+      db_str_sync_queue(::aura::application * papp) :
+         ::object(papp),
+         thread(papp),
+         simple_thread(papp),
+         m_handler(papp),
+         m_mutex(papp),
+         m_phttpsession(NULL)
+      { }
 
-   void queue(const char * pszKey, const char * psz);
+      virtual ~db_str_sync_queue() {}
+
+
+      virtual int32_t run();
+
+      void queue(const char * pszKey, const char * psz);
 
 };
 
@@ -276,7 +279,7 @@ int32_t db_str_sync_queue::run()
    {
 
    }
-   
+
    ((db_str_set_core *)(m_pset->m_pcore->m_ptopthis))->m_pqueue = NULL;
 
    return 0;
@@ -371,7 +374,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
       //
       //if (&Session != NULL)
       //{
-      //   
+      //
       //   if (Session.fontopus())
       //   {
 
@@ -472,10 +475,10 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
 
          if (pdb->setErr(sqlite3_prepare_v2(
-            (sqlite3 *)pdb->getHandle(),
-            "select value FROM stringtable WHERE id = :id;",
-            -1,
-            &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
+                            (sqlite3 *)pdb->getHandle(),
+                            "select value FROM stringtable WHERE id = :id;",
+                            -1,
+                            &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
          {
 
             return false;
@@ -495,7 +498,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
       if (index == 0)
          return false;
 
-      int res = sqlite3_bind_text(pcore->m_pstmtSelect, index, strKey, strKey.get_length(), SQLITE_TRANSIENT);
+      int res = sqlite3_bind_text(pcore->m_pstmtSelect, index, strKey, convert < int > (strKey.get_length()), SQLITE_TRANSIENT);
       if (res != SQLITE_OK)
          return false;
 
@@ -612,12 +615,12 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             {
 
                if (pdb->setErr(
-                  sqlite3_prepare_v2(
-                  (sqlite3 *)pdb->getHandle(),
-                     "UPDATE stringtable SET value = :val WHERE id = :id;",
-                     -1,
-                     &pcore->m_pstmtUpdate,
-                     NULL)) != SQLITE_OK)
+                        sqlite3_prepare_v2(
+                           (sqlite3 *)pdb->getHandle(),
+                           "UPDATE stringtable SET value = :val WHERE id = :id;",
+                           -1,
+                           &pcore->m_pstmtUpdate,
+                           NULL)) != SQLITE_OK)
                {
 
                   return false;
@@ -639,7 +642,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             if (index == 0)
                return false;
 
-            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strValue, strValue.get_length(), SQLITE_TRANSIENT);
+            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strValue, convert < int > (strValue.get_length()), SQLITE_TRANSIENT);
             if (res != SQLITE_OK)
                return false;
 
@@ -647,7 +650,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             if (index == 0)
                return false;
 
-            res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strKey, strKey.get_length(), SQLITE_TRANSIENT);
+            res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strKey, convert < int > (strKey.get_length()), SQLITE_TRANSIENT);
             if (res != SQLITE_OK)
                return false;
 

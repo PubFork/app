@@ -99,7 +99,7 @@ namespace message
 
       pmessage->m_psender = this;
 
-      for(;pmessage->m_iRouteIndex >= 0; pmessage->m_iRouteIndex--)
+      for(; pmessage->m_iRouteIndex >= 0; pmessage->m_iRouteIndex--)
       {
 
          pmessage->route_message();
@@ -125,11 +125,11 @@ namespace message
       {
 
          id_route_array.m_element2.pred_each([=](auto & pitem)
-                                               {
+         {
 
-                                                  pitem->m_preceiver->m_sendera.remove(this);
+            pitem->m_preceiver->m_sendera.remove(this);
 
-                                               });
+         });
 
       }
 
@@ -159,15 +159,16 @@ namespace message
          return PrototypeNotify;
 #endif
       case WM_COMMAND:
-      {
-         switch (uiCode)
-         {
-         //case CN_UPDATE_::user::command:
-           // return PrototypeUpdateCommandUserInterface;
-         default:
-            return PrototypeCommand;
-         }
-      }
+         return PrototypeCommand;
+      //{
+      //switch (uiCode)
+      //{
+      //case CN_UPDATE_::user::command:
+      //    return PrototypeUpdateCommandUserInterface;
+      //default:
+      //return PrototypeCommand;
+      //}
+      //}
       case WM_MOUSEMOVE:
       case WM_LBUTTONDOWN:
       case WM_LBUTTONUP:
@@ -212,13 +213,13 @@ namespace message
          return PrototypeShowWindow;
       case WM_INITMENUPOPUP:
          return PrototypeInitMenuPopup;
-         /*#ifdef WINDOWS
-         case WM_CTLCOLOR:
-         if(pba)
-         return PrototypeCtlColor;
-         case WM_CTLCOLOR + WM_REFLECT_AXIS:
-         return PrototypeCtlColorReflect;
-         #endif*/
+      /*#ifdef WINDOWS
+      case WM_CTLCOLOR:
+      if(pba)
+      return PrototypeCtlColor;
+      case WM_CTLCOLOR + WM_REFLECT_AXIS:
+      return PrototypeCtlColorReflect;
+      #endif*/
       case WM_SETFOCUS:
          return PrototypeSetFocus;
       case WM_WINDOWPOSCHANGING:

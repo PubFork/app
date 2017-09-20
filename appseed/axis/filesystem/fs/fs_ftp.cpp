@@ -73,7 +73,7 @@ bool ftpfs::has_subdir(const ::file::path & path)
 {
 
    ::file::path & path = listing[listing.add("ftp://")];
-   
+
    UNUSED(path);
 
    listing.m_straTitle.add("FTP sites");
@@ -252,7 +252,7 @@ retry:
 
 int ftpfs::is_dir(const ::file::path & path)
 {
-   
+
    //xml::node node(get_app());
 
    if (path.is_empty())
@@ -282,7 +282,7 @@ int ftpfs::is_dir(const ::file::path & path)
       return 1;
 
    }
-   
+
    string strPath = path;
 
    if (::str::begins_eat_ci(strPath, "ftp://"))
@@ -316,7 +316,7 @@ int ftpfs::is_dir(const ::file::path & path)
       listing.ls(path.folder());
    }
 
-   int iFind = dir.name_find_first_ci(path.name());
+   auto iFind = dir.name_find_first_ci(path.name());
 
    if (iFind < 0)
    {
@@ -363,7 +363,7 @@ bool ftpfs::file_move(const ::file::path & pszDst, const ::file::path & pszSrc)
 
       int iTry = 0;
 
-   retry:
+retry:
 
       defer_initialize(&pclient, path);
 
@@ -488,11 +488,11 @@ void ftpfs::defer_initialize(::ftp::client_socket ** ppclient, string strPath)
    if (client->m_estate == ::ftp::client_socket::state_initial || !client->IsConnected())
    {
 
-   retry:
+retry:
 
       Application.fontopus_get_cred(get_app(), strUrl, ::null_rect(), logon.Username(), logon.Password(), strToken, strUrl, true, NULL);
 
-      retry_login:
+retry_login:
 
       if (!client->Login(logon))
       {

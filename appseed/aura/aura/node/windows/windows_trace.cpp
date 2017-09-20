@@ -201,7 +201,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // DDE special case
 
-static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
+void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 {
    ENSURE_ARG(pMsg != NULL);
    if (pMsg->message == WM_DDE_EXECUTE)
@@ -209,10 +209,10 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       uint_ptr nDummy;
       HGLOBAL hCommands;
       if (!UnpackDDElParam(WM_DDE_EXECUTE, pMsg->lParam,
-         &nDummy, (uint_ptr*)&hCommands))
+                           &nDummy, (uint_ptr*)&hCommands))
       {
 //         ::output_debug_string(::aura::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_EXECUTE lParam %08lX.\n",
-  //          pMsg->lParam);
+         //          pMsg->lParam);
          return;
       }
       ASSERT(hCommands != NULL);
@@ -228,11 +228,11 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ATOM aItem;
       HGLOBAL hAdvise;
       if (!UnpackDDElParam(WM_DDE_ADVISE, pMsg->lParam,
-         (uint_ptr*)&hAdvise, &nItem))
+                           (uint_ptr*)&hAdvise, &nItem))
       {
 //         ::output_debug_string(::aura::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_ADVISE lParam %08lX.\n",
 //            pMsg->lParam);
-       return;
+         return;
       }
       aItem = (ATOM)nItem;
       ASSERT(aItem != NULL);
@@ -252,7 +252,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
             ((UINT)lpAdvise->cfFormat <= (UINT)0xFFFF))
       {
          ::GetClipboardFormatName(lpAdvise->cfFormat,
-            szFormat, _countof(szFormat));
+                                  szFormat, _countof(szFormat));
 
          // User defined clipboard formats have a range of 0xC000->0xFFFF
          // System clipboard formats have other ranges, but no printable
@@ -261,7 +261,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 
       __trace(
          "%s: Advise item='%s', Format='%s', Ack=%d, Defer Update= %d\n",
-          lpszPrefix, szItem, szFormat, lpAdvise->fAckReq,
+         lpszPrefix, szItem, szFormat, lpAdvise->fAckReq,
          lpAdvise->fDeferUpd);
       ::GlobalUnlock(hAdvise);
    }

@@ -23,26 +23,29 @@ void SSL_init_app_data2_3_idx(void)
 {
    int i;
 
-   if (SSL_app_data2_idx > -1) {
+   if (SSL_app_data2_idx > -1)
+   {
       return;
    }
 
    /* we _do_ need to call this twice */
-   for (i = 0; i <= 1; i++) {
+   for (i = 0; i <= 1; i++)
+   {
       SSL_app_data2_idx =
          SSL_get_ex_new_index(0,
-            (void *) "Second Application Data for SSL",
-            NULL, NULL, NULL);
+                              (void *) "Second Application Data for SSL",
+                              NULL, NULL, NULL);
    }
 
-   if (SSL_app_data3_idx > -1) {
+   if (SSL_app_data3_idx > -1)
+   {
       return;
    }
 
    SSL_app_data3_idx =
       SSL_get_ex_new_index(0,
-         (void *) "Third Application Data for SSL",
-         NULL, NULL, NULL);
+                           (void *) "Third Application Data for SSL",
+                           NULL, NULL, NULL);
 
 }
 void *SSL_get_app_data2(SSL *ssl)
@@ -90,13 +93,17 @@ static int find_session_key(::sockets::tcp_socket *c, unsigned char key_name[16]
    return result;
 }
 
-static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16], unsigned char *iv, EVP_CIPHER_CTX *ctx, HMAC_CTX *hctx, int enc) {
+static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16], unsigned char *iv, EVP_CIPHER_CTX *ctx, HMAC_CTX *hctx, int enc)
+{
    ::sockets::tcp_socket *c = (::sockets::tcp_socket *) SSL_get_app_data2(s);
    ssl_ticket_key key;
    int is_current_key;
-   if (enc) { /* create new session */
-      if (current_session_key(c, &key)) {
-         if (RAND_bytes(iv, EVP_MAX_IV_LENGTH) <= 0) {
+   if (enc)   /* create new session */
+   {
+      if (current_session_key(c, &key))
+      {
+         if (RAND_bytes(iv, EVP_MAX_IV_LENGTH) <= 0)
+         {
             return -1; /* insufficient random */
          }
          memcpy(key_name, key.key_name, 16);
@@ -107,11 +114,14 @@ static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16], unsigned
       // No ticket configured
       return 0;
    }
-   else { /* retrieve session */
-      if (find_session_key(c, key_name, &key, &is_current_key)) {
+   else   /* retrieve session */
+   {
+      if (find_session_key(c, key_name, &key, &is_current_key))
+      {
          HMAC_Init_ex(hctx, key.hmac_key, 16, EVP_sha256(), NULL);
          EVP_DecryptInit_ex(ctx, EVP_aes_128_cbc(), NULL, key.aes_key, iv);
-         if (!is_current_key) {
+         if (!is_current_key)
+         {
             return 2;
          }
          return 1;
@@ -122,12 +132,12 @@ static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16], unsigned
 }
 
 #ifndef ETIMEDOUT
-   #define ETIMEDOUT       138
+#define ETIMEDOUT       138
 #endif
 
 #if defined(LINUX)
-   #include <signal.h>
-   #include <unistd.h>
+#include <signal.h>
+#include <unistd.h>
 #endif
 
 
@@ -157,7 +167,7 @@ namespace sockets
 
 // thanks, q
 #ifdef _MSC_VER
-   #pragma warning(disable:4355)
+#pragma warning(disable:4355)
 #endif
    tcp_socket::tcp_socket(base_socket_handler& h):
       object(h.get_app()),
@@ -184,12 +194,12 @@ namespace sockets
       //m_pmutexSslCtx = NULL;
    }
 #ifdef _MSC_VER
-   #pragma warning(default:4355)
+#pragma warning(default:4355)
 #endif
 
 
 #ifdef _MSC_VER
-   #pragma warning(disable:4355)
+#pragma warning(disable:4355)
 #endif
    tcp_socket::tcp_socket(base_socket_handler& h,size_t isize,size_t osize):
       object(h.get_app()),
@@ -217,7 +227,7 @@ namespace sockets
       UNREFERENCED_PARAMETER(osize);
    }
 #ifdef _MSC_VER
-   #pragma warning(default:4355)
+#pragma warning(default:4355)
 #endif
 
 
@@ -422,7 +432,7 @@ namespace sockets
                goto ipv4_try;;
             return true;
          }
-         ipv4_try:
+ipv4_try:
          {
             in_addr l;
             if (!Session.sockets().net().convert(l, host))
@@ -804,7 +814,8 @@ namespace sockets
                }
             }
          }
-      } while(repeat);
+      }
+      while(repeat);
 
       if(m_transfer_limit && sz > m_transfer_limit && GetOutputLength() < m_transfer_limit)
       {
@@ -941,7 +952,7 @@ namespace sockets
 
       m_output_length += len;
 
-      while(ptr < len)
+      while(::comparison::lt(ptr, len))
       {
          // buf/len => pbuf/sz
          int32_t space = 0;
@@ -1181,15 +1192,15 @@ namespace sockets
       //}
 
 //      if(!m_ssl_ctx)
-  //    {
+      //    {
 
       int iError = 0;
 
-      retry_init_ssl_client:
+//retry_init_ssl_client:
 
-         InitSSLClient();
+      InitSSLClient();
 
-    //  }
+      //  }
 
       //slMap.unlock();
 
@@ -1315,7 +1326,7 @@ namespace sockets
 
       if(!IsSSLServer()) // client
       {
-         
+
          TRACE("SSL_connect!!");
 
          if (m_bReuseSession && !m_bClientSessionSet && m_ssl_session != NULL)
@@ -1398,9 +1409,9 @@ namespace sockets
             }
             log("SSLNegotiate/SSL_connect",0,"Connection established",::aura::log::level_info);
 //            if(m_spsslclientcontext->m_psession == NULL)
-  //          {
-    //           m_spsslclientcontext->m_psession = SSL_get1_session(m_ssl);
-      //      }
+            //          {
+            //           m_spsslclientcontext->m_psession = SSL_get1_session(m_ssl);
+            //      }
 
             return true;
          }
@@ -1416,15 +1427,15 @@ namespace sockets
 
             //if(m_spsslclientcontext.is_set() &&
             if (m_ssl_ctx != NULL &&
-               iErrorSsl == SSL_ERROR_ZERO_RETURN
-               && (m_ssl_method == TLS_client_method()))
+                  iErrorSsl == SSL_ERROR_ZERO_RETURN
+                  && (m_ssl_method == TLS_client_method()))
             {
-               
+
                TRACE("ssl_error_zero_return");
 
             }
 
-            else 
+            else
             {
 
                if (m_bReuseSession)
@@ -1636,7 +1647,7 @@ namespace sockets
       SSL_CTX_set_mode(m_ssl_ctx, SSL_MODE_AUTO_RETRY);
       // session id
       if (context.get_length())
-          SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
+         SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)(const  char *)context, (uint32_t)context.get_length());
       else
          SSL_CTX_set_session_id_context(m_ssl_ctx, (const uchar *)"--is_empty--", 9);
 
@@ -1703,7 +1714,8 @@ namespace sockets
          int cnt = sizeof(Session.sockets().m_baTicketKey) / SSL_SESSION_TICKET_KEY_SIZE;
          m_ticketkeya.set_size(cnt);
          int j;
-         for (i = 0; i < cnt; ++i) {
+         for (i = 0; i < cnt; ++i)
+         {
             j = (SSL_SESSION_TICKET_KEY_SIZE * i);
             memcpy(m_ticketkeya[i].key_name, Session.sockets().m_baTicketKey + j, 16);
             memcpy(m_ticketkeya[i].hmac_key, Session.sockets().m_baTicketKey + j + 16, 16);
@@ -1808,10 +1820,10 @@ namespace sockets
 
 
       if(m_bReuseSession
-        && m_spsslclientcontext.is_set()
-        && m_spsslclientcontext->m_pcontext != NULL
-        && m_spsslclientcontext->m_psession != NULL
-        && m_spsslclientcontext->m_pmethod != NULL)
+            && m_spsslclientcontext.is_set()
+            && m_spsslclientcontext->m_pcontext != NULL
+            && m_spsslclientcontext->m_psession != NULL
+            && m_spsslclientcontext->m_pmethod != NULL)
       {
 
          ssl_client_context_map & clientcontextmap = Session.sockets().m_clientcontextmap;
@@ -1855,7 +1867,7 @@ namespace sockets
 
       if(m_ssl)
       {
-         
+
          SSL_free(m_ssl);
 
          m_ssl = NULL;
@@ -2184,14 +2196,16 @@ namespace sockets
             STACK_OF(GENERAL_NAME) *san_names = NULL;
             // Try to extract the names within the SAN extension from the certificate
             san_names = (STACK_OF(GENERAL_NAME) *) X509_get_ext_d2i((X509 *)cert, NID_subject_alt_name, NULL, NULL);
-            if (san_names == NULL) {
+            if (san_names == NULL)
+            {
             }
             else
             {
                san_names_nb = sk_GENERAL_NAME_num(san_names);
 
                // Check each name within the extension
-               for (i = 0; i < san_names_nb; i++) {
+               for (i = 0; i < san_names_nb; i++)
+               {
                   const GENERAL_NAME *current_name = sk_GENERAL_NAME_value(san_names, i);
 
                   if (current_name->type == GEN_DNS)
@@ -2206,8 +2220,8 @@ namespace sockets
 
                      if(strDnsName.compare_ci(common_name) == 0)
                      {
-                           ok = true;
-                           break;
+                        ok = true;
+                        break;
 
                      }
 
@@ -2256,7 +2270,7 @@ namespace sockets
 
    }
 
-   
+
 
 
 } // namespace sockets

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -10,7 +10,7 @@ namespace user
    {
 
       //set_user_schema(schema_button);
-      
+
    }
 
 
@@ -18,7 +18,7 @@ namespace user
       object(papp),
       ::user::interaction(papp)
    {
-      
+
       //set_user_schema(schema_button);
 
       m_estockicon      = stock_icon_none;
@@ -97,7 +97,7 @@ namespace user
       else
       {
 
-         
+
 
          string strText;
 
@@ -137,9 +137,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover, this));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_hover));
 
-               pgraphics->set_text_color(_001GetColor(color_button_text_hover, this));
+               pgraphics->set_text_color(_001GetColor(color_button_text_hover));
 
             }
             else
@@ -149,9 +149,9 @@ namespace user
 
                //rectClient.deflate(1,1);
 
-               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal, this));
+               pgraphics->FillSolidRect(rectClient, _001GetColor(color_button_background_normal));
 
-               pgraphics->set_text_color(_001GetColor(color_button_text_normal, this));
+               pgraphics->set_text_color(_001GetColor(color_button_text_normal));
 
             }
 
@@ -198,7 +198,7 @@ namespace user
 
    void button::_001OnLButtonDown(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse,pmouse,pobj);
 
       pobj->previous();
@@ -221,10 +221,10 @@ namespace user
 
    }
 
-   
+
    void button::_001OnMButtonDown(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
       pobj->previous();
@@ -246,14 +246,14 @@ namespace user
       }
 
    }
-   
-   
+
+
    void button::_001OnMButtonUp(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
-       pobj->previous();
+      pobj->previous();
 
       e_element eelement;
 
@@ -296,7 +296,7 @@ namespace user
          Session.m_puiLastLButtonDown = NULL;
 
 
-         pobj->m_bRet = _001OnClick(pmouse->m_ulFlags, pt);
+         pobj->m_bRet = _001OnClick(pmouse->m_nFlags, pt);
          if (pobj->m_bRet)
          {
             pmouse->set_lresult(1);
@@ -439,19 +439,19 @@ namespace user
       if(m_estyle == style_simple)
       {
 
-            ::draw2d::memory_graphics pgraphics(allocer());
+         ::draw2d::memory_graphics pgraphics(allocer());
 
-            select_font(pgraphics, font_button);
+         select_font(pgraphics, font_button);
 
-            string str;
-            get_window_text(str);
-            size size = pgraphics->GetTextExtent(str);
+         string str;
+         get_window_text(str);
+         size size = pgraphics->GetTextExtent(str);
 
-            rect rect(0,0,0,0);
-            rect.right = size.cx + 4;
-            rect.bottom = size.cy + 4;
+         rect rect(0,0,0,0);
+         convert(rect.right, size.cx * 1.6);
+         convert(rect.bottom, size.cy * 1.4);
 
-            SetWindowPos(0,0,0,rect.width(),rect.height(),SWP_NOMOVE);
+         SetWindowPos(0,0,0,rect.width(),rect.height(),SWP_NOMOVE);
 
 
       }
@@ -468,9 +468,9 @@ namespace user
 
          ::size sizeTotal = calc_text_size();
 
-         sizeTotal.cx += 10 * 2;
+         convert_multiply(sizeTotal.cx, 1.6);
 
-         sizeTotal.cy += 5 * 2;
+         convert_multiply(sizeTotal.cy, 1.4);
 
          SetWindowPos(0,0,0,sizeTotal.cx,sizeTotal.cy,SWP_NOMOVE);
 
@@ -507,7 +507,7 @@ namespace user
    {
 
       UNREFERENCED_PARAMETER(pobj);
-      
+
       if(m_estyle == style_none)
       {
 
@@ -559,7 +559,7 @@ namespace user
       if(m_puserstyle == NULL)
          return;
 
-      
+
 
       rect rectClient;
 
@@ -616,10 +616,12 @@ namespace user
       {
          crBorder = ARGB(255, 10, 10, 100);
       }
-      
-      if(has_flag(flag_border))
+
+      if(_001GetFlag(flag_border))
       {
+
          pgraphics->Draw3dRect(rectClient, crBorder, crBorder);
+
       }
 
 //      pgraphics->SetBkMode(TRANSPARENT);
@@ -741,7 +743,7 @@ namespace user
    void button::_001OnDrawPush(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       //   int32_t iOriginalBkMode = pgraphics->GetBkMode();
       //   pgraphics->SetBkMode(TRANSPARENT);
@@ -1014,27 +1016,27 @@ namespace user
 
 
    void button::pre_translate_message(::message::message * pobj)
-      {
+   {
 
-         // Relay events from this button to the tool tip tool handler
-         BaseToolTipRelayEvent(pobj);
+      // Relay events from this button to the tool tip tool handler
+      BaseToolTipRelayEvent(pobj);
 
-         return ::user::control::pre_translate_message(pobj);
+      return ::user::control::pre_translate_message(pobj);
 
-      }
+   }
 
 
-      void button::BaseToolTipGetRect(LPRECT lprect)
-      {
-         // use window client rect as the tool rect
-         GetClientRect(lprect);
-      }
+   void button::BaseToolTipGetRect(LPRECT lprect)
+   {
+      // use window client rect as the tool rect
+      GetClientRect(lprect);
+   }
 
-      int32_t button::BaseToolTipGetIndex()
-      {
-         // use window dialog control id as the index
-         return (int32_t)GetDlgCtrlId();
-      }
+   int32_t button::BaseToolTipGetIndex()
+   {
+      // use window dialog control id as the index
+      return (int32_t)GetDlgCtrlId();
+   }
 
 
 
@@ -1047,7 +1049,7 @@ namespace user
       bool bItemHover;
       bool bSubItemHover;
 
-      
+
 
       ::aura::draw_context * pdrawcontext = pgraphics->::core::simple_chain < ::aura::draw_context >::get_last();
 

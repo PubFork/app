@@ -36,23 +36,23 @@ namespace install
    {
 
       dir::mk(dir::element());
-      
+
       if (m_file != NULL)
       {
 
          string str2 = "ensure_trace_file";
-         
-         DWORD dwWritten = fwrite(str2, 1, str2.length(), m_file);
-         
+
+         auto dwWritten = fwrite(str2, 1, str2.length(), m_file);
+
          if (dwWritten == str2.length())
          {
-            
+
             ::fflush(m_file);
-            
+
             return;
-            
+
          }
-         
+
       }
 
       // _SH_DENYNO
@@ -148,9 +148,9 @@ namespace install
 //         DWORD dwWritten;
 //         ::SetFilePointer(m_hfile, 0, NULL, SEEK_END);
          //WriteFile(m_hfile, str2, (uint32_t)str2.length(), &dwWritten, NULL);
-         
+
          fwrite(str2, 1, str2.length(), m_file);
-         
+
          fflush(m_file);
 
       }

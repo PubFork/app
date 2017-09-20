@@ -12,8 +12,8 @@ namespace prompt
    {
 
       m_pimagelist = NULL;
-      
-      
+
+
       m_bTimerHide = false;
 
       WfiEnableFullScreen();
@@ -29,29 +29,33 @@ namespace prompt
    }
 
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void frame::assert_valid() const
    {
-	   simple_frame_window::assert_valid();
+      simple_frame_window::assert_valid();
    }
 
    void frame::dump(dump_context & dumpcontext) const
    {
-	   simple_frame_window::dump(dumpcontext);
+      simple_frame_window::dump(dumpcontext);
    }
 
 
-   #endif //DEBUG
+#endif //DEBUG
 
 
    void frame::_001OnTimer(::timer * ptimer)
    {
+
       simple_frame_window::_001OnTimer(ptimer);;
-      UINT nIDEvent = ptimer->m_nIDEvent;
+
+      auto nIDEvent = ptimer->m_nIDEvent;
+
       static float theta;
+
       if(nIDEvent == 3)
       {
-         
+
       }
       else if(nIDEvent == 1000)
       {
@@ -89,20 +93,20 @@ namespace prompt
       // every 100 ms approximately
       else if(nIDEvent == 4033)
       {
-   /*      rect rectWindow;
-         GetWindowRect(rectWindow);
-         point pt;
-         Session.get_cursor_pos(&pt);
-         if(!rectWindow.contains(pt) && !m_bTimerHide)
-         {
-            m_bTimerHide = true;
-            SetTimer(1001, 800, NULL);
-         }
-         else
-         {
-            m_bTimerHide = false;
-            KillTimer(1001);
-         }*/
+         /*      rect rectWindow;
+               GetWindowRect(rectWindow);
+               point pt;
+               Session.get_cursor_pos(&pt);
+               if(!rectWindow.contains(pt) && !m_bTimerHide)
+               {
+                  m_bTimerHide = true;
+                  SetTimer(1001, 800, NULL);
+               }
+               else
+               {
+                  m_bTimerHide = false;
+                  KillTimer(1001);
+               }*/
          /*point pt;
          if(m_bHoverMouse && get_tick_count() > m_dwLastHover + 300)
          {
@@ -122,26 +126,26 @@ namespace prompt
             }
 
          }*/
-   // OpenGL animation code goes here
+         // OpenGL animation code goes here
 
-			   //glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-			   //glClear( GL_COLOR_BUFFER_BIT );
+         //glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+         //glClear( GL_COLOR_BUFFER_BIT );
 
-			   /*glPushMatrix();
-			   glRotatef( theta, 0.0f, 1.0f, 1.0f );
-			   glBegin( GL_TRIANGLES );
-			   glColor3f( 1.0f, 0.0f, 0.0f ); glVertgenf( 0.0f, 1.0f );
-			   glColor3f( 0.0f, 1.0f, 0.0f ); glVertgenf( 0.87f, -0.5f );
-			   glColor3f( 0.0f, 0.0f, 1.0f ); glVertgenf( -0.87f, -0.5f );
-			   glEnd();
-			   glPopMatrix();*/
+         /*glPushMatrix();
+         glRotatef( theta, 0.0f, 1.0f, 1.0f );
+         glBegin( GL_TRIANGLES );
+         glColor3f( 1.0f, 0.0f, 0.0f ); glVertgenf( 0.0f, 1.0f );
+         glColor3f( 0.0f, 1.0f, 0.0f ); glVertgenf( 0.87f, -0.5f );
+         glColor3f( 0.0f, 0.0f, 1.0f ); glVertgenf( -0.87f, -0.5f );
+         glEnd();
+         glPopMatrix();*/
 
-			   //SwapBuffers( m_hdcOpenGL );
+         //SwapBuffers( m_hdcOpenGL );
 
-			   theta += 2.0f;
+         theta += 2.0f;
 
       }
-   //	simple_frame_window::OnTimer(nIDEvent);
+      // simple_frame_window::OnTimer(nIDEvent);
    }
 
 
@@ -157,11 +161,11 @@ namespace prompt
          nShow = SW_HIDE;
       }
 
-   /*   m_toolbar.ShowWindow(nShow);
-      m_toolbarView.ShowWindow(nShow);
-   //   m_statusbar.ShowWindow(nShow);
-      m_menubar.ShowWindow(nShow);
-      m_dialogbar.ShowWindow(nShow);*/
+      /*   m_toolbar.ShowWindow(nShow);
+         m_toolbarView.ShowWindow(nShow);
+      //   m_statusbar.ShowWindow(nShow);
+         m_menubar.ShowWindow(nShow);
+         m_dialogbar.ShowWindow(nShow);*/
 
    }
 
@@ -199,10 +203,10 @@ namespace prompt
       simple_frame_window::install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
       IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &frame::_001OnClose);
-//      
+//
       IGUI_MSG_LINK(WM_MOVE, pinterface, this, &frame::_001OnMove);
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &frame::_001OnShowWindow);
-      IGUI_MSG_LINK(WM_APP + 2000  , pinterface, this, &frame::_001OnApp2000);
+      IGUI_MSG_LINK(WM_APP + 2000, pinterface, this, &frame::_001OnApp2000);
    }
 
    void frame::_001OnCreate(::message::message * pobj)
@@ -237,13 +241,13 @@ namespace prompt
 
 
 
-	   if (!LoadToolBar(0,"command\\toolbar.xml") )
-	   {
-		   pcreate->failed("Failed to create toolbar\n");
+      if (!LoadToolBar(0,"command\\toolbar.xml") )
+      {
+         pcreate->failed("Failed to create toolbar\n");
          pcreate->set_lresult(-1);
          pcreate->m_bRet = true;
          return;
-	   }
+      }
 
       if(!m_spqueue->create_message_queue("::ca2::fontopus::message_wnd::command", this))
       {
@@ -423,9 +427,9 @@ namespace prompt
 
       if(pcommand->m_id == "app_exit")
       {
-         
+
          simple_frame_window::OnClose();
-         
+
          pcommand->m_bRet = true;
 
          return;
@@ -439,14 +443,14 @@ namespace prompt
 
    void frame::on_command_probe(::user::command * pcommand)
    {
-      
+
       if(pcommand->m_id == "app_exit")
       {
-         
+
          pcommand->Enable();
-         
+
          pcommand->m_bRet = true;
-         
+
          return;
 
       }

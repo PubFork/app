@@ -121,6 +121,8 @@ namespace user
 
 
       virtual void defer_close();
+
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
       
    };
 

@@ -499,7 +499,7 @@ namespace music
              mmrc = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
              if(mmrc != ::multimedia::result_success)
              return;
-             Sleep(284);
+             Sleep(300);
              const uchar gmModeOn[] = {
              //        0x00, 0x00, 0x00, 0x00,
              //        0x00, 0x00, 0x00, 0x00,
@@ -528,7 +528,7 @@ namespace music
              if(mmrc != ::multimedia::result_success)
              goto End;
              mmrc = midiOutLongMsg( hmidiout, lpmh, sizeof(MIDIHDR));
-             Sleep(284);
+             Sleep(300);
              mmrc = midiOutUnprepareHeader( hmidiout, lpmh, sizeof(MIDIHDR));
              if(mmrc != ::multimedia::result_success)
              goto End;

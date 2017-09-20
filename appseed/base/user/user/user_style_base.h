@@ -26,7 +26,7 @@ namespace user
       ///virtual sp(style) & operator[](e_style estyle) = 0;
       
       
-      virtual ::user::interaction * create_menu_button() = 0;
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) = 0;
       virtual bool prepare_menu(::user::menu_item * pitem) = 0;
       virtual bool prepare_menu_button(::user::menu_item * pitem) = 0;
       
@@ -44,12 +44,13 @@ namespace user
       virtual bool _001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar) = 0;
       
       
-      virtual bool get_color(COLORREF & cr,e_color ecolor, ::user::interaction * pui) = 0;
-      virtual bool get_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui) = 0;
-      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui) = 0;
-      virtual bool has_flag(::user::e_flag eflag, ::user::interaction * pui) = 0;
-      virtual rect get_rect(::user::e_rect erect, ::user::interaction * pui) = 0;
-      virtual int get_int(::user::e_int eint, ::user::interaction * pui) = 0;
+      virtual bool get_color(COLORREF & cr,e_color ecolor, ::user::interaction * pui);
+      virtual bool get_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui);
+      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui);
+      virtual bool get_flag(bool & bSet, ::user::e_flag eflag, ::user::interaction * pui);
+      virtual bool get_rect(RECT & rect, ::user::e_rect erect, ::user::interaction * pui);
+      virtual bool get_int(int & i, ::user::e_int eint, ::user::interaction * pui);
+      virtual bool get_double(double & d, ::user::e_double edouble, ::user::interaction * pui);
 
       virtual e_schema get_user_style() = 0;
       

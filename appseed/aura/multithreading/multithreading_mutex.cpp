@@ -1522,7 +1522,7 @@ void wait_until_mutex_does_not_exist(const char * pszName)
 
          delete pmutex;
 
-         Sleep(184);
+         Sleep(200);
 
          pmutex = new mutex(get_thread_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 

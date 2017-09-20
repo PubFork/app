@@ -197,9 +197,11 @@ bool compress_department::uncompress(memory & dest, memory & memory)
 
       dest.allocate(memory.get_size() * 10);
 
-      uLong l = dest.get_size();
+      uLong l;
 
-      int i = ::uncompress(dest.get_data(), &l, memory.get_data(), memory.get_size());
+      convert(l, dest.get_size());
+
+      int i = ::uncompress(dest.get_data(), &l, memory.get_data(), convert < uLong > (memory.get_size()));
 
       if (i == Z_OK)
       {

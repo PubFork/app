@@ -2,7 +2,7 @@
 // Multipage functions demonstration
 //
 // Design and implementation by
-// - Herv� Drolon
+// - Hervé Drolon
 //
 // This file is part of FreeImage 3
 //

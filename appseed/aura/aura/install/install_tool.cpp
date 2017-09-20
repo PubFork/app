@@ -284,7 +284,8 @@ namespace install
             output_debug_string(" from " + str::from(straPath.size()));
             output_debug_string("\r\n");
 
-            int iMax = MAX(straMd5.size(), straPath.size());
+            auto iMax = MAX(straMd5.size(), straPath.size());
+
             for (index i = 0; i < iMax; i++)
             {
 
@@ -434,7 +435,7 @@ namespace install
       }
 
       ::CloseHandle(sei.hProcess);
-      
+
    }
 
 #endif

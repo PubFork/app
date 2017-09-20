@@ -59,7 +59,7 @@ namespace visual
 // Thank you Microsoft!!
 // Thank you Pappi!! Pelo passeio no Mercado Municipal de Curitiba com a Mummi e pelo almoÁo com o-bento de sushi e onigiri delicioso!!
 // Obrigado Mummi por tudo!! E por hoje tambÈm e por propiciar isso tudo!! Por falar t„o profundamente do Chico Xavier mesmo com muitas d˙vidas minhas!!
-// Obrigado Carlos!! VocÍ poderia colaborar, n„o È!!
+// Obrigado Carlos!! VocÅEpoderia colaborar, n„o ÅE!
 // Meu Deus me ajude!!
 
 CLASS_DECL_AURA HBITMAP CreateAlphaBitmapV5(::draw2d::dib * pdib);

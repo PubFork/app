@@ -5,7 +5,7 @@
 template < class T >
 class static_numeric_info
 {
-public:
+   public:
 
 }; // numeric_info
 
@@ -15,10 +15,10 @@ public:
 template <>
 class CLASS_DECL_AURA static_numeric_info < uint32_t >
 {
-public:
+   public:
 
-   static const bool is_signed = false;
-   static const bool is_integer = true;
+      static const bool is_signed = false;
+      static const bool is_integer = true;
 
 }; // numeric_info
 
@@ -27,10 +27,10 @@ public:
 template <>
 class CLASS_DECL_AURA static_numeric_info < uint64_t >
 {
-public:
+   public:
 
-   static const bool is_signed = false;
-   static const bool is_integer = true;
+      static const bool is_signed = false;
+      static const bool is_integer = true;
 
 }; // numeric_info
 
@@ -40,12 +40,16 @@ public:
 template <>
 class CLASS_DECL_AURA static_numeric_info < long unsigned int >
 {
-public:
+   public:
 
-   static const bool is_signed = false;
-   static const bool is_integer = true;
+      static const bool is_signed = false;
+      static const bool is_integer = true;
 
 }; // numeric_info
 
 
 #endif
+
+
+
+

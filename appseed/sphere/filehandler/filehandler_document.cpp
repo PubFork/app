@@ -19,13 +19,13 @@ namespace filehandler
       if (!::user::document::on_new_document())
          return FALSE;
 
-//      if(!get_data()->on_open_document("rtp://10.10.100.97:19847"))
+//      if(!get_data()->on_open_document("rtp://10.10.100.97:20007"))
    //    {
       //     delete_contents();
       //   return FALSE;
       //}
 
-      //update_all_views(NULL, 19847);
+      //update_all_views(NULL, 20007);
 
       return TRUE;
    }

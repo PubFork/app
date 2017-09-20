@@ -49,10 +49,10 @@ namespace user
             ::windows::comptr < IShellFolder > pfolder;
 
             hr = pfork->m_pfolderDesktop->BindToObject(
-               lpiidlFolder,
-               NULL,
-               IID_IShellFolder,
-               pfolder);
+                    lpiidlFolder,
+                    NULL,
+                    IID_IShellFolder,
+                    pfolder);
 
             if (SUCCEEDED(hr))
             {
@@ -95,7 +95,7 @@ namespace user
          int32_t iLen = _017ItemIDListGetLen(lpiidl);
 
          LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-            pfork->m_pmalloc->Alloc(iLen + 2);
+                                  pfork->m_pmalloc->Alloc(iLen + 2);
 
          memcpy(lpiidlRet, lpiidl, iLen);
          ((LPBYTE)lpiidlRet)[iLen] = 0;
@@ -141,7 +141,7 @@ namespace user
          int32_t iLen = _017ItemIDListGetLen(lpiidl);
 
          LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-            pfork->m_pmalloc->Alloc(iLenParent + iLen + 2);
+                                  pfork->m_pmalloc->Alloc(iLenParent + iLen + 2);
 
          memcpy(lpiidlRet, lpiidlParent, iLenParent);
          memcpy(&(((LPBYTE)lpiidlRet)[iLenParent]), lpiidl, iLen);
@@ -177,7 +177,7 @@ namespace user
             return NULL;
 
          LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-            pfork->m_pmalloc->Alloc(iCount + 2);
+                                  pfork->m_pmalloc->Alloc(iCount + 2);
 
          memcpy(lpiidlRet, lpshiidLast, iCount);
 
@@ -187,12 +187,18 @@ namespace user
 
       }
 
+
       LPITEMIDLIST windows::_017ItemIDListGetFolderParent(per_fork * pfork, LPITEMIDLIST lpiidl)
       {
+
          if (lpiidl == NULL)
+         {
+
             return NULL;
 
-         HRESULT hr;
+         }
+
+         //HRESULT hr;
 
          LPSHITEMID  lpshiid = (LPSHITEMID)lpiidl;
          LPSHITEMID  lpshiidLast = lpshiid;
@@ -212,7 +218,7 @@ namespace user
             return NULL;
 
          LPITEMIDLIST lpiidlRet = (LPITEMIDLIST)
-            pfork->m_pmalloc->Alloc(iCount + 2);
+                                  pfork->m_pmalloc->Alloc(iCount + 2);
 
          memcpy(lpiidlRet, lpiidl, iCount);
 
@@ -272,12 +278,12 @@ namespace user
                LPITEMIDLIST pChild = NULL;
 
                hr = pfork->m_pfolder->ParseDisplayName(
-                  window,
-                  NULL,
-                  ::str::international::utf8_to_unicode(::file::path(lpcsz).name()),
-                  NULL,
-                  &pChild,
-                  NULL);
+                       window,
+                       NULL,
+                       ::str::international::utf8_to_unicode(::file::path(lpcsz).name()),
+                       NULL,
+                       &pChild,
+                       NULL);
 
                *lpiidl = _017ItemIDListGetAbsolute(pfork, pfork->m_lpiidl, pChild);
 
@@ -287,12 +293,12 @@ namespace user
             else
             {
                hr = pfork->m_pfolderDesktop->ParseDisplayName(
-                  window,
-                  NULL,
-                  ::str::international::utf8_to_unicode(lpcsz),
-                  NULL,
-                  lpiidl,
-                  NULL);
+                       window,
+                       NULL,
+                       ::str::international::utf8_to_unicode(lpcsz),
+                       NULL,
+                       lpiidl,
+                       NULL);
             }
          }
          catch (...)
@@ -482,22 +488,22 @@ namespace user
          string strIconLocation;
 
          if (SUCCEEDED(hrExtractIconUI= lpsf->GetUIObjectOf(
-            oswindow,
-            1,
-            (LPCITEMIDLIST *)&lpiidlChild,
-            IID_IExtractIconW,
-            NULL,
-            lpiextracticon)))
+                                           oswindow,
+                                           1,
+                                           (LPCITEMIDLIST *)&lpiidlChild,
+                                           IID_IExtractIconW,
+                                           NULL,
+                                           lpiextracticon)))
          {
 
             int iIcon = 0;
 
             if (SUCCEEDED(hrIconLocation = lpiextracticon->GetIconLocation(
-               iType,
-               wszPath,
-               sizeof(wszPath) / sizeof(wszPath[0]),
-               &iIcon,
-               &uiExtractIconLocationFlags)))
+                                              iType,
+                                              wszPath,
+                                              sizeof(wszPath) / sizeof(wszPath[0]),
+                                              &iIcon,
+                                              &uiExtractIconLocationFlags)))
             {
 
                if (wcscmp(wszPath, L"*") == 0)
@@ -527,12 +533,12 @@ namespace user
 
          }
          else if (SUCCEEDED(lpsf->GetUIObjectOf(
-            oswindow,
-            1,
-            (LPCITEMIDLIST *)&lpiidlChild,
-            IID_IShellIconOverlayIdentifier,
-            NULL,
-            lpioverlay)))
+                               oswindow,
+                               1,
+                               (LPCITEMIDLIST *)&lpiidlChild,
+                               IID_IShellIconOverlayIdentifier,
+                               NULL,
+                               lpioverlay)))
          {
 
             int iIndex = 0;
@@ -540,10 +546,10 @@ namespace user
             DWORD dwFlags = 0;
 
             if (SUCCEEDED(hrIconLocation = lpioverlay->GetOverlayInfo(
-               wszPath,
-               sizeof(wszPath),
-               &iIndex,
-               &dwFlags)))
+                                              wszPath,
+                                              sizeof(wszPath),
+                                              &iIndex,
+                                              &dwFlags)))
             {
 
                if (wcscmp(wszPath, L"*") == 0)
@@ -571,12 +577,12 @@ namespace user
 
          }
          else if (SUCCEEDED(lpsf->GetUIObjectOf(
-            oswindow,
-            1,
-            (LPCITEMIDLIST *)&lpiidlChild,
-            IID_IExtractImage,
-            NULL,
-            lpiextractimage)))
+                               oswindow,
+                               1,
+                               (LPCITEMIDLIST *)&lpiidlChild,
+                               IID_IExtractImage,
+                               NULL,
+                               lpiextractimage)))
          {
 
             SIZE s;
@@ -590,12 +596,12 @@ namespace user
             DWORD dwFlags = 0;
 
             if (SUCCEEDED(hrIconLocation = lpiextractimage->GetLocation(
-               wszPath,
-               sizeof(wszPath),
-               NULL,
-               &s,
-               dwDepth,
-               &dwFlags)))
+                                              wszPath,
+                                              sizeof(wszPath),
+                                              NULL,
+                                              &s,
+                                              dwDepth,
+                                              &dwFlags)))
             {
 
 
@@ -822,11 +828,11 @@ namespace user
                      {
 
                         if (SUCCEEDED(hrIconLocation = lpiextracticon->Extract(
-                           wszPath,
-                           imagekey.m_iIcon,
-                           NULL,
-                           &hicon,
-                           iSize << 16)))
+                                                          wszPath,
+                                                          imagekey.m_iIcon,
+                                                          NULL,
+                                                          &hicon,
+                                                          iSize << 16)))
                         {
 
 
@@ -839,11 +845,11 @@ namespace user
                      {
 
                         if (SUCCEEDED(hrIconLocation = lpiextracticon->Extract(
-                           wszPath,
-                           imagekey.m_iIcon,
-                           &hicon,
-                           NULL,
-                           iSize)))
+                                                          wszPath,
+                                                          imagekey.m_iIcon,
+                                                          &hicon,
+                                                          NULL,
+                                                          iSize)))
                         {
 
 
@@ -1129,7 +1135,8 @@ namespace user
          if (!b48 && shfi48.hIcon != NULL)
          {
             ::DestroyIcon(shfi48.hIcon);
-         }         synch_lock sl(m_pmutex);
+         }
+         synch_lock sl(m_pmutex);
 
          m_imagemap.set_at(imagekey, iImage);
 
@@ -1476,9 +1483,9 @@ namespace user
          while (*pcsidl != -1)
          {
             if (SUCCEEDED(SHGetSpecialFolderLocation(
-               NULL,
-               *pcsidl,
-               &ppidl)))
+                             NULL,
+                             *pcsidl,
+                             &ppidl)))
             {
                if (_017ItemIDListIsEqual(ppidl, lpiidl))
                {
@@ -2027,7 +2034,7 @@ namespace user
          {
 
             output_debug_string("1484 *test*");
-                    
+
          }
 
          int32_t iImage = 0x80000000;
@@ -2343,7 +2350,9 @@ namespace user
          {
 
             return m_pilHover[iSize]->pred_add_image([&](auto dib)
-            { System.visual().imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64); }
+            {
+               System.visual().imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64);
+            }
             , m_pil[iSize], iImage);
 
          }

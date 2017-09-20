@@ -27,27 +27,27 @@ namespace filemanager
       bool bDoubleClickInWebView = true;
 
       //#ifdef WINDOWSEX
-      //      
+      //
       //      SHELLSTATE shellstate;
       //
       //      SHGetSetSettings(&shellstate, SSF_DOUBLECLICKINWEBVIEW, false);
       //
       //      bDoubleClickInWebView = shellstate.fDoubleClickInWebView != FALSE;
-      //      
+      //
       //#elif defined(MACOS)
-      //      
+      //
       //      bDoubleClickInWebView = true;
       //
       //#endif
 
       //#ifdef LINUX
-      //      
+      //
       m_bHoverSelect = true;
 
       //#else
-      //      
+      //
       //      m_bHoverSelect = !bDoubleClickInWebView;
-      //      
+      //
       //#endif
 
 
@@ -552,8 +552,8 @@ namespace filemanager
       _001GetSelection(range);
 
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
 
          item_range itemrange = range.ItemAt(iItemRange);
@@ -586,8 +586,8 @@ namespace filemanager
       range range;
       _001GetSelection(range);
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = itemrange.get_lower_bound(); iItem <= itemrange.get_upper_bound(); iItem++)
@@ -684,8 +684,8 @@ namespace filemanager
    void file_list::_001OnUpdateFileRename(::message::message * pobj)
    {
       //      SCAST_PTR(::user::command, pcommand, pobj);
-        //    pcommand->Enable(_001GetSelectedItemCount() == 1);
-          //  pobj->m_bRet = true;
+      //    pcommand->Enable(_001GetSelectedItemCount() == 1);
+      //  pobj->m_bRet = true;
 
       SCAST_PTR(::user::command, pcommand, pobj);
       range range;
@@ -877,7 +877,7 @@ namespace filemanager
 
       if (pcommand->m_id == "1000")
       {
-         
+
          //      _017OpenSelected(true, ::action::source_user);
 
          pcommand->m_bRet = true;
@@ -988,11 +988,11 @@ namespace filemanager
       string strTime;
 
       strTime.Format("%04d-%02d-%02d %02d-%02d",
-         time.GetYear(),
-         time.GetMonth(),
-         time.GetDay(),
-         time.GetHour(),
-         time.GetMinute());
+                     time.GetYear(),
+                     time.GetMonth(),
+                     time.GetDay(),
+                     time.GetHour(),
+                     time.GetMinute());
 
       string strBase = get_filemanager_item()->m_filepath / "spafy_";
 
@@ -1027,7 +1027,7 @@ namespace filemanager
       for (int32_t i = 0; i < pdata->m_itema.get_count(); i++)
       {
          if (::userfs::list::get_document()->get_fs_data()->is_dir(pdata->m_itema.get_item(i).m_filepath)
-            && pdata->m_itema.get_item(i).m_filepath.name() != ".svn")
+               && pdata->m_itema.get_item(i).m_filepath.name() != ".svn")
          {
             straSub.rls(pdata->m_itema.get_item(i).m_filepath);
             for (int32_t j = 0; j < straSub.get_size(); j++)
@@ -1035,8 +1035,8 @@ namespace filemanager
                string strExtension = straSub[j].extension();
 
                if (!Application.dir().is(straSub[j])
-                  && (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
-                     || strExtension == "exe.manifest"))
+                     && (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
+                         || strExtension == "exe.manifest"))
                {
                   strFileList += straSub[j] + "\n";
                   strFileCheck += straSub[j] + ",";
@@ -1049,7 +1049,7 @@ namespace filemanager
          {
             string strExtension = pdata->m_itema.get_item(i).m_filepath.extension();
             if (strExtension == "exe" || strExtension == "dll" || strExtension == "dll.manifest"
-               || strExtension == "exe.manifest")
+                  || strExtension == "exe.manifest")
             {
 
                strFileList += pdata->m_itema.get_item(i).m_filepath + "\n";
@@ -1064,11 +1064,11 @@ namespace filemanager
 
       string strTime;
       strTime.Format("%04d-%02d-%02d %02d-%02d",
-         time.GetYear(),
-         time.GetMonth(),
-         time.GetDay(),
-         time.GetHour(),
-         time.GetMinute());
+                     time.GetYear(),
+                     time.GetMonth(),
+                     time.GetDay(),
+                     time.GetHour(),
+                     time.GetMinute());
       string strBase = get_filemanager_item()->m_filepath / "spafy_";
       string strList = strBase + "list_" + strTime + ".txt";
       string strCheck = strBase + "check_" + strTime + ".txt";
@@ -1279,7 +1279,7 @@ namespace filemanager
             //spitem->m_iImage = Session.userex()->shell()->get_image(
             //   get_handle(),
             //   path,
-            //   path.m_iDir == 1 ? 
+            //   path.m_iDir == 1 ?
             //   ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
             //   ::user::shell::icon_normal);
 
@@ -1300,7 +1300,7 @@ namespace filemanager
          {
             /*   // primeiro, todos System arquivos que foram removidos
             // ou seja, que existem no array antigo,
-            // mas n�o existe no novo.
+            // mas não existe no novo.
             for(index strictOld = 0; strictOld < straStrictOrder.get_count(); strictOld++)
             {
             string str = straStrictOrder[strictOld];
@@ -1323,7 +1323,7 @@ namespace filemanager
                   iaDisplayToStrictNew.set(iDisplay, strictNew);
                }
             }
-            // terceiro, adiciona System novos arquivos nos primeiros espa�os
+            // terceiro, adiciona System novos arquivos nos primeiros espaços
             // vazios
             for (index strictNew = 0; strictNew < m_pathaStrictOrder.get_count(); strictNew++)
             {
@@ -1345,11 +1345,11 @@ namespace filemanager
 
       ///      _001CreateImageList();
 
-            //file_size_add_request(true);
-            /*   for(int32_t i = 0; i < m_itema.get_item_count(); i++)
-            {
-            pset->m_table.add_request(m_itema.get_item(i).m_strPath);
-            }*/
+      //file_size_add_request(true);
+      /*   for(int32_t i = 0; i < m_itema.get_item_count(); i++)
+      {
+      pset->m_table.add_request(m_itema.get_item(i).m_strPath);
+      }*/
       if (m_eview == view_icon)
       {
          data_save(data_get_current_sort_id() + "." + data_get_current_list_layout_id() + ".straStrictOrder", m_pathaStrictOrder);
@@ -1440,96 +1440,96 @@ namespace filemanager
    //   }
 
 
-      //bool file_list::_001CreateImageListStep()
-      //{
+   //bool file_list::_001CreateImageListStep()
+   //{
 
-      //   synch_lock sl(get_fs_mesh_data()->m_pmutex);
+   //   synch_lock sl(get_fs_mesh_data()->m_pmutex);
 
-      //   if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-      //   {
-      //      if (m_bRestartCreateImageList)
-      //      {
-      //         m_bRestartCreateImageList = false;
-      //         m_iCreateImageListStep = 0;
-      //         if (m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-      //         {
-      //            return false;
-      //         }
-      //      }
-      //      else
-      //      {
-      //         return false;
-      //      }
-      //   }
+   //   if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+   //   {
+   //      if (m_bRestartCreateImageList)
+   //      {
+   //         m_bRestartCreateImageList = false;
+   //         m_iCreateImageListStep = 0;
+   //         if (m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+   //         {
+   //            return false;
+   //         }
+   //      }
+   //      else
+   //      {
+   //         return false;
+   //      }
+   //   }
 
-      //   ::file::path path;
+   //   ::file::path path;
 
-      //   {
+   //   {
 
-      //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
-      //      if (&item == NULL)
-      //      {
+   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
+   //      if (&item == NULL)
+   //      {
 
-      //         return true;
+   //         return true;
 
-      //      }
-      //      ::file::path & p = item.m_filepath;
-      //      if (p.m_iDir < 0)
-      //      {
+   //      }
+   //      ::file::path & p = item.m_filepath;
+   //      if (p.m_iDir < 0)
+   //      {
 
-      //         p.m_iDir = get_document()->get_fs_data()->is_dir(p) ? 1 : 0;
+   //         p.m_iDir = get_document()->get_fs_data()->is_dir(p) ? 1 : 0;
 
-      //      }
+   //      }
 
-      //      if (p.m_iDir == 1)
-      //      {
+   //      if (p.m_iDir == 1)
+   //      {
 
-      //         item.m_flags.signalize(::fs::FlagFolder);
+   //         item.m_flags.signalize(::fs::FlagFolder);
 
-      //      }
-      //      path = p;
-      //   }
-      //   sl.unlock();
+   //      }
+   //      path = p;
+   //   }
+   //   sl.unlock();
 
-      //   int iImage = Session.userex()->shell()->get_image(
-      //      get_handle(),
-      //      path,
-      //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
-      //      ::user::shell::icon_normal);
+   //   int iImage = Session.userex()->shell()->get_image(
+   //      get_handle(),
+   //      path,
+   //      path.m_iDir == 1 ? ::user::shell::file_attribute_directory : ::user::shell::file_attribute_normal,
+   //      ::user::shell::icon_normal);
 
-      //   sl.lock();
-      //   {
+   //   sl.lock();
+   //   {
 
-      //      //single_lock sl(m_pmutex, true);
+   //      //single_lock sl(m_pmutex, true);
 
-      //      if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
-      //      {
-      //         return true;
-      //      }
-      //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
+   //      if (m_iCreateImageListStep < 0 || m_iCreateImageListStep >= get_fs_mesh_data()->m_itema.get_count())
+   //      {
+   //         return true;
+   //      }
+   //      ::userfs::list_item & item = get_fs_mesh_data()->m_itema.get_item((int32_t)m_iCreateImageListStep);
 
-      //      if (&item == NULL)
-      //      {
+   //      if (&item == NULL)
+   //      {
 
-      //         return true;
+   //         return true;
 
-      //      }
+   //      }
 
-      //      if (path == item.m_filepath)
-      //      {
+   //      if (path == item.m_filepath)
+   //      {
 
-      //         item.m_iImage = iImage;
+   //         item.m_iImage = iImage;
 
-      //      }
+   //      }
 
-      //   }
+   //   }
 
 
-      //   m_iCreateImageListStep++;
+   //   m_iCreateImageListStep++;
 
-      //   return true;
+   //   return true;
 
-      //}
+   //}
 
 
    void file_list::_001InsertColumns()
@@ -1841,13 +1841,13 @@ namespace filemanager
       range range;
       _001GetSelection(range);
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = itemrange.get_lower_bound();
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
             if (iItem < 0)
                continue;
@@ -1892,13 +1892,13 @@ namespace filemanager
       range range;
       _001GetSelection(range);
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = itemrange.get_lower_bound();
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
             if (iItem < 0)
                continue;
@@ -1986,13 +1986,13 @@ namespace filemanager
       _001GetSelection(range);
       index_array iaItem;
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = MAX(0, itemrange.get_lower_bound());
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
 
             if (iItem < get_fs_mesh_data()->m_itema.get_count() && !iaItem.contains(iItem))

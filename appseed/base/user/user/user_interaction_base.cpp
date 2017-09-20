@@ -703,7 +703,7 @@ Restart:
    bool interaction_base::_001IsPointInside(point64 pt)
    {
 
-      
+
       return false;
 
    }
@@ -731,12 +731,12 @@ Restart:
 
    LRESULT interaction_base::send(::message::base * pbase)
    {
-      
+
       if(pbase->m_pwnd == NULL)
       {
-         
+
          pbase->m_pwnd = this;
-         
+
       }
 
       message_handler(pbase);
@@ -1443,6 +1443,15 @@ Restart:
    }
 
 
+   ::user::frame_window * interaction_base::GetOwnerFrame() const
+   {
+
+      //::exception::throw_interface_only(get_app());
+
+      return NULL;
+
+   }
+
    interaction * interaction_base::GetParent() const
    {
 
@@ -1601,7 +1610,7 @@ Restart:
       return 0;
 
    }
-   
+
 
    void interaction_base::message_handler(::message::base * pbase)
    {
@@ -2412,7 +2421,7 @@ Restart:
       }
 
    }
-   
+
 
    void interaction_base::on_command(::user::command * pcommand)
    {

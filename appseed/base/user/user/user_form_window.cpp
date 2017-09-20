@@ -277,7 +277,7 @@ namespace user
 
       if(!pcontrol->Validate(str))
       {
-         // que tal um bal�o para indicar o erro
+         // que tal um balão para indicar o erro
          return false;
       }
 
@@ -355,16 +355,16 @@ namespace user
       case control_type_check_box:
          _001UpdateDbFlagsCheckBox(pcontrol);
          break;
-         /*   case control_type_combo_box:
-         _001UpdateComboBox(control);
-         break;
-         case control_type_edit:
-         case control_type_edit_plain_text:
-         _001UpdateEdit(control);
-         break;
-         case control_type_simple_list:
-         _001UpdateSimpleList(control);
-         break;*/
+      /*   case control_type_combo_box:
+      _001UpdateComboBox(control);
+      break;
+      case control_type_edit:
+      case control_type_edit_plain_text:
+      _001UpdateEdit(control);
+      break;
+      case control_type_simple_list:
+      _001UpdateSimpleList(control);
+      break;*/
       default:
          break;
       }
@@ -447,7 +447,7 @@ namespace user
       keep<bool> keepUpdateLock(&m_bOnEditUpdate,true,false,true);
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit
-         || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+             || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
       if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
@@ -593,16 +593,16 @@ namespace user
 
       ::user::control::install_message_routing(psender);
 
-      IGUI_MSG_LINK(WM_CREATE                      , psender,this,&form_window::_001OnCreate);
-      IGUI_MSG_LINK(::message::message_pos_create  , psender,this,&form_window::_000OnPosCreate);
-      MSG_TYPE_LINK(::message::type_language       , psender,this,&form_window::_001OnAppLanguage);
+      IGUI_MSG_LINK(WM_CREATE, psender,this,&form_window::_001OnCreate);
+      IGUI_MSG_LINK(::message::message_pos_create, psender,this,&form_window::_000OnPosCreate);
+      MSG_TYPE_LINK(::message::type_language, psender,this,&form_window::_001OnAppLanguage);
       //IGUI_MSG_LINK(WM_KEYDOWN                     , psender,this,&form_window::_001OnKeyDown);
       //IGUI_MSG_LINK(WM_KEYUP                       , psender,this,&form_window::_001OnKeyUp);
-      IGUI_MSG_LINK(WM_USER + 123                  , psender,this,&form_window::_001OnUser123);
+      IGUI_MSG_LINK(WM_USER + 123, psender,this,&form_window::_001OnUser123);
 
    }
 
-   
+
    void form_window::_001GetSelection(::database::id & id,::database::selection &selection)
    {
 
@@ -626,7 +626,7 @@ namespace user
 
       SCAST_PTR(::message::notify,pnotify,pobj);
 
-         pnotify->m_bRet = false;
+      pnotify->m_bRet = false;
 
 #else
 
@@ -642,9 +642,9 @@ namespace user
 
       SCAST_PTR(::message::base,pbase,pobj);
 
-         // revamp pbase->set_lresult(user::NotifyRetContinue);
+      // revamp pbase->set_lresult(user::NotifyRetContinue);
 
-         pbase->m_bRet = false;
+      pbase->m_bRet = false;
 
    }
 
@@ -790,7 +790,7 @@ namespace user
 
       SCAST_PTR(::message::base,pbase,pobj);
 
-         keep < bool > keepOnLanguageChange(&m_bOnLanguageChange,true,false,true);
+      keep < bool > keepOnLanguageChange(&m_bOnLanguageChange,true,false,true);
 
       _017OnAppLanguage();
 
@@ -996,8 +996,8 @@ namespace user
       if(m_pcallback != NULL)
       {
          if(m_pcallback->BaseOnControlEvent(
-            this,
-            pevent))
+                  this,
+                  pevent))
             return true;
       }
       //else if(get_html_data()->m_pform != NULL
@@ -1027,7 +1027,7 @@ namespace user
       }
       else if(pevent->m_eevent == ::user::event_button_clicked)
       {
-         
+
          control * pcontrol = dynamic_cast <control *> (pevent->m_puie);
 
          if(pcontrol == NULL)
@@ -1101,7 +1101,7 @@ namespace user
 
    }
 
-   
+
    bool form_window::_001OnControlKillFocus(::user::interaction * pui)
    {
 

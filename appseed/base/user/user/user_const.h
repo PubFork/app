@@ -79,7 +79,9 @@ namespace user
       color_text_selected_highlight,
       color_text_focused,
       color_background,
+      color_background_highlight,
       color_background_selected,
+      color_background_selected_highlight,
       color_border_normal,
       color_border_hover,
       color_border_press,
@@ -170,8 +172,19 @@ namespace user
       int_check_box_size
       
    };
+
+   enum e_double
+   {
+
+      double_none,
+      double_width_rate,
+      double_height_rate
+
+   };
    
    using int_map = ::map < e_int, e_int, int, int >;
+
+   using double_map = ::map < e_double, e_double, double, double >;
 
    enum e_timer
    {

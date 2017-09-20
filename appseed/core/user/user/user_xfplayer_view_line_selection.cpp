@@ -19,12 +19,14 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
 {
    SCAST_PTR(::message::base, pbase, pobj);
 
-   UINT message = pbase->m_id;
+   UINT message;
+
+   convert(message, pbase->m_id.int64());
 
    if(message != WM_MOUSEMOVE
-      || message != WM_TIMER
-      || message != WM_LBUTTONDOWN
-      || message != WM_LBUTTONUP)
+         || message != WM_TIMER
+         || message != WM_LBUTTONDOWN
+         || message != WM_LBUTTONUP)
    {
       return;
    }
@@ -32,8 +34,8 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
    index iLine;
    strsize iChar;
    if((message == WM_MOUSEMOVE && GetState() == StateTracking)
-      || message == WM_LBUTTONDOWN
-      || message == WM_LBUTTONUP)
+         || message == WM_LBUTTONDOWN
+         || message == WM_LBUTTONUP)
    {
       bool bInside;
       point ptCursor(
@@ -46,12 +48,12 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
       if(!bInside && GetState() == StateTracking)
       {
          if(message == WM_LBUTTONUP
-            || message == WM_MOUSEMOVE)
+               || message == WM_MOUSEMOVE)
          {
             if(ptCursor.y < rectPlacement.top
-               ||
-               (ptCursor.y <= rectPlacement.bottom &&
-               ptCursor.x < rectPlacement.left))
+                  ||
+                  (ptCursor.y <= rectPlacement.bottom &&
+                   ptCursor.x < rectPlacement.left))
             {
                SetSelBefore(viewline);
                //                   viewline.get_interaction()->RedrawWindow();
@@ -96,7 +98,7 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
          }
          else if(
             (message == WM_LBUTTONUP
-            || message == WM_MOUSEMOVE)
+             || message == WM_MOUSEMOVE)
             && GetState() == StateTracking)
          {
             if(viewline.CalcChar(ptCursor, iChar))
@@ -124,9 +126,9 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
             {
                OnSelEvent(viewline, EventEnd);
                if(m_iLineStartSource == m_item.GetLineStart()
-                  && m_iLineEndSource == m_item.GetLineEnd()
-                  && m_iCharStartSource == m_item.GetCharStart()
-                  && m_iCharEndSource == m_item.GetCharEnd())
+                     && m_iLineEndSource == m_item.GetLineEnd()
+                     && m_iCharStartSource == m_item.GetCharStart()
+                     && m_iCharEndSource == m_item.GetCharEnd())
                {
                   string str;
                   point pt;
@@ -373,7 +375,7 @@ XfplayerViewLineSelectionItem::XfplayerViewLineSelectionItem(
    index      iLineEnd,
    strsize      iCharStart,
    strsize      iCharEnd
-   )
+)
 {
    m_iLineStart = iLineStart;
    m_iLineEnd = iLineEnd;
@@ -415,10 +417,10 @@ void XfplayerViewLineSelection::Select(
    m_itema.remove_all();
    m_itema.add(
       XfplayerViewLineSelectionItem(
-      iLineStart,
-      iLineEnd,
-      iCharStart,
-      iCharEnd));
+         iLineStart,
+         iLineEnd,
+         iCharStart,
+         iCharEnd));
 }
 
 bool XfplayerViewLineSelection::OnLButtonDown(xfplayer_view_line & viewline, UINT user, point pt)
@@ -485,9 +487,9 @@ bool XfplayerViewLineSelection::OnMouseMove(xfplayer_view_line & viewline, UINT 
    if(!bInside && GetState() == StateTracking)
    {
       if(pt1.y < rectPlacement.top
-         ||
-         (pt1.y <= rectPlacement.bottom &&
-         pt1.x < rectPlacement.left))
+            ||
+            (pt1.y <= rectPlacement.bottom &&
+             pt1.x < rectPlacement.left))
       {
          SetSelBefore(viewline);
          //             viewline.get_interaction()->RedrawWindow();
@@ -529,9 +531,9 @@ bool XfplayerViewLineSelection::OnMouseMove(xfplayer_view_line & viewline, UINT 
          }
          //OnSelEvent(viewline, EventEnd);
          if(m_iLineStartSource == m_item.GetLineStart()
-            && m_iLineEndSource == m_item.GetLineEnd()
-            && m_iCharStartSource == m_item.GetCharStart()
-            && m_iCharEndSource == m_item.GetCharEnd())
+               && m_iLineEndSource == m_item.GetLineEnd()
+               && m_iCharStartSource == m_item.GetCharStart()
+               && m_iCharEndSource == m_item.GetCharEnd())
          {
             string str;
             if(viewline.GetLink(str, pt) == ::user::line_hit_link)
@@ -566,9 +568,9 @@ bool XfplayerViewLineSelection::OnLButtonUp(xfplayer_view_line & viewline, UINT 
    if(!bInside && GetState() == StateTracking)
    {
       if(pt1.y < rectPlacement.top
-         ||
-         (pt1.y <= rectPlacement.bottom &&
-         pt1.x < rectPlacement.left))
+            ||
+            (pt1.y <= rectPlacement.bottom &&
+             pt1.x < rectPlacement.left))
       {
          SetSelBefore(viewline);
          //             viewline.get_interaction()->RedrawWindow();
@@ -610,9 +612,9 @@ bool XfplayerViewLineSelection::OnLButtonUp(xfplayer_view_line & viewline, UINT 
          }
          OnSelEvent(viewline, EventEnd);
          if(m_iLineStartSource == m_item.GetLineStart()
-            && m_iLineEndSource == m_item.GetLineEnd()
-            && m_iCharStartSource == m_item.GetCharStart()
-            && m_iCharEndSource == m_item.GetCharEnd())
+               && m_iLineEndSource == m_item.GetLineEnd()
+               && m_iCharStartSource == m_item.GetCharStart()
+               && m_iCharEndSource == m_item.GetCharEnd())
          {
             string str;
             if(viewline.GetLink(str, pt) == ::user::line_hit_link)
@@ -659,7 +661,7 @@ void XfplayerViewLineSelectionItem::NormalizeSel()
       ::core::swap(m_iCharEnd, m_iCharStart);
    }
    else if(m_iLineStart == m_iLineEnd
-      && m_iCharStart > m_iCharEnd)
+           && m_iCharStart > m_iCharEnd)
    {
       ::core::swap(m_iCharEnd, m_iCharStart);
    }

@@ -3,7 +3,7 @@
 //
 // Design and implementation by
 // - Floris van den Plat (flvdberg@wxs.nl)
-// - Herve Drolon (drolon@infonie.fr)
+// - Hervé Drolon (drolon@infonie.fr)
 // - Detlev Vendt (detlev.vendt@brillit.de)
 // - Aaron Shumate (trek@startreker.com)
 //

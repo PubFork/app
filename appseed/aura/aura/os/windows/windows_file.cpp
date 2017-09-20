@@ -40,15 +40,19 @@ int_bool read_resource_as_file_dup(const char * pszFile, HINSTANCE hinstance, UI
 
       if(file != NULL)
       {
-         DWORD dwWritten = 0;
-         dwWritten = fwrite(pResource, 1, dwResourseSize, file);
+
+         auto dwWritten = fwrite(pResource, 1, dwResourseSize, file);
+
          CloseHandle(file);
+
          bOk = dwWritten == dwResourseSize;
+
       }
 
       FreeResource(hglobalResource);
 
       return bOk;
+
    }
 
    return FALSE;
@@ -113,9 +117,7 @@ int_bool file_put_contents_dup(const char * path, const char * contents, count l
    else
       dwWrite = len;
 
-   DWORD dwWritten = 0;
-
-   dwWritten = fwrite(contents, 1, (uint32_t) dwWrite, file);
+   auto dwWritten = fwrite(contents, 1, (uint32_t) dwWrite, file);
 
    int_bool bOk = dwWritten == dwWrite;
 
@@ -335,18 +337,18 @@ string file_as_string_dup(const char * path)
    {
 
       DWORD dw = ::GetLastError();
-   
+
       return "";
 
    }
 
-   DWORD dwSize = fsize_dup(file);
+   DWORD dwSize;
+
+   convert(dwSize, fsize_dup(file));
 
    LPSTR lpsz = str.GetBufferSetLength(dwSize);
 
-   DWORD dwRead;
-
-   dwRead = fread(lpsz, 1, dwSize, file);
+   auto dwRead = fread(lpsz, 1, dwSize, file);
 
    lpsz[dwSize] = '\0';
 
@@ -387,9 +389,7 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
    memory.allocate((::count) uiSize);
 
-   DWORD dwRead;
-
-   dwRead = ::fread(memory.get_data(), 1, (uint32_t) memory.get_size(), file);
+   auto dwRead = ::fread(memory.get_data(), 1, (uint32_t) memory.get_size(), file);
 
    ::fclose(file);
 
@@ -420,8 +420,8 @@ string file_module_path_dup()
 
 struct PROCESS_INFO_t
 {
-    string csProcess;
-    uint32_t dwImageListIndex;
+   string csProcess;
+   uint32_t dwImageListIndex;
 };
 
 
@@ -447,484 +447,486 @@ HANDLE OnlyGetDrv()
 {
 
 
-        HMODULE hModule = GetModuleHandle(_T("core.dll"));
-        if( !hModule )
-        {
-            output_debug_string( L"GetModuleHandle(_T(\"core.dll\")); failed" );
-            return 0;
-        }
-        string csFilePath;
-        LPTSTR lpPath = csFilePath.GetBuffer( MAX_PATH );
-        GetModuleFileName( hModule,lpPath , MAX_PATH );
-        LIBCALL(shlwapi,PathRemoveFileSpecA)(lpPath);
-        csFilePath.ReleaseBuffer();
-        if(IsWow64())
-        {
-         csFilePath += DRIVER_FILE_NAME_64;
-        }
-        else
-        {
-           csFilePath += DRIVER_FILE_NAME_32;
-        }
+   HMODULE hModule = GetModuleHandle(_T("core.dll"));
+   if( !hModule )
+   {
+      output_debug_string( L"GetModuleHandle(_T(\"core.dll\")); failed" );
+      return 0;
+   }
+   string csFilePath;
+   LPTSTR lpPath = csFilePath.GetBuffer( MAX_PATH );
+   GetModuleFileName( hModule,lpPath, MAX_PATH );
+   LIBCALL(shlwapi,PathRemoveFileSpecA)(lpPath);
+   csFilePath.ReleaseBuffer();
+   if(IsWow64())
+   {
+      csFilePath += DRIVER_FILE_NAME_64;
+   }
+   else
+   {
+      csFilePath += DRIVER_FILE_NAME_32;
+   }
 
-        if(!LIBCALL(shlwapi, PathFileExistsA)(csFilePath))
-        {
-           simple_message_box(NULL,"Cannot find driver " + csFilePath,"Cannot find driver " + csFilePath,MB_OK);
-            return 0;
-        }
+   if(!LIBCALL(shlwapi, PathFileExistsA)(csFilePath))
+   {
+      simple_message_box(NULL,"Cannot find driver " + csFilePath,"Cannot find driver " + csFilePath,MB_OK);
+      return 0;
+   }
 
 
 
-	// Delete the temp file...
-	//DeleteFile( csPath );
-	HANDLE hFile = CreateFile( DRV_DOS_NAME, GENERIC_READ|GENERIC_WRITE,
-								FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
-								OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0 );
-	return hFile;
+   // Delete the temp file...
+   //DeleteFile( csPath );
+   HANDLE hFile = CreateFile( DRV_DOS_NAME, GENERIC_READ|GENERIC_WRITE,
+                              FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
+                              OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0 );
+   return hFile;
 
 }
 
 
 extern "C" CLASS_DECL_AURA void GetOpenedFiles(LPCWSTR lpPath, OF_TYPE Filter, OF_CALLBACK CallBackProc, uint_ptr pUserContext)
 {
-	string csPath = lpPath;
-	csPath.make_lower();
-	EnableTokenPrivilege( SE_DEBUG_NAME );
-	if( Filter& MODULES_ONLY )
-	{
-		EnumerateLoadedModules( csPath, CallBackProc, pUserContext );
-	}
+   string csPath = lpPath;
+   csPath.make_lower();
+   EnableTokenPrivilege( SE_DEBUG_NAME );
+   if( Filter& MODULES_ONLY )
+   {
+      EnumerateLoadedModules( csPath, CallBackProc, pUserContext );
+   }
 
-	if( Filter& FILES_ONLY )
-	{
+   if( Filter& FILES_ONLY )
+   {
 
 
-		// Extract the driver from the resource and install it.
-		//HANDLE hDriver = ExtractAndInstallDrv();
+      // Extract the driver from the resource and install it.
+      //HANDLE hDriver = ExtractAndInstallDrv();
       //HANDLE hDriver = OnlyGetDrv();
       HANDLE hDriver = NULL;
-		GetFinalPathNameByHandleDef pGetFinalPathNameByHandle = 0;
-		if(  !hDriver )
-		{
-			pGetFinalPathNameByHandle = (GetFinalPathNameByHandleDef)GetProcAddress( GetModuleHandle(_T("kernel32.dll")), "GetFinalPathNameByHandleW" );
-		}
-		// Now walk all handles
-		EnumerateOpenedFiles( csPath, CallBackProc, pUserContext, hDriver, pGetFinalPathNameByHandle );
-		//if( hDriver )
-		{	// Time to wind up
-			//StopAndUninstallDrv( hDriver );
-		}
-	}
+      GetFinalPathNameByHandleDef pGetFinalPathNameByHandle = 0;
+      if(  !hDriver )
+      {
+         pGetFinalPathNameByHandle = (GetFinalPathNameByHandleDef)GetProcAddress( GetModuleHandle(_T("kernel32.dll")), "GetFinalPathNameByHandleW" );
+      }
+      // Now walk all handles
+      EnumerateOpenedFiles( csPath, CallBackProc, pUserContext, hDriver, pGetFinalPathNameByHandle );
+      //if( hDriver )
+      {
+         // Time to wind up
+         //StopAndUninstallDrv( hDriver );
+      }
+   }
 }
 
 #ifndef METROWIN
 
 typedef struct _SYSTEM_HANDLE_INFORMATION
 {
-    uint32_t         dwCount;
-    SYSTEM_HANDLE Handles[1];
+   uint32_t         dwCount;
+   SYSTEM_HANDLE Handles[1];
 } SYSTEM_HANDLE_INFORMATION, *PSYSTEM_HANDLE_INFORMATION, **PPSYSTEM_HANDLE_INFORMATION;
 
-typedef enum _SYSTEM_INFORMATION_CLASS2 {
-    SystemHandleInformation = 0X10,
+typedef enum _SYSTEM_INFORMATION_CLASS2
+{
+   SystemHandleInformation = 0X10,
 } SYSTEM_INFORMATION_CLASS2;
 
 #endif
 
 typedef NTSTATUS ( WINAPI *PNtQuerySystemInformation)
-				 ( IN	SYSTEM_INFORMATION_CLASS2 SystemInformationClass,
-				   OUT	PVOID					 SystemInformation,
-				   IN	ULONG					 SystemInformationLength,
-				   OUT	PULONG					 ReturnLength OPTIONAL );
+( IN SYSTEM_INFORMATION_CLASS2 SystemInformationClass,
+  OUT   PVOID              SystemInformation,
+  IN ULONG              SystemInformationLength,
+  OUT   PULONG                ReturnLength OPTIONAL );
 
 UINT g_CurrentIndex = 0;
 struct THREAD_PARAMS
 {
-	PSYSTEM_HANDLE_INFORMATION pSysHandleInformation;
-	GetFinalPathNameByHandleDef pGetFinalPathNameByHandle;
-	LPWSTR lpPath;
-	int32_t nFileType;
-	HANDLE hStartEvent;
-	HANDLE hFinishedEvent;
-	bool bStatus;
+   PSYSTEM_HANDLE_INFORMATION pSysHandleInformation;
+   GetFinalPathNameByHandleDef pGetFinalPathNameByHandle;
+   LPWSTR lpPath;
+   int32_t nFileType;
+   HANDLE hStartEvent;
+   HANDLE hFinishedEvent;
+   bool bStatus;
 };
 
 uint32_t ThreadProc(void * lParam)
 {
-	THREAD_PARAMS* pThreadParam = (THREAD_PARAMS*)lParam;
+   THREAD_PARAMS* pThreadParam = (THREAD_PARAMS*)lParam;
 
    FILE_NAME_INFO * pinfo = (FILE_NAME_INFO *)new BYTE[MAX_PATH * 8];
 
-	GetFinalPathNameByHandleDef pGetFinalPathNameByHandle = pThreadParam->pGetFinalPathNameByHandle;
-	for( g_CurrentIndex; g_CurrentIndex < pThreadParam->pSysHandleInformation->dwCount;  )
-	{
+   GetFinalPathNameByHandleDef pGetFinalPathNameByHandle = pThreadParam->pGetFinalPathNameByHandle;
+   for( g_CurrentIndex; g_CurrentIndex < pThreadParam->pSysHandleInformation->dwCount;  )
+   {
 
-		WaitForSingleObject( pThreadParam->hStartEvent, INFINITE );
-		ResetEvent( pThreadParam->hStartEvent );
-		pThreadParam->bStatus = false;
-		SYSTEM_HANDLE& sh = pThreadParam->pSysHandleInformation->Handles[g_CurrentIndex];
-		g_CurrentIndex++;
-		HANDLE hDup = (HANDLE)sh.wValue;
-		HANDLE hProcess = OpenProcess( PROCESS_DUP_HANDLE , FALSE, sh.dwProcessId );
-		if( hProcess )
-		{
-			bool b = DuplicateHandle( hProcess, (HANDLE)sh.wValue, GetCurrentProcess(), &hDup, 0, FALSE, DUPLICATE_SAME_ACCESS ) != FALSE;
-			if( !b )
-			{
-				hDup = (HANDLE)sh.wValue;
-			}
-			CloseHandle( hProcess );
-		}
-		//uint32_t dwRet = pGetFinalPathNameByHandle( hDup, pThreadParam->lpPath, MAX_PATH, 0 );
+      WaitForSingleObject( pThreadParam->hStartEvent, INFINITE );
+      ResetEvent( pThreadParam->hStartEvent );
+      pThreadParam->bStatus = false;
+      SYSTEM_HANDLE& sh = pThreadParam->pSysHandleInformation->Handles[g_CurrentIndex];
+      g_CurrentIndex++;
+      HANDLE hDup = (HANDLE)sh.wValue;
+      HANDLE hProcess = OpenProcess( PROCESS_DUP_HANDLE, FALSE, sh.dwProcessId );
+      if( hProcess )
+      {
+         bool b = DuplicateHandle( hProcess, (HANDLE)sh.wValue, GetCurrentProcess(), &hDup, 0, FALSE, DUPLICATE_SAME_ACCESS ) != FALSE;
+         if( !b )
+         {
+            hDup = (HANDLE)sh.wValue;
+         }
+         CloseHandle( hProcess );
+      }
+      //uint32_t dwRet = pGetFinalPathNameByHandle( hDup, pThreadParam->lpPath, MAX_PATH, 0 );
       //uint32_t dwRet = GetFileInformationByHandleEx(hDup, FileNameInfo, pinfo, MAX_PATH * 8);
       uint32_t dwRet = GetFinalPathNameByHandleW( hDup, pThreadParam->lpPath, MAX_PATH, 0 );
       //wcsncpy(pThreadParam->lpPath, pinfo->FileName, pinfo->FileNameLength);
-		if( hDup && (hDup != (HANDLE)sh.wValue))
-		{
-			CloseHandle( hDup );
-		}
-		if(dwRet)
-		{
-			pThreadParam->bStatus = true;
-		}
-		SetEvent( pThreadParam->hFinishedEvent );
+      if( hDup && (hDup != (HANDLE)sh.wValue))
+      {
+         CloseHandle( hDup );
+      }
+      if(dwRet)
+      {
+         pThreadParam->bStatus = true;
+      }
+      SetEvent( pThreadParam->hFinishedEvent );
 
-	}
+   }
    delete[] (BYTE *) pinfo;
-	return 0;
+   return 0;
 }
 
 void EnumerateOpenedFiles( string& csPath, OF_CALLBACK CallBackProc, uint_ptr pUserContext, HANDLE hDriver,
-						   GetFinalPathNameByHandleDef pGetFinalPathNameByHandle )
+                           GetFinalPathNameByHandleDef pGetFinalPathNameByHandle )
 {
    int32_t nFileType;
 
    if(is_windows_vista_or_greater())
-	{
-		nFileType = VISTA_FILETYPE;
-	}
+   {
+      nFileType = VISTA_FILETYPE;
+   }
    else
    {
       nFileType = XP_FILETYPE;
    }
 
-	LPCTSTR lpPath = csPath;
-	string csShortName;
-	GetShortPathName( csPath, csShortName.GetBuffer( MAX_PATH), MAX_PATH );
-	csShortName.ReleaseBuffer();
-	csShortName.make_lower();
-	bool bShortPath = false;
-	LPCTSTR lpShortPath = csShortName;
-	if(  csShortName != csPath && FALSE == csShortName.is_empty())
-	{
-		bShortPath = true;
-	}
+   LPCTSTR lpPath = csPath;
+   string csShortName;
+   GetShortPathName( csPath, csShortName.GetBuffer( MAX_PATH), MAX_PATH );
+   csShortName.ReleaseBuffer();
+   csShortName.make_lower();
+   bool bShortPath = false;
+   LPCTSTR lpShortPath = csShortName;
+   if(  csShortName != csPath && FALSE == csShortName.is_empty())
+   {
+      bShortPath = true;
+   }
 
-	HMODULE hModule = GetModuleHandle(_T("ntdll.dll"));
-	PNtQuerySystemInformation NtQuerySystemInformation = (PNtQuerySystemInformation)GetProcAddress( hModule, "NtQuerySystemInformation" );
-	if( 0 == NtQuerySystemInformation )
-	{
-		output_debug_string( L"Getting proc of NtQuerySystemInformation failed" );
-		return;
-	}
+   HMODULE hModule = GetModuleHandle(_T("ntdll.dll"));
+   PNtQuerySystemInformation NtQuerySystemInformation = (PNtQuerySystemInformation)GetProcAddress( hModule, "NtQuerySystemInformation" );
+   if( 0 == NtQuerySystemInformation )
+   {
+      output_debug_string( L"Getting proc of NtQuerySystemInformation failed" );
+      return;
+   }
 
-	// Get the list of all handles in the file_system
-	PSYSTEM_HANDLE_INFORMATION pSysHandleInformation = new SYSTEM_HANDLE_INFORMATION;
-	uint32_t size = sizeof(SYSTEM_HANDLE_INFORMATION);
-	DWORD needed = 0;
-	NTSTATUS status = NtQuerySystemInformation( SystemHandleInformation, pSysHandleInformation, size, &needed );
-	if( !NT_SUCCESS(status))
-	{
-		if( 0 == needed )
-		{
-			return;// some other error
-		}
-		// The previously supplied buffer wasn't enough.
-		delete pSysHandleInformation;
-		size = needed + 1024;
-		pSysHandleInformation = (PSYSTEM_HANDLE_INFORMATION)new BYTE[size];
-		status = NtQuerySystemInformation( SystemHandleInformation, pSysHandleInformation, size, &needed );
-		if( !NT_SUCCESS(status))
-		{
-			// some other error so quit.
-			delete pSysHandleInformation;
-			return;
-		}
-	}
+   // Get the list of all handles in the file_system
+   PSYSTEM_HANDLE_INFORMATION pSysHandleInformation = new SYSTEM_HANDLE_INFORMATION;
+   uint32_t size = sizeof(SYSTEM_HANDLE_INFORMATION);
+   DWORD needed = 0;
+   NTSTATUS status = NtQuerySystemInformation( SystemHandleInformation, pSysHandleInformation, size, &needed );
+   if( !NT_SUCCESS(status))
+   {
+      if( 0 == needed )
+      {
+         return;// some other error
+      }
+      // The previously supplied buffer wasn't enough.
+      delete pSysHandleInformation;
+      size = needed + 1024;
+      pSysHandleInformation = (PSYSTEM_HANDLE_INFORMATION)new BYTE[size];
+      status = NtQuerySystemInformation( SystemHandleInformation, pSysHandleInformation, size, &needed );
+      if( !NT_SUCCESS(status))
+      {
+         // some other error so quit.
+         delete pSysHandleInformation;
+         return;
+      }
+   }
 
-	if( pGetFinalPathNameByHandle )// there is no driver, we have do it ugly way
-	{
-		g_CurrentIndex = 0;
-//		TCHAR tcFileName[MAX_PATH+1];
-		THREAD_PARAMS ThreadParams;
+   if( pGetFinalPathNameByHandle )// there is no driver, we have do it ugly way
+   {
+      g_CurrentIndex = 0;
+//    TCHAR tcFileName[MAX_PATH+1];
+      THREAD_PARAMS ThreadParams;
       wstring wstrFileName;
 
       wstrFileName.alloc(MAX_PATH * 8);
-		ThreadParams.lpPath = wstrFileName;
-		ThreadParams.nFileType = nFileType;
-		ThreadParams.pGetFinalPathNameByHandle = pGetFinalPathNameByHandle;
-		ThreadParams.pSysHandleInformation = pSysHandleInformation;
-		ThreadParams.hStartEvent = ::CreateEvent( 0, TRUE, FALSE, 0 );
-		ThreadParams.hFinishedEvent = ::CreateEvent( 0, TRUE, FALSE, 0 );
-		HANDLE ThreadHandle = 0;
-		while( g_CurrentIndex < pSysHandleInformation->dwCount )
-		{
-			if( !ThreadHandle )
-			{
-				ThreadHandle = create_thread( 0, 0, ThreadProc, &ThreadParams, 0, 0 );
-			}
-			ResetEvent( ThreadParams.hFinishedEvent );
-			SetEvent( ThreadParams.hStartEvent );
-			if( WAIT_TIMEOUT == WaitForSingleObject( ThreadParams.hFinishedEvent, 100 ))
-			{
-				string csError;
-				csError.Format("Query hang for handle %d", (int32_t)pSysHandleInformation->Handles[g_CurrentIndex - 1].wValue);
-				output_debug_string(csError );
-				TerminateThread( ThreadHandle, 0 );
-				CloseHandle( ThreadHandle );
-				ThreadHandle = 0;
-				continue;
-			}
-			if( !ThreadParams.bStatus )
-			{
-				continue;
-			}
-			int32_t nCmpStart = 4;
-			string csFileName( ::str::international::unicode_to_utf8(&ThreadParams.lpPath[nCmpStart]));
-			csFileName.make_lower();
+      ThreadParams.lpPath = wstrFileName;
+      ThreadParams.nFileType = nFileType;
+      ThreadParams.pGetFinalPathNameByHandle = pGetFinalPathNameByHandle;
+      ThreadParams.pSysHandleInformation = pSysHandleInformation;
+      ThreadParams.hStartEvent = ::CreateEvent( 0, TRUE, FALSE, 0 );
+      ThreadParams.hFinishedEvent = ::CreateEvent( 0, TRUE, FALSE, 0 );
+      HANDLE ThreadHandle = 0;
+      while( g_CurrentIndex < pSysHandleInformation->dwCount )
+      {
+         if( !ThreadHandle )
+         {
+            ThreadHandle = create_thread( 0, 0, ThreadProc, &ThreadParams, 0, 0 );
+         }
+         ResetEvent( ThreadParams.hFinishedEvent );
+         SetEvent( ThreadParams.hStartEvent );
+         if( WAIT_TIMEOUT == WaitForSingleObject( ThreadParams.hFinishedEvent, 100 ))
+         {
+            string csError;
+            csError.Format("Query hang for handle %d", (int32_t)pSysHandleInformation->Handles[g_CurrentIndex - 1].wValue);
+            output_debug_string(csError );
+            TerminateThread( ThreadHandle, 0 );
+            CloseHandle( ThreadHandle );
+            ThreadHandle = 0;
+            continue;
+         }
+         if( !ThreadParams.bStatus )
+         {
+            continue;
+         }
+         int32_t nCmpStart = 4;
+         string csFileName( ::str::international::unicode_to_utf8(&ThreadParams.lpPath[nCmpStart]));
+         csFileName.make_lower();
          if(csFileName.find("vs11_dp_ctp") >= 0)
          {
             continue;
          }
-			else if( 0 != _tcsncmp( lpPath, csFileName , csPath.get_length()))
-			{
-				continue;
-			}
-			OF_INFO_t stOFInfo;
-			stOFInfo.dwPID = pSysHandleInformation->Handles[g_CurrentIndex - 1].dwProcessId;
+         else if( 0 != _tcsncmp( lpPath, csFileName, csPath.get_length()))
+         {
+            continue;
+         }
+         OF_INFO_t stOFInfo;
+         stOFInfo.dwPID = pSysHandleInformation->Handles[g_CurrentIndex - 1].dwProcessId;
          wstring wstrCallback;
          wstrCallback = ::str::international::utf8_to_unicode(csFileName);
-			stOFInfo.lpFile = wstrCallback;
-			stOFInfo.hFile  = (HANDLE)pSysHandleInformation->Handles[g_CurrentIndex - 1].wValue;
-			CallBackProc( stOFInfo, pUserContext );
-		}
-		if( ThreadHandle )
-		{
-			if( WAIT_TIMEOUT == WaitForSingleObject( ThreadHandle, 1000 ))
-			{
-				TerminateThread( ThreadHandle, 0 );
-			}
-			CloseHandle( ThreadHandle );
-		}
-		CloseHandle( ThreadParams.hStartEvent );
-		CloseHandle( ThreadParams.hFinishedEvent );
-		return;
-	}
+         stOFInfo.lpFile = wstrCallback;
+         stOFInfo.hFile  = (HANDLE)pSysHandleInformation->Handles[g_CurrentIndex - 1].wValue;
+         CallBackProc( stOFInfo, pUserContext );
+      }
+      if( ThreadHandle )
+      {
+         if( WAIT_TIMEOUT == WaitForSingleObject( ThreadHandle, 1000 ))
+         {
+            TerminateThread( ThreadHandle, 0 );
+         }
+         CloseHandle( ThreadHandle );
+      }
+      CloseHandle( ThreadParams.hStartEvent );
+      CloseHandle( ThreadParams.hFinishedEvent );
+      return;
+   }
 
-	// Walk through the handle list
-	for ( uint32_t i = 0; i < pSysHandleInformation->dwCount; i++ )
-	{
-		SYSTEM_HANDLE& sh = pSysHandleInformation->Handles[i];
-		if( sh.bObjectType != nFileType )// Under windows XP file handle is of type 28
-		{
-			continue;
-		}
+   // Walk through the handle list
+   for ( uint32_t i = 0; i < pSysHandleInformation->dwCount; i++ )
+   {
+      SYSTEM_HANDLE& sh = pSysHandleInformation->Handles[i];
+      if( sh.bObjectType != nFileType )// Under windows XP file handle is of type 28
+      {
+         continue;
+      }
 
-		string csFileName;
-		string csDir;
-		if( hDriver )
-		{
-			HANDLE_INFO stHandle = {0};
-			ADDRESS_INFO stAddress;
-			stAddress.pAddress = sh.pAddress;
-			DWORD dwReturn = 0;
-			bool bSuccess = DeviceIoControl( hDriver, IOCTL_LISTDRV_BUFFERED_IO, &stAddress, sizeof(ADDRESS_INFO), &stHandle, sizeof(HANDLE_INFO), &dwReturn, NULL ) != FALSE;
+      string csFileName;
+      string csDir;
+      if( hDriver )
+      {
+         HANDLE_INFO stHandle = {0};
+         ADDRESS_INFO stAddress;
+         stAddress.pAddress = sh.pAddress;
+         DWORD dwReturn = 0;
+         bool bSuccess = DeviceIoControl( hDriver, IOCTL_LISTDRV_BUFFERED_IO, &stAddress, sizeof(ADDRESS_INFO), &stHandle, sizeof(HANDLE_INFO), &dwReturn, NULL ) != FALSE;
 
 
-			if( bSuccess && stHandle.tcFileName[0] != 0 &&
-				stHandle.uType != FILE_DEVICE_SOUND &&
-				stHandle.uType != FILE_DEVICE_NAMED_PIPE )
-			{
+         if( bSuccess && stHandle.tcFileName[0] != 0 &&
+               stHandle.uType != FILE_DEVICE_SOUND &&
+               stHandle.uType != FILE_DEVICE_NAMED_PIPE )
+         {
 
-				if( stHandle.uType != FILE_DEVICE_NETWORK_FILE_SYSTEM  )
-				{
-					// Get the drive name from the dos device name
-					if( !GetDrive( (LPCTSTR)stHandle.tcDeviceName, csFileName, true ))
-					{
-						output_debug_string( L"GetDrive failed" );
-					}
-					csFileName += (LPCTSTR)stHandle.tcFileName;
-				}
-				else
-				{
-					csFileName = _T("\\");
-					csFileName += (LPCTSTR)stHandle.tcFileName;
-				}
-			}
+            if( stHandle.uType != FILE_DEVICE_NETWORK_FILE_SYSTEM  )
+            {
+               // Get the drive name from the dos device name
+               if( !GetDrive( (LPCTSTR)stHandle.tcDeviceName, csFileName, true ))
+               {
+                  output_debug_string( L"GetDrive failed" );
+               }
+               csFileName += (LPCTSTR)stHandle.tcFileName;
+            }
             else
             {
-                continue;
+               csFileName = _T("\\");
+               csFileName += (LPCTSTR)stHandle.tcFileName;
             }
-		}
-		else
-		{
-			return;
-		}
+         }
+         else
+         {
+            continue;
+         }
+      }
+      else
+      {
+         return;
+      }
 
 
-		csFileName.make_lower();
-		// Check whether the file belongs to the specified folder
-// 		if( -1 == csFileName.Find( csPath ))
-// 		{
-// 			if( bShortPath )
-// 			{
-// 				// Some times the file name may be in int16_t path form.
-// 				if( -1 == csFileName.Find( csShortName ))
-// 				{
-// 					continue;
-// 				}
-// 			}
-// 			else
-// 			{
-// 				continue;
-// 			}
-// 		}
+      csFileName.make_lower();
+      // Check whether the file belongs to the specified folder
+//       if( -1 == csFileName.Find( csPath ))
+//       {
+//          if( bShortPath )
+//          {
+//             // Some times the file name may be in int16_t path form.
+//             if( -1 == csFileName.Find( csShortName ))
+//             {
+//                continue;
+//             }
+//          }
+//          else
+//          {
+//             continue;
+//          }
+//       }
 
-		if( 0 != _tcsncmp( lpPath, csFileName, csPath.get_length()))
-		{
-			if( bShortPath )
-			{
-				// Some times the file name may be in int16_t path form.
-				if( 0 != _tcsncmp( lpShortPath, csFileName, csShortName.get_length()))
-				{
-					continue;
-				}
-			}
-			else
-			{
-				continue;
-			}
-		}
-		OF_INFO_t stOFInfo;
-		stOFInfo.dwPID = sh.dwProcessId;
+      if( 0 != _tcsncmp( lpPath, csFileName, csPath.get_length()))
+      {
+         if( bShortPath )
+         {
+            // Some times the file name may be in int16_t path form.
+            if( 0 != _tcsncmp( lpShortPath, csFileName, csShortName.get_length()))
+            {
+               continue;
+            }
+         }
+         else
+         {
+            continue;
+         }
+      }
+      OF_INFO_t stOFInfo;
+      stOFInfo.dwPID = sh.dwProcessId;
       wstring wstrCallback;
       wstrCallback = ::str::international::utf8_to_unicode(csFileName);
-		stOFInfo.lpFile = wstrCallback;
-		stOFInfo.hFile  = (HANDLE)sh.wValue;
-		CallBackProc( stOFInfo, pUserContext );
-	}
-	delete pSysHandleInformation;
+      stOFInfo.lpFile = wstrCallback;
+      stOFInfo.hFile  = (HANDLE)sh.wValue;
+      CallBackProc( stOFInfo, pUserContext );
+   }
+   delete pSysHandleInformation;
 
 }
 
 
 void EnumerateLoadedModules( string& csPath, OF_CALLBACK CallBackProc, uint_ptr pUserContext )
 {
-	string csShortName;
-	GetShortPathName( csPath, csShortName.GetBuffer( MAX_PATH), MAX_PATH );
-	csShortName.ReleaseBuffer();
-	csShortName.make_lower();
-	bool bShortPath = false;
-	if(  csShortName != csPath && FALSE == csShortName.is_empty())
-	{
-		bShortPath = true;
-	}
+   string csShortName;
+   GetShortPathName( csPath, csShortName.GetBuffer( MAX_PATH), MAX_PATH );
+   csShortName.ReleaseBuffer();
+   csShortName.make_lower();
+   bool bShortPath = false;
+   if(  csShortName != csPath && FALSE == csShortName.is_empty())
+   {
+      bShortPath = true;
+   }
 
-	uint32_t dwsize = 300;
-	PDWORD pDwId = (PDWORD)new BYTE[dwsize];
-	DWORD dwReturned = dwsize;
-	// Enum all the process first
-	while( 1 )
-	{
-		EnumProcesses( pDwId, dwsize, &dwReturned );
-		if( dwsize > dwReturned  )
-		{
-			break;
-		}
-		delete pDwId;
-		dwsize += 50;
-		pDwId = (PDWORD)new BYTE[dwsize];
-	}
-	int32_t nCount = dwReturned / sizeof(uint32_t);
-	int32_t nItemCount = -1;
-	// Enumerate modules of the above process
-	for( int32_t nIdx = 0; nIdx < nCount;nIdx++ )
-	{
-		if( 0 != pDwId[nIdx] )
-		{
-			HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
-			MODULEENTRY32 me32;
-			// Take a snapshot of all modules in the specified process.
-			hModuleSnap = CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, pDwId[nIdx] );
-			if( hModuleSnap == INVALID_HANDLE_VALUE )
-			{
-				continue;
-			}
-			me32.dwSize = sizeof( MODULEENTRY32 );
-			if( !Module32First( hModuleSnap, &me32 ) )
-			{
-				CloseHandle( hModuleSnap );
-				continue;
-			}
-			bool bFirst = true;
-			PROCESS_INFO_t stInfo;
-			do
-			{
-				string csModule;
-				if( bFirst )
-				{
-					// First module is always the exe name
-					bFirst = false;
+   uint32_t dwsize = 300;
+   PDWORD pDwId = (PDWORD)new BYTE[dwsize];
+   DWORD dwReturned = dwsize;
+   // Enum all the process first
+   while( 1 )
+   {
+      EnumProcesses( pDwId, dwsize, &dwReturned );
+      if( dwsize > dwReturned  )
+      {
+         break;
+      }
+      delete pDwId;
+      dwsize += 50;
+      pDwId = (PDWORD)new BYTE[dwsize];
+   }
+   int32_t nCount = dwReturned / sizeof(uint32_t);
+   int32_t nItemCount = -1;
+   // Enumerate modules of the above process
+   for( int32_t nIdx = 0; nIdx < nCount; nIdx++ )
+   {
+      if( 0 != pDwId[nIdx] )
+      {
+         HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
+         MODULEENTRY32 me32;
+         // Take a snapshot of all modules in the specified process.
+         hModuleSnap = CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, pDwId[nIdx] );
+         if( hModuleSnap == INVALID_HANDLE_VALUE )
+         {
+            continue;
+         }
+         me32.dwSize = sizeof( MODULEENTRY32 );
+         if( !Module32First( hModuleSnap, &me32 ) )
+         {
+            CloseHandle( hModuleSnap );
+            continue;
+         }
+         bool bFirst = true;
+         PROCESS_INFO_t stInfo;
+         do
+         {
+            string csModule;
+            if( bFirst )
+            {
+               // First module is always the exe name
+               bFirst = false;
                if(!LIBCALL(shlwapi,PathFileExistsA)(me32.szExePath))
-					{
-						TCHAR tcFileName[MAX_PATH];
-						HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION|PROCESS_VM_READ, TRUE, pDwId[nIdx] );
-						if( GetProcessImageFileName( hProcess, tcFileName, MAX_PATH ))
-						{
-							GetDrive( tcFileName, csModule, false );
-						}
-						CloseHandle( hProcess );
-					}
-					else
-					{
-						csModule = me32.szExePath;
-					}
-					csModule.make_lower();
-				}
-				else
-				{
-					csModule = me32.szExePath;
-					csModule.make_lower();
-				}
-				if( -1 == csModule.find( csPath ))
-				{
-					if( bShortPath )
-					{
-						if( -1 == csModule.find( csShortName ))
-						{
-							continue;
-						}
-					}
-					else
-					{
-						continue;
-					}
-				}
-				OF_INFO_t stOFInfo;
-				stOFInfo.dwPID = pDwId[nIdx];
+               {
+                  TCHAR tcFileName[MAX_PATH];
+                  HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION|PROCESS_VM_READ, TRUE, pDwId[nIdx] );
+                  if( GetProcessImageFileName( hProcess, tcFileName, MAX_PATH ))
+                  {
+                     GetDrive( tcFileName, csModule, false );
+                  }
+                  CloseHandle( hProcess );
+               }
+               else
+               {
+                  csModule = me32.szExePath;
+               }
+               csModule.make_lower();
+            }
+            else
+            {
+               csModule = me32.szExePath;
+               csModule.make_lower();
+            }
+            if( -1 == csModule.find( csPath ))
+            {
+               if( bShortPath )
+               {
+                  if( -1 == csModule.find( csShortName ))
+                  {
+                     continue;
+                  }
+               }
+               else
+               {
+                  continue;
+               }
+            }
+            OF_INFO_t stOFInfo;
+            stOFInfo.dwPID = pDwId[nIdx];
             wstring wstrCallback;
 
             wstrCallback = ::str::international::utf8_to_unicode(csModule);
 
-				stOFInfo.lpFile = wstrCallback;
-				CallBackProc( stOFInfo, pUserContext );
-			}
-			while( Module32Next( hModuleSnap, &me32 ) );
-			CloseHandle( hModuleSnap );
-		}
-	}
+            stOFInfo.lpFile = wstrCallback;
+            CallBackProc( stOFInfo, pUserContext );
+         }
+         while( Module32Next( hModuleSnap, &me32 ) );
+         CloseHandle( hModuleSnap );
+      }
+   }
 
-	delete pDwId;
+   delete pDwId;
 
 }
 
@@ -938,7 +940,7 @@ void EnumerateLoadedModules( string& csPath, OF_CALLBACK CallBackProc, uint_ptr 
 
 int ftruncate(int file, file_size_t len)
 {
-  return _chsize_s (file, len);
+   return _chsize_s (file, len);
 }
 
 
@@ -1062,7 +1064,7 @@ int_bool file_move_dup(const char * lpszNewName, const char * lpszOldName)
 
 int_bool file_delete_dup(const char * lpszFileName)
 {
-   
+
 
    if(!::DeleteFile((LPTSTR)lpszFileName))
       return FALSE;
@@ -1112,8 +1114,8 @@ char get_drive_letter(const char * lpDevicePath)
 
    while(d <= 'Z')
    {
-      char szDeviceName[3] ={d,':','\0'};
-      char szTarget[512] ={0};
+      char szDeviceName[3] = {d,':','\0'};
+      char szTarget[512] = {0};
       if(QueryDosDevice(szDeviceName,szTarget,511) != 0)
          if(_tcscmp(lpDevicePath,szTarget) == 0)
             return d;
@@ -1256,8 +1258,8 @@ HANDLE ExtractAndInstallDrv()
 
 
       hService = CreateService(hSCManager, DRV_NAME, DRV_NAME, SERVICE_ALL_ACCESS,
-         SERVICE_KERNEL_DRIVER, SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL,
-         csFilePath, NULL, NULL, NULL, NULL, NULL);
+                               SERVICE_KERNEL_DRIVER, SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL,
+                               csFilePath, NULL, NULL, NULL, NULL, NULL);
 
       if (0 == hService)
       {
@@ -1284,8 +1286,8 @@ HANDLE ExtractAndInstallDrv()
    // Delete the temp file...
    //DeleteFile( csPath );
    HANDLE hFile = CreateFile(DRV_DOS_NAME, GENERIC_READ | GENERIC_WRITE,
-      FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
-      OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0);
+                             FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
+                             OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0);
    if (INVALID_HANDLE_VALUE == hFile)
    {
       hFile = 0;
@@ -1353,22 +1355,22 @@ int_bool EnableTokenPrivilege(LPCTSTR pszPrivilege)
 
    // Get a token for this process.
    if (!OpenProcessToken(GetCurrentProcess(),
-      TOKEN_ADJUST_PRIVILEGES |
-      TOKEN_QUERY, &hToken))
+                         TOKEN_ADJUST_PRIVILEGES |
+                         TOKEN_QUERY, &hToken))
    {
       return FALSE;
    }
 
-   // Get the LUID for the privilege. 
+   // Get the LUID for the privilege.
    if (LookupPrivilegeValue(NULL, pszPrivilege,
-      &tkp.Privileges[0].Luid))
+                            &tkp.Privileges[0].Luid))
    {
-      tkp.PrivilegeCount = 1;  // one privilege to set    
+      tkp.PrivilegeCount = 1;  // one privilege to set
       tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
-      // set the privilege for this process. 
+      // set the privilege for this process.
       AdjustTokenPrivileges(hToken, FALSE, &tkp, 0,
-         (PTOKEN_PRIVILEGES)NULL, 0);
+                            (PTOKEN_PRIVILEGES)NULL, 0);
 
       if (GetLastError() != ERROR_SUCCESS)
          return FALSE;
@@ -1390,7 +1392,6 @@ CLASS_DECL_AURA int_bool read_resource_as_memory_dup(memory & m, HINSTANCE hinst
    uint32_t dwResourceSize;
    int_bool bOk;
    UINT FAR* pResource;
-   HANDLE hfile;
 
    if (hrsrc == NULL)
       return FALSE;

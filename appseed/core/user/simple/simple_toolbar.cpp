@@ -4,14 +4,14 @@
 
 class simple_tool_command : public ::user::command        // class private to this file !
 {
-public: // re-implementations only
+   public: // re-implementations only
 
-   simple_tool_command(::aura::application * papp);
-   virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
-   //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
-   virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+      simple_tool_command(::aura::application * papp);
+      virtual void Enable(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
+      //   virtual void _001SetCheck(bool bCheck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
+      virtual void _001SetCheck(check::e_check echeck, ::action::context = ::action::source_system);   // 0, 1 or 2 (indeterminate)
 //   virtual void SetRadio(bool bOn = TRUE, ::action::context actioncontext = ::action::source_system);
-   virtual void SetText(const char * lpszText, ::action::context actioncontext = ::action::source_system);
+      virtual void SetText(const char * lpszText, ::action::context actioncontext = ::action::source_system);
 };
 
 #define EXTRA_TEXT_CX 3
@@ -85,7 +85,7 @@ simple_toolbar::simple_toolbar(::aura::application * papp) :
 
    m_bDelayedButtonLayout = true;
 
-   
+
 
 }
 
@@ -428,10 +428,10 @@ void simple_toolbar::on_command_probe(::user::frame_window * ptarget, bool bDisa
             continue;
 
          }
-          
+
          //if (!state.m_bEnableChanged)
          //{
-         // 
+         //
          //   if (m_itema[state.m_iIndex]->m_bEnableIfHasCommandHandler)
          //   {
 
@@ -467,7 +467,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
    ASSERT(nCount > 0);
 
    ::draw2d::memory_graphics pgraphics(allocer());
-   
+
    select_font(pgraphics, ::user::font_toolbar);
 
    m_dFontSize = pgraphics->m_spfont->m_dFontSize;
@@ -488,7 +488,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
    int32_t buttonx, buttony;
 
-   int iC = MIN(nCount, m_itema.get_size());
+   auto iC = MIN(nCount, m_itema.get_size());
 
    rect rItemPad = get_item_pad();
 
@@ -550,9 +550,9 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
          size = pgraphics->GetTextExtent(str);
 
-         buttonx += size.cx + EXTRA_TEXT_CX;
+         convert_add(buttonx, size.cx + EXTRA_TEXT_CX);
 
-         buttony += size.cy + EXTRA_TEXT_CY;
+         convert_add(buttony, size.cy + EXTRA_TEXT_CY);
 
       }
 
@@ -663,9 +663,9 @@ void simple_toolbar::_001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem)
 
 void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, int32_t iItem)
 {
-   
+
    draw_select ds(this, pgraphics);
-   
+
    pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
    rect rectItem;
@@ -687,87 +687,87 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
    UINT uiImage = pmenucentral->CommandToImage(item.m_id);
 
    e_element eelement = element_item;
-   
+
    e_element eelementImage = element_image;
-   
+
    e_element eelementText = element_text;
-   
+
    if ((nStyle & TBBS_SEPARATOR) == 0)
    {
-      
+
       if ((nStyle & TBBS_DISABLED) == 0)
       {
-         
+
          // item is enabled
          if (m_iButtonPressItem >= 0)
          {
-            
+
             if (iItem == m_iButtonPressItem)
             {
-               
+
                if (bHover)
                {
-                  
+
                   eelement = ElementItemPress;
-                  
+
                   eelementImage = ElementImagePress;
-                  
+
                   eelementText = ElementTextPress;
-                  
+
                }
                else
                {
-                  
+
                   eelement = ElementItemHover;
-                  
+
                   eelementImage = ElementImageHover;
-                  
+
                   eelementText = ElementTextHover;
-                  
+
                }
-               
+
             }
-            
+
          }
          else if (bHover)
          {
-            
+
             eelement = ElementItemHover;
-            
+
             eelementImage = ElementImageHover;
-            
+
             eelementText = ElementTextHover;
-            
+
          }
-         
+
       }
       else
       {
-         
+
          // item is disabled
-         
+
          eelement = element_item;
-         
+
          eelementImage = element_image;
-         
+
          eelementText = element_text;
-         
+
       }
-      
+
    }
    else
    {
-      
+
       eelement = element_item;
-      
+
       eelementImage = element_image;
-      
+
       eelementText = element_text;
-      
+
    }
 
    int iOffsetX = 0;
-   
+
    int iOffsetY = 0;
 
    _001GetElementRect(iItem, rectItem, eelement);
@@ -776,26 +776,26 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    if ((nStyle & TBBS_SEPARATOR) != 0)
    {
-      
+
       rect rectSeparator;
-      
+
       rectSeparator.left = (rectImage.left + rectImage.right) / 2 - 1;
-      
+
       rectSeparator.right = rectSeparator.left + 2;
-      
+
       rectSeparator.top = rectImage.top;
-      
+
       rectSeparator.bottom = rectImage.bottom;
-      
+
       pgraphics->Draw3dRect(rectSeparator, ARGB(255, 92, 92, 92), ARGB(255, 255, 255, 255));
-      
+
    }
    else
    {
-      
+
       if (eelement == ElementItemHover)
       {
-         
+
          if ((nStyle & TBBS_CHECKED) != 0)
          {
 
@@ -814,22 +814,22 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
                   RGB(255, 255, 250), 208);
 
                pgraphics->Draw3dRect(rectItem, ARGB(255, 127, 127, 127), ARGB(255, 255, 255, 255));
-               
+
             }
-            
+
             if (uiImage != 0xffffffffu)
             {
-               
+
                if ((nStyle & TBBS_DISABLED) == 0)
                {
-                  
+
                   // button is enabled
                   pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
                }
                else
                {
-               
+
                   // button is disabled
                   pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
@@ -849,42 +849,42 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
             {
 
                ::draw2d::pen_sp pen(pgraphics, 1, ARGB(184, 92, 184, 92));
-               
+
                ::draw2d::brush_sp brush(allocer(), ARGB(123, 177, 184, 255));
-               
+
                ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
-               
+
                ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-               
+
                pgraphics->Rectangle(rectItem);
-               
+
                pgraphics->SelectObject(ppenOld);
-               
+
                pgraphics->SelectObject(pbrushOld);
 
             }
 
             if (item.m_spdib.is_set())
             {
-               
+
                rect rect;
-               
+
                _001GetElementRect(iItem, rect, ElementImageHover);
-               
+
                System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
 
             }
             else if (uiImage != 0xffffffffu)
             {
-               
+
                rect rect;
-               
+
                _001GetElementRect(iItem, rect, ElementItemHover);
 
                pmenucentral->MenuV033GetImageListHue()->draw(pgraphics, uiImage, rect.top_left(), 0);
 
                pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
-               
+
             }
 
          }
@@ -897,26 +897,26 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          {
 
             ::draw2d::pen_sp pen(pgraphics, 1, ARGB(255, 92, 92, 92));
-            
+
             ::draw2d::brush_sp brush(allocer(), ARGB(255, 255, 255, 255));
-            
+
             ::draw2d::pen * ppenOld = pgraphics->SelectObject(pen);
-            
+
             ::draw2d::brush * pbrushOld = pgraphics->SelectObject(brush);
-            
+
             pgraphics->Rectangle(rectItem);
-            
+
             pgraphics->SelectObject(ppenOld);
-            
+
             pgraphics->SelectObject(pbrushOld);
 
          }
 
          if (item.m_spdib.is_set())
          {
-            
+
             rect rect;
-            
+
             _001GetElementRect(iItem, rect, ElementImagePress);
 
             System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
@@ -924,7 +924,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          }
          else if (uiImage != 0xffffffff)
          {
-            
+
             pmenucentral->MenuV033GetImageList()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
          }
@@ -935,7 +935,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
          if ((nStyle & TBBS_DISABLED) == 0)
          {
-            
+
             _001GetElementRect(iItem, rectItem, element_item);
 
             pgraphics->FillSolidRect(rectItem, ARGB(184, 255, 255, 255));
@@ -951,9 +951,9 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
          if (item.m_spdib.is_set())
          {
-            
+
             rect rect;
-            
+
             _001GetElementRect(iItem, rect, element_image);
 
             System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
@@ -964,13 +964,13 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             if ((nStyle & TBBS_DISABLED) == 0)
             {
-               
+
                pmenucentral->MenuV033GetImageListBlend()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
             }
             else
             {
-               
+
                pmenucentral->MenuV033GetImageListHueLight()->draw(pgraphics, uiImage, rectImage.top_left(), 0);
 
             }
@@ -1004,7 +1004,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
          brushText->create_solid(ARGB(255, 123, 123, 118));
 
       }
-      
+
       pgraphics->SelectObject(brushText);
 
       if (_001GetElementRect(iItem, rectText, eelementText) && rectText.right > 0)
@@ -1124,7 +1124,7 @@ bool simple_toolbar::_001GetElementRect(int32_t iItem, LPRECT lprect, e_element 
          size sPress = get_press_shift();
          rect.offset(sPress.cx, sPress.cy);
       }
-         break;
+      break;
       default:
          break;
       }
@@ -1203,16 +1203,19 @@ m_hRsrcImageWell = hRsrcImageWell;
 
 _001DiscardImageList();
 
-   m_pimagelist = new image_list();
+m_pimagelist = new image_list();
 m_bInternalImageList = true;
 
 m_pimagelist->create(
-(char *) lpszResourceName,
-m_sizeImage.cx,
-1,
-RGB(192, 192, 192));
+   (char *) lpszResourceName,
+   m_sizeImage.cx,
+   1,
+   RGB(192, 192, 192)
+   );
 
-_001OnImageListAttrib();*/
+_001OnImageListAttrib();
+
+*/
 
 /*
 return TRUE;
@@ -1221,7 +1224,6 @@ return TRUE;
 
 void simple_toolbar::on_layout()
 {
-   //ASSERT(m_bDelayedButtonLayout);
 
    synch_lock ml(m_pmutex);
 
@@ -1244,12 +1246,23 @@ void simple_toolbar::on_layout()
    bool bHorz = (m_dwStyle & CBRS_ORIENT_HORZ) != 0;
 
    if ((m_dwStyle & CBRS_FLOATING) && (m_dwStyle & CBRS_SIZE_DYNAMIC))
+   {
+
       CalcDynamicLayout(0, LM_HORZ | LM_MRUWIDTH | LM_COMMIT);
+
+   }
    else if (bHorz)
+   {
+
       CalcDynamicLayout(0, LM_HORZ | LM_HORZDOCK | LM_COMMIT);
+
+   }
    else
+   {
+
       CalcDynamicLayout(0, LM_VERTDOCK | LM_COMMIT);
 
+   }
 
    if (m_dwCtrlStyle &TBSTYLE_ALIGN_CENTER)
    {
@@ -1260,7 +1273,7 @@ void simple_toolbar::on_layout()
 
       GetClientRect(rectClient);
 
-      size s = CalcSize(m_itema.get_count());
+      size s = CalcSize(convert < int32_t > (m_itema.get_count()));
 
       for (index i = 0; i < m_itema.get_count(); i++)
       {
@@ -1269,11 +1282,11 @@ void simple_toolbar::on_layout()
          {
 
             int iTotalX = 0;
+
             for (index j = 0; j <= i; j++)
             {
 
                iTotalX += m_itema[j]->m_rect.width() + get_item_spacing().cx;
-
 
             }
 
@@ -1284,120 +1297,203 @@ void simple_toolbar::on_layout()
 
                m_itema[j]->m_rect.offset(offsetx, 0);
 
-
             }
 
          }
 
       }
 
-
    }
-
 
 }
 
 
 void simple_toolbar::_001OnMouseMove(::message::message * pobj)
 {
+
    SCAST_PTR(::message::mouse, pmouse, pobj);
+
    point pt = pmouse->m_pt;
+
    ScreenToClient(&pt);
+
    if (m_bDockTrack)
    {
+
       pobj->previous();
+
    }
    else
    {
+
       _001Hover(pt);
+
       if (m_iHover >= 0)
       {
+
          pmouse->m_bRet = true;
+
          pmouse->set_lresult(1);
+
       }
+
       pobj->previous();
+
    }
+
 }
+
 
 void simple_toolbar::_001OnLButtonDown(::message::message * pobj)
 {
+
    SCAST_PTR(::message::mouse, pmouse, pobj);
+
    point pt = pmouse->m_pt;
+
    ScreenToClient(&pt);
+
    m_iButtonPressItem = _001HitTest(pt);
 
    if (m_iButtonPressItem >= 0)
    {
+
       pmouse->m_bRet = true;
+
       pmouse->set_lresult(1);
+
    }
 
    RedrawWindow();
 
    pobj->previous();
+
 }
+
 
 void simple_toolbar::_001OnLButtonUp(::message::message * pobj)
 {
+
    SCAST_PTR(::message::mouse, pmouse, pobj);
+
    point pt = pmouse->m_pt;
+
    ScreenToClient(&pt);
+
    if (m_bDockTrack)
    {
+
       pobj->previous();
+
    }
    else
    {
+
       int32_t iItem = _001HitTest(pt);
+
       if (iItem >= 0 && iItem == m_iButtonPressItem)
       {
+
          _001OnClick(iItem);
+
          pmouse->m_bRet = true;
+
          pmouse->set_lresult(1);
+
       }
+
       sp(::user::frame_window) pTarget = GetOwner();
+
       if (pTarget == NULL)
+      {
+
          pTarget = GetParentFrame();
+
+      }
+
       if (pTarget != NULL)
+      {
+
          pTarget->send_message_to_descendants(WM_IDLEUPDATECMDUI);
+
+      }
+
       m_iButtonPressItem = -1;
+
       RedrawWindow();
+
       if (pobj->m_bRet)
       {
+
          return;
+
       }
+
       pobj->previous();
+
    }
+
 }
 
 
 int32_t simple_toolbar::_001HitTest(point pt)
 {
+
    for (int32_t iItem = 0; iItem < m_itema.get_size(); iItem++)
    {
+
       if (m_itema[iItem]->m_rect.contains(pt))
+      {
+
          return iItem;
+
+      }
+
    }
+
    if (Session.GetCapture() == this)
+   {
+
       return -1;
+
+   }
+
    rect rectWindow;
+
    GetWindowRect(rectWindow);
+
    ScreenToClient(rectWindow);
+
    if (rectWindow.contains(pt))
+   {
+
       return -1;
+
+   }
    else
+   {
+
       return 0x80000000;
+
+   }
+
 }
 
 
 void simple_toolbar::_001Hover(point pt, bool bRedraw)
 {
+
    int32_t iHover = _001HitTest(pt);
+
    if (m_iHover != iHover)
    {
+
       track_mouse_leave();
+
       m_iHover = iHover;
+
       OnUpdateHover();
+
       //      if(m_iHover < -1)
       //    {
       //     KillTimer(TIMER_HOVER);
@@ -1409,38 +1505,54 @@ void simple_toolbar::_001Hover(point pt, bool bRedraw)
 
       if (bRedraw)
       {
+
          RedrawWindow();
+
       }
+
    }
+
 }
+
 
 void simple_toolbar::_001Hover(bool bRedraw)
 {
+
    point pt;
+
    GetCursorPos(&pt);
+
    ScreenToClient(&pt);
+
    _001Hover(pt, bRedraw);
+
 }
+
 
 void simple_toolbar::_001OnTimer(::timer * ptimer)
 {
+
    ::user::toolbar::_001OnTimer(ptimer);
+
    if (ptimer->m_nIDEvent == TIMER_HOVER)
    {
+
       _001Hover();
+
    }
 
    // trans ::user::control_bar::OnTimer(ptimer->m_nIDEvent);
+
 }
 
 
 void simple_toolbar::_001OnClick(index iItem)
 {
-   
+
    sp(::user::interaction) pwnd = GetOwner();
 
    ::user::command command(m_itema[iItem]->m_id);
-   
+
    pwnd->_001SendCommand(&command);
 
 }
@@ -1448,66 +1560,106 @@ void simple_toolbar::_001OnClick(index iItem)
 
 void simple_toolbar::_001DiscardImageList()
 {
-   /*   if(m_bInternalImageList)
+
+   /*
+
+   if(m_bInternalImageList)
    {
-   if(m_pimagelist != NULL)
-   {
-   delete m_pimagelist;
-   m_pimagelist = NULL;
-   }
+
+      if(m_pimagelist != NULL)
+      {
+
+         delete m_pimagelist;
+
+         m_pimagelist = NULL;
+
+      }
+
    }
    else
    {
-   m_pimagelist = NULL;
-   }*/
+
+      m_pimagelist = NULL;
+
+   }
+   */
+
 }
+
 
 void simple_toolbar::_001SetImageList(sp(image_list) pimagelist)
 {
+
    UNREFERENCED_PARAMETER(pimagelist);
-   /*   m_pimagelist = pimagelist;
+
+   /*
+
+   m_pimagelist = pimagelist;
+
    m_bInternalImageList = false;
-   _001OnImageListAttrib();*/
+
+   _001OnImageListAttrib();
+
+   */
+
 }
 
 
 void simple_toolbar::_001OnImageListAttrib()
 {
+
    /*
+
    if(m_pimagelistHue == NULL)
    {
-   m_pimagelistHue = new image_list();
+
+      m_pimagelistHue = new image_list();
+
    }
+
    ::draw2d::graphics_sp spgraphics(allocer());
+
    spgraphics->CreateDC("DISPLAY", NULL, NULL, NULL);
+
    System.visual().imaging().CreateHueImageList(
-   &spgraphics,
-   m_pimagelistHue,
-   m_pimagelist,
-   RGB(192, 192, 180),
-   0.50);
+      &spgraphics,
+      m_pimagelistHue,
+      m_pimagelist,
+      RGB(192, 192, 180),
+      0.50
+   );
 
    if(m_pimagelistBlend == NULL)
    {
-   m_pimagelistBlend = new image_list();
+
+      m_pimagelistBlend = new image_list();
+
    }
+
    System.visual().imaging().Createcolor_blend_ImageList(
-   m_pimagelistBlend,
-   m_pimagelist,
-   RGB(255, 255, 240),
-   64);
+      m_pimagelistBlend,
+      m_pimagelist,
+      RGB(255, 255, 240),
+      64
+   );
 
    if(m_pimagelistHueLight == NULL)
    {
-   m_pimagelistHueLight = new image_list();
+
+      m_pimagelistHueLight = new image_list();
+
    }
+
    System.visual().imaging().CreateHueImageList(
-   &spgraphics,
-   m_pimagelistHueLight,
-   m_pimagelist,
-   RGB(220, 220, 215),
-   0.50);
+      &spgraphics,
+      m_pimagelistHueLight,
+      m_pimagelist,
+      RGB(220, 220, 215),
+      0.50
+      );
+
    */
+
 }
 
 
@@ -1517,63 +1669,107 @@ void simple_toolbar::_001OnImageListAttrib()
 simple_tool_command::simple_tool_command(::aura::application * papp) :
    ::user::command(papp)
 {
+
 }
+
+
 void simple_tool_command::Enable(bool bOn, ::action::context actioncontext)
 {
+
    m_bEnableChanged = TRUE;
+
    simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
+
    ASSERT(pToolBar != NULL);
+
    //   ASSERT_KINDOF(simple_toolbar, pToolBar);
+
    ASSERT(m_iIndex < m_iCount);
+
    UINT nNewStyle = pToolBar->GetButtonStyle((int32_t)m_iIndex) & ~TBBS_DISABLED;
+
    if (!bOn)
    {
+
       nNewStyle |= TBBS_DISABLED;
+
       // WINBUG: If a button is currently pressed and then is disabled
       // COMCTL32.DLL does not unpress the button, even after the mouse
       // button goes up!  We work around this bug by forcing TBBS_PRESSED
       // off when a button is disabled.
       nNewStyle &= ~TBBS_PRESSED;
+
    }
+
    ASSERT(!(nNewStyle & TBBS_SEPARATOR));
+
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle);
+
 }
+
 
 void simple_tool_command::_001SetCheck(check::e_check echeck, ::action::context actioncontext)
 {
-   ASSERT(echeck == check::checked
-      || echeck == check::unchecked
-      || echeck == check::tristate); // 0=>off, 1=>on, 2=>indeterminate
+
+   // 0=>off, 1=>on, 2=>indeterminate
+
+   ASSERT(echeck == check::checked || echeck == check::unchecked || echeck == check::tristate);
+
    simple_toolbar* pToolBar = dynamic_cast <simple_toolbar *> (m_puiOther);
+
    ASSERT(pToolBar != NULL);
+
    ASSERT_KINDOF(simple_toolbar, pToolBar);
+
    ASSERT(m_iIndex < m_iCount);
 
-   UINT nNewStyle = pToolBar->GetButtonStyle((int32_t)m_iIndex) &
-      ~(TBBS_CHECKED | TBBS_INDETERMINATE);
+   UINT nNewStyle = pToolBar->GetButtonStyle((int32_t)m_iIndex) & ~(TBBS_CHECKED | TBBS_INDETERMINATE);
+
    if (echeck == check::checked)
+   {
+
       nNewStyle |= TBBS_CHECKED;
+
+   }
    else if (echeck == check::tristate)
+   {
+
       nNewStyle |= TBBS_INDETERMINATE;
+
+   }
+
    ASSERT(!(nNewStyle & TBBS_SEPARATOR));
+
    pToolBar->SetButtonStyle((int32_t)m_iIndex, nNewStyle | TBBS_CHECKBOX);
+
 }
+
 
 void simple_tool_command::SetText(const char *, ::action::context)
 {
+
    // ignore it
+
 }
+
 
 int32_t simple_toolbar::GetItemStyle(int32_t iItem)
 {
+
    return m_itema[iItem]->m_fsStyle;
+
 }
+
 
 bool simple_toolbar::SetItemStyle(int32_t iItem, BYTE bStyle)
 {
+
    UNREFERENCED_PARAMETER(iItem);
+
    UNREFERENCED_PARAMETER(bStyle);
+
    return false;
+
 }
 
 
@@ -1583,7 +1779,11 @@ UINT simple_toolbar::GetButtonStyle(int32_t nIndex)
    sp(::user::toolbar_item) pitem = m_itema[nIndex];
 
    if (pitem.is_null())
+   {
+
       return 0;
+
+   }
 
    return MAKELONG(pitem->m_fsStyle, pitem->m_fsState);
 
@@ -1596,13 +1796,21 @@ void simple_toolbar::SetButtonStyle(int32_t nIndex, UINT nStyle)
    sp(::user::toolbar_item) pitem = m_itema[nIndex];
 
    if (pitem.is_null())
+   {
+
       return;
+
+   }
 
    if (pitem->m_fsStyle != (BYTE)LOWORD(nStyle) || pitem->m_fsState != (BYTE)HIWORD(nStyle))
    {
+
       pitem->m_fsStyle = (BYTE)LOWORD(nStyle);
+
       pitem->m_fsState = (BYTE)HIWORD(nStyle);
+
       m_bDelayedButtonLayout = TRUE;
+
    }
 
 }
@@ -1610,33 +1818,50 @@ void simple_toolbar::SetButtonStyle(int32_t nIndex, UINT nStyle)
 
 void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 {
+
 #if defined(WINDOWSEX) //|| defined(LINUX)
+
    SCAST_PTR(::message::nc_calc_size, pnccalcsize, pobj);
+
    // calculate border space (will add to top/bottom, subtract from right/bottom)
    class rect rect;
+
    rect.null();
+
    bool bHorz = (m_dwStyle & CBRS_ORIENT_HORZ) != 0;
+
    ::user::control_bar::CalcInsideRect(rect, bHorz);
 
    // adjust non-client area for border space
    pnccalcsize->m_pparams->rgrc[0].left += rect.left;
+
    pnccalcsize->m_pparams->rgrc[0].top += rect.top;
+
    pnccalcsize->m_pparams->rgrc[0].right += rect.right;
+
    pnccalcsize->m_pparams->rgrc[0].bottom += rect.bottom;
+
 #else
+
    throw todo(get_app());
+
 #endif
+
 }
 
 
 void simple_toolbar::_001OnNcHitTest(::message::message * pobj)
 {
+
    SCAST_PTR(::message::nchittest, pnchittest, pobj);
+
    pnchittest->set_lresult(HTCLIENT);
+
 }
 
 
 #define CX_OVERLAP  0
+
 
 int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 {
@@ -1667,7 +1892,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    string str;
 
-   int iC = MIN(nCount, m_itema.get_count());
+   auto iC = MIN(nCount, m_itema.get_count());
 
    bool bFirstInRow = true;
 
@@ -1715,7 +1940,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
             sized size = pgraphics->GetTextExtent(str);
 
-            dx += size.cx + EXTRA_TEXT_CX;
+            convert(dx, size.cx + EXTRA_TEXT_CX);
 
          }
 
@@ -1732,41 +1957,64 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
          for (int32_t j = i; j >= 0 && !(m_itema[j]->m_fsState & TBSTATE_WRAP); j--)
          {
+
             // find last separator that isn't hidden
             // a separator that has a command ID is not
             // a separator, but a custom control.
             if ((m_itema[j]->m_fsStyle & TBSTYLE_SEP) &&
-               (m_itema[j]->m_id == "separator") &&
-               !(m_itema[j]->m_fsState & TBSTATE_HIDDEN))
+                  (m_itema[j]->m_id == "separator") &&
+                  !(m_itema[j]->m_fsState & TBSTATE_HIDDEN))
             {
+
                bFound = TRUE;
+
                i = j;
+
                x = rBorder.left;
+
                bFirstInRow = true;
+
                m_itema[j]->m_fsState |= TBSTATE_WRAP;
+
                nResult++;
+
                break;
+
             }
+
          }
 
          if (!bFound)
          {
+
             for (int32_t j = i - 1; j >= 0 && !(m_itema[j]->m_fsState & TBSTATE_WRAP); j--)
             {
+
                // Never wrap anything that is hidden,
                // or any custom controls
                if ((m_itema[j]->m_fsState & TBSTATE_HIDDEN) ||
-                  ((m_itema[j]->m_fsStyle & TBSTYLE_SEP) &&
-                  (m_itema[j]->m_id != "separator")))
+                     ((m_itema[j]->m_fsStyle & TBSTYLE_SEP) &&
+                      (m_itema[j]->m_id != "separator")))
+               {
+
                   continue;
 
+               }
+
                bFound = TRUE;
+
                i = j;
+
                x = rBorder.left;
+
                bFirstInRow = true;
+
                m_itema[j]->m_fsState |= TBSTATE_WRAP;
+
                nResult++;
+
                break;
+
             }
 
          }
@@ -1798,78 +2046,123 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
 void  simple_toolbar::SizeToolBar(int32_t nCount, int32_t nLength, bool bVert)
 {
+
    ASSERT(nCount > 0);
 
    if (!bVert)
    {
+
       int32_t nMin, nMax, nTarget, nCurrent, nMid;
 
       // Wrap ToolBar as specified
       nMax = nLength;
+
       nTarget = WrapToolBar(nCount, nMax);
 
       // Wrap ToolBar vertically
       nMin = 0;
+
       nCurrent = WrapToolBar(nCount, nMin);
 
       if (nCurrent != nTarget)
       {
          while (nMin < nMax)
          {
+
             nMid = (nMin + nMax) / 2;
+
             nCurrent = WrapToolBar(nCount, nMid);
 
             if (nCurrent == nTarget)
+            {
+
                nMax = nMid;
+
+            }
             else
             {
                if (nMin == nMid)
                {
+
                   WrapToolBar(nCount, nMax);
+
                   break;
+
                }
+
                nMin = nMid;
+
             }
+
          }
+
       }
+
       size size = CalcSize(nCount);
+
       WrapToolBar(nCount, size.cx);
+
       CalcSize(nCount);
+
    }
    else
    {
+
       size sizeMax, sizeMin, sizeMid;
 
       // Wrap ToolBar vertically
       WrapToolBar(nCount, 0);
+
       sizeMin = CalcSize(nCount);
 
       // Wrap ToolBar horizontally
       WrapToolBar(nCount, 32767);
+
       sizeMax = CalcSize(nCount);
 
       while (sizeMin.cx < sizeMax.cx)
       {
+
          sizeMid.cx = (sizeMin.cx + sizeMax.cx) / 2;
+
          WrapToolBar(nCount, sizeMid.cx);
+
          sizeMid = CalcSize(nCount);
 
          if (nLength < sizeMid.cy)
          {
+
             if (sizeMin == sizeMid)
             {
+
                WrapToolBar(nCount, sizeMax.cx);
+
                return;
+
             }
+
             sizeMin = sizeMid;
+
          }
          else if (nLength > sizeMid.cy)
+         {
+
             sizeMax = sizeMid;
+
+         }
          else
+         {
+
             return;
+
+         }
+
       }
+
    }
+
 }
+
 
 struct ___CONTROLPOS
 {
@@ -1881,6 +2174,7 @@ struct ___CONTROLPOS
 
 size simple_toolbar::CalcLayout(uint32_t dwMode, int32_t nLength)
 {
+
    sp(::user::tab) ptab = GetTypedParent < ::user::tab >();
 
    if (ptab.is_set())
@@ -1888,168 +2182,272 @@ size simple_toolbar::CalcLayout(uint32_t dwMode, int32_t nLength)
 
       if (!ptab->m_bShowTabs)
       {
+
          return size(0, 0);
+
       }
 
    }
 
    ASSERT_VALID(this);
+
    ASSERT(IsWindow());
+
    if (dwMode & LM_HORZDOCK)
+   {
+
       ASSERT(dwMode & LM_HORZ);
 
+   }
+
    int32_t nCount;
-   //TBBUTTON* m_itema = NULL;
+
    size sizeResult(0, 0);
 
    nCount = _001GetItemCount();
 
-
    if (nCount > 0)
    {
+
       if (!(m_dwStyle & CBRS_SIZE_FIXED))
       {
+
          bool bDynamic = (m_dwStyle & CBRS_SIZE_DYNAMIC) != 0;
 
          if (bDynamic && (dwMode & LM_MRUWIDTH))
+         {
+
             SizeToolBar(nCount, m_nMRUWidth);
+
+         }
          else if (bDynamic && (dwMode & LM_HORZDOCK))
+         {
+
             SizeToolBar(nCount, 32767);
+
+         }
          else if (bDynamic && (dwMode & LM_VERTDOCK))
+         {
+
             SizeToolBar(nCount, 0);
+
+         }
          else if (bDynamic && (nLength != -1))
          {
+
             class rect rect;
+
             rect.null();
+
             CalcInsideRect(rect, (dwMode & LM_HORZ) != 0);
+
             bool bVert = (dwMode & LM_LENGTHY) != 0;
+
             int32_t nLen = nLength + (bVert ? rect.height() : rect.width());
 
             SizeToolBar(nCount, nLen, bVert);
+
          }
          else if (bDynamic && (m_dwStyle & CBRS_FLOATING))
+         {
+
             SizeToolBar(nCount, m_nMRUWidth);
+
+         }
          else
+         {
+
             SizeToolBar(nCount, (dwMode & LM_HORZ) ? 32767 : 0);
+
+         }
+
       }
 
       sizeResult = CalcSize(nCount);
 
       if (dwMode & LM_COMMIT)
       {
+
          ___CONTROLPOS* pControl = NULL;
+
          int32_t nControlCount = 0;
+
          bool bIsDelayed = m_bDelayedButtonLayout;
+
          m_bDelayedButtonLayout = FALSE;
 
          int32_t i;
+
          for (i = 0; i < nCount; i++)
+         {
+
             if ((m_itema[i]->m_fsStyle & TBSTYLE_SEP) && (m_itema[i]->m_id != "separator"))
+            {
+
                nControlCount++;
+
+            }
+
+         }
 
          if (nControlCount > 0)
          {
+
             pControl = new ___CONTROLPOS[nControlCount];
+
             nControlCount = 0;
 
             for (int32_t i = 0; i < nCount; i++)
             {
+
                if ((m_itema[i]->m_fsStyle & TBSTYLE_SEP) && (m_itema[i]->m_id != "separator"))
                {
+
                   pControl[nControlCount].nIndex = i;
+
                   pControl[nControlCount].strId = m_itema[i]->m_id;
 
                   rect rect;
+
                   _001GetItemRect(i, &rect);
+
                   ClientToScreen(&rect);
+
                   pControl[nControlCount].rectOldPos = rect;
 
                   nControlCount++;
+
                }
+
             }
+
          }
 
-         //::draw2d::memory_graphics pgraphics(this);
          string str;
+
          if ((m_dwStyle & CBRS_FLOATING) && (m_dwStyle & CBRS_SIZE_DYNAMIC))
             m_nMRUWidth = sizeResult.cx;
+
          for (i = 0; i < nCount; i++)
          {
-            //            _SetButton(i, &m_itema[i]);
-            //            GetButtonText(i, str);
-            //            size size;
-            //            if(!str.is_empty())
-            //            {
-            //               ::GetTextExtentPointW(
-            //                  (HDC)pgraphics->get_os_data(),
-            //                  str,
-            //                  str.get_length(),
-            //                  &size);
-            //               size.cx += m_sizeButton.cx;
-            //            }
-            //            else
-            //            {
-            //               size = m_sizeImage;
-            //            }
-            //            TBBUTTONINFOW button;
-            //            memset(&button, 0, sizeof(button));
-            //            button.cbSize = sizeof(button);
-            //            button.dwMask =
-            //               TBIF_COMMAND
-            //               | TBIF_SIZE  ;
-            //            button.cx = size.cx;
-            //            button.m_id = i;
-            //            GetToolBarCtrl().SetButtonInfo(i, &button);
+
+            // _SetButton(i, &m_itema[i]);
+            //
+            // GetButtonText(i, str);
+            //
+            // size size;
+            //
+            // if(!str.is_empty())
+            // {
+            //
+            //    ::GetTextExtentPointW(
+            //       (HDC)pgraphics->get_os_data(),
+            //       str,
+            //       str.get_length(),
+            //       &size);
+            //
+            //    size.cx += m_sizeButton.cx;
+            //
+            // }
+            // else
+            // {
+            //
+            //    size = m_sizeImage;
+            //
+            // }
+            //
+            // TBBUTTONINFOW button;
+            //
+            // memset(&button, 0, sizeof(button));
+            //
+            // button.cbSize = sizeof(button);
+            //
+            // button.dwMask = TBIF_COMMAND | TBIF_SIZE;
+            // button.cx = size.cx;
+            // button.m_id = i;
+            //
+            // GetToolBarCtrl().SetButtonInfo(i, &button);
+
          }
+
          //for (i = 0; i < nCount; i++)
          {
-            //            TBBUTTONINFOW buttona;
-              //          memset(&buttona, 0, sizeof(buttona));
-                //        buttona.cbSize = sizeof(buttona);
-                  //      buttona.dwMask =
-                    //       TBIF_COMMAND
-                      //     | TBIF_STYLE
-                        //   | TBIF_SIZE;
-                        //            UINT uiID = GetItemID(i);
-                        ///            GetToolBarCtrl().GetButtonInfo(uiID, &buttona);
-                        //         TRACE("BUTTON.m_id = %d\n", buttona.m_id  );
-                        //         TRACE("BUTTON.m_fsStyle = %d\n", buttona.m_fsStyle  );
-                        //         TRACE("BUTTON.cx = %d\n", buttona.cx );
+
+            // TBBUTTONINFOW buttona;
+            // memset(&buttona, 0, sizeof(buttona));
+            // buttona.cbSize = sizeof(buttona);
+            // buttona.dwMask =
+            //    TBIF_COMMAND
+            //    | TBIF_STYLE
+            //    | TBIF_SIZE;
+            // UINT uiID = GetItemID(i);
+            // GetToolBarCtrl().GetButtonInfo(uiID, &buttona);
+            // TRACE("BUTTON.m_id = %d\n", buttona.m_id  );
+            // TRACE("BUTTON.m_fsStyle = %d\n", buttona.m_fsStyle  );
+            // TRACE("BUTTON.cx = %d\n", buttona.cx );
+
          }
 
          if (nControlCount > 0)
          {
+
             for (int32_t i = 0; i < nControlCount; i++)
             {
-               /* xxx sp(::user::interaction) pwindow = get_child_by_id(pControl[i]->strId);
+
+               /* xxx
+
+               sp(::user::interaction) pwindow = get_child_by_id(pControl[i]->strId);
+
                if (pwindow != NULL)
                {
+
                rect rect;
+
                pwindow->GetWindowRect(&rect);
+
                point pt = rect.top_left() - pControl[i]->rectOldPos.top_left();
+
                _001GetElementRect(pControl[i]->nIndex, &rect);
+
                pt = rect.top_left() + pt;
+
                pwindow->SetWindowPos(0, pt.x, pt.y, 0, 0, SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER);
+
                }*/
+
             }
+
             delete[] pControl;
+
          }
+
          m_bDelayedButtonLayout = bIsDelayed != 0;
+
       }
+
       //delete[] m_itema;
+
    }
 
    //BLOCK: Adjust Margins
    {
+
       class rect rect;
+
       rect.null();
+
       CalcInsideRect(rect, (dwMode & LM_HORZ) != 0);
+
       sizeResult.cy -= rect.height();
+
       sizeResult.cx -= rect.width();
 
       size size = ::user::control_bar::CalcFixedLayout((dwMode & LM_STRETCH) != 0, (dwMode & LM_HORZ) != 0);
+
       sizeResult.cx = MAX(sizeResult.cx, size.cx);
+
       sizeResult.cy = MAX(sizeResult.cy, size.cy);
+
    }
 
    return sizeResult;
@@ -2085,64 +2483,88 @@ void simple_toolbar::GetButtonText(int32_t i, string &str)
 
 void simple_toolbar::OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle)
 {
+
    // a dynamically resizeable toolbar can not have the CBRS_FLOAT_MULTI
-   ASSERT(!((dwNewStyle & CBRS_SIZE_DYNAMIC) &&
-      (m_dwDockStyle & CBRS_FLOAT_MULTI)));
+   ASSERT(!((dwNewStyle & CBRS_SIZE_DYNAMIC) && (m_dwDockStyle & CBRS_FLOAT_MULTI)));
 
    // a toolbar can not be both dynamic and fixed in size
-   ASSERT(!((dwNewStyle & CBRS_SIZE_FIXED) &&
-      (dwNewStyle & CBRS_SIZE_DYNAMIC)));
+   ASSERT(!((dwNewStyle & CBRS_SIZE_FIXED) && (dwNewStyle & CBRS_SIZE_DYNAMIC)));
 
    // CBRS_SIZE_DYNAMIC can not be disabled once it has been enabled
-   ASSERT(((dwOldStyle & CBRS_SIZE_DYNAMIC) == 0) ||
-      ((dwNewStyle & CBRS_SIZE_DYNAMIC) != 0));
+   ASSERT(((dwOldStyle & CBRS_SIZE_DYNAMIC) == 0) || ((dwNewStyle & CBRS_SIZE_DYNAMIC) != 0));
 
    if (((dwOldStyle & CBRS_BORDER_ANY) != (dwNewStyle & CBRS_BORDER_ANY)))
    {
+
       // recalc non-client area when border styles change
       SetWindowPos(0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+
    }
+
    m_bDelayedButtonLayout = TRUE;
+
 }
+
 
 size simple_toolbar::CalcDynamicLayout(int32_t nLength, uint32_t dwMode)
 {
+
    if ((nLength == -1) && !(dwMode & LM_MRUWIDTH) && !(dwMode & LM_COMMIT) &&
-      ((dwMode & LM_HORZDOCK) || (dwMode & LM_VERTDOCK)))
+         ((dwMode & LM_HORZDOCK) || (dwMode & LM_VERTDOCK)))
    {
+
       return CalcFixedLayout((dwMode & LM_STRETCH) != 0, (dwMode & LM_HORZDOCK) != 0);
+
    }
+
    return CalcLayout(dwMode, nLength);
+
 }
 
 
 void simple_toolbar::_001OnMouseLeave(::message::message * pobj)
 {
+
    SCAST_PTR(::message::base, pbase, pobj);
+
    m_iHover = 0x80000000;
+
    OnUpdateHover();
+
    RedrawWindow();
+
    pbase->set_lresult(0);
+
 }
+
 
 void simple_toolbar::SetItemImage(int32_t iItem, int32_t iImage)
 {
+
    m_itema[iItem]->m_iImage = iImage;
+
 }
+
 
 void simple_toolbar::OnUpdateHover()
 {
 
 }
 
+
 int32_t simple_toolbar::_001GetHoverItem()
 {
+
    return m_iHover;
+
 }
+
 
 void simple_toolbar::RemoveAllTools()
 {
+
    m_itema.remove_all();
+
 }
 
 
@@ -2156,34 +2578,32 @@ rect simple_toolbar::get_item_pad()
    if (r.left < 0)
    {
 
-      r.left = m_dFontSize/ 3;
+      convert(r.left, m_dFontSize / 3);
 
    }
+
    if (r.right < 0)
    {
 
-      r.right = m_dFontSize / 3;
+      convert(r.right, m_dFontSize / 3);
 
    }
+
    if (r.top < 0)
    {
 
-      r.top = m_dFontSize / 3;
+      convert(r.top, m_dFontSize / 3);
 
    }
+
    if (r.bottom < 0)
    {
 
-      r.bottom = m_dFontSize / 3;
+      convert(r.bottom, m_dFontSize / 3);
 
    }
 
-
    return r;
-
-
-
-
 
 }
 
@@ -2198,25 +2618,25 @@ rect simple_toolbar::get_bar_border()
    if (r.left < 0)
    {
 
-      r.left = m_dFontSize / 3;
+      convert(r.left, m_dFontSize / 3);
 
    }
    if (r.right < 0)
    {
 
-      r.right = m_dFontSize / 3;
+      convert(r.right, m_dFontSize / 3);
 
    }
    if (r.top < 0)
    {
 
-      r.top = m_dFontSize / 3;
+      convert(r.top, m_dFontSize / 3);
 
    }
    if (r.bottom < 0)
    {
 
-      r.bottom = m_dFontSize / 3;
+      convert(r.bottom, m_dFontSize / 3);
 
    }
 
@@ -2285,14 +2705,14 @@ size simple_toolbar::get_separator_size()
    if (s.cx < 0)
    {
 
-      s.cx = m_dFontSize * 2 / 3;
+      convert(s.cx, m_dFontSize * 2 / 3);
 
    }
 
    if (s.cy < 0)
    {
 
-      s.cy = m_dFontSize * 2 / 3;
+      convert(s.cy, m_dFontSize * 2 / 3);
 
    }
 
@@ -2312,7 +2732,7 @@ int simple_toolbar::get_image_spacing()
    if (i < 0)
    {
 
-      i = m_dFontSize / 4;
+      convert(i, m_dFontSize / 4);
 
    }
 

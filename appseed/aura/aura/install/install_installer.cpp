@@ -65,7 +65,7 @@ namespace install
    {
 
 #ifdef WINDOWS
-      
+
       System.install().trace().ensure_trace_file();
 
       if (!m_machineevent.initialize())
@@ -204,7 +204,7 @@ namespace install
 
          set_progress(0.2);
 
-      retry_host:
+retry_host:
 
          if (iHostRetry > 0)
          {
@@ -530,7 +530,7 @@ namespace install
                   while (::GetExitCodeProcess(hProcess, &dwExitCode) && dwExitCode == STILL_ACTIVE && iRetry > 0)
                   {
 
-                     Sleep(184);
+                     Sleep(200);
 
                      iRetry--;
 
@@ -581,7 +581,7 @@ namespace install
 
                memset_dup(&cds, 0, sizeof(cds));
 
-               cds.dwData = 15111984;
+               cds.dwData = 15112000;
 
                cds.cbData = (uint32_t)str.length();
 
@@ -626,7 +626,7 @@ namespace install
 
             iRetry++;
 
-            Sleep(184);
+            Sleep(200);
 
             if ((iRetry % 33) == 0)
             {
@@ -651,7 +651,7 @@ namespace install
             add_spa_start(strCommand);
 
             if (::simple_message_box(NULL, "The computer need to be restarted!!\n\nDo you want to restart now?\n\nWe recommend you to close all other applications first and then agree with this question using the buttons below.", "spa - Restart Needed!!", MB_ICONEXCLAMATION | MB_YESNO)
-               == IDYES)
+                  == IDYES)
             {
 
                reboot();
@@ -750,7 +750,7 @@ namespace install
             //}
             //else
             //{
-            //      
+            //
             //   return false;
 
             //}
@@ -758,7 +758,7 @@ namespace install
          }
 
       }
-      
+
 #endif
 
       return 0;
@@ -811,7 +811,7 @@ namespace install
             if (::str::ends_ci(strCurrent, ".expand_fileset"))
             {
 
-               int iGzLen = mapGzLen[strCurrent];
+               auto iGzLen = mapGzLen[strCurrent];
 
                m_iProgressTotalGzLen2 += iGzLen;
 
@@ -852,9 +852,9 @@ namespace install
 
             string strMd5 = mapMd5[strCurrent];
 
-            int iLen = mapLen[strCurrent];
+            auto iLen = mapLen[strCurrent];
 
-            int iGzLen = mapGzLen[strCurrent];
+            auto iGzLen = mapGzLen[strCurrent];
 
             str += ".";
 
@@ -871,8 +871,8 @@ namespace install
             ::file::path strStageInplace = ca2bz_get_dir(strCurrent) / strStageInplaceFile;
 
             if (file_exists_dup(strStageInplace)
-               && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-               && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
+                  && (iLen != -1) && file_length_dup(strStageInplace) == iLen
+                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
             {
 
                bDownload = false;
@@ -887,8 +887,8 @@ namespace install
                System.compress().unbz(get_app(), strStageInplace, strStageGz);
 
                if (file_exists_dup(strStageInplace)
-                  && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
+                     && (iLen != -1) && file_length_dup(strStageInplace) == iLen
+                     && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
                   bDownload = false;
 
             }
@@ -950,7 +950,7 @@ namespace install
 
             }
 
-            int iGzLen = mapGzLen[strCurrent];
+            auto iGzLen = mapGzLen[strCurrent];
 
             ::file::path str = m_pathBaseUrl;
 
@@ -968,7 +968,7 @@ namespace install
 
             string strMd5 = mapMd5[strCurrent];
 
-            int iLen = mapLen[strCurrent];
+            auto iLen = mapLen[strCurrent];
 
             str += ".";
 
@@ -983,8 +983,8 @@ namespace install
             ::file::path strStageInplace = ca2inplace_get_dir(strCurrent) / ca2inplace_get_file(strCurrent);
 
             if (file_exists_dup(strStageInplace)
-               && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-               && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
+                  && (iLen != -1) && file_length_dup(strStageInplace) == iLen
+                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
             {
 
                bDownload = false;
@@ -997,8 +997,8 @@ namespace install
                string strCandidate = ::dir::stage(System.get_system_platform()) / strFileName;
 
                if (file_exists_dup(strCandidate)
-                  && iLen != -1 && file_length_dup(strCandidate) == iLen
-                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strCandidate), strMd5) == 0)
+                     && iLen != -1 && file_length_dup(strCandidate) == iLen
+                     && strMd5.has_char() && stricmp_dup(Application.file().md5(strCandidate), strMd5) == 0)
                {
 
                   bDownload = !::file_copy_dup(strStageInplace, strCandidate, false);
@@ -1015,8 +1015,8 @@ namespace install
                System.compress().unbz(get_app(), strStageInplace, strStageGz);
 
                if (file_exists_dup(strStageInplace)
-                  && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
+                     && (iLen != -1) && file_length_dup(strStageInplace) == iLen
+                     && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
                   bDownload = false;
 
             }
@@ -1426,7 +1426,7 @@ namespace install
       }
 
       return bOk;
-      
+
 
    }
 
@@ -1782,8 +1782,6 @@ namespace install
       }
 
       System.install().trace().rich_trace(str::replace("\\", "/", strUrl));
-
-      char buf[2048];
 
       int32_t iCount = 0;
 
@@ -2200,7 +2198,7 @@ namespace install
 
 #endif
 
-      
+
    }
 
 
@@ -2284,7 +2282,7 @@ namespace install
    //   }
    //   else
    //   {
-   //      
+   //
    //      System.install().trace().rich_trace("");
    //      System.install().trace().rich_trace("");
    //      System.install().trace().rich_trace("");
@@ -2343,7 +2341,7 @@ namespace install
             return -1;
          }
          System.install().trace().trace_add(".");
-         Sleep(184);
+         Sleep(200);
       }
 
       m_strAppMatterList = str;
@@ -2362,7 +2360,7 @@ namespace install
 
       int32_t iRetry = 0;
 
-   RetryBuildNumber:
+RetryBuildNumber:
 
       System.install().trace().rich_trace("***Getting build number");
 
@@ -2386,7 +2384,7 @@ namespace install
       if (m_strBuild.length() != 19)
       {
 
-         Sleep(184);
+         Sleep(200);
 
          goto RetryBuildNumber;
 
@@ -2463,7 +2461,7 @@ namespace install
 
       string strStatus;
 
-   RetryBuildNumber:
+RetryBuildNumber:
 
       System.install().trace().rich_trace("***Getting build number");
 
@@ -2519,7 +2517,7 @@ namespace install
 
       if (!Application.http().download(*m_psockethandler, psession, strUrl, &file, set))
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
 
@@ -2532,7 +2530,7 @@ namespace install
 
       if (file.get_size() < 19)
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
 
@@ -2543,7 +2541,7 @@ namespace install
 
       if (strBuild.length() != 19)
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
 
@@ -2553,7 +2551,7 @@ namespace install
 
       if (strName.length() <= 0)
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
 
@@ -2563,7 +2561,7 @@ namespace install
 
       if (strSpaHost.length() <= 0)
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
 
@@ -2575,10 +2573,12 @@ namespace install
          straMd5[i].Empty();
          string strMd5AndLen;
          file.read_string(strMd5AndLen);
-         int iFind = strMd5AndLen.find('|');
+
+         strsize iFind = strMd5AndLen.find('|');
+
          if (iFind < 0)
          {
-            Sleep(184);
+            Sleep(200);
             goto RetryBuildNumber;
          }
          string strMd5 = strMd5AndLen.Left(iFind);
@@ -2587,7 +2587,7 @@ namespace install
          straMd5[i].trim();
          if (straMd5[i].length() != 32)
          {
-            Sleep(184);
+            Sleep(200);
             goto RetryBuildNumber;
          }
 
@@ -2603,13 +2603,13 @@ namespace install
       {
          if (strIndexMd5.is_empty())
          {
-            Sleep(184);
+            Sleep(200);
             goto RetryBuildNumber;
          }
       }
       else if (strStatus != "send")
       {
-         Sleep(184);
+         Sleep(200);
          goto RetryBuildNumber;
       }
       else
@@ -2619,7 +2619,7 @@ namespace install
 
          if (strLen.length() <= 0)
          {
-            Sleep(184);
+            Sleep(200);
             goto RetryBuildNumber;
          }
 
@@ -2657,7 +2657,7 @@ namespace install
             if (uiTotalRead != len)
             {
 
-               Sleep(184);
+               Sleep(200);
 
                goto RetryBuildNumber;
 
@@ -2691,7 +2691,7 @@ namespace install
 
    int32_t installer::calc_host(string & strSpaHost, int32_t &iHostRetry)
    {
-   retry_host:
+retry_host:
 
       System.install().trace().rich_trace("***Finding optimal server");
 
@@ -2735,7 +2735,7 @@ namespace install
             if (m_strLastHost.is_empty())
             {
                System.install().trace().trace_add(".");
-               Sleep(184);
+               Sleep(200);
                iGuessRetry++;
             }
             else
@@ -2926,7 +2926,7 @@ namespace install
       TOKEN_PRIVILEGES tkp;
 
       if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+                            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
          return false;
 
       LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
@@ -2942,15 +2942,15 @@ namespace install
 
       tkp.Privileges[0].Attributes = 0;
 
-      
-AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0);
-      
-      #else
-      
+
+      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0);
+
+#else
+
       throw todo(get_app());
-      
+
 #endif
-      
+
 
       return true;
 
@@ -2977,7 +2977,7 @@ AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0);
          return false;
 
       }
-      
+
 #ifdef WINDOWS
 
       SHELLEXECUTEINFOW sei = {};
@@ -3000,12 +3000,12 @@ AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0);
          return false;
 
       }
-      
-      
+
+
 #else
-      
+
       throw todo(get_app());
-      
+
 #endif
 
       return true;
@@ -3048,11 +3048,11 @@ AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0);
 
    int32_t installer::app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)
    {
-      
+
       string strFile = dir::stage(process_platform_dir_name()) / "app";
-      
+
       string strParams = string(pszCommandLine) + " install";
-    
+
       return shell_execute_sync(strFile, strParams);
 
    }

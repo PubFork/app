@@ -259,8 +259,8 @@ namespace user
 
             cslock sl(&m_mutex);
             {
-   //      TRACE("split_layout::RelayChildEvent LOWORD(lpMsg->lParam) %d\n", LOWORD(lpMsg->lParam));
-   //      TRACE("split_layout::RelayChildEvent HIWORD(lpMsg->lParam) %d\n", HIWORD(lpMsg->lParam));
+               //      TRACE("split_layout::RelayChildEvent LOWORD(lpMsg->lParam) %d\n", LOWORD(lpMsg->lParam));
+               //      TRACE("split_layout::RelayChildEvent HIWORD(lpMsg->lParam) %d\n", HIWORD(lpMsg->lParam));
 
 
 
@@ -352,7 +352,7 @@ namespace user
 
    int32_t split_layout::GetMaxPos()
    {
-   
+
       rect rectClient;
 
       GetClientRect(rectClient);
@@ -405,8 +405,8 @@ namespace user
             {
 
                if ((m_splitbara[i]->m_dRate < m_splitbara[i]->m_dMinimumRate
-                  || m_splitbara[i]->m_dRate > m_splitbara[i]->m_dMaximumRate)
-                  && m_splitbara[i]->m_dwPosition > 0)
+                     || m_splitbara[i]->m_dRate > m_splitbara[i]->m_dMaximumRate)
+                     && m_splitbara[i]->m_dwPosition > 0)
                {
 
                   dwPosition = m_splitbara[i]->m_dwPosition;
@@ -483,7 +483,7 @@ namespace user
             rectBar.width(),
             rectBar.height(),
             uiFlags & ~(SWP_NOZORDER));
-         
+
          if (bIsWindowVisible)
          {
 
@@ -630,7 +630,7 @@ namespace user
       for (index i = 0; i < get_pane_count(); i++)
       {
 
-         if (is_pane_visible(i))
+         if (is_pane_visible(convert < int > (i)))
          {
 
             c++;
@@ -646,7 +646,7 @@ namespace user
 
    bool split_layout::is_pane_visible(int iPane)
    {
-      
+
       if (iPane < 0)
       {
 
@@ -777,7 +777,7 @@ namespace user
    {
 
       ASSERT(iIndex >= 0);
-   
+
       ASSERT(iIndex < get_split_count());
 
       if (iIndex >= m_splitbara.get_count())
@@ -788,13 +788,13 @@ namespace user
       }
 
       int32_t nPos = 0;
-      
+
       index i = 0;
 
       while (i <= iIndex)
       {
 
-         if (is_pane_visible(i))
+         if (is_pane_visible(convert < int > (i)))
          {
 
             nPos = m_splitbara[iIndex]->m_dwPosition;
@@ -804,7 +804,7 @@ namespace user
          i++;
 
       }
-      
+
 
       GetClientRect(lpRect);
 
@@ -858,7 +858,7 @@ namespace user
 
          if (!splitbar.create_window(null_rect(), this))
          {
-          
+
             return false;
 
          }
@@ -903,9 +903,9 @@ namespace user
 
    bool split_layout::RemovePaneAt(index iIndex)
    {
-      
+
       ASSERT(iIndex >= 0);
-      
+
       ASSERT(iIndex < get_pane_count());
 
       m_panea.remove_at(iIndex);
@@ -941,16 +941,16 @@ namespace user
 
    bool split_layout::SetPane(index iIndex, sp(::user::interaction)pwnd, bool bFixedSize, id id)
    {
-      
+
       ASSERT(iIndex >= 0);
 
       ASSERT(iIndex < get_pane_count());
-      
+
       split_layout::Pane * pcomponent = m_panea.element_at(iIndex);
-      
+
       if(pcomponent->m_pholder != NULL)
       {
-         
+
          if (!pcomponent->m_pholder->hold(pwnd))
          {
 
@@ -961,7 +961,7 @@ namespace user
       }
       else
       {
-         
+
          rect rectPane;
 
          pcomponent->m_pholder->GetClientRect(rectPane);
@@ -978,7 +978,7 @@ namespace user
       }
 
       pcomponent->m_id = id.is_empty() ? (::id) iIndex : id;
-      
+
       m_panea[iIndex]->m_bFixedSize = bFixedSize;
 
       return true;
@@ -996,7 +996,7 @@ namespace user
       ASSERT(iIndex >= 0);
 
       ASSERT(iIndex < get_pane_count());
-   //    m_aFixedSize.element_at(iIndex) = *pSize;
+      //    m_aFixedSize.element_at(iIndex) = *pSize;
 
    }
 
@@ -1124,8 +1124,8 @@ namespace user
          {
             cslock lock(&m_mutex);
             {
-         TRACE("split_layout::RelayChildEvent LOWORD(lParam) %d\n", LOWORD(lParam));
-         TRACE("split_layout::RelayChildEvent HIWORD(lParam) %d\n", HIWORD(lParam));
+               TRACE("split_layout::RelayChildEvent LOWORD(lParam) %d\n", LOWORD(lParam));
+               TRACE("split_layout::RelayChildEvent HIWORD(lParam) %d\n", HIWORD(lParam));
 
 
                int32_t nPos;
@@ -1177,7 +1177,7 @@ namespace user
 
       if (iPane < 0 || iPane >= get_pane_count())
       {
-      
+
          return *((rect*)NULL);
 
       }
@@ -1235,7 +1235,7 @@ namespace user
          return id();
 
       }
-      
+
       Pane & pane = m_panea(iPane);
 
       return pane.m_id;
@@ -1262,13 +1262,13 @@ namespace user
 
    }
 
-   
+
    split_layout::Pane::Pane(::aura::application * papp) :
       ::object(papp)
    {
 
       m_pholder = NULL;
-      
+
       m_rect.null();
 
       m_rectClient.null();

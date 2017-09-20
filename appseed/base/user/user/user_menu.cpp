@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -70,14 +70,14 @@ namespace user
       ::user::control::install_message_routing(psender);
 
       //IGUI_MSG_LINK(WM_IDLEUPDATECMDUI  , psender, this, &menu::_001OnIdleUpdateCmdUI);
-      IGUI_MSG_LINK(WM_CREATE       , psender, this, &menu::_001OnCreate);
-      IGUI_MSG_LINK(WM_DESTROY      , psender, this, &menu::_001OnDestroy);
-      IGUI_MSG_LINK(WM_NCACTIVATE   , psender, this, &menu::_001OnNcActivate);
-      IGUI_MSG_LINK(WM_NCCALCSIZE   , psender, this, &menu::_001OnNcCalcSize);
-      IGUI_MSG_LINK(WM_ENABLE       , psender, this, &menu::_001OnEnable);
-      IGUI_MSG_LINK(WM_SHOWWINDOW   , psender, this, &menu::_001OnShowWindow);
-      IGUI_MSG_LINK(WM_CLOSE        , psender, this, &menu::_001OnClose);
-      IGUI_MSG_LINK(WM_SHOWWINDOW   , psender, this, &menu::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &menu::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY, psender, this, &menu::_001OnDestroy);
+      IGUI_MSG_LINK(WM_NCACTIVATE, psender, this, &menu::_001OnNcActivate);
+      IGUI_MSG_LINK(WM_NCCALCSIZE, psender, this, &menu::_001OnNcCalcSize);
+      IGUI_MSG_LINK(WM_ENABLE, psender, this, &menu::_001OnEnable);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &menu::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_CLOSE, psender, this, &menu::_001OnClose);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, psender, this, &menu::_001OnShowWindow);
 
    }
 
@@ -356,7 +356,7 @@ namespace user
       if (m_itemClose.m_pui == NULL)
       {
 
-         m_itemClose.m_pui = create_menu_button();
+         m_itemClose.m_pui = create_menu_button(get_app());
 
       }
 
@@ -401,9 +401,9 @@ namespace user
    {
 
       m_bMenuOk = false;
-      
+
       m_bInline = true;
-      
+
       if (!create_menu(puiNotify, puiParent))
       {
 
@@ -499,9 +499,9 @@ namespace user
 
       sp(::user::menu_item_ptra) spitema = pitem->m_spitema;
 
-      rect rectMargin = get_rect(rect_menu_margin);
+      rect rectMargin = _001GetRect(rect_menu_margin);
 
-      int iElementPadding = get_int(int_menu_button_padding);
+      int iElementPadding = _001GetInt(int_menu_button_padding);
 
       for (int32_t i = 0; i < spitema->get_size(); i++)
       {
@@ -514,14 +514,14 @@ namespace user
 
          size.cx += rectMargin.right;
 
-         size.cx += style_int(int_menu_button_padding);
+         size.cx += _001GetInt(int_menu_button_padding);
 
          size.cx += m_iCheckBoxSize;
 
          if (spitema->element_at(i)->IsPopup())
          {
 
-            size.cx += style_int(int_menu_button_padding);
+            size.cx += _001GetInt(int_menu_button_padding);
 
             size.cx += m_iCheckBoxSize;
 
@@ -802,7 +802,7 @@ namespace user
 
                if (pevent->m_puie->m_pmenuitem != m_pmenuitemSub)
                {
-                  
+
                   {
 
                      sp(::user::menu_item) pitem = get_item(pevent->m_puie);
@@ -976,13 +976,13 @@ namespace user
          //   commandui.m_pitema          = spitema;
          //   for(int32_t i = 0; i < spitema->get_size(); i++)
          //   {
-         //      
+         //
          //      commandui.m_iIndex    = i;
          //      commandui.m_id        = spitema->element_at(i)->m_id;
          //      commandui.m_pOther    = spitema->element_at(i)->m_pui;
-         //      
+         //
          //      sp(::user::interaction) puiTarget = get_target_window();
-         //      
+         //
          //      if(puiTarget != NULL)
          //      {
          //         /* xxx if(pwndParent->on_command(0,
@@ -1065,22 +1065,22 @@ namespace user
       pbase->set_lresult(DefWindowProc(WM_NCACTIVATE, pbase->m_wparam, -1));
    }
 
-   
+
    void menu::_001OnNcCalcSize(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::base, pbase, pobj);
 
       if (pbase->m_wparam == TRUE)
       {
-         
+
          pbase->m_bRet = true;
          pbase->set_lresult(0);
 
       }
       else
       {
-         
+
          LPRECT lprect = (LPRECT)pbase->m_lparam.m_lparam;
          lprect->left = m_ptTrack.x;
          lprect->top = m_ptTrack.y;
@@ -1167,7 +1167,7 @@ namespace user
       else
       {
 
-         return ::user::control::get_color(cr, ecolor);
+         return ::user::control::get_color(cr, ecolor, this);
 
       }
 
@@ -1268,6 +1268,14 @@ namespace user
       }
 
       set_need_redraw();
+
+   }
+
+
+   ::user::interaction * menu::create_menu_button(::aura::application * papp)
+   {
+
+      return Session.create_menu_button(papp);
 
    }
 

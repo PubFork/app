@@ -19,9 +19,9 @@
 // Use at your own risk!
 // ==========================================================
 
-//#ifdef _MSC_VER 
+//#ifdef _MSC_VER
 //#pragma warning (disable : 4786) // identifier was truncated to 'number' characters
-//#endif 
+//#endif
 //
 //#ifdef _WIN32
 //#include <windows.h>
@@ -32,75 +32,84 @@
 
 // ==========================================================
 
-DeprecationMgr::DeprecationMgr() {
+DeprecationMgr::DeprecationMgr()
+{
 }
 
-DeprecationMgr::~DeprecationMgr() {
+DeprecationMgr::~DeprecationMgr()
+{
 #ifdef _WIN32
-	if (!m_functions.empty()) {
-		output_debug_string( "*************************************************************************************\n" );
-		output_debug_string( "This is a warning, because you use one or more deprecated functions.\nContinuing to use these functions might eventually render your program uncompilable.\nThe following functions are deprecated:\n\n" );
+   if (!m_functions.empty())
+   {
+      output_debug_string( "*************************************************************************************\n" );
+      output_debug_string( "This is a warning, because you use one or more deprecated functions.\nContinuing to use these functions might eventually render your program uncompilable.\nThe following functions are deprecated:\n\n" );
 
-		for (std::map<const char *, DeprecatedFunction>::iterator i = m_functions.begin(); i != m_functions.end(); ++i) {
-			DeprecatedFunction *function = &((*i).m_element2);
+      for (std::map<const char *, DeprecatedFunction>::iterator i = m_functions.begin(); i != m_functions.end(); ++i)
+      {
+         DeprecatedFunction *function = &((*i).m_element2);
 
-			char txt[255];
+         char txt[255];
 
-			sprintf(txt, " * %s called from %i different places. Instead use %s.\n", function->old_function_name,  function->called_from.size(), function->new_function_name);
+         sprintf(txt, " * %s called from %i different places. Instead use %s.\n", function->old_function_name, convert < int > (function->called_from.size()), function->new_function_name);
 
-			output_debug_string(txt);
-		}
+         output_debug_string(txt);
+      }
 
-		output_debug_string( "*************************************************************************************\n" );
+      output_debug_string( "*************************************************************************************\n" );
 
-		m_functions.clear();
-	}
+      m_functions.clear();
+   }
 #endif // _WIN32
 }
 
 // ==========================================================
 
 DeprecationMgr *
-DeprecationMgr::GetInstance() {
-	static DeprecationMgr Instance;
-	return &Instance;
+DeprecationMgr::GetInstance()
+{
+   static DeprecationMgr Instance;
+   return &Instance;
 }
 
 // ==========================================================
 
 void
-DeprecationMgr::AddDeprecatedFunction(const char *old_function_name, const char *new_function_name, const void *frame_ptr) {
+DeprecationMgr::AddDeprecatedFunction(const char *old_function_name, const char *new_function_name, const void *frame_ptr)
+{
 #ifdef _WIN32
-	int *preturn = (int *)frame_ptr + 1; // usual return address @ [ebp+4]
+   int *preturn = (int *)frame_ptr + 1; // usual return address @ [ebp+4]
 #ifdef METROWIN
-	int called_from = preturn == NULL ? 0 : *preturn;
+   int called_from = preturn == NULL ? 0 : *preturn;
 #else
    int called_from = IsBadReadPtr(preturn,4) ? 0 : *preturn;
 #endif
 
-	// check if this function was already listed as deprecated
-	// if it wasn't, make a new entry for it
-	// if it was, keep track of where it's called from.
+   // check if this function was already listed as deprecated
+   // if it wasn't, make a new entry for it
+   // if it was, keep track of where it's called from.
 
-	std::map<const char *, DeprecatedFunction>::iterator existing_function = m_functions.find(old_function_name);
+   std::map<const char *, DeprecatedFunction>::iterator existing_function = m_functions.find(old_function_name);
 
-	if (existing_function == m_functions.end()) {
-		DeprecatedFunction function;
+   if (existing_function == m_functions.end())
+   {
+      DeprecatedFunction function;
 
-		function.old_function_name = old_function_name;
-		function.new_function_name = new_function_name;
-		function.called_from.insert(called_from);
+      function.old_function_name = old_function_name;
+      function.new_function_name = new_function_name;
+      function.called_from.insert(called_from);
 
-		m_functions[old_function_name] = function;
-	} else {
-		// since we're keeping track of the addresses this function
-		// was called from in a set, we don't need to check whether we've
-		// already added the address.
+      m_functions[old_function_name] = function;
+   }
+   else
+   {
+      // since we're keeping track of the addresses this function
+      // was called from in a set, we don't need to check whether we've
+      // already added the address.
 
-		DeprecatedFunction *function = &((*existing_function).m_element2);
+      DeprecatedFunction *function = &((*existing_function).m_element2);
 
-		function->called_from.insert(called_from);
-	}
+      function->called_from.insert(called_from);
+   }
 #endif // _WIN32
 }
 

@@ -59,18 +59,18 @@ namespace user
       if(pobj->previous())
          return;
 
-      
+
       m_pimagelist = canew(image_list(get_app()));
 
       m_pimagelist->create(16, 16, 0, 10, 10);
-      
+
       ::fork(get_app(), [this]()
       {
 
          _001SetCollapseImage("list/collapse.png");
 
          _001SetExpandImage("list/expand.png");
-         
+
       });
 
 
@@ -82,7 +82,7 @@ namespace user
 
       ::user::interaction::_001OnDraw(pgraphics);
 
-      
+
 
       rect rectClient;
 
@@ -150,13 +150,13 @@ namespace user
       pgraphics->OffsetViewportOrg(-ptOffset.x, -ptOffset.y);
 
       ::user::tree_draw_item drawitemdata;
-      
+
       drawitemdata.m_pdc = pgraphics;
-      
+
       drawitemdata.m_iIndentation = _001GetIndentation();
-      
+
       drawitemdata.m_iItemHeight = _001GetItemHeight();
-      
+
       GetClientRect(drawitemdata.m_rectClient);
 
       sp(::data::tree_item) pitem = m_pitemFirstVisible;
@@ -165,11 +165,11 @@ namespace user
 
       index iItem = m_iFirstVisibleItemProperIndex;
 
-      int iVisibleCount = _001GetVisibleItemCount();
+      auto iVisibleCount = _001GetVisibleItemCount();
 
       index iIndex = 0;
 
-      for(;pitem != NULL; pitem = pitem->get_item(::data::TreeNavigationProperForward))
+      for(; pitem != NULL; pitem = pitem->get_item(::data::TreeNavigationProperForward))
       {
 
          drawitemdata.m_pitem = pitem;
@@ -298,26 +298,33 @@ namespace user
 
          ::draw2d::brush_sp brushText(allocer());
 
-         COLORREF crText = ARGB(255, 0, 0, 0);
-
-         get_color(crText, color_text);
+         COLORREF crText = _001GetColor(color_text, ARGB(255, 0, 0, 0));
 
          if(bSelected) // selected
          {
+
             if(bHover)
             {
+
                brushText->create_solid(_001GetColor(color_text_selected_highlight));
+
             }
             else
             {
+
                brushText->create_solid(_001GetColor(color_text_selected));
+
             }
+
          }
          else
          {
+
             if(bHover)
             {
+
                brushText->create_solid(_001GetColor(color_text_highlight));
+
             }
             else
             {
@@ -368,9 +375,9 @@ namespace user
 
    void tree::_001OnLButtonDblClk(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
-      
+
       _001OnClick((UINT) pmouse->m_nFlags, pmouse->m_pt);
 
       sp(::data::tree_item) pitem;
@@ -381,7 +388,7 @@ namespace user
 
       if(pitem != NULL)
       {
-      
+
          if(eelement == tree_element_expand_box || eelement == tree_element_image || eelement == tree_element_text)
          {
 
@@ -400,9 +407,9 @@ namespace user
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
       pmouse->previous();
-      
+
       pobj->m_bRet = true;
-   
+
       pmouse->set_lresult(1);
 
    }
@@ -410,7 +417,7 @@ namespace user
 
    void tree::_001OnLButtonUp(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
       m_uiLButtonUpFlags = (UINT) pmouse->m_nFlags;
@@ -418,7 +425,7 @@ namespace user
       m_ptLButtonUp = pmouse->m_pt;
 
       perform_click();
-      
+
       pobj->m_bRet = true;
 
       pmouse->set_lresult(1);
@@ -427,7 +434,7 @@ namespace user
 
    void tree::perform_click()
    {
-      
+
       UINT nFlags = m_uiLButtonUpFlags;
 
       point point = m_ptLButtonUp;
@@ -435,16 +442,16 @@ namespace user
       _001OnClick(nFlags, point);
 
       sp(::data::tree_item) pitem;
-      
+
       ::user::e_tree_element eelement;
-      
+
       ScreenToClient(&point);
 
       pitem = _001HitTest(point, eelement);
 
       if(pitem != NULL)
       {
-         
+
          if(eelement == tree_element_expand_box)
          {
 
@@ -525,17 +532,17 @@ namespace user
    {
       ::user::control::_001OnTimer(ptimer);
 
-         //         return; //xxxtimer
+      //         return; //xxxtimer
 
-         if(ptimer->m_nIDEvent == TimerHover)
-         {
-            UpdateHover();
-         }
-         else
-         {
+      if(ptimer->m_nIDEvent == TimerHover)
+      {
+         UpdateHover();
+      }
+      else
+      {
 
 
-         }
+      }
    }
 
 
@@ -553,7 +560,7 @@ namespace user
       return false;
 
    }
-   
+
 
 
    sp(::data::tree_item) tree::_001HitTest(POINT pt, ::user::e_tree_element & eelement)
@@ -579,13 +586,13 @@ namespace user
       //      return false;
 
       synch_lock sl(m_treeptra.has_elements() ? m_treeptra[0]->m_pmutex : NULL);
-      
+
       sp(::data::tree_item) pitem = get_proper_item(iItem);
 
       if(pitem == NULL)
          return NULL;
 
-      
+
 
 
       index iLevel = pitem->m_iLevel;
@@ -610,19 +617,19 @@ namespace user
 
    void tree::install_message_routing(::message::sender * psender)
    {
-      
+
       ::user::control::install_message_routing(psender);
 
-      IGUI_MSG_LINK(WM_CREATE        , psender, this, &tree::_001OnCreate);
-      IGUI_MSG_LINK(WM_LBUTTONDBLCLK , psender, this, &tree::_001OnLButtonDblClk);
-      IGUI_MSG_LINK(WM_LBUTTONUP     , psender, this, &tree::_001OnLButtonUp);
-      IGUI_MSG_LINK(WM_LBUTTONDOWN   , psender, this, &tree::_001OnLButtonDown);
-      IGUI_MSG_LINK(WM_RBUTTONUP     , psender, this, &tree::_001OnRButtonUp);
-      IGUI_MSG_LINK(WM_RBUTTONDOWN   , psender, this, &tree::_001OnRButtonDown);
-      IGUI_MSG_LINK(WM_MOUSEMOVE     , psender, this, &tree::_001OnMouseMove);
-      IGUI_MSG_LINK(WM_MOUSELEAVE    , psender, this, &tree::_001OnMouseLeave);
-      IGUI_MSG_LINK(WM_HSCROLL       , psender, this, &tree::_001OnHScroll);
-      IGUI_MSG_LINK(WM_VSCROLL       , psender, this, &tree::_001OnVScroll);
+      IGUI_MSG_LINK(WM_CREATE, psender, this, &tree::_001OnCreate);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, psender, this, &tree::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_LBUTTONUP, psender, this, &tree::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, psender, this, &tree::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_RBUTTONUP, psender, this, &tree::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONDOWN, psender, this, &tree::_001OnRButtonDown);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, psender, this, &tree::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_MOUSELEAVE, psender, this, &tree::_001OnMouseLeave);
+      IGUI_MSG_LINK(WM_HSCROLL, psender, this, &tree::_001OnHScroll);
+      IGUI_MSG_LINK(WM_VSCROLL, psender, this, &tree::_001OnVScroll);
 //      //IGUI_MSG_LINK(WM_TIMER         , psender, this, &tree::_001OnTimer);
 
    }
@@ -648,38 +655,38 @@ namespace user
       switch(eelement)
       {
       case tree_element_expand_box:
-         {
-            lprect->left   = drawitem.m_rect.left;
-            lprect->right  = MIN(lprect->left + 16, drawitem.m_rect.right);
-            lprect->top    = drawitem.m_rect.top;
-            lprect->bottom = drawitem.m_rect.bottom;
-         }
-         break;
+      {
+         lprect->left   = drawitem.m_rect.left;
+         lprect->right  = MIN(lprect->left + 16, drawitem.m_rect.right);
+         lprect->top    = drawitem.m_rect.top;
+         lprect->bottom = drawitem.m_rect.bottom;
+      }
+      break;
       case tree_element_image:
+      {
+         lprect->left   = drawitem.m_rect.left + 18;
+         lprect->right  = MIN(lprect->left + 16, drawitem.m_rect.right);
+
+         int iHDiff = 0;
+         if (m_pimagelist != NULL)
          {
-            lprect->left   = drawitem.m_rect.left + 18;
-            lprect->right  = MIN(lprect->left + 16, drawitem.m_rect.right);
 
-            int iHDiff = 0;
-            if (m_pimagelist != NULL)
-            {
+            iHDiff = drawitem.m_rect.height() - m_pimagelist->m_size.cy;
 
-               iHDiff = drawitem.m_rect.height() - m_pimagelist->m_size.cy;
-
-            }
-
-            lprect->top    = drawitem.m_rect.top +iHDiff/2;
-            lprect->bottom = drawitem.m_rect.bottom - iHDiff / 2;
          }
-         break;
+
+         lprect->top    = drawitem.m_rect.top +iHDiff/2;
+         lprect->bottom = drawitem.m_rect.bottom - iHDiff / 2;
+      }
+      break;
       case tree_element_text:
-         {
-            lprect->left   = drawitem.m_rect.left + 38;
-            lprect->right  = drawitem.m_rect.right;
-            lprect->top    = drawitem.m_rect.top;
-            lprect->bottom = drawitem.m_rect.bottom;
-         }
-         break;
+      {
+         lprect->left   = drawitem.m_rect.left + 38;
+         lprect->right  = drawitem.m_rect.right;
+         lprect->top    = drawitem.m_rect.top;
+         lprect->bottom = drawitem.m_rect.bottom;
+      }
+      break;
       }
       return true;
    }
@@ -696,7 +703,7 @@ namespace user
 
    void tree::_001ExpandItem(::data::tree_item * pitem, ::action::context actioncontext, bool bExpand, /* = true */ bool bRedraw, /*=true*/ bool bLayout /*=true*/)
    {
-      
+
       //::data::simple_lock lock(pitem->m_pitem);
 
       UNREFERENCED_PARAMETER(bLayout);
@@ -724,16 +731,16 @@ namespace user
 
             index iLastVisibleIndex = (index) (ptOffset.y / _001GetItemHeight() + _001GetVisibleItemCount()) + 1;
 
-            
+
 
             index iObscured; // obscured proper descendants
             iObscured = iLastChildIndex  - iLastVisibleIndex;
 
             if(iObscured > 0)
             {
-               
+
                index iNewScroll = (int32_t) (ptOffset.y + iObscured * _001GetItemHeight());
-               
+
                if(iNewScroll > (iParentIndex * _001GetItemHeight()))
                   iNewScroll = (iParentIndex * _001GetItemHeight());
 
@@ -747,7 +754,7 @@ namespace user
       {
          if ((pitem->m_dwState & ::data::tree_item_state_expanded))
          {
-            
+
             pitem->m_dwState &= ~::data::tree_item_state_expanded;
 
             _001OnItemCollapse(pitem, actioncontext);
@@ -821,7 +828,7 @@ namespace user
    }
    void tree::_001OnItemExpand(::data::tree_item * pitem, ::action::context actioncontext)
    {
-      
+
       sp(::data::tree) ptree = find_tree(pitem);
 
       if (ptree.is_set())
@@ -984,7 +991,7 @@ namespace user
       ::user::e_tree_element eelement;
       sp(::data::tree_item) pitem = _001HitTest(pt, eelement);
       if(eelement != tree_element_image &&
-         eelement != tree_element_text)
+            eelement != tree_element_text)
       {
          pitem = NULL;
       }
@@ -1055,11 +1062,11 @@ namespace user
 
    sp(::data::tree_item) tree::CalcFirstVisibleItem(index & iProperIndex)
    {
-      
+
       synch_lock sl(m_treeptra.has_elements() ? m_treeptra[0]->m_pmutex : NULL);
 
       index nOffset;
-      
+
       if(_001GetItemHeight() == 0)
          return NULL;
 
@@ -1068,7 +1075,7 @@ namespace user
       int iItemHeight = _001GetItemHeight();
 
       nOffset = ptOffset.y / iItemHeight;
-      
+
       ::data::tree_item * pitem = NULL;
 
       iProperIndex = 0;
@@ -1094,7 +1101,7 @@ namespace user
 
             if (nOffset <= 0)
             {
-               
+
                return pitem;
 
             }
@@ -1129,9 +1136,12 @@ namespace user
       ::data::tree_item * pitem = NULL;
 
       int iWidth;
+
       int iMaxWidth = 0;
+
       index iLevel = 0;
-      int iIndent = _001GetIndentation();
+
+      auto iIndent = _001GetIndentation();
 
       ::draw2d::graphics_sp g(allocer());
 
@@ -1157,12 +1167,12 @@ namespace user
          iItemHeight = MAX(size.cy, iItemHeight);
       }
 
-      m_iItemHeight = iItemHeight;
+      convert(m_iItemHeight, iItemHeight * _001GetDouble(::user::double_height_rate));
 
       on_ui_event(event_calc_item_height, object_tree, this);
 
       spa(::data::tree_item) spitema;
-      
+
       for (index i = 0; i < m_treeptra.get_count(); i++)
       {
 
@@ -1216,7 +1226,7 @@ namespace user
 
       ::count iProperCount = 0;
 
-      index nOffset;
+      //index nOffset;
 
       index iLevel;
 
@@ -1260,7 +1270,7 @@ namespace user
       return m_pimagelist;
    }
 
- 
+
 
    int32_t tree::get_wheel_scroll_delta()
    {
@@ -1326,13 +1336,13 @@ namespace user
 
    bool tree::selection_set(::data::tree_item * pitem, bool bIfNotInSelection, bool bIfParentInSelection)
    {
-      
+
       if (!contains(pitem))
          return false;
-      
+
       if (bIfNotInSelection && is_selected(pitem))
          return true;
-   
+
       if (bIfParentInSelection && !is_selected(pitem->m_pparent))
          return true;
 
@@ -1535,7 +1545,7 @@ namespace user
       for (index i = 0; i < m_treeptra.get_count(); i++)
       {
 
-         if (piLevel != NULL) 
+         if (piLevel != NULL)
             *piLevel = 1;
 
          iFound = m_treeptra[i]->get_proper_item_index(pitemParam, piLevel, &iCount);
@@ -1596,7 +1606,7 @@ namespace user
 
       if (iIndex < iMinVisibleIndex || iIndex > iMaxVisibleIndex)
       {
-         
+
          index iNewScrollIndex = iIndex;
 
          set_viewport_offset_y((int) MAX(iNewScrollIndex,0) * m_iItemHeight);

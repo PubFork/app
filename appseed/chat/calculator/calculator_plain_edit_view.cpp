@@ -27,7 +27,7 @@ namespace calculator
    void plain_edit_view::on_update(::user::impact * pSender,LPARAM lHint,object* phint)
    {
 
-      if(lHint == 1984)
+      if(lHint == 2000)
       {
 
          {
@@ -287,7 +287,7 @@ namespace calculator
 /*         if(m_ptopview != NULL)
          {
 
-            m_ptopview->m_pview->post_message(WM_USER + 1984 + 77 + 2);
+            m_ptopview->m_pview->post_message(WM_VIEW_UPDATE);
 
          }*/
 
@@ -306,7 +306,7 @@ namespace calculator
          //      if(m_ptopview == NULL || m_ptopview->m_pview == NULL)
            //       return;
 
-         on_update(NULL,1984,NULL);
+         on_update(NULL,2000,NULL);
 
       }
 

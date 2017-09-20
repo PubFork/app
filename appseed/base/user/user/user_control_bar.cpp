@@ -20,7 +20,7 @@ namespace user
       m_bDockTrack = false;
 
       // no elements contained in the control bar yet
-   //   m_nCount = 0;
+      //   m_nCount = 0;
       //m_pData = NULL;
 
       // set up some default border spacings
@@ -40,22 +40,22 @@ namespace user
 
    void control_bar::install_message_routing(::message::sender * pinterface)
    {
-      
+
       ::user::interaction::install_message_routing(pinterface);
 
 #ifdef WINDOWS
-      IGUI_MSG_LINK(WM_CTLCOLOR          , pinterface, this, &control_bar::_001OnCtlColor);
+      IGUI_MSG_LINK(WM_CTLCOLOR, pinterface, this, &control_bar::_001OnCtlColor);
 #endif
-      IGUI_MSG_LINK(WM_SIZEPARENT        , pinterface, this, &control_bar::_001OnSizeParent);
-      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &control_bar::_001OnWindowPosChanging);
-      IGUI_MSG_LINK(WM_MOUSEMOVE         , pinterface, this, &control_bar::_001OnMouseMove);
-      IGUI_MSG_LINK(WM_LBUTTONDOWN       , pinterface, this, &control_bar::_001OnLButtonDown);
-      IGUI_MSG_LINK(WM_LBUTTONUP         , pinterface, this, &control_bar::_001OnLButtonUp);
-      IGUI_MSG_LINK(WM_LBUTTONDBLCLK     , pinterface, this, &control_bar::_001OnLButtonDblClk);
-      IGUI_MSG_LINK(WM_MOUSEACTIVATE     , pinterface, this, &control_bar::_001OnMouseActivate);
-      IGUI_MSG_LINK(WM_CREATE            , pinterface, this, &control_bar::_001OnCreate);
-      IGUI_MSG_LINK(WM_DESTROY           , pinterface, this, &control_bar::_001OnDestroy);
-      IGUI_MSG_LINK(WM_HELPHITTEST       , pinterface, this, &control_bar::_001OnHelpHitTest);
+      IGUI_MSG_LINK(WM_SIZEPARENT, pinterface, this, &control_bar::_001OnSizeParent);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING, pinterface, this, &control_bar::_001OnWindowPosChanging);
+      IGUI_MSG_LINK(WM_MOUSEMOVE, pinterface, this, &control_bar::_001OnMouseMove);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &control_bar::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &control_bar::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDBLCLK, pinterface, this, &control_bar::_001OnLButtonDblClk);
+      IGUI_MSG_LINK(WM_MOUSEACTIVATE, pinterface, this, &control_bar::_001OnMouseActivate);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &control_bar::_001OnCreate);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &control_bar::_001OnDestroy);
+      IGUI_MSG_LINK(WM_HELPHITTEST, pinterface, this, &control_bar::_001OnHelpHitTest);
    }
 
 
@@ -82,7 +82,7 @@ namespace user
 
       // default border style translation for Win4
       //  (you can turn off this translation by setting CBRS_BORDER_3D)
-   //   if (afxData.bWin4 && (m_dwStyle & CBRS_BORDER_3D) == 0)
+      //   if (afxData.bWin4 && (m_dwStyle & CBRS_BORDER_3D) == 0)
       if ((m_dwStyle & CBRS_BORDER_3D) == 0)
       {
          uint32_t dwNewStyle = 0;
@@ -169,18 +169,18 @@ namespace user
          m_pDockSite->RemoveControlBar(this);
 
       // free docking context
-   /*   BaseDockContext* pDockContext = m_pDockContext;
-      m_pDockContext = NULL;
-      delete pDockContext;*/
+      /*   BaseDockContext* pDockContext = m_pDockContext;
+         m_pDockContext = NULL;
+         delete pDockContext;*/
 
       // free array
-   /*
-      if (m_pData != NULL)
-      {
-         ASSERT(m_nCount != 0);
-         free(m_pData);
-      }
-   */
+      /*
+         if (m_pData != NULL)
+         {
+            ASSERT(m_nCount != 0);
+            free(m_pData);
+         }
+      */
 
    }
 
@@ -215,8 +215,8 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // Fly-by status bar help
 
-   #define ID_TIMER_WAIT   0xE000  // timer while waiting to show status
-   #define ID_TIMER_CHECK  0xE001  // timer to check for removal of status
+#define ID_TIMER_WAIT   0xE000  // timer while waiting to show status
+#define ID_TIMER_CHECK  0xE001  // timer to check for removal of status
 
    void control_bar::ResetTimer(UINT nEvent, UINT nTime)
    {
@@ -273,7 +273,7 @@ namespace user
    void control_bar::pre_translate_message(::message::message * pobj)
    {
       ASSERT_VALID(this);
-   //trans   ASSERT(get_handle() != NULL);
+      //trans   ASSERT(get_handle() != NULL);
 
       // allow tooltip messages to be filtered
       ::user::interaction::pre_translate_message(pobj);
@@ -286,12 +286,14 @@ namespace user
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      UINT message = pbase->m_id;
+      UINT message;
+
+      convert(message, pbase->m_id.int64());
 
       // handle CBRS_FLYBY style (status bar flyby help)
       if (((m_dwStyle & CBRS_FLYBY) ||
-         message == WM_LBUTTONDOWN || message == WM_LBUTTONUP) &&
-         ((message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)))
+            message == WM_LBUTTONDOWN || message == WM_LBUTTONUP) &&
+            ((message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)))
 //          (message >= WM_NCMOUSEFIRST && message <= WM_NCMOUSELAST)))
       {
       }
@@ -327,7 +329,7 @@ namespace user
    {
 
       ::user::interaction::message_handler(pbase);
-      
+
       if (pbase->m_bRet)
       {
 
@@ -339,7 +341,9 @@ namespace user
 
       LRESULT lResult;
 
-      UINT uiMessage = pbase->m_id;
+      UINT uiMessage;
+
+      convert(uiMessage, pbase->m_id.int64());
 
       switch (uiMessage)
       {
@@ -352,14 +356,14 @@ namespace user
       case WM_VKEYTOITEM:
       case WM_CHARTOITEM:
          // send these messages to the owner if not handled
-   //      if (OnWndMsg(nMsg, wParam, lParam, &lResult))
-   //         return lResult;
-   //      else
-         {
-            // try owner next
-            lResult = GetOwner()->send_message(uiMessage, pbase->m_wparam, pbase->m_lparam);
+         //      if (OnWndMsg(nMsg, wParam, lParam, &lResult))
+         //         return lResult;
+         //      else
+      {
+         // try owner next
+         lResult = GetOwner()->send_message(uiMessage, pbase->m_wparam, pbase->m_lparam);
 
-            // special case for TTN_NEEDTEXTA and TTN_NEEDTEXTW
+         // special case for TTN_NEEDTEXTA and TTN_NEEDTEXTW
 //#ifdef WINDOWSEX
 //            if(pbase->m_id == WM_NOTIFY)
 //            {
@@ -379,8 +383,8 @@ namespace user
 //#else
 //            throw todo(get_app());
 //#endif
-            return;
-         }
+         return;
+      }
       }
 
       // otherwise, just handle in default way
@@ -452,7 +456,7 @@ namespace user
       /* trans if(get_handle() != NULL && IsFloating())
          return GetDockingFrame()->DestroyWindow();
       else */
-         return ::user::interaction::DestroyWindow();
+      return ::user::interaction::DestroyWindow();
    }
 
    void control_bar::_001OnMouseActivate(::message::message * pobj)
@@ -489,25 +493,25 @@ namespace user
    void control_bar::EraseNonClient()
    {
       // get interaction_impl DC that is clipped to the non-client area
-   /* trans   CWindowDC spgraphics(this);
-      rect rectClient;
-      GetClientRect(rectClient);
-      rect rectWindow;
-      GetWindowRect(rectWindow);
-      ScreenToClient(rectWindow);
-      rectClient.offset(-rectWindow.left, -rectWindow.top);
-      spgraphics->ExcludeClipRect(rectClient);
+      /* trans   CWindowDC spgraphics(this);
+         rect rectClient;
+         GetClientRect(rectClient);
+         rect rectWindow;
+         GetWindowRect(rectWindow);
+         ScreenToClient(rectWindow);
+         rectClient.offset(-rectWindow.left, -rectWindow.top);
+         spgraphics->ExcludeClipRect(rectClient);
 
-      // draw borders in non-client area
-      rectWindow.offset(-rectWindow.left, -rectWindow.top);
-      DrawBorders(&spgraphics, rectWindow);
+         // draw borders in non-client area
+         rectWindow.offset(-rectWindow.left, -rectWindow.top);
+         DrawBorders(&spgraphics, rectWindow);
 
-      // erase parts not drawn
-      spgraphics->IntersectClipRect(rectWindow);
-      SendMessage(WM_ERASEBKGND, (WPARAM)spgraphics->get_handle1());
+         // erase parts not drawn
+         spgraphics->IntersectClipRect(rectWindow);
+         SendMessage(WM_ERASEBKGND, (WPARAM)spgraphics->get_handle1());
 
-      // draw gripper in non-client area
-      DrawGripper(&spgraphics, rectWindow);*/
+         // draw gripper in non-client area
+         DrawGripper(&spgraphics, rectWindow);*/
    }
 
    void control_bar::EraseNonClient(::draw2d::graphics * pgraphics)
@@ -550,7 +554,7 @@ namespace user
    {
       SCAST_PTR(::message::ctl_color,pctlcolor,pobj);
 
-         sp(::user::interaction) pui =pctlcolor->m_pwnd;
+      sp(::user::interaction) pui =pctlcolor->m_pwnd;
       if (pui.is_set() && pui->OnChildNotify(pctlcolor))
       {
          pctlcolor->m_bRet = true;
@@ -558,13 +562,13 @@ namespace user
       }
 
       // force black text on gray background all the time
-/*      if (!interaction_impl::GrayCtlColor((HDC)pctlcolor->m_pdc->get_os_data(), pctlcolor->m_pwnd->get_os_data(), pctlcolor->m_nCtlType,
-         afxData.hbrBtnFace, afxData.clrBtnText))
-      {
-         pctlcolor->set_lresult(Default());
-         pctlcolor->m_bRet = true;
-         return;
-      }*/
+      /*      if (!interaction_impl::GrayCtlColor((HDC)pctlcolor->m_pdc->get_os_data(), pctlcolor->m_pwnd->get_os_data(), pctlcolor->m_nCtlType,
+               afxData.hbrBtnFace, afxData.clrBtnText))
+            {
+               pctlcolor->set_lresult(Default());
+               pctlcolor->m_bRet = true;
+               return;
+            }*/
       //pctlcolor->set_lresult((LRESULT) afxData.hbrBtnFace);
       pctlcolor->m_bRet = true;
    }
@@ -579,7 +583,7 @@ namespace user
          // start the drag
          ASSERT(m_pDockContext != NULL);
          ClientToScreen(&pmouse->m_pt);
-   //      m_pDockContext->StartDrag(pmouse->m_pt);
+         //      m_pDockContext->StartDrag(pmouse->m_pt);
       }
       else
       {
@@ -592,7 +596,7 @@ namespace user
       SCAST_PTR(::message::mouse, pmouse, pobj);
       if(m_bDockTrack)
       {
-   //      m_pDockContext->OnBarLButtonUp(pmouse->m_nFlags, pmouse->m_pt);
+         //      m_pDockContext->OnBarLButtonUp(pmouse->m_nFlags, pmouse->m_pt);
       }
       pmouse->previous();
    }
@@ -602,7 +606,7 @@ namespace user
       SCAST_PTR(::message::mouse, pmouse, pobj);
       if(m_bDockTrack)
       {
-   //      m_pDockContext->OnBarMouseMove(pmouse->m_nFlags, pmouse->m_pt);
+         //      m_pDockContext->OnBarMouseMove(pmouse->m_nFlags, pmouse->m_pt);
       }
       pmouse->previous();
    }
@@ -661,7 +665,7 @@ namespace user
 
       // resize and reposition this control bar based on styles
       uint32_t dwStyle = (m_dwStyle & (CBRS_ALIGN_ANY|CBRS_BORDER_ANY)) |
-         (GetStyle() & WS_VISIBLE);
+                         (GetStyle() & WS_VISIBLE);
 
       // handle delay hide/show
       if (m_nStateFlags & (delayHide|delayShow))
@@ -759,7 +763,7 @@ namespace user
 
          // only resize the interaction_impl if doing on_layout and not just rect query
          //if (lpLayout->hDWP != NULL)
-            __reposition_window(lpLayout, this, &rect);
+         __reposition_window(lpLayout, this, &rect);
       }
       pbase->set_lresult(0);
    }
@@ -768,8 +772,8 @@ namespace user
    {
       m_nStateFlags &= ~(delayHide|delayShow);
 //      /*if (bShow && (GetStyle() & WS_VISIBLE) == 0)
-  //       m_nStateFlags |= delayShow;
-    //  else if (!bShow && (GetStyle() & WS_VISIBLE) != 0)
+      //       m_nStateFlags |= delayShow;
+      //  else if (!bShow && (GetStyle() & WS_VISIBLE) != 0)
       //   m_nStateFlags |= delayHide;*/
       if (bShow && !is_this_visible())
          m_nStateFlags |= delayShow;
@@ -823,7 +827,7 @@ namespace user
       class rect rect1, rect2;
       rect1 = rect;
       rect2 = rect;
-   //   COLORREF clr = afxData.bWin4 ? afxData.clrBtnShadow : afxData.clrWindowFrame;
+      //   COLORREF clr = afxData.bWin4 ? afxData.clrBtnShadow : afxData.clrWindowFrame;
 //      COLORREF clr = afxData.clrBtnShadow;
       COLORREF clr;
       clr = RGB(128, 128, 123);
@@ -839,10 +843,10 @@ namespace user
       }
       if (dwStyle & CBRS_BORDER_TOP)
          rect2.top += 2;
-         //rect2.top += afxData.cyBorder2;
+      //rect2.top += afxData.cyBorder2;
       if (dwStyle & CBRS_BORDER_BOTTOM)
          rect2.bottom -= 2;
-         //rect2.bottom -= afxData.cyBorder2;
+      //rect2.bottom -= afxData.cyBorder2;
 
       // draw left and top
       if (dwStyle & CBRS_BORDER_LEFT)
@@ -876,7 +880,7 @@ namespace user
                1,
                RGB(128, 128, 123));
          }
-   //      pgraphics->FillSolidRect(0, 0, rect.right, CY_BORDER, clr);
+         //      pgraphics->FillSolidRect(0, 0, rect.right, CY_BORDER, clr);
       }
       if (dwStyle & (CBRS_BORDER_LEFT | CBRS_BORDER_TOP))
       {
@@ -924,16 +928,16 @@ namespace user
 
       if (dwStyle & CBRS_BORDER_LEFT)
          //rect.left += afxData.cxBorder2;
-            rect.left += 2;
+         rect.left += 2;
       if (dwStyle & CBRS_BORDER_TOP)
          //rect.top += afxData.cyBorder2;
-            rect.top += 2;
+         rect.top += 2;
       if (dwStyle & CBRS_BORDER_RIGHT)
          //rect.right -= afxData.cxBorder2;
-            rect.right -= 2;
+         rect.right -= 2;
       if (dwStyle & CBRS_BORDER_BOTTOM)
          //rect.bottom -= afxData.cyBorder2;
-            rect.bottom -= 2;
+         rect.bottom -= 2;
 
 #else
 
@@ -943,23 +947,23 @@ namespace user
 
    }
 
-   #define CX_GRIPPER  6
-   #define CY_GRIPPER  6
-   #define CX_BORDER_GRIPPER 2
-   #define CY_BORDER_GRIPPER 2
+#define CX_GRIPPER  6
+#define CY_GRIPPER  6
+#define CX_BORDER_GRIPPER 2
+#define CY_BORDER_GRIPPER 2
 
    void DrawGripperElement001(::draw2d::graphics * pgraphics, int32_t ix, int32_t iy)
    {
       UNREFERENCED_PARAMETER(pgraphics);
       UNREFERENCED_PARAMETER(ix);
       UNREFERENCED_PARAMETER(iy);
-/*      pgraphics->SetPixel(ix    , iy + 1, afxData.clrBtnHilite);
-      pgraphics->SetPixel(ix + 1, iy + 1, afxData.clrBtnHilite);
-      pgraphics->SetPixel(ix + 1, iy    , afxData.clrBtnHilite);
-      pgraphics->SetPixel(ix + 2, iy    , afxData.clrBtnShadow);
-      pgraphics->SetPixel(ix + 3, iy + 1, afxData.clrBtnShadow);
-      pgraphics->SetPixel(ix + 3, iy + 2, afxData.clrBtnShadow);
-      pgraphics->SetPixel(ix + 2, iy + 3, afxData.clrBtnShadow);*/
+      /*      pgraphics->SetPixel(ix    , iy + 1, afxData.clrBtnHilite);
+            pgraphics->SetPixel(ix + 1, iy + 1, afxData.clrBtnHilite);
+            pgraphics->SetPixel(ix + 1, iy    , afxData.clrBtnHilite);
+            pgraphics->SetPixel(ix + 2, iy    , afxData.clrBtnShadow);
+            pgraphics->SetPixel(ix + 3, iy + 1, afxData.clrBtnShadow);
+            pgraphics->SetPixel(ix + 3, iy + 2, afxData.clrBtnShadow);
+            pgraphics->SetPixel(ix + 2, iy + 3, afxData.clrBtnShadow);*/
    }
 
    void control_bar::DrawGripper(::draw2d::graphics * pgraphics, const rect& rect)
@@ -993,10 +997,10 @@ namespace user
          }
          else
          {
-   //         pgraphics->Draw3dRect(rect.left+m_cyTopBorder,
-   //            rect.top+CY_BORDER_GRIPPER,
-   //            rect.width()-m_cyTopBorder-m_cyBottomBorder, CY_GRIPPER,
-   //            afxData.clrBtnHilite, afxData.clrBtnShadow);
+            //         pgraphics->Draw3dRect(rect.left+m_cyTopBorder,
+            //            rect.top+CY_BORDER_GRIPPER,
+            //            rect.width()-m_cyTopBorder-m_cyBottomBorder, CY_GRIPPER,
+            //            afxData.clrBtnHilite, afxData.clrBtnShadow);
             int32_t dx = CX_GRIPPER / 2;
             int32_t dy = CY_GRIPPER / 2;
             int32_t ix = rect.left + m_cyTopBorder + dx / 2;
@@ -1057,7 +1061,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // control_bar diagnostics
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void control_bar::assert_valid() const
    {
       ::user::interaction::assert_valid();
@@ -1079,7 +1083,7 @@ namespace user
       dumpcontext << "\n";
    }
 
-   #endif
+#endif
 
    sp(::user::frame_window) control_bar::GetDockingFrame()
    {

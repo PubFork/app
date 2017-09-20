@@ -82,7 +82,7 @@ namespace multimedia
 
       //}
 
-      ::multimedia::e_result wave_out::wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
+      ::multimedia::e_result wave_out::wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount)
       {
 
          single_lock sLock(m_pmutex, TRUE);
@@ -165,13 +165,13 @@ namespace multimedia
          //}
 
 //Opened:
-         uint32_t uiBufferSizeLog2;
-         uint32_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         uint32_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-         uint32_t uiBufferCount = iBufferCount;
+         memory_size_t uiBufferSizeLog2;
+         memory_size_t uiBufferSize;
+         memory_size_t uiAnalysisSize;
+         memory_size_t uiAllocationSize;
+         memory_size_t uiInterestSize;
+         memory_size_t uiSkippedSamplesCount;
+         memory_size_t uiBufferCount = iBufferCount;
 
          if(m_pwaveformat->nSamplesPerSec == 44100)
          {
@@ -216,11 +216,7 @@ namespace multimedia
             uiBufferCount, // group count
             iBufferSampleCount); // group sample count
 
-
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
-
-
-
 
          m_estate = state_opened;
 
@@ -228,7 +224,8 @@ namespace multimedia
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
+
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
          single_lock sLock(m_pmutex, TRUE);
@@ -325,7 +322,7 @@ namespace multimedia
 
          int iAlign = 2048;
 
-         uint32_t uiBufferSize = iBufferSampleCount * m_pwaveformat->nChannels * 2;
+         auto uiBufferSize = iBufferSampleCount * m_pwaveformat->nChannels * 2;
 
          uiBufferSize = MAX(uiBufferSize,2048);
 
@@ -367,9 +364,9 @@ namespace multimedia
          ::multimedia::e_result mmr;
 
 //         int32_t i, iSize;
-         int32_t iSize;
+         //int32_t iSize;
 
-         iSize =  wave_out_get_buffer()->GetBufferCount();
+         auto iSize =  wave_out_get_buffer()->GetBufferCount();
 
          //for(i = 0; i < iSize; i++)
          //{
@@ -477,13 +474,24 @@ namespace multimedia
          /* the last position where its possible to find "s" in "l" */
          last = (char *)cl + l_len - s_len;
 
-         for(cur = (char *)cl; cur <= last; cur++)
-            if(cur[0] == cs[0] && memcmp(cur,cs,s_len) == 0)
+         for (cur = (char *)cl; cur <= last; cur++)
+         {
+
+            if (cur[0] == cs[0] && memcmp(cur, cs, s_len) == 0)
+            {
+
                return cur;
 
+            }
+
+         }
+
          return NULL;
+
       }
-      void wave_out::wave_out_buffer_ready(int iBuffer)
+
+
+      void wave_out::wave_out_buffer_ready(index iBuffer)
       {
 
          if(wave_out_get_state() != state_playing)
@@ -493,18 +501,24 @@ namespace multimedia
          }
 
          ::multimedia::audio::wave_buffer * pwbuffer = wave_out_get_buffer();
+
          ::multimedia::audio::wave_buffer::buffer * pbuffer = pwbuffer->get_buffer(iBuffer);
 
          ::multimedia::e_result mmr;
+
          if(m_peffect != NULL)
          {
+
             m_peffect->Process16bits((int16_t *)pbuffer->m_pData,pwbuffer->m_uiBufferSize / 2);
+
          }
 
          XAUDIO2_BUFFER b;
+
          ZERO(b);
+
          b.pContext = pbuffer;
-         b.AudioBytes = pwbuffer->m_uiBufferSize;
+         convert(b.AudioBytes, pwbuffer->m_uiBufferSize);
          b.pAudioData = (const BYTE *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 
@@ -516,15 +530,22 @@ namespace multimedia
 
          if(memmem(b.pAudioData,pwbuffer->m_uiBufferSize,sz,sizeof(sz)))
          {
+
             output_debug_string("too much zeros in audio buffer\n");
+
          }
 
          static DWORD g_dwLastBuffer;
+
          DWORD dwTick = get_tick_count();
+
          if(dwTick-g_dwLastBuffer > 50)
          {
+
             output_debug_string("too much delay for submitting audio buffer\n");
+
          }
+
          g_dwLastBuffer = dwTick;
 
          mmr = xaudio::translate(m_psourcevoice->SubmitSourceBuffer(&b));
@@ -734,14 +755,19 @@ namespace multimedia
             m_psourcevoice->GetState(&s);
 
             return s.SamplesPlayed;
+
          }
          else
+         {
+
             return 0;
 
+         }
 
       }
 
-      void wave_out::wave_out_free(int iBuffer)
+
+      void wave_out::wave_out_free(index iBuffer)
       {
 
          //wave_out_free(wave_hdr(iBuffer));
@@ -775,7 +801,8 @@ namespace multimedia
 
       }
 
-      int32_t wave_out::wave_out_get_buffered_buffer_count()
+
+      ::count wave_out::wave_out_get_buffered_buffer_count()
       {
 
          return ::multimedia::audio::wave_out::wave_out_get_buffered_buffer_count();

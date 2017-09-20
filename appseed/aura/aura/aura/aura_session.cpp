@@ -17,11 +17,8 @@ namespace aura
    {
 
       m_pappCurrent = NULL;
-
       m_psockets = NULL;
-
       m_paurasession = this;
-
       m_bMatterFromHttpCache = m_paurasystem->m_bMatterFromHttpCache;
 
 #ifdef WINDOWS
@@ -38,9 +35,6 @@ namespace aura
       m_psavings = canew(class ::aura::savings(this));
 
       m_bZipIsDir = true;
-
-      //      m_paurasystem->m_basesessionptra.add_unique(this);
-
 
       m_iEdge = 0;
       m_bShowPlatform = false;
@@ -86,7 +80,7 @@ namespace aura
       }
 
       if (pcreate->m_spCommandLine->m_varQuery.has_property("install")
-         || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
+            || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
       {
 
          Session.appptra().remove(papp);
@@ -468,9 +462,9 @@ namespace aura
          string strApp;
 
          if ((pcreate->m_spCommandLine->m_varQuery["app"].array_get_count() > 1
-            || pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || handler()->m_varTopicQuery["show_platform"] == 1)
-            && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
-            && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
+               || pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || handler()->m_varTopicQuery["show_platform"] == 1)
+               && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
+               && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
          {
             m_bShowPlatform = true;
          }
@@ -559,7 +553,7 @@ namespace aura
                {
 
                   if (System.handler()->m_spcommandline->m_varQuery["app"].array_get_count() == 1
-                     && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
+                        && System.handler()->m_spcommandline->m_varQuery["app"] == strApp)
                   {
 
                      ::multithreading::post_quit(&System);
@@ -617,8 +611,8 @@ namespace aura
       m_varCurrentViewFile = pcreate->m_spCommandLine->m_varFile;
 
       if ((pcreate->m_spCommandLine->m_varQuery["show_platform"] == 1 || handler()->m_varTopicQuery["show_platform"] == 1)
-         && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
-         && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
+            && (!(bool)pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !(bool)handler()->m_varTopicQuery.has_property("client_only"))
+            && (!pcreate->m_spCommandLine->m_varQuery.has_property("client_only") && !handler()->m_varTopicQuery.has_property("client_only")))
       {
          m_bShowPlatform = true;
       }
@@ -690,7 +684,7 @@ namespace aura
             if (strApp.is_empty() || strApp == "session")
             {
                if (pcreate->m_spCommandLine->m_varQuery.has_property("install")
-                  || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
+                     || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall"))
                {
                   //System.planesessionptra().remove(this);
                   return;
@@ -761,7 +755,7 @@ namespace aura
          {
 
             // aura::session, axis::session and ::base::session, could get more specialized handling in core::application (core::system)
-            // Thank you Mummi (em S�o Paulo, cuidando do Lucinho e ajudando um monte a Car� 2015-02-03) !! Thank you God!!
+            // Thank you Mummi (em São Paulo, cuidando do Lucinho e ajudando um monte a Carô 2015-02-03) !! Thank you God!!
             if (!Sys(this).on_run_exception(e))
             {
 
@@ -814,7 +808,7 @@ namespace aura
 
 #ifdef CUBE
 
-      // Criar novo meio de instala��o
+      // Criar novo meio de instalação
 
 #elif !defined(METROWIN)
 
@@ -823,10 +817,10 @@ namespace aura
 
 
       if (((!System.handler()->m_varTopicQuery.has_property("install")
-         && !System.handler()->m_varTopicQuery.has_property("uninstall"))
-         ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
-         && strAppId.has_char()
-         && !System.is_application_installed(strAppId, "installed"))
+            && !System.handler()->m_varTopicQuery.has_property("uninstall"))
+          ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
+            && strAppId.has_char()
+            && !System.is_application_installed(strAppId, "installed"))
       {
 
          throw not_installed(get_app(), strAppId);
@@ -1054,8 +1048,8 @@ namespace aura
       {
 
          if (m_pappCurrent != NULL && m_pappCurrent != this
-            && (pcreate->m_spCommandLine->m_strApp.is_empty()
-               || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
+               && (pcreate->m_spCommandLine->m_strApp.is_empty()
+                   || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
          {
             //if(get_document() != NULL && get_document()->get_typed_view < ::bergedge::pane_view >() != NULL)
             //{
@@ -1077,7 +1071,7 @@ namespace aura
                {
                   string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
                   if (::str::begins_eat(strCommand, "ca2prompt\r")
-                     || ::str::begins_eat(strCommand, "ca2prompt\n"))
+                        || ::str::begins_eat(strCommand, "ca2prompt\n"))
                   {
                      strCommand.trim();
                      handler()->add_fork_uri(strCommand);
@@ -1121,7 +1115,7 @@ namespace aura
          {
             string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
             if (::str::begins_eat(strCommand, "ca2prompt\r")
-               || ::str::begins_eat(strCommand, "ca2prompt\n"))
+                  || ::str::begins_eat(strCommand, "ca2prompt\n"))
             {
                strCommand.trim();
                handler()->add_fork_uri(strCommand);
@@ -1135,8 +1129,8 @@ namespace aura
          }
       }
       else if (m_pappCurrent != NULL && m_pappCurrent != this
-         && (pcreate->m_spCommandLine->m_strApp.is_empty()
-            || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
+               && (pcreate->m_spCommandLine->m_strApp.is_empty()
+                   || App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
       {
 
 
@@ -1283,35 +1277,5 @@ namespace aura
 
 
 } // namespace aura
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

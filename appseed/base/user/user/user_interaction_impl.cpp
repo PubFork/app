@@ -25,7 +25,7 @@ namespace user
 
    void interaction_impl::user_common_construct()
    {
-      
+
       m_dFps = 60.0;
       m_bIpcCopy = false;
       m_pmutex                               = new mutex(get_app());
@@ -64,20 +64,20 @@ namespace user
       return this;
 
    }
-   
-   
+
+
    bool interaction_impl::has_pending_redraw_flags()
    {
-    
+
       if(m_pthreadUpdateWindow.is_null())
       {
-       
+
          return false;
-         
+
       }
-      
+
       return ::user::interaction_impl_base::has_pending_redraw_flags();
-      
+
    }
 
 
@@ -183,7 +183,7 @@ namespace user
    }
 
    bool interaction_impl::UpdateLayeredWindow(::draw2d::graphics * pDCDst,POINT * pptDst,SIZE * psize,
-      ::draw2d::graphics * pDCSrc,POINT * pptSrc,COLORREF crKey,BLENDFUNCTION * pblend,uint32_t dwFlags)
+         ::draw2d::graphics * pDCSrc,POINT * pptSrc,COLORREF crKey,BLENDFUNCTION * pblend,uint32_t dwFlags)
    {
       UNREFERENCED_PARAMETER(pDCDst);
       UNREFERENCED_PARAMETER(pptDst);
@@ -291,23 +291,23 @@ namespace user
       return false;
 
    }
-   
-   
+
+
 
 
    void interaction_impl::prio_install_message_routing(::message::sender * pinterface)
    {
-      
+
       //m_queuethread = canew(queue_thread(this));
 //      for(index i = (index) queue_thread_first; i < (index) queue_thread_end; i++)
 //      {
-//         
+//
 //         e_queue_thread e = (e_queue_thread) i;
-//         
+//
 //         m_mapqueue.set_at(e, canew(queue_thread(this)));
-//         
+//
 //      }
-      
+
       ::user::interaction_impl_base::prio_install_message_routing(pinterface);
 
    }
@@ -373,9 +373,9 @@ namespace user
 
    }
 
-   
-   
-   
+
+
+
    void interaction_impl::_001OnTriggerMouseInside()
    {
 
@@ -390,121 +390,121 @@ namespace user
 //      m_evNewMessage(pimpl->m_pui->get_app()),
 //      m_pimpl(pimpl)
 //   {
-//    
+//
 //      if(get_app() != NULL)
 //      {
-//      
+//
 //         begin();
-//         
+//
 //         m_pimpl->m_pui->threadrefa_add(this);
-//         
+//
 //      }
-//      
+//
 //   }
-//   
-//      
+//
+//
 //   interaction_impl::queue_thread::~queue_thread()
 //   {
-//         
-//         
+//
+//
 //   }
-//      
-//      
+//
+//
 //   void interaction_impl::queue_thread::queue_message_handler(::message::base * pbase)
 //   {
-//      
+//
 //      if(m_hthread == NULL)
 //      {
-//         
+//
 //         m_pimpl->m_pui->message_handler(pbase);
-//         
+//
 //         return;
-//         
+//
 //      }
-//      
+//
 //      {
-//            
+//
 //         single_lock sl(m_pmutex);
-//            
+//
 //         m_messagequeue.add(pbase);
-//            
+//
 //      }
-//         
+//
 //      m_evNewMessage.SetEvent();
-//         
+//
 //   }
-//      
-//      
+//
+//
 //   int32_t interaction_impl::queue_thread::run()
 //   {
-//      
+//
 //      while(thread_get_run())
 //      {
-//            
+//
 //         if (m_evNewMessage.wait(seconds(1)).succeeded())
 //         {
-//                  
+//
 //            m_evNewMessage.ResetEvent();
-//                  
+//
 //         }
-//         
+//
 //         {
-//               
+//
 //            synch_lock sl(m_pmutex);
-//               
+//
 //            if (m_messagequeue.has_elements())
 //            {
-//                  
+//
 //               sp(::message::base) pbase = m_messagequeue.element_at(0);
-//                  
+//
 //               m_messagequeue.remove_at(0);
-//                  
+//
 //               sl.unlock();
-//               
+//
 //               if(pbase.is_set())
 //               {
-//                  
+//
 //                  ::message::message * pobj = pbase.cast < ::message::message >();
-//                  
+//
 //                  if(pobj != NULL)
 //                  {
-//                     
+//
 //                     try
 //                     {
-//                  
+//
 //                        m_pimpl->m_pui->message_handler(pbase);
-//                  
+//
 //                     }
 //                     catch (...)
 //                     {
-//               
+//
 //                     }
-//                     
+//
 //                  }
-//                  
+//
 //               }
-//                  
+//
 //            }
-//            
+//
 //         }
-//         
+//
 //      }
-//      
+//
 //      m_pimpl->m_queuethread.release();
-//      
+//
 //      return 0;
-//         
+//
 //   }
-//   
-//   
+//
+//
 //   interaction_impl::e_queue_thread interaction_impl::message_queue_thread(UINT uiMessage)
 //   {
-//      
+//
 //      if (uiMessage == WM_MOUSEMOVE)
 //      {
-//         
+//
 //         return queue_thread_mouse_move;
-//         
+//
 //      }
 //      else if ((uiMessage >= WM_MOUSEFIRST
 //                && uiMessage <= WM_MOUSELAST)
@@ -512,52 +512,52 @@ namespace user
 //               (uiMessage >= WM_KEYFIRST
 //                && uiMessage <= WM_KEYLAST))
 //      {
-//         
+//
 //         return queue_thread_input;
-//         
+//
 //      }
 //
 //      return queue_thread_other;
 //
 //   }
-//   
-//   
+//
+//
 //   void interaction_impl::queue_message_handler(::message::base * pbase)
 //   {
-//      
+//
 //      e_queue_thread equeuethread = message_queue_thread(pbase->m_id);
-//      
+//
 //      if(equeuethread == queue_thread_mouse_move)
 //      {
-//         
+//
 //         DWORD dwNow = get_tick_count();
-//         
+//
 //         if(dwNow - m_dwLastMouseMove < 10)
 //         {
-//            
+//
 //            return;
-//            
+//
 //         }
 //
 //         m_dwLastMouseMove = dwNow;
-//         
+//
 //      }
-//      
+//
 //      if(m_pui->m_bUserElementalOk && m_queuethread != NULL)
 //      {
-//      
+//
 //         m_queuethread->queue_message_handler(pbase);
-//         
+//
 //      }
-//      
+//
 //   }
-   
+
 
    void interaction_impl::_008OnMouse(::message::mouse * pmouse)
    {
 
       bool bPointInside;
-      
+
       bPointInside = m_pui->_001IsPointInside(pmouse->m_pt);
 
       if (!bPointInside)
@@ -572,7 +572,7 @@ namespace user
 
       }
 
-      
+
       {
 
          ::user::interaction_spa uia = m_guieptraMouseHover;
@@ -636,7 +636,7 @@ namespace user
          {
 
             //(puiCapture->m_pimpl->*puiCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast <::message::message *> (pmouse));
-            
+
             puiCapture->m_pimpl->route_message(pmouse);
 
          }
@@ -663,7 +663,7 @@ namespace user
 
       }
 
-      pmouse->set_lresult(DefWindowProc(pmouse->m_id, pmouse->m_wparam, pmouse->m_lparam));
+      pmouse->set_lresult(DefWindowProc(convert<UINT>(pmouse->m_id.int64()), pmouse->m_wparam, pmouse->m_lparam));
 
    }
 
@@ -731,7 +731,7 @@ namespace user
    // WM_NCDESTROY is the absolute LAST message sent.
    void interaction_impl::PostNcDestroy()
    {
-     ::user::interaction_base::PostNcDestroy();
+      ::user::interaction_base::PostNcDestroy();
    }
 
 
@@ -879,7 +879,7 @@ namespace user
 //   }
 //#endif
 //
-  void interaction_impl::PrepareForHelp()
+   void interaction_impl::PrepareForHelp()
    {
       ::exception::throw_interface_only(get_app());
    }
@@ -1435,7 +1435,7 @@ namespace user
 
    LONG_PTR interaction_impl::set_window_long_ptr(int32_t nIndex,LONG_PTR lValue)
    {
-      
+
       return ::user::interaction_impl_base::set_window_long_ptr(nIndex, lValue);
 
    }
@@ -1568,65 +1568,65 @@ namespace user
 
    bool interaction_impl::ModifyStyle(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
-      
+
       if (!IsWindow())
       {
-       
+
          return false;
-         
+
       }
-      
+
       DWORD dw = get_window_long(GWL_STYLE);
-      
+
       dw &= ~dwRemove;
-      
+
       dw |= dwAdd;
-      
+
       set_window_long(GWL_STYLE, dw);
-      
+
       if(nFlags != 0)
       {
-         
+
          m_iShowFlags |= nFlags;
-         
+
          m_bShowFlags = true;
-         
+
       }
-      
+
       return false;
-      
+
    }
-   
+
 
    bool interaction_impl::ModifyStyleEx(uint32_t dwRemove,uint32_t dwAdd,UINT nFlags)
    {
-      
+
       if (!IsWindow())
       {
-         
+
          return false;
-         
+
       }
-      
+
       DWORD dw = get_window_long(GWL_EXSTYLE);
-      
+
       dw &= ~dwRemove;
-      
+
       dw |= dwAdd;
-      
+
       set_window_long(GWL_EXSTYLE, dw);
-      
+
       if(nFlags != 0)
       {
-         
+
          m_iShowFlags |= nFlags;
-         
+
          m_bShowFlags = true;
-         
+
       }
-      
+
       return false;
-      
+
    }
 
    void interaction_impl::set_owner(::user::interaction * pOwnerWnd)
@@ -1864,7 +1864,7 @@ namespace user
    ::user::interaction * interaction_impl::GetDescendantWindow(id id) const
    {
       UNREFERENCED_PARAMETER(id);
-    //  ::exception::throw_interface_only(get_app());
+      //  ::exception::throw_interface_only(get_app());
 
       return ::user::interaction_impl_base::GetDescendantWindow(id);
    }
@@ -1890,16 +1890,16 @@ namespace user
       ::exception::throw_interface_only(get_app());
    }
 
-   
+
    bool interaction_impl::RedrawWindow(LPCRECT lpRectUpdate,::draw2d::region * prgnUpdate,UINT flags)
    {
-   
+
       m_pui->set_need_redraw();
-      
+
       return true;
-      
+
    }
-   
+
 
    bool interaction_impl::EnableScrollBar(int32_t nSBFlags,UINT nArrowFlags)
    {
@@ -2110,8 +2110,8 @@ namespace user
    }
 
    int32_t interaction_impl::ScrollWindowEx(int32_t dx,int32_t dy,
-      LPCRECT lpRectScroll,LPCRECT lpRectClip,
-      ::draw2d::region* prgnUpdate,LPRECT lpRectUpdate,UINT flags)
+         LPCRECT lpRectScroll,LPCRECT lpRectClip,
+         ::draw2d::region* prgnUpdate,LPRECT lpRectUpdate,UINT flags)
    {
       UNREFERENCED_PARAMETER(dx);
       UNREFERENCED_PARAMETER(dy);
@@ -2523,18 +2523,18 @@ namespace user
 
       if (m_spgraphics.is_null())
       {
-         
-         return;
-         
-      }
-      
 
-      
+         return;
+
+      }
+
+
+
       if(!m_pui->IsWindowVisible())
       {
-       
+
          return;
-         
+
       }
 
       bool bUpdateBuffer = true;
@@ -2593,13 +2593,13 @@ namespace user
                pgraphics->FillSolidRect(r, ARGB(255, 184, 184, 177));
 
             }
-            
+
             //if(m_pui->IsWindowVisible())
             try
             {
 
                _001Print(pgraphics);
-               
+
             }
             catch (...)
             {
@@ -2926,12 +2926,12 @@ namespace user
          return m_puiForward->message_handler(pbase);
 
       }
-      
+
    }
 
 
    void __reposition_window(SIZEPARENTPARAMS * lpLayout,
-      ::user::interaction * oswindow,LPCRECT lpRect)
+                            ::user::interaction * oswindow,LPCRECT lpRect)
    {
       ASSERT(oswindow != NULL);
       ASSERT(lpRect != NULL);

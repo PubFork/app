@@ -239,7 +239,7 @@ namespace userstack
 #ifdef WINDOWSEX
          int32_t iEdge = 0;
          COPYDATASTRUCT * pstruct = (COPYDATASTRUCT *) pbase->m_lparam.m_lparam;
-         if(pstruct->dwData == 1984)
+         if(pstruct->dwData == 2000)
          {
             ::memory_file file(get_app(), pstruct->lpData, pstruct->cbData);
             string strPath;
@@ -353,7 +353,7 @@ namespace userstack
          if(iEdge == 0)
             iEdge = 77;
          else
-            iEdge += 1984;
+            iEdge += 2000;
          pbase->set_lresult(iEdge);
       }
       else if(pbase->m_wparam == 25)

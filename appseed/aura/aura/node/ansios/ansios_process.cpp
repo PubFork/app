@@ -519,7 +519,7 @@ namespace ansios
 
       while(!has_exited() && get_tick_count() - dwStart < durationTimeOut.get_total_milliseconds())
       {
-         Sleep(84);
+         Sleep(100);
       }
       DWORD dwExitCode = 0;
       if(!has_exited(&dwExitCode))
@@ -630,7 +630,7 @@ namespace ansios
 //               {
 //               }
 
-            Sleep(84);
+            Sleep(100);
          }
          if(!has_exited(&dwExitCode))
          {
@@ -738,7 +738,7 @@ namespace ansios
 
         while(!has_exited() && get_tick_count() - dwStart < durationTimeOut.get_total_milliseconds())
         {
-            Sleep(84);
+            Sleep(100);
         }
         DWORD dwExitCode = 0;
         if(!has_exited(&dwExitCode))

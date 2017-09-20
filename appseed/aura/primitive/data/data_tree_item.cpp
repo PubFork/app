@@ -837,7 +837,9 @@ namespace data
 
    tree_item * tree_item::get_item(ETreeNavigation enavigation, index * pindexLevel)
    {
-      tree_item * pitem;
+
+      //tree_item * pitem;
+
       switch(enavigation)
       {
       case TreeNavigationExpandedForward:
@@ -872,49 +874,49 @@ namespace data
       switch(erelative)
       {
       case RelativeFirstChild:
-         {
-            return m_children.has_elements() ? m_children.first_sp() : NULL;
-         }
-         break;
+      {
+         return m_children.has_elements() ? m_children.first_sp() : NULL;
+      }
+      break;
       case RelativeLastChild:
-         {
-            return m_children.has_elements() ? m_children.last_sp() : NULL;
-         }
+      {
+         return m_children.has_elements() ? m_children.last_sp() : NULL;
+      }
       case RelativeParent:
-         {
-            return m_pparent;
-         }
-         break;
+      {
+         return m_pparent;
+      }
+      break;
       case RelativeFirstSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            return m_pparent->get_item(RelativeFirstChild);
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         return m_pparent->get_item(RelativeFirstChild);
+      }
+      break;
       case RelativePreviousSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            index iFind = get_index();
-            if (iFind <= 0)
-               return NULL;
-            return m_pparent->m_children[iFind - 1];
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         index iFind = get_index();
+         if (iFind <= 0)
+            return NULL;
+         return m_pparent->m_children[iFind - 1];
+      }
+      break;
       case RelativeNextSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            index iFind = get_index();
-            if (iFind < 0 || iFind >= m_pparent->m_children.get_upper_bound())
-               return NULL;
-            return m_pparent->m_children[iFind + 1];
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         index iFind = get_index();
+         if (iFind < 0 || iFind >= m_pparent->m_children.get_upper_bound())
+            return NULL;
+         return m_pparent->m_children[iFind + 1];
+      }
+      break;
       case RelativeLastSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            return m_pparent->get_item(RelativeLastChild);
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         return m_pparent->get_item(RelativeLastChild);
+      }
+      break;
       default:
          // Not Expected
          ASSERT(FALSE);

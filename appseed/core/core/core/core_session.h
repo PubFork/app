@@ -206,6 +206,7 @@ namespace core
 
       virtual stringa get_user_wallpaper();
       
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
 
    };
 

@@ -178,7 +178,7 @@ namespace install
       if(m_phost->m_bInstalling)
       {
 
-         if((::get_tick_count() - m_dwLastInstallingCheck) > 1984)
+         if((::get_tick_count() - m_dwLastInstallingCheck) > 2000)
          {
 
             m_dwLastInstallingCheck = get_tick_count();

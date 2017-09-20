@@ -1509,7 +1509,7 @@ namespace draw2d_quartz2d
 
          CGRect rectSub;
          
-         if(::compare::gt(xSrc, SrcW))
+         if(::comparison::gt(xSrc, SrcW))
          {
           
             CGImageRelease(image);
@@ -1518,7 +1518,7 @@ namespace draw2d_quartz2d
             
          }
 
-         if(::compare::gt(ySrc, SrcH))
+         if(::comparison::gt(ySrc, SrcH))
          {
             
             CGImageRelease(image);

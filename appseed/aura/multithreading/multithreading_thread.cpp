@@ -362,7 +362,7 @@ bool thread::is_alive()
    //   return false;
 
    //if ((::get_tick_count() - m_dwAlive) > ((5000) * 91))
-     // return false;
+   // return false;
 
    return true;
 
@@ -499,7 +499,7 @@ bool thread::defer_pump_message()
    {
 
       // pump message, but quit on wm_quit
-     // if(!m_bRun || !pump_message())
+      // if(!m_bRun || !pump_message())
       if (!pump_message())
       {
 
@@ -949,7 +949,7 @@ void thread::unregister_from_required_threads()
 void thread::do_events(const duration & duration)
 {
 
-	DWORD dwStart = ::get_tick_count();
+   DWORD dwStart = ::get_tick_count();
 
    int64_t dwSpan = duration.get_total_milliseconds();
 
@@ -962,7 +962,8 @@ void thread::do_events(const duration & duration)
 
       Sleep(dwSleep);
 
-   } while(::get_tick_count() - dwStart < dwSpan);
+   }
+   while(::get_tick_count() - dwStart < dwSpan);
 
 }
 
@@ -970,9 +971,9 @@ void thread::do_events(const duration & duration)
 bool thread::should_enable_thread()
 {
 
-    m_bRunThisThread = true;
+   m_bRunThisThread = true;
 
-    return true;
+   return true;
 
 }
 
@@ -1050,7 +1051,7 @@ bool thread::thread_get_run()
 void thread::message_queue_message_handler(::message::base * pbase)
 {
 
-    UNREFERENCED_PARAMETER(pbase);
+   UNREFERENCED_PARAMETER(pbase);
 
 }
 
@@ -1106,7 +1107,7 @@ void thread::delete_this()
       //else
       //{
 
-         ::command_target::delete_this();
+      ::command_target::delete_this();
 
       //}
 
@@ -1290,8 +1291,8 @@ wait_result thread::wait(const duration & duration)
    }
 
    return is_thread_on(uiThread) ?
-            wait_result(::wait_result::Timeout) :
-            wait_result(::wait_result::Event0);
+          wait_result(::wait_result::Timeout) :
+          wait_result(::wait_result::Event0);
 
 }
 
@@ -1363,9 +1364,9 @@ void thread::process_window_procedure_exception(::exception::base*,::message::me
 
       // force validation of interaction_impl to prevent getting WM_PAINT again
 
-      #ifdef WIDOWSEX
+#ifdef WIDOWSEX
       ValidateRect(pbase->m_pwnd->get_safe_handle(),NULL);
-      #endif
+#endif
 
       pbase->set_lresult(0);
 
@@ -1623,7 +1624,9 @@ uint32_t __thread_entry(void * pparam)
 
 #if defined(WINDOWSEX) || defined(LINUX)
 
-            WINBOOL bOk = ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask);
+            WINBOOL bOk =
+               ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
+               || ::GetLastError() == 0;
 
             if (bOk)
             {
@@ -2102,7 +2105,7 @@ int32_t thread::thread_startup(::thread_startup * pstartup)
 //   ASSERT(pstartup->m_pthreadimpl != NULL);
    ASSERT(!pstartup->m_bError);
 //   ASSERT(pstartup->m_pthreadimpl == pstartup->m_pthreadimpl);
-  // ASSERT(pstartup->m_pthread == pstartup->m_pthreadimpl->m_pthread);
+   // ASSERT(pstartup->m_pthread == pstartup->m_pthreadimpl->m_pthread);
 
    //::thread * pthreadimpl = pstartup->m_pthreadimpl;
 
@@ -2168,7 +2171,8 @@ bool thread::thread_entry()
 
    }
 
-error:;
+error:
+   ;
 
    if(bError)
    {
@@ -2204,7 +2208,7 @@ int32_t thread::main()
    else
    {
       ASSERT_VALID(this);
-   run:
+run:
       try
       {
          m_bReady = true;
@@ -2853,16 +2857,16 @@ uint32_t thread::ResumeThread()
 
    ASSERT(m_hthread != NULL);
 
-   #if defined (WINODWSEX)
+#if defined (WINODWSEX)
 
    return ::ResumeThread(m_hthread);
 
-   #else
+#else
 
 
    return 0;
 
-   #endif
+#endif
 
 }
 

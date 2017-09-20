@@ -39,7 +39,7 @@ multi_lock::multi_lock(const sync_object_ptra & syncobjectptra,bool bInitialLock
 
    m_baLocked.allocate(m_syncobjectptra.get_count());
 
-   
+
    for (index i = 0; i < m_syncobjectptra.get_count(); i++)
    {
 
@@ -74,21 +74,21 @@ multi_lock::multi_lock(const sync_object_ptra & syncobjectptra,bool bInitialLock
 }
 
 
-multi_lock::multi_lock(int iCount, const sync_object_ptra & syncobjectptra, bool bInitialLock)
+multi_lock::multi_lock(::count c, const sync_object_ptra & syncobjectptra, bool bInitialLock)
 {
 
-   ASSERT(syncobjectptra.get_count() > 0 && iCount > 0 && iCount <= syncobjectptra.get_count() && iCount <= MAXIMUM_WAIT_OBJECTS);
+   ASSERT(syncobjectptra.get_count() > 0 && c > 0 && c <= syncobjectptra.get_count() && c <= MAXIMUM_WAIT_OBJECTS);
 
-   if (syncobjectptra.get_count() <= 0 || iCount <= 0 || iCount > syncobjectptra.get_count())
+   if (syncobjectptra.get_count() <= 0 || c <= 0 || c > syncobjectptra.get_count())
    {
 
       throw invalid_argument_exception(::get_thread_app());
 
    }
 
-   m_syncobjectptra.set_size(iCount);
+   m_syncobjectptra.set_size(c);
 
-   for (index i = 0; i < iCount; i++)
+   for (index i = 0; i < c; i++)
    {
 
       m_syncobjectptra[i] = syncobjectptra[i];

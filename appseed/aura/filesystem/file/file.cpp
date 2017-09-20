@@ -71,7 +71,7 @@ string url_dir_name_for_relative(const char * pszPath)
 
 CLASS_DECL_AURA string solve_relative_compressions(const string & strParam, bool * pbUrl)
 {
-   
+
    string str(strParam);
 
    bool bUrl;
@@ -104,7 +104,7 @@ if (bOnlyNativeFileSep && psz[iPos] == '/') \
 \
    bOnlyNativeFileSep = false; \
 \
-} 
+}
 
 #else
 
@@ -115,7 +115,7 @@ if (bOnlyNativeFileSep && psz[iPos] == '/') \
 \
    bOnlyNativeFileSep = false; \
 \
-} 
+}
 
 #endif
 
@@ -134,7 +134,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
    char * psz = (char *) str.c_str();
 
    strsize iLen = str.get_length();
-   
+
    //string strAbsolute(strParam);
 
    strsize iNewPos;
@@ -142,7 +142,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
    bool bDynIa = false;
 
    //strsize * iaSlash = *iaSlash;
-   
+
    int & iSlashCount = *piSlashCount;
 
    iSlashCount = 0;
@@ -162,7 +162,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
          bOnlyNativeFileSep = false;
 
 #endif
-         
+
          iaSlash[0] = 1;
 
          iPos = 2;
@@ -180,7 +180,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
       {
 
          CHECK_NATIVE_FILE_SEP(psz[iPos]);
-         
+
          iaSlash[iSlashCount] = iPos;
 
          iSlashCount++;
@@ -225,7 +225,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
                else
                {
 
-                  iPos--;// remove the dot 
+                  iPos--;// remove the dot
 
                }
 
@@ -258,7 +258,7 @@ CLASS_DECL_AURA bool solve_relative_compressions_inline(string & str, bool & bUr
                   if (iPos > 2)
                   {
 
-                     iPos--; 
+                     iPos--;
 
                   }
 
@@ -513,18 +513,18 @@ CLASS_DECL_AURA string defer_solve_relative_name(const char * pszRelative,const 
 
 string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
 {
-   
+
 #ifdef WINDOWS
-   
+
    WCHAR lpPathBuffer[MAX_PATH * 16];
-   
+
    DWORD dwRetVal = GetTempPathW(sizeof(lpPathBuffer) / sizeof(WCHAR), lpPathBuffer);
 
    if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
    {
-      
+
       debug_print("GetTempPath failed (%d)\n", GetLastError());
-      
+
       return "";
 
    }
@@ -534,14 +534,14 @@ string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
    char lpPathBuffer[MAX_PATH * 16];
 
    strcpy(lpPathBuffer, "/tmp/");
-   
+
 #endif
-   
+
    ::file::path pathFolder(lpPathBuffer);
-   
+
    for(int i = 0; i < 1000; i++)
    {
-      
+
       ::file::path path;
 
       path = pathFolder;
@@ -554,14 +554,14 @@ string get_temp_file_name_dup(const char * pszName,const char * pszExtension)
 
       if(file_exists_dup(path))
       {
-         
+
          if (::file_delete_dup(path))
          {
 
             return path;
 
          }
-         
+
       }
       else
       {
@@ -596,8 +596,8 @@ bool write_memory_to_file(FILE * file,const void * lpBuf,memory_size_t nCount,me
    {
 
       dwWrite = (DWORD)MIN(nCount - uiWrittenTotal,0xffffffffu);
-      
-      dw = fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file);
+
+      convert(dw, fwrite(&((byte *)lpBuf)[pos],1, dwWrite, file));
 
       if(dw != dwWrite)
       {
@@ -775,8 +775,8 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data)
    {
 
       if (data.cFileName[1] == '\0' ||
-         (data.cFileName[1] == '.' &&
-            data.cFileName[2] == '\0'))
+            (data.cFileName[1] == '.' &&
+             data.cFileName[2] == '\0'))
       {
 
          return true;

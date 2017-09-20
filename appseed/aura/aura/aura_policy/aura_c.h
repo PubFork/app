@@ -16,6 +16,8 @@
 #include "aura/aura/aura/aura_cpu_architecture.h"
 
 
+#include "aura/aura/message/message_global.h"
+
 BEGIN_EXTERN_C
 
 
@@ -151,8 +153,8 @@ inline int type_is_null(const T * p)
 #define FLOATABS(f) (((f) >= 0.f) ? (f) : (-f))
 #define DOUBLEABS(d) (((d) >= 0.0) ? (d) : (-d))
 #ifdef __cplusplus
-#define MAX(a, b) ((compare::gt((a), (b))) ? (a) : (b))
-#define MIN(a, b) ((compare::lt((a), (b))) ? (a) : (b))
+#define MAX(a, b) ((comparison::gt((a), (b))) ? (a) : (b))
+#define MIN(a, b) ((comparison::lt((a), (b))) ? (a) : (b))
 #include "aura/primitive/comparison/compare.h"
 #else
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
@@ -188,7 +190,7 @@ inline int type_is_null(const T * p)
 #define GET_Y_LPARAM64(lp)                        ((int32_t)(int16_t)HIDWORD(lp))
 
 
-CLASS_DECL_AURA int get_aura_init();
+       CLASS_DECL_AURA int get_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_init();
 CLASS_DECL_AURA int_bool defer_aura_term();
 

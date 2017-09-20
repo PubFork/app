@@ -166,7 +166,7 @@ namespace user
          if (pitem->m_pui == NULL)
          {
 
-            pitem->m_pui = m_pmenu->create_menu_button();
+            pitem->m_pui = m_pmenu->create_menu_button(get_app());
 
          }
 

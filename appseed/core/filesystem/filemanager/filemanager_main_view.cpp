@@ -112,9 +112,7 @@ namespace filemanager
    void main_view::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      COLORREF crBackground = 0;
-
-      get_color(crBackground, ::user::color_background);
+      COLORREF crBackground = _001GetColor(::user::color_background);
 
       if ((crBackground & ARGB(255, 0, 0, 0)) != 0)
       {

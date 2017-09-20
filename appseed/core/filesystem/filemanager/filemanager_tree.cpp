@@ -125,16 +125,16 @@ namespace filemanager
          ptree->set_need_layout();
 
       });
-      
+
 
    }
 
 
    void tree::filemanager_tree_insert(const ::file::path & strPath,::file::listing & listingParam,::action::context actioncontext,bool bOnlyParent, bool bVoidTreeDataChangeEvent)
    {
-      
+
       synch_lock sl(m_pmutex);
-      
+
       ::file::listing & straRootPath = ::userfs::tree::get_document()->m_listingRoot;
 
       ::data::tree_item_ptr_array ptraRemove;
@@ -153,14 +153,14 @@ namespace filemanager
 
          for (index i = 0; i < listingParam.get_size(); i++)
          {
-            
+
             if (!listingParam[i].m_iDir)
             {
 
                continue;
 
             }
-            
+
             listing[j] = listingParam[i];
             listing.m_straTitle[j] = listingParam.name(i);
 
@@ -174,7 +174,7 @@ namespace filemanager
       }
 
       sp(::data::tree_item) pitem;
-      
+
       if (strPath.is_empty())
       {
 
@@ -248,7 +248,7 @@ namespace filemanager
       int32_t i;
 
       ::file::path pathParent;
-      
+
       if (pitemParent->m_pitem.cast < ::fs::item >() != NULL)
       {
 
@@ -274,7 +274,7 @@ namespace filemanager
 
       for (index i = 0; i < b.get_size(); i++)
       {
-         
+
          bb[i] = b[i]->m_pitem.cast < ::fs::item >();
 
          if (b[i]->m_pparent != pitemParent)
@@ -354,7 +354,7 @@ namespace filemanager
          }
 
          index iFind = -1;
-         
+
          for (index i = MAX(0, iLastFind - 2); i < bb.get_size(); i++)
          {
 
@@ -379,14 +379,14 @@ namespace filemanager
 
                ::fs::item * p = bb[i];
 
-            if (stricmp(p->m_filepath, path) == 0)
-            {
+               if (stricmp(p->m_filepath, path) == 0)
+               {
 
-               iFind = i;
+                  iFind = i;
 
-               break;
+                  break;
 
-            }
+               }
 
             }
 
@@ -485,7 +485,7 @@ namespace filemanager
          pitemChild->m_filepath = path;
 
          pitemChild->m_strName = name;
-         
+
          pitemChild->m_flags.signalize(::fs::FlagFolder);
 
          pitemChild->m_flags.signalize(::fs::FlagHasSubFolder);
@@ -514,7 +514,7 @@ namespace filemanager
 
    void tree::browse_sync(::action::context actioncontext)
    {
-      
+
       mutex *pm = m_treeptra.has_elements() ? m_treeptra[0]->m_pmutex : NULL;
 
       synch_lock sl(pm);
@@ -625,7 +625,7 @@ namespace filemanager
 
 
          if (get_filemanager_template() != NULL && get_filemanager_data()->m_ptreeFileTreeMerge != NULL
-            && !(dynamic_cast <::user::tree *> (get_filemanager_data()->m_ptreeFileTreeMerge))->m_treeptra.contains(this))
+               && !(dynamic_cast <::user::tree *> (get_filemanager_data()->m_ptreeFileTreeMerge))->m_treeptra.contains(this))
          {
 
             get_filemanager_data()->m_ptreeFileTreeMerge->merge(this, true);
@@ -653,10 +653,10 @@ namespace filemanager
 
             _001SelectItem(pitem);
 
-            int iMaxLevel = pitem != NULL ? pitem->m_iLevel + 2 : -1;
+            auto iMaxLevel = pitem != NULL ? pitem->m_iLevel + 2 : -1;
 
             // remove level 3 with more than 80 children.
-            restart:
+restart:
 
             while (pitem != NULL)
             {
@@ -720,7 +720,7 @@ namespace filemanager
 
       for(int32_t i = 0; i < itemptraSelected.get_size(); i++)
       {
-         
+
          stra.add(( (itemptraSelected[0]->m_pitem.cast < ::userfs::item > ()))->m_filepath);
 
       }
@@ -736,23 +736,23 @@ namespace filemanager
       {
       case MessageMainPostCreateImageListItemRedraw:
       {
-            
-         pbase->m_pwnd->m_puiThis->RedrawWindow();
-            
-            pbase->m_pwnd->m_puiThis->KillTimer(123);
 
-            /*
-            rect rect;
-            int32_t iArrange = (int32_t) lparam;
-            if(_001IsItemVisible(iArrange))
-            {
-            m_bCreateImageListRedraw = true;
-            _001GetItemRect(iArrange, iArrange, rect);
-            RedrawWindow(rect);
-            m_bCreateImageListRedraw = false;
-            }*/
-         }
-         break;
+         pbase->m_pwnd->m_puiThis->RedrawWindow();
+
+         pbase->m_pwnd->m_puiThis->KillTimer(123);
+
+         /*
+         rect rect;
+         int32_t iArrange = (int32_t) lparam;
+         if(_001IsItemVisible(iArrange))
+         {
+         m_bCreateImageListRedraw = true;
+         _001GetItemRect(iArrange, iArrange, rect);
+         RedrawWindow(rect);
+         m_bCreateImageListRedraw = false;
+         }*/
+      }
+      break;
       }
       pbase->set_lresult(0);
       pbase->m_bRet = true;
@@ -1049,7 +1049,7 @@ namespace filemanager
    //   }
    //   else if(estep == step_image_visible || estep == step_image_hidden)
    //   {
-   //      
+   //
    //      synch_lock sl(m_pmutex);
 
    //      if ((item->m_iImage < 0 ||
@@ -1204,7 +1204,7 @@ namespace filemanager
       //                             ::user::shell::file_attribute_directory,
       //                             ::user::shell::icon_open);
 
-      
+
 
 
    }

@@ -2,7 +2,7 @@
 //#include"in_file.h"
 namespace str
 {
-   
+
    ::index begins_eat_ci(string & str,stringa & stra)
    {
 
@@ -35,7 +35,7 @@ namespace str
    }
 
 
-      
+
 }
 
 namespace zip
@@ -54,7 +54,7 @@ namespace zip
 
    bool util::ls(::aura::application * papp, ::file::listing & listing)
    {
-      
+
       string strZip;
 
       string strRemain;
@@ -113,7 +113,7 @@ namespace zip
 
          if(!::str::ends(strRemain,"/"))
          {
-         
+
             strRemain += "/";
 
          }
@@ -125,7 +125,9 @@ namespace zip
       if(pf != NULL)
       {
 
-         int iLastZip = ::file::path(strLastZip + ":").length();
+         int iLastZip;
+
+         convert(iLastZip, ::file::path(strLastZip + ":").length());
 
          while(true)
          {
@@ -145,8 +147,8 @@ namespace zip
             string strTitle(szTitle);
 
             if(strRemain != strTitle && ((strRemain.is_empty() &&
-               (strTitle.find("/") < 0  || strTitle.find("/") == (strTitle.get_length() - 1)))
-            || (strRemain.has_char() && ::str::begins_eat_ci(strTitle, strRemain))))
+                                          (strTitle.find("/") < 0  || strTitle.find("/") == (strTitle.get_length() - 1)))
+                                         || (strRemain.has_char() && ::str::begins_eat_ci(strTitle, strRemain))))
             {
 
                if(listing.m_bRecursive || strTitle.find("/") < 0 || strTitle.find("/") == (strTitle.get_length() - 1))
@@ -156,7 +158,7 @@ namespace zip
                   listing.last().m_iRelative = iLastZip;
                   listing.last().m_iDir = ::str::ends(szTitle, "/") || ::str::ends(szTitle, "\\") || ::str::ends(szTitle, ".zip");
                   listing.last().m_iSize = fi.uncompressed_size;
-                  
+
                }
 
             }
@@ -211,92 +213,92 @@ namespace zip
       iFind  = wstrFileName.find(L".zip", iStart);*/
 
 
-  /*    stringa wstraPath;
-      cregexp_util::add_tokens(wstraPath, lpszFileName, "((([A-Z]:)|([^:]))[^:]+\\.zip)",1);
+      /*    stringa wstraPath;
+          cregexp_util::add_tokens(wstraPath, lpszFileName, "((([A-Z]:)|([^:]))[^:]+\\.zip)",1);
 
-      if(wstraPath.get_size() == 0)
-         return false;
-
-
-      filea.add(new File(get_app()));
-      if(!filea.last().open(wstraPath[0]))
-         return false;
+          if(wstraPath.get_size() == 0)
+             return false;
 
 
-      stringa wstraPrefix;
-      string str;
-      int32_t i;
-      smart_pointer_array < in_file, in_file & > izfilea;
-   //   smart_pointer_array < buffered_file, buffered_file & > bzfilea;
-      for(i = 1; i < wstraPath.get_size(); i++)
-      {
-         izfilea.add(new in_file(get_app()));
-         str =  wstraPath[i];
-         izfilea.last().open(&filea.last(), str);
-     //    bzfilea.add(new buffered_file(&izfilea.last(), 1024 * 1024, 1024 * 1024));
-         filea.add(new File(get_app()));
-         //filea.last().open(&bzfilea.last());
-         filea.last().open(&izfilea.last());
-         wstraPrefix.add(wstraPath[i]);
-      }
-
-      string wstrPrefix;
-      wstraPrefix.implode(wstrPrefix, ":");
-
-      if(wstrPrefix.get_length() > 0)
-      {
-         wstrPrefix += ":";
-      }
-
-      unzFile pf = filea.last().m_pf;
-      string wstrFolder;
-      stringa wstraFolder;
-      string wstrZip;
-      if(pf != NULL)
-      {
-         while(true)
-         {
-   //         if(unzOpenCurrentFile(pf) == UNZ_OK)
-            {
-               const int32_t BUFSIZE = 4096;
-               WCHAR lpPathBuffer[BUFSIZE];
-               GetTempPathW(BUFSIZE,   // length of the buffer
-                  lpPathBuffer);      // buffer for path
+          filea.add(new File(get_app()));
+          if(!filea.last().open(wstraPath[0]))
+             return false;
 
 
-                CHAR szTitle[_MAX_PATH];
+          stringa wstraPrefix;
+          string str;
+          int32_t i;
+          smart_pointer_array < in_file, in_file & > izfilea;
+       //   smart_pointer_array < buffered_file, buffered_file & > bzfilea;
+          for(i = 1; i < wstraPath.get_size(); i++)
+          {
+             izfilea.add(new in_file(get_app()));
+             str =  wstraPath[i];
+             izfilea.last().open(&filea.last(), str);
+         //    bzfilea.add(new buffered_file(&izfilea.last(), 1024 * 1024, 1024 * 1024));
+             filea.add(new File(get_app()));
+             //filea.last().open(&bzfilea.last());
+             filea.last().open(&izfilea.last());
+             wstraPrefix.add(wstraPath[i]);
+          }
 
-               unzGetCurrentFileInfo(
-                  pf,
-                  NULL,
-                  szTitle,
-                  _MAX_PATH,
-                  NULL, // extra Field
-                  0,
-                  NULL, // comment
-                  0);
+          string wstrPrefix;
+          wstraPrefix.implode(wstrPrefix, ":");
 
-               str = szTitle;
-               if(str.Right(1) == "/")
-               {
-                  return true;
-               }
-               wstrZip = lpszFileName;
-               wstrZip += ":";
-               wstrZip + str;
-               if(IsUnzipable(wstrZip))
-               {
-                  return true;
-               }
+          if(wstrPrefix.get_length() > 0)
+          {
+             wstrPrefix += ":";
+          }
 
-     //          unzCloseCurrentFile(pf);
-            }
-            if(unzGoToNextFile(pf) != UNZ_OK)
-            {
-               break;
-            }
-         }
-      }*/
+          unzFile pf = filea.last().m_pf;
+          string wstrFolder;
+          stringa wstraFolder;
+          string wstrZip;
+          if(pf != NULL)
+          {
+             while(true)
+             {
+       //         if(unzOpenCurrentFile(pf) == UNZ_OK)
+                {
+                   const int32_t BUFSIZE = 4096;
+                   WCHAR lpPathBuffer[BUFSIZE];
+                   GetTempPathW(BUFSIZE,   // length of the buffer
+                      lpPathBuffer);      // buffer for path
+
+
+                    CHAR szTitle[_MAX_PATH];
+
+                   unzGetCurrentFileInfo(
+                      pf,
+                      NULL,
+                      szTitle,
+                      _MAX_PATH,
+                      NULL, // extra Field
+                      0,
+                      NULL, // comment
+                      0);
+
+                   str = szTitle;
+                   if(str.Right(1) == "/")
+                   {
+                      return true;
+                   }
+                   wstrZip = lpszFileName;
+                   wstrZip += ":";
+                   wstrZip + str;
+                   if(IsUnzipable(wstrZip))
+                   {
+                      return true;
+                   }
+
+         //          unzCloseCurrentFile(pf);
+                }
+                if(unzGoToNextFile(pf) != UNZ_OK)
+                {
+                   break;
+                }
+             }
+          }*/
       return false;
    }
 
@@ -377,8 +379,8 @@ namespace zip
             {
 
                ::file::file_sp spfile = Sess(pfile->get_app()).file().get_file(
-                  ::file::path(pszDir) / strTitle,
-                  ::file::mode_create | ::file::mode_write | ::file::defer_create_directory);
+                                           ::file::path(pszDir) / strTitle,
+                                           ::file::mode_create | ::file::mode_write | ::file::defer_create_directory);
 
 
                if(spfile.is_set())
@@ -387,7 +389,7 @@ namespace zip
                }
                else
                {
-               //   return false;
+                  //   return false;
                }
             }
             if(unzGoToNextFile(pf) != UNZ_OK)
@@ -401,10 +403,10 @@ namespace zip
 
    }
 
-   
+
    bool util::is_unzippable(::aura::application * papp, const char * lpszFileName)
    {
-      
+
       string str(lpszFileName);
       if(str.get_length() < 4)
          return false;

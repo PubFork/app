@@ -99,7 +99,7 @@ inline UINT HashKey<const wchar_t *>(const wchar_t * key)
     strsize counter = wcslen(key) * sizeof(wchar_t);
 #endif
     uint64_t nHash = 0;
-    while (compare::ge(counter, sizeof(*puiKey)))
+    while (comparison::ge(counter, sizeof(*puiKey)))
     {
         nHash = (nHash << 5) + nHash + *puiKey++;
         counter -= sizeof(*puiKey);

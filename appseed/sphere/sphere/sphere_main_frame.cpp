@@ -21,7 +21,7 @@ namespace sphere
    }
 
 
-   bool main_frame::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
+   bool main_frame::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
    {
 
       etranslucency = ::user::translucency_present;
@@ -31,7 +31,7 @@ namespace sphere
    }
 
 
-   bool main_frame::get_color(COLORREF & cr, ::user::e_color ecolor)
+   bool main_frame::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
    {
 
       bool bOk = true;

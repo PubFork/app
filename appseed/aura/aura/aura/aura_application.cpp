@@ -347,8 +347,8 @@ namespace aura
       {
 
          if (pcreate->m_spCommandLine.is_set()
-            && (pcreate->m_spCommandLine->m_varQuery.has_property("install")
-               || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall")))
+               && (pcreate->m_spCommandLine->m_varQuery.has_property("install")
+                   || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall")))
          {
 
             if (!is_system() && !is_session())
@@ -771,14 +771,14 @@ namespace aura
 
    class open_browser_enum
    {
-   public:
+      public:
 
-      string                           m_strWindowEnd;
-      string                           m_strTopic;
-      string                           m_strCounterTopic;
-      oswindow                         m_hwnd;
-      comparable_array < oswindow >    m_hwndaTopic;
-      comparable_array < oswindow >    m_hwndaCounterTopic;
+         string                           m_strWindowEnd;
+         string                           m_strTopic;
+         string                           m_strCounterTopic;
+         oswindow                         m_hwnd;
+         comparable_array < oswindow >    m_hwndaTopic;
+         comparable_array < oswindow >    m_hwndaCounterTopic;
 
    };
 
@@ -857,14 +857,14 @@ namespace aura
 
          switch (iStep % 3)
          {
-            //case 0:
-            //{
-            //   DWORD dwPid;
-            //   GetWindowThreadProcessId(w, &dwPid);
-            //   uia.add_unique(dwPid);
+         //case 0:
+         //{
+         //   DWORD dwPid;
+         //   GetWindowThreadProcessId(w, &dwPid);
+         //   uia.add_unique(dwPid);
 
-            //}
-            //break;
+         //}
+         //break;
          case 0:
             ::PostMessage(w, WM_CLOSE, NULL, NULL);
             break;
@@ -886,24 +886,24 @@ namespace aura
 
       switch (iStep % 4)
       {
-         //case 0:
-         //   User32EndTask(w, FALSE,FALSE);
-         //   break;
-         //case 0:
+      //case 0:
+      //   User32EndTask(w, FALSE,FALSE);
+      //   break;
+      //case 0:
 
-         //{
-         //   for (auto dwPid : uia)
-         //   {
+      //{
+      //   for (auto dwPid : uia)
+      //   {
 
 
-         //      string str;
-         //      str.Format("taskkill /pid " + ::str::from((unsigned int)dwPid));
-         //      ::system(str);
+      //      string str;
+      //      str.Format("taskkill /pid " + ::str::from((unsigned int)dwPid));
+      //      ::system(str);
 
-         //   }
-         //   Sleep(2000);
-         //}
-         //   break;
+      //   }
+      //   Sleep(2000);
+      //}
+      //   break;
       case 0:
          Sleep(300);
          break;
@@ -977,140 +977,140 @@ namespace aura
       try
       {
 
-      //   //::fork(this, [&]()
-      //   {
+         //   //::fork(this, [&]()
+         //   {
 
-      //      try
-      //      {
+         //      try
+         //      {
 
-      //         string strParam1 = strParam;
+         //         string strParam1 = strParam;
 
-      //         open_browser_enum e;
+         //         open_browser_enum e;
 
-      //         if (strId == "chrome" || strId == "commander")
-      //         {
+         //         if (strId == "chrome" || strId == "commander")
+         //         {
 
-      //            e.m_strTopic = " - Google Chrome";
+         //            e.m_strTopic = " - Google Chrome";
 
-      //            e.m_strCounterTopic = " - Google Chrome";
+         //            e.m_strCounterTopic = " - Google Chrome";
 
-      //         }
-      //         else if (strId == "vivaldi")
-      //         {
+         //         }
+         //         else if (strId == "vivaldi")
+         //         {
 
-      //         }
-      //         else
-      //         {
-
-
-      //         }
-
-      //         ::file::path pathProfile = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfile;
-
-      //         e.m_hwndaCounterTopic.remove_all();
-
-      //         ::EnumWindows(&enum_proc_ff_counter_topic, (LPARAM)&e);
-
-      //         bool bFound;
-
-      //         string strProfilePrefix = strProfile;
-
-      //         string strProfileSuffix;
-
-      //         strsize iFind = strProfile.find_last_in('.');
-
-      //         if (iFind >= 0)
-      //         {
-
-      //            strProfilePrefix = strProfile.Left(iFind + 1);
-
-      //            strProfileSuffix = strProfile.Mid(iFind + 1);
-
-      //            if (strProfileSuffix == "browser_day")
-      //            {
-
-      //               strProfileSuffix = "browser_night";
-
-      //            }
-      //            else
-      //            {
-
-      //               strProfileSuffix = "browser_day";
-
-      //            }
-
-      //         }
-
-      //         ::file::path pathPrefix = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix;
-
-      //         ::file::path pathCounter = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix + strProfileSuffix;
-
-      //      repeat_counter_search:
-
-      //         bFound = false;
-
-      //         if (e.m_hwndaCounterTopic.has_elements())
-      //         {
-
-      //            for (auto w : e.m_hwndaCounterTopic)
-      //            {
-
-      //               DWORD dwPid = 0;
-
-      //               ::GetWindowThreadProcessId(w, &dwPid);
-
-      //               if (dwPid != 0)
-      //               {
-
-      //                  HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
-
-      //                  if (h != INVALID_HANDLE_VALUE)
-      //                  {
-
-      //                     string strCmd = get_command_line(h);
-
-      //                     if (strCmd.contains_ci(pathPrefix) && !strCmd.contains_ci(pathProfile))
-      //                     {
-
-      //                        do_events();
-
-      //                        //SendCtrlShiftQToChrome(w, 30, this);
-
-      //                        do_events();
-
-      //                        bFound = true;
-
-      //                     }
-
-      //                  }
-
-      //                  ::CloseHandle(h);
-
-      //               }
-
-      //            }
-
-      //         }
-
-      //         if (bFound)
-      //         {
-
-      //            goto repeat_counter_search;
-
-      //         }
-
-      //      }
-      //      catch (...)
-      //      {
+         //         }
+         //         else
+         //         {
 
 
-      //      }
+         //         }
 
-      //      evClose.SetEvent();
+         //         ::file::path pathProfile = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfile;
 
-      //      //});
+         //         e.m_hwndaCounterTopic.remove_all();
 
-      //   }
+         //         ::EnumWindows(&enum_proc_ff_counter_topic, (LPARAM)&e);
+
+         //         bool bFound;
+
+         //         string strProfilePrefix = strProfile;
+
+         //         string strProfileSuffix;
+
+         //         strsize iFind = strProfile.find_last_in('.');
+
+         //         if (iFind >= 0)
+         //         {
+
+         //            strProfilePrefix = strProfile.Left(iFind + 1);
+
+         //            strProfileSuffix = strProfile.Mid(iFind + 1);
+
+         //            if (strProfileSuffix == "browser_day")
+         //            {
+
+         //               strProfileSuffix = "browser_night";
+
+         //            }
+         //            else
+         //            {
+
+         //               strProfileSuffix = "browser_day";
+
+         //            }
+
+         //         }
+
+         //         ::file::path pathPrefix = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix;
+
+         //         ::file::path pathCounter = pathAppDataDir / "ca2" / strBrowserProfile / "Profile" / strProfilePrefix + strProfileSuffix;
+
+         //      repeat_counter_search:
+
+         //         bFound = false;
+
+         //         if (e.m_hwndaCounterTopic.has_elements())
+         //         {
+
+         //            for (auto w : e.m_hwndaCounterTopic)
+         //            {
+
+         //               DWORD dwPid = 0;
+
+         //               ::GetWindowThreadProcessId(w, &dwPid);
+
+         //               if (dwPid != 0)
+         //               {
+
+         //                  HANDLE h = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dwPid);
+
+         //                  if (h != INVALID_HANDLE_VALUE)
+         //                  {
+
+         //                     string strCmd = get_command_line(h);
+
+         //                     if (strCmd.contains_ci(pathPrefix) && !strCmd.contains_ci(pathProfile))
+         //                     {
+
+         //                        do_events();
+
+         //                        //SendCtrlShiftQToChrome(w, 30, this);
+
+         //                        do_events();
+
+         //                        bFound = true;
+
+         //                     }
+
+         //                  }
+
+         //                  ::CloseHandle(h);
+
+         //               }
+
+         //            }
+
+         //         }
+
+         //         if (bFound)
+         //         {
+
+         //            goto repeat_counter_search;
+
+         //         }
+
+         //      }
+         //      catch (...)
+         //      {
+
+
+         //      }
+
+         //      evClose.SetEvent();
+
+         //      //});
+
+         //   }
 
          bool bFound = false;
 
@@ -1309,40 +1309,40 @@ namespace aura
 
 
 
-            ::file::path shell;
+         ::file::path shell;
 
-            shell = "/bin/bash";
+         shell = "/bin/bash";
 
 #ifdef MACOS
 
-            path = System.url().url_decode(path);
+         path = System.url().url_decode(path);
 
-            strParam += "--user-data-dir=\"" + pathProfile + "\"";
+         strParam += "--user-data-dir=\"" + pathProfile + "\"";
 
-            string strCmd = "open -n -a \"" + path + "\" --args " + strParam;
+         string strCmd = "open -n -a \"" + path + "\" --args " + strParam;
 
-            //strCmd.replace("\"", "\\\"");
+         //strCmd.replace("\"", "\\\"");
 
-            strParam = " -c '" + strCmd + "'";
+         strParam = " -c '" + strCmd + "'";
 
 #else
 
-            strParam += "--user-data-dir=\"" + pathProfile + "\"";
+         strParam += "--user-data-dir=\"" + pathProfile + "\"";
 
-            string strCmd = path + " " + strParam;
+         string strCmd = path + " " + strParam;
 
-            strCmd.replace("\"", "\\\"");
+         strCmd.replace("\"", "\\\"");
 
-            strParam = " -c \"" + strCmd + "\"";
+         strParam = " -c \"" + strCmd + "\"";
 
 
 #endif
 
-            //MessageBox(NULL, strParam, path, MB_OK);
+         //MessageBox(NULL, strParam, path, MB_OK);
 
-            output_debug_string(strParam);
+         output_debug_string(strParam);
 
-            call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
+         call_async(shell, strParam, pathDir, SW_SHOWDEFAULT, false);
 
 #endif
 
@@ -1810,7 +1810,7 @@ namespace aura
          string * pstrNew = new string(strUrl);
 
          Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(::Windows::UI::Core::CoreDispatcherPriority::Normal,
-            ref new Windows::UI::Core::DispatchedHandler([pstrNew]()
+               ref new Windows::UI::Core::DispatchedHandler([pstrNew]()
          {
 
             ::Windows::Foundation::Uri ^ uri = ref new ::Windows::Foundation::Uri(*pstrNew);
@@ -1855,7 +1855,7 @@ namespace aura
          //if (strOpenUrl.has_char())
          {
 
-           // System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
+            // System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
 
             System.m_pandroidinitdata->m_pszOpenUrl = strdup(strUrl);
 
@@ -2472,9 +2472,9 @@ namespace aura
 
 
 //   string CLASS_DECL_AURA application::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
-  // {
+   // {
 
-    //  throw not_implemented(this);
+   //  throw not_implemented(this);
 
    //}
 
@@ -2592,7 +2592,7 @@ namespace aura
 
       }
 
-   exit_application:
+exit_application:
 
 
       try
@@ -2944,7 +2944,7 @@ namespace aura
 
          }
 
-      run:
+run:
 
          try
          {
@@ -3067,7 +3067,7 @@ namespace aura
          // - ...
 
       }
-   InitFailure:
+InitFailure:
       try
       {
          if (m_peventReady != NULL)
@@ -3311,7 +3311,7 @@ namespace aura
 
       return 0;
 
-   InitFailure:
+InitFailure:
 
       if (m_iReturnCode == 0)
       {
@@ -3342,93 +3342,93 @@ namespace aura
    bool application::check_install()
    {
 
-	   if (handler()->m_varTopicQuery.has_property("install"))
-	   {
+      if (handler()->m_varTopicQuery.has_property("install"))
+      {
 
-		   if (!on_install())
-		   {
+         if (!on_install())
+         {
 
-			   ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
+            ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
-			   System.m_iReturnCode = -1;
+            System.m_iReturnCode = -1;
 
-			   return false;
+            return false;
 
-		   }
+         }
 
-		   string strBuild;
+         string strBuild;
 
-		   string strAppId = m_strAppId;
+         string strAppId = m_strAppId;
 
-		   xxdebug_box("on_install1", strAppId, 0);
+         xxdebug_box("on_install1", strAppId, 0);
 
-		   if (strAppId.is_empty())
-		   {
+         if (strAppId.is_empty())
+         {
 
-			   strAppId = m_strAppName;
+            strAppId = m_strAppName;
 
-		   }
+         }
 
-		   if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
-		   {
+         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
+         {
 
-			   system_add_app_install(strAppId, "installed");
+            system_add_app_install(strAppId, "installed");
 
-			   if (strBuild.has_char())
-			   {
+            if (strBuild.has_char())
+            {
 
-				   system_add_app_install(strAppId, strBuild);
+               system_add_app_install(strAppId, strBuild);
 
-			   }
+            }
 
-		   }
-		   else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
-		   {
+         }
+         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
+         {
 
-			   system_add_app_install(strAppId, "installed");
+            system_add_app_install(strAppId, "installed");
 
-			   if (strBuild.has_char())
-			   {
+            if (strBuild.has_char())
+            {
 
-				   system_add_app_install(strAppId, strBuild);
+               system_add_app_install(strAppId, strBuild);
 
-			   }
+            }
 
-		   }
-		   else if (m_strInstallToken.has_char())
-		   {
+         }
+         else if (m_strInstallToken.has_char())
+         {
 
-			   system_add_app_install(m_strInstallToken, "installed");
+            system_add_app_install(m_strInstallToken, "installed");
 
-			   if (strBuild.has_char())
-			   {
+            if (strBuild.has_char())
+            {
 
-				   system_add_app_install(m_strInstallToken, strBuild);
+               system_add_app_install(m_strInstallToken, strBuild);
 
-			   }
+            }
 
-		   }
+         }
 
-	   }
-	   else if (handler()->m_varTopicQuery.has_property("uninstall"))
-	   {
+      }
+      else if (handler()->m_varTopicQuery.has_property("uninstall"))
+      {
 
-		   if (!on_uninstall())
-		   {
+         if (!on_uninstall())
+         {
 
-			   return false;
+            return false;
 
-		   }
+         }
 
 #ifdef INSTALL_SUBSYSTEM
 
-		   System.install().remove_spa_start(m_strAppId);
+         System.install().remove_spa_start(m_strAppId);
 
 #endif
 
-	   }
+      }
 
-	   return true;
+      return true;
 
    }
 
@@ -3440,53 +3440,53 @@ namespace aura
    {
 
 
-	   string strLicense = get_license_id();
+      string strLicense = get_license_id();
 
-	   var & varTopicQuey = System.handler()->m_varTopicQuery;
+      var & varTopicQuey = System.handler()->m_varTopicQuery;
 
-	   bool bHasInstall = varTopicQuey.has_property("install");
+      bool bHasInstall = varTopicQuey.has_property("install");
 
-	   bool bHasUninstall = varTopicQuey.has_property("uninstall");
+      bool bHasUninstall = varTopicQuey.has_property("uninstall");
 
-	   if (!(bHasInstall || bHasUninstall)
-		   && m_bLicense
-		   && strLicense.has_char())
-	   {
+      if (!(bHasInstall || bHasUninstall)
+            && m_bLicense
+            && strLicense.has_char())
+      {
 
-		   if (!Session.assert_user_logged_in())
-		   {
-			   return false;
-		   }
+         if (!Session.assert_user_logged_in())
+         {
+            return false;
+         }
 
-		   // call application's is_licensed function
-		   // because if delay is needed for authentication -
-		   // or either asking for authentication -
-		   // current application startup won't be
-		   // exited by timeout.
+         // call application's is_licensed function
+         // because if delay is needed for authentication -
+         // or either asking for authentication -
+         // current application startup won't be
+         // exited by timeout.
 
-		   int32_t iRetry = 1;
+         int32_t iRetry = 1;
 
-	   retry_license:
+retry_license:
 
-		   iRetry--;
+         iRetry--;
 
-		   if (!Session.is_licensed(strLicense))
-		   {
+         if (!Session.is_licensed(strLicense))
+         {
 
-			   if (iRetry > 0)
-				   goto retry_license;
+            if (iRetry > 0)
+               goto retry_license;
 
-			   return false;
+            return false;
 
-		   }
+         }
 
-	   }
-
-
-	   ::output_debug_string("initial_check_directrix : ok (" + string(typeid(*this).name()) + ")" + m_strAppId + "\n\n");
+      }
 
 
-	   return true;
+      ::output_debug_string("initial_check_directrix : ok (" + string(typeid(*this).name()) + ")" + m_strAppId + "\n\n");
+
+
+      return true;
 
    }
 
@@ -3976,17 +3976,17 @@ namespace aura
                               && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
 
-                  duration durationTimeout;
+               duration durationTimeout;
 
-                  #ifdef DEBUG
+#ifdef DEBUG
 
-                  durationTimeout = minutes(5);
+               durationTimeout = minutes(5);
 
-                  #else
+#else
 
-                  durationTimeout = seconds(15);
+               durationTimeout = seconds(15);
 
-                  #endif
+#endif
 
                simple_message_box_timeout(NULL, "Another instance of \"" + m_strAppName + "\" is already running (and some exclusivity policy is active).", durationTimeout, MB_ICONASTERISK);
 
@@ -4474,11 +4474,11 @@ namespace aura
             //
             //               try
             //               {
-                              // avoid calling CloseHandle() on our own thread handle
-                              // during the thread destructor
-                              // avoid thread object data auto deletion on thread termination,
-                              // letting thread function terminate
-                              //m_bAutoDelete = false;
+            // avoid calling CloseHandle() on our own thread handle
+            // during the thread destructor
+            // avoid thread object data auto deletion on thread termination,
+            // letting thread function terminate
+            //m_bAutoDelete = false;
 
             post_quit();
 
@@ -4678,9 +4678,9 @@ namespace aura
          // give the security descriptor a Null Dacl
          // done using the  "TRUE, (PACL)NULL" here
          bSetOk = SetSecurityDescriptorDacl(&SD,
-            TRUE,
-            (PACL)NULL,
-            FALSE) != FALSE;
+                                            TRUE,
+                                            (PACL)NULL,
+                                            FALSE) != FALSE;
       }
 
       if (bSetOk)
@@ -4720,7 +4720,7 @@ namespace aura
          }
 
          if (m_eexclusiveinstance == ExclusiveInstanceGlobal
-            && (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException))
+               && (::GetLastError() == ERROR_ALREADY_EXISTS || bResourceException))
          {
             // Should in some way activate the other instance, but this is global, what to do? do not know yet.
             //System.simple_message_box("A instance of the application:<br><br>           - " + string(m_strAppName) + "<br><br>seems to be already running at the same machine<br>Only one instance of this application can run globally: at the same machine.<br><br>Exiting this new instance.");
@@ -5939,9 +5939,9 @@ namespace aura
 #if defined(INSTALL_SUBSYSTEM)
 
       if ((papp == NULL || papp->m_strAppId != strAppId)
-         &&
-         (!Application.handler()->m_varTopicQuery.has_property("install")
-            && !Application.handler()->m_varTopicQuery.has_property("uninstall")))
+            &&
+            (!Application.handler()->m_varTopicQuery.has_property("install")
+             && !Application.handler()->m_varTopicQuery.has_property("uninstall")))
       {
 
          TRACE("Failed to instantiate %s, going to try installation through ca2_cube_install", strAppId);
@@ -6144,7 +6144,7 @@ namespace aura
 #endif
 
       if (((!bDebuggerCheck || ::is_debugger_attached()) && !file_exists_dup(::dir::system() / "config\\plugin\\disable_manual_install_warning.txt")
-         && !file_exists_dup(::dir::system() / "config\\system\\skip_debug_install.txt")) || file_exists_dup(::dir::system() / "config\\system\\enable_debug_install.txt"))
+            && !file_exists_dup(::dir::system() / "config\\system\\skip_debug_install.txt")) || file_exists_dup(::dir::system() / "config\\system\\enable_debug_install.txt"))
          //|| (App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service()))
       {
 
@@ -6289,7 +6289,7 @@ namespace aura
             //                     if(dwExitCode == STILL_ACTIVE)
             //                     {
             //
-            //                        Sleep(84);
+            //                        Sleep(100);
             //
             //                     }
             //                     else
@@ -6312,7 +6312,7 @@ namespace aura
                {
 
                   if ((App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
-                     || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + notinstalled.m_strAppId + "\n\tconfiguration = " + notinstalled.m_strConfiguration + "\n\tplatform = " + notinstalled.m_strPlatform + "\n\tlocale = " + notinstalled.m_strLocale + "\n\tschema = " + notinstalled.m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + notinstalled.m_strAppId + "\n\tconfiguration = " + notinstalled.m_strConfiguration + "\n\tplatform = " + notinstalled.m_strPlatform + "\n\tlocale = " + notinstalled.m_strLocale + "\n\tschema = " + notinstalled.m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
                   {
 
                      ::duration durationWait = minutes(1);
@@ -6683,91 +6683,91 @@ namespace aura
 
 #else
 
-         sp(::aura::library) & library = System.m_mapLibrary["draw2d"];
+      sp(::aura::library) & library = System.m_mapLibrary["draw2d"];
 
-         if (library->is_opened())
-            return;
+      if (library->is_opened())
+         return;
 
-         string strLibrary;
+      string strLibrary;
 
-         if (handler()->m_varTopicQuery.has_property("draw2d"))
+      if (handler()->m_varTopicQuery.has_property("draw2d"))
+      {
+
+         string strDraw2d = handler()->m_varTopicQuery["draw2d"];
+
+         strDraw2d.trim();
+
+         if (strDraw2d.has_char())
          {
 
-            string strDraw2d = handler()->m_varTopicQuery["draw2d"];
+            ::str::begins_eat_ci(strDraw2d, "draw2d_");
 
-            strDraw2d.trim();
+            ::str::begins_eat_ci(strDraw2d, "draw2d");
 
-            if (strDraw2d.has_char())
-            {
-
-               ::str::begins_eat_ci(strDraw2d, "draw2d_");
-
-               ::str::begins_eat_ci(strDraw2d, "draw2d");
-
-               strLibrary = "draw2d_" + strDraw2d;
-
-            }
+            strLibrary = "draw2d_" + strDraw2d;
 
          }
 
-         if (strLibrary.has_char())
-         {
+      }
 
-            library->open(strLibrary);
-
-            if (library->is_opened())
-               goto finalize;
-
-         }
-
-         strLibrary = draw2d_get_default_library_name();
-
-         if (strLibrary.is_empty())
-#ifdef WINDOWS
-            strLibrary = "draw2d_gdiplus";
-#else
-            strLibrary = "draw2d_cairo";
-#endif
+      if (strLibrary.has_char())
+      {
 
          library->open(strLibrary);
 
          if (library->is_opened())
             goto finalize;
 
+      }
+
+      strLibrary = draw2d_get_default_library_name();
+
+      if (strLibrary.is_empty())
+#ifdef WINDOWS
+         strLibrary = "draw2d_gdiplus";
+#else
+         strLibrary = "draw2d_cairo";
+#endif
+
+      library->open(strLibrary);
+
+      if (library->is_opened())
+         goto finalize;
+
 #ifdef WINDOWSEX
 
-         if (strLibrary != "draw2d_gdiplus")
-         {
+      if (strLibrary != "draw2d_gdiplus")
+      {
 
-            library->open("draw2d_gdiplus");
+         library->open("draw2d_gdiplus");
 
-            if (library->is_opened())
-               goto finalize;
+         if (library->is_opened())
+            goto finalize;
 
-         }
+      }
 
 
 #endif
 
-         if (strLibrary != "draw2d_cairo")
-         {
+      if (strLibrary != "draw2d_cairo")
+      {
 
 
-            library->open("draw2d_cairo");
+         library->open("draw2d_cairo");
 
-            if (library->is_opened())
-               goto finalize;
+         if (library->is_opened())
+            goto finalize;
 
-         }
+      }
 
-         output_debug_string("No draw2d pluging available!!.");
-         return;
+      output_debug_string("No draw2d pluging available!!.");
+      return;
 
-      finalize:
+finalize:
 
-         PFN_ca2_factory_exchange pfn_ca2_factory_exchange = library->get < PFN_ca2_factory_exchange >("ca2_factory_exchange");
+      PFN_ca2_factory_exchange pfn_ca2_factory_exchange = library->get < PFN_ca2_factory_exchange >("ca2_factory_exchange");
 
-         pfn_ca2_factory_exchange(this);
+      pfn_ca2_factory_exchange(this);
 
 #endif
 
@@ -6983,8 +6983,8 @@ namespace aura
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), desc.length() * sizeof(wchar_t)); // default vlaue is description of file extension
-      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), content_type.length() * sizeof(wchar_t)); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), convert < DWORD > (desc.length() * sizeof(wchar_t))); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), convert < DWORD > (content_type.length() * sizeof(wchar_t))); // default vlaue is description of file extension
       RegCloseKey(hkey);
 
 
@@ -6996,7 +6996,7 @@ namespace aura
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), app.length() * sizeof(wchar_t));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), convert < DWORD > (app.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
 
@@ -7007,7 +7007,7 @@ namespace aura
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), icon.length() * sizeof(wchar_t));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), convert < DWORD > (icon.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
       wstring wstr(dir::stage("x86") / "spa_register.txt");
@@ -7023,7 +7023,7 @@ namespace aura
 
          iRetry--;
 
-         Sleep(84);
+         Sleep(100);
 
       }
 
@@ -7094,9 +7094,9 @@ namespace aura
    string application::install_pick_command_line()
    {
 
-       throw interface_only_exception(this);
+      throw interface_only_exception(this);
 
-       return "";
+      return "";
 
    }
 
@@ -7115,7 +7115,7 @@ namespace aura
 
       string wstr = strCommandLine;
 
-      int iFind1 = 0;
+      strsize iFind1 = 0;
 
       if (wstr[0] == '\"')
       {
@@ -7124,7 +7124,7 @@ namespace aura
 
       }
 
-      int iFind = wstr.find(" : ", iFind1 + 1);
+      strsize iFind = wstr.find(" : ", iFind1 + 1);
 
       if (iFind < 0)
       {

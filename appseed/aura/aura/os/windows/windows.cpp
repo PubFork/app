@@ -33,23 +33,23 @@ DWORD_PTR                        g_gdiplusHookToken         = NULL;
 
 typedef int
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
-    UINT message,
-    DWORD dwFlag);
+   UINT message,
+   DWORD dwFlag);
 
 
 LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
 
-typedef  
+typedef
 LSTATUS
 ( APIENTRY * LPFN_RegGetValueW) (
-    HKEY hkey,
-    LPCWSTR lpSubKey,
-    LPCWSTR lpValue,
-    uint32_t dwFlags,
-    LPDWORD pdwType,
-	 PVOID pvData,
-    LPDWORD pcbData
-    );
+   HKEY hkey,
+   LPCWSTR lpSubKey,
+   LPCWSTR lpValue,
+   uint32_t dwFlags,
+   LPDWORD pdwType,
+   PVOID pvData,
+   LPDWORD pcbData
+);
 
 LPFN_RegGetValueW g_pfnRegGetValueW = NULL;
 
@@ -95,7 +95,7 @@ bool defer_co_initialize_ex(bool bMultiThread)
 
 bool __node_aura_pre_init()
 {
-   
+
 
    g_iWsaStartup = WSAStartup(0x101, &g_wsadata);
 
@@ -166,7 +166,7 @@ bool __node_aura_pos_init()
 
    return true;
 
-} 
+}
 
 
 bool __node_aura_pre_term()
@@ -281,7 +281,7 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
          }
       }
 
-         
+
 
       return str;
 
@@ -291,7 +291,7 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
 
 }
 
- string get_system_error_message(uint32_t dwError)
+string get_system_error_message(uint32_t dwError)
 {
 
    LPWSTR lpBuffer;
@@ -299,28 +299,28 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
    HMODULE Hand = NULL;
 
    if(!FormatMessageW(
-      FORMAT_MESSAGE_ALLOCATE_BUFFER |
-      FORMAT_MESSAGE_FROM_SYSTEM,
-      NULL,
-      dwError,
-      0,
-      (LPWSTR) &lpBuffer,
-      1,
-      NULL))
+            FORMAT_MESSAGE_ALLOCATE_BUFFER |
+            FORMAT_MESSAGE_FROM_SYSTEM,
+            NULL,
+            dwError,
+            0,
+            (LPWSTR) &lpBuffer,
+            1,
+            NULL))
    {
 
       HMODULE Hand = ::LoadLibrary("NTDLL.DLL");
 
       if(!FormatMessageW(
-         FORMAT_MESSAGE_ALLOCATE_BUFFER |
-         FORMAT_MESSAGE_FROM_SYSTEM |
-         FORMAT_MESSAGE_FROM_HMODULE,
-         Hand,
-         dwError,
-         0,
-         (LPWSTR) &lpBuffer,
-         1,
-         NULL))
+               FORMAT_MESSAGE_ALLOCATE_BUFFER |
+               FORMAT_MESSAGE_FROM_SYSTEM |
+               FORMAT_MESSAGE_FROM_HMODULE,
+               Hand,
+               dwError,
+               0,
+               (LPWSTR) &lpBuffer,
+               1,
+               NULL))
       {
          FreeLibrary(Hand);
          return "";
@@ -331,7 +331,7 @@ string key_to_char(WPARAM wparam, LPARAM lparam)
    string str(lpBuffer);
 
    LocalFree(lpBuffer);
-   
+
    if(Hand != NULL)
    {
       FreeLibrary(Hand);
@@ -413,7 +413,7 @@ int_bool is_windows_nt()
 
 int_bool is_windows_7_or_lower()
 {
-   
+
    return !is_windows_8_or_greater();
 
 }
@@ -521,7 +521,7 @@ int_bool is_windows_nt_lesser_than_2000()
 #else
 
    OSVERSIONINFO osversioninfo;
-   
+
    osversioninfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
    if (!GetVersionEx(&osversioninfo))
@@ -798,7 +798,7 @@ namespace core
 
 
 
-// __is_valid_atom() returns TRUE if the passed parameter is 
+// __is_valid_atom() returns TRUE if the passed parameter is
 // a valid local or global atom.
 
 bool __is_valid_atom(ATOM nAtom)
@@ -825,7 +825,7 @@ bool __is_valid_atom(ATOM nAtom)
    return FALSE;
 }
 
-// __is_valid_address() returns TRUE if the passed parameter is 
+// __is_valid_address() returns TRUE if the passed parameter is
 // a valid representation of a local or a global atom within a const char *.
 
 bool __is_valid_atom(const char * psz)
@@ -840,7 +840,7 @@ bool __is_valid_atom(const char * psz)
 
 //int get_processor_count()
 //{
-//   
+//
 //   SYSTEM_INFO sysinfo;
 //   GetSystemInfo(&sysinfo);
 //
@@ -992,7 +992,7 @@ CLASS_DECL_AURA int32_t app_common_main(int argc, char *argv[], app_core & appco
    if (strAppId.is_empty())
    {
 
-      strAppId = read_resource_as_string_dup(NULL, 1, "APPID");
+      strAppId = read_resource_as_string_dup(hinstance, 1, "APPID");
 
       if (strAppId.is_empty())
       {

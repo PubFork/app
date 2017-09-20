@@ -101,7 +101,7 @@ bool property_set::contains_var_ci(const var & var, ::count countMin, ::count co
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find_var_ci(var)) >= 0)
+         && (find_var_ci(var)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -115,7 +115,7 @@ bool property_set::contains_value_ci(const char * psz, ::count countMin, ::count
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find_value_ci(psz)) >= 0)
+         && (find_value_ci(psz)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -125,7 +125,7 @@ bool property_set::contains_var(const var & var, ::count countMin, ::count count
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find_var(var)) >= 0)
+         && (find_var(var)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -139,7 +139,7 @@ bool property_set::contains_value(const char * psz, ::count countMin, ::count co
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find_value(psz)) >= 0)
+         && (find_value(psz)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -147,9 +147,9 @@ bool property_set::contains_value(const char * psz, ::count countMin, ::count co
 
 bool property_set::remove_first_var_ci(const var & var)
 {
-   
+
    property * pproperty = find_var_ci(var);
-   
+
    if(pproperty != NULL)
    {
 
@@ -232,7 +232,7 @@ bool property_set::remove_first_value(const char * lpcsz)
    ::count count = 0;
    if(contains_var_ci(var, countMin, countMax))
       while(conditional(countMax >= 0, count < countMax)
-         && (remove_first_var_ci(var)))
+            && (remove_first_var_ci(var)))
          count++;
    return count;
 }
@@ -248,7 +248,7 @@ bool property_set::remove_first_value(const char * lpcsz)
 
 ::count property_set::remove_value_ci(const char * psz, ::count countMin, ::count countMax)
 {
-   
+
    ::count count = 0;
 
    if(contains_value_ci(psz,countMin,countMax))
@@ -440,28 +440,28 @@ void property_set::_008Add(const char * pszKey, const char * pszValue)
 
    while(i  < straKey.get_upper_bound())
    {
-      
+
       pset = &(*pset)[straKey[i]].propset();
-      
+
       i++;
 
    }
 
    if(pszValue != NULL && pset->has_property(straKey[i]) && pset->operator[](straKey[i]) != pszValue)
    {
-      
+
       pset->operator[](straKey[i]).stra().add(pszValue);
 
    }
    else if (pszValue == NULL)
    {
-      
+
       pset->operator[](straKey[i]) = var::type_key_exists;
 
    }
    else
    {
-      
+
       pset->operator[](straKey[i])= var(pszValue);
 
    }
@@ -557,35 +557,35 @@ void property_set::_008Parse(bool bApp, const char * pszCmdLine, var & varFile, 
       switch(state)
       {
       case state_key:
+      {
+         strKey = str;
+         state = state_equal;
+      }
+      break;
+      case state_equal:
+      {
+         if(str == '=')
          {
+            state = state_value;
+         }
+         else
+         {
+            _008Add(strKey, NULL);
             strKey = str;
             state = state_equal;
          }
-         break;
-      case state_equal:
-         {
-            if(str == '=')
-            {
-               state = state_value;
-            }
-            else
-            {
-               _008Add(strKey, NULL);
-               strKey = str;
-               state = state_equal;
-            }
-         }
-         break;
+      }
+      break;
       case state_value:
-         {
+      {
 
-            _008Add(strKey, str);
-            strKey.Empty();
-            str.Empty();
-            state = state_key;
+         _008Add(strKey, str);
+         strKey.Empty();
+         str.Empty();
+         state = state_key;
 
-         }
-         break;
+      }
+      break;
       }
 
    }
@@ -655,7 +655,7 @@ void property_set::parse_json(const string & strJson)
 
 void property_set::parse_json(const char * & pszJson)
 {
-   
+
    parse_json(pszJson, pszJson + strlen(pszJson) - 1);
 
 }
@@ -679,11 +679,11 @@ void property_set::parse_json(const char * & pszJson, const char * pszEnd)
    {
 
       ::id id;
-      
+
       property::parse_json_id(id, pszJson,pszEnd);
-      
+
       property * pproperty = get_assoc(id);
-      
+
       property::parse_json_value(pproperty->m_element2,pszJson,pszEnd);
 
       ::str::consume_spaces(pszJson, 0, pszEnd);
@@ -1012,13 +1012,13 @@ property * property_set::find_value(const char * psz) const
 
 property * property_set::find_value_ci(const char * psz) const
 {
-   
+
    for(const_iterator it = begin(); it != end(); it++)
    {
-      
+
       if(it->get_string().compare_ci(psz) == 0)
       {
-       
+
          return (property *) &it->m_element2;
 
       }
@@ -1031,7 +1031,7 @@ property * property_set::find_value_ci(const char * psz) const
 
 property_set::property_set(const property_set & set)
 {
-   
+
 //   m_iIndex = 0;
 
    operator = (set);
@@ -1267,12 +1267,12 @@ property_set & property_set::operator |= (const property_set & set)
 //{
 //
 //   remove_all();
-//   
+//
 //   int32_t iCount = set.str_str_interface_get_count();
 //
 //   for (int32_t i = 0; i < iCount; i++)
 //   {
-//      
+//
 //      string strKey = set.str_str_interface_get_key(i);
 //
 //      class var var = set.str_str_interface_get_value(i);
@@ -1290,7 +1290,7 @@ property * property_set::str_find(const property & property) const
 
    for(const_iterator it = begin(); it != end(); it++)
    {
-      
+
       if(it->str_compare(property) == 0)
       {
 
@@ -1310,7 +1310,7 @@ bool property_set::str_contains(const property_set & set) const
 
    for(const_iterator it = begin(); it != end(); it++)
    {
-      
+
       if(str_find(*it) < 0)
       {
 
@@ -1429,7 +1429,7 @@ bool stable_property_set::is_new_or_null(id id)
 
 bool stable_property_set::has_property(id id)
 {
-   
+
    index iFind = find(id);
 
    if (iFind < 0)
@@ -1498,7 +1498,7 @@ property & stable_property_set::operator [](id id)
    if (id.is_integer())
    {
 
-      iFind = id.int64();
+      convert(iFind, id.int64());
 
       if (iFind < 0 || iFind >= m_propertya.get_count())
       {

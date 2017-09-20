@@ -26,7 +26,7 @@ namespace http
    void form::parse_body(file::file *infil, const char * pszContentType, size_t content_length)
    {
 
-      if (content_length > Application.http().m_setHttp["max_http_post"].int64())
+      if (::comparison::gt(content_length, Application.http().m_setHttp["max_http_post"].int64()))
       {
 
          return;
@@ -92,8 +92,7 @@ namespace http
                      {
                         content_type = pa.getword();
                      }
-                     else
-                     if(!stricmp_dup(h,"Content-Disposition:"))
+                     else if(!stricmp_dup(h,"Content-Disposition:"))
                      {
                         h = pa.getword();
                         if (!strcmp(h,"form-data"))
@@ -116,8 +115,7 @@ namespace http
                                     current_name = h;
                                  }
                               }
-                              else
-                              if (!strcmp(name,"filename"))
+                              else if (!strcmp(name,"filename"))
                               {
                                  if (!h.is_empty() && h[0] == '"')
                                  {
@@ -162,8 +160,8 @@ namespace http
                      {
                         val = val.Mid(0,val.get_length() - 1);
                      }
-   //                  cgi = new CGI(current_name, val);
-   //                  m_cgi.push_back(cgi);
+                     //                  cgi = new CGI(current_name, val);
+                     //                  m_cgi.push_back(cgi);
                      m_setPost[current_name] = val;
                   }
                   else // current_filename.get_length() > 0
@@ -196,7 +194,7 @@ namespace http
                         file_append_wait_dup("C:\\ca2\\toomuchuploads.txt", strMessage);
                         i++;
                      }
-                     
+
                      ::file::file_sp spfile(Application.file().get_file(strTempFile, ::file::defer_create_directory | ::file::type_binary | ::file::mode_create | ::file::mode_write));
                      //sl.unlock();
                      if(spfile.is_set())
@@ -264,7 +262,7 @@ namespace http
       }
       else
          // "x-www-form-urlencoded" is the default
-      //if (strstr(content_type, "x-www-form-urlencoded"))
+         //if (strstr(content_type, "x-www-form-urlencoded"))
       {
          string str;
          infil->full_read_string(str);
@@ -272,151 +270,151 @@ namespace http
 //         strsize clen = content_length;
          //TRACE("x-www-form-urlencoded POST is %d bytes length and reported content-length header is %d.", len);
          m_setPost.parse_url_query(str);
-   /*      bool got_name = false; // tnx to FatherNitwit
-         int32_t cl = (int32_t)content_length;
-         char ca,chigh,clow;
-         string slask;
-   //      m_current = m_cgi.end();
-         string name;
+         /*      bool got_name = false; // tnx to FatherNitwit
+               int32_t cl = (int32_t)content_length;
+               char ca,chigh,clow;
+               string slask;
+         //      m_current = m_cgi.end();
+               string name;
 
-         cl--;
-         while (cl >= 0 && infil -> read(&ca, 1))
-         {
-            switch (ca)
-            {
-               case '=': /* end of name */
-   /*               name = slask;
-                  slask.Empty();
-                  got_name = true;
-                  break;
-               case '&': /* end of value */
-   /*               if (got_name)
+               cl--;
+               while (cl >= 0 && infil -> read(&ca, 1))
+               {
+                  switch (ca)
                   {
-   //                  cgi = new CGI(name,slask);
-                     if(::str::ends_eat(name, "[]"))
-                     {
-                        m_setPost[name].vara().add(slask);
-                     }
-                     else
-                     {
-                        m_setPost[name] = slask;
-                     }
-                     got_name = false;
+                     case '=': /* end of name */
+         /*               name = slask;
+                        slask.Empty();
+                        got_name = true;
+                        break;
+                     case '&': /* end of value */
+         /*               if (got_name)
+                        {
+         //                  cgi = new CGI(name,slask);
+                           if(::str::ends_eat(name, "[]"))
+                           {
+                              m_setPost[name].vara().add(slask);
+                           }
+                           else
+                           {
+                              m_setPost[name] = slask;
+                           }
+                           got_name = false;
+                        }
+                        else
+                        {
+         //                  cgi = new CGI(slask, "");
+                           m_setPost[slask] = "";
+                        }
+                        slask.Empty();
+                        //m_cgi.push_back(cgi);
+                        break;
+                     case '+': /* space */
+         /*               slask += " ";
+                        break;
+                     case '%': /* hex value */
+         /*               infil -> read(&chigh,1);
+                        cl--;
+                        chigh -= 48 + (chigh > '9' ? 7 : 0) + (chigh >= 'a' ? 32 : 0);
+                        infil -> read(&clow,1);
+                        cl--;
+                        clow -= 48 + (clow > '9' ? 7 : 0) + (clow >= 'a' ? 32 : 0);
+                        slask += (char)(chigh * 16 + clow);
+                        break;
+                     default: /* just another char */
+         /*               slask += ca;
+                        break;
+                  }
+                  //
+                  cl--;
+               }
+               if (got_name)
+               {
+         //                  cgi = new CGI(name,slask);
+                  if(::str::ends_eat(name, "[]"))
+                  {
+                     m_setPost[name].vara().add(slask);
                   }
                   else
                   {
-   //                  cgi = new CGI(slask, "");
-                     m_setPost[slask] = "";
+                     m_setPost[name] = slask;
                   }
-                  slask.Empty();
-                  //m_cgi.push_back(cgi);
-                  break;
-               case '+': /* space */
-   /*               slask += " ";
-                  break;
-               case '%': /* hex value */
-   /*               infil -> read(&chigh,1);
-                  cl--;
-                  chigh -= 48 + (chigh > '9' ? 7 : 0) + (chigh >= 'a' ? 32 : 0);
-                  infil -> read(&clow,1);
-                  cl--;
-                  clow -= 48 + (clow > '9' ? 7 : 0) + (clow >= 'a' ? 32 : 0);
-                  slask += (char)(chigh * 16 + clow);
-                  break;
-               default: /* just another char */
-   /*               slask += ca;
-                  break;
-            }
-            //
-            cl--;
-         }
-         if (got_name)
-         {
-   //                  cgi = new CGI(name,slask);
-            if(::str::ends_eat(name, "[]"))
-            {
-               m_setPost[name].vara().add(slask);
-            }
-            else
-            {
-               m_setPost[name] = slask;
-            }
-            got_name = false;
-         }
-         else
-         {
-   //                  cgi = new CGI(slask, "");
-            m_setPost[slask] = "";
-         }*/
+                  got_name = false;
+               }
+               else
+               {
+         //                  cgi = new CGI(slask, "");
+                  m_setPost[slask] = "";
+               }*/
       }
    }
 
 
    // form(buffer,l) -- request_method GET
 
-/*   void form::parse_query_string(const string & buffer,size_t l)
-   {
-      m_setGet.parse_url_query(buffer);
-      return;
-      string slask;
-      string name;
-      char ca,chigh,clow;
-      size_t ptr = 0;
-      bool got_name = false;
-
-
-      ptr = 0;
-      while (ptr < l)
+   /*   void form::parse_query_string(const string & buffer,size_t l)
       {
-         ca = buffer.operator[](ptr++);
-         switch (ca)
+         m_setGet.parse_url_query(buffer);
+         return;
+         string slask;
+         string name;
+         char ca,chigh,clow;
+         size_t ptr = 0;
+         bool got_name = false;
+
+
+         ptr = 0;
+         while (ptr < l)
          {
-            case '=': /* end of name */
-  /*             name = slask;
-               slask.Empty();
-               got_name = true;
-               break;
-            case '&': /* end of value */
-    /*              if (got_name)
-                  {
+            ca = buffer.operator[](ptr++);
+            switch (ca)
+            {
+               case '=': /* end of name */
+   /*             name = slask;
+                slask.Empty();
+                got_name = true;
+                break;
+             case '&': /* end of value */
+   /*              if (got_name)
+                 {
    //                  cgi = new CGI(name,slask);
-                     m_setGet[name] = slask;
-                     got_name = false;
-                  }
-                  else
-                  {
+                    m_setGet[name] = slask;
+                    got_name = false;
+                 }
+                 else
+                 {
    //                  cgi = new CGI(slask, "");
-                     m_setGet[slask] = "";
-                  }
-               slask.Empty();
+                    m_setGet[slask] = "";
+                 }
+              slask.Empty();
    //            m_cgi.push_back(cgi);
-               break;
-            case '+': /* space */
-      /*         slask += " ";
-               break;
-            case '%': /* hex value */
-        /*       chigh = buffer.operator[](ptr++);
-               chigh -= 48 + (chigh > '9' ? 7 : 0) + (chigh >= 'a' ? 32 : 0);
-               clow = buffer.operator[](ptr++);
-               clow -= 48 + (clow > '9' ? 7 : 0) + (clow >= 'a' ? 32 : 0);
-               slask += (char)(chigh * 16 + clow);
-               break;
-            default: /* just another char */
-          /*     slask += ca;
-               break;
-         }
-      }
-                  if (got_name)
-                  {
+              break;
+           case '+': /* space */
+   /*         slask += " ";
+            break;
+         case '%': /* hex value */
+   /*       chigh = buffer.operator[](ptr++);
+          chigh -= 48 + (chigh > '9' ? 7 : 0) + (chigh >= 'a' ? 32 : 0);
+          clow = buffer.operator[](ptr++);
+          clow -= 48 + (clow > '9' ? 7 : 0) + (clow >= 'a' ? 32 : 0);
+          slask += (char)(chigh * 16 + clow);
+          break;
+       default: /* just another char */
+   /*     slask += ca;
+        break;
+   }
+   }
+           if (got_name)
+           {
    //                  cgi = new CGI(name,slask);
-                     m_setGet[name] = slask;
-                     got_name = false;
-                  }
-                  else
-                  {
+              m_setGet[name] = slask;
+              got_name = false;
+           }
+           else
+           {
    //                  cgi = new CGI(slask, "");
-                     m_setGet[slask] = "";
-                  }
+              m_setGet[slask] = "";
+           }
    //   m_cgi.push_back(cgi);
    }*/
 
@@ -441,13 +439,11 @@ namespace http
          {
             v += "&lt;";
          }
-         else
-         if (value[i] == '>')
+         else if (value[i] == '>')
          {
             v += "&gt;";
          }
-         else
-         if (value[i] == '&')
+         else if (value[i] == '&')
          {
             v += "&amp;";
          }

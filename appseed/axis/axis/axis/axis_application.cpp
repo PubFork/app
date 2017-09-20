@@ -2357,7 +2357,7 @@ namespace axis
 
             }
 
-            Sleep(184);
+            Sleep(200);
 
          }
 

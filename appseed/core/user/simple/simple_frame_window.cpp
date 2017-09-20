@@ -76,7 +76,7 @@ int simple_frame_window::helper_task::run()
          }
 
       }
-      //Sleep(184); // the tester (without UPS) can loose a save here
+      //Sleep(200); // the tester (without UPS) can loose a save here
 
    }
 
@@ -3119,7 +3119,7 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
+bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
 {
 
    if (m_etranslucency != ::user::translucency_undefined)
@@ -3131,7 +3131,7 @@ bool simple_frame_window::get_translucency(::user::e_translucency & etranslucenc
 
    }
 
-   return ::user::frame_window::get_translucency(etranslucency, eelement);
+   return ::user::frame_window::get_translucency(etranslucency, eelement, pui);
 
 }
 

@@ -101,7 +101,7 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
          int32_t i;
          int32_t j;
          i = 0;
-         for(; compare::lt(i, dwSize);)
+         for(; comparison::lt(i, dwSize);)
          {
 
             if(pmq != NULL)
@@ -164,7 +164,7 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
       while(true)
       {
 
-         for(i = 0; compare::lt(i, dwSize);i++)
+         for(i = 0; comparison::lt(i, dwSize);i++)
          {
 
             if(pmq != NULL)
@@ -786,7 +786,7 @@ int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 //
 //      }
 //
-//      Sleep(184);
+//      Sleep(200);
 //
 //   }
 //

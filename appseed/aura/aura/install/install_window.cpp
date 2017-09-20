@@ -9,7 +9,7 @@
 namespace install
 {
 
-   
+
    window * window::s_p = NULL;
 
 
@@ -55,18 +55,18 @@ namespace install
 
    window::~window()
    {
-      
+
       oswindow hwnd = m_hwnd;
 
       if (hwnd != NULL)
       {
 
 #ifdef WINDOWSEX
-         
+
          ::ShowWindow(hwnd, SW_HIDE);
 
          ::DestroyWindow(hwnd);
-         
+
 #endif
 
       }
@@ -78,26 +78,23 @@ namespace install
    {
 
 #ifdef WINDOWS
-      
+
       BITMAPINFO info = {};
+
       info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
       info.bmiHeader.biWidth = cx;
       info.bmiHeader.biHeight = -cy;
       info.bmiHeader.biPlanes = 1;
       info.bmiHeader.biBitCount = 32;
       info.bmiHeader.biCompression = BI_RGB;
-      //info.bmiHeader.biSizeImage=g_cx*g_cy * 4;
-      LPDWORD lpdata;
-      //g_pcolorref = new COLORREF[g_cx * g_cy * sizeof(COLORREF)];
-      int iScan;
 
       m_hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **)&m_pcolorref, NULL, NULL);
 
       if(m_hbitmap == NULL)
-      { 
+      {
 
          return false;
-      
+
       }
 
       m_hdc = ::CreateCompatibleDC(NULL);
@@ -112,7 +109,7 @@ namespace install
       }
 
       ::SelectObject(m_hdc, m_hbitmap);
-      
+
       m_cx = cx;
 
       m_cy = cy;
@@ -129,7 +126,7 @@ namespace install
       m_brushBar->create_solid(ARGB(180, 80, 180, 80));
       m_brushBarBk->create_solid(ARGB(50, 200, 200, 200));
       m_brushBk->create_solid(ARGB(210, 20, 20, 20));
-      
+
 #endif
 
       return true;
@@ -170,44 +167,74 @@ namespace install
 
          if (file.is_set())
          {
-            int iTell = file->seek(0, ::file::seek_end);
+
+            auto iTell = file->seek(0, ::file::seek_end);
+
             iTell--;
+
             string strLine;
+
             int iSkip = 0;
+
             bool bNormal = false;
+
             bool bHeader = false;
+
             bool bBold = false;
+
             bool bPreNormal = true;
+
             bool bStart = false;
+
             while (iTell > 0 && !bStart && !(bNormal && bBold && bProgress && bHeader))
             {
+
                file->seek(iTell, ::file::seek_begin);
+
                char ch;
+
                file->read( &ch, 1);
+
                if (ch == '\r')
                {
+
                   iSkip++;
+
                }
                else if (ch == '\n')
                {
+
                   iSkip++;
+
                }
                else if (iSkip > 0)
                {
+
                   iSkip = 0;
+
                   strLine.trim();
+
                   if (strLine == "--")
                   {
+
                      bStart = true;
+
                   }
                   else if (::str::begins_eat(strLine, "#----------"))
                   {
+
                      strHeader = L"Thank you";
+
                      bHeader = true;
+
                      strBold = u16(strLine);
+
                      bBold = true;
+
                      dProgress = 0.0;
+
                      bProgress = true;
+
                   }
                   else if (::str::begins_eat(strLine, ":::::"))
                   {
@@ -284,8 +311,11 @@ namespace install
 
          if (file.is_set())
          {
-            int iTell = file->seek(0, ::file::seek_end);
+
+            auto iTell = file->seek(0, ::file::seek_end);
+
             iTell--;
+
             string strLine;
             int iSkip = 0;
             bool bNormal = false;
@@ -371,7 +401,7 @@ namespace install
                }
                iTell--;
             }
-            
+
          }
       }
 
@@ -403,7 +433,7 @@ namespace install
 
       double cyText = MAX(s.cy, 5.0);
 
-      int iLineCount = (rect.bottom - 30) / cyText;
+      int iLineCount = (int) ((rect.bottom - 30) / cyText);
 
       // !m_bHealingSurface => "Surgery Internals"
       {
@@ -437,17 +467,26 @@ namespace install
          //}
 
       }
+
       double cyBar = cyText * 1.2;
 
       {
+
          pgraphics->SelectObject(m_brushBarBk);
-         pgraphics->FillRectangle(::rect(point(10.0, (lpcrect->top + lpcrect->bottom - cyBar) / 2.0), size(lpcrect->right - 10.0 - 10.0, cyBar)));
+         pgraphics->FillRectangle(
+            ::rect(point(10, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
+                   ::size((int) (lpcrect->right - 10 - 10), (int) (cyBar))));
 
          if (bProgress)
          {
             double iRight = ((double)m_cx - 11.0 - 11.0) * dProgress;
             pgraphics->SelectObject(m_brushBar);
-            pgraphics->FillRectangle(::rect(point(11.0, (lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0), size(iRight, cyBar - 2.0)));
+
+            pgraphics->FillRectangle(
+               ::rect(
+                  ::point(11, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+                  ::size((int) iRight, (int) (cyBar - 2.0))));
+
          }
          else
          {
@@ -457,16 +496,29 @@ namespace install
             double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
             double iRight = i + iBarWidth;
             pgraphics->SelectObject(m_brushBar);
-            pgraphics->FillRectangle(::rect(point(11.0 + i, (lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0), ::size(MIN(lpcrect->right - 10.0, iRight) - 11 - i, cyBar - 2.0)));
+
+            pgraphics->FillRectangle(
+               ::rect(
+                  ::point((int) (11.0 + i), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+                  ::size((int) (MIN(lpcrect->right - 10.0, iRight) - 11 - i), (int) (cyBar - 2.0))));
+
             if (iRight >= lpcrect->right - 10)
             {
-               pgraphics->FillRectangle(::rect(point(11.0, (lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0), ::size(iRight - lpcrect->right - 10.0 - 11.0, cyBar - 2.0)));
+
+               pgraphics->FillRectangle(
+                  ::rect(
+                     ::point((int) (11.0), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+                     ::size((int) (iRight - lpcrect->right - 10.0 - 11.0), (int) (cyBar - 2.0))));
+
             }
          }
 
          pgraphics->SelectObject(m_penBarBorder);
 
-         pgraphics->DrawRectangle(::rect(point(10.0, (lpcrect->top + lpcrect->bottom - cyBar) / 2.0), ::size(lpcrect->right - 10.0 - 10.0, cyBar)));
+         pgraphics->DrawRectangle(
+            ::rect(
+               ::point((int) 10.0, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
+               ::size((int) (lpcrect->right - 10.0 - 10.0), (int) cyBar)));
 
       }
 
@@ -490,7 +542,7 @@ namespace install
 
    bool window::update_layered_window()
    {
-      
+
 #ifdef WINDOWS
 
       RECT rect;
@@ -542,7 +594,7 @@ namespace install
       UpdateLayeredWindow(hwnd, hdcWindow, &pt, &sz, m_hdc, &ptSrc, 0, &blendPixelFunction, ULW_ALPHA);
 
       ::ReleaseDC(hwnd, hdcWindow);
-      
+
 #endif
 
       return true;
@@ -554,7 +606,7 @@ namespace install
    {
 
 #ifdef WINDOWS
-      
+
       switch (message)
       {
 
@@ -637,9 +689,9 @@ namespace install
 
       return 0;
 
-   
+
 #endif
-   
+
    }
 
 
@@ -652,11 +704,11 @@ namespace install
       ::GetCursorPos(&ptCursor);
 
       ::SetWindowPos(m_hwnd, NULL,
-         ptCursor.x - m_ptDragStart.x + m_rectWindowDragStart.left,
-         ptCursor.y - m_ptDragStart.y + m_rectWindowDragStart.top,
-         0,
-         0,
-         SWP_NOSIZE | SWP_SHOWWINDOW);
+                     ptCursor.x - m_ptDragStart.x + m_rectWindowDragStart.left,
+                     ptCursor.y - m_ptDragStart.y + m_rectWindowDragStart.top,
+                     0,
+                     0,
+                     SWP_NOSIZE | SWP_SHOWWINDOW);
 #endif
 
    }
@@ -684,11 +736,11 @@ namespace install
 
    bool window::show()
    {
-      
+
 #ifdef WINDOWS
 
       ShowWindow(m_hwnd, SW_SHOW);
-      
+
 #endif
 
       return true;
@@ -698,12 +750,12 @@ namespace install
 
    bool window::hide()
    {
-      
+
 #ifdef WINDOWS
 
       ShowWindow(m_hwnd, SW_HIDE);
-      
-      
+
+
 #endif
 
       return true;
@@ -713,8 +765,8 @@ namespace install
 
    bool window::create()
    {
-      
-      
+
+
 #ifdef WINDOWS
 
       m_wstrWindowTitle = L"";
@@ -728,18 +780,18 @@ namespace install
       int iHeight = 600;
 
       HWND hwnd = CreateWindowExW(
-         WS_EX_LAYERED,
-         m_wstrWindowClass.c_str(),
-         m_wstrWindowTitle.c_str(),
-         WS_OVERLAPPED,
-         CW_USEDEFAULT,
-         0, 
-         CW_USEDEFAULT, 
-         0, 
-         NULL, 
-         NULL, 
-         System.m_hinstance,
-         NULL);
+                     WS_EX_LAYERED,
+                     m_wstrWindowClass.c_str(),
+                     m_wstrWindowTitle.c_str(),
+                     WS_OVERLAPPED,
+                     CW_USEDEFAULT,
+                     0,
+                     CW_USEDEFAULT,
+                     0,
+                     NULL,
+                     NULL,
+                     System.m_hinstance,
+                     NULL);
 
       if (hwnd == NULL)
       {
@@ -777,7 +829,7 @@ namespace install
       SetWindowPos(m_hwnd, NULL, x, y, m_cx, m_cy, SWP_NOCOPYBITS);
 
       UpdateWindow(m_hwnd);
-      
+
 #endif
 
       return 1;
@@ -800,12 +852,12 @@ namespace install
 
    }
 
-   
+
 #endif
 
    ATOM window::register_class()
    {
-      
+
 #ifdef WINDOWS
 
       HINSTANCE hinstance = System.m_hinstance;
@@ -827,9 +879,9 @@ namespace install
       wcex.hIconSm = LoadIcon(hinstance, MAKEINTRESOURCE(ID_ONE));
 
       return RegisterClassExW(&wcex);
-      
+
 #endif
-      
+
       return TRUE;
 
    }

@@ -1234,6 +1234,7 @@
     <ClInclude Include="aura\message\message_base.h" />
     <ClInclude Include="aura\message\message_const.h" />
     <ClInclude Include="aura\message\message_cross_windows.h" />
+    <ClInclude Include="aura\message\message_global.h" />
     <ClInclude Include="aura\message\message_id.h" />
     <ClInclude Include="aura\message\message_message.h" />
     <ClInclude Include="aura\message\message_definition.h" />
@@ -1879,6 +1880,7 @@
     <ClInclude Include="primitive\collection\collection_typed_ptr_list.h" />
     <ClInclude Include="primitive\collection\collection_unique_array.h" />
     <ClInclude Include="primitive\collection\collection_var_array.h" />
+    <ClInclude Include="primitive\comparison\compare.h" />
     <ClInclude Include="primitive\comparison\comparison.h" />
     <ClInclude Include="primitive\comparison\comparison_binary.h" />
     <ClInclude Include="primitive\comparison\comparison_compare.h" />
@@ -1916,6 +1918,7 @@
     <ClInclude Include="primitive\geometry\geometry_size.h" />
     <ClInclude Include="primitive\math\math_binary_operation.h" />
     <ClInclude Include="primitive\math\math_classes.h" />
+    <ClInclude Include="primitive\math\math_clip.h" />
     <ClInclude Include="primitive\math\math_complex.h" />
     <ClInclude Include="primitive\math\math_count.h" />
     <ClInclude Include="primitive\math\math_c_number.h" />

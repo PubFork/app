@@ -369,7 +369,7 @@ namespace aura
          //            {
          //
          //               ZERO(data);
-         //               if((result = msgrcv(m_iQueue,&data,length,1984,IPC_NOWAIT)) == -1)
+         //               if((result = msgrcv(m_iQueue,&data,length,2000,IPC_NOWAIT)) == -1)
          //               {
          //
          //                  if(errno == ENOMSG)
@@ -378,7 +378,7 @@ namespace aura
          //  //                   {
          //    //                    Sleep(84 * 1000);
          //      //               }
-         //                     Sleep(84);
+         //                     Sleep(100);
          //                  }
          //                  else
          //                  {

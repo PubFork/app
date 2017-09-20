@@ -27,8 +27,6 @@ namespace user
 
       //index indexNew = m_controldescriptorset.add(new class control_descriptor(descriptorParam));
 
-
-
       class control_descriptor * pdescriptor = canew(class control_descriptor(descriptorParam));
 
       m_controldescriptorset.add(pdescriptor);
@@ -43,18 +41,18 @@ namespace user
          switch(pdescriptor->m_etype)
          {
          case control_type_static:
-            {
-   /*xxx            CTransparentStatic * pstatic = (CTransparentStatic *) window::FromHandlePermanent(pform->get_child_by_id(pcontrol->m_id)->GetSafeoswindow_());
-               if(pstatic == NULL || !base_class < CTransparentStatic >::bases(pstatic))
-               {
-                  pstatic = new CTransparentStatic;
-                  VERIFY(pstatic->subclass_window(pform->get_child_by_id(pcontrol->m_id)->GetSafeoswindow_()));
-               }
-               pcontrol->m_unionwndptr.m_pstatic = pstatic;*/
-            }
+         {
+            /*xxx            CTransparentStatic * pstatic = (CTransparentStatic *) window::FromHandlePermanent(pform->get_child_by_id(pcontrol->m_id)->GetSafeoswindow_());
+                        if(pstatic == NULL || !base_class < CTransparentStatic >::bases(pstatic))
+                        {
+                           pstatic = new CTransparentStatic;
+                           VERIFY(pstatic->subclass_window(pform->get_child_by_id(pcontrol->m_id)->GetSafeoswindow_()));
+                        }
+                        pcontrol->m_unionwndptr.m_pstatic = pstatic;*/
+         }
+         break;
+         default:
             break;
-            default:
-               break;
 
          }
       }
@@ -171,14 +169,14 @@ namespace user
       switch(uiNotificationCode)
       {
       case BN_CLICKED:
+      {
+         if(pcontrol->descriptor().has_function(control_function_action))
          {
-            if(pcontrol->descriptor().has_function(control_function_action))
-            {
-               _001OnButtonAction(pcontrol);
-               return true;
-            }
+            _001OnButtonAction(pcontrol);
+            return true;
          }
-         break;
+      }
+      break;
       default:
          break;
       }
@@ -206,12 +204,12 @@ namespace user
       switch(uiNotificationCode)
       {
       case BN_CLICKED:
-         {
-   /*      linux   ::user::button * pbutton = (::user::button *) get_child_by_id(pcontrol->m_id);
-            int32_t i = pbutton->get_check() != 0;
-            VmsDataSet(pcontrol->descriptor().m_dataid, 0, 0, i);*/
-         }
-         break;
+      {
+         /*      linux   ::user::button * pbutton = (::user::button *) get_child_by_id(pcontrol->m_id);
+                  int32_t i = pbutton->get_check() != 0;
+                  VmsDataSet(pcontrol->descriptor().m_dataid, 0, 0, i);*/
+      }
+      break;
       default:
          break;
       }
@@ -240,20 +238,20 @@ namespace user
       switch(uiNotificationCode)
       {
       case CBN_SELCHANGE:
-         {
-   /* linux         sp(::user::combo_box) pcombo = (sp(::user::combo_box)) get_child_by_id(pcontrol->m_id);
-            int32_t iSel = pcombo->get_cur_sel();
-            if(iSel != CB_ERR)
-            {
-               uint32_t dwData = pcontrol->GetComboBox()->m_dwaData[iSel];
-               VmsDataSet(pcontrol->descriptor().m_dataid, 0, 0, (int32_t) dwData);
-            }*/
-         }
-         break;
+      {
+         /* linux         sp(::user::combo_box) pcombo = (sp(::user::combo_box)) get_child_by_id(pcontrol->m_id);
+                  int32_t iSel = pcombo->get_cur_sel();
+                  if(iSel != CB_ERR)
+                  {
+                     uint32_t dwData = pcontrol->GetComboBox()->m_dwaData[iSel];
+                     VmsDataSet(pcontrol->descriptor().m_dataid, 0, 0, (int32_t) dwData);
+                  }*/
+      }
+      break;
       case EN_KILLFOCUS:
-         {
-            //_001SaveEdit(control);
-         }
+      {
+         //_001SaveEdit(control);
+      }
       default:
          break;
       }
@@ -282,17 +280,17 @@ namespace user
       switch(uiNotificationCode)
       {
       case EN_CHANGE:
-         {
-            if(pcontrol->descriptor().has_function(control_function_save_on_change))
-            {
-               _001SaveEdit(pcontrol);
-            }
-         }
-         break;
-      case EN_KILLFOCUS:
+      {
+         if(pcontrol->descriptor().has_function(control_function_save_on_change))
          {
             _001SaveEdit(pcontrol);
          }
+      }
+      break;
+      case EN_KILLFOCUS:
+      {
+         _001SaveEdit(pcontrol);
+      }
       default:
          break;
       }
@@ -336,7 +334,7 @@ namespace user
 
       if(!pcontrol->Validate(str))
       {
-         // que tal um bal�o para indicar o erro
+         // que tal um balão para indicar o erro
          return false;
       }
 
@@ -414,16 +412,16 @@ namespace user
       case control_type_check_box:
          _001UpdateDbFlagsCheckBox(pcontrol);
          break;
-   /*   case control_type_combo_box:
-         _001UpdateComboBox(control);
-         break;
-      case control_type_edit:
-      case control_type_edit_plain_text:
-         _001UpdateEdit(control);
-         break;
-      case control_type_simple_list:
-         _001UpdateSimpleList(control);
-         break;*/
+      /*   case control_type_combo_box:
+            _001UpdateComboBox(control);
+            break;
+         case control_type_edit:
+         case control_type_edit_plain_text:
+            _001UpdateEdit(control);
+            break;
+         case control_type_simple_list:
+            _001UpdateSimpleList(control);
+            break;*/
       default:
          break;
       }
@@ -446,19 +444,19 @@ namespace user
          return;
       }
       {
-/*         check_box * pcheck = dynamic_cast < check_box * > (pcontrol);
-         if(pcheck != NULL)
-         {
-            index i = 0;
-            if(ia.BaseSortFind(pcontrol->descriptor().m_ddx.m_pdbflags->m_value, i))
-            {
-               pcheck->_001SetCheck(check::checked, false);
-            }
-            else
-            {
-               pcheck->_001SetCheck(check::unchecked, false);
-            }
-         }*/
+         /*         check_box * pcheck = dynamic_cast < check_box * > (pcontrol);
+                  if(pcheck != NULL)
+                  {
+                     index i = 0;
+                     if(ia.BaseSortFind(pcontrol->descriptor().m_ddx.m_pdbflags->m_value, i))
+                     {
+                        pcheck->_001SetCheck(check::checked, false);
+                     }
+                     else
+                     {
+                        pcheck->_001SetCheck(check::unchecked, false);
+                     }
+                  }*/
       }
    }
 
@@ -472,8 +470,8 @@ namespace user
       int32_t i;
       if(data_get(pcontrol->descriptor().m_dataid, i))
       {
-   /* linux      ::user::button * pbutton = (::user::button *) get_child_by_id(pcontrol->m_id);
-         pbutton->SetCheck((i != 0) ? 1 : 0); */
+         /* linux      ::user::button * pbutton = (::user::button *) get_child_by_id(pcontrol->m_id);
+               pbutton->SetCheck((i != 0) ? 1 : 0); */
       }
    }
 
@@ -482,17 +480,17 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-   /* linux   ASSERT(pcontrol->descriptor().get_type() == control_type_combo_box);
-      int32_t i;
-      if(VmsDataGet(pcontrol->descriptor().m_dataid, 0, 0, i))
-      {
-         int_ptr iSel = pcontrol->GetComboBox()->m_dwaData.find_first((uint32_t) i);
-         if(iSel >= 0)
+      /* linux   ASSERT(pcontrol->descriptor().get_type() == control_type_combo_box);
+         int32_t i;
+         if(VmsDataGet(pcontrol->descriptor().m_dataid, 0, 0, i))
          {
-            sp(::user::combo_box) pcombo = (sp(::user::combo_box)) get_child_by_id(pcontrol->m_id);
-            pcombo->set_cur_sel(iSel);
-         }
-      }*/
+            int_ptr iSel = pcontrol->GetComboBox()->m_dwaData.find_first((uint32_t) i);
+            if(iSel >= 0)
+            {
+               sp(::user::combo_box) pcombo = (sp(::user::combo_box)) get_child_by_id(pcontrol->m_id);
+               pcombo->set_cur_sel(iSel);
+            }
+         }*/
    }
 
    void form::_001UpdateEdit(sp(control) pcontrol)
@@ -506,7 +504,7 @@ namespace user
       keep<bool> keepUpdateLock(&m_bOnEditUpdate, true, false, true);
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit
-         || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+             || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
       if(pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
@@ -533,19 +531,19 @@ namespace user
                switch(var.get_type())
                {
                case var::type_string:
-                  {
-                     string str;
-                     str = var.m_str;
-                     ptext->_001SetText(str, ::action::source_database);
-                  }
-                  break;
+               {
+                  string str;
+                  str = var.m_str;
+                  ptext->_001SetText(str, ::action::source_database);
+               }
+               break;
                case var::type_int32:
-                  {
-                     string str;
-                     str.Format("%d", var.int32());
-                     ptext->_001SetText(str, ::action::source_database);
-                  }
-                  break;
+               {
+                  string str;
+                  str.Format("%d", var.int32());
+                  ptext->_001SetText(str, ::action::source_database);
+               }
+               break;
                default:
                   ASSERT(FALSE);
                   break;
@@ -563,16 +561,16 @@ namespace user
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_simple_list);
 
-/*      ::user::list * plist = dynamic_cast<::user::list *>(get_child_by_id(pcontrol->m_id));
+      /*      ::user::list * plist = dynamic_cast<::user::list *>(get_child_by_id(pcontrol->m_id));
 
-      if(typeid(plist->GetDataInterface()) == System.type_info < ::user::simple_mesh_data > ())
-      {
-         ::user::simple_mesh_data * pdata = dynamic_cast < ::user::simple_mesh_data * > (plist->GetDataInterface());
-         stringa stra;
-         data_get(pcontrol->descriptor().m_dataid, stra);
-         ASSERT(plist != NULL);
-         pdata->set_data(plist, stra);
-      }*/
+            if(typeid(plist->GetDataInterface()) == System.type_info < ::user::simple_mesh_data > ())
+            {
+               ::user::simple_mesh_data * pdata = dynamic_cast < ::user::simple_mesh_data * > (plist->GetDataInterface());
+               stringa stra;
+               data_get(pcontrol->descriptor().m_dataid, stra);
+               ASSERT(plist != NULL);
+               pdata->set_data(plist, stra);
+            }*/
    }
 
    void form::_000OnPosCreate(::message::message * pobj)
@@ -588,15 +586,15 @@ namespace user
          m_pcallback->_001InitializeFormPreData(this);
       }
 
-   /*
-      if(GetOwner() != NULL)
-      {
-         GetOwner()->SendMessage(
-            WM_USER + 723,
-            GetDlgCtrlId(),
-            (LPARAM) this);
-      }
-   */
+      /*
+         if(GetOwner() != NULL)
+         {
+            GetOwner()->SendMessage(
+               WM_USER + 723,
+               GetDlgCtrlId(),
+               (LPARAM) this);
+         }
+      */
 
    }
 
@@ -671,10 +669,10 @@ namespace user
       selection.add_item(id);
    }
 
-   
+
    void form::on_command(::user::command * pcommand)
    {
-      
+
       control::on_command(pcommand);
 
    }
@@ -889,30 +887,30 @@ namespace user
       ASSERT(pcontrol != NULL);
       if(pcontrol == NULL)
          return;
-   /* linux  if(pcontrol->GetComboBox() != NULL)
-      {
-         if(!pcontrol->GetComboBox()->m_datakeyFill.IsNull())
+      /* linux  if(pcontrol->GetComboBox() != NULL)
          {
-            pcontrol->GetComboBox()->m_wstra.remove_all();
-            pcontrol->GetComboBox()->m_dwaData.remove_all();
-            var var;
-            var.m_etype = var::type_element;
-            var.m_pca2 = pcontrol->GetComboBox();
-            VmsDataGet(
-               pcontrol->GetComboBox()->m_datakeyFill,
-               0, 0,
-               var);
-            sp(::user::combo_box) pcombo = (sp(::user::combo_box)) pcontrol->m_pwnd;
-            pcombo->ResetContent();
-            string str;
-            for(int32_t i = 0; i < pcontrol->GetComboBox()->m_wstra.get_size(); i++)
+            if(!pcontrol->GetComboBox()->m_datakeyFill.IsNull())
             {
-               str = pcontrol->GetComboBox()->m_wstra[i];
-               pcombo->AddString(str);
-            }
+               pcontrol->GetComboBox()->m_wstra.remove_all();
+               pcontrol->GetComboBox()->m_dwaData.remove_all();
+               var var;
+               var.m_etype = var::type_element;
+               var.m_pca2 = pcontrol->GetComboBox();
+               VmsDataGet(
+                  pcontrol->GetComboBox()->m_datakeyFill,
+                  0, 0,
+                  var);
+               sp(::user::combo_box) pcombo = (sp(::user::combo_box)) pcontrol->m_pwnd;
+               pcombo->ResetContent();
+               string str;
+               for(int32_t i = 0; i < pcontrol->GetComboBox()->m_wstra.get_size(); i++)
+               {
+                  str = pcontrol->GetComboBox()->m_wstra[i];
+                  pcombo->AddString(str);
+               }
 
-         }
-      } */
+            }
+         } */
    }
 
 
@@ -1140,14 +1138,20 @@ namespace user
       _001InitializeFormPreData();
 
       _001UpdateFunctionStatic();
-   //   CVmsGuiApp * papp = (CVmsGuiApp *) &System;
-   //   papp->m_pcoreapp->TwfInitializeDescendants(pview->GetSafeoswindow_(), true);
+      //   CVmsGuiApp * papp = (CVmsGuiApp *) &System;
+      //   papp->m_pcoreapp->TwfInitializeDescendants(pview->GetSafeoswindow_(), true);
       for(int32_t i = 0; i < m_controldescriptorset.get_size(); i++)
       {
          sp(control) pcontrol = m_controldescriptorset[i]->get_control(this);
-         if(pcontrol == NULL)
+         if (pcontrol == NULL)
+         {
+
             continue;
+
+         }
+
          _001Update(pcontrol);
+
       }
 
       m_bInitialized = true;
@@ -1166,7 +1170,6 @@ namespace user
       return pcontrol->_001IsPointInside(point);
 
    }
-
 
 
    bool form::normalize_control_descriptor_typeinfo(class ::user::control_descriptor * pdescriptor)
@@ -1213,13 +1216,13 @@ namespace user
 
    }
 
+
    void form::control_get_client_rect(sp(control) pcontrol, LPRECT lprect)
    {
 
       pcontrol->GetClientRect(lprect);
 
    }
-
 
 
 } // namespace user

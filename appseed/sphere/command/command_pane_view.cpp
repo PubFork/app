@@ -24,17 +24,17 @@ namespace prompt
    }
 
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::user::impact::assert_valid();
+      ::user::impact::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::user::impact::dump(dumpcontext);
+      ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+#endif //DEBUG
 
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers
@@ -76,9 +76,9 @@ namespace prompt
             }
          }
       }
-	      if(pHint != NULL)
+      if(pHint != NULL)
       {
-   	   if(base_class <pane_view_update_hint >::bases(pHint))
+         if(base_class <pane_view_update_hint >::bases(pHint))
          {
             pane_view_update_hint * puh = (pane_view_update_hint * ) pHint;
             if(puh->is_type_of(pane_view_update_hint::TypeOnShowKaraoke))
@@ -120,7 +120,7 @@ namespace prompt
 
    void pane_view::_001OnSize(::message::message * pobj)
    {
-	   pobj->previous();
+      pobj->previous();
 
    }
 
@@ -129,7 +129,7 @@ namespace prompt
    {
       cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
 
-	   return ::user::impact::pre_create_window(cs);
+      return ::user::impact::pre_create_window(cs);
    }
 
 
@@ -138,111 +138,111 @@ namespace prompt
       switch(pcreatordata->m_id)
       {
       case PaneViewContextMenu:
+      {
+         sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
+         if(pdoc != NULL)
          {
-                                 sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
-            if(pdoc != NULL)
-            {
-               pdoc->get_filemanager_data()->m_iIconSize = 16;
-               pdoc->get_filemanager_data()->m_bListText = true;
-               pdoc->get_filemanager_data()->m_bListSelection = false;
-               pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
-               pdoc->get_filemanager_data()->m_strDISection = "winactionarea_menu";
-               pdoc->get_filemanager_data()->m_pcallback = this;
-               pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
-               pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\menu", ::action::source::system_default());
-               if(pview != NULL)
-               {
-                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != NULL)
-                  {
-                  #ifdef WINDOWSEX
-                     pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     #endif
-                     pframe->SetParent(this);
-                     pcreatordata->m_pdoc = pdoc;
-                     pcreatordata->m_pwnd = pframe;
-                  }
-               }
-            }
-         }
-         break;
-      case PaneViewPrimaryCommand:
-         {
-            sp(::user::impact) pview = create_view < primary_view > ();
+            pdoc->get_filemanager_data()->m_iIconSize = 16;
+            pdoc->get_filemanager_data()->m_bListText = true;
+            pdoc->get_filemanager_data()->m_bListSelection = false;
+            pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
+            pdoc->get_filemanager_data()->m_strDISection = "winactionarea_menu";
+            pdoc->get_filemanager_data()->m_pcallback = this;
+            pdoc->Initialize(true);
+            pdoc->update_all_views(NULL, 1234);
+            pdoc->update_all_views(NULL, 123458);
+            sp(::user::impact) pview = pdoc->get_view();
+            pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\menu", ::action::source::system_default());
             if(pview != NULL)
             {
-               pcreatordata->m_pdoc = get_document();
-               pcreatordata->m_pwnd = pview;
-               pcreatordata->m_iExtendOnParent = 0;
+               sp(::user::frame_window) pframe =  (pview->GetParentFrame());
+               if(pframe != NULL)
+               {
+#ifdef WINDOWSEX
+                  pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
+#endif
+                  pframe->SetParent(this);
+                  pcreatordata->m_pdoc = pdoc;
+                  pcreatordata->m_pwnd = pframe;
+               }
             }
          }
-         break;
+      }
+      break;
+      case PaneViewPrimaryCommand:
+      {
+         sp(::user::impact) pview = create_view < primary_view > ();
+         if(pview != NULL)
+         {
+            pcreatordata->m_pdoc = get_document();
+            pcreatordata->m_pwnd = pview;
+            pcreatordata->m_iExtendOnParent = 0;
+         }
+      }
+      break;
       case PaneViewFileManager:
+      {
+         sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child(false, true);
+         if(pdoc != NULL)
          {
-                                 sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child(false, true);
-            if(pdoc != NULL)
+            pdoc->get_filemanager_data()->m_strDISection = "winactionarea_filemanager";
+            pdoc->Initialize(true);
+            pdoc->update_all_views(NULL, 1234);
+            pdoc->update_all_views(NULL, 123458);
+            sp(::user::impact) pview = pdoc->get_view();
+            if(pview != NULL)
             {
-               pdoc->get_filemanager_data()->m_strDISection = "winactionarea_filemanager";
-               pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
-               if(pview != NULL)
+               sp(::user::frame_window) pframe =  (pview->GetParentFrame());
+               if(pframe != NULL)
                {
-                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != NULL)
-                  {
-                  #ifdef WINDOWSEX
-                     pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     #endif
-                     pframe->SetParent(this);
-                     pcreatordata->m_pdoc = pdoc;
-                     pcreatordata->m_pwnd = pframe;
+#ifdef WINDOWSEX
+                  pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
+#endif
+                  pframe->SetParent(this);
+                  pcreatordata->m_pdoc = pdoc;
+                  pcreatordata->m_pwnd = pframe;
 
 
-                  }
                }
             }
          }
-         break;
+      }
+      break;
       case PaneViewThreeActionLaunch:
+      {
+         sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
+         if(pdoc != NULL)
          {
-                                       sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
-            if(pdoc != NULL)
+            pdoc->get_filemanager_data()->m_iIconSize = 48;
+            pdoc->get_filemanager_data()->m_bListText = false;
+            pdoc->get_filemanager_data()->m_bListSelection = false;
+            pdoc->get_filemanager_data()->m_pcallback = this;
+            pdoc->get_filemanager_data()->m_strDISection = "winactionarea_3-action-launch";
+            pdoc->Initialize(true);
+            pdoc->update_all_views(NULL, 1234);
+            pdoc->update_all_views(NULL, 123458);
+            sp(::user::impact) pview = pdoc->get_view();
+
+            pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\3-action-launch", ::action::source::system_default());
+
+            if(pview != NULL)
             {
-               pdoc->get_filemanager_data()->m_iIconSize = 48;
-               pdoc->get_filemanager_data()->m_bListText = false;
-               pdoc->get_filemanager_data()->m_bListSelection = false;
-               pdoc->get_filemanager_data()->m_pcallback = this;
-               pdoc->get_filemanager_data()->m_strDISection = "winactionarea_3-action-launch";
-               pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
-               
-               pdoc->FileManagerBrowse(Application.dir().userappdata()/ "command\\3-action-launch", ::action::source::system_default());
-
-               if(pview != NULL)
+               sp(::user::frame_window) pframe =  (pview->GetParentFrame());
+               if(pframe != NULL)
                {
-                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != NULL)
-                  {
-                  #ifdef WINDOWSEX
-                     pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     #endif
-                     pframe->SetParent(this);
-                     pcreatordata->m_pdoc = pdoc;
-                     pcreatordata->m_pwnd = pframe;
+#ifdef WINDOWSEX
+                  pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
+#endif
+                  pframe->SetParent(this);
+                  pcreatordata->m_pdoc = pdoc;
+                  pcreatordata->m_pwnd = pframe;
 
 
-                  }
                }
             }
          }
-         break;
+      }
+      break;
       case PaneViewConfiguration:
       {
          sp(::user::document) pdoc = Application.create_form(this, this);
@@ -285,9 +285,9 @@ namespace prompt
    {
       ::user::impact::install_message_routing(pinterface);
 
-	   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-	   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &pane_view::_001OnSize);
-      IGUI_MSG_LINK(WM_USER + 1122  , this, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &pane_view::_001OnSize);
+      IGUI_MSG_LINK(WM_USER + 1122, this, this, &pane_view::_001OnMenuMessage);
 
    }
 
@@ -320,17 +320,17 @@ namespace prompt
       if(itema.get_size() > 0)
       {
 
-         int32_t i = 0;
+         int_ptr i = 0;
 
 #ifdef WINDOWSEX
 
          i = (int_ptr) ::ShellExecuteW(
-            GetTopLevel()->get_handle(),
-            NULL,
-            ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
-            NULL,
-            ::str::international::utf8_to_unicode("\"" +  itema[0]->m_filepath.folder() + "\""),
-            SW_SHOWNORMAL);
+                GetTopLevel()->get_handle(),
+                NULL,
+                ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
+                NULL,
+                ::str::international::utf8_to_unicode("\"" +  itema[0]->m_filepath.folder() + "\""),
+                SW_SHOWNORMAL);
 
 #else
 

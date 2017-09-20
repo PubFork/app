@@ -1117,7 +1117,12 @@ namespace core
 
    }
 
+   ::user::interaction * session::create_menu_button(::aura::application * papp)
+   {
 
+      return canew(::user::menu_button(papp));
+
+   }
 
 } // namespace plane
 

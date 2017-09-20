@@ -428,17 +428,17 @@ namespace install
       {
 
          if(!property.get_string().has_char()
-            &&
-            (property.name() == "app"
-            || property.name() == "build"
-            || property.name() == "app_type"
-            || property.name() == "locale"
-            || property.name() == "schema"
-            || property.name() == "app"
-            || property.name() == "session_start"
-            || property.name() == "version"
-            )
-            )
+               &&
+               (property.name() == "app"
+                || property.name() == "build"
+                || property.name() == "app_type"
+                || property.name() == "locale"
+                || property.name() == "schema"
+                || property.name() == "app"
+                || property.name() == "session_start"
+                || property.name() == "version"
+               )
+           )
             continue;
 
          strCommandLine += " ";
@@ -819,7 +819,7 @@ namespace install
 
       }
 
-   run_install:
+run_install:
 
       m_phost->start_app_install(pszInstall);
 
@@ -998,7 +998,7 @@ namespace install
 
       //simple_bitmap b;
 
-      
+
 
       pgraphics->OffsetViewportOrg(rectWindow.left, rectWindow.top);
 
@@ -1064,7 +1064,7 @@ namespace install
 
       pgraphics->SetViewportOrg(0, 0);
       //pgraphics.bit_blt(lprect->left                , lprect->top                 , lprect->right - lprect->left, lprect->bottom - lprect->top,
-        //     pgraphics         , lprect->left - ::hotplugin::plugin::m_rect.left  , lprect->top - ::hotplugin::plugin::m_rect.top    , SRCCOPY);
+      //     pgraphics         , lprect->left - ::hotplugin::plugin::m_rect.left  , lprect->top - ::hotplugin::plugin::m_rect.top    , SRCCOPY);
 
       /*string strx = itoa_dup(lprect->left);
       string stry = itoa_dup(lprect->top);
@@ -1075,7 +1075,7 @@ namespace install
       text_out(hdcWindow, lprect->left + 210, lprect->top + 10, strx2, strx2.get_length());
       text_out(hdcWindow, lprect->left + 310, lprect->top + 10, stry2, stry2.get_length());
       */
-         //hdc,       lprect->left, lprect->top, SRCCOPY);
+      //hdc,       lprect->left, lprect->top, SRCCOPY);
       //::BitBlt(hdcWindow, m_rect.left, m_rect.top, cx, cy, hdc, 0, 0, SRCCOPY);
 
 #endif
@@ -1114,7 +1114,7 @@ namespace install
    {
 
       if(!m_bLogin && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pbase != NULL && !is_installing() && System.install().is_ca2_installed())
-      //if(!m_bLogin && (m_bLogged || m_bHasCred) && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
+         //if(!m_bLogin && (m_bLogged || m_bHasCred) && !m_bCa2Login && !m_bCa2Logout && !m_bNativeLaunch && pobj != NULL && !is_installing() && System.install().is_ca2_installed())
       {
 
          ::hotplugin::plugin::message_handler(pbase);
@@ -1178,7 +1178,7 @@ namespace install
    double plugin::extract_spa_progress_rate()
    {
 
-      DWORD dwRead;
+      size_t dwRead;
 
       FILE * file = ::fopen_dup(::path::install_log(process_platform_dir_name2()), "r");
 
@@ -1276,7 +1276,7 @@ namespace install
             iTell--;
 
          }
-         
+
          ::fclose(file);
 
       }
@@ -1397,7 +1397,7 @@ namespace install
          return;
 
       //if(!m_bLogged && !m_bHasCred)
-        // return;
+      // return;
 
       if(System.install().is_installing_ca2())
          return;
@@ -1430,7 +1430,7 @@ namespace install
 
             int32_t iTry = 0;
 
-         retry_get_prompt:
+retry_get_prompt:
 
             property_set set(get_app());
 

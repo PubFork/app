@@ -21,7 +21,7 @@ namespace command
 {
 
    class command;
-   
+
 } // namespace command
 
 // very short name ([{c}])ontext (switchers, as it as context) enums
@@ -51,27 +51,27 @@ enum e_context_switcher_failed
 
 enum e_command
 {
-   
+
    command_default,
    command_on_agree_exit,
    command_france_exit,
    command_check_exit
-   
+
 };
 
 
 namespace aura
 {
-   
+
    enum e_setting
    {
-      
+
       setting_none,
       setting_wallpaper,
       setting_app_activation
-      
+
    };
-   
+
 } // namespace system
 
 
@@ -86,26 +86,26 @@ namespace install
 template<class T>
 struct remove_reference
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T>
 struct remove_reference<T&>
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T>
 struct remove_reference<T&&>
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T> inline
 typename remove_reference<T>::TYPE&& move(T && t)
 {
 
-	return (static_cast<typename remove_reference<T>::TYPE&&>(t));
+   return (static_cast<typename remove_reference<T>::TYPE&&>(t));
 
 }
 
@@ -196,7 +196,7 @@ namespace user
 namespace install
 {
 
-   
+
    class install;
    class canvas;
 
@@ -295,7 +295,7 @@ class memory;
 namespace user
 {
 
-   
+
    class command;
 
 
@@ -360,6 +360,7 @@ namespace html
 
 
 #include "aura/aura/aura/aura_auto.h"
+#include "aura/primitive/comparison/comparison_compare.h"
 
 
 
@@ -638,7 +639,10 @@ namespace draw2d
 } // namespace draw2d
 
 
-class random_access_iterator { public: };
+class random_access_iterator
+{
+   public:
+};
 
 
 #ifdef WINDOWS
@@ -794,6 +798,8 @@ namespace file
 #include "aura/primitive/math/math_static_numeric_info.h"
 #include "aura/primitive/math/math_numeric_info.h"
 #include "aura/primitive/math/math_c_number.h"
+#include "aura/primitive/math/math_clip.h"
+
 //#include "aura/primitive/math/math_complex.h"
 
 
@@ -1003,14 +1009,14 @@ namespace file
 
 class CLASS_DECL_AURA openweather_city
 {
-public:
+   public:
 
-   index    m_iIndex;
-   string   m_strCnt;
-   string   m_strCit;
-   int64_t  m_iId;
-   double   m_dLat;
-   double   m_dLon;
+      index    m_iIndex;
+      string   m_strCnt;
+      string   m_strCit;
+      int64_t  m_iId;
+      double   m_dLat;
+      double   m_dLon;
 
 };
 
@@ -1584,7 +1590,9 @@ namespace _std
 
    template <class T> void swap(T& a, T& b)
    {
-      T c(a); a = b; b = c;
+      T c(a);
+      a = b;
+      b = c;
    }
 
 
@@ -1682,8 +1690,14 @@ namespace std
    using complex = ::math::complex < T >;
 
 
-   template <class T> const T& min(const T& a,const T& b) { return !(a > b) ? a : b; }
-   template <class T> const T& max(const T& a,const T& b) { return !(a < b) ? a : b; }
+   template <class T> const T& min(const T& a,const T& b)
+   {
+      return !(a > b) ? a : b;
+   }
+   template <class T> const T& max(const T& a,const T& b)
+   {
+      return !(a < b) ? a : b;
+   }
 
    template <class RandomAccessIterator>
    void make_heap(RandomAccessIterator first,RandomAccessIterator last)
@@ -1839,9 +1853,9 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 template < typename TYPE >
 void function_call(const TYPE * p)
 {
-   
+
    const char * psz = reinterpret_cast < const char * > (p);
-   
+
 }
 
 

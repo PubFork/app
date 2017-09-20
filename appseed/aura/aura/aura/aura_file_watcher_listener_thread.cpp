@@ -6,9 +6,9 @@ namespace file_watcher
 
    listener_thread::add::add()
    {
-   
-      m_id = -2; 
-   
+
+      m_id = -2;
+
    }
 
    listener_thread::listener_thread(::aura::application * papp) :
@@ -40,7 +40,7 @@ namespace file_watcher
 
    file_watch_id listener_thread::add_file_watch(const char * directory, bool bRecursive)
    {
-      
+
       return add_file_watch(directory, this, bRecursive);
 
    }
@@ -82,7 +82,7 @@ namespace file_watcher
       for(index i = 0; i < 50 && padd->m_id == -2; i++)
       {
 
-         Sleep(5 + i);
+         Sleep(convert < DWORD > (5 + i));
 
       }
 

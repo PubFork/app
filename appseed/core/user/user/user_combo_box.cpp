@@ -724,9 +724,7 @@ namespace user
 
          defer_create_combo_list();
 
-         ::draw2d::font_sp spfont;
-
-         get_font(spfont, font_plain_edit);
+         ::draw2d::font_sp spfont = _001GetFont(font_plain_edit);
 
          m_plist->query_full_size(m_sizeFull);
 

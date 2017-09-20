@@ -22,9 +22,9 @@
 
 
 #ifdef _DRAW2D_DIRECT2D_LIBRARY
-    #define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_EXPORT
+#define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_IMPORT
+#define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_IMPORT
 #endif
 
 
@@ -35,7 +35,12 @@ namespace d2d1
    inline D2D1_RECT_F rectf(LPCRECT lpcrect)
    {
 
-      return D2D1::Rect<FLOAT>(lpcrect->left, lpcrect->top, lpcrect->right, lpcrect->bottom);
+      return D2D1::Rect<FLOAT>(
+                convert<FLOAT>(lpcrect->left),
+                convert<FLOAT>(lpcrect->top),
+                convert<FLOAT>(lpcrect->right),
+                convert<FLOAT>(lpcrect->bottom)
+             );
 
    }
 
@@ -43,7 +48,10 @@ namespace d2d1
    inline D2D1_POINT_2F Point2F(double x = 0.0, double y = 0.0)
    {
 
-      return Point2F((float)x, (float)y);
+      return Point2F(
+                convert<FLOAT>(x),
+                convert<FLOAT>(y)
+             );
 
    }
 

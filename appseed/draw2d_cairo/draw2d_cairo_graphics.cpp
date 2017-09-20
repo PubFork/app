@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 
@@ -122,10 +122,10 @@ namespace draw2d_cairo
 
       m_iSaveDC = 0;
 
-      #ifdef WINDOWS
+#ifdef WINDOWS
       m_psurfaceAttach = NULL;
       m_hdcAttach = NULL;
-      #endif
+#endif
 
       m_bPrinting = FALSE;
       m_pdibAlphaBlend = NULL;
@@ -524,7 +524,7 @@ namespace draw2d_cairo
 
       //    ASSERT(get_handle1() != NULL);
 
-    //      return ::InvertRgn(get_handle1(), (HRGN)pRgn->get_os_data()) != FALSE;
+      //      return ::InvertRgn(get_handle1(), (HRGN)pRgn->get_os_data()) != FALSE;
       ::exception::throw_not_implemented(get_app());
       return false;
 
@@ -536,7 +536,7 @@ namespace draw2d_cairo
 
       //      ASSERT(get_handle1() != NULL);
 
-        //    return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != FALSE;
+      //    return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != FALSE;
       ::exception::throw_not_implemented(get_app());
       return false;
 
@@ -547,7 +547,7 @@ namespace draw2d_cairo
 
       //    ASSERT(get_handle1() != NULL);
 
-    //      return ::PtVisible(get_handle1(), x, y) != FALSE;
+      //      return ::PtVisible(get_handle1(), x, y) != FALSE;
       ::exception::throw_not_implemented(get_app());
       return false;
 
@@ -686,14 +686,14 @@ namespace draw2d_cairo
    {
 
       return Arc(
-         lpRect.left,
-         lpRect.top,
-         lpRect.right,
-         lpRect.bottom,
-         ptStart.x,
-         ptStart.y,
-         ptEnd.x,
-         ptEnd.y);
+                lpRect.left,
+                lpRect.top,
+                lpRect.right,
+                lpRect.bottom,
+                ptStart.x,
+                ptStart.y,
+                ptEnd.x,
+                ptEnd.y);
 
    }
 
@@ -1040,7 +1040,7 @@ namespace draw2d_cairo
       return DrawEllipse(lprect.left, lprect.top, lprect.right, lprect.bottom);
 
       /*return ::Ellipse(get_handle1(), lpRect.left, lpRect.top,
-   lpRect.right, lpRect.bottom); */
+      lpRect.right, lpRect.bottom); */
 
 
    }
@@ -1084,7 +1084,7 @@ namespace draw2d_cairo
    {
 
       /*return ::Ellipse(get_handle1(), lpRect.left, lpRect.top,
-   lpRect.right, lpRect.bottom); */
+      lpRect.right, lpRect.bottom); */
 
       return FillEllipse(lpRect.left, lpRect.top, lpRect.right, lpRect.bottom);
 
@@ -2605,7 +2605,7 @@ namespace draw2d_cairo
             delete pMeta;
 
             return bOk ? TRUE : FALSE;*/
-            //return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds);
+      //return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds);
 
    }
 
@@ -2796,7 +2796,7 @@ namespace draw2d_cairo
 
          ::draw2d::dib * pdibWork = NULL;
          ::draw2d::dib * pdibWork2 = NULL;
-//         ::draw2d::dib * pdibWork3 = NULL;
+   //         ::draw2d::dib * pdibWork3 = NULL;
          ::draw2d::dib * pdibWork4 = NULL;
 
 
@@ -3226,14 +3226,14 @@ namespace draw2d_cairo
    */
 
    void graphics::Draw3dRect(const RECT & lpRect,
-      COLORREF clrTopLeft, COLORREF clrBottomRight)
+                             COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
       Draw3dRect(lpRect.left, lpRect.top, lpRect.right - lpRect.left,
-         lpRect.bottom - lpRect.top, clrTopLeft, clrBottomRight);
+                 lpRect.bottom - lpRect.top, clrTopLeft, clrBottomRight);
    }
 
    void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
-      COLORREF clrTopLeft, COLORREF clrBottomRight)
+                             COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
       FillSolidRect(x, y, cx - 1, 1, clrTopLeft);
       FillSolidRect(x, y, 1, cy - 1, clrTopLeft);
@@ -3716,7 +3716,7 @@ namespace draw2d_cairo
             // is better in  cairo to restore the DC instead of resetting clipping
 
             //RestoreDC(m_iSaveDCPositiveClip);
-           // cairo_reset_clip(m_pdc);
+            // cairo_reset_clip(m_pdc);
 
             m_iSaveDCPositiveClip = -1;
 
@@ -4211,105 +4211,105 @@ namespace draw2d_cairo
 
    /////////////////////////////////////////////////////////////////////////////
    // Special handling for metafile playback
-/*
-   int32_t CALLBACK __enum_meta_file_procedure(HDC hDC,
-      HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int32_t nHandles, LPARAM lParam)
-   {
-      ::draw2d::graphics * pgraphics = (::draw2d::graphics *)lParam;
-      ASSERT_VALID(pgraphics);
-
-      switch (pMetaRec->rdFunction)
+   /*
+      int32_t CALLBACK __enum_meta_file_procedure(HDC hDC,
+         HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int32_t nHandles, LPARAM lParam)
       {
-         // these records have effects different for each graphics derived class
-      case META_SETMAPMODE:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SETWINDOWEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SETWINDOWORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SETVIEWPORTEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SETVIEWPORTORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_ScaLEWINDOWEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
-            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_ScaLEVIEWPORTEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
-            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_OFFSETVIEWPORTORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SAVEDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
-         break;
-      case META_RESTOREDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(short)pMetaRec->rdParm[0]);
-         break;
-      case META_SETBKCOLOR:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-         break;
-      case META_SETTEXTCOLOR:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
-         break;
+         ::draw2d::graphics * pgraphics = (::draw2d::graphics *)lParam;
+         ASSERT_VALID(pgraphics);
 
-         // need to watch out for SelectObject(HFONT), for custom font mapping
-      case META_SELECTOBJECT:
+         switch (pMetaRec->rdFunction)
          {
-            HGDIOBJ hObject = pHandleTable->objectHandle[pMetaRec->rdParm[0]];
-            UINT nObjType = GetObjectType(hObject);
-            if (nObjType == 0)
+            // these records have effects different for each graphics derived class
+         case META_SETMAPMODE:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SETWINDOWEXT:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SETWINDOWORG:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SETVIEWPORTEXT:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SETVIEWPORTORG:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_ScaLEWINDOWEXT:
+            (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
+               (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_ScaLEVIEWPORTEXT:
+            (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
+               (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_OFFSETVIEWPORTORG:
+            (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
+               (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SAVEDC:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
+            break;
+         case META_RESTOREDC:
+            (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(short)pMetaRec->rdParm[0]);
+            break;
+         case META_SETBKCOLOR:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+            break;
+         case META_SETTEXTCOLOR:
+            (dynamic_cast<::win::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+            break;
+
+            // need to watch out for SelectObject(HFONT), for custom font mapping
+         case META_SELECTOBJECT:
             {
-               // object type is unknown, determine if it is a font
-               HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-               HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hStockFont);
-               HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObject);
-               if (hObjOld == hStockFont)
+               HGDIOBJ hObject = pHandleTable->objectHandle[pMetaRec->rdParm[0]];
+               UINT nObjType = GetObjectType(hObject);
+               if (nObjType == 0)
                {
-                  // got the stock object back, so must be selecting a font
+                  // object type is unknown, determine if it is a font
+                  HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
+                  HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hStockFont);
+                  HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObject);
+                  if (hObjOld == hStockFont)
+                  {
+                     // got the stock object back, so must be selecting a font
+                     throw not_implemented(get_thread_app());
+   //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
+                     break;  // don't play the default record
+                  }
+                  else
+                  {
+                     // didn't get the stock object back, so restore everything
+                     ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hFontOld);
+                     ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObjOld);
+                  }
+                  // and fall through to PlayMetaFileRecord...
+               }
+               else if (nObjType == OBJ_FONT)
+               {
+                  // play back as graphics::SelectObject(::draw2d::font*)
+   //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                   throw not_implemented(get_thread_app());
-//                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
-               else
-               {
-                  // didn't get the stock object back, so restore everything
-                  ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hFontOld);
-                  ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObjOld);
-               }
-               // and fall through to PlayMetaFileRecord...
             }
-            else if (nObjType == OBJ_FONT)
-            {
-               // play back as graphics::SelectObject(::draw2d::font*)
-//               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
-               throw not_implemented(get_thread_app());
-               break;  // don't play the default record
-            }
+            // fall through...
+
+         default:
+            ::PlayMetaFileRecord(hDC, pHandleTable, pMetaRec, nHandles);
+            break;
          }
-         // fall through...
 
-      default:
-         ::PlayMetaFileRecord(hDC, pHandleTable, pMetaRec, nHandles);
-         break;
-      }
-
-      return 1;
-   }*/
+         return 1;
+      }*/
 
    /*
 
@@ -4332,8 +4332,8 @@ namespace draw2d_cairo
 
    //   }
 
-      /////////////////////////////////////////////////////////////////////////////
-      // Coordinate transforms
+   /////////////////////////////////////////////////////////////////////////////
+   // Coordinate transforms
 
    void graphics::LPtoDP(LPSIZE lpSize) const
    {
@@ -4698,7 +4698,7 @@ namespace draw2d_cairo
 
       cairo_font_extents_t e;
 
-      if (::str::begins(str, "バーチャルマシン"))
+      if (::str::begins(str, unitext("バーチャルマシン")))
       {
 
          TRACE("Likely to fail in certain circumstances");
@@ -4805,8 +4805,8 @@ namespace draw2d_cairo
 
       //      m_pgraphics->FillRectangle(gdiplus_brush(), lpRect.left, lpRect.top, lpRect.right - lpRect.left, lpRect.bottom - lpRect.top);
 
-            //::SetBkColor(get_handle1(), clr);
-            //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
+      //::SetBkColor(get_handle1(), clr);
+      //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
    }
 
    void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
@@ -4840,7 +4840,12 @@ namespace draw2d_cairo
    bool graphics::TextOutRaw(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      ::rect r = ::rect_dim(x, y, 65535, 65535);
+      ::rect r = ::rect_dim(
+                    convert < LONG > (x),
+                    convert < LONG > (y),
+                    65535,
+                    65535
+                 );
 
       internal_draw_text(lpszString, nCount, r, 0, &cairo_show_text);
 
@@ -4883,8 +4888,8 @@ namespace draw2d_cairo
          dib0->get_graphics()->SelectObject(get_current_brush());
          dib0->get_graphics()->SelectObject(get_current_font());
          dib0->get_graphics()->text_out(x - m_spregion.cast < region >()->m_rectBoundingBoxInternal.left,
-            y - m_spregion.cast < region >()->m_rectBoundingBoxInternal.top,
-            str);
+                                        y - m_spregion.cast < region >()->m_rectBoundingBoxInternal.top,
+                                        str);
 
          cairo_keep k(m_pdc);
 
@@ -4937,7 +4942,7 @@ namespace draw2d_cairo
 
       }
 
-      if (::str::begins(str, "バーチャルマシン"))
+      if (::str::begins(str, unitext("バーチャルマシン")))
       {
 
          TRACE("Likely to fail in certain circumstances");
@@ -4969,10 +4974,10 @@ namespace draw2d_cairo
 
       //      ::Gdiplus::Pen pen(::Gdiplus::Color(argb_get_a_value(m_crColor), argb_get_r_value(m_crColor), argb_get_g_value(m_crColor), argb_get_b_value(m_crColor)), m_dPenWidth);
 
-            //gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+      //gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
-            //m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
-            //string str(lpszString, nCount);
+      //m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
+      //string str(lpszString, nCount);
 
 
       cairo_move_to(m_pdc, m_x, m_y);
@@ -5079,8 +5084,10 @@ namespace draw2d_cairo
 
       memcpy(dst, src, width*height * 4);
 
-      for (iteration = 0; iteration < MAX_ITERATIONS; iteration++) {
-         for (channel = 0; channel < 4; channel++) {
+      for (iteration = 0; iteration < MAX_ITERATIONS; iteration++)
+      {
+         for (channel = 0; channel < 4; channel++)
+         {
             int32_t x, y;
 
             // precomputation step.
@@ -5088,8 +5095,10 @@ namespace draw2d_cairo
             unsigned* pre = precalc;
 
             pix += channel;
-            for (y = 0; y < height; y++) {
-               for (x = 0; x < width; x++) {
+            for (y = 0; y < height; y++)
+            {
+               for (x = 0; x < width; x++)
+               {
                   int32_t tot = pix[0];
                   if (x > 0) tot += pre[-1];
                   if (y > 0) tot += pre[-width];
@@ -5101,14 +5110,16 @@ namespace draw2d_cairo
 
             // blur step.
             pix = dst + (int32_t)radius * width * 4 + (int32_t)radius * 4 + channel;
-            for (y = (int32_t)radius; y < height - radius; y++) {
-               for (x = (int32_t)radius; x < width - radius; x++) {
+            for (y = (int32_t)radius; y < height - radius; y++)
+            {
+               for (x = (int32_t)radius; x < width - radius; x++)
+               {
                   int32_t l = (int32_t)(x < radius ? 0 : x - radius);
                   int32_t t = (int32_t)(y < radius ? 0 : y - radius);
                   int32_t r = (int32_t)(x + radius >= width ? width - 1 : x + radius);
                   int32_t b = (int32_t)(y + radius >= height ? height - 1 : y + radius);
                   int32_t tot = precalc[r + b*width] + precalc[l + t*width] -
-                     precalc[l + b*width] - precalc[r + t*width];
+                                precalc[l + b*width] - precalc[r + t*width];
                   *pix = (unsigned char)(tot*mul);
                   pix += 4;
                }
@@ -5267,7 +5278,7 @@ namespace draw2d_cairo
       ///*if(pfont->m_ft != NULL)
       //{
       //
-      //	return true;
+      // return true;
       //
       //}
       //
@@ -5643,7 +5654,11 @@ namespace draw2d_cairo
 
       ((graphics *) this)->set(stringpath.m_spfont);
 
-      ::rect r = ::rect_dim(stringpath.m_x, stringpath.m_y, 65535, 65535);
+      ::rect r = ::rect_dim(
+                    convert < LONG > (stringpath.m_x),
+                    convert < LONG > (stringpath.m_y),
+                    65535,
+                    65535);
 
 
       internal_draw_text(stringpath.m_strText, stringpath.m_strText.get_length(), r, 0, &cairo_text_path);

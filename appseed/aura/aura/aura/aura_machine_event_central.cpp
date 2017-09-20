@@ -63,7 +63,7 @@ int32_t machine_event_central::run()
          //System.process_machine_event_data(&data);
       }
 
-      Sleep(484);
+      Sleep(500);
 
    }
 
@@ -117,6 +117,6 @@ void machine_event_central::command(sp(::xml::node) pnode)
 
    m_machineevent.write(&data);
 
-   Sleep(484);
+   Sleep(500);
 
 }

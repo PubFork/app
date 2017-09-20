@@ -103,11 +103,11 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
 
    if(str == "en" || str == "us" || str == "english")
    {
-      
+
       strLang = "409";
 
    }
-   else if(str == "pt" || str == "br" || str == "portugues" || str == "portugu�s")
+   else if(str == "pt" || str == "br" || str == "portugues" || str == unitext("português"))
    {
 
       strLang = "416";
@@ -196,7 +196,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
 
                wstrLang = L"Gender=";
                wstrLang += L"Female";
-               
+
                hr = ptoken->MatchesAttributes(wstrLang,&bMatches);
 
                if(SUCCEEDED(hr) && bMatches)
@@ -302,7 +302,7 @@ namespace windows
          {
 
             //
-            // Get token corresponding to default voice 
+            // Get token corresponding to default voice
             //
             hr = SpGetDefaultTokenFromCategoryId(SPCAT_VOICES,&m_token[strLang],FALSE);
 
@@ -316,9 +316,9 @@ namespace windows
          }
          else
          {
-            
+
             //
-            // Get token corresponding to default voice 
+            // Get token corresponding to default voice
             //
             hr = SpGetDefaultTokenFromCategoryIdAndLang(get_app(), L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech_OneCore\\Voices",&m_token[strLang], strLang,FALSE);
 
@@ -351,7 +351,7 @@ namespace windows
       {
 
          return false;
-      
+
       }
 
       bool speaker::finalize(string strLang)
@@ -428,7 +428,7 @@ namespace windows
       //--------------------------------------------------------------------
       bool speaker::speak(const string & strLang, const string & text, bool bSync)
       {
-         
+
          //
          // Input text must not be empty
          //
@@ -457,19 +457,19 @@ namespace windows
          {
 
             uiFlag |= SPF_IS_XML;
-            
+
          }
          //else
          //{
 
-           // uiFlag |= SPF_IS_NOT_XML;
+         // uiFlag |= SPF_IS_NOT_XML;
 
          //}
 
          wstring wstr(strT);
 
          if(bSync)
-         { 
+         {
             //
             // Speak input text
             //
@@ -478,10 +478,10 @@ namespace windows
             m_voice[strLang]->WaitUntilDone(5 * 60 * 60 * 1000);
 
             HRESULT hr = m_voice[strLang]->Speak(
-               wstr,
-               //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
-               uiFlag | (bSync ? 0 : SPF_ASYNC),
-               &streamNumber);
+                            wstr,
+                            //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
+                            uiFlag | (bSync ? 0 : SPF_ASYNC),
+                            &streamNumber);
 
             if (FAILED(hr))
             {
@@ -506,10 +506,10 @@ namespace windows
                m_voice[strLang]->WaitUntilDone(5 * 60 * 60 * 1000);
 
                HRESULT hr = m_voice[strLang]->Speak(
-                  wstr,
-                  //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
-                  uiFlag | (bSync ? 0 : SPF_ASYNC),
-                  &streamNumber);
+                               wstr,
+                               //SPF_IS_NOT_XML | SPF_ASYNC | SPF_PURGEBEFORESPEAK,
+                               uiFlag | (bSync ? 0 : SPF_ASYNC),
+                               &streamNumber);
 
                if (FAILED(hr))
                {
@@ -547,7 +547,7 @@ namespace windows
 
          }
 
-         SPVOICESTATUS status ={};
+         SPVOICESTATUS status = {};
 
          HRESULT hr = m_voice[strLang]->GetStatus(&status,NULL);
 
@@ -575,7 +575,7 @@ namespace windows
 
          if (m_tts[strLang])
          {
-            
+
             finalize(strLang);
 
          }

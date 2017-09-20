@@ -3,7 +3,7 @@
 //
 // Design and implementation by
 // - Floris van den Berg
-// - Herv� Drolon
+// - Hervé Drolon
 //
 // This file is part of FreeImage 3
 //

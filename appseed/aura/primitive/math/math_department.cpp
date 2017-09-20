@@ -24,18 +24,18 @@ namespace math
       hDuplicateKey = NULL;
 
       if (!CryptAcquireContext(
-         &hCryptProv,
-         NULL,
-         NULL,
-         PROV_RSA_FULL,
-         0))
+               &hCryptProv,
+               NULL,
+               NULL,
+               PROV_RSA_FULL,
+               0))
       {
          if (CryptAcquireContext(
-            &hCryptProv,
-            NULL,
-            NULL,
-            PROV_RSA_FULL,
-            CRYPT_NEWKEYSET))
+                  &hCryptProv,
+                  NULL,
+                  NULL,
+                  PROV_RSA_FULL,
+                  CRYPT_NEWKEYSET))
          {
             //debug_print("CryptAcquireContext succeeded. \n");
          }
@@ -54,10 +54,10 @@ namespace math
       //-------------------------------------------------------------------
       // Generate a key.
       if (CryptGenKey(
-         hCryptProv,
-         CALG_RC4,
-         0,
-         &hOriginalKey))
+               hCryptProv,
+               CALG_RC4,
+               0,
+               &hOriginalKey))
       {
          //debug_print("Original session key is created. \n");
       }
@@ -69,10 +69,10 @@ namespace math
       // Duplicate the key.
 
       if (CryptDuplicateKey(
-         hOriginalKey,
-         NULL,
-         0,
-         &hDuplicateKey))
+               hOriginalKey,
+               NULL,
+               0,
+               &hDuplicateKey))
       {
          //debug_print("The session key has been duplicated. \n");
       }
@@ -86,10 +86,10 @@ namespace math
 
       dwMode = CRYPT_MODE_ECB;
       if (CryptSetKeyParam(
-         hOriginalKey,
-         KP_MODE,
-         (BYTE*)&dwMode,
-         0))
+               hOriginalKey,
+               KP_MODE,
+               (BYTE*)&dwMode,
+               0))
       {
          //debug_print("Key Parameters set. \n");
       }
@@ -100,9 +100,9 @@ namespace math
 
       // Generate a random initialization vector.
       if (CryptGenRandom(
-         hCryptProv,
-         8,
-         pbData))
+               hCryptProv,
+               8,
+               pbData))
       {
          //debug_print("Random sequence generated. \n");
       }
@@ -113,10 +113,10 @@ namespace math
       //-------------------------------------------------------------------
       // set the initialization vector.
       if (CryptSetKeyParam(
-         hOriginalKey,
-         KP_IV,
-         pbData,
-         0))
+               hOriginalKey,
+               KP_IV,
+               pbData,
+               0))
       {
          //debug_print("Parameter set with random sequence as initialization vector. \n");
       }
@@ -299,16 +299,26 @@ namespace math
       return dPi;
    }
 
-   bool math::IsPowerOfTwo(
-      uint32_t uiValue)
+
+   bool math::IsPowerOfTwo(uint64_t uiValue)
    {
-      if (uiValue < 2)
-         return FALSE;
+
+      if (uiValue == 0)
+      {
+
+         return false;
+
+      }
 
       if (uiValue & (uiValue - 1)) // Thanks to 'byang' for this cute trick!
-         return FALSE;
+      {
 
-      return TRUE;
+         return false;
+
+      }
+
+      return true;
+
    }
 
    uint32_t math::ReverseBits(uint32_t index, uint32_t NumBits)

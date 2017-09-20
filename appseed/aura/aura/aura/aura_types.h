@@ -3,7 +3,7 @@
 
 //typedef uint8_t      byte;
 //typedef uint8_t      uchar;
-//typedef uint32_t     dword;
+typedef DWORD        dword;
 typedef int          int_bool;
 
 

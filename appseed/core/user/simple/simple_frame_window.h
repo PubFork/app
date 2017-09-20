@@ -113,7 +113,7 @@ public:
 
    virtual bool is_application_main_window();
    
-   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement) override;
+   virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
 
    bool GetCustomFrame();
    void SetCustomFrame(bool bCustom);
