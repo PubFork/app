@@ -22,7 +22,7 @@ namespace user
 
       virtual void install_message_routing(::message::sender * pinterface);
 
-      virtual bool get_color(COLORREF & cr,e_color ecolor);
+      virtual bool get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnDestroy);

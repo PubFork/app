@@ -299,7 +299,7 @@ public:
    //virtual ::user::style * get_user_style() override;
 
    using ::user::frame_window::get_color;
-   virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui);
+   virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
 
    virtual void on_select_user_style() override;
 
