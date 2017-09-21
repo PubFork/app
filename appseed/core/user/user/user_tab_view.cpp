@@ -55,12 +55,12 @@ namespace user
       if (lHint == 0 && pHint == NULL)
       {
 
-         if (get_tab_count() >= 1 && _001GetSel() < 0)
-         {
+         //if (get_tab_count() >= 1 && _001GetSel() < 0)
+         //{
 
-            _001SetSel(0);
+         //   _001SetSel(0);
 
-         }
+         //}
 
       }
 
@@ -127,7 +127,7 @@ namespace user
       impact::install_message_routing(pinterface);
       ::user::tab::install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_CREATE, pinterface, this, &tab_view::_001OnCreate);
-      IGUI_MSG_LINK(WM_USER + 1122  , pinterface, this, &tab_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_USER + 1122, pinterface, this, &tab_view::_001OnMenuMessage);
       IGUI_MSG_LINK(WM_SETFOCUS, pinterface, this, &tab_view::_001OnSetFocus);
    }
 
@@ -781,7 +781,7 @@ namespace user
 
    }
 
-   
+
    void tab_view::_001OnCmdMsg(::user::command * pcommand)
    {
 

@@ -7,7 +7,7 @@
 
 
 #if defined(LINUX)
-   #include <ctype.h>
+#include <ctype.h>
 #endif
 
 
@@ -153,8 +153,8 @@ namespace introjection
       }
 
 #endif
-      
-      
+
+
 #ifdef WINDOWSEX
 
       if (m_strVs == "2017")
@@ -209,7 +209,7 @@ namespace introjection
          m_strSdk1 = "vc141";
 
       }
-      
+
 #endif
 
 #ifdef OS64BIT
@@ -348,7 +348,7 @@ namespace introjection
       else if (m_strVs == "2017")
       {
 
-         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.14393.0";
+         strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.15063.0";
 
       }
 
@@ -385,6 +385,7 @@ namespace introjection
       for(auto pair : arrEnvVarVal)
       {
          map[pair.m_element1] = pair.m_element2;
+         TRACE("%s : %s", pair.m_element1, pair.m_element2);
          SetEnvironmentVariable(pair.m_element1,pair.m_element2);
       }
 
@@ -935,7 +936,7 @@ namespace introjection
       ::process::process_sp process(allocer());
 
       //      ::multithreading::set_thread_priority(::multithreading::priority_highest);
-      #ifdef LINUX
+#ifdef LINUX
 
       file_put_contents_dup("/tmp/introj.bash", str);
 
@@ -943,11 +944,11 @@ namespace introjection
 
       process->create_child_process("/tmp/introj.bash",true,NULL,::multithreading::priority_highest);
 
-      #else
+#else
 
       process->create_child_process(str,true,m_pathProjectDir,::multithreading::priority_highest);
 
-      #endif
+#endif
 
 #endif
 
@@ -971,12 +972,12 @@ namespace introjection
          str2.replace("%SRC_FOLDER%", strSrcFolder);
          str2.replace("%SRC_NAME%", strSrcName);
          Application.file().put_contents(strCmd + "2", str2);
-         
-         
-         
+
+
+
          //chmod(strCmd + "2", 0777);
-         
-         
+
+
          ::system(str2);
 
       }
@@ -1028,11 +1029,11 @@ namespace introjection
 
 
 
-      #ifdef LINUX
+#ifdef LINUX
       if(!bTimeout)
-      #else
+#else
       if(!bTimeout && strLog.has_char())
-      #endif
+#endif
       {
 
 #ifdef LINUX
@@ -1117,15 +1118,15 @@ namespace introjection
 
          //         set_thread_priority(::multithreading::priority_highest);
 
-      #ifdef LINUX
+#ifdef LINUX
 
-      file_put_contents_dup("/tmp/introl.bash", str);
+         file_put_contents_dup("/tmp/introl.bash", str);
 
-      chmod("/tmp/introl.bash", S_IRWXU | S_IRWXG | S_IRWXO);
+         chmod("/tmp/introl.bash", S_IRWXU | S_IRWXG | S_IRWXO);
 
-      process->create_child_process("/tmp/introl.bash",true,NULL,::multithreading::priority_highest);
+         process->create_child_process("/tmp/introl.bash",true,NULL,::multithreading::priority_highest);
 
-      #else
+#else
 
          process->create_child_process(str,true,NULL,::multithreading::priority_highest);
 #endif
@@ -1167,7 +1168,7 @@ namespace introjection
 
          string strLog;
 #ifdef MACOS
-          strLog= file_as_string_dup(strLlog);
+         strLog= file_as_string_dup(strLlog);
 #else
          while(true)
          {
@@ -1326,11 +1327,11 @@ DWORD RunSilent(const char* strFunct, char* strstrParams)
    strcat(Args, strstrParams);
 
    if (!CreateProcess(NULL, Args, NULL, NULL, FALSE,
-      CREATE_NEW_CONSOLE,
-      NULL,
-      NULL,
-      &StartupInfo,
-      &ProcessInfo))
+                      CREATE_NEW_CONSOLE,
+                      NULL,
+                      NULL,
+                      &StartupInfo,
+                      &ProcessInfo))
    {
       return GetLastError();
    }
