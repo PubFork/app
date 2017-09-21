@@ -228,7 +228,8 @@ namespace user
          rect.offset(-rect.left, -rect.top);
          CalcInsideRect(rect, TRUE);
          int32_t rgBorders[3];
-         VERIFY(DefWindowProc(SB_GETBORDERS, 0, (LPARAM)&rgBorders) != FALSE);
+
+         DefWindowProc(SB_GETBORDERS, 0, (LPARAM)&rgBorders);
 
          // determine extra space for stretchy pane
          int32_t cxExtra = rect.width() + rgBorders[2];

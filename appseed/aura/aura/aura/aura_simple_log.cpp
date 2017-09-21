@@ -5,13 +5,13 @@ simple_log::simple_log()
 {
 
    m_psimplelog = NULL;
-   
+
    m_iLogTarget = -1;
 
 }
 
 
-simple_log::simple_log(simple_log * psimplelog, int iLogTarget)
+simple_log::simple_log(simple_log * psimplelog, index iLogTarget)
 {
 
    m_psimplelog = psimplelog;
@@ -28,7 +28,7 @@ simple_log::~simple_log()
 }
 
 
-void simple_log::log_line(string str, int iLogTarget)
+void simple_log::log_line(string str, index iLogTarget)
 {
 
    if (m_psimplelog != NULL)

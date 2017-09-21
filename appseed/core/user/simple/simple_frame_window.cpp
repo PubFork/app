@@ -159,7 +159,7 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
    IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
 #ifdef WINDOWSEX
-   IGUI_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
+   IGUI_MSG_LINK(WM_DDE_INITIATE, pinterface, this, &simple_frame_window::_001OnDdeInitiate);
 #endif
    IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
    IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
@@ -1271,48 +1271,48 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
    {
 
       {
-   // Note: only queries the active document
-   ::user::document * pdocument = GetActiveDocument();
-   if (pdocument != NULL && !pdocument->can_close_frame(this))
-   {
-      // document can't close right now -- don't close it
-      return;
-   }
+         // Note: only queries the active document
+         ::user::document * pdocument = GetActiveDocument();
+         if (pdocument != NULL && !pdocument->can_close_frame(this))
+         {
+            // document can't close right now -- don't close it
+            return;
+         }
 
       }
 
-   ::aura::application * papp = &Application;
+      ::aura::application * papp = &Application;
 
-   if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
-   {
-
-      // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
-      // cube, bergedge, session or system.
-
-      ::aura::application_ptra appptra = System.get_appptra();
-
-      for (int32_t i = 0; i <  appptra.get_count(); i++)
+      if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
       {
 
-         sp(::aura::application) pappChild = appptra[i];
+         // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
+         // cube, bergedge, session or system.
 
-         if (!pappChild->m_pcoreapp->_001CloseApplicationByUser(this))
+         ::aura::application_ptra appptra = System.get_appptra();
+
+         for (int32_t i = 0; i <  appptra.get_count(); i++)
+         {
+
+            sp(::aura::application) pappChild = appptra[i];
+
+            if (!pappChild->m_pcoreapp->_001CloseApplicationByUser(this))
+               return;
+
+         }
+
+      }
+      else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
+      {
+
+         if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
             return;
 
       }
-
-   }
-   else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
-   {
-
-      if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
-         return;
-
-   }
-   else
-   {
-      bDestroyWindow = true;
-   }
+      else
+      {
+         bDestroyWindow = true;
+      }
 
    }
 
@@ -1391,26 +1391,26 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
          if (iActive == WA_CLICKACTIVE)
          {
 
-         //   if (bMinimized || WfiIsIconic())
-         //   {
+            //   if (bMinimized || WfiIsIconic())
+            //   {
 
-         //      WfiRestore();
+            //      WfiRestore();
 
-         //   }
-         //   else
-         //   {
+            //   }
+            //   else
+            //   {
 
-         //      WfiMinimize();
+            //      WfiMinimize();
 
-         //   }
+            //   }
 
-         //}
-         //else if (bMinimized)
-         //{
+            //}
+            //else if (bMinimized)
+            //{
 
 
 
-         //   WfiRestore();
+            //   WfiRestore();
 
 
          }
@@ -1440,9 +1440,9 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
 
       //   }
 
-         pactivate->m_bRet = true;
+      pactivate->m_bRet = true;
 
-         pactivate->m_lresult = 0;
+      pactivate->m_lresult = 0;
 
 
       //
@@ -1767,8 +1767,8 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 {
 
    if(m_pauraapp == NULL
-   || m_pauraapp->m_pcoresession == NULL
-   || m_pauraapp->m_pcoresession->m_psavings == NULL)
+         || m_pauraapp->m_pcoresession == NULL
+         || m_pauraapp->m_pcoresession->m_psavings == NULL)
    {
 
       return;
@@ -1980,9 +1980,9 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
                null_point(),
                49);
             pgraphics->from(rectClient.size(),
-                                       m_fastblur->get_graphics(),
-                                       null_point(),
-                                       SRCCOPY);
+                            m_fastblur->get_graphics(),
+                            null_point(),
+                            SRCCOPY);
          }
 #endif
       }
@@ -2542,12 +2542,10 @@ LRESULT simple_frame_window::OnDDEInitiate(WPARAM wParam, LPARAM lParam)
    {
       // make duplicates of the incoming atoms (really adding a reference)
       char szAtomName[_MAX_PATH];
-      VERIFY(GlobalGetAtomName(pApp->m_atomApp,
-                               szAtomName, _MAX_PATH - 1) != 0);
-      VERIFY(GlobalAddAtom(szAtomName) == pApp->m_atomApp);
-      VERIFY(GlobalGetAtomName(pApp->m_atomSystemTopic,
-                               szAtomName, _MAX_PATH - 1) != 0);
-      VERIFY(GlobalAddAtom(szAtomName) == pApp->m_atomSystemTopic);
+      GlobalGetAtomName(pApp->m_atomApp, szAtomName, _MAX_PATH - 1);
+      GlobalAddAtom(szAtomName);
+      GlobalGetAtomName(pApp->m_atomSystemTopic, szAtomName, _MAX_PATH - 1);
+      GlobalAddAtom(szAtomName);
 
       // send the WM_DDE_ACK (caller will delete duplicate atoms)
       ::SendMessage((oswindow)wParam, WM_DDE_ACK, (WPARAM)get_handle(),
@@ -3160,9 +3158,9 @@ void simple_frame_window::on_simple_command(::message::simple_command * psimplec
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
 
-   UNREFERENCED_PARAMETER(dwStyle);
+      UNREFERENCED_PARAMETER(dwStyle);
 
-   return NULL;
+      return NULL;
 
 }
 

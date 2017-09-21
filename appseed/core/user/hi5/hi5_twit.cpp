@@ -38,7 +38,7 @@ namespace hi5
    * @output: none
    *
    *--*/
-   twit::twit(::aura::application * papp, simple_log * psimplelog, int iLogTarget) :
+   twit::twit(::aura::application * papp, simple_log * psimplelog, index iLogTarget) :
       object(papp),
       simple_log(psimplelog, iLogTarget),
       /* Constants */
