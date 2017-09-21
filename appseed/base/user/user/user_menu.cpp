@@ -671,9 +671,7 @@ namespace user
    void menu::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      COLORREF crBackground = 0;
-
-      get_color(crBackground, ::user::color_background);
+      COLORREF crBackground = _001GetColor(::user::color_background);
 
       if ((crBackground & ARGB(255, 0, 0, 0)) != 0)
       {
@@ -1153,7 +1151,7 @@ namespace user
    }
 
 
-   bool menu::get_color(COLORREF & cr, ::user::e_color ecolor)
+   bool menu::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
    {
 
       if (ecolor == ::user::color_background)
@@ -1174,7 +1172,7 @@ namespace user
    }
 
 
-   bool menu::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
+   bool menu::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
    {
 
       etranslucency = ::user::translucency_present;
