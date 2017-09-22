@@ -482,10 +482,10 @@ namespace windows
       key.SetValue(NULL, strExtensionNamingClass);
 
       registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell", true);
-      keyLink3.SetValue(NULL, "open");
+      keyLink3.SetValue("", "open");
 
       registry::Key keyLink2(keyLink3, "open", true);
-      keyLink2.SetValue(NULL, "&Abrir");
+      keyLink2.SetValue("", "");
 
       registry::Key keyLink1(keyLink2, "command", true);
 
@@ -494,8 +494,10 @@ namespace windows
       strCommand = solve_relative_compressions(strCommand);
 
       string strFormat;
+
       strFormat.Format("\"%s\" %s", strCommand, pszParam);
-      keyLink1.SetValue(NULL, strFormat);
+
+      keyLink1.SetValue("", strFormat);
 
       return true;
 

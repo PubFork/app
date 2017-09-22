@@ -1615,17 +1615,6 @@ namespace html
 
          }
 
-         if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
-         {
-
-            return true;
-
-         }
-
-         cr = ARGB(255, 0, 0, 0);
-
-         return true;
-
       }
       else if(ecolor == ::user::color_background)
       {
@@ -1637,31 +1626,16 @@ namespace html
 
          }
 
-         if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
-         {
+      }
 
-            return true;
-
-         }
-
-         cr = ARGB(127, 255, 255, 247);
+      if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
+      {
 
          return true;
 
       }
-      else
-      {
 
-         if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
-         {
-
-            return true;
-
-         }
-
-         return m_pdata->m_pform->get_color(cr, ecolor, pui);
-
-      }
+      return m_pdata->m_pform->style_color(cr, ecolor, pui);
 
    }
 
@@ -1670,6 +1644,13 @@ namespace html
    {
 
       font = m_pdata->get_font(this)->m_font;
+
+      if (font.is_null())
+      {
+
+         return m_pdata->m_pform->style_font(font, efont, pui);
+
+      }
 
       return true;
 
