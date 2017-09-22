@@ -7492,6 +7492,14 @@ finalize:
 
 #endif
 
+   LPWAVEOUT application::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
+   {
+
+      throw interface_only_exception(NULL);
+
+      return NULL;
+
+   }
 
 } // namespace install
 

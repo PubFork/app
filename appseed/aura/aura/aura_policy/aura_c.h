@@ -223,6 +223,9 @@ END_EXTERN_C
 
 #include "aura/charguess/charguess_c.h"
 
+#include "multimedia/multimedia_c.h"
+
+
 
 BEGIN_EXTERN_C
 

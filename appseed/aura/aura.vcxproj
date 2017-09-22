@@ -771,6 +771,7 @@
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_icon.cpp">
     </ClCompile>
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp" />
     <ClCompile Include="multithreading\multithreading_tools.cpp">
     </ClCompile>
     <ClCompile Include="net\ftp\ftp_client_socket.cpp">
@@ -1667,6 +1668,11 @@
     <ClInclude Include="graphics\visual\visual_const.h" />
     <ClInclude Include="graphics\visual\visual_cursor.h" />
     <ClInclude Include="graphics\visual\visual_icon.h" />
+    <ClInclude Include="multimedia\audio\audio.h" />
+    <ClInclude Include="multimedia\audio\audio_c.h" />
+    <ClInclude Include="multimedia\audio\audio_wave_out.h" />
+    <ClInclude Include="multimedia\multimedia.h" />
+    <ClInclude Include="multimedia\multimedia_c.h" />
     <ClInclude Include="multithreading\multithreading_data.h" />
     <ClInclude Include="multithreading\multithreading_delay_thread.h" />
     <ClInclude Include="multithreading\multithreading_forking_thread.h" />

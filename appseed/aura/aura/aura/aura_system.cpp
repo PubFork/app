@@ -607,7 +607,7 @@ namespace aura
    bool system::initialize1()
    {
 
-
+      //m_spwaveout = canew(::aura::audio::wave_out(this));
 
       if(!::aura::application::initialize1())
          return false;
@@ -2897,6 +2897,15 @@ found:
       return false;
 
    }
+
+
+   LPWAVEOUT system::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
+   {
+
+      return get_appptra()[0]->waveout_open(iChannel, pformat, pcallback);
+
+   }
+
 
 } // namespace aura
 

@@ -4,5 +4,10 @@ LIBRARY  "aura"
 EXPORTS
 o_debug_string
 defer_aura_init
+waveout_open
+waveout_start
+waveout_write
+waveout_stop
+waveout_close
 
 

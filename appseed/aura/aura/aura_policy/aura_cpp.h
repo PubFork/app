@@ -1296,6 +1296,8 @@ CLASS_DECL_AURA string get_exe_path();
 
 #include "aura/aura/crypto/crypto.h"
 
+#include "aura/multimedia/multimedia.h"
+
 #include "aura/aura/aura/aura_system.h"
 
 #include "aura/aura/install/install.h"

@@ -408,6 +408,18 @@
     <Filter Include="Source Files\aura\os\windows_common">
       <UniqueIdentifier>{47304b31-5aaa-4323-a2e1-070743f2f4aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\multimedia">
+      <UniqueIdentifier>{017ccec6-c97c-49c9-913c-8467c55a2ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multimedia\audio">
+      <UniqueIdentifier>{bb52cb6a-8760-4e0d-b184-61e3d098a088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia">
+      <UniqueIdentifier>{76329357-bec2-4ff8-b3b0-4834ed81333a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia\audio">
+      <UniqueIdentifier>{07ae2b17-76e4-4bb6-9530-28e2d7e3da0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -2900,6 +2912,21 @@
     <ClInclude Include="aura\message\message_global.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
+    <ClInclude Include="multimedia\multimedia.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio_wave_out.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio_c.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\multimedia_c.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4830,6 +4857,9 @@
     </ClCompile>
     <ClCompile Include="primitive\str\_str_pool.cpp">
       <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
+      <Filter>Source Files\multimedia\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

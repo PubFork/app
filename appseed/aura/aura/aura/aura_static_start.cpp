@@ -20,10 +20,12 @@
 //clock_serv_t   g_cclock;
 double g_machtime_conversion_factor;
 //   clock_get_time(cclock, &mts);
-   
+
 #endif
 
 mutex * g_pmutexCred = NULL;
+
+
 //extern mutex * g_pmutexSignal;
 extern class ::exception::engine * g_pexceptionengine;
 //CLASS_DECL_AURA void init_draw2d_mutex();
@@ -65,7 +67,7 @@ extern map < IDTHREAD, IDTHREAD, IDTHREAD, IDTHREAD > * g_pmapThreadOn;
 
 #ifdef WINDOWS
 
-   extern LARGE_INTEGER g_freq;
+extern LARGE_INTEGER g_freq;
 
 #endif
 
@@ -90,32 +92,32 @@ extern mutex * g_pmutexUiDestroyed;
 //extern string * g_pstrLastGlsStatus;
 #ifdef ANDROID
 
-   extern mutex * g_pmutexOutputDebugStringA;
+extern mutex * g_pmutexOutputDebugStringA;
 
 #endif
 
 
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
-   extern mutex * g_pmutexMq;
+extern mutex * g_pmutexMq;
 
-   extern map < HTHREAD,HTHREAD,mq *,mq * > * g_pmapMq;
+extern map < HTHREAD,HTHREAD,mq *,mq * > * g_pmapMq;
 
 #endif
 
 #if defined(LINUX) || defined(APPLEOS) || defined(METROWIN) || defined(ANDROID)
 
-   //extern mutex * g_pmutexThreadIdHandleLock;
+//extern mutex * g_pmutexThreadIdHandleLock;
 
-   //extern mutex * g_pmutexThreadIdLock;
+//extern mutex * g_pmutexThreadIdLock;
 
-   #if !defined(METROWIN)
+#if !defined(METROWIN)
 
-      //extern mutex * g_pmutexPendingThreadsLock;
+//extern mutex * g_pmutexPendingThreadsLock;
 
-   #endif
+#endif
 
-   extern mutex * g_pmutexTlsData;
+extern mutex * g_pmutexTlsData;
 
 #endif // defined(LINUX) || defined(APPLEOS) || defined(METROWIN)
 
@@ -123,11 +125,11 @@ extern mutex * g_pmutexUiDestroyed;
 
 
 
-   extern mutex * g_pmutexTz;
+extern mutex * g_pmutexTz;
 
-   //extern map < HTHREAD, HTHREAD, PendingThreadInfo, PendingThreadInfo > * g_ppendingThreads;
+//extern map < HTHREAD, HTHREAD, PendingThreadInfo, PendingThreadInfo > * g_ppendingThreads;
 
-   extern mutex * g_pmutexThreadHandleLock;
+extern mutex * g_pmutexThreadHandleLock;
 
 #endif // defined(LINUX) || defined(APPLEOS)
 
@@ -154,7 +156,7 @@ extern oswindow_dataptra * g_poswindowdataptra;
 
 #ifdef APPLEOS
 
-   extern mutex * g_pmutexCvt;
+extern mutex * g_pmutexCvt;
 
 #endif
 
@@ -176,10 +178,10 @@ namespace aura
 #ifdef WINDOWS
 
          QueryPerformanceFrequency(&g_freq);
-         
+
 #elif defined(MACOS)
 
-         
+
          {
             mach_timebase_info_data_t timebase;
             mach_timebase_info(&timebase);
@@ -187,7 +189,7 @@ namespace aura
          }
 
 #endif
-         
+
 
 
          g_firstNano = get_nanos();
@@ -252,7 +254,7 @@ namespace aura
          g_pmutexCvt = new mutex(NULL);
 
 #endif
-         
+
          ::thread::s_pmutexDependencies = new mutex();
 
          g_pmutexThreadOn = new mutex();
@@ -355,7 +357,7 @@ namespace aura
          // init_draw2d_mutex();
 
 #ifdef MACOS
-         
+
          //mach_port_deallocate(mach_task_self(), g_cclock);
 
 #endif
@@ -372,7 +374,7 @@ namespace aura
 
 #else
 
-        g_iMemoryCountersStartable = 0;
+         g_iMemoryCountersStartable = 0;
 
 #endif
 
@@ -539,7 +541,7 @@ namespace aura
          ::aura::del(g_pmutexThreadOn);
 
          ::aura::del(g_pmapThreadOn);
-         
+
          ::aura::del(::thread::s_pmutexDependencies);
 
          // delete g_pstrLastGlsStatus;
@@ -659,3 +661,7 @@ CLASS_DECL_AURA mutex * get_cred_mutex()
    return g_pmutexCred;
 
 }
+
+
+
+

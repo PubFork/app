@@ -179,7 +179,7 @@ bool aura_init()
 
 //   ::hthread::s_pmutex = new mutex();
 
-  // ::hthread::s_pptra = new ref_array <  hthread >();
+   // ::hthread::s_pptra = new ref_array <  hthread >();
 
 
    if(!__node_aura_pos_init())
@@ -335,7 +335,6 @@ CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s)
    return (((size_t) p) < s);
 
 }
-
 
 
 
