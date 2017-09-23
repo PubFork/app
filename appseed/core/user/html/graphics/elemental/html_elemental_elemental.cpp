@@ -448,9 +448,9 @@ namespace html
       m_pimpl->layout_phase0(pdata);
 
       if (m_elementalptra.has_elements()
-         && etag != tag_table
-         && etag != tag_tbody
-         && etag != tag_tr)
+            && etag != tag_table
+            && etag != tag_tbody
+            && etag != tag_tr)
       {
 
          for (int32_t i = 0; i < m_elementalptra.get_size(); i++)
@@ -493,7 +493,7 @@ namespace html
       bool bLayout = m_pimpl->layout_phase1(pdata);
 
       if (m_elementalptra.has_elements() &&
-         m_etag != tag_select)
+            m_etag != tag_select)
       {
 
          pdata->m_layoutstate1.m_cya.add(0.f);
@@ -554,7 +554,9 @@ namespace html
 
          pdata->m_layoutstate1.m_cy = m_pimpl->m_box.get_cy();
 
-         int iExtraCy = m_pimpl->get_extra_content_cy();
+         int iExtraCy;
+
+         convert(iExtraCy, m_pimpl->get_extra_content_cy());
 
          if (iExtraCy > 0)
          {
@@ -676,8 +678,8 @@ namespace html
 
             }
             else if (pdata->m_layoutstate3.m_bLastBlock
-               || m_style.m_edisplay == display_block
-               || m_style.m_edisplay == display_table_row)
+                     || m_style.m_edisplay == display_block
+                     || m_style.m_edisplay == display_table_row)
             {
 
                pdata->m_layoutstate3.m_y += pdata->m_layoutstate3.m_cya.last();
@@ -817,7 +819,7 @@ namespace html
          }
          for (int32_t i = 0; i < m_elementalptra.get_size(); )
          {
-            
+
             elemental * pelemental = m_elementalptra[i];
 
             try
@@ -844,69 +846,69 @@ namespace html
 
    void elemental::load(data * pdata, base * pbase)
    {
-      
+
       if (pdata == NULL)
       {
-         
+
          return;
-         
+
       }
-      
+
       if (pdata->m_pform == NULL)
       {
-         
+
          return;
-         
+
       }
-      
+
       if (pbase == NULL)
       {
-         
+
          return;
-         
+
       }
-      
+
       synch_lock lock(pdata->m_pmutex);
 
       m_pbase = pbase;
-      
+
       m_elementalptra.remove_all();
-      
+
       var var;
-      
+
       var.set_type(var::type_string);
-      
+
       if (m_pbase->get_type() == base::type_tag)
       {
 
          ::html::tag * ptag = dynamic_cast < ::html::tag * > (m_pbase);
 
          m_idTagName = ptag->get_name();
-         
+
          for (int32_t i = 0; i < ptag->attra().get_size(); i++)
          {
-            
+
             m_propertyset[ptag->attra()[i]->get_name()] = ptag->attra()[i]->get_value();
-            
+
          }
-         
+
          if (m_idTagName == __id(html_link) && get_tag()->get_attr_value("rel").compare_ci("stylesheet") == 0)
          {
-            
+
             sp(style_sheet) pstylesheet(canew(style_sheet(m_pauraapp)));
 
             string strUrl(get_tag()->get_attr_value("href"));
-            
+
             if(strUrl.find(":") >= 0)
             {
-               
+
             }
             else if(strUrl[0] == '\\')
             {
-               
+
             }
             else if(::str::begins(m_pdata->m_strPathName,"http://") ||
-               ::str::begins(m_pdata->m_strPathName,"https://"))
+                    ::str::begins(m_pdata->m_strPathName,"https://"))
             {
                strUrl = System.url().path(m_pdata->m_strPathName,strUrl);
             }
@@ -941,7 +943,7 @@ namespace html
             pdata->m_stylesheeta.add(pstylesheet);
          }
          else if (m_idTagName == __id(html_link)
-            && m_pparent->get_tag()->get_attr_value("rel").compare_ci("stylesheet") == 0)
+                  && m_pparent->get_tag()->get_attr_value("rel").compare_ci("stylesheet") == 0)
          {
             sp(style_sheet) pstylesheet(canew(style_sheet(m_pauraapp)));
             pstylesheet->parse(pdata, App(pdata->get_app()).file().as_string(m_pparent->get_tag()->get_attr_value("href")));
@@ -1160,120 +1162,217 @@ namespace html
          if (pelemental != NULL)
             break;
       }
+
       return pelemental;
+
    }
+
 
    elemental * elemental::get_element_by_id(id id)
    {
+
       if (m_pbase->get_type() == base::type_value)
+      {
+
          return NULL;
+
+      }
+
       ::html::tag * ptag = m_pbase->get_tag();
+
       if (id == ptag->get_attr_value("id"))
+      {
+
          return this;
+
+      }
+
       elemental * pelemental = NULL;
+
       for (int32_t i = 0; i < m_elementalptra.get_size(); i++)
       {
+
          pelemental = m_elementalptra[i]->get_element_by_id(id);
+
          if (pelemental != NULL)
+         {
+
             break;
+
+         }
+
       }
+
       return pelemental;
+
    }
+
 
    void elemental::OnLButtonDown(::message::message * pobj)
    {
+
       m_pimpl->OnLButtonDown(pobj);
+
    }
+
 
    void elemental::OnMouseMove(::message::message * pobj)
    {
+
       m_pimpl->OnMouseMove(pobj);
+
    }
+
 
    void elemental::OnLButtonUp(::message::message * pobj)
    {
+
       m_pimpl->OnLButtonUp(pobj);
+
    }
+
 
    elemental * elemental::hit_test(data * pdata, ::point pt)
    {
-//      e_tag etype = m_etag;
+
       if (m_pimpl != NULL)
       {
+
          if (m_pimpl->hit_test(pdata, pt))
          {
+
             elemental * pelemental;
+
             for (int32_t i = 0; i < m_elementalptra.get_size(); i++)
             {
+
                pelemental = m_elementalptra[i]->hit_test(pdata, pt);
+
                if (pelemental != NULL)
+               {
+
                   return pelemental;
+
+               }
+
             }
+
             if (m_pimpl->is_value() || m_elementalptra.get_size() <= 0)
             {
+
                string strBody = m_strBody;
+
                strBody.trim();
+
                if (strBody.is_empty())
+               {
+
                   return NULL;
+
+               }
+
             }
             else
             {
+
                return NULL;
+
             }
+
             return this;
+
          }
          else if (pdata->m_bEdit)
          {
+
             return bound_hit_test(pdata, pt);
+
          }
+
       }
+
       return NULL;
+
    }
+
 
    elemental * elemental::bound_hit_test(data * pdata, ::point pt)
    {
+
       double dMin = -1.0;
+
       return bound_hit_test(pdata, pt, dMin);
+
    }
+
 
    elemental * elemental::bound_hit_test(data * pdata, ::point pt, double & dMin)
    {
+
       if (m_pimpl != NULL)
       {
+
          double d = m_pimpl->bound_hit_test(pdata, pt);
+
          if (dMin < 0.0 || (d <= dMin && d >= 0.0))
          {
+
             dMin = d;
+
             //            elemental * pelemental;
+
             //            int32_t iFound = 0;
+
             for (int32_t i = 0; i < m_elementalptra.get_size(); i++)
             {
+
                elemental * pelemental = m_elementalptra[i]->bound_hit_test(pdata, pt, dMin);
+
                if (pelemental != NULL)
+               {
+
                   return pelemental;
+
+               }
+
             }
+
             return this;
+
          }
+
       }
+
       return NULL;
+
    }
+
 
    void elemental::_001SetText(const string & str, ::action::context actioncontext)
    {
+
       if (m_pbase->get_type() == base::type_tag)
       {
+
          if (m_elementalptra.get_size() == 1)
          {
+
             m_elementalptra[0]->m_strBody = str;
+
          }
          else
          {
+
             m_strBody = str;
+
          }
+
       }
       else
       {
+
          m_strBody = str;
+
       }
 
    }
@@ -1286,15 +1385,22 @@ namespace html
 
       if(m_pimpl != NULL)
       {
+
          if(pdoc->m_pform != NULL)
          {
+
             if(pdoc->m_pform->m_phtmlform != NULL)
             {
+
                if(pdoc->m_pform->m_phtmlform->m_pelementalHover == this)
                {
+
                   pdoc->m_pform->m_phtmlform->m_pelementalHover = NULL;
+
                }
+
             }
+
          }
 
          try
@@ -1314,6 +1420,7 @@ namespace html
 
    }
 
+
    void elemental::destroy(data * pdoc)
    {
 
@@ -1325,15 +1432,21 @@ namespace html
 
          if(pdoc->m_pform != NULL)
          {
+
             if(pdoc->m_pform->m_phtmlform != NULL)
             {
+
                if(pdoc->m_pform->m_phtmlform->m_pelementalHover == this)
                {
+
                   pdoc->m_pform->m_phtmlform->m_pelementalHover = NULL;
+
                }
 
             }
+
          }
+
       }
       catch(...)
       {
@@ -1439,12 +1552,19 @@ namespace html
 
          for(auto property : this->m_propertyset)
          {
+
             str += " ";
+
             str += property.name();
+
             str += "=";
+
             str += "\"";
+
             str += property.get_string();
+
             str += "\"";
+
          }
 
          str += ">";
@@ -1457,79 +1577,85 @@ namespace html
          }
          else
          {
+
             for (int32_t i = 0; i < m_elementalptra.get_size(); i++)
             {
-               string strHtml;
-               m_elementalptra[i]->get_html(pdata, strHtml);
-               str += strHtml;
-            }
-         }
-         str += "</";
-         str += m_idTagName;
-         str += ">";
-      }
 
+               string strHtml;
+
+               m_elementalptra[i]->get_html(pdata, strHtml);
+
+               str += strHtml;
+
+            }
+
+         }
+
+         str += "</";
+
+         str += m_idTagName;
+
+         str += ">";
+
+      }
 
    }
 
 
-
-
-
-   bool elemental::get_color(COLORREF & cr,::user::e_color ecolor)
+   bool elemental::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
    {
 
       if(ecolor == ::user::color_text)
       {
 
-         if(!m_style.get_color("color","",m_pdata,this,cr))
+         if (!m_style.get_color("color", "", m_pdata, this, cr))
+         {
+
             return true;
 
-         if(m_pparent != NULL && m_pparent->get_color(cr,ecolor))
-            return true;
-
-         cr = ARGB(255,0,0,0);
-
-         return true;
+         }
 
       }
       else if(ecolor == ::user::color_background)
       {
 
-         if(m_style.get_color("background-color","",m_pdata,this,cr))
+         if (m_style.get_color("background-color", "", m_pdata, this, cr))
+         {
+
             return true;
 
-         if(m_pparent != NULL && m_pparent->get_color(cr, ecolor))
-            return true;
+         }
 
-         cr = ARGB(127,255,255,247);
+      }
+
+      if (m_pparent != NULL && m_pparent->get_color(cr, ecolor, pui))
+      {
 
          return true;
 
       }
-      else
-      {
 
-         if (m_pparent != NULL && m_pparent->get_color(cr, ecolor))
-            return true;
-
-         
-         return m_pdata->m_pform->get_color(cr, ecolor);
-
-      }
-
+      return m_pdata->m_pform->style_color(cr, ecolor, pui);
 
    }
 
-   bool elemental::get_font(::draw2d::font_sp & font)
+
+   bool elemental::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui)
    {
 
-
       font = m_pdata->get_font(this)->m_font;
+
+      if (font.is_null())
+      {
+
+         return m_pdata->m_pform->style_font(font, efont, pui);
+
+      }
 
       return true;
 
    }
+
 
 } // namespace html
 

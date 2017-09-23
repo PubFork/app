@@ -1,7 +1,8 @@
 #include "framework.h"
 
 
-typedef struct _PROCESS_BASIC_INFORMATION64 {
+typedef struct _PROCESS_BASIC_INFORMATION64
+{
    uint64_t  Reserved1;
    uint64_t  PebBaseAddress;
    uint64_t  Reserved2[2];
@@ -88,7 +89,7 @@ struct shell_execute :
    wstring        m_wstrFile;
 
    wstring        m_wstrParams;
-   
+
    shell_execute(const char * pszFile, const char * pszParams)
    {
 
@@ -203,13 +204,13 @@ bool shell_execute_sync(const char * pszFile, const char * pszParams, ::duration
 
 bool root_execute_async(const char * pszFile, const char * pszParams)
 {
-   
+
    shell_execute execute(pszFile, pszParams);
 
    execute.lpVerb = L"RunAs";
 
    return execute.async();
-   
+
 }
 
 
@@ -619,7 +620,7 @@ int_array module_path_get_pid(const char * pszModulePath, bool bModuleNameIsProp
    if (Process32First(process_snap, &entry) && ::GetLastError() != ERROR_NO_MORE_FILES)
    {
 
-   repeat_process:
+repeat_process:
 
       string strPath;
 
@@ -692,7 +693,7 @@ string module_path_from_pid(uint32_t pid)
    //}
 
    //string strName  = solve_relative_compressions(me32.szExePath);
-   // 
+   //
    //CloseHandle(hModuleSnap);
 
    //return strName;
@@ -860,7 +861,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
    mem.allocate(iImageSize);
 
-   GetModuleFileNameExW(hProcess, NULL, (WCHAR *)mem.get_data(), mem.get_size() / sizeof(WCHAR));
+   GetModuleFileNameExW(hProcess, NULL, (WCHAR *)mem.get_data(), convert < DWORD > (mem.get_size() / sizeof(WCHAR)));
 
    strImage = (const wchar_t *)mem.get_data();
 
@@ -868,7 +869,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
    bool bFound = false;
 
-   if (EnumProcessModules(hProcess, hmods.get_data(), hmods.get_size_in_bytes(), &cbNeeded))
+   if (EnumProcessModules(hProcess, hmods.get_data(), convert < DWORD > (hmods.get_size_in_bytes()), &cbNeeded))
    {
 
       for (ui = 0; ui < (cbNeeded / sizeof(HMODULE)); ui++)
@@ -876,7 +877,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
          // Get the full path to the module's file.
 
-         if (GetModuleFileNameExW(hProcess, hmods[ui], (WCHAR *)mem.get_data(), mem.get_size() / sizeof(WCHAR)))
+         if (GetModuleFileNameExW(hProcess, hmods[ui], (WCHAR *)mem.get_data(), convert < DWORD > (mem.get_size() / sizeof(WCHAR))))
          {
 
             if (!wcsicmp_dup((const wchar_t *)mem.get_data(), wstrLibrary))
@@ -914,7 +915,7 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 
    uint32_t ui;
 
-   if (!EnumProcesses(aProcesses.get_data(), aProcesses.get_size_in_bytes(), &cbNeeded))
+   if (!EnumProcesses(aProcesses.get_data(), convert < DWORD > (aProcesses.get_size_in_bytes()), &cbNeeded))
    {
 
       return;

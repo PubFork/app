@@ -58,8 +58,8 @@ uint_ptr LiteHTMLElemAttr::parseFromStr(::lite_html_reader * preader, const char
       // attribute name may contain letters (a-z, A-Z), digits (0-9),
       // underscores '_', hyphen '-', colons ':', and periods '.'
       if ( (!::isalnum((uchar) *lpszEnd)) &&
-         (*lpszEnd != '-') && (*lpszEnd != ':') &&
-         (*lpszEnd != '_') && (*lpszEnd != '.') )
+            (*lpszEnd != '-') && (*lpszEnd != ':') &&
+            (*lpszEnd != '_') && (*lpszEnd != '.') )
       {
          ASSERT(lpszEnd != lpszBegin);
 
@@ -68,8 +68,8 @@ uint_ptr LiteHTMLElemAttr::parseFromStr(::lite_html_reader * preader, const char
          // can act as the separator between an attribute and its
          // value
          if (*lpszEnd =='\0' || ::isspace((uchar) *lpszEnd) ||
-            *lpszEnd == '=' ||
-            *lpszEnd == '>' || *lpszEnd == '/')
+               *lpszEnd == '=' ||
+               *lpszEnd == '>' || *lpszEnd == '/')
          {
             break;
          }
@@ -99,9 +99,11 @@ uint_ptr LiteHTMLElemAttr::parseFromStr(::lite_html_reader * preader, const char
    {
       // skip white-space characters after equal-sign
       // and the equal-sign itself
-      do {
+      do
+      {
          lpszEnd++;
-      } while (::isspace((uchar) *lpszEnd));
+      }
+      while (::isspace((uchar) *lpszEnd));
 
       lpszBegin = lpszEnd;
       string strChar = string(*lpszEnd);
@@ -141,7 +143,7 @@ uint_ptr LiteHTMLElemAttr::parseFromStr(::lite_html_reader * preader, const char
          // white-space character, or until we reach at the
          // end of the string buffer
          while (*lpszEnd != '\0' && !::isspace((uchar) *lpszEnd) &&
-            *lpszEnd != '/' && *lpszEnd != '>');
+                *lpszEnd != '/' && *lpszEnd != '>');
       }
 
       m_strName = strAttrName;
@@ -190,7 +192,7 @@ uint_ptr LiteHTMLAttributes::parseFromStr(::lite_html_reader * preader, const ch
    LiteHTMLElemAttr   oElemAttr;
    const uint_ptr         nStrLen = iLen;
    uint_ptr            nRetVal = 0U,
-      nTemp = 0U;
+                       nTemp = 0U;
 
    do
    {
@@ -267,9 +269,12 @@ LiteHTMLElemAttr* LiteHTMLAttributes::addAttribute(const char * lpszName, const 
          }
       }
 
-      VERIFY(m_parrAttrib->add(pItem) >= 0);
+      m_parrAttrib->add(pItem);
+
    }
+
    return (pItem);
+
 }
 
 

@@ -59,12 +59,12 @@ LPWSTR GetCommandLineW()
 
 
 
-void output_debug_string(const char * psz)
-{
+// void output_debug_string(const char * psz)
+// {
 
-   output_debug_string(psz);
+//    printf("%s", psz);
 
-}
+// }
 
 
 void osx_init_workspace_rect();
@@ -128,7 +128,7 @@ CLASS_DECL_AXIS bool __node_axis_pos_term()
    
 }
 
-extern const char * g_pszCommandLine;
+//extern const char * g_pszCommandLine;
 
 
 
@@ -305,7 +305,9 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
    
    setlocale(LC_ALL,"");
    
-   g_pszCommandLine = strdup_dup(pszCommandLine);
+   //g_pszCommandLine = strdup_dup(pszCommandLine);
+
+   set_command_line_dup(pszCommandLine);
    
    ns_shared_application(argc, argv);
    

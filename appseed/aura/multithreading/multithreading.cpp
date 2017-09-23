@@ -234,8 +234,10 @@ bool get_thread_run()
 
 }
 
+
 namespace multithreading
 {
+
 
    CLASS_DECL_AURA bool post_quit()
    {
@@ -253,20 +255,104 @@ namespace multithreading
    }
 
 
-   CLASS_DECL_AURA bool post_quit(::thread * pthread)
+   
+   bool post_quit(::thread * pthread)
    {
 
-      return post_quit<::thread>(pthread);
+      if (pthread == NULL)
+      {
+
+         return true;
+
+      }
+
+      bool bOk = false;
+
+      try
+      {
+
+         bOk = pthread->post_quit();
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
+   }
+
+   
+   bool post_quit_and_wait(::thread * pthread, const duration & duration)
+   {
+
+      if (pthread == NULL)
+      {
+
+         return true;
+
+      }
+
+      bool bOk = false;
+
+      try
+      {
+
+         pthread->post_quit();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         if (pthread != NULL)
+         {
+
+            bOk = pthread->wait(duration).succeeded();
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
 
    }
 
 
-   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration)
-   {
-
-      return post_quit_and_wait<::thread>(pthread, duration);
-
-   }
 
 
 } // namespace multithreading
@@ -375,3 +461,111 @@ void do_events(const duration & duration)
 }
 
 
+
+
+
+bool thread_refa::post_quit_and_wait(const duration & duration)
+{
+
+   bool bOk = true;
+
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
+
+   single_lock sl(m_pmutex);
+
+   try
+   {
+      
+      ::count cCount = get_count();
+      
+      ::datetime::time timeNow = ::datetime::time::get_current_time();
+
+      while (cCount &&  timeNow < timeEnd)
+      {
+
+         sl.lock();
+
+      restart1:
+
+         for (index i = 0; i < get_count(); i++)
+         {
+
+            ::thread * pthread = element_at(i);
+
+            sl.unlock();
+
+            try
+            {
+
+               pthread->post_quit();
+
+            }
+            catch (...)
+            {
+
+               sl.lock();
+
+               remove(pthread);
+
+               goto restart1;
+
+            }
+
+            sl.lock();
+
+         }
+
+      restart2:
+
+         for (index i = 0; i < get_count(); i++)
+         {
+
+            ::thread * pthread = element_at(i);
+
+            sl.unlock();
+
+            try
+            {
+
+               if (pthread->wait(one_second()).succeeded())
+               {
+
+                  sl.lock();
+
+                  remove(pthread);
+
+                  goto restart2;
+
+               }
+
+            }
+            catch (...)
+            {
+
+               sl.lock();
+
+               remove(pthread);
+
+               goto restart2;
+
+            }
+
+         }
+         
+         timeNow = ::datetime::time::get_current_time();
+         
+         cCount = get_count();
+
+      }
+
+   }
+   catch (...)
+   {
+
+      bOk = false;
+
+   }
+
+   return bOk;
+
+}

@@ -5,8 +5,6 @@
 #include <shlobj.h>
 
 
-#include "aura/aura/aura/aura_speaker.h"
-
 #include "windows_exception.h"
 
 

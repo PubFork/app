@@ -25,7 +25,7 @@ namespace macos
       string                           m_strWindowText;
       ::user::interaction_base *       m_pbasewnd;
       bool                             m_bNeedsUpdate;
-      sp(::thread)                     m_pthreadDraw;
+      //sp(::thread)                     m_pthreadDraw;
       rect64                           m_rectLastPos;
       uint32_t                         m_dwLastPos;
 
@@ -59,9 +59,9 @@ namespace macos
 
       virtual ::user::interaction * get_wnd() const;
 
-      virtual bool _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
       void _002OnDraw(::draw2d::dib * pdib);
 

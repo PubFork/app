@@ -392,12 +392,12 @@ WINBOOL IsWindow(oswindow oswindow)
 
 
 
-void output_debug_string(const char * psz)
-{
+// void output_debug_string(const char * psz)
+// {
    
-   ::output_debug_string(wstring(psz));
+//    ::output_debug_string(wstring(psz));
 
-}
+// }
 
 
 DWORD WINAPI WaitForSingleObject( _In_ HANDLE hHandle, _In_ DWORD dwMilliseconds )

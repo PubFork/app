@@ -248,7 +248,7 @@ CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
 
 #else // DEBUG
 
-#define DEBUG_ONLY(f)      
+#define DEBUG_ONLY(f)
 
 //#define VERIFY(f)          ((void)(f))
 //#define DEBUG_ONLY(f)      ((void)0)
@@ -257,8 +257,8 @@ CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
 inline void c_cdecl __trace(...) { }
 #pragma warning(pop)
 #if defined(APPLEOS) || defined(ANDROID)
-#define TRACE              
-#define APPTRACE           
+#define TRACE
+#define APPTRACE
 #else
 #define TRACE              __noop
 #define APPTRACE           __noop

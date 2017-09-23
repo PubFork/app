@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 ////#include "ca/x/x_defines.h"
 ////#include "ca/x/x_tables.h"
 ////#include "ca/x/x_charcategory_names.h"
@@ -300,7 +300,7 @@ char * strstr_dup(const char * src, const char * find)
 
    if (src == NULL)
    {
-      
+
       return NULL;
 
    }
@@ -689,196 +689,214 @@ int32_t str_ends_ci_dup(const char * psz, const char * pszSuffix)
 
 void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * numargs, int32_t * numchars)
 {
-        char *p;
-        char c;
-        int32_t inquote;                    /* 1 = inside quotes */
-        int32_t copychar;                   /* 1 = copy char to *args */
-        uint32_t numslash;              /* num of backslashes seen */
+   char *p;
+   char c;
+   int32_t inquote;                    /* 1 = inside quotes */
+   int32_t copychar;                   /* 1 = copy char to *args */
+   uint32_t numslash;              /* num of backslashes seen */
 
-        *numchars = 0;
-        *numargs = 1;                   /* the program name at least */
+   *numchars = 0;
+   *numargs = 1;                   /* the program name at least */
 
-        /* first scan the program name, copy it, and ::count the bytes */
-        p = cmdstart;
-        if (argv)
-            *argv++ = args;
+   /* first scan the program name, copy it, and ::count the bytes */
+   p = cmdstart;
+   if (argv)
+      *argv++ = args;
 
 #ifdef WILDCARD
-        /* To handle later wild card expansion, we prefix each entry by
-        it's first character before quote handling.  This is done
-        so _[w]cwild() knows whether to expand an entry or not. */
-        if (args)
-            *args++ = *p;
-        ++*numchars;
+   /* To handle later wild card expansion, we prefix each entry by
+   it's first character before quote handling.  This is done
+   so _[w]cwild() knows whether to expand an entry or not. */
+   if (args)
+      *args++ = *p;
+   ++*numchars;
 
 #endif  /* WILDCARD */
 
-        /* A quoted program name is handled here. The handling is much
-           simpler than for other arguments. Basically, whatever lies
-           between the leading double-quote and next one, or a terminal NULL
-           character is simply accepted. Fancier handling is not required
-           because the program name must be a legal NTFS/HPFS file name.
-           Note that the double-quote characters are not copied, nor do they
-           contribute to numchars. */
-        if ( *p == DQUOTECHAR ) {
-            /* scan from just past the first double-quote through the next
-               double-quote, or up to a NULL, whichever comes first */
-            while ( (*(++p) != DQUOTECHAR) && (*p != NULCHAR) ) {
+   /* A quoted program name is handled here. The handling is much
+      simpler than for other arguments. Basically, whatever lies
+      between the leading double-quote and next one, or a terminal NULL
+      character is simply accepted. Fancier handling is not required
+      because the program name must be a legal NTFS/HPFS file name.
+      Note that the double-quote characters are not copied, nor do they
+      contribute to numchars. */
+   if ( *p == DQUOTECHAR )
+   {
+      /* scan from just past the first double-quote through the next
+         double-quote, or up to a NULL, whichever comes first */
+      while ( (*(++p) != DQUOTECHAR) && (*p != NULCHAR) )
+      {
 
-/*#ifdef _MBCS
-                if (_ismbblead(*p)) {
-                    ++*numchars;
-                    if ( args )
-                        *args++ = *p++;
-                }
-#endif  /* _MBCS */
-                ++*numchars;
-                if ( args )
-                    *args++ = *p;
-            }
-            /* append the terminating NULL */
-            ++*numchars;
-            if ( args )
-                *args++ = NULCHAR;
+         /*#ifdef _MBCS
+                         if (_ismbblead(*p)) {
+                             ++*numchars;
+                             if ( args )
+                                 *args++ = *p++;
+                         }
+         #endif  /* _MBCS */
+         ++*numchars;
+         if ( args )
+            *args++ = *p;
+      }
+      /* append the terminating NULL */
+      ++*numchars;
+      if ( args )
+         *args++ = NULCHAR;
 
-            /* if we stopped on a double-quote (usual case), skip over it */
-            if ( *p == DQUOTECHAR )
-                p++;
-        }
-        else {
-            /* Not a quoted program name */
-            do {
-                ++*numchars;
-                if (args)
-                    *args++ = *p;
+      /* if we stopped on a double-quote (usual case), skip over it */
+      if ( *p == DQUOTECHAR )
+         p++;
+   }
+   else
+   {
+      /* Not a quoted program name */
+      do
+      {
+         ++*numchars;
+         if (args)
+            *args++ = *p;
 
-                c = (char) *p++;
-/*#ifdef _MBCS
-                if (_ismbblead(c)) {
-                    ++*numchars;
-                    if (args)
-                        *args++ = *p;   /* copy 2nd byte too */
-    //                p++;  /* skip over trail byte */
-  //              }
+         c = (char) *p++;
+         /*#ifdef _MBCS
+                         if (_ismbblead(c)) {
+                             ++*numchars;
+                             if (args)
+                                 *args++ = *p;   /* copy 2nd byte too */
+         //                p++;  /* skip over trail byte */
+         //              }
 //#endif  /* _MBCS */
 
-            } while ( c != SPACECHAR && c != NULCHAR && c != TABCHAR );
+      }
+      while ( c != SPACECHAR && c != NULCHAR && c != TABCHAR );
 
-            if ( c == NULCHAR ) {
-                p--;
-            } else {
-                if (args)
-                    *(args-1) = NULCHAR;
-            }
-        }
+      if ( c == NULCHAR )
+      {
+         p--;
+      }
+      else
+      {
+         if (args)
+            *(args-1) = NULCHAR;
+      }
+   }
 
-        inquote = 0;
+   inquote = 0;
 
-        /* loop on each argument */
-        for(;;) {
+   /* loop on each argument */
+   for(;;)
+   {
 
-            if ( *p ) {
-                while (*p == SPACECHAR || *p == TABCHAR)
-                    ++p;
-            }
+      if ( *p )
+      {
+         while (*p == SPACECHAR || *p == TABCHAR)
+            ++p;
+      }
 
-            if (*p == NULCHAR)
-                break;              /* end of args */
+      if (*p == NULCHAR)
+         break;              /* end of args */
 
-            /* scan an argument */
-            if (argv)
-                *argv++ = args;     /* store ptr to arg */
-            ++*numargs;
+      /* scan an argument */
+      if (argv)
+         *argv++ = args;     /* store ptr to arg */
+      ++*numargs;
 
 #ifdef WILDCARD
-        /* To handle later wild card expansion, we prefix each entry by
-        it's first character before quote handling.  This is done
-        so _[w]cwild() knows whether to expand an entry or not. */
-        if (args)
-            *args++ = *p;
-        ++*numchars;
+      /* To handle later wild card expansion, we prefix each entry by
+      it's first character before quote handling.  This is done
+      so _[w]cwild() knows whether to expand an entry or not. */
+      if (args)
+         *args++ = *p;
+      ++*numchars;
 
 #endif  /* WILDCARD */
 
-        /* loop through scanning one argument */
-        for (;;) {
-            copychar = 1;
-            /* Rules: 2N backslashes + " ==> N backslashes and begin/end quote
-               2N+1 backslashes + " ==> N backslashes + literal "
-               N backslashes ==> N backslashes */
-            numslash = 0;
-            while (*p == SLASHCHAR) {
-                /* ::count number of backslashes for use below */
-                ++p;
-                ++numslash;
-            }
-            if (*p == DQUOTECHAR) {
-                /* if 2N backslashes before, start/end quote, otherwise
-                    copy literally */
-                if (numslash % 2 == 0) {
-                    if (inquote) {
-                        if (p[1] == DQUOTECHAR)
-                            p++;    /* Double quote inside quoted string */
-                        else        /* skip first quote char and copy second */
-                            copychar = 0;
-                    } else
-                        copychar = 0;       /* don't copy quote */
-
-                    inquote = !inquote;
-                }
-                numslash /= 2;          /* divide numslash by two */
-            }
-
-            /* copy slashes */
-            while (numslash--) {
-                if (args)
-                    *args++ = SLASHCHAR;
-                ++*numchars;
-            }
-
-            /* if at end of arg, break loop */
-            if (*p == NULCHAR || (!inquote && (*p == SPACECHAR || *p == TABCHAR)))
-                break;
-
-            /* copy character into argument */
-/*#ifdef _MBCS
-            if (copychar) {
-                if (args) {
-                    if (_ismbblead(*p)) {
-                        *args++ = *p++;
-                        ++*numchars;
-                    }
-                    *args++ = *p;
-                } else {
-                    if (_ismbblead(*p)) {
-                        ++p;
-                        ++*numchars;
-                    }
-                }
-                ++*numchars;
-            }
+      /* loop through scanning one argument */
+      for (;;)
+      {
+         copychar = 1;
+         /* Rules: 2N backslashes + " ==> N backslashes and begin/end quote
+            2N+1 backslashes + " ==> N backslashes + literal "
+            N backslashes ==> N backslashes */
+         numslash = 0;
+         while (*p == SLASHCHAR)
+         {
+            /* ::count number of backslashes for use below */
             ++p;
-#else  /* _MBCS */
-            if (copychar) {
-                if (args)
-                    *args++ = *p;
-                ++*numchars;
-            }
-            ++p;
-//#endif  /* _MBCS */
-            }
+            ++numslash;
+         }
+         if (*p == DQUOTECHAR)
+         {
+            /* if 2N backslashes before, start/end quote, otherwise
+                copy literally */
+            if (numslash % 2 == 0)
+            {
+               if (inquote)
+               {
+                  if (p[1] == DQUOTECHAR)
+                     p++;    /* Double quote inside quoted string */
+                  else        /* skip first quote char and copy second */
+                     copychar = 0;
+               }
+               else
+                  copychar = 0;       /* don't copy quote */
 
-            /* NULL-terminate the argument */
+               inquote = !inquote;
+            }
+            numslash /= 2;          /* divide numslash by two */
+         }
 
+         /* copy slashes */
+         while (numslash--)
+         {
             if (args)
-                *args++ = NULCHAR;          /* terminate string */
+               *args++ = SLASHCHAR;
             ++*numchars;
-        }
+         }
 
-        /* We put one last argument in -- a NULL ptr */
-        if (argv)
-            *argv++ = NULL;
-        ++*numargs;
+         /* if at end of arg, break loop */
+         if (*p == NULCHAR || (!inquote && (*p == SPACECHAR || *p == TABCHAR)))
+            break;
+
+         /* copy character into argument */
+         /*#ifdef _MBCS
+                     if (copychar) {
+                         if (args) {
+                             if (_ismbblead(*p)) {
+                                 *args++ = *p++;
+                                 ++*numchars;
+                             }
+                             *args++ = *p;
+                         } else {
+                             if (_ismbblead(*p)) {
+                                 ++p;
+                                 ++*numchars;
+                             }
+                         }
+                         ++*numchars;
+                     }
+                     ++p;
+         #else  /* _MBCS */
+         if (copychar)
+         {
+            if (args)
+               *args++ = *p;
+            ++*numchars;
+         }
+         ++p;
+//#endif  /* _MBCS */
+      }
+
+      /* NULL-terminate the argument */
+
+      if (args)
+         *args++ = NULCHAR;          /* terminate string */
+      ++*numchars;
+   }
+
+   /* We put one last argument in -- a NULL ptr */
+   if (argv)
+      *argv++ = NULL;
+   ++*numargs;
 }
 
 
@@ -981,19 +999,19 @@ string read_resource_as_string_dup(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType)
    HRSRC hrsrc = ::FindResource(hinst, MAKEINTRESOURCE(nID), lpcszType);
 
    if(hrsrc == NULL)
-		return "";
+      return "";
 
    HGLOBAL hres = ::LoadResource(hinst, hrsrc);
 
    if(hres == NULL)
-		return "";
+      return "";
 
    uint32_t dwResSize = ::SizeofResource(hinst, hrsrc);
 
    string str;
    char * psz = NULL;
 
-	if(hres != NULL)
+   if(hres != NULL)
    {
 
       UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
@@ -1003,7 +1021,7 @@ string read_resource_as_string_dup(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType)
       psz[dwResSize] = '\0';
       str.ReleaseBuffer(dwResSize);
       ::FreeResource(hres);
-	}
+   }
    return str;
 
 }
@@ -1014,21 +1032,21 @@ string read_resource_as_string_dup(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType)
 
 char * strtok_r_dup(char *s1, const char *s2, char **lasts)
 {
-  char *ret;
+   char *ret;
 
-  if (s1 == NULL)
-    s1 = *lasts;
-  while(*s1 && strchr_dup(s2, *s1))
-    ++s1;
-  if(*s1 == '\0')
-    return NULL;
-  ret = s1;
-  while(*s1 && !strchr_dup(s2, *s1))
-    ++s1;
-  if(*s1)
-    *s1++ = '\0';
-  *lasts = s1;
-  return ret;
+   if (s1 == NULL)
+      s1 = *lasts;
+   while(*s1 && strchr_dup(s2, *s1))
+      ++s1;
+   if(*s1 == '\0')
+      return NULL;
+   ret = s1;
+   while(*s1 && !strchr_dup(s2, *s1))
+      ++s1;
+   if(*s1)
+      *s1++ = '\0';
+   *lasts = s1;
+   return ret;
 }
 
 
@@ -1217,9 +1235,18 @@ CLASS_DECL_AURA int is_surrogated(uint32_t character)
    return 0x10000 <= character && character <= 0x10FFFF;
 }
 
-CLASS_DECL_AURA int is_surrogate(unichar uc) { return (uc - 0xd800) < 2048; }
-CLASS_DECL_AURA int is_high_surrogate(unichar uc) { return (uc & 0xfffffc00) == 0xd800; }
-CLASS_DECL_AURA int is_low_surrogate(unichar uc) { return (uc & 0xfffffc00) == 0xdc00; }
+CLASS_DECL_AURA int is_surrogate(unichar uc)
+{
+   return (uc - 0xd800) < 2048;
+}
+CLASS_DECL_AURA int is_high_surrogate(unichar uc)
+{
+   return (uc & 0xfffffc00) == 0xd800;
+}
+CLASS_DECL_AURA int is_low_surrogate(unichar uc)
+{
+   return (uc & 0xfffffc00) == 0xdc00;
+}
 
 END_EXTERN_C
 
@@ -1474,6 +1501,8 @@ strsize utf8_to_utf32_len(const char * psz, strsize srclen)
 
    strsize len;
 
+   strsize utf32len = 0;
+
    while(srclen != 0 && psz != NULL && *psz != '\0')
    {
 
@@ -1481,11 +1510,13 @@ strsize utf8_to_utf32_len(const char * psz, strsize srclen)
 
       psz += len;
 
+      utf32len++;
+
       srclen--;
 
    }
 
-   return len;
+   return utf32len;
 
 }
 

@@ -323,7 +323,7 @@ namespace fontopus
    void dialog::on_layout()
    {
 
-      simple_ui::interaction::on_layout();
+      ::simple_ui::interaction::on_layout();
 
       /*
 

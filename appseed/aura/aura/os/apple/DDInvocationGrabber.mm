@@ -57,7 +57,6 @@
  *
  */
 
-#import "framework.h"
 
 
 @implementation DDInvocationGrabber

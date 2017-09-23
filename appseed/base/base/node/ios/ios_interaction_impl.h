@@ -56,7 +56,7 @@ namespace ios
       
       virtual ::user::interaction * get_wnd() const override;
       
-      virtual bool _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
       
       virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
       
@@ -703,6 +703,10 @@ namespace ios
       
       virtual void round_window_on_show() override;
       virtual void round_window_on_hide() override;
+      
+      virtual void round_window_activate() override;
+      virtual void round_window_deactivate() override;
+
       
       virtual bool initialize_native_window(::user::native_window_initialize * pinitialize) override;
 

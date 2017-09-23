@@ -50,10 +50,10 @@ namespace draw2d_direct2d
 #ifndef METROWIN
          bOk = ::ClosePrinter(m_hPrinter) != FALSE;
 #else
-throw todo(get_app());
-return false;
+         throw todo(get_app());
+         return false;
 #endif
-m_hPrinter = NULL;
+         m_hPrinter = NULL;
       }
       return bOk;
    }
@@ -87,15 +87,16 @@ m_hPrinter = NULL;
          return false;
       }
 #else
-throw todo(get_app());
-return false;
+      throw todo(get_app());
+      return false;
 #endif
-return true;
+      return true;
    }
 
    bool printer::document_properties::close()
    {
-      throw todo(get_app());
+      //throw todo(get_app());
+      return false;
 #ifndef METROWIN
       if(m_hdc != NULL)
       {
@@ -103,10 +104,10 @@ return true;
          m_hdc = NULL;
       }
 #else
-throw todo(get_app());
-return false;
+      throw todo(get_app());
+      return false;
 #endif
-if(m_pdevmode != NULL)
+      if(m_pdevmode != NULL)
       {
          free(m_pdevmode);
          m_pdevmode = NULL;
@@ -124,7 +125,7 @@ if(m_pdevmode != NULL)
          return NULL;
 #ifndef METROWIN
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
-::draw2d::graphics_sp g(allocer());
+      ::draw2d::graphics_sp g(allocer());
       g->Attach(m_hdc);
       return g.detach();
 #else

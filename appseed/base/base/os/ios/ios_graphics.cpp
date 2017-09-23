@@ -25,66 +25,66 @@ HDC GetDC(oswindow hwnd);
 
 
 
-HDC GetWindowDC(oswindow hwnd)
-{
-   
-   return GetDC(hwnd);
-   
-}
-
-
-HDC GetDC(oswindow hwnd)
-{
-    
-    HDC hdc = new device_context;
-    
-    
-    hdc->m_window = hwnd;
-    hdc->m_cgcontext = get_nswindow_cgcontext(hwnd);
-/*    hdc->m_windowPort = GetWindowPort(hwnd);
-    GetPortBounds(hdc->m_windowPort, &hdc->m_portBounds);
-    
-    hdc->m_wasSwapped = QDSwapPort(hdc->m_windowPort, &hwnd->m_savedPort);
-    
-    
-    /* ... QuickDraw Drawing Commands ... */
-    // at windowPort
-    
-    
-  /*  QDBeginCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
-    SyncCGContextOriginWithPort(hdc->m_cgcontext, hdc->m_windowPort);
-    //ClipCGContextToRegion(cgContext, &portBounds, clippingRegion);
-    //DisposeRgn(clippingRegion);
-    //clippingRegion = NULL;
-    
-    /* ... Quartz Drawing Commands ... */
-    
-    
-    hdc->m_cgcolorrefText = cg_create_color(0);
-    hdc->m_cgcolorrefBk = cg_create_color(RGB(255, 255, 255));
-    
-    return hdc;
-    
-}
-
-
-WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
-{
-
-   if(hdc == NULL)
-      return FALSE;
-   
-   /*QDEndCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
-   
-   if(hdc->m_wasSwapped)
-   {
-      QDSwapPort(hdc->m_savedPort, &hdc->m_savedPort);
-   }*/
-
-   delete hdc;
-   return TRUE;
-
-}
+//HDC GetWindowDC(oswindow hwnd)
+//{
+//   
+//   return GetDC(hwnd);
+//   
+//}
+//
+//
+//HDC GetDC(oswindow hwnd)
+//{
+//    
+//    HDC hdc = new device_context;
+//    
+//    
+//    hdc->m_window = hwnd;
+//    hdc->m_cgcontext = get_nswindow_cgcontext(hwnd);
+///*    hdc->m_windowPort = GetWindowPort(hwnd);
+//    GetPortBounds(hdc->m_windowPort, &hdc->m_portBounds);
+//    
+//    hdc->m_wasSwapped = QDSwapPort(hdc->m_windowPort, &hwnd->m_savedPort);
+//    
+//    
+//    /* ... QuickDraw Drawing Commands ... */
+//    // at windowPort
+//    
+//    
+//  /*  QDBeginCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
+//    SyncCGContextOriginWithPort(hdc->m_cgcontext, hdc->m_windowPort);
+//    //ClipCGContextToRegion(cgContext, &portBounds, clippingRegion);
+//    //DisposeRgn(clippingRegion);
+//    //clippingRegion = NULL;
+//    
+//    /* ... Quartz Drawing Commands ... */
+//    
+//    
+//    hdc->m_cgcolorrefText = cg_create_color(0);
+//    hdc->m_cgcolorrefBk = cg_create_color(RGB(255, 255, 255));
+//    
+//    return hdc;
+//    
+//}
+//
+//
+//WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
+//{
+//
+//   if(hdc == NULL)
+//      return FALSE;
+//   
+//   /*QDEndCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
+//   
+//   if(hdc->m_wasSwapped)
+//   {
+//      QDSwapPort(hdc->m_savedPort, &hdc->m_savedPort);
+//   }*/
+//
+//   delete hdc;
+//   return TRUE;
+//
+//}
 
 
 WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)

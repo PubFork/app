@@ -195,11 +195,26 @@ namespace visual
    bool fastblur::initialize(int32_t cx,int32_t cy,int32_t radius)
    {
 
-      if(is_null())
+      if (is_null())
+      {
+
          return false;
 
-      if(m_p->m_size == size(cx,cy) && radius == m_iRadius)
+      }
+
+      if (cx <= 0 || cy <= 0 || radius <= 0)
+      {
+
+         return false;
+
+      }
+
+      if (m_p->m_size == size(cx, cy) && radius == m_iRadius)
+      {
+
          return true;
+
+      }
       
       
       if(cx != m_p->m_size.cx || cy != m_p->m_size.cy)

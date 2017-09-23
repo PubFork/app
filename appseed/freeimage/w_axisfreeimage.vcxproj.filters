@@ -34,9 +34,6 @@
     <Filter Include="Source Files\Metadata">
       <UniqueIdentifier>{f453d8b5-e251-437c-a297-3857af46afb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NewFilter1">
-      <UniqueIdentifier>{c0c600ef-9e98-4a53-9787-ae4cdd098cff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Toolkit Files">
       <UniqueIdentifier>{3bf4c43c-52c6-43ca-81ff-d3cb458304f9}</UniqueIdentifier>
     </Filter>
@@ -289,9 +286,6 @@
     </ClCompile>
     <ClCompile Include="Source\Metadata\TagLib.cpp">
       <Filter>Source Files\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\FreeImageToolkit\_Toolkit.cpp">
-      <Filter>Toolkit Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\FreeImageToolkit\Background.cpp">
       <Filter>Toolkit Files</Filter>

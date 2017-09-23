@@ -112,19 +112,21 @@ uint64_t get_nanos()
 //#endif // _WIN32
 
 /* Windows sleep in 100ns units */
-BOOLEAN nanosleep(LONGLONG ns) {
+BOOLEAN nanosleep(LONGLONG ns)
+{
    /* Declarations */
    HANDLE timer;   /* Timer handle */
    LARGE_INTEGER li;   /* Time defintion */
-                       /* Create timer */
+   /* Create timer */
    if (!(timer = CreateWaitableTimer(NULL, TRUE, NULL)))
    {
-      Sleep(ns / (1000 * 1000));
+      Sleep(::convert<DWORD> (ns / (1000 * 1000)));
       return TRUE;
    }
    /* Set timer properties */
    li.QuadPart = -(ns / 100);
-   if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE)) {
+   if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
+   {
       CloseHandle(timer);
       return FALSE;
    }

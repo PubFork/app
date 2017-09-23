@@ -94,7 +94,7 @@ namespace core
 
          m_bLicense                 = false;
 
-         m_prunstartinstaller       = NULL;
+         //m_prunstartinstaller       = NULL;
          m_bLicense                 = false;
 
 #ifdef WINDOWSEX
@@ -216,7 +216,7 @@ namespace core
 
       }
 
-      ::core::profiler::initialize();
+      ::aura::profiler::initialize();
 
 #ifdef LINUX
 

@@ -135,7 +135,7 @@ namespace user
          int iImage;
          for (auto iSize : m_iaSize)
          {
-            
+
             iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
 
             add_hover_image(iSize, iImage, 0);
@@ -144,14 +144,14 @@ namespace user
             iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
 
             add_hover_image(iSize, iImage, 0);
-            
+
          }
 
       }
 
       image_list * shell::GetImageList(int iSize)
       {
-         
+
          index i = 0;
 
          for (; i < m_iaSize.get_size(); i++)
@@ -172,12 +172,12 @@ namespace user
             i = m_iaSize.get_upper_bound();
 
          }
-         
+
          return m_pil[m_iaSize[i]];
 
       }
 
-      
+
       image_list * shell::GetImageListHover(int iSize)
       {
          index i = 0;
@@ -230,3 +230,75 @@ namespace user
 
 
 
+#ifdef WINDOWSEX
+#include "core/user/user/user_shell_windows.h"
+#elif defined(MACOS)
+#include "core/user/user/user_shell_macos.h"
+#elif defined(APPLE_IOS)
+#include "core/user/user/user_shell_ios.h"
+#elif defined(LINUX)
+#include "core/user/user/user_shell_linux.h"
+#elif defined(ANDROID)
+#include "core/user/user/user_shell_android.h"
+#elif defined(METROWIN)
+#include "core/user/user/user_shell_metrowin.h"
+#else
+#error "Implement here"
+#endif
+
+
+
+namespace userex
+{
+
+   bool userex::create_user_shell()
+   {
+
+      if (m_pshell.is_null())
+      {
+
+#ifdef WINDOWSEX
+
+         m_pshell = canew(::user::shell::windows(get_app()));
+
+#elif defined(MACOS)
+
+         m_pshell = canew(::user::shell::macos(get_app()));
+
+#elif defined(APPLE_IOS)
+
+         m_pshell = canew(::user::shell::ios(get_app()));
+
+#elif defined(ANDROID)
+
+         m_pshell = canew(::user::shell::android(get_app()));
+
+#elif defined(METROWIN)
+
+         m_pshell = canew(::user::shell::metrowin(get_app()));
+
+#elif defined(LINUX)
+
+         m_pshell = canew(::user::shell::linux(get_app()));
+
+#else
+
+         #error "Implement for your platform."
+
+#endif
+
+      }
+
+      if(m_pshell.is_null())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+}

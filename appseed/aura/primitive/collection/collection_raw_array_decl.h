@@ -316,14 +316,6 @@ public:
    inline TYPE& get_at(index nIndex);
    inline void set_at(index nIndex, ARG_TYPE newElement);
 
-   inline const TYPE & element_at(index nIndex) const;
-   inline TYPE & element_at(index nIndex);
-
-   inline const TYPE& first(index index = 0) const;
-   inline TYPE& first(index index = 0);
-
-   inline const TYPE& last(index index = -1) const;
-   inline TYPE& last(index index = -1);
 
    // Direct Access to the element data (may return NULL)
    inline const TYPE* get_data() const;
@@ -401,7 +393,7 @@ public:
       for(index i = iStart; i <= iEnd; i++)
       {
 
-         a.add(element_at(i));
+         a.add(this->element_at(i));
          ca++;
 
       }

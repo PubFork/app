@@ -13,6 +13,9 @@ struct PROCESS_INFO_t
 };
 
 
+bool _ui_get_executable_path(char * psz, uint32_t * puiSize);
+
+
 namespace ios
 {
    
@@ -1285,7 +1288,7 @@ namespace ios
       
       uint32_t size = 1024;
       
-      if(_NSGetExecutablePath(lpsz, &size) == 0)
+      if(_ui_get_executable_path(lpsz, &size) == 0)
       {
          
          str.ReleaseBuffer();
@@ -1296,7 +1299,7 @@ namespace ios
          
          lpsz = str.GetBufferSetLength(size);
          
-         if(_NSGetExecutablePath(lpsz, &size) == 0)
+         if(_ui_get_executable_path(lpsz, &size) == 0)
          {
             
             str.ReleaseBuffer();

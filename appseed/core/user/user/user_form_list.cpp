@@ -8,11 +8,9 @@ namespace user
    form_list::form_list()
    {
 
-
       m_iControlItem = -1;
       m_iControlSubItem = -1;
       m_pcontrolEdit = NULL;
-
 
       m_iOnClickClickCount    = 0;
       m_iOnClickClickItem     = -1;
@@ -20,25 +18,32 @@ namespace user
 
    }
 
+
    form_list::~form_list()
    {
 
    }
 
-   void form_list::_001GetSelection(
-      ::database::id & key,::database::selection &selection)
+
+   void form_list::_001GetSelection(::database::id & key,::database::selection &selection)
    {
+
       list::_001GetSelection(key,selection);
+
    }
+
 
    void form_list::install_message_routing(::message::sender *pinterface)
    {
+
       IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&form_list::_001OnKeyDown);
 
       form_mesh::install_message_routing(pinterface);
+
       list::install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &form_list::_001OnVScroll);
+
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &form_list::_001OnHScroll);
 
    }
@@ -160,11 +165,11 @@ namespace user
 
    bool form_list::_001OnClick(uint_ptr uiFlags,point point)
    {
-      
+
       list::_001OnClick(uiFlags,point);
 
       index iItem;
-      
+
       index iSubItem;
 
       if(_001HitTest_(point,iItem,iSubItem))
@@ -205,9 +210,9 @@ namespace user
                Session.m_puiLastLButtonDown      = NULL;
 
                ::user::control_event ev;
-            
+
                ev.m_puie                  = pcontrol;
-               
+
                ev.m_eevent                = ::user::event_button_clicked;
 
                m_iControlItem             = iItem;
@@ -219,7 +224,7 @@ namespace user
          }
          else if(m_columna.get_by_subitem(iSubItem)->m_bEditOnSecondClick)
          {
-            
+
             if(m_iOnClickClickItem == iItem && m_iOnClickClickSubItem == iSubItem)
             {
 
@@ -249,7 +254,7 @@ namespace user
          }
          else
          {
-      
+
             _001PlaceControl(pcontrol, iItem, true);
 
          }
@@ -407,15 +412,18 @@ namespace user
       return pdescriptor->get_control(this, iItem);
 
    }
+
+
    void form_list::_001OnShowControl(sp(control) pcontrol)
    {
 
 
    }
 
+
    void form_list::_001PlaceControl(sp(control) pcontrol, index iEditItem, bool bClick, bool bOnlySizeAndPosition)
    {
-      
+
       if (!bOnlySizeAndPosition && _001GetEditControl() != NULL)
       {
 
@@ -540,7 +548,7 @@ namespace user
 
             for(index iItem = 0; iItem < iItemCount; iItem++)
             {
-               
+
                if (_001GetSubItemCheck(iItem, pitem->m_iSubItemDuplicateCheckBox) == ::check::checked)
                {
 
@@ -594,7 +602,7 @@ namespace user
       keep<bool> keepUpdateLock(&m_bOnEditUpdate, true, false, true);
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit
-         || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
+             || pcontrol->descriptor().get_type() == control_type_edit_plain_text);
 
       sp(::user::plain_edit) pedit = pcontrol;
 
@@ -608,7 +616,7 @@ namespace user
       if (pcontrol->descriptor().has_function(control_function_vms_data_edit))
       {
 
-         
+
 
          draw_list_item item(this);
 
@@ -670,7 +678,7 @@ namespace user
 
    void form_list::_001UpdateComboBox(sp(control) pcontrol)
    {
-      
+
       ASSERT(pcontrol != NULL);
 
       if (pcontrol == NULL)
@@ -727,7 +735,7 @@ namespace user
 
       if (pcontrol->descriptor().get_type() == control_type_check_box)
       {
-         
+
          sp(::user::elemental) pcheckbox = pcontrol;
 
          ::check::e_check echeck = pcheckbox->_001GetCheck();
@@ -742,7 +750,7 @@ namespace user
          {
 
             string str = pcontrol->descriptor().m_setValue[::check::checked];
-            
+
             if(str.has_char())
             {
 
@@ -805,7 +813,7 @@ namespace user
       }
 
       ASSERT(pcontrol->descriptor().get_type() == control_type_edit || pcontrol->descriptor().get_type() == control_type_edit_plain_text
-      || pcontrol->descriptor().get_type() == control_type_combo_box);
+             || pcontrol->descriptor().get_type() == control_type_combo_box);
 
       sp(::user::elemental) pedit = get_child_by_id(pcontrol->m_id);
 
@@ -831,7 +839,7 @@ namespace user
 
       if (!pcontrol->Validate(str))
       {
-         // que tal um bal�o para indicar o erro
+         // que tal um balão para indicar o erro
          return false;
       }
 
@@ -847,9 +855,9 @@ namespace user
       }
 
       if (pcontrol->descriptor().has_function(control_function_vms_data_edit)
-         || pcontrol->descriptor().has_function(control_function_data_selection))
+            || pcontrol->descriptor().has_function(control_function_data_selection))
       {
-         
+
          draw_list_item item(this);
 
          item.m_iItem = pcontrol->m_iEditItem;
@@ -958,7 +966,7 @@ namespace user
 
       if(pcontrol != NULL)
       {
-         
+
          _001PlaceControl(pcontrol, pcontrol->m_iEditItem, false, true);
 
       }
@@ -1097,13 +1105,13 @@ namespace user
    {
       SCAST_PTR(::message::key,pkey,pobj);
 
-         if(pkey->m_ekey == ::user::key_return)
-         {
-            _001SaveEdit(_001GetEditControl());
-            _001HideEditingControls();
-            pobj->m_bRet = true;
-            return;
-         }
+      if(pkey->m_ekey == ::user::key_return)
+      {
+         _001SaveEdit(_001GetEditControl());
+         _001HideEditingControls();
+         pobj->m_bRet = true;
+         return;
+      }
       pkey->previous();
    }
 
@@ -1119,7 +1127,7 @@ namespace user
       if(pcontrol->m_pdescriptor != NULL)
       {
          if(pcontrol->m_pdescriptor->m_etype == control_type_edit
-            || pcontrol->m_pdescriptor->m_etype == control_type_edit_plain_text)
+               || pcontrol->m_pdescriptor->m_etype == control_type_edit_plain_text)
          {
             if(pcontrol == _001GetEditControl())
             {
@@ -1348,12 +1356,12 @@ namespace user
    }
 
 
-   bool form_list::_001PreviousEditableControl(int & iItem, int & iSubItem)
+   bool form_list::_001PreviousEditableControl(index & iItem, index & iSubItem)
    {
 
-      int iPreviousItem = iItem;
+      index iPreviousItem = iItem;
 
-      int iColumnCount = _001GetColumnCount();
+      ::count iColumnCount = _001GetColumnCount();
 
       index iSubItemColumn = _001MapSubItemToColumn(iSubItem);
 
@@ -1363,8 +1371,8 @@ namespace user
       {
 
          if (m_columna.get_visible(iColumn)->m_iControl >= 0
-            && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
-            && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
+               && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
+               && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
          {
 
             iColumnPrevious = iColumn;
@@ -1384,8 +1392,8 @@ namespace user
          {
 
             if (m_columna.get_visible(iColumn)->m_iControl >= 0
-               && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
-               && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
+                  && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
+                  && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
             {
 
                iColumnPrevious = iColumn;
@@ -1428,12 +1436,12 @@ namespace user
    }
 
 
-   bool form_list::_001NextEditableControl(int & iItem, int & iSubItem)
+   bool form_list::_001NextEditableControl(index & iItem, index & iSubItem)
    {
 
-      int iNextItem = iItem;
+      index iNextItem = iItem;
 
-      int iColumnCount = _001GetColumnCount();
+      index iColumnCount = _001GetColumnCount();
 
       index iSubItemColumn = _001MapSubItemToColumn(iSubItem);
 
@@ -1443,8 +1451,8 @@ namespace user
       {
 
          if (m_columna.get_visible(iColumn)->m_iControl >= 0
-            && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
-            && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
+               && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
+               && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
          {
 
             iColumnNext = iColumn;
@@ -1464,8 +1472,8 @@ namespace user
          {
 
             if (m_columna.get_visible(iColumn)->m_iControl >= 0
-               && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
-               && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
+                  && _001GetControl(iItem, m_columna.get_visible(iColumn)->m_iSubItem) != NULL
+                  && _001IsSubItemEnabled(iItem, m_columna.get_visible(iColumn)->m_iSubItem))
             {
 
                iColumnNext = iColumn;
@@ -1507,10 +1515,10 @@ namespace user
 
    }
 
-   bool form_list::_001UpperEditableControl(int & iItem, int & iSubItem)
+   bool form_list::_001UpperEditableControl(index & iItem, index & iSubItem)
    {
 
-      int iUpperItem = iItem - 1;
+      index iUpperItem = iItem - 1;
 
       for (; iUpperItem >= 0; iUpperItem--)
       {
@@ -1554,10 +1562,10 @@ namespace user
    }
 
 
-   bool form_list::_001LowerEditableControl(int & iItem, int & iSubItem)
+   bool form_list::_001LowerEditableControl(index & iItem, index & iSubItem)
    {
 
-      int iLowerItem = iItem + 1;
+      index iLowerItem = iItem + 1;
 
       for (; iLowerItem <  _001GetItemCount() - 1; iLowerItem++)
       {
@@ -1641,8 +1649,9 @@ namespace user
       else if (pevent->m_eevent == ::user::event_tab_key)
       {
 
-         int iItem = 0;
-         int iSubItem = 0;
+         index iItem = 0;
+
+         index iSubItem = 0;
 
          if (m_pcontrolEdit != NULL)
          {
@@ -1675,15 +1684,15 @@ namespace user
          }
 
          if(bOk)
-         { 
-         
+         {
+
             sp(control) pcontrol = _001GetControl(iItem, iSubItem);
 
             _001PlaceControl(pcontrol, iItem);
 
             pevent->m_bRet = true;
 
-            pevent->m_bProcessed = true;  
+            pevent->m_bProcessed = true;
 
          }
 
@@ -1694,12 +1703,12 @@ namespace user
          SCAST_PTR(::message::key, pkey, pevent->m_pobj);
 
          if (pkey->m_ekey == key_down || pkey->m_ekey == key_up
-            || pkey->m_ekey == key_left || pkey->m_ekey == key_right)
+               || pkey->m_ekey == key_left || pkey->m_ekey == key_right)
          {
 
-            int iItem = 0;
+            index iItem = 0;
 
-            int iSubItem = 0;
+            index iSubItem = 0;
 
             if (m_pcontrolEdit != NULL)
             {
@@ -1854,9 +1863,7 @@ namespace user
          if (rScreen.contains(Session.m_ptCursor))
          {
 
-            COLORREF crBackHover = ARGB(40, 0, 0, 0);
-
-            get_color(crBackHover, ::user::color_background_hover);
+            COLORREF crBackHover = _001GetColor(::user::color_background_hover, ARGB(40, 0, 0, 0));
 
             pdrawitem->m_pgraphics->FillSolidRect(pdrawitem->m_rectSubItem, crBackHover);
 
@@ -2025,7 +2032,7 @@ namespace user
 
                }
 
-               ::check::e_check echeck;
+               //::check::e_check echeck;
 
                if (item.m_strText == pdescriptor->m_setValue[::check::checked])
                {

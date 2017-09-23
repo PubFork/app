@@ -456,12 +456,14 @@ namespace aura
 
    }
 
-   bool os::file_open(string str)
+
+   bool os::file_open(::file::path strSrc)
    {
 
       return false;
 
    }
+
 
    string os::get_default_browser()
    {
@@ -537,7 +539,37 @@ namespace aura
       UNREFERENCED_PARAMETER(pcommand);
       
    }
+
+
+   bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return false;
+
+   }
+
    
+   bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return false;
+
+   }
+
+
+   bool os::browse_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+	   throw interface_only_exception(get_app());
+
+	   return false;
+
+   }
+
 
 } // namespace core
 

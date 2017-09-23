@@ -255,7 +255,7 @@ int_bool WINAPI tls_free(DWORD dwIndex)
 
       allthreaddata->get_next_assoc(pos,iThreadId,pdata);
 
-      if(compare::gt(pdata->get_count(),dwIndex))
+      if(comparison::gt(pdata->get_count(),dwIndex))
       {
          pdata->element_at(dwIndex) = NULL;
       }
@@ -269,7 +269,7 @@ LPVOID WINAPI tls_get_value(DWORD dwIndex)
 {
    ThreadLocalData* threadData = currentThreadData;
 
-   if(threadData && compare::gt(threadData->get_count(),dwIndex))
+   if(threadData && comparison::gt(threadData->get_count(),dwIndex))
    {
       // Return the value of an allocated TLS slot.
       return threadData->element_at(dwIndex);
@@ -280,7 +280,7 @@ LPVOID WINAPI tls_get_value(DWORD dwIndex)
       if(threadData)
       {
          currentThreadData = threadData;
-         if(compare::gt(threadData->get_count(),dwIndex))
+         if(comparison::gt(threadData->get_count(),dwIndex))
          {
             return threadData->element_at(dwIndex);
          }
@@ -308,7 +308,7 @@ LPVOID WINAPI tls_get_value(DWORD dwIndex)
 //
 //      ThreadLocalData * threadData = ppair->m_element2;
 //
-//      if(threadData && compare::gt(threadData->get_count(),dwIndex))
+//      if(threadData && comparison::gt(threadData->get_count(),dwIndex))
 //      {
 //
 //         // Return the value of an allocated TLS slot.
@@ -522,7 +522,7 @@ int_bool thread_free(uint32_t dwIndex)
 
       allthreaddata->get_next_assoc(pos,iThreadId,pdata);
 
-      if(compare::gt(pdata->get_count(),dwIndex))
+      if(comparison::gt(pdata->get_count(),dwIndex))
       {
          pdata->element_at(dwIndex) = NULL;
       }
@@ -536,7 +536,7 @@ void * thread_get_data(uint32_t dwIndex)
 {
    ThreadLocalData* threadData = currentThreadData;
 
-   if(threadData && compare::gt(threadData->get_count(),dwIndex))
+   if(threadData && comparison::gt(threadData->get_count(),dwIndex))
    {
       // Return the value of an allocated TLS slot.
       return threadData->element_at(dwIndex);
@@ -547,7 +547,7 @@ void * thread_get_data(uint32_t dwIndex)
       if(threadData)
       {
          currentThreadData = threadData;
-         if(compare::gt(threadData->get_count(),dwIndex))
+         if(comparison::gt(threadData->get_count(),dwIndex))
          {
             return threadData->element_at(dwIndex);
          }
@@ -580,7 +580,7 @@ void * __thread_get_data(IDTHREAD hthread,uint32_t dwIndex)
 
       ThreadLocalData * threadData = ppair->m_element2;
 
-      if(threadData && compare::gt(threadData->get_count(),dwIndex))
+      if(threadData && comparison::gt(threadData->get_count(),dwIndex))
       {
 
          // Return the value of an allocated TLS slot.

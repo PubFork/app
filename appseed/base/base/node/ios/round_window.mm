@@ -162,7 +162,7 @@ void round_window::round_window_get_title(char * pszTitle, int iSize)
    
    NSString * str = [[m_proundwindow dd_invokeOnMainThreadAndWaitUntilDone:FALSE] title];
 
-   strncpy(pszTitle, iSize, [str UTF8String]);
+   strncpy(pszTitle, [str UTF8String], iSize);
    
 }
 

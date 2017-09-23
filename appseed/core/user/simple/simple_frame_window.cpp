@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -76,7 +76,7 @@ int simple_frame_window::helper_task::run()
          }
 
       }
-      //Sleep(184); // the tester (without UPS) can loose a save here
+      //Sleep(200); // the tester (without UPS) can loose a save here
 
    }
 
@@ -159,7 +159,7 @@ void simple_frame_window::install_message_routing(::message::sender * pinterface
    IGUI_MSG_LINK(WM_CREATE, pinterface, this, &simple_frame_window::_001OnCreate);
    IGUI_MSG_LINK(WM_NCACTIVATE, pinterface, this, &simple_frame_window::_001OnNcActivate);
 #ifdef WINDOWSEX
-   IGUI_MSG_LINK(WM_DDE_INITIATE   , pinterface, this, &simple_frame_window::_001OnDdeInitiate);
+   IGUI_MSG_LINK(WM_DDE_INITIATE, pinterface, this, &simple_frame_window::_001OnDdeInitiate);
 #endif
    IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &simple_frame_window::_001OnDestroy);
    IGUI_MSG_LINK(WM_CLOSE, pinterface, this, &simple_frame_window::_001OnClose);
@@ -270,14 +270,14 @@ void simple_frame_window::_001OnDestroy(::message::message * pobj)
 
 sp(::user::wndfrm::frame::frame) simple_frame_window::create_frame_schema()
 {
-   
+
    if(Application.wndfrm() == NULL)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
    sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(m_varFrame["wndfrm"], m_varFrame["schema"]);
 
    pschema->set_style(m_varFrame["style"]);
@@ -366,7 +366,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
       m_varFrame["schema"] = "005";
 
    }
-   
+
    if (m_varFrame["style"].is_empty())
    {
 
@@ -395,12 +395,12 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    }
    else
    {
-      
+
       fork([&]()
       {
 
          data_get("transparent_frame", m_bTransparentFrame);
-         
+
       });
 
    }
@@ -433,7 +433,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    }
 
 
-   initialize_userstyle();
+   on_select_user_style();
 
 
    if (pobj->previous())
@@ -465,7 +465,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
       try
       {
-         
+
          pinteractionframe = create_frame_schema();
 
       }
@@ -487,16 +487,16 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          return;
 
       }
-      
+
       if(pinteractionframe == NULL)
       {
-         
+
          pcreate->m_lresult = -1;
-         
+
          pcreate->m_bRet = true;
-         
+
          return;
-         
+
       }
 
       //frame::FrameSchema * pschema = dynamic_cast < ::frame::FrameSchema * > (pinteractionframe);
@@ -669,7 +669,7 @@ void simple_frame_window::defer_set_icon()
 
       stringa straMatter;
 
-      if (strMatter.name(0).is_equal("system"))
+      if (strMatter.name(0) == "system")
       {
 
          straMatter.add("main");
@@ -949,7 +949,7 @@ bool simple_frame_window::WfiToggleTransparentFrame()
    set_need_layout();
 
    set_need_redraw();
-   
+
    return true;
 
 }
@@ -1265,62 +1265,62 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
    {
       pobj->m_bRet = true;
    }
-   
+
    bool bDestroyWindow = false;
-   
+
    {
-   
+
       {
-   // Note: only queries the active document
-   ::user::document * pdocument = GetActiveDocument();
-   if (pdocument != NULL && !pdocument->can_close_frame(this))
-   {
-      // document can't close right now -- don't close it
-      return;
-   }
-         
+         // Note: only queries the active document
+         ::user::document * pdocument = GetActiveDocument();
+         if (pdocument != NULL && !pdocument->can_close_frame(this))
+         {
+            // document can't close right now -- don't close it
+            return;
+         }
+
       }
 
-   ::aura::application * papp = &Application;
+      ::aura::application * papp = &Application;
 
-   if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
-   {
-
-      // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
-      // cube, bergedge, session or system.
-
-      ::aura::application_ptra appptra = System.get_appptra();
-
-      for (int32_t i = 0; i <  appptra.get_count(); i++)
+      if (papp->m_pcoreapp->is_system() || papp->m_pcoreapp->is_session())
       {
 
-         sp(::aura::application) pappChild = appptra[i];
+         // TODO: instead of closing all applications in process System.m_apptra, should close application that make part of
+         // cube, bergedge, session or system.
 
-         if (!pappChild->m_pcoreapp->_001CloseApplicationByUser(this))
+         ::aura::application_ptra appptra = System.get_appptra();
+
+         for (int32_t i = 0; i <  appptra.get_count(); i++)
+         {
+
+            sp(::aura::application) pappChild = appptra[i];
+
+            if (!pappChild->m_pcoreapp->_001CloseApplicationByUser(this))
+               return;
+
+         }
+
+      }
+      else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
+      {
+
+         if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
             return;
 
       }
+      else
+      {
+         bDestroyWindow = true;
+      }
 
    }
-   else if(Application.GetVisibleTopLevelFrameCountExcept(this) <= 0)
-   {
 
-      if (!papp->m_pcoreapp->_001CloseApplicationByUser(this))
-         return;
-
-   }
-   else
-   {
-      bDestroyWindow = true;
-   }
-      
-   }
-   
    if(bDestroyWindow)
    {
-      
+
       DestroyWindow();
-      
+
    }
 
 }
@@ -1345,7 +1345,7 @@ void simple_frame_window::OnNcCalcSize(bool bCalcValidRects, NCCALCSIZE_PARAMS F
 
 void simple_frame_window::_001OnActivateApp(::message::message * pobj)
 {
-   
+
    SCAST_PTR(::message::base, pbase, pobj);
 
    pbase->previous();
@@ -1391,26 +1391,26 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
          if (iActive == WA_CLICKACTIVE)
          {
 
-         //   if (bMinimized || WfiIsIconic())
-         //   {
+            //   if (bMinimized || WfiIsIconic())
+            //   {
 
-         //      WfiRestore();
+            //      WfiRestore();
 
-         //   }
-         //   else
-         //   {
+            //   }
+            //   else
+            //   {
 
-         //      WfiMinimize();
+            //      WfiMinimize();
 
-         //   }
+            //   }
 
-         //}
-         //else if (bMinimized)
-         //{
+            //}
+            //else if (bMinimized)
+            //{
 
 
 
-         //   WfiRestore();
+            //   WfiRestore();
 
 
          }
@@ -1440,16 +1440,16 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
 
       //   }
 
-         pactivate->m_bRet = true;
+      pactivate->m_bRet = true;
 
-         pactivate->m_lresult = 0;
+      pactivate->m_lresult = 0;
 
 
       //
 
 //         if (!bMinimized && !WfiIsIconic())
-//         { 
-//         
+//         {
+//
 ////            WfiMinimize();
 //
 //         }
@@ -1567,25 +1567,23 @@ void simple_frame_window::_001OnDdeInitiate(::message::message * pobj)
 }
 
 
-void simple_frame_window::pre_translate_message(::message::message * pobj)
+void simple_frame_window::pre_translate_message(::message::message * pmessage)
 {
 
-   SCAST_PTR(::message::base, pbase, pobj);
-
-   if(pbase->m_id == message_display_change)
+   if(pmessage->m_id == message_display_change)
    {
 
       Wfi();
 
    }
-   else if (pbase->m_id == WM_MOUSEMOVE)
+   else if (pmessage->m_id == WM_MOUSEMOVE)
    {
 
    }
-   else if(pbase->m_id == WM_KEYDOWN || pbase->m_id == WM_SYSKEYDOWN)
+   else if(pmessage->m_id == WM_KEYDOWN || pmessage->m_id == WM_SYSKEYDOWN)
    {
 
-      SCAST_PTR(::message::key, pkey, pobj);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       if(pkey->m_ekey == ::user::key_alt || pkey->m_ekey == ::user::key_lalt || pkey->m_ekey == ::user::key_ralt)
       {
@@ -1615,7 +1613,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
                if (DeferFullScreen(true, false))
                {
 
-                  pbase->m_bRet = true;
+                  pmessage->m_bRet = true;
 
                   return;
 
@@ -1628,10 +1626,10 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
       }
 
    }
-   else if(pbase->m_id == WM_KEYUP || pbase->m_id == WM_SYSKEYUP)
+   else if(pmessage->m_id == WM_KEYUP || pmessage->m_id == WM_SYSKEYUP)
    {
 
-      SCAST_PTR(::message::key, pkey, pobj);
+      SCAST_PTR(::message::key, pkey, pmessage);
 
       if(pkey->m_ekey == ::user::key_alt || pkey->m_ekey == ::user::key_lalt || pkey->m_ekey == ::user::key_ralt)
       {
@@ -1642,7 +1640,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
             if (WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
-               pbase->m_bRet = true;
+               pmessage->m_bRet = true;
 
                m_bFullScreenAlt = false;
 
@@ -1664,7 +1662,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
             if(WfiRestore(m_eappearanceBefore != ::user::appearance_full_screen))
             {
 
-               pbase->m_bRet = true;
+               pmessage->m_bRet = true;
 
                m_bFullScreenAlt = false;
 
@@ -1680,7 +1678,7 @@ void simple_frame_window::pre_translate_message(::message::message * pobj)
 
    }
 
-   return ::user::frame_window::pre_translate_message(pobj);
+   return ::user::frame_window::pre_translate_message(pmessage);
 
 }
 
@@ -1769,8 +1767,8 @@ void simple_frame_window::_001OnDeferPaintLayeredWindowBackground(::draw2d::grap
 {
 
    if(m_pauraapp == NULL
-   || m_pauraapp->m_pcoresession == NULL
-   || m_pauraapp->m_pcoresession->m_psavings == NULL)
+         || m_pauraapp->m_pcoresession == NULL
+         || m_pauraapp->m_pcoresession->m_psavings == NULL)
    {
 
       return;
@@ -1898,7 +1896,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 177, 84));
+         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -1910,7 +1908,7 @@ void simple_frame_window::_000OnDraw(::draw2d::graphics * pgraphicsParam)
 
 #if TEST
 
-         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 177, 84));
+         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
 
 #endif
 
@@ -1982,9 +1980,9 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
                null_point(),
                49);
             pgraphics->from(rectClient.size(),
-                                       m_fastblur->get_graphics(),
-                                       null_point(),
-                                       SRCCOPY);
+                            m_fastblur->get_graphics(),
+                            null_point(),
+                            SRCCOPY);
          }
 #endif
       }
@@ -2182,7 +2180,7 @@ bool simple_frame_window::LoadToolBar(sp(::type) sptype, id idToolBar, const cha
 
    if(!ptoolbar->LoadXmlToolBar(strXml))
    {
-      
+
       return false;
 
    }
@@ -2475,7 +2473,7 @@ void simple_frame_window::OnDropFiles(HDROP hDropInfo)
    wchar_t szFileName[_MAX_PATH];
    for (UINT iFile = 0; iFile < nFiles; iFile++)
    {
-      
+
       if (::DragQueryFileW(hDropInfo, iFile, szFileName, _MAX_PATH))
       {
 
@@ -2544,12 +2542,10 @@ LRESULT simple_frame_window::OnDDEInitiate(WPARAM wParam, LPARAM lParam)
    {
       // make duplicates of the incoming atoms (really adding a reference)
       char szAtomName[_MAX_PATH];
-      VERIFY(GlobalGetAtomName(pApp->m_atomApp,
-                               szAtomName, _MAX_PATH - 1) != 0);
-      VERIFY(GlobalAddAtom(szAtomName) == pApp->m_atomApp);
-      VERIFY(GlobalGetAtomName(pApp->m_atomSystemTopic,
-                               szAtomName, _MAX_PATH - 1) != 0);
-      VERIFY(GlobalAddAtom(szAtomName) == pApp->m_atomSystemTopic);
+      GlobalGetAtomName(pApp->m_atomApp, szAtomName, _MAX_PATH - 1);
+      GlobalAddAtom(szAtomName);
+      GlobalGetAtomName(pApp->m_atomSystemTopic, szAtomName, _MAX_PATH - 1);
+      GlobalAddAtom(szAtomName);
 
       // send the WM_DDE_ACK (caller will delete duplicate atoms)
       ::SendMessage((oswindow)wParam, WM_DDE_ACK, (WPARAM)get_handle(),
@@ -3121,7 +3117,7 @@ bool simple_frame_window::calc_layered()
 }
 
 
-bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
+bool simple_frame_window::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
 {
 
    if (m_etranslucency != ::user::translucency_undefined)
@@ -3133,7 +3129,7 @@ bool simple_frame_window::get_translucency(::user::e_translucency & etranslucenc
 
    }
 
-   return ::user::frame_window::get_translucency(etranslucency, eelement);
+   return ::user::frame_window::get_translucency(etranslucency, eelement, pui);
 
 }
 
@@ -3162,9 +3158,9 @@ void simple_frame_window::on_simple_command(::message::simple_command * psimplec
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
 
-   UNREFERENCED_PARAMETER(dwStyle);
+      UNREFERENCED_PARAMETER(dwStyle);
 
-   return NULL;
+      return NULL;
 
 }
 
@@ -3398,14 +3394,14 @@ bool simple_frame_window::IsNotifyIconEnabled()
 }
 
 
-bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
+bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
 {
 
    if (m_workset.m_pframeschema != NULL)
    {
 
 
-      if (m_workset.m_pframeschema->get_color(cr, ecolor))
+      if (m_workset.m_pframeschema->get_color(cr, ecolor, pui))
       {
 
          return true;
@@ -3414,31 +3410,28 @@ bool simple_frame_window::get_color(COLORREF & cr, ::user::e_color ecolor)
 
    }
 
-   return ::user::frame_window::get_color(cr, ecolor);
+   return ::user::frame_window::get_color(cr, ecolor, pui);
 
 }
 
 
-void simple_frame_window::initialize_userstyle()
+void simple_frame_window::on_select_user_style()
 {
-
-   ::user::frame_window::initialize_userstyle();
 
    if (m_puserstyle == NULL)
    {
 
       string strSchema = m_varFrame["wndfrm"];
 
-      m_puserstyle = Session.get_user_style(strSchema, get_app());
+      if (strSchema.has_char() || GetParent() == NULL)
+      {
+
+         m_puserstyle = Session.get_user_style(strSchema, get_app());
+
+      }
 
    }
 
-   if (m_puserstyle == NULL)
-   {
-
-      m_puserstyle = Application.userstyle();
-
-   }
-
+   ::user::frame_window::on_select_user_style();
 
 }

@@ -28,33 +28,29 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}</ProjectGuid>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <Keyword>ManagedCProj</Keyword>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>_acid</RootNamespace>
     <ProjectName>_acid</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -62,23 +58,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>false</CLRSupport>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -155,7 +148,6 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAsManaged>false</CompileAsManaged>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -166,9 +158,8 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
@@ -228,7 +219,6 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAsManaged>false</CompileAsManaged>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -239,9 +229,8 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
@@ -302,7 +291,6 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAsManaged>false</CompileAsManaged>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -313,10 +301,9 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <MinimalRebuild>false</MinimalRebuild>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
@@ -397,11 +384,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>Disabled</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
-      <CompileAsManaged>false</CompileAsManaged>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
@@ -470,11 +455,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>Disabled</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
-      <CompileAsManaged>false</CompileAsManaged>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
@@ -543,12 +526,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <Optimization>MaxSpeed</Optimization>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
       <MinimalRebuild>false</MinimalRebuild>
-      <CompileAsManaged>false</CompileAsManaged>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <OmitFramePointers>true</OmitFramePointers>
       <FloatingPointExceptions>false</FloatingPointExceptions>
@@ -634,6 +615,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='basis|x64'">$(IntDir)%(Directory)</ObjectFileName>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_chronometer.cpp" />
+    <ClCompile Include="aura\aura\aura_simple_log.cpp" />
     <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -666,10 +648,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="aura\aura\simple_log.cpp" />
     <ClCompile Include="aura\compress\compress_bz.cpp" />
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
     <ClCompile Include="aura\compress\zip\zip_api.cpp">
     </ClCompile>
@@ -760,6 +740,8 @@
     <ClCompile Include="aura\message\message_receiver.cpp" />
     <ClCompile Include="aura\message\message_sender.cpp" />
     <ClCompile Include="aura\message\message_simple_command.cpp" />
+    <ClCompile Include="aura\node\windows\windows_crypto.cpp" />
+    <ClCompile Include="aura\node\windows\windows_ip_enum.cpp" />
     <ClCompile Include="aura\node\windows\windows_timer.cpp" />
     <ClCompile Include="aura\os\ansios\ansios_base.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -779,7 +761,7 @@
     <ClCompile Include="aura\scripting\javascript\javascript.cpp" />
     <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp" />
     <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp" />
-    <ClCompile Include="aura_keep.cpp" />
+    <ClCompile Include="build_debug.cpp" />
     <ClCompile Include="filesystem\file\file_path.cpp">
     </ClCompile>
     <ClCompile Include="graphics\draw2d\draw2d_bitmap.cpp">
@@ -991,6 +973,7 @@
     </ClCompile>
     <ClCompile Include="net\sockets\sockets_websocket_client.cpp">
     </ClCompile>
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp" />
     <ClCompile Include="primitive\math\math_binary_operation.cpp">
     </ClCompile>
     <ClCompile Include="primitive\math\math_number.cpp">
@@ -1008,6 +991,7 @@
     </ClCompile>
     <ClCompile Include="primitive\str\str_x.cpp">
     </ClCompile>
+    <ClCompile Include="primitive\str\_str_pool.cpp" />
     <ClCompile Include="user\user\user_command.cpp" />
     <ClCompile Include="user\user\user_interactive.cpp">
     </ClCompile>
@@ -1120,7 +1104,6 @@
     <ClInclude Include="aura\aura\aura_types.h" />
     <ClInclude Include="aura\aura\aura_user.h" />
     <ClInclude Include="aura\aura\aura_simple_log.h" />
-    <ClInclude Include="aura\aura\aura__c.h" />
     <ClInclude Include="aura\aura\os.h" />
     <ClInclude Include="aura\aura_policy\aura_c.h" />
     <ClInclude Include="aura\aura_policy\aura_cpp.h" />
@@ -1279,6 +1262,7 @@
     <ClInclude Include="aura\node\windows\windows.h" />
     <ClInclude Include="aura\node\windows\windows_command.h" />
     <ClInclude Include="aura\node\windows\windows_console_window.h" />
+    <ClInclude Include="aura\node\windows\windows_crypto.h" />
     <ClInclude Include="aura\node\windows\windows_dir.h" />
     <ClInclude Include="aura\node\windows\windows_exception.h" />
     <ClInclude Include="aura\node\windows\windows_factory_exchange.h" />
@@ -1286,6 +1270,7 @@
     <ClInclude Include="aura\node\windows\windows_file_find.h" />
     <ClInclude Include="aura\node\windows\windows_file_system.h" />
     <ClInclude Include="aura\node\windows\windows_folder_watch.h" />
+    <ClInclude Include="aura\node\windows\windows_ip_enum.h" />
     <ClInclude Include="aura\node\windows\windows_os.h" />
     <ClInclude Include="aura\node\windows\windows_pipe.h" />
     <ClInclude Include="aura\node\windows\windows_registry.h" />
@@ -1319,7 +1304,6 @@
     <ClInclude Include="aura\os\windows\windows_file_watcher.h" />
     <ClInclude Include="aura\os\windows\windows_implementation.h" />
     <ClInclude Include="aura\os\windows\windows_multithreading.h" />
-    <ClInclude Include="aura\os\windows\aaa_want_to_remove_windows_os.h" />
     <ClInclude Include="aura\os\windows\windows_port_forward.h" />
     <ClInclude Include="aura\os\windows\windows_process.h" />
     <ClInclude Include="aura\os\windows\windows_process_env_reader.h" />
@@ -1767,8 +1751,6 @@
     <ClInclude Include="net\sockets\base\sockets_base_socket_handler.h" />
     <ClInclude Include="net\sockets\bsd\asynch_dns\resolv_server.h" />
     <ClInclude Include="net\sockets\bsd\asynch_dns\resolv_socket.h" />
-    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context.h" />
-    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context_map.h" />
     <ClInclude Include="net\sockets\bsd\basic\sockets_listen_socket.h" />
     <ClInclude Include="net\sockets\bsd\basic\sockets_net.h" />
     <ClInclude Include="net\sockets\bsd\basic\sockets_sctp_socket.h" />
@@ -1832,7 +1814,6 @@
     <ClInclude Include="primitive\api\api.h" />
     <ClInclude Include="primitive\api\api_rotate.h" />
     <ClInclude Include="primitive\collection\collection.h" />
-    <ClInclude Include="primitive\collection\collection_array_decl.h" />
     <ClInclude Include="primitive\collection\collection_attrib_map.h" />
     <ClInclude Include="primitive\collection\collection_base_2array.h" />
     <ClInclude Include="primitive\collection\collection_base_enum.h" />
@@ -2270,8 +2251,6 @@
     <ClCompile Include="primitive\math\math_int_biunique.cpp">
     </ClCompile>
     <ClCompile Include="primitive\str\str_sz.cpp">
-    </ClCompile>
-    <ClCompile Include="test.cpp">
     </ClCompile>
     <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp">
     </ClCompile>

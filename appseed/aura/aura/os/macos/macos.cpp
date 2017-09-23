@@ -101,7 +101,7 @@ string ca2_command_line()
    
 }
 
-const char * g_pszCommandLine = NULL;
+///const char * g_pszCommandLine = NULL;
 
 
 
@@ -277,7 +277,7 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
    
    setlocale(LC_ALL,"");
    
-   g_pszCommandLine = strdup_dup(pszCommandLine);
+   set_command_line_dup(pszCommandLine);
    
    ns_shared_application(argc, argv);
    
@@ -300,7 +300,7 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
 int32_t defer_run_system()
 {
    
-   return __start_system(NULL);
+   return __start_system_with_file(NULL);
    
 }
 
@@ -308,19 +308,15 @@ int32_t defer_run_system()
 int32_t defer_run_system(const char * pszFileName)
 {
    
-   return __start_system(pszFileName);
+   return __start_system_with_file(pszFileName);
    
 }
 
 
-int32_t defer_run_system(char * * psza, int c)
+int32_t defer_run_system(char ** pszaFileName, int iFileCount)
 {
    
-   stringa stra;
-   
-   stra.c_add(psza, c);
-   
-   return __start_system(stra);
+   return __start_system_with_file((const char **) pszaFileName, iFileCount);
    
 }
 
@@ -341,10 +337,35 @@ void macos_on_new_file()
 }
 
 
-void macos_on_open_file(const char * pszFilename, const char * pszExtra)
+void macos_on_open_file(const char ** psza, int iCount, const char * pszExtra)
 {
    
-   ::aura::system::g_p->on_open_file(pszFilename, pszExtra);
+   if(iCount <= 0)
+   {
+    
+      macos_on_new_file();
+      
+   }
+   else if(iCount == 1)
+   {
+   
+      ::aura::system::g_p->on_open_file(psza[0], pszExtra);
+      
+      ::free((void *) psza[0]);
+      
+      ::free(psza);
+      
+   }
+   else
+   {
+      
+      stringa stra;
+      
+      stra.c_add((char **) psza, iCount);
+      
+      ::aura::system::g_p->on_open_file(stra, pszExtra);
+      
+   }
    
 }
 

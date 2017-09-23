@@ -102,8 +102,8 @@ namespace user
       
       sp(::user::menu_item) get_item(::user::interaction * pui);
       
-      virtual bool get_color(COLORREF & cr,::user::e_color ecolor);
-      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement);
+      virtual bool get_color(COLORREF & cr,::user::e_color ecolor, ::user::interaction * pui) override;
+      virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
       virtual bool has_pending_graphical_update();
       
       virtual bool create_menu(const stringa & straCommand, const stringa & straCommandTitle);
@@ -121,6 +121,8 @@ namespace user
 
 
       virtual void defer_close();
+
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
       
    };
 

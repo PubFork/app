@@ -192,7 +192,7 @@ int get_current_process_affinity_order()
 
 
 
-int32_t shell_execute_sync(const char * pszFile, const char * pszParams, , ::duration durationTimeout )
+bool shell_execute_sync(const char * pszFile, const char * pszParams,  ::duration durationTimeout )
 {
    
    return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, durationTimeout.get_total_milliseconds());

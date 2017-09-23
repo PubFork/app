@@ -82,6 +82,7 @@ class var;
 class application_bias;
 class create;
 class command_line;
+class thread_refa;
 #include "aura/multithreading/multithreading_wait_result.h"
 // Duplicated root here... element is essentially like root (Rute, Inha, Lenir) for templates, but not for polymorphism
 
@@ -113,6 +114,7 @@ public:
    ::aura::application *         m_pauraapp;
    mutex *                       m_pmutex;
    property_set *                m_psetObject;
+   thread_refa *                 m_pthreadrefa;
 
 
    object();
@@ -214,6 +216,9 @@ public:
    virtual void on_handle(::command::command * pcommand);
    virtual void on_handle(::create * pcreate);
 
+   virtual void threadrefa_add(::thread * pthread);
+   virtual void threadrefa_post_quit_and_wait(::duration duration);
+   virtual void threadrefa_remove(::thread * pthread);
 
    // main loosely coupled semantics :
    // varFile   : empty, one file path, many file paths, one file object, one or more file objects, or Url, of cached, downloaded, dowloading or queuing files to be opened

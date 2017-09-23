@@ -576,9 +576,12 @@ oswindow hWnd);
 #define DT_TABSTOP                  0x00000080
 #define DT_NOCLIP                   0x00000100
 #define DT_EXTERNALLEADING          0x00000200
-#define DT_caLCRECT                 0x00000400
+#define DT_CALCRECT                 0x00000400
 #define DT_NOPREFIX                 0x00000800
 #define DT_INTERNAL                 0x00001000
+
+
+
 
 //#if(WINVER >= 0x0400)
 #define DT_EDITCONTROL              0x00002000

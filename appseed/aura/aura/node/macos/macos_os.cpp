@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "macos.h"
 
+#if defined(MACOS)
+#include <sys/stat.h>
+#endif
 
 #undef USERNAME_LENGTH // mysql one
 
@@ -1108,6 +1111,15 @@ namespace macos
       
    }
 
+   
+   bool os::file_open(::file::path path)
+   {
+      
+      ns_open_file(path.c_str());
+      
+      return true;
+      
+   }
    
    
 } // namespace macos

@@ -32,7 +32,7 @@ namespace asphere
       m_mapText["dark"] = ARGB(255, 155, 155, 155);
       m_mapText["blue"] = ARGB(255, 55, 50, 80);
       m_mapText["lite"] = ARGB(255, 0, 0, 0);
-      
+
       m_mapBack["dark"] = ARGB(160, 0, 0, 0);
       m_mapBack["blue"] = ARGB(160, 205, 200, 250);
       m_mapBack["lite"] = ARGB(160, 255, 255, 255);
@@ -152,16 +152,21 @@ namespace asphere
 
       string strTheme = get_theme();
 
-      int iFind = m_straTheme.find_first(strTheme);
+      strsize iFind = m_straTheme.find_first(strTheme);
 
       if (iFind < 0)
       {
+
          iFind = 0;
+
       }
       else
       {
+
          iFind++;
+
          iFind %= m_straTheme.get_size();
+
       }
 
       strTheme = m_straTheme[iFind];

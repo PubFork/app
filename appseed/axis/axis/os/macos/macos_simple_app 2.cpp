@@ -6,8 +6,7 @@ namespace aura
 {
 
 
-   app::app():
-      ::aura::system(this)
+   app::app()
    {
 
    }
@@ -22,25 +21,25 @@ namespace aura
    {
 
 
-      TCHAR *cmd = GetCommandLine();
-
-      // Skip program name
-      if(*cmd == _T('"'))
-      {
-         while(*cmd && *cmd != _T('"'))
-            cmd++;
-         if(*cmd == _T('"'))
-            cmd++;
-      }
-      else
-      {
-         while(*cmd > _T(' '))
-            cmd++;
-      }
-
-      // Skip any white space
-      while(*cmd && *cmd <= _T(' '))
-         cmd++;
+//      TCHAR *cmd = GetCommandLine();
+//
+//      // Skip program name
+//      if(*cmd == _T('"'))
+//      {
+//         while(*cmd && *cmd != _T('"'))
+//            cmd++;
+//         if(*cmd == _T('"'))
+//            cmd++;
+//      }
+//      else
+//      {
+//         while(*cmd > _T(' '))
+//            cmd++;
+//      }
+//
+//      // Skip any white space
+//      while(*cmd && *cmd <= _T(' '))
+//         cmd++;
 
       body();
 
@@ -192,7 +191,7 @@ namespace aura
       try
       {
 
-         m_iReturnCode = exit();
+         m_iReturnCode = exit_application();
 
       }
       catch(...)

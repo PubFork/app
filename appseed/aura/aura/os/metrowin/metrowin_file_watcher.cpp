@@ -23,8 +23,6 @@
 //#include "metrowin.h"
 
 
-CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_get_folder(const string & strFolder);
-
 
 namespace file_watcher
 {

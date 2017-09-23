@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace userex // ca8 + cube
+namespace userex
 {
 
 
@@ -22,7 +22,7 @@ namespace userex // ca8 + cube
 
       virtual void install_message_routing(::message::sender * psender);
 
-      virtual void on_show(const char * pszMatter, property_set & propertyset);
+      virtual void on_show(const char * pszMatter, property_set * propertyset) override;
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -38,6 +38,6 @@ namespace userex // ca8 + cube
    };
 
 
-} // namespace core // ca8 + cube
+} // namespace userex
 
 

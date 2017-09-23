@@ -60,7 +60,7 @@ const int string::npos = -1;
 //      return *this;
 //   char sz[256];
 //   strsize iLen = str.get_length();
-//   if(::compare::lt(iLen, ((sizeof(sz) / sizeof(char)) - sizeof(char))))
+//   if(::comparison::lt(iLen, ((sizeof(sz) / sizeof(char)) - sizeof(char))))
 //   {
 //      str.get_string(sz);
 //      set_string(sz,::action::source::op(::action::source_assign));

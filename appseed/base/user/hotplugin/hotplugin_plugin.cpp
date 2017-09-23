@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 
 
@@ -235,10 +235,10 @@ namespace hotplugin
 
 #ifdef WINDOWS
 
-/*   LRESULT plugin::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
-   {
-      return 0;
-   }*/
+   /*   LRESULT plugin::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
+      {
+         return 0;
+      }*/
 
 #elif defined(LINUX) || defined(SOLARIS)
 
@@ -664,7 +664,7 @@ namespace hotplugin
 
             rectP.right    = rectWindow.right;
 
-            pgraphics->FillSolidRect(rectP, ARGB(84, 84, 84, 77));
+            pgraphics->FillSolidRect(rectP, ARGB(84, 84, 90, 80));
 
          }
 
@@ -755,8 +755,8 @@ namespace hotplugin
          return;
 
       if(m_memBitmap.get_data() == NULL
-         || m_sizeBitmapData.cx != cx
-         || m_sizeBitmapData.cy != cy)
+            || m_sizeBitmapData.cx != cx
+            || m_sizeBitmapData.cy != cy)
       {
 
          m_sizeBitmapData.cx = cx;
@@ -1071,7 +1071,7 @@ namespace hotplugin
 
       LPARAM lparam;
 
-      message    = pbase->m_id;
+      convert(message, pbase->m_id.int64());
 
       wparam     = pbase->m_wparam;
 

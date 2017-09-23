@@ -1,21 +1,21 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 #include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
 
-   //#include <fcntl.h>
-   //#include <unistd.h>
+//#include <fcntl.h>
+//#include <unistd.h>
 
 
-   //#include <link.h>
+//#include <link.h>
 
-   //#include <dlfcn.h>
-   //#include <ctype.h>
-   //#include <sys/stat.h>
+//#include <dlfcn.h>
+//#include <ctype.h>
+//#include <sys/stat.h>
 #endif
 
 #ifdef LINUX
-   UINT __x11_thread(void * pparam);
+UINT __x11_thread(void * pparam);
 #endif
 
 void dappy(const char * psz);
@@ -49,13 +49,13 @@ namespace aura
       m_typemap.InitHashTable(2048);
 
       m_bAcid = false;
-      
+
       m_pdumpcontext = new dump_context();
 
 #ifndef WINDOWS
-      
+
       exception::translator::attach();
-      
+
 #endif
 
 #ifdef VSNORD
@@ -84,9 +84,9 @@ namespace aura
 #endif
 
       set_app(this);
-      
+
 //#ifdef APPLEOS
-  //    translator::attach();
+      //    translator::attach();
 //#endif
 
       m_nSafetyPoolSize          = 512;        // default size
@@ -276,16 +276,16 @@ namespace aura
       }
 
 #ifndef WINDOWS
-      
+
       exception::translator::detach();
-      
+
 #endif
-      
+
       ::aura::del(m_pdumpcontext);
 
 
-      
-      
+
+
 
 
    }
@@ -404,7 +404,7 @@ namespace aura
 
    void system::construct(const char * pszAppId)
    {
-      
+
 
       ::aura::application::construct(pszAppId);
 
@@ -446,7 +446,7 @@ namespace aura
 
    bool system::process_initialize()
    {
-      
+
 
       //m_peengine = new ::exception::engine(this);
 
@@ -464,9 +464,9 @@ namespace aura
 
       if(!process_command(m_pcommand))
       {
-         
+
          return false;
-         
+
       }
 
       if(is_installing() || is_uninstalling())
@@ -539,22 +539,22 @@ namespace aura
 
       if(!m_spfile->initialize())
       {
-         
+
          thiserr << "failed to initialize file-system";
-         
+
          return false;
-         
+
       }
 
       m_spdir.alloc(allocer());
 
       if(!m_spdir->initialize())
       {
-         
+
          thiserr << "failed to initialize dir-system";
-         
+
          return false;
-         
+
       }
 
 
@@ -607,7 +607,7 @@ namespace aura
    bool system::initialize1()
    {
 
-
+      //m_spwaveout = canew(::aura::audio::wave_out(this));
 
       if(!::aura::application::initialize1())
          return false;
@@ -644,9 +644,9 @@ namespace aura
 
       if(!m_paurasession->begin_synch(&m_iReturnCode))
       {
-         
+
          return false;
-         
+
       }
 
       dappy(string(typeid(*this).name()) + " : ::aura::session OK " + ::str::from(m_iReturnCode));
@@ -694,37 +694,37 @@ namespace aura
    int32_t system::exit_application()
    {
 
-      
+
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paurasystem == this)
                {
-                  
+
                   pair.m_element2->m_paurasystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
+
       }
-         
+
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -890,7 +890,7 @@ namespace aura
 
       //}
 //#ifdef MACOS
-  //    ns_app_terminate();
+      //    ns_app_terminate();
 //#endif
 
       return iRet;
@@ -1045,12 +1045,12 @@ namespace aura
 
    mutex * system::get_openweather_city_mutex()
    {
-      
+
       synch_lock sl(m_pmutex);
 
       if (m_spmutexOpenweatherCity.is_null())
       {
-         
+
 #ifdef METROWIN
 
          m_spmutexOpenweatherCity = canew(mutex(this));
@@ -1060,7 +1060,7 @@ namespace aura
          m_spmutexOpenweatherCity = canew(mutex(this, false, "Global\\ca2_weather_city"));
 
 #endif
-            
+
       }
 
       return m_spmutexOpenweatherCity;
@@ -1153,12 +1153,12 @@ namespace aura
       id = info.name();
 
 #endif
-      
+
       sp(type) & typeinfo = m_typemap[id];
 
       if (typeinfo.is_null())
       {
-       
+
          typeinfo = canew(type(info));
 
       }
@@ -1178,7 +1178,7 @@ namespace aura
    class ::str::base64 & system::base64()
    {
 
-      return m_base64;
+         return m_base64;
 
    }
 
@@ -1476,16 +1476,16 @@ namespace aura
 
    application_ptra system::get_appptra()
    {
-      
+
       application_ptra appptra;
 
-      
+
       {
-      
+
          synch_lock sl(m_pmutex);
-      
+
          appptra = Session.m_appptra;
-         
+
       }
 
       return appptra;
@@ -1768,11 +1768,11 @@ namespace aura
 
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 
-         return "basis";
+      return "basis";
 
 #else
 
-         return "stage";
+      return "stage";
 
 #endif
 
@@ -1784,11 +1784,11 @@ namespace aura
 
 #ifdef X86
 
-         return "x86";
+      return "x86";
 
 #else
 
-         return "x64";
+      return "x64";
 
 #endif
 
@@ -1833,7 +1833,7 @@ namespace aura
 
       int iRetry = 0;
 
-   RetryBuildNumber:
+RetryBuildNumber:
 
       if (iRetry > 10)
       {
@@ -2188,14 +2188,14 @@ namespace aura
 
       if(pcommand != NULL)
       {
-         
+
          if(!::aura::application::process_command(pcommand))
          {
-            
+
             return false;
-            
+
          }
-         
+
       }
 
       if(pcommand == NULL)
@@ -2204,11 +2204,11 @@ namespace aura
       property_set set(this);
 
       var varFile;
-      
+
       string strApp;
 
       set._008ParseCommandFork(pcommand->m_strCommandLine, varFile, strApp);
-      
+
       varFile._001Add(m_pcommand->m_varFile.stra());
 
       string strAppId(strApp);
@@ -2231,20 +2231,20 @@ namespace aura
                                  || strAppId == "bergedge")) &&
             !(set.has_property("install") || set.has_property("uninstall")))
       {
-         
+
          if (set["show_platform"] == 1)
          {
-            
+
             handler()->add_line(" : show_platform=1");
-            
+
          }
-         
+
       }
       else
       {
 
          handler()->add_line(pcommand);
-         
+
          os().on_process_command(pcommand);
 
       }
@@ -2253,7 +2253,7 @@ namespace aura
 
    }
 
-   
+
    void system::request_exit()
    {
 
@@ -2405,16 +2405,16 @@ namespace aura
    void system::defer_check_openweather_city_list()
    {
 
-      
+
       synch_lock sl(get_openweather_city_mutex());
 
       if (m_straCityLo.get_size() == m_straCity.get_size()
-         && m_straCity.get_size() == m_iaIds.get_size()
-         && m_iaIds.get_size() == m_daLon.get_size()
-         && m_daLon.get_size() == m_daLat.get_size()
-         && m_straCity.get_size() > 1)
+            && m_straCity.get_size() == m_iaIds.get_size()
+            && m_iaIds.get_size() == m_daLon.get_size()
+            && m_daLon.get_size() == m_daLat.get_size()
+            && m_straCity.get_size() > 1)
       {
-         
+
          return;
 
       }
@@ -2432,10 +2432,10 @@ namespace aura
 
 
          bOk = m_straCityLo.get_size() == m_straCity.get_size()
-            && m_straCity.get_size() == m_iaIds.get_size()
-            && m_iaIds.get_size() == m_daLon.get_size()
-            && m_daLon.get_size() == m_daLat.get_size()
-            && m_straCity.get_size() > 1;
+               && m_straCity.get_size() == m_iaIds.get_size()
+               && m_iaIds.get_size() == m_daLon.get_size()
+               && m_daLon.get_size() == m_daLat.get_size()
+               && m_straCity.get_size() > 1;
 
 
       }
@@ -2471,10 +2471,10 @@ namespace aura
       }
 
       if (m_straCityLo.get_size() == m_straCity.get_size()
-       && m_straCity.get_size() == m_iaIds.get_size()
-       && m_iaIds.get_size() == m_daLon.get_size()
-       && m_daLon.get_size() == m_daLat.get_size()
-       && m_straCity.get_size() > 1)
+            && m_straCity.get_size() == m_iaIds.get_size()
+            && m_iaIds.get_size() == m_daLon.get_size()
+            && m_daLon.get_size() == m_daLat.get_size()
+            && m_straCity.get_size() > 1)
       {
       }
       else
@@ -2547,11 +2547,11 @@ namespace aura
          city_auto_pointer = new openweather_city;
 
          city_auto_pointer->m_iIndex = openweather_find_city2(
-            strQuery,
-            city_auto_pointer->m_strCit,
-            city_auto_pointer->m_iId,
-            city_auto_pointer->m_dLat,
-            city_auto_pointer->m_dLon);
+                                          strQuery,
+                                          city_auto_pointer->m_strCit,
+                                          city_auto_pointer->m_iId,
+                                          city_auto_pointer->m_dLat,
+                                          city_auto_pointer->m_dLon);
 
       }
 
@@ -2559,7 +2559,7 @@ namespace aura
 
    }
 
-   
+
    index system::openweather_find_city2(string strQuery, string & strCit, int64_t & iId, double & dLat, double & dLon)
    {
 
@@ -2584,7 +2584,7 @@ namespace aura
          return openweather_find_city2(strQuery, "", strCit, iId, dLat, dLon, true);
 
       }
-      
+
 
       for (index iCount = stra.get_count() - 1; iCount >= 1; iCount--)
       {
@@ -2619,7 +2619,7 @@ namespace aura
    }
 
 
-   
+
    index system::openweather_find_city2(string strQ1, string strQ2, string & strCit, int64_t & iId, double & dLat, double & dLon, bool bPrefix)
    {
 
@@ -2753,23 +2753,23 @@ namespace aura
       strTry = strQueryLo;
 
       strTry.replace("st.", "saint");
-      strTry.replace("são", "sao");
-      strTry.replace("ž", "z");
-      strTry.replace("á", "a");
-      strTry.replace("à", "a");
-      strTry.replace("ä", "a");
-      strTry.replace("é", "e");
-      strTry.replace("è", "e");
-      strTry.replace("ë", "e");
-      strTry.replace("í", "i");
-      strTry.replace("ì", "i");
-      strTry.replace("ï", "i");
-      strTry.replace("ó", "o");
-      strTry.replace("ò", "o");
-      strTry.replace("ö", "o");
-      strTry.replace("ú", "u");
-      strTry.replace("ù", "u");
-      strTry.replace("ü", "u");
+      strTry.replace(unitext("são"), "sao");
+      strTry.replace(unitext("ž"), "z");
+      strTry.replace(unitext("á"), "a");
+      strTry.replace(unitext("à"), "a");
+      strTry.replace(unitext("ä"), "a");
+      strTry.replace(unitext("é"), "e");
+      strTry.replace(unitext("è"), "e");
+      strTry.replace(unitext("ë"), "e");
+      strTry.replace(unitext("í"), "i");
+      strTry.replace(unitext("ì"), "i");
+      strTry.replace(unitext("ï"), "i");
+      strTry.replace(unitext("ó"), "o");
+      strTry.replace(unitext("ò"), "o");
+      strTry.replace(unitext("ö"), "o");
+      strTry.replace(unitext("ú"), "u");
+      strTry.replace(unitext("ù"), "u");
+      strTry.replace(unitext("ü"), "u");
 
       if (bPrefix)
       {
@@ -2801,7 +2801,7 @@ namespace aura
 
       return -1;
 
-   found:
+found:
 
       strCit   = m_straCity[iFind];
 
@@ -2819,7 +2819,7 @@ namespace aura
    string system::url_encode(const string & str)
    {
 
-	   //throw interface_only_exception(this);
+      //throw interface_only_exception(this);
 
       return url_encode_dup(str);
 
@@ -2841,7 +2841,7 @@ namespace aura
    class ::crypto::crypto & system::crypto()
    {
 
-      return *m_spcrypto;
+         return *m_spcrypto;
 
    }
 
@@ -2856,73 +2856,57 @@ namespace aura
 
    bool system::on_open_file(var varFile, string strExtra)
    {
-      
+
       auto appptra = get_appptra();
-      
+
       ::aura::application * papp = NULL;
-      
+
       if(appptra.get_size() > 0)
       {
-         
+
          papp = appptra[0];
-         
+
       }
       else
       {
-         
+
          papp = this;
-         
+
       }
-      
+
       if(papp != NULL)
       {
-      
+
          if(varFile.is_empty())
          {
 
             papp->handler()->add_fork("app.exe : open_default " + strExtra);
-            
+
          }
          else
          {
 
-            papp->handler()->add_fork("app.exe " + varFile.get_file_path() + ::str::has_char(strExtra, " : "));
-            
+            papp->handler()->add_fork("app.exe \"" + varFile.get_file_path() + "\" " + ::str::has_char(strExtra, " : "));
+
          }
-         
+
          return true;
-         
+
       }
-      
+
       return false;
-      
+
    }
 
+
+   LPWAVEOUT system::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
+   {
+
+      return get_appptra()[0]->waveout_open(iChannel, pformat, pcallback);
+
+   }
+
+
 } // namespace aura
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

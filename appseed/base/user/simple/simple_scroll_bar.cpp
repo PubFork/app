@@ -10,8 +10,8 @@ simple_scroll_bar::simple_scroll_bar(::aura::application * papp) :
    ::user::interaction(papp),
    m_penDraw(allocer()),
    m_brushDraw(allocer()),
-   m_rgnA(allocer()), // regi�o da primeira seta
-   m_rgnB(allocer()) // regi�o da segunda seta
+   m_rgnA(allocer()), // região da primeira seta
+   m_rgnB(allocer()) // região da segunda seta
 {
    //m_brushNull->CreateStockObject(NULL_BRUSH);
    m_flagNonClient.unsignalize(non_client_background);
@@ -417,7 +417,7 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
 
    if(m_eorientation == orientation_horizontal)
    {
-      
+
       int32_t iWidth = rectClient.width() - GetSystemMetrics(SM_CXHSCROLL) * 2 - sizeTrack.cx;
       //nPos = point.x - m_ptTrackOffset.x;
       //nPos -= GetSystemMetrics(SM_CXHSCROLL);
@@ -476,7 +476,7 @@ int32_t simple_scroll_bar::SetTrackingPos(point point)
 void simple_scroll_bar::_001OnHScroll(::message::message * pobj)
 {
    SCAST_PTR(::message::scroll, pscroll, pobj);
-      pscroll->m_bRet = false;
+   pscroll->m_bRet = false;
 }
 
 int32_t simple_scroll_bar::_001GetScrollPos()
@@ -817,8 +817,8 @@ pParentWnd->SendMessage(WM_VSCROLL, MAKEWPARAM(SB_LINEDOWN, m_scrollinfo.nPos), 
 
 void simple_scroll_bar::_001OnCreate(::message::message * pobj)
 {
-   
-   
+
+
    SCAST_PTR(::message::create, pcreate, pobj);
 
 
@@ -958,37 +958,37 @@ void simple_scroll_bar::update_drawing_objects()
 class trw:
    virtual public ::user::interaction
 {
-public:
+   public:
 
-   point pt1;
-   point pt2;
+      point pt1;
+      point pt2;
 
 
-   trw(::aura::application * papp): ::object(papp),::user::interaction(papp)
-   {
-
-      if(create_window_ex(WS_EX_LAYERED,NULL,"",WS_VISIBLE,null_rect(),NULL, /*nIDResource*/ 0,NULL))
+      trw(::aura::application * papp): ::object(papp),::user::interaction(papp)
       {
 
-         TRACE("created trw");
+         if(create_window_ex(WS_EX_LAYERED,NULL,"",WS_VISIBLE,null_rect(),NULL, /*nIDResource*/ 0,NULL))
+         {
+
+            TRACE("created trw");
+
+         }
+
+         best_monitor(NULL,null_rect(),true);
 
       }
 
-      best_monitor(NULL,null_rect(),true);
+      virtual ~trw()
+      {
 
-   }
-
-   virtual ~trw()
-   {
-
-   }
+      }
 
 
-   virtual void _001OnDraw(::draw2d::graphics * pgraphics)
-   {
-      pgraphics->MoveTo(pt1);
-      pgraphics->LineTo(pt2);
-   }
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics)
+      {
+         pgraphics->MoveTo(pt1);
+         pgraphics->LineTo(pt2);
+      }
 };
 
 void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
@@ -1027,9 +1027,7 @@ void simple_scroll_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 {
 
-   COLORREF crBackground = 0;
-
-   style_color(crBackground, ::user::color_background);
+   COLORREF crBackground = _001GetColor(::user::color_background);
 
    rect rectClient;
 
@@ -1282,7 +1280,7 @@ void simple_scroll_bar::_001OnVerisimpleDraw(::draw2d::graphics * pgraphics)
 void simple_scroll_bar::_001OnShowWindow(::message::message * pobj)
 {
    SCAST_PTR(::message::show_window, pshowwindow, pobj);
-      pshowwindow->m_bRet = false;
+   pshowwindow->m_bRet = false;
 
    // xxx   TwiOnShowWindow(bShow, nStatus);
 }

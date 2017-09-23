@@ -14,7 +14,7 @@ namespace draw2d
    pen_sp::pen_sp(::draw2d::graphics * pgraphics,double dWidth,COLORREF crColor):
       smart_pointer < pen >(pgraphics->allocer())
    {
-      
+
       m_p->create_solid(dWidth,crColor);
 
    }
@@ -1291,7 +1291,7 @@ namespace draw2d
 
    bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
-   
+
       // return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop);
 
       if (m_pdibAlphaBlend != NULL)
@@ -1414,11 +1414,11 @@ namespace draw2d
             if (!pdibWork->create(sizeDst))
                return false;
             if (!pdibWork->get_graphics()->StretchBltRaw(
-               0, 0,
-               nDstWidth, nDstHeight,
-               pgraphicsSrc,
-               xSrc, ySrc,
-               nSrcWidth, nSrcHeight))
+                     0, 0,
+                     nDstWidth, nDstHeight,
+                     pgraphicsSrc,
+                     xSrc, ySrc,
+                     nSrcWidth, nSrcHeight))
                return false;
 
 
@@ -1447,7 +1447,7 @@ namespace draw2d
             pdibWork4->Fill(255, 0, 0, 0);
 
             pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDst), MAX(0, m_ptAlphaBlend.y - yDst)),
-               m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDst - m_ptAlphaBlend.x), MAX(0, yDst - m_ptAlphaBlend.y)), sizeDst);
+                            m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDst - m_ptAlphaBlend.x), MAX(0, yDst - m_ptAlphaBlend.y)), sizeDst);
 
             pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
@@ -2991,7 +2991,7 @@ namespace draw2d
       throw interface_only_exception(get_app());
    }
 
-   
+
    void graphics::DPtoLP(LPSIZE lpSize) const
    {
 
@@ -3086,7 +3086,7 @@ namespace draw2d
 
          if (iRange >= iStart)
          {
-            
+
             sizea.add(GetTextExtent(str, str.get_length(), iAsciiCharCount));
 
          }
@@ -3233,28 +3233,40 @@ namespace draw2d
 
       if(nFormat & DT_RIGHT)
       {
+
          dx = lpRect.right - lpRect.left - sz.cx;
+
       }
       else if(nFormat & DT_CENTER)
       {
+
          dx = ((lpRect.right - lpRect.left) - (sz.cx)) / 2.0;
+
       }
       else
       {
+
          dx = 0.;
+
       }
 
       if(nFormat & DT_BOTTOM)
       {
+
          dy = lpRect.bottom - lpRect.top - sz.cy;
+
       }
       else if(nFormat & DT_VCENTER)
       {
+
          dy = ((lpRect.bottom - lpRect.top) - (sz.cy)) / 2.0;
+
       }
       else
       {
+
          dy = 0.;
+
       }
 
       if(nFormat & DT_EXPANDTABS)
@@ -3544,7 +3556,7 @@ namespace draw2d
             pdibWork4->Fill(255, 0, 0, 0);
 
             pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDest), MAX(0, m_ptAlphaBlend.y - yDest)),
-               m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
+                            m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
 
             pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
@@ -3800,9 +3812,9 @@ namespace draw2d
 
    }
 
-   memory_graphics::memory_graphics() 
+   memory_graphics::memory_graphics()
    {
-      
+
    }
 
    memory_graphics::memory_graphics(const ::aura::allocatorsp & allocer) :
@@ -3816,13 +3828,13 @@ namespace draw2d
 
       if (is_null())
       {
-         
+
          ::draw2d::graphics_sp::alloc(allocer);
 
          ::draw2d::graphics_sp::m_p->CreateCompatibleDC(NULL);
 
       }
-      
+
    }
 
 
@@ -3861,11 +3873,11 @@ namespace draw2d
    //
    // Purpose:     Draws a rounded rectangle with a solid pen
    //
-   // Parameters:  pGraphics	- [in]	pointer to the Graphics device
-   //				r			- [in]	Rect that defines the round rectangle boundaries
-   //				color		- [in]	Color value for the brush
-   //				radius		- [in]  radius of the rounded corner
-   //				width		- [in]  width of the border
+   // Parameters:  pGraphics  - [in]   pointer to the Graphics device
+   //          r        - [in]   Rect that defines the round rectangle boundaries
+   //          color    - [in]   Color value for the brush
+   //          radius      - [in]  radius of the rounded corner
+   //          width    - [in]  width of the border
    //
    // Returns:     None
    //
@@ -3893,11 +3905,11 @@ namespace draw2d
    //
    // Purpose:     Draws a rounded rectangle with a solid pen
    //
-   // Parameters:  pGraphics	- [in]	pointer to the Graphics device
-   //				r			- [in]	Rect that defines the round rectangle boundaries
-   //				color		- [in]	Color value for the brush
-   //				radius		- [in]  radius of the rounded corner
-   //				width		- [in]  width of the border
+   // Parameters:  pGraphics  - [in]   pointer to the Graphics device
+   //          r        - [in]   Rect that defines the round rectangle boundaries
+   //          color    - [in]   Color value for the brush
+   //          radius      - [in]  radius of the rounded corner
+   //          width    - [in]  width of the border
    //
    // Returns:     None
    //
@@ -4040,12 +4052,12 @@ namespace draw2d
    // fill_round_rect()
    //
    // Purpose:     Fills a rounded rectangle with a solid brush.  Draws the border
-   //				first then fills in the rectangle.
+   //          first then fills in the rectangle.
    //
-   // Parameters:  pGraphics	- [in]	pointer to the Graphics device
-   //				r			- [in]	Rect that defines the round rectangle boundaries
-   //				color		- [in]	Color value for the brush
-   //				radius		- [in]  radius of the rounded corner
+   // Parameters:  pGraphics  - [in]   pointer to the Graphics device
+   //          r        - [in]   Rect that defines the round rectangle boundaries
+   //          color    - [in]   Color value for the brush
+   //          radius      - [in]  radius of the rounded corner
    //
    // Returns:     None
    //
@@ -4063,14 +4075,14 @@ namespace draw2d
    // fill_round_rect()
    //
    // Purpose:     Fills a rounded rectangle with a solid brush.  Draws the border
-   //				first then fills in the rectangle.
+   //          first then fills in the rectangle.
    //
-   // Parameters:  pGraphics	- [in]	pointer to the Graphics device
-   //				pBrush		- [in]  pointer to a Brush
-   //				r			- [in]	Rect that defines the round rectangle boundaries
-   //				color		- [in]	Color value for the border (needed in case the
-   //									brush is a type other than solid)
-   //				radius		- [in]  radius of the rounded corner
+   // Parameters:  pGraphics  - [in]   pointer to the Graphics device
+   //          pBrush      - [in]  pointer to a Brush
+   //          r        - [in]   Rect that defines the round rectangle boundaries
+   //          color    - [in]   Color value for the border (needed in case the
+   //                         brush is a type other than solid)
+   //          radius      - [in]  radius of the rounded corner
    //
    // Returns:     None
    //
@@ -4265,7 +4277,7 @@ namespace draw2d
       rect rect;
       rect.left = 0;
       rect.top = 0;
-      rect.right = sz.cx;
+      convert(rect.right, sz.cx);
       rect.bottom = iLineSpacing;
 
       int32_t align = 0;
@@ -4344,17 +4356,17 @@ namespace draw2d
                str.Right(iCount),
                iCount);*/
             }
-            
+
             pgraphics->SelectObject(pfontOld);
-            
+
          }
-         
+
       }
       else
       {
-         
+
          pgraphics->text_out(rect.left, rect.top, str);
-         
+
       }
 
       if (!bLastLine && str2.get_length() > 0)
@@ -4474,7 +4486,8 @@ namespace draw2d
                }
                lpszPrevious      = lpsz;
                lpsz              = ::str::utf8_inc(lpsz);
-            } while(lpsz != NULL);
+            }
+            while(lpsz != NULL);
          }
 
          if (sz.cx > rectClip.width())
@@ -5203,11 +5216,13 @@ namespace draw2d
       y1234 = (y123 + y234)*0.5f;
 
       d = nanosvg_distPtSeg(x1234, y1234, x1, y1, x4, y4);
-      if (d > tol*tol) {
+      if (d > tol*tol)
+      {
          nanosvg_cubicBez(x1, y1, x12, y12, x123, y123, x1234, y1234, tol, level + 1);
          nanosvg_cubicBez(x1234, y1234, x234, y234, x34, y34, x4, y4, tol, level + 1);
       }
-      else {
+      else
+      {
          LineTo(x4, y4);
       }
    }
@@ -5218,11 +5233,13 @@ namespace draw2d
 
       BeginPath();
       MoveTo(pts[0], pts[1]);
-      for (i = 0; i < npts - 1; i += 3) {
+      for (i = 0; i < npts - 1; i += 3)
+      {
          float* p = &pts[i * 2];
          nanosvg_cubicBez(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], tol, 0);
       }
-      if (closed) {
+      if (closed)
+      {
          MoveTo(pts[0], pts[1]);
       }
       EndPath();
@@ -5236,7 +5253,8 @@ namespace draw2d
       //glColor4ubv(lineColor);
       //glBegin(GL_LINES);
       BeginPath();
-      for (i = 0; i < npts - 1; i += 3) {
+      for (i = 0; i < npts - 1; i += 3)
+      {
          float* p = &pts[i * 2];
          MoveTo(p[0], p[1]);
          LineTo(p[2], p[3]);
@@ -5304,14 +5322,16 @@ namespace draw2d
       hw = pimage->width*0.5f;
       hh = pimage->height*0.5f;
 
-      if (width / hw < height / hh) {
+      if (width / hw < height / hh)
+      {
          aspect = (float)height / (float)width;
          view[0] = cx - hw * 1.2f;
          view[2] = cx + hw * 1.2f;
          view[1] = cy - hw * 1.2f * aspect;
          view[3] = cy + hw * 1.2f * aspect;
       }
-      else {
+      else
+      {
          aspect = (float)width / (float)height;
          view[0] = cx - hh * 1.2f * aspect;
          view[2] = cx + hh * 1.2f * aspect;

@@ -55,10 +55,15 @@ bool dialog::show(const char * pszMatter, property_set  * ppropertyset)
 
    if(m_pdocument == NULL)
    {
+      
       string str;
+      
       str.Format("Could not show dialog %s", pszMatter);
+      
       TRACE(str);
+      
       return false;
+      
    }
 
    if(ppropertyset != NULL)
@@ -73,8 +78,6 @@ bool dialog::show(const char * pszMatter, property_set  * ppropertyset)
    m_pdocument->on_open_document(path);
 
    m_pframe =  (m_pdocument->get_view()->GetParentFrame());
-   m_pframe->m_bWindowFrame         = true;
-   //m_pframe->m_bblur_Background     = true;
 
    on_position_parent_frame();
 
@@ -89,9 +92,7 @@ bool dialog::show(const char * pszMatter, property_set  * ppropertyset)
 void dialog::on_show(const char * pszMatter, property_set  * ppropertyset)
 {
 
-   UNREFERENCED_PARAMETER(pszMatter);
-
-   UNREFERENCED_PARAMETER(ppropertyset);
+   set_need_redraw();
 
 }
 
@@ -122,9 +123,7 @@ void dialog::on_position_parent_frame()
    
    rect rectOpen;
 
-   on_layout();
-   
-   GetTopLevelFrame()->best_monitor(rectOpen);
+   m_pframe->best_monitor(rectOpen);
 
    int32_t iWidth = rectOpen.width();
 
@@ -132,12 +131,16 @@ void dialog::on_position_parent_frame()
 
    rectOpen.deflate(iWidth / 5, iHeight / 5);
 
-   m_pframe->SetWindowPos(ZORDER_TOP, rectOpen.left,
-      rectOpen.top,
-      rectOpen.width(), rectOpen.height(), SWP_SHOWWINDOW);
-
-   m_pframe->RedrawWindow();
-
+   m_pframe->WfiRestore(true);
+   
+   m_pframe->SetWindowPos(ZORDER_TOP, rectOpen, SWP_SHOWWINDOW);
+   
+   m_pframe->ActivateFrame();
+   
+   m_pframe->set_need_layout();
+   
+   m_pframe->set_need_redraw();
+   
 }
 
 void dialog::OnCancel()

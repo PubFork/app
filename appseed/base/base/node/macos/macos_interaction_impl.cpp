@@ -343,6 +343,8 @@ namespace macos
          cs.style &= ~WS_CHILD;
 
       }
+      
+      install_message_routing(this);
 
       hook_window_create(m_pui);
 
@@ -396,9 +398,10 @@ namespace macos
          
          bOk = false;
          
-         ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
+         threadrefa_post_quit_and_wait(one_minute());
+         //::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
          
-         ::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
+         //::multithreading::post_quit_and_wait(m_queuethread, seconds(5));
          
          //for(auto & pthread : m_mapqueue)
          {
@@ -584,7 +587,9 @@ namespace macos
 
       }
 
-      m_pui->on_layout();
+      //m_pui->on_layout();
+      
+      m_pui->set_need_layout();
 
 
 
@@ -609,15 +614,15 @@ namespace macos
       
       delete_all_timers();
       
-      ::multithreading::post_quit_and_wait(m_pthreadDraw, seconds(5));
-      
-      //for(auto & pthread : m_mapqueue)
-      {
-         
-        // ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
-          ::multithreading::post_quit_and_wait(m_queuethread, millis(5));
-         
-      }
+//      ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
+//      
+//      //for(auto & pthread : m_mapqueue)
+//      {
+//         
+//        // ::multithreading::post_quit_and_wait(pthread.element2(), millis(200));
+//          ::multithreading::post_quit_and_wait(m_queuethread, millis(5));
+//         
+//      }
 
       
    }
@@ -631,7 +636,6 @@ namespace macos
       
       pobj->m_bRet = true;
       
-      // cleanup main and active windows
       ::thread* pthread = ::get_thread();
       
       if (pthread != NULL)
@@ -652,18 +656,6 @@ namespace macos
       
       ASSERT(get_handle() == NULL);
       
-      m_pfnDispatchWindowProc = &interaction_impl::_start_user_message_handler;
-
-      signalizable_disconnect_all();
-
-      if (m_pui != NULL)
-      {
-
-         m_pui->signalizable_disconnect_all();
-
-      }
-
-      // call special m_pui->send-cleanup routine
       PostNcDestroy();
 
       if (m_pui != NULL)
@@ -1076,10 +1068,17 @@ namespace macos
 
 
 
-   bool interaction_impl::_001OnCmdMsg(::user::command * pcommand)
+   void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      if (command_target::_001OnCmdMsg(pcommand))
-         return TRUE;
+      
+      command_target::_001OnCmdMsg(pcommand);
+      
+      if(pcommand->m_bRet)
+      {
+         
+         return;
+         
+      }
 
       //      bool b;
 
@@ -1120,7 +1119,7 @@ namespace macos
          pbase->m_id == WM_CHAR)
       {
 
-         SCAST_PTR(::message::key, pkey, pobj);
+         SCAST_PTR(::message::key, pkey, pbase);
 
          Session.keyboard().translate_os_key_message(pkey);
 
@@ -1148,8 +1147,8 @@ namespace macos
 
       if (m_pui != NULL)
       {
-         m_pui->pre_translate_message(pobj);
-         if (pobj->m_bRet)
+         m_pui->pre_translate_message(pbase);
+         if (pbase->m_bRet)
             return;
       }
 
@@ -1345,9 +1344,11 @@ namespace macos
          
       }
       
-      (this->*m_pfnDispatchWindowProc)(pobj);
+      //(this->*m_pfnDispatchWindowProc)(pobj);
       
-      if (pobj->m_bRet)
+      route_message(pbase);
+      
+      if (pbase->m_bRet)
       {
          
          return;
@@ -2238,7 +2239,7 @@ namespace macos
       else
       {
 
-         m_pthreadDraw = ::fork(get_app(), [&]()
+         m_pthreadUpdateWindow = m_pui->fork([&]()
          {
 
             DWORD dwStart;
@@ -2262,9 +2263,22 @@ namespace macos
                   
                   if (!m_pui->m_bLockWindowUpdate)
                   {
+                     
+                     bool bUpdateBuffer = m_pui->check_need_layout()
+                     || m_pui->check_need_zorder() || m_pui->check_show_flags();
+                     
+                     if(bUpdateBuffer)
+                     {
+                        
+                     }
+                     else if(m_pui->IsWindowVisible())
+                     {
+                        
+                        bUpdateBuffer = m_pui->has_pending_graphical_update();
+                        
+                     }
 
-                     if (m_pui->has_pending_graphical_update()
-                         || m_pui->check_need_layout())
+                     if(bUpdateBuffer)
                      {
 
                         _001UpdateBuffer();
@@ -2306,6 +2320,8 @@ namespace macos
             }
             
             output_debug_string("m_pthreadDraw has finished!");
+            
+            m_pthreadUpdateWindow.release();
             
             release_graphics_resources();
             
@@ -5502,7 +5518,7 @@ namespace macos
 
       ::message::key * pkey = canew(::message::key(get_app()));
 
-      pkey->m_uiMessage = WM_KEYDOWN;
+      pkey->m_id = WM_KEYDOWN;
 
       pkey->m_nChar = uiKeyCode;
 
@@ -5529,7 +5545,7 @@ namespace macos
 
       ::message::key * pkey = canew(::message::key(get_app()));
 
-      pkey->m_uiMessage = WM_KEYUP;
+      pkey->m_id = WM_KEYUP;
 
       pkey->m_nChar = uiKeyCode;
 
@@ -5616,7 +5632,7 @@ namespace macos
 
             ::message::mouse_activate * pmouseactivate = canew(::message::mouse_activate(get_app()));
 
-            pmouseactivate->m_uiMessage = WM_MOUSEACTIVATE;
+            pmouseactivate->m_id = WM_MOUSEACTIVATE;
 
             spbase = pmouseactivate;
 
@@ -5627,7 +5643,7 @@ namespace macos
 
                ::message::activate * pactivate = canew(::message::activate(get_app()));
 
-               pactivate->m_uiMessage = WM_ACTIVATE;
+               pactivate->m_id = WM_ACTIVATE;
                pactivate->m_wparam = WA_CLICKACTIVE;
                pactivate->m_nState = WA_CLICKACTIVE;
                pactivate->m_bMinimized = false;
@@ -5660,13 +5676,13 @@ namespace macos
          if (iButton == 1)
          {
             
-            pmouse->m_uiMessage = WM_RBUTTONDOWN;
+            pmouse->m_id = WM_RBUTTONDOWN;
             
          }
          else
          {
             
-            pmouse->m_uiMessage = WM_LBUTTONDOWN;
+            pmouse->m_id = WM_LBUTTONDOWN;
             
          }
          
@@ -5700,13 +5716,13 @@ namespace macos
       if (iButton == 1)
       {
          
-         pmouse->m_uiMessage = WM_RBUTTONUP;
+         pmouse->m_id = WM_RBUTTONUP;
          
       }
       else
       {
          
-         pmouse->m_uiMessage = WM_LBUTTONUP;
+         pmouse->m_id = WM_LBUTTONUP;
          
       }
       
@@ -5738,13 +5754,13 @@ namespace macos
       if (iButton == 1)
       {
          
-         pmouse->m_uiMessage = WM_RBUTTONDBLCLK;
+         pmouse->m_id = WM_RBUTTONDBLCLK;
          
       }
       else
       {
          
-         pmouse->m_uiMessage = WM_LBUTTONDBLCLK;
+         pmouse->m_id = WM_LBUTTONDBLCLK;
          
       }
       
@@ -5773,7 +5789,7 @@ namespace macos
 
       ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-      pmouse->m_uiMessage = WM_MOUSEMOVE;
+      pmouse->m_id = WM_MOUSEMOVE;
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
@@ -5799,7 +5815,7 @@ namespace macos
 
       ::message::mouse * pmouse = canew(::message::mouse(get_app()));
 
-      pmouse->m_uiMessage = WM_MOUSEMOVE;
+      pmouse->m_id = WM_MOUSEMOVE;
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;

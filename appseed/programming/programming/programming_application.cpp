@@ -9,7 +9,7 @@ namespace programming
       m_semCompiler(this, MAX(1, ::get_processor_count()), MAX(1, ::get_processor_count()))
    {
 
-      m_pauraapp->add_route(this, &application::on_application_signal);
+      //
 
    }
 
@@ -60,6 +60,7 @@ namespace programming
          {
 
             return;
+            
 
          }
 

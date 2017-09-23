@@ -23,7 +23,7 @@ namespace windows
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType, NULL, &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
@@ -63,17 +63,17 @@ namespace windows
       if(bCreate)
       {
          return ERROR_SUCCESS == ::RegCreateKey(
-            hkey,
-            lpcszSubKey,
-            &m_hkey);
+                   hkey,
+                   lpcszSubKey,
+                   &m_hkey);
 
       }
       else
       {
          return ERROR_SUCCESS == ::RegOpenKey(
-            hkey,
-            lpcszSubKey,
-            &m_hkey);
+                   hkey,
+                   lpcszSubKey,
+                   &m_hkey);
       }
    }
 
@@ -82,7 +82,7 @@ namespace windows
       if(m_hkey != NULL)
       {
          if(ERROR_SUCCESS == ::RegCloseKey(
-            m_hkey))
+                  m_hkey))
          {
             m_hkey = NULL;
          }
@@ -114,7 +114,7 @@ namespace windows
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, NULL, &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
@@ -133,7 +133,7 @@ namespace windows
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, NULL, &cbValue))
          return false;
       if(dwType != REG_BINARY)
          return false;
@@ -153,8 +153,8 @@ namespace windows
    {
       wstring wstr(strValue);
       return ERROR_SUCCESS ==
-         RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
-               (LPBYTE)wstr.c_str(), (wstr.get_length() + 1)*sizeof(WCHAR));
+             RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
+                            (LPBYTE)wstr.c_str(), convert < DWORD > ((wstr.get_length() + 1)*sizeof(WCHAR)));
    }
 
    bool registry::Key::SetValue(
@@ -163,36 +163,45 @@ namespace windows
    {
       wstring wstr(pszValue);
       return ERROR_SUCCESS ==
-         RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
-         (LPBYTE)wstr.c_str(), (wstr.get_length() + 1) * sizeof(WCHAR));
+             RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_SZ,
+                            (LPBYTE)wstr.c_str(), convert < DWORD > ((wstr.get_length() + 1) * sizeof(WCHAR)));
    }
 
-   bool registry::Key::SetValue(
-      const char * lpcszValueName,
-      const memory & memValue)
+   bool registry::Key::SetValue(const char * lpcszValueName, const memory & memValue)
    {
 
       return ERROR_SUCCESS ==
-         RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_BINARY,
-         (LPBYTE)memValue.get_data(), memValue.get_size());
+             RegSetValueExW(
+                m_hkey,
+                wstring(lpcszValueName),
+                0,
+                REG_BINARY,
+                (LPBYTE)memValue.get_data(),
+                convert < DWORD > (memValue.get_size())
+             );
+
    }
 
 
-   bool registry::Key::SetValue(
-      const char * lpcszValueName,
-      DWORD dwValue)
+   bool registry::Key::SetValue(const char * lpcszValueName, DWORD dwValue)
    {
-      
+
       return ERROR_SUCCESS ==
-         RegSetValueExW(m_hkey, wstring(lpcszValueName), 0, REG_DWORD,
-         (LPBYTE)&dwValue, sizeof(dwValue));
+             RegSetValueExW(
+                m_hkey,
+                wstring(lpcszValueName),
+                0,
+                REG_DWORD,
+                (LPBYTE)&dwValue,
+                sizeof(dwValue));
+
    }
 
    bool registry::Key::DeleteValue(
       const char * lpcszValueName)
    {
       return ERROR_SUCCESS ==
-         ::RegDeleteValue(m_hkey, (LPTSTR)lpcszValueName);
+             ::RegDeleteValue(m_hkey, (LPTSTR)lpcszValueName);
    }
 
    bool registry::Key::DeleteKey()
@@ -202,7 +211,7 @@ namespace windows
       // using NULL for the value parameter
       // deletes the key.
       return ERROR_SUCCESS ==
-         ::RegDeleteKey(m_hkey, NULL);
+             ::RegDeleteKey(m_hkey, NULL);
    }
 
    ::count registry::Key::EnumKey(stringa & stra)
@@ -212,15 +221,15 @@ namespace windows
          m_hkey,
          NULL,
          NULL,
-        NULL,
-        NULL,
-        &dwMaxSubKeyLen,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL);
+         NULL,
+         NULL,
+         &dwMaxSubKeyLen,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL);
       int32_t iSize = MAX(dwMaxSubKeyLen, 1024);
       char *buf = (char *) malloc(iSize);
       int32_t iKey = 0;
@@ -247,14 +256,14 @@ namespace windows
       DWORD dwIndex = 0;
       DWORD dwLen = dwMaxValueNameLen;
       while(ERROR_SUCCESS == (l = RegEnumValue(
-         m_hkey,
-         dwIndex,
-         pszBuf,
-         &dwLen,
-         NULL,
-         NULL,
-         NULL,
-         NULL)))
+                                     m_hkey,
+                                     dwIndex,
+                                     pszBuf,
+                                     &dwLen,
+                                     NULL,
+                                     NULL,
+                                     NULL,
+                                     NULL)))
       {
          stra.add(pszBuf);
          dwIndex++;

@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "aura/primitive/collection/collection_sort.h"
 
 
 namespace data
@@ -26,7 +25,7 @@ namespace data
 
    tree * tree_item::get_tree()
    {
-      
+
       return m_ptree;
 
    }
@@ -310,7 +309,7 @@ namespace data
       }
 
 
-   
+
 
       return false;
 
@@ -478,7 +477,7 @@ namespace data
 
    //tree_item * tree_item::get_child_or_next(index * iLevelOffset)
    //{
-   //   
+   //
    //   if (!(m_uiTreeItemFlag & flag_child_or_next))
    //   {
 
@@ -578,7 +577,7 @@ namespace data
    //tree_item * tree_item::calc_previous()
    tree_item * tree_item::get_previous()
    {
-      
+
       if (m_pparent == NULL)
       {
 
@@ -602,7 +601,7 @@ namespace data
    //tree_item * tree_item::calc_next()
    tree_item * tree_item::get_next()
    {
-      
+
       if (m_pparent == NULL)
       {
 
@@ -650,7 +649,7 @@ namespace data
 
    }
 
-   
+
 
 
 
@@ -704,7 +703,7 @@ namespace data
       }
 
       m_iIndexHint = iFind;
-      // safe hint for many cases, 
+      // safe hint for many cases,
       // specially for ca2, hint is any hint,
       // or maybe not
       m_ptree->m_iaLevelNext[iLevel] = MAX(0, iFind - 6);
@@ -716,7 +715,7 @@ namespace data
    //tree_item * tree_item::calc_next_or_parent(index * iLevelOffset)
    tree_item * tree_item::get_next_or_parent(index * iLevelOffset)
    {
-      
+
       if (m_pparent == NULL)
       {
 
@@ -748,7 +747,7 @@ namespace data
    //tree_item * tree_item::calc_child_or_next(index * iLevelOffset)
    tree_item * tree_item::get_child_or_next(index * iLevelOffset)
    {
-      
+
       tree_item * pitem = first_child();
 
       if (pitem != NULL)
@@ -838,18 +837,20 @@ namespace data
 
    tree_item * tree_item::get_item(ETreeNavigation enavigation, index * pindexLevel)
    {
-      tree_item * pitem;
+
+      //tree_item * pitem;
+
       switch(enavigation)
       {
       case TreeNavigationExpandedForward:
-         
+
          return get_child_next_or_parent(pindexLevel);
 
       case TreeNavigationProperForward:
-         
+
          if ((m_dwState & ::data::tree_item_state_expanded) != 0)
          {
-            
+
             return get_child_next_or_parent(pindexLevel);
 
          }
@@ -873,49 +874,49 @@ namespace data
       switch(erelative)
       {
       case RelativeFirstChild:
-         {
-            return m_children.has_elements() ? m_children.first_sp() : NULL;
-         }
-         break;
+      {
+         return m_children.has_elements() ? m_children.first_sp() : NULL;
+      }
+      break;
       case RelativeLastChild:
-         {
-            return m_children.has_elements() ? m_children.last_sp() : NULL;
-         }
+      {
+         return m_children.has_elements() ? m_children.last_sp() : NULL;
+      }
       case RelativeParent:
-         {
-            return m_pparent;
-         }
-         break;
+      {
+         return m_pparent;
+      }
+      break;
       case RelativeFirstSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            return m_pparent->get_item(RelativeFirstChild);
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         return m_pparent->get_item(RelativeFirstChild);
+      }
+      break;
       case RelativePreviousSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            index iFind = get_index();
-            if (iFind <= 0)
-               return NULL;
-            return m_pparent->m_children[iFind - 1];
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         index iFind = get_index();
+         if (iFind <= 0)
+            return NULL;
+         return m_pparent->m_children[iFind - 1];
+      }
+      break;
       case RelativeNextSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            index iFind = get_index();
-            if (iFind < 0 || iFind >= m_pparent->m_children.get_upper_bound())
-               return NULL;
-            return m_pparent->m_children[iFind + 1];
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         index iFind = get_index();
+         if (iFind < 0 || iFind >= m_pparent->m_children.get_upper_bound())
+            return NULL;
+         return m_pparent->m_children[iFind + 1];
+      }
+      break;
       case RelativeLastSibling:
-         {
-            ASSERT(m_pparent != NULL);
-            return m_pparent->get_item(RelativeLastChild);
-         }
-         break;
+      {
+         ASSERT(m_pparent != NULL);
+         return m_pparent->get_item(RelativeLastChild);
+      }
+      break;
       default:
          // Not Expected
          ASSERT(FALSE);
@@ -925,15 +926,15 @@ namespace data
 
    tree_item * tree_item::calc_previous(bool bParent)
    {
-      
+
       if (m_pparent == NULL)
          return NULL;
-      
+
       index iFind = get_index();
-      
+
       if (iFind <= 0)
       {
-         
+
          if (bParent)
             return m_pparent;
          else
@@ -948,7 +949,7 @@ namespace data
 
    tree_item * tree_item::first_child()
    {
-      
+
       if (m_children.is_empty())
          return NULL;
 
@@ -963,10 +964,10 @@ namespace data
    {
 
       index iFind;
-      
+
       if(bChild && m_children.has_elements())
       {
-         
+
          if(pindexLevel != NULL)
             (*pindexLevel)++;
 
@@ -1082,11 +1083,11 @@ namespace data
 
       if (pitem == NULL)
       {
-       
+
          return false;
 
       }
-      
+
       return pitem->is_ascendant(this);
 
    }
@@ -1116,7 +1117,7 @@ namespace data
          pparent = pparent->m_pparent;
 
       }
-      
+
       return false;
 
    }
@@ -1141,7 +1142,7 @@ namespace data
 
    //   if (m_children.has_elements())
    //   {
-   //      
+   //
    //      m_children[0]->update_previous_pointers(true);
 
    //   }
@@ -1183,7 +1184,7 @@ namespace data
 
    //void tree_item::update_next_pointers(bool bUpdatePrevious)
    //{
-   //   
+   //
    //   m_iLevelNext = m_iLevel;
 
    //   m_pnext = calc_next(false, false, &m_iLevelNext);

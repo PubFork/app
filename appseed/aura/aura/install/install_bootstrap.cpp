@@ -56,11 +56,11 @@ bool get_os_bit(bool & isWindows64bit)
 
 bool get_os_bit(bool & b64)
 {
-   
+
    b64 = true;
-   
+
    return true;
-   
+
 }
 
 #endif
@@ -287,7 +287,7 @@ namespace install
 
       string strPlatform = m_strPlatform;
 
-   spa_admin:
+spa_admin:
 
       while (!is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform))
       {
@@ -318,7 +318,7 @@ namespace install
 
       int iCommandRetry = 0;
 
-   command_retry:
+command_retry:
 
       iTry = 2000;
 
@@ -328,8 +328,8 @@ namespace install
          bSomeSortOfInstall = true;
 
          if (!is_downloading_admin()
-            && is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform)
-            && !Application.low_is_app_app_admin_running(strPlatform))
+               && is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform)
+               && !Application.low_is_app_app_admin_running(strPlatform))
          {
 
             if (!is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform))
@@ -404,7 +404,7 @@ namespace install
 
          string strParams;
 
-         int iFind1 = 0;
+         strsize iFind1 = 0;
 
          if (str[0] == '\"')
          {
@@ -413,7 +413,7 @@ namespace install
 
          }
 
-         int iFind = str.find(" : ", iFind1 + 1);
+         strsize iFind = str.find(" : ", iFind1 + 1);
 
          if (iFind >= 0)
          {
@@ -421,7 +421,7 @@ namespace install
             iFind = str.find("app=", iFind);
             if (iFind >= 0)
             {
-               int iEnd = str.find(" ", iFind);
+               strsize iEnd = str.find(" ", iFind);
                if (iEnd < 0)
                {
                   strId = str.substr(iFind + 4);
@@ -554,7 +554,7 @@ namespace install
 
       string strPlatform = m_strPlatform;
 
-   spa_admin:
+spa_admin:
 
       while (iTry > 0)
       {
@@ -595,7 +595,7 @@ namespace install
 
       int iCommandRetry = 0;
 
-   command_retry:
+command_retry:
 
       while (true)
       {
@@ -693,7 +693,7 @@ namespace install
 
          string strParams;
 
-         int iFind1 = 0;
+         strsize iFind1 = 0;
 
          if (wstr[0] == '\"')
          {
@@ -702,7 +702,7 @@ namespace install
 
          }
 
-         int iFind = wstr.find(" : ", iFind1 + 1);
+         strsize iFind = wstr.find(" : ", iFind1 + 1);
 
          if (iFind >= 0)
          {
@@ -710,7 +710,7 @@ namespace install
             iFind = wstr.find("app=", iFind);
             if (iFind >= 0)
             {
-               int iEnd = wstr.find(" ", iFind);
+               strsize iEnd = wstr.find(" ", iFind);
                if (iEnd < 0)
                {
                   strId = wstr.substr(iFind + 4);
@@ -833,7 +833,7 @@ namespace install
    //
    // do_spa
    // installs the application synchronously
-   // it just installs the application, it doesn't launch it 
+   // it just installs the application, it doesn't launch it
    int bootstrap::do_app_app(const char * pszId, const char * pszParams)
    {
 
@@ -917,13 +917,11 @@ namespace install
 #ifdef WINDOWS
       straFile.add("vcredist");
 #endif
-      
-      
-      status.m_lTotal = straFile.size();
+
+      convert(status.m_lTotal, straFile.size());
       status.m_lProcessing = status.m_lTotal;
       status.m_lOk = 0;
       status.m_lBad = 0;
-
 
       for (int iFile = 0; iFile < straFile.size(); iFile++)
       {
@@ -999,13 +997,13 @@ namespace install
 
          }
 #else
-   
+
          throw todo(get_app());
-         
+
 #endif
 
       }
-      
+
 
       if (!do_app_app("app-core/user_service"))
       {
@@ -1023,7 +1021,7 @@ namespace install
    }
 
 #ifdef WINDOWSEX
-   
+
    bool bootstrap::is_vcredist_installed(string strPlatform)
    {
 
@@ -1043,7 +1041,7 @@ namespace install
       }
       else
       {
-        
+
          if (b64)
          {
 
@@ -1058,8 +1056,8 @@ namespace install
          }
 
       }
-      
-      
+
+
       ::windows::registry::Key key(HKEY_LOCAL_MACHINE, strKey, false);
 
       DWORD dwInstalled;
@@ -1207,7 +1205,7 @@ namespace install
       return "";
 
    }
-   
+
 #endif
 
 
@@ -1370,7 +1368,7 @@ namespace install
             return 0;
 
          }
-         
+
 #ifdef WINDOWSEX
 
          SHELLEXECUTEINFOW sei = {};

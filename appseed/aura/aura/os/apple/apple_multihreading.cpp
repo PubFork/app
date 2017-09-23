@@ -12,7 +12,7 @@
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #undef user
-
+#include <CoreText/CoreText.h>
 
 CTFontDescriptorRef CreateFontDescriptorFromName(CFStringRef iPostScriptName, CGFloat iSize)
 {

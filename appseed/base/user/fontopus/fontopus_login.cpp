@@ -46,24 +46,24 @@ namespace fontopus
 
    login::~login()
    {
-/*
-      if(m_pploginDeferTranslate != NULL)
-      {
+      /*
+            if(m_pploginDeferTranslate != NULL)
+            {
 
-         try
-         {
+               try
+               {
 
-            *m_pploginDeferTranslate = NULL;
+                  *m_pploginDeferTranslate = NULL;
 
-         }
-         catch(...)
-         {
+               }
+               catch(...)
+               {
 
-         }
+               }
 
-      }
+            }
 
-      Sleep(49);*/
+            Sleep(49);*/
 
       ::aura::del(m_plabelUser);
       ::aura::del(m_peditUser);
@@ -289,10 +289,10 @@ namespace fontopus
 #endif
 
       crBk = ARGB(
-         (argb_get_a_value(crOut) + argb_get_a_value(crIn)) / 2,
-         (argb_get_r_value(crOut) + argb_get_r_value(crIn)) / 2,
-         (argb_get_g_value(crOut) + argb_get_g_value(crIn)) / 2,
-         (argb_get_b_value(crOut) + argb_get_b_value(crIn)) / 2);
+                (argb_get_a_value(crOut) + argb_get_a_value(crIn)) / 2,
+                (argb_get_r_value(crOut) + argb_get_r_value(crIn)) / 2,
+                (argb_get_g_value(crOut) + argb_get_g_value(crIn)) / 2,
+                (argb_get_b_value(crOut) + argb_get_b_value(crIn)) / 2);
 
       double rx = m_dRateX;
 
@@ -305,7 +305,7 @@ namespace fontopus
 
          pgraphics->StretchBlt(
             (int)(49 * rx), (int)(49 * ry) + 2 - 11,
-            m_dib->m_size.cx * r, m_dib->m_size.cy * r,
+            convert < int32_t >(m_dib->m_size.cx * r), convert < int32_t > (m_dib->m_size.cy * r),
             m_dib->get_graphics(),
             0, 0, m_dib->m_size.cx, m_dib->m_size.cy, 0);
 
@@ -394,11 +394,11 @@ namespace fontopus
          return;
 
       if(!m_plabelUser->create_window(null_rect(), this,"label_user")
-         || !m_peditUser->create_window(null_rect(),this,"edit_user")
-         || !m_plabelPassword->create_window(null_rect(),this,"label_password")
-         || !m_ppassword->create_window(null_rect(),this,"password")
-         || !m_ptap->create_window(null_rect(),this,"submit")
-         || !m_ptapClose->create_window(null_rect(),this,"escape"))
+            || !m_peditUser->create_window(null_rect(),this,"edit_user")
+            || !m_plabelPassword->create_window(null_rect(),this,"label_password")
+            || !m_ppassword->create_window(null_rect(),this,"password")
+            || !m_ptap->create_window(null_rect(),this,"submit")
+            || !m_ptapClose->create_window(null_rect(),this,"escape"))
       {
          pcreate->set_lresult(-1);
          pcreate->m_bRet = true;

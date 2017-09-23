@@ -997,7 +997,7 @@ void script_compiler::cppize1(ds_script * pscript)
    while ((strSource = Application.file().as_string(pscript->m_strSourcePath)).trimmed().is_empty() && ::get_thread_run() && thread_get_run())
    {
 
-      Sleep(84);
+      Sleep(100);
 
       iTry++;
 

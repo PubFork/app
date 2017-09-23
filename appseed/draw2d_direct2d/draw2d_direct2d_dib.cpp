@@ -74,9 +74,9 @@ namespace draw2d_direct2d
    bool dib::create(int width, int height)
    {
       if (m_spbitmap.is_set()
-         && m_spbitmap->get_os_data() != NULL
-         && width == m_size.cx
-         && height == m_size.cy)
+            && m_spbitmap->get_os_data() != NULL
+            && width == m_size.cx
+            && height == m_size.cy)
          return TRUE;
 
       Destroy();
@@ -2914,7 +2914,7 @@ namespace draw2d_direct2d
 
    }
 
-   
+
    bool dib::blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size sizeParam, byte bA)
    {
 
@@ -2943,9 +2943,9 @@ namespace draw2d_direct2d
          if (pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
             return FALSE;
 
-         if (get_graphics() != NULL && 
-            get_graphics()->get_current_bitmap() != NULL && 
-            get_graphics()->get_current_bitmap()->get_os_data() != NULL)
+         if (get_graphics() != NULL &&
+               get_graphics()->get_current_bitmap() != NULL &&
+               get_graphics()->get_current_bitmap()->get_os_data() != NULL)
          {
 
             D2D1_SIZE_U sz = ((ID2D1Bitmap *)get_graphics()->get_current_bitmap()->get_os_data())->GetPixelSize();
@@ -3031,16 +3031,16 @@ namespace draw2d_direct2d
             pgraphicsDst->ExcludeClipRect(rDst);
 
             D2D1_RECT_F r1;
-            r1.left = ptDst.x;
-            r1.top = ptDst.y;
-            r1.right = ptDst.x + sizeParam.cx;
-            r1.bottom = ptDst.y + sizeParam.cy;
+            convert(r1.left, ptDst.x);
+            convert(r1.top, ptDst.y);
+            convert(r1.right, ptDst.x + sizeParam.cx);
+            convert(r1.bottom, ptDst.y + sizeParam.cy);
 
             D2D1_RECT_F r2;
-            r2.left = ptSrc.x;
-            r2.top = ptSrc.y;
-            r2.right = ptSrc.x + sizeParam.cx;
-            r2.bottom = ptSrc.y + sizeParam.cy;
+            convert(r2.left, ptSrc.x);
+            convert(r2.top, ptSrc.y);
+            convert(r2.right, ptSrc.x + sizeParam.cx);
+            convert(r2.bottom, ptSrc.y + sizeParam.cy);
 
             pgraphicsDst->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphicsDst->m_interpolationmode, r2);
 

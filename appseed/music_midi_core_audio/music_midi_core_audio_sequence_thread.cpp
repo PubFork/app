@@ -360,7 +360,7 @@ namespace music
                
             }
             
-            Sleep(84);
+            Sleep(100);
             
          }
          else

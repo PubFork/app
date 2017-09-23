@@ -141,14 +141,8 @@
     <ClInclude Include="userstack\userstack_view.h">
       <Filter>Header Files\userstack</Filter>
     </ClInclude>
-    <ClInclude Include="asphere\asphere.h">
-      <Filter>Header Files\asphere</Filter>
-    </ClInclude>
     <ClInclude Include="asphere\asphere_application.h">
       <Filter>Header Files\asphere</Filter>
-    </ClInclude>
-    <ClInclude Include="sphere\sphere.h">
-      <Filter>Header Files\sphere</Filter>
     </ClInclude>
     <ClInclude Include="sphere\sphere_application.h">
       <Filter>Header Files\sphere</Filter>
@@ -174,11 +168,14 @@
     <ClInclude Include="console\console_prompt_impact.h">
       <Filter>Header Files\console</Filter>
     </ClInclude>
+    <ClInclude Include="sphere\sphere.h">
+      <Filter>Header Files\sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="asphere\asphere.h">
+      <Filter>Header Files\asphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="_sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="calculator\calculator_application.cpp">
       <Filter>Source Files\calculator</Filter>
     </ClCompile>

@@ -23,25 +23,25 @@ namespace base
 
 
 
-      TCHAR *cmd = GetCommandLine();
-
-      // Skip program name
-      if(*cmd == _T('"'))
-      {
-         while(*cmd && *cmd != _T('"'))
-            cmd++;
-         if(*cmd == _T('"'))
-            cmd++;
-      }
-      else
-      {
-         while(*cmd > _T(' '))
-            cmd++;
-      }
-
-      // Skip any white space
-      while(*cmd && *cmd <= _T(' '))
-         cmd++;
+//      TCHAR *cmd = GetCommandLine();
+//
+//      // Skip program name
+//      if(*cmd == _T('"'))
+//      {
+//         while(*cmd && *cmd != _T('"'))
+//            cmd++;
+//         if(*cmd == _T('"'))
+//            cmd++;
+//      }
+//      else
+//      {
+//         while(*cmd > _T(' '))
+//            cmd++;
+//      }
+//
+//      // Skip any white space
+//      while(*cmd && *cmd <= _T(' '))
+//         cmd++;
 
       body();
 

@@ -665,7 +665,7 @@ namespace html
             if (m_pelemental->m_style.get_alpha("", pdata, m_pelemental, d))
             {
 
-               if (m_pelemental->get_color(cr, ::user::color_background))
+               if (m_pelemental->get_color(cr, ::user::color_background, pdata->m_pform))
                {
 
                   Sys(pdata->get_app()).visual().imaging().color_blend(pgraphics, rect, cr, MAX(0, MIN(255, (BYTE)(d * 255))));
@@ -676,7 +676,7 @@ namespace html
             else
             {
 
-               if(m_pelemental->get_color(cr,::user::color_background))
+               if(m_pelemental->get_color(cr,::user::color_background, pdata->m_pform))
                {
 
                   pgraphics->FillSolidRect(rect, cr);

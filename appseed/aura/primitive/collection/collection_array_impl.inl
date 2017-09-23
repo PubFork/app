@@ -77,6 +77,12 @@ inline index array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_upper_bound(index in
 }
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline index array_base < TYPE, ARG_TYPE, ALLOCATOR > ::get_middle_index(index index) const
+{
+   return (m_nSize / 2) + index;
+}
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline bool array_base < TYPE, ARG_TYPE, ALLOCATOR > ::bounds(index index) const
 {
    return index >= 0 && index < m_nSize;
@@ -165,42 +171,51 @@ inline void array < TYPE, ARG_TYPE, ALLOCATOR > ::set_at(index nIndex, ARG_TYPE 
    ASSERT(nIndex >= 0 && nIndex < this->m_nSize);
    get_data()[nIndex] = newElement;
 }
+
+
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline const TYPE& array_base < TYPE, ARG_TYPE, ALLOCATOR > ::element_at(index nIndex) const
 {
-   if (nIndex < 0 || nIndex >= this->m_nSize)
-      throw index_out_of_bounds(this->get_app());
+   
+   ASSERT(nIndex >= 0 && nIndex < this->m_nSize);
+
    return m_pData[nIndex];
+   
 }
+
+
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE& array_base < TYPE, ARG_TYPE, ALLOCATOR > ::element_at(index nIndex)
 {
-   if (nIndex < 0 || nIndex >= this->m_nSize)
-      throw index_out_of_bounds(this->get_app());
+   
+   ASSERT(nIndex >= 0 && nIndex < this->m_nSize);
+
    return m_pData[nIndex];
-}
-template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline const TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::first(index nIndex) const
-{
-   return this->element_at(nIndex);
-}
-template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::first(index nIndex)
-{
-   return this->element_at(nIndex);
-}
-template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline const TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::last(index index) const
-{
-   return this->element_at(this->get_upper_bound(index));
+   
 }
 
-
-template < class TYPE, class ARG_TYPE, class ALLOCATOR >
-inline TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::last(index index)
-{
-   return this->element_at(this->get_upper_bound(index));
-}
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline const TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::first(index nIndex) const
+//{
+//   return this->element_at(nIndex);
+//}
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::first(index nIndex)
+//{
+//   return this->element_at(nIndex);
+//}
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline const TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::last(index index) const
+//{
+//   return this->element_at(this->get_upper_bound(index));
+//}
+//
+//
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline TYPE& array < TYPE, ARG_TYPE, ALLOCATOR > ::last(index index)
+//{
+//   return this->element_at(this->get_upper_bound(index));
+//}
 
 
 
@@ -223,7 +238,7 @@ inline index array < TYPE, ARG_TYPE, ALLOCATOR > ::add(ARG_TYPE newElement)
 {
    index nIndex = this->m_nSize;
    this->allocate(nIndex + 1);
-   last() = newElement;
+   this->last() = newElement;
    return nIndex;
 }
 
@@ -497,16 +512,24 @@ inline array < TYPE, ARG_TYPE, ALLOCATOR >  array < TYPE, ARG_TYPE, ALLOCATOR > 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE & array < TYPE, ARG_TYPE, ALLOCATOR > ::add_new()
 {
-  this-> set_size(this->m_nSize + 1);
-   return last();
+   
+   this->set_size(this->m_nSize + 1);
+   
+   return this->last();
+   
 }
+
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline index array < TYPE, ARG_TYPE, ALLOCATOR > ::add_new(::count count)
 {
+   
    this->set_size(this->m_nSize + count);
+   
    return this->get_upper_bound();
+   
 }
+
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline TYPE array_base < TYPE, ARG_TYPE, ALLOCATOR >::pop(index n)
@@ -632,76 +655,69 @@ inline array < TYPE, ARG_TYPE, ALLOCATOR > & array < TYPE, ARG_TYPE, ALLOCATOR >
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//template < typename Type, typename RawType >
-//Type string_array < Type, RawType >::get_at(index nIndex) const
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline const TYPE& array_base < TYPE, ARG_TYPE, ALLOCATOR >::element_at(index nIndex) const
 //{
-//   if (nIndex < 0 || nIndex >= this->m_nSize)
-//      throw index_out_of_bounds(this->get_app());
-//   return get_data()[nIndex];
-//}
-//
-//template < typename Type, typename RawType >
-//void string_array < Type, RawType >::set_at(index nIndex,const char * newElement)
-//{
-//   if (nIndex < 0 || nIndex >= this->m_nSize)
-//      throw index_out_of_bounds(this->get_app());
-//   get_data()[nIndex] = newElement;
+//   
+//   return m_pData[nIndex];
+//   
 //}
 //
 //
-//template < typename Type, typename RawType >
-//void string_array < Type, RawType >::set_at(index nIndex,const Type & newElement)
+//template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+//inline TYPE& array_base < TYPE, ARG_TYPE, ALLOCATOR >::element_at(index nIndex)
 //{
-//   if (nIndex < 0 || nIndex >= this->m_nSize)
-//      throw index_out_of_bounds(this->get_app());
-//   get_data()[nIndex] = newElement;
-//}
 //
-//
-//template < typename Type, typename RawType >
-//Type & string_array < Type, RawType >::element_at(index nIndex)
-//{
-//   if (nIndex < 0 || nIndex >= this->m_nSize)
-//      throw index_out_of_bounds(this->get_app());
-//   return get_data()[nIndex];
+//   return m_pData[nIndex];
+//   
 //}
 
 
-//template < typename Type, typename RawType >
-//const Type & string_array < Type, RawType >::element_at(index nIndex) const
-//{
-//   if (nIndex < 0 || nIndex >= this->m_nSize)
-//     throw index_out_of_bounds(this->get_app());
-//   return get_data()[nIndex];
-//}
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline const TYPE& array_base < TYPE, ARG_TYPE, ALLOCATOR >::first(index nIndex) const
+{
+   
+   return this->element_at(nIndex);
+   
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::first(index nIndex)
+{
+   return this->element_at(nIndex);
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline const TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::last(index index) const
+{
+   return element_at(this->get_upper_bound(index));
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::last(index index)
+{
+   
+   return element_at(this->get_upper_bound(index));
+   
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline const TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::middle(index index) const
+{
+   
+   return element_at(this->get_middle_index(index));
+   
+}
+
+
+template < class TYPE, class ARG_TYPE, class ALLOCATOR >
+inline TYPE & array_base < TYPE, ARG_TYPE, ALLOCATOR >::middle(index index)
+{
+   
+   return element_at(this->get_middle_index(index));
+   
+}

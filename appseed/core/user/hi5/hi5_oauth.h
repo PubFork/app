@@ -6,14 +6,14 @@ namespace hi5
 
    CLASS_DECL_CORE string char2hex( char dec );
    CLASS_DECL_CORE string urlencode( const string &ca );
-  
+
 
    typedef enum _eOAuthHttpRequestType
    {
-       eOAuthHttpInvalid = 0,
-       eOAuthHttpGet,
-       eOAuthHttpPost,
-       eOAuthHttpDelete
+      eOAuthHttpInvalid = 0,
+      eOAuthHttpGet,
+      eOAuthHttpPost,
+      eOAuthHttpDelete
    } eOAuthHttpRequestType;
 
    typedef stringa oAuthKeyValueList;
@@ -22,83 +22,83 @@ namespace hi5
    class CLASS_DECL_CORE oauth :
       virtual public ::simple_log
    {
-   public:
+      public:
 
-      const string OAUTHLIB_CONSUMERKEY_KEY;
-      const string OAUTHLIB_CALLBACK_KEY;
-      const string OAUTHLIB_VERSION_KEY;
-      const string OAUTHLIB_SIGNATUREMETHOD_KEY;
-      const string OAUTHLIB_SIGNATURE_KEY;
-      const string OAUTHLIB_TIMESTAMP_KEY;
-      const string OAUTHLIB_NONCE_KEY;
-      const string OAUTHLIB_TOKEN_KEY;
-      const string OAUTHLIB_TOKENSECRET_KEY;
-      const string OAUTHLIB_VERIFIER_KEY;
-      const string OAUTHLIB_SCREENNAME_KEY;
-
-
-      const string OAUTHLIB_TWITTER_REQUEST_TOKEN_URL;
-      const string OAUTHLIB_TWITTER_AUTHORIZE_URL;
-      const string OAUTHLIB_TWITTER_ACCESS_TOKEN_URL;
+         const string OAUTHLIB_CONSUMERKEY_KEY;
+         const string OAUTHLIB_CALLBACK_KEY;
+         const string OAUTHLIB_VERSION_KEY;
+         const string OAUTHLIB_SIGNATUREMETHOD_KEY;
+         const string OAUTHLIB_SIGNATURE_KEY;
+         const string OAUTHLIB_TIMESTAMP_KEY;
+         const string OAUTHLIB_NONCE_KEY;
+         const string OAUTHLIB_TOKEN_KEY;
+         const string OAUTHLIB_TOKENSECRET_KEY;
+         const string OAUTHLIB_VERIFIER_KEY;
+         const string OAUTHLIB_SCREENNAME_KEY;
 
 
-       oauth(::aura::application * papp, simple_log * psimplelog, int iLogTarget);
-       virtual ~oauth();
+         const string OAUTHLIB_TWITTER_REQUEST_TOKEN_URL;
+         const string OAUTHLIB_TWITTER_AUTHORIZE_URL;
+         const string OAUTHLIB_TWITTER_ACCESS_TOKEN_URL;
 
-       /* OAuth public methods used by twitCurl */
-       void getConsumerKey( string& consumerKey /* out */ );
-       void setConsumerKey( const string& consumerKey /* in */ );
 
-       void getConsumerSecret( string& consumerSecret /* out */ );
-       void setConsumerSecret( const string& consumerSecret /* in */ );
+         oauth(::aura::application * papp, simple_log * psimplelog, index iLogTarget);
+         virtual ~oauth();
 
-       void getOAuthTokenKey( string& oAuthTokenKey /* out */ );
-       void setOAuthTokenKey( const string& oAuthTokenKey /* in */ );
+         /* OAuth public methods used by twitCurl */
+         void getConsumerKey( string& consumerKey /* out */ );
+         void setConsumerKey( const string& consumerKey /* in */ );
 
-       void getOAuthTokenSecret( string& oAuthTokenSecret /* out */ );
-       void setOAuthTokenSecret( const string& oAuthTokenSecret /* in */ );
+         void getConsumerSecret( string& consumerSecret /* out */ );
+         void setConsumerSecret( const string& consumerSecret /* in */ );
 
-       void getOAuthScreenName( string& oAuthScreenName /* out */ );
-       void setOAuthScreenName( const string& oAuthScreenName /* in */ );
+         void getOAuthTokenKey( string& oAuthTokenKey /* out */ );
+         void setOAuthTokenKey( const string& oAuthTokenKey /* in */ );
 
-       void getOAuthPin( string& oAuthPin /* out */ );
-       void setOAuthPin( const string& oAuthPin /* in */ );
+         void getOAuthTokenSecret( string& oAuthTokenSecret /* out */ );
+         void setOAuthTokenSecret( const string& oAuthTokenSecret /* in */ );
 
-       bool getOAuthHeader(const eOAuthHttpRequestType eType, /* in */
-                           const string & rawUrl, /* in */
-                           property_set & set, /* in(set["post"])/out(set["headers"]) */
-                           const bool includeOAuthVerifierPin = false /* in */);
+         void getOAuthScreenName( string& oAuthScreenName /* out */ );
+         void setOAuthScreenName( const string& oAuthScreenName /* in */ );
 
-       bool extractOAuthTokenKeySecret( const string& requestTokenResponse /* in */ );
+         void getOAuthPin( string& oAuthPin /* out */ );
+         void setOAuthPin( const string& oAuthPin /* in */ );
 
-   private:
+         bool getOAuthHeader(const eOAuthHttpRequestType eType, /* in */
+                             const string & rawUrl, /* in */
+                             property_set & set, /* in(set["post"])/out(set["headers"]) */
+                             const bool includeOAuthVerifierPin = false /* in */);
 
-       /* OAuth data */
-       string m_consumerKey;
-       string m_consumerSecret;
-       string m_oAuthTokenKey;
-       string m_oAuthTokenSecret;
-       string m_oAuthPin;
-       string m_nonce;
-       string m_timeStamp;
-       string m_oAuthScreenName;
+         bool extractOAuthTokenKeySecret( const string& requestTokenResponse /* in */ );
 
-       /* OAuth twitter related utility methods */
-       bool buildOAuthTokenKeyValuePairs( const bool includeOAuthVerifierPin, /* in */
-                                          oAuthKeyValuePairs & rawData, /* in */
-                                          const string& oauthSignature, /* in */
-                                          oAuthKeyValuePairs& keyValueMap /* out */ );
+      private:
 
-       bool getStringFromOAuthKeyValuePairs( const oAuthKeyValuePairs& rawParamMap, /* in */
-                                             string& rawParams, /* out */
-                                             const char * pszSeparator /* in */ );
+         /* OAuth data */
+         string m_consumerKey;
+         string m_consumerSecret;
+         string m_oAuthTokenKey;
+         string m_oAuthTokenSecret;
+         string m_oAuthPin;
+         string m_nonce;
+         string m_timeStamp;
+         string m_oAuthScreenName;
 
-       bool getSignature( const eOAuthHttpRequestType eType, /* in */
-                          const string& rawUrl, /* in */
-                          const oAuthKeyValuePairs& rawKeyValuePairs, /* in */
-                          string& oAuthSignature /* out */ );
+         /* OAuth twitter related utility methods */
+         bool buildOAuthTokenKeyValuePairs( const bool includeOAuthVerifierPin, /* in */
+                                            oAuthKeyValuePairs & rawData, /* in */
+                                            const string& oauthSignature, /* in */
+                                            oAuthKeyValuePairs& keyValueMap /* out */ );
 
-       void generateNonceTimeStamp();
+         bool getStringFromOAuthKeyValuePairs( const oAuthKeyValuePairs& rawParamMap, /* in */
+                                               string& rawParams, /* out */
+                                               const char * pszSeparator /* in */ );
+
+         bool getSignature( const eOAuthHttpRequestType eType, /* in */
+                            const string& rawUrl, /* in */
+                            const oAuthKeyValuePairs& rawKeyValuePairs, /* in */
+                            string& oAuthSignature /* out */ );
+
+         void generateNonceTimeStamp();
 
 
    };

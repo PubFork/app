@@ -10,14 +10,14 @@ namespace windows
       virtual public ::aura::os
    {
    public:
-   
-      
+
+
       os(::aura::application * papp);
       virtual ~os();
 
-      
+
       virtual string get_command_line();
-      
+
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);
@@ -46,23 +46,25 @@ namespace windows
       virtual bool file_extension_get_open_with_list_commands(stringa & straCommand, const char * pszExtension);
 
       virtual bool file_association_set_default_icon(const char * pszExtension, const char * pszExtensionNamingClass, const char * pszIconPath);
-      virtual bool file_association_set_shell_open_command(const char * pszExtension, const char * pszExtensionNamingClass,  const char * pszCommand, const char * pszParam);
+      virtual bool file_association_set_shell_open_command(const char * pszExtension, const char * pszExtensionNamingClass, const char * pszCommand, const char * pszParam);
       virtual bool file_association_get_shell_open_command(const char * pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam);
 
 
       virtual bool open_in_ie(const char * lpcsz);
 
-      virtual bool file_open(string str);
+      virtual bool file_open(::file::path path);
 
-
+      virtual bool browse_file_open(oswindow oswindowOwner, property_set & set) override;
+      virtual bool browse_file_save(oswindow oswindowOwner, property_set & set) override;
+      virtual bool browse_folder(oswindow oswindowOwner, property_set & set) override;
 
       virtual bool create_service(::aura::application * papp);
       virtual bool remove_service(::aura::application * papp);
-      
+
       virtual bool start_service(::aura::application * papp);
       virtual bool stop_service(::aura::application * papp);
 
-      virtual bool create_service(const string & strServiceName,const string & strDisplayName, const string & strCommand, const string & strUser = "",const string & strPass = "");
+      virtual bool create_service(const string & strServiceName, const string & strDisplayName, const string & strCommand, const string & strUser = "", const string & strPass = "");
       virtual bool remove_service(const string & strServiceName);
 
       virtual bool start_service(const string & strServiceName);
@@ -73,7 +75,7 @@ namespace windows
 
       virtual bool resolve_link(string & strTarget, string & strDirectory, string & strParams, const string & pszSource, ::user::primitive * puiMessageParentOptional = NULL);
 
-      DECLSPEC_NO_RETURN void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
+      DECLSPEC_NO_RETURN void raise_exception(DWORD dwExceptionCode, DWORD dwExceptionFlags);
 
       virtual bool is_remote_session();
 
@@ -89,6 +91,8 @@ namespace windows
       virtual bool is_user_auto_start(string strId) override;
 
       virtual ::file::path get_app_path(const string & strApp) override;
+
+      virtual bool set_default_browser(::aura::application * papp) override;
 
    };
 

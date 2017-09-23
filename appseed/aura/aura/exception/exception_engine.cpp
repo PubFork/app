@@ -50,11 +50,14 @@ static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context,void* 
 {
    BacktraceState* state = static_cast<BacktraceState*>(arg);
    uintptr_t pc = _Unwind_GetIP(context);
-   if(pc) {
-      if(state->current == state->end) {
+   if(pc)
+   {
+      if(state->current == state->end)
+      {
          return _URC_END_OF_STACK;
       }
-      else {
+      else
+      {
          *state->current++ = reinterpret_cast<void*>(pc);
       }
    }
@@ -63,7 +66,7 @@ static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context,void* 
 
 size_t captureBacktrace(void** buffer,size_t max)
 {
-   BacktraceState state ={buffer, buffer + max};
+   BacktraceState state = {buffer, buffer + max};
    _Unwind_Backtrace(unwindCallback,&state);
 
    return state.current - buffer;
@@ -72,7 +75,8 @@ size_t captureBacktrace(void** buffer,size_t max)
 string dumpBacktrace(void** buffer,size_t count)
 {
    string str;
-   for(size_t idx = 0; idx < count; ++idx) {
+   for(size_t idx = 0; idx < count; ++idx)
+   {
       const void* addr = buffer[idx];
       const char* symbol = "";
 
@@ -217,10 +221,10 @@ size_t engine_symbol(char * sz, int n, DWORD * pdisplacement, DWORD dwAddress)
 
 HANDLE SymGetProcessHandle();
 int_bool __stdcall My_ReadProcessMemory(HANDLE      hProcess,
-DWORD64     qwBaseAddress,
-PVOID       lpBuffer,
-DWORD       nSize,
-LPDWORD     lpNumberOfBytesRead
+                                        DWORD64     qwBaseAddress,
+                                        PVOID       lpBuffer,
+                                        DWORD       nSize,
+                                        LPDWORD     lpNumberOfBytesRead
                                        );
 
 
@@ -247,7 +251,7 @@ int_bool __stdcall My_ReadProcessMemory (
    PVOID       lpBuffer,
    DWORD       nSize,
    LPDWORD     lpNumberOfBytesRead
-   )
+)
 {
 
    SIZE_T size = 0;
@@ -262,13 +266,11 @@ int_bool __stdcall My_ReadProcessMemory (
    return TRUE;
 
 }
-int_bool __stdcall My_ReadProcessMemory32(
-   HANDLE      hProcess,
-   DWORD     qwBaseAddress,
-   PVOID       lpBuffer,
-   DWORD       nSize,
-   LPDWORD     lpNumberOfBytesRead
-)
+
+
+#ifndef FAST_STACK_TRACE
+
+int_bool __stdcall My_ReadProcessMemory32(HANDLE hProcess, DWORD qwBaseAddress, PVOID lpBuffer, DWORD nSize, LPDWORD lpNumberOfBytesRead)
 {
 
    SIZE_T size = 0;
@@ -283,6 +285,9 @@ int_bool __stdcall My_ReadProcessMemory32(
    return TRUE;
 
 }
+
+#endif
+
 /*
 #else
 int_bool __stdcall My_ReadProcessMemory (HANDLE, LPCVOID lpBaseAddress, LPVOID lpBuffer, uint32_t nSize, SIZE_T * lpNumberOfBytesRead)
@@ -300,7 +305,7 @@ namespace exception
    CLASS_DECL_AURA class ::exception::engine & engine()
    {
 
-      return *g_pexceptionengine;
+         return *g_pexceptionengine;
 
    }
 
@@ -311,7 +316,7 @@ namespace exception
       uint32_t       nSize,
       LPDWORD     lpNumberOfBytesRead,
       LPVOID      pUserData  // optional data, which was passed in "ShowCallstack"
-      );
+   );
 
    // The following is used to pass the "userData"-Pointer to the user-provided readMemoryFunction
    // This has to be done due to a problem with the "hProcess"-parameter in x64...
@@ -379,7 +384,7 @@ namespace exception
 
 #ifdef WINDOWSEX
 
-   #if OSBIT == 32
+#if OSBIT == 32
 
    size_t engine::symbol(char * psz, int nCount, DWORD * pdisplacement)
    {
@@ -502,7 +507,7 @@ namespace exception
 #if OSBIT == 32
    void engine::backtrace(DWORD *pui, int &c)
 #else
-      void engine::backtrace(DWORD64 *pui, int &c)
+   void engine::backtrace(DWORD64 *pui, int &c)
 #endif
    {
       synch_lock sl(m_pmutex);
@@ -523,100 +528,100 @@ namespace exception
       m_iAddressWrite = RtlCaptureStackBackTrace(0, maxframes, reinterpret_cast<PVOID*>(&m_uia), &BackTraceHash);
 #else
       m_iAddressWrite = 0;
-   //if (!m_bOk)
-   //{
-     // _ASSERTE(0);
+      //if (!m_bOk)
+      //{
+      // _ASSERTE(0);
       //return;
-   //}
+      //}
 
 
-   while (true)
-   {
+      while (true)
+      {
 
-      SetLastError(0);
-      HANDLE hprocess = SymGetProcessHandle();
+         SetLastError(0);
+         HANDLE hprocess = SymGetProcessHandle();
 
-      uint32_t dwType;
+         uint32_t dwType;
 
-      bool bRetry;
+         bool bRetry;
 
 #ifdef AMD64
-      dwType = IMAGE_FILE_MACHINE_AMD64;
+         dwType = IMAGE_FILE_MACHINE_AMD64;
 #else
-      dwType = IMAGE_FILE_MACHINE_I386;
+         dwType = IMAGE_FILE_MACHINE_I386;
 #endif
 
 #if OSBIT == 64
-      bool r = StackWalk64(
-         dwType,   // __in      uint32_t MachineType,
-         hprocess,        // __in      HANDLE hProcess,
-         get_current_thread(),         // __in      HANDLE hThread,
-         &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
-         &m_context,                  // __inout   PVOID ContextRecord,
-         My_ReadProcessMemory,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                                                   //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-         SymFunctionTableAccess64,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
-         SymGetModuleBase64,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
-         NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
-         ) != FALSE;
+         bool r = StackWalk64(
+                     dwType,   // __in      uint32_t MachineType,
+                     hprocess,        // __in      HANDLE hProcess,
+                     get_current_thread(),         // __in      HANDLE hThread,
+                     &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
+                     &m_context,                  // __inout   PVOID ContextRecord,
+                     My_ReadProcessMemory,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                     //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                     SymFunctionTableAccess64,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
+                     SymGetModuleBase64,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
+                     NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
+                  ) != FALSE;
 #else
-      bool r = StackWalk(
-         dwType,   // __in      uint32_t MachineType,
-         hprocess,        // __in      HANDLE hProcess,
-         get_current_thread(),         // __in      HANDLE hThread,
-         &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
-         &m_context,                  // __inout   PVOID ContextRecord,
-         My_ReadProcessMemory32,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-                                                   //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
-         SymFunctionTableAccess,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
-         SymGetModuleBase,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
-         NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
-      ) != FALSE;
+         bool r = StackWalk(
+                     dwType,   // __in      uint32_t MachineType,
+                     hprocess,        // __in      HANDLE hProcess,
+                     get_current_thread(),         // __in      HANDLE hThread,
+                     &m_stackframe,                       // __inout   LP STACKFRAME64 StackFrame,
+                     &m_context,                  // __inout   PVOID ContextRecord,
+                     My_ReadProcessMemory32,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                     //NULL,                     // __in_opt  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+                     SymFunctionTableAccess,                      // __in_opt  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
+                     SymGetModuleBase,                     // __in_opt  PGET_MODULE_AXIS_ROUTINE64 GetModuleBaseRoutine,
+                     NULL                       // __in_opt  PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress
+                  ) != FALSE;
 
 #endif
-      /*#else
-      bool r = StackWalk64 (
-      ,
-      hprocess,
-      get_current_thread(),
-      &m_stackframe,
-      m_pcontext,
-      My_ReadProcessMemory,
-      SymFunctionTableAccess64,
-      SymGetModuleBase64,
-      0) != FALSE;
-      #endif*/
+         /*#else
+         bool r = StackWalk64 (
+         ,
+         hprocess,
+         get_current_thread(),
+         &m_stackframe,
+         m_pcontext,
+         My_ReadProcessMemory,
+         SymFunctionTableAccess64,
+         SymGetModuleBase64,
+         0) != FALSE;
+#endif*/
 
-      if (!r || !m_stackframe.AddrFrame.Offset)
-      {
+         if (!r || !m_stackframe.AddrFrame.Offset)
+         {
 
          return;
 
-      }
+         }
 
-      bRetry = false;
+         bRetry = false;
 
-   retry_get_base:
+         retry_get_base:
 
-      // "Debugging Applications" John Robbins
-      // Before I get too carried away and start calculating
-      // everything, I need to double-check that the address returned
-      // by StackWalk really exists. I've seen cases in which
-      // StackWalk returns TRUE but the address doesn't belong to
-      // a module in the process.
+         // "Debugging Applications" John Robbins
+         // Before I get too carried away and start calculating
+         // everything, I need to double-check that the address returned
+         // by StackWalk really exists. I've seen cases in which
+         // StackWalk returns TRUE but the address doesn't belong to
+         // a module in the process.
 
-      DWORD64 dwModBase = SymGetModuleBase64(hprocess, m_stackframe.AddrPC.Offset);
+         DWORD64 dwModBase = SymGetModuleBase64(hprocess, m_stackframe.AddrPC.Offset);
 
-      if (!dwModBase)
-      {
+         if (!dwModBase)
+         {
          //::output_debug_string("engine::stack_next :: StackWalk returned TRUE but the address doesn't belong to a module in the process.");
          return;
          if (bRetry)
          {
 
-            m_bSkip = true;
+         m_bSkip = true;
 
-            return;
+         return;
 
          }
 
@@ -626,11 +631,11 @@ namespace exception
 
          goto retry_get_base;
 
-      }
-      m_bSkip = false;
-      address(m_stackframe.AddrPC.Offset);
+         }
+         m_bSkip = false;
+         address(m_stackframe.AddrPC.Offset);
 
-   }
+         }
 
 #endif
    }
@@ -749,7 +754,7 @@ namespace exception
       //uint32_t r = GetModuleFileNameA(hmodule, psz, nCount);
 
       //if(!r)
-        // return 0;
+      // return 0;
 
 
 
@@ -836,8 +841,8 @@ namespace exception
                (ENUMPROCESSMODULES)GetProcAddress(hInst, "EnumProcessModules");
             DWORD cbNeeded = 0;
             if (fnEnumProcessModules &&
-               fnEnumProcessModules(GetCurrentProcess(), 0, 0, &cbNeeded) &&
-               cbNeeded)
+                  fnEnumProcessModules(GetCurrentProcess(), 0, 0, &cbNeeded) &&
+                  cbNeeded)
             {
                HMODULE * pmod = (HMODULE *)alloca(cbNeeded);
                DWORD cb = cbNeeded;
@@ -851,8 +856,8 @@ namespace exception
                         //   m_iRef = -1;
                         //   break;
 //                        _ASSERTE(0);
-                           m_iRef = -1;
-                           break;
+                        m_iRef = -1;
+                        break;
                      }
                   }
                }
@@ -879,8 +884,8 @@ namespace exception
          MODULEWALK fnModule32Next  = (MODULEWALK)GetProcAddress(hMod, "Module32Next");
 
          if (fnCreateToolhelp32Snapshot &&
-            fnModule32First &&
-            fnModule32Next)
+               fnModule32First &&
+               fnModule32Next)
          {
             HANDLE hModSnap = fnCreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPid);
             if (hModSnap)
@@ -1303,21 +1308,21 @@ namespace exception
 
 #else
 
-       void * array[64];
+      void * array[64];
 
-       int32_t size = ::backtrace(array, 64);
+      int32_t size = ::backtrace(array, 64);
 
-       if(caller_address != NULL)
-       {
+      if(caller_address != NULL)
+      {
 
          array[1] = caller_address;
 
-       }
+      }
 
-       return stack_trace(array, size);
+      return stack_trace(array, size);
 
 
-   #endif
+#endif
 
 
 
@@ -1332,7 +1337,7 @@ namespace exception
 
    bool engine::stack_trace(CONTEXT * pcontext, uint_ptr uiSkip, bool bSkip, const char * pszFormat)
    {
-      
+
       *_strS = '\0';
 
       if (!stack_first(pcontext))
@@ -1348,7 +1353,7 @@ namespace exception
 
       do
       {
-         
+
          if (!uiSkip && !bSkip || uiSkip == DEFAULT_SE_EXCEPTION_CALL_STACK_SKIP)
          {
 
@@ -1361,7 +1366,7 @@ namespace exception
 
                if (::str::find_ci("KiUserExceptionDispatcher", psz) >= 0)
                {
-                  
+
                   uiSkip = 0;
 
                }
@@ -1386,7 +1391,7 @@ namespace exception
          }
          else
          {
-            
+
             --uiSkip;
 
          }
@@ -1417,28 +1422,29 @@ namespace exception
 
       do
       {
-         
+
          iLine = 0;
 
          psz = get_frame(pszFormat, iLine);
 
          if (psz == NULL)
          {
-          
+
             break;
 
          }
 
          strcat(_strS, psz);
 
-      } while (stack_next());
+      }
+      while (stack_next());
 
       return _strS;
    }
 
 #endif
 
-#if defined(WINDOWSEX) 
+#if defined(WINDOWSEX)
 
 
    char * engine::get_frame(const char * pszFormat, int & iLine)
@@ -1527,9 +1533,9 @@ namespace exception
                   if (strncmp(_strSymbol, "dispatch::AddMessageHandler", strlen("dispatch::AddMessageHandler")) == 0)
                   {
 //                     strcpy(_strS, "\n");
-  //                   strcat(_strS, _strSymbol);
-    //                 strcat(_strS, "\n");
-      //               return NULL;
+                     //                   strcat(_strS, _strSymbol);
+                     //                 strcat(_strS, "\n");
+                     //               return NULL;
                      strcat(_strS, " * * * ");
                   }
                   strcat(_str, _strSymbol);
@@ -1558,7 +1564,7 @@ namespace exception
       return _str;
 
    }
-    
+
 #elif defined(APPLEOS)
 
    void engine::backtrace(void *pui, int &c)
@@ -1629,7 +1635,7 @@ namespace exception
             int32_t status;
 
 //            char * real_name = abi::__cxa_demangle(mangled_name, 0, 0, &status);
-             string real_name = demangle(mangled_name);
+            string real_name = demangle(mangled_name);
 
             strcat(_strS, "[bt]: (");
             ultoa_dup(szN, i, 10);
@@ -1684,144 +1690,144 @@ namespace exception
    }
 
 
-#elif defined(LINUX) || defined(MACOS) 
-    
-    void engine::backtrace(void *pui, int &c)
-    {
-        
-        synch_lock sl(&m_mutex);
-        
-        UINT32 maxframes = c;
-        
-        c = ::backtrace(pui, maxframes);
-        
-    }
-    
-    char * engine::stack_trace(void * pui, int c, const char * pszFormat)
-    {
-        
-        char ** messages = backtrace_symbols(pui, c);
-        
-        char szN[24];
-        
-        *_strS = '\0';
-        
-        char syscom[1024];
-        
-        const char * func;
-        const char * file;
-        unsigned iLine;
-        
-        for (int32_t i = 1; i < c && messages != NULL; ++i)
-        {
+#elif defined(LINUX) || defined(MACOS)
+
+   void engine::backtrace(void ** ppui, int &c)
+   {
+
+      synch_lock sl(&m_mutex);
+
+      UINT32 maxframes = c;
+
+      c = ::backtrace(ppui, maxframes);
+
+   }
+
+   char * engine::stack_trace(void * const * ppui, int c, const char * pszFormat)
+   {
+
+      char ** messages = backtrace_symbols(ppui, c);
+
+      char szN[24];
+
+      *_strS = '\0';
+
+      char syscom[1024];
+
+      const char * func;
+      const char * file;
+      unsigned iLine;
+
+      for (int32_t i = 1; i < c && messages != NULL; ++i)
+      {
 #ifdef __USE_BFD
-            
-            if(resolve_addr_file_func_line(((void **)pui)[i], &file, &func, iLine))
-            {
-                
-                
-                strcat(_strS, file);
-                strcat(_strS, ":");
-                ultoa_dup(szN, iLine, 10);
-                strcat(_strS, szN);
-                strcat(_strS, ":1: warning: ");
-                
-            }
+
+         if(resolve_addr_file_func_line(((void **)ppui)[i], &file, &func, iLine))
+         {
+
+
+            strcat(_strS, file);
+            strcat(_strS, ":");
+            ultoa_dup(szN, iLine, 10);
+            strcat(_strS, szN);
+            strcat(_strS, ":1: warning: ");
+
+         }
 #endif // __USE_BFD
-            
-            char *mangled_name = 0, *offset_begin = 0, *offset_end = 0;
-            
-            // find parantheses and +address offset surrounding mangled name
-            for (char *p = messages[i]; *p; ++p)
+
+         char *mangled_name = 0, *offset_begin = 0, *offset_end = 0;
+
+         // find parantheses and +address offset surrounding mangled name
+         for (char *p = messages[i]; *p; ++p)
+         {
+
+            if (*p == '(')
             {
-                
-                if (*p == '(')
-                {
-                    
-                    mangled_name = p;
-                    
-                }
-                else if (*p == '+')
-                {
-                    
-                    offset_begin = p;
-                    
-                }
-                else if (*p == ')')
-                {
-                    
-                    offset_end = p;
-                    
-                    break;
-                    
-                }
-                
+
+               mangled_name = p;
+
             }
-            
-            if (mangled_name && offset_begin && offset_end && mangled_name < offset_begin)
+            else if (*p == '+')
             {
-                
-                *mangled_name++ = '\0';
-                *offset_begin++ = '\0';
-                *offset_end++ = '\0';
-                
-                int32_t status;
-                
-                char * real_name = abi::__cxa_demangle(mangled_name, 0, 0, &status);
-                
-                strcat(_strS, "[bt]: (");
-                ultoa_dup(szN, i, 10);
-                strcat(_strS, szN);
-                strcat(_strS, ") ");
-                strcat(_strS, messages[i]);
-                strcat(_strS, " : ");
-                
-                if (status == 0)
-                {
-                    
-                    strcat(_strS, real_name);
-                    
-                }
-                else
-                {
-                    
-                    strcat(_strS, mangled_name);
-                    
-                }
-                
-                strcat(_strS, "+");
-                strcat(_strS, offset_begin);
-                strcat(_strS, offset_end);
-                strcat(_strS,"\n");
-                
-                if(real_name != NULL)
-                {
-                    
-                    free(real_name);
-                    
-                }
-                
+
+               offset_begin = p;
+
+            }
+            else if (*p == ')')
+            {
+
+               offset_end = p;
+
+               break;
+
+            }
+
+         }
+
+         if (mangled_name && offset_begin && offset_end && mangled_name < offset_begin)
+         {
+
+            *mangled_name++ = '\0';
+            *offset_begin++ = '\0';
+            *offset_end++ = '\0';
+
+            int32_t status;
+
+            char * real_name = abi::__cxa_demangle(mangled_name, 0, 0, &status);
+
+            strcat(_strS, "[bt]: (");
+            ultoa_dup(szN, i, 10);
+            strcat(_strS, szN);
+            strcat(_strS, ") ");
+            strcat(_strS, messages[i]);
+            strcat(_strS, " : ");
+
+            if (status == 0)
+            {
+
+               strcat(_strS, real_name);
+
             }
             else
             {
-                
-                strcat(_strS, "[bt]: (");
-                ultoa_dup(szN, i, 10);
-                strcat(_strS, szN);
-                strcat(_strS, ") ");
-                strcat(_strS, messages[i]);
-                
+
+               strcat(_strS, mangled_name);
+
             }
-            
+
+            strcat(_strS, "+");
+            strcat(_strS, offset_begin);
+            strcat(_strS, offset_end);
             strcat(_strS,"\n");
-            
-        }
-        
-        return _strS;
-        
-    }
-    
-    
+
+            if(real_name != NULL)
+            {
+
+               free(real_name);
+
+            }
+
+         }
+         else
+         {
+
+            strcat(_strS, "[bt]: (");
+            ultoa_dup(szN, i, 10);
+            strcat(_strS, szN);
+            strcat(_strS, ") ");
+            strcat(_strS, messages[i]);
+
+         }
+
+         strcat(_strS,"\n");
+
+      }
+
+      return _strS;
+
+   }
+
+
 #endif
 
 
@@ -1840,7 +1846,7 @@ namespace exception
 #include <unistd.h>
 
 /* globals retained across calls to resolve. */
-static const char * moda[]={"/ca2/stage/x86/libaura.so", "/ca2/stage/x86/libbase.so", "/ca2/stage/x86/libcore.so", NULL};
+static const char * moda[]= {"/ca2/stage/x86/libaura.so", "/ca2/stage/x86/libbase.so", "/ca2/stage/x86/libcore.so", NULL};
 static bfd* abfda[64];
 static asymbol **symsa[64];
 static asection *texta[64];
@@ -1926,7 +1932,7 @@ void init_resolve_addr_file_func_line()
 
    ZERO(symsa);
 
- 	ZERO(texta)
+   ZERO(texta)
 
    bfd_init();
 
@@ -1966,16 +1972,17 @@ void init_resolve_addr_file_func_line()
 
 bool resolve_addr_file_func_line1(bfd* abfd, asymbol **syms, asection *text, void *address, const char * * filename, const char ** func, unsigned & iLine)
 {
-    long offset = ((long)address) - text->vma;
-    if (offset > 0) {
-         *filename = NULL;
-    *func = NULL;
+   long offset = ((long)address) - text->vma;
+   if (offset > 0)
+   {
+      *filename = NULL;
+      *func = NULL;
 
-        if (bfd_find_nearest_line(abfd, text, syms, offset, filename, func, &iLine) && *filename)
-            return true;
-            return false;
-    }
-    return false;
+      if (bfd_find_nearest_line(abfd, text, syms, offset, filename, func, &iLine) && *filename)
+         return true;
+      return false;
+   }
+   return false;
 }
 
 
@@ -1991,7 +1998,7 @@ bool resolve_addr_file_func_line(void *address, const char * * filename, const c
       i++;
 
    }
-    return false;
+   return false;
 }
 
 

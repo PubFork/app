@@ -59,74 +59,75 @@ namespace user
          DestroyWindow();
 
       }
-      
-      try {
 
-      m_bCreate = true;
-
-      m_pui = pui;
-
-      m_pui->m_pimpl = this;
-
-      m_pui->m_id      = id;
-
-      install_message_routing(this);
-
-      if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
+      try
       {
 
-         m_pui->on_set_parent(pparent);
+         m_bCreate = true;
 
-      }
+         m_pui = pui;
 
-      ::user::create_struct cs;
+         m_pui->m_pimpl = this;
 
-      cs = rect;
-      cs.dwExStyle   = dwExStyle;
-      cs.style       = dwStyle;
-      #ifdef WINDOWSEX
-      wstring wstrClassName(lpszClassName);
-      wstring wstrWindowName(lpszWindowName);
-      cs.lpszClass = wstrClassName;
-      cs.lpszName = wstrWindowName;
-      #else
-      cs.lpszClass = lpszClassName;
-      cs.lpszName = lpszWindowName;
-      #endif
-      cs.hwndParent = pparent->get_handle();
-      cs.hMenu = NULL;
-      cs.hInstance = System.m_hinstance;
-      cs.hInstance = NULL;
-      cs.lpCreateParams = lpParam;
+         m_pui->m_id      = id;
 
-      m_pui->pre_create_window(cs);
+         install_message_routing(this);
 
-      m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
+         if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
+         {
 
-      ::rect rectChild(rect);
+            m_pui->on_set_parent(pparent);
 
-      if(rectChild.area() > 0)
-      {
+         }
 
-         m_pui->SetWindowPos(0,rectChild,(dwStyle & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
+         ::user::create_struct cs;
 
-      }
-      else if(dwStyle & WS_VISIBLE)
-      {
+         cs = rect;
+         cs.dwExStyle   = dwExStyle;
+         cs.style       = dwStyle;
+#ifdef WINDOWSEX
+         wstring wstrClassName(lpszClassName);
+         wstring wstrWindowName(lpszWindowName);
+         cs.lpszClass = wstrClassName;
+         cs.lpszName = wstrWindowName;
+#else
+         cs.lpszClass = lpszClassName;
+         cs.lpszName = lpszWindowName;
+#endif
+         cs.hwndParent = pparent->get_handle();
+         cs.hMenu = NULL;
+         cs.hInstance = System.m_hinstance;
+         cs.hInstance = NULL;
+         cs.lpCreateParams = lpParam;
 
-         ShowWindow(SW_SHOW);
+         m_pui->pre_create_window(cs);
 
-      }
+         m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
+
+         ::rect rectChild(rect);
+
+         if(rectChild.area() > 0)
+         {
+
+            m_pui->SetWindowPos(0,rectChild,(dwStyle & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
+
+         }
+         else if(dwStyle & WS_VISIBLE)
+         {
+
+            ShowWindow(SW_SHOW);
+
+         }
       }
       catch(...)
       {
-         
+
          m_bCreate = false;
-         
-         
+
+
          return false;
-         
-         
+
+
       }
 
       return true;
@@ -143,86 +144,87 @@ namespace user
          DestroyWindow();
 
       }
-      
-      try {
-      
 
-      m_bCreate = true;
-
-      m_pui = pui;
-
-      m_pui->m_pimpl = this;
-
-      m_pui->m_id      = id;
-
-      install_message_routing(this);
-
-      if(pparent != m_pui && !m_pui->is_descendant(pparent) && ! pparent->is_descendant(m_pui))
+      try
       {
 
-         m_pui->on_set_parent(pparent);
 
-      }
+         m_bCreate = true;
 
-      ::user::create_struct cs;
+         m_pui = pui;
 
-      cs = rect;
+         m_pui->m_pimpl = this;
 
-      cs.dwExStyle = 0;
-      cs.style = dwStyle;
-#ifdef WINDOWSEX
-      wstring wstrClassName(lpszClassName);
-      wstring wstrWindowName(lpszWindowName);
-      cs.lpszClass   = wstrClassName;
-      cs.lpszName    = wstrWindowName;
-#else
-      cs.lpszClass   = lpszClassName;
-      cs.lpszName    = lpszWindowName;
-#endif
-      cs.hwndParent  = pparent->get_handle();
-      cs.hInstance   = System.m_hinstance;
-      cs.hMenu = NULL;
-      cs.lpCreateParams = (LPVOID)pcreate;
+         m_pui->m_id      = id;
 
-      m_pui->pre_create_window(cs);
+         install_message_routing(this);
 
-      //if (!m_pui->m_bCreated)
-      //{
-
-         m_pui->send_message(WM_CREATE, 0, (lparam)(LPARAM)&cs);
-
-      //}
-
-      ::rect rectChild(rect);
-
-      if(rectChild.area() > 0)
-      {
-
-         m_pui->SetWindowPos(0,rectChild,(dwStyle & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
-
-      }
-      else
-      {
-
-         m_pui->send_message(WM_SIZE);
-
-         if ((dwStyle & WS_VISIBLE) != 0)
+         if(pparent != m_pui && !m_pui->is_descendant(pparent) && ! pparent->is_descendant(m_pui))
          {
 
-            ShowWindow(SW_SHOW);
+            m_pui->on_set_parent(pparent);
 
          }
 
-      }
+         ::user::create_struct cs;
+
+         cs = rect;
+
+         cs.dwExStyle = 0;
+         cs.style = dwStyle;
+#ifdef WINDOWSEX
+         wstring wstrClassName(lpszClassName);
+         wstring wstrWindowName(lpszWindowName);
+         cs.lpszClass   = wstrClassName;
+         cs.lpszName    = wstrWindowName;
+#else
+         cs.lpszClass   = lpszClassName;
+         cs.lpszName    = lpszWindowName;
+#endif
+         cs.hwndParent  = pparent->get_handle();
+         cs.hInstance   = System.m_hinstance;
+         cs.hMenu = NULL;
+         cs.lpCreateParams = (LPVOID)pcreate;
+
+         m_pui->pre_create_window(cs);
+
+         //if (!m_pui->m_bCreated)
+         //{
+
+         m_pui->send_message(WM_CREATE, 0, (lparam)(LPARAM)&cs);
+
+         //}
+
+         ::rect rectChild(rect);
+
+         if(rectChild.area() > 0)
+         {
+
+            m_pui->SetWindowPos(0,rectChild,(dwStyle & WS_VISIBLE) ? SWP_SHOWWINDOW : 0);
+
+         }
+         else
+         {
+
+            m_pui->send_message(WM_SIZE);
+
+            if ((dwStyle & WS_VISIBLE) != 0)
+            {
+
+               ShowWindow(SW_SHOW);
+
+            }
+
+         }
       }
       catch(...)
       {
-         
+
          m_bCreate = false;
-         
+
          return false;
-         
-         
+
+
       }
 
       return true;
@@ -239,65 +241,65 @@ namespace user
          DestroyWindow();
 
       }
-      
+
       try
       {
 
-      m_bCreate         = true;
+         m_bCreate         = true;
 
-      m_pui             = pui;
+         m_pui             = pui;
 
-      m_pui->m_pimpl    = this;
+         m_pui->m_pimpl    = this;
 
-      m_pui->m_id       = id;
+         m_pui->m_id       = id;
 
-      install_message_routing(this);
+         install_message_routing(this);
 
-      if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
-      {
+         if(pparent != m_pui && !pparent->is_descendant(m_pui) && !m_pui->is_descendant(pparent))
+         {
 
-         m_pui->on_set_parent(pparent);
+            m_pui->on_set_parent(pparent);
 
-      }
+         }
 
-      ::user::create_struct cs;
+         ::user::create_struct cs;
 
-      cs                =  rect;
-      cs.style          = WS_CHILD | WS_VISIBLE;
-      cs.dwExStyle      = 0;
-      cs.lpszClass      = NULL;
-      cs.lpszName       = NULL;
-      cs.hwndParent     = pparent->get_handle();
-      cs.hMenu          = NULL;
-      cs.hInstance      = System.m_hinstance;
-      cs.lpCreateParams = (LPVOID)NULL;
+         cs                =  rect;
+         cs.style          = WS_CHILD | WS_VISIBLE;
+         cs.dwExStyle      = 0;
+         cs.lpszClass      = NULL;
+         cs.lpszName       = NULL;
+         cs.hwndParent     = pparent->get_handle();
+         cs.hMenu          = NULL;
+         cs.hInstance      = System.m_hinstance;
+         cs.lpCreateParams = (LPVOID)NULL;
 
-      m_pui->pre_create_window(cs);
+         m_pui->pre_create_window(cs);
 
-      m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
+         m_pui->send_message(WM_CREATE,0,(lparam)(LPARAM)&cs);
 
-      ::rect rectChild(rect);
+         ::rect rectChild(rect);
 
-      if(rectChild.area() > 0)
-      {
+         if(rectChild.area() > 0)
+         {
 
-         m_pui->SetWindowPos(0,rectChild, SWP_SHOWWINDOW);
+            m_pui->SetWindowPos(0,rectChild, SWP_SHOWWINDOW);
 
-      }
-      else
-      {
+         }
+         else
+         {
 
-         ShowWindow(SW_SHOW);
+            ShowWindow(SW_SHOW);
 
-      }
+         }
       }
       catch(...)
       {
-         
+
          m_bCreate = false;
-         
+
          return false;
-         
+
       }
 
       return true;
@@ -315,13 +317,13 @@ namespace user
    void interaction_child::install_message_routing(::message::sender * pinterface)
    {
 
+      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
+
       last_install_message_routing(pinterface);
 
       IGUI_MSG_LINK(WM_DESTROY,pinterface,this,&interaction_child::_001OnDestroy);
 
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &interaction_child::_001OnShowWindow);
-
-      IGUI_MSG_LINK(WM_NCDESTROY,pinterface,this,&interaction_child::_001OnNcDestroy);
 
       m_pui->install_message_routing(pinterface);
 
@@ -548,11 +550,11 @@ namespace user
 
       if(!m_bCreate)
       {
-         
+
          return false;
-         
+
       }
-      
+
       bool bOk = ::user::interaction_impl_base::DestroyWindow();
 
       m_bCreate = false;
@@ -565,16 +567,18 @@ namespace user
    void interaction_child::message_handler(::message::base * pbase)
    {
 
-      UINT uiMessage = pbase->m_id;
+      UINT uiMessage;
+
+      convert(uiMessage, pbase->m_id.int64());
 
       if(m_pui != NULL)
       {
-         
+
          m_pui->GuieProc(pbase);
 
          if(pbase->m_bRet)
          {
-         
+
             return;
 
          }
@@ -583,15 +587,15 @@ namespace user
 
       if(uiMessage == ::message::message_event)
       {
-         
+
          ((::user::control_event *) pbase->m_lparam.m_lparam)->m_bProcessed = m_pui->BaseOnControlEvent((control_event *)pbase->m_lparam.m_lparam);
-         
+
          return;
 
       }
 
       route_message(pbase);
-      
+
    }
 
 
@@ -769,7 +773,7 @@ namespace user
 
    void interaction_child::set_viewport_org(::draw2d::graphics * pgraphics)
    {
-      
+
       // graphics will be already set its view port to the interaction_impl for linux - cairo with xlib
 
       try

@@ -219,7 +219,7 @@ namespace str
       inline bool is_legal_uni_index(int64_t iUnicodeIndex)
       {
 
-         return iUnicodeIndex < 65536 ? true : false;
+         return iUnicodeIndex >= 0 && iUnicodeIndex < 65536 ? true : false;
 
          //return ca >= ((uint64_t) 0xffffffffu) ? false : true;
 

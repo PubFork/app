@@ -23,6 +23,7 @@ namespace message
       ::message::message(papp)
    {
 
+      m_pwnd               = NULL;
       m_lresult            = 0;
       m_bDestroyed         = false;
       m_pwnd               = NULL;
@@ -36,6 +37,7 @@ namespace message
       ::message::message(papp)
    {
 
+      m_pwnd               = NULL;
       m_lresult            = 0;
       m_bDestroyed         = false;
       m_bDoSystemDefault   = true;

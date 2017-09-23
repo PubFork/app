@@ -59,3 +59,6 @@ CLASS_DECL_AURA string normalize_path(const char * lpcszPath);
 
 #endif
 
+HANDLE create_file(const char * lpcszFileName, DWORD dwDesiredAcces, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSA, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+
+

@@ -129,7 +129,7 @@ namespace base
 
       case MSGF_MENU:
             
-         pMsgWnd = pbase->m_pwnd.cast < ::user::interaction > ();
+         pMsgWnd = dynamic_cast < ::user::interaction * > (pbase->m_pwnd);
             
          if(pMsgWnd != NULL)
          {

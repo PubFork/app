@@ -314,7 +314,7 @@ namespace aura
 
 
 
-   bool application::process_command(::aura::main_init_data * pdata)
+   bool application::process_command(::command::command * pdata)
    {
 
 //      m_pmaininitdata = (::ios::main_init_data *) pdata;
@@ -332,7 +332,7 @@ namespace aura
          
          string strCmdLine          = pdata->m_strCommandLine;
          
-         System.m_strCmdLine = strCmdLine;
+//         System.m_strCmdLine = strCmdLine;
          
          SetCurrentHandles();
          

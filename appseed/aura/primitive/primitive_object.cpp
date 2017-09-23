@@ -11,6 +11,7 @@ object::object()
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = NULL;
+   m_pthreadrefa        = NULL;
 
 }
 
@@ -48,6 +49,7 @@ object::object(const object& objectSrc)
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = objectSrc.m_pauraapp;
+   m_pthreadrefa        = NULL;
 
 
 }
@@ -62,6 +64,7 @@ object::object(::aura::application * papp)
    m_pfactoryitembase   = NULL;
    m_countReference     = 1;
    m_pauraapp           = papp;
+   m_pthreadrefa        = NULL;
 
 }
 
@@ -69,9 +72,13 @@ object::object(::aura::application * papp)
 object::~object()
 {
 
-   ::aura::del(m_pmutex);
+   threadrefa_post_quit_and_wait(one_minute());
 
+   ::aura::del(m_pthreadrefa);
+   
    ::aura::del(m_psetObject);
+   
+   ::aura::del(m_pmutex);
 
 }
 
@@ -878,6 +885,72 @@ void object::on_handle(::create * pcreate)
    
 }
 
+
+void object::threadrefa_post_quit_and_wait(::duration duration)
+{
+   
+   if (m_pthreadrefa != NULL)
+   {
+      
+      m_pthreadrefa->post_quit_and_wait(duration);
+      
+   }
+   
+}
+
+
+
+void object::threadrefa_add(::thread * pthread)
+{
+
+   if (pthread == NULL)
+   {
+    
+      return;
+      
+   }
+
+   if (m_pthreadrefa == NULL)
+   {
+   
+      m_pthreadrefa = new thread_refa;
+   
+   }
+
+   {
+      
+      synch_lock sl(m_pthreadrefa->m_pmutex);
+   
+      m_pthreadrefa->add(pthread);
+      
+      pthread->m_objectrefaDependent.add(this);
+   
+   }
+   
+}
+
+void object::threadrefa_remove(::thread * pthread)
+{
+   
+   if (m_pthreadrefa == NULL)
+   {
+      
+      return;
+      
+   }
+   
+   synch_lock sl(m_pthreadrefa->m_pmutex);
+   
+   if (pthread != NULL)
+   {
+      
+      m_pthreadrefa->remove(pthread);
+      
+      pthread->m_objectrefaDependent.remove(this);
+      
+   }
+   
+}
 
 
 

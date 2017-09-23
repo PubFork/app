@@ -199,7 +199,7 @@ static const int table_00000102[32] =
 static const int table_40000002[36] =
 {
    ERROR_INVALID_PARAMETER,                /* 40000002 (STATUS_WORKING_SET_LIMIT_RANGE) */
-   ERROR_IMAGE_NOT_AT_AXIS,                /* 40000003 (STATUS_IMAGE_NOT_AT_AXIS) */
+   ERROR_IMAGE_NOT_AT_BASE,                /* 40000003 (STATUS_IMAGE_NOT_AT_AXIS) */
    0,                                      /* 40000004 (STATUS_RXACT_STATE_CREATED) */
    0,                                      /* 40000005 (STATUS_SEGMENT_NOTIFICATION) */
    ERROR_LOCAL_USER_SESSION_KEY,           /* 40000006 (STATUS_LOCAL_USER_SESSION_KEY) */

@@ -3,74 +3,77 @@
 template < typename PAIR >
 class map_dynamic_hash_table
 {
-public:
+   public:
 
-   typedef map_association < PAIR >  assoc;
+      typedef map_association < PAIR >  assoc;
 
-   assoc *           m_assocHash17[17];
-   assoc **          m_ppassocHash;
-   UINT              m_nHashTableSize;
+      assoc *           m_assocHash17[17];
+      assoc **          m_ppassocHash;
+      UINT              m_nHashTableSize;
 
-   map_dynamic_hash_table()
-   {
-
-      m_ppassocHash = NULL;
-      m_nHashTableSize = 17;
-
-   }
-
-   UINT GetHashTableSize() const { return m_nHashTableSize; }
-
-
-   void InitHashTable(UINT nHashSize,bool bAllocNow = TRUE)
-   {
-
-      if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
+      map_dynamic_hash_table()
       {
-         // free hash table
-         delete[] m_ppassocHash;
+
          m_ppassocHash = NULL;
+         m_nHashTableSize = 17;
+
       }
 
-      if(bAllocNow)
+      UINT GetHashTableSize() const
+      {
+         return m_nHashTableSize;
+      }
+
+
+      void InitHashTable(UINT nHashSize,bool bAllocNow = TRUE)
       {
 
-         if (nHashSize == 17)
+         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
          {
-
-            m_ppassocHash = m_assocHash17;
-
-         }
-         else
-         {
-         
-            m_ppassocHash = new assoc *[nHashSize];
-            
-            ENSURE(m_ppassocHash != NULL);
-
+            // free hash table
+            delete[] m_ppassocHash;
+            m_ppassocHash = NULL;
          }
 
-         memset(m_ppassocHash,0,sizeof(assoc*) * nHashSize);
+         if(bAllocNow)
+         {
+
+            if (nHashSize == 17)
+            {
+
+               m_ppassocHash = m_assocHash17;
+
+            }
+            else
+            {
+
+               m_ppassocHash = new assoc *[nHashSize];
+
+               ENSURE(m_ppassocHash != NULL);
+
+            }
+
+            memset(m_ppassocHash,0,sizeof(assoc*) * nHashSize);
+
+         }
+
+         m_nHashTableSize = nHashSize;
 
       }
 
-      m_nHashTableSize = nHashSize;
-
-   }
-
-   void remove_all()
-   {
-      if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
+      void remove_all()
       {
+         if(m_ppassocHash != NULL && m_ppassocHash != m_assocHash17)
+         {
 
-         // free hash table
-         delete[] m_ppassocHash;
+            // free hash table
+            delete[] m_ppassocHash;
+
+         }
+
+         m_ppassocHash = NULL;
 
       }
-
-      m_ppassocHash = NULL;
-
-   }
 
 
 };
@@ -78,27 +81,30 @@ public:
 template < int m_nHashTableSize,typename PAIR >
 class map_fixed_hash_table
 {
-public:
+   public:
 
 
-   typedef map_association < PAIR > assoc;
+      typedef map_association < PAIR > assoc;
 
 
-   assoc *           m_ppassocHash[m_nHashTableSize];
+      assoc *           m_ppassocHash[m_nHashTableSize];
 
-   map_fixed_hash_table()
-   {
-      zero(m_ppassocHash,sizeof(m_ppassocHash));
-   }
+      map_fixed_hash_table()
+      {
+         zero(m_ppassocHash,sizeof(m_ppassocHash));
+      }
 
 
-   UINT GetHashTableSize() const { return m_nHashTableSize; }
-   void InitHashTable(UINT hashSize,bool bAllocNow = TRUE) {  }
+      UINT GetHashTableSize() const
+      {
+         return m_nHashTableSize;
+      }
+      void InitHashTable(UINT hashSize,bool bAllocNow = TRUE) {  }
 
-   void remove_all()
-   {
-      zero(m_ppassocHash,sizeof(m_ppassocHash));
-   }
+      void remove_all()
+      {
+         zero(m_ppassocHash,sizeof(m_ppassocHash));
+      }
 
 };
 
@@ -107,420 +113,435 @@ template <class KEY,class ARG_KEY,class VALUE,class ARG_VALUE = const VALUE &, c
 class map :
    virtual public ::object
 {
-public:
-
-   typedef map_dynamic_hash_table < PAIR >         HASH_TABLE;
-   typedef KEY                                     AXIS_KEY;
-   typedef ARG_KEY                                 AXIS_ARG_KEY;
-   typedef VALUE                                   AXIS_VALUE;
-   typedef ARG_VALUE                               AXIS_ARG_VALUE;
-
-   typedef ::map_association < PAIR >              assoc;
-   typedef typename assoc::pair                    pair;
-
-   HASH_TABLE                                      m_hashtable;
-
-
-   class iterator
-   {
    public:
 
+      typedef map_dynamic_hash_table < PAIR >         HASH_TABLE;
+      typedef KEY                                     AXIS_KEY;
+      typedef ARG_KEY                                 AXIS_ARG_KEY;
+      typedef VALUE                                   AXIS_VALUE;
+      typedef ARG_VALUE                               AXIS_ARG_VALUE;
 
-      typedef pair TYPE;
+      typedef ::map_association < PAIR >              assoc;
+      typedef typename assoc::pair                    pair;
+
+      HASH_TABLE                                      m_hashtable;
 
 
-      pair *                     m_ppair;
-      map *                      m_pmap;
-
-
-      iterator()
+      class iterator
       {
-         m_ppair  = NULL;
-         m_pmap   = NULL;
+         public:
+
+
+            typedef pair TYPE;
+
+
+            pair *                     m_ppair;
+            map *                      m_pmap;
+
+
+            iterator()
+            {
+               m_ppair  = NULL;
+               m_pmap   = NULL;
+            }
+
+            iterator(const iterator & iterator)
+            {
+               m_ppair  = iterator.m_ppair;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            iterator(pair * ppair, map * pmap)
+            {
+               m_ppair  = ppair;
+               m_pmap   = pmap;
+            }
+
+            pair * operator -> ()
+            {
+               return m_ppair;
+            }
+
+            pair * operator -> () const
+            {
+               return m_ppair;
+            }
+
+            pair & operator * ()
+            {
+               return *m_ppair;
+            }
+
+            pair & operator * () const
+            {
+               return *m_ppair;
+            }
+
+            iterator & operator ++ ()
+            {
+               if(m_ppair != NULL && m_pmap != NULL)
+                  m_ppair = m_pmap->PGetNextAssoc(m_ppair);
+               return *this;
+            }
+
+            iterator operator ++ (int32_t)
+            {
+               if(m_ppair != NULL && m_pmap != NULL)
+                  m_ppair = m_pmap->PGetNextAssoc(m_ppair);
+               return *this;
+            }
+
+            bool operator == (const iterator & it) const
+            {
+               if(this == &it)
+                  return true;
+               if(m_ppair == NULL && it.m_ppair == NULL && it.m_pmap == NULL)
+                  return true;
+               if(m_pmap != it.m_pmap)
+                  return false;
+               return m_ppair == it.m_ppair;
+            }
+
+            bool operator != (const iterator & it) const
+            {
+               return !operator == (it);
+            }
+
+            iterator & operator = (const iterator & it)
+            {
+               if(this != &it)
+               {
+                  m_pmap         = it.m_pmap;
+                  m_ppair        = it.m_ppair;
+               }
+               return *this;
+            }
+
+      };
+
+
+      class const_iterator
+      {
+         public:
+
+            typedef pair TYPE;
+
+
+            pair *   m_ppair;
+            map *    m_pmap;
+
+
+            const_iterator()
+            {
+               m_ppair  = NULL;
+               m_pmap   = NULL;
+            }
+
+            const_iterator(const iterator & iterator)
+            {
+               m_ppair  = iterator.m_ppair;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            const_iterator(const const_iterator & const_iterator)
+            {
+               m_ppair  = const_iterator.m_ppair;
+               m_pmap   = const_iterator.m_pmap;
+            }
+
+            const_iterator(pair * ppair, map * pmap)
+            {
+               m_ppair  = ppair;
+               m_pmap   = pmap;
+            }
+
+            const pair * operator -> () const
+            {
+               return m_ppair;
+            }
+
+            pair & operator * ()
+            {
+               return *m_ppair;
+            }
+
+            pair & operator * () const
+            {
+               return *m_ppair;
+            }
+
+
+            const_iterator & operator ++ ()
+            {
+               if(m_ppair != NULL && m_pmap != NULL)
+                  m_ppair = m_pmap->PGetNextAssoc(m_ppair);
+               return *this;
+            }
+
+            const_iterator operator ++ (int32_t)
+            {
+               if(m_ppair != NULL && m_pmap != NULL)
+                  m_ppair = m_pmap->PGetNextAssoc(m_ppair);
+               return *this;
+            }
+
+            bool operator == (const const_iterator & it) const
+            {
+               if(this == &it)
+                  return true;
+               if(m_ppair == NULL && it.m_ppair == NULL && it.m_pmap == NULL)
+                  return true;
+               if(m_pmap != it.m_pmap)
+                  return false;
+               return m_ppair == it.m_ppair;
+            }
+
+            bool operator != (const const_iterator & it) const
+            {
+               return !operator == (it);
+            }
+
+            const_iterator & operator = (const const_iterator & it)
+            {
+               if(this != &it)
+               {
+                  m_pmap         = it.m_pmap;
+                  m_ppair        = it.m_ppair;
+               }
+               return *this;
+            }
+
+      };
+
+
+
+      iterator begin()
+      {
+         return iterator(PGetFirstAssoc(), this);
       }
 
-      iterator(const iterator & iterator)
+
+      iterator end()
       {
-         m_ppair  = iterator.m_ppair;
-         m_pmap   = iterator.m_pmap;
+         return iterator(NULL, this);
       }
 
-      iterator(pair * ppair, map * pmap)
+      const_iterator begin() const
       {
-         m_ppair  = ppair;
-         m_pmap   = pmap;
+         return const_iterator(((map *) this)->PGetFirstAssoc(), (map *) this);
       }
 
-      pair * operator -> ()
+
+      const_iterator end() const
       {
-         return m_ppair;
+         return const_iterator(NULL, (map *) this);
       }
 
-      pair * operator -> () const
+      void construct(::count nBlockSize = 10);
+      map(::aura::application * papp = NULL, ::count nBlockSize = 10);
+      map(pair pairs[], int32_t iCount);
+      map(const map & m);
+
+      ::count get_count() const;
+      ::count get_size() const;
+      ::count size() const;
+      ::count count() const;
+      bool is_empty() const;
+      bool empty() const;
+
+      //Lookup
+      bool Lookup(ARG_KEY key, VALUE& rValue) const;
+      const pair *PLookup(ARG_KEY key) const;
+      pair *PLookup(ARG_KEY key);
+
+
+      VALUE * pget(ARG_KEY key);
+
+      //Operations
+      //Lookup and add if not there
+      VALUE& operator[](ARG_KEY key);
+      const VALUE& operator[](ARG_KEY key) const;
+
+      assoc * get_assoc(ARG_KEY key);
+      assoc * get_assoc(ARG_KEY key) const
       {
-         return m_ppair;
+         return ((map *) this)->get_assoc(key);
       }
 
-      pair & operator * ()
-      {
-         return *m_ppair;
-      }
+      //add a new (key, value) pair
+      assoc * set_at(ARG_KEY key, ARG_VALUE newValue);
 
-      pair & operator * () const
-      {
-         return *m_ppair;
-      }
+      //removing existing (key, ?) pair
+      bool remove_key(ARG_KEY key);
+      inline bool remove_assoc(assoc * passoc);
+      void erase(iterator it);
+      ::count erase(const KEY & key);
+      //the following funtion is available in a sort_map
+      //void erase ( iterator first, iterator last );
+      void remove_all();
+      void clear();
+      void Empty();
 
-      iterator & operator ++ ()
-      {
-         if(m_ppair != NULL && m_pmap != NULL)
-            m_ppair = m_pmap->PGetNextAssoc(m_ppair);
-         return *this;
-      }
 
-      iterator operator ++ (int32_t)
-      {
-         if(m_ppair != NULL && m_pmap != NULL)
-            m_ppair = m_pmap->PGetNextAssoc(m_ppair);
-         return *this;
-      }
+      ::count count(const KEY & t) const;
+      bool has(const KEY & t) const;
+      bool contains(const KEY & t) const;
 
-      bool operator == (const iterator & it) const
-      {
-         if(this == &it)
-            return true;
-         if(m_ppair == NULL && it.m_ppair == NULL && it.m_pmap == NULL)
-            return true;
-         if(m_pmap != it.m_pmap)
-            return false;
-         return m_ppair == it.m_ppair;
-      }
+      //iterating all (key, value) pairs
+      POSITION get_start_position() const;
 
-      bool operator != (const iterator & it) const
-      {
-         return !operator == (it);
-      }
+      const assoc *PGetFirstAssoc() const;
+      assoc *PGetFirstAssoc();
 
-      iterator & operator = (const iterator & it)
+      void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
+
+      const assoc *PGetNextAssoc(const pair *passocRet) const;
+      assoc *PGetNextAssoc(const pair *passocRet);
+
+      //advanced features for derived classes
+      UINT GetHashTableSize() const
       {
-         if(this != &it)
+         return m_hashtable.GetHashTableSize();
+      }
+      void InitHashTable(UINT hashSize,bool bAllocNow = TRUE);
+
+
+      VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
+
+
+      pair * next(pair * & ppair)
+      {
+         if(ppair == NULL)
          {
-            m_pmap         = it.m_pmap;
-            m_ppair        = it.m_ppair;
+            ppair = PGetFirstAssoc();
          }
-         return *this;
-      }
-
-   };
-
-
-   class const_iterator
-   {
-   public:
-
-      typedef pair TYPE;
-
-
-      pair *   m_ppair;
-      map *    m_pmap;
-
-
-      const_iterator()
-      {
-         m_ppair  = NULL;
-         m_pmap   = NULL;
-      }
-
-      const_iterator(const iterator & iterator)
-      {
-         m_ppair  = iterator.m_ppair;
-         m_pmap   = iterator.m_pmap;
-      }
-
-      const_iterator(const const_iterator & const_iterator)
-      {
-         m_ppair  = const_iterator.m_ppair;
-         m_pmap   = const_iterator.m_pmap;
-      }
-
-      const_iterator(pair * ppair, map * pmap)
-      {
-         m_ppair  = ppair;
-         m_pmap   = pmap;
-      }
-
-      const pair * operator -> () const
-      {
-         return m_ppair;
-      }
-
-      pair & operator * ()
-      {
-         return *m_ppair;
-      }
-
-      pair & operator * () const
-      {
-         return *m_ppair;
-      }
-
-
-      const_iterator & operator ++ ()
-      {
-         if(m_ppair != NULL && m_pmap != NULL)
-            m_ppair = m_pmap->PGetNextAssoc(m_ppair);
-         return *this;
-      }
-
-      const_iterator operator ++ (int32_t)
-      {
-         if(m_ppair != NULL && m_pmap != NULL)
-            m_ppair = m_pmap->PGetNextAssoc(m_ppair);
-         return *this;
-      }
-
-      bool operator == (const const_iterator & it) const
-      {
-         if(this == &it)
-            return true;
-         if(m_ppair == NULL && it.m_ppair == NULL && it.m_pmap == NULL)
-            return true;
-         if(m_pmap != it.m_pmap)
-            return false;
-         return m_ppair == it.m_ppair;
-      }
-
-      bool operator != (const const_iterator & it) const
-      {
-         return !operator == (it);
-      }
-
-      const_iterator & operator = (const const_iterator & it)
-      {
-         if(this != &it)
+         else
          {
-            m_pmap         = it.m_pmap;
-            m_ppair        = it.m_ppair;
+            ppair = PGetNextAssoc(ppair);
          }
-         return *this;
+         return ppair;
       }
 
-   };
-
-
-
-   iterator begin()
-   {
-      return iterator(PGetFirstAssoc(), this);
-   }
-
-
-   iterator end()
-   {
-      return iterator(NULL, this);
-   }
-
-   const_iterator begin() const
-   {
-      return const_iterator(((map *) this)->PGetFirstAssoc(), (map *) this);
-   }
-
-
-   const_iterator end() const
-   {
-      return const_iterator(NULL, (map *) this);
-   }
-
-   void construct(::count nBlockSize = 10);
-   map(::aura::application * papp = NULL, ::count nBlockSize = 10);
-   map(pair pairs[], int32_t iCount);
-   map(const map & m);
-
-   ::count get_count() const;
-   ::count get_size() const;
-   ::count size() const;
-   ::count count() const;
-   bool is_empty() const;
-   bool empty() const;
-
-    //Lookup
-   bool Lookup(ARG_KEY key, VALUE& rValue) const;
-   const pair *PLookup(ARG_KEY key) const;
-   pair *PLookup(ARG_KEY key);
-
-
-   VALUE * pget(ARG_KEY key);
-
-    //Operations
-    //Lookup and add if not there
-   VALUE& operator[](ARG_KEY key);
-   const VALUE& operator[](ARG_KEY key) const;
-
-   assoc * get_assoc(ARG_KEY key);
-   assoc * get_assoc(ARG_KEY key) const { return ((map *) this)->get_assoc(key);  }
-
-    //add a new (key, value) pair
-   assoc * set_at(ARG_KEY key, ARG_VALUE newValue);
-
-    //removing existing (key, ?) pair
-   bool remove_key(ARG_KEY key);
-   inline bool remove_assoc(assoc * passoc);
-   void erase(iterator it);
-   ::count erase(const KEY & key);
-    //the following funtion is available in a sort_map
-   //void erase ( iterator first, iterator last );
-   void remove_all();
-   void clear();
-   void Empty();
-
-
-   ::count count(const KEY & t) const;
-   bool has(const KEY & t) const;
-   bool contains(const KEY & t) const;
-
-    //iterating all (key, value) pairs
-   POSITION get_start_position() const;
-
-   const assoc *PGetFirstAssoc() const;
-   assoc *PGetFirstAssoc();
-
-   void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
-
-   const assoc *PGetNextAssoc(const pair *passocRet) const;
-   assoc *PGetNextAssoc(const pair *passocRet);
-
-    //advanced features for derived classes
-   UINT GetHashTableSize() const { return m_hashtable.GetHashTableSize();  }
-   void InitHashTable(UINT hashSize,bool bAllocNow = TRUE);
-
-
-   VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
-
-
-   pair * next(pair * & ppair)
-   {
-      if(ppair == NULL)
+      const pair * next(const pair * & ppair) const
       {
-         ppair = PGetFirstAssoc();
+         if(ppair == NULL)
+         {
+            ppair = PGetFirstAssoc();
+         }
+         else
+         {
+            ppair = PGetNextAssoc(ppair);
+         }
+         return ppair;
       }
-      else
+
+
+      void set(map & map)
       {
-         ppair = PGetNextAssoc(ppair);
+         pair * ppair = NULL;
+         while(map.next(ppair) != NULL)
+         {
+            set_at(ppair->m_element1, ppair->m_element2);
+         }
       }
-      return ppair;
-   }
 
-   const pair * next(const pair * & ppair) const
-   {
-      if(ppair == NULL)
-      {
-         ppair = PGetFirstAssoc();
-      }
-      else
-      {
-         ppair = PGetNextAssoc(ppair);
-      }
-      return ppair;
-   }
+      iterator find (ARG_KEY key);
+      const_iterator find (ARG_KEY key) const;
 
+      //Implementation
+      ::count           m_nCount;
+      assoc *           m_passocFree;
+      assoc *           m_passocHead;
+      struct ::plex *   m_pplex;
+      ::count           m_nBlockSize;
 
-   void set(map & map)
-   {
-      pair * ppair = NULL;
-      while(map.next(ppair) != NULL)
-      {
-         set_at(ppair->m_element1, ppair->m_element2);
-      }
-   }
+      assoc * new_assoc(ARG_KEY key);
+      void free_assoc(assoc * passoc);
+      assoc * get_assoc_at(ARG_KEY, UINT&, UINT&) const;
 
-   iterator find (ARG_KEY key);
-   const_iterator find (ARG_KEY key) const;
-
-    //Implementation
-   ::count           m_nCount;
-   assoc *           m_passocFree;
-   assoc *           m_passocHead;
-   struct ::plex *   m_pplex;
-   ::count           m_nBlockSize;
-
-   assoc * new_assoc(ARG_KEY key);
-   void free_assoc(assoc * passoc);
-   assoc * get_assoc_at(ARG_KEY, UINT&, UINT&) const;
-
-   virtual ~map();
+      virtual ~map();
 //      void Serialize(CArchive&);
-   void dump(dump_context &) const;
-   void assert_valid() const;
+      void dump(dump_context &) const;
+      void assert_valid() const;
 
-   template < class ARRAY >
-   bool remove_key_array(ARRAY a)
-   {
-
-      bool bRemoved = false;
-
-      for(index i = 0; i < a.get_count(); i++)
+      template < class ARRAY >
+      bool remove_key_array(ARRAY a)
       {
 
-         bRemoved |= remove_key(a[i]);
+         bool bRemoved = false;
 
-      }
-
-      return bRemoved;
-
-   }
-
-   template < class ARRAY >
-   ::count remove_assoc_array(ARRAY a)
-   {
-
-      ::count countRemoved = 0;
-
-      for(index i = 0; i < a.get_count(); i++)
-      {
-
-         if(remove_assoc(a[i]))
+         for(index i = 0; i < a.get_count(); i++)
          {
 
-            countRemoved++;
+            bRemoved |= remove_key(a[i]);
 
          }
 
+         return bRemoved;
+
       }
 
-      return countRemoved;
-
-   }
-
-   virtual void on_after_read() {}
-
-   range < iterator > elements() { return range < iterator >(begin(),end()); }
-   const_range < const_iterator > elements() const { return const_range < const_iterator >(begin(),end()); }
-
-   PAIR & element_at(::index iIndex) { return elements().element_at(iIndex); }
-
-   template < typename PRED >
-   typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc * pred_find(PRED pred)
-   {
-
-      auto p = this->PGetFirstAssoc();
-
-      while (p != NULL)
+      template < class ARRAY >
+      ::count remove_assoc_array(ARRAY a)
       {
 
-         if (pred(p))
+         ::count countRemoved = 0;
+
+         for(index i = 0; i < a.get_count(); i++)
          {
 
-            return p;
+            if(remove_assoc(a[i]))
+            {
+
+               countRemoved++;
+
+            }
 
          }
 
-         p = this->PGetNextAssoc(p);
+         return countRemoved;
 
       }
 
-      return NULL;
+      virtual void on_after_read() {}
 
-   }
+      range < iterator > elements()
+      {
+         return range < iterator >(begin(),end());
+      }
+      const_range < const_iterator > elements() const
+      {
+         return const_range < const_iterator >(begin(),end());
+      }
+
+      PAIR & element_at(::index iIndex)
+      {
+         return elements().element_at(iIndex);
+      }
+
+      template < typename PRED >
+      typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc * pred_find(PRED pred)
+      {
+
+         auto p = this->PGetFirstAssoc();
+
+         while (p != NULL)
+         {
+
+            if (pred(p))
+            {
+
+               return p;
+
+            }
+
+            p = this->PGetNextAssoc(p);
+
+         }
+
+         return NULL;
+
+      }
 
 };
 
@@ -958,27 +979,39 @@ bool contains_value(const map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > * pmap, A
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline ::count map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_count() const
-{ return m_nCount; }
+{
+   return m_nCount;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline ::count map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_size() const
-{ return m_nCount; }
+{
+   return m_nCount;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline ::count map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::count() const
-{ return m_nCount; }
+{
+   return m_nCount;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline ::count map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::size() const
-{ return m_nCount; }
+{
+   return m_nCount;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline bool map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::is_empty() const
-{ return m_nCount == 0; }
+{
+   return m_nCount == 0;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline bool map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::empty() const
-{ return m_nCount == 0; }
+{
+   return m_nCount == 0;
+}
 
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
@@ -996,7 +1029,9 @@ inline typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc * map < KEY,
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline POSITION map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_start_position() const
-{ return (m_nCount == 0) ? NULL : BEFORE_START_POSITION; }
+{
+   return (m_nCount == 0) ? NULL : BEFORE_START_POSITION;
+}
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc* map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::PGetFirstAssoc() const
@@ -1123,7 +1158,7 @@ map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::~map()
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc *
-   map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::new_assoc(ARG_KEY key)
+map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::new_assoc(ARG_KEY key)
 {
 
    if(m_passocFree == NULL)
@@ -1225,8 +1260,8 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::free_assoc(assoc * passoc)
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc *
-   map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_assoc_at(ARG_KEY key, UINT& nHashBucket, UINT& nHashValue) const
-   // find association (or return NULL)
+map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_assoc_at(ARG_KEY key, UINT& nHashBucket, UINT& nHashValue) const
+// find association (or return NULL)
 {
 
    nHashValue = HashKey<ARG_KEY>(key);
@@ -1369,7 +1404,7 @@ const VALUE & map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::operator[](ARG_KEY k
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 bool map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::remove_key(ARG_KEY key)
-   // remove key - return TRUE if removed
+// remove key - return TRUE if removed
 {
    ASSERT_VALID(this);
 
@@ -1392,7 +1427,7 @@ bool map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::remove_key(ARG_KEY key)
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 inline bool map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::remove_assoc(assoc * passoc)
-   // remove key - return TRUE if removed
+// remove key - return TRUE if removed
 {
    if(passoc->m_pnextHash != NULL)
    {
@@ -1447,11 +1482,11 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::erase(iterator it)
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc(POSITION& rNextPosition,
-                                                                         KEY& rKey, VALUE& rValue) const
+      KEY& rKey, VALUE& rValue) const
 {
-   
+
    ASSERT_VALID(this);
-   
+
    if(m_hashtable.m_ppassocHash == NULL)
    {
 
@@ -1480,7 +1515,7 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc(POSITION& rNex
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc*
-   map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::PGetNextAssoc(const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::pair* pPairRet) const
+map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::PGetNextAssoc(const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::pair* pPairRet) const
 {
    ASSERT_VALID(this);
 
@@ -1497,7 +1532,7 @@ const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc*
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc*
-   map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::PGetNextAssoc(const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::pair* pPairRet)
+map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::PGetNextAssoc(const typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::pair* pPairRet)
 {
    ASSERT_VALID(this);
 
@@ -1514,7 +1549,7 @@ typename map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assoc*
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 VALUE map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR > ::
-   get(ARG_KEY argkey, ARG_VALUE valueDefault)
+get(ARG_KEY argkey, ARG_VALUE valueDefault)
 {
    pair * ppair = PLookup(argkey);
    if(ppair == NULL)
@@ -1634,15 +1669,19 @@ template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 
 
 
+template < class KEY, class VALUE, class ARG_VALUE = const VALUE & >
+using isomap = map < KEY, KEY, VALUE, ARG_VALUE >;
 
-
+template < class VALUE, class ARG_VALUE = const VALUE & >
+using colorrefmap = isomap < COLORREF, VALUE, ARG_VALUE >;
 
 
 template < class VALUE, class ARG_VALUE = const VALUE & >
-using double_map = map < double, double, VALUE, ARG_VALUE >;
+using double_map = isomap < double, VALUE, ARG_VALUE >;
 
 using double_to_double = double_map < double, double >;
 
-
+template < class VALUE, class ARG_VALUE = const VALUE & >
+using dword_map = isomap < DWORD, VALUE, ARG_VALUE >;
 
 

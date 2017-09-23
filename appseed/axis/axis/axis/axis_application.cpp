@@ -1390,9 +1390,20 @@ namespace axis
    }
 
 
+#ifdef INSTALL_SUBSYSTEM
+
    bool application::check_install()
    {
 
+
+	   if (!::aura::application::check_install())
+	   {
+
+		   return false;
+
+	   }
+
+/*
       if (handler()->m_varTopicQuery.has_property("install"))
       {
 
@@ -1477,61 +1488,70 @@ namespace axis
 
 #endif
 
-      }
+      }*/
 
       return true;
 
    }
 
 
+#endif
+
+
    bool application::initial_check_directrix()
    {
 
+	   if (!::aura::application::initial_check_directrix())
+	   {
 
-      string strLicense = get_license_id();
+		   return false;
 
-      var & varTopicQuey = System.handler()->m_varTopicQuery;
+	   }
 
-      bool bHasInstall = varTopicQuey.has_property("install");
+      //string strLicense = get_license_id();
 
-      bool bHasUninstall = varTopicQuey.has_property("uninstall");
+      //var & varTopicQuey = System.handler()->m_varTopicQuery;
 
-      if(!(bHasInstall || bHasUninstall)
-         && m_bLicense
-         && strLicense.has_char())
-      {
+      //bool bHasInstall = varTopicQuey.has_property("install");
 
-         if(!Session.assert_user_logged_in())
-         {
-            return false;
-         }
+      //bool bHasUninstall = varTopicQuey.has_property("uninstall");
 
-         // call application's is_licensed function
-         // because if delay is needed for authentication -
-         // or either asking for authentication -
-         // current application startup won't be
-         // exited by timeout.
+      //if(!(bHasInstall || bHasUninstall)
+      //   && m_bLicense
+      //   && strLicense.has_char())
+      //{
 
-         int32_t iRetry = 1;
+      //   if(!Session.assert_user_logged_in())
+      //   {
+      //      return false;
+      //   }
 
-      retry_license:
+      //   // call application's is_licensed function
+      //   // because if delay is needed for authentication -
+      //   // or either asking for authentication -
+      //   // current application startup won't be
+      //   // exited by timeout.
 
-         iRetry--;
+      //   int32_t iRetry = 1;
 
-         if(!Session.is_licensed(strLicense))
-         {
+      //retry_license:
 
-            if(iRetry > 0)
-               goto retry_license;
+      //   iRetry--;
 
-            return false;
+      //   if(!Session.is_licensed(strLicense))
+      //   {
 
-         }
+      //      if(iRetry > 0)
+      //         goto retry_license;
 
-      }
+      //      return false;
+
+      //   }
+
+      //}
 
 
-      ::output_debug_string("initial_check_directrix : ok ("+string(typeid(*this).name())+")" + m_strAppId + "\n\n");
+      //::output_debug_string("initial_check_directrix : ok ("+string(typeid(*this).name())+")" + m_strAppId + "\n\n");
 
 
       return true;
@@ -2337,7 +2357,7 @@ namespace axis
 
             }
 
-            Sleep(184);
+            Sleep(200);
 
          }
 

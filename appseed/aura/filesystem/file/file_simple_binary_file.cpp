@@ -1,7 +1,11 @@
 #include "framework.h"
 #include <stdio.h>
 
-//#include <sys/stat.h>
+#if defined(APPLEOS)
+#include <sys/stat.h>
+#elif defined(LINUX)
+#include <sys/stat.h>
+#endif
 //////#include <errno.h>
 ////#include <io.h>
 ////#include <fcntl.h>

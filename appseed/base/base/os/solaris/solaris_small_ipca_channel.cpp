@@ -62,7 +62,7 @@ bool ::aura::ipc::tx::send(const char * pszMessage, DWORD dwTimeout)
 {
 
    data_struct data;
-   data.mtype        = 15111984;
+   data.mtype        = 15112000;
    data.request      = 0;
    data.size         = strlen_dup(pszMessage);
    if(data.size > 512)
@@ -99,7 +99,7 @@ bool ::aura::ipc::tx::send(int32_t message, void * pdata, int32_t len, DWORD dwT
    ::count cSend;
 
    data_struct data;
-   data.mtype        = 15111984;
+   data.mtype        = 15112000;
    data.request      = 0x80000000;
    data.size         = (int32_t)strlen_dup(pszMessage);
 
@@ -338,14 +338,14 @@ void * small_ipc_rx_channel::receive()
       do
       {
 
-         if((result = msgrcv(m_iQueue, &data, length, 15111984, IPC_NOWAIT)) == -1)
+         if((result = msgrcv(m_iQueue, &data, length, 15112000, IPC_NOWAIT)) == -1)
          {
 
             if(errno == ENOMSG)
             {
                if(!on_idle())
                {
-                  sleep(84);
+                  Sleep(100);
                }
             }
             else

@@ -267,7 +267,7 @@ namespace windows
 
          }
 
-         Sleep(84);
+         Sleep(100);
 
       }
 

@@ -52,6 +52,14 @@ namespace user
       control_type_button,
       control_type_combo_box,
       control_type_edit_plain_text,
+      control_type_list,
+      control_type_mesh,
+      control_type_tree,
+      control_type_split,
+      control_type_tab,
+      control_type_toolbar,
+      control_type_statusbar,
+      control_type_menu
    };
 
 

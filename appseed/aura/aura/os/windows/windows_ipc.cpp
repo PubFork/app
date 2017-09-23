@@ -14,7 +14,7 @@ namespace aura
    namespace ipc
    {
 
-      
+
       ATOM rx_register_class(HINSTANCE hInstance);
       LRESULT CALLBACK s_rx_message_queue_proc(oswindow oswindow,UINT message,WPARAM wparam,LPARAM lparam);
 
@@ -152,7 +152,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, durationTimeout.get_total_milliseconds(),&dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, ::convert<UINT>(durationTimeout.get_total_milliseconds()),&dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();
@@ -202,7 +202,7 @@ namespace aura
 
             DWORD_PTR dwptr;
 
-            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, durationTimeout.get_total_milliseconds(), &dwptr))
+            if(!::SendMessageTimeout(m_oswindow,WM_COPYDATA,(WPARAM)0,(LPARAM)&cds,SMTO_BLOCK, ::convert<UINT>(durationTimeout.get_total_milliseconds()), &dwptr))
                return false;
 
             unsigned int dwError = ::GetLastError();
@@ -407,18 +407,18 @@ namespace aura
 
          wcex.cbSize = sizeof(WNDCLASSEX);
 
-         wcex.style			   = 0;
-         wcex.lpfnWndProc	   = &s_rx_message_queue_proc;
-         wcex.cbClsExtra	   = 0;
-         wcex.cbWndExtra	   = 0;
-         wcex.hInstance		   = hInstance;
-         wcex.hIcon			   = NULL;
-         //wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
-         wcex.hCursor		   = NULL;
-         wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW + 1);
-         wcex.lpszMenuName	   = NULL;
-         wcex.lpszClassName	= "small_ipc_rx_channel_message_queue_class";
-         wcex.hIconSm		   = NULL;
+         wcex.style           = 0;
+         wcex.lpfnWndProc     = &s_rx_message_queue_proc;
+         wcex.cbClsExtra      = 0;
+         wcex.cbWndExtra      = 0;
+         wcex.hInstance       = hInstance;
+         wcex.hIcon           = NULL;
+         //wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
+         wcex.hCursor         = NULL;
+         wcex.hbrBackground   = (HBRUSH)(COLOR_WINDOW + 1);
+         wcex.lpszMenuName    = NULL;
+         wcex.lpszClassName   = "small_ipc_rx_channel_message_queue_class";
+         wcex.hIconSm         = NULL;
 
          return RegisterClassEx(&wcex);
       }

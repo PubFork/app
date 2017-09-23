@@ -95,7 +95,7 @@ namespace html
                string strValue = pelemental->m_pbase->get_tag()->baseptra()[i]->get_tag()->get_attr_value("value");
                m_pcombo->AddString(strText, strValue);
             }
-            
+
             m_pcombo->_001SetText(pelemental->m_pbase->get_tag()->get_attr_value("value"), ::action::source::add(::action::source_data, ::action::source_load));
 
             m_pcombo->m_puserstyle = pelemental;
@@ -133,10 +133,10 @@ namespace html
 
       }
 
-      
 
 
-      
+
+
 
       bool select::layout_phase1(data * pdata)
       {
@@ -166,13 +166,15 @@ namespace html
 
          elemental::layout_phase3(pdata);
 
-         LONG x = m_box.left;
+         LONG x, y, cx, cy;
 
-         LONG y = m_box.top;
+         convert(x, m_box.left);
 
-         LONG cx = m_box.get_cx();
+         convert(y, m_box.top);
 
-         LONG cy = m_box.get_cy();
+         convert(cx, m_box.get_cx());
+
+         convert(cy, m_box.get_cy());
 
          m_pcombo->SetWindowPos(0, x, y, cx, cy, SWP_NOREDRAW);
 
@@ -211,13 +213,15 @@ namespace html
 
          UNREFERENCED_PARAMETER(pdata);
 
-         LONG x = m_box.left;
+         LONG x, y, cx, cy;
 
-         LONG y = m_box.top;
+         convert(x, m_box.left);
 
-         LONG cx = m_box.get_cx();
+         convert(y, m_box.top);
 
-         LONG cy = m_box.get_cy();
+         convert(cx, m_box.get_cx());
+
+         convert(cy, m_box.get_cy());
 
          m_pcombo->SetWindowPos(0, x, y, cx, cy, SWP_NOREDRAW);
 

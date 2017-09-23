@@ -15,37 +15,8 @@ CLASS_DECL_CORE stringa macos_get_user_wallpaper()
 
    long long ll = mm_get_user_wallpaper(&ppsz);
 
-   if(ppsz == NULL)
-   {
-
-      return stra;
-
-   }
-
-   for(index i = 0; i < ll; i++)
-   {
-
-      if(ppsz[i] != NULL)
-      {
-
-         stra.add(ppsz[i]);
-
-         ::str::begins_eat_ci(stra.last(), "file://");
-
-         //free(ppsz[i]);
-
-      }
-      else
-      {
-
-         stra.add("");
-
-      }
-
-   }
-
-   //free(ppsz);
-
+   stra.c_add(ppsz, ll);
+   
    return stra;
 
 }

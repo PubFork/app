@@ -62,8 +62,8 @@ namespace html
       virtual void _001OnDraw(data * pdoc);
       virtual void load(data * pdoc, base * pbase);
 
-      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
-      virtual bool get_font(::draw2d::font_sp & spfont);
+      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
+      virtual bool get_font(::draw2d::font_sp & spfont, ::user::e_font efont, ::user::interaction * pui) override;
 
 
       void initialize();

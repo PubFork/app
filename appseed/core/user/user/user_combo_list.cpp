@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -126,7 +126,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      br->create_solid(ARGB(255, 84, 84, 77));
+      br->create_solid(ARGB(255, 84, 90, 80));
 
       select_font(font_plain_edit);
 
@@ -164,7 +164,7 @@ namespace user
          }
          else
          {
-            br->create_solid(ARGB(184, 77, 184, 63));
+            br->create_solid(ARGB(190, 80, 184, 63));
          }
          pgraphics->SelectObject(br);
          pgraphics->FillRectangle(rectItem);
@@ -225,7 +225,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      br->create_solid(ARGB(255, 84, 84, 77));
+      br->create_solid(ARGB(255, 84, 90, 80));
 
       //int32_t dSize = (int32_t) (_001GetItemHeight() * 0.7);
 
@@ -268,7 +268,7 @@ namespace user
          }
          else
          {
-            br->create_solid(ARGB(184, 77, 184, 63));
+            br->create_solid(ARGB(190, 80, 184, 63));
          }
          pgraphics->SelectObject(br);
          pgraphics->FillRectangle(rectItem);
@@ -360,7 +360,7 @@ namespace user
          if (iHover == i)
          {
 
-            //br->create_solid(ARGB(184, 77, 184, 63));
+            //br->create_solid(ARGB(190, 80, 184, 63));
             br->create_solid(_001GetColor(::user::color_background_selected));
             pgraphics->SelectObject(br);
             pgraphics->FillRectangle(rectItem);
@@ -371,7 +371,7 @@ namespace user
          }
          else
          {
-            pgraphics->set_text_color(ARGB(255, 84, 84, 77));
+            pgraphics->set_text_color(ARGB(255, 84, 90, 80));
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->draw_text(strItem, rectItem, 0);
          }
@@ -434,7 +434,7 @@ namespace user
 
       ScreenToClient(&ptCursor);
 
-      //br->create_solid(ARGB(255,84,84,77));
+      //br->create_solid(ARGB(255,90, 90, 80));
 
       //int32_t dSize = (int32_t) (_001GetItemHeight() * 0.7);
 
@@ -461,7 +461,7 @@ namespace user
          rectItem.bottom = rectItem.top + _001GetItemHeight();
          if (i == iHover)
          {
-            //br->create_solid(ARGB(184, 77, 184, 63));
+            //br->create_solid(ARGB(190, 80, 184, 63));
             br->create_solid(_001GetColor(::user::color_background_selected));
             pgraphics->SelectObject(br);
             pgraphics->FillRectangle(rectItem);
@@ -472,7 +472,7 @@ namespace user
          }
          else
          {
-            pgraphics->set_text_color(ARGB(255, 84, 84, 77));
+            pgraphics->set_text_color(ARGB(255, 84, 90, 80));
             m_pcombo->_001GetListText(i, strItem);
             pgraphics->draw_text(strItem, rectItem, 0);
          }

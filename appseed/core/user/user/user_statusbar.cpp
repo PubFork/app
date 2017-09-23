@@ -29,20 +29,20 @@ namespace user
 
    status_bar::~status_bar()
    {
-   //   AllocElements(0, 0);    // destroys existing elements
+      //   AllocElements(0, 0);    // destroys existing elements
    }
 
    void status_bar::install_message_routing(::message::sender * pinterface)
    {
-      IGUI_MSG_LINK(WM_NCHITTEST         , pinterface, this, &status_bar::_001OnNcHitTest);
-      IGUI_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &status_bar::_001OnNcCalcSize);
-      IGUI_MSG_LINK(WM_SIZE              , pinterface, this, &status_bar::_001OnSize);
-      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING , pinterface, this, &status_bar::_001OnWindowPosChanging);
-      IGUI_MSG_LINK(WM_SETTEXT           , pinterface, this, &status_bar::_001OnSetText);
-      IGUI_MSG_LINK(WM_GETTEXT           , pinterface, this, &status_bar::_001OnGetText);
-      IGUI_MSG_LINK(WM_GETTEXTLENGTH     , pinterface, this, &status_bar::_001OnGetTextLength);
+      IGUI_MSG_LINK(WM_NCHITTEST, pinterface, this, &status_bar::_001OnNcHitTest);
+      IGUI_MSG_LINK(WM_NCCALCSIZE, pinterface, this, &status_bar::_001OnNcCalcSize);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &status_bar::_001OnSize);
+      IGUI_MSG_LINK(WM_WINDOWPOSCHANGING, pinterface, this, &status_bar::_001OnWindowPosChanging);
+      IGUI_MSG_LINK(WM_SETTEXT, pinterface, this, &status_bar::_001OnSetText);
+      IGUI_MSG_LINK(WM_GETTEXT, pinterface, this, &status_bar::_001OnGetText);
+      IGUI_MSG_LINK(WM_GETTEXTLENGTH, pinterface, this, &status_bar::_001OnGetTextLength);
 #ifdef WINDOWSEX
-      IGUI_MSG_LINK(SB_SETMINHEIGHT      , pinterface, this, &status_bar::_001OnSetMinHeight);
+      IGUI_MSG_LINK(SB_SETMINHEIGHT, pinterface, this, &status_bar::_001OnSetMinHeight);
 #endif
    }
 
@@ -67,7 +67,7 @@ namespace user
       dwStyle |= CCS_NOPARENTALIGN|CCS_NOMOVEY|CCS_NODIVIDER|CCS_NORESIZE;
       if (pParentWnd->GetStyle() & WS_THICKFRAME)
          dwStyle |= SBARS_SIZEGRIP;
-      
+
       //return ::user::interaction::create_window(STATUSCLASSNAMEA, NULL, dwStyle, rect, pParentWnd, strId);
       return ::user::interaction::create_window("msctls_statusbar32",NULL,dwStyle,rect,pParentWnd,strId);
 
@@ -88,64 +88,64 @@ namespace user
       ASSERT_VALID(this);
       ASSERT(stra.get_count() >= 1);  // must be at least one of them
       //ASSERT(lpIDArray == NULL ||
-   //      __is_valid_address(lpIDArray, sizeof(UINT) * nIDCount, FALSE));
+      //      __is_valid_address(lpIDArray, sizeof(UINT) * nIDCount, FALSE));
       ASSERT(IsWindow());
 
       // first allocate array for panes and copy initial data
-   //   if (!AllocElements(nIDCount, sizeof(__STATUSPANE)))
-   //      return FALSE;
-   //   ASSERT(nIDCount == m_panea.get_count());
+      //   if (!AllocElements(nIDCount, sizeof(__STATUSPANE)))
+      //      return FALSE;
+      //   ASSERT(nIDCount == m_panea.get_count());
 
       // copy initial data from indicator array
       bool bResult = TRUE;
       //if (lpIDArray != NULL)
       //{
 //         HFONT hFont = (HFONT)send_message(WM_GETFONT);
-         ::draw2d::graphics_sp spgraphicsScreen(allocer());
+      ::draw2d::graphics_sp spgraphicsScreen(allocer());
 
-         throw todo(get_app());
-/*         HGDIOBJ hOldFont = NULL;
-         if (hFont != NULL)
-            hOldFont = spgraphicsScreen->SelectObject(hFont);*/
+      throw todo(get_app());
+      /*         HGDIOBJ hOldFont = NULL;
+               if (hFont != NULL)
+                  hOldFont = spgraphicsScreen->SelectObject(hFont);*/
 
-         __STATUSPANE* pSBP = _GetPanePtr(0);
-         for (int32_t i = 0; i < stra.get_count(); i++)
+      __STATUSPANE* pSBP = _GetPanePtr(0);
+      for (int32_t i = 0; i < stra.get_count(); i++)
+      {
+         pSBP->m_id = stra[i];
+         pSBP->nFlags |= SBPF_UPDATE;
+         if (pSBP->m_id.has_char())
          {
-            pSBP->m_id = stra[i];
-            pSBP->nFlags |= SBPF_UPDATE;
-            if (pSBP->m_id.has_char())
+            /* xxx            if (!pSBP->strText.load_string(pSBP->strId))
+                        {
+                           TRACE(::aura::trace::category_AppMsg, 0, "Warning: failed to load indicator string 0x%04X.\n",
+                              pSBP->strId);
+                           bResult = FALSE;
+                           break;
+                        } */
+            convert(pSBP->cxText, spgraphicsScreen->GetTextExtent(pSBP->strText).cx);
+            ASSERT(pSBP->cxText >= 0);
+            if (!SetPaneText(i, pSBP->strText, FALSE))
             {
-   /* xxx            if (!pSBP->strText.load_string(pSBP->strId))
-               {
-                  TRACE(::aura::trace::category_AppMsg, 0, "Warning: failed to load indicator string 0x%04X.\n",
-                     pSBP->strId);
-                  bResult = FALSE;
-                  break;
-               } */
-               pSBP->cxText = spgraphicsScreen->GetTextExtent(pSBP->strText).cx;
-               ASSERT(pSBP->cxText >= 0);
-               if (!SetPaneText(i, pSBP->strText, FALSE))
-               {
-                  bResult = FALSE;
-                  break;
-               }
+               bResult = FALSE;
+               break;
             }
-            else
-            {
-               // no indicator (must access via index)
-               // default to 1/4 the screen width (first pane is stretchy)
-#ifdef WINDOWSEX
-               pSBP->cxText = ::GetSystemMetrics(SM_CXSCREEN)/4;
-               if (i == 0)
-                  pSBP->nStyle |= (SBPS_STRETCH | SBPS_NOBORDERS);
-#else
-               throw todo(get_app());
-#endif
-            }
-            ++pSBP;
          }
+         else
+         {
+            // no indicator (must access via index)
+            // default to 1/4 the screen width (first pane is stretchy)
+#ifdef WINDOWSEX
+            pSBP->cxText = ::GetSystemMetrics(SM_CXSCREEN)/4;
+            if (i == 0)
+               pSBP->nStyle |= (SBPS_STRETCH | SBPS_NOBORDERS);
+#else
+            throw todo(get_app());
+#endif
+         }
+         ++pSBP;
+      }
 //         if (hOldFont != NULL)
-  //          spgraphicsScreen->SelectObject(hOldFont);
+      //          spgraphicsScreen->SelectObject(hOldFont);
       //}
       UpdateAllPanes(TRUE, TRUE);
 
@@ -202,7 +202,7 @@ namespace user
 
          // size grip uses a border + size of scrollbar + cx border
          rect.right -= rgBorders[0] + ::GetSystemMetrics(SM_CXVSCROLL) +
-            ::GetSystemMetrics(SM_CXBORDER) * 2;
+                       ::GetSystemMetrics(SM_CXBORDER) * 2;
       }
 #else
       throw todo(get_app());
@@ -223,11 +223,13 @@ namespace user
       {
 
          // get border information and client work area
-         rect rect; GetWindowRect(rect);
+         rect rect;
+         GetWindowRect(rect);
          rect.offset(-rect.left, -rect.top);
          CalcInsideRect(rect, TRUE);
          int32_t rgBorders[3];
-         VERIFY(DefWindowProc(SB_GETBORDERS, 0, (LPARAM)&rgBorders) != FALSE);
+
+         DefWindowProc(SB_GETBORDERS, 0, (LPARAM)&rgBorders);
 
          // determine extra space for stretchy pane
          int32_t cxExtra = rect.width() + rgBorders[2];
@@ -247,7 +249,7 @@ namespace user
          rgRightsMem.allocate(m_panea.get_count() * sizeof(int32_t));
          int32_t* rgRights = (int32_t*)rgRightsMem.get_data();
          int32_t right = rgBorders[0];
-   //      pSBP = _GetPanePtr(0);
+         //      pSBP = _GetPanePtr(0);
          for (i = 0; i < m_panea.get_count(); i++)
          {
             __STATUSPANE* pSBP = _GetPanePtr(i);
@@ -289,9 +291,9 @@ namespace user
 #endif
    }
 
-   #ifdef __CORE3_SEG
-   #pragma code_seg(__CORE3_SEG)
-   #endif
+#ifdef __CORE3_SEG
+#pragma code_seg(__CORE3_SEG)
+#endif
 
    /////////////////////////////////////////////////////////////////////////////
    // status_bar attribute access
@@ -359,7 +361,7 @@ namespace user
    }
 
    void status_bar::GetPaneInfo(int32_t nIndex, id & id, UINT& nStyle,
-      int32_t& cxWidth)
+                                int32_t& cxWidth)
    {
       ASSERT_VALID(this);
 
@@ -422,8 +424,8 @@ namespace user
       __STATUSPANE* pSBP = _GetPanePtr(nIndex);
 
       if (!(pSBP->nFlags & SBPF_UPDATE) &&
-         ((lpszNewText == NULL && pSBP->strText.is_empty()) ||
-          (lpszNewText != NULL && pSBP->strText.compare(lpszNewText) == 0)))
+            ((lpszNewText == NULL && pSBP->strText.is_empty()) ||
+             (lpszNewText != NULL && pSBP->strText.compare(lpszNewText) == 0)))
       {
          // nothing to change
          return TRUE;
@@ -453,8 +455,8 @@ namespace user
       pSBP->nFlags &= ~SBPF_UPDATE;
 #ifdef WINDOWSEX
       DefWindowProc(SB_SETTEXT, ((WORD)pSBP->nStyle)|nIndex,
-         (pSBP->nStyle & SBPS_DISABLED) ? 0 :
-         (LPARAM)(const char *)pSBP->strText);
+                    (pSBP->nStyle & SBPS_DISABLED) ? 0 :
+                    (LPARAM)(const char *)pSBP->strText);
 #endif
 
       return TRUE;
@@ -473,14 +475,14 @@ namespace user
       {
          // os independence
          ::exception::throw_not_implemented(get_app());
-   /*      CClientDC spgraphics(NULL);
-         HFONT hFont = (HFONT)SendMessage(WM_GETFONT);
-         HGDIOBJ hOldFont = NULL;
-         if (hFont != NULL)
-            hOldFont = spgraphics->SelectObject(hFont);
-         VERIFY(spgraphics->GetTextMetrics(&tm));
-         if (hOldFont != NULL)
-            spgraphics->SelectObject(hOldFont);*/
+         /*      CClientDC spgraphics(NULL);
+               HFONT hFont = (HFONT)SendMessage(WM_GETFONT);
+               HGDIOBJ hOldFont = NULL;
+               if (hFont != NULL)
+                  hOldFont = spgraphics->SelectObject(hFont);
+               VERIFY(spgraphics->GetTextMetrics(&tm));
+               if (hOldFont != NULL)
+                  spgraphics->SelectObject(hOldFont);*/
       }
 
       // get border information
@@ -624,7 +626,7 @@ namespace user
       // not necessary to invalidate the borders
       uint32_t dwStyle = m_dwStyle;
       m_dwStyle &= ~(CBRS_BORDER_ANY);
-   // trans   ::user::control_bar::OnWindowPosChanging(pwindowpos->m_pwindowpos);
+      // trans   ::user::control_bar::OnWindowPosChanging(pwindowpos->m_pwindowpos);
       pwindowpos->previous();
       m_dwStyle = dwStyle;
 #else
@@ -711,12 +713,12 @@ namespace user
 
    class status_command : public ::user::command      // class private to this file!
    {
-   public: // re-implementations only
+      public: // re-implementations only
 
-      status_command(::aura::application * papp);
-      virtual void Enable(bool bOn);
-      virtual void SetCheck(check::e_check echeck = check::checked);
-      virtual void SetText(const char * lpszText);
+         status_command(::aura::application * papp);
+         virtual void Enable(bool bOn);
+         virtual void SetCheck(check::e_check echeck = check::checked);
+         virtual void SetText(const char * lpszText);
    };
 
    status_command::status_command(::aura::application * papp) :
@@ -802,7 +804,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // status_bar diagnostics
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void status_bar::assert_valid() const
    {
       ::user::control_bar::assert_valid();
@@ -827,11 +829,11 @@ namespace user
       }
       dumpcontext << "\n";
    }
-   #endif //DEBUG
+#endif //DEBUG
 
-   #ifdef __INIT_SEG
-   #pragma code_seg(__INIT_SEG)
-   #endif
+#ifdef __INIT_SEG
+#pragma code_seg(__INIT_SEG)
+#endif
 
    // IMPLEMENT_DYNAMIC(status_bar, ::user::control_bar)
 
@@ -844,8 +846,8 @@ namespace user
          return *this;
       m_id = pane.m_id;        // IDC of indicator: 0 => normal text area
       cxText = pane.cxText;     // width of string area in pixels
-                     //   on both sides there is a 3 pixel gap and
-                     //   a one pixel border, making a pane 6 pixels wider
+      //   on both sides there is a 3 pixel gap and
+      //   a one pixel border, making a pane 6 pixels wider
       nStyle = pane.nStyle;     // style flags (SBPS_*)
       nFlags = pane.nFlags;     // state flags (SBPF_*)
       strText = pane.strText;    // text in the pane

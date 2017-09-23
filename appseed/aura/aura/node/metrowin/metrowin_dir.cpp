@@ -407,12 +407,36 @@ namespace metrowin
 
       lpcsz.ascendants_path(stra);
 
-      for(int i = 0; i < stra.get_size(); i++)
+      int i = stra.get_upper_bound();
+
+      bool bIsDir = false;
+
+      for (; i >= 0; i--)
       {
 
          ::file::path pathDir = stra[i];
 
-         if(!is(pathDir,papp) && ::GetLastError() != ERROR_ACCESS_DENIED)
+         bIsDir = is(pathDir, papp);
+
+         if (bIsDir)
+         {
+
+            i++;
+
+            break;
+
+         }
+
+      }
+
+      for(; i < stra.get_size(); i++)
+      {
+
+         ::file::path pathDir = stra[i];
+
+         bIsDir = is(pathDir, papp);
+
+         if(!bIsDir && ::GetLastError() != ERROR_ACCESS_DENIED)
          {
 
             if (!::CreateDirectoryW(::str::international::utf8_to_unicode(pathDir), NULL))
@@ -425,59 +449,93 @@ namespace metrowin
 
                   if (dwError == ERROR_ALREADY_EXISTS)
                   {
+
                      string str;
+
                      str = "\\\\?\\" + stra[i];
+
                      str.trim_right("\\/");
+
                      try
                      {
+
                         Application.file().del(str);
+
                      }
                      catch (...)
                      {
+
                      }
+
                      str = stra[i];
+
                      str.trim_right("\\/");
+
                      try
                      {
+
                         Application.file().del(str);
+
                      }
                      catch (...)
                      {
+
                      }
+
                      if (::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                      {
+                        
                         m_isdirmap.set(stra[i], true, 0);
+                        
                         goto try1;
+
                      }
                      else
                      {
+
                         dwError = ::GetLastError();
+
                      }
+
                   }
+                  
                   string strError = get_system_error_message(dwError);
 
                   APPTRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, strError);
+                  
                   //m_isdirmap.set(stra[i], false);
+
                }
                else
                {
+
                   m_isdirmap.set(stra[i], true, 0);
+
                }
+
             }
             else
             {
+
                m_isdirmap.set(stra[i],true,0);
+
             }
+
 try1:
 
             if(!is(stra[i],papp))
             {
+
                return false;
+
             }
 
          }
+
       }
+
       return true;
+
    }
 
 
@@ -782,7 +840,11 @@ try1:
    }
 
 
+
 } // namespace metrowin
+
+
+
 
 
 

@@ -9,6 +9,8 @@ namespace user
       object(papp)
    {
 
+      m_econtroltype = control_type_static;
+
       m_etype = type_text;
 
       m_bLButtonDown = false;

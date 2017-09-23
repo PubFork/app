@@ -1,36 +1,55 @@
 #include "framework.h"
 
+
 namespace user
 {
+
 
    notify_icon_listener::notify_icon_listener()
    {
 
    }
 
+
    notify_icon_listener::~notify_icon_listener()
    {
 
    }
 
+
    void notify_icon_listener::OnNotifyIconMessage(UINT uiNotifyIcon, UINT message)
    {
+
       switch(message)
       {
       case WM_RBUTTONDOWN:
-        OnNotifyIconContextMenu(uiNotifyIcon);
-        break;
-      case WM_LBUTTONDBLCLK:
-        OnNotifyIconLButtonDblClk(uiNotifyIcon);
-        break;
-      case WM_LBUTTONDOWN:
-        OnNotifyIconLButtonDown(uiNotifyIcon);
-        break;
-      case WM_CLOSE:
-         OnNotifyIconClose(uiNotifyIcon);
+
+         OnNotifyIconContextMenu(uiNotifyIcon);
+
          break;
+
+      case WM_LBUTTONDBLCLK:
+
+         OnNotifyIconLButtonDblClk(uiNotifyIcon);
+
+         break;
+
+      case WM_LBUTTONDOWN:
+
+         OnNotifyIconLButtonDown(uiNotifyIcon);
+
+         break;
+
+      case WM_CLOSE:
+
+         OnNotifyIconClose(uiNotifyIcon);
+
+         break;
+
       case WM_QUIT:
+
          OnNotifyIconQuit(uiNotifyIcon);
+
          break;
 
       }
@@ -77,19 +96,21 @@ namespace user
 
    }
 
+
    bool notify_icon_listener::__close_is_closed()
    {
 
       return false;
 
    }
-   
-   
+
+
    bool notify_icon_listener::notify_icon_frame_is_opened()
    {
-      
+
       return false;
-      
+
    }
+
 
 } // namespace user

@@ -6,7 +6,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
 #include "framework.h"
-//#include "metrowin.h"
+#include "metrowin.h"
 //#include "metrowin_metrowin.h"
 
 #undef System
@@ -989,7 +989,7 @@ void __node_term_multithreading()
 
 
 
-//thread_int_ptr < HRESULT > t_hresultCoInitialize;
+thread_int_ptr < HRESULT > t_hresultCoInitialize;
 
 //CLASS_DECL_AURA void __clear_mq();
 

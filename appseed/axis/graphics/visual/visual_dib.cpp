@@ -2,7 +2,11 @@
 
 #ifdef WINDOWS
 #include <wincodec.h>
+#include <ShCore.h>
+//#elif defined(METROWIN)
+//#include <ShCore.h>
 #endif
+
 
 #include "freeimage/Source/FreeImage.h"
 

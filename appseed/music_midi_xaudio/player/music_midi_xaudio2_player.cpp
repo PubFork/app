@@ -492,7 +492,7 @@ namespace music
                mmrc = translate_mmr(midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL));
                if(mmrc != MMSYSERR_NOERROR)
                   return;
-               Sleep(284);
+               Sleep(300);
                const uchar gmModeOn[] = {
                   //        0x00, 0x00, 0x00, 0x00,
                   //        0x00, 0x00, 0x00, 0x00,
@@ -521,7 +521,7 @@ namespace music
                if(mmrc != MMSYSERR_NOERROR)
                   goto End;
                mmrc = translate_mmr(midiOutLongMsg( hmidiout, lpmh, sizeof(MIDIHDR)));
-               Sleep(284);
+               Sleep(300);
                mmrc = translate_mmr(midiOutUnprepareHeader( hmidiout, lpmh, sizeof(MIDIHDR)));
                if(mmrc != MMSYSERR_NOERROR)
                   goto End;

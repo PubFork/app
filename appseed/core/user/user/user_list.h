@@ -208,6 +208,9 @@ namespace user
       bool                             m_bHeaderCtrl;
       bool                             m_bSingleColumnMode;
 
+      //double                           m_dWidthRate;
+      //double                           m_dHeightRate;
+
       sp(list_header)                  m_plistheader;
 
 

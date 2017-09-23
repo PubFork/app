@@ -10,7 +10,7 @@ namespace ios
 
    os::os(::aura::application * papp) :
    ::object(papp),
-   ::core::os(papp)
+   ::aura::os(papp)
    {
    }
 
@@ -160,8 +160,7 @@ namespace ios
       get_all_processes(dwa);
       for(int32_t i = 0; i < dwa.get_count(); i++)
       {
-         if(System.file().title_(get_process_path(dwa[i]))
-            .compare_ci(pszName) == 0)
+         if(get_process_path(dwa[i]).title().compare_ci(pszName) == 0)
          {
             dwPid = dwa[i];
             return true;
@@ -170,7 +169,7 @@ namespace ios
       return false;
    }
 
-   string os::get_process_path(DWORD dwPid)
+   ::file::path os::get_process_path(DWORD dwPid)
    {
       /*
        string strName = ":<unknown>";
@@ -753,15 +752,15 @@ namespace ios
    }
 
    
-   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::interaction * puiMessageParentOptional)
-   {
-
-//      throw not_implemented(get_app());
-      return false;
-
-      //      return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
-
-   }
+//   bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::interaction * puiMessageParentOptional)
+//   {
+//
+////      throw not_implemented(get_app());
+//      return false;
+//
+//      //      return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
+//
+//   }
 
 
    void os::raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags)

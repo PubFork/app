@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -124,9 +124,9 @@ namespace simple_ui
       /*   if (eschema == ::hotplugin::plugin::schema_darker)
          {
 
-         crOut = ARGB(0, 84, 84, 77);
+         crOut = ARGB(0, 84, 90, 80);
 
-         crIn = ARGB(133, 84, 84, 77);
+         crIn = ARGB(133, 84, 90, 80);
 
          }
          else*/
@@ -220,7 +220,7 @@ namespace simple_ui
    COLORREF interaction::get_action_hover_border_color()
    {
 
-      return ARGB(255,83,104,255);
+      return _001GetColor(::user::color_action_hover_border_color);
 
    }
 

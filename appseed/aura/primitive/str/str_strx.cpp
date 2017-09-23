@@ -9,7 +9,8 @@
 * left as-is for anyone who may want to do such conversion, which was
 * allowed in earlier algorithms.
 */
-const char trailingBytesForUTF8[256] = {
+const char trailingBytesForUTF8[256] =
+{
    (const char)  -1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -26,7 +27,8 @@ const char trailingBytesForUTF8[256] = {
 * in a UTF-8 sequence.
 */
 static const uint32_t offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080UL,
-   0x03C82080UL, 0xFA082080UL, 0x82082080UL };
+                                             0x03C82080UL, 0xFA082080UL, 0x82082080UL
+                                           };
 
 
 const char * utf8_inc(const char * psz)
@@ -52,22 +54,26 @@ const char * utf8_inc(const char * psz)
 
 int32_t uni_to_utf8(char * dest, int32_t ch)
 {
-   if (ch < 0x80) {
+   if (ch < 0x80)
+   {
       dest[0] = (char)ch;
       return 1;
    }
-   if (ch < 0x800) {
+   if (ch < 0x800)
+   {
       dest[0] = (ch >> 6) | 0xC0;
       dest[1] = (ch & 0x3F) | 0x80;
       return 2;
    }
-   if (ch < 0x10000) {
+   if (ch < 0x10000)
+   {
       dest[0] = (ch >> 12) | 0xE0;
       dest[1] = ((ch >> 6) & 0x3F) | 0x80;
       dest[2] = (ch & 0x3F) | 0x80;
       return 3;
    }
-   if (ch < 0x110000) {
+   if (ch < 0x110000)
+   {
       dest[0] = (ch >> 18) | 0xF0;
       dest[1] = ((ch >> 12) & 0x3F) | 0x80;
       dest[2] = ((ch >> 6) & 0x3F) | 0x80;
@@ -80,18 +86,21 @@ int32_t uni_to_utf8(char * dest, int32_t ch)
 
 int32_t uni_to_utf8_2_or_more(char * dest, int32_t ch)
 {
-   if (ch < 0x800) {
+   if (ch < 0x800)
+   {
       dest[0] = (ch >> 6) | 0xC0;
       dest[1] = (ch & 0x3F) | 0x80;
       return 2;
    }
-   if (ch < 0x10000) {
+   if (ch < 0x10000)
+   {
       dest[0] = (ch >> 12) | 0xE0;
       dest[1] = ((ch >> 6) & 0x3F) | 0x80;
       dest[2] = (ch & 0x3F) | 0x80;
       return 3;
    }
-   if (ch < 0x110000) {
+   if (ch < 0x110000)
+   {
       dest[0] = (ch >> 18) | 0xF0;
       dest[1] = ((ch >> 12) & 0x3F) | 0x80;
       dest[2] = ((ch >> 6) & 0x3F) | 0x80;
@@ -136,7 +145,7 @@ void utf8_to_utf16(unichar * pwsz, const char * psz)
 
    while(psz != NULL && *psz != '\0')
    {
-      
+
       *pwsz++ = (unichar) ::str::ch::uni_index_len(psz, len);
 
       psz += len;
@@ -238,7 +247,7 @@ CLASS_DECL_AURA string utf16_to_utf8(const unichar * pwsz,strsize srcLen)
 
    string str;
 
-   strsize len;
+   //strsize len;
 
    //if(srcLen < 0)
    //{

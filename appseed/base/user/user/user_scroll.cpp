@@ -57,10 +57,10 @@ namespace user
             _001GetXScrollInfo(m_pscrollbarHorz->m_scrollinfo);
 
             m_pscrollbarHorz->SetWindowPos(
-               ZORDER_TOP, 
-               rectClient.left, 
+               ZORDER_TOP,
+               rectClient.left,
                rectClient.bottom - GetSystemMetrics(SM_CYHSCROLL),
-               rectClient.width() - get_final_y_scroll_bar_width(), 
+               rectClient.width() - get_final_y_scroll_bar_width(),
                GetSystemMetrics(SM_CYHSCROLL), ifswp);
 
             m_pscrollbarHorz->on_layout();
@@ -195,7 +195,7 @@ namespace user
 
    }
 
-   //   
+   //
    // void scroll_x::create_x_scroll_bar(const RECT & rect);
 
 
@@ -298,7 +298,7 @@ namespace user
    //
    //   void scroll::GetClientRect(LPRECT lprect)
    //   {
-   //      
+   //
    //      ::rect rectScroll;
    //
    //      GetClientRect(rectScroll);
@@ -1008,7 +1008,7 @@ namespace user
 
       if (!m_scrolldataVert.m_bScroll || !m_scrolldataVert.m_bScrollEnable)
       {
-      
+
          return;
 
       }
@@ -1052,7 +1052,7 @@ namespace user
       m_pscrollbarVert->m_scrollinfo.nPos =  (int32_t) nPos;
 
       m_pscrollbarVert->send_scroll_message(SB_THUMBPOSITION);
-         
+
       pmousewheel->set_lresult(0);
 
       pmousewheel->m_bRet = true;
@@ -1396,7 +1396,7 @@ namespace user
    }
 
 
-   
+
    bool scroll::GetFocusRect(LPRECT lprect)
    {
 
@@ -1418,9 +1418,9 @@ namespace user
    {
 
       if (m_scrolldataHorz.m_bScrollEnable && m_scrolldataHorz.m_bScroll
-         && m_pscrollbarHorz.is_set() && m_pscrollbarHorz->m_pimpl.is_set()
-         && m_scrolldataVert.m_bScrollEnable && m_scrolldataVert.m_bScroll
-         && m_pscrollbarVert.is_set() && m_pscrollbarVert->m_pimpl.is_set())
+            && m_pscrollbarHorz.is_set() && m_pscrollbarHorz->m_pimpl.is_set()
+            && m_scrolldataVert.m_bScrollEnable && m_scrolldataVert.m_bScroll
+            && m_pscrollbarVert.is_set() && m_pscrollbarVert->m_pimpl.is_set())
       {
 
          rect rectClient;
@@ -1431,8 +1431,8 @@ namespace user
 
          r.top = rectClient.bottom;
          r.left = rectClient.right;
-         r.right = r.left + m_pscrollbarVert->m_pimpl->m_rectParentClientRequest.width();
-         r.bottom = r.top + m_pscrollbarHorz->m_pimpl->m_rectParentClientRequest.height();
+         convert(r.right, r.left + m_pscrollbarVert->m_pimpl->m_rectParentClientRequest.width());
+         convert(r.bottom, r.top + m_pscrollbarHorz->m_pimpl->m_rectParentClientRequest.height());
 
          pgraphics->FillSolidRect(r, _001GetColor(color_scrollbar_background));
 

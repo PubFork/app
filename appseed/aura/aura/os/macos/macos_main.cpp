@@ -70,69 +70,71 @@
 //}
 
 
-uint32_t __start_system(const stringa & stra);
+uint32_t __start_system_with_file(const char ** pszaFile, int iCount);
 
 
-uint32_t __start_system(const char * pszFileName)
+uint32_t __start_system_with_file(const char * pszFileName)
 {
    
-   string str(pszFileName);
-   
-   stringa stra;
-   
-   stra._001Explode(str);
-   
-   return __start_system(stra);
-   
-}
-
-uint32_t __start_system(const stringa & stra)
-{
-   
-   var varFile;
-   
-   string strExtra;
-   
-   index iFind = stra.find_first(":");
-   
-   if(iFind >= 0)
+   if(pszFileName == NULL)
    {
       
-      if(iFind >= 1)
-      {
-         
-         if(iFind == 1)
-         {
-            
-            varFile = stra[0];
-            
-         }
-         else
-         {
-            
-            varFile = stra.slice(0, iFind);
-            
-         }
-         
-      }
-      
-      strExtra = stra.implode(" ", 1);
+      return __start_system_with_file(NULL, 0);
       
    }
    
-   strExtra.trim();
+   const char ** psza = (const char **) malloc(sizeof(const char **) * 1);
+   
+   psza[0] = strdup(pszFileName);
+   
+   return __start_system_with_file(psza, 1);
+   
+}
+
+uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
+{
+   
+   string strExtra;
    
    if(::aura::system::g_p != NULL)
    {
       
-      if(!varFile.is_empty())
+      if(pszaFile != NULL)
       {
       
-         macos_on_open_file(varFile, strExtra);
+         macos_on_open_file(pszaFile, iCount, strExtra);
          
       }
     
       return 0;
+      
+   }
+   
+   var varFile;
+   
+   {
+      
+      stringa stra;
+      
+      stra.c_add((char **) pszaFile, iCount);
+      ::count c= stra.get_count();
+      
+      for(index i = 0; i < c; i++)
+      {
+         
+         string str = stra[i];
+         
+         int iFindColon = str.find(':');
+         
+         if(iFindColon == 0)
+         {
+            stra.remove_at(i, stra.get_count() - i);
+            break;
+         }
+         
+      }
+      
+      varFile = stra;
       
    }
    
@@ -146,12 +148,10 @@ uint32_t __start_system(const stringa & stra)
       
    ::command::command * pcommand = new ::command::command;
       
-   pcommand->m_strCommandLine = g_pszCommandLine;
+   pcommand->m_strCommandLine = get_command_line_dup();
    
    pcommand->m_varFile = varFile;
       
-   pcommand->m_strExtra = strExtra;
-   
    psystem->startup_command(pcommand);
       
    bool bOk = true;

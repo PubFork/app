@@ -16,19 +16,24 @@
 static inline size_t
 uint32_size(uint32_t v)
 {
-   if (v < (1UL << 7)) {
+   if (v < (1UL << 7))
+   {
       return 1;
    }
-   else if (v < (1UL << 14)) {
+   else if (v < (1UL << 14))
+   {
       return 2;
    }
-   else if (v < (1UL << 21)) {
+   else if (v < (1UL << 21))
+   {
       return 3;
    }
-   else if (v < (1UL << 28)) {
+   else if (v < (1UL << 28))
+   {
       return 4;
    }
-   else {
+   else
+   {
       return 5;
    }
 }
@@ -50,16 +55,20 @@ uint32_pack(uint32_t value, uint8_t *out)
 {
    unsigned rv = 0;
 
-   if (value >= 0x80) {
+   if (value >= 0x80)
+   {
       out[rv++] = value | 0x80;
       value >>= 7;
-      if (value >= 0x80) {
+      if (value >= 0x80)
+      {
          out[rv++] = value | 0x80;
          value >>= 7;
-         if (value >= 0x80) {
+         if (value >= 0x80)
+         {
             out[rv++] = value | 0x80;
             value >>= 7;
-            if (value >= 0x80) {
+            if (value >= 0x80)
+            {
                out[rv++] = value | 0x80;
                value >>= 7;
             }
@@ -75,13 +84,13 @@ uint32_pack(uint32_t value, uint8_t *out)
 CLASS_DECL_AURA void websocket_prefix_varuint(memory & m, unsigned int ui)
 {
 
-   int iSize = uint32_size(ui);
+   auto iSize = uint32_size(ui);
 
    m.allocate_add_up(iSize);
 
    m.move(iSize);
 
-   int iSize2 = uint32_pack(ui, m.get_data());
+   auto iSize2 = uint32_pack(ui, m.get_data());
 
 }
 
@@ -113,10 +122,12 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
    header[0] = 0x80 | fin;
    int iOffset = -1;
    if (false) {}
-   else if (message_size < 126) {
+   else if (message_size < 126)
+   {
       header[1] = (message_size & 0xff) | (useMask ? 0x80 : 0);
-      
-      if (useMask) {
+
+      if (useMask)
+      {
          header[2] = masking_key[0];
          header[3] = masking_key[1];
          header[4] = masking_key[2];
@@ -128,11 +139,13 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
          iOffset = 2;
       }
    }
-   else if (message_size < 65536) {
+   else if (message_size < 65536)
+   {
       header[1] = 126 | (useMask ? 0x80 : 0);
       header[2] = (message_size >> 8) & 0xff;
       header[3] = (message_size >> 0) & 0xff;
-      if (useMask) {
+      if (useMask)
+      {
          header[4] = masking_key[0];
          header[5] = masking_key[1];
          header[6] = masking_key[2];
@@ -144,7 +157,8 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
          iOffset = 4;
       }
    }
-   else { // TODO: run coverage testing here
+   else   // TODO: run coverage testing here
+   {
       header[1] = 127 | (useMask ? 0x80 : 0);
       header[2] = (message_size >> 56) & 0xff;
       header[3] = (message_size >> 48) & 0xff;
@@ -154,7 +168,8 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
       header[7] = (message_size >> 16) & 0xff;
       header[8] = (message_size >> 8) & 0xff;
       header[9] = (message_size >> 0) & 0xff;
-      if (useMask) {
+      if (useMask)
+      {
          header[10] = masking_key[0];
          header[11] = masking_key[1];
          header[12] = masking_key[2];
@@ -176,9 +191,9 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
    }
    //memcpy(&frame[iOffset+ memory.get_length()],masking_key, 4);
 
-   
 
-   return m.get_size();
+
+   return convert < int > (m.get_size());
 
 }
 
@@ -201,9 +216,9 @@ int client_send(memory & m, int fin, const char* src)
 
    }
 
-   int length = len
-      + 1	//0x00
-      + 1;	//0xFF
+   auto length = len
+                 + 1   //0x00
+                 + 1;  //0xFF
 
    if (len >= 126)
    {
@@ -251,7 +266,7 @@ int client_send(memory & m, int fin, const char* src)
 
          frame[1] = 126;
 
-         *((int16_t*)&frame[2]) = htons(len);
+         *((int16_t*)&frame[2]) = htons(convert < u_short > (len));
 
       }
 
@@ -261,7 +276,7 @@ int client_send(memory & m, int fin, const char* src)
 
       iOffset = 2;
 
-      frame[1] = len;
+      convert(frame[1], len);
 
    }
 
@@ -272,7 +287,7 @@ int client_send(memory & m, int fin, const char* src)
 
    }
 
-   return m.get_size();
+   return convert < int > (m.get_size());
 
 }
 
@@ -297,7 +312,8 @@ int client_send_text_masked(memory & m, const char* src)
 namespace sockets
 {
 
-   enum e_opcode {
+   enum e_opcode
+   {
       CONTINUATION = 0x0,
       TEXT_FRAME = 0x1,
       BINARY_FRAME = 0x2,
@@ -407,7 +423,7 @@ namespace sockets
 
       if (!m_bWebSocket)
       {
-         
+
          if (get_tick_count() - m_dwLastPing > 60 * 1000)
          {
 
@@ -471,7 +487,7 @@ namespace sockets
 
 
       }
-      
+
       return true;
 
    }
@@ -505,7 +521,9 @@ namespace sockets
 
       m_strBase64 = System.base64().encode(m);
 
-      int iLen = m_strBase64.get_length();
+      int iLen;
+
+      convert(iLen, m_strBase64.get_length());
 
       inheader("Sec-WebSocket-Key") = m_strBase64;
       if (m_strWebSocketProtocol.has_char())
@@ -514,7 +532,7 @@ namespace sockets
 
       }
       inheader("Sec-WebSocket-Version") = "13";
-      
+
       if (m_strOrigin.has_char())
       {
 
@@ -625,18 +643,18 @@ namespace sockets
 
    void websocket_client::InitSSLClient()
    {
-   #if defined(HAVE_OPENSSL)
-         if(m_bTls)
-         {
-            InitializeContext("",TLS_client_method());
-            //m_strTlsHostName = m_host;
-         }
-         else
-         {
-            InitializeContext("", TLS_client_method());
-         }
-   #endif
+#if defined(HAVE_OPENSSL)
+      if(m_bTls)
+      {
+         InitializeContext("",TLS_client_method());
+         //m_strTlsHostName = m_host;
       }
+      else
+      {
+         InitializeContext("", TLS_client_method());
+      }
+#endif
+   }
 
 
 
@@ -852,7 +870,7 @@ namespace sockets
 
             }
 
-            int iStart = m_header_size;
+            auto iStart = m_header_size;
 
             // We got a whole message, now do something with it:
             if (m_opcode == e_opcode::TEXT_FRAME || m_opcode == e_opcode::BINARY_FRAME || m_opcode == e_opcode::CONTINUATION)
@@ -882,7 +900,7 @@ namespace sockets
                if (m_fin)
                {
 
-                  on_websocket_data(m_memReceivedData.get_data(), m_memReceivedData.get_size());
+                  on_websocket_data(m_memReceivedData.get_data(), convert < int > (m_memReceivedData.get_size()));
 
                   m_memReceivedData.allocate(0);
 
@@ -972,14 +990,14 @@ namespace sockets
 
       //::fork(get_app(), [=]()
       //{
-         
-         // DO FORK if necessary only in inner loops, 
-         // taking care of only writing to websocket when it is proper.
-         on_websocket_data(str);
+
+      // DO FORK if necessary only in inner loops,
+      // taking care of only writing to websocket when it is proper.
+      on_websocket_data(str);
 
       //});
 
-      
+
 
    }
 

@@ -418,7 +418,7 @@ script_instance * ds_script::create_instance()
    if(ShouldBuild())
    {
       synch_lock slCompiler(&Application.m_semCompiler);
-      Sleep(84);
+      Sleep(100);
 
       try
       {
@@ -443,7 +443,7 @@ script_instance * ds_script::create_instance()
          if (iRetry > 0)
          {
 
-            Sleep((DWORD) System.math().RandRange(1977, 1977+ 1984));
+            Sleep((DWORD) System.math().RandRange(1977, 1977+ 2000));
 
          }
 
@@ -483,7 +483,7 @@ script_instance * ds_script::create_instance()
 
       Load();
 
-      Sleep(84);
+      Sleep(100);
 
       if (!::get_thread_run())
          return NULL;

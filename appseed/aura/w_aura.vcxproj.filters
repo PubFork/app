@@ -10,9 +10,6 @@
     <Filter Include="Header Files\primitive\datetime">
       <UniqueIdentifier>{fc6a2ac9-cbc6-4afb-a514-ccdfb5a0daaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\primitive\datetime\data">
-      <UniqueIdentifier>{8788ca14-5e88-44f3-8f32-5b35061f4a99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\primitive\collection">
       <UniqueIdentifier>{e226268b-3b9e-41d5-aed9-914f4b841ba5}</UniqueIdentifier>
     </Filter>
@@ -211,9 +208,6 @@
     <Filter Include="Source Files\aura\os\ansios">
       <UniqueIdentifier>{d0ef3393-37e0-48af-87ea-df8189592a2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\os\windows">
-      <UniqueIdentifier>{977a2476-8ace-4893-b1b2-666c8e1202d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\aura\exception">
       <UniqueIdentifier>{fdf735f4-7039-4ee6-ad2b-22a3378a7323}</UniqueIdentifier>
     </Filter>
@@ -238,9 +232,6 @@
     <Filter Include="Source Files\aura\os\windows_common">
       <UniqueIdentifier>{60b50081-d6fa-47b8-8d49-21e721dd3aed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\node\windows">
-      <UniqueIdentifier>{4280469b-7403-46cd-a9a5-6b6c1cd213f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\aura\charguess">
       <UniqueIdentifier>{01ea0f06-b472-4bc3-8758-599a8f2944b5}</UniqueIdentifier>
     </Filter>
@@ -255,9 +246,6 @@
     </Filter>
     <Filter Include="Source Files\aura\crypto">
       <UniqueIdentifier>{005ad10e-973b-48da-992a-9c611e552bf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\aura\install">
-      <UniqueIdentifier>{ad9a4364-365e-4a48-b1b6-cc77f00f080b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\aura\compress">
       <UniqueIdentifier>{1060f424-081c-44d2-a92d-888ccfb67eee}</UniqueIdentifier>
@@ -316,6 +304,18 @@
     <Filter Include="Source Files\graphics\draw3d">
       <UniqueIdentifier>{8bce8610-67a0-4abf-9dfb-6ab7a3bc61e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\aura\aura\os_alloc">
+      <UniqueIdentifier>{cbbb5a26-f04c-49e6-9093-7ad9ad604de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting">
+      <UniqueIdentifier>{6304d41b-9c8a-42c6-8b0f-cd396853483f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\aura\scripting\javascript">
+      <UniqueIdentifier>{114292b3-1284-4801-8572-4e4501bb41f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\primitive\data">
+      <UniqueIdentifier>{8788ca14-5e88-44f3-8f32-5b35061f4a99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_application_bias.h">
@@ -334,9 +334,6 @@
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
     <ClInclude Include="primitive\primitive_command_line.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\primitive_command_thread.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
     <ClInclude Include="primitive\primitive_create.h">
@@ -399,9 +396,6 @@
     <ClInclude Include="primitive\primitive_shared_memory.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\primitive_signal.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\primitive_type.h">
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
@@ -430,16 +424,16 @@
       <Filter>Header Files\primitive\datetime</Filter>
     </ClInclude>
     <ClInclude Include="primitive\data\data_data.h">
-      <Filter>Header Files\primitive\datetime\data</Filter>
+      <Filter>Header Files\primitive\data</Filter>
     </ClInclude>
     <ClInclude Include="primitive\data\data_data_container.h">
-      <Filter>Header Files\primitive\datetime\data</Filter>
+      <Filter>Header Files\primitive\data</Filter>
     </ClInclude>
     <ClInclude Include="primitive\data\data_data_listener.h">
-      <Filter>Header Files\primitive\datetime\data</Filter>
+      <Filter>Header Files\primitive\data</Filter>
     </ClInclude>
     <ClInclude Include="primitive\data\data_item.h">
-      <Filter>Header Files\primitive\datetime\data</Filter>
+      <Filter>Header Files\primitive\data</Filter>
     </ClInclude>
     <ClInclude Include="primitive\math\math_complex.h">
       <Filter>Header Files\primitive\math</Filter>
@@ -1290,19 +1284,7 @@
     <ClInclude Include="aura\aura\aura_cmp2.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_command.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_msg.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_command_target.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui_test.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_common.h">
@@ -1315,9 +1297,6 @@
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_cpu_architecture.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_create_context.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_cregexp.h">
@@ -1414,9 +1393,6 @@
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_machine_event_data.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_main_init_data.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_math.h">
@@ -1738,9 +1714,6 @@
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
     <ClInclude Include="aura\message\message_definition.h">
-      <Filter>Header Files\aura\message</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\message\message_dispatch.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura_policy\aura_c.h">
@@ -2070,6 +2043,15 @@
     <ClInclude Include="multithreading\multithreading_forking_thread.h">
       <Filter>Header Files\multithreading</Filter>
     </ClInclude>
+    <ClInclude Include="aura\compress\compress_department.h">
+      <Filter>Header Files\aura\compress</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\os_cpp.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\node\metrowin\metrowin_command.h">
+      <Filter>Header Files\aura\os\metrowin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive\primitive_factory_impl.inl">
@@ -2126,9 +2108,6 @@
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\primitive_command_line.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\primitive_command_thread.cpp">
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\primitive_create.cpp">
@@ -2188,9 +2167,6 @@
     <ClCompile Include="primitive\primitive_shared_memory.cpp">
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\primitive_signal.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
     <ClCompile Include="primitive\primitive_type.cpp">
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
@@ -2198,9 +2174,6 @@
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\primitive_virtual_memory.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\_primitive.cpp">
       <Filter>Source Files\primitive</Filter>
     </ClCompile>
     <ClCompile Include="primitive\comparison\comparison_var_strict.cpp">
@@ -2243,9 +2216,6 @@
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
     <ClCompile Include="primitive\math\math_math.cpp">
-      <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\math_math_rng.cpp">
       <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
     <ClCompile Include="primitive\math\math_mkint_c.cpp">
@@ -2309,9 +2279,6 @@
       <Filter>Source Files\primitive\collection</Filter>
     </ClCompile>
     <ClCompile Include="primitive\collection\collection_string_list.cpp">
-      <Filter>Source Files\primitive\collection</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\collection\collection_string_sort_array.cpp">
       <Filter>Source Files\primitive\collection</Filter>
     </ClCompile>
     <ClCompile Include="primitive\collection\collection_string_to_string_map.cpp">
@@ -2485,9 +2452,6 @@
     <ClCompile Include="multithreading\multithreading_wait_result.cpp">
       <Filter>Source Files\multithreading</Filter>
     </ClCompile>
-    <ClCompile Include="multithreading\_multithreading.cpp">
-      <Filter>Source Files\multithreading</Filter>
-    </ClCompile>
     <ClCompile Include="multithreading\service\service_plain_service.cpp">
       <Filter>Source Files\multithreading\service</Filter>
     </ClCompile>
@@ -2599,117 +2563,6 @@
     <ClCompile Include="graphics\visual\visual_icon.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
-    <ClCompile Include="filesystem\file\file.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_binary_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_buffered_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_byte_stream.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_byte_stream_memory_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_c.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_circular_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_composite.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_dir.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_dir2.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_exception.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_file_stream.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_file_stream_base.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_folder_watch.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_memory_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_plain_text_stream.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_plain_text_stream_base.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_plain_text_stream_memory_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_plain_text_stream_string_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_reader.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_seekable.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_serializable.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_set.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_simple_binary_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_stream.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_stream2.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_streambuf.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_stream_base.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_stream_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_stream_buffer_base.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_string_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_text_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_timeout_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_transfer_buffer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_writer.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\file_writer_flush.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\file\_file.cpp">
-      <Filter>Source Files\filesystem\file</Filter>
-    </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_application.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
@@ -2726,9 +2579,6 @@
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_system.cpp">
-      <Filter>Source Files\filesystem\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
     <ClCompile Include="aura\xml\xml_attr.cpp">
@@ -2798,9 +2648,6 @@
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\os_thread.cpp">
-      <Filter>Source Files\aura\os</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\_os.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\cross\metrowin\cross_metrowin_user.cpp">
@@ -2884,20 +2731,11 @@
     <ClCompile Include="aura\os\metrowin\metrowin_sockets.cpp">
       <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\metrowin\metrowin_time.cpp">
-      <Filter>Source Files\aura\os\metrowin</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\metrowin\metrowin_user.cpp">
       <Filter>Source Files\aura\os\metrowin</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\ansios\ansios_message_loop.cpp">
       <Filter>Source Files\aura\os\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\windows\windows_ansi_file.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\windows\windows_ipc.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="aura\exception\exception.cpp">
       <Filter>Source Files\aura\exception</Filter>
@@ -3265,9 +3103,6 @@
     <ClCompile Include="aura\message\message_base.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
-    <ClCompile Include="aura\message\message_dispatch.cpp">
-      <Filter>Source Files\aura\message</Filter>
-    </ClCompile>
     <ClCompile Include="aura\process\process_bidi_pipe.cpp">
       <Filter>Source Files\aura\process</Filter>
     </ClCompile>
@@ -3280,12 +3115,6 @@
     <ClCompile Include="net\net_url.cpp">
       <Filter>Source Files\net</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\ansios\ansios_multithreading.cpp">
-      <Filter>Source Files\aura\os\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\windows_common\_windows_common.cpp">
-      <Filter>Source Files\aura\os\windows_common</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\windows_common\windows_common_base.cpp">
       <Filter>Source Files\aura\os\windows_common</Filter>
     </ClCompile>
@@ -3294,9 +3123,6 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_department.cpp">
       <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\aura_department_container.cpp">
-      <Filter>Header Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="primitive\math\math_department.cpp">
       <Filter>Source Files\primitive\math</Filter>
@@ -3325,20 +3151,11 @@
     <ClCompile Include="aura\pcre\pcre.cpp">
       <Filter>Source Files\aura\pcre</Filter>
     </ClCompile>
-    <ClCompile Include="aura\node\windows\windows_dir.cpp">
-      <Filter>Source Files\aura\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="aura\os\os_debug.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
     <ClCompile Include="primitive\datetime\datetime_zonetime.cpp">
       <Filter>Source Files\primitive\datetime</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\datetime\_datetime.cpp">
-      <Filter>Source Files\primitive\datetime</Filter>
-    </ClCompile>
-    <ClCompile Include="primitive\math\_math.cpp">
-      <Filter>Source Files\primitive\math</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_interactive.cpp">
       <Filter>Source Files\user\user</Filter>
@@ -3366,9 +3183,6 @@
     </ClCompile>
     <ClCompile Include="aura\aura\aura_chronometer.cpp">
       <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\os\windows\windows_time.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="aura\charguess\big5Prober.cpp">
       <Filter>Source Files\aura\charguess</Filter>
@@ -3436,12 +3250,6 @@
     <ClCompile Include="aura\charguess\UTF8Prober.cpp">
       <Filter>Source Files\aura\charguess</Filter>
     </ClCompile>
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\compress\compress_department.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
     <ClCompile Include="aura\compress\zip\zip_api.cpp">
       <Filter>Source Files\aura\compress\zip</Filter>
     </ClCompile>
@@ -3501,66 +3309,6 @@
     </ClCompile>
     <ClCompile Include="aura\fontopus\fontopus_validate.cpp">
       <Filter>Source Files\aura\fontopus</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\fontopus\fontopus_validate1.cpp">
-      <Filter>Source Files\aura\fontopus</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_application.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_bootstrap.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_focus.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_install.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_install_item.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer_launcher.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_installer_square.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_launcher.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_module_list.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_small_bell.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket_handler.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_socket_thread.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_tool.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_trace.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_trace_file.cpp">
-      <Filter>Source Files\aura\install</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\install_window.cpp">
-      <Filter>Source Files\aura\install</Filter>
     </ClCompile>
     <ClCompile Include="net\sockets\base\sockets_base_socket.cpp">
       <Filter>Source Files\net\sockets\base</Filter>
@@ -3825,6 +3573,309 @@
     </ClCompile>
     <ClCompile Include="graphics\draw3d\draw3d_ortho.cpp">
       <Filter>Source Files\graphics\draw3d</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_id.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_receiver.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_sender.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\message_simple_command.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_os.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_command.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_binary_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_buffered_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_byte_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_byte_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_byte_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_c.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_circular_buffer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_composite.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_dir.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_dir2.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_edit_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_exception.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_file_stream_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_folder_watch.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_html_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_md5.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_memory_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_path.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_istream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_ostream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_plain_text_stream_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_reader.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_seekable.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_serializable.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_set.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_simple_binary_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stdio_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream_base.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_stream2.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_string_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_text_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_writer.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\file_writer_flush.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_rng.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\primitive_handler.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_binary_operation.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_int_biunique.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_number.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_number_double.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_number_float.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_number_integer.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\math_value.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_url_department.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\net_url_domain.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_allocate_processor_cache_oriented.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_malloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_no_bounds_check.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_WindowsHeapAlloc.cpp">
+      <Filter>Source Files\aura\aura\os_alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_alloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\multithreading_tools.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_department.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_binreloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_windowing.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_timer.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\ansios_file_std.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_callback.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_speaker.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_os.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin_native_buffer.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_md5.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_simple_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\data_tree_item.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_time.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_simple_log.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\geometry_box.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_dibmap.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\draw2d_keep.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_timer_event.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\str_sz.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_department_container.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_file_time.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\datetime_file_time_span.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\metrowin\metrowin.cpp">
+      <Filter>Source Files\aura\node\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_console_window.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\metrowin\metrowin_file_std.cpp">
+      <Filter>Source Files\aura\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_profiler.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

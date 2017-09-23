@@ -67,7 +67,7 @@ CLASS_DECL_BOOT DWORD call_sync(
          break;
       if(dwExitCode != STILL_ACTIVE)
          break;
-      Sleep(84);
+      Sleep(100);
       if(pfnOnRetry != NULL)
       {
          if(!pfnOnRetry(iTry, dwParam))
@@ -323,6 +323,7 @@ DWORD_PTR translate_processor_affinity(int i)
 
 }
 
+#undef System
 
 CLASS_DECL_AURA int ui_open_url(const char * pszUrl)
 {

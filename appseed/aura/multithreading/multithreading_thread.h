@@ -1,71 +1,11 @@
 #pragma once
 
 
-class tool_thread;
-class thread_tool;
-class thread_tools;
-class thread_toolset;
-//class pred_set;
 
 
-class CLASS_DECL_AURA pred_holder_base :
-   virtual public object
-{
-public:
-
-   ::tool_thread *      m_ptoolthread;
-   sp(object)           m_pholdref;
-
-   pred_holder_base(::aura::application * papp, sp(object) pholdref = NULL) :
-      object(papp),
-      m_pholdref(pholdref)
-   {
-      
-      m_ptoolthread = NULL;
-
-   }
-
-   virtual void run() {}
-
-};
-
-template < typename PRED >
-class pred_holder :
-   virtual public pred_holder_base
-{
-public:
-
-   PRED m_pred;
-
-   pred_holder(::aura::application * papp, PRED pred) :
-      object(papp),
-      pred_holder_base(papp),
-      m_pred(pred)
-   {
-
-   }
-
-   pred_holder(::aura::application * papp, sp(object) pholdref, PRED pred) :
-      object(papp),
-      pred_holder_base(papp, pholdref),
-      m_pred(pred)
-   {
-
-   }
-
-   virtual void run() { m_pred(); }
-
-};
-//class replace_thread;
-
-class user_interaction_ptr_array;
-
-class thread_startup;
-
-///
-/// \author Camilo Sasuke Tsumanuma
 ///
 /// a thread must be always allocated in the heap
+///
 class CLASS_DECL_AURA thread :
    virtual public command_target
 #ifdef WINDOWS
@@ -119,6 +59,9 @@ public:
 
    single_lock *                          m_pslUser;
    static bool                            s_bAllocReady;
+
+   object_refa                            m_objectrefaDependent;
+
    //mutex *                              m_pmutex;
 
    //thread_impl_sp                       m_pthreadimpl;
@@ -131,8 +74,8 @@ public:
    ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
    //property_set                           m_set;
    string                                 m_strWorkUrl;
-   ref_array < thread >                   m_threadptraDependent;
-   ref_array < thread >                   m_threadptraRequired;
+   thread_refa                            m_threadrefaDependent;
+   thread_refa                            m_threadrefaRequired;
    ::user::interactive *                  m_pinteractive;
 
    bool                                   m_bZipIsDir;
@@ -339,7 +282,7 @@ public:
    virtual void on_unregister_dependent_thread(::thread * pthread);
    virtual void signal_close_dependent_threads();
    virtual void wait_close_dependent_threads(const duration & duration);
-   virtual void register_at_required_threads();
+   virtual bool register_at_required_threads();
    virtual void unregister_from_required_threads();
 
    virtual void do_events();
@@ -417,114 +360,64 @@ public:
 
 
 
+
 namespace multithreading
 {
 
-
-   template < typename THREAD >
-   inline bool post_quit(THREAD * & pthread)
-   {
-
-      if (pthread == NULL)
-      {
-
-         return true;
-
-      }
-
-      bool bOk = false;
-
-      try
-      {
-
-         bOk = pthread->post_quit();
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
-
-   }
-
-   template < typename THREAD >
-   inline bool post_quit_and_wait(THREAD * & pthread, const duration & duration)
-   {
-
-      if (pthread == NULL)
-      {
-
-         return true;
-
-      }
-
-      bool bOk = false;
-
-      try
-      {
-
-         pthread->post_quit();
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         if (pthread != NULL)
-         {
-
-            bOk = pthread->wait(duration).succeeded();
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
-
-   }
-
-
+   
    CLASS_DECL_AURA bool post_quit();
    CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
-
-
+   
+   
    CLASS_DECL_AURA bool post_quit(::thread * pthread);
    CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
+
+
+   template < typename THREAD >
+   inline bool post_quit(THREAD & pthread)
+   {
+
+      bool bOk = post_quit((::thread *) pthread);
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
+   }
+
+
+   template < typename THREAD >
+   inline bool post_quit_and_wait(THREAD & pthread, const duration & duration)
+   {
+
+      bool bOk = post_quit_and_wait((::thread *) pthread, duration);
+
+      try
+      {
+
+         pthread = NULL;
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return bOk;
+
+   }
+
+
 
 
 } // namespace multithreading
@@ -533,5 +426,10 @@ namespace multithreading
 CLASS_DECL_AURA bool is_thread_on(IDTHREAD id);
 CLASS_DECL_AURA void set_thread_on(IDTHREAD id);
 CLASS_DECL_AURA void set_thread_off(IDTHREAD id);
+
+
+
+
+CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis);
 
 

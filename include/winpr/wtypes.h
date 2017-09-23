@@ -25,7 +25,7 @@
 
 /* Set by CMake during configuration. */
 #ifdef _WIN32
-#undef WINPR_HAVE_STDBOOL_H 0
+#undef WINPR_HAVE_STDBOOL_H
 #else
 #define WINPR_HAVE_STDBOOL_H 1
 #endif
@@ -68,8 +68,8 @@
 #endif
 
 #if WINPR_HAVE_STDINT_H
-#define __int8	int8_t
-#define __uint8	uint8_t
+#define __int8 int8_t
+#define __uint8   uint8_t
 #define __int16 int16_t
 #define __uint16 uint16_t
 #define __int32 int32_t
@@ -77,8 +77,8 @@
 #define __int64 int64_t
 #define __uint64 uint64_t
 #else
-#define __int8	char
-#define __uint8	unsigned char
+#define __int8 char
+#define __uint8   unsigned char
 #define __int16 short
 #define __uint16 unsigned short
 #define __int32 int
@@ -169,17 +169,17 @@ typedef short SHORT;
 
 #ifndef FALSE
 #if WINPR_HAVE_STDBOOL_H && !defined(__OBJC__)
-#define FALSE			false
+#define FALSE        false
 #else
-#define FALSE			0
+#define FALSE        0
 #endif
 #endif
 
 #ifndef TRUE
 #if WINPR_HAVE_STDBOOL_H && !defined(__OBJC__)
-#define TRUE			true
+#define TRUE         true
 #else
-#define TRUE			1
+#define TRUE         1
 #endif
 #endif
 
@@ -299,25 +299,25 @@ typedef unsigned int UINT_PTR;
 
 typedef struct _GUID
 {
-	UINT32 Data1;
-	UINT16 Data2;
-	UINT16 Data3;
-	BYTE Data4[8];
+   UINT32 Data1;
+   UINT16 Data2;
+   UINT16 Data3;
+   BYTE Data4[8];
 } GUID, UUID, *PGUID, *LPGUID, *LPCGUID;
 
 typedef struct _LUID
 {
-	DWORD LowPart;
-	LONG  HighPart;
+   DWORD LowPart;
+   LONG  HighPart;
 } LUID, *PLUID;
 
 typedef GUID IID;
 typedef IID* REFIID;
 
 #ifdef UNICODE
-#define _T(x)	L ## x
+#define _T(x)  L ## x
 #else
-#define _T(x)	x
+#define _T(x)  x
 #endif
 
 #ifdef UNICODE
@@ -334,106 +334,106 @@ typedef LPCSTR LPCTSTR;
 
 typedef union _ULARGE_INTEGER
 {
-	struct
-	{
-		DWORD LowPart;
-		DWORD HighPart;
-	};
+   struct
+   {
+      DWORD LowPart;
+      DWORD HighPart;
+   };
 
-	struct
-	{
-		DWORD LowPart;
-		DWORD HighPart;
-	} u;
+   struct
+   {
+      DWORD LowPart;
+      DWORD HighPart;
+   } u;
 
-	ULONGLONG QuadPart;
+   ULONGLONG QuadPart;
 } ULARGE_INTEGER, *PULARGE_INTEGER;
 
 typedef union _LARGE_INTEGER
 {
-	struct
-	{
-		DWORD LowPart;
-		LONG  HighPart;
-	};
+   struct
+   {
+      DWORD LowPart;
+      LONG  HighPart;
+   };
 
-	struct
-	{
-		DWORD LowPart;
-		LONG  HighPart;
-	} u;
+   struct
+   {
+      DWORD LowPart;
+      LONG  HighPart;
+   } u;
 
-	LONGLONG QuadPart;
+   LONGLONG QuadPart;
 } LARGE_INTEGER, *PLARGE_INTEGER;
 
 typedef struct _FILETIME
 {
-	DWORD dwLowDateTime;
-	DWORD dwHighDateTime;
+   DWORD dwLowDateTime;
+   DWORD dwHighDateTime;
 } FILETIME, *PFILETIME, *LPFILETIME;
 
 typedef struct _SYSTEMTIME
 {
-	WORD wYear;
-	WORD wMonth;
-	WORD wDayOfWeek;
-	WORD wDay;
-	WORD wHour;
-	WORD wMinute;
-	WORD wSecond;
-	WORD wMilliseconds;
+   WORD wYear;
+   WORD wMonth;
+   WORD wDayOfWeek;
+   WORD wDay;
+   WORD wHour;
+   WORD wMinute;
+   WORD wSecond;
+   WORD wMilliseconds;
 } SYSTEMTIME,*PSYSTEMTIME,*LPSYSTEMTIME;
 
 typedef struct _RPC_SID_IDENTIFIER_AUTHORITY
 {
-	BYTE Value[6];
+   BYTE Value[6];
 } RPC_SID_IDENTIFIER_AUTHORITY;
 
 typedef DWORD SECURITY_INFORMATION, *PSECURITY_INFORMATION;
 
 typedef struct _RPC_SID
 {
-	UCHAR Revision;
-	UCHAR SubAuthorityCount;
-	RPC_SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
-	ULONG SubAuthority[];
+   UCHAR Revision;
+   UCHAR SubAuthorityCount;
+   RPC_SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
+   ULONG SubAuthority[];
 } RPC_SID, *PRPC_SID, *PSID;
 
 typedef struct _ACL
 {
-	UCHAR AclRevision;
-	UCHAR Sbz1;
-	USHORT AclSize;
-	USHORT AceCount;
-	USHORT Sbz2;
+   UCHAR AclRevision;
+   UCHAR Sbz1;
+   USHORT AclSize;
+   USHORT AceCount;
+   USHORT Sbz2;
 } ACL, *PACL;
 
 typedef struct _SECURITY_DESCRIPTOR
 {
-	UCHAR Revision;
-	UCHAR Sbz1;
-	USHORT Control;
-	PSID Owner;
-	PSID Group;
-	PACL Sacl;
-	PACL Dacl;
+   UCHAR Revision;
+   UCHAR Sbz1;
+   USHORT Control;
+   PSID Owner;
+   PSID Group;
+   PACL Sacl;
+   PACL Dacl;
 } SECURITY_DESCRIPTOR, *PSECURITY_DESCRIPTOR;
 
 typedef WORD SECURITY_DESCRIPTOR_CONTROL, *PSECURITY_DESCRIPTOR_CONTROL;
 
 typedef struct _SECURITY_ATTRIBUTES
 {
-	DWORD nLength;
-	LPVOID lpSecurityDescriptor;
-	BOOL bInheritHandle;
+   DWORD nLength;
+   LPVOID lpSecurityDescriptor;
+   BOOL bInheritHandle;
 } SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
 
 typedef struct _PROCESS_INFORMATION
 {
-	HANDLE hProcess;
-	HANDLE hThread;
-	DWORD dwProcessId;
-	DWORD dwThreadId;
+   HANDLE hProcess;
+   HANDLE hThread;
+   DWORD dwProcessId;
+   DWORD dwThreadId;
 } PROCESS_INFORMATION, *PPROCESS_INFORMATION, *LPPROCESS_INFORMATION;
 
 typedef DWORD (*PTHREAD_START_ROUTINE)(LPVOID lpThreadParameter);
@@ -470,28 +470,32 @@ typedef const VOID *LPCVOID;
 
 typedef struct tagDEC
 {
-	USHORT wReserved;
-	union {
-		struct {
-			BYTE scale;
-			BYTE sign;
-		} DUMMYSTRUCTNAME;
-		USHORT signscale;
-	} DUMMYUNIONNAME;
-	ULONG Hi32;
-	union {
-		struct {
-			ULONG Lo32;
-			ULONG Mid32;
-		} DUMMYSTRUCTNAME2;
-		ULONGLONG Lo64;
-	} DUMMYUNIONNAME2;
+   USHORT wReserved;
+   union
+   {
+      struct
+      {
+         BYTE scale;
+         BYTE sign;
+      } DUMMYSTRUCTNAME;
+      USHORT signscale;
+   } DUMMYUNIONNAME;
+   ULONG Hi32;
+   union
+   {
+      struct
+      {
+         ULONG Lo32;
+         ULONG Mid32;
+      } DUMMYSTRUCTNAME2;
+      ULONGLONG Lo64;
+   } DUMMYUNIONNAME2;
 } DECIMAL;
 
 typedef DECIMAL *LPDECIMAL;
 
-#define DECIMAL_NEG		((BYTE) 0x80)
-#define DECIMAL_SETZERO(dec)	{ (dec).Lo64 = 0; (dec).Hi32 = 0; (dec).signscale = 0; }
+#define DECIMAL_NEG     ((BYTE) 0x80)
+#define DECIMAL_SETZERO(dec)  { (dec).Lo64 = 0; (dec).Hi32 = 0; (dec).signscale = 0; }
 
 typedef char CCHAR;
 typedef DWORD LCID;

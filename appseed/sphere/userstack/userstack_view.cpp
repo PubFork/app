@@ -164,7 +164,7 @@ namespace userstack
 
 
       SetTimer(TimerBackView, 83, NULL);  // max. 12 fps
-      SetTimer(21977, 1984 * 11, NULL);  // max. 12 fps
+      SetTimer(21977, 20 * 1000, NULL);  // max. 12 fps
 
       check_apps();
 

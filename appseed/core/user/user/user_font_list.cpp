@@ -80,7 +80,7 @@ namespace user
 
          if (m_pfontlistdata != NULL)
          {
-            
+
             m_pfontlistdata->update();
 
          }
@@ -104,10 +104,14 @@ namespace user
       if (iSel != m_pfontlistdata->m_iSel)
       {
 
-         m_pfontlistdata->m_iSel = iSel;
+         convert(m_pfontlistdata->m_iSel, iSel);
+
          ::user::control_event ev;
+
          ev.m_puie = this;
+
          ev.m_eevent = ::user::event_after_change_cur_sel;
+
          ev.m_actioncontext = ::action::source_user;
 
          BaseOnControlEvent(&ev);
@@ -130,7 +134,7 @@ namespace user
 
       ScreenToClient(&pt);
 
-      int iHover = hit_test(pt);
+      auto iHover = hit_test(pt);
 
       if (m_pfontlistdata->m_iHover != iHover)
       {
@@ -224,7 +228,7 @@ namespace user
    string font_list::get_cur_sel_face_name()
    {
 
-      int iSel = get_cur_sel();
+      auto iSel = get_cur_sel();
 
       if (iSel < 0)
       {
@@ -237,10 +241,11 @@ namespace user
 
    }
 
+
    string font_list::get_cur_hover_face_name()
    {
 
-      int iHover = get_cur_hover();
+      auto iHover = get_cur_hover();
 
       if (iHover < 0)
       {
@@ -254,7 +259,7 @@ namespace user
    }
 
 
-   int font_list::get_cur_sel()
+   index font_list::get_cur_sel()
    {
 
       if (m_pfontlistdata->m_iSel < 0)
@@ -275,7 +280,8 @@ namespace user
 
    }
 
-   int font_list::get_cur_hover()
+
+   index font_list::get_cur_hover()
    {
 
       if (m_pfontlistdata->m_iHover < 0)
@@ -296,7 +302,7 @@ namespace user
 
    }
 
-   int font_list::hit_test(point pt)
+   index font_list::hit_test(point pt)
    {
 
       return m_pfontlistdata->hit_test(pt);
@@ -307,7 +313,7 @@ namespace user
    bool font_list::set_sel_by_name(string str)
    {
 
-      int iSel = m_pfontlistdata->find_name(str);
+      index iSel = m_pfontlistdata->find_name(str);
 
       if (iSel < 0)
          return false;
@@ -319,7 +325,7 @@ namespace user
    }
 
 
-   bool font_list::style_color(COLORREF & cr, e_color ecolor)
+   bool font_list::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
    {
 
       if (ecolor == color_background)
@@ -331,7 +337,7 @@ namespace user
 
       }
 
-      return control::get_color(cr, ecolor);
+      return control::get_color(cr, ecolor, pui);
 
    }
 

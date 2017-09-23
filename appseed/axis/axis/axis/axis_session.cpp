@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
 //#include "fiasco_finder.h"
 
@@ -723,7 +723,7 @@ namespace axis
       case COLOR_3DSHADOW:
          return ARGB(127,138,138,130);
       case COLOR_3DDKSHADOW:
-         return ARGB(127,84,84,77);
+         return ARGB(127,90, 90, 80);
       default:
          break;
       }
@@ -1600,7 +1600,7 @@ namespace axis
    //   case COLOR_3DSHADOW:
    //      return ARGB(127,138,138,130);
    //   case COLOR_3DDKSHADOW:
-   //      return ARGB(127,84,84,77);
+   //      return ARGB(127,90, 90, 80);
    //   default:
    //      break;
    //   }

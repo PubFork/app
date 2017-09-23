@@ -6,7 +6,7 @@
 // from profiler in beggining bottom for veriwellfair
 
 
-namespace core
+namespace aura
 {
 
 
@@ -34,7 +34,7 @@ namespace core
    }
 
 
-} // namespace core
+} // namespace aura
 
 
 

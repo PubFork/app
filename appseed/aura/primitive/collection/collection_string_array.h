@@ -5,379 +5,391 @@ template < typename Type, typename RawType >
 class string_array :
    public array < Type >
 {
-public:
+   public:
 
 
-   typedef Type                           String;
-   typedef RawType                        RawString;
-   typedef string_array < RawType >       RawStringArray;
+      typedef Type                           String;
+      typedef RawType                        RawString;
+      typedef string_array < RawType >       RawStringArray;
 
 
-   string_array() {}
-   string_array(::aura::application * papp);
-   string_array(const Type & t) { add(t); }
-   string_array(::std::initializer_list < Type > l) {   for(auto & e : l) {    add(e);    }  }
-   string_array(const string_array & array);
-   virtual ~string_array();
+      string_array() {}
+      string_array(::aura::application * papp);
+      string_array(const Type & t)
+      {
+         add(t);
+      }
+      string_array(::std::initializer_list < Type > l)
+      {
+         for(auto & e : l)
+         {
+            add(e);
+         }
+      }
+      string_array(const string_array & array);
+      virtual ~string_array();
 
 
 
-   ::count get_size() const;
-   ::count get_count() const;
-   index get_lower_bound(index i = 0) const;
-   index get_upper_bound(index i = -1) const;
-   //void set_size(::count nNewSize, ::count nGrowBy = -1);
+      ::count get_size() const;
+      ::count get_count() const;
+      index get_lower_bound(index i = 0) const;
+      index get_upper_bound(index i = -1) const;
+      index get_middle_index(index i = 0) const;
 
-   //::count size() const;
+      //void set_size(::count nNewSize, ::count nGrowBy = -1);
 
-   //void free_extra();
-   //void remove_all();
-   //void clear();
+      //::count size() const;
 
-   
-   void sort();
-   void sort_ci();
-   void collate_sort();
-   void collate_sort_ci();
+      //void free_extra();
+      //void remove_all();
+      //void clear();
 
 
-   Type safe_at(index nIndex, Type tDefault = "") const;
-   Type safe_at(index nIndex, Type tDefault = "");
+      void sort();
+      void sort_ci();
+      void collate_sort();
+      void collate_sort_ci();
 
-   Type get_at(index nIndex) const;
-   void set_at(index nIndex, const char * newElement);
 
-   void set_at(index nIndex, const Type & newElement);
+      Type safe_at(index nIndex, Type tDefault = "") const;
+      Type safe_at(index nIndex, Type tDefault = "");
 
-   Type & element_at(index nIndex);
-   const Type & element_at(index nIndex) const;
+      Type get_at(index nIndex) const;
+      void set_at(index nIndex, const char * newElement);
 
-   Type & add_new(const char * psz = NULL, index i = -1);
-   Type & new_element(index i = -1);
+      void set_at(index nIndex, const Type & newElement);
 
-   Type & first(index count = 0);
-   Type first(index count = 0) const;
+      Type & element_at(index nIndex);
+      const Type & element_at(index nIndex) const;
 
-   Type & last(index count = -1);
-   Type last(index count = -1) const;
+      Type & add_new(const char * psz = NULL, index i = -1);
+      Type & new_element(index i = -1);
 
-   const Type* get_data() const;
-   Type* get_data();
+      Type & first(index count = 0);
+      Type first(index count = 0) const;
 
-   // Potentially growing the array
-   Type & set_at_grow(index nIndex, const char * newElement);
+      Type & last(index count = -1);
+      Type last(index count = -1) const;
 
-   Type & set_at_grow(index nIndex,const Type & newElement);
+      const Type* get_data() const;
+      Type* get_data();
 
-   index add(const char * psz);
+      // Potentially growing the array
+      Type & set_at_grow(index nIndex, const char * newElement);
 
-   index add(const unichar * pwsz);
+      Type & set_at_grow(index nIndex,const Type & newElement);
 
-   index add(char ch);
+      index add(const char * psz);
 
-   index add(unichar wch);
+      index add(const unichar * pwsz);
 
-   void add(const var & var);
+      index add(char ch);
 
-   void add(const property & prop);
+      index add(unichar wch);
 
-   void add(const id & id);
+      void add(const var & var);
 
-   Type & add(const Type & newElement);
+      void add(const property & prop);
 
-   void push_back(const Type & newElement);
+      void add(const id & id);
 
-   ::count add(const string_array & src);
+      Type & add(const Type & newElement);
 
-   void copy(const string_array & src);
-   void copy(const int64_array & src);
+      void push_back(const Type & newElement);
 
+      ::count add(const string_array & src);
 
+      void copy(const string_array & src);
+      void copy(const int64_array & src);
 
-   // overloaded operator helpers
-   Type operator[](index nIndex) const;
-   Type & operator[](index nIndex);
 
-   // Operations that move elements around
-   Type & insert_at(index nIndex,const Type & newElement);
-   void insert_at(index nIndex,const char * newElement,::count nCount);
-   void insert_at(index nIndex,const Type & newElement,::count nCount);
-   void insert_at(index nStartIndex, const string_array & NewArray);
 
-   template < typename SWAP >
-   void swap_sort(
-      SWAP swap);
+      // overloaded operator helpers
+      Type operator[](index nIndex) const;
+      Type & operator[](index nIndex);
 
-   template < typename SWAP >
-   void swap_sort_ci(
-      SWAP swap);
+      // Operations that move elements around
+      Type & insert_at(index nIndex,const Type & newElement);
+      void insert_at(index nIndex,const char * newElement,::count nCount);
+      void insert_at(index nIndex,const Type & newElement,::count nCount);
+      void insert_at(index nStartIndex, const string_array & NewArray);
 
-   void get_quick_sort_ci(index_array & ia);
+      template < typename SWAP >
+      void swap_sort(
+         SWAP swap);
 
-   string_array slice(index iStart, ::count iCount = -1) const;
+      template < typename SWAP >
+      void swap_sort_ci(
+         SWAP swap);
 
-   string_array & operator =(const string_array & stra);
+      void get_quick_sort_ci(index_array & ia);
 
+      string_array slice(index iStart, ::count iCount = -1) const;
 
-   Type & insert_empty(index nIndex);
+      string_array & operator =(const string_array & stra);
 
-   void insert_empty(index nIndex, ::count c);
 
+      Type & insert_empty(index nIndex);
 
-   class ::memory GetFormatV004();
-   ::count remove_empty();
-   index add_normal(const char * lpcsz);
-   void trim_right(const char * pszChars);
-   void trim_left(const char * pszChars);
-   void trim(const char * pszChars);
-   void trim_right();
-   void trim_left();
-   void trim();
-   index add_unique(const string & lpcsz);
-   ::count add_unique(const string_array & stra);
-   index add_unique_ci(const string & lpcsz);
-   ::count add_unique_ci(const string_array & stra);
+      void insert_empty(index nIndex, ::count c);
 
-   void make_lower();
-   void make_upper();
 
+      class ::memory GetFormatV004();
+      ::count remove_empty();
+      index add_normal(const char * lpcsz);
+      void trim_right(const char * pszChars);
+      void trim_left(const char * pszChars);
+      void trim(const char * pszChars);
+      void trim_right();
+      void trim_left();
+      void trim();
+      index add_unique(const string & lpcsz);
+      ::count add_unique(const string_array & stra);
+      index add_unique_ci(const string & lpcsz);
+      ::count add_unique_ci(const string_array & stra);
 
+      void make_lower();
+      void make_upper();
 
 
-   operator ::count() const {
-      return get_count();
-   }
 
 
-   index get_random_index() const;
+      operator ::count() const
+      {
+         return get_count();
+      }
 
-   Type & random_element();
-   const Type & random_element() const;
 
-   Type pop_random_element();
+      index get_random_index() const;
 
-   Type pop(index i = -1);
-   void slice(string_array & stra,index index,::count ca = -1);
-   void remove(index index,::count count);
-   void splice(const string_array & stra,index index,::count ca = -1);
-   void splice(const string_array & stra,index index,string_array & straRemoved,::count ca = -1);
+      Type & random_element();
+      const Type & random_element() const;
 
+      Type pop_random_element();
 
-   // if Type is found, move it to specified position
-   bool move_ci(const char * lpcsz,index iIndex);
+      Type pop(index i = -1);
+      void slice(string_array & stra,index index,::count ca = -1);
+      void remove(index index,::count count);
+      void splice(const string_array & stra,index index,::count ca = -1);
+      void splice(const string_array & stra,index index,string_array & straRemoved,::count ca = -1);
 
-   // move preferred in order
-   bool preferred(const char * lpcsz);
-   ::count preferred(string_array & stra);
 
-   index find_first_ci(const char * lpcsz,index find = 0,index last = -1) const;
-   index find_first(const char * lpcsz,index find = 0,index last = -1) const;
+      // if Type is found, move it to specified position
+      bool move_ci(const char * lpcsz,index iIndex);
 
-   index find_last_ci(const char * lpcsz, index find = 0, index last = -1) const;
-   index find_last(const char * lpcsz, index find = 0, index last = -1) const;
+      // move preferred in order
+      bool preferred(const char * lpcsz);
+      ::count preferred(string_array & stra);
 
-   index reverse_find_ci(const char * lpcsz,index find = -1,index last = 0) const;
-   index reverse_find(const char * lpcsz,index find = -1,index last = 0) const;
+      index find_first_ci(const char * lpcsz,index find = 0,index last = -1) const;
+      index find_first(const char * lpcsz,index find = 0,index last = -1) const;
 
-   bool begins_ci(const char * lpcsz, index find = 0, index last = -1) const;
-   bool begins(const char * lpcsz, index find = 0, index last = -1) const;
+      index find_last_ci(const char * lpcsz, index find = 0, index last = -1) const;
+      index find_last(const char * lpcsz, index find = 0, index last = -1) const;
 
+      index reverse_find_ci(const char * lpcsz,index find = -1,index last = 0) const;
+      index reverse_find(const char * lpcsz,index find = -1,index last = 0) const;
 
-   bool suffixes_ci(const char * lpcsz, index find = 0, index last = -1) const;
-   bool suffixes(const char * lpcsz, index find = 0, index last = -1) const;
-   index find_first_suffixes_ci(const char * lpcsz, index find = 0, index last = -1) const;
-   index find_first_suffixes(const char * lpcsz, index find = 0, index last = -1) const;
+      bool begins_ci(const char * lpcsz, index find = 0, index last = -1) const;
+      bool begins(const char * lpcsz, index find = 0, index last = -1) const;
 
 
-   index find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
-   index find_first_begins(const Type & strPrefix,index find = 0,index last = -1) const;
+      bool suffixes_ci(const char * lpcsz, index find = 0, index last = -1) const;
+      bool suffixes(const char * lpcsz, index find = 0, index last = -1) const;
+      index find_first_suffixes_ci(const char * lpcsz, index find = 0, index last = -1) const;
+      index find_first_suffixes(const char * lpcsz, index find = 0, index last = -1) const;
 
-   bool str_begins_ci(const char * lpcsz, index find = 0, index last = -1) const;
-   bool str_begins(const char * lpcsz, index find = 0, index last = -1) const;
 
-   index str_find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
-   index str_find_first_begins(const char * lpcsz,index find = 0,index last = -1) const;
+      index find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
+      index find_first_begins(const Type & strPrefix,index find = 0,index last = -1) const;
 
-   index find_first_begins_eat_ci(string & str,const char * lpcsz, index find = 0,index last = -1) const;
+      bool str_begins_ci(const char * lpcsz, index find = 0, index last = -1) const;
+      bool str_begins(const char * lpcsz, index find = 0, index last = -1) const;
 
-   bool contains_ci(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
-   bool contains(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
+      index str_find_first_begins_ci(const char * lpcsz,index find = 0,index last = -1) const;
+      index str_find_first_begins(const char * lpcsz,index find = 0,index last = -1) const;
 
-   ::count get_begins_ci(string_array & stra,const char * lpcsz,index first = 0,index last = -1);
+      index find_first_begins_eat_ci(string & str,const char * lpcsz, index find = 0,index last = -1) const;
 
-   ::count filter_begins_ci(const char * lpcsz,index first = 0,index last = -1);
+      bool contains_ci(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
+      bool contains(const char * lpcsz,index find = 0,index last = -1,::count countMin = 1,::count countMax = -1) const;
 
-   template < typename Pred >
-   ::count filter(Pred pred,index first = 0,index last = -1);
+      ::count get_begins_ci(string_array & stra,const char * lpcsz,index first = 0,index last = -1);
 
-   template < typename Pred >
-   ::count filter_out(Pred pred,index first = 0,index last = -1);
+      ::count filter_begins_ci(const char * lpcsz,index first = 0,index last = -1);
 
-   template < typename Pred, typename ArrayOut >
-   ::count filter_out(Pred pred, ArrayOut & a, index first = 0,index last = -1);
+      template < typename Pred >
+      ::count filter(Pred pred,index first = 0,index last = -1);
 
-   ::count remove_first_ci(const string & lpcsz,index find = 0,index last = -1);
-   ::count remove_first(const string & lpcsz,index find = 0,index last = -1);
+      template < typename Pred >
+      ::count filter_out(Pred pred,index first = 0,index last = -1);
 
-   ::count remove_last_ci(const string & lpcsz, index find = 0, index last = -1);
-   using array < Type >::remove_last;
-   ::count remove_last(const string & lpcsz, index find = 0, index last = -1);
+      template < typename Pred, typename ArrayOut >
+      ::count filter_out(Pred pred, ArrayOut & a, index first = 0,index last = -1);
 
-   ::count remove_ci(const string & lpcsz,index find = 0,index last = -1,::count countMin = 0,::count countMax = -1);
-   ::count remove(const string & lpcsz,index find = 0,index last = -1,::count countMin = 0,::count countMax = -1);
+      ::count remove_first_ci(const string & lpcsz,index find = 0,index last = -1);
+      ::count remove_first(const string & lpcsz,index find = 0,index last = -1);
 
-   ::count remove_ci(const string_array & stra);
-   ::count remove(const string_array & stra);
+      ::count remove_last_ci(const string & lpcsz, index find = 0, index last = -1);
+      using array < Type >::remove_last;
+      ::count remove_last(const string & lpcsz, index find = 0, index last = -1);
 
-   string_array & explode(const Type & strSeparator,const Type & str);
-   
-   string_array & _001Explode(const Type & str);
+      ::count remove_ci(const string & lpcsz,index find = 0,index last = -1,::count countMin = 0,::count countMax = -1);
+      ::count remove(const string & lpcsz,index find = 0,index last = -1,::count countMin = 0,::count countMax = -1);
 
-   // csstidy: Same as explode, but not within a Type
-   string_array & csstidy_explode_ws(char sep,const char * psz);
+      ::count remove_ci(const string_array & stra);
+      ::count remove(const string_array & stra);
 
-   void implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
-   Type implode(const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
-   void reverse_implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
-   Type reverse_implode(const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+      string_array & explode(const Type & strSeparator,const Type & str);
 
-   void _008Implode(Type & rwstr, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, index iStart = 0, ::count iCount = -1) const;
-   Type _008Implode(const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, index iStart = 0, ::count iCount = -1) const;
+      string_array & _001Explode(const Type & str);
 
-   void _008IfImplode(Type & rwstr, const char * lpcszIfHasElementPrefix = NULL, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, bool bUseLast = true, index iStart = 0, ::count iCount = -1) const;
-   Type _008IfImplode(const char * lpcszIfHasElementPrefix = NULL, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, bool bUseLast = true, index iStart = 0, ::count iCount = -1) const;
+      // csstidy: Same as explode, but not within a Type
+      string_array & csstidy_explode_ws(char sep,const char * psz);
 
-   void surround(const char * pszPrefix = NULL,const char * pszSuffix = NULL,index iStart = 0,::count iCount = -1);
-   Type surround_and_implode(const char * lpcszSeparator = NULL,const char * pszPrefix = NULL,const char * pszSuffix = NULL,index iStart = 0,::count iCount = -1);
+      void implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+      Type implode(const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+      void reverse_implode(Type & rwstr,const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
+      Type reverse_implode(const char * lpcszSeparator = NULL,index iStart = 0,::count iCount = -1) const;
 
-   comparable_array < id > get_comparable_ida() const;
+      void _008Implode(Type & rwstr, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, index iStart = 0, ::count iCount = -1) const;
+      Type _008Implode(const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, index iStart = 0, ::count iCount = -1) const;
 
-   ::count explode_command_line(const Type & str,ref_array < char > * argv = NULL);
+      void _008IfImplode(Type & rwstr, const char * lpcszIfHasElementPrefix = NULL, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, bool bUseLast = true, index iStart = 0, ::count iCount = -1) const;
+      Type _008IfImplode(const char * lpcszIfHasElementPrefix = NULL, const char * lpcszSeparator = NULL, const char * lpcszLastSeparator = NULL, bool bUseLast = true, index iStart = 0, ::count iCount = -1) const;
 
+      void surround(const char * pszPrefix = NULL,const char * pszSuffix = NULL,index iStart = 0,::count iCount = -1);
+      Type surround_and_implode(const char * lpcszSeparator = NULL,const char * pszPrefix = NULL,const char * pszSuffix = NULL,index iStart = 0,::count iCount = -1);
 
+      comparable_array < id > get_comparable_ida() const;
 
-   //   void XFV001Expand();
+      ::count explode_command_line(const Type & str,ref_array < char > * argv = NULL);
 
-   string_array & operator =(const var var);
+
+
+      //   void XFV001Expand();
+
+      string_array & operator =(const var var);
 //   string_array & operator =(const string_array & stra);
-   string_array & operator =(const int64_array & ia);
+      string_array & operator =(const int64_array & ia);
 //   string_array & operator =(const string_array & stra);
-   string_array & operator -=(const string_array & stra);
-   string_array & operator +=(const string_array & stra);
+      string_array & operator -=(const string_array & stra);
+      string_array & operator +=(const string_array & stra);
 
-   string_array operator -(const string_array & stra) const;
-   string_array operator +(const string_array & stra) const;
+      string_array operator -(const string_array & stra) const;
+      string_array operator +(const string_array & stra) const;
 //   string_array operator -(const string_array & stra) const;
 //   string_array operator +(const string_array & stra) const;
 
 
-   bool operator == (const RawStringArray & a) const;
-   bool operator != (const RawStringArray & a) const;
+      bool operator == (const RawStringArray & a) const;
+      bool operator != (const RawStringArray & a) const;
 
 
-   void replace(const char * lpszSearch,const char * lpszReplace);
+      void replace(const char * lpszSearch,const char * lpszReplace);
 
-   //void write(::file::ostream & ostream) const;
-   //void read(::file::istream & istream);
-
-
-   void get_format_string(Type & str,const char * lpcszSeparator) const;
-   void add_tokens(const char * lpcsz,const char * lpcszSeparator,bool bAddEmpty = true);
-   void add_smallest_tokens(const char * lpcsz, RawStringArray & straSeparator,bool bAddEmpty = true,bool bWithSeparator = FALSE);
-   void add_lines(const Type & str,bool bAddEmpty = true);
-
-   
-   void _001AddTokens(const char * lpcsz);
-   
-
-   bool is_empty(::count countMinimum = 1) const;
-   bool has_elements(::count countMinimum = 1) const;
-
-   Type encode_v16();
+      //void write(::file::ostream & ostream) const;
+      //void read(::file::istream & istream);
 
 
-   void decode_v16(const char * psz);
+      void get_format_string(Type & str,const char * lpcszSeparator) const;
+      void add_tokens(const char * lpcsz,const char * lpcszSeparator,bool bAddEmpty = true);
+      void add_smallest_tokens(const char * lpcsz, RawStringArray & straSeparator,bool bAddEmpty = true,bool bWithSeparator = FALSE);
+      void add_lines(const Type & str,bool bAddEmpty = true);
 
-   ::count get_count_except(const char * psz);
-   ::count get_count_except(const Type & str);
-   ::count get_count_except(const string_array & stra);
 
-   ::count get_count_except_ci(const char * psz);
-   ::count get_count_except_ci(const Type & str);
-   ::count get_count_except_ci(const string_array & stra);
+      void _001AddTokens(const char * lpcsz);
 
-   Type & get_json(Type & str, bool bNewLine = true) const;
 
-   void dump(dump_context &) const;
+      bool is_empty(::count countMinimum = 1) const;
+      bool has_elements(::count countMinimum = 1) const;
 
-   void assert_valid() const;
+      Type encode_v16();
 
-   typedef Type BASE_TYPE;
 
-   typedef const char * BASE_ARG_TYPE;
+      void decode_v16(const char * psz);
 
-   ::array < const char * > c_get() const;
-   void c_add(char ** ppsz, ::count iCount);
-   void c_add(char ** ppsz);
-   void c_add(wchar_t ** ppsz, ::count iCount);
-   void c_add(wchar_t ** ppsz);
+      ::count get_count_except(const char * psz);
+      ::count get_count_except(const Type & str);
+      ::count get_count_except(const string_array & stra);
 
-   string_array & intersect(const string_array & a)
-   {
+      ::count get_count_except_ci(const char * psz);
+      ::count get_count_except_ci(const Type & str);
+      ::count get_count_except_ci(const string_array & stra);
 
-      for (index i = 0; i < get_size(); )
+      Type & get_json(Type & str, bool bNewLine = true) const;
+
+      void dump(dump_context &) const;
+
+      void assert_valid() const;
+
+      typedef Type BASE_TYPE;
+
+      typedef const char * BASE_ARG_TYPE;
+
+      ::array < const char * > c_get() const;
+      void c_add(char ** ppsz, ::count iCount);
+      void c_add(char ** ppsz);
+      void c_add(wchar_t ** ppsz, ::count iCount);
+      void c_add(wchar_t ** ppsz);
+
+      string_array & intersect(const string_array & a)
       {
 
-         if (!a.contains(element_at(i)))
+         for (index i = 0; i < get_size(); )
          {
 
-            this->remove_at(i);
+            if (!a.contains(element_at(i)))
+            {
+
+               this->remove_at(i);
+
+            }
+            else
+            {
+
+               i++;
+
+            }
 
          }
-         else
-         {
 
-            i++;
-
-         }
+         return *this;
 
       }
 
-      return *this;
-
-   }
-
-   string_array & intersect_ci(const string_array & a)
-   {
-
-      for (index i = 0; i < get_size(); )
+      string_array & intersect_ci(const string_array & a)
       {
 
-         if (!a.contains_ci(element_at(i)))
+         for (index i = 0; i < get_size(); )
          {
 
-            this->remove_at(i);
+            if (!a.contains_ci(element_at(i)))
+            {
+
+               this->remove_at(i);
+
+            }
+            else
+            {
+
+               i++;
+
+            }
 
          }
-         else
-         {
 
-            i++;
-
-         }
+         return *this;
 
       }
 
-      return *this;
+      string_array & operator &=(const string_array & a)
+      {
 
-   }
+         return intersect(a);
 
-   string_array & operator &=(const string_array & a)
-   {
-
-      return intersect(a);
-
-   }
+      }
 
 
 };
@@ -581,20 +593,33 @@ inline Type string_array < Type, RawType >::first(index count) const
 
 template < class Type, class RawType >
 inline ::count string_array < Type, RawType >::get_size() const
-   { return this->m_nSize; }
+{
+   return this->m_nSize;
+}
 
 template < class Type, class RawType >
 inline ::count string_array < Type, RawType >::get_count() const
-   { return this->m_nSize; }
+{
+   return this->m_nSize;
+}
 
 template < class Type, class RawType >
 inline index string_array < Type, RawType >::get_lower_bound(index i) const
-   { return i; }
+{
+   return i;
+}
 
 template < class Type, class RawType >
 inline index string_array < Type, RawType >::get_upper_bound(index count) const
-   { return this->m_nSize + count; }
+{
+   return this->m_nSize + count;
+}
 
+template < class Type, class RawType >
+inline index string_array < Type, RawType >::get_middle_index(index i) const
+{
+   return get_upper_bound() / 2 + i;
+}
 
 
 
@@ -1305,8 +1330,8 @@ inline Type & string_array < Type, RawType >::operator[](index nIndex)
 
 template <class ARRAYCOMPARE,class ARRAYRELATION>
 void SortEx(ARRAYCOMPARE * pacompare,
-   int32_t fCompare(const char *,const char *),
-   ARRAYRELATION * parelation)
+            int32_t fCompare(const char *,const char *),
+            ARRAYRELATION * parelation)
 {
    index_array stackLowerBound;
    index_array stackUpperBound;
@@ -1383,8 +1408,8 @@ void SortEx(ARRAYCOMPARE * pacompare,
 
 template <class ARRAYCOMPARE,class ARRAYRELATION>
 void SortEx(ARRAYCOMPARE * pacompare,
-   int32_t fCompare(const unichar *,const unichar *),
-   ARRAYRELATION * parelation)
+            int32_t fCompare(const unichar *,const unichar *),
+            ARRAYRELATION * parelation)
 {
    index_array stackLowerBound;
    index_array stackUpperBound;
@@ -1466,7 +1491,7 @@ typedef CLASS_DECL_AURA string_array < string > stringa;
 class string2a:
    public array < stringa >
 {
-public:
+   public:
 
 
 };
@@ -1501,7 +1526,7 @@ __STATIC UINT __read_string_length(::file::istream & ar);
 
 template < class Type, class RawType >
 string_array < Type, RawType > ::string_array(::aura::application * papp):
-object(papp)
+   object(papp)
 {
 }
 
@@ -1569,18 +1594,18 @@ void string_array < Type, RawType > ::add_tokens(const char * lpcsz,const char *
 template < class Type, class RawType >
 void string_array < Type, RawType > ::_001AddTokens(const char * lpcsz)
 {
-   
+
    ::str::tokenizer strTokenizer(lpcsz);
-   
+
    Type strToken;
 
    while(strTokenizer._001GetNextToken(strToken))
    {
-      
+
       string_array::add(strToken);
-      
+
    }
-   
+
 }
 
 
@@ -1668,7 +1693,8 @@ void string_array < Type, RawType > ::add_lines(const Type & str,bool bAddEmpty)
 
       }
 
-   } while(true);
+   }
+   while(true);
 
    goto end;
 
@@ -1698,7 +1724,8 @@ n_only:
       iPos = iFindA + 1;
 
 
-   } while(true);
+   }
+   while(true);
    goto end;
 r_only:
    do
@@ -1725,7 +1752,8 @@ r_only:
       iPos = iFindB + 1;
 
 
-   } while(true);
+   }
+   while(true);
 
 end:
 
@@ -1875,12 +1903,12 @@ index string_array < Type, RawType > ::find_first_ci(const char * lpcsz,index fi
 template < class Type, class RawType >
 index string_array < Type, RawType > ::find_first(const char * lpcsz, index find, index last) const
 {
-   
+
    this->prepare_first_last(find, last);
 
    for(; find <= last; find++)
    {
-      
+
       if (this->element_at(find).compare(lpcsz) == 0)
       {
 
@@ -2095,7 +2123,7 @@ bool string_array < Type, RawType > ::contains_ci(const char * lpcsz,index find,
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first_ci(lpcsz,find,last)) >= 0)
+         && (find = find_first_ci(lpcsz,find,last)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0,count <= countMax);
 }
@@ -2106,7 +2134,7 @@ bool string_array < Type, RawType > ::contains(const char * lpcsz,index find,ind
 {
    ::count count = 0;
    while((count < countMin || (countMax >= 0 && count <= countMax))
-      && (find = find_first(lpcsz,find,last)) >= 0)
+         && (find = find_first(lpcsz,find,last)) >= 0)
       count++;
    return count >= countMin && conditional(countMax >= 0,count <= countMax);
 }
@@ -2154,7 +2182,7 @@ template < class Type, class RawType >
    ::count count = 0;
    if(contains_ci(lpcsz,find,last,countMin,countMax))
       while(conditional(countMax >= 0,count < countMax)
-         && (find = remove_first_ci(lpcsz,find,last)) >= 0)
+            && (find = remove_first_ci(lpcsz,find,last)) >= 0)
          count++;
    return count;
 }
@@ -2166,7 +2194,7 @@ template < class Type, class RawType >
    ::count count = 0;
    if(contains(lpcsz,find,last,countMin,countMax))
       while(conditional(countMax >= 0,count < countMax)
-         && (find = remove_first(lpcsz,find,last)) >= 0)
+            && (find = remove_first(lpcsz,find,last)) >= 0)
          count++;
    return count;
 }
@@ -2425,7 +2453,7 @@ template < class Type, class RawType >
 
    ::count cNewSize = a.get_size();
 
-   for(int32_t i = cOldSize; i < cNewSize; i++)
+   for(auto i = cOldSize; i < cNewSize; i++)
    {
 
       istream >> a.element_at(i);
@@ -2541,13 +2569,13 @@ string_array < Type, RawType >  & string_array < Type, RawType > ::explode(const
 template < class Type, class RawType >
 string_array < Type, RawType >  & string_array < Type, RawType > ::_001Explode(const Type & str)
 {
-   
+
    this->remove_all();
-   
+
    _001AddTokens(str);
-   
+
    return * this;
-   
+
 }
 
 
@@ -3447,7 +3475,7 @@ Type string_array < Type, RawType > ::_008IfImplode(const char * lpcszIfHasEleme
 template < class Type, class RawType >
 void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
 {
-   
+
    for (index i = 0; i < c; i++)
    {
 
@@ -3457,8 +3485,13 @@ void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
 
    }
 
-   free((void *)ppsz);
-   
+   if(ppsz != NULL)
+   {
+
+      free((void *)ppsz);
+
+   }
+
 }
 
 
@@ -3466,18 +3499,18 @@ void string_array < Type, RawType > ::c_add(char ** ppsz, ::count c)
 template < class Type, class RawType >
 ::array < const char * > string_array < Type, RawType > ::c_get() const
 {
-   
+
    ::array < const char * > psza;
-   
+
    for(index i = 0; i < get_size(); i++)
    {
-      
+
       psza.add((const char *) element_at(i));
-      
+
    }
-   
+
    return psza;
-   
+
 }
 
 /// expect strings allocated with malloc (sic, not memory_alloc) or strdup and array allocated with malloc (sic, not memory_alloc)
@@ -3500,7 +3533,12 @@ void string_array < Type, RawType > ::c_add(char ** ppszParam)
 
    }
 
-   free((void *)ppsz);
+   if(ppsz != NULL)
+   {
+
+      free((void *)ppsz);
+
+   }
 
 }
 
@@ -3518,7 +3556,12 @@ void string_array < Type, RawType > ::c_add(wchar_t ** ppsz, ::count c)
 
    }
 
-   free((void *)ppsz);
+   if(ppsz != NULL)
+   {
+
+      free((void *)ppsz);
+
+   }
 
 }
 /// expect strings allocated with malloc (sic, not memory_alloc) or wcsdup and array allocated with malloc (sic, not memory_alloc)
@@ -3541,7 +3584,12 @@ void string_array < Type, RawType > ::c_add(wchar_t ** ppszParam)
 
    }
 
-   free((void *)ppsz);
+   if(ppsz != NULL)
+   {
+
+      free((void *)ppsz);
+
+   }
 
 }
 
@@ -3552,8 +3600,11 @@ void string_array < Type, RawType > ::c_add(wchar_t ** ppszParam)
 template < class Type, class RawType >
 void string_array < Type, RawType > ::sort()
 {
-   
-   this->pred_sort([](Type & a, Type & b) { return a.compare(b) < 0; });
+
+   this->pred_sort([](Type & a, Type & b)
+   {
+      return a.compare(b) < 0;
+   });
 
 }
 
@@ -3562,7 +3613,10 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b) { return a.compare_ci(b) < 0; });
+   pred_sort([](Type & a, Type & b)
+   {
+      return a.compare_ci(b) < 0;
+   });
 
 }
 
@@ -3571,7 +3625,10 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort()
 {
 
-   pred_sort([](Type & a, Type & b) { return a.collate(b) < 0; });
+   pred_sort([](Type & a, Type & b)
+   {
+      return a.collate(b) < 0;
+   });
 
 }
 
@@ -3580,7 +3637,10 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b) { return a.collate_ci(b) < 0; });
+   pred_sort([](Type & a, Type & b)
+   {
+      return a.collate_ci(b) < 0;
+   });
 
 }
 

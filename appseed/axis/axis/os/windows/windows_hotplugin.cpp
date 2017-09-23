@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "coated/gdiplus.h"
 
 
@@ -95,7 +95,7 @@ namespace hotplugin
       if (!bStatic)
       {
 
-         SolidBrush brushGren(Color(184, 77, 184, 123));
+         SolidBrush brushGren(Color(190, 80, 184, 123));
 
          if (rectDraw.intersect(rectBar, rectBrick))
          {

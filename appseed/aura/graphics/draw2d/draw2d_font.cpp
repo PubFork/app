@@ -48,6 +48,8 @@ namespace draw2d
 
    bool font::create_pixel_font(const char * lpszFacename, double dSize, int32_t iWeight, bool bItalic, bool bUnderline, bool bStrikeOut, double dWidth)
    {
+      
+      synch_lock sl(m_pmutex);
 
 #ifdef WINDOWS
       if(stricmp(lpszFacename, FONT_SANS) == 0)
@@ -78,6 +80,8 @@ namespace draw2d
 
    bool font::create_point_font(const char * lpszFacename, double dSize, int32_t iWeight, bool bItalic, bool bUnderline, bool bStrikeOut, double dWidth)
    {
+      
+      synch_lock sl(m_pmutex);
 
       m_strFontFamilyName     = lpszFacename;
 #ifdef MACOS
@@ -102,6 +106,8 @@ namespace draw2d
 
    font & font::operator = (const font & fontSrc)
    {
+      
+      synch_lock sl(m_pmutex);
 
       if(this != &fontSrc)
       {
@@ -123,6 +129,8 @@ namespace draw2d
 
    void font::set_family_name(const char * pszFamilyName)
    {
+      
+      synch_lock sl(m_pmutex);
 
       m_strFontFamilyName  = pszFamilyName;
       m_bUpdated           = false;
@@ -133,6 +141,8 @@ namespace draw2d
    void font::set_size(double dSize, e_unit eunit)
    {
 
+      synch_lock sl(m_pmutex);
+      
       m_dFontSize       = dSize;
       m_eunitFontSize   = eunit;
       m_bUpdated        = false;
@@ -142,6 +152,8 @@ namespace draw2d
 
    void font::set_bold(bool bBold)
    {
+      
+      synch_lock sl(m_pmutex);
 
       if(bBold)
       {
@@ -158,6 +170,8 @@ namespace draw2d
 
    void font::set_italic(bool bItalic)
    {
+      
+      synch_lock sl(m_pmutex);
 
       m_bItalic      = bItalic;
       m_bUpdated     = false;
@@ -167,6 +181,8 @@ namespace draw2d
    void font::set_underline(bool bUnderline)
    {
 
+      synch_lock sl(m_pmutex);
+      
       m_bUnderline   = bUnderline;
       m_bUpdated     = false;
 
@@ -174,6 +190,9 @@ namespace draw2d
 
    void font::set_strikeout(bool bStrikeout)
    {
+      
+      
+      synch_lock sl(m_pmutex);
 
       m_bStrikeout   = bStrikeout;
       m_bUpdated     = false;

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace sphere
@@ -21,7 +21,7 @@ namespace sphere
    }
 
 
-   bool main_frame::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement)
+   bool main_frame::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
    {
 
       etranslucency = ::user::translucency_present;
@@ -31,7 +31,7 @@ namespace sphere
    }
 
 
-   bool main_frame::get_color(COLORREF & cr, ::user::e_color ecolor)
+   bool main_frame::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
    {
 
       bool bOk = true;
@@ -176,13 +176,13 @@ namespace sphere
       else if (ecolor == ::user::color_border_normal)
       {
 
-         cr = ARGB(255, 84, 84, 77);
+         cr = ARGB(255, 84, 90, 80);
 
       }
       else if (ecolor == ::user::color_border_hover)
       {
 
-         cr = ARGB(255, 84, 184, 77);
+         cr = ARGB(255, 84, 190, 80);
 
       }
       else if (ecolor == ::user::color_text_hover)

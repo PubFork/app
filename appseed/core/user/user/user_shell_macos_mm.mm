@@ -5,7 +5,6 @@
 //  Created by Camilo Sasuke Tsumanuma on 30/12/16.
 //  Copyright © 2016 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
-#import "aura/aura/aura.h"
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 

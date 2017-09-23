@@ -33,7 +33,7 @@ namespace wndfrm_core
       void _001OnTabPaneDrawTitle(::user::tab_pane & pane,::user::tab * ptab,::draw2d::graphics * pgraphics,LPCRECT lpcrect,::draw2d::brush_sp & brushText);
       bool _001OnTabLayout(::user::tab * ptab);
 
-      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor);
+      virtual bool get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui) override;
 
       virtual bool _001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar);
 

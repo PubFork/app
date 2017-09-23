@@ -83,7 +83,7 @@ namespace aura
 
       virtual bool initialize_wallpaper_fileset(::file::set * pfileset, bool bAddSearch);
 
-      virtual bool file_open(string str);
+      virtual bool file_open(::file::path path);
 
       virtual string get_default_browser();
 
@@ -98,6 +98,23 @@ namespace aura
       virtual ::file::path get_app_path(const string & strApp);
        
       virtual void on_process_command(::command::command * pcommand);
+
+	  /// set["file_filter_specs"] : string array of file extensions (with dot)
+	  /// set["file_filter_names"] : string array of the file extensions titles
+	  /// set["default_file_extension"] : default file extension (with dot)
+	  /// set["folder"] : folder path
+	  /// set["file_name"] : in/out file name
+	  virtual bool browse_file_open(oswindow oswindowOwner, property_set & set);
+	  
+	  /// set["file_filter_specs"] : string array of extensions (with dot)
+	  /// set["file_filter_names"] : string array of the file extensions titles
+	  /// set["default_file_extension"] : default file extension (with dot)
+	  /// set["folder"] : folder path
+	  /// set["file_name"] : in/out file name
+	  virtual bool browse_file_save(oswindow oswindowOwner, property_set & set);
+	  
+	  /// set["folder"] : in/out folder path
+	  virtual bool browse_folder(oswindow oswindowOwner, property_set & set);
 
 
    };

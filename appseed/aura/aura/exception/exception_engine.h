@@ -52,7 +52,7 @@ namespace exception
    public:
 
       /// m_pmutex from ::object cannot be used for allocation, because new operator
-      /// is tricky during system initialization and exception::engine is ofter 
+      /// is tricky during system initialization and exception::engine is ofter
       /// instantiated at system initialization
       mutex                m_mutex;
 #ifdef WINDOWSEX
@@ -190,8 +190,8 @@ namespace exception
       bool load_module(HANDLE, HMODULE);
 #elif defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
-      void backtrace(void * pui, int &c);
-      char * stack_trace(void * pui, int c, const char * pszFormat = default_format());
+      void backtrace(void ** pui, int &c);
+      char * stack_trace(void * const * pui, int c, const char * pszFormat = default_format());
 
 #endif
 

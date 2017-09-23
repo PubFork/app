@@ -236,7 +236,7 @@ namespace filemanager
    }
 
 
-   bool data::get_color(COLORREF & cr,::user::e_color ecolor)
+   bool data::get_color(COLORREF & cr, ::user::e_color ecolor, ::user::interaction * pui)
    {
 
       if(ecolor == ::user::color_text)
@@ -337,14 +337,14 @@ namespace filemanager
       else
       {
 
-         return ::user::style::get_color(cr,ecolor);
+         return ::user::style::get_color(cr, ecolor, pui);
 
       }
 
    }
 
 
-   bool data::get_font(::draw2d::font_sp & font)
+   bool data::get_font(::draw2d::font_sp & font, ::user::e_font efont, ::user::interaction * pui)
    {
 
       if(m_spfont.is_null())
@@ -357,7 +357,7 @@ namespace filemanager
    }
 
 
-   bool data::get_translucency(::user::e_translucency & etranslucency)
+   bool data::get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui)
    {
 
       if(m_bTransparentBackground)

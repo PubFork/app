@@ -166,7 +166,7 @@ namespace user
          if (pitem->m_pui == NULL)
          {
 
-            pitem->m_pui = m_pmenu->create_menu_button();
+            pitem->m_pui = m_pmenu->create_menu_button(get_app());
 
          }
 
@@ -218,7 +218,12 @@ namespace user
 
          pitem->m_pui->set_window_text(pitem->m_strTitle);
 
-         //pitem->create_buttons(pmenu);
+         if(pmenu->m_bInline)
+         {
+         
+            pitem->create_buttons(pmenu);
+            
+         }
 
       }
 

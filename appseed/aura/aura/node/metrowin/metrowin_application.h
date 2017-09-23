@@ -11,24 +11,24 @@
 //} // namespace gen
 //
 //
-namespace metrowin
-{
-
-
-   class CLASS_DECL_AURA main_init_data :
-      public ::aura::main_init_data
-   {
-   public:
-
-
-      HINSTANCE   m_hInstance;
-      HINSTANCE   m_hPrevInstance;
-      int         m_nCmdShow;
-
-
-   };
-
-}
+//namespace metrowin
+//{
+//
+//
+//   class CLASS_DECL_AURA main_init_data :
+//      public ::command::command
+//   {
+//   public:
+//
+//
+//      HINSTANCE   m_hInstance;
+//      HINSTANCE   m_hPrevInstance;
+//      int         m_nCmdShow;
+//
+//
+//   };
+//
+//}
 
 //
 //   class CLASS_DECL_AURA application :
@@ -82,7 +82,7 @@ namespace metrowin
 //
 //      virtual void SetCurrentHandles();
 //
-//      virtual bool process_command(::aura::main_init_data * pdata);
+//      virtual bool process_command(::command::command * pdata);
 //
 //      virtual bool process_initialize();
 //      virtual bool initialize1();

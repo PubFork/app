@@ -38,6 +38,7 @@ namespace user
    class interaction_impl_base;
    class interaction;
    class user;
+   class button;
    class window_draw;
    class control_event;
    class interaction_impl;
@@ -111,7 +112,6 @@ namespace plane
 
 } // namespace plane
 
-class ::user::command;
 
 
 namespace draw2d

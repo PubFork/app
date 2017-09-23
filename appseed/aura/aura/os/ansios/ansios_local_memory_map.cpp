@@ -1,15 +1,15 @@
 #include "framework.h"
 
 
-//#include <sys/mman.h>
-//#include <sys/stat.h>
-//#include <fcntl.h>
-//#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 
 void local_memory_map::construct()
 {
-   
+
    m_strName.Empty();
    m_iFile = -1;
    m_pdata = (void *) MAP_FAILED;

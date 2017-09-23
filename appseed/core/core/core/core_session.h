@@ -204,6 +204,9 @@ namespace core
 
       virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 
+      virtual stringa get_user_wallpaper();
+      
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
 
    };
 

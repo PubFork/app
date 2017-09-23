@@ -24,7 +24,7 @@ namespace str
    // LINUX: Added cast for "isspace".
    //
    // Revision 1.18  2008/05/21 13:42:17  alsdorf\jgo
-   // BR080522150941- The parameter domain don�t work
+   // BR080522150941- The parameter domain don't work
    //
    // Revision 1.17  2008/01/25 19:13:19  alsdorf\jgo
    // BR080125110525 - Text to Speech is not working on Satellite Nodes
@@ -89,106 +89,122 @@ namespace str
 
    inline int32_t compare_ignore_case( const string & left, const string & right, size_t len=0 )
    {
-	   if ( len ) {
-   #if defined(WIN32) || defined(WIN64)
-		   return _strnicmp(left.c_str(),right.c_str(),len);
-   #elif defined(LINUX) || defined(APPLEOS)
+      if ( len )
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _strnicmp(left.c_str(),right.c_str(),len);
+#elif defined(LINUX) || defined(APPLEOS)
          return strnicmp_dup(left.c_str(), right.c_str(), len);
-   #else
-		   return strncasecmp(left.c_str(),right.c_str(),len);
-   #endif
-	   }
-	   else {
-   #if defined(WIN32) || defined(WIN64)
-		   return _stricmp(left.c_str(),right.c_str());
-   #elif defined(LINUX) || defined(APPLEOS)
+#else
+         return strncasecmp(left.c_str(),right.c_str(),len);
+#endif
+      }
+      else
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _stricmp(left.c_str(),right.c_str());
+#elif defined(LINUX) || defined(APPLEOS)
          return stricmp_dup(left.c_str(), right.c_str());
-   #else
-		   return strcasecmp(left.c_str(),right.c_str());
-   #endif
-	   }
+#else
+         return strcasecmp(left.c_str(),right.c_str());
+#endif
+      }
    }
 
    inline bool equal_ignore_case( const string & left, const string & right, size_t len=0 )
-   { return compare_ignore_case(left,right,len) == 0; }
+   {
+      return compare_ignore_case(left,right,len) == 0;
+   }
 
 
    inline int32_t compare_ignore_case( const char * left, const string & right, size_t len=0 )
    {
-	   if ( len ) {
-   #if defined(WIN32) || defined(WIN64)
-		   return _strnicmp(left,right.c_str(),len);
-   #elif defined(LINUX) || defined(APPLEOS)
+      if ( len )
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _strnicmp(left,right.c_str(),len);
+#elif defined(LINUX) || defined(APPLEOS)
          return strnicmp_dup(left, right.c_str(), len);
-   #else
-		   return strncasecmp(left,right.c_str(),len);
-   #endif
-	   }
-	   else {
-   #if defined(WIN32) || defined(WIN64)
-		   return _stricmp(left,right.c_str());
-   #elif defined(LINUX) || defined(APPLEOS)
+#else
+         return strncasecmp(left,right.c_str(),len);
+#endif
+      }
+      else
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _stricmp(left,right.c_str());
+#elif defined(LINUX) || defined(APPLEOS)
          return stricmp_dup(left, right.c_str());
-   #else
-		   return strcasecmp(left,right.c_str());
-   #endif
-	   }
+#else
+         return strcasecmp(left,right.c_str());
+#endif
+      }
    }
 
    inline bool equal_ignore_case( const char * left, const string & right, size_t len=0 )
-   { return compare_ignore_case(left,right,len) == 0; }
+   {
+      return compare_ignore_case(left,right,len) == 0;
+   }
 
 
    inline int32_t compare_ignore_case( const string & left, const char * right, size_t len=0 )
    {
-	   if ( len ) {
-   #if defined(WIN32) || defined(WIN64)
-		   return _strnicmp(left.c_str(),right,len);
-   #elif defined(LINUX) || defined(APPLEOS)
+      if ( len )
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _strnicmp(left.c_str(),right,len);
+#elif defined(LINUX) || defined(APPLEOS)
          return strnicmp_dup(left.c_str(), right, len);
-   #else
-		   return strncasecmp(left.c_str(),right,len);
-   #endif
-	   }
-	   else {
-   #if defined(WIN32) || defined(WIN64)
-		   return _stricmp(left.c_str(),right);
-   #elif defined(LINUX) || defined(APPLEOS)
+#else
+         return strncasecmp(left.c_str(),right,len);
+#endif
+      }
+      else
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _stricmp(left.c_str(),right);
+#elif defined(LINUX) || defined(APPLEOS)
          return stricmp_dup(left.c_str(), right);
-   #else
-		   return strcasecmp(left.c_str(),right);
-   #endif
-	   }
+#else
+         return strcasecmp(left.c_str(),right);
+#endif
+      }
    }
 
    inline bool equal_ignore_case( const string & left, const char * right, size_t len=0 )
-   { return compare_ignore_case(left,right,len) == 0; }
+   {
+      return compare_ignore_case(left,right,len) == 0;
+   }
 
 
    inline int32_t compare_ignore_case( const char * left, const char * right, size_t len=0 )
    {
-	   if ( len ) {
-   #if defined(WIN32) || defined(WIN64)
-		   return _strnicmp(left,right,len);
-   #elif defined(LINUX) || defined(APPLEOS)
+      if ( len )
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _strnicmp(left,right,len);
+#elif defined(LINUX) || defined(APPLEOS)
          return strnicmp_dup(left, right, len);
-   #else
-		   return strncasecmp(left,right,len);
-   #endif
-	   }
-	   else {
-   #if defined(WIN32) || defined(WIN64)
-		   return _stricmp(left,right);
-   #elif defined(LINUX) || defined(APPLEOS)
+#else
+         return strncasecmp(left,right,len);
+#endif
+      }
+      else
+      {
+#if defined(WIN32) || defined(WIN64)
+         return _stricmp(left,right);
+#elif defined(LINUX) || defined(APPLEOS)
          return stricmp_dup(left, right);
-   #else
-		   return strcasecmp(left,right);
-   #endif
-	   }
+#else
+         return strcasecmp(left,right);
+#endif
+      }
    }
 
    inline bool equal_ignore_case( const char * left, const char * right, size_t len=0 )
-   { return compare_ignore_case(left,right,len) == 0; }
+   {
+      return compare_ignore_case(left,right,len) == 0;
+   }
 
 
 //   inline CLASS_DECL_AURA  string  from(char ca)
@@ -268,7 +284,7 @@ namespace str
 //      from(str, f);
 //      return str;
 //   }
-//   
+//
 //   inline CLASS_DECL_AURA string from(double d)
 //   {
 //      string str;
@@ -276,15 +292,26 @@ namespace str
 //      return str;
 //   }
 
+
    inline CLASS_DECL_AURA bool     trimmed_is_empty(const char * psz)
    {
 
       while(true)
       {
-         if(*psz == '\0')
+
+         if (*psz == '\0')
+         {
+
             break;
-         if(!isspace(*psz))
+
+         }
+
+         if (!isspace(*psz))
+         {
+
             return false;
+
+         }
          psz++;
       }
 
@@ -329,11 +356,17 @@ CLASS_DECL_AURA string utf16_to_utf8(const unichar * pwsz, strsize srcLine = -1)
 
 inline CLASS_DECL_AURA  void to_string(string & str, const char & ca)
 {
+
    str = ca;
+
 }
+
+
 inline CLASS_DECL_AURA  void to_string(string & str, const uchar & ca)
 {
+
    str = (const char &) ca;
+
 }
 
 //inline CLASS_DECL_AURA  void to_string(string & str, const char & i)
@@ -399,7 +432,7 @@ inline CLASS_DECL_AURA  void to_string(string & str, const uchar & ca)
 //   from(str, f);
 //   return str;
 //}
-//   
+//
 //inline CLASS_DECL_AURA string from(double d)
 //{
 //   string str;

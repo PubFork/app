@@ -56,6 +56,17 @@ typedef UINT(c_cdecl *__THREADPROC)(LPVOID);
 CLASS_DECL_AURA void do_events();
 CLASS_DECL_AURA void do_events(const duration & duration);
 
+class tool_thread;
+class thread_tool;
+class thread_tools;
+class thread_toolset;
+//class pred_set;
+//class replace_thread;
+
+class user_interaction_ptr_array;
+
+class thread_startup;
+
 
 
 namespace multithreading
@@ -102,6 +113,26 @@ namespace multithreading
 
 
 
+
+class CLASS_DECL_AURA thread_refa :
+   virtual public ::ref_array < thread >
+{
+public:
+
+
+   thread_refa();
+   virtual ~thread_refa();
+
+
+   virtual bool post_quit_and_wait(const duration & duration);
+
+
+};
+
+
+
+
+#include "multithreading_pred_holder.h"
 
 #include "multithreading_sync_object.h"
 #include "multithreading_event_base.h"

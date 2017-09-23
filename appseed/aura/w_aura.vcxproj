@@ -44,17 +44,12 @@
     <ClInclude Include="aura\aura\aura_class.h" />
     <ClInclude Include="aura\aura\aura_cmp.h" />
     <ClInclude Include="aura\aura\aura_cmp2.h" />
-    <ClInclude Include="aura\aura\aura_command.h" />
-    <ClInclude Include="aura\aura\aura_command_msg.h" />
     <ClInclude Include="aura\aura\aura_command_target.h" />
-    <ClInclude Include="aura\aura\aura_command_ui.h" />
-    <ClInclude Include="aura\aura\aura_command_ui_test.h" />
     <ClInclude Include="aura\aura\aura_common.h" />
     <ClInclude Include="aura\aura\aura_console_window.h" />
     <ClInclude Include="aura\aura\aura_conv.h" />
     <ClInclude Include="aura\aura\aura_core.h" />
     <ClInclude Include="aura\aura\aura_cpu_architecture.h" />
-    <ClInclude Include="aura\aura\aura_create_context.h" />
     <ClInclude Include="aura\aura\aura_cregexp.h" />
     <ClInclude Include="aura\aura\aura_cregexp_util.h" />
     <ClInclude Include="aura\aura\aura_debug.h" />
@@ -92,7 +87,6 @@
     <ClInclude Include="aura\aura\aura_machine_event.h" />
     <ClInclude Include="aura\aura\aura_machine_event_central.h" />
     <ClInclude Include="aura\aura\aura_machine_event_data.h" />
-    <ClInclude Include="aura\aura\aura_main_init_data.h" />
     <ClInclude Include="aura\aura\aura_math.h" />
     <ClInclude Include="aura\aura\aura_md5.h" />
     <ClInclude Include="aura\aura\aura_message_loop.h" />
@@ -140,6 +134,7 @@
     <ClInclude Include="aura\aura_policy\aura_policy_objc.h" />
     <ClInclude Include="aura\aura_policy\aura_policy_objcpp.h" />
     <ClInclude Include="aura\aura_policy\aura_policy_winrt.h" />
+    <ClInclude Include="aura\compress\compress_department.h" />
     <ClInclude Include="aura\exception\exception.h" />
     <ClInclude Include="aura\exception\exception2.h" />
     <ClInclude Include="aura\exception\exception_assert.h" />
@@ -191,10 +186,10 @@
     <ClInclude Include="aura\message\message_base.h" />
     <ClInclude Include="aura\message\message_cross_windows.h" />
     <ClInclude Include="aura\message\message_definition.h" />
-    <ClInclude Include="aura\message\message_dispatch.h" />
     <ClInclude Include="aura\node\metrowin\metrowin.h" />
     <ClInclude Include="aura\node\metrowin\metrowin1.h" />
     <ClInclude Include="aura\node\metrowin\metrowin_application.h" />
+    <ClInclude Include="aura\node\metrowin\metrowin_command.h" />
     <ClInclude Include="aura\node\metrowin\metrowin_dir.h" />
     <ClInclude Include="aura\node\metrowin\metrowin_exception.h" />
     <ClInclude Include="aura\node\metrowin\metrowin_factory_exchange.h" />
@@ -218,254 +213,37 @@
     <ClInclude Include="aura\os\cross.h" />
     <ClInclude Include="aura\os\cross\ansios\ansios.h" />
     <ClInclude Include="aura\os\cross\cross.h" />
-    <ClInclude Include="aura\os\cross\windows\e.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_base.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_base_tsd.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_common_controls.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_crt.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_crtdefs.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_defs.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_errno.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_error.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_file.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_gdi.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_guid_def.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_internals.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_mmeapi.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_mmsystem.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_nls.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_nt.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_ntstatus.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_ole_automation.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_poppack.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_pshpack2.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_pshpack4.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_pshpack8.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_shared_memory.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_thread.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_thread_impl.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_time.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_types.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_user.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="aura\os\cross\windows\windows_winnt.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="aura\os\cross\windows\e.h" />
+    <ClInclude Include="aura\os\cross\windows\windows.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_base.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_base_tsd.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_common_controls.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_crt.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_crtdefs.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_defs.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_errno.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_error.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_file.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_gdi.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_guid_def.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_internals.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_mmeapi.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_mmsystem.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_nls.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_nt.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_ntstatus.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_ole_automation.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_poppack.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_pshpack2.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_pshpack4.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_pshpack8.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_shared_memory.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_thread.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_thread_impl.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_time.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_types.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_user.h" />
+    <ClInclude Include="aura\os\cross\windows\windows_winnt.h" />
     <ClInclude Include="aura\os\metrowin\metrowin.h" />
     <ClInclude Include="aura\os\metrowin\metrowin_base_file.h" />
     <ClInclude Include="aura\os\metrowin\metrowin_file_watcher.h" />
@@ -481,6 +259,7 @@
     <ClInclude Include="aura\os\metrowin\metrowin_user_impl.h" />
     <ClInclude Include="aura\os\os.h" />
     <ClInclude Include="aura\os\os_binreloc.h" />
+    <ClInclude Include="aura\os\os_cpp.h" />
     <ClInclude Include="aura\os\os_process.h" />
     <ClInclude Include="aura\os\os_threading.h" />
     <ClInclude Include="aura\os\os_time.h" />
@@ -716,7 +495,6 @@
     <ClInclude Include="primitive\primitive_color.h" />
     <ClInclude Include="primitive\primitive_command.h" />
     <ClInclude Include="primitive\primitive_command_line.h" />
-    <ClInclude Include="primitive\primitive_command_thread.h" />
     <ClInclude Include="primitive\primitive_create.h" />
     <ClInclude Include="primitive\primitive_edit.h" />
     <ClInclude Include="primitive\primitive_factory.h" />
@@ -737,7 +515,6 @@
     <ClInclude Include="primitive\primitive_request_interface.h" />
     <ClInclude Include="primitive\primitive_request_signal.h" />
     <ClInclude Include="primitive\primitive_shared_memory.h" />
-    <ClInclude Include="primitive\primitive_signal.h" />
     <ClInclude Include="primitive\primitive_type.h" />
     <ClInclude Include="primitive\primitive_var.h" />
     <ClInclude Include="primitive\primitive_var2.h" />
@@ -848,6 +625,7 @@
     <ClCompile Include="aura\aura\aura.cpp" />
     <ClCompile Include="aura\aura\aura_action_context.cpp" />
     <ClCompile Include="aura\aura\aura_allocate_mid_big.cpp" />
+    <ClCompile Include="aura\aura\aura_allocate_processor_cache_oriented.cpp" />
     <ClCompile Include="aura\aura\aura_allocate_system_heap.cpp" />
     <ClCompile Include="aura\aura\aura_allocate_x86_cache_oriented.cpp" />
     <ClCompile Include="aura\aura\aura_application.cpp" />
@@ -856,20 +634,14 @@
     <ClCompile Include="aura\aura\aura_assert_running_task.cpp" />
     <ClCompile Include="aura\aura\aura_checked.cpp" />
     <ClCompile Include="aura\aura\aura_command_target.cpp" />
+    <ClCompile Include="aura\aura\aura_console_window.cpp" />
     <ClCompile Include="aura\aura\aura_conv.cpp" />
     <ClCompile Include="aura\aura\aura_cpu_architecture.cpp" />
     <ClCompile Include="aura\aura\aura_cregexp.cpp" />
     <ClCompile Include="aura\aura\aura_cregexp_util.cpp" />
     <ClCompile Include="aura\aura\aura_debug.cpp" />
     <ClCompile Include="aura\aura\aura_department.cpp" />
-    <ClCompile Include="aura\aura\aura_department_container.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="aura\aura\aura_department_container.cpp" />
     <ClCompile Include="aura\aura\aura_draw_context.cpp" />
     <ClCompile Include="aura\aura\aura_draw_interface.cpp" />
     <ClCompile Include="aura\aura\aura_element.cpp" />
@@ -895,17 +667,21 @@
     <ClCompile Include="aura\aura\aura_machine_event_data.cpp" />
     <ClCompile Include="aura\aura\aura_math.cpp" />
     <ClCompile Include="aura\aura\aura_chronometer.cpp" />
+    <ClCompile Include="aura\aura\aura_md5.cpp" />
     <ClCompile Include="aura\aura\aura_mktime.cpp" />
     <ClCompile Include="aura\aura\aura_muldiv64.cpp" />
     <ClCompile Include="aura\aura\aura_net.cpp" />
     <ClCompile Include="aura\aura\aura_new.cpp" />
+    <ClCompile Include="aura\aura\aura_os.cpp" />
     <ClCompile Include="aura\aura\aura_plex.cpp" />
     <ClCompile Include="aura\aura\aura_plex_heap.cpp" />
     <ClCompile Include="aura\aura\aura_printer.cpp" />
     <ClCompile Include="aura\aura\aura_printf.cpp" />
+    <ClCompile Include="aura\aura\aura_profiler.cpp" />
     <ClCompile Include="aura\aura\aura_progress.cpp" />
     <ClCompile Include="aura\aura\aura_savings.cpp" />
     <ClCompile Include="aura\aura\aura_session.cpp" />
+    <ClCompile Include="aura\aura\aura_speaker.cpp" />
     <ClCompile Include="aura\aura\aura_sprintf.cpp" />
     <ClCompile Include="aura\aura\aura_static_start.cpp" />
     <ClCompile Include="aura\aura\aura_str_context.cpp" />
@@ -913,8 +689,43 @@
     <ClCompile Include="aura\aura\aura_template.cpp" />
     <ClCompile Include="aura\aura\aura_timer.cpp" />
     <ClCompile Include="aura\aura\aura_timer_array.cpp" />
+    <ClCompile Include="aura\aura\aura_timer_callback.cpp" />
+    <ClCompile Include="aura\aura\aura_timer_event.cpp" />
     <ClCompile Include="aura\aura\aura_timer_item.cpp" />
     <ClCompile Include="aura\aura\aura_trace.cpp" />
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_bounds_check.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_malloc.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_no_bounds_check.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="aura\aura\os_alloc\os_alloc_WindowsHeapAlloc.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_simple_log.cpp" />
     <ClCompile Include="aura\charguess\big5Prober.cpp" />
     <ClCompile Include="aura\charguess\charDistribution.cpp" />
     <ClCompile Include="aura\charguess\charguess.cpp" />
@@ -938,9 +749,8 @@
     <ClCompile Include="aura\charguess\SJISProber.cpp" />
     <ClCompile Include="aura\charguess\universal.cpp" />
     <ClCompile Include="aura\charguess\UTF8Prober.cpp" />
-    <ClCompile Include="aura\compress\compress_bz.cpp" />
-    <ClCompile Include="aura\compress\compress_compress.cpp" />
     <ClCompile Include="aura\compress\compress_department.cpp" />
+    <ClCompile Include="aura\compress\compress_bz.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
     <ClCompile Include="aura\compress\zip\zip_api.cpp" />
     <ClCompile Include="aura\compress\zip\zip_file.cpp" />
@@ -1005,30 +815,16 @@
     <ClCompile Include="aura\fontopus\fontopus_user_authentication.cpp" />
     <ClCompile Include="aura\fontopus\fontopus_user_set.cpp" />
     <ClCompile Include="aura\fontopus\fontopus_validate.cpp" />
-    <ClCompile Include="aura\fontopus\fontopus_validate1.cpp" />
-    <ClCompile Include="aura\install\install.cpp" />
-    <ClCompile Include="aura\install\install_application.cpp" />
-    <ClCompile Include="aura\install\install_bootstrap.cpp" />
-    <ClCompile Include="aura\install\install_focus.cpp" />
-    <ClCompile Include="aura\install\install_install.cpp" />
-    <ClCompile Include="aura\install\install_installer.cpp" />
-    <ClCompile Include="aura\install\install_installer_launcher.cpp" />
-    <ClCompile Include="aura\install\install_installer_square.cpp" />
-    <ClCompile Include="aura\install\install_install_item.cpp" />
-    <ClCompile Include="aura\install\install_launcher.cpp" />
-    <ClCompile Include="aura\install\install_module_list.cpp" />
-    <ClCompile Include="aura\install\install_small_bell.cpp" />
-    <ClCompile Include="aura\install\install_socket.cpp" />
-    <ClCompile Include="aura\install\install_socket_handler.cpp" />
-    <ClCompile Include="aura\install\install_socket_thread.cpp" />
-    <ClCompile Include="aura\install\install_tool.cpp" />
-    <ClCompile Include="aura\install\install_trace.cpp" />
-    <ClCompile Include="aura\install\install_trace_file.cpp" />
-    <ClCompile Include="aura\install\install_window.cpp" />
     <ClCompile Include="aura\message\message.cpp" />
     <ClCompile Include="aura\message\message_base.cpp" />
-    <ClCompile Include="aura\message\message_dispatch.cpp" />
+    <ClCompile Include="aura\message\message_id.cpp" />
+    <ClCompile Include="aura\message\message_message.cpp" />
+    <ClCompile Include="aura\message\message_receiver.cpp" />
+    <ClCompile Include="aura\message\message_sender.cpp" />
+    <ClCompile Include="aura\message\message_simple_command.cpp" />
+    <ClCompile Include="aura\node\metrowin\metrowin.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_application.cpp" />
+    <ClCompile Include="aura\node\metrowin\metrowin_command.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_dir.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_dll.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_error.cpp" />
@@ -1038,18 +834,19 @@
     <ClCompile Include="aura\node\metrowin\metrowin_file_system.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_folder_watch.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_main.cpp" />
+    <ClCompile Include="aura\node\metrowin\metrowin_native_buffer.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_os.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_registry.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_shell.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_stdio_file.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_thread.cpp" />
+    <ClCompile Include="aura\node\metrowin\metrowin_timer.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_trace.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_tts_speaker.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_uac_tools.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_util.cpp" />
-    <ClCompile Include="aura\node\windows\windows_dir.cpp" />
+    <ClCompile Include="aura\os\ansios\ansios_file_std.cpp" />
     <ClCompile Include="aura\os\ansios\ansios_message_loop.cpp" />
-    <ClCompile Include="aura\os\ansios\ansios_multithreading.cpp" />
     <ClCompile Include="aura\os\cross\ansios\ansios_datetime.cpp" />
     <ClCompile Include="aura\os\cross\ansios\ansios_file_raw.cpp" />
     <ClCompile Include="aura\os\cross\metrowin\cross_metrowin_user.cpp" />
@@ -1066,6 +863,7 @@
     <ClCompile Include="aura\os\metrowin\metrowin_debug.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_direct2d_tls.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_dummy_ipc.cpp" />
+    <ClCompile Include="aura\os\metrowin\metrowin_file_std.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_file_watcher.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_launcher.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_library.cpp" />
@@ -1080,37 +878,25 @@
     <ClCompile Include="aura\os\metrowin\metrowin_sockets.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_time.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_user.cpp" />
+    <ClCompile Include="aura\os\os_alloc.cpp" />
+    <ClCompile Include="aura\os\os_binreloc.cpp" />
     <ClCompile Include="aura\os\os_debug.cpp" />
     <ClCompile Include="aura\os\os_file.cpp" />
     <ClCompile Include="aura\os\os_http.cpp" />
+    <ClCompile Include="aura\os\os_os.cpp" />
     <ClCompile Include="aura\os\os_process.cpp" />
     <ClCompile Include="aura\os\os_thread.cpp" />
-    <ClCompile Include="aura\os\windows\windows_ansi_file.cpp" />
-    <ClCompile Include="aura\os\windows\windows_ipc.cpp" />
-    <ClCompile Include="aura\os\windows\windows_time.cpp" />
+    <ClCompile Include="aura\os\os_windowing.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_base.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp" />
-    <ClCompile Include="aura\os\windows_common\_windows_common.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="aura\os\_os.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="aura\pcre\pcre.cpp" />
     <ClCompile Include="aura\process\process_bidi_pipe.cpp" />
     <ClCompile Include="aura\process\process_department.cpp" />
     <ClCompile Include="aura\process\process_pipe.cpp" />
     <ClCompile Include="aura\process\process_process.cpp" />
+    <ClCompile Include="aura\scripting\javascript\javascript.cpp" />
+    <ClCompile Include="aura\scripting\javascript\javascript_functions.cpp" />
+    <ClCompile Include="aura\scripting\javascript\javascript_tinyjs_functions.cpp" />
     <ClCompile Include="aura\xml\xml_attr.cpp" />
     <ClCompile Include="aura\xml\xml_base_array.cpp" />
     <ClCompile Include="aura\xml\xml_data.cpp" />
@@ -1136,44 +922,49 @@
     <ClCompile Include="filesystem\filesystem\filesystem_listing.cpp" />
     <ClCompile Include="filesystem\filesystem\filesystem_path.cpp" />
     <ClCompile Include="filesystem\filesystem\filesystem_system.cpp" />
-    <ClCompile Include="filesystem\filesystem\_filesystem.cpp" />
     <ClCompile Include="filesystem\file\file.cpp" />
     <ClCompile Include="filesystem\file\file_binary_buffer.cpp" />
     <ClCompile Include="filesystem\file\file_buffered_buffer.cpp" />
+    <ClCompile Include="filesystem\file\file_byte_istream.cpp" />
+    <ClCompile Include="filesystem\file\file_byte_ostream.cpp" />
     <ClCompile Include="filesystem\file\file_byte_stream.cpp" />
-    <ClCompile Include="filesystem\file\file_byte_stream_memory_buffer.cpp" />
     <ClCompile Include="filesystem\file\file_c.cpp" />
     <ClCompile Include="filesystem\file\file_circular_buffer.cpp" />
     <ClCompile Include="filesystem\file\file_composite.cpp" />
     <ClCompile Include="filesystem\file\file_dir.cpp" />
     <ClCompile Include="filesystem\file\file_dir2.cpp" />
+    <ClCompile Include="filesystem\file\file_edit_file.cpp" />
     <ClCompile Include="filesystem\file\file_exception.cpp" />
+    <ClCompile Include="filesystem\file\file_file.cpp" />
+    <ClCompile Include="filesystem\file\file_file_base.cpp" />
+    <ClCompile Include="filesystem\file\file_file_istream.cpp" />
+    <ClCompile Include="filesystem\file\file_file_ostream.cpp" />
     <ClCompile Include="filesystem\file\file_file_stream.cpp" />
     <ClCompile Include="filesystem\file\file_file_stream_base.cpp" />
     <ClCompile Include="filesystem\file\file_folder_watch.cpp" />
-    <ClCompile Include="filesystem\file\file_memory_buffer.cpp" />
+    <ClCompile Include="filesystem\file\file_html_file.cpp" />
+    <ClCompile Include="filesystem\file\file_istream.cpp" />
+    <ClCompile Include="filesystem\file\file_md5.cpp" />
+    <ClCompile Include="filesystem\file\file_memory_file.cpp" />
+    <ClCompile Include="filesystem\file\file_ostream.cpp" />
+    <ClCompile Include="filesystem\file\file_path.cpp" />
+    <ClCompile Include="filesystem\file\file_plain_text_istream.cpp" />
+    <ClCompile Include="filesystem\file\file_plain_text_ostream.cpp" />
     <ClCompile Include="filesystem\file\file_plain_text_stream.cpp" />
     <ClCompile Include="filesystem\file\file_plain_text_stream_base.cpp" />
-    <ClCompile Include="filesystem\file\file_plain_text_stream_memory_buffer.cpp" />
-    <ClCompile Include="filesystem\file\file_plain_text_stream_string_buffer.cpp" />
     <ClCompile Include="filesystem\file\file_reader.cpp" />
     <ClCompile Include="filesystem\file\file_seekable.cpp" />
     <ClCompile Include="filesystem\file\file_serializable.cpp" />
     <ClCompile Include="filesystem\file\file_set.cpp" />
-    <ClCompile Include="filesystem\file\file_simple_binary_buffer.cpp" />
+    <ClCompile Include="filesystem\file\file_simple_binary_file.cpp" />
+    <ClCompile Include="filesystem\file\file_stdio_file.cpp" />
     <ClCompile Include="filesystem\file\file_stream.cpp" />
     <ClCompile Include="filesystem\file\file_stream2.cpp" />
-    <ClCompile Include="filesystem\file\file_streambuf.cpp" />
     <ClCompile Include="filesystem\file\file_stream_base.cpp" />
-    <ClCompile Include="filesystem\file\file_stream_buffer.cpp" />
-    <ClCompile Include="filesystem\file\file_stream_buffer_base.cpp" />
-    <ClCompile Include="filesystem\file\file_string_buffer.cpp" />
-    <ClCompile Include="filesystem\file\file_text_buffer.cpp" />
-    <ClCompile Include="filesystem\file\file_timeout_buffer.cpp" />
-    <ClCompile Include="filesystem\file\file_transfer_buffer.cpp" />
+    <ClCompile Include="filesystem\file\file_string_file.cpp" />
+    <ClCompile Include="filesystem\file\file_text_file.cpp" />
     <ClCompile Include="filesystem\file\file_writer.cpp" />
     <ClCompile Include="filesystem\file\file_writer_flush.cpp" />
-    <ClCompile Include="filesystem\file\_file.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|ARM'">Create</PrecompiledHeader>
@@ -1192,8 +983,10 @@
     <ClCompile Include="graphics\draw2d\draw2d_brush.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_debug.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_dib.cpp" />
+    <ClCompile Include="graphics\draw2d\draw2d_dibmap.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_font.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_graphics.cpp" />
+    <ClCompile Include="graphics\draw2d\draw2d_keep.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_nanosvg.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_object.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_palette.cpp" />
@@ -1228,10 +1021,10 @@
     <ClCompile Include="multithreading\multithreading_thread.cpp" />
     <ClCompile Include="multithreading\multithreading_thread_impl.cpp" />
     <ClCompile Include="multithreading\multithreading_thread_os.cpp" />
+    <ClCompile Include="multithreading\multithreading_tools.cpp" />
     <ClCompile Include="multithreading\multithreading_waitable.cpp" />
     <ClCompile Include="multithreading\multithreading_wait_result.cpp" />
     <ClCompile Include="multithreading\service\service_plain_service.cpp" />
-    <ClCompile Include="multithreading\_multithreading.cpp" />
     <ClCompile Include="net\ftp\ftp_client_socket.cpp" />
     <ClCompile Include="net\ftp\ftp_data_types.cpp" />
     <ClCompile Include="net\ftp\ftp_file.cpp" />
@@ -1266,6 +1059,8 @@
     <ClCompile Include="net\net_port_forward.cpp" />
     <ClCompile Include="net\net_sockets.cpp" />
     <ClCompile Include="net\net_url.cpp" />
+    <ClCompile Include="net\net_url_department.cpp" />
+    <ClCompile Include="net\net_url_domain.cpp" />
     <ClCompile Include="net\sockets\base\sockets_base_socket.cpp" />
     <ClCompile Include="net\sockets\base\sockets_base_socket_handler.cpp" />
     <ClCompile Include="net\sockets\bsd\asynch_dns\sockets_resolv_server.cpp" />
@@ -1333,12 +1128,12 @@
     <ClCompile Include="primitive\collection\collection_pointer_list.cpp" />
     <ClCompile Include="primitive\collection\collection_point_array.cpp" />
     <ClCompile Include="primitive\collection\collection_rect_array.cpp" />
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp" />
     <ClCompile Include="primitive\collection\collection_sort.cpp" />
     <ClCompile Include="primitive\collection\collection_stringa.cpp" />
     <ClCompile Include="primitive\collection\collection_stringl.cpp" />
     <ClCompile Include="primitive\collection\collection_string_array.cpp" />
     <ClCompile Include="primitive\collection\collection_string_list.cpp" />
-    <ClCompile Include="primitive\collection\collection_string_sort_array.cpp" />
     <ClCompile Include="primitive\collection\collection_string_to_string_map.cpp" />
     <ClCompile Include="primitive\collection\collection_var_array.cpp" />
     <ClCompile Include="primitive\comparison\comparison_var_strict.cpp" />
@@ -1346,36 +1141,49 @@
     <ClCompile Include="primitive\data\data_data_container.cpp" />
     <ClCompile Include="primitive\data\data_data_listener.cpp" />
     <ClCompile Include="primitive\data\data_item.cpp" />
+    <ClCompile Include="primitive\data\data_simple_item.cpp" />
+    <ClCompile Include="primitive\data\data_tree.cpp" />
+    <ClCompile Include="primitive\data\data_tree_item.cpp" />
     <ClCompile Include="primitive\datetime\datetime.cpp" />
+    <ClCompile Include="primitive\datetime\datetime_department.cpp" />
     <ClCompile Include="primitive\datetime\datetime_duration.cpp" />
+    <ClCompile Include="primitive\datetime\datetime_file_time.cpp" />
+    <ClCompile Include="primitive\datetime\datetime_file_time_span.cpp" />
     <ClCompile Include="primitive\datetime\datetime_mktime.cpp" />
     <ClCompile Include="primitive\datetime\datetime_time.cpp" />
     <ClCompile Include="primitive\datetime\datetime_value.cpp" />
     <ClCompile Include="primitive\datetime\datetime_zonetime.cpp" />
-    <ClCompile Include="primitive\datetime\_datetime.cpp" />
+    <ClCompile Include="primitive\geometry\geometry_box.cpp" />
     <ClCompile Include="primitive\geometry\geometry_geometry.cpp" />
     <ClCompile Include="primitive\geometry\geometry_point.cpp" />
     <ClCompile Include="primitive\geometry\geometry_rect.cpp" />
     <ClCompile Include="primitive\geometry\geometry_size.cpp" />
     <ClCompile Include="primitive\geometry\geometry_types.cpp" />
+    <ClCompile Include="primitive\math\math.cpp" />
+    <ClCompile Include="primitive\math\math_binary_operation.cpp" />
     <ClCompile Include="primitive\math\math_cvt.cpp" />
     <ClCompile Include="primitive\math\math_cvt_g.cpp" />
     <ClCompile Include="primitive\math\math_department.cpp" />
+    <ClCompile Include="primitive\math\math_int_biunique.cpp" />
     <ClCompile Include="primitive\math\math_math.cpp" />
-    <ClCompile Include="primitive\math\math_math_rng.cpp" />
     <ClCompile Include="primitive\math\math_mkint_c.cpp" />
     <ClCompile Include="primitive\math\math_natural.cpp" />
+    <ClCompile Include="primitive\math\math_number.cpp" />
+    <ClCompile Include="primitive\math\math_number_double.cpp" />
+    <ClCompile Include="primitive\math\math_number_float.cpp" />
+    <ClCompile Include="primitive\math\math_number_integer.cpp" />
+    <ClCompile Include="primitive\math\math_rng.cpp" />
     <ClCompile Include="primitive\math\math_scalar.cpp" />
-    <ClCompile Include="primitive\math\_math.cpp" />
+    <ClCompile Include="primitive\math\math_value.cpp" />
     <ClCompile Include="primitive\primitive_application_bias.cpp" />
     <ClCompile Include="primitive\primitive_bit.cpp" />
     <ClCompile Include="primitive\primitive_color.cpp" />
     <ClCompile Include="primitive\primitive_command.cpp" />
     <ClCompile Include="primitive\primitive_command_line.cpp" />
-    <ClCompile Include="primitive\primitive_command_thread.cpp" />
     <ClCompile Include="primitive\primitive_create.cpp" />
     <ClCompile Include="primitive\primitive_edit.cpp" />
     <ClCompile Include="primitive\primitive_factory.cpp" />
+    <ClCompile Include="primitive\primitive_handler.cpp" />
     <ClCompile Include="primitive\primitive_id.cpp" />
     <ClCompile Include="primitive\primitive_id_space.cpp" />
     <ClCompile Include="primitive\primitive_interlocked_long.cpp" />
@@ -1392,7 +1200,6 @@
     <ClCompile Include="primitive\primitive_request_interface.cpp" />
     <ClCompile Include="primitive\primitive_request_signal.cpp" />
     <ClCompile Include="primitive\primitive_shared_memory.cpp" />
-    <ClCompile Include="primitive\primitive_signal.cpp" />
     <ClCompile Include="primitive\primitive_type.cpp" />
     <ClCompile Include="primitive\primitive_var.cpp" />
     <ClCompile Include="primitive\primitive_virtual_memory.cpp" />
@@ -1416,11 +1223,11 @@
     <ClCompile Include="primitive\str\str_stringtow.cpp" />
     <ClCompile Include="primitive\str\str_strw.cpp" />
     <ClCompile Include="primitive\str\str_strx.cpp" />
+    <ClCompile Include="primitive\str\str_sz.cpp" />
     <ClCompile Include="primitive\str\str_tokenizer.cpp" />
     <ClCompile Include="primitive\str\str_to_integer.cpp" />
     <ClCompile Include="primitive\str\str_verisimple_wstring.cpp" />
     <ClCompile Include="primitive\str\str_wtostring.cpp" />
-    <ClCompile Include="primitive\_primitive.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp" />
     <ClCompile Include="user\colorertake5\colorertake5_colorertake5.cpp" />
@@ -1579,9 +1386,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <CompileAsManaged>false</CompileAsManaged>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ControlFlowGuard>false</ControlFlowGuard>
@@ -1605,11 +1412,11 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <CompileAsManaged>false</CompileAsManaged>
@@ -1629,11 +1436,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <PreprocessorDefinitions>_AURA_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
@@ -1650,11 +1457,11 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <CompileAsManaged>false</CompileAsManaged>
@@ -1674,11 +1481,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <PreprocessorDefinitions>_AURA_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsManaged>false</CompileAsManaged>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -1696,11 +1503,11 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
-      <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
+      <AdditionalOptions>/bigobj </AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <CompileAsManaged>false</CompileAsManaged>

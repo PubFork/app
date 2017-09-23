@@ -2,7 +2,7 @@
 // JPEG XR Loader & Writer
 //
 // Design and implementation by
-// - Herve Drolon (drolon@infonie.fr)
+// - Hervé Drolon (drolon@infonie.fr)
 //
 // This file is part of FreeImage 3
 //

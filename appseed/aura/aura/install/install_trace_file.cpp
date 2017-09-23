@@ -50,20 +50,36 @@ namespace install
 
    void trace_file::print(double dRate)
    {
-      if (dRate < 0.0)
-         dRate = 0.0;
-      if (dRate > 1.0)
-         dRate = 1.0;
-      dRate = dRate * 1000.0 * 1000.0 * 1000.0;
-      //int32_t i = ftol(dRate);
-      int i = (int)dRate;
-      string str;
-      str = "|||";
-      char sz[20];
-      str += ::itoa_dup(i);
-      str += "\r\n";
-      print(str);
 
+      if (dRate < 0.0)
+      {
+
+         dRate = 0.0;
+
+      }
+
+      if (dRate > 1.0)
+      {
+
+         dRate = 1.0;
+
+      }
+
+      dRate = dRate * 1000.0 * 1000.0 * 1000.0;
+
+      //int32_t i = ftol(dRate);
+
+      int i = (int)dRate;
+
+      string str;
+
+      str = "|||";
+
+      str += ::itoa_dup(i);
+
+      str += "\r\n";
+
+      print(str);
 
    }
 

@@ -1,5 +1,7 @@
 #include "framework.h"
 
+void ns_Sleep(unsigned int uiMillis);
+
 thread_int_ptr < DWORD > m_dwLastError;
 
 DWORD GetLastError()
@@ -12,19 +14,5 @@ DWORD SetLastError(DWORD dwLastError)
     m_dwLastError = dwLastError;
    return m_dwLastError;
 }
-
-void Sleep(DWORD dwMillis)
-{
-   if(dwMillis > 500)
-   {
-      printf("test04");
-   }
-    timespec ts;
-    ts.tv_sec = dwMillis / 1000;
-    ts.tv_nsec = (dwMillis % 1000) * 1000 * 1000;
-    timespec tsRem;
-    nanosleep(&ts, &tsRem);
-}
-
 
 

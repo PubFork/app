@@ -11,6 +11,7 @@ namespace fontopus
    simple_ui::simple_ui(::aura::application * papp, const string & strRequestUrl) :
       ::object(papp),
       ::simple_ui::style(papp),
+      ::simple_ui::top(papp),
       m_login(papp, 0, 0, strRequestUrl)
    {
 
@@ -20,7 +21,7 @@ namespace fontopus
 #else
       m_bMayProDevian = false;
 #endif
-      m_eschema = schema_normal;
+      m_eschema = ::user::schema_default;
       m_login.m_pstyle = this;
       m_bFontopusSimpleUiLayout = false;
 
@@ -207,8 +208,8 @@ namespace fontopus
 
       }
 
-      rectFontopus.left = rectDesktop.left + (width(rectDesktop) - w) / 2;
-      rectFontopus.top = rectDesktop.top + (height(rectDesktop) - h) / 3;
+      rectFontopus.left = rectDesktop.left + (rectDesktop.width() - w) / 2;
+      rectFontopus.top = rectDesktop.top + (rectDesktop.height() - h) / 3;
       rectFontopus.right = rectFontopus.left + w;
       rectFontopus.bottom = rectFontopus.top + h;
 
@@ -233,7 +234,7 @@ namespace fontopus
       if(!create_window_ex(0,NULL,NULL,0,rectFontopus,puiParent,"fontopus"))
          return "";
 
-      SetWindowText( "fontopus Auth Windows");
+      set_window_text( "fontopus Auth Windows");
 
       SetWindowPos(ZORDER_TOP,rectFontopus,SWP_SHOWWINDOW);
 

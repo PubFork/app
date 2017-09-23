@@ -6,7 +6,6 @@
 //
 //
 
-#include "framework.h"
 
 bool GetImagePixelData(unsigned int * pcr, int cx, int cy, int iScan, CGImageRef inImage);;
 
@@ -101,4 +100,26 @@ bool mm1_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
 {
    
    return mm2_get_file_image(pcr, cx, cy, iScan, psz);
+}
+
+
+
+
+bool _ui_get_executable_path(char * psz, unsigned int * puiSize)
+{
+   NSString * pstr = [[NSBundle mainBundle] executablePath];
+   
+   if(pstr == NULL)
+   {
+    
+      return false;
+      
+   }
+   
+   *puiSize = strlen([pstr UTF8String]);
+   
+   strncpy(psz, [pstr UTF8String], *puiSize);
+                 
+   return true;
+
 }

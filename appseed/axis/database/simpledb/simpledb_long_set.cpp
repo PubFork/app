@@ -4,10 +4,10 @@
 
 class CLASS_DECL_AXIS db_long_set_item
 {
-public:
+   public:
 
-   uint32_t       m_dwTimeout;
-   int64_t        m_l;
+      uint32_t       m_dwTimeout;
+      int64_t        m_l;
 
 };
 
@@ -15,27 +15,30 @@ public:
 class CLASS_DECL_AXIS db_long_set_queue_item :
    virtual public object
 {
-public:
+   public:
 
-   string         m_strKey;
-   uint32_t       m_dwTimeout;
-   int64_t        m_l;
+      string         m_strKey;
+      uint32_t       m_dwTimeout;
+      int64_t        m_l;
 
-   db_long_set_queue_item() {}
-   db_long_set_queue_item(const db_long_set_queue_item & item) { operator =(item); }
-   virtual ~db_long_set_queue_item() {}
-
-
-   db_long_set_queue_item & operator = (const db_long_set_queue_item & item)
-   {
-      if (this != &item)
+      db_long_set_queue_item() {}
+      db_long_set_queue_item(const db_long_set_queue_item & item)
       {
-         m_strKey = item.m_strKey;
-         m_dwTimeout = item.m_dwTimeout;
-         m_l = item.m_l;
+         operator =(item);
       }
-      return *this;
-   }
+      virtual ~db_long_set_queue_item() {}
+
+
+      db_long_set_queue_item & operator = (const db_long_set_queue_item & item)
+      {
+         if (this != &item)
+         {
+            m_strKey = item.m_strKey;
+            m_dwTimeout = item.m_dwTimeout;
+            m_l = item.m_l;
+         }
+         return *this;
+      }
 
 };
 
@@ -44,37 +47,37 @@ public:
 class CLASS_DECL_AXIS db_long_set_core :
    virtual public db_set
 {
-public:
+   public:
 
 
-   sockets::socket_handler                   m_handler;
-   sp(sockets::http_session)                 m_phttpsession;
+      sockets::socket_handler                   m_handler;
+      sp(sockets::http_session)                 m_phttpsession;
 
 
-   string_map < db_long_set_item >           m_map;
-   bool                                      m_bIndexed;
+      string_map < db_long_set_item >           m_map;
+      bool                                      m_bIndexed;
 
-   ::simpledb::database *                       m_psimpledbUser;
-   string                                    m_strUser;
+      ::simpledb::database *                       m_psimpledbUser;
+      string                                    m_strUser;
 
-   sp(class db_long_sync_queue)                m_pqueue;
+      sp(class db_long_sync_queue)                m_pqueue;
 
-   db_long_set_core(db_server * pserver) :
-      ::object(pserver->get_app()),
-      db_set(pserver, "integertable"),
-      m_handler(get_app()),
-      m_phttpsession(NULL),
-      m_pqueue(NULL),
-      m_psimpledbUser(pserver->m_psimpledbUser),
-      m_strUser(pserver->m_strUser)
-   {
+      db_long_set_core(db_server * pserver) :
+         ::object(pserver->get_app()),
+         db_set(pserver, "integertable"),
+         m_handler(get_app()),
+         m_phttpsession(NULL),
+         m_pqueue(NULL),
+         m_psimpledbUser(pserver->m_psimpledbUser),
+         m_strUser(pserver->m_strUser)
+      {
 
-      m_ptopthis = this;
-      defer_create_mutex();
+         m_ptopthis = this;
+         defer_create_mutex();
 
-   }
+      }
 
-   virtual ~db_long_set_core() {}
+      virtual ~db_long_set_core() {}
 
 };
 
@@ -82,33 +85,33 @@ public:
 class CLASS_DECL_AXIS db_long_sync_queue :
    public simple_thread
 {
-public:
+   public:
 
 
-   mutex                                                    m_mutex;
-   db_long_set *                                            m_pset;
-   sockets::socket_handler                                  m_handler;
-   sp(sockets::http_session)                                m_phttpsession;
+      mutex                                                    m_mutex;
+      db_long_set *                                            m_pset;
+      sockets::socket_handler                                  m_handler;
+      sp(sockets::http_session)                                m_phttpsession;
 
-   smart_pointer_array < db_long_set_queue_item >           m_itema;
+      smart_pointer_array < db_long_set_queue_item >           m_itema;
 
-   db_long_sync_queue(::aura::application * papp) :
-      ::object(papp),
-      thread(papp),
-      simple_thread(papp),
-      m_handler(papp),
-      m_mutex(papp),
-      m_phttpsession(NULL)
-   {}
+      db_long_sync_queue(::aura::application * papp) :
+         ::object(papp),
+         thread(papp),
+         simple_thread(papp),
+         m_handler(papp),
+         m_mutex(papp),
+         m_phttpsession(NULL)
+      {}
 
-   virtual ~db_long_sync_queue() {}
-
-
-
-   virtual int32_t run();
+      virtual ~db_long_sync_queue() {}
 
 
-   void queue(const char * pszKey, int64_t l);
+
+      virtual int32_t run();
+
+
+      void queue(const char * pszKey, int64_t l);
 
 };
 
@@ -286,7 +289,7 @@ db_long_set::~db_long_set()
 
 }
 
-// Adiciona na matriz System nomes dos diret�rios de imagens.
+// Adiciona na matriz System nomes dos diretórios de imagens.
 bool db_long_set::load(const char * lpKey, int64_t * plValue)
 {
 

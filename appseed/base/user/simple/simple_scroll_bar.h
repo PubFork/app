@@ -17,8 +17,8 @@ public:
    rect                       m_rectB;
    point                      m_ptaA[4]; // pontos da primeira seta
    point                      m_ptaB[4]; // pontos da segunda seta
-   ::draw2d::region_sp        m_rgnA; // regi�o da primeira seta
-   ::draw2d::region_sp        m_rgnB; // regi�o da segunda seta
+   ::draw2d::region_sp        m_rgnA; // região da primeira seta
+   ::draw2d::region_sp        m_rgnB; // região da segunda seta
    UINT                       m_uiTimer;
    ::user::e_element          m_eelement;
 

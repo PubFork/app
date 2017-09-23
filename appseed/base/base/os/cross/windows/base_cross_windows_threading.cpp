@@ -22,7 +22,7 @@ CLASS_DECL_BASE int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
    if(pui == NULL)
       return FALSE;
 
-   if(pui->m_bDestroying)
+   if(!pui->m_bUserElementalOk)
       return FALSE;
 
    IDTHREAD h = pui->m_pauraapp->get_os_int();

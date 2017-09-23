@@ -1135,6 +1135,12 @@ namespace base
    }
 
 
+   ::user::interaction * session::create_menu_button(::aura::application * papp)
+   {
+
+      return canew(::user::button(get_app()));
+
+   }
 
 } // namespace base
 

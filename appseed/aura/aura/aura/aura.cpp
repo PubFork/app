@@ -4,7 +4,7 @@
 
 
 
-CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
+//CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
 
 
 
@@ -179,7 +179,7 @@ bool aura_init()
 
 //   ::hthread::s_pmutex = new mutex();
 
-  // ::hthread::s_pptra = new ref_array <  hthread >();
+   // ::hthread::s_pptra = new ref_array <  hthread >();
 
 
    if(!__node_aura_pos_init())
@@ -307,10 +307,10 @@ BEGIN_EXTERN_C
 
 CLASS_DECL_AURA void c_function_call(void * p)
 {
-   
+
    const char * psz = (const char *) p;
 
-   
+
 }
 
 END_EXTERN_C
@@ -319,15 +319,22 @@ END_EXTERN_C
 template < >
 CLASS_DECL_AURA void function_call(const ::object * p)
 {
-   
+
    const char * psz = reinterpret_cast< const char * > (p);
-   
+
 }
 
 
 
 
 
+
+CLASS_DECL_AURA int is_ptr_null(const void * p, size_t s)
+{
+
+   return (((size_t) p) < s);
+
+}
 
 
 

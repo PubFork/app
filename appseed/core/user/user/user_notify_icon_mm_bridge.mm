@@ -19,3 +19,14 @@ void user_notify_icon_mm_bridge::notify_icon_init(const char * strIconFile)
    
 }
 
+
+void user_notify_icon_mm_bridge::notify_icon_destroy()
+{
+   [((__bridge user_notify_icon *) m_pnotifyicon) close];
+   //NSMenu* rootMenu = [NSApp mainMenu];
+   // sender is an NSMenuItem
+   //[rootMenu removeItem: menu];
+   //[rootMenu removeItemAtIndex: iIndex];
+   
+}
+

@@ -82,16 +82,22 @@ FormatMessage(
 
 void ns_log(const char * pszLog);
 
-VOID
-WINAPI
-output_debug_string(
-                   LPCSTR lpOutputString
-                   )
+
+void output_debug_string(const char * pszOutputString)
 {
-    
-   ns_log(lpOutputString);
-    
-    
+   
+   string strOutputString(pszOutputString);
+   
+   strOutputString.replace("\r\n", "\n");
+   
+   strOutputString.replace("\n", "\r");
+   
+   unichar32 * pusz = utf8_to_utf32(strOutputString);
+   
+   wprintf(L"%S", pusz);
+   
+   memory_free(pusz);
+   
 }
 
 

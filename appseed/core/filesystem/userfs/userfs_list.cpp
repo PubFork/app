@@ -14,10 +14,10 @@ namespace userfs
       m_rectMargin.top = 8;
       m_rectMargin.bottom = 0;
       m_rectMargin.right = 0;
-      
+
    }
 
-   
+
    list::~list()
    {
 
@@ -26,7 +26,7 @@ namespace userfs
 
    void list::install_message_routing(::message::sender * pinterface)
    {
-   
+
       ::user::form_list_view::install_message_routing(pinterface);
       IGUI_MSG_LINK(WM_HSCROLL, pinterface, this, &list::_001OnHScroll);
       IGUI_MSG_LINK(WM_VSCROLL, pinterface, this, &list::_001OnVScroll);
@@ -120,20 +120,20 @@ namespace userfs
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::mouse, pmouse, pobj);
-/*         index iItem;
-      list_data * pdata = get_fs_mesh_data();
-      if(_001HitTest_(pmouse->m_pt, iItem))
-      {
-         ::fs::item item;
-         item.m_strPath         = pdata->m_foldera.GetFolder(iItem).m_strPath;
-         get_filemanager_template()->get_filemanager_data()->OnFileManagerOpenFolder(item);
-      }*/
+      /*         index iItem;
+            list_data * pdata = get_fs_mesh_data();
+            if(_001HitTest_(pmouse->m_pt, iItem))
+            {
+               ::fs::item item;
+               item.m_strPath         = pdata->m_foldera.GetFolder(iItem).m_strPath;
+               get_filemanager_template()->get_filemanager_data()->OnFileManagerOpenFolder(item);
+            }*/
    }
 
    void list::_001OnCancelMode(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-   // trans   ::user::impact::OnCancelMode();
+      // trans   ::user::impact::OnCancelMode();
 
       // TODO: add your message handler code here
 
@@ -232,13 +232,13 @@ namespace userfs
       range range;
       _001GetSelection(range);
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = itemrange.get_lower_bound();
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
             if (iItem < 0)
                continue;
@@ -281,13 +281,13 @@ namespace userfs
       range range;
       _001GetSelection(range);
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = itemrange.get_lower_bound();
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
             if (iItem < 0)
                continue;
@@ -413,13 +413,13 @@ namespace userfs
       _001GetSelection(range);
       index_array iaItem;
       for (iItemRange = 0;
-         iItemRange < range.get_item_count();
-         iItemRange++)
+            iItemRange < range.get_item_count();
+            iItemRange++)
       {
          item_range itemrange = range.ItemAt(iItemRange);
          for (iItem = MAX(0, itemrange.get_lower_bound());
-            iItem <= itemrange.get_upper_bound();
-            iItem++)
+               iItem <= itemrange.get_upper_bound();
+               iItem++)
          {
             ::fs::item item;
             if (iItem < pdata->m_itema.get_count() && !iaItem.contains(iItem))
@@ -462,13 +462,13 @@ namespace userfs
 
    void list::add_item(const char * pszPath, const char * pszTitle)
    {
-      
+
       list_item item(get_app());
-      
+
       item.m_filepath = pszPath;
-      
+
       item.m_strName = pszTitle;
-      
+
       if (get_document()->get_fs_data()->is_dir(pszPath))
       {
 
@@ -505,7 +505,7 @@ namespace userfs
       if (range.get_item_count() == 1 && range.ItemAt(0).get_lower_bound() == range.ItemAt(0).get_upper_bound())
       {
 
-         int iEditItem = range.ItemAt(0).get_lower_bound();
+         auto iEditItem = range.ItemAt(0).get_lower_bound();
 
          sp(::user::control) pcontrol = _001GetControl(iEditItem, get_fs_mesh_data()->m_iNameSubItem);
 
@@ -519,7 +519,7 @@ namespace userfs
    void list::_001OnUpdateFileRename(::message::message * pobj)
    {
       SCAST_PTR(::user::command, pcommand, pobj);
-         range range;
+      range range;
       _001GetSelection(range);
       pcommand->Enable(
          range.get_item_count() == 1
@@ -647,15 +647,15 @@ namespace userfs
    {
       //if(get_filemanager_template() != NULL && get_filemanager_template()->get_filemanager_data()->is_saving())
       {
-         return RGB(255, 177, 84);
+         return RGB(255, 180, 90);
       }
       //      else
       {
-      return RGB(200, 255, 255);
-   }
+         return RGB(200, 255, 255);
+      }
    }
 
-   
+
    list_data * list::get_fs_mesh_data()
    {
 

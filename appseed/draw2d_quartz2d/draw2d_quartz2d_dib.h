@@ -294,6 +294,10 @@ namespace draw2d_quartz2d
       /*
   //    virtual void draw_bitmap(int32_t dx, int32_t dy, FT_Bitmap * bitmap, FT_Int x, FT_Int y);*/
       
+      
+      virtual bool blend(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size, byte bA) override;
+      
+      
    };
 
 } // namespace draw2d_quartz2d

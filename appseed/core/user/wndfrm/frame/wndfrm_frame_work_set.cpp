@@ -53,7 +53,7 @@ namespace user
 
          void WorkSet::message_handler(::message::base * pbase)
          {
-            
+
             relay_event(pbase);
 
          }
@@ -152,7 +152,7 @@ namespace user
          {
             if(bEnable)
             {
-               
+
                if (m_pappearance.is_null())
                {
 
@@ -165,7 +165,7 @@ namespace user
             }
             else
             {
-               
+
                if (m_pappearance.is_set())
                {
 
@@ -204,7 +204,7 @@ namespace user
          bool WorkSet::IsSizingEnabled()
          {
             return m_bSizingEnabled && (m_pappearance == NULL ||
-               m_pappearance->GetAppearance() != appearance_fixed_size);
+                                        m_pappearance->GetAppearance() != appearance_fixed_size);
          }
 
          bool WorkSet::IsSysMenuEnabled()
@@ -415,7 +415,7 @@ namespace user
             }
             if(pevent->m_eevent == ::user::event_button_clicked)
             {
-               
+
                sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
                if(pinterface == NULL)
@@ -512,8 +512,8 @@ namespace user
          }
 
 
-         //  define System flags que ser�o usados para posicionar ou
-         //  dimensionar pelo uso da fun��o SetWindowPos
+         //  define System flags que serão usados para posicionar ou
+         //  dimensionar pelo uso da função SetWindowPos
 
          void WorkSet::SetSWPFlags(UINT uiFlags)
          {
@@ -679,8 +679,8 @@ namespace user
                         }*/
 
                if(pbase->m_id == WM_TIMER
-                  && pbase->m_wparam == 16319
-                  && IsHoverModeOn())
+                     && pbase->m_wparam == 16319
+                     && IsHoverModeOn())
                {
                   rect rectWindow;
                   sp(::user::interaction) pwnd = GetWndRegion();
@@ -693,7 +693,7 @@ namespace user
                         Hover(true);
                   }
                   else if(!m_pmovemanager->IsMoving() &&
-                     !m_psizemanager->IsSizing())
+                          !m_psizemanager->IsSizing())
                   {
                      if(IsHoverActive())
                         Hover(false);
@@ -791,95 +791,95 @@ namespace user
             EBorder eborderRemove = BorderNone;
             if (edock == DockNone)
             {
-            m_psizemanager->SetGripMask(GripAll);
-            m_pmovemanager->SetBorderMask(BorderAll);
+               m_psizemanager->SetGripMask(GripAll);
+               m_pmovemanager->SetBorderMask(BorderAll);
             }
             if (edock & DockTop)
             {
-            egripRemove =
-            (EGrip)
-            (
-            egripRemove
-            | GripTop
-            );
-            eborderRemove =
-            (EBorder)
-            (
-            eborderRemove
-            | BorderTop
-            );
+               egripRemove =
+                  (EGrip)
+                  (
+                     egripRemove
+                     | GripTop
+                  );
+               eborderRemove =
+                  (EBorder)
+                  (
+                     eborderRemove
+                     | BorderTop
+                  );
             }
             if (edock & DockBottom)
             {
-            egripRemove =
-            (EGrip)
-            (
-            egripRemove
-            | GripBottom
-            );
-            eborderRemove =
-            (EBorder)
-            (
-            eborderRemove
-            | BorderBottom
-            );
+               egripRemove =
+                  (EGrip)
+                  (
+                     egripRemove
+                     | GripBottom
+                  );
+               eborderRemove =
+                  (EBorder)
+                  (
+                     eborderRemove
+                     | BorderBottom
+                  );
             }
             if (edock & DockLeft)
             {
-            egripRemove =
-            (EGrip)
-            (
-            egripRemove
-            | GripLeft
-            );
-            eborderRemove =
-            (EBorder)
-            (
-            eborderRemove
-            | BorderLeft
-            );
+               egripRemove =
+                  (EGrip)
+                  (
+                     egripRemove
+                     | GripLeft
+                  );
+               eborderRemove =
+                  (EBorder)
+                  (
+                     eborderRemove
+                     | BorderLeft
+                  );
             }
             if (edock & DockRight)
             {
-            egripRemove =
-            (EGrip)
-            (
-            egripRemove
-            | GripRight
-            );
-            eborderRemove =
-            (EBorder)
-            (
-            eborderRemove
-            | BorderRight
-            );
+               egripRemove =
+                  (EGrip)
+                  (
+                     egripRemove
+                     | GripRight
+                  );
+               eborderRemove =
+                  (EBorder)
+                  (
+                     eborderRemove
+                     | BorderRight
+                  );
             }
             if (edock != DockNone)
             {
-            m_psizemanager->SetGripMask(
-            (EGrip)
-            (
-            GripAll
-            & ~egripRemove
-            ));
-            m_pmovemanager->SetBorderMask(
-            (EBorder)
-            (
-            BorderAll
-            & ~eborderRemove
-            ));
+               m_psizemanager->SetGripMask(
+                  (EGrip)
+                  (
+                     GripAll
+                     & ~egripRemove
+                  ));
+               m_pmovemanager->SetBorderMask(
+                  (EBorder)
+                  (
+                     BorderAll
+                     & ~eborderRemove
+                  ));
             }
 
             m_wfla.WFLOnDock(
-            this,
-            m_pwndEvent);
+               this,
+               m_pwndEvent);
 
          }
 
-         
+
          SizeManager * WorkSet::GetSizingManager()
          {
-            
+
             if(m_psizemanager == NULL)
             {
 
@@ -895,7 +895,7 @@ namespace user
          void WorkSet::SetDockMask(EDock emask)
          {
             ASSERT(m_pdockmanager != NULL);
-                   m_pdockmanager->SetDockMask(emask);
+            m_pdockmanager->SetDockMask(emask);
          }
 
          void WorkSet::OnMove()
@@ -1173,7 +1173,7 @@ namespace user
 
          void WorkSet::WindowClose()
          {
-            
+
             sp(WorkSetClientInterface) pinterface = m_pwndCommand;
 
             ASSERT(pinterface != NULL);
@@ -1358,24 +1358,24 @@ namespace user
             pnchittest->m_bRet = m_pframeschema->_000OnNcHitTest(pnchittest->m_pt,pnchittest->get_lresult());
          }
 
-         
+
          void WorkSet::_001OnTimer(::timer * ptimer)
          {
-            
+
             //return; //xxxtimer
-            
+
             if(!m_bEnable)
             {
-               
+
                ptimer->m_bRet = false;
 
                return;
 
             }
-            
+
             if(m_pframeschema != NULL)
             {
-             
+
                ptimer->m_bRet = m_pframeschema->_000OnTimer((UINT) ptimer->m_nIDEvent);
 
             }
@@ -1616,23 +1616,23 @@ namespace user
 
          void WorkSet::AttachFrameSchema(::user::wndfrm::frame::frame * pframeschema)
          {
-            
+
             if(m_pframeschema != NULL && m_pframeschema != pframeschema)
             {
-               
+
                m_pframeschema->OnDetach();
-               
+
                m_pframeschema->m_pworkset = NULL;
-               
+
                m_pframeschema = NULL;
-               
+
             }
-            
+
             if(pframeschema == NULL)
             {
-               
+
                return;
-               
+
             }
 
             m_pframeschema = pframeschema;
@@ -1642,37 +1642,37 @@ namespace user
             m_pframeschema->OnAttach();
 
          }
-         
+
 
          ::user::interaction * WorkSet::get_draw_window()
          {
-            
+
             return m_pwndDraw;
-            
+
          }
-         
+
 
          ::user::interaction * WorkSet::GetEventWindow()
          {
-            
+
             return m_pwndEvent;
-            
+
          }
-         
+
 
          ::user::interaction * WorkSet::GetRegionWindow()
          {
-            
+
             return m_pwndRegion;
-            
+
          }
-         
+
 
          ::user::interaction * WorkSet::GetCommandWindow()
          {
-            
+
             return m_pwndCommand;
-            
+
          }
 
 
@@ -1683,22 +1683,5 @@ namespace user
 
 
 } // namespace user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

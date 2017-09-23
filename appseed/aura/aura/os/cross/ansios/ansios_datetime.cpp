@@ -27,6 +27,7 @@ struct tm *gmtime_r(const time_t *timep,struct tm *result)
 
 }
 
+#ifndef LINUX
 
 #include <time.h>
 #include <sys/timeb.h>
@@ -42,3 +43,7 @@ int gettimeofday(struct timeval* tp, void* tz)
    tp->tv_usec = timebuffer.millitm * 1000;
    return 0;
 }
+
+
+#endif
+

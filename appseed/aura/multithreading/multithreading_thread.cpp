@@ -221,6 +221,47 @@ void thread::CommonConstruct()
 
 thread::~thread()
 {
+
+   try
+   {
+
+      for (auto * pobject : m_objectrefaDependent)
+      {
+
+         try
+         {
+
+            if (pobject == NULL)
+            {
+
+               continue;
+
+            }
+
+            if (pobject->m_pthreadrefa != NULL)
+            {
+
+               synch_lock sl(pobject->m_pmutex);
+
+               pobject->m_pthreadrefa->remove(this);
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
    memcnts_dec(this);
    //try
    //{
@@ -272,6 +313,19 @@ HTHREAD thread::get_os_handle() const
 bool thread::on_after_run_thread()
 {
 
+   {
+
+      synch_lock sl(m_objectrefaDependent.m_pmutex);
+
+      for(auto pobject : m_objectrefaDependent)
+      {
+
+         pobject->threadrefa_remove(this);
+
+      }
+
+   }
+
    close_dependent_threads(minutes(1));
 
    return true;
@@ -308,7 +362,7 @@ bool thread::is_alive()
    //   return false;
 
    //if ((::get_tick_count() - m_dwAlive) > ((5000) * 91))
-     // return false;
+   // return false;
 
    return true;
 
@@ -445,7 +499,7 @@ bool thread::defer_pump_message()
    {
 
       // pump message, but quit on wm_quit
-     // if(!m_bRun || !pump_message())
+      // if(!m_bRun || !pump_message())
       if (!pump_message())
       {
 
@@ -624,17 +678,17 @@ void thread::on_register_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock slThread(pthreadDependent->m_pmutex);
+      synch_lock slThread(pthreadDependent->m_threadrefaRequired.m_pmutex);
 
-      pthreadDependent->m_threadptraRequired.add_unique(this);
+      pthreadDependent->m_threadrefaRequired.add_unique(this);
 
    }
 
    {
 
-      synch_lock sl(m_pmutex);
+      synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-      m_threadptraDependent.add_unique(pthreadDependent);
+      m_threadrefaDependent.add_unique(pthreadDependent);
 
    }
 
@@ -649,11 +703,21 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    string strDependentThread = string(demangle(typeid(*pthreadDependent).name()));
 
-   synch_lock sl(s_pmutexDependencies);
+   {
 
-   m_threadptraDependent.remove(pthreadDependent);
+      synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-   pthreadDependent->m_threadptraRequired.remove(this);
+      m_threadrefaDependent.remove(pthreadDependent);
+
+   }
+
+   {
+
+      synch_lock sl(pthreadDependent->m_threadrefaRequired.m_pmutex);
+
+      pthreadDependent->m_threadrefaRequired.remove(this);
+
+   }
 
    // the system may do some extra processing (like quitting system in case pthreadDependent is the last thread virgin in America (North, most especifically US) ?!?!), so do a kick
    // (do not apply virgin to your self...)
@@ -675,23 +739,24 @@ void thread::close_dependent_threads(const ::duration & dur)
 void thread::signal_close_dependent_threads()
 {
 
-   ref_array < thread > threadptraDependent;
+   synch_lock sl(m_threadrefaDependent.m_pmutex);
 
+   for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
    {
 
-      synch_lock sl(m_pmutex);
+      thread * pthread = m_threadrefaDependent[i];
 
-      threadptraDependent = (m_threadptraDependent);
-
-   }
-
-   for(index i = 0; i < threadptraDependent.get_count(); i++)
-   {
-
-      thread * pthread = threadptraDependent[i];
+      sl.unlock();
 
       try
       {
+
+         if (pthread == NULL)
+         {
+
+            continue;
+
+         }
 
          pthread->post_quit();
 
@@ -700,6 +765,8 @@ void thread::signal_close_dependent_threads()
       {
 
       }
+
+      sl.lock();
 
    }
 
@@ -717,20 +784,46 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
       {
 
-         synch_lock sl(m_pmutex);
+         synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-         if(m_threadptraDependent.get_count() <= 0)
+         if(m_threadrefaDependent.get_count() <= 0)
             break;
 
          output_debug_string(string("-------------------------\n"));
 
-         for(index i = 0; i < m_threadptraDependent.get_count(); i++)
+         DWORD dwTime = ::get_tick_count() - dwStart;
+
+         string strTime = ::str::from(dwTime);
+
+         output_debug_string(strTime + string("ms\n"));
+
+         for(index i = 0; i < m_threadrefaDependent.get_count(); i++)
          {
 
-            ::thread * pthread = m_threadptraDependent[i];
-            output_debug_string(string("---"));
-            output_debug_string(string("supporter : ") + typeid(*this).name() + string(" (") + ::str::from((int_ptr) this) + ")");
-            output_debug_string(string("dependent : ") + typeid(*m_threadptraDependent[i]).name() + string(" (") + ::str::from((int_ptr) m_threadptraDependent[i]) + ")\n");
+            ::thread * pthread = m_threadrefaDependent[i];
+
+            string strSupporter;
+
+            string strDependent;
+
+            try
+            {
+
+               strSupporter.Format("supporter : %s (%d)\n", typeid(*this).name(), (int_ptr) this);
+
+               strDependent.Format("dependent : %s (%d)\n", typeid(*pthread).name(), (int_ptr) pthread);
+
+            }
+            catch(...)
+            {
+
+            }
+
+            output_debug_string("---\n");
+
+            output_debug_string(strSupporter);
+
+            output_debug_string(strDependent);
 
          }
 
@@ -744,58 +837,98 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
 }
 
-void thread::register_at_required_threads()
+
+bool thread::register_at_required_threads()
 {
 
    if(is_system())
-      return;
+   {
+
+      return true;
+
+   }
 
    // register default dependencies
 
-   if(&System != NULL)
+   try
    {
 
-      System.register_dependent_thread(this);
+      if(&System != NULL)
+      {
+
+         if(!System.m_bRunThisThread)
+         {
+
+            return false;
+
+         }
+
+         System.register_dependent_thread(this);
+
+      }
+
+      if(&Session != NULL)
+      {
+
+         if(!Session.m_bRunThisThread)
+         {
+
+            return false;
+
+         }
+
+         Session.register_dependent_thread(this);
+
+      }
+
+      if(&Application != NULL)
+      {
+
+         if(!Application.m_bRunThisThread)
+         {
+
+            return false;
+
+         }
+
+         Application.register_dependent_thread(this);
+
+      }
+
+      return true;
+
+   }
+   catch(...)
+   {
 
    }
 
-   if(&Session != NULL)
-   {
-
-      Session.register_dependent_thread(this);
-
-   }
-
-   if(&Application != NULL)
-   {
-
-      Application.register_dependent_thread(this);
-
-   }
-
-
+   return false;
 
 }
-
 
 
 void thread::unregister_from_required_threads()
 {
 
-   synch_lock sl(s_pmutexDependencies);
+   synch_lock sl(m_threadrefaRequired.m_pmutex);
 
-   for(index i = m_threadptraRequired.get_upper_bound(); i >= 0;)
+   for(index i = m_threadrefaRequired.get_upper_bound(); i >= 0;)
    {
 
       try
       {
 
-         ::thread * pthread = m_threadptraRequired[i];
+         ::thread * pthread = m_threadrefaRequired[i];
 
          if (pthread != this)
          {
 
+            sl.unlock();
+
             pthread->unregister_dependent_thread(this);
+
+            sl.lock();
 
          }
 
@@ -816,7 +949,7 @@ void thread::unregister_from_required_threads()
 void thread::do_events(const duration & duration)
 {
 
-	DWORD dwStart = ::get_tick_count();
+   DWORD dwStart = ::get_tick_count();
 
    int64_t dwSpan = duration.get_total_milliseconds();
 
@@ -829,7 +962,8 @@ void thread::do_events(const duration & duration)
 
       Sleep(dwSleep);
 
-   } while(::get_tick_count() - dwStart < dwSpan);
+   }
+   while(::get_tick_count() - dwStart < dwSpan);
 
 }
 
@@ -837,9 +971,9 @@ void thread::do_events(const duration & duration)
 bool thread::should_enable_thread()
 {
 
-    m_bRunThisThread = true;
+   m_bRunThisThread = true;
 
-    return true;
+   return true;
 
 }
 
@@ -886,6 +1020,22 @@ bool thread::post_quit()
 bool thread::thread_get_run()
 {
 
+   try
+   {
+
+      if(!get_app()->m_bRunThisThread)
+      {
+
+         return false;
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
    return m_bRunThisThread;
 
 }
@@ -901,7 +1051,7 @@ bool thread::thread_get_run()
 void thread::message_queue_message_handler(::message::base * pbase)
 {
 
-    UNREFERENCED_PARAMETER(pbase);
+   UNREFERENCED_PARAMETER(pbase);
 
 }
 
@@ -957,7 +1107,7 @@ void thread::delete_this()
       //else
       //{
 
-         ::command_target::delete_this();
+      ::command_target::delete_this();
 
       //}
 
@@ -1036,7 +1186,12 @@ bool thread::initialize_thread()
 bool thread::on_before_run_thread()
 {
 
-   register_at_required_threads();
+   if(!register_at_required_threads())
+   {
+
+      return false;
+
+   }
 
    return true;
 
@@ -1136,8 +1291,8 @@ wait_result thread::wait(const duration & duration)
    }
 
    return is_thread_on(uiThread) ?
-            wait_result(::wait_result::Timeout) :
-            wait_result(::wait_result::Event0);
+          wait_result(::wait_result::Timeout) :
+          wait_result(::wait_result::Event0);
 
 }
 
@@ -1195,23 +1350,23 @@ void thread::pre_translate_message(::message::message * pobj)
 
 void thread::process_window_procedure_exception(::exception::base*,::message::message * pobj)
 {
-   
+
    SCAST_PTR(::message::base,pbase,pobj);
 
    if(pbase->m_id == WM_CREATE)
    {
-      
+
       pbase->set_lresult(-1);
-      
+
    }
    else if(pbase->m_id == WM_PAINT)
    {
-      
+
       // force validation of interaction_impl to prevent getting WM_PAINT again
-      
-      #ifdef WIDOWSEX
+
+#ifdef WIDOWSEX
       ValidateRect(pbase->m_pwnd->get_safe_handle(),NULL);
-      #endif
+#endif
 
       pbase->set_lresult(0);
 
@@ -1469,7 +1624,9 @@ uint32_t __thread_entry(void * pparam)
 
 #if defined(WINDOWSEX) || defined(LINUX)
 
-            BOOL bOk = ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask);
+            WINBOOL bOk =
+               ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
+               || ::GetLastError() == 0;
 
             if (bOk)
             {
@@ -1948,7 +2105,7 @@ int32_t thread::thread_startup(::thread_startup * pstartup)
 //   ASSERT(pstartup->m_pthreadimpl != NULL);
    ASSERT(!pstartup->m_bError);
 //   ASSERT(pstartup->m_pthreadimpl == pstartup->m_pthreadimpl);
-  // ASSERT(pstartup->m_pthread == pstartup->m_pthreadimpl->m_pthread);
+   // ASSERT(pstartup->m_pthread == pstartup->m_pthreadimpl->m_pthread);
 
    //::thread * pthreadimpl = pstartup->m_pthreadimpl;
 
@@ -2014,7 +2171,8 @@ bool thread::thread_entry()
 
    }
 
-error:;
+error:
+   ;
 
    if(bError)
    {
@@ -2050,7 +2208,7 @@ int32_t thread::main()
    else
    {
       ASSERT_VALID(this);
-   run:
+run:
       try
       {
          m_bReady = true;
@@ -2699,16 +2857,16 @@ uint32_t thread::ResumeThread()
 
    ASSERT(m_hthread != NULL);
 
-   #if defined (WINODWSEX)
+#if defined (WINODWSEX)
 
    return ::ResumeThread(m_hthread);
 
-   #else
+#else
 
 
    return 0;
 
-   #endif
+#endif
 
 }
 
@@ -2840,9 +2998,9 @@ void thread::_001OnThreadMessage(::message::message * pobj)
 
 ::handler * thread::handler()
 {
-   
+
    return m_phandler;
-   
+
 }
 
 
@@ -2911,9 +3069,9 @@ void thread::on_create(::create * pcreate)
 // a thread transforms a request to create into a request workflow...
 void thread::request_create(::create * pcreate)
 {
-   
+
    on_request(pcreate);
-   
+
 }
 
 
@@ -3001,7 +3159,7 @@ CLASS_DECL_AURA void forking_count_thread_null_end(int iOrder)
    }
 
    sp(thread_toolset) & pset = m_toolset.element_at_grow((index)etool);
-      
+
    if (pset.is_null())
    {
 
@@ -3033,3 +3191,57 @@ CLASS_DECL_AURA uint32_t random_processor_index_generator()
    return g_uiRandomProcessorIndexGenerator;
 
 }
+
+
+
+
+thread_refa::thread_refa()
+{
+
+   defer_create_mutex();
+
+}
+
+
+
+
+thread_refa::~thread_refa()
+{
+
+
+}
+
+
+
+
+
+CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
+{
+
+   int iTenths = (dwMillis / 1000) * 10;
+
+   int iMillis = dwMillis % 1000;
+
+   while(iTenths > 0)
+   {
+
+      if(!::get_thread_run())
+      {
+
+         return false;
+
+      }
+
+      Sleep(100);
+
+      iTenths--;
+
+   }
+
+   Sleep(iMillis);
+
+   return ::get_thread_run();
+
+}
+
+

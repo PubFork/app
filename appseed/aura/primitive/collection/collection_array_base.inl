@@ -1,4 +1,3 @@
-#include "framework.h"
 
 
 
@@ -570,9 +569,9 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       // create buffer big enough to hold number of requested elements or
       // m_nGrowBy elements, whichever is larger.
 #ifdef SIZE_T_MAX
-      if(::compare::gt(nNewSize, SIZE_T_MAX / sizeof(TYPE)))
+      if(::comparison::gt(nNewSize, SIZE_T_MAX / sizeof(TYPE)))
          throw memory_exception(get_app());
-      ASSERT(::compare::lt(nNewSize, SIZE_T_MAX / sizeof(TYPE)));    // no overflow
+      ASSERT(::comparison::lt(nNewSize, SIZE_T_MAX / sizeof(TYPE)));    // no overflow
 #endif
 
       ::count nAllocSize = MAX(nNewSize,m_nGrowBy);
@@ -658,7 +657,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
          throw invalid_argument_exception(get_app());
 
 #ifdef SIZE_T_MAX
-      ASSERT(::compare::lt(nNewMax, SIZE_T_MAX / sizeof(TYPE))); // no overflow
+      ASSERT(::comparison::lt(nNewMax, SIZE_T_MAX / sizeof(TYPE))); // no overflow
 #endif
       #if MEMDLEAK || defined(__MCRTDBG)
       TYPE* pNewData =  NULL;

@@ -2,9 +2,9 @@
 //#include "metrowin.h"
 
 
-//#include <errno.h>
-//#include <io.h>
-//#include <fcntl.h>
+#include <errno.h>
+#include <io.h>
+#include <fcntl.h>
 
 
 namespace metrowin

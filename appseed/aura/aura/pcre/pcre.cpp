@@ -1,5 +1,6 @@
 #include "framework.h"
-#include "pcre2.h"
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
 
 
 #define PC() (*((pcre_context_impl *)pcreContext->m_pthis))

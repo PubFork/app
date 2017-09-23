@@ -571,7 +571,7 @@ namespace data
 
       tree * ptree = (tree *) lpParameter;
 
-      Sleep(284);
+      Sleep(300);
 
       try
       {

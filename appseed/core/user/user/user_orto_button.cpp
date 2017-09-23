@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -45,7 +45,7 @@ namespace user
       if (!is_window_enabled())
       {
 
-         pgraphics->FillSolidRect(rectClient, ARGB(255, 84, 84, 77));
+         pgraphics->FillSolidRect(rectClient, ARGB(255, 84, 90, 80));
 
          crText = ARGB(255, 49, 49, 23);
 

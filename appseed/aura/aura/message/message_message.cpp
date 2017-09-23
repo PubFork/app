@@ -40,7 +40,7 @@ namespace message
 
 
 
-   bool message::route()
+   bool message::route_message()
    {
 
       if (m_routea.is_empty())
@@ -108,14 +108,14 @@ namespace message
 
    bool message::previous()
    {
-      
+
       m_iRouteIndex--;
 
-      return route();
+      return route_message();
 
    }
 
-   
+
    void message::set(::user::primitive * pwnd, UINT uiMessage, WPARAM wparam, ::lparam lparam)
    {
 

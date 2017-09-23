@@ -9,7 +9,7 @@
 
 #endif
 
-//#include<sys/stat.h>
+
 
 static geoipv6_t IPV6_NULL;
 
@@ -18,14 +18,15 @@ static geoipv6_t IPV6_NULL;
 
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
-//#include<sys/mman.h>
+#include<sys/stat.h>
+#include<sys/mman.h>
 
 #endif
 
 #if defined(APPLEOS) || defined(LINUX)
 
 #include<arpa/inet.h>
-//#include<sys/time.h>
+#include<sys/time.h>
 
 #endif
 

@@ -96,7 +96,7 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage, unsigned int dwTimeout)
+      bool tx::send(const char * pszMessage, duration durationTimeout)
       {
 
          if (!is_tx_ok())
@@ -106,7 +106,7 @@ namespace aura
 
          Uri ^uri = ref new Uri(anotherappURI);
 
-         ::wait(Launcher::LaunchUriAsync(uri), dwTimeout);
+         ::wait(Launcher::LaunchUriAsync(uri), durationTimeout.get_total_milliseconds());
 
          return true;
 
@@ -124,7 +124,7 @@ namespace aura
       }
 
 
-      bool tx::send(int message, void * pdata, int len, unsigned int dwTimeout)
+      bool tx::send(int message, void * pdata, int len, ::duration durationTimeout)
       {
 
          if (!is_tx_ok())
@@ -138,7 +138,7 @@ namespace aura
 
          Uri ^uri = ref new Uri(anotherappURI);
 
-         ::wait(Launcher::LaunchUriAsync(uri), dwTimeout);
+         ::wait(Launcher::LaunchUriAsync(uri), durationTimeout);
 
          return true;
 

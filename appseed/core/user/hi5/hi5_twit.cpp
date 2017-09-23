@@ -11,7 +11,7 @@ namespace hi5
 
    namespace oAuthTwitterApiUrls
    {
-       /* Twitter OAuth API URLs */
+      /* Twitter OAuth API URLs */
    };
 
    /* Default values used in twitcurl */
@@ -38,7 +38,7 @@ namespace hi5
    * @output: none
    *
    *--*/
-   twit::twit(::aura::application * papp, simple_log * psimplelog, int iLogTarget) :
+   twit::twit(::aura::application * papp, simple_log * psimplelog, index iLogTarget) :
       object(papp),
       simple_log(psimplelog, iLogTarget),
       /* Constants */
@@ -254,7 +254,7 @@ namespace hi5
 
       }
 
-      string strMediaId = mediaUploadInit(iLen, strMimeType, strCategory);
+      string strMediaId = mediaUploadInit(convert < int > (iLen), strMimeType, strCategory);
 
       if (strMediaId.is_empty())
       {
@@ -352,7 +352,7 @@ namespace hi5
 
          //while ((uiRead = pfile->read(&mem.get_data()[iPos], mem.get_size() - iPos)) > 0)
          //{
-         //   
+         //
          //   iPos += uiRead;
 
          //   if (iPos == mem.get_size())
@@ -389,7 +389,7 @@ namespace hi5
          //}
 
 
-         if (!mediaUploadAppend(strMediaId, i, pfile, iSize, strMimeType, boundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends))
+         if (!mediaUploadAppend(strMediaId, i, pfile, convert < int > (iSize), strMimeType, boundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends))
          {
 
             m_strError = "ERROR: mediaUploadAppend failed chunk=" + ::str::from(i) + ", " + m_strError;
@@ -481,7 +481,7 @@ namespace hi5
    {
 
       m_strRequest = "REQUEST: mediaUploadInit(" + ::str::from(iTotalSize) + ", \"" + strMimeType + "\", \"" + strCategory + "\")";
-      
+
       log_line(m_strRequest);
 
       property_set post(get_app());
@@ -558,7 +558,7 @@ namespace hi5
    {
 
       log_line("mediaUploadAppend(\"" + strMediaId + "\", " + ::str::from(iIndex) + ", memory(size=" + ::str::from(iSize) + "))");
-      
+
       property_set post(get_app());
 
       ::sockets::multipart multipart(get_app());
@@ -583,10 +583,10 @@ namespace hi5
       //strUrl += "?command=APPEND&segment_index=" + str::from(iIndex);
 
       bool bOk = performMultiPartPost(strUrl, post, true);
-      
+
       if (!bOk)
       {
-         
+
          m_strError = "ERROR: REPLY: " + m_strResponse;
 
       }
@@ -766,7 +766,7 @@ namespace hi5
          return false;
 
       }
-      
+
       bool bOk;
 
       property_set post(get_app());
@@ -796,7 +796,7 @@ namespace hi5
          m_strError = "ERROR: REPLY: " + m_strResponse;
 
       }
-      
+
       log_line(m_strError);
 
       return bOk;
@@ -1838,30 +1838,30 @@ namespace hi5
 
    }
 
-/*   bool twit::performPost( const string & getUrl, property_set & headers, property_set & post)
-   {
-
-      string dataStrDummy( "" );
-
-      property_set set(m_setHttp);
-
-      if (headers.m_propertya.get_count() > 0)
+   /*   bool twit::performPost( const string & getUrl, property_set & headers, property_set & post)
       {
 
-         set["headers"] = headers;
+         string dataStrDummy( "" );
 
-      }
+         property_set set(m_setHttp);
 
-      set["post"] = post;
+         if (headers.m_propertya.get_count() > 0)
+         {
 
-      set["http_method"] = "POST";
+            set["headers"] = headers;
 
-      /* Send http request */
-      /*bool bOk = Application.http().get(getUrl, m_strResponse, set);
+         }
 
-      headers = set["get_headers"].propset();
+         set["post"] = post;
 
-      return bOk;
+         set["http_method"] = "POST";
+
+         /* Send http request */
+   /*bool bOk = Application.http().get(getUrl, m_strResponse, set);
+
+   headers = set["get_headers"].propset();
+
+   return bOk;
 
    }*/
 

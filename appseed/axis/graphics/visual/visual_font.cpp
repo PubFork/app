@@ -40,13 +40,13 @@ namespace visual
 
    void font::EmbossedTextOut(::draw2d::graphics * pgraphics, const RECT & rect, double dRateX, double dHeight, string & str)
    {
-      
+
 
       System.visual().api().EmbossedTextOut(pgraphics, rect, dRateX, dHeight, str);
 
       return;
 
-      
+
 
       SetDC(pgraphics);
       SelectFont();
@@ -61,7 +61,7 @@ namespace visual
          lpglyph = GetGlyph(str[i]);
          if(lpglyph != NULL)
          {
-            ptOffset.x += pgraphics->GetTextExtent(str.Left(i)).cx;
+            convert_add(ptOffset.x, pgraphics->GetTextExtent(str.Left(i)).cx);
             lpglyph->DrawGlyph(
                pgraphics,
                true,
@@ -75,17 +75,17 @@ namespace visual
       UnselectFont();
       ClearDC();
 
-   /*   SetDC(pgraphics);
-      SelectFont();
+      /*   SetDC(pgraphics);
+         SelectFont();
 
-      pgraphics->text_out(x, y, str);
-      pgraphics->BeginPath();
-      pgraphics->text_out(x, y, str);
-      pgraphics->EndPath();
-      pgraphics->StrokePath();
+         pgraphics->text_out(x, y, str);
+         pgraphics->BeginPath();
+         pgraphics->text_out(x, y, str);
+         pgraphics->EndPath();
+         pgraphics->StrokePath();
 
-      UnselectFont();
-      ClearDC();*/
+         UnselectFont();
+         ClearDC();*/
 
    }
 
@@ -96,7 +96,7 @@ namespace visual
 
       return;
 
-      
+
 
       SetDC(pgraphics);
       SelectFont();
@@ -123,40 +123,40 @@ namespace visual
       }
 
 
-   /*   visual::api::EmbossedTextOut(
-         pgraphics,
-         lpcrect,
-         floatRateX,
-         floatHeight,
-         str,
-         lpiCharsPositions,
-         iCharsPositions,
-         iOffset);*/
+      /*   visual::api::EmbossedTextOut(
+            pgraphics,
+            lpcrect,
+            floatRateX,
+            floatHeight,
+            str,
+            lpiCharsPositions,
+            iCharsPositions,
+            iOffset);*/
 
       UnselectFont();
       ClearDC();
-   /*   SetDC(pgraphics);
-      SelectFont();
+      /*   SetDC(pgraphics);
+         SelectFont();
 
-      rect clipRect;
+         rect clipRect;
 
-      int32_t iOldMapMode = pgraphics->GetMapMode();
-      pgraphics->SetMapMode(MM_TEXT);
-      pgraphics->text_out(x, y, str);
-      pgraphics->BeginPath();
-      pgraphics->text_out(x, y, str);
-      pgraphics->EndPath();
-      pgraphics->StrokePath();
+         int32_t iOldMapMode = pgraphics->GetMapMode();
+         pgraphics->SetMapMode(MM_TEXT);
+         pgraphics->text_out(x, y, str);
+         pgraphics->BeginPath();
+         pgraphics->text_out(x, y, str);
+         pgraphics->EndPath();
+         pgraphics->StrokePath();
 
-      pgraphics->SetMapMode(iOldMapMode);
-      UnselectFont();
-      ClearDC();*/
+         pgraphics->SetMapMode(iOldMapMode);
+         UnselectFont();
+         ClearDC();*/
    }
 
    void font::SimpleTextOut(::draw2d::graphics * pgraphics, int32_t x, int32_t y, string & str, LPINT lpiCharsPositions, int32_t iCharsPositions)
 
    {
-      
+
 
       UNREFERENCED_PARAMETER(lpiCharsPositions);
       UNREFERENCED_PARAMETER(iCharsPositions);
@@ -207,8 +207,8 @@ namespace visual
    bool font::AddGlyph(UINT user)
    {
 
-   //   single_lock sl(&m_mutex);
-   //   sl.lock(INFINITE);
+      //   single_lock sl(&m_mutex);
+      //   sl.lock(INFINITE);
 
       return TRUE;
 
@@ -312,7 +312,7 @@ namespace visual
       string         str;
       int32_t        i, j, k;
       bool           forceInsertion = FALSE;
-      
+
       SelectFont();
       for(i = 0; i < str2aTokens.get_size(); i++)
       {
@@ -371,23 +371,23 @@ namespace visual
 
    void font::TextOutEx(
       ::draw2d::graphics * pgraphics,
-       const RECT &               rect,
+      const RECT &               rect,
       double               dRateX,
       double               dHeight,
       string                 &str,
       LPINT                lpiCharsPositions,
-       int32_t                     iCharsPositions,
+      int32_t                     iCharsPositions,
       int32_t                  iOffset,
-       int32_t                     iEffect)
+      int32_t                     iEffect)
    {
-      
-       switch(iEffect)
-       {
-       case EffectSimple:
-           SimpleTextOut(pgraphics, rect.left, rect.top, str, lpiCharsPositions, iCharsPositions);
-           break;
-       case EffectEmbossed:
-           EmbossedTextOut(
+
+      switch(iEffect)
+      {
+      case EffectSimple:
+         SimpleTextOut(pgraphics, rect.left, rect.top, str, lpiCharsPositions, iCharsPositions);
+         break;
+      case EffectEmbossed:
+         EmbossedTextOut(
             pgraphics,
             rect,
             dRateX,
@@ -396,11 +396,11 @@ namespace visual
             lpiCharsPositions,
             iCharsPositions,
             iOffset);
-           break;
-       default:
-           ASSERT(FALSE);
+         break;
+      default:
+         ASSERT(FALSE);
 
-       }
+      }
 
    }
 
@@ -464,15 +464,15 @@ bool CLASS_DECL_AXIS TextOutU(HDC hdc, int32_t x, int32_t y, const char * lpStri
 
    throw todo(get_thread_app());
 
-/*
+   /*
 
-   if(lpString == NULL)
-   {
-      return ::text_out(hdc, x, y, NULL, 0) != FALSE;
-   }
+      if(lpString == NULL)
+      {
+         return ::text_out(hdc, x, y, NULL, 0) != FALSE;
+      }
 
-   return ::text_out(hdc, x, y, wstr, (int32_t) wstr.get_length()) != FALSE;
-*/
+      return ::text_out(hdc, x, y, wstr, (int32_t) wstr.get_length()) != FALSE;
+   */
 
 #endif
 

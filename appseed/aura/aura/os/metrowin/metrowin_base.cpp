@@ -443,27 +443,27 @@ END_EXTERN_C
 
 
 
-BEGIN_EXTERN_C
-
-int_bool is_windows_nt()
-{
-
-#if defined(_WIN32_WINNT) && (_WIN32_WINNT >= _WIN32_WINNT_WINXP) // winxp or greater
-
-//   return IsWindowsXPOrGreater();
-
-   return TRUE;
-
-#else
-
-   return !(GetVersion() & 0x80000000);
-
-#endif
-
-}
-
-
-END_EXTERN_C
+//BEGIN_EXTERN_C
+//
+//int_bool is_windows_nt()
+//{
+//
+//#if defined(_WIN32_WINNT) && (_WIN32_WINNT >= _WIN32_WINNT_WINXP) // winxp or greater
+//
+////   return IsWindowsXPOrGreater();
+//
+//   return TRUE;
+//
+//#else
+//
+//   return !(GetVersion() & 0x80000000);
+//
+//#endif
+//
+//}
+//
+//
+//END_EXTERN_C
 
 
 
@@ -772,7 +772,7 @@ void CLASS_DECL_AURA __throw_last_cleanup()
 
 CLASS_DECL_AURA thread_int_ptr < int_ptr >                             t_iCoInitialize;
 
-CLASS_DECL_AURA thread_int_ptr < HRESULT > t_hresultCoInitialize;
+extern CLASS_DECL_AURA thread_int_ptr < HRESULT > t_hresultCoInitialize;
 
 
 

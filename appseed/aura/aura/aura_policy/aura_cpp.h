@@ -21,7 +21,7 @@ namespace command
 {
 
    class command;
-   
+
 } // namespace command
 
 // very short name ([{c}])ontext (switchers, as it as context) enums
@@ -51,27 +51,27 @@ enum e_context_switcher_failed
 
 enum e_command
 {
-   
+
    command_default,
    command_on_agree_exit,
    command_france_exit,
    command_check_exit
-   
+
 };
 
 
 namespace aura
 {
-   
+
    enum e_setting
    {
-      
+
       setting_none,
       setting_wallpaper,
       setting_app_activation
-      
+
    };
-   
+
 } // namespace system
 
 
@@ -86,26 +86,26 @@ namespace install
 template<class T>
 struct remove_reference
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T>
 struct remove_reference<T&>
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T>
 struct remove_reference<T&&>
 {
-	typedef T TYPE;
+   typedef T TYPE;
 };
 
 template<class T> inline
 typename remove_reference<T>::TYPE&& move(T && t)
 {
 
-	return (static_cast<typename remove_reference<T>::TYPE&&>(t));
+   return (static_cast<typename remove_reference<T>::TYPE&&>(t));
 
 }
 
@@ -196,7 +196,7 @@ namespace user
 namespace install
 {
 
-   
+
    class install;
    class canvas;
 
@@ -295,7 +295,7 @@ class memory;
 namespace user
 {
 
-   
+
    class command;
 
 
@@ -360,6 +360,7 @@ namespace html
 
 
 #include "aura/aura/aura/aura_auto.h"
+#include "aura/primitive/comparison/comparison_compare.h"
 
 
 
@@ -638,7 +639,10 @@ namespace draw2d
 } // namespace draw2d
 
 
-class random_access_iterator { public: };
+class random_access_iterator
+{
+   public:
+};
 
 
 #ifdef WINDOWS
@@ -794,6 +798,8 @@ namespace file
 #include "aura/primitive/math/math_static_numeric_info.h"
 #include "aura/primitive/math/math_numeric_info.h"
 #include "aura/primitive/math/math_c_number.h"
+#include "aura/primitive/math/math_clip.h"
+
 //#include "aura/primitive/math/math_complex.h"
 
 
@@ -848,7 +854,6 @@ namespace file
 
 
 #include "aura/primitive/collection/collection_decl.h"
-#include "aura/primitive/collection/collection_array_decl.h"
 #include "aura/primitive/collection/collection_raw_array_decl.h"
 #include "aura/primitive/collection/collection_lemon_array_decl.h"
 #include "aura/primitive/collection/collection_smart_pointer_array.h"
@@ -1004,14 +1009,14 @@ namespace file
 
 class CLASS_DECL_AURA openweather_city
 {
-public:
+   public:
 
-   index    m_iIndex;
-   string   m_strCnt;
-   string   m_strCit;
-   int64_t  m_iId;
-   double   m_dLat;
-   double   m_dLon;
+      index    m_iIndex;
+      string   m_strCnt;
+      string   m_strCit;
+      int64_t  m_iId;
+      double   m_dLat;
+      double   m_dLon;
 
 };
 
@@ -1118,7 +1123,9 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/aura/aura_department_container.h"
 #include "aura/aura/xml/xml.h"
 
+
 #include "aura/aura/aura/aura_live_signal.h"
+#include "aura/multithreading/multithreading_pred_holder.h"
 #include "aura/multithreading/multithreading_thread.h"
 #include "aura/multithreading/multithreading_forking_thread.h"
 #include "aura/multithreading/multithreading_delay_thread.h"
@@ -1288,6 +1295,8 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_os.h"
 
 #include "aura/aura/crypto/crypto.h"
+
+#include "aura/multimedia/multimedia.h"
 
 #include "aura/aura/aura/aura_system.h"
 
@@ -1559,6 +1568,9 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/os/os2.h"
 
 
+#include "aura/aura/aura/aura_speaker.h"
+
+
 #include "app/appseed/aura/aura/node/node.h"
 
 
@@ -1580,7 +1592,9 @@ namespace _std
 
    template <class T> void swap(T& a, T& b)
    {
-      T c(a); a = b; b = c;
+      T c(a);
+      a = b;
+      b = c;
    }
 
 
@@ -1678,8 +1692,14 @@ namespace std
    using complex = ::math::complex < T >;
 
 
-   template <class T> const T& min(const T& a,const T& b) { return !(a > b) ? a : b; }
-   template <class T> const T& max(const T& a,const T& b) { return !(a < b) ? a : b; }
+   template <class T> const T& min(const T& a,const T& b)
+   {
+      return !(a > b) ? a : b;
+   }
+   template <class T> const T& max(const T& a,const T& b)
+   {
+      return !(a < b) ? a : b;
+   }
 
    template <class RandomAccessIterator>
    void make_heap(RandomAccessIterator first,RandomAccessIterator last)
@@ -1796,10 +1816,10 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/primitive/primitive.h"
 
 
+#include "aura/aura/os/os_cpp.h"
+
+
 #include "aura/user/user.h"
-
-
-#include "aura/aura/aura_speaker.h"
 
 
 #include "aura/pcre/pcre.h"
@@ -1835,9 +1855,9 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 template < typename TYPE >
 void function_call(const TYPE * p)
 {
-   
+
    const char * psz = reinterpret_cast < const char * > (p);
-   
+
 }
 
 

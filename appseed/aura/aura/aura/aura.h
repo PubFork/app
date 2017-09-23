@@ -1,8 +1,6 @@
 #pragma once
 
 
-#include "aura/aura/aura/aura.h"
-
 #include "setup/debug.h"
 
 #define CA2_AURA
@@ -39,8 +37,6 @@
 #include "aura_number.h"
 
 #include "aura/aura/aura_policy/aura_policy.h"
-
-#include "aura__c.h"
 
 #define new AURA_NEW
 

@@ -258,9 +258,9 @@ CLASS_DECL_AURA bool safe_destroy_element(object * pelement)
 
    try
    {
-
+      
       pelement->~object();
-
+   
    }
    catch(...)
    {

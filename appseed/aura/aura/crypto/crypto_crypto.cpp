@@ -140,15 +140,15 @@ namespace crypto
          storageEncrypt.allocate(0);
 
 #if OPENSSL_API_COMPAT < 0x10100000L
-         
+
          EVP_CIPHER_CTX_cleanup(pctx);
-         
+
 #else
-         
+
          EVP_CIPHER_CTX_reset(pctx);
-         
+
 #endif
-         
+
          return false;
 
       }
@@ -161,15 +161,15 @@ namespace crypto
          storageEncrypt.allocate(0);
 
 #if OPENSSL_API_COMPAT < 0x10100000L
-         
+
          EVP_CIPHER_CTX_cleanup(pctx);
-         
+
 #else
-         
+
          EVP_CIPHER_CTX_reset(pctx);
-         
+
 #endif
-         
+
          return false;
 
       }
@@ -179,15 +179,15 @@ namespace crypto
       storageEncrypt.allocate(cipherlen);
 
 #if OPENSSL_API_COMPAT < 0x10100000L
-      
+
       EVP_CIPHER_CTX_cleanup(pctx);
-      
+
 #else
-      
+
       EVP_CIPHER_CTX_reset(pctx);
-      
+
 #endif
-      
+
       return true;
 
 
@@ -861,7 +861,7 @@ namespace crypto
 
       unsigned int md_len = 0;
 
-      HMAC(EVP_sha1(), memKey.get_data(), memKey.get_size(), memMessage.get_data(), memMessage.get_size(), (unsigned char *) result, &md_len);
+      HMAC(EVP_sha1(), memKey.get_data(), convert < int > (memKey.get_size()), memMessage.get_data(), memMessage.get_size(), (unsigned char *) result, &md_len);
 
 //#endif
 
@@ -877,7 +877,7 @@ namespace crypto
 
       unsigned int md_len = 0;
 
-      HMAC(EVP_sha1(),strKey,strKey.length(),(const unsigned char *)(const char *)strMessage,strMessage.length(),(unsigned char *)result,&md_len);
+      HMAC(EVP_sha1(),strKey,convert < int > (strKey.length()),(const unsigned char *)(const char *)strMessage,strMessage.length(),(unsigned char *)result,&md_len);
 
 //#endif
 
@@ -1081,7 +1081,7 @@ namespace crypto
 
       ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider ^ provider =
          ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider::OpenAlgorithm(
-         ::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
+            ::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
 
 
       return canew(::crypto::rsa(get_app(), provider->CreateKeyPair(1024)));
@@ -1113,15 +1113,15 @@ namespace crypto
 #if defined(OPENSSL_CRYPTO)
 
 #if OPENSSL_API_COMPAT < 0x10100000L
-      
+
       ERR_load_crypto_strings();
-      
+
 #else
 
 //      OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL);
 
 #endif
-      
+
 #endif
 
    }
@@ -1184,7 +1184,8 @@ namespace crypto
 #elif defined(METROWIN) && !defined(OPENSSL_CRYPTO)
 
 
-      typedef struct _BCRYPT_RSAKEY_BLOB {
+      typedef struct _BCRYPT_RSAKEY_BLOB
+      {
          ULONG Magic;
          ULONG BitLength;
          ULONG cbPublicExp;
@@ -1207,9 +1208,9 @@ namespace crypto
 
 //      memory memVer(get_app());
 
-  //    memVer.from_hex("00");
+      //    memVer.from_hex("00");
 
-    //  memVer.prefix_der_uint();
+      //  memVer.prefix_der_uint();
 
       memfile.write(&blob, sizeof(blob));
 
@@ -1290,14 +1291,14 @@ namespace crypto
 #ifdef OPENSSL_CRYPTO
 
    rsa::rsa(::aura::application * papp,
-      const string & strN,
-      const string & strE,
-      const string & strD,
-      const string & strP,
-      const string & strQ,
-      const string & strDmp1,
-      const string & strDmq1,
-      const string & strIqmp) :
+            const string & strN,
+            const string & strE,
+            const string & strD,
+            const string & strP,
+            const string & strQ,
+            const string & strDmp1,
+            const string & strDmq1,
+            const string & strIqmp) :
       ::object(papp),
       m_mutex(papp)
    {
@@ -1470,7 +1471,7 @@ namespace crypto
 
 #endif
 
-      return out.get_size();
+      return convert < int > (out.get_size());
 
 
    }
@@ -1483,7 +1484,7 @@ namespace crypto
 
 
 
-out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEngine::Decrypt(m_prsa, in.get_os_crypt_buffer(), nullptr));
+      out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEngine::Decrypt(m_prsa, in.get_os_crypt_buffer(), nullptr));
 
 
 
@@ -1513,7 +1514,7 @@ out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEn
 
 #endif
 
-      return out.get_size();
+      return convert < int > (out.get_size());
 
    }
 
@@ -1620,7 +1621,7 @@ out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEn
 
 #endif
 
-      return out.get_size();
+      return convert < int > (out.get_size());
 
 
    }
@@ -1663,7 +1664,7 @@ out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEn
 
 #endif
 
-      return out.get_size();
+      return convert < int > (out.get_size());
 
    }
 
@@ -1966,7 +1967,7 @@ out.set_os_crypt_buffer(::Windows::Security::Cryptography::Core::CryptographicEn
 
 void
 stunCalculateIntegrity_longterm(char* hmac, const char* input, int32_t length,
-const char *username, const char *realm, const char *password)
+                                const char *username, const char *realm, const char *password)
 {
 
 #if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
@@ -1978,9 +1979,9 @@ const char *username, const char *realm, const char *password)
    MD5((uchar *)HA1_text, strlen(HA1_text), HA1);
 
    HMAC(EVP_sha1(),
-      HA1, 16,
-      (const uchar*)input, length,
-      (uchar*)hmac, &resultSize);
+        HA1, 16,
+        (const uchar*)input, length,
+        (uchar*)hmac, &resultSize);
 #endif
 }
 
@@ -1990,9 +1991,9 @@ stunCalculateIntegrity_shortterm(char* hmac, const char* input, int32_t length, 
 #if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
    uint32_t resultSize = 0;
    HMAC(EVP_sha1(),
-      key, (int)strlen(key),
-      (const uchar*)input, length,
-      (uchar*)hmac, &resultSize);
+        key, (int)strlen(key),
+        (const uchar*)input, length,
+        (uchar*)hmac, &resultSize);
 #endif
 }
 
@@ -2001,9 +2002,9 @@ void hmac_evp_sha1_1234(unsigned char * hmac, unsigned int * hmacSize, const uns
 #if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
 
    HMAC(EVP_sha1(),
-      "1234", 4,
-      (const uchar*)buf, bufLen - 20 - 4,
-      hmac, hmacSize);
+        "1234", 4,
+        (const uchar*)buf, bufLen - 20 - 4,
+        hmac, hmacSize);
 #endif
 
 }

@@ -22,7 +22,7 @@ namespace html
 
       input_button::~input_button()
       {
-         
+
          try
          {
 
@@ -118,7 +118,7 @@ namespace html
 
       void input_button::on_change_layout(data * pdata)
       {
-         
+
          UNREFERENCED_PARAMETER(pdata);
 
          m_pbutton->SetWindowPos(0, (int32_t) m_box.left, (int32_t) m_box.top, (int32_t) m_box.get_cx(), (int32_t) m_box.get_cy(), SWP_NOREDRAW);

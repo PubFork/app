@@ -310,7 +310,7 @@ int ifs::is_dir(const ::file::path & path)
       listing.ls(path.folder());
    }
 
-   int iFind = dir.name_find_first_ci(path.name());
+   auto iFind = dir.name_find_first_ci(path.name());
 
    if(iFind < 0)
    {

@@ -108,7 +108,7 @@ namespace windows
 
 #elif defined(APPLEOS)
 
-   path = ::file::path(getenv("HOME")) / "Application Support/Library";
+   path = ::file::path(getenv("HOME")) / "Library/Application Support";
 
 #else
 
@@ -136,6 +136,19 @@ namespace windows
 
 }
 
+#ifdef METROWIN
+
+
+::file::path dir::app_relative()
+{
+
+   return "";
+
+}
+
+
+#else
+
 
 ::file::path dir::app_relative()
 {
@@ -160,3 +173,6 @@ namespace windows
    return strRelative;
 
 }
+
+
+#endif

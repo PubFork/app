@@ -71,11 +71,11 @@ plane_system::plane_system(const char * pszId)
    
    m_psystem->m_possystemwindow->m_pui = new ::user::interaction(m_psystem);
    
-   ::aura::main_init_data * pinitmaindata  = new ::aura::main_init_data;
+   ::command::command * pinitmaindata  = new ::command::command;
    
    pinitmaindata->m_strCommandLine        = pszId;
    
-   m_psystem->init_main_data(pinitmaindata);
+   m_psystem->startup_command(pinitmaindata);
    
 }
 

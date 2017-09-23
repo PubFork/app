@@ -1,3 +1,9 @@
+#include "framework.h"
+
+
+#include <sys/types.h>
+       #include <sys/ipc.h>
+       #include <sys/msg.h>
 
 
 namespace aura
@@ -83,7 +89,7 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage,DWORD dwTimeout)
+      bool tx::send(const char * pszMessage,duration durationTimeout)
       {
 
 
@@ -160,7 +166,7 @@ namespace aura
       }
 
 
-      bool tx::send(int32_t message,void * p,int32_t iLen,DWORD dwTimeout)
+      bool tx::send(int32_t message,void * p,int32_t iLen,duration durationTimeout)
       {
 
          if(message == 0x80000000)

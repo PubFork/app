@@ -6,8 +6,8 @@
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 #include <unistd.h>
 #if defined(APPLEOS)
-#define	NI_MAXHOST	1025
-#define	NI_MAXSERV	32
+#define  NI_MAXHOST  1025
+#define  NI_MAXSERV  32
 #endif
 //#define __USE_MISC
 //#include <ctype.h>
@@ -21,7 +21,7 @@ namespace sockets
    net::net(::aura::application * papp) :
       ::object(papp)
 //      m_mapCache(papp,""),
-  //    m_mapReverseCache(papp,"sockets::net::m_mapReverseCache")
+      //    m_mapReverseCache(papp,"sockets::net::m_mapReverseCache")
    {
 
       m_bInitialized = false;
@@ -71,7 +71,7 @@ namespace sockets
 
 //      m_mapCache.gudo_set();
 
-  //    m_mapReverseCache.gudo_set();
+      //    m_mapReverseCache.gudo_set();
 
       return true;
 
@@ -103,18 +103,17 @@ namespace sockets
          {
             dst += src[i];
          }
+         else if (src[i] == ' ')
+         {
+            dst += '+';
+         }
          else
-            if (src[i] == ' ')
-            {
-               dst += '+';
-            }
-            else
-            {
-               uchar ca = static_cast<uchar>(src[i]);
-               dst += '%';
-               dst += hex[ca / 16];
-               dst += hex[ca % 16];
-            }
+         {
+            uchar ca = static_cast<uchar>(src[i]);
+            dst += '%';
+            dst += hex[ca / 16];
+            dst += hex[ca % 16];
+         }
       }
       return dst;
    } // rfc1738_encode
@@ -137,15 +136,14 @@ namespace sockets
             c2 = c2 - 48 - ((c2 >= 'A') ? 7 : 0) - ((c2 >= 'a') ? 32 : 0);
             dst += (char)(c1 * 16 + c2);
          }
+         else if (src[i] == '+')
+         {
+            dst += ' ';
+         }
          else
-            if (src[i] == '+')
-            {
-               dst += ' ';
-            }
-            else
-            {
-               dst += src[i];
-            }
+         {
+            dst += src[i];
+         }
       }
       return dst;
    } // rfc1738_decode
@@ -159,9 +157,8 @@ namespace sockets
       {
          if (str[i] == '.')
             dots++;
-         else
-            if (!isdigit((uchar) str[i]))
-               return false;
+         else if (!isdigit((uchar) str[i]))
+            return false;
       }
       if (dots != 3)
          return false;
@@ -201,7 +198,7 @@ namespace sockets
          for (int32_t i = 0; i < tmp.get_length(); i++)
          {
             if (tmp[i] < '0' || (tmp[i] > '9' && tmp[i] < 'A') ||
-               (tmp[i] > 'F' && tmp[i] < 'a') || tmp[i] > 'f')
+                  (tmp[i] > 'F' && tmp[i] < 'a') || tmp[i] > 'f')
             {
                return false;
             }
@@ -244,8 +241,10 @@ namespace sockets
       if ((ai_flags & AI_NUMERICHOST) != 0 || isipv4(host))
       {
          ::str::parse pa((const char *)host, ".");
-         union {
-            struct {
+         union
+         {
+            struct
+            {
                uchar b1;
                uchar b2;
                uchar b3;
@@ -304,9 +303,9 @@ namespace sockets
       if (n)
       {
          string error = "getaddrinfo Error: ";
-   #ifndef __CYGWIN__
+#ifndef __CYGWIN__
          error += gai_strerror(n);
-   #endif
+#endif
          thiserr << error;
          item.r = false;
          item.m_bTimeout = true;
@@ -314,263 +313,263 @@ namespace sockets
          m_mapCache.set_at(str, item);
 
          return false;
-   #endif // NO_GETADDRINFO
-      }
-      item.r = true;
-      ref_array <  addrinfo > vec;
-      addrinfo *ai = res;
-      while (ai)
-      {
-         if (ai -> ai_addrlen == sizeof(sa))
-            vec.add( ai );
-         ai = ai -> ai_next;
-      }
-      if (!vec.get_count())
-         return false;
-      ai = vec[rand() % vec.get_count()];
-      {
-         memcpy(&sa, ai -> ai_addr, ai -> ai_addrlen);
-      }
-      freeaddrinfo(res);
-      item.m_ipaddr = sa.sin_addr;
-      item.m_dwLastChecked = ::get_tick_count();
-      m_mapCache.set_at(str, item);
+#endif // NO_GETADDRINFO
+   }
+   item.r = true;
+   ref_array <  addrinfo > vec;
+   addrinfo *ai = res;
+   while (ai)
+   {
+      if (ai -> ai_addrlen == sizeof(sa))
+         vec.add( ai );
+      ai = ai -> ai_next;
+   }
+   if (!vec.get_count())
+      return false;
+   ai = vec[rand() % vec.get_count()];
+   {
+      memcpy(&sa, ai -> ai_addr, ai -> ai_addrlen);
+   }
+   freeaddrinfo(res);
+   item.m_ipaddr = sa.sin_addr;
+   item.m_dwLastChecked = ::get_tick_count();
+   m_mapCache.set_at(str, item);
 
-      //if(System.m_bGudoNetCache)
-      {
+   //if(System.m_bGudoNetCache)
+   {
 
-         //Application.gudo_set("sockets::net::m_mapCache",m_mapCache);
+      //Application.gudo_set("sockets::net::m_mapCache",m_mapCache);
 
-      }
+   }
 
 //      uint32_t dwTimeProfile2 = get_tick_count();
 //      TRACE("DNS Lookup net::u2ip " + str + " : %d.%d.%d.%d (%d ms)",
-  //       (uint32_t)((byte*)&pitem->m_ipaddr)[0],
-    //     (uint32_t)((byte*)&pitem->m_ipaddr)[1],
-      //   (uint32_t)((byte*)&pitem->m_ipaddr)[2],
-        // (uint32_t)((byte*)&pitem->m_ipaddr)[3],
-         //(dwTimeProfile2 - dwTimeProfile1));
-      l = item.m_ipaddr;
+   //       (uint32_t)((byte*)&pitem->m_ipaddr)[0],
+   //     (uint32_t)((byte*)&pitem->m_ipaddr)[1],
+   //   (uint32_t)((byte*)&pitem->m_ipaddr)[2],
+   // (uint32_t)((byte*)&pitem->m_ipaddr)[3],
+   //(dwTimeProfile2 - dwTimeProfile1));
+   l = item.m_ipaddr;
 
-      return item.r;
-   }
-
-
-   //bool net::convert(struct in6_addr& l, const string & str, int32_t ai_flags)
-   //{
+   return item.r;
+}
 
 
-   //   return from_string(l, str) != FALSE;
+//bool net::convert(struct in6_addr& l, const string & str, int32_t ai_flags)
+//{
 
 
-   //}
+//   return from_string(l, str) != FALSE;
 
 
-   bool net::convert(string & str, const in_addr & ip)
+//}
+
+
+bool net::convert(string & str, const in_addr & ip)
+{
+
+   struct sockaddr_in sa;
+
+   memset(&sa, 0, sizeof(sa));
+
+   sa.sin_family  = AF_INET;
+
+   sa.sin_addr    = ip;
+
+   return reverse( (struct sockaddr *)&sa, sizeof(sa), str, NI_NUMERICHOST);
+
+}
+
+
+bool net::convert(string & str, const struct in6_addr& ip, bool mixed)
+{
+
+
+   char slask[100]; // l2ip temporary
+   *slask = 0;
+   uint32_t prev = 0;
+   bool skipped = false;
+   bool ok_to_skip = true;
+   if (mixed)
    {
-
-      struct sockaddr_in sa;
-
+      uint16_t x;
+      uint16_t addr16[8];
+      memcpy(addr16, &ip, sizeof(addr16));
+      for (index i = 0; i < 6; i++)
+      {
+         x = ntohs(addr16[i]);
+         if (*slask && (x || !ok_to_skip || prev))
+            strcat(slask,":");
+         if (x || !ok_to_skip)
+         {
+            sprintf(slask + strlen(slask),"%x", x);
+            if (x && skipped)
+               ok_to_skip = false;
+         }
+         else
+         {
+            skipped = true;
+         }
+         prev = x;
+      }
+      x = ntohs(addr16[6]);
+      sprintf(slask + strlen(slask),":%u.%u",x / 256,x & 255);
+      x = ntohs(addr16[7]);
+      sprintf(slask + strlen(slask),".%u.%u",x / 256,x & 255);
+   }
+   else
+   {
+      struct sockaddr_in6 sa;
       memset(&sa, 0, sizeof(sa));
-
-      sa.sin_family  = AF_INET;
-
-      sa.sin_addr    = ip;
-
+      sa.sin6_family = AF_INET6;
+      sa.sin6_addr = ip;
       return reverse( (struct sockaddr *)&sa, sizeof(sa), str, NI_NUMERICHOST);
-
    }
+   str = slask;
+   return true;
+}
 
 
-   bool net::convert(string & str, const struct in6_addr& ip, bool mixed)
+int32_t net::in6_addr_compare(in6_addr a,in6_addr b)
+{
+   for (index i = 0; i < 16; i++)
    {
-
-
-      char slask[100]; // l2ip temporary
-      *slask = 0;
-      uint32_t prev = 0;
-      bool skipped = false;
-      bool ok_to_skip = true;
-      if (mixed)
-      {
-         uint16_t x;
-         uint16_t addr16[8];
-         memcpy(addr16, &ip, sizeof(addr16));
-         for (index i = 0; i < 6; i++)
-         {
-            x = ntohs(addr16[i]);
-            if (*slask && (x || !ok_to_skip || prev))
-               strcat(slask,":");
-            if (x || !ok_to_skip)
-            {
-               sprintf(slask + strlen(slask),"%x", x);
-               if (x && skipped)
-                  ok_to_skip = false;
-            }
-            else
-            {
-               skipped = true;
-            }
-            prev = x;
-         }
-         x = ntohs(addr16[6]);
-         sprintf(slask + strlen(slask),":%u.%u",x / 256,x & 255);
-         x = ntohs(addr16[7]);
-         sprintf(slask + strlen(slask),".%u.%u",x / 256,x & 255);
-      }
-      else
-      {
-         struct sockaddr_in6 sa;
-         memset(&sa, 0, sizeof(sa));
-         sa.sin6_family = AF_INET6;
-         sa.sin6_addr = ip;
-         return reverse( (struct sockaddr *)&sa, sizeof(sa), str, NI_NUMERICHOST);
-      }
-      str = slask;
-      return true;
+      if (a.s6_addr[i] < b.s6_addr[i])
+         return -1;
+      if (a.s6_addr[i] > b.s6_addr[i])
+         return 1;
    }
+   return 0;
+}
 
+void net::ResolveLocal()
+{
 
-   int32_t net::in6_addr_compare(in6_addr a,in6_addr b)
+   char h[256];
+
+   // get local hostname and translate into ip-address
+   *h = 0;
+   gethostname(h,255);
    {
-      for (index i = 0; i < 16; i++)
+      if(convert(m_ip, h))
       {
-         if (a.s6_addr[i] < b.s6_addr[i])
-            return -1;
-         if (a.s6_addr[i] > b.s6_addr[i])
-            return 1;
+         convert(m_addr, m_ip);
       }
-      return 0;
    }
-
-   void net::ResolveLocal()
-   {
-
-      char h[256];
-
-      // get local hostname and translate into ip-address
-      *h = 0;
-      gethostname(h,255);
-      {
-         if(convert(m_ip, h))
-         {
-            convert(m_addr, m_ip);
-         }
-      }
 #ifdef ENABLE_IPV6
 #ifdef IPPROTO_IPV6
-      memset(&m_local_ip6, 0, sizeof(m_local_ip6));
+   memset(&m_local_ip6, 0, sizeof(m_local_ip6));
+   {
+      if (convert(m_local_ip6, h))
       {
-         if (convert(m_local_ip6, h))
-         {
-            convert(m_local_addr6, m_local_ip6);
-         }
+         convert(m_local_addr6, m_local_ip6);
       }
+   }
 #endif
 #endif
-      m_host = h;
-      m_local_resolved = true;
+   m_host = h;
+   m_local_resolved = true;
 
-   }
+}
 
 
-   const string & net::GetLocalHostname()
+const string & net::GetLocalHostname()
+{
+   if (!m_local_resolved)
    {
-      if (!m_local_resolved)
-      {
-         ResolveLocal();
-      }
-      return m_host;
+      ResolveLocal();
    }
+   return m_host;
+}
 
 
-   in_addr net::GetLocalIP()
+in_addr net::GetLocalIP()
+{
+   if (!m_local_resolved)
    {
-      if (!m_local_resolved)
-      {
-         ResolveLocal();
-      }
-      return m_ip;
+      ResolveLocal();
    }
+   return m_ip;
+}
 
 
-   const string & net::GetLocalAddress()
+const string & net::GetLocalAddress()
+{
+   if (!m_local_resolved)
    {
-      if (!m_local_resolved)
-      {
-         ResolveLocal();
-      }
-      return m_addr;
+      ResolveLocal();
    }
+   return m_addr;
+}
 
 
-   const struct in6_addr& net::GetLocalIP6()
+const struct in6_addr& net::GetLocalIP6()
+{
+   if (!m_local_resolved)
    {
-      if (!m_local_resolved)
-      {
-         ResolveLocal();
-      }
-      return m_local_ip6;
+      ResolveLocal();
    }
+   return m_local_ip6;
+}
 
 
-   const string & net::GetLocalAddress6()
+const string & net::GetLocalAddress6()
+{
+   if (!m_local_resolved)
    {
-      if (!m_local_resolved)
-      {
-         ResolveLocal();
-      }
-      return m_local_addr6;
+      ResolveLocal();
    }
+   return m_local_addr6;
+}
 
-   string net::Sa2String(struct sockaddr *sa)
+string net::Sa2String(struct sockaddr *sa)
+{
+   if (sa -> sa_family == AF_INET6)
    {
-      if (sa -> sa_family == AF_INET6)
-      {
-         struct sockaddr_in6 *sa6 = (struct sockaddr_in6 *)sa;
-         string tmp;
-         convert(tmp, sa6 -> sin6_addr);
-         return tmp + ":" + ::str::from(ntohs(sa6 -> sin6_port));
-      }
-      if (sa -> sa_family == AF_INET)
-      {
-         struct sockaddr_in *sa4 = (struct sockaddr_in *)sa;
-         string tmp;
-         convert(tmp, sa4 -> sin_addr);
-         return tmp + ":" + ::str::from(ntohs(sa4 -> sin_port));
-      }
-      return "";
+      struct sockaddr_in6 *sa6 = (struct sockaddr_in6 *)sa;
+      string tmp;
+      convert(tmp, sa6 -> sin6_addr);
+      return tmp + ":" + ::str::from(ntohs(sa6 -> sin6_port));
    }
-
-
-   /*
-   ::net::address net::CreateAddress(struct sockaddr *sa,socklen_t sa_len)
+   if (sa -> sa_family == AF_INET)
    {
-      retur
-      switch (sa -> sa_family)
-      {
-      case AF_INET:
-         if (sa_len == sizeof(struct sockaddr_in))
-         {
-            struct sockaddr_in *p = (struct sockaddr_in *)sa;
-            ::sockets::address_sp addr;
-            addr(new ::sockets::ipv4_address(get_app(), *p));
-            return addr;
-         }
-         break;
-      case AF_INET6:
-         if (sa_len == sizeof(struct sockaddr_in6))
-         {
-            struct sockaddr_in6 *p = (struct sockaddr_in6 *)sa;
-            ::sockets::address_sp addr;
-            addr(new ::sockets::ipv6_address(get_app(), *p));
-            return addr;
-         }
-         break;
-      }
-      return ::sockets::address_sp();
+      struct sockaddr_in *sa4 = (struct sockaddr_in *)sa;
+      string tmp;
+      convert(tmp, sa4 -> sin_addr);
+      return tmp + ":" + ::str::from(ntohs(sa4 -> sin_port));
    }
-   */
+   return "";
+}
+
+
+/*
+::net::address net::CreateAddress(struct sockaddr *sa,socklen_t sa_len)
+{
+   retur
+   switch (sa -> sa_family)
+   {
+   case AF_INET:
+      if (sa_len == sizeof(struct sockaddr_in))
+      {
+         struct sockaddr_in *p = (struct sockaddr_in *)sa;
+         ::sockets::address_sp addr;
+         addr(new ::sockets::ipv4_address(get_app(), *p));
+         return addr;
+      }
+      break;
+   case AF_INET6:
+      if (sa_len == sizeof(struct sockaddr_in6))
+      {
+         struct sockaddr_in6 *p = (struct sockaddr_in6 *)sa;
+         ::sockets::address_sp addr;
+         addr(new ::sockets::ipv6_address(get_app(), *p));
+         return addr;
+      }
+      break;
+   }
+   return ::sockets::address_sp();
+}
+*/
 
 /*   bool net::convert(in_addr & sa, const string & host, int32_t ai_flags)
    {
@@ -666,532 +665,534 @@ namespace sockets
    }*/
 
 
-   bool net::convert(struct in6_addr & sa, const string & host, int32_t ai_flags)
+bool net::convert(struct in6_addr & sa, const string & host, int32_t ai_flags)
+{
+
+
+   if (from_string(sa, host))
    {
 
+      return true;
 
-      if (from_string(sa, host))
-      {
-
-         return true;
-
-      }
+   }
 
 
-      memset(&sa, 0, sizeof(sa));
+   memset(&sa, 0, sizeof(sa));
 #ifdef WINDOWS
 #else
-      sa.sin6_family = AF_INET6;
+   //sa.sin6_family = AF_INET6;
 #endif
 #ifdef NO_GETADDRINFO
-      if ((ai_flags & AI_NUMERICHOST) != 0 || isipv6(host))
+   if ((ai_flags & AI_NUMERICHOST) != 0 || isipv6(host))
+   {
+      //         list<string> vec;
+      index x = 0;
+      for (index i = 0; i <= host.get_length(); i++)
       {
-         //         list<string> vec;
-         index x = 0;
-         for (index i = 0; i <= host.get_length(); i++)
+         if (i == host.get_length() || host[i] == ':')
          {
-            if (i == host.get_length() || host[i] == ':')
+            string s = host.Mid(x, i - x);
+            //
+            if (strstr(s,".")) // x.x.x.x
             {
-               string s = host.Mid(x, i - x);
-               //
-               if (strstr(s,".")) // x.x.x.x
-               {
-                  Parse pa(s,".");
-                  char slask[100]; // u2ip temporary hgenstring conversion
-                  unsigned long b0 = static_cast<unsigned long>(pa.getvalue());
-                  unsigned long b1 = static_cast<unsigned long>(pa.getvalue());
-                  unsigned long b2 = static_cast<unsigned long>(pa.getvalue());
-                  unsigned long b3 = static_cast<unsigned long>(pa.getvalue());
-                  sprintf(slask,"%lx",b0 * 256 + b1);
-                  vec.push_back(slask);
-                  sprintf(slask,"%lx",b2 * 256 + b3);
-                  vec.push_back(slask);
-               }
-               else
-               {
-                  vec.push_back(s);
-               }
-               //
-               x = i + 1;
-            }
-         }
-         index sz = vec.get_length(); // number of byte pairs
-         index i = 0; // index in in6_addr.in6_u.u6_addr16[] ( 0 .. 7 )
-         uint16_t addr16[8];
-         for (list<string>::iterator it = vec.begin(); it != vec.end(); it++)
-         {
-            string bytepair = *it;
-            if (bytepair.get_length())
-            {
-               addr16[i++] = htons(net::hgenunsigned(bytepair));
+               Parse pa(s,".");
+               char slask[100]; // u2ip temporary hgenstring conversion
+               unsigned long b0 = static_cast<unsigned long>(pa.getvalue());
+               unsigned long b1 = static_cast<unsigned long>(pa.getvalue());
+               unsigned long b2 = static_cast<unsigned long>(pa.getvalue());
+               unsigned long b3 = static_cast<unsigned long>(pa.getvalue());
+               sprintf(slask,"%lx",b0 * 256 + b1);
+               vec.push_back(slask);
+               sprintf(slask,"%lx",b2 * 256 + b3);
+               vec.push_back(slask);
             }
             else
             {
+               vec.push_back(s);
+            }
+            //
+            x = i + 1;
+         }
+      }
+      index sz = vec.get_length(); // number of byte pairs
+      index i = 0; // index in in6_addr.in6_u.u6_addr16[] ( 0 .. 7 )
+      uint16_t addr16[8];
+      for (list<string>::iterator it = vec.begin(); it != vec.end(); it++)
+      {
+         string bytepair = *it;
+         if (bytepair.get_length())
+         {
+            addr16[i++] = htons(net::hgenunsigned(bytepair));
+         }
+         else
+         {
+            addr16[i++] = 0;
+            while (sz++ < 8)
+            {
                addr16[i++] = 0;
-               while (sz++ < 8)
-               {
-                  addr16[i++] = 0;
-               }
             }
          }
-         memcpy(&sa.sin6_addr, addr16, sizeof(addr16));
-         return true;
       }
-#ifdef SOLARIS
-      int32_t errnum = 0;
-      struct hostent *he = getipnodebyname( host, AF_INET6, 0, &errnum );
-#else
-      struct hostent *he = gethostbyname2( host, AF_INET6 );
-#endif
-      if (!he)
-      {
-         return false;
-      }
-      memcpy(&sa.sin6_addr,he -> h_addr_list[0],he -> h_length);
-#ifdef SOLARIS
-      free(he);
-#endif
+      memcpy(&sa.sin6_addr, addr16, sizeof(addr16));
       return true;
+   }
+#ifdef SOLARIS
+   int32_t errnum = 0;
+   struct hostent *he = getipnodebyname( host, AF_INET6, 0, &errnum );
 #else
-      struct addrinfo hints;
-      memset(&hints, 0, sizeof(hints));
-      hints.ai_flags = ai_flags;
-      hints.ai_family = AF_INET6;
-      hints.ai_socktype = SOCK_STREAM;
-      hints.ai_protocol = IPPROTO_TCP;
-      struct addrinfo *res;
-      if (net::isipv6(host))
-         hints.ai_flags |= AI_NUMERICHOST;
-      int32_t n = getaddrinfo(host, NULL, &hints, &res);
-      if (!n)
+   struct hostent *he = gethostbyname2( host, AF_INET6 );
+#endif
+   if (!he)
+   {
+      return false;
+   }
+   memcpy(&sa.sin6_addr,he -> h_addr_list[0],he -> h_length);
+#ifdef SOLARIS
+   free(he);
+#endif
+   return true;
+#else
+   struct addrinfo hints;
+   memset(&hints, 0, sizeof(hints));
+   hints.ai_flags = ai_flags;
+   hints.ai_family = AF_INET6;
+   hints.ai_socktype = SOCK_STREAM;
+   hints.ai_protocol = IPPROTO_TCP;
+   struct addrinfo *res;
+   if (net::isipv6(host))
+      hints.ai_flags |= AI_NUMERICHOST;
+   int32_t n = getaddrinfo(host, NULL, &hints, &res);
+   if (!n)
+   {
+
+      array <  sockaddr_in6 * > addra;
+      struct addrinfo *ai = res;
+      int iSaSize = sizeof(sockaddr_in6);
+      //char ipstringbuffer[46];
+      DWORD ipbufferlength = 46;
+      while (ai)
       {
-         
-         array <  sockaddr_in6 * > addra;
-         struct addrinfo *ai = res;
-         int iSaSize = sizeof(sockaddr_in6);
-         char ipstringbuffer[46];
-         DWORD ipbufferlength = 46;
-         while (ai)
-         {
-            // The buffer length is changed by each call to WSAAddresstoString
-            // So we need to set it for each iteration through the loop for safety
-            if (ai -> ai_addrlen == iSaSize)
-               addra.add((sockaddr_in6 *)ai->ai_addr);
-            ai = ai -> ai_next;
-         }
-         if(addra.is_empty())
-            return false;
-         memcpy(&sa, &::lemon::array::pick_random(addra)->sin6_addr, sizeof(sa));
-         freeaddrinfo(res);
-         return true;
+         // The buffer length is changed by each call to WSAAddresstoString
+         // So we need to set it for each iteration through the loop for safety
+         if (ai -> ai_addrlen == iSaSize)
+            addra.add((sockaddr_in6 *)ai->ai_addr);
+         ai = ai -> ai_next;
       }
-      string error = "Error: ";
+      if(addra.is_empty())
+         return false;
+      memcpy(&sa, &::lemon::array::pick_random(addra)->sin6_addr, sizeof(sa));
+      freeaddrinfo(res);
+      return true;
+   }
+   string error = "Error: ";
 #ifndef __CYGWIN__
-      error += gai_strerror(n);
+   error += gai_strerror(n);
 #endif
-      return false;
+   return false;
 #endif // NO_GETADDRINFO
 
+}
+
+
+bool net::reverse(string & number, const string & hostname, int32_t flags)
+{
+
+   ::net::address address(hostname);
+
+   number = address.get_display_number();
+
+   return true;
+
+}
+
+
+bool net::reverse(struct sockaddr *sa, socklen_t sa_len, string & hostname, int32_t flags)
+{
+   string service;
+   return reverse(sa, sa_len, hostname, service, flags);
+}
+
+
+bool net::reverse(struct sockaddr *sa, socklen_t sa_len, string & hostname, string & service, int32_t flags)
+{
+
+   single_lock sl(&m_mutexCache,true);
+   reverse_cache_item item;
+   string strIpString;
+
+   strIpString = *(sockaddr *)sa;
+
+   if(m_mapReverseCache.Lookup(strIpString,item) && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (11 * ((84 + 77) * 1000)))))
+   {
+      hostname = item.m_strReverse;
+      return item.r;
+   }
+   else
+   {
+      item.m_ipaddr = *((in_addr*)sa->sa_data);
    }
 
 
-   bool net::reverse(string & number, const string & hostname, int32_t flags)
-   {
-
-      ::net::address address(hostname);
-
-      number = address.get_display_number();
-
-      return true;
-
-   }
-
-
-   bool net::reverse(struct sockaddr *sa, socklen_t sa_len, string & hostname, int32_t flags)
-   {
-      string service;
-      return reverse(sa, sa_len, hostname, service, flags);
-   }
-
-
-   bool net::reverse(struct sockaddr *sa, socklen_t sa_len, string & hostname, string & service, int32_t flags)
-   {
-
-      single_lock sl(&m_mutexCache,true);
-      reverse_cache_item item;
-      string strIpString;
-      
-      strIpString = *(sockaddr *)sa;
-
-      if(m_mapReverseCache.Lookup(strIpString,item) && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (11 * ((84 + 77) * 1000)))))
-      {
-         hostname = item.m_strReverse;
-         return item.r;
-      }
-      else
-      {
-         item.m_ipaddr = *((in_addr*)sa->sa_data);
-      }
-
-
-      hostname = "";
-      service = "";
+   hostname = "";
+   service = "";
 #ifdef NO_GETADDRINFO
-      switch (sa -> sa_family)
-      {
-      case AF_INET:
-         if (flags & NI_NUMERICHOST)
-         {
-            union {
-               struct {
-                  uchar b1;
-                  uchar b2;
-                  uchar b3;
-                  uchar b4;
-               } a;
-               ipaddr_t l;
-            } u;
-            struct sockaddr_in *sa_in = (struct sockaddr_in *)sa;
-            memcpy(&u.l, &sa_in -> sin_addr, sizeof(u.l));
-            char tmp[100];
-            sprintf(tmp, "%u.%u.%u.%u", u.a.b1, u.a.b2, u.a.b3, u.a.b4);
-            hostname = tmp;
-            return true;
-         }
-         else
-         {
-            struct sockaddr_in *sa_in = (struct sockaddr_in *)sa;
-            struct hostent *h = gethostbyaddr( (const char *)&sa_in -> sin_addr, sizeof(sa_in -> sin_addr), AF_INET);
-            if (h)
-            {
-               hostname = h -> h_name;
-               return true;
-            }
-         }
-         break;
-#ifdef ENABLE_IPV6
-      case AF_INET6:
-         if (flags & NI_NUMERICHOST)
-         {
-            char slask[100]; // l2ip temporary
-            *slask = 0;
-            uint32_t prev = 0;
-            bool skipped = false;
-            bool ok_to_skip = true;
-            {
-               uint16_t addr16[8];
-               struct sockaddr_in6 *sa_in6 = (struct sockaddr_in6 *)sa;
-               memcpy(addr16, &sa_in6 -> sin6_addr, sizeof(addr16));
-               for (index i = 0; i < 8; i++)
-               {
-                  uint16_t x = ntohs(addr16[i]);
-                  if (*slask && (x || !ok_to_skip || prev))
-                     strcat(slask,":");
-                  if (x || !ok_to_skip)
-                  {
-                     sprintf(slask + strlen(slask),"%x", x);
-                     if (x && skipped)
-                        ok_to_skip = false;
-                  }
-                  else
-                  {
-                     skipped = true;
-                  }
-                  prev = x;
-               }
-            }
-            if (!*slask)
-               strcpy(slask, "::");
-            hostname = slask;
-            return true;
-         }
-         else
-         {
-            // %! TODO: ipv6 reverse lookup
-            struct sockaddr_in6 *sa_in = (struct sockaddr_in6 *)sa;
-            struct hostent *h = gethostbyaddr( (const char *)&sa_in -> sin6_addr, sizeof(sa_in -> sin6_addr), AF_INET6);
-            if (h)
-            {
-               hostname = h -> h_name;
-               return true;
-            }
-         }
-         break;
-#endif
-      }
-      return false;
-#else
-      char host[NI_MAXHOST];
-      char serv[NI_MAXSERV];
-      // NI_NOFQDN
-      // NI_NUMERICHOST
-      // NI_NAMEREQD
-      // NI_NUMERICSERV
-      // NI_DGRAM
-      int32_t n = getnameinfo(sa, sa_len, host, sizeof(host), serv, sizeof(serv), flags);
-      if (n)
-      {
-         // EAI_AGAIN
-         // EAI_BADFLAGS
-         // EAI_FAIL
-         // EAI_FAMILY
-         // EAI_MEMORY
-         // EAI_NONAME
-         // EAI_OVERFLOW
-         // EAI_SYSTEM
-         return false;
-      }
-      hostname = host;
-      service = serv;
-      item.m_strReverse = hostname;
-      item.m_dwLastChecked = ::get_tick_count();
-      m_mapReverseCache.set_at(strIpString,item);
-
-      return true;
-#endif // NO_GETADDRINFO
-   }
-
-   string net::reverse_name(const ::net::address & address)
+   switch (sa -> sa_family)
    {
-
-      string strHostname;
-
-      reverse((sockaddr *) &address.u.m_sa,sizeof(address.u.m_sa), strHostname, 0);
-
-      return strHostname;
-
-   }
-
-
-   string net::reverse_name(const string & strAddress)
-   {
-
-      ::net::address address(strAddress);
-
-      return reverse_name(address);
-
-   }
-
-
-
-   bool net::u2service(const string & name, int32_t& service, int32_t ai_flags)
-   {
-
-#ifdef NO_GETADDRINFO
-      // %!
-      return false;
-#else
-      struct addrinfo hints;
-      service = 0;
-      memset(&hints, 0, sizeof(hints));
-      // AI_NUMERICHOST
-      // AI_CANONNAME
-      // AI_PASSIVE - server
-      // AI_ADDRCONFIG
-      // AI_V4MAPPED
-      // AI_ALL
-      // AI_NUMERICSERV
-      hints.ai_flags = ai_flags;
-      hints.ai_family = AF_UNSPEC;
-      hints.ai_socktype = 0;
-      hints.ai_protocol = 0;
-      struct addrinfo *res;
-      int32_t n = getaddrinfo(NULL, name, &hints, &res);
-      if (!n)
+   case AF_INET:
+      if (flags & NI_NUMERICHOST)
       {
-         service = res -> ai_protocol;
-         freeaddrinfo(res);
+         union
+         {
+            struct
+            {
+               uchar b1;
+               uchar b2;
+               uchar b3;
+               uchar b4;
+            } a;
+            ipaddr_t l;
+         } u;
+         struct sockaddr_in *sa_in = (struct sockaddr_in *)sa;
+         memcpy(&u.l, &sa_in -> sin_addr, sizeof(u.l));
+         char tmp[100];
+         sprintf(tmp, "%u.%u.%u.%u", u.a.b1, u.a.b2, u.a.b3, u.a.b4);
+         hostname = tmp;
          return true;
       }
-      return false;
-#endif // NO_GETADDRINFO
-
-   }
-
-
-   int32_t net::service_port(const string & str, int32_t flags)
-   {
-
-      if(::str::is_simple_natural(str))
-         return ::str::to_int(str);
-
-      if(str.compare_ci("http"))
+      else
       {
-         return 80;
+         struct sockaddr_in *sa_in = (struct sockaddr_in *)sa;
+         struct hostent *h = gethostbyaddr( (const char *)&sa_in -> sin_addr, sizeof(sa_in -> sin_addr), AF_INET);
+         if (h)
+         {
+            hostname = h -> h_name;
+            return true;
+         }
       }
-      else if(str.compare_ci("https"))
+      break;
+#ifdef ENABLE_IPV6
+   case AF_INET6:
+      if (flags & NI_NUMERICHOST)
       {
-         return 443;
+         char slask[100]; // l2ip temporary
+         *slask = 0;
+         uint32_t prev = 0;
+         bool skipped = false;
+         bool ok_to_skip = true;
+         {
+            uint16_t addr16[8];
+            struct sockaddr_in6 *sa_in6 = (struct sockaddr_in6 *)sa;
+            memcpy(addr16, &sa_in6 -> sin6_addr, sizeof(addr16));
+            for (index i = 0; i < 8; i++)
+            {
+               uint16_t x = ntohs(addr16[i]);
+               if (*slask && (x || !ok_to_skip || prev))
+                  strcat(slask,":");
+               if (x || !ok_to_skip)
+               {
+                  sprintf(slask + strlen(slask),"%x", x);
+                  if (x && skipped)
+                     ok_to_skip = false;
+               }
+               else
+               {
+                  skipped = true;
+               }
+               prev = x;
+            }
+         }
+         if (!*slask)
+            strcpy(slask, "::");
+         hostname = slask;
+         return true;
       }
       else
       {
-
-         int32_t service = 0;
-
-         if(!u2service(str, service, 0))
-            return 0;
-
-         return service;
-
+         // %! TODO: ipv6 reverse lookup
+         struct sockaddr_in6 *sa_in = (struct sockaddr_in6 *)sa;
+         struct hostent *h = gethostbyaddr( (const char *)&sa_in -> sin6_addr, sizeof(sa_in -> sin6_addr), AF_INET6);
+         if (h)
+         {
+            hostname = h -> h_name;
+            return true;
+         }
       }
+      break;
+#endif
+   }
+   return false;
+#else
+   char host[NI_MAXHOST];
+   char serv[NI_MAXSERV];
+   // NI_NOFQDN
+   // NI_NUMERICHOST
+   // NI_NAMEREQD
+   // NI_NUMERICSERV
+   // NI_DGRAM
+   int32_t n = getnameinfo(sa, sa_len, host, sizeof(host), serv, sizeof(serv), flags);
+   if (n)
+   {
+      // EAI_AGAIN
+      // EAI_BADFLAGS
+      // EAI_FAIL
+      // EAI_FAMILY
+      // EAI_MEMORY
+      // EAI_NONAME
+      // EAI_OVERFLOW
+      // EAI_SYSTEM
+      return false;
+   }
+   hostname = host;
+   service = serv;
+   item.m_strReverse = hostname;
+   item.m_dwLastChecked = ::get_tick_count();
+   m_mapReverseCache.set_at(strIpString,item);
+
+   return true;
+#endif // NO_GETADDRINFO
+}
+
+string net::reverse_name(const ::net::address & address)
+{
+
+   string strHostname;
+
+   reverse((sockaddr *) &address.u.m_sa,sizeof(address.u.m_sa), strHostname, 0);
+
+   return strHostname;
+
+}
+
+
+string net::reverse_name(const string & strAddress)
+{
+
+   ::net::address address(strAddress);
+
+   return reverse_name(address);
+
+}
+
+
+
+bool net::u2service(const string & name, int32_t& service, int32_t ai_flags)
+{
+
+#ifdef NO_GETADDRINFO
+   // %!
+   return false;
+#else
+   struct addrinfo hints;
+   service = 0;
+   memset(&hints, 0, sizeof(hints));
+   // AI_NUMERICHOST
+   // AI_CANONNAME
+   // AI_PASSIVE - server
+   // AI_ADDRCONFIG
+   // AI_V4MAPPED
+   // AI_ALL
+   // AI_NUMERICSERV
+   hints.ai_flags = ai_flags;
+   hints.ai_family = AF_UNSPEC;
+   hints.ai_socktype = 0;
+   hints.ai_protocol = 0;
+   struct addrinfo *res;
+   int32_t n = getaddrinfo(NULL, name, &hints, &res);
+   if (!n)
+   {
+      service = res -> ai_protocol;
+      freeaddrinfo(res);
+      return true;
+   }
+   return false;
+#endif // NO_GETADDRINFO
+
+}
+
+
+int32_t net::service_port(const string & str, int32_t flags)
+{
+
+   if(::str::is_simple_natural(str))
+      return ::str::to_int(str);
+
+   if(str.compare_ci("http"))
+   {
+      return 80;
+   }
+   else if(str.compare_ci("https"))
+   {
+      return 443;
+   }
+   else
+   {
+
+      int32_t service = 0;
+
+      if(!u2service(str, service, 0))
+         return 0;
+
+      return service;
 
    }
 
+}
 
-   string  net::service_name(int32_t iPort, int32_t flags)
+
+string  net::service_name(int32_t iPort, int32_t flags)
+{
+
+   switch(iPort)
    {
-
-      switch(iPort)
-      {
-      case 80:
-         return "http";
-      case 443:
-         return "https";
-      default:
-         return "";
-      }
-
+   case 80:
+      return "http";
+   case 443:
+      return "https";
+   default:
+      return "";
    }
 
-   string net::canonical_name(const ::net::address & address)
+}
+
+string net::canonical_name(const ::net::address & address)
+{
+
+   string str;
+
+   if(address.is_ipv4())
    {
-
-      string str;
-
-      if(address.is_ipv4())
-      {
-         ::sockets::net::convert(str, address.u.m_addr.sin_addr);
-      }
-      else if(address.is_ipv6())
-      {
-         ::sockets::net::convert(str, address.u.m_addr6.sin6_addr);
-      }
-
-      return str;
-
+      ::sockets::net::convert(str, address.u.m_addr.sin_addr);
+   }
+   else if(address.is_ipv6())
+   {
+      ::sockets::net::convert(str, address.u.m_addr6.sin6_addr);
    }
 
+   return str;
 
-   string net::service_name(const ::net::address & address)
-   {
-
-      return service_name(address.get_service_number());
-
-   }
+}
 
 
-   net::dns_cache_item::dns_cache_item()
-   {
+string net::service_name(const ::net::address & address)
+{
 
-      ZERO(m_ipaddr);
-      m_dwLastChecked = 0;
-      r = false;
-      m_bTimeout = true;
-   }
+   return service_name(address.get_service_number());
+
+}
 
 
-   net::dns_cache_item::dns_cache_item(const dns_cache_item & item)
-   {
+net::dns_cache_item::dns_cache_item()
+{
 
-      this->operator = (item);
-
-   }
-
-
-   void net::dns_cache_item::write(::file::ostream & ostream) const
-   {
-
-      ostream.write(&m_ipaddr, sizeof(m_ipaddr));
-      ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
-      ostream.write(&r,sizeof(r));
-      ostream.write(&m_bTimeout,sizeof(m_bTimeout));
-
-   }
+   ZERO(m_ipaddr);
+   m_dwLastChecked = 0;
+   r = false;
+   m_bTimeout = true;
+}
 
 
-   void net::dns_cache_item::read(::file::istream & istream)
-   {
+net::dns_cache_item::dns_cache_item(const dns_cache_item & item)
+{
 
-      istream.read(&m_ipaddr,sizeof(m_ipaddr));
-      istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
-      istream.read(&r,sizeof(r));
-      istream.read(&m_bTimeout,sizeof(m_bTimeout));
+   this->operator = (item);
 
-   }
+}
 
 
-   net::dns_cache_item & net::dns_cache_item::operator = (const dns_cache_item & item)
-   {
+void net::dns_cache_item::write(::file::ostream & ostream) const
+{
 
-      if(this==&item)
-         return *this;
+   ostream.write(&m_ipaddr, sizeof(m_ipaddr));
+   ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
+   ostream.write(&r,sizeof(r));
+   ostream.write(&m_bTimeout,sizeof(m_bTimeout));
 
-      memcpy(&m_ipaddr,&item.m_ipaddr,sizeof(m_ipaddr));
-      m_dwLastChecked = item.m_dwLastChecked;
-      r = item.r;
-      m_bTimeout = item.m_bTimeout;
+}
 
+
+void net::dns_cache_item::read(::file::istream & istream)
+{
+
+   istream.read(&m_ipaddr,sizeof(m_ipaddr));
+   istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
+   istream.read(&r,sizeof(r));
+   istream.read(&m_bTimeout,sizeof(m_bTimeout));
+
+}
+
+
+net::dns_cache_item & net::dns_cache_item::operator = (const dns_cache_item & item)
+{
+
+   if(this==&item)
       return *this;
 
-   }
+   memcpy(&m_ipaddr,&item.m_ipaddr,sizeof(m_ipaddr));
+   m_dwLastChecked = item.m_dwLastChecked;
+   r = item.r;
+   m_bTimeout = item.m_bTimeout;
+
+   return *this;
+
+}
 
 
-   net::reverse_cache_item::reverse_cache_item()
-   {
+net::reverse_cache_item::reverse_cache_item()
+{
 
-      ZERO(m_ipaddr);
-      m_dwLastChecked = 0;
-      r = false;
-      m_bTimeout = true;
+   ZERO(m_ipaddr);
+   m_dwLastChecked = 0;
+   r = false;
+   m_bTimeout = true;
 
-   }
-
-
-   net::reverse_cache_item::reverse_cache_item(const reverse_cache_item & item)
-   {
-
-      this->operator = (item);
-
-   }
-
-   void net::reverse_cache_item::write(::file::ostream & ostream) const
-   {
-
-      ostream.write(&m_ipaddr,sizeof(m_ipaddr));
-      ostream.write(m_strReverse);
-      ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
-      ostream.write(&r,sizeof(r));
-      ostream.write(&m_bTimeout,sizeof(m_bTimeout));
-
-   }
+}
 
 
-   void net::reverse_cache_item::read(::file::istream & istream)
-   {
+net::reverse_cache_item::reverse_cache_item(const reverse_cache_item & item)
+{
 
-      istream.read(&m_ipaddr,sizeof(m_ipaddr));
-      istream.read(m_strReverse);
-      istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
-      istream.read(&r,sizeof(r));
-      istream.read(&m_bTimeout,sizeof(m_bTimeout));
-   }
+   this->operator = (item);
+
+}
+
+void net::reverse_cache_item::write(::file::ostream & ostream) const
+{
+
+   ostream.write(&m_ipaddr,sizeof(m_ipaddr));
+   ostream.write(m_strReverse);
+   ostream.write(&m_dwLastChecked,sizeof(m_dwLastChecked));
+   ostream.write(&r,sizeof(r));
+   ostream.write(&m_bTimeout,sizeof(m_bTimeout));
+
+}
 
 
-   net::reverse_cache_item & net::reverse_cache_item::operator = (const reverse_cache_item & item)
-   {
+void net::reverse_cache_item::read(::file::istream & istream)
+{
 
-      if(this==&item)
-         return *this;
+   istream.read(&m_ipaddr,sizeof(m_ipaddr));
+   istream.read(m_strReverse);
+   istream.read(&m_dwLastChecked,sizeof(m_dwLastChecked));
+   istream.read(&r,sizeof(r));
+   istream.read(&m_bTimeout,sizeof(m_bTimeout));
+}
 
-      memcpy(&m_ipaddr, &item.m_ipaddr, sizeof(m_ipaddr));
-      m_dwLastChecked = item.m_dwLastChecked;
-      m_strReverse = item.m_strReverse;
-      r = item.r;
-      m_bTimeout = item.m_bTimeout;
 
+net::reverse_cache_item & net::reverse_cache_item::operator = (const reverse_cache_item & item)
+{
+
+   if(this==&item)
       return *this;
 
-   }
+   memcpy(&m_ipaddr, &item.m_ipaddr, sizeof(m_ipaddr));
+   m_dwLastChecked = item.m_dwLastChecked;
+   m_strReverse = item.m_strReverse;
+   r = item.r;
+   m_bTimeout = item.m_bTimeout;
+
+   return *this;
+
+}
 
 
 } // namespace sockets

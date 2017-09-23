@@ -490,25 +490,14 @@ namespace aura
    }
 
 
-   bool application::process_command(::aura::main_init_data * pdata)
+   bool application::process_command(::command::command * pdata)
    {
 
       m_pcommand = pdata;
 
-      //if(m_pmaininitdata != NULL && m_pimpl->is_system())
-      //ASSERT(pdata->m_hPrevInstance == NULL);
-
-      string strCmdLine = pdata->m_strCommandLine;
-
-      System.m_strCmdLine = strCmdLine;
-      //System.m_nCmdShow = pdata->;
-
-
       SetCurrentHandles();
 
       __init_thread();
-
-      return true;
 
       return true;
 

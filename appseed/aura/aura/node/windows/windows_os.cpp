@@ -2,16 +2,17 @@
 #include <wincred.h>
 #include <wtsapi32.h>
 
+#include <shobjidl.h>
 
 CREDUIAPI
 BOOL
 WINAPI
 CredPackAuthenticationBufferWfoo(
-_In_ DWORD                                      dwFlags,
-_In_ LPWSTR                                     pszUserName,
-_In_ LPWSTR                                     pszPassword,
-_Out_writes_bytes_opt_(*pcbPackedCredentials) PBYTE   pPackedCredentials,
-_Inout_ DWORD*                                  pcbPackedCredentials
+   _In_ DWORD                                      dwFlags,
+   _In_ LPWSTR                                     pszUserName,
+   _In_ LPWSTR                                     pszPassword,
+   _Out_writes_bytes_opt_(*pcbPackedCredentials) PBYTE   pPackedCredentials,
+   _Inout_ DWORD*                                  pcbPackedCredentials
 );
 
 
@@ -39,9 +40,9 @@ namespace windows
 
    string os::get_command_line()
    {
-      
+
       return GetCommandLineW();
-      
+
    }
 
 
@@ -51,7 +52,7 @@ namespace windows
       HANDLE hToken;
       TOKEN_PRIVILEGES tkp;
       if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+                            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
          return false;
       LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
       tkp.PrivilegeCount = 1;
@@ -73,7 +74,7 @@ namespace windows
       HANDLE hToken;
       TOKEN_PRIVILEGES tkp;
       if (!OpenProcessToken(GetCurrentProcess(),
-         TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+                            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
          return false;
       if(!LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
       {
@@ -114,7 +115,7 @@ namespace windows
          TRACELASTERROR();
          return false;
       }
-      /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE, 
+      /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
       SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
       {
       DWORD dwLastError = ::GetLastError();
@@ -132,14 +133,14 @@ namespace windows
       while(get_pid_by_title(pszName, dwPid))
       {
          HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-            PROCESS_VM_READ,
-            FALSE, dwPid );
+                                        PROCESS_VM_READ,
+                                        FALSE, dwPid );
          TerminateProcess(hProcess, (UINT) -1);
          CloseHandle(hProcess);
          /*::EnumWindows((WNDENUMPROC)
-         CKillProcessHelper::TerminateAppEnum, 
+         CKillProcessHelper::TerminateAppEnum,
          (LPARAM) dwId);
-         // Wait on the handle. If it signals, great. 
+         // Wait on the handle. If it signals, great.
 
          //If it times out, then you kill it.
 
@@ -147,7 +148,7 @@ namespace windows
          !=WAIT_OBJECT_0)
          bResult = TerminateProcess(hProcess,0);
          else
-         bResult = TRUE; 
+         bResult = TRUE;
          CloseHandle(hProcess);
          return bResult == TRUE;*/
 
@@ -187,12 +188,12 @@ namespace windows
 
    int os::get_pid()
    {
-      
+
       return (int) ::GetCurrentProcessId();
 
    }
 
-   
+
 
 
    ::file::path os::get_process_path(DWORD dwPid)
@@ -200,8 +201,8 @@ namespace windows
       string strName = ":<unknown>";
       // get a handle to the process.
       HANDLE hProcess = OpenProcess( PROCESS_QUERY_INFORMATION |
-         PROCESS_VM_READ,
-         FALSE, dwPid );
+                                     PROCESS_VM_READ,
+                                     FALSE, dwPid );
 
       // get the process name.
 
@@ -210,8 +211,8 @@ namespace windows
          HMODULE hMod;
          DWORD cbNeeded;
 
-         if(EnumProcessModules( hProcess, &hMod, sizeof(hMod), 
-            &cbNeeded) )
+         if(EnumProcessModules( hProcess, &hMod, sizeof(hMod),
+                                &cbNeeded) )
          {
             strName = get_module_path(hMod);
          }
@@ -229,9 +230,9 @@ namespace windows
       {
          dwa.allocate(dwa.get_count() + 1024);
          if(!EnumProcesses(
-            (DWORD *) dwa.get_data(), 
-            (DWORD) (dwa.get_count() * sizeof(DWORD)),
-            &cbNeeded))
+                  (DWORD *) dwa.get_data(),
+                  (DWORD) (dwa.get_count() * sizeof(DWORD)),
+                  &cbNeeded))
          {
             return;
          }
@@ -246,9 +247,9 @@ namespace windows
       while(natural(wstrPath.get_length() + 1) == dwSize)
       {
          dwSize = ::GetModuleFileNameW(
-            hmodule,
-            wstrPath.alloc(dwSize + 1024),
-            (dwSize + 1024));
+                     hmodule,
+                     wstrPath.alloc(dwSize + 1024),
+                     (dwSize + 1024));
          wstrPath.release_buffer();
       }
       return ::str::international::unicode_to_utf8(wstrPath);
@@ -395,10 +396,10 @@ namespace windows
          if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
          {
 
-            keyPlugin.SetValue("Description", "core plugin for NPAPI");
+            keyPlugin.SetValue("Description", "ca2 plugin for NPAPI");
             keyPlugin.SetValue("Path", System.dir().ca2module() /"npca2.dll");
-            keyPlugin.SetValue("ProductName", "core plugin for NPAPI");
-            keyPlugin.SetValue("Vendor", "core Desenvolvimento de Software Ltda.");
+            keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
+            keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
             keyPlugin.SetValue("Version", Application.file().as_string(System.dir().element()/"appdata/x86/ca2_build.txt"));
 
             registry::Key keyApplicationCa2;
@@ -473,7 +474,6 @@ namespace windows
 
       string strExt;
 
-      strExt = ".";
       strExt += pszExtension;
 
       string strExtensionNamingClass(pszExtensionNamingClass);
@@ -482,16 +482,22 @@ namespace windows
       key.SetValue(NULL, strExtensionNamingClass);
 
       registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell", true);
-      keyLink3.SetValue(NULL, "open");
+      keyLink3.SetValue("", "open");
 
       registry::Key keyLink2(keyLink3, "open", true);
-      keyLink2.SetValue(NULL, "&Abrir");
+      keyLink2.SetValue("", "");
 
       registry::Key keyLink1(keyLink2, "command", true);
 
+      string strCommand(pszCommand);
+
+      strCommand = solve_relative_compressions(strCommand);
+
       string strFormat;
-      strFormat.Format("\"%s\" \"%%L\" %s", pszCommand, pszParam);
-      keyLink1.SetValue(NULL, strFormat);
+
+      strFormat.Format("\"%s\" %s", strCommand, pszParam);
+
+      keyLink1.SetValue("", strFormat);
 
       return true;
 
@@ -588,7 +594,8 @@ namespace windows
    // This is a helper function and is not part of the Windows Biometric
    // Framework API.
    //
-   struct TOKEN_INFO{
+   struct TOKEN_INFO
+   {
       TOKEN_USER tokenUser;
       BYTE buffer[SECURITY_MAX_SID_SIZE];
    };
@@ -603,9 +610,9 @@ namespace windows
       // Open the access token associated with the
       // current process
       if(!OpenProcessToken(
-         GetCurrentProcess(),            // Process handle
-         TOKEN_READ,                     // Read access only
-         &tokenHandle))                  // Access token handle
+               GetCurrentProcess(),            // Process handle
+               TOKEN_READ,                     // Read access only
+               &tokenHandle))                  // Access token handle
       {
          DWORD win32Status = GetLastError();
          debug_print("Cannot open token handle: %d\n",win32Status);
@@ -618,11 +625,11 @@ namespace windows
       // Retrieve information about the access token. In this case,
       // retrieve a SID.
       if(!GetTokenInformation(
-         tokenHandle,                    // Access token handle
-         TokenUser,                      // User for the token
-         &tokenInfo.tokenUser,     // Buffer to fill
-         sizeof(tokenInfo),        // Size of the buffer
-         &bytesReturned))                // Size needed
+               tokenHandle,                    // Access token handle
+               TokenUser,                      // User for the token
+               &tokenInfo.tokenUser,     // Buffer to fill
+               sizeof(tokenInfo),        // Size of the buffer
+               &bytesReturned))                // Size needed
       {
          DWORD win32Status = GetLastError();
          debug_print("Cannot query token information: %d\n",win32Status);
@@ -637,11 +644,11 @@ namespace windows
       return bOk;
    }
    BOOL
-      GetAccountSid(
+   GetAccountSid(
       LPTSTR SystemName,
       LPTSTR AccountName,
       PSID *Sid
-      )
+   )
    {
       LPTSTR ReferencedDomain=NULL;
       DWORD cbSid=128;    // initial allocation attempt
@@ -649,72 +656,78 @@ namespace windows
       SID_NAME_USE peUse;
       BOOL bSuccess=FALSE; // assume this function will fail
 
-      __try {
+      __try
+      {
 
-         // 
+         //
          // initial memory allocations
-         // 
+         //
          if((*Sid=HeapAlloc(
-            GetProcessHeap(),
-            0,
-            cbSid
-            )) == NULL) __leave;
+                     GetProcessHeap(),
+                     0,
+                     cbSid
+                  )) == NULL) __leave;
 
          if((ReferencedDomain=(LPTSTR)HeapAlloc(
-            GetProcessHeap(),
-            0,
-            cchReferencedDomain * sizeof(TCHAR)
-            )) == NULL) __leave;
+                                 GetProcessHeap(),
+                                 0,
+                                 cchReferencedDomain * sizeof(TCHAR)
+                              )) == NULL) __leave;
 
-         // 
+         //
          // Obtain the SID of the specified account on the specified system.
-         // 
+         //
          while(!LookupAccountName(
-            SystemName,         // machine to lookup account on
-            AccountName,        // account to lookup
-            *Sid,               // SID of interest
-            &cbSid,             // size of SID
-            ReferencedDomain,   // domain account was found on
-            &cchReferencedDomain,
-            &peUse
-            )) {
-            if(GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-               // 
+                  SystemName,         // machine to lookup account on
+                  AccountName,        // account to lookup
+                  *Sid,               // SID of interest
+                  &cbSid,             // size of SID
+                  ReferencedDomain,   // domain account was found on
+                  &cchReferencedDomain,
+                  &peUse
+               ))
+         {
+            if(GetLastError() == ERROR_INSUFFICIENT_BUFFER)
+            {
+               //
                // reallocate memory
-               // 
+               //
                if((*Sid=HeapReAlloc(
-                  GetProcessHeap(),
-                  0,
-                  *Sid,
-                  cbSid
-                  )) == NULL) __leave;
+                           GetProcessHeap(),
+                           0,
+                           *Sid,
+                           cbSid
+                        )) == NULL) __leave;
 
                if((ReferencedDomain=(LPTSTR)HeapReAlloc(
-                  GetProcessHeap(),
-                  0,
-                  ReferencedDomain,
-                  cchReferencedDomain * sizeof(TCHAR)
-                  )) == NULL) __leave;
+                                       GetProcessHeap(),
+                                       0,
+                                       ReferencedDomain,
+                                       cchReferencedDomain * sizeof(TCHAR)
+                                    )) == NULL) __leave;
             }
             else __leave;
          }
 
-         // 
+         //
          // Indicate success.
-         // 
+         //
          bSuccess=TRUE;
 
       } // finally
-      __finally {
+      __finally
+      {
 
-         // 
+         //
          // Cleanup and indicate failure, if appropriate.
-         // 
+         //
 
          HeapFree(GetProcessHeap(),0,ReferencedDomain);
 
-         if(!bSuccess) {
-            if(*Sid != NULL) {
+         if(!bSuccess)
+         {
+            if(*Sid != NULL)
+            {
                HeapFree(GetProcessHeap(),0,*Sid);
                *Sid = NULL;
             }
@@ -750,9 +763,9 @@ namespace windows
    bool getCredentialsForService(::aura::application * papp, const string & strService,WCHAR * szUsername,WCHAR *szPassword)
    {
 
-      
 
-      
+
+
 
 
       HRESULT hr = S_OK;
@@ -793,7 +806,7 @@ namespace windows
 
       DWORD lenUserName = CREDUI_MAX_USERNAME_LENGTH + 1;
 
-         //::GetUserNameW(szUsername,&lenUserName);
+      //::GetUserNameW(szUsername,&lenUserName);
 
 
       DWORD dwLastError = 0;
@@ -836,14 +849,14 @@ namespace windows
 
       // Call CredPackAuthenticationBufferW once to determine the size,
       // in bytes, of the authentication buffer.
-      
+
       if(!LIBCALL(credui,CredPackAuthenticationBufferW)(
-         0,                // Reserved
-         szDomainAndUser,  // Domain\User name
-         szPassword,       // User Password
-         NULL,             // Packed credentials
-         &cbInAuthBlob)    // Size, in bytes, of credentials
-         && GetLastError() != ERROR_INSUFFICIENT_BUFFER)
+               0,                // Reserved
+               szDomainAndUser,  // Domain\User name
+               szPassword,       // User Password
+               NULL,             // Packed credentials
+               &cbInAuthBlob)    // Size, in bytes, of credentials
+            && GetLastError() != ERROR_INSUFFICIENT_BUFFER)
       {
          dwResult = GetLastError();
          debug_print("\n getCredentialsForService CredPackAuthenticationBufferW (1) failed: win32 error = 0x%x\n",dwResult);
@@ -862,11 +875,11 @@ namespace windows
       // Call CredPackAuthenticationBufferW again to retrieve the
       // authentication buffer.
       if(!LIBCALL(credui,CredPackAuthenticationBufferW)(
-         0,
-         szDomainAndUser,
-         szPassword,
-         (PBYTE)pvInAuthBlob,
-         &cbInAuthBlob))
+               0,
+               szDomainAndUser,
+               szPassword,
+               (PBYTE)pvInAuthBlob,
+               &cbInAuthBlob))
       {
          dwResult = GetLastError();
          debug_print("\n CredPackAuthenticationBufferW (2) failed: win32 error = 0x%x\n",dwResult);
@@ -887,23 +900,23 @@ namespace windows
 
       }
 
-   retry:
+retry:
 
       dwResult = LIBCALL(credui,CredUIPromptForWindowsCredentialsW)(
-         &ui,             // Customizing information
-         dwLastError,               // Error code to display
-         &ulAuthPackage,  // Authorization package
-         pvInAuthBlob,    // Credential byte array
-         cbInAuthBlob,    // Size of credential input buffer
-         &pvAuthBlob,     // Output credential byte array
-         &cbAuthBlob,     // Size of credential byte array
-         &fSave,          // Select the save check box.
-         //CREDUIWIN_SECURE_PROMPT |
-         CREDUIWIN_IN_CRED_ONLY |
-         CREDUIWIN_ENUMERATE_CURRENT_USER
-         );
+                    &ui,             // Customizing information
+                    dwLastError,               // Error code to display
+                    &ulAuthPackage,  // Authorization package
+                    pvInAuthBlob,    // Credential byte array
+                    cbInAuthBlob,    // Size of credential input buffer
+                    &pvAuthBlob,     // Output credential byte array
+                    &cbAuthBlob,     // Size of credential byte array
+                    &fSave,          // Select the save check box.
+                    //CREDUIWIN_SECURE_PROMPT |
+                    CREDUIWIN_IN_CRED_ONLY |
+                    CREDUIWIN_ENUMERATE_CURRENT_USER
+                 );
 
-      
+
       if(dwResult == NO_ERROR)
       {
 
@@ -912,15 +925,15 @@ namespace windows
          DWORD lenPass = maxLenPass;
 
          bOk = LIBCALL(credui, CredUnPackAuthenticationBufferW)(CRED_PACK_PROTECTED_CREDENTIALS,
-            pvAuthBlob,
-            cbAuthBlob,
-            szUsername,
-            &lenName,
-            szDomain,
-            &lenDomain,
-            szPassword,
-            &lenPass) != FALSE;
-      
+               pvAuthBlob,
+               cbAuthBlob,
+               szUsername,
+               &lenName,
+               szDomain,
+               &lenDomain,
+               szPassword,
+               &lenPass) != FALSE;
+
          SecureZeroMemory(pvAuthBlob,cbAuthBlob);
          CoTaskMemFree(pvAuthBlob);
          pvAuthBlob = NULL;
@@ -937,12 +950,12 @@ namespace windows
          ::GetUserNameExW(NameSamCompatible,szDomainAndUser,&l);
 
          bOk = LIBCALL(credui,CredUIParseUserNameW)(
-            szDomainAndUser,
-            szUsername,
-            CREDUI_MAX_USERNAME_LENGTH,
-            szDomain,
-            CREDUI_MAX_DOMAIN_TARGET_LENGTH
-            ) == NO_ERROR ;
+                  szDomainAndUser,
+                  szUsername,
+                  CREDUI_MAX_USERNAME_LENGTH,
+                  szDomain,
+                  CREDUI_MAX_DOMAIN_TARGET_LENGTH
+               ) == NO_ERROR ;
 
          if(!bOk)
          {
@@ -955,12 +968,12 @@ namespace windows
 
 
          if(::LogonUserW(
-            szUsername,
-            szDomain,
-            szPassword,
-            LOGON32_LOGON_SERVICE,
-            LOGON32_PROVIDER_DEFAULT,
-            &h))
+                  szUsername,
+                  szDomain,
+                  szPassword,
+                  LOGON32_LOGON_SERVICE,
+                  LOGON32_PROVIDER_DEFAULT,
+                  &h))
          {
             ::CloseHandle(h);
          }
@@ -971,7 +984,7 @@ namespace windows
          }
 
          wcscpy(szUsername,szDomainAndUser);
-           
+
 
       }
       else
@@ -1039,8 +1052,8 @@ namespace windows
    {
 
       if(papp->m_strAppName.is_empty()
-         || papp->m_strAppName.compare_ci("bergedge") == 0
-         || !papp->is_serviceable())
+            || papp->m_strAppName.compare_ci("bergedge") == 0
+            || !papp->is_serviceable())
          return "";
 
       string strServiceName = papp->m_strAppId;
@@ -1048,7 +1061,7 @@ namespace windows
       strServiceName.replace("/","-");
 
       strServiceName.replace("\\","-");
-      
+
       return strServiceName;
 
    }
@@ -1171,19 +1184,19 @@ namespace windows
       wcscpy(pszPass,wstring(strPass));
 
       SC_HANDLE hdlServ = ::CreateServiceW(
-         hdlSCM,                    // SCManager database 
-         wstring(strServiceName),
-         wstring(strDisplayName),        // service name to display 
-         STANDARD_RIGHTS_REQUIRED,  // desired access 
-         SERVICE_WIN32_OWN_PROCESS, // service type 
-         SERVICE_AUTO_START,      // start type 
-         SERVICE_ERROR_NORMAL,      // error control type 
-         wstring(strCommand),                   // service's binary Path name
-         0,                      // no load ordering group 
-         0,                      // no tag identifier 
-         0,                      // no dependencies 
-         strUser.has_char() ? pszName : NULL,                      // LocalSystem account 
-         strPass.has_char() ? pszPass : NULL);                     // no password 
+                             hdlSCM,                    // SCManager database
+                             wstring(strServiceName),
+                             wstring(strDisplayName),        // service name to display
+                             STANDARD_RIGHTS_REQUIRED,  // desired access
+                             SERVICE_WIN32_OWN_PROCESS, // service type
+                             SERVICE_AUTO_START,      // start type
+                             SERVICE_ERROR_NORMAL,      // error control type
+                             wstring(strCommand),                   // service's binary Path name
+                             0,                      // no load ordering group
+                             0,                      // no tag identifier
+                             0,                      // no dependencies
+                             strUser.has_char() ? pszName : NULL,                      // LocalSystem account
+                             strPass.has_char() ? pszPass : NULL);                     // no password
 
 
       if(!hdlServ)
@@ -1222,15 +1235,15 @@ namespace windows
 
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-         hdlSCM,                    // SCManager database 
-         wstring(strServiceName),
-         DELETE);
+                             hdlSCM,                    // SCManager database
+                             wstring(strServiceName),
+                             DELETE);
 
       if(!hdlServ)
       {
          DWORD Ret = ::GetLastError();
          CloseServiceHandle(hdlSCM);
-         if(Ret == 1060) // O servi�o j� n�o existe. Service already doesn't exist.
+         if(Ret == 1060) // O serviço já não existe. Service already doesn't exist.
             return true; // do self-healing
          return false;
       }
@@ -1279,9 +1292,9 @@ namespace windows
       }
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-         hdlSCM,                    // SCManager database 
-         wstring(strServiceName),
-         SERVICE_START);                     // no password 
+                             hdlSCM,                    // SCManager database
+                             wstring(strServiceName),
+                             SERVICE_START);                     // no password
 
 
       if(!hdlServ)
@@ -1314,9 +1327,9 @@ namespace windows
       }
 
       SC_HANDLE hdlServ = ::OpenServiceW(
-         hdlSCM,                    // SCManager database 
-         wstring(strServiceName),
-         SERVICE_STOP);                     // no password 
+                             hdlSCM,                    // SCManager database
+                             wstring(strServiceName),
+                             SERVICE_STOP);                     // no password
 
       if(!hdlServ)
       {
@@ -1476,7 +1489,7 @@ namespace windows
       ZERO(info);
 
       DWORD_PTR dw = ::windows::shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info), SHGFI_ATTRIBUTES);
-      
+
       if(dw == 0 || !(info.dwAttributes & SFGAO_LINK))
       {
 
@@ -1489,7 +1502,7 @@ namespace windows
 
       if(FAILED(hr = pshelllink.CoCreateInstance(CLSID_ShellLink,NULL,CLSCTX_INPROC_SERVER)))
       {
-         
+
          return false;
 
       }
@@ -1501,11 +1514,11 @@ namespace windows
 
       if(SUCCEEDED(hr = pshelllink.As(ppersistfile)))
       {
-      
+
          if(SUCCEEDED(hr = ppersistfile->Load(wstrFileIn,STGM_READ)))
          {
 
-         
+
             /* Resolve the link, this may post UI to find the link */
             if(SUCCEEDED(pshelllink->Resolve(pui == NULL ? NULL : pui->get_handle(), SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
             {
@@ -1535,7 +1548,7 @@ namespace windows
                   strFolder = ::str::international::unicode_to_utf8((LPCWSTR)wstr);
 
                }
-      
+
                wstr.alloc(MAX_PATH * 8);
 
                if(SUCCEEDED(pshelllink->GetArguments(wstr,MAX_PATH * 8)))
@@ -1550,7 +1563,7 @@ namespace windows
             }
 
          }
-         
+
       }
 
       return bOk;
@@ -1567,8 +1580,16 @@ namespace windows
 
       string strProgId;
 
+      string strHash;
+      key.QueryValue("Hash", strHash);
       key.QueryValue("ProgId", strProgId);
 
+      if (::str::begins(strProgId, "App") && strHash.has_char())
+      {
+
+         strId = "edge";
+
+      }
       if (::str::begins_ci(strProgId, "IE."))
       {
 
@@ -1599,7 +1620,7 @@ namespace windows
          strId = "vivaldi";
 
       }
-      else if (::str::ends_ci(strProgId, "ca2_app_core_commander"))
+      else if (::str::ends_ci(strProgId, "app_core_commander"))
       {
 
          strId = "commander";
@@ -1608,7 +1629,7 @@ namespace windows
       else
       {
 
-         strId = "edge";
+         strId = "commander";
 
       }
 
@@ -1695,7 +1716,7 @@ namespace windows
 //
 //#else
 
-   bool os::file_open(string str)
+   bool os::file_open(::file::path str)
    {
 
       manual_reset_event ev(get_app());
@@ -1707,7 +1728,7 @@ namespace windows
 
          ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
-         iRet = (int) ::ShellExecute(NULL, "open", str, NULL, NULL, SW_RESTORE);
+         iRet = (int) (int_ptr) ::ShellExecute(NULL, "open", str, NULL, NULL, SW_RESTORE);
 
          ev.set_event();
 
@@ -1733,7 +1754,7 @@ namespace windows
    {
 
       registry::Key keyKar;
-      
+
       if (keyKar.OpenKey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false))
       {
 
@@ -1761,12 +1782,12 @@ namespace windows
    {
 
       string str(strApp);
-      
+
       registry::Key key;
 
       string strDefault;
 
-      repeat:
+repeat:
 
       if (key.OpenKey(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + str, false))
       {
@@ -1795,7 +1816,712 @@ namespace windows
       }
 
       return ::aura::os::get_app_path(str);
-         
+
+   }
+
+   bool os::set_default_browser(::aura::application * papp)
+   {
+
+      string strTargetProgId;
+      string strModule = solve_relative_compressions(::file_module_path_dup());
+
+      strTargetProgId = papp->m_strAppName;
+
+      strTargetProgId.replace("-", "_");
+      strTargetProgId.replace("\\", "_");
+      strTargetProgId.replace("/", "_");
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "SOFTWARE\\RegisteredApplications", true);
+
+         string strValue;
+
+         regkey.SetValue(strTargetProgId, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities");
+
+
+
+      }
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId, true);
+
+         string strValue;
+
+         regkey.SetValue("", papp->oprop("ApplicationName").get_string());
+
+
+
+      }
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities", true);
+
+         string strValue;
+
+         regkey.SetValue("ApplicationDescription", papp->oprop("ApplicationDescription").get_string());
+         regkey.SetValue("ApplicationIcon", papp->oprop("ApplicationIcon").get_string());
+         regkey.SetValue("ApplicationName", papp->oprop("ApplicationName").get_string());
+
+
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities\\FileAssociations", true);
+
+         string strValue;
+
+         regkey.SetValue(".htm", strTargetProgId);
+         regkey.SetValue(".html", strTargetProgId);
+         regkey.SetValue(".pdf", strTargetProgId);
+         regkey.SetValue(".shtml", strTargetProgId);
+         regkey.SetValue(".svg", strTargetProgId);
+         regkey.SetValue(".webp", strTargetProgId);
+         regkey.SetValue(".xht", strTargetProgId);
+         regkey.SetValue(".xhtml", strTargetProgId);
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities\\Startmenu", true);
+
+         string strValue;
+
+         regkey.SetValue("StartMenuInternet", strTargetProgId);
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\Capabilities\\URLAssociations", true);
+
+         string strValue;
+
+         regkey.SetValue("ftp", strTargetProgId);
+         regkey.SetValue("http", strTargetProgId);
+         regkey.SetValue("https", strTargetProgId);
+         regkey.SetValue("irc", strTargetProgId);
+         regkey.SetValue("mailto", strTargetProgId);
+         regkey.SetValue("mms", strTargetProgId);
+         regkey.SetValue("news", strTargetProgId);
+         regkey.SetValue("nntp", strTargetProgId);
+         regkey.SetValue("sms", strTargetProgId);
+         regkey.SetValue("smsto", strTargetProgId);
+         regkey.SetValue("tel", strTargetProgId);
+         regkey.SetValue("urn", strTargetProgId);
+         regkey.SetValue("webcal", strTargetProgId);
+
+      }
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\DefaultIcon", true);
+
+         string strValue;
+
+         regkey.SetValue("", strModule + ",0");
+
+      }
+
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\InstallInfo", true);
+
+         string strValue;
+
+         regkey.SetValue("HideIconsCommand", "\""+strModule + "\" : hide_icons");
+         regkey.SetValue("IconsVisible", 1);
+         regkey.SetValue("ReinstallCommand", "\""+strModule + "\" : install");
+         regkey.SetValue("ShowIconsCommand", "\""+strModule + "\" : show_icons");
+
+      }
+
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_LOCAL_MACHINE, "Software\\Clients\\StartMenuInternet\\" + strTargetProgId + "\\shell\\open\\command", true);
+
+         string strValue;
+
+         regkey.SetValue("", "\""+strModule + "\" : browser_weather=default");
+
+      }
+
+
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId, true);
+
+         regkey.SetValue("", strTargetProgId + " HTML Document");
+         regkey.SetValue("AppUserModelId", papp->oprop("AppUserModelId").get_string());
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId + "\\Application", true);
+
+         regkey.SetValue("ApplicationCompany", papp->oprop("ApplicationCompany").get_string());
+         regkey.SetValue("ApplicationDescription", papp->oprop("ApplicationDescription").get_string());
+         regkey.SetValue("ApplicationIcon", papp->oprop("ApplicationIcon").get_string());
+         regkey.SetValue("ApplicationName", papp->oprop("ApplicationName").get_string());
+         regkey.SetValue("AppUserModelId", papp->oprop("AppUserModelId").get_string());
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, strTargetProgId + "\\DefaultIcon", true);
+
+         regkey.SetValue("", papp->oprop("DefaultIcon").get_string());
+
+      }
+
+      file_association_set_shell_open_command(strTargetProgId, strTargetProgId, strModule, "\"%1\"");
+      {
+
+         ::windows::registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\shell\\Associations\\UrlAssociations\\http\\UserChoice", true);
+
+         string strProgId;
+
+         regkey.QueryValue("ProgId", strProgId);
+
+         if (strProgId != strTargetProgId)
+         {
+
+            regkey.DeleteValue("Hash");
+            regkey.SetValue("ProgId", strTargetProgId);
+
+         }
+
+      }
+
+
+      {
+
+         ::windows::registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\shell\\Associations\\UrlAssociations\\https\\UserChoice", true);
+
+         string strProgId;
+
+         regkey.QueryValue("ProgId", strProgId);
+
+         if (strProgId != strTargetProgId)
+         {
+
+            regkey.DeleteValue("Hash");
+            regkey.SetValue("ProgId", strTargetProgId);
+
+         }
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.html\\UserChoice", true);
+         string strProgId;
+
+         regkey.QueryValue("ProgId", strProgId);
+
+         if (strProgId != strTargetProgId)
+         {
+
+            regkey.DeleteValue("Hash");
+            regkey.SetValue("ProgId", strTargetProgId);
+
+         }
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.htm\\UserChoice", true);
+         string strProgId;
+
+         regkey.QueryValue("ProgId", strProgId);
+
+         if (strProgId != strTargetProgId)
+         {
+
+            regkey.DeleteValue("Hash");
+            regkey.SetValue("ProgId", strTargetProgId);
+
+         }
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, ".html\\OpenWithProgids", true);
+
+         if (!regkey.SetValue(strTargetProgId, ""))
+         {
+
+            TRACE("Failure to set .html/OpenWithProgids");
+
+         }
+
+      }
+      {
+
+         registry::Key regkey(HKEY_CLASSES_ROOT, ".htm\\OpenWithProgids", true);
+
+         if(!regkey.SetValue(strTargetProgId, ""))
+         {
+
+            TRACE("Failure to set .htm/OpenWithProgids");
+
+         }
+
+      }
+      //file_association_set_shell_open_command(".htm", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command(".html", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command("http", strTargetProgId, strModule, "\"%1\"");
+      //file_association_set_shell_open_command("https", strTargetProgId, strModule, "\"%1\"");
+      SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_DWORD | SHCNF_FLUSH, nullptr, nullptr);
+      Sleep(1000);
+
+
+
+      return true;
+
+   }
+
+
+   bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
+   {
+
+      bool bOk = false;
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, FALSE);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         defer_co_initialize_ex(false);
+
+         comptr < IFileOpenDialog > pfileopen;
+
+         HRESULT hr = pfileopen.CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL);
+
+         if (SUCCEEDED(hr))
+         {
+
+            array < COMDLG_FILTERSPEC > rgSpec;
+
+            array < wstring > wstraSpecs;
+
+            ::lemon::array::copy(wstraSpecs, set["file_filter_specs"].stra());
+
+            array < wstring > wstraNames;
+
+            ::lemon::array::copy(wstraNames, set["file_filter_names"].stra());
+
+            rgSpec.set_size(MIN(wstraSpecs.get_size(), wstraNames.get_size()));
+
+            for (index i = 0; i < rgSpec.get_size(); i++)
+            {
+
+               rgSpec[i].pszName = wstraNames[i];
+
+               rgSpec[i].pszSpec = wstraSpecs[i];
+
+               //{ L"CSV files", L"*.csv" },
+               //{ L"Text files", L"*.txt" },
+               //{ L"All files", L"*.*" },
+
+            }
+
+            if (rgSpec.get_size() > 0)
+            {
+
+               pfileopen->SetFileTypes(convert < UINT > (rgSpec.get_size()), rgSpec.get_data());
+
+            }
+
+            if (set["default_file_extension"].get_string().get_length() > 0)
+            {
+
+               pfileopen->SetDefaultExtension(wstring(set["default_file_extension"].get_string()));
+
+            }
+
+            if (set["file_name"].get_string().get_length() > 0)
+            {
+
+               pfileopen->SetFileName(wstring(set["file_name"].get_string()));
+
+            }
+
+            if (set["folder"].get_string().get_length() > 0)
+            {
+
+               wstring wstr(set["folder"].get_string());
+
+               comptr < IShellItem > psi;
+
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  pfileopen->SetFolder(psi);
+
+               }
+
+            }
+
+            // Show the Save dialog box.
+            hr = pfileopen->Show(NULL);
+
+            if (SUCCEEDED(hr))
+            {
+
+               // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+               hr = pfileopen->GetResult(&pitem);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  cotaskp(PWSTR) pwszFilePath;
+
+                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+
+                     set["file_name"] = string((PWSTR) pwszFilePath);
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, TRUE);
+
+         ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+         ::SetForegroundWindow(oswindowOwner);
+
+         ::BringWindowToTop(oswindowOwner);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
+   }
+
+
+   bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
+   {
+
+      bool bOk = false;
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, FALSE);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         defer_co_initialize_ex(false);
+
+         comptr < IFileSaveDialog > pfilesave;
+
+         // Create the FileSaveDialog object.
+         HRESULT hr = pfilesave.CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_ALL);
+
+         if (SUCCEEDED(hr))
+         {
+
+            //COMDLG_FILTERSPEC rgSpec[] =
+            //{
+            // { L"CSV files", L"*.csv" },
+            // { L"Text files", L"*.txt" },
+            // { L"All files", L"*.*" },
+            //};
+
+            //pFileSave->SetFileTypes(3, rgSpec);
+
+
+            //pFileSave->SetDefaultExtension(L"csv");
+
+            //pFileSave->SetFileName(L"Twitter Automator Export");
+
+            array < COMDLG_FILTERSPEC > rgSpec;
+
+            array < wstring > wstraSpecs;
+
+            ::lemon::array::copy(wstraSpecs, set["file_filter_specs"].stra());
+
+            array < wstring > wstraNames;
+
+            ::lemon::array::copy(wstraNames, set["file_filter_names"].stra());
+
+            rgSpec.set_size(MIN(wstraSpecs.get_size(), wstraNames.get_size()));
+
+            for (index i = 0; i < rgSpec.get_size(); i++)
+            {
+
+               rgSpec[i].pszName = wstraNames[i];
+
+               rgSpec[i].pszSpec = wstraSpecs[i];
+
+               //{ L"CSV files", L"*.csv" },
+               //{ L"Text files", L"*.txt" },
+               //{ L"All files", L"*.*" },
+
+            }
+
+            if (rgSpec.get_size() > 0)
+            {
+
+               pfilesave->SetFileTypes(convert < UINT > (rgSpec.get_size()), rgSpec.get_data());
+
+            }
+
+            if (set["default_file_extension"].get_string().get_length() > 0)
+            {
+
+               pfilesave->SetDefaultExtension(wstring(set["default_file_extension"].get_string()));
+
+            }
+
+            if (set["file_name"].get_string().get_length() > 0)
+            {
+
+               pfilesave->SetFileName(wstring(set["file_name"].get_string()));
+
+            }
+
+            if (set["folder"].get_string().get_length() > 0)
+            {
+
+               wstring wstr(set["folder"].get_string());
+
+               comptr < IShellItem > psi;
+
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  pfilesave->SetFolder(psi);
+
+               }
+
+            }
+
+            // Show the Save dialog box.
+            hr = pfilesave->Show(NULL);
+
+            if (SUCCEEDED(hr))
+            {
+
+               // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+               hr = pfilesave->GetResult(&pitem);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  cotaskp(PWSTR) pwszFilePath;
+
+                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+
+                     set["file_name"] = (PWSTR) pwszFilePath;
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, TRUE);
+
+         ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+         ::SetForegroundWindow(oswindowOwner);
+
+         ::BringWindowToTop(oswindowOwner);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      return bOk;
+
+   }
+
+
+   bool os::browse_folder(oswindow oswindowOwner, property_set & set)
+   {
+
+      bool bOk = false;
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, FALSE);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      try
+      {
+
+         defer_co_initialize_ex(false);
+
+         comptr < IFileOpenDialog > pfileopen;
+
+         // Create the FileOpenDialog object.
+         HRESULT hr = pfileopen.CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL);
+
+         if (SUCCEEDED(hr))
+         {
+
+            if (set["folder"].get_string().get_length() > 0)
+            {
+
+               wstring wstr(set["folder"].get_string());
+
+               comptr < IShellItem > psi;
+
+               hr = SHCreateItemFromParsingName(wstr, NULL, IID_IShellItem, (void **)&psi);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  pfileopen->SetFolder(psi);
+
+               }
+
+            }
+
+            pfileopen->SetOptions(FOS_PICKFOLDERS);
+
+            // Show the Open dialog box.
+            hr = pfileopen->Show(NULL);
+
+            if (SUCCEEDED(hr))
+            {
+
+               // Get the file name from the dialog box.
+               comptr < IShellItem > pitem;
+
+               hr = pfileopen->GetResult(&pitem);
+
+               if (SUCCEEDED(hr))
+               {
+
+                  cotaskp(PWSTR) pwszFilePath;
+
+                  hr = pitem->GetDisplayName(SIGDN_FILESYSPATH, &pwszFilePath);
+
+                  // Display the file name to the user.
+                  if (SUCCEEDED(hr))
+                  {
+
+                     set["folder"] = string((PWSTR) pwszFilePath);
+
+                     bOk = true;
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ::EnableWindow(oswindowOwner, TRUE);
+
+         ::SetWindowPos(oswindowOwner, HWND_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW);
+
+         ::SetForegroundWindow(oswindowOwner);
+
+         ::BringWindowToTop(oswindowOwner);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      return bOk;
+
    }
 
 

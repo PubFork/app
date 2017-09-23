@@ -46,18 +46,11 @@ namespace aura
 
 
    class ipi;
-   class main_init_data;
    class application_heap;
 
 
 } // namespace aura
 
-class tool_thread;
-class thread_tool;
-class thread_tools;
-class thread_toolset;
-//class pred_set;
-//class replace_thread;
 
 class user_interaction_ptr_array;
 

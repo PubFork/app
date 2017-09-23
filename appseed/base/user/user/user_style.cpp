@@ -1,13 +1,16 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 
 namespace user
 {
 
 
-   style::style() :
-      style(get_app())
+   style::style()
    {
+      
+      m_eschema = schema_default;
+      
+      m_pgraphics = NULL;
 
    }
 
@@ -259,7 +262,7 @@ namespace user
    }
 
 
-   bool style::get_color(COLORREF & cr, e_color ecolor)
+   bool style::get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui)
    {
 
       if (m_mapColor.Lookup(ecolor, cr))
@@ -269,339 +272,12 @@ namespace user
 
       }
 
-      if (ecolor == color_text)
-      {
-
-         cr = ARGB(255, 0, 0, 0);
-
-      }
-      else if (ecolor == color_text_selected)
-      {
-
-         cr = ARGB(255, 255, 255, 255);
-
-      }
-      else if (ecolor == color_text_highlight)
-      {
-
-         cr = ARGB(255, 55, 105, 255);
-
-      }
-      else if (ecolor == color_text_selected_highlight)
-      {
-
-         cr = ARGB(255, 102, 153, 255);
-
-      }
-      else if (ecolor == color_background)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(60, 255, 255, 255);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 255, 255, 255);
-
-         }
-
-      }
-      else if (ecolor == color_face)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(120, 0, 0, 0);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 80, 80, 80);
-
-         }
-
-      }
-      else if (ecolor == color_face_lite)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(80, 0, 0, 0);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 120, 120, 120);
-
-         }
-
-      }
-      else if (ecolor == color_tab_layout_background)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(80, 255, 255, 255);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 255, 255, 255);
-
-         }
-
-      }
-      else if (ecolor == color_tab_client_background)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(0, 0, 0, 0);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 255, 255, 255);
-
-         }
-
-      }
-      else if (ecolor == color_background_selected)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(184, 0, 0, 127);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 0, 0, 127);
-
-         }
-
-      }
-      else if (ecolor == color_background_selected)
-      {
-
-         if (_001IsTranslucent())
-         {
-
-            cr = ARGB(184, 0, 0, 127);
-
-         }
-         else
-         {
-
-            cr = ARGB(255, 0, 0, 127);
-
-         }
-
-      }
-      else if (ecolor == color_border_normal)
-      {
-
-         cr = ARGB(255, 84, 84, 77);
-
-      }
-      else if (ecolor == color_border_hover)
-      {
-
-         cr = ARGB(255, 84, 184, 77);
-
-      }
-      else if (ecolor == color_text_hover)
-      {
-
-         cr = ARGB(255, 84, 184, 255);
-
-      }
-      else if (ecolor == color_list_header)
-      {
-
-         cr = ARGB(255, 80, 80, 80);
-
-      }
-      else if (ecolor == color_background_normal)
-      {
-
-         cr = ARGB(255, 255, 255, 255);
-
-      }
-      else if (ecolor == color_text_normal)
-      {
-
-         cr = ARGB(255, 0, 0, 0);
-
-      }
-      else if (ecolor == color_background_hover)
-      {
-
-         cr = ARGB(255, 255, 255, 255);
-
-      }
-      else if (ecolor == color_background_press)
-      {
-
-         cr = ARGB(255, 215, 200, 255);
-
-      }
-      else if (ecolor == color_text_hover)
-      {
-
-         cr = ARGB(255, 0, 0, 0);
-
-      }
-      else if (ecolor == color_list_header_background)
-      {
-
-         cr = ARGB(80, 0, 0, 0);
-
-      }
-      else if (ecolor == color_list_item_background)
-      {
-
-         cr = ARGB(127, 0, 0, 0);
-
-      }
-      else if (ecolor == color_button_background_disabled)
-      {
-
-         return get_color(cr, color_background_disabled);
-
-      }
-      else if (ecolor == color_button_background_hover)
-      {
-
-         return get_color(cr, color_background_hover);
-
-      }
-      else if (ecolor == color_button_background_normal)
-      {
-
-         return get_color(cr, color_background_normal);
-
-      }
-      else if (ecolor == color_button_background_press)
-      {
-
-         return get_color(cr, color_background_press);
-
-      }
-      else if (ecolor == color_button_text_disabled)
-      {
-
-         return get_color(cr, color_text_disabled);
-
-      }
-      else if (ecolor == color_button_text_hover)
-      {
-
-         return get_color(cr, color_text_hover);
-
-      }
-      else if (ecolor == color_button_text_normal)
-      {
-
-         return get_color(cr, color_text_normal);
-
-      }
-      else if (ecolor == color_button_text_press)
-      {
-
-         return get_color(cr, color_text_press);
-
-      }
-      else if (ecolor == color_edit_background)
-      {
-
-         cr = ARGB(128, 255, 255, 255);
-
-      }
-      else if (ecolor == color_edit_text)
-      {
-
-         cr = ARGB(128, 0, 0, 0);
-
-      }
-      else if (ecolor == color_edit_text_selected)
-      {
-
-         cr = ARGB(128, 255, 255, 255);
-
-      }
-      else if (ecolor == color_edit_background_selected)
-      {
-
-         cr = ARGB(128, 0, 0, 128);
-
-      }
-      else if (ecolor == color_split_layout_background)
-      {
-
-         cr = ARGB(128, 255, 255, 255);
-
-      }
-      else if (ecolor == color_list_background)
-      {
-
-         cr = ARGB(128, 255, 255, 255);
-
-      }
-      else if (ecolor == color_toolbar_background)
-      {
-
-         cr = ARGB(128, 255, 255, 255);
-
-      }
-      else if (ecolor == color_list_header_separator)
-      {
-
-         cr = ARGB(128, 0, 0, 0);
-
-      }
-      else if (ecolor == color_view_background)
-      {
-
-         cr = 0;
-
-      }
-      else if (ecolor == color_scrollbar_background)
-      {
-
-         cr = ARGB(127, 127, 127, 127);
-
-      }
-      else
-      {
-
-         throw invalid_argument_exception(::get_thread_app());
-
-
-         return false;
-
-      }
-
-      return true;
+      return false;
 
    }
 
 
-   bool style::get_font(::draw2d::font_sp & font, e_font efont)
+   bool style::get_font(::draw2d::font_sp & font, e_font efont, ::user::interaction * pui)
    {
 
       if (m_mapFont.Lookup(efont, font))
@@ -611,17 +287,6 @@ namespace user
 
       }
 
-      if (m_mapFont.Lookup(font_default, font))
-      {
-
-         return true;
-
-      }
-
-      m_mapFont[font_default].alloc(allocer());
-
-      m_mapFont[font_default]->create_point_font(FONT_SANS, 9.0);
-
       return false;
 
    }
@@ -629,7 +294,7 @@ namespace user
 
 
 
-   bool style::get_translucency(e_translucency & etranslucency, e_element eelement)
+   bool style::get_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui)
    {
 
       if (!m_mapTranslucency.Lookup(eelement, etranslucency)
@@ -645,6 +310,66 @@ namespace user
             return false;
 
          }
+
+      }
+
+      return false;
+
+   }
+
+
+   bool style::get_flag(bool & bSet, e_flag eflag, ::user::interaction * pui)
+   {
+
+      if (m_mapFlag.Lookup(eflag, bSet))
+      {
+
+         return true;
+
+      }
+
+      return false;
+
+   }
+
+
+   bool style::get_rect(RECT & rect, e_rect erect, ::user::interaction * pui)
+   {
+
+      if (m_mapRect.Lookup(erect, (::rect &) rect))
+      {
+
+         return true;
+
+      }
+
+      return false;
+
+   }
+
+
+   bool style::get_int(int & i, e_int eint, ::user::interaction * pui)
+   {
+
+      if (m_mapInt.Lookup(eint, i))
+      {
+
+         return true;
+
+      }
+
+      return false;
+
+   }
+
+
+   bool style::get_double(double & d, e_double edouble, ::user::interaction * pui)
+   {
+
+      if (m_mapDouble.Lookup(edouble, d))
+      {
+
+         return true;
 
       }
 
@@ -778,7 +503,7 @@ namespace user
             {
 
                //::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(255, 108, 149, 255));
-               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 84, 77));
+               ::draw2d::pen_sp pen(pgraphics, 1.0, ARGB(184, 84, 90, 80));
 
                pgraphics->DrawRect(rectClient, pen);
 
@@ -961,7 +686,7 @@ namespace user
          else
          {
 
-            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 84, 77, 255));
+            ::draw2d::pen_sp pen(pgraphics, 3.0, ARGB(255, 90, 80, 255));
 
             pgraphics->DrawRect(rectClient, pen);
 
@@ -1096,10 +821,10 @@ namespace user
    }
 
 
-   ::user::interaction * style::create_menu_button()
+   ::user::interaction * style::create_menu_button(::aura::application * papp)
    {
 
-      return canew(::user::button(get_app()));
+      return Session.create_menu_button(papp);
 
    }
 
@@ -1147,11 +872,11 @@ namespace user
 
          pbutton->m_pmenuitem = pitem;
 
-         rect rectMargin = pbutton->style_rect(::user::rect_menu_margin);
+         rect rectMargin = pbutton->_001GetRect(::user::rect_menu_margin);
 
-         int iCheckBoxSize = pbutton->style_int(::user::int_check_box_size);
+         int iCheckBoxSize = pbutton->_001GetInt(::user::int_check_box_size);
 
-         int iElementPadding = pbutton->style_int(::user::int_element_padding);
+         int iElementPadding = pbutton->_001GetInt(::user::int_element_padding);
 
          auto & rectCheckBox = pbutton->m_rectCheckBox;
 
@@ -1180,30 +905,6 @@ namespace user
       userstyle()->m_mapColor[ecolor] = cr;
 
       return true;
-
-   }
-
-
-   bool style::has_flag(e_flag eflag)
-   {
-
-      return userstyle()->m_mapFlag[eflag];
-
-   }
-
-
-   rect style::get_rect(e_rect erect)
-   {
-
-      return userstyle()->m_mapRect[erect];
-
-   }
-
-
-   int style::get_int(e_int eint)
-   {
-
-      return userstyle()->m_mapInt[eint];
 
    }
 

@@ -6,6 +6,7 @@
 
 #include "aura/aura/aura/aura.h"
 
+#include <CoreText/CoreText.h>
 
 #define CLASS_DECL_DRAW2D_QUARTZ2D
 

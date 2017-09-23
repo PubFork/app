@@ -9,10 +9,42 @@ namespace draw2d_quartz2d
       virtual public ::draw2d::font
    {
    public:
+   
+      class metrics
+      {
+      public:
+         
+         
+         CGFloat ascent;
+         CGFloat descent;
+         CGFloat leading;
+         CGFloat width;
+         
+         // mode, brush color, pen color
+         isomap < CGTextDrawingMode, colorrefmap < colorrefmap < CTLineRef > > > m_map;
+
+         
+         metrics() {}
+         ~metrics() {}
+         
+         void get(CGFloat * pascent, CGFloat * pdescent, CGFloat * pleading, CGFloat * pwidth);
+         
+         void align(double & x, double & y, double wAlign, UINT nFormat);
+         
+      };
+      
+      string_map < metrics >  m_mapMetrics;
+      CFDictionaryRef         attributes;
+      CTFontRef               m_font;
+      CTFontDescriptorRef     m_fontD;
+      CFStringRef             m_fontName;
       
       
-      font(sp(::aura::application) papp);
+      font(::aura::application * papp);
       virtual ~font();
+      
+      
+   
       
       
       virtual void * get_os_data() const;

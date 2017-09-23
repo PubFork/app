@@ -66,7 +66,7 @@ CLASS_DECL_AURA VOID WINAPI Sleep(DWORD dwMilliseconds);
 
 
 
-
+LPVOID WINAPI tls_get_value(DWORD dwIndex);
 
 
 #if defined(METROWIN) && defined(__cplusplus_winrt)

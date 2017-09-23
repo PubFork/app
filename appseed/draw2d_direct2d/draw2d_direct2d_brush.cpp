@@ -10,12 +10,12 @@ namespace draw2d_direct2d
 
    brush::brush(::aura::application * papp) :
       ::object(papp)
-   { 
+   {
 
    }
 
    brush::~brush()
-   { 
+   {
 
       destroy();
 
@@ -23,35 +23,35 @@ namespace draw2d_direct2d
 
 
    // bool brush::CreateHatchBrush(int nIndex, COLORREF crColor)
-   // { 
+   // {
    //    //return Attach(::CreateHatchBrush(nIndex, crColor));
    //    return FALSE;
    // }
    //    bool brush::CreateBrushIndirect(const LOGBRUSH* lpLogBrush)
    //  {
-   //return Attach(::CreateBrushIndirect(lpLogBrush)); 
+   //return Attach(::CreateBrushIndirect(lpLogBrush));
    //   return FALSE;
    //}
    //bool brush::CreatePatternBrush(::draw2d::bitmap* pBitmap)
-   //{ 
+   //{
    //   //return Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data()));
    //   return FALSE;
    //}
    //bool brush::CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage)
-   //{ 
+   //{
    //   //return Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
    //   return FALSE;
    //}
    //bool brush::CreateSysColorBrush(int nIndex)
-   //{ 
+   //{
    //   //return Attach(::GetSysColorBrush(nIndex));
    //   return FALSE;
 
    //}
    /*    int brush::GetLogBrush(LOGBRUSH* pLogBrush)
-   { 
+   {
    //ASSERT(get_os_data() != NULL);
-   //return ::GetObject(get_os_data(), sizeof(LOGBRUSH), pLogBrush); 
+   //return ::GetObject(get_os_data(), sizeof(LOGBRUSH), pLogBrush);
    return FALSE;
    }*/
 
@@ -241,12 +241,12 @@ namespace draw2d_direct2d
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
             HRESULT hr = pgraphics->m_prendertarget->CreateGradientStopCollection(
-               gradientstops,
-               2,
-               D2D1_GAMMA_2_2,
-               D2D1_EXTEND_MODE_CLAMP,
-               &pgradientstops
-               );
+                            gradientstops,
+                            2,
+                            D2D1_GAMMA_2_2,
+                            D2D1_EXTEND_MODE_CLAMP,
+                            &pgradientstops
+                         );
 
 
 
@@ -254,7 +254,7 @@ namespace draw2d_direct2d
             // The gradient origin offset was set to zero(0, 0) or center in this case.
             if(SUCCEEDED(hr))
             {
-               
+
                double centerx = m_size.cx - m_pt.x;
                double centery = m_size.cy - m_pt.y;
                double originx = m_size.cx / 2 -m_pt.x;
@@ -263,13 +263,13 @@ namespace draw2d_direct2d
                double radiusy = m_size.cy / 2;
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
-                  D2D1::RadialGradientBrushProperties(
-                  D2D1::Point2F(centerx,centery),
-                  D2D1::Point2F(originx, originy),
-                  (float) radiusx, (float) radiusy),
-                  pgradientstops,
-                  & ((brush *) this)->m_pradialgradientbrush
-                  );
+                       D2D1::RadialGradientBrushProperties(
+                          D2D1::Point2F(convert < FLOAT > (centerx), convert < FLOAT > (centery)),
+                          D2D1::Point2F(convert < FLOAT > (originx), convert < FLOAT > (originy)),
+                          convert < FLOAT > (radiusx), convert < FLOAT > (radiusy)),
+                       pgradientstops,
+                       & ((brush *) this)->m_pradialgradientbrush
+                    );
             }
 
             pgradientstops->Release();
@@ -309,14 +309,14 @@ namespace draw2d_direct2d
          m_psolidbrush = nullptr;
 
       }
-      
+
       if(m_plineargradientbrush != NULL)
       {
 
          m_plineargradientbrush = nullptr;
 
       }
-      
+
       if(m_pbrush != NULL)
       {
 

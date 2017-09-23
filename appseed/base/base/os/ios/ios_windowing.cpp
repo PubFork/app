@@ -361,6 +361,23 @@ oswindow GetActiveWindow()
 }
 
 
+void DeactivateWindow(oswindow window)
+{
+   
+   synch_lock sl(g_poswindowdataptra->m_pmutex);
+   
+   if(GetActiveWindow() != window)
+   {
+      
+      return;
+      
+   }
+   
+   SetActiveWindow(NULL);
+   
+}
+
+
 oswindow SetActiveWindow(oswindow window)
 {
 

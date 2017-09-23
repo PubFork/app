@@ -60,6 +60,13 @@ namespace simple_ui
       tapa.add(ptap);
 
    }
+   
+   void message_box::on_select_user_style()
+   {
+      
+      m_puserstyle = this;
+      
+   }
 
    int32_t message_box::show()
    {

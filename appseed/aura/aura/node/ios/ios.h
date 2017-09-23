@@ -6,7 +6,7 @@
 
 #include "app/appseed/aura/aura/aura/aura.h"
 
-
+#include "aura/aura/node/ansios/ansios.h"
 ////#define CLASS_DECL_AURA
 
 //struct plane_system
@@ -80,7 +80,7 @@ CLASS_DECL_AURA void AfxTryCleanup();
 //#include "ios_port_forward.h"
 //#include "ios_copydesk.h"
 //#include "ios_crypto.h"
-//#include "ios_ip_enum.h"
+#include "ios_ip_enum.h"
 
 #define NULL_REF(class) (*((class *) NULL))
 

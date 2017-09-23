@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
@@ -21,6 +21,8 @@ namespace user
       m_penHighlight(allocer()),
       m_dcextension(get_app())
    {
+
+      m_econtroltype = control_type_mesh;
 
       m_iItemHeight = 32;
       m_plist = NULL;
@@ -3001,7 +3003,7 @@ namespace user
 
       }
 
-      _001OnRightClick(pmouse->m_ulFlags, pt);
+      _001OnRightClick(pmouse->m_nFlags, pt);
 
 
       pobj->m_bRet = true;

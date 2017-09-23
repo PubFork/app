@@ -8,7 +8,7 @@ simple_thread::simple_thread(::aura::application * papp) :
 
 //   set_auto_delete(false);
 
-   m_dwFinishTimeout = 1984 * 30; // default
+   m_dwFinishTimeout = 2000 * 30; // default
 
 }
 

@@ -245,7 +245,7 @@ namespace aura
                for(iSubStep = 0; (iSubStep < (iStep + 1) * 10) && ::get_thread_run(); iSubStep++)
                {
 
-                  Sleep(84);
+                  Sleep(100);
 
                }
 

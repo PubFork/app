@@ -15,6 +15,7 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -43,6 +44,7 @@
 		<Compiler>
 			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
+			<Add option="-fpermissive" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
 			<Add option="-fno-stack-protector" />

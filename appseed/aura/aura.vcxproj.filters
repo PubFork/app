@@ -408,6 +408,18 @@
     <Filter Include="Source Files\aura\os\windows_common">
       <UniqueIdentifier>{47304b31-5aaa-4323-a2e1-070743f2f4aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\multimedia">
+      <UniqueIdentifier>{017ccec6-c97c-49c9-913c-8467c55a2ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multimedia\audio">
+      <UniqueIdentifier>{bb52cb6a-8760-4e0d-b184-61e3d098a088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia">
+      <UniqueIdentifier>{76329357-bec2-4ff8-b3b0-4834ed81333a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia\audio">
+      <UniqueIdentifier>{07ae2b17-76e4-4bb6-9530-28e2d7e3da0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -567,9 +579,6 @@
       <Filter>Header Files\primitive</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_array_decl.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_attrib_map.h">
@@ -1745,9 +1754,6 @@
     <ClInclude Include="primitive\collection\collection_numeric_array_range.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
-    <ClInclude Include="aura\os\windows\aaa_want_to_remove_windows_os.h">
-      <Filter>Header Files\aura\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\data\data_data.h">
       <Filter>Header Files\primitive\data</Filter>
     </ClInclude>
@@ -1791,9 +1797,6 @@
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_command_target.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\aura\aura_command_ui.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
     <ClInclude Include="aura\os\cross\ansios\ansios_file.h">
@@ -2336,12 +2339,6 @@
     <ClInclude Include="net\sockets\bsd\sockets_sockets.h">
       <Filter>Header Files\net\sockets\bsd</Filter>
     </ClInclude>
-    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context.h">
-      <Filter>Header Files\net\sockets\bsd\basic</Filter>
-    </ClInclude>
-    <ClInclude Include="net\sockets\bsd\basic\aaa_want_to_remove_sockets_ssl_server_context_map.h">
-      <Filter>Header Files\net\sockets\bsd\basic</Filter>
-    </ClInclude>
     <ClInclude Include="net\sockets\bsd\basic\sockets_listen_socket.h">
       <Filter>Header Files\net\sockets\bsd\basic</Filter>
     </ClInclude>
@@ -2810,9 +2807,6 @@
     <ClInclude Include="aura\aura\aura_chronometer.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura__c.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_application_common.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -2879,9 +2873,6 @@
     <ClInclude Include="aura\aura\aura_application_message.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\aaa_want_to_remove_primitive_signal.h">
-      <Filter>Header Files\primitive</Filter>
-    </ClInclude>
     <ClInclude Include="aura\message\message_listener_smart_pointer_array.h">
       <Filter>Header Files\aura\message</Filter>
     </ClInclude>
@@ -2899,6 +2890,42 @@
     </ClInclude>
     <ClInclude Include="aura\node\windows\windows_ip_enum.h">
       <Filter>Header Files\aura\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="multithreading\multithreading_pred_holder.h">
+      <Filter>Header Files\multithreading</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_ref_array.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_array_base.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\collection\collection_array.h">
+      <Filter>Header Files\primitive\collection</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\math\math_clip.h">
+      <Filter>Header Files\primitive\math</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\comparison\compare.h">
+      <Filter>Header Files\primitive\comparison</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\message\message_global.h">
+      <Filter>Header Files\aura\message</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\multimedia.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio_wave_out.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio_c.h">
+      <Filter>Header Files\multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\multimedia_c.h">
+      <Filter>Header Files\multimedia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4120,9 +4147,6 @@
     <ClCompile Include="aura\process\process_department.cpp">
       <Filter>Source Files\aura\process</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="aura\pcre\pcre.cpp">
       <Filter>Source Files\aura\pcre</Filter>
     </ClCompile>
@@ -4266,9 +4290,6 @@
     </ClCompile>
     <ClCompile Include="primitive\math\math_rng.cpp">
       <Filter>Source Files\primitive\math</Filter>
-    </ClCompile>
-    <ClCompile Include="aura_keep.cpp">
-      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="net\ftp\ftp_client_socket.cpp">
       <Filter>Source Files\net\ftp</Filter>
@@ -4585,9 +4606,6 @@
     <ClCompile Include="aura\compress\compress_gz.cpp">
       <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
-    <ClCompile Include="aura\compress\compress_compress.cpp">
-      <Filter>Source Files\aura\compress</Filter>
-    </ClCompile>
     <ClCompile Include="aura\compress\compress_bz.cpp">
       <Filter>Source Files\aura\compress</Filter>
     </ClCompile>
@@ -4614,9 +4632,6 @@
     </ClCompile>
     <ClCompile Include="primitive\primitive_property.cpp">
       <Filter>Source Files\primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\aura\simple_log.cpp">
-      <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
     <ClCompile Include="primitive\str\str_x.cpp">
       <Filter>Source Files\primitive\str</Filter>
@@ -4810,9 +4825,6 @@
     <ClCompile Include="aura\message\message_id.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
-    <ClCompile Include="primitive\aaa_want_to_remove_primitive_signal.cpp">
-      <Filter>Source Files\primitive</Filter>
-    </ClCompile>
     <ClCompile Include="aura\message\message_message.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
@@ -4830,6 +4842,24 @@
     </ClCompile>
     <ClCompile Include="aura\node\windows\windows_ip_enum.cpp">
       <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\compress_department.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\aura_simple_log.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\collection_ref_array.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="build_debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\_str_pool.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
+      <Filter>Source Files\multimedia\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -41,7 +41,7 @@ namespace user
       virtual void initialize_style_system_menu_close() override;
       virtual void initialize_style_system_menu_popup() override;
       virtual void initialize_style() override;
-      virtual ::user::interaction * create_menu_button() override;
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
       virtual bool prepare_menu(::user::menu_item * pitem) override;
       virtual bool prepare_menu_button(::user::menu_item * pitem) override;
       
@@ -58,12 +58,12 @@ namespace user
       virtual bool _001DrawSimpleScrollBar(::draw2d::graphics * pgraphics, simple_scroll_bar * pbar) override;
       virtual bool _001DrawScrollBar(::draw2d::graphics * pgraphics, ::user::scroll_bar * pbar) override;
       
-      virtual bool get_color(COLORREF & cr,e_color ecolor) override;
-      virtual bool get_font(::draw2d::font_sp & sp, e_font efont) override;
-      virtual bool get_translucency(e_translucency & etranslucency, e_element eelement) override;
-      virtual bool has_flag(::user::e_flag eflag) override;
-      virtual rect get_rect(::user::e_rect erect) override;
-      virtual int get_int(::user::e_int eint) override;
+      //virtual bool get_color(COLORREF & cr,e_color ecolor) override;
+      //virtual bool get_font(::draw2d::font_sp & sp, e_font efont) override;
+      //virtual bool get_translucency(e_translucency & etranslucency, e_element eelement) override;
+      //virtual bool get_flag(bool & bSet, ::user::e_flag eflag) override;
+      //virtual bool get_rect(RECT & rect, ::user::e_rect erect) override;
+      //virtual bool get_int(int & i, ::user::e_int eint) override;
       
       //virtual e_style get_style() override;
       
@@ -90,26 +90,30 @@ namespace user
       // to implement the utility functions
       //virtual bool _001GetMainFrameTranslucency(::user::e_translucency & etranslucency);
 
-      virtual bool select_text_color(::draw2d::graphics * pgraphics,e_color ecolor = color_text);
-      virtual bool select_solid_brush(::draw2d::graphics * pgraphics,e_color ecolor);
-      virtual bool select_font(::draw2d::graphics * pgraphics, e_font efont = font_default);
+      virtual bool select_text_color(::user::interaction * pui, ::draw2d::graphics * pgraphics, e_color ecolor = color_text);
+      virtual bool select_solid_brush(::user::interaction * pui, ::draw2d::graphics * pgraphics, e_color ecolor);
+      virtual bool select_font(::user::interaction * pui, ::draw2d::graphics * pgraphics, e_font efont = font_default);
 
       
       
-      virtual bool select_text_color(e_color ecolor = color_text);
-      virtual bool select_solid_brush(e_color ecolor);
-      virtual bool select_font(e_font efont = font_default);
+      virtual bool select_text_color(::user::interaction * pui, e_color ecolor = color_text);
+      virtual bool select_solid_brush(::user::interaction * pui, e_color ecolor);
+      virtual bool select_font(::user::interaction * pui, e_font efont = font_default);
 
       
       
-      virtual COLORREF        _001GetColor(e_color ecolor, COLORREF crDefault);
-      virtual COLORREF        _001GetColor(e_color ecolor);
-      virtual e_translucency   _001GetTranslucency(e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
-      
-      virtual bool _001IsBackgroundBypass(e_element eelement = element_none);
-      virtual bool _001IsTransparent(e_element eelement = element_none);
-      virtual bool _001IsTranslucent(e_element eelement = element_none);
-      virtual bool _001HasTranslucency(e_element eelement = element_none);
+      virtual COLORREF           _001GetColor(::user::interaction * pui, e_color ecolor, COLORREF crDefault = 0);
+      virtual ::draw2d::font_sp  _001GetFont(::user::interaction * pui, e_font efont, ::draw2d::font * pfont = NULL);
+      virtual e_translucency     _001GetTranslucency(::user::interaction * pui, e_element eelement = element_none, e_translucency etranslucencyDefault = translucency_undefined);
+      virtual bool               _001GetFlag(::user::interaction * pui, ::user::e_flag eflag, bool bDefault = false);
+      virtual RECT               _001GetRect(::user::interaction * pui, ::user::e_rect erect, rect rectDefault = ::null_rect());
+      virtual int                _001GetInt(::user::interaction * pui, ::user::e_int eint, int iDefault = 0);
+      virtual double             _001GetDouble(::user::interaction * pui, ::user::e_double edouble, double dDefault = 0.0);
+
+      virtual bool _001IsBackgroundBypass(::user::interaction * pui, e_element eelement = element_none);
+      virtual bool _001IsTransparent(::user::interaction * pui, e_element eelement = element_none);
+      virtual bool _001IsTranslucent(::user::interaction * pui, e_element eelement = element_none);
+      virtual bool _001HasTranslucency(::user::interaction * pui, e_element eelement = element_none);
       
 
       
@@ -130,15 +134,26 @@ namespace user
 
       
       virtual ::draw2d::graphics * style_get_graphics();
-      
+
+
+      // userstyle() composition
+      virtual bool userstyle_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui);
+      virtual bool userstyle_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui);
+      virtual bool userstyle_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui);
+      virtual bool userstyle_flag(bool & bSet, ::user::e_flag eflag, ::user::interaction * pui);
+      virtual bool userstyle_rect(RECT & rect, ::user::e_rect erect, ::user::interaction * pui);
+      virtual bool userstyle_int(int & i, ::user::e_int eint, ::user::interaction * pui);
+      virtual bool userstyle_double(double & d, ::user::e_double edouble, ::user::interaction * pui);
+
       
       // e_style composition
-      virtual bool style_color(COLORREF & cr,e_color ecolor);
-      virtual bool style_font(::draw2d::font_sp & sp, e_font efont);
-      virtual bool style_translucency(e_translucency & etranslucency, e_element eelement);
-      virtual bool style_flag(::user::e_flag eflag);
-      virtual rect style_rect(::user::e_rect erect);
-      virtual int style_int(::user::e_int eint);
+      virtual bool style_color(COLORREF & cr,e_color ecolor, ::user::interaction * pui);
+      virtual bool style_font(::draw2d::font_sp & sp, e_font efont, ::user::interaction * pui);
+      virtual bool style_translucency(e_translucency & etranslucency, e_element eelement, ::user::interaction * pui);
+      virtual bool style_flag(bool & bSet, ::user::e_flag eflag, ::user::interaction * pui);
+      virtual bool style_rect(RECT & rect, ::user::e_rect erect, ::user::interaction * pui);
+      virtual bool style_int(int & i, ::user::e_int eint, ::user::interaction * pui);
+      virtual bool style_double(double & d, ::user::e_double edouble, ::user::interaction * pui);
       
       
       

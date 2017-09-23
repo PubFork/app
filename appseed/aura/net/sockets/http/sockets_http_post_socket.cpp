@@ -193,15 +193,15 @@ namespace sockets
          }
          inheader(__id(content_length)) = (int64_t) body.get_length();
 
-      m_bExpectResponse = true;
-      m_bExpectRequest = false;
+         m_bExpectResponse = true;
+         m_bExpectRequest = false;
 
          SendRequest();
 
          if(body.get_length() > 0)
          {
-         // send body
-         write( body );
+            // send body
+            write( body );
          }
       }
    }
@@ -209,9 +209,9 @@ namespace sockets
 
    void http_post_socket::DoMultipartPost()
    {
-      
+
       uint64_t length = 0; // calculate content_length of our post body
-      
+
       string tmp;
 
       if (m_pmultipart->m_strOverrideBoundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends.has_char())
@@ -248,7 +248,7 @@ namespace sockets
 
             strFields += value + "\r\n";
 
-            
+
 
          }
 
@@ -259,9 +259,9 @@ namespace sockets
       {
          for (auto & pair : m_pmultipart->m_map)
          {
-            
+
             string & name = pair.m_element1;
-            
+
             uint64_t content_length = pair.m_element2.m_uiContentLength;
 
             string filename;
@@ -287,7 +287,7 @@ namespace sockets
             strContentLength = "Content-Length: " + ::str::from(content_length) + "\r\n";
 
             tmp = "--" + m_boundary + "\r\nContent-Disposition: form-data; name=\"" + name + "\""+ filename + "\r\n"
-               + content_type + strContentLength + "\r\n";
+                  + content_type + strContentLength + "\r\n";
 
             length += (long)tmp.get_length();
 
@@ -300,13 +300,13 @@ namespace sockets
 
          //for(; pos != NULL; )
          //{
-         //   
+         //
          //   string name;
-         //   
+         //
          //   string filename;
-         //   
+         //
          //   m_mapFiles.get_next_assoc(pos, name, filename);
-         //   
+         //
          //   uint64_t content_length = m_mapContentLength[filename];
 
          //   string content_type = m_mapContentType[filename];
@@ -401,24 +401,24 @@ namespace sockets
             strContentLength = "Content-Length: " + ::str::from(content_length) + "\r\n";
 
             tmp = "--" + m_boundary + "\r\nContent-Disposition: form-data; name=\"" + name + "\"" + filename + "\r\n"
-               + content_type + strContentLength + "\r\n";
+                  + content_type + strContentLength + "\r\n";
 
             write( tmp );
             //{
-               //::file::file_sp spfile(allocer());
-               //if(spfile->open(filename, ::file::type_binary | ::file::mode_read).succeeded())
-               //{
-            
+            //::file::file_sp spfile(allocer());
+            //if(spfile->open(filename, ::file::type_binary | ::file::mode_read).succeeded())
+            //{
+
             memory m;
-            
-            m.allocate(content_length);
-            
+
+            m.allocate(::convert<uint32_t> (content_length));
+
             pair.m_element2.m_spfile->read(m.get_data(), m.get_size());
-            
+
             write(m.get_data(), m.get_size());
 
-                  //transfer_from(*pair.m_element2.m_spfile, content_length);
-               //}
+            //transfer_from(*pair.m_element2.m_spfile, content_length);
+            //}
             //}
             write("\r\n");
          }
