@@ -31,6 +31,8 @@ call_stack::call_stack(::aura::application * papp, uint32_t uiSkip) :
 #endif
 {
 
+   m_pszCallStack = NULL;
+
    if (m_pauraapp == NULL)
    {
 
