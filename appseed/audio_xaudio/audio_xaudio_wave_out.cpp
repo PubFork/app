@@ -518,7 +518,7 @@ namespace multimedia
          ZERO(b);
 
          b.pContext = pbuffer;
-         convert(b.AudioBytes, pwbuffer->m_uiBufferSize);
+         b.AudioBytes = (UINT32) (pwbuffer->m_uiBufferSize);
          b.pAudioData = (const BYTE *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 

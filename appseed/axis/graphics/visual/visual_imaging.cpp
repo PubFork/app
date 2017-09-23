@@ -1045,10 +1045,10 @@ void EmbossedTextOut(
    ** and offset are used.
    */
    sizeText = pgraphics->GetTextExtent(string(lpcsz,cb));
-   rcText.left   = x;
-   convert(rcText.right, x + cx + sizeText.cx);
-   rcText.top    = y;
-   convert(rcText.bottom, y + cy + sizeText.cy);
+   rcText.left    = x;
+   rcText.right   = LONG (x + cx + sizeText.cx);
+   rcText.top     = y;
+   rcText.bottom  = LONG(y + cy + sizeText.cy);
    //ExtTextOut(hDC, x+cx, y+cy, ETO_OPAQUE, &rcText, lpsz, cb, NULL);
    //pgraphics->SetBkMode(TRANSPARENT);
    //ExtTextOut(hDC, x-cx, y+cy, NULL, &rcText, lpsz, cb, NULL);

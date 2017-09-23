@@ -21,7 +21,7 @@ void XfplayerViewLineSelection::relay_event(xfplayer_view_line & viewline, ::mes
 
    UINT message;
 
-   convert(message, pbase->m_id.int64());
+   message = (UINT) (pbase->m_id.int64());
 
    if(message != WM_MOUSEMOVE
          || message != WM_TIMER

@@ -918,7 +918,7 @@ command_retry:
       straFile.add("vcredist");
 #endif
 
-      convert(status.m_lTotal, straFile.size());
+      status.m_lTotal = (LONG) (straFile.size());
       status.m_lProcessing = status.m_lTotal;
       status.m_lOk = 0;
       status.m_lBad = 0;

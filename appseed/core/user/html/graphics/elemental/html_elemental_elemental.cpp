@@ -556,7 +556,7 @@ namespace html
 
          int iExtraCy;
 
-         convert(iExtraCy, m_pimpl->get_extra_content_cy());
+         iExtraCy = (int) (m_pimpl->get_extra_content_cy());
 
          if (iExtraCy > 0)
          {

@@ -193,7 +193,7 @@ int client_send(memory & m, int fin, memory & memory, bool useMask)
 
 
 
-   return convert < int > (m.get_size());
+   return (int) (m.get_size());
 
 }
 
@@ -266,7 +266,7 @@ int client_send(memory & m, int fin, const char* src)
 
          frame[1] = 126;
 
-         *((int16_t*)&frame[2]) = htons(convert < u_short > (len));
+         *((int16_t*)&frame[2]) = htons((u_short) (len));
 
       }
 
@@ -276,7 +276,7 @@ int client_send(memory & m, int fin, const char* src)
 
       iOffset = 2;
 
-      convert(frame[1], len);
+      frame[1] = (char) (len);
 
    }
 
@@ -287,7 +287,7 @@ int client_send(memory & m, int fin, const char* src)
 
    }
 
-   return convert < int > (m.get_size());
+   return (int) (m.get_size());
 
 }
 
@@ -523,7 +523,7 @@ namespace sockets
 
       int iLen;
 
-      convert(iLen, m_strBase64.get_length());
+      iLen = (int)(m_strBase64.get_length());
 
       inheader("Sec-WebSocket-Key") = m_strBase64;
       if (m_strWebSocketProtocol.has_char())
@@ -900,7 +900,7 @@ namespace sockets
                if (m_fin)
                {
 
-                  on_websocket_data(m_memReceivedData.get_data(), convert < int > (m_memReceivedData.get_size()));
+                  on_websocket_data(m_memReceivedData.get_data(), (int) (m_memReceivedData.get_size()));
 
                   m_memReceivedData.allocate(0);
 

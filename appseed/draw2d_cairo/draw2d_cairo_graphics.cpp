@@ -4841,8 +4841,8 @@ namespace draw2d_cairo
    {
 
       ::rect r = ::rect_dim(
-                    convert < LONG > (x),
-                    convert < LONG > (y),
+                    LONG(x),
+                    LONG(y),
                     65535,
                     65535
                  );
@@ -5655,8 +5655,8 @@ namespace draw2d_cairo
       ((graphics *) this)->set(stringpath.m_spfont);
 
       ::rect r = ::rect_dim(
-                    convert < LONG > (stringpath.m_x),
-                    convert < LONG > (stringpath.m_y),
+                    LONG (stringpath.m_x),
+                    LONG (stringpath.m_y),
                     65535,
                     65535);
 

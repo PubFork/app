@@ -279,7 +279,7 @@ namespace draw2d
 
                               hfontOld = (HFONT) ::SelectObject(m_hdc, hfont);
 
-                              if (::GetTextExtentPointW(m_hdc, wstrSample, convert < int > (wstrSample.get_length()), &sSample))
+                              if (::GetTextExtentPointW(m_hdc, wstrSample, (int) (wstrSample.get_length()), &sSample))
                               {
 
                                  if (sSample.area() > maxarea)

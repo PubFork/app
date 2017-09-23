@@ -26,7 +26,7 @@ thread_tools::thread_tools(::aura::application * papp) :
 
       ptoolthread->m_iThread = m_threada.get_count();
 
-      ptoolthread->m_dwThreadAffinityMask = translate_processor_affinity(convert < int > (ptoolthread->m_iThread));
+      ptoolthread->m_dwThreadAffinityMask = translate_processor_affinity((int) (ptoolthread->m_iThread));
 
       m_threada.add(ptoolthread);
 

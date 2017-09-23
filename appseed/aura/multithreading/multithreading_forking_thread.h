@@ -226,7 +226,7 @@ class forking_count_thread :
       void construct()
       {
 
-         m_dwThreadAffinityMask = translate_processor_affinity(convert < int > (m_iOrder));
+         m_dwThreadAffinityMask = translate_processor_affinity(int (m_iOrder));
 
       }
 

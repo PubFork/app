@@ -1403,7 +1403,7 @@ namespace windows
 
       UINT uiMessage;
 
-      convert(uiMessage, pbase->m_id.int64());
+      uiMessage = UINT(pbase->m_id.int64());
 
       //if(uiMessage == WM_MOUSEMOVE)
       //{
@@ -2271,7 +2271,7 @@ namespace windows
 
       UINT uiMessage;
 
-      convert(uiMessage, pbase->m_id.int64());
+      uiMessage = UINT(pbase->m_id.int64());
 
       switch (uiMessage)
       {
@@ -2508,7 +2508,7 @@ namespace windows
 
                index iLastFrameId;
 
-               convert(iLastFrameId, millis_now() / dPeriod);
+               iLastFrameId = index(millis_now() / dPeriod);
 
                index iFrameId;
 
@@ -2608,7 +2608,7 @@ namespace windows
 
                   double dWait = dPeriod - fmod(dNow, dPeriod);
 
-                  convert(iFrameId, dNow / dPeriod);
+                  iFrameId = (index) (dNow / dPeriod);
 
                   ::count cLost = iFrameId - iLastFrameId - 1;
 
@@ -2626,7 +2626,7 @@ namespace windows
                   if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
                   {
 
-                     Sleep(convert < DWORD > (dWait));
+                     Sleep(DWORD (dWait));
 
                   }
                   else
@@ -2661,7 +2661,7 @@ namespace windows
 
                   }
 
-                  convert(m_dUpdateScreenFps, daFrame.get_size());
+                  m_dUpdateScreenFps = (double) (daFrame.get_size());
 
                   daFrame.add(dNow);
 

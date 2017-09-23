@@ -51,7 +51,7 @@ int32_t fflush_dup(FILE * fp)
 file_position_t fseek_dup(FILE *fp, file_offset_t offset, int32_t origin)
 {
 
-   return fseek(fp, ::convert<long> (offset), origin);
+   return fseek(fp, (long) (offset), origin);
 
 }
 
@@ -130,7 +130,7 @@ uint64_t fsize_dup(FILE * fp)
 
    auto len = ftell(fp);
 
-   fseek(fp, convert < long > (pos), SEEK_SET);
+   fseek(fp, (long) (pos), SEEK_SET);
 
    return len;
 

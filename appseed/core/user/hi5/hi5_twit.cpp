@@ -254,7 +254,7 @@ namespace hi5
 
       }
 
-      string strMediaId = mediaUploadInit(convert < int > (iLen), strMimeType, strCategory);
+      string strMediaId = mediaUploadInit(int (iLen), strMimeType, strCategory);
 
       if (strMediaId.is_empty())
       {
@@ -389,7 +389,7 @@ namespace hi5
          //}
 
 
-         if (!mediaUploadAppend(strMediaId, i, pfile, convert < int > (iSize), strMimeType, boundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends))
+         if (!mediaUploadAppend(strMediaId, i, pfile, int (iSize), strMimeType, boundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends))
          {
 
             m_strError = "ERROR: mediaUploadAppend failed chunk=" + ::str::from(i) + ", " + m_strError;

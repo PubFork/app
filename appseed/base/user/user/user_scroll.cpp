@@ -1431,8 +1431,8 @@ namespace user
 
          r.top = rectClient.bottom;
          r.left = rectClient.right;
-         convert(r.right, r.left + m_pscrollbarVert->m_pimpl->m_rectParentClientRequest.width());
-         convert(r.bottom, r.top + m_pscrollbarHorz->m_pimpl->m_rectParentClientRequest.height());
+         r.right = (LONG) (r.left + m_pscrollbarVert->m_pimpl->m_rectParentClientRequest.width());
+         r.bottom = (LONG) (r.top + m_pscrollbarHorz->m_pimpl->m_rectParentClientRequest.height());
 
          pgraphics->FillSolidRect(r, _001GetColor(color_scrollbar_background));
 

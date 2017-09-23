@@ -53,52 +53,25 @@ namespace user
    }
 
 
-   //void menu_list_view::GuieProc(::message::message * pobj)
-   //{
-   //   
-   //   SCAST_PTR(::message::base, pbase, pobj);
-
-   //   if (pbase->m_id == m_iMessage)
-   //   {
-   //      if (base_class < ::user::place_holder >::bases(GetParent()))
-   //      {
-   //         pbase->set_lresult(GetParent()->GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
-   //      }
-   //      else
-   //      {
-   //         pbase->set_lresult(GetParent()->send_message(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
-   //      }
-   //      
-   //      pbase->m_bRet = true;
-   //      
-   //      return;
-   //      
-   //   }
-   //   
-   //   return impact::GuieProc(pobj);
-   //   
-   //}
-   
-
    void menu_list_view::_001OnCmdMsg(::user::command * pcommand)
    {
-      
+
       if (m_puiNotify != NULL && m_puiNotify != this)
       {
-         
+
          m_puiNotify->_001OnCmdMsg(pcommand);
 
-         if(pcommand->m_bRet)
+         //if(pcommand->m_bRet)
          {
-            
+
             return;
-            
+
          }
-         
+
       }
-      
+
       return impact::_001OnCmdMsg(pcommand);
-      
+
    }
 
 

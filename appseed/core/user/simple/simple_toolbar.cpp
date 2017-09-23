@@ -550,9 +550,9 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
          size = pgraphics->GetTextExtent(str);
 
-         convert_add(buttonx, size.cx + EXTRA_TEXT_CX);
+         buttonx += (int32_t) (size.cx + EXTRA_TEXT_CX);
 
-         convert_add(buttony, size.cy + EXTRA_TEXT_CY);
+         buttony += (int32_t) (size.cy + EXTRA_TEXT_CY);
 
       }
 
@@ -1273,7 +1273,7 @@ void simple_toolbar::on_layout()
 
       GetClientRect(rectClient);
 
-      size s = CalcSize(convert < int32_t > (m_itema.get_count()));
+      size s = CalcSize( (int32_t) (m_itema.get_count()));
 
       for (index i = 0; i < m_itema.get_count(); i++)
       {
@@ -1940,7 +1940,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
             sized size = pgraphics->GetTextExtent(str);
 
-            convert(dx, size.cx + EXTRA_TEXT_CX);
+            dx = (int32_t)  (size.cx + EXTRA_TEXT_CX);
 
          }
 
@@ -2578,28 +2578,28 @@ rect simple_toolbar::get_item_pad()
    if (r.left < 0)
    {
 
-      convert(r.left, m_dFontSize / 3);
+      r.left = (LONG)(m_dFontSize / 3);
 
    }
 
    if (r.right < 0)
    {
 
-      convert(r.right, m_dFontSize / 3);
+      r.right = (LONG) (m_dFontSize / 3);
 
    }
 
    if (r.top < 0)
    {
 
-      convert(r.top, m_dFontSize / 3);
+      r.top = (LONG) (m_dFontSize / 3);
 
    }
 
    if (r.bottom < 0)
    {
 
-      convert(r.bottom, m_dFontSize / 3);
+      r.bottom = (LONG) (m_dFontSize / 3);
 
    }
 
@@ -2618,25 +2618,25 @@ rect simple_toolbar::get_bar_border()
    if (r.left < 0)
    {
 
-      convert(r.left, m_dFontSize / 3);
+      r.left = (LONG) (m_dFontSize / 3);
 
    }
    if (r.right < 0)
    {
 
-      convert(r.right, m_dFontSize / 3);
+      r.right = (LONG) (m_dFontSize / 3);
 
    }
    if (r.top < 0)
    {
 
-      convert(r.top, m_dFontSize / 3);
+      r.top = (LONG) (m_dFontSize / 3);
 
    }
    if (r.bottom < 0)
    {
 
-      convert(r.bottom, m_dFontSize / 3);
+      r.bottom = (LONG)(m_dFontSize / 3);
 
    }
 
@@ -2705,14 +2705,14 @@ size simple_toolbar::get_separator_size()
    if (s.cx < 0)
    {
 
-      convert(s.cx, m_dFontSize * 2 / 3);
+      s.cx = LONG(m_dFontSize * 2 / 3);
 
    }
 
    if (s.cy < 0)
    {
 
-      convert(s.cy, m_dFontSize * 2 / 3);
+      s.cy = LONG(m_dFontSize * 2 / 3);
 
    }
 
@@ -2732,7 +2732,7 @@ int simple_toolbar::get_image_spacing()
    if (i < 0)
    {
 
-      convert(i, m_dFontSize / 4);
+      i = (int)(m_dFontSize / 4);
 
    }
 

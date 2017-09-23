@@ -423,7 +423,7 @@ namespace user
                string strExtent2;
                strExtent2 = strLine.Mid(x, len);
                int x1;
-               convert(x1, get_line_extent(iLine, x));
+               x1 = (int)(get_line_extent(iLine, x));
                if (pregion->styled()->bback)
                {
                   pgraphics->FillSolidRect((int32_t)(left + x1), (int32_t)y, x1, m_iLineHeight, pregion->styled()->back);
@@ -527,7 +527,7 @@ namespace user
             if (m_bPassword)
             {
 
-               strLine = ::str::block('*', convert < int32_t > (strLine.get_length()));
+               strLine = ::str::block('*', int32_t (strLine.get_length()));
 
             }
 
@@ -538,7 +538,7 @@ namespace user
             if (m_bPassword)
             {
 
-               strLineGraphics = ::str::block('*', convert < int32_t > (strLineGraphics.get_length()));
+               strLineGraphics = ::str::block('*', int32_t (strLineGraphics.get_length()));
 
             }
 
@@ -1118,7 +1118,7 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      return convert < strsize > (m_ptree->m_editfile.get_length());
+      return strsize (m_ptree->m_editfile.get_length());
 
    }
 
@@ -1273,7 +1273,7 @@ namespace user
 
       index xEnd = 0;
 
-      convert(xEnd, get_line_extent(iLine, m_iaLineLen[iLine]));
+      xEnd = index (get_line_extent(iLine, m_iaLineLen[iLine]));
 
       rect rectClient;
 
@@ -1781,7 +1781,7 @@ namespace user
          if (m_daExtent[m_iLineStart + i].get_size() <= 0)
          {
 
-            m_daExtent[m_iLineStart + i].set_size(strLine.get_length());
+            m_daExtent[m_iLineStart + i].set_size(strLine.get_length() + 1);
 
             while (*pszNext != '\0')
             {
@@ -2218,7 +2218,7 @@ namespace user
       if (iLineUpdate < 0)
       {
 
-         convert(m_sizeTotal.cy, (((int32_t)m_iaLineLen.get_count() + (m_bMultiLine ? MAX(5, m_iLineCount) : 0)) * m_iLineHeight));
+         m_sizeTotal.cy = (LONG) ((((int32_t)m_iaLineLen.get_count() + (m_bMultiLine ? MAX(5, m_iLineCount) : 0)) * m_iLineHeight));
 
          class size sizePage;
 
@@ -2379,7 +2379,7 @@ namespace user
 
             strsize iRel = iSel - i1;
 
-            convert(x, get_line_extent(iLine, iRel));
+            x = (strsize) (get_line_extent(iLine, iRel));
 
             return iLine;
 
@@ -2524,7 +2524,7 @@ namespace user
 
             int x;
 
-            convert(x, get_line_extent(iLine, iRel));
+            x = (int) (get_line_extent(iLine, iRel));
 
             x = rectClient.left + x;
 
@@ -2710,7 +2710,7 @@ namespace user
 
          int x;
 
-         convert(x, get_line_extent(iLine, strExtent.length()));
+         x = (int) (get_line_extent(iLine, strExtent.length()));
 
          lim2 = x;
 
@@ -2863,7 +2863,7 @@ end:
          else if (::comparison::gt(iSelStart, m_ptree->m_editfile.get_length()))
          {
 
-            convert(iSelStart, m_ptree->m_editfile.get_length());
+            iSelStart = (strsize) (m_ptree->m_editfile.get_length());
 
          }
 
@@ -2876,7 +2876,7 @@ end:
          else if (::comparison::gt(iSelEnd, m_ptree->m_editfile.get_length()))
          {
 
-            convert(iSelEnd, m_ptree->m_editfile.get_length());
+            iSelEnd = (strsize) (m_ptree->m_editfile.get_length());
 
          }
 
@@ -3815,7 +3815,7 @@ finished_update:
 
                   index iLine = m_iaLineBeg.get_upper_bound();
 
-                  m_ptree->m_iSelEnd = LineXToSel(iLine, convert < int32_t > (m_iaLineLen[iLine]));
+                  m_ptree->m_iSelEnd = LineXToSel(iLine, int32_t (m_iaLineLen[iLine]));
 
                   _001EnsureVisibleLine(iLine);
 
@@ -4114,12 +4114,12 @@ finished_update:
          auto iLen = _001GetTextLength();
 
          if (m_ptree->m_iSelStart > iLen)
-            convert(m_ptree->m_iSelStart, iLen);
+            m_ptree->m_iSelStart = (strsize) (iLen);
          else if (m_ptree->m_iSelStart < 0)
             m_ptree->m_iSelStart = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
-            convert(m_ptree->m_iSelEnd, iLen);
+            m_ptree->m_iSelEnd = (strsize) (iLen);
          else if (m_ptree->m_iSelEnd < 0)
             m_ptree->m_iSelEnd = 0;
 
@@ -4183,12 +4183,12 @@ finished_update:
          auto iLen = _001GetTextLength();
 
          if (m_ptree->m_iSelStart > iLen)
-            convert(m_ptree->m_iSelStart, iLen);
+            m_ptree->m_iSelStart = (strsize) (iLen);
          else if (m_ptree->m_iSelStart < 0)
             m_ptree->m_iSelStart = 0;
 
          if (m_ptree->m_iSelEnd > iLen)
-            convert(m_ptree->m_iSelEnd, iLen);
+            m_ptree->m_iSelEnd = (strsize) (iLen);
          else if (m_ptree->m_iSelEnd < 0)
             m_ptree->m_iSelEnd = 0;
 

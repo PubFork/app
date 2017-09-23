@@ -344,7 +344,7 @@ string file_as_string_dup(const char * path)
 
    DWORD dwSize;
 
-   convert(dwSize, fsize_dup(file));
+   dwSize = (DWORD) fsize_dup(file);
 
    LPSTR lpsz = str.GetBufferSetLength(dwSize);
 

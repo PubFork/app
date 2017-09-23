@@ -12,7 +12,7 @@ namespace user
       menu_list_window(get_app())
    {
 
-      set_user_schema(schema_menu);
+      m_econtroltype = ::user::control_type_menu;
 
    }
 

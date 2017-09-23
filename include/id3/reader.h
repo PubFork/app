@@ -123,7 +123,7 @@ class ID3_CPP_EXPORT ID3_Reader
          if (end >= cur)
          {
 
-            return convert < size_type > (end - cur);
+            return size_type (end - cur);
 
          }
 

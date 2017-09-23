@@ -861,7 +861,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
    mem.allocate(iImageSize);
 
-   GetModuleFileNameExW(hProcess, NULL, (WCHAR *)mem.get_data(), convert < DWORD > (mem.get_size() / sizeof(WCHAR)));
+   GetModuleFileNameExW(hProcess, NULL, (WCHAR *)mem.get_data(), (DWORD) (mem.get_size() / sizeof(WCHAR)));
 
    strImage = (const wchar_t *)mem.get_data();
 
@@ -869,7 +869,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
    bool bFound = false;
 
-   if (EnumProcessModules(hProcess, hmods.get_data(), convert < DWORD > (hmods.get_size_in_bytes()), &cbNeeded))
+   if (EnumProcessModules(hProcess, hmods.get_data(), (DWORD) (hmods.get_size_in_bytes()), &cbNeeded))
    {
 
       for (ui = 0; ui < (cbNeeded / sizeof(HMODULE)); ui++)
@@ -877,7 +877,7 @@ CLASS_DECL_AURA bool process_contains_module(string & strImage, DWORD processID,
 
          // Get the full path to the module's file.
 
-         if (GetModuleFileNameExW(hProcess, hmods[ui], (WCHAR *)mem.get_data(), convert < DWORD > (mem.get_size() / sizeof(WCHAR))))
+         if (GetModuleFileNameExW(hProcess, hmods[ui], (WCHAR *)mem.get_data(), (DWORD) (mem.get_size() / sizeof(WCHAR))))
          {
 
             if (!wcsicmp_dup((const wchar_t *)mem.get_data(), wstrLibrary))
@@ -915,7 +915,7 @@ CLASS_DECL_AURA void shared_library_process(dword_array & dwa, stringa & straPro
 
    uint32_t ui;
 
-   if (!EnumProcesses(aProcesses.get_data(), convert < DWORD > (aProcesses.get_size_in_bytes()), &cbNeeded))
+   if (!EnumProcesses(aProcesses.get_data(), (DWORD) (aProcesses.get_size_in_bytes()), &cbNeeded))
    {
 
       return;

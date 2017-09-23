@@ -307,7 +307,7 @@ namespace visual
                            if (sSample.area() > maxarea)
                            {
 
-                              convert(maxarea, sSample.area());
+                              maxarea = (int) (sSample.area());
 
                               strText = strSample;
 
@@ -332,7 +332,7 @@ namespace visual
                            if (sSample.area() > maxarea)
                            {
 
-                              convert(maxarea, sSample.area());
+                              maxarea = (int) (sSample.area());
 
                               strText = strSample;
 

@@ -6983,8 +6983,8 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), convert < DWORD > (desc.length() * sizeof(wchar_t))); // default vlaue is description of file extension
-      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), convert < DWORD > (content_type.length() * sizeof(wchar_t))); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), DWORD (desc.length() * sizeof(wchar_t))); // default vlaue is description of file extension
+      RegSetValueExW(hkey, L"ContentType", 0, REG_SZ, (BYTE*)content_type.c_str(), DWORD (content_type.length() * sizeof(wchar_t))); // default vlaue is description of file extension
       RegCloseKey(hkey);
 
 
@@ -6996,7 +6996,7 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), convert < DWORD > (app.length() * sizeof(wchar_t)));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), DWORD(app.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
 
@@ -7007,7 +7007,7 @@ finalize:
          output_debug_string("Could not create or open a registrty key\n");
          return 0;
       }
-      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), convert < DWORD > (icon.length() * sizeof(wchar_t)));
+      RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), DWORD (icon.length() * sizeof(wchar_t)));
       RegCloseKey(hkey);
 
       wstring wstr(dir::stage("x86") / "spa_register.txt");

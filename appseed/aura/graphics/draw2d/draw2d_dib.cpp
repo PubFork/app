@@ -1994,7 +1994,7 @@ restart:
 
          ptool->m_h = pdibSrc->m_size.cy;
 
-         convert(ptool->m_ySkip, pset->get_count());
+         ptool->m_ySkip = (int) (pset->get_count());
 
          ptool->m_y = y;
 
@@ -5670,7 +5670,7 @@ restart:
 
       index a;
 
-      convert(a, area());
+      a = (index)(area());
 
       index jNextBoundary;
       index jStart;

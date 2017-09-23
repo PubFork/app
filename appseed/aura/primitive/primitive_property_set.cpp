@@ -1498,7 +1498,7 @@ property & stable_property_set::operator [](id id)
    if (id.is_integer())
    {
 
-      convert(iFind, id.int64());
+      iFind = (index) (id.int64());
 
       if (iFind < 0 || iFind >= m_propertya.get_count())
       {

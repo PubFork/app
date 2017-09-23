@@ -2142,7 +2142,7 @@ repeat:
             if (rgSpec.get_size() > 0)
             {
 
-               pfileopen->SetFileTypes(convert < UINT > (rgSpec.get_size()), rgSpec.get_data());
+               pfileopen->SetFileTypes(UINT (rgSpec.get_size()), rgSpec.get_data());
 
             }
 
@@ -2314,7 +2314,7 @@ repeat:
             if (rgSpec.get_size() > 0)
             {
 
-               pfilesave->SetFileTypes(convert < UINT > (rgSpec.get_size()), rgSpec.get_data());
+               pfilesave->SetFileTypes(UINT (rgSpec.get_size()), rgSpec.get_data());
 
             }
 

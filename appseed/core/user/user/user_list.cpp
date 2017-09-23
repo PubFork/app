@@ -1057,7 +1057,7 @@ namespace user
 
             rect.top = 0;
 
-            convert(rect.bottom, (_001GetItemCount() + (m_bHeaderCtrl ? 1 : 0)) * m_iItemHeight);
+            rect.bottom = (index) ((_001GetItemCount() + (m_bHeaderCtrl ? 1 : 0)) * m_iItemHeight);
 
             //            draw_list_item itemLast(this);
             //
@@ -1351,7 +1351,7 @@ namespace user
    int32_t list::_001CalcItemHeight(int iBaseHeight)
    {
 
-      return convert < int32_t > (iBaseHeight * _001GetDouble(::user::double_height_rate, 1.0));
+      return (int32_t) (iBaseHeight * _001GetDouble(::user::double_height_rate, 1.0));
 
    }
 
@@ -5791,7 +5791,7 @@ namespace user
             if (pt.y > (_001GetItemCount() - m_nDisplayCount) * m_iItemHeight + (m_bHeaderCtrl ? m_iItemHeight : 0))
             {
 
-               convert(pt.y, (_001GetItemCount() - m_nDisplayCount) * m_iItemHeight + (m_bHeaderCtrl ? m_iItemHeight : 0));
+               pt.y = (LONG) ((_001GetItemCount() - m_nDisplayCount) * m_iItemHeight + (m_bHeaderCtrl ? m_iItemHeight : 0));
 
             }
 

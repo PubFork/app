@@ -411,7 +411,7 @@ namespace sockets
 
             memory m;
 
-            m.allocate(::convert<uint32_t> (content_length));
+            m.allocate((uint32_t) (content_length));
 
             pair.m_element2.m_spfile->read(m.get_data(), m.get_size());
 

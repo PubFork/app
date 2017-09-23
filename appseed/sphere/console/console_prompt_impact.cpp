@@ -340,7 +340,7 @@ namespace console
 
          ::rect rectCaret;
 
-         convert(rectCaret.left, iLeftMargin+m_sizeChar.cx * m_iCursor);
+         rectCaret.left = (LONG) (iLeftMargin+m_sizeChar.cx * m_iCursor);
          rectCaret.right = rectCaret.left + m_sizeChar.cx;
          rectCaret.top = m_sizeChar.cy - 3;
          rectCaret.bottom = m_sizeChar.cy;

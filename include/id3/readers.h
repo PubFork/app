@@ -167,7 +167,7 @@ class ID3_CPP_EXPORT ID3_MemoryReader : public ID3_Reader
       virtual pos_type setCur(pos_type pos)
       {
          pos_type end = this->getEnd();
-         size_type size = convert < size_type > ((pos < end) ? pos : end);
+         size_type size = size_type ((pos < end) ? pos : end);
          _cur = _beg + size;
          return this->getCur();
       }

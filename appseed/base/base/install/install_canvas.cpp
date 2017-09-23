@@ -336,7 +336,7 @@ namespace install
 
          int32_t iLine;
 
-         convert(iLine, ((rect.bottom - 10) / size.cy) - 1);
+         iLine = int32_t(((rect.bottom - 10) / size.cy) - 1);
 
          if(rect.bottom - rect.top >= size.cy)
          {

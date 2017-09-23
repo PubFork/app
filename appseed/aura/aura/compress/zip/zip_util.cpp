@@ -127,7 +127,7 @@ namespace zip
 
          int iLastZip;
 
-         convert(iLastZip, ::file::path(strLastZip + ":").length());
+         iLastZip = int( ::file::path(strLastZip + ":").length());
 
          while(true)
          {

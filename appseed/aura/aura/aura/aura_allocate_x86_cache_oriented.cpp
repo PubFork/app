@@ -111,7 +111,7 @@ class x86_cache_oriented_memory_pool
          if(m_iCurPos + c < m_iSize)
          {
             lpb =  &m_ba[m_iCurPos];
-            convert_add(m_iCurPos, c);
+            m_iCurPos += (int) c;
          }
          else
          {

@@ -61,7 +61,7 @@ namespace visual
          lpglyph = GetGlyph(str[i]);
          if(lpglyph != NULL)
          {
-            convert_add(ptOffset.x, pgraphics->GetTextExtent(str.Left(i)).cx);
+            ptOffset.x = LONG(pgraphics->GetTextExtent(str.Left(i)).cx);
             lpglyph->DrawGlyph(
                pgraphics,
                true,

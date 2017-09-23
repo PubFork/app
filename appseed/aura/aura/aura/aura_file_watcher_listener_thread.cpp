@@ -82,7 +82,7 @@ namespace file_watcher
       for(index i = 0; i < 50 && padd->m_id == -2; i++)
       {
 
-         Sleep(convert < DWORD > (5 + i));
+         Sleep((DWORD) (5 + i));
 
       }
 

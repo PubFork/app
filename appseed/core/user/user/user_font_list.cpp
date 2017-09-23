@@ -104,7 +104,7 @@ namespace user
       if (iSel != m_pfontlistdata->m_iSel)
       {
 
-         convert(m_pfontlistdata->m_iSel, iSel);
+         m_pfontlistdata->m_iSel = (index) (iSel);
 
          ::user::control_event ev;
 

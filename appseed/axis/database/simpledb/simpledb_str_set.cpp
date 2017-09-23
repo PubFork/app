@@ -498,7 +498,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
       if (index == 0)
          return false;
 
-      int res = sqlite3_bind_text(pcore->m_pstmtSelect, index, strKey, convert < int > (strKey.get_length()), SQLITE_TRANSIENT);
+      int res = sqlite3_bind_text(pcore->m_pstmtSelect, index, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
       if (res != SQLITE_OK)
          return false;
 
@@ -642,7 +642,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             if (index == 0)
                return false;
 
-            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strValue, convert < int > (strValue.get_length()), SQLITE_TRANSIENT);
+            int res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strValue, int (strValue.get_length()), SQLITE_TRANSIENT);
             if (res != SQLITE_OK)
                return false;
 
@@ -650,7 +650,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             if (index == 0)
                return false;
 
-            res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strKey, convert < int > (strKey.get_length()), SQLITE_TRANSIENT);
+            res = sqlite3_bind_text(pcore->m_pstmtUpdate, index, strKey, int (strKey.get_length()), SQLITE_TRANSIENT);
             if (res != SQLITE_OK)
                return false;
 

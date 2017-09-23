@@ -122,7 +122,7 @@ namespace user
                            bResult = FALSE;
                            break;
                         } */
-            convert(pSBP->cxText, spgraphicsScreen->GetTextExtent(pSBP->strText).cx);
+            pSBP->cxText = (int32_t) (spgraphicsScreen->GetTextExtent(pSBP->strText).cx);
             ASSERT(pSBP->cxText >= 0);
             if (!SetPaneText(i, pSBP->strText, FALSE))
             {

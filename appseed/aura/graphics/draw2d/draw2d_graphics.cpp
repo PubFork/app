@@ -4277,7 +4277,7 @@ namespace draw2d
       rect rect;
       rect.left = 0;
       rect.top = 0;
-      convert(rect.right, sz.cx);
+      rect.right = (LONG) sz.cx;
       rect.bottom = iLineSpacing;
 
       int32_t align = 0;

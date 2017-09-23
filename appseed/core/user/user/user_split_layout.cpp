@@ -630,7 +630,7 @@ namespace user
       for (index i = 0; i < get_pane_count(); i++)
       {
 
-         if (is_pane_visible(convert < int > (i)))
+         if (is_pane_visible((int) (i)))
          {
 
             c++;
@@ -794,7 +794,7 @@ namespace user
       while (i <= iIndex)
       {
 
-         if (is_pane_visible(convert < int > (i)))
+         if (is_pane_visible((int)(i)))
          {
 
             nPos = m_splitbara[iIndex]->m_dwPosition;

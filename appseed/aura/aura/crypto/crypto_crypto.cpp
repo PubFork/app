@@ -861,7 +861,7 @@ namespace crypto
 
       unsigned int md_len = 0;
 
-      HMAC(EVP_sha1(), memKey.get_data(), convert < int > (memKey.get_size()), memMessage.get_data(), memMessage.get_size(), (unsigned char *) result, &md_len);
+      HMAC(EVP_sha1(), memKey.get_data(), int (memKey.get_size()), memMessage.get_data(), memMessage.get_size(), (unsigned char *) result, &md_len);
 
 //#endif
 
@@ -877,7 +877,7 @@ namespace crypto
 
       unsigned int md_len = 0;
 
-      HMAC(EVP_sha1(),strKey,convert < int > (strKey.length()),(const unsigned char *)(const char *)strMessage,strMessage.length(),(unsigned char *)result,&md_len);
+      HMAC(EVP_sha1(),strKey, int (strKey.length()),(const unsigned char *)(const char *)strMessage,strMessage.length(),(unsigned char *)result,&md_len);
 
 //#endif
 
@@ -1471,7 +1471,7 @@ namespace crypto
 
 #endif
 
-      return convert < int > (out.get_size());
+      return int (out.get_size());
 
 
    }
@@ -1514,7 +1514,7 @@ namespace crypto
 
 #endif
 
-      return convert < int > (out.get_size());
+      return int (out.get_size());
 
    }
 
@@ -1621,10 +1621,10 @@ namespace crypto
 
 #endif
 
-      return convert < int > (out.get_size());
-
+      return int (out.get_size());
 
    }
+
 
    int rsa::public_decrypt(memory & out,const memory & in,string & strError)
    {
@@ -1664,7 +1664,7 @@ namespace crypto
 
 #endif
 
-      return convert < int > (out.get_size());
+      return int (out.get_size());
 
    }
 

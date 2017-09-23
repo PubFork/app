@@ -176,7 +176,7 @@ namespace install
             string strMessage = "yes_fontopus_com";
             m.allocate(strMessage.get_length() + 2);
             m.get_data()[0] = 0x81;
-            convert(m.get_data()[1], strMessage.get_length());
+            m.get_data()[1] = (byte) (strMessage.get_length());
             memcpy(&m.get_data()[2], strMessage.c_str(), strMessage.get_length());
             write(m.get_data(), m.get_size());
             return;

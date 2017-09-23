@@ -569,7 +569,7 @@ namespace user
 
       UINT uiMessage;
 
-      convert(uiMessage, pbase->m_id.int64());
+      uiMessage = (UINT) (pbase->m_id.int64());
 
       if(m_pui != NULL)
       {

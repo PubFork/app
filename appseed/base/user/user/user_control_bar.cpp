@@ -288,7 +288,7 @@ namespace user
 
       UINT message;
 
-      convert(message, pbase->m_id.int64());
+      message = UINT(pbase->m_id.int64());
 
       // handle CBRS_FLYBY style (status bar flyby help)
       if (((m_dwStyle & CBRS_FLYBY) ||
@@ -343,7 +343,7 @@ namespace user
 
       UINT uiMessage;
 
-      convert(uiMessage, pbase->m_id.int64());
+      uiMessage = (UINT)(pbase->m_id.int64());
 
       switch (uiMessage)
       {

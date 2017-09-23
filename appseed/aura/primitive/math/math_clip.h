@@ -2,7 +2,7 @@
 
 
 template < typename T1, typename T2 >
-inline bool convert(T1 & t1, const T2 & t2)
+inline bool clip_convert(T1 & t1, const T2 & t2)
 {
 
    if (::comparison::gt(t2, ::numeric_info < T1 >::get_maximum_value()))
@@ -35,7 +35,7 @@ inline bool convert(T1 & t1, const T2 & t2)
 
 
 template < typename T1, typename T2 >
-inline T1 convert(const T2 & t2)
+inline T1 clip_convert(const T2 & t2)
 {
 
    if (::comparison::gt(t2, ::numeric_info < T1 >::get_maximum_value()))
@@ -62,7 +62,7 @@ inline T1 convert(const T2 & t2)
 
 
 template < typename T1, typename T2 >
-inline bool convert_add(T1 & t1, const T2 & t2)
+inline bool clip_convert_add(T1 & t1, const T2 & t2)
 {
 
    auto t = t1 + t2;
@@ -80,23 +80,23 @@ inline bool convert_add(T1 & t1, const T2 & t2)
 
 
 template < typename T1, typename T2 >
-inline bool convert_difference(T1 & t1, const T2 & t2)
+inline bool clip_convert_difference(T1 & t1, const T2 & t2)
 {
 
    auto t = t1 - t2;
 
-   return convert(t1, t);
+   return clip_convert(t1, t);
 
 }
 
 
 template < typename T1, typename T2 >
-inline bool convert_multiply(T1 & t1, const T2 & t2)
+inline bool clip_convert_multiply(T1 & t1, const T2 & t2)
 {
 
    auto t = t2 * t1;
 
-   if (!convert(t1, t))
+   if (!clip_convert(t1, t))
    {
 
       output_debug_string(" (convert_multiply)");
@@ -110,12 +110,12 @@ inline bool convert_multiply(T1 & t1, const T2 & t2)
 
 // division by zero protection isn't this function's current responsability and maybe never should be
 template < typename T1, typename T2 >
-inline bool convert_divide(T1 & t1, const T2 & t2)
+inline bool clip_convert_divide(T1 & t1, const T2 & t2)
 {
 
    auto t = t1 / t2;
 
-   if (!convert(t1, t))
+   if (!clip_convert(t1, t))
    {
 
       output_debug_string(" (convert_divide)");
