@@ -1389,6 +1389,17 @@ namespace user
 
       }
 
+
+      if ((int)edouble >= (int)double_default_one_min
+            && (int)edouble <= (int)double_default_one_max)
+      {
+
+         d = 1.0;
+
+         return true;
+
+      }
+
       return false;
 
    }
