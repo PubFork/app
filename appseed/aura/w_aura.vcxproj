@@ -916,6 +916,7 @@
     <ClCompile Include="aura\xml\xml_var_exchange.cpp" />
     <ClCompile Include="aura\xml\xml_xml.cpp" />
     <ClCompile Include="aura\xml\xml_xmlite.cpp" />
+    <ClCompile Include="build_debug.cpp" />
     <ClCompile Include="filesystem\filesystem\filesystem_application.cpp" />
     <ClCompile Include="filesystem\filesystem\filesystem_dir_application.cpp" />
     <ClCompile Include="filesystem\filesystem\filesystem_dir_system.cpp" />
@@ -1228,7 +1229,7 @@
     <ClCompile Include="primitive\str\str_to_integer.cpp" />
     <ClCompile Include="primitive\str\str_verisimple_wstring.cpp" />
     <ClCompile Include="primitive\str\str_wtostring.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="primitive\str\_str_pool.cpp" />
     <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp" />
     <ClCompile Include="user\colorertake5\colorertake5_colorertake5.cpp" />
     <ClCompile Include="user\colorertake5\colorertake5_default_error_handler.cpp" />
@@ -1279,7 +1280,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -1402,7 +1403,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <FixedBaseAddress>false</FixedBaseAddress>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -1451,6 +1452,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|arm'">
@@ -1497,6 +1499,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">

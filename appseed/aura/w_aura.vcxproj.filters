@@ -3136,9 +3136,6 @@
     <ClCompile Include="graphics\draw2d\draw2d_nanosvg.cpp">
       <Filter>Source Files\graphics\draw2d</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="aura\aura\aura_new.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
@@ -3876,6 +3873,12 @@
     </ClCompile>
     <ClCompile Include="primitive\collection\collection_ref_array.cpp">
       <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\_str_pool.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="build_debug.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
