@@ -4,10 +4,10 @@
 namespace user
 {
 
-   
+
    enum e_element
    {
-      
+
       element_none,
       element_frame_window,
       element_tab,
@@ -28,14 +28,14 @@ namespace user
       element_scrollbar_pageA,
       element_scrollbar_pageB,
 
-      
+
       element_split = 10000,
-      
+
    };
-   
+
    using translucency_map = ::map < e_element, e_element, e_translucency, e_translucency >;
 
-   
+
    enum e_event
    {
       event_initialize_control,
@@ -123,7 +123,7 @@ namespace user
       color_tab_layout_background,
       color_action_hover_border_color,
    };
-   
+
    using color_map = map < e_color,e_color,COLORREF,COLORREF >;
 
    enum e_font
@@ -147,51 +147,53 @@ namespace user
 
       flag_none,
       flag_border,
-      
+
    };
 
    using flag_map = map < e_flag, e_flag, bool, bool >;
-   
+
    enum e_rect
    {
-      
+
       rect_none,
       rect_menu_margin,
 
    };
-   
+
    using rect_map = ::map < e_rect, e_rect, rect, rect >;
-   
+
    enum e_int
    {
-      
+
       int_none,
       int_border,
       int_element_padding,
       int_menu_button_padding,
       int_check_box_size
-      
+
    };
 
    enum e_double
    {
 
       double_none,
+      double_default_one_min,
       double_width_rate,
-      double_height_rate
+      double_height_rate,
+      double_default_one_max,
 
    };
-   
+
    using int_map = ::map < e_int, e_int, int, int >;
 
    using double_map = ::map < e_double, e_double, double, double >;
 
    enum e_timer
    {
-      
+
       timer_command_probe = 11225,
       timer_menu
-      
+
    };
 
 
@@ -221,13 +223,13 @@ namespace user
 
    enum e_control_ddx
    {
-      
+
       control_ddx_none,
       control_ddx_flags,
       control_ddx_dbflags,
 
    };
 
-   
+
 } // namespace user
 

@@ -7,9 +7,9 @@ namespace user
 
    style::style()
    {
-      
+
       m_eschema = schema_default;
-      
+
       m_pgraphics = NULL;
 
    }
@@ -298,11 +298,11 @@ namespace user
    {
 
       if (!m_mapTranslucency.Lookup(eelement, etranslucency)
-         || etranslucency == translucency_undefined)
+            || etranslucency == translucency_undefined)
       {
 
          if (!m_mapTranslucency.Lookup(element_none, etranslucency)
-            || etranslucency == translucency_undefined)
+               || etranslucency == translucency_undefined)
          {
 
             etranslucency = translucency_undefined;
@@ -368,6 +368,16 @@ namespace user
 
       if (m_mapDouble.Lookup(edouble, d))
       {
+
+         return true;
+
+      }
+
+      if ((int)edouble >= (int)double_default_one_min
+            && (int)edouble <= (int)double_default_one_max)
+      {
+
+         d = 1.0;
 
          return true;
 
@@ -456,8 +466,8 @@ namespace user
 
 
       bool bError = pui->m_ptooltip.is_set()
-         && pui->m_ptooltip->IsWindowVisible()
-         && pui->get_tooltip()->m_bError;
+                    && pui->m_ptooltip->IsWindowVisible()
+                    && pui->get_tooltip()->m_bError;
 
       rect rectClient;
 
@@ -777,7 +787,7 @@ namespace user
          }
          pgraphics->Draw3dRect(rectCheckBox, ARGB(255, 128, 128, 128), ARGB(255, 128, 128, 128));
          if (echeck == check::tristate
-            || echeck == check::checked)
+               || echeck == check::checked)
          {
             ::draw2d::pen_sp pen(allocer());
             pen->create_solid(1 * (w + h) / 30, echeck == check::checked ? ARGB(255, 0, 0, 0) : ARGB(255, 96, 96, 96));
@@ -891,7 +901,7 @@ namespace user
          rectText.top = rectMargin.top;
          rectText.bottom = cy - rectMargin.bottom;
          rectText.right = cx - rectMargin.right;
-         
+
       }
 
       return true;

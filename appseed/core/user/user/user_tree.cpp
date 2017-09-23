@@ -729,7 +729,23 @@ namespace user
 
             index iLastChildIndex = iParentIndex + pitem->get_proper_descendant_count();
 
-            index iLastVisibleIndex = (index) (ptOffset.y / _001GetItemHeight() + _001GetVisibleItemCount()) + 1;
+            index iDivision;
+
+            if (_001GetItemHeight() == 0)
+            {
+
+               // height is zero?!?!
+               iDivision = 1;
+
+            }
+            else
+            {
+
+               iDivision = ptOffset.y / _001GetItemHeight();
+
+            }
+
+            index iLastVisibleIndex = (index) (iDivision + _001GetVisibleItemCount()) + 1;
 
 
 

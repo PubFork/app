@@ -24,7 +24,7 @@ namespace filemanager
    {
 
       ::user::impact::install_message_routing(psender);
-      
+
       connect_command_probe("edit_paste",&impact::_001OnUpdateEditPaste);
 
       connect_command("edit_paste",&impact::_001OnEditPaste);
@@ -34,7 +34,7 @@ namespace filemanager
    }
 
 
-  
+
    ::user::impact * impact::get_this_view()
    {
 
@@ -118,6 +118,7 @@ namespace filemanager
                {
                   knowledge(puh->m_filepath, puh->m_actioncontext + ::action::source_sync);
                }
+               set_need_redraw();
             }
 
          }
@@ -171,7 +172,7 @@ namespace filemanager
 
    void impact::_001OnEditPaste(::message::message * pobj)
    {
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
       ::file::listing stra;
@@ -184,7 +185,7 @@ namespace filemanager
          return;
 
       }
-      
+
       string strDir;
 
       strDir = get_filemanager_item()->m_filepath;
@@ -193,9 +194,9 @@ namespace filemanager
 
       if(pview == NULL)
       {
-         
+
          return;
-         
+
       }
 
       tab_view * ptabview = get_this_view()->GetTypedParent < tab_view >();
@@ -208,7 +209,7 @@ namespace filemanager
          ptabview->filemanager_manager().get_operation_doc(true)->m_thread.kick();
 
       }
-      
+
       pobj->m_bRet =true;
 
    }
