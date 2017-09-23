@@ -24,6 +24,13 @@ extern "C"
 CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
 {
 
+   if (is_ptr_null(pszFormat, 1024))
+   {
+
+      return;
+   
+   }
+
    //if (strstr(pszFormat, "%") == NULL)
    //{
    //
