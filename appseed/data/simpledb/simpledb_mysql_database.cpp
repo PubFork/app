@@ -191,7 +191,7 @@ namespace mysql
 
       if(pres) /* a result set was returned */
       {
-         m_iLastUsedTime = ::core::profiler::micros();
+         m_iLastUsedTime = ::aura::profiler::micros();
          return canew(result(this, pres));
       }
       else /* no result set was returned */
@@ -208,7 +208,7 @@ namespace mysql
             * SHOW, DESCRIBE, etc.); just report rows-affected value.
             */
 
-            m_iLastUsedTime = ::core::profiler::micros();
+            m_iLastUsedTime = ::aura::profiler::micros();
 
             result * presult = canew(result(this, NULL));
 
