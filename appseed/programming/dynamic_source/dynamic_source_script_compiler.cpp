@@ -158,7 +158,7 @@ void script_compiler::prepare_compile_and_link_environment()
 
 	  }
 
-	  m_strVCVersion = "10.0.14393.0";
+	  m_strVCVersion = "10.0.15063.0";
 
 
    }
@@ -1191,7 +1191,7 @@ void script_compiler::prepare1(const char * lpcszSource, const char * lpcszDest)
    else if (m_strVs == "2017")
    {
 
-      strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.14393.0";
+      strBuildCmd = "\"" + strBuildCmd + "\" " + m_strPlat2 + " 10.0.15063.0";
 
    }
 

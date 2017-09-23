@@ -180,7 +180,7 @@ namespace introjection
 
          }
 
-         m_strVCVersion = "10.0.14393.0";
+         m_strVCVersion = "10.0.15063.0";
 
       }
       else if (m_strVs == "2015")
@@ -286,7 +286,7 @@ namespace introjection
 
 #elif defined(LINUX)
 #else
-      var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.14393.0");
+      var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.15063.0");
       TRACE0(var.get_string());
 
 #endif
