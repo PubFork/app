@@ -54,7 +54,7 @@ namespace windows
 
             Release();
 
-            if (defer_co_initialize_ex(false))
+            if (!defer_co_initialize_ex(false))
             {
 
                return E_FAIL;
