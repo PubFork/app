@@ -502,7 +502,16 @@ namespace user
                if (puserstyle == NULL)
                {
 
-                  puserstyle = canew(style(get_app()));
+                  Session.m_puserstyle = Session.get_user_style("", get_app());
+
+                  puserstyle = Session.m_puserstyle;
+
+                  if (puserstyle == NULL)
+                  {
+
+                     puserstyle = this;
+
+                  }
 
                }
 

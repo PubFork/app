@@ -138,7 +138,7 @@ namespace metrowin
       else
       {
 
-         if(::file::dir::system::ls(papp,listing))
+         if(::file::dir::system::ls(papp,listing).succeeded())
          {
 
             return listing;
@@ -484,9 +484,9 @@ namespace metrowin
 
                      if (::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                      {
-                        
+
                         m_isdirmap.set(stra[i], true, 0);
-                        
+
                         goto try1;
 
                      }
@@ -498,11 +498,11 @@ namespace metrowin
                      }
 
                   }
-                  
+
                   string strError = get_system_error_message(dwError);
 
                   APPTRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, strError);
-                  
+
                   //m_isdirmap.set(stra[i], false);
 
                }
@@ -616,6 +616,8 @@ try1:
          return false;
 
       mk(m_strTimeFolder / "time",get_app());
+
+      m_pathHome = ::dir::roaming_app_data() / "home";
 
       return true;
 

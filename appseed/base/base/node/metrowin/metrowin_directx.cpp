@@ -48,7 +48,7 @@ namespace metrowin
 
    bool directx_base::defer_init()
    {
-    
+
       ::draw2d::lock draw2dlock;
 
       if (m_bInitialized)
@@ -79,7 +79,7 @@ namespace metrowin
    // Recreate all device resources and set them back to the current state.
    void directx_base::HandleDeviceLost()
    {
-      
+
       ::draw2d::lock draw2dlock;
 
       // Reset these member variables to ensure that SetDpi recreates all resources.
@@ -238,9 +238,9 @@ namespace metrowin
 
          System.m_dpi = dpi;
 
-         m_size.cx = m_window->Bounds.Width;
+         m_size.cx = (LONG) m_window->Bounds.Width;
 
-         m_size.cy = m_window->Bounds.Height;
+         m_size.cy = (LONG) m_window->Bounds.Height;
 
          // Often a DPI change implies a window size change. In some cases Windows will issue
          // both a size changed event and a DPI changed event. In this case, the resulting bounds
@@ -284,7 +284,7 @@ namespace metrowin
             m_d3dRenderTargetView = nullptr;
             m_d3dDepthStencilView = nullptr;
             m_windowSizeChangeInProgress = true;
-            
+
             CreateWindowSizeDependentResources();
 
          }
@@ -314,8 +314,8 @@ namespace metrowin
 
       // Store the window bounds so the next time we get a SizeChanged event we can
       // avoid rebuilding everything if the size is identical.
-      m_windowBounds.Width = m_size.cx;
-      m_windowBounds.Height = m_size.cy;
+      m_windowBounds.Width = (float) m_size.cx;
+      m_windowBounds.Height = (float) m_size.cy;
 
       if(m_swapChain != nullptr)
       {

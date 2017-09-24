@@ -8817,6 +8817,40 @@ restart:
 
       }
 
+
+      sp(::user::style) puserstyle = m_puserstyle;
+
+      if (puserstyle.is_null())
+      {
+
+         puserstyle = Session.m_puserstyle;
+
+         if (puserstyle == NULL)
+         {
+
+            puserstyle = Application.m_puserstyle;
+
+            if (puserstyle == NULL)
+            {
+
+               puserstyle = Session.m_puserstyle;
+
+               if (puserstyle == NULL)
+               {
+
+                  Session.m_puserstyle = Session.get_user_style("", get_app());
+
+                  m_puserstyle = Session.m_puserstyle;
+
+               }
+
+            }
+
+         }
+
+      }
+
+
       //if (m_puserstyle == NULL)
       {
 

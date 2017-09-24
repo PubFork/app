@@ -9,16 +9,16 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    SCAST_PTR(::message::base,pbase,pobj);
 
    if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_NCMOUSEMOVE ||
-      pbase->m_id == WM_NCHITTEST || pbase->m_id == WM_SETCURSOR ||
-      pbase->m_id == WM_CTLCOLORBTN ||
-      pbase->m_id == WM_CTLCOLORDLG ||
-      pbase->m_id == WM_CTLCOLOREDIT ||
-      pbase->m_id == WM_CTLCOLORLISTBOX ||
-      pbase->m_id == WM_CTLCOLORMSGBOX ||
-      pbase->m_id == WM_CTLCOLORSCROLLBAR ||
-      pbase->m_id == WM_CTLCOLORSTATIC ||
-      pbase->m_id == WM_ENTERIDLE || pbase->m_id == WM_CANCELMODE ||
-      pbase->m_id == 0x0118)    // WM_SYSTIMER (caret blink)
+         pbase->m_id == WM_NCHITTEST || pbase->m_id == WM_SETCURSOR ||
+         pbase->m_id == WM_CTLCOLORBTN ||
+         pbase->m_id == WM_CTLCOLORDLG ||
+         pbase->m_id == WM_CTLCOLOREDIT ||
+         pbase->m_id == WM_CTLCOLORLISTBOX ||
+         pbase->m_id == WM_CTLCOLORMSGBOX ||
+         pbase->m_id == WM_CTLCOLORSCROLLBAR ||
+         pbase->m_id == WM_CTLCOLORSTATIC ||
+         pbase->m_id == WM_ENTERIDLE || pbase->m_id == WM_CANCELMODE ||
+         pbase->m_id == 0x0118)    // WM_SYSTIMER (caret blink)
    {
       // don't report very frequently sent messages
       return;
@@ -39,12 +39,12 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    else if(pbase->m_id >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X",pbase->m_id.int64() - WM_USER);
+      sprintf_s(szBuf,_countof(szBuf),"WM_USER+0x%04X", (UINT) (pbase->m_id.int64() - WM_USER));
       lpszMsgName = szBuf;
    }
    else
    {
-      lpszMsgName = get_windows_message_name(pbase->m_id);
+      lpszMsgName = get_windows_message_name((UINT) pbase->m_id.int64());
    }
 
    if(lpszMsgName != NULL)
@@ -83,16 +83,16 @@ void __trace_message(const char * lpszPrefix,LPMESSAGE lpmsg)
    ENSURE_ARG(lpmsg != NULL);
 
    if(lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE ||
-      lpmsg->message == WM_NCHITTEST || lpmsg->message == WM_SETCURSOR ||
-      lpmsg->message == WM_CTLCOLORBTN ||
-      lpmsg->message == WM_CTLCOLORDLG ||
-      lpmsg->message == WM_CTLCOLOREDIT ||
-      lpmsg->message == WM_CTLCOLORLISTBOX ||
-      lpmsg->message == WM_CTLCOLORMSGBOX ||
-      lpmsg->message == WM_CTLCOLORSCROLLBAR ||
-      lpmsg->message == WM_CTLCOLORSTATIC ||
-      lpmsg->message == WM_ENTERIDLE || lpmsg->message == WM_CANCELMODE ||
-      lpmsg->message == 0x0118)    // WM_SYSTIMER (caret blink)
+         lpmsg->message == WM_NCHITTEST || lpmsg->message == WM_SETCURSOR ||
+         lpmsg->message == WM_CTLCOLORBTN ||
+         lpmsg->message == WM_CTLCOLORDLG ||
+         lpmsg->message == WM_CTLCOLOREDIT ||
+         lpmsg->message == WM_CTLCOLORLISTBOX ||
+         lpmsg->message == WM_CTLCOLORMSGBOX ||
+         lpmsg->message == WM_CTLCOLORSCROLLBAR ||
+         lpmsg->message == WM_CTLCOLORSTATIC ||
+         lpmsg->message == WM_ENTERIDLE || lpmsg->message == WM_CANCELMODE ||
+         lpmsg->message == 0x0118)    // WM_SYSTIMER (caret blink)
    {
       // don't report very frequently sent messages
       return;

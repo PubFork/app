@@ -127,7 +127,6 @@
     <ClInclude Include="aura\aura\aura_trace.h" />
     <ClInclude Include="aura\aura\aura_types.h" />
     <ClInclude Include="aura\aura\aura_user.h" />
-    <ClInclude Include="aura\aura\aura__c.h" />
     <ClInclude Include="aura\aura_policy\aura_c.h" />
     <ClInclude Include="aura\aura_policy\aura_cpp.h" />
     <ClInclude Include="aura\aura_policy\aura_policy.h" />
@@ -348,6 +347,8 @@
     <ClInclude Include="graphics\visual\visual_const.h" />
     <ClInclude Include="graphics\visual\visual_cursor.h" />
     <ClInclude Include="graphics\visual\visual_icon.h" />
+    <ClInclude Include="multimedia\audio\audio.h" />
+    <ClInclude Include="multimedia\audio\audio_c.h" />
     <ClInclude Include="multithreading\multithreading.h" />
     <ClInclude Include="multithreading\multithreading_condition.h" />
     <ClInclude Include="multithreading\multithreading_critical_section.h" />
@@ -390,7 +391,6 @@
     <ClInclude Include="primitive\api\api.h" />
     <ClInclude Include="primitive\api\api_rotate.h" />
     <ClInclude Include="primitive\collection\collection.h" />
-    <ClInclude Include="primitive\collection\collection_array_decl.h" />
     <ClInclude Include="primitive\collection\collection_attrib_map.h" />
     <ClInclude Include="primitive\collection\collection_base_2array.h" />
     <ClInclude Include="primitive\collection\collection_base_enum.h" />
@@ -997,6 +997,7 @@
     <ClCompile Include="graphics\draw3d\draw3d_ortho.cpp" />
     <ClCompile Include="graphics\visual\visual_cursor.cpp" />
     <ClCompile Include="graphics\visual\visual_icon.cpp" />
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp" />
     <ClCompile Include="multithreading\multithreading.cpp" />
     <ClCompile Include="multithreading\multithreading_condition.cpp" />
     <ClCompile Include="multithreading\multithreading_core.cpp" />

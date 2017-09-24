@@ -9,10 +9,10 @@
 void copy(D2D1_RECT_F & rectSrc, LPCRECT lpcrect)
 {
 
-   convert(rectSrc.left, lpcrect->left);
-   convert(rectSrc.top, lpcrect->top);
-   convert(rectSrc.right, lpcrect->right);
-   convert(rectSrc.bottom, lpcrect->bottom);
+   rectSrc.left = (FLOAT) (lpcrect->left);
+   rectSrc.top = (FLOAT) (lpcrect->top);
+   rectSrc.right = (FLOAT) (lpcrect->right);
+   rectSrc.bottom = (FLOAT) (lpcrect->bottom);
 
 }
 
@@ -423,7 +423,7 @@ namespace draw2d_direct2d
 
          rect rectAlphaBlend(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
-         point pt(convert < LONG > (x), convert < LONG > (y));
+         point pt((LONG) (x), (LONG)(y));
 
          rect rectText(pt, size);
 

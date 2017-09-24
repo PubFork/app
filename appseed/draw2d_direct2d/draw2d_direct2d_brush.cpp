@@ -264,9 +264,9 @@ namespace draw2d_direct2d
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                        D2D1::RadialGradientBrushProperties(
-                          D2D1::Point2F(convert < FLOAT > (centerx), convert < FLOAT > (centery)),
-                          D2D1::Point2F(convert < FLOAT > (originx), convert < FLOAT > (originy)),
-                          convert < FLOAT > (radiusx), convert < FLOAT > (radiusy)),
+                          D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
+                          D2D1::Point2F((FLOAT)(originx), (FLOAT)(originy)),
+                          (FLOAT)(radiusx), (FLOAT)(radiusy)),
                        pgradientstops,
                        & ((brush *) this)->m_pradialgradientbrush
                     );

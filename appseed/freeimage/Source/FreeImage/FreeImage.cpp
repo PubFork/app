@@ -38,23 +38,28 @@ static const char *s_copyright = "This program uses FreeImage, a free, open sour
 #if defined(_WIN32) && !defined(__MINGW32__)
 #ifndef FREEIMAGE_LIB
 
+#ifdef METROWIN
+[MTAThread]
+#endif
 WINBOOL APIENTRY
-DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
-	switch (ul_reason_for_call) {
-		case DLL_PROCESS_ATTACH :
-			//FreeImage_Initialise(FALSE);
-			break;
+DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+{
+   switch (ul_reason_for_call)
+   {
+   case DLL_PROCESS_ATTACH :
+      //FreeImage_Initialise(FALSE);
+      break;
 
-		case DLL_PROCESS_DETACH :
-			//FreeImage_DeInitialise();
-			break;
+   case DLL_PROCESS_DETACH :
+      //FreeImage_DeInitialise();
+      break;
 
-		case DLL_THREAD_ATTACH :
-		case DLL_THREAD_DETACH :
-			break;
-    }
+   case DLL_THREAD_ATTACH :
+   case DLL_THREAD_DETACH :
+      break;
+   }
 
-    return TRUE;
+   return TRUE;
 }
 
 #endif // FREEIMAGE_LIB
@@ -81,27 +86,31 @@ void FreeImage_SO_DeInitialise() {
 //----------------------------------------------------------------------
 
 const char * DLL_CALLCONV
-FreeImage_GetVersion() {
-	static char s_version[16];
-	sprintf(s_version, "%d.%d.%d", FREEIMAGE_MAJOR_VERSION, FREEIMAGE_MINOR_VERSION, FREEIMAGE_RELEASE_SERIAL);
-	return s_version;
+FreeImage_GetVersion()
+{
+   static char s_version[16];
+   sprintf(s_version, "%d.%d.%d", FREEIMAGE_MAJOR_VERSION, FREEIMAGE_MINOR_VERSION, FREEIMAGE_RELEASE_SERIAL);
+   return s_version;
 }
 
 const char * DLL_CALLCONV
-FreeImage_GetCopyrightMessage() {
-	return s_copyright;
+FreeImage_GetCopyrightMessage()
+{
+   return s_copyright;
 }
 
 //----------------------------------------------------------------------
 
 WINBOOL DLL_CALLCONV
-FreeImage_IsLittleEndian() {
-	union {
-		DWORD i;
-		BYTE c[4];
-	} u;
-	u.i = 1;
-	return (u.c[0] != 0);
+FreeImage_IsLittleEndian()
+{
+   union
+   {
+      DWORD i;
+      BYTE c[4];
+   } u;
+   u.i = 1;
+   return (u.c[0] != 0);
 }
 
 //----------------------------------------------------------------------
@@ -110,119 +119,131 @@ static FreeImage_OutputMessageFunction freeimage_outputmessage_proc = NULL;
 static FreeImage_OutputMessageFunctionStdCall freeimage_outputmessagestdcall_proc = NULL;
 
 void DLL_CALLCONV
-FreeImage_SetOutputMessage(FreeImage_OutputMessageFunction omf) {
-	freeimage_outputmessage_proc = omf;
+FreeImage_SetOutputMessage(FreeImage_OutputMessageFunction omf)
+{
+   freeimage_outputmessage_proc = omf;
 }
 
 void DLL_CALLCONV
-FreeImage_SetOutputMessageStdCall(FreeImage_OutputMessageFunctionStdCall omf) {
-	freeimage_outputmessagestdcall_proc = omf;
+FreeImage_SetOutputMessageStdCall(FreeImage_OutputMessageFunctionStdCall omf)
+{
+   freeimage_outputmessagestdcall_proc = omf;
 }
 
 void DLL_CALLCONV
-FreeImage_OutputMessageProc(int fif, const char *fmt, ...) {
-	const int MSG_SIZE = 512; // 512 bytes should be more than enough for a short message
+FreeImage_OutputMessageProc(int fif, const char *fmt, ...)
+{
+   const int MSG_SIZE = 512; // 512 bytes should be more than enough for a short message
 
-	if ((fmt != NULL) && ((freeimage_outputmessage_proc != NULL) || (freeimage_outputmessagestdcall_proc != NULL))) {
-		char message[MSG_SIZE];
-		memset(message, 0, MSG_SIZE);
+   if ((fmt != NULL) && ((freeimage_outputmessage_proc != NULL) || (freeimage_outputmessagestdcall_proc != NULL)))
+   {
+      char message[MSG_SIZE];
+      memset(message, 0, MSG_SIZE);
 
-		// initialize the optional parameter list
+      // initialize the optional parameter list
 
-		va_list arg;
-		va_start(arg, fmt);
+      va_list arg;
+      va_start(arg, fmt);
 
-		// check the length of the format string
+      // check the length of the format string
 
-		int str_length = (int)( (strlen(fmt) > MSG_SIZE) ? MSG_SIZE : strlen(fmt) );
+      int str_length = (int)( (strlen(fmt) > MSG_SIZE) ? MSG_SIZE : strlen(fmt) );
 
-		// parse the format string and put the result in 'message'
+      // parse the format string and put the result in 'message'
 
-		for (int i = 0, j = 0; i < str_length; ++i) {
-			if (fmt[i] == '%') {
-				if (i + 1 < str_length) {
-					switch(tolower(fmt[i + 1])) {
-						case '%' :
-							message[j++] = '%';
-							break;
+      for (int i = 0, j = 0; i < str_length; ++i)
+      {
+         if (fmt[i] == '%')
+         {
+            if (i + 1 < str_length)
+            {
+               switch(tolower(fmt[i + 1]))
+               {
+               case '%' :
+                  message[j++] = '%';
+                  break;
 
-						case 'o' : // octal numbers
-						{
-							char tmp[16];
+               case 'o' : // octal numbers
+               {
+                  char tmp[16];
 
-							_itoa(va_arg(arg, int), tmp, 8);
+                  _itoa(va_arg(arg, int), tmp, 8);
 
-							strcat(message, tmp);
+                  strcat(message, tmp);
 
-							j += (int)strlen(tmp);
+                  j += (int)strlen(tmp);
 
-							++i;
+                  ++i;
 
-							break;
-						}
+                  break;
+               }
 
-						case 'i' : // decimal numbers
-						case 'd' :
-						{
-							char tmp[16];
+               case 'i' : // decimal numbers
+               case 'd' :
+               {
+                  char tmp[16];
 
-							_itoa(va_arg(arg, int), tmp, 10);
+                  _itoa(va_arg(arg, int), tmp, 10);
 
-							strcat(message, tmp);
+                  strcat(message, tmp);
 
-							j += (int)strlen(tmp);
+                  j += (int)strlen(tmp);
 
-							++i;
+                  ++i;
 
-							break;
-						}
+                  break;
+               }
 
-						case 'x' : // hexadecimal numbers
-						{
-							char tmp[16];
+               case 'x' : // hexadecimal numbers
+               {
+                  char tmp[16];
 
-							_itoa(va_arg(arg, int), tmp, 16);
+                  _itoa(va_arg(arg, int), tmp, 16);
 
-							strcat(message, tmp);
+                  strcat(message, tmp);
 
-							j += (int)strlen(tmp);
+                  j += (int)strlen(tmp);
 
-							++i;
+                  ++i;
 
-							break;
-						}
+                  break;
+               }
 
-						case 's' : // strings
-						{
-							char *tmp = va_arg(arg, char*);
+               case 's' : // strings
+               {
+                  char *tmp = va_arg(arg, char*);
 
-							strcat(message, tmp);
+                  strcat(message, tmp);
 
-							j += (int)strlen(tmp);
+                  j += (int)strlen(tmp);
 
-							++i;
+                  ++i;
 
-							break;
-						}
-					};
-				} else {
-					message[j++] = fmt[i];
-				}
-			} else {
-				message[j++] = fmt[i];
-			};
-		}
+                  break;
+               }
+               };
+            }
+            else
+            {
+               message[j++] = fmt[i];
+            }
+         }
+         else
+         {
+            message[j++] = fmt[i];
+         };
+      }
 
-		// deinitialize the optional parameter list
+      // deinitialize the optional parameter list
 
-		va_end(arg);
+      va_end(arg);
 
-		// output the message to the user program
+      // output the message to the user program
 
-		if (freeimage_outputmessage_proc != NULL)
-			freeimage_outputmessage_proc((FREE_IMAGE_FORMAT)fif, message);
+      if (freeimage_outputmessage_proc != NULL)
+         freeimage_outputmessage_proc((FREE_IMAGE_FORMAT)fif, message);
 
-		if (freeimage_outputmessagestdcall_proc != NULL)
-			freeimage_outputmessagestdcall_proc((FREE_IMAGE_FORMAT)fif, message);
-	}
+      if (freeimage_outputmessagestdcall_proc != NULL)
+         freeimage_outputmessagestdcall_proc((FREE_IMAGE_FORMAT)fif, message);
+   }
 }

@@ -27,6 +27,6 @@ uint64_t get_nanos()
 CLASS_DECL_AURA void sleep(const ::duration & dur)
 {
 
-   Sleep(dur.total_milliseconds());
+   Sleep((DWORD) dur.total_milliseconds());
 
 }

@@ -36,10 +36,10 @@ namespace d2d1
    {
 
       return D2D1::Rect<FLOAT>(
-                convert<FLOAT>(lpcrect->left),
-                convert<FLOAT>(lpcrect->top),
-                convert<FLOAT>(lpcrect->right),
-                convert<FLOAT>(lpcrect->bottom)
+                (FLOAT)(lpcrect->left),
+                (FLOAT)(lpcrect->top),
+                (FLOAT)(lpcrect->right),
+                (FLOAT)(lpcrect->bottom)
              );
 
    }
@@ -49,8 +49,8 @@ namespace d2d1
    {
 
       return Point2F(
-                convert<FLOAT>(x),
-                convert<FLOAT>(y)
+                (FLOAT)(x),
+                (FLOAT)(y)
              );
 
    }

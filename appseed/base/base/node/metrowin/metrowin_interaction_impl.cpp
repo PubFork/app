@@ -38,7 +38,7 @@ namespace metrowin
       m_bScreenRelativeMouseMessagePosition  = false;
       m_plistener = NULL;
       m_nModalResult = 0;
-     // m_bMouseHover = false;
+      // m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
       m_pwindow = NULL;
@@ -53,7 +53,7 @@ namespace metrowin
       m_bScreenRelativeMouseMessagePosition  = false;
       m_plistener = NULL;
       m_nModalResult = 0;
-     // m_bMouseHover = false;
+      // m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
       m_pwindow = new ::user::native_window;
@@ -331,10 +331,10 @@ namespace metrowin
    }
 
    bool interaction_impl::create_window(const char * lpszClassName,
-                                 const char * lpszWindowName,uint32_t dwStyle,
-                                 const RECT& rect,
-                                 ::user::interaction* pParentWnd,id id,
-                                 ::create* pContext)
+                                        const char * lpszWindowName,uint32_t dwStyle,
+                                        const RECT& rect,
+                                        ::user::interaction* pParentWnd,id id,
+                                        ::create* pContext)
    {
       // can't use for desktop or pop-up windows (use CreateEx instead)
       ASSERT(pParentWnd != NULL);
@@ -386,7 +386,7 @@ namespace metrowin
             }
 
             if (!bDrawing && (m_pui->has_pending_graphical_update()
-               || m_pui->defer_check_layout()))
+                              || m_pui->defer_check_layout()))
             {
 
                bDrawing = true;
@@ -397,8 +397,8 @@ namespace metrowin
                   evDraw.ResetEvent();
 
                   m_window->Dispatcher->RunAsync(
-                        CoreDispatcherPriority::Normal, 
-                        ref new Windows::UI::Core::DispatchedHandler([this, &evDraw, & bDrawing]()
+                     CoreDispatcherPriority::Normal,
+                     ref new Windows::UI::Core::DispatchedHandler([this, &evDraw, & bDrawing]()
                   {
 
                      keep < bool > keepDrawing(&bDrawing, true, false, true);
@@ -445,7 +445,7 @@ namespace metrowin
 
                   if (dwTick < dwEllapse)
                   {
-                   
+
                      DWORD dwRemain = dwEllapse - dwFps;
 
                      if (dwRemain > 0)
@@ -459,7 +459,8 @@ namespace metrowin
 
                   dwLastRedraw = ::get_tick_count();
 
-               } while (!evDraw.wait(millis((int) dwEllapse)).succeeded());
+               }
+               while (!evDraw.wait(millis((int) dwEllapse)).succeeded());
 
             }
 
@@ -490,7 +491,7 @@ namespace metrowin
       //m_plistener = pcallback;
       if(IsWindow())
       {
-         
+
          set_window_text(pszName);
 
       }
@@ -902,8 +903,8 @@ namespace metrowin
 
 
       ::wait(m_window->Dispatcher->RunAsync(
-         CoreDispatcherPriority::Normal,
-         ref new Windows::UI::Core::DispatchedHandler([this]()
+                CoreDispatcherPriority::Normal,
+                ref new Windows::UI::Core::DispatchedHandler([this]()
       {
 
          Windows::UI::ViewManagement::ApplicationView ^ applicationview = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
@@ -1251,7 +1252,7 @@ namespace metrowin
 
    void interaction_impl::_001OnCmdMsg(::user::command * pcommand)
    {
-      
+
       command_target::_001OnCmdMsg(pcommand);
 
       if (pcommand->m_bRet)
@@ -1480,7 +1481,7 @@ namespace metrowin
                   return;
             }
          }
-         pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(),pbase->m_wparam,pbase->m_lparam));
          return;
       }
       if(pbase->m_id == ::message::message_event)
@@ -1496,7 +1497,7 @@ namespace metrowin
          return;
       }
       //(this->*m_pfnDispatchWindowProc)(pobj);
-      
+
       route_message(pbase);
 
       if (pbase->m_bRet)
@@ -1514,7 +1515,7 @@ namespace metrowin
       return;
       }
       */
-      pbase->set_lresult(DefWindowProc(pbase->m_id,pbase->m_wparam,pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(),pbase->m_wparam,pbase->m_lparam));
    }
 
    /*
@@ -2816,29 +2817,29 @@ return TRUE;
 
       // special case for WM_COMMAND
       case WM_COMMAND:
+      {
+         // reflect the message through the message ::map as OCM_COMMAND
+         /* xxx         int nCode = HIWORD(wParam);
+         if (interaction_impl::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
          {
-            // reflect the message through the message ::map as OCM_COMMAND
-            /* xxx         int nCode = HIWORD(wParam);
-            if (interaction_impl::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
-            {
-            if (pResult != NULL)
-            *pResult = 1;
-            return TRUE;
-            } */
-         }
-         break;
+         if (pResult != NULL)
+         *pResult = 1;
+         return TRUE;
+         } */
+      }
+      break;
 
       // special case for WM_NOTIFY
       case WM_NOTIFY:
-         {
-            // reflect the message through the message ::map as OCM_NOTIFY
-            NMHDR* pNMHDR = (NMHDR*)lParam;
-            //            int nCode = pNMHDR->code;
-            //            __NOTIFY notify;
-            //          notify.pResult = pResult;
-            //        notify.pNMHDR = pNMHDR;
-            // xxxx         return interaction_impl::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_NOTIFY), &notify, NULL);
-         }
+      {
+         // reflect the message through the message ::map as OCM_NOTIFY
+         NMHDR* pNMHDR = (NMHDR*)lParam;
+         //            int nCode = pNMHDR->code;
+         //            __NOTIFY notify;
+         //          notify.pResult = pResult;
+         //        notify.pNMHDR = pNMHDR;
+         // xxxx         return interaction_impl::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_NOTIFY), &notify, NULL);
+      }
 
       // other special cases (WM_CTLCOLOR family)
       default:
@@ -2981,7 +2982,7 @@ return TRUE;
       {
          const MSG* pMsg = GetCurrentMessage();
          send_message_to_descendants(pMsg->message,pMsg->wParam,pMsg->lParam,
-                                  TRUE,TRUE);
+                                     TRUE,TRUE);
       }
 
       return Default();
@@ -3047,45 +3048,45 @@ return TRUE;
    class print_window:
       virtual ::object
    {
-   public:
+      public:
 
 
 
-      manual_reset_event m_event;
-      oswindow m_hwnd;
-      HDC m_hdc;
+         manual_reset_event m_event;
+         oswindow m_hwnd;
+         HDC m_hdc;
 
-      print_window(::aura::application * papp,oswindow hwnd,HDC hdc,uint32_t dwTimeout):
-         ::object(papp),
-         m_event(papp)
-      {
-         m_event.ResetEvent();
-         m_hwnd = hwnd;
-         m_hdc = hdc;
-         __begin_thread(papp,&print_window::s_print_window,(LPVOID) this,::multithreading::priority_above_normal);
-         if(m_event.wait(millis(dwTimeout)).timeout())
+         print_window(::aura::application * papp,oswindow hwnd,HDC hdc,uint32_t dwTimeout):
+            ::object(papp),
+            m_event(papp)
          {
-            TRACE("print_window::time_out");
+            m_event.ResetEvent();
+            m_hwnd = hwnd;
+            m_hdc = hdc;
+            __begin_thread(papp,&print_window::s_print_window,(LPVOID) this,::multithreading::priority_above_normal);
+            if(m_event.wait(millis(dwTimeout)).timeout())
+            {
+               TRACE("print_window::time_out");
+            }
          }
-      }
 
 
-      static_function UINT c_cdecl s_print_window(LPVOID pvoid)
-      {
-         throw todo(::get_thread_app());
+         static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+         {
+            throw todo(::get_thread_app());
 
-         //print_window * pprintwindow = (print_window *) pvoid;
-         //try
-         //{
-         //   HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
-         //   ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
-         //   ::SetEvent(hevent);
-         //}
-         //catch(...)
-         //{
-         //}
-         //return 0;
-      }
+            //print_window * pprintwindow = (print_window *) pvoid;
+            //try
+            //{
+            //   HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
+            //   ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
+            //   ::SetEvent(hevent);
+            //}
+            //catch(...)
+            //{
+            //}
+            //return 0;
+         }
    };
 
    void interaction_impl::_001DeferPaintLayeredWindowBackground(HDC hdc)
@@ -3216,7 +3217,7 @@ return TRUE;
                      //print_window printwindow(get_app(), hWnd, hDCMem, 284);
                      ::PrintWindow(hWnd, hDCMem, 0);
                      ::BitBlt(
-                        hdc ,
+                        hdc,
                         //rect5.left,
                         //rect5.top,
                         0, 0,
@@ -3935,7 +3936,8 @@ return TRUE;
             pliveobject->keep();
             }*/
 
-         } while(::PeekMessage(&msg,NULL,NULL,NULL,PM_NOREMOVE) != FALSE);
+         }
+         while(::PeekMessage(&msg,NULL,NULL,NULL,PM_NOREMOVE) != FALSE);
 
 
          if(m_pauraapp != NULL)
@@ -4611,7 +4613,7 @@ ExitModal:
    {
 
       return get_window_long_ptr(GWL_STYLE);
-      
+
    }
 
    uint32_t interaction_impl::GetExStyle() const
@@ -4724,7 +4726,7 @@ ExitModal:
 
    void interaction_impl::set_window_text(const char * lpszString)
    {
-      
+
       m_strWindowText = lpszString;
 
       m_window->Dispatcher->RunAsync(
@@ -7076,16 +7078,16 @@ __activation_window_procedure(oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
       switch (nMsg)
       {
       case WM_INITDIALOG:
-         {
-            uint32_t dwStyle;
-            rect rectOld;
-            ::user::interaction_impl * pWnd = ::metrowin::interaction_impl::from_handle(hWnd);
-            __pre_init_dialog(pWnd, &rectOld, &dwStyle);
-            bCallDefault = FALSE;
-            lResult = CallWindowProc(oldWndProc, hWnd, nMsg, wParam, lParam);
-            __post_init_dialog(pWnd, rectOld, dwStyle);
-         }
-         break;
+      {
+         uint32_t dwStyle;
+         rect rectOld;
+         ::user::interaction_impl * pWnd = ::metrowin::interaction_impl::from_handle(hWnd);
+         __pre_init_dialog(pWnd, &rectOld, &dwStyle);
+         bCallDefault = FALSE;
+         lResult = CallWindowProc(oldWndProc, hWnd, nMsg, wParam, lParam);
+         __post_init_dialog(pWnd, rectOld, dwStyle);
+      }
+      break;
 
       case WM_ACTIVATE:
          __handle_activate(::metrowin::interaction_impl::from_handle(hWnd), wParam,

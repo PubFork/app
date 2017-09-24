@@ -3031,16 +3031,16 @@ namespace draw2d_direct2d
             pgraphicsDst->ExcludeClipRect(rDst);
 
             D2D1_RECT_F r1;
-            convert(r1.left, ptDst.x);
-            convert(r1.top, ptDst.y);
-            convert(r1.right, ptDst.x + sizeParam.cx);
-            convert(r1.bottom, ptDst.y + sizeParam.cy);
+            r1.left = (FLOAT) (ptDst.x);
+            r1.top = (FLOAT)(ptDst.y);
+            r1.right = (FLOAT)(ptDst.x + sizeParam.cx);
+            r1.bottom = (FLOAT)(ptDst.y + sizeParam.cy);
 
             D2D1_RECT_F r2;
-            convert(r2.left, ptSrc.x);
-            convert(r2.top, ptSrc.y);
-            convert(r2.right, ptSrc.x + sizeParam.cx);
-            convert(r2.bottom, ptSrc.y + sizeParam.cy);
+            r2.left = (FLOAT)(ptSrc.x);
+            r2.top = (FLOAT)(ptSrc.y);
+            r2.right = (FLOAT)(ptSrc.x + sizeParam.cx);
+            r2.bottom = (FLOAT)(ptSrc.y + sizeParam.cy);
 
             pgraphicsDst->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsSrc->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphicsDst->m_interpolationmode, r2);
 

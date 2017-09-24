@@ -123,7 +123,8 @@ uint_ptr virtualkey_to_char(::Windows::System::VirtualKey e)
       return VK_TAB;
    case ::Windows::System::VirtualKey::Enter:
       return VK_RETURN;
-   default:;
+   default:
+      ;
    }
    return (int)e;
 }
@@ -265,11 +266,12 @@ uint_ptr virtualkey_to_char(::Windows::System::VirtualKey e)
       return ::user::key_slash2;
    case ::Windows::System::VirtualKey::Space:
       return ::user::key_space;
-   default:;
-   {
-      int iKey = (int)e;
-      debug_break();
-   }
+   default:
+      ;
+      {
+         int iKey = (int)e;
+         debug_break();
+      }
    }
 
    return (::user::e_key) e;
@@ -371,7 +373,8 @@ uint_ptr virtualkey_to_code(::Windows::System::VirtualKey e)
       return VK_LMENU;
    case ::Windows::System::VirtualKey::RightMenu:
       return VK_RMENU;
-   default:;
+   default:
+      ;
    }
    return (int)e;
 }
@@ -465,7 +468,7 @@ namespace metrowin
       m_psystem->startup_command(pcommand);
 
 //      m_psystem->m_paxisapp   = m_psystem;
-  //    m_psystem->m_psystem    = m_paxissystem;
+      //    m_psystem->m_psystem    = m_paxissystem;
 
 
 
@@ -639,11 +642,11 @@ namespace metrowin
    void directx_application::OnWindowSizeChanged(CoreWindow ^ sender, WindowSizeChangedEventArgs ^ args)
    {
 
-      m_directx->m_size.set_size(args->Size.Width,args->Size.Height);
+      m_directx->m_size.set_size((int32_t) args->Size.Width, (int32_t)args->Size.Height);
 
-      m_rectLastWindowRect.Width = m_directx->m_size.cx;
+      m_rectLastWindowRect.Width = (float) m_directx->m_size.cx;
 
-      m_rectLastWindowRect.Height = m_directx->m_size.cy;
+      m_rectLastWindowRect.Height = (float)m_directx->m_size.cy;
 
       m_directx->UpdateForWindowSizeChange();
 
@@ -690,7 +693,7 @@ namespace metrowin
 
             if (papp->m_pipi == NULL)
             {
-               
+
                sp(::user::interaction) pui;
 
                m_psystem->get_frame(pui);
@@ -776,7 +779,7 @@ namespace metrowin
    }
 
 
-   void directx_application::OnCharacterReceived(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::CharacterReceivedEventArgs ^ args)
+   void directx_application::OnCharacterReceived(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::CharacterReceivedEventArgs ^ args)
    {
 
       if(m_psystem == NULL)
@@ -805,7 +808,7 @@ namespace metrowin
    }
 
 
-   void directx_application::OnKeyDown(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::KeyEventArgs ^ args)
+   void directx_application::OnKeyDown(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^ args)
    {
       if (args->VirtualKey == ::Windows::System::VirtualKey::Shift)
       {
@@ -841,7 +844,7 @@ namespace metrowin
 
    }
 
-   void directx_application::OnKeyUp(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::KeyEventArgs ^ args)
+   void directx_application::OnKeyUp(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^ args)
    {
 
       if(m_psystem == NULL)
@@ -902,7 +905,7 @@ namespace metrowin
       //}
       //else
       //{
-         m_psystem->m_possystemwindow->m_pui->m_pimpl->queue_message_handler(spbase);
+      m_psystem->m_possystemwindow->m_pui->m_pimpl->queue_message_handler(spbase);
       //}
 
 
@@ -910,7 +913,7 @@ namespace metrowin
    }
 
 
-   void directx_application::OnPointerMoved(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::PointerEventArgs ^ args)
+   void directx_application::OnPointerMoved(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^ args)
    {
 
       if(m_psystem == NULL)
@@ -944,7 +947,7 @@ namespace metrowin
    }
 
 
-   void directx_application::OnPointerPressed(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::PointerEventArgs ^ args)
+   void directx_application::OnPointerPressed(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^ args)
    {
 
       if(m_psystem == NULL)
@@ -1009,7 +1012,7 @@ namespace metrowin
 
    }
 
-   void directx_application::OnPointerReleased(Windows::UI::Core::CoreWindow ^ , Windows::UI::Core::PointerEventArgs ^ args)
+   void directx_application::OnPointerReleased(Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^ args)
    {
 
       if(m_psystem == NULL)
@@ -1069,7 +1072,7 @@ namespace metrowin
 
       if (::get_thread() == NULL)
       {
-       
+
          ::set_thread(m_psystem->m_possystemwindow->m_pui->get_app());
 
       }
@@ -1115,24 +1118,24 @@ namespace metrowin
 
       Windows::Foundation::Rect rect = m_rectLastWindowRect;
 
-/*      rect.X = 0;
-      rect.Y = 0;
-      rect.Width = 600;
-      rect.Height = 480;
+      /*      rect.X = 0;
+            rect.Y = 0;
+            rect.Width = 600;
+            rect.Height = 480;
 
-      if(m_window == nullptr)
-         return rect;
+            if(m_window == nullptr)
+               return rect;
 
-      ::wait(m_window->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=, &rect]()
-      {
-         try
-         {
-            rect = m_window->Bounds;
-         }
-         catch(...)
-         {
-         }
-      })));*/
+            ::wait(m_window->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=, &rect]()
+            {
+               try
+               {
+                  rect = m_window->Bounds;
+               }
+               catch(...)
+               {
+               }
+            })));*/
 
       return rect;
 
@@ -1145,44 +1148,44 @@ namespace metrowin
 
       Windows::Foundation::Point p = m_ptLastCursor;
 
-/*      if(m_window == nullptr)
-         return p;
+      /*      if(m_window == nullptr)
+               return p;
 
-      if(g_iMouse < 0)
-         return p;
+            if(g_iMouse < 0)
+               return p;
 
-      ::wait(m_window->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=, &p]()
-      {
-         try
-         {
-
-            Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
-
-            for(unsigned int ui = 0; ui < deva->Size; ui++)
+            ::wait(m_window->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=, &p]()
             {
-
-               Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
-
-               if(dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
+               try
                {
 
-                  Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
+                  Windows::Foundation::Collections::IVectorView < Windows::Devices::Input::PointerDevice ^ > ^ deva = ::Windows::Devices::Input::PointerDevice::GetPointerDevices();
 
-                  p = pointerPoint->RawPosition;
+                  for(unsigned int ui = 0; ui < deva->Size; ui++)
+                  {
 
-                  break;
+                     Windows::Devices::Input::PointerDevice ^ dev = deva->GetAt(ui);
+
+                     if(dev->PointerDeviceType == ::Windows::Devices::Input::PointerDeviceType::Mouse)
+                     {
+
+                        Windows::UI::Input::PointerPoint ^ pointerPoint = Windows::UI::Input::PointerPoint::GetCurrentPoint(g_iMouse);
+
+                        p = pointerPoint->RawPosition;
+
+                        break;
+
+                     }
+
+                  }
 
                }
+               catch(...)
+               {
+               }
+            })), 5); // wait for up to 5 milliseconds
 
-            }
-
-         }
-         catch(...)
-         {
-         }
-      })), 5); // wait for up to 5 milliseconds
-
-      m_ptLastCursor = p;*/
+            m_ptLastCursor = p;*/
 
       return p;
 
@@ -1196,7 +1199,7 @@ namespace metrowin
 
    }
 
-   
+
    directx_interaction::directx_interaction(::aura::application * papp) :
       ::object(papp),
       user::interaction(papp)
@@ -1204,8 +1207,8 @@ namespace metrowin
 
 
    }
-   
-   
+
+
    directx_interaction::~directx_interaction()
    {
 
@@ -1339,7 +1342,7 @@ namespace metrowin
       rect rectClient;
 
       GetClientRect(rectClient);
-      
+
       pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
 
    }

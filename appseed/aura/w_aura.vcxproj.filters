@@ -316,6 +316,18 @@
     <Filter Include="Header Files\primitive\data">
       <UniqueIdentifier>{8788ca14-5e88-44f3-8f32-5b35061f4a99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\multimedia">
+      <UniqueIdentifier>{05052950-a107-4896-8e74-4184d2b9ed6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia\audio">
+      <UniqueIdentifier>{86a90574-4d5b-484f-9944-67dd439add50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multimedia">
+      <UniqueIdentifier>{6dced9a8-ec8e-40b5-a3a7-4b61bb8aa785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multimedia\audio">
+      <UniqueIdentifier>{b573c5cb-1e2b-4cf2-be46-2c9e20c90323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_application_bias.h">
@@ -1779,9 +1791,6 @@
     <ClInclude Include="aura\node\metrowin\metrowin_tts_speaker.h">
       <Filter>Header Files\aura\node\metrowin</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura__c.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_allocate_processor_cache_oriented.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -1840,9 +1849,6 @@
       <Filter>Header Files\aura\os\metrowin</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_array_decl.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_attrib_map.h">
@@ -2051,6 +2057,12 @@
     </ClInclude>
     <ClInclude Include="aura\node\metrowin\metrowin_command.h">
       <Filter>Header Files\aura\os\metrowin</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\audio_c.h">
+      <Filter>Header Files\multimedia\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3879,6 +3891,9 @@
     </ClCompile>
     <ClCompile Include="build_debug.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
+      <Filter>Source Files\multimedia\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,7 @@ namespace aura
 
       string strKey = key(strApp, iPid);
 
-	   if(!m_rx.create(strKey))
+      if(!m_rx.create(strKey))
          throw ::resource_exception(papp);
 
       //Application.simple_message_box(NULL, Application.m_strAppName + string(" : ") + strKey, MB_OK);
@@ -209,6 +209,8 @@ namespace aura
 
       //throw todo(get_app());
 
+      return true;
+
 #else
 
       ::aura::app_launcher launcher(process_platform_dir_name2(), strApp);
@@ -255,7 +257,7 @@ namespace aura
 
          }
 
-         started:
+started:
 
          iPid = ia[0];
 
@@ -356,32 +358,32 @@ namespace aura
 
 #else
 
-   #ifdef LINUX
+#ifdef LINUX
 
       strKey = ::file::path(getenv("HOME")) / ".config/ca2/ipi" / strApp / ::str::from(iPid);
 
-   #else
-      
+#else
+
 #ifdef APPLE_IOS
-      
+
       string strAppId(strApp);
-      
+
       strAppId.replace("\\","-");
-      
+
       strAppId.replace("/","-");
-      
+
       strAppId.replace("-","-");
-      
+
       strKey = "core-" + strAppId;
-      
+
 #else
 
 
       strKey = ::file::path(getenv("HOME")) / "Library/ca2/ipi" / strApp / ::str::from(iPid);
-      
+
 #endif
 
-   #endif
+#endif
 
 #endif
 
@@ -573,7 +575,7 @@ namespace aura
       string strModuleList = file_as_string_dup(pathModule);
 
       stra.add_lines(strModuleList);
-      repeat:
+repeat:
 
       if (stra.get_count() > 32)
       {
@@ -624,16 +626,16 @@ namespace aura
       if (iaPid.get_count() <= 0 && stra.get_size() > 32)
       {
 
-      goto repeat;
+         goto repeat;
 
-}
+      }
       //for(auto & str : stra2)
       //{
 
       //   if(str.has_char())
       //   {
 
-  //          iaPid.add_unique(module_path_get_pid(str));
+      //          iaPid.add_unique(module_path_get_pid(str));
 //
       //   }
 
@@ -739,7 +741,7 @@ namespace aura
       ::file::path pathThisModule = System.file().module();
 
       string strItem;
-      
+
       if (pathPid.has_char())
       {
          strItem = pathPid + "|" + ::str::from(iPid);
