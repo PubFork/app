@@ -205,13 +205,6 @@ void __cdecl wparse_cmdline(WCHAR *cmdstart, WCHAR **argv, WCHAR *args, int32_t 
                double-quote, or up to a NULL, whichever comes first */
             while ( (*(++p) != DQUOTEWCHAR) && (*p != NULWCHAR) ) {
 
-/*#ifdef _MBCS
-                if (_ismbblead(*p)) {
-                    ++*numchars;
-                    if ( args )
-                        *args++ = *p++;
-                }
-#endif  /* _MBCS */
                 ++*numchars;
                 if ( args )
                     *args++ = *p;
@@ -233,14 +226,6 @@ void __cdecl wparse_cmdline(WCHAR *cmdstart, WCHAR **argv, WCHAR *args, int32_t 
                     *args++ = *p;
 
                 c = (WCHAR) *p++;
-/*#ifdef _MBCS
-                if (_ismbblead(c)) {
-                    ++*numchars;
-                    if (args)
-                        *args++ = *p;   /* copy 2nd byte too */
-    //                p++;  /* skip over trail byte */
-  //              }
-//#endif  /* _MBCS */
 
             } while ( c != SPACEWCHAR && c != NULWCHAR && c != TABWCHAR );
 
@@ -320,32 +305,12 @@ void __cdecl wparse_cmdline(WCHAR *cmdstart, WCHAR **argv, WCHAR *args, int32_t 
             if (*p == NULWCHAR || (!inquote && (*p == SPACEWCHAR || *p == TABWCHAR)))
                 break;
 
-            /* copy character into argument */
-/*#ifdef _MBCS
-            if (copychar) {
-                if (args) {
-                    if (_ismbblead(*p)) {
-                        *args++ = *p++;
-                        ++*numchars;
-                    }
-                    *args++ = *p;
-                } else {
-                    if (_ismbblead(*p)) {
-                        ++p;
-                        ++*numchars;
-                    }
-                }
-                ++*numchars;
-            }
-            ++p;
-#else  /* _MBCS */
             if (copychar) {
                 if (args)
                     *args++ = *p;
                 ++*numchars;
             }
             ++p;
-//#endif  /* _MBCS */
             }
 
             /* NULL-terminate the argument */

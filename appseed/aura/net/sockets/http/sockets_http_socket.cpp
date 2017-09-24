@@ -80,7 +80,7 @@ namespace sockets
                         char * tmp = (char*)mem.get_data();
                         memcpy(tmp,buf + ptr,len - ptr);
                         tmp[len - ptr] = 0;
-                        on_read( tmp, len - ptr );
+                        on_read( tmp, (int) (len - ptr ));
                         ptr = len;
                      }
                   }
@@ -168,7 +168,7 @@ namespace sockets
                   char * tmp = (char*)mem.get_data();
                   memcpy(tmp,buf + sz,len - sz);
                   tmp[len - sz] = 0;
-                  on_read( tmp, len - sz );
+                  on_read( tmp, (int) (len - sz) );
                }
             }
          }

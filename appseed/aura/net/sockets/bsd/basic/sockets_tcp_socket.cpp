@@ -419,20 +419,6 @@ namespace sockets
       }
       if(!Handler().ResolverEnabled() || Session.sockets().net().isipv4(host))
       {
-         goto ipv4_try;
-         {
-            in6_addr l;
-            if (!Session.sockets().net().convert(l, host))
-            {
-               goto ipv4_try;
-            }
-            ::net::address ad(l, port);
-            ::net::address addrLocal;
-            if (!open(ad, addrLocal))
-               goto ipv4_try;;
-            return true;
-         }
-ipv4_try:
          {
             in_addr l;
             if (!Session.sockets().net().convert(l, host))
@@ -488,10 +474,10 @@ ipv4_try:
 
 
 
-   memory_size_t tcp_socket::recv(void * buf,memory_size_t nBufSize)
+   int tcp_socket::recv(void * buf, int nBufSize)
    {
 
-      memory_size_t n = nBufSize;
+      int n = nBufSize;
 
 #ifdef HAVE_OPENSSL
 
@@ -617,10 +603,10 @@ ipv4_try:
    }
 
 
-   memory_size_t tcp_socket::read(void * buf,memory_size_t nBufSize)
+   int tcp_socket::read(void * buf, int nBufSize)
    {
 
-      memory_size_t n = nBufSize;
+      int n = (int) nBufSize;
 
       n = recv(buf,nBufSize);
 
@@ -670,7 +656,7 @@ ipv4_try:
       char *buf = (char *) m_memRead.get_data();
 
 
-      int_ptr n = 0;
+      int n = 0;
 
       try
       {
@@ -690,7 +676,7 @@ ipv4_try:
    }
 
 
-   void tcp_socket::on_read(const void * buf,int_ptr n)
+   void tcp_socket::on_read(const void * buf, int n)
    {
 
       // unbuffered
@@ -888,7 +874,7 @@ ipv4_try:
 //         retry:
 #if defined(APPLEOS)
          int iSocket = GetSocket();
-         n = send(iSocket,buf,len,SO_NOSIGPIPE);
+         n = (int) (send(iSocket,buf,len,SO_NOSIGPIPE));
 #elif defined(SOLARIS)
          n = send(GetSocket(),(const char *)buf,(int)len,0);
 #else
@@ -1852,7 +1838,7 @@ ipv4_try:
                 //pthread_t thread;
                   sigset_t set;
                   int s;
-
+*/
                   /* Block SIGQUIT and SIGUSR1; other threads created by main()
                      will inherit a copy of the signal mask. */
 #ifdef LINUX

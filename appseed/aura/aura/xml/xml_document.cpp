@@ -169,7 +169,7 @@ namespace xml
 
    // the additional parameter must end with , NULL
    // the parameters are pointers based on m_strData that should be offset because m_strData will be edited by entity ref patch
-   char * document::patch_entity_ref(const char * & pszXml, bool useExtEnt, ...)
+   char * document::patch_entity_ref(const char * & pszXml, int bUseExtEnt, ...)
    {
       // pszXml must be a valid portion of and point to an entity ref in:
       // m_strData of this document
@@ -178,11 +178,11 @@ namespace xml
       ASSERT(iPos < m_strData.get_length() && iPos >= 0);
       string strName;
       bool bExt = false;
-      string strValue = consume_entity_ref(pszXml, strName, useExtEnt, bExt);
+      string strValue = consume_entity_ref(pszXml, strName, bUseExtEnt, bExt);
       m_strData = m_strData.Left(iPos) + strValue + m_strData.Mid(iPos + strName.get_length() + 2);
       strsize iOffset = ((const char *)m_strData) - pszOldData;
       va_list ptr;
-      va_start(ptr, useExtEnt);
+      va_start(ptr, bUseExtEnt);
       int_ptr p;
       while((p = va_arg(ptr, int_ptr)) != 0)
       {

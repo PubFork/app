@@ -570,7 +570,7 @@ namespace aura
          virtual bool _001OnAgreeExit();
          virtual void _001OnFranceExit();
 
-         virtual string lstr(id id,const string & strDefault = (const string &)*((const string *)NULL)) override;
+         virtual string lstr(id id, string strDefault = "") override;
 
 
          void handle_command(::command::command * pcommand) override;

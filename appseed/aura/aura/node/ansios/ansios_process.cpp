@@ -130,7 +130,7 @@ namespace ansios
 
             env.add((char *) psz);
 
-            iPrevious = i;
+            iPrevious = (int) i;
 
             i++;
 
@@ -607,7 +607,7 @@ namespace ansios
 
          DWORD dwStart = get_tick_count();
 
-         DWORD dwTimeOut = durationTimeOut.get_total_milliseconds();
+         DWORD dwTimeOut = (DWORD) durationTimeOut.get_total_milliseconds();
 
          char sz[1025];
 

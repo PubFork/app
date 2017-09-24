@@ -100,8 +100,7 @@ property * property_set::find_value(var var) const
 bool property_set::contains_var_ci(const var & var, ::count countMin, ::count countMax) const
 {
    ::count count = 0;
-   while((count < countMin || (countMax >= 0 && count <= countMax))
-         && (find_var_ci(var)) >= 0)
+   while((count < countMin || (countMax >= 0 && count <= countMax)) && find_var_ci(var) != NULL)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -114,8 +113,7 @@ bool property_set::contains_value_ci(var var, ::count countMin, ::count countMax
 bool property_set::contains_value_ci(const char * psz, ::count countMin, ::count countMax) const
 {
    ::count count = 0;
-   while((count < countMin || (countMax >= 0 && count <= countMax))
-         && (find_value_ci(psz)) >= 0)
+   while((count < countMin || (countMax >= 0 && count <= countMax)) && find_value_ci(psz) != NULL)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -124,8 +122,7 @@ bool property_set::contains_value_ci(const char * psz, ::count countMin, ::count
 bool property_set::contains_var(const var & var, ::count countMin, ::count countMax) const
 {
    ::count count = 0;
-   while((count < countMin || (countMax >= 0 && count <= countMax))
-         && (find_var(var)) >= 0)
+   while((count < countMin || (countMax >= 0 && count <= countMax)) && (find_var(var)) != NULL)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -138,8 +135,7 @@ bool property_set::contains_value(var var, ::count countMin, ::count countMax) c
 bool property_set::contains_value(const char * psz, ::count countMin, ::count countMax) const
 {
    ::count count = 0;
-   while((count < countMin || (countMax >= 0 && count <= countMax))
-         && (find_value(psz)) >= 0)
+   while((count < countMin || (countMax >= 0 && count <= countMax)) && find_value(psz) != NULL)
       count++;
    return count >= countMin && conditional(countMax >= 0, count <= countMax);
 }
@@ -1311,7 +1307,7 @@ bool property_set::str_contains(const property_set & set) const
    for(const_iterator it = begin(); it != end(); it++)
    {
 
-      if(str_find(*it) < 0)
+      if(str_find(*it) == NULL)
       {
 
          return false;

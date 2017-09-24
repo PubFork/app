@@ -783,7 +783,7 @@ void object::defer_create_mutex()
    }
 
 }
-string object::lstr(id id,const string & strDefault)
+string object::lstr(id id, string strDefault)
 {
 
    return m_pauraapp->lstr(id,strDefault);

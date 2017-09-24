@@ -15,8 +15,7 @@ namespace macos
       virtual ~os();
 
       
-      virtual string get_command_line();
-      
+      virtual string get_command_line() override;
 
       virtual bool reboot() override;
       
@@ -29,10 +28,10 @@ namespace macos
       
       virtual bool get_pid_by_title(const char * pszName, DWORD & dwPid) override;
       
-      virtual void get_all_processes(uint_array & dwa);
+      virtual void get_all_processes(uint_array & dwa) override;
        virtual ::file::path get_process_path(DWORD dwPid) override;
 
-      virtual bool connection_settings_get_auto_detect();
+      virtual bool connection_settings_get_auto_detect() override;
       virtual string connection_settings_get_auto_config_url() override;
 
 

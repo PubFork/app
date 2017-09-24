@@ -487,7 +487,7 @@ namespace aura
 
          virtual bool on_open_file(var varFile, string strExtra);
 
-         virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
+         virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback) override;
 
 
    };

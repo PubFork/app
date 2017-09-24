@@ -410,26 +410,26 @@ namespace ftp
          }
       }
 
-      if (m_econnectiontype == connection_type_tls_implicit)
-      {
-
-         reply Reply;
-         if (!SendCommand(command::PROT(), { "P" }, Reply))
-         {
-
-            return false;
-
-         }
-
-         if (!Reply.Code().IsPositiveCompletionReply() && !Reply.Code().IsPositiveIntermediateReply())
-         {
-
-            return false;
-
-         }
-
-
-      }
+//      if (m_econnectiontype == connection_type_tls_implicit)
+//      {
+//
+//         reply Reply;
+//         if (!SendCommand(command::PROT(), { "P" }, Reply))
+//         {
+//
+//            return false;
+//
+//         }
+//
+//         if (!Reply.Code().IsPositiveCompletionReply() && !Reply.Code().IsPositiveIntermediateReply())
+//         {
+//
+//            return false;
+//
+//         }
+//
+//
+//      }
       //return false;
    }
 
@@ -665,7 +665,7 @@ namespace ftp
          cmd = command::STOU();
 
       const long lLocalFileSize = Observer.GetLocalStreamSize();
-      Observer.SetLocalStreamOffset(lRemoteFileSize);
+      Observer.SetLocalStreamOffset((unsigned int) lRemoteFileSize);
 
       for (auto * p : (observer_array &)m_setObserver)
          p->OnPreSendFile(Observer.GetLocalStreamName(), strRemoteFile, lLocalFileSize);
@@ -725,7 +725,7 @@ namespace ftp
       if (PassiveServer.Passive(ulIP, ushSock) != FTP_OK)
          return false;
 
-      ::net::address csaPassiveServer(ulIP, ushSock);
+      ::net::address csaPassiveServer((int32_t) ulIP, ushSock);
 
       // transmit the socket (ip ::net::address + port) of the first FTP server to the
       // second server
@@ -1086,7 +1086,7 @@ namespace ftp
          return false;
 
       // establish connection
-      ::net::address sockAddrTemp(::net::ipv4(ulRemoteHostIP, ushServerSock));
+      ::net::address sockAddrTemp(::net::ipv4((int32_t) ulRemoteHostIP, ushServerSock));
       try
       {
          if (!sckDataConnection.open(sockAddrTemp))

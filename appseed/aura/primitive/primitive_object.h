@@ -227,7 +227,7 @@ public:
    virtual void on_request(::create * pcreate);
 
 
-   virtual string lstr(id id, const string & strDefault = (const string &) *((const string *) NULL ));
+   virtual string lstr(id id, string strDefault = "");
 
    //void common_construct();
 

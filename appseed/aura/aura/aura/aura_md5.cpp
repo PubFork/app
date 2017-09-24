@@ -324,7 +324,7 @@ namespace aura
       }
 
       if(size >= 64) {
-         data = body(data,size & ~(unsigned long)0x3f);
+         data = body(data,(unsigned int) (size & ~(unsigned long)0x3f));
          size &= 0x3f;
       }
 

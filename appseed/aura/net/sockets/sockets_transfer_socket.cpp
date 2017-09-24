@@ -458,7 +458,7 @@ namespace sockets
 
       // input buffer should be big enough for the entire datagram
       socklen_t nFromSize = sizeof(SOCKADDR);
-      const int nBytesReceived = ::recvfrom(GetSocket(), pch, nSize, 0, psa, &nFromSize);
+      const int nBytesReceived = (int) (::recvfrom(GetSocket(), pch, nSize, 0, psa, &nFromSize));
 
       if (nBytesReceived == SOCKET_ERROR)
       {
@@ -477,7 +477,7 @@ namespace sockets
          throw transfer_socket_exception(get_app(), _T("Send timeout"));
       }
 
-      const int nBytesSent = ::sendto(GetSocket(), pch, nSize, 0, psa, sizeof(SOCKADDR));
+      const int nBytesSent = (int) (::sendto(GetSocket(), pch, nSize, 0, psa, sizeof(SOCKADDR)));
       if (nBytesSent == SOCKET_ERROR)
       {
          throw transfer_socket_exception(get_app(), _T("SendDatagram"));

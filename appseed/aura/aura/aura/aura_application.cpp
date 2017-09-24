@@ -492,7 +492,7 @@ namespace aura
 
    // lang string
    // load string
-   string application::lstr(id id, const string & strDefault)
+   string application::lstr(id id, string strDefault)
    {
 
       string str;

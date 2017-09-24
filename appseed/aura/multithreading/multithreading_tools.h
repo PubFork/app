@@ -31,7 +31,7 @@ public:
    bool set_pred(::pred_holder_base * ppred);
 
    void reset();
-   void start();
+   void start() override;
 
 };
 

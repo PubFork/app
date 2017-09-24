@@ -230,9 +230,9 @@ namespace sockets
 
       void OnRead();
       using ::sockets::stream_socket::read;
-      virtual memory_size_t read(void * buf, memory_size_t n);
-      virtual memory_size_t recv(void * buf, memory_size_t n);
-      virtual void on_read(const void * buf, int_ptr n );
+      virtual int read(void * buf, int n);
+      virtual int recv(void * buf, int n);
+      virtual void on_read(const void * buf, int n );
       void OnWrite();
 
 

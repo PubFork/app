@@ -197,7 +197,7 @@ namespace draw2d
 
       ::draw2d::bitmap & bitmap = *pgraphics->get_current_bitmap();
 
-      if (&bitmap == NULL)
+      if (is_null(bitmap))
          return false;
 
       ::exception::throw_not_implemented(get_app());
@@ -2206,27 +2206,27 @@ restart:
 
             if (psrc2[3] > 0)
             {
-               if (false && x >= x1 && x < x2 && y >= y1 && y < y2)
-               {
-
-                  a = (*palf2 * psrc2[3]) / 255;
-                  a = psrc2[3];
-                  //a = (int) (byte) sqrt((float) (*palf2 * psrc2[3]));
-                  pdst2[3] = (BYTE)MAX(a, pdst2[3]);
-                  //pdst2[3] = (BYTE)((((int)psrc2[3] - (int)pdst2[3]) * a + ((int)pdst2[3] * 255)) / 255);
-                  pdst2[3] = (BYTE)(MAX(psrc2[3], pdst2[3]));
-
-                  //                  if (a > 0)
-                  {
-
-                     pdst2[0] = (BYTE)((((int)psrc2[0] - (int)pdst2[0]) * a + ((int)pdst2[0] * 255)) / 255);
-                     pdst2[1] = (BYTE)((((int)psrc2[1] - (int)pdst2[1]) * a + ((int)pdst2[1] * 255)) / 255);
-                     pdst2[2] = (BYTE)((((int)psrc2[2] - (int)pdst2[2]) * a + ((int)pdst2[2] * 255)) / 255);
-
-                  }
-
-               }
-               else
+//               if (false && x >= x1 && x < x2 && y >= y1 && y < y2)
+//               {
+//
+//                  a = (*palf2 * psrc2[3]) / 255;
+//                  a = psrc2[3];
+//                  //a = (int) (byte) sqrt((float) (*palf2 * psrc2[3]));
+//                  pdst2[3] = (BYTE)MAX(a, pdst2[3]);
+//                  //pdst2[3] = (BYTE)((((int)psrc2[3] - (int)pdst2[3]) * a + ((int)pdst2[3] * 255)) / 255);
+//                  pdst2[3] = (BYTE)(MAX(psrc2[3], pdst2[3]));
+//
+//                  //                  if (a > 0)
+//                  {
+//
+//                     pdst2[0] = (BYTE)((((int)psrc2[0] - (int)pdst2[0]) * a + ((int)pdst2[0] * 255)) / 255);
+//                     pdst2[1] = (BYTE)((((int)psrc2[1] - (int)pdst2[1]) * a + ((int)pdst2[1] * 255)) / 255);
+//                     pdst2[2] = (BYTE)((((int)psrc2[2] - (int)pdst2[2]) * a + ((int)pdst2[2] * 255)) / 255);
+//
+//                  }
+//
+//               }
+//               else
                {
 
                   //pdst2[3] = (BYTE)(MAX(psrc2[3], pdst2[3]));
@@ -4857,122 +4857,122 @@ restart:
    void dib::SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy)
    {
 
-      throw todo(get_app());
-
-      // xxx todo create(m_size.cx, m_size.cy);
-
-      if (m_size.cx <= 0 || m_size.cy <= 0)
-         return;
-
-
-
-
-      // White blend dib
-      dib dib1;
-
-      throw todo(get_app());
-
-      // xxx todo dib1.create(m_size.cx, m_size.cy);
-
-      dib1.Fill(0, 255, 255, 255);
-
-#ifdef METROWIN
-
-      ::exception::throw_not_implemented(get_app());
-
-#else
-
-      dib1.get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         m_size.cx, m_size.cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
-
-#endif
-
-      // Black blend dib
-      ::draw2d::dib_sp spdib2(allocer());
-
-
-      throw todo(get_app());
-
-      // xxx todo spdib2->create(m_size.cx, m_size.cy);
-      spdib2->Fill(0, 0, 0, 0);
-
-#ifdef METROWIN
-
-      ::exception::throw_not_implemented(get_app());
-
-#else
-
-      spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         m_size.cx, m_size.cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
-
-#endif
-
-      // Mask dib
-      dib dibM;
-      throw todo(get_app());
-
-      // xxx todo dibM.create(m_size.cx, m_size.cy);
-
-#ifdef METROWIN
-
-      ::exception::throw_not_implemented(get_app());
-
-#else
-
-      dibM.get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         m_size.cx, m_size.cy,
-         0,
-         NULL,
-         DI_MASK);
-
-#endif
-
-      BYTE * r1 = (BYTE*)dib1.get_data();
-      BYTE * r2 = (BYTE*)spdib2->get_data();
-      BYTE * srcM = (BYTE*)dibM.get_data();
-      BYTE * dest = (BYTE*)get_data();
-      int32_t iSize = m_size.cx*m_size.cy;
-
-      BYTE b;
-      BYTE bMax;
-      while (iSize-- > 0)
-      {
-         if (srcM[0] == 255)
-         {
-            bMax = 0;
-         }
-         else
-         {
-            bMax = 0;
-            b = (BYTE)(r1[0] - r2[0]);
-            bMax = MAX(b, bMax);
-            b = (BYTE)(r1[1] - r2[1]);
-            bMax = MAX(b, bMax);
-            b = (BYTE)(r1[2] - r2[2]);
-            bMax = MAX(b, bMax);
-            bMax = 255 - bMax;
-         }
-         dest[0] = bMax;
-         dest[1] = bMax;
-         dest[2] = bMax;
-         dest += 4;
-         srcM += 4;
-         r1 += 4;
-         r2 += 4;
-      }
-
+//      throw todo(get_app());
+//
+//      // xxx todo create(m_size.cx, m_size.cy);
+//
+//      if (m_size.cx <= 0 || m_size.cy <= 0)
+//         return;
+//
+//
+//
+//
+//      // White blend dib
+//      dib dib1;
+//
+//      throw todo(get_app());
+//
+//      // xxx todo dib1.create(m_size.cx, m_size.cy);
+//
+//      dib1.Fill(0, 255, 255, 255);
+//
+//#ifdef METROWIN
+//
+//      ::exception::throw_not_implemented(get_app());
+//
+//#else
+//
+//      dib1.get_graphics()->DrawIcon(
+//         0, 0,
+//         picon,
+//         m_size.cx, m_size.cy,
+//         0,
+//         NULL,
+//         DI_IMAGE | DI_MASK);
+//
+//#endif
+//
+//      // Black blend dib
+//      ::draw2d::dib_sp spdib2(allocer());
+//
+//
+//      throw todo(get_app());
+//
+//      // xxx todo spdib2->create(m_size.cx, m_size.cy);
+//      spdib2->Fill(0, 0, 0, 0);
+//
+//#ifdef METROWIN
+//
+//      ::exception::throw_not_implemented(get_app());
+//
+//#else
+//
+//      spdib2->get_graphics()->DrawIcon(
+//         0, 0,
+//         picon,
+//         m_size.cx, m_size.cy,
+//         0,
+//         NULL,
+//         DI_IMAGE | DI_MASK);
+//
+//#endif
+//
+//      // Mask dib
+//      dib dibM;
+//      throw todo(get_app());
+//
+//      // xxx todo dibM.create(m_size.cx, m_size.cy);
+//
+//#ifdef METROWIN
+//
+//      ::exception::throw_not_implemented(get_app());
+//
+//#else
+//
+//      dibM.get_graphics()->DrawIcon(
+//         0, 0,
+//         picon,
+//         m_size.cx, m_size.cy,
+//         0,
+//         NULL,
+//         DI_MASK);
+//
+//#endif
+//
+//      BYTE * r1 = (BYTE*)dib1.get_data();
+//      BYTE * r2 = (BYTE*)spdib2->get_data();
+//      BYTE * srcM = (BYTE*)dibM.get_data();
+//      BYTE * dest = (BYTE*)get_data();
+//      int32_t iSize = m_size.cx*m_size.cy;
+//
+//      BYTE b;
+//      BYTE bMax;
+//      while (iSize-- > 0)
+//      {
+//         if (srcM[0] == 255)
+//         {
+//            bMax = 0;
+//         }
+//         else
+//         {
+//            bMax = 0;
+//            b = (BYTE)(r1[0] - r2[0]);
+//            bMax = MAX(b, bMax);
+//            b = (BYTE)(r1[1] - r2[1]);
+//            bMax = MAX(b, bMax);
+//            b = (BYTE)(r1[2] - r2[2]);
+//            bMax = MAX(b, bMax);
+//            bMax = 255 - bMax;
+//         }
+//         dest[0] = bMax;
+//         dest[1] = bMax;
+//         dest[2] = bMax;
+//         dest += 4;
+//         srcM += 4;
+//         r1 += 4;
+//         r2 += 4;
+//      }
+//
 
 
    }

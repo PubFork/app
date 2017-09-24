@@ -69,7 +69,7 @@ namespace sockets
 
          sp(base_socket) get_socket() const { return m_spsocket; }
 
-         virtual int run();
+         virtual int run() override;
 
       };
 

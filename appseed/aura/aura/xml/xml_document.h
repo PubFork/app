@@ -28,7 +28,7 @@ namespace xml
     
 
       string consume_entity_ref(const char * & pszXml, string & strName, bool useExtEnt, bool & bExt);
-      char * patch_entity_ref(const char * & pszXml, bool useExtEnt, ...);
+      char * patch_entity_ref(const char * & pszXml, int bUseExtEnt, ...);
 
       node * get_root() const;
       

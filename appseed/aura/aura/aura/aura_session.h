@@ -69,14 +69,13 @@ namespace aura
 
       ::aura::str_context *                        str_context() { return m_puserstrcontext; }
 
+      virtual bool is_session() override;
 
-      virtual bool is_session();
-
-      virtual int64_t add_ref()
+      virtual int64_t add_ref() override
       {
          return ::object::add_ref();
       }
-      virtual int64_t dec_ref()
+      virtual int64_t dec_ref() override
       {
          return ::object::dec_ref();
       }
@@ -103,7 +102,7 @@ namespace aura
       //virtual sp(::aura::application) start_application(const char * pszType,const char * pszAppId, ::create * pcreate);
 
 
-      virtual void request_create(::create * pcreate);
+      virtual void request_create(::create * pcreate) override;
       virtual bool open_by_file_extension(const char * pszPathName,application_bias * pbiasCreate = NULL);
       virtual bool open_by_file_extension(::create * pcc);
 
@@ -165,7 +164,7 @@ namespace aura
 
 
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
 
       ::aura::application * application_get(const char * pszAppId, bool bCreate, bool bSynch, application_bias * pbiasCreate);
 

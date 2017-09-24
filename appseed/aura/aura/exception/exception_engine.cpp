@@ -256,14 +256,14 @@ int_bool __stdcall My_ReadProcessMemory (
 
    SIZE_T size = 0;
 #if defined(METROWIN) || defined(LINUX) || defined(APPLEOS) || defined(ANDROID) || defined(SOLARIS)
-   throw todo(get_thread_app());
+   return FALSE;
 #else
    if(!ReadProcessMemory(hProcess, (LPCVOID) qwBaseAddress, (LPVOID) lpBuffer, nSize, &size))
       return FALSE;
-#endif
    *lpNumberOfBytesRead = (uint32_t) size;
-
+   
    return TRUE;
+#endif
 
 }
 
@@ -1567,21 +1567,21 @@ namespace exception
 
 #elif defined(APPLEOS)
 
-   void engine::backtrace(void *pui, int &c)
+   void engine::backtrace(void **pui, int &c)
    {
 
       synch_lock sl(&m_mutex);
 
       UINT32 maxframes = c;
 
-      c = ::backtrace((void **)pui, maxframes);
+      c = ::backtrace(pui, maxframes);
 
    }
 
-   char * engine::stack_trace(void * pui, int c, const char * pszFormat)
+   char * engine::stack_trace(void * const * pui, int c, const char * pszFormat)
    {
 
-      char ** messages = backtrace_symbols(&pui, c);
+      char ** messages = backtrace_symbols(pui, c);
 
       char szN[24];
 

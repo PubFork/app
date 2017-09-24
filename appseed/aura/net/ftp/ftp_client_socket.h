@@ -188,7 +188,7 @@ namespace ftp
       bool SendCommand(const command& Command, const stringa & Arguments, reply& Reply);
       bool GetResponse(reply& Reply);
       bool GetSingleResponseLine(string& strResponse);
-      void OnLine(const string & strLine);
+      void OnLine(const string & strLine) override;
 
       bool OpenControlChannel(const string& strServerHost, WINUSHORT ushServerPort = DEFAULT_FTP_PORT);
       void CloseControlChannel();

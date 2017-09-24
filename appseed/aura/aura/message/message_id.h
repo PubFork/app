@@ -129,6 +129,6 @@ template <  >
 inline UINT HashKey < const ::message::id & >(const ::message::id & key)
 {
 
-   return ((int64_t)key.m_emessagetype) ^ HashKey < const ::id & >((const ::id &) key);
+   return (UINT) (((int64_t)key.m_emessagetype) ^ HashKey < const ::id & >((const ::id &) key));
 
 }

@@ -415,11 +415,6 @@ namespace zip
       //ASSERT(get_zip_file() != NULL);
       //ASSERT(nFrom == ::file::seek_begin || nFrom == ::file::seek_end || nFrom == ::file::seek_current);
       //ASSERT(::file::seek_begin == FILE_BEGIN && ::file::seek_end == FILE_END && ::file::seek_current == FILE_CURRENT);
-      /*typedef struct unz_file_pos_s
-      {
-      uint_ptr pos_in_zip_directory;   /* offset in zip file directory */
-      //  uint_ptr num_of_file;            /* # of file */
-      //} unz_file_pos;
 
 
       uint64_t iNewPos;
@@ -648,20 +643,7 @@ namespace zip
 #endif
 
 
-   /*void throw_file_exception(int32_t cause, LONG lOsError,
-   //   const unichar * lpszFileName /* == NULL */
-   /*{
-   #ifdef DEBUG
-      const char * lpsz;
-      if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
-      lpsz = rgszFileExceptionCause[cause];
-      else
-      lpsz = szUnknown;
-      TRACE3("in_file exception: %hs, in_file %W, App error information = %ld.\n",
-      lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
-      #endif
-      THROW(new FileException(cause, lOsError, lpszFileName));
-      }*/
+
 
    /* Error Codes */
 #ifndef LINUX

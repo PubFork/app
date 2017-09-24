@@ -7,8 +7,8 @@ timer::timer(::aura::application * papp, uint_ptr uiTimer, PFN_TIMER pfnTimer, v
    
    impl_init();
    
-   m_nIDEvent = uiTimer,
-   m_pfnTimer = pfnTimer,
+   m_nIDEvent = uiTimer;
+   m_pfnTimer = pfnTimer;
    m_pvoidData = pvoidData;
    m_pmutex = pmutex;
    

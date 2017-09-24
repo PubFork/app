@@ -40,7 +40,7 @@ namespace file_watcher
       virtual ~listener_thread();
 
 
-      virtual int32_t run();
+      virtual int32_t run() override;
 
 
 
