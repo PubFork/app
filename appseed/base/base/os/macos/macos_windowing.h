@@ -87,9 +87,11 @@ public:
       return this != p;
    }
    
+   bool is_null();
+   
    nswindow window()
    {
-      return this == NULL ? NULL : m_nswindow;
+      return is_null() ? NULL : m_nswindow;
    }
    
    
@@ -118,10 +120,7 @@ public:
    
    
    
-   bool is_null() const
-   {
-      return this == NULL;
-   }
+   bool is_null() const;
    
 };
 
@@ -197,7 +196,7 @@ inline int32_t IsWindowVisible(::oswindow window)
 #define SetWindowLong SetWindowLongA
 
 
-#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
+//#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 
 
 

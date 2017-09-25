@@ -185,8 +185,6 @@ template < typename PRED >
 
    }
 
-   index i = 0;
-
    sync_object_ptra ptra;
 
    ::count iScan = MAX(1, MIN(iCount - iStart, ptools->get_count()));

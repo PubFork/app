@@ -115,41 +115,57 @@ index cookies::lowfind_cookie(const char * name)
 
 http::cookie & cookies::cookie(const char * name)
 {
+   
    index iFind = find_cookie(name);
+   
    if(iFind < 0)
    {
+      
       sp(class cookie) ca(canew(class cookie));
+      
       ca->m_strName = name;
+      
       ca->m_strNameLow = name;
+      
       add(ca);
+      
       iFind = find_cookie(name);
-      if(iFind < 0)
-      {
-         return *((http::cookie *) NULL);
-      }
-      return *this->element_at(iFind);;
+      
+      ASSERT(iFind >= 0);
+      
    }
+   
    return *this->element_at(iFind);
+   
 }
 
+   
 http::cookie & cookies::lowcookie(const char * name)
 {
+   
    index iFind = lowfind_cookie(name);
+   
    if(iFind < 0)
    {
+      
       class cookie ca;
+      
       ca.m_strName = name;
+      
       ca.m_strNameLow = name;
+      
       add(canew(class cookie(ca)));
+      
       iFind = find_cookie(name);
-      if(iFind < 0)
-      {
-         return *((http::cookie *) NULL);
-      }
-      return *this->element_at(iFind);;
+      
+      ASSERT(iFind >= 0);
+      
    }
+   
    return *this->element_at(iFind);
+   
 }
+   
 
 void cookies::add(const char * psz)
 {

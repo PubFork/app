@@ -1254,6 +1254,8 @@ namespace draw2d_quartz2d
       
    }
       
+      return true;
+      
    }
    
    
@@ -1268,6 +1270,8 @@ namespace draw2d_quartz2d
          CGContextAddLineToPoint(m_pdc, pa[i].x, pa[i].y);
          
       }
+      
+      return true;
       
    }
 
@@ -1869,34 +1873,34 @@ namespace draw2d_quartz2d
                
                return true;
                
-               ::draw2d::dib_sp dib0(allocer());
-               dib0->create(rectText.size());
-               dib0->get_graphics()->set_text_color(RGB(255, 255, 255));
-               dib0->get_graphics()->SelectObject(get_current_font());
-               
-               dib0->get_graphics()->text_out(0, 0, str);
-               
-               dib0->ToAlpha(0);
-               ::draw2d::dib_sp dib1(allocer());
-               dib1->create(rectText.size());
-               dib1->get_graphics()->set_text_color(m_spbrush->m_cr);
-               dib1->get_graphics()->SelectObject(get_current_font());
-
-               dib1->get_graphics()->text_out(0, 0, str);
-               
-               dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::draw2d::dib_sp dib2(allocer());
-               dib2->create(rectText.size());
-               dib2->Fill(255, 0, 0, 0);
-               dib2->from(point((int64_t) MAX(0, m_ptAlphaBlend.x - x), (int64_t) MAX(0, m_ptAlphaBlend.y - y)),
-                          m_pdibAlphaBlend->get_graphics(), point((int64_t) MAX(0, x - m_ptAlphaBlend.x), (int64_t) MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
-               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::draw2d::dib_sp dib3(get_app());
-                dib1->mult_alpha(dib3);*/
-
-               keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-               return BitBlt(point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
+//               ::draw2d::dib_sp dib0(allocer());
+//               dib0->create(rectText.size());
+//               dib0->get_graphics()->set_text_color(RGB(255, 255, 255));
+//               dib0->get_graphics()->SelectObject(get_current_font());
+//
+//               dib0->get_graphics()->text_out(0, 0, str);
+//
+//               dib0->ToAlpha(0);
+//               ::draw2d::dib_sp dib1(allocer());
+//               dib1->create(rectText.size());
+//               dib1->get_graphics()->set_text_color(m_spbrush->m_cr);
+//               dib1->get_graphics()->SelectObject(get_current_font());
+//
+//               dib1->get_graphics()->text_out(0, 0, str);
+//
+//               dib1->channel_from(visual::rgba::channel_alpha, dib0);
+//               ::draw2d::dib_sp dib2(allocer());
+//               dib2->create(rectText.size());
+//               dib2->Fill(255, 0, 0, 0);
+//               dib2->from(point((int64_t) MAX(0, m_ptAlphaBlend.x - x), (int64_t) MAX(0, m_ptAlphaBlend.y - y)),
+//                          m_pdibAlphaBlend->get_graphics(), point((int64_t) MAX(0, x - m_ptAlphaBlend.x), (int64_t) MAX(0, y - m_ptAlphaBlend.y)), rectText.size());
+//               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
+//               /*::draw2d::dib_sp dib3(get_app());
+//                dib1->mult_alpha(dib3);*/
+//
+//               keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+//
+//               return BitBlt(point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
 
                /*BLENDFUNCTION bf;
                 bf.BlendOp     = AC_SRC_OVER;
@@ -4541,7 +4545,7 @@ namespace draw2d_quartz2d
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount) const
    {
 
-      return GetTextExtent(size, lpszString, nCount, nCount);
+      return GetTextExtent(size, lpszString, nCount, (int32_t) nCount);
       
    }
    
@@ -4599,7 +4603,7 @@ namespace draw2d_quartz2d
    bool graphics::TextOutRaw(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      return internal_show_text(x, y, 0, DT_TOPLEFT, lpszString, nCount, kCGTextFill);
+      return internal_show_text(x, y, 0, DT_TOPLEFT, lpszString, (int32_t) nCount, kCGTextFill);
 
    }
 
@@ -5390,9 +5394,9 @@ namespace draw2d_quartz2d
       
       synch_lock ml(m_pmutex);
       
-      double dx;
+      //double dx;
       
-      double dy;
+      //double dy;
       
       
       if(nFormat & DT_EXPANDTABS)
@@ -5466,7 +5470,9 @@ namespace draw2d_quartz2d
          
          stra.add_lines(str);
          
-         CGFloat ascent, descent, leading, width;
+         //CGFloat ascent, descent, leading, width;
+         
+         CGFloat ascent, descent, leading;
          
          if(nFormat & DT_TOP)
          {

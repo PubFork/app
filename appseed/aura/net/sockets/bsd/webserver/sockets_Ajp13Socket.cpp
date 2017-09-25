@@ -277,7 +277,7 @@ namespace sockets
          for(auto property : m_response.m_propertysetHeader)
          {
             string strNameLower(property.name());
-            strNameLower;
+            strNameLower.make_lower();
             int32_t iValue;
             if(Session.sockets().m_pajpaxissocketinit->ResponseHeader.Lookup(strNameLower, iValue))
             {

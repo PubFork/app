@@ -116,7 +116,7 @@ namespace user
       
       
       virtual ::draw2d::graphics * style_get_graphics() override;
-      virtual style * style_get(e_schema eschema);
+      virtual style * style_get(e_schema eschema) override;
       
       virtual style * userstyle() override;
 

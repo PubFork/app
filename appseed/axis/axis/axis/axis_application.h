@@ -58,8 +58,8 @@ namespace axis
       virtual bool app_data_get(class id id, ::file::ostream & os);
       virtual bool app_data_set(class id id, ::file::istream & is);
 
-      virtual bool app_data_set(class id id, ::file::serializable & obj);
-      virtual bool app_data_get(class id id, ::file::serializable & obj);
+      virtual bool app_data_set(class id id, ::file::serializable & obj) override;
+      virtual bool app_data_get(class id id, ::file::serializable & obj) override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive) override;
@@ -109,7 +109,7 @@ namespace axis
       virtual bool initialize2() override;
       virtual bool initialize3() override;
 
-      virtual bool initialize_application();
+      virtual bool initialize_application() override;
       virtual int32_t exit_application() override;
 
       virtual bool initialize() override;
@@ -275,9 +275,9 @@ namespace axis
       virtual string http_get(const string & strUrl, ::property_set & set) override;
 
       virtual bool compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed) override;
-      virtual bool compress_ungz(::primitive::memory_base & mem);
-      virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6);
-      virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6);
+      virtual bool compress_ungz(::primitive::memory_base & mem) override;
+      virtual bool compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel = 6) override;
+      virtual bool compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel = 6) override;
       
 
 

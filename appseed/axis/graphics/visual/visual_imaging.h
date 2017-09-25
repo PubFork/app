@@ -41,10 +41,10 @@ public:
 
 
    virtual void pixelate_24CC(LPBYTE lpbDest, int32_t xDest, int32_t yDest, int32_t wDest, int32_t cx, int32_t cy, LPBYTE lpbSrc, int32_t xSrc, int32_t ySrc, int32_t wSrc, int32_t iSize);
-   virtual bool pixelate(::draw2d::graphics *pdcDest, int32_t xDest, int32_t yDest, int32_t cx, int32_t cy, ::draw2d::graphics * pdcSrc, int32_t xSrc, int32_t ySrc, int32_t iSize);
+//   virtual bool pixelate(::draw2d::graphics *pdcDest, int32_t xDest, int32_t yDest, int32_t cx, int32_t cy, ::draw2d::graphics * pdcSrc, int32_t xSrc, int32_t ySrc, int32_t iSize);
 
    virtual void alpha_pixelate_24CC(LPBYTE lpbDest, int32_t xDest, int32_t yDest, int32_t wDest, int32_t cx, int32_t cy, LPBYTE lpbSrc1, int32_t xSrc1, int32_t ySrc1, int32_t wSrc1, LPBYTE lpbSrc2, int32_t xSrc2, int32_t ySrc2, int32_t wSrc2, int32_t iSize, int32_t iAlpha);
-   virtual bool alpha_pixelate(::draw2d::graphics *pdcDest, int32_t xDest, int32_t yDest, int32_t cx, int32_t cy, ::draw2d::graphics * pdcSrc1, int32_t xSrc1, int32_t ySrc1, ::draw2d::graphics * pdcSrc2, int32_t xSrc2, int32_t ySrc2, int32_t iSize, int32_t iAlpha);
+//   virtual bool alpha_pixelate(::draw2d::graphics *pdcDest, int32_t xDest, int32_t yDest, int32_t cx, int32_t cy, ::draw2d::graphics * pdcSrc1, int32_t xSrc1, int32_t ySrc1, ::draw2d::graphics * pdcSrc2, int32_t xSrc2, int32_t ySrc2, int32_t iSize, int32_t iAlpha);
 
 
    virtual void blur_32CC(::draw2d::dib * pdibDst, ::draw2d::dib * pdibSrc, int32_t iRadius);
@@ -64,22 +64,22 @@ public:
 
    bool spread__32CC(::draw2d::dib * pdibDst, ::draw2d::dib * pdibSrc, int32_t iRadius, COLORREF cr);
 
-   bool alpha_spread_R2(
-      ::draw2d::graphics * pdcDest,
-      point ptDst,
-      size size,
-      ::draw2d::graphics * pdcSrc,
-      point ptSrc,
-      BYTE bMin);
+//   bool alpha_spread_R2(
+//      ::draw2d::graphics * pdcDest,
+//      point ptDst,
+//      size size,
+//      ::draw2d::graphics * pdcSrc,
+//      point ptSrc,
+//      BYTE bMin);
 
-   bool alpha_spread(
-      ::draw2d::graphics * pdcDest,
-      point ptDst,
-      size size,
-      ::draw2d::graphics * pdcSrc,
-      point ptSrc,
-      BYTE bMin,
-      int32_t iRadius);
+//   bool alpha_spread(
+//      ::draw2d::graphics * pdcDest,
+//      point ptDst,
+//      size size,
+//      ::draw2d::graphics * pdcSrc,
+//      point ptSrc,
+//      BYTE bMin,
+//      int32_t iRadius);
 
    bool channel_spread(
       ::draw2d::graphics * pdcDest,
@@ -207,49 +207,49 @@ public:
 
 */
 
-   bool GetDeviceContext24BitsCC(
-      ::draw2d::graphics *pdc,
-      BITMAP & bm,
-      BITMAPINFO & bmi,
-      memory & memomrystorage,
-      ::draw2d::bitmap * pbitmap,
-      const RECT & rect,
-      int32_t & iWidth,
-      UINT & uiStartScanLine,
-      UINT & uiScanLineCount,
-      int32_t & iLimitYParam);
-
-
-
-
-
-
-   bool GrayVRCP(
-      ::draw2d::graphics * pgraphics,
-      ::draw2d::bitmap * pbitmap,
-      ::draw2d::bitmap * pbitmapMask,
-      int32_t x,
-      int32_t y,
-      int32_t cx,
-      int32_t cy,
-      COLORREF crTransparent);
+//   bool GetDeviceContext24BitsCC(
+//      ::draw2d::graphics *pdc,
+//      BITMAP & bm,
+//      BITMAPINFO & bmi,
+//      memory & memomrystorage,
+//      ::draw2d::bitmap * pbitmap,
+//      const RECT & rect,
+//      int32_t & iWidth,
+//      UINT & uiStartScanLine,
+//      UINT & uiScanLineCount,
+//      int32_t & iLimitYParam);
+//
+//
+//
+//
+//
+//
+//   bool GrayVRCP(
+//      ::draw2d::graphics * pgraphics,
+//      ::draw2d::bitmap * pbitmap,
+//      ::draw2d::bitmap * pbitmapMask,
+//      int32_t x,
+//      int32_t y,
+//      int32_t cx,
+//      int32_t cy,
+//      COLORREF crTransparent);
 
    bool HueVRCP(::draw2d::dib * pdib, COLORREF crHue, double dCompress);
 
-   bool GrayVRCP(
-      ::draw2d::graphics * pgraphics,
-      ::draw2d::bitmap * pbitmap,
-      ::draw2d::bitmap * pbitmapMask,
-      const RECT & rect,
-      COLORREF crTransparent);
-
-   bool GrayVRCP(
-      ::draw2d::graphics * pgraphics,
-      int32_t x,
-      int32_t y,
-      int32_t cx,
-      int32_t cy,
-      COLORREF crAlpha);
+//   bool GrayVRCP(
+//      ::draw2d::graphics * pgraphics,
+//      ::draw2d::bitmap * pbitmap,
+//      ::draw2d::bitmap * pbitmapMask,
+//      const RECT & rect,
+//      COLORREF crTransparent);
+//
+//   bool GrayVRCP(
+//      ::draw2d::graphics * pgraphics,
+//      int32_t x,
+//      int32_t y,
+//      int32_t cx,
+//      int32_t cy,
+//      COLORREF crAlpha);
 
    bool CreateHueImageList(::draw2d::graphics * pgraphics, image_list * pilGray, image_list * pilParam, COLORREF crHue, double dCompress);
    bool Createcolor_blend_ImageList(image_list * pilGray, image_list * pilParam, COLORREF cr, BYTE bAlpha);

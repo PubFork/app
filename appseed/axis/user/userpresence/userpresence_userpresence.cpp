@@ -61,75 +61,75 @@ namespace userpresence
 
       return true;
 
-      if(!is_initialized())
-      {
-
-         //if(m_spuiMessage.is_null())
-         {
-            // m_spuiMessage = canew(::user::interaction());
-         }
-
-         //         if(!m_spqueue->create_message_queue("ca5::user::userpresence::message_queue"))
-         //          return false;
-
-      }
-
-
-      string strQuery = Application.handler()->m_varTopicQuery["app"];
-
-      if(Application.handler()->m_varTopicQuery.has_property("install")
-         || Application.handler()->m_varTopicQuery.has_property("uninstall"))
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "simpledbcfg"
-         || Application.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
-         || Application.handler()->m_varTopicQuery["app"] == "netshareclient")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-core/mydns")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode")
-         return true;
-
-      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service")
-         return true;
-
-      // it may not be initialized, due
-      // licensing for example
-      if(!Session.is_licensed("user_presence",m_bUserPresenceFeatureRequired))
-      {
-         TRACE("user presence not licensed for this user");
-         return false;
-      }
-      else
-      {
-         TRACE("user presence is licensed for this user");
-      }
-
-
-      create_timer(8888,1000, NULL);
-
-      if(ApplicationUser.m_ppresence == NULL)
-      {
-         presence * ppresence = new presence(get_app());
-         ppresence->report_activity();
-         ppresence->pulse_user_presence();
-         ApplicationUser.m_ppresence = ppresence;
-      }
-
-      m_bInit = true;
-
-      return true;
+//      if(!is_initialized())
+//      {
+//
+//         //if(m_spuiMessage.is_null())
+//         {
+//            // m_spuiMessage = canew(::user::interaction());
+//         }
+//
+//         //         if(!m_spqueue->create_message_queue("ca5::user::userpresence::message_queue"))
+//         //          return false;
+//
+//      }
+//
+//
+//      string strQuery = Application.handler()->m_varTopicQuery["app"];
+//
+//      if(Application.handler()->m_varTopicQuery.has_property("install")
+//         || Application.handler()->m_varTopicQuery.has_property("uninstall"))
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "simpledbcfg"
+//         || Application.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
+//         || Application.handler()->m_varTopicQuery["app"] == "netshareclient")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-core/mydns")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode")
+//         return true;
+//
+//      if(Application.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service")
+//         return true;
+//
+//      // it may not be initialized, due
+//      // licensing for example
+//      if(!Session.is_licensed("user_presence",m_bUserPresenceFeatureRequired))
+//      {
+//         TRACE("user presence not licensed for this user");
+//         return false;
+//      }
+//      else
+//      {
+//         TRACE("user presence is licensed for this user");
+//      }
+//
+//
+//      create_timer(8888,1000, NULL);
+//
+//      if(ApplicationUser.m_ppresence == NULL)
+//      {
+//         presence * ppresence = new presence(get_app());
+//         ppresence->report_activity();
+//         ppresence->pulse_user_presence();
+//         ApplicationUser.m_ppresence = ppresence;
+//      }
+//
+//      m_bInit = true;
+//
+//      return true;
 
    }
 

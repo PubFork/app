@@ -48,32 +48,32 @@ namespace visual
 
 
 
-      SetDC(pgraphics);
-      SelectFont();
-
-      ::rect rectOffset(rect);
-      point ptOffset(rectOffset.top_left());
-
-      glyph * lpglyph;
-      strsize iSize = str.get_length();
-      for(int32_t i = 0; i < iSize; i++)
-      {
-         lpglyph = GetGlyph(str[i]);
-         if(lpglyph != NULL)
-         {
-            ptOffset.x = LONG(pgraphics->GetTextExtent(str.Left(i)).cx);
-            lpglyph->DrawGlyph(
-               pgraphics,
-               true,
-               (float) dRateX,
-               &ptOffset);
-         }
-      }
-
-
-
-      UnselectFont();
-      ClearDC();
+//      SetDC(pgraphics);
+//      SelectFont();
+//
+//      ::rect rectOffset(rect);
+//      point ptOffset(rectOffset.top_left());
+//
+//      glyph * lpglyph;
+//      strsize iSize = str.get_length();
+//      for(int32_t i = 0; i < iSize; i++)
+//      {
+//         lpglyph = GetGlyph(str[i]);
+//         if(lpglyph != NULL)
+//         {
+//            ptOffset.x = LONG(pgraphics->GetTextExtent(str.Left(i)).cx);
+//            lpglyph->DrawGlyph(
+//               pgraphics,
+//               true,
+//               (float) dRateX,
+//               &ptOffset);
+//         }
+//      }
+//
+//
+//
+//      UnselectFont();
+//      ClearDC();
 
       /*   SetDC(pgraphics);
          SelectFont();
@@ -98,29 +98,29 @@ namespace visual
 
 
 
-      SetDC(pgraphics);
-      SelectFont();
-
-      const ::rect rectOffset(rect);
-      point ptOffset;
-
-
-      glyph * lpglyph;
-      strsize iSize = str.get_length();
-      for(strsize i = 0; i < iSize; i++)
-      {
-         lpglyph = GetGlyph(str[i]);
-         if(lpglyph != NULL)
-         {
-            ptOffset = rectOffset.top_left();
-            ptOffset.x += (long) ((lpiCharsPositions[iOffset + i] - lpiCharsPositions[iOffset]) * dRateX);
-            lpglyph->DrawGlyph(
-               pgraphics,
-               true,
-               (float) dRateX,
-               &ptOffset);
-         }
-      }
+//      SetDC(pgraphics);
+//      SelectFont();
+//
+//      const ::rect rectOffset(rect);
+//      point ptOffset;
+//
+//
+//      glyph * lpglyph;
+//      strsize iSize = str.get_length();
+//      for(strsize i = 0; i < iSize; i++)
+//      {
+//         lpglyph = GetGlyph(str[i]);
+//         if(lpglyph != NULL)
+//         {
+//            ptOffset = rectOffset.top_left();
+//            ptOffset.x += (long) ((lpiCharsPositions[iOffset + i] - lpiCharsPositions[iOffset]) * dRateX);
+//            lpglyph->DrawGlyph(
+//               pgraphics,
+//               true,
+//               (float) dRateX,
+//               &ptOffset);
+//         }
+//      }
 
 
       /*   visual::api::EmbossedTextOut(
@@ -133,8 +133,8 @@ namespace visual
             iCharsPositions,
             iOffset);*/
 
-      UnselectFont();
-      ClearDC();
+//      UnselectFont();
+//      ClearDC();
       /*   SetDC(pgraphics);
          SelectFont();
 
@@ -164,22 +164,8 @@ namespace visual
       SelectFont();
 
       rect clipRect;
-      int32_t iOldMapMode = pgraphics->GetMapMode();
-
-#ifdef WINDOWS
-
-      pgraphics->SetMapMode(MM_TEXT);
-
-
-#else
-
-      throw todo(get_app());
-
-#endif
 
       pgraphics->text_out(x, y, str);
-
-      pgraphics->SetMapMode(iOldMapMode);
 
       UnselectFont();
 

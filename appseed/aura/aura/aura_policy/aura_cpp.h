@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -763,13 +763,42 @@ CLASS_DECL_AURA ::aura::application * get_thread_app();
 
 
 
-template <class TYPE>
-inline bool is_null(const TYPE & ref)
+template < typename TYPE >
+bool is_null(const TYPE * p)
 {
-   return &ref == NULL;
+   return (((int_ptr)p) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
 }
 
-#define NULL_REF(class) (*((class *) NULL))
+template < typename TYPE >
+bool is_set(const TYPE * p)
+{
+   return !is_null(p);
+}
+
+
+template < typename TYPE >
+bool is_null(const TYPE & t)
+{
+   return (((int_ptr)&t) < ((sizeof(TYPE) + sizeof(int_ptr)) * 2));
+}
+
+template < typename TYPE >
+bool is_set(const TYPE & t)
+{
+   return !is_null(t);
+}
+
+
+template <class t>
+inline void delptr(t *& p)
+{
+   if(p != NULL)
+   {
+      delete p;
+      p = NULL;
+   }
+}
+
 
 
 #include "aura/aura/aura/aura_pointer.h"
@@ -1852,17 +1881,17 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/user/user/user_controller.h"
 
 
-template < typename TYPE >
-void function_call(const TYPE * p)
-{
-
-   const char * psz = reinterpret_cast < const char * > (p);
-
-}
-
-
-template < >
-CLASS_DECL_AURA void function_call(const ::object * p);
+//template < typename TYPE >
+//void function_call(const TYPE * p)
+//{
+//
+//   const char * psz = reinterpret_cast < const char * > (p);
+//
+//}
+//
+//
+//template < >
+//CLASS_DECL_AURA void function_call(const ::object * p);
 
 
 

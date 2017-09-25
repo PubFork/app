@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/net_sockets.h"
 //#include "fiasco_finder.h"
 
@@ -350,7 +350,7 @@ namespace axis
          || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
-         if(m_pfontopus->create_system_user("system") == NULL)
+         if(is_null(m_pfontopus->create_system_user("system")))
             return false;
 
       }

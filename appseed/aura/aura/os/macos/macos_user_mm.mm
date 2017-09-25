@@ -157,7 +157,7 @@ int GetScreenRect(LPRECT lprect, int iMonitor)
 int GetScreenCount()
 {
    
-   return [[NSScreen screens] count];
+   return (int) [[NSScreen screens] count];
    
 }
 
@@ -176,7 +176,7 @@ int GetWkspaceRect(LPRECT lprect, int iMonitor)
 int GetWkspaceCount()
 {
    
-   return [[NSScreen screens] count];
+   return (int) [[NSScreen screens] count];
    
 }
 

@@ -104,16 +104,6 @@ int32_t WINAPI GetLocaleInfoW( LCID lcid, LCTYPE lctype, LPWSTR buffer, int32_t 
     if (SUBLANGID(lang_id) == SUBLANG_NEUTRAL)
         lang_id = MAKELANGID(PRIMARYLANGID(lang_id), SUBLANG_DEFAULT);
 
-/*    if (!(hrsrc = FindResourceExW( kernel32_handle, (LPWSTR)RT_STRING,
-                                   ULongToPtr((lctype >> 4) + 1), lang_id )))
-    {
-        SetLastError( ERROR_INVALID_FLAGS );  /* no such lctype */
-/*        return 0;
-    }
-    if (!(hmem = LoadResource( kernel32_handle, hrsrc )))
-        return 0;
-
-    p = LockResource( hmem );*/
    p = NULL;
     for (i = 0; i < (lctype & 0x0f); i++) p += *p + 1;
 
@@ -502,67 +492,13 @@ const WCHAR *get_locale_value_name( DWORD lctype )
  * Retrieve user-modified locale info from the registry.
  * Return length, 0 on error, -1 if not found.
  */
+
 //INT get_registry_locale_info( LPCWSTR value, LPWSTR buffer, INT len )
 INT get_registry_locale_info(LPCWSTR, LPWSTR, INT)
 {
+   
    return 0;
-/*    DWORD size;
-    INT ret;
-    HANDLE hkey;
-    NTSTATUS status;
-    UNICODE_STRING nameW;
-    KEY_VALUE_PARTIAL_INFORMATION *info;
-    static const int info_size = FIELD_OFFSET(KEY_VALUE_PARTIAL_INFORMATION, Data);
-
-    if (!(hkey = create_registry_key())) return -1;
-
-    RtlInitUnicodeString( &nameW, value );
-    size = info_size + len * sizeof(WCHAR);
-
-    if (!(info = HeapAlloc( GetProcessHeap(), 0, size )))
-    {
-        NtClose( hkey );
-        SetLastError( ERROR_NOT_ENOUGH_MEMORY );
-        return 0;
-    }
-
-    status = NtQueryValueKey( hkey, &nameW, KeyValuePartialInformation, info, size, &size );
-
-    if (!status)
-    {
-        ret = (size - info_size) / sizeof(WCHAR);
-        /* append terminating NULL if needed */
-  /*      if (!ret || ((WCHAR *)info->Data)[ret-1])
-        {
-            if (ret < len || !buffer) ret++;
-            else
-            {
-                SetLastError( ERROR_INSUFFICIENT_BUFFER );
-                ret = 0;
-            }
-        }
-        if (ret && buffer)
-        {
-            memcpy( buffer, info->Data, (ret-1) * sizeof(WCHAR) );
-            buffer[ret-1] = 0;
-        }
-    }
-    else if (status == STATUS_BUFFER_OVERFLOW && !buffer)
-    {
-        ret = (size - info_size) / sizeof(WCHAR) + 1;
-    }
-    else if (status == STATUS_OBJECT_NAME_NOT_FOUND)
-    {
-        ret = -1;
-    }
-    else
-    {
-        SetLastError( RtlNtStatusToDosError(status) );
-        ret = 0;
-    }
-    NtClose( hkey );
-    HeapFree( GetProcessHeap(), 0, info );
-    return ret;*/
+   
 }
 
 
@@ -589,55 +525,6 @@ INT get_registry_locale_info(LPCWSTR, LPWSTR, INT)
  */
 UINT setup_unix_locales(void)
 {
-/*    struct locale_name locale_name;
-    WCHAR buffer[128], ctype_buff[128];
-    char *locale;
-    UINT unix_cp = 0;
-
-    if ((locale = setlocale( LC_CTYPE, NULL )))
-    {
-        strcpynAtoW( ctype_buff, locale, sizeof(ctype_buff)/sizeof(WCHAR) );
-        parse_locale_name( ctype_buff, &locale_name );
-        lcid_LC_CTYPE = locale_name.lcid;
-        unix_cp = locale_name.codepage;
-    }
-    if (!lcid_LC_CTYPE)  /* this one needs a default value */
-  /*      lcid_LC_CTYPE = MAKELCID( MAKELANGID(LANG_ENGLISH,SUBLANG_DEFAULT), SORT_DEFAULT );
-
-    TRACE( "got lcid %04x (%d matches) for LC_CTYPE=%s\n",
-           locale_name.lcid, locale_name.matches, debugstr_a(locale) );
-
-#define GET_UNIX_LOCALE(cat) do \
-    if ((locale = setlocale( cat, NULL ))) \
-    { \
-        strcpynAtoW( buffer, locale, sizeof(buffer)/sizeof(WCHAR) ); \
-        if (!strcmpW( buffer, ctype_buff )) lcid_##cat = lcid_LC_CTYPE; \
-        else { \
-            parse_locale_name( buffer, &locale_name );  \
-            lcid_##cat = locale_name.lcid; \
-            TRACE( "got lcid %04x (%d matches) for " #cat "=%s\n",        \
-                   locale_name.lcid, locale_name.matches, debugstr_a(locale) ); \
-        } \
-    } while (0)
-
-    GET_UNIX_LOCALE( LC_COLLATE );
-    GET_UNIX_LOCALE( LC_MESSAGES );
-    GET_UNIX_LOCALE( LC_MONETARY );
-    GET_UNIX_LOCALE( LC_NUMERIC );
-    GET_UNIX_LOCALE( LC_TIME );
-#ifdef LC_PAPER
-    GET_UNIX_LOCALE( LC_PAPER );
-#endif
-#ifdef LC_MEASUREMENT
-    GET_UNIX_LOCALE( LC_MEASUREMENT );
-#endif
-#ifdef LC_TELEPHONE
-    GET_UNIX_LOCALE( LC_TELEPHONE );
-#endif
-
-#undef GET_UNIX_LOCALE
-
-    return unix_cp;*/
     return 0;
 }
 

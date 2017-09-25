@@ -234,7 +234,7 @@ FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)
 
    COLORREF * psrc = pdib->m_pcolorref;
 
-   int iStrideSrc = pdib->m_iScan;
+   //int iStrideSrc = pdib->m_iScan;
 
 #if  defined(VSNORD)
 
@@ -557,7 +557,7 @@ bool imaging::from(::draw2d::dib * pdib,::draw2d::graphics * pgraphics,FIBITMAP 
 
    pdib->map();
 
-   int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
+   //int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
 
 //#if defined(VSNORD) && defined(__arm__)
 #if defined(ANDROID)
@@ -1109,83 +1109,83 @@ void GetMultiLineTextExtent(HDC hDC,stringa * pArray,LPSIZE lpSize)
 }
 
 
-void DrawMultiLineText(HDC hDC,stringa * pArray)
-{
+//void DrawMultiLineText(HDC hDC,stringa * pArray)
+//{
+//
+//#ifdef WINDOWSEX
+//
+//   TEXTMETRICW tm;
+//
+//   GetTextMetricsW(hDC,&tm);
+//
+//   index nIndex;
+//   ::count nSize;
+//
+//   nSize = pArray->get_size();
+//
+//   int32_t yPos = 0;
+//
+//   for(nIndex = 0; nIndex < nSize; nIndex++)
+//   {
+//
+//      const string &str = pArray->get_at(nIndex);
+//
+//      TextOut(hDC,0,yPos,str,(int32_t)str.get_length());
+//
+//      yPos +=
+//         tm.tmHeight +
+//         tm.tmExternalLeading +
+//         tm.tmInternalLeading;
+//
+//   }
+//
+//#else
+//
+//   throw todo(get_thread_app());
+//
+//#endif
+//
+//}
 
-#ifdef WINDOWSEX
-
-   TEXTMETRICW tm;
-
-   GetTextMetricsW(hDC,&tm);
-
-   index nIndex;
-   ::count nSize;
-
-   nSize = pArray->get_size();
-
-   int32_t yPos = 0;
-
-   for(nIndex = 0; nIndex < nSize; nIndex++)
-   {
-
-      const string &str = pArray->get_at(nIndex);
-
-      TextOut(hDC,0,yPos,str,(int32_t)str.get_length());
-
-      yPos +=
-         tm.tmHeight +
-         tm.tmExternalLeading +
-         tm.tmInternalLeading;
-
-   }
-
-#else
-
-   throw todo(get_thread_app());
-
-#endif
-
-}
-
-bool imaging::GrayVRCP(
-   ::draw2d::graphics * pgraphics,
-   int32_t x,
-   int32_t y,
-   int32_t cx,
-   int32_t cy,
-   COLORREF crAlpha)
-{
-   UNREFERENCED_PARAMETER(pgraphics);
-   UNREFERENCED_PARAMETER(x);
-   UNREFERENCED_PARAMETER(y);
-   UNREFERENCED_PARAMETER(cx);
-   UNREFERENCED_PARAMETER(cy);
-   UNREFERENCED_PARAMETER(crAlpha);
-   ::exception::throw_not_implemented(get_app());
-   ASSERT(FALSE);
-
-   return 0;
-
-}
-
-bool imaging::GrayVRCP(
-   ::draw2d::graphics * pgraphics,
-   ::draw2d::bitmap * pbitmap,
-   ::draw2d::bitmap * pbitmapMask,
-   const RECT & rect,
-   COLORREF crTransparent)
-{
-
-   return GrayVRCP(
-             pgraphics,
-             pbitmap,
-             pbitmapMask,
-             rect.left,
-             rect.top,
-             rect.right - rect.left,
-             rect.bottom - rect.top,
-             crTransparent);
-}
+//bool imaging::GrayVRCP(
+//   ::draw2d::graphics * pgraphics,
+//   int32_t x,
+//   int32_t y,
+//   int32_t cx,
+//   int32_t cy,
+//   COLORREF crAlpha)
+//{
+//   UNREFERENCED_PARAMETER(pgraphics);
+//   UNREFERENCED_PARAMETER(x);
+//   UNREFERENCED_PARAMETER(y);
+//   UNREFERENCED_PARAMETER(cx);
+//   UNREFERENCED_PARAMETER(cy);
+//   UNREFERENCED_PARAMETER(crAlpha);
+//   ::exception::throw_not_implemented(get_app());
+//   ASSERT(FALSE);
+//
+//   return 0;
+//
+//}
+//
+//bool imaging::GrayVRCP(
+//   ::draw2d::graphics * pgraphics,
+//   ::draw2d::bitmap * pbitmap,
+//   ::draw2d::bitmap * pbitmapMask,
+//   const RECT & rect,
+//   COLORREF crTransparent)
+//{
+//
+//   return GrayVRCP(
+//             pgraphics,
+//             pbitmap,
+//             pbitmapMask,
+//             rect.left,
+//             rect.top,
+//             rect.right - rect.left,
+//             rect.bottom - rect.top,
+//             crTransparent);
+//}
 
 /*sp(::image_list) imaging::CreateGrayVRCPImageList(
 ::draw2d::graphics * pgraphics,
@@ -1380,445 +1380,448 @@ return pil;
 */
 
 
-bool imaging::GrayVRCP(
-   ::draw2d::graphics * pgraphics,
-   ::draw2d::bitmap * pbitmap,
-   ::draw2d::bitmap * pbitmapMask,
-   int32_t x,
-   int32_t y,
-   int32_t cx,
-   int32_t cy,
-   COLORREF crAlpha)
-{
-   UNREFERENCED_PARAMETER(crAlpha);
-   //COLORREF cr3dface = Session.get_default_color(COLOR_3DFACE);
-
-#ifdef WINDOWSEX
-
-   COLORREF cr3dshadow = Session.get_default_color(COLOR_3DSHADOW);
-
-#else
-
-   COLORREF cr3dshadow = ARGB(255,127,127,127);
-
-#endif
-
-   //BYTE uch3dfaceR = rgba_get_r(cr3dface);
-   //BYTE uch3dfaceG = rgba_get_g(cr3dface);
-   //BYTE uch3dfaceB = rgba_get_b(cr3dface);
-   BYTE uch3dshadowR = rgba_get_r(cr3dshadow);
-   BYTE uch3dshadowG = rgba_get_g(cr3dshadow);
-   BYTE uch3dshadowB = rgba_get_b(cr3dshadow);
-
-
-#ifdef WINDOWSEX
-
-   COLORREF cr3dhighlight = Session.get_default_color(COLOR_3DHILIGHT);
-
-#else
-
-   COLORREF cr3dhighlight = ARGB(255,192,192,192);
-
-#endif
-
-
-   BYTE uch3dhighlightR = rgba_get_r(cr3dhighlight);
-   BYTE uch3dhighlightG = rgba_get_g(cr3dhighlight);
-   BYTE uch3dhighlightB = rgba_get_b(cr3dhighlight);
-
-   class size size = pbitmap->get_size();
-
-   UINT cbLine = ((size.cx * 3 + 3) & ~3);
-   UINT cbImage = size.cy * cbLine;
-
-   UINT cbMask = size.cy * ((size.cx + 3) & ~3);
-
-
-   BITMAPINFO bmi;
-
-   bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-   bmi.bmiHeader.biWidth = size.cx;
-   bmi.bmiHeader.biHeight = - size.cy;
-   bmi.bmiHeader.biPlanes = 1;
-   bmi.bmiHeader.biBitCount = 24;
-   bmi.bmiHeader.biCompression = BI_RGB;
-   bmi.bmiHeader.biSizeImage = 0;
-   bmi.bmiHeader.biXPelsPerMeter = 1;
-   bmi.bmiHeader.biYPelsPerMeter = 1;
-   bmi.bmiHeader.biClrUsed = 0;
-   bmi.bmiHeader.biClrImportant = 0;
-
-   LPBYTE lpbData = (LPBYTE)malloc(cbImage);
-   LPBYTE lpbShadow = (LPBYTE)malloc(cbMask);
-   LPBYTE lpbMask = (LPBYTE)malloc(cbMask);
-   //LPBYTE lpbShadow = lpbData;
-
-#ifdef WINDOWSEX
-
-   UINT uiScanLines = size.cy;
-
-
-   if(!GetDIBits(
-            (HDC)pgraphics->get_os_data(),
-            (HBITMAP)pbitmap->get_os_data(),
-            0,
-            uiScanLines,
-            lpbData,
-            &bmi,
-            DIB_RGB_COLORS))
-   {
-      return false;
-   }
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-   class size sizeMask = pbitmapMask->get_size();
-
-   BITMAPINFO * pbmiMask = (BITMAPINFO *)malloc(sizeof(BITMAPINFOHEADER) + 256 * sizeof(RGBQUAD));
-
-   pbmiMask->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-   pbmiMask->bmiHeader.biWidth = sizeMask.cx;
-   pbmiMask->bmiHeader.biHeight = - sizeMask.cy;
-   pbmiMask->bmiHeader.biPlanes = 1;
-   pbmiMask->bmiHeader.biBitCount = 8;
-   pbmiMask->bmiHeader.biCompression = BI_RGB;
-   pbmiMask->bmiHeader.biSizeImage = 0;
-   pbmiMask->bmiHeader.biXPelsPerMeter = 1;
-   pbmiMask->bmiHeader.biYPelsPerMeter = 1;
-   pbmiMask->bmiHeader.biClrUsed = 0;
-   pbmiMask->bmiHeader.biClrImportant = 0;
-
-#ifdef WINDOWSEX
-
-   if(!GetDIBits((HDC)pgraphics->get_os_data(),
-                 (HBITMAP)pbitmapMask->get_os_data(),
-                 0,uiScanLines,
-                 lpbMask,pbmiMask,DIB_RGB_COLORS))
-   {
-      return false;
-   }
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-   //   memcpy(lpbShadow, lpbData, cbImage);
-
-   LPBYTE lpbBase = lpbData + cbLine * y + x * 3;
-   LPBYTE lpbBaseShift = lpbData + cbLine * (y + 1) + (x + 1) * 3;
-   LPBYTE lpbBaseShadow = lpbShadow + size.cx * y + x * 3;
-   LPBYTE lpbBaseMask = lpbMask + size.cx * y + x;
-   LPBYTE lpbBaseMaskShift = lpbMask + size.cx * (y + 1) + (x + 1);
-
-
-   BYTE br,bg,bb;
-
-   //   COLORREF crBtnFace = Session.get_default_color(COLOR_BTNFACE);
-   //   COLORREF crBtnShad = Session.get_default_color(COLOR_BTNSHADOW);
-   //   COLORREF crWndBack = Session.get_default_color(COLOR_WINDOW);
-
-   //   BYTE bRBtnFace = rgba_get_r(crBtnFace);
-   //   BYTE bGBtnFace = rgba_get_g(crBtnFace);
-   //   BYTE bBBtnFace = rgba_get_b(crBtnFace);
-
-   //   BYTE bRBtnShad = rgba_get_r(crBtnShad);
-   //   BYTE bGBtnShad = rgba_get_g(crBtnShad);
-   //   BYTE bBBtnShad = rgba_get_b(crBtnShad);
-
-   //   BYTE bRWndBack = rgba_get_r(crWndBack);
-   //   BYTE bGWndBack = rgba_get_g(crWndBack);
-   //   BYTE bBWndBack = rgba_get_b(crWndBack);
-
-   int32_t i;
-   for(i = 0; i < cy; i ++)
-   {
-      LPBYTE lpbLine = lpbBase + cbLine * i;
-      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
-      LPBYTE lpbLineMask = lpbBaseMask + size.cy * i;
-      for(int32_t j = 0; j < cx; j++)
-      {
-         bb = *lpbLine++;
-         bg = *lpbLine++;
-         br = *lpbLine++;
-         if((((br + bg + bb) / 3) < 192) &&
-               (*lpbLineMask == 0))
-         {
-            *lpbLineShadow++ = 1;
-         }
-         else
-         {
-            *lpbLineShadow++ = 0;
-         }
-         lpbLineMask++;
-      }
-   }
-
-
-
-
-
-
-
-
-
-
-
-   for(i = 0; i < cy; i ++)
-   {
-      LPBYTE lpbLine = lpbBase + cbLine * i;
-      for(int32_t j = 0; j < cx; j++)
-      {
-         *lpbLine++ = 0;
-         *lpbLine++ = 0;
-         *lpbLine++ = 0;
-      }
-   }
-
-
-
-
-
-
-
-
-
-
-   for(i = 0; i < cy; i ++)
-   {
-      LPBYTE lpbLineMask = lpbBaseMask + size.cx * i;
-      for(int32_t j = 0; j < cx; j++)
-      {
-         *lpbLineMask++ = 1;
-      }
-   }
-
-
-
-
-   int32_t cyminus1 = cy - 1;
-   int32_t cxminus1 = cx - 1;
-   BYTE b;
-
-   for(i = 0; i < cyminus1; i ++)
-   {
-      LPBYTE lpbLine = lpbBaseShift + cbLine * i;
-      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
-      LPBYTE lpbLineMask = lpbBaseMaskShift + size.cx * i;
-      for(int32_t j = 0; j < cxminus1; j++)
-      {
-         b = *lpbLineShadow;
-         lpbLineShadow++;
-
-         if(b == 1)
-         {
-            *lpbLine++ = uch3dhighlightB;
-            *lpbLine++ = uch3dhighlightG;
-            *lpbLine++ = uch3dhighlightR;
-            *lpbLineMask++ = 0;
-         }
-         else
-         {
-            lpbLine += 3;
-            lpbLineMask++;
-         }
-      }
-   }
-
-
-
-
-
-
-
-   for(i = 0; i < cy; i ++)
-   {
-      LPBYTE lpbLine = lpbBase + cbLine * i;
-      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
-      LPBYTE lpbLineMask = lpbBaseMask + size.cx * i;
-      for(int32_t j = 0; j < cx; j++)
-      {
-         b = *lpbLineShadow;
-         lpbLineShadow++;
-
-         if(b == 1)
-         {
-            *lpbLine++ = uch3dshadowB;
-            *lpbLine++ = uch3dshadowG;
-            *lpbLine++ = uch3dshadowR;
-            *lpbLineMask++ = 0;
-         }
-         else
-         {
-            lpbLine += 3;
-            lpbLineMask++;
-         }
-      }
-   }
-
-#ifdef WINDOWSEX
-
-   if(!SetDIBits(
-            (HDC)pgraphics->get_os_data(),
-            (HBITMAP)pbitmap->get_os_data(),
-            0,
-            uiScanLines,
-            lpbData,
-            &bmi,
-            DIB_RGB_COLORS))
-   {
-      return false;
-   }
-
-   if(!SetDIBits(
-            (HDC)pgraphics->get_os_data(),
-            (HBITMAP)pbitmapMask->get_os_data(),
-            0,
-            uiScanLines,
-            lpbMask,
-            pbmiMask,
-            DIB_RGB_COLORS))
-   {
-      return false;
-   }
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-   ::free(lpbShadow);
-   ::free(lpbData);
-   ::free(lpbMask);
-   ::free(pbmiMask);
-
-   return true;
-
-}
-
-bool imaging::GetDeviceContext24BitsCC(
-   ::draw2d::graphics *pgraphics,
-   BITMAP & bm,
-   BITMAPINFO & bmi,
-   memory & memorystorage,
-   ::draw2d::bitmap * pbitmap,
-   const RECT & rectParam,
-   int32_t &iWidthParam,
-   UINT & uiStartScanLineParam,
-   UINT & uiScanLineCountParam,
-   int32_t & iLimitYParam)
-{
-   UNREFERENCED_PARAMETER(pbitmap);
-   rect rect(rectParam);
-
-   //   int32_t x = rect.left;
-   int32_t y = rect.top;
-   //   int32_t cx = rect.width();
-   int32_t cy = rect.height();
-
-   ::draw2d::bitmap_sp spbmpTemp(get_app());
-   if(!spbmpTemp->CreateCompatibleBitmap(pgraphics,1,1))
-   {
-      return false;
-   }
-
-   ::draw2d::bitmap * pbmpOld = pgraphics->SelectObject(spbmpTemp);
-
-   if(pbmpOld != NULL)
-   {
-      try
-      {
-#ifdef WINDOWSEX
-         ::draw2d::bitmap * pbmp = pbmpOld;
-#endif
-
-         ::exception::throw_not_implemented(get_app());
-         /*         if(!pbmp->GetObject(sizeof(bm), &bm))
-         {
-         pgraphics->SelectObject(pbmpOld);
-         return false;
-         }*/
-
-         bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
-         bmi.bmiHeader.biWidth = bm.bmWidth ;
-         bmi.bmiHeader.biHeight = bm.bmHeight;
-         bmi.bmiHeader.biPlanes = 1;
-         bmi.bmiHeader.biBitCount = 24;
-         bmi.bmiHeader.biCompression = BI_RGB;
-         bmi.bmiHeader.biSizeImage = 0;
-         bmi.bmiHeader.biXPelsPerMeter = 0;
-         bmi.bmiHeader.biYPelsPerMeter = 0;
-         bmi.bmiHeader.biClrUsed = 0;
-         bmi.bmiHeader.biClrImportant = 0;
-         int32_t iLineBytes =  ((bm.bmWidth * 3) + 3) & ~3;
-         iWidthParam = iLineBytes;
-         try
-         {
-            memorystorage.allocate(iLineBytes * cy);
-         }
-         catch(memory_exception * pe)
-         {
-            delete pe;
-            throw 4000;
-         }
-#ifdef WINDOWSEX
-
-         LPVOID lpv = memorystorage.get_data();
-#endif
-         //       point pointViewport = pgraphics->GetViewportOrg();
-
-         UINT uiStartScanLine = MAX(0,bm.bmHeight - y - cy);
-         UINT uiScanLines = cy + MIN(0,bm.bmHeight - y - cy);
-
-         uiStartScanLineParam = uiStartScanLine;
-         uiScanLineCountParam = uiScanLines;
-
-#ifdef WINDOWSEX
-
-         if(!(iLimitYParam = GetDIBits
-                             (
-                                (HDC)pgraphics->get_os_data(),
-                                (HBITMAP)pbmp->get_os_data(),
-                                uiStartScanLine,
-                                uiScanLines,
-                                lpv,
-                                &bmi,
-                                DIB_RGB_COLORS
-                             )
-             ))
-         {
-            pgraphics->SelectObject(pbmpOld);
-            return false;
-         }
-
-#else
-
-         throw todo(get_app());
-
-#endif
-
-      }
-      catch(int32_t)
-      {
-         //         UINT user = GetLastError();
-         pgraphics->SelectObject(pbmpOld);
-         return false;
-      }
-      pgraphics->SelectObject(pbmpOld);
-      return true;
-   }
-   else
-   {
-      pgraphics->SelectObject(pbmpOld);
-      return false;
-   }
-}
+//bool imaging::GrayVRCP(
+//   ::draw2d::graphics * pgraphics,
+//   ::draw2d::bitmap * pbitmap,
+//   ::draw2d::bitmap * pbitmapMask,
+//   int32_t x,
+//   int32_t y,
+//   int32_t cx,
+//   int32_t cy,
+//   COLORREF crAlpha)
+//{
+//
+//   return false;
+//
+////   UNREFERENCED_PARAMETER(crAlpha);
+////   //COLORREF cr3dface = Session.get_default_color(COLOR_3DFACE);
+////
+////#ifdef WINDOWSEX
+////
+////   COLORREF cr3dshadow = Session.get_default_color(COLOR_3DSHADOW);
+////
+////#else
+////
+////   COLORREF cr3dshadow = ARGB(255,127,127,127);
+////
+////#endif
+////
+////   //BYTE uch3dfaceR = rgba_get_r(cr3dface);
+////   //BYTE uch3dfaceG = rgba_get_g(cr3dface);
+////   //BYTE uch3dfaceB = rgba_get_b(cr3dface);
+////   BYTE uch3dshadowR = rgba_get_r(cr3dshadow);
+////   BYTE uch3dshadowG = rgba_get_g(cr3dshadow);
+////   BYTE uch3dshadowB = rgba_get_b(cr3dshadow);
+////
+////
+////#ifdef WINDOWSEX
+////
+////   COLORREF cr3dhighlight = Session.get_default_color(COLOR_3DHILIGHT);
+////
+////#else
+////
+////   COLORREF cr3dhighlight = ARGB(255,192,192,192);
+////
+////#endif
+////
+////
+////   BYTE uch3dhighlightR = rgba_get_r(cr3dhighlight);
+////   BYTE uch3dhighlightG = rgba_get_g(cr3dhighlight);
+////   BYTE uch3dhighlightB = rgba_get_b(cr3dhighlight);
+////
+////   class size size = pbitmap->get_size();
+////
+////   UINT cbLine = ((size.cx * 3 + 3) & ~3);
+////   UINT cbImage = size.cy * cbLine;
+////
+////   UINT cbMask = size.cy * ((size.cx + 3) & ~3);
+////
+////
+////   BITMAPINFO bmi;
+////
+////   bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+////   bmi.bmiHeader.biWidth = size.cx;
+////   bmi.bmiHeader.biHeight = - size.cy;
+////   bmi.bmiHeader.biPlanes = 1;
+////   bmi.bmiHeader.biBitCount = 24;
+////   bmi.bmiHeader.biCompression = BI_RGB;
+////   bmi.bmiHeader.biSizeImage = 0;
+////   bmi.bmiHeader.biXPelsPerMeter = 1;
+////   bmi.bmiHeader.biYPelsPerMeter = 1;
+////   bmi.bmiHeader.biClrUsed = 0;
+////   bmi.bmiHeader.biClrImportant = 0;
+////
+////   LPBYTE lpbData = (LPBYTE)malloc(cbImage);
+////   LPBYTE lpbShadow = (LPBYTE)malloc(cbMask);
+////   LPBYTE lpbMask = (LPBYTE)malloc(cbMask);
+////   //LPBYTE lpbShadow = lpbData;
+////
+////#ifdef WINDOWSEX
+////
+////   UINT uiScanLines = size.cy;
+////
+////
+////   if(!GetDIBits(
+////            (HDC)pgraphics->get_os_data(),
+////            (HBITMAP)pbitmap->get_os_data(),
+////            0,
+////            uiScanLines,
+////            lpbData,
+////            &bmi,
+////            DIB_RGB_COLORS))
+////   {
+////      return false;
+////   }
+////
+////#else
+////
+////   throw todo(get_app());
+////
+////#endif
+////
+////   class size sizeMask = pbitmapMask->get_size();
+////
+////   BITMAPINFO * pbmiMask = (BITMAPINFO *)malloc(sizeof(BITMAPINFOHEADER) + 256 * sizeof(RGBQUAD));
+////
+////   pbmiMask->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+////   pbmiMask->bmiHeader.biWidth = sizeMask.cx;
+////   pbmiMask->bmiHeader.biHeight = - sizeMask.cy;
+////   pbmiMask->bmiHeader.biPlanes = 1;
+////   pbmiMask->bmiHeader.biBitCount = 8;
+////   pbmiMask->bmiHeader.biCompression = BI_RGB;
+////   pbmiMask->bmiHeader.biSizeImage = 0;
+////   pbmiMask->bmiHeader.biXPelsPerMeter = 1;
+////   pbmiMask->bmiHeader.biYPelsPerMeter = 1;
+////   pbmiMask->bmiHeader.biClrUsed = 0;
+////   pbmiMask->bmiHeader.biClrImportant = 0;
+////
+////#ifdef WINDOWSEX
+////
+////   if(!GetDIBits((HDC)pgraphics->get_os_data(),
+////                 (HBITMAP)pbitmapMask->get_os_data(),
+////                 0,uiScanLines,
+////                 lpbMask,pbmiMask,DIB_RGB_COLORS))
+////   {
+////      return false;
+////   }
+////
+////#else
+////
+////   throw todo(get_app());
+////
+////#endif
+////
+////   //   memcpy(lpbShadow, lpbData, cbImage);
+////
+////   LPBYTE lpbBase = lpbData + cbLine * y + x * 3;
+////   LPBYTE lpbBaseShift = lpbData + cbLine * (y + 1) + (x + 1) * 3;
+////   LPBYTE lpbBaseShadow = lpbShadow + size.cx * y + x * 3;
+////   LPBYTE lpbBaseMask = lpbMask + size.cx * y + x;
+////   LPBYTE lpbBaseMaskShift = lpbMask + size.cx * (y + 1) + (x + 1);
+////
+////
+////   BYTE br,bg,bb;
+////
+////   //   COLORREF crBtnFace = Session.get_default_color(COLOR_BTNFACE);
+////   //   COLORREF crBtnShad = Session.get_default_color(COLOR_BTNSHADOW);
+////   //   COLORREF crWndBack = Session.get_default_color(COLOR_WINDOW);
+////
+////   //   BYTE bRBtnFace = rgba_get_r(crBtnFace);
+////   //   BYTE bGBtnFace = rgba_get_g(crBtnFace);
+////   //   BYTE bBBtnFace = rgba_get_b(crBtnFace);
+////
+////   //   BYTE bRBtnShad = rgba_get_r(crBtnShad);
+////   //   BYTE bGBtnShad = rgba_get_g(crBtnShad);
+////   //   BYTE bBBtnShad = rgba_get_b(crBtnShad);
+////
+////   //   BYTE bRWndBack = rgba_get_r(crWndBack);
+////   //   BYTE bGWndBack = rgba_get_g(crWndBack);
+////   //   BYTE bBWndBack = rgba_get_b(crWndBack);
+////
+////   int32_t i;
+////   for(i = 0; i < cy; i ++)
+////   {
+////      LPBYTE lpbLine = lpbBase + cbLine * i;
+////      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
+////      LPBYTE lpbLineMask = lpbBaseMask + size.cy * i;
+////      for(int32_t j = 0; j < cx; j++)
+////      {
+////         bb = *lpbLine++;
+////         bg = *lpbLine++;
+////         br = *lpbLine++;
+////         if((((br + bg + bb) / 3) < 192) &&
+////               (*lpbLineMask == 0))
+////         {
+////            *lpbLineShadow++ = 1;
+////         }
+////         else
+////         {
+////            *lpbLineShadow++ = 0;
+////         }
+////         lpbLineMask++;
+////      }
+////   }
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////   for(i = 0; i < cy; i ++)
+////   {
+////      LPBYTE lpbLine = lpbBase + cbLine * i;
+////      for(int32_t j = 0; j < cx; j++)
+////      {
+////         *lpbLine++ = 0;
+////         *lpbLine++ = 0;
+////         *lpbLine++ = 0;
+////      }
+////   }
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////   for(i = 0; i < cy; i ++)
+////   {
+////      LPBYTE lpbLineMask = lpbBaseMask + size.cx * i;
+////      for(int32_t j = 0; j < cx; j++)
+////      {
+////         *lpbLineMask++ = 1;
+////      }
+////   }
+////
+////
+////
+////
+////   int32_t cyminus1 = cy - 1;
+////   int32_t cxminus1 = cx - 1;
+////   BYTE b;
+////
+////   for(i = 0; i < cyminus1; i ++)
+////   {
+////      LPBYTE lpbLine = lpbBaseShift + cbLine * i;
+////      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
+////      LPBYTE lpbLineMask = lpbBaseMaskShift + size.cx * i;
+////      for(int32_t j = 0; j < cxminus1; j++)
+////      {
+////         b = *lpbLineShadow;
+////         lpbLineShadow++;
+////
+////         if(b == 1)
+////         {
+////            *lpbLine++ = uch3dhighlightB;
+////            *lpbLine++ = uch3dhighlightG;
+////            *lpbLine++ = uch3dhighlightR;
+////            *lpbLineMask++ = 0;
+////         }
+////         else
+////         {
+////            lpbLine += 3;
+////            lpbLineMask++;
+////         }
+////      }
+////   }
+////
+////
+////
+////
+////
+////
+////
+////   for(i = 0; i < cy; i ++)
+////   {
+////      LPBYTE lpbLine = lpbBase + cbLine * i;
+////      LPBYTE lpbLineShadow = lpbBaseShadow + size.cx * i;
+////      LPBYTE lpbLineMask = lpbBaseMask + size.cx * i;
+////      for(int32_t j = 0; j < cx; j++)
+////      {
+////         b = *lpbLineShadow;
+////         lpbLineShadow++;
+////
+////         if(b == 1)
+////         {
+////            *lpbLine++ = uch3dshadowB;
+////            *lpbLine++ = uch3dshadowG;
+////            *lpbLine++ = uch3dshadowR;
+////            *lpbLineMask++ = 0;
+////         }
+////         else
+////         {
+////            lpbLine += 3;
+////            lpbLineMask++;
+////         }
+////      }
+////   }
+////
+////#ifdef WINDOWSEX
+////
+////   if(!SetDIBits(
+////            (HDC)pgraphics->get_os_data(),
+////            (HBITMAP)pbitmap->get_os_data(),
+////            0,
+////            uiScanLines,
+////            lpbData,
+////            &bmi,
+////            DIB_RGB_COLORS))
+////   {
+////      return false;
+////   }
+////
+////   if(!SetDIBits(
+////            (HDC)pgraphics->get_os_data(),
+////            (HBITMAP)pbitmapMask->get_os_data(),
+////            0,
+////            uiScanLines,
+////            lpbMask,
+////            pbmiMask,
+////            DIB_RGB_COLORS))
+////   {
+////      return false;
+////   }
+////
+////#else
+////
+////   throw todo(get_app());
+////
+////#endif
+////
+////   ::free(lpbShadow);
+////   ::free(lpbData);
+////   ::free(lpbMask);
+////   ::free(pbmiMask);
+////
+////   return true;
+//
+//}
+
+//bool imaging::GetDeviceContext24BitsCC(
+//   ::draw2d::graphics *pgraphics,
+//   BITMAP & bm,
+//   BITMAPINFO & bmi,
+//   memory & memorystorage,
+//   ::draw2d::bitmap * pbitmap,
+//   const RECT & rectParam,
+//   int32_t &iWidthParam,
+//   UINT & uiStartScanLineParam,
+//   UINT & uiScanLineCountParam,
+//   int32_t & iLimitYParam)
+//{
+//   UNREFERENCED_PARAMETER(pbitmap);
+//   rect rect(rectParam);
+//
+//   //   int32_t x = rect.left;
+//   int32_t y = rect.top;
+//   //   int32_t cx = rect.width();
+//   int32_t cy = rect.height();
+//
+//   ::draw2d::bitmap_sp spbmpTemp(get_app());
+//   if(!spbmpTemp->CreateCompatibleBitmap(pgraphics,1,1))
+//   {
+//      return false;
+//   }
+//
+//   ::draw2d::bitmap * pbmpOld = pgraphics->SelectObject(spbmpTemp);
+//
+//   if(pbmpOld != NULL)
+//   {
+//      try
+//      {
+//#ifdef WINDOWSEX
+//         ::draw2d::bitmap * pbmp = pbmpOld;
+//#endif
+//
+//         ::exception::throw_not_implemented(get_app());
+//         /*         if(!pbmp->GetObject(sizeof(bm), &bm))
+//         {
+//         pgraphics->SelectObject(pbmpOld);
+//         return false;
+//         }*/
+//
+//         bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
+//         bmi.bmiHeader.biWidth = bm.bmWidth ;
+//         bmi.bmiHeader.biHeight = bm.bmHeight;
+//         bmi.bmiHeader.biPlanes = 1;
+//         bmi.bmiHeader.biBitCount = 24;
+//         bmi.bmiHeader.biCompression = BI_RGB;
+//         bmi.bmiHeader.biSizeImage = 0;
+//         bmi.bmiHeader.biXPelsPerMeter = 0;
+//         bmi.bmiHeader.biYPelsPerMeter = 0;
+//         bmi.bmiHeader.biClrUsed = 0;
+//         bmi.bmiHeader.biClrImportant = 0;
+//         int32_t iLineBytes =  ((bm.bmWidth * 3) + 3) & ~3;
+//         iWidthParam = iLineBytes;
+//         try
+//         {
+//            memorystorage.allocate(iLineBytes * cy);
+//         }
+//         catch(memory_exception * pe)
+//         {
+//            delete pe;
+//            throw 4000;
+//         }
+//#ifdef WINDOWSEX
+//
+//         LPVOID lpv = memorystorage.get_data();
+//#endif
+//         //       point pointViewport = pgraphics->GetViewportOrg();
+//
+//         UINT uiStartScanLine = MAX(0,bm.bmHeight - y - cy);
+//         UINT uiScanLines = cy + MIN(0,bm.bmHeight - y - cy);
+//
+//         uiStartScanLineParam = uiStartScanLine;
+//         uiScanLineCountParam = uiScanLines;
+//
+//#ifdef WINDOWSEX
+//
+//         if(!(iLimitYParam = GetDIBits
+//                             (
+//                                (HDC)pgraphics->get_os_data(),
+//                                (HBITMAP)pbmp->get_os_data(),
+//                                uiStartScanLine,
+//                                uiScanLines,
+//                                lpv,
+//                                &bmi,
+//                                DIB_RGB_COLORS
+//                             )
+//             ))
+//         {
+//            pgraphics->SelectObject(pbmpOld);
+//            return false;
+//         }
+//
+//#else
+//
+//         throw todo(get_app());
+//
+//#endif
+//
+//      }
+//      catch(int32_t)
+//      {
+//         //         UINT user = GetLastError();
+//         pgraphics->SelectObject(pbmpOld);
+//         return false;
+//      }
+//      pgraphics->SelectObject(pbmpOld);
+//      return true;
+//   }
+//   else
+//   {
+//      pgraphics->SelectObject(pbmpOld);
+//      return false;
+//   }
+//}
 
 /*bool imaging::GetDeviceContext24BitsAllCC(
 ::draw2d::graphics *pgraphics,
@@ -3730,7 +3733,8 @@ void imaging::blur_32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc,int32_t 
       y2++;
    }
 
-   delete pFilter;
+   delete[] pFilter;
+   
 }
 
 
@@ -4633,8 +4637,10 @@ bool imaging::channel_gray_blur_32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdi
       lpbSource += wSrc;
    }
 
-   delete pFilter;
+   delete[]pFilter;
+   
    return true;
+   
 }
 
 
@@ -4764,323 +4770,323 @@ void imaging::color_blend_24CC(
 
 
 
-bool imaging::alpha_spread_R2(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::graphics * pdcSrc,point ptSrc,BYTE bMin)
-{
-   if(size.cx <= 0 || size.cy <= 0)
-      return true;
-
-   UINT user;
-   UINT uiStartScanLine;
-   UINT uiScanLineCount;
-
-
-   rect rectDst(ptDst,size);
-   rect rectSrc(ptSrc,size);
-
-   int32_t iwDest;
-
-   BITMAPINFO bmiDst;
-   BITMAP   bmDst;
-   int32_t iLimitYDst;
-
-   ::draw2d::bitmap_sp bitmapDst(get_app());
-
-   memory memstorageA;
-   memory memstorageB;
-
-   if(!GetDeviceContext24BitsCC(
-            pdcDst,
-            bmDst,
-            bmiDst,
-            memstorageA,
-            bitmapDst,
-            rectDst,
-            iwDest,
-            uiStartScanLine,
-            uiScanLineCount,
-            iLimitYDst))
-   {
-      return false;
-   }
-
-   LPBYTE lpbDst = memstorageA.get_data();
-
-
-   int32_t iwSrc;
-
-   BITMAPINFO bmiSrc;
-   BITMAP   bmSrc;
-   int32_t iLimitYSrc;
-
-   ::draw2d::bitmap_sp bitmapSrc(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcSrc,bmSrc,bmiSrc,
-            memstorageB,
-            bitmapSrc,
-            rectSrc,
-            iwSrc,
-            user,
-            user,
-            iLimitYSrc))
-   {
-      return false;
-   }
-
-   LPBYTE lpbSrc = memstorageB.get_data();
-
-
-   point ptViewportDst = pdcDst->GetViewportOrg();
-   point ptViewportSrc = pdcSrc->GetViewportOrg();
-
-   int32_t xvpDst = ptDst.x + ptViewportDst.x;
-   int32_t xvpSrc = ptSrc.x + ptViewportSrc.x;
-
-   int32_t iLimitX = size.cx;
-
-   if(bmDst.bmWidth - xvpDst < iLimitX)
-   {
-      iLimitX = bmDst.bmWidth - xvpDst;
-   }
-   if(bmSrc.bmWidth - xvpSrc < iLimitX)
-   {
-      iLimitX = bmSrc.bmWidth - xvpSrc;
-   }
-
-
-   if(xvpDst < 0)
-      return false;
-   if(xvpSrc < 0)
-      return false;
-
-   int32_t iLimitY = MIN(iLimitYDst,iLimitYSrc);
-
-   alpha_spread_R2_24CC(
-      lpbDst,
-      xvpDst,
-      0,
-      iwDest,
-      iLimitX,
-      iLimitY,
-      lpbSrc,
-      xvpSrc,
-      0,
-      iwSrc,
-      bMin);
-
-
-#ifdef WINDOWSEX
-
-   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
-
-   if(pbmpOld == NULL)
-   {
-      ::draw2d::graphics_sp graphicsMem(allocer());
-      graphicsMem->CreateCompatibleDC(pdcDst);
-      if(!SetDIBits(
-               (HDC)graphicsMem->get_os_data(),
-               (HBITMAP)bitmapDst->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDst,
-               DIB_RGB_COLORS))
-         throw 6000;
-      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDst);
-      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
-      {
-         ASSERT(FALSE);
-      }
-      graphicsMem->SelectObject(pbmpMemOld);
-   }
-   else
-   {
-      ::draw2d::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
-      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
-      if(!SetDIBits(
-               (HDC)pdcDst->get_os_data(),
-               (HBITMAP)bitmapDst->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDst,
-               DIB_RGB_COLORS))
-         throw 6000;
-      pdcDst->SelectObject(bitmapDst);
-   }
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-   return true;
-
-}
-
-
-bool imaging::alpha_spread(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::graphics * pdcSrc,point ptSrc,BYTE bMin,int32_t iRadius)
-{
-
-   if(size.cx <= 0 || size.cy <= 0)
-      return true;
-
-   //   single_lock sl(&m_csMem, TRUE);
-
-
-   UINT user;
-   UINT uiStartScanLine;
-   UINT uiScanLineCount;
-
-
-   rect rectDest(ptDst,size);
-   rect rectSrc(ptSrc,size);
-
-   int32_t iwDest;
-
-   BITMAPINFO bmiDest;
-   BITMAP   bmDest;
-   int32_t iLimitYDest;
-
-
-
-   ::draw2d::bitmap_sp bitmapDest(get_app());
-   memory memstorageA;
-   memory memstorageB;
-
-   if(!GetDeviceContext24BitsCC(
-            pdcDst,
-            bmDest,
-            bmiDest,
-            memstorageA,
-            bitmapDest,
-            rectDest,
-            iwDest,
-            uiStartScanLine,
-            uiScanLineCount,
-            iLimitYDest))
-   {
-      return false;
-   }
-
-   LPBYTE lpbDst = memstorageA.get_data();
-
-
-   int32_t iwSrc;
-
-   BITMAPINFO bmiSrc;
-   BITMAP   bmSrc;
-   int32_t iLimitYSrc;
-
-   ::draw2d::bitmap_sp bitmapSrc(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcSrc,bmSrc,bmiSrc,
-            memstorageB,
-            bitmapSrc,
-            rectSrc,
-            iwSrc,
-            user,
-            user,
-            iLimitYSrc))
-   {
-      return false;
-   }
-
-   LPBYTE lpbSrc = memstorageB.get_data();
-
-
-   point ptViewportDest = pdcDst->GetViewportOrg();
-   point ptViewportSrc = pdcSrc->GetViewportOrg();
-
-   int32_t xvpDest = ptDst.x + ptViewportDest.x;
-   int32_t xvpSrc = ptDst.y + ptViewportSrc.x;
-
-   int32_t iLimitX = size.cx;
-
-   if(bmDest.bmWidth - xvpDest < iLimitX)
-   {
-      iLimitX = bmDest.bmWidth - xvpDest;
-   }
-   if(bmSrc.bmWidth - xvpSrc < iLimitX)
-   {
-      iLimitX = bmSrc.bmWidth - xvpSrc;
-   }
-
-
-   if(xvpDest < 0)
-      return false;
-   if(xvpSrc < 0)
-      return false;
-
-   int32_t iLimitY = MIN(iLimitYDest,iLimitYSrc);
-
-   alpha_spread__24CC(
-      lpbDst,
-      xvpDest,
-      0,
-      iwDest,
-      iLimitX,
-      iLimitY,
-      lpbSrc,
-      xvpSrc,
-      0,
-      iwSrc,
-      bMin,iRadius);
-
-
-#ifdef WINDOWSEX
-
-   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
-
-   if(pbmpOld == NULL)
-   {
-      ::draw2d::graphics_sp graphicsMem(allocer());
-      graphicsMem->CreateCompatibleDC(pdcDst);
-      if(!SetDIBits(
-               (HDC)graphicsMem->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-         throw 6000;
-      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
-      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
-      {
-         ASSERT(FALSE);
-      }
-      graphicsMem->SelectObject(pbmpMemOld);
-   }
-   else
-   {
-      ::draw2d::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
-      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
-      if(!SetDIBits(
-               (HDC)pdcDst->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-         throw 6000;
-      pdcDst->SelectObject(bitmapDest);
-   }
-
-   return true;
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-}
+//bool imaging::alpha_spread_R2(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::graphics * pdcSrc,point ptSrc,BYTE bMin)
+//{
+//   if(size.cx <= 0 || size.cy <= 0)
+//      return true;
+//
+//   UINT user;
+//   UINT uiStartScanLine;
+//   UINT uiScanLineCount;
+//
+//
+//   rect rectDst(ptDst,size);
+//   rect rectSrc(ptSrc,size);
+//
+//   int32_t iwDest;
+//
+//   BITMAPINFO bmiDst;
+//   BITMAP   bmDst;
+//   int32_t iLimitYDst;
+//
+//   ::draw2d::bitmap_sp bitmapDst(get_app());
+//
+//   memory memstorageA;
+//   memory memstorageB;
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcDst,
+//            bmDst,
+//            bmiDst,
+//            memstorageA,
+//            bitmapDst,
+//            rectDst,
+//            iwDest,
+//            uiStartScanLine,
+//            uiScanLineCount,
+//            iLimitYDst))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbDst = memstorageA.get_data();
+//
+//
+//   int32_t iwSrc;
+//
+//   BITMAPINFO bmiSrc;
+//   BITMAP   bmSrc;
+//   int32_t iLimitYSrc;
+//
+//   ::draw2d::bitmap_sp bitmapSrc(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcSrc,bmSrc,bmiSrc,
+//            memstorageB,
+//            bitmapSrc,
+//            rectSrc,
+//            iwSrc,
+//            user,
+//            user,
+//            iLimitYSrc))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbSrc = memstorageB.get_data();
+//
+//
+//   point ptViewportDst = pdcDst->GetViewportOrg();
+//   point ptViewportSrc = pdcSrc->GetViewportOrg();
+//
+//   int32_t xvpDst = ptDst.x + ptViewportDst.x;
+//   int32_t xvpSrc = ptSrc.x + ptViewportSrc.x;
+//
+//   int32_t iLimitX = size.cx;
+//
+//   if(bmDst.bmWidth - xvpDst < iLimitX)
+//   {
+//      iLimitX = bmDst.bmWidth - xvpDst;
+//   }
+//   if(bmSrc.bmWidth - xvpSrc < iLimitX)
+//   {
+//      iLimitX = bmSrc.bmWidth - xvpSrc;
+//   }
+//
+//
+//   if(xvpDst < 0)
+//      return false;
+//   if(xvpSrc < 0)
+//      return false;
+//
+//   int32_t iLimitY = MIN(iLimitYDst,iLimitYSrc);
+//
+//   alpha_spread_R2_24CC(
+//      lpbDst,
+//      xvpDst,
+//      0,
+//      iwDest,
+//      iLimitX,
+//      iLimitY,
+//      lpbSrc,
+//      xvpSrc,
+//      0,
+//      iwSrc,
+//      bMin);
+//
+//
+//#ifdef WINDOWSEX
+//
+//   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
+//
+//   if(pbmpOld == NULL)
+//   {
+//      ::draw2d::graphics_sp graphicsMem(allocer());
+//      graphicsMem->CreateCompatibleDC(pdcDst);
+//      if(!SetDIBits(
+//               (HDC)graphicsMem->get_os_data(),
+//               (HBITMAP)bitmapDst->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDst,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDst);
+//      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
+//      {
+//         ASSERT(FALSE);
+//      }
+//      graphicsMem->SelectObject(pbmpMemOld);
+//   }
+//   else
+//   {
+//      ::draw2d::bitmap_sp bitmap(get_app());
+//      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
+//      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
+//      if(!SetDIBits(
+//               (HDC)pdcDst->get_os_data(),
+//               (HBITMAP)bitmapDst->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDst,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      pdcDst->SelectObject(bitmapDst);
+//   }
+//
+//#else
+//
+//   throw todo(get_app());
+//
+//#endif
+//
+//   return true;
+//
+//}
+
+
+//bool imaging::alpha_spread(::draw2d::graphics *pdcDst,point ptDst,size size,::draw2d::graphics * pdcSrc,point ptSrc,BYTE bMin,int32_t iRadius)
+//{
+//
+//   if(size.cx <= 0 || size.cy <= 0)
+//      return true;
+//
+//   //   single_lock sl(&m_csMem, TRUE);
+//
+//
+//   UINT user;
+//   UINT uiStartScanLine;
+//   UINT uiScanLineCount;
+//
+//
+//   rect rectDest(ptDst,size);
+//   rect rectSrc(ptSrc,size);
+//
+//   int32_t iwDest;
+//
+//   BITMAPINFO bmiDest;
+//   BITMAP   bmDest;
+//   int32_t iLimitYDest;
+//
+//
+//
+//   ::draw2d::bitmap_sp bitmapDest(get_app());
+//   memory memstorageA;
+//   memory memstorageB;
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcDst,
+//            bmDest,
+//            bmiDest,
+//            memstorageA,
+//            bitmapDest,
+//            rectDest,
+//            iwDest,
+//            uiStartScanLine,
+//            uiScanLineCount,
+//            iLimitYDest))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbDst = memstorageA.get_data();
+//
+//
+//   int32_t iwSrc;
+//
+//   BITMAPINFO bmiSrc;
+//   BITMAP   bmSrc;
+//   int32_t iLimitYSrc;
+//
+//   ::draw2d::bitmap_sp bitmapSrc(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcSrc,bmSrc,bmiSrc,
+//            memstorageB,
+//            bitmapSrc,
+//            rectSrc,
+//            iwSrc,
+//            user,
+//            user,
+//            iLimitYSrc))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbSrc = memstorageB.get_data();
+//
+//
+//   point ptViewportDest = pdcDst->GetViewportOrg();
+//   point ptViewportSrc = pdcSrc->GetViewportOrg();
+//
+//   int32_t xvpDest = ptDst.x + ptViewportDest.x;
+//   int32_t xvpSrc = ptDst.y + ptViewportSrc.x;
+//
+//   int32_t iLimitX = size.cx;
+//
+//   if(bmDest.bmWidth - xvpDest < iLimitX)
+//   {
+//      iLimitX = bmDest.bmWidth - xvpDest;
+//   }
+//   if(bmSrc.bmWidth - xvpSrc < iLimitX)
+//   {
+//      iLimitX = bmSrc.bmWidth - xvpSrc;
+//   }
+//
+//
+//   if(xvpDest < 0)
+//      return false;
+//   if(xvpSrc < 0)
+//      return false;
+//
+//   int32_t iLimitY = MIN(iLimitYDest,iLimitYSrc);
+//
+//   alpha_spread__24CC(
+//      lpbDst,
+//      xvpDest,
+//      0,
+//      iwDest,
+//      iLimitX,
+//      iLimitY,
+//      lpbSrc,
+//      xvpSrc,
+//      0,
+//      iwSrc,
+//      bMin,iRadius);
+//
+//
+//#ifdef WINDOWSEX
+//
+//   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
+//
+//   if(pbmpOld == NULL)
+//   {
+//      ::draw2d::graphics_sp graphicsMem(allocer());
+//      graphicsMem->CreateCompatibleDC(pdcDst);
+//      if(!SetDIBits(
+//               (HDC)graphicsMem->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
+//      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
+//      {
+//         ASSERT(FALSE);
+//      }
+//      graphicsMem->SelectObject(pbmpMemOld);
+//   }
+//   else
+//   {
+//      ::draw2d::bitmap_sp bitmap(get_app());
+//      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
+//      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
+//      if(!SetDIBits(
+//               (HDC)pdcDst->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      pdcDst->SelectObject(bitmapDest);
+//   }
+//
+//   return true;
+//
+//#else
+//
+//   throw todo(get_app());
+//
+//#endif
+//
+//}
 
 
 void imaging::alpha_spread_R2_24CC(LPBYTE lpbDst,int32_t xDest,int32_t yDest,int32_t wDest,int32_t cx,int32_t cy,LPBYTE lpbSrc,int32_t xSrc,int32_t ySrc,int32_t wSrc,BYTE bMin)
@@ -5222,7 +5228,8 @@ void imaging::alpha_spread_R2_24CC(LPBYTE lpbDst,int32_t xDest,int32_t yDest,int
       y2++;
    }
 
-   delete pFilter;
+   delete[] pFilter;
+   
 }
 
 
@@ -6312,246 +6319,247 @@ breakFilter2:
 
 
 
-bool imaging::pixelate(::draw2d::graphics *pdcDst,int32_t xDest,int32_t yDest,int32_t cx,int32_t cy,::draw2d::graphics * pdcSrc,int32_t xSrc,int32_t ySrc,int32_t iSize)
-{
+//bool imaging::pixelate(::draw2d::graphics *pdcDst,int32_t xDest,int32_t yDest,int32_t cx,int32_t cy,::draw2d::graphics * pdcSrc,int32_t xSrc,int32_t ySrc,int32_t iSize)
+//{
+//
+//   /*::draw2d::graphics_sp & dibA->get_graphics()  = pthreadsafedata->m_dcA;
+//   ::draw2d::graphics_sp & dibB->get_graphics()  = pthreadsafedata->m_dcA;
+//
+//   ::draw2d::bitmap & bitmapA  = pthreadsafedata->bitmapA;
+//   ::draw2d::bitmap & bitmapB  = pthreadsafedata->bitmapB;
+//
+//   int32_t cxDest = cx / iSize;
+//   int32_t cyDest = cy / iSize;
+//
+//   if(dibA->get_graphics()->get_os_data() == NULL)
+//   {
+//   ::draw2d::graphics_sp dcScreen;
+//   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
+//   dibA->get_graphics()->CreateCompatibleDC(&dcScreen);
+//   }
+//   if(dibB->get_graphics()->get_os_data() == NULL)
+//   {
+//   ::draw2d::graphics_sp dcScreen;
+//   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
+//   dibB->get_graphics()->CreateCompatibleDC(&dcScreen);
+//   }
+//   if(spbitmapB->m_hObject == NULL)
+//   {
+//   ::draw2d::graphics_sp dcScreen;
+//   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
+//   spbitmapB->CreateBitmap(cxDest + 100, cyDest + 100, 1, 32, NULL);
+//
+//   }
+//   else
+//   {
+//   BITMAP bm;
+//   if(!spbitmapB->GetObject(sizeof(bm), &bm))
+//   throw 3500;
+//   if(bm.bmWidth < cx ||
+//   bm.bmHeight  < cy)
+//   {
+//   spbitmapB->delete_object();
+//   spbitmapB->CreateBitmap(cxDest + 100, cyDest + 100, 1, 32, NULL);
+//   }
+//   }
+//   dibB->get_graphics()->SelectObject(bitmapB);
+//
+//   dibB->get_graphics()->SetStretchBltMode(HALFTONE);
+//   dibB->get_graphics()->StretchBlt(0, 0, cxDest, cyDest, pdcSrc, xSrc, ySrc, cx, cy, SRCCOPY);
+//
+//   int32_t x1 = xDest;
+//   int32_t x2 = xDest + iSize;
+//   int32_t y1;
+//   int32_t y2;
+//   for(int32_t x = 0; x < cxDest; x++)
+//   {
+//   y1 = yDest;
+//   y2 = yDest + iSize;
+//   for(int32_t y = 0; y < cyDest; y++)
+//   {
+//   pdcDst->FillSolidRect(x1, y1, x2, y2, dibB->get_graphics()->GetPixel(x, y));
+//   y1 += iSize;
+//   y2 += iSize;
+//   }
+//   x1 += iSize;
+//   x2 += iSize;
+//   }
+//
+//   return true;*/
+//
+//
+//
+//
+//   if(cx <= 0 || cy <= 0)
+//      return true;
+//
+//   UINT user;
+//   UINT uiStartScanLine;
+//   UINT uiScanLineCount;
+//
+//
+//   memory memstorageA;
+//   memory memstorageB;
+//   memory memstorageC;
+//
+//   rect rectDest;
+//   rectDest.left = xDest;
+//   rectDest.right = xDest + cx;
+//   rectDest.top = yDest;
+//   rectDest.bottom = yDest + cy;
+//
+//   rect rectSrc;
+//   rectSrc.left = xSrc;
+//   rectSrc.right = xSrc + cx;
+//   rectSrc.top = ySrc;
+//   rectSrc.bottom = ySrc + cy;
+//
+//   int32_t iwDest;
+//
+//   BITMAPINFO bmiDest;
+//   BITMAP   bmDest;
+//   int32_t iLimitYDest;
+//
+//   ::draw2d::bitmap_sp bitmapDest(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcDst,
+//            bmDest,
+//            bmiDest,
+//            memstorageA,
+//            bitmapDest,
+//            rectDest,
+//            iwDest,
+//            uiStartScanLine,
+//            uiScanLineCount,
+//            iLimitYDest))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbDst = memstorageA.get_data();
+//
+//
+//   int32_t iwSrc;
+//
+//   BITMAPINFO bmiSrc;
+//   BITMAP   bmSrc;
+//   int32_t iLimitYSrc;
+//
+//   ::draw2d::bitmap_sp bitmapSrc(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcSrc,bmSrc,bmiSrc,
+//            memstorageB,
+//            bitmapSrc,
+//            rectSrc,
+//            iwSrc,
+//            user,
+//            user,
+//            iLimitYSrc))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbSrc = memstorageB.get_data();
+//
+//   memstorageC.allocate((cx + iSize) / iSize * (cy + iSize) / iSize);
+//   //   LPBYTE lpc = memstorageC.get_data();
+//
+//
+//   point ptViewportDest = pdcDst->GetViewportOrg();
+//   point ptViewportSrc = pdcSrc->GetViewportOrg();
+//
+//   int32_t xvpDest = xDest + ptViewportDest.x;
+//   int32_t xvpSrc = xSrc + ptViewportSrc.x;
+//
+//   int32_t iLimitX = cx;
+//
+//   if(bmDest.bmWidth - xvpDest < iLimitX)
+//   {
+//      iLimitX = bmDest.bmWidth - xvpDest;
+//   }
+//   if(bmSrc.bmWidth - xvpSrc < iLimitX)
+//   {
+//      iLimitX = bmSrc.bmWidth - xvpSrc;
+//   }
+//
+//
+//   if(xvpDest < 0)
+//      return false;
+//   if(xvpSrc < 0)
+//      return false;
+//
+//   int32_t iLimitY = MIN(iLimitYDest,iLimitYSrc);
+//
+//   pixelate_24CC(
+//      lpbDst + xvpDest * 3,
+//      0,
+//      0,
+//      iwDest,
+//      iLimitX,
+//      iLimitY,
+//      lpbSrc + xvpSrc * 3,
+//      0,
+//      0,
+//      iwSrc,
+//      iSize);
+//
+//
+//#ifdef WINDOWSEX
+//
+//   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
+//
+//   if(pbmpOld == NULL)
+//   {
+//      ::draw2d::graphics_sp graphicsMem(allocer());
+//      graphicsMem->CreateCompatibleDC(pdcDst);
+//      if(!SetDIBits(
+//               (HDC)graphicsMem->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
+//      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xSrc,ySrc,SRCCOPY))
+//      {
+//         ASSERT(FALSE);
+//      }
+//      graphicsMem->SelectObject(pbmpMemOld);
+//   }
+//   else
+//   {
+//      ::draw2d::bitmap_sp bitmap(get_app());
+//      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
+//      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
+//      if(!SetDIBits(
+//               (HDC)pdcDst->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//      {
+//         pdcDst->SelectObject(bitmapDest);
+//         return false;
+//      }
+//      pdcDst->SelectObject(bitmapDest);
+//   }
+//
+//   return true;
+//
+//#else
+//
+//   throw todo(get_app());
+//
+//#endif
+//
+//}
 
-   /*::draw2d::graphics_sp & dibA->get_graphics()  = pthreadsafedata->m_dcA;
-   ::draw2d::graphics_sp & dibB->get_graphics()  = pthreadsafedata->m_dcA;
-
-   ::draw2d::bitmap & bitmapA  = pthreadsafedata->bitmapA;
-   ::draw2d::bitmap & bitmapB  = pthreadsafedata->bitmapB;
-
-   int32_t cxDest = cx / iSize;
-   int32_t cyDest = cy / iSize;
-
-   if(dibA->get_graphics()->get_os_data() == NULL)
-   {
-   ::draw2d::graphics_sp dcScreen;
-   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
-   dibA->get_graphics()->CreateCompatibleDC(&dcScreen);
-   }
-   if(dibB->get_graphics()->get_os_data() == NULL)
-   {
-   ::draw2d::graphics_sp dcScreen;
-   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
-   dibB->get_graphics()->CreateCompatibleDC(&dcScreen);
-   }
-   if(spbitmapB->m_hObject == NULL)
-   {
-   ::draw2d::graphics_sp dcScreen;
-   spgraphicsScreen->CreateDC("DISPLAY", NULL, NULL, NULL);
-   spbitmapB->CreateBitmap(cxDest + 100, cyDest + 100, 1, 32, NULL);
-
-   }
-   else
-   {
-   BITMAP bm;
-   if(!spbitmapB->GetObject(sizeof(bm), &bm))
-   throw 3500;
-   if(bm.bmWidth < cx ||
-   bm.bmHeight  < cy)
-   {
-   spbitmapB->delete_object();
-   spbitmapB->CreateBitmap(cxDest + 100, cyDest + 100, 1, 32, NULL);
-   }
-   }
-   dibB->get_graphics()->SelectObject(bitmapB);
-
-   dibB->get_graphics()->SetStretchBltMode(HALFTONE);
-   dibB->get_graphics()->StretchBlt(0, 0, cxDest, cyDest, pdcSrc, xSrc, ySrc, cx, cy, SRCCOPY);
-
-   int32_t x1 = xDest;
-   int32_t x2 = xDest + iSize;
-   int32_t y1;
-   int32_t y2;
-   for(int32_t x = 0; x < cxDest; x++)
-   {
-   y1 = yDest;
-   y2 = yDest + iSize;
-   for(int32_t y = 0; y < cyDest; y++)
-   {
-   pdcDst->FillSolidRect(x1, y1, x2, y2, dibB->get_graphics()->GetPixel(x, y));
-   y1 += iSize;
-   y2 += iSize;
-   }
-   x1 += iSize;
-   x2 += iSize;
-   }
-
-   return true;*/
-
-
-
-
-   if(cx <= 0 || cy <= 0)
-      return true;
-
-   UINT user;
-   UINT uiStartScanLine;
-   UINT uiScanLineCount;
-
-
-   memory memstorageA;
-   memory memstorageB;
-   memory memstorageC;
-
-   rect rectDest;
-   rectDest.left = xDest;
-   rectDest.right = xDest + cx;
-   rectDest.top = yDest;
-   rectDest.bottom = yDest + cy;
-
-   rect rectSrc;
-   rectSrc.left = xSrc;
-   rectSrc.right = xSrc + cx;
-   rectSrc.top = ySrc;
-   rectSrc.bottom = ySrc + cy;
-
-   int32_t iwDest;
-
-   BITMAPINFO bmiDest;
-   BITMAP   bmDest;
-   int32_t iLimitYDest;
-
-   ::draw2d::bitmap_sp bitmapDest(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcDst,
-            bmDest,
-            bmiDest,
-            memstorageA,
-            bitmapDest,
-            rectDest,
-            iwDest,
-            uiStartScanLine,
-            uiScanLineCount,
-            iLimitYDest))
-   {
-      return false;
-   }
-
-   LPBYTE lpbDst = memstorageA.get_data();
-
-
-   int32_t iwSrc;
-
-   BITMAPINFO bmiSrc;
-   BITMAP   bmSrc;
-   int32_t iLimitYSrc;
-
-   ::draw2d::bitmap_sp bitmapSrc(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcSrc,bmSrc,bmiSrc,
-            memstorageB,
-            bitmapSrc,
-            rectSrc,
-            iwSrc,
-            user,
-            user,
-            iLimitYSrc))
-   {
-      return false;
-   }
-
-   LPBYTE lpbSrc = memstorageB.get_data();
-
-   memstorageC.allocate((cx + iSize) / iSize * (cy + iSize) / iSize);
-   //   LPBYTE lpc = memstorageC.get_data();
-
-
-   point ptViewportDest = pdcDst->GetViewportOrg();
-   point ptViewportSrc = pdcSrc->GetViewportOrg();
-
-   int32_t xvpDest = xDest + ptViewportDest.x;
-   int32_t xvpSrc = xSrc + ptViewportSrc.x;
-
-   int32_t iLimitX = cx;
-
-   if(bmDest.bmWidth - xvpDest < iLimitX)
-   {
-      iLimitX = bmDest.bmWidth - xvpDest;
-   }
-   if(bmSrc.bmWidth - xvpSrc < iLimitX)
-   {
-      iLimitX = bmSrc.bmWidth - xvpSrc;
-   }
-
-
-   if(xvpDest < 0)
-      return false;
-   if(xvpSrc < 0)
-      return false;
-
-   int32_t iLimitY = MIN(iLimitYDest,iLimitYSrc);
-
-   pixelate_24CC(
-      lpbDst + xvpDest * 3,
-      0,
-      0,
-      iwDest,
-      iLimitX,
-      iLimitY,
-      lpbSrc + xvpSrc * 3,
-      0,
-      0,
-      iwSrc,
-      iSize);
-
-
-#ifdef WINDOWSEX
-
-   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
-
-   if(pbmpOld == NULL)
-   {
-      ::draw2d::graphics_sp graphicsMem(allocer());
-      graphicsMem->CreateCompatibleDC(pdcDst);
-      if(!SetDIBits(
-               (HDC)graphicsMem->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-         throw 6000;
-      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
-      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xSrc,ySrc,SRCCOPY))
-      {
-         ASSERT(FALSE);
-      }
-      graphicsMem->SelectObject(pbmpMemOld);
-   }
-   else
-   {
-      ::draw2d::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
-      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
-      if(!SetDIBits(
-               (HDC)pdcDst->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-      {
-         pdcDst->SelectObject(bitmapDest);
-         return false;
-      }
-      pdcDst->SelectObject(bitmapDest);
-   }
-
-   return true;
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-}
 
 void imaging::pixelate_24CC(
    LPBYTE   lpbDst,
@@ -6795,227 +6803,229 @@ void imaging::pixelate_24CC(
 
 }
 
-bool imaging::alpha_pixelate(
-   ::draw2d::graphics *pdcDst,
-   int32_t xDest,
-   int32_t yDest,
-   int32_t cx,
-   int32_t cy,
-   ::draw2d::graphics * pdcSrc1,
-   int32_t xSrc1,
-   int32_t ySrc1,
-   ::draw2d::graphics * pdcSrc2,
-   int32_t xSrc2,
-   int32_t ySrc2,
-   int32_t iSize,
-   int32_t iAlpha)
-{
-   if(cx <= 0 || cy <= 0)
-      return true;
 
-   memory memstorageA;
-   memory memstorageB;
-   memory memstorageC;
+//bool imaging::alpha_pixelate(
+//   ::draw2d::graphics *pdcDst,
+//   int32_t xDest,
+//   int32_t yDest,
+//   int32_t cx,
+//   int32_t cy,
+//   ::draw2d::graphics * pdcSrc1,
+//   int32_t xSrc1,
+//   int32_t ySrc1,
+//   ::draw2d::graphics * pdcSrc2,
+//   int32_t xSrc2,
+//   int32_t ySrc2,
+//   int32_t iSize,
+//   int32_t iAlpha)
+//{
+//   if(cx <= 0 || cy <= 0)
+//      return true;
+//
+//   memory memstorageA;
+//   memory memstorageB;
+//   memory memstorageC;
+//
+//
+//   UINT user;
+//   UINT uiStartScanLine;
+//   UINT uiScanLineCount;
+//
+//
+//   rect rectDest;
+//   rectDest.left = xDest;
+//   rectDest.right = xDest + cx;
+//   rectDest.top = yDest;
+//   rectDest.bottom = yDest + cy;
+//
+//   rect rectSrc1;
+//   rectSrc1.left = xSrc1;
+//   rectSrc1.right = xSrc1 + cx;
+//   rectSrc1.top = ySrc1;
+//   rectSrc1.bottom = ySrc1 + cy;
+//
+//   rect rectSrc2;
+//   rectSrc2.left = xSrc2;
+//   rectSrc2.right = xSrc2 + cx;
+//   rectSrc2.top = ySrc2;
+//   rectSrc2.bottom = ySrc2 + cy;
+//
+//   int32_t iwDest;
+//
+//   BITMAPINFO bmiDest;
+//   BITMAP   bmDest;
+//   int32_t iLimitYDest;
+//
+//   ::draw2d::bitmap_sp bitmapDest(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcDst,
+//            bmDest,
+//            bmiDest,
+//            memstorageA,
+//            bitmapDest,
+//            rectDest,
+//            iwDest,
+//            uiStartScanLine,
+//            uiScanLineCount,
+//            iLimitYDest))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbDst = memstorageA.get_data();
+//
+//
+//   int32_t iwSrc1;
+//   int32_t iwSrc2;
+//
+//   BITMAPINFO bmiSrc1;
+//   BITMAP   bmSrc1;
+//   int32_t iLimitYSrc1;
+//
+//   ::draw2d::bitmap_sp bitmapSrc1(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcSrc1,bmSrc1,bmiSrc1,
+//            memstorageB,
+//            bitmapSrc1,
+//            rectSrc1,
+//            iwSrc1,
+//            user,
+//            user,
+//            iLimitYSrc1))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbSrc1 = memstorageB.get_data();
+//
+//   BITMAPINFO bmiSrc2;
+//   BITMAP   bmSrc2;
+//   int32_t iLimitYSrc2;
+//
+//   ::draw2d::bitmap_sp bitmapSrc2(get_app());
+//
+//   if(!GetDeviceContext24BitsCC(
+//            pdcSrc2,bmSrc2,bmiSrc2,
+//            memstorageC,
+//            bitmapSrc2,
+//            rectSrc2,
+//            iwSrc2,
+//            user,
+//            user,
+//            iLimitYSrc2))
+//   {
+//      return false;
+//   }
+//
+//   LPBYTE lpbSrc2 = memstorageC.get_data();
+//
+//   point ptViewportDest = pdcDst->GetViewportOrg();
+//   point ptViewportSrc1 = pdcSrc1->GetViewportOrg();
+//   point ptViewportSrc2 = pdcSrc2->GetViewportOrg();
+//
+//   int32_t xvpDest = xDest + ptViewportDest.x;
+//   int32_t xvpSrc1 = xSrc1 + ptViewportSrc1.x;
+//   int32_t xvpSrc2 = xSrc2 + ptViewportSrc2.x;
+//
+//   int32_t iLimitX = cx;
+//
+//   if(bmDest.bmWidth - xvpDest < iLimitX)
+//   {
+//      iLimitX = bmDest.bmWidth - xvpDest;
+//   }
+//   if(bmSrc1.bmWidth - xvpSrc1 < iLimitX)
+//   {
+//      iLimitX = bmSrc1.bmWidth - xvpSrc1;
+//   }
+//   if(bmSrc2.bmWidth - xvpSrc2 < iLimitX)
+//   {
+//      iLimitX = bmSrc2.bmWidth - xvpSrc2;
+//   }
+//
+//
+//   if(xvpDest < 0)
+//      return false;
+//   if(xvpSrc1 < 0)
+//      return false;
+//   if(xvpSrc2 < 0)
+//      return false;
+//
+//   int32_t iLimitY = MIN(MIN(iLimitYDest,iLimitYSrc1),iLimitYSrc2);
+//
+//   alpha_pixelate_24CC(
+//      lpbDst + xvpDest * 3,
+//      0,
+//      0,
+//      iwDest,
+//      iLimitX,
+//      iLimitY,
+//      lpbSrc1 + xvpSrc1 * 3,
+//      0,
+//      0,
+//      iwSrc1,
+//      lpbSrc2 + xvpSrc2 * 3,
+//      0,
+//      0,
+//      iwSrc2,
+//      iSize,
+//      iAlpha);
+//
+//#ifdef WINDOWSEX
+//
+//   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
+//
+//   if(pbmpOld == NULL)
+//   {
+//      ::draw2d::graphics_sp graphicsMem(allocer());
+//      graphicsMem->CreateCompatibleDC(pdcDst);
+//      if(!SetDIBits(
+//               (HDC)graphicsMem->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//         throw 6000;
+//      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
+//      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xDest,yDest,SRCCOPY))
+//      {
+//         ASSERT(FALSE);
+//      }
+//      graphicsMem->SelectObject(pbmpMemOld);
+//   }
+//   else
+//   {
+//      ::draw2d::bitmap_sp bitmap(get_app());
+//      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
+//      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
+//      if(!SetDIBits(
+//               (HDC)pdcDst->get_os_data(),
+//               (HBITMAP)bitmapDest->get_os_data(),
+//               uiStartScanLine,
+//               uiScanLineCount,
+//               lpbDst,
+//               &bmiDest,
+//               DIB_RGB_COLORS))
+//      {
+//         pdcDst->SelectObject(bitmapDest);
+//         return false;
+//      }
+//      pdcDst->SelectObject(bitmapDest);
+//   }
+//
+//   return true;
+//
+//#else
+//
+//   throw todo(get_app());
+//
+//#endif
+//
+//}
 
-
-   UINT user;
-   UINT uiStartScanLine;
-   UINT uiScanLineCount;
-
-
-   rect rectDest;
-   rectDest.left = xDest;
-   rectDest.right = xDest + cx;
-   rectDest.top = yDest;
-   rectDest.bottom = yDest + cy;
-
-   rect rectSrc1;
-   rectSrc1.left = xSrc1;
-   rectSrc1.right = xSrc1 + cx;
-   rectSrc1.top = ySrc1;
-   rectSrc1.bottom = ySrc1 + cy;
-
-   rect rectSrc2;
-   rectSrc2.left = xSrc2;
-   rectSrc2.right = xSrc2 + cx;
-   rectSrc2.top = ySrc2;
-   rectSrc2.bottom = ySrc2 + cy;
-
-   int32_t iwDest;
-
-   BITMAPINFO bmiDest;
-   BITMAP   bmDest;
-   int32_t iLimitYDest;
-
-   ::draw2d::bitmap_sp bitmapDest(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcDst,
-            bmDest,
-            bmiDest,
-            memstorageA,
-            bitmapDest,
-            rectDest,
-            iwDest,
-            uiStartScanLine,
-            uiScanLineCount,
-            iLimitYDest))
-   {
-      return false;
-   }
-
-   LPBYTE lpbDst = memstorageA.get_data();
-
-
-   int32_t iwSrc1;
-   int32_t iwSrc2;
-
-   BITMAPINFO bmiSrc1;
-   BITMAP   bmSrc1;
-   int32_t iLimitYSrc1;
-
-   ::draw2d::bitmap_sp bitmapSrc1(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcSrc1,bmSrc1,bmiSrc1,
-            memstorageB,
-            bitmapSrc1,
-            rectSrc1,
-            iwSrc1,
-            user,
-            user,
-            iLimitYSrc1))
-   {
-      return false;
-   }
-
-   LPBYTE lpbSrc1 = memstorageB.get_data();
-
-   BITMAPINFO bmiSrc2;
-   BITMAP   bmSrc2;
-   int32_t iLimitYSrc2;
-
-   ::draw2d::bitmap_sp bitmapSrc2(get_app());
-
-   if(!GetDeviceContext24BitsCC(
-            pdcSrc2,bmSrc2,bmiSrc2,
-            memstorageC,
-            bitmapSrc2,
-            rectSrc2,
-            iwSrc2,
-            user,
-            user,
-            iLimitYSrc2))
-   {
-      return false;
-   }
-
-   LPBYTE lpbSrc2 = memstorageC.get_data();
-
-   point ptViewportDest = pdcDst->GetViewportOrg();
-   point ptViewportSrc1 = pdcSrc1->GetViewportOrg();
-   point ptViewportSrc2 = pdcSrc2->GetViewportOrg();
-
-   int32_t xvpDest = xDest + ptViewportDest.x;
-   int32_t xvpSrc1 = xSrc1 + ptViewportSrc1.x;
-   int32_t xvpSrc2 = xSrc2 + ptViewportSrc2.x;
-
-   int32_t iLimitX = cx;
-
-   if(bmDest.bmWidth - xvpDest < iLimitX)
-   {
-      iLimitX = bmDest.bmWidth - xvpDest;
-   }
-   if(bmSrc1.bmWidth - xvpSrc1 < iLimitX)
-   {
-      iLimitX = bmSrc1.bmWidth - xvpSrc1;
-   }
-   if(bmSrc2.bmWidth - xvpSrc2 < iLimitX)
-   {
-      iLimitX = bmSrc2.bmWidth - xvpSrc2;
-   }
-
-
-   if(xvpDest < 0)
-      return false;
-   if(xvpSrc1 < 0)
-      return false;
-   if(xvpSrc2 < 0)
-      return false;
-
-   int32_t iLimitY = MIN(MIN(iLimitYDest,iLimitYSrc1),iLimitYSrc2);
-
-   alpha_pixelate_24CC(
-      lpbDst + xvpDest * 3,
-      0,
-      0,
-      iwDest,
-      iLimitX,
-      iLimitY,
-      lpbSrc1 + xvpSrc1 * 3,
-      0,
-      0,
-      iwSrc1,
-      lpbSrc2 + xvpSrc2 * 3,
-      0,
-      0,
-      iwSrc2,
-      iSize,
-      iAlpha);
-
-#ifdef WINDOWSEX
-
-   ::draw2d::bitmap * pbmpOld = pdcDst->get_current_bitmap();
-
-   if(pbmpOld == NULL)
-   {
-      ::draw2d::graphics_sp graphicsMem(allocer());
-      graphicsMem->CreateCompatibleDC(pdcDst);
-      if(!SetDIBits(
-               (HDC)graphicsMem->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-         throw 6000;
-      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
-      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xDest,yDest,SRCCOPY))
-      {
-         ASSERT(FALSE);
-      }
-      graphicsMem->SelectObject(pbmpMemOld);
-   }
-   else
-   {
-      ::draw2d::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdcDst,1,1);
-      //      ::draw2d::bitmap * pbitmap = pdcDst->SelectObject(bitmap);
-      if(!SetDIBits(
-               (HDC)pdcDst->get_os_data(),
-               (HBITMAP)bitmapDest->get_os_data(),
-               uiStartScanLine,
-               uiScanLineCount,
-               lpbDst,
-               &bmiDest,
-               DIB_RGB_COLORS))
-      {
-         pdcDst->SelectObject(bitmapDest);
-         return false;
-      }
-      pdcDst->SelectObject(bitmapDest);
-   }
-
-   return true;
-
-#else
-
-   throw todo(get_app());
-
-#endif
-
-}
 
 void imaging::alpha_pixelate_24CC(
    LPBYTE lpbDst,

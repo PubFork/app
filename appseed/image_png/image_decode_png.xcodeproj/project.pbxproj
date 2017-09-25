@@ -663,12 +663,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/all-mac-exvrklrokleuokawrbpzmvyzamwr/Build/Products/Debug",
-					/ios/app/appseed/aura/build/Debug,
-					/ios/app/axis/freeimage/build/Debug,
-				);
 				PRODUCT_NAME = image_decode_png;
 			};
 			name = Debug;
@@ -678,12 +672,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/all-mac-exvrklrokleuokawrbpzmvyzamwr/Build/Products/Debug",
-					/ios/app/appseed/aura/build/Debug,
-					/ios/app/axis/freeimage/build/Debug,
-				);
 				PRODUCT_NAME = image_decode_png;
 			};
 			name = Release;

@@ -74,9 +74,7 @@ namespace visual
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      rect rectClient = m_rectClient;
-
-
+      //rect rectClient = m_rectClient;
 
       for (int i = 0; i < m_itemptra.get_count(); i++)
       {
@@ -194,10 +192,7 @@ namespace visual
 
       //int nextx;
 
-      index i = 0;
       index iCount = m_itema.get_count();
-      index iScan = 1;
-      index iOrder = 0;
 
       m_itemptra.set_size(iCount);
 

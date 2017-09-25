@@ -1268,7 +1268,7 @@ wait_result thread::wait(const duration & duration)
       else
       {
 
-         DWORD dwDelay = duration.total_milliseconds();
+         DWORD dwDelay = (DWORD) duration.total_milliseconds();
 
          DWORD dwStep = MIN(MAX(dwDelay / 10, 1), 100);
 
@@ -1958,7 +1958,7 @@ bool thread::post_object(UINT message, WPARAM wParam, lparam lParam)
    if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
-      if (lParam != NULL)
+      if (lParam != 0)
       {
 
          sp(object) spo((lparam)lParam);
@@ -2009,7 +2009,7 @@ bool thread::send_object(UINT message, WPARAM wParam, lparam lParam, ::duration 
    if (m_hthread == (HTHREAD)NULL || !thread_get_run())
    {
 
-      if (lParam != NULL)
+      if (lParam != 0)
       {
 
          sp(object) spo((lparam)lParam);
@@ -2374,7 +2374,7 @@ int32_t thread::thread_exit()
 thread::operator HTHREAD() const
 {
 
-   return this == NULL ? (HTHREAD) NULL : m_hthread;
+   return is_null(*this) ? (HTHREAD) NULL : m_hthread;
 
 }
 

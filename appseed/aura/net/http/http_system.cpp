@@ -48,46 +48,46 @@ namespace http
    {
 
       return;
-      if(i == 0)
-      {
-      }
-      else if(i == 1)
-      {
-         // telmico: no proxy
-         string str = Application.file().as_string(System.dir().appdata() / "machine/proxy.xml");
-         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
-         {
-            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().element()/ "proxy.xml", false);
-         }
-         if(Application.file().exists(System.dir().appdata()/ "proxy.xml"))
-         {
-            try
-            {
-               Application.file().del(System.dir().appdata()/ "proxy.xml");
-            }
-            catch(...)
-            {
-            }
-         }
-      }
-      else if(i == 2)
-      {
-         // telmico: original proxy configuration
-         if(Application.file().exists(System.dir().appdata()/ "proxy_original.xml"))
-         {
-            Application.file().copy(System.dir().appdata()/ "proxy.xml", System.dir().appdata()/"proxy_original.xml", false);
-         }
-      }
-      else
-      {
-         // telmico: simple default proxy configuration : hostname=>proxy - try etc/hosts port=>80  - assume HTTP proxy
-         string str = Application.file().as_string(System.dir().appdata()/"proxy.xml");
-         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
-         {
-            Application.file().copy(System.dir().appdata()/"proxy_original.xml", System.dir().appdata()/"proxy.xml", false);
-         }
-         Application.file().put_contents(System.dir().appdata()/"proxy.xml", "proxy");
-      }
+//      if(i == 0)
+//      {
+//      }
+//      else if(i == 1)
+//      {
+//         // telmico: no proxy
+//         string str = Application.file().as_string(System.dir().appdata() / "machine/proxy.xml");
+//         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
+//         {
+//            Application.file().copy(System.dir().appdata()/ "proxy_original.xml", System.dir().element()/ "proxy.xml", false);
+//         }
+//         if(Application.file().exists(System.dir().appdata()/ "proxy.xml"))
+//         {
+//            try
+//            {
+//               Application.file().del(System.dir().appdata()/ "proxy.xml");
+//            }
+//            catch(...)
+//            {
+//            }
+//         }
+//      }
+//      else if(i == 2)
+//      {
+//         // telmico: original proxy configuration
+//         if(Application.file().exists(System.dir().appdata()/ "proxy_original.xml"))
+//         {
+//            Application.file().copy(System.dir().appdata()/ "proxy.xml", System.dir().appdata()/"proxy_original.xml", false);
+//         }
+//      }
+//      else
+//      {
+//         // telmico: simple default proxy configuration : hostname=>proxy - try etc/hosts port=>80  - assume HTTP proxy
+//         string str = Application.file().as_string(System.dir().appdata()/"proxy.xml");
+//         if(str.has_char() && str.find("<") >= 0 && str.find(">") > 0)
+//         {
+//            Application.file().copy(System.dir().appdata()/"proxy_original.xml", System.dir().appdata()/"proxy.xml", false);
+//         }
+//         Application.file().put_contents(System.dir().appdata()/"proxy.xml", "proxy");
+//      }
    }
 
    void system::defer_auto_initialize_proxy_configuration()
@@ -463,55 +463,55 @@ namespace http
       }
 
 
-      if(!bOk)
-      {
-
-         //bool bAutoDetect = System.os().connection_settings_get_auto_detect();
-
-         //if(bAutoDetect)
-         //{
-
-         //   TRACE("proxy auto_detect true");
-
-         //   string strUrl = System.os().connection_settings_get_auto_config_url();
-
-         //   if(strUrl.has_char())
-         //   {
-
-         //      TRACE("get_auto_config_url : %s",strUrl);
-
-         //      if(try_pac_script(strUrl,pszUrl,pproxy))
-         //         return;
-
-         //   }
-
-         //}
-         //else
-         //{
-
-         //   TRACE("proxy auto_detect false");
-
-         //   string strUrl = System.os().connection_settings_get_auto_config_url();
-
-         //   if(strUrl.has_char())
-         //   {
-
-         //      TRACE("get_auto_config_url : %s",strUrl);
-
-         //      if(try_pac_script(strUrl,pszUrl,pproxy))
-         //         return;
-
-         //   }
-
-         //   if(try_pac_script("http://wpad/wpad.dat",pszUrl,pproxy))
-         //      return;
-
-         //}
-
-
-         pproxy->m_bDirect = true;
-
-      }
+//      if(!bOk)
+//      {
+//
+//         //bool bAutoDetect = System.os().connection_settings_get_auto_detect();
+//
+//         //if(bAutoDetect)
+//         //{
+//
+//         //   TRACE("proxy auto_detect true");
+//
+//         //   string strUrl = System.os().connection_settings_get_auto_config_url();
+//
+//         //   if(strUrl.has_char())
+//         //   {
+//
+//         //      TRACE("get_auto_config_url : %s",strUrl);
+//
+//         //      if(try_pac_script(strUrl,pszUrl,pproxy))
+//         //         return;
+//
+//         //   }
+//
+//         //}
+//         //else
+//         //{
+//
+//         //   TRACE("proxy auto_detect false");
+//
+//         //   string strUrl = System.os().connection_settings_get_auto_config_url();
+//
+//         //   if(strUrl.has_char())
+//         //   {
+//
+//         //      TRACE("get_auto_config_url : %s",strUrl);
+//
+//         //      if(try_pac_script(strUrl,pszUrl,pproxy))
+//         //         return;
+//
+//         //   }
+//
+//         //   if(try_pac_script("http://wpad/wpad.dat",pszUrl,pproxy))
+//         //      return;
+//
+//         //}
+//
+//
+//         pproxy->m_bDirect = true;
+//
+//      }
 
 
 
@@ -1392,12 +1392,12 @@ retry_session:
                   if_then(set.has_property("optional_ca2_login"), !(bool)set["optional_ca2_login"]))
                {
                
-                  if (0)
-                  {
-
-                     strSessId += "a";
-
-                  }
+//                  if (0)
+//                  {
+//
+//                     strSessId += "a";
+//
+//                  }
 
                   System.url().string_set(strUrl, "sessid", strSessId);
                   string strHost;

@@ -507,3 +507,10 @@ WINBOOL DestroyWindow(oswindow w)
 
 
 
+
+bool oswindow_data::is_null()
+{
+   
+   return ::is_null(this);
+   
+}

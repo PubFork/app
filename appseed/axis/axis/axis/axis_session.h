@@ -80,22 +80,22 @@ namespace axis
 
       //application_ptra & appptra();
 
-      virtual bool is_session();
+      virtual bool is_session() override;
 
 
-      void construct(::aura::application * papp, int iPhase);
+      void construct(::aura::application * papp, int iPhase) override;
 
-      virtual bool process_initialize();
+      virtual bool process_initialize() override;
 
-      virtual bool initialize1();
+      virtual bool initialize1() override;
 
-      virtual bool initialize2();
+      virtual bool initialize2() override;
 
       virtual bool initialize_application() override;
 
-      virtual bool initialize();
+      virtual bool initialize() override;
 
-      virtual bool finalize();
+      virtual bool finalize() override;
 
       virtual int32_t exit_application() override;
 
@@ -104,13 +104,13 @@ namespace axis
       //inline ::sockets::sockets &               sockets()      { return *m_psockets; }
 
 
-      virtual bool  get_window_minimum_size(LPSIZE lpsize);
+      virtual bool  get_window_minimum_size(LPSIZE lpsize) override;
 
 
       //virtual void  get_cursor_pos(LPPOINT lppoint);
 
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
       
 
       //virtual string matter_as_string(const char * pszMatter,const char * pszMatter2);
@@ -123,7 +123,7 @@ namespace axis
       // time in milliseconds that a pressing is considered a double click
       virtual DWORD get_Long_PhRESSing_time();
 
-      virtual void defer_initialize_user_presence();
+      virtual void defer_initialize_user_presence() override;
 
 
       virtual string fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive = NULL) override;
@@ -158,7 +158,7 @@ namespace axis
 
 
 
-      virtual COLORREF get_default_color(uint64_t ui);
+      virtual COLORREF get_default_color(uint64_t ui) override;
 
 
 
@@ -216,7 +216,7 @@ namespace axis
       //virtual void on_request(::create * pcreate);
 
 
-      virtual void on_user_login(::fontopus::user * puser);
+      virtual void on_user_login(::fontopus::user * puser) override;
 
       ::user::keyboard & keyboard();
 
@@ -227,7 +227,7 @@ namespace axis
       virtual ::user::elemental * get_keyboard_focus();
       virtual void set_keyboard_focus(::user::elemental * pkeyboardfocus);
 
-      virtual ::user::primitive * get_active_ui();
+      virtual ::user::primitive * get_active_ui() override;
       virtual ::user::primitive * get_focus_ui();
 
       virtual void on_finally_focus_set(::user::elemental * pelementalFocus);

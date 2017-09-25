@@ -173,9 +173,15 @@ namespace user
 
       frame_window();
       virtual ~frame_window();
+      
+      
+      void common_construct();
 
-      void CommonConstruct();
 
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dc) const override;
+      
+      
 
       virtual void OnInitialFrameUpdate(bool bMakeVisible);
 
@@ -188,15 +194,15 @@ namespace user
       //virtual ::user::OleFrameHook * GetNotifyHook();
       virtual void NotifyFloatingWindows(uint32_t dwFlags);
 
-      virtual string get_window_default_matter();
-      virtual ::user::interaction::e_type get_window_type();
+      virtual string get_window_default_matter() override;
+      virtual ::user::interaction::e_type get_window_type() override;
 
 
       virtual void on_simple_command(::message::simple_command * psimplecommand) override;
       virtual void on_command(::user::command * pcommand) override;
       //virtual void _000OnDraw(::draw2d::graphics * pgraphics);
       //virtual void _001OnDraw(::draw2d::graphics * pgraphics);
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       DECL_GEN_SIGNAL(_guserbaseOnInitialUpdate);
       DECL_GEN_SIGNAL(guserbaseOnInitialUpdate);
@@ -206,8 +212,6 @@ namespace user
       virtual void defer_synch_layered();
       virtual bool calc_layered();
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dc) const;
 
 
 
@@ -221,7 +225,7 @@ namespace user
          ::user::interaction * pParentWnd = NULL,
          ::create * pcreate = NULL);
 
-      virtual bool ShowWindow(int32_t nCmdShow);
+      virtual bool ShowWindow(int32_t nCmdShow) override;
 
 
       // Attributes
@@ -244,7 +248,7 @@ namespace user
       bool IsTracking() const;
 
       // Operations
-      virtual void on_layout();
+      virtual void on_layout() override;
       virtual void ActivateFrame(int32_t nCmdShow = -1);
       virtual void InitialUpdateFrame(::user::document * pDoc, bool bMakeVisible);
       virtual void InitialFramePosition(bool bForceRestore = false);
@@ -280,7 +284,7 @@ namespace user
       virtual void on_update_frame_title(bool bAddToTitle);
       virtual void OnUpdateFrameMenu(HMENU hMenuAlt);
       virtual HACCEL GetDefaultAccelerator();
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
       virtual void DelayUpdateFrameMenu(HMENU hMenuAlt);
       void DelayUpdateFrameTitle();
@@ -288,15 +292,15 @@ namespace user
 
       // for Shift+F1 help support
       bool CanEnterHelpMode();
-      virtual void ExitHelpMode();
+      virtual void ExitHelpMode() override;
 
 
       void UpdateFrameTitleForDocument(const char * lpszDocName);
-      virtual bool pre_create_window(::user::create_struct& cs);
+      virtual bool pre_create_window(::user::create_struct& cs) override;
       //virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
-      virtual void PostNcDestroy();   // default to delete this.
+      virtual void PostNcDestroy() override;   // default to delete this.
       int32_t OnCreateHelper(::user::create_struct * lpcs, ::create * pcreate);
-      void BringToTop(int32_t nCmdShow);
+      void BringToTop(int32_t nCmdShow) override;
       // bring interaction_impl to top for SW_ commands which affect z-order
 
       // implementation helpers for Shift+F1 help mode
@@ -351,10 +355,10 @@ namespace user
 
 
 
-      virtual void _000OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
 
       sp(::user::interaction) WindowDataGetWnd();
@@ -373,13 +377,13 @@ namespace user
       void data_on_after_change(::message::message * pobj);
 
 
-      virtual bool _001HasCommandHandler(::user::command * pcommand);
+      virtual bool _001HasCommandHandler(::user::command * pcommand) override;
 
 
-      virtual bool get_window_minimum_size(::size & sizeMin);
+      virtual bool get_window_minimum_size(::size & sizeMin) override;
 
 
-      virtual ::user::style * userstyle();
+      virtual ::user::style * userstyle() override;
 
 
    };

@@ -563,7 +563,7 @@ namespace visual
 
       };
 
-      bool bRet = emboss_pred(
+      emboss_pred(
          pgraphics,
          lpcrect,
          pred,

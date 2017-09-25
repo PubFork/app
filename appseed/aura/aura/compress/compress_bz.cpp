@@ -58,8 +58,7 @@ bool compress_bz::transfer(::file::ostream & ostreamBzFileCompressed, ::file::is
    int32_t                    m_CurrentBufferSize;
    bz_stream                  zstream;
    int32_t                    m_z_err;   /* error code for last stream operation */
-//   memory_size_t              n, n2, ret;
-   memory_size_t              ret;
+   int_ptr                    ret;
 
    ZERO(zstream);
 

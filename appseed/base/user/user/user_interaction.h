@@ -372,7 +372,7 @@ namespace user
          virtual void track_mouse_leave() override;
 
          // dialog support
-         virtual void update_dialog_controls(command_target * ptarget);
+         virtual void update_dialog_controls(command_target * ptarget) override;
          virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
          virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
          virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
@@ -571,7 +571,7 @@ namespace user
          virtual void get_window_text(string & rString) override;
          virtual strsize get_window_text_length() override;
 
-         virtual void _001SetText(const string & str, ::action::context actioncontext);
+         virtual void _001SetText(const string & str, ::action::context actioncontext) override;
 
          virtual void install_message_routing(::message::sender * pinterface) override;
          virtual bool IsWindowVisible() override;
@@ -990,14 +990,14 @@ namespace user
 
          inline bool has_redraw();
 
-         virtual void on_after_graphical_update();
+         virtual void on_after_graphical_update() override;
 
 
          virtual void _001OnDeiconify(::user::e_appearance eappearance);
 
          virtual void on_setting_changed(::aura::e_setting esetting);
 
-         virtual bool is_this_visible();
+         virtual bool is_this_visible() override;
 
          virtual bool _001OnClick(uint_ptr nFlag, point point);
          virtual bool _001OnRightClick(uint_ptr nFlag, point point);

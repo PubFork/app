@@ -24,7 +24,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
    pointer->m_dib->map();
 
-   COLORREF crBack = 0;
+   //COLORREF crBack = 0;
 
    if (uFrameIndex <= 0 && transparentIndex >= 0)
    {
@@ -328,16 +328,16 @@ bool gif_draw_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
          COLORREF cr = cra[iIndex];
 
-         byte bA = argb_get_a_value(cr);
+         //byte bA = argb_get_a_value(cr);
          
 //#if defined(__APPLE__) || (defined(ANDROID) && defined(__arm__))
 //#if defined(__APPLE__) || defined(ANDROID)
 // ANDROID -> // LITTLE_LIT_LIGHT_LITE_LITLE_ENDIANS!!!!!!!!!!
 #if defined(__APPLE__) || defined(ANDROID)
          
-         byte bR = argb_get_r_value(cr);
-         byte bG = argb_get_g_value(cr);
-         byte bB = argb_get_b_value(cr);
+         //byte bR = argb_get_r_value(cr);
+         //byte bG = argb_get_g_value(cr);
+         //byte bB = argb_get_b_value(cr);
 
          //pointer->m_dib->m_pcolorref[y*w + x] = ARGB(bA, bB, bG, bR);
 

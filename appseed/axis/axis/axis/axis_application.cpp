@@ -2881,7 +2881,11 @@ namespace axis
    void application::process_message_filter(int32_t code,::message::message * pobj)
    {
 
-      SCAST_PTR(::message::base,pbase,pobj);
+      //SCAST_PTR(::message::base,pbase,pobj);
+      
+      UNREFERENCED_PARAMETER(code);
+      
+      UNREFERENCED_PARAMETER(pobj);
 
 
    }
@@ -3950,7 +3954,7 @@ namespace axis
          if(pszPath == NULL)
          {
 
-            if(&Session.keyboard().on_layout() != NULL)
+            if(is_set(Session.keyboard().on_layout()))
             {
 
                //            if(Session.fontopus()->m_puser != NULL

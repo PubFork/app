@@ -561,7 +561,7 @@ namespace visual
 
       }
 
-      bool bOk = true;
+      //bool bOk = true;
 
 
       switch (m_sparray->element_at(m_sparray->m_iLastFrame)->m_edisposal)
@@ -576,7 +576,7 @@ namespace visual
          // Clear the area covered by the current raw frame with background color
          m_sparray->m_dibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
          COLORREF crBack = m_sparray->m_crBack;
-         byte bAlpha = argb_get_a_value(crBack);
+         //byte bAlpha = argb_get_a_value(crBack);
 
          m_sparray->m_dibCompose->get_graphics()->FillSolidRect(m_sparray->element_at(m_sparray->m_iLastFrame)->m_rect, crBack);
       }

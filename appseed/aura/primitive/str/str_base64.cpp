@@ -202,11 +202,17 @@ namespace str
             }
             if(dtable[uch]&0x80)
             {
+               
                string str;
+               
                str.Format("Illegal character '%ca' in input spfile->\n", uch);
+               
                throw io_exception(get_app(), str);
-               i--;
-               continue;
+               
+//               i--;
+//               
+//               continue;
+               
             }
             a[i]= (uchar) uch;
             b[i]= (uchar) dtable[uch];

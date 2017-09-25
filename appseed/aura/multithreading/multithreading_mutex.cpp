@@ -719,11 +719,11 @@ wait_result mutex::wait(const duration & duration)
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
-
-      ASSERT(iError == 0);
-
-      return wait_result(wait_result::Failure);
+//      int iError = pthread_mutex_unlock(&m_mutex);
+//
+//      ASSERT(iError == 0);
+//
+//      return wait_result(wait_result::Failure);
 
    }
    else
@@ -1061,11 +1061,11 @@ bool mutex::lock()
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
-
-      ASSERT(iError == 0);
-
-      return false;
+//      int iError = pthread_mutex_unlock(&m_mutex);
+//
+//      ASSERT(iError == 0);
+//
+//      return false;
 
    }
    else

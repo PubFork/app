@@ -24,13 +24,13 @@ namespace user
       box();
       virtual ~box();
 
-      void install_message_routing(::message::sender * pinterface);
+      void install_message_routing(::message::sender * pinterface) override;
 
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnSize);
       DECL_GEN_SIGNAL(_001OnShowWindow);
 
-      virtual void _001WindowRestore();
+      virtual void _001WindowRestore() override;
 
       virtual string calc_display();
       virtual bool does_display_match();
@@ -53,7 +53,7 @@ namespace user
       virtual bool on_before_set_parent(::user::interaction * pinterface) override;
 
 
-      virtual string calc_data_id();
+      virtual string calc_data_id() override;
 
 
    };

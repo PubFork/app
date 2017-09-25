@@ -1193,7 +1193,7 @@ namespace macos
          if (pbase->m_id == WM_LBUTTONDOWN)
          {
 
-            function_call(this);
+            output_debug_string("\nWM_LBUTTONDOWN");
 
          }
 

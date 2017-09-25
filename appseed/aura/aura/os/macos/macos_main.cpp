@@ -124,7 +124,7 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
          
          string str = stra[i];
          
-         int iFindColon = str.find(':');
+         strsize iFindColon = str.find(':');
          
          if(iFindColon == 0)
          {

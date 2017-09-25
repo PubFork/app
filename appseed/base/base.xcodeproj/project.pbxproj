@@ -958,15 +958,15 @@
 			children = (
 				9A9D7B6C1F5D66FB009EC103 /* macos_graphics.cpp */,
 				9A9D7B6D1F5D66FB009EC103 /* macos_simple_app.cpp */,
-				9A9D7B6F1F5D66FB009EC103 /* macos_windowing.cpp */,
 				9A9D7B701F5D66FB009EC103 /* macos.cpp */,
 				07D968B91B4C65FD004A3D2A /* macos_base_user_mm.mm */,
 				07D968BA1B4C65FD004A3D2A /* macos_cross_gdi.mm */,
 				9A9D7B6E1F5D66FB009EC103 /* macos_window_impl.h */,
-				07D966EE1B4C621C004A3D2A /* macos_windowing.h */,
 				07A36E621B25D18E00E4F888 /* macos.h */,
 				9ACE46C21D1FE1D700A1E0AD /* macos_c.h */,
+				07D966EE1B4C621C004A3D2A /* macos_windowing.h */,
 				9ACE46C51D1FE24C00A1E0AD /* macos_windowing_c.h */,
+				9A9D7B6F1F5D66FB009EC103 /* macos_windowing.cpp */,
 			);
 			path = macos;
 			sourceTree = "<group>";

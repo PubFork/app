@@ -269,20 +269,6 @@ namespace file
    #endif*/
 
 
-   /*void throw_file_exception(int32_t cause, LONG lOsError,
-   //   const char * lpszFileName /* == NULL */
-   /*{
-   #ifdef DEBUG
-      const char * lpsz;
-      if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
-         lpsz = rgszFileExceptionCause[cause];
-      else
-         lpsz = szUnknown;
-      TRACE3("file exception: %hs, file %W, App error information = %ld.\n",
-         lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
-   #endif
-      THROW(new file_exception(cause, lOsError, lpszFileName));
-   }*/
 
    /* Error Codes */
 

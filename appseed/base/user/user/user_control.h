@@ -36,7 +36,7 @@ namespace user
       virtual ~control();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
       /// if you (developer) don't know how to create a control,
       /// you should be able (control developer pay attention now),
@@ -49,7 +49,7 @@ namespace user
       ::user::interaction_base * _003GetCustomMessageWnd();
 
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
 
@@ -65,7 +65,7 @@ namespace user
       virtual form_window * get_form();
 
       //virtual form_list * get_form_list();
-      virtual bool _001IsPointInside(point64 pt);
+      virtual bool _001IsPointInside(point64 pt) override;
 
       control null() { return control(); }
       bool Validate(string & str);
@@ -79,8 +79,8 @@ namespace user
 
       using ::user::interaction::GetClientRect;
       using ::user::interaction::GetWindowRect;
-      virtual bool GetClientRect(LPRECT lprect);
-      virtual bool GetWindowRect(LPRECT lprect);
+      virtual bool GetClientRect(LPRECT lprect) override;
+      virtual bool GetWindowRect(LPRECT lprect) override;
 
 
       bool operator == (const class ::user::control_descriptor & descriptor) const;
@@ -93,21 +93,21 @@ namespace user
 
       virtual void BaseControlExOnMouseMove(UINT nFlags, point point);
 
-      virtual index hit_test(point point, e_element & eelement);
+      virtual index hit_test(point point, e_element & eelement) override;
 
       DECL_GEN_SIGNAL(_001OnMouseMove);
       DECL_GEN_SIGNAL(_001OnMouseLeave);
       DECL_GEN_SIGNAL(_001OnKeyDown);
 
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 
       virtual bool simple_process_system_message(::message::message * pobj, ::user::e_event eevent);
 
       //virtual void walk_pre_translate_tree(::message::message * pobj,sp(::user::interaction) puiStop);
 
-      virtual bool keyboard_focus_OnSetFocus();
-      virtual bool keyboard_focus_OnKillFocus();
+      virtual bool keyboard_focus_OnSetFocus() override;
+      virtual bool keyboard_focus_OnKillFocus() override;
 
    };
 

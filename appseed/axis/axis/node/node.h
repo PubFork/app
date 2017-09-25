@@ -5,6 +5,14 @@
 
 #include "windows/windows.h"
 
+#elif defined(APPLE_IOS)
+
+#include "ios/ios.h"
+
+#elif defined(MACOS)
+
+#include "macos/macos.h"
+
 #endif
 
 

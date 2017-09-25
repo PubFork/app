@@ -181,36 +181,19 @@
 		9A9367B61D26C84200ED7535 /* fs_ifs_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B41D26C84200ED7535 /* fs_ifs_file.h */; };
 		9A9367B71D26C84200ED7535 /* fs_remote_native_fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B51D26C84200ED7535 /* fs_remote_native_fs.h */; };
 		9A9367B91D26C87900ED7535 /* fs_remote_native_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B81D26C87900ED7535 /* fs_remote_native_file.h */; };
-		9A9577CE1F6212AD00623508 /* ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A31F6212AD00623508 /* ios.cpp */; };
 		9A9577CF1F6212AD00623508 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577A41F6212AD00623508 /* ios.h */; };
-		9A9577D01F6212AD00623508 /* ios_axis_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A51F6212AD00623508 /* ios_axis_dir.cpp */; };
 		9A9577D11F6212AD00623508 /* ios_axis_dir.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577A61F6212AD00623508 /* ios_axis_dir.h */; };
-		9A9577D21F6212AD00623508 /* ios_axis_file_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A71F6212AD00623508 /* ios_axis_file_system.cpp */; };
 		9A9577D31F6212AD00623508 /* ios_axis_file_system.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577A81F6212AD00623508 /* ios_axis_file_system.h */; };
-		9A9577D41F6212AD00623508 /* ios_copydesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A91F6212AD00623508 /* ios_copydesk.cpp */; };
 		9A9577D51F6212AD00623508 /* ios_copydesk.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577AA1F6212AD00623508 /* ios_copydesk.h */; };
-		9A9577D61F6212AD00623508 /* ios_crypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AB1F6212AD00623508 /* ios_crypto.cpp */; };
 		9A9577D71F6212AD00623508 /* ios_crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577AC1F6212AD00623508 /* ios_crypto.h */; };
-		9A9577D81F6212AD00623508 /* ios_dumpinit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AD1F6212AD00623508 /* ios_dumpinit.cpp */; };
-		9A9577D91F6212AD00623508 /* ios_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AE1F6212AD00623508 /* ios_exception.cpp */; };
-		9A9577DA1F6212AD00623508 /* ios_factory_exchange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AF1F6212AD00623508 /* ios_factory_exchange.cpp */; };
 		9A9577DB1F6212AD00623508 /* ios_factory_exchange.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577B01F6212AD00623508 /* ios_factory_exchange.h */; };
-		9A9577DC1F6212AD00623508 /* ios_file_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B11F6212AD00623508 /* ios_file_set.cpp */; };
 		9A9577DE1F6212AD00623508 /* ios_implementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577B31F6212AD00623508 /* ios_implementation.h */; };
 		9A9577DF1F6212AD00623508 /* ios_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577B41F6212AD00623508 /* ios_internal.h */; };
-		9A9577E01F6212AD00623508 /* ios_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B51F6212AD00623508 /* ios_ios.cpp */; };
-		9A9577E11F6212AD00623508 /* ios_ip_enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B61F6212AD00623508 /* ios_ip_enum.cpp */; };
-		9A9577E21F6212AD00623508 /* ios_ip_enum.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577B71F6212AD00623508 /* ios_ip_enum.h */; };
 		9A9577E31F6212AD00623508 /* ios_m.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577B81F6212AD00623508 /* ios_m.h */; };
-		9A9577E41F6212AD00623508 /* ios_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B91F6212AD00623508 /* ios_main.cpp */; };
 		9A9577E51F6212AD00623508 /* ios_mm.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577BA1F6212AD00623508 /* ios_mm.h */; };
-		9A9577E61F6212AD00623508 /* ios_port_forward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577BB1F6212AD00623508 /* ios_port_forward.cpp */; };
 		9A9577E71F6212AD00623508 /* ios_port_forward.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577BC1F6212AD00623508 /* ios_port_forward.h */; };
-		9A9577E81F6212AD00623508 /* ios_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577BD1F6212AD00623508 /* ios_printer.cpp */; };
 		9A9577E91F6212AD00623508 /* ios_printer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577BE1F6212AD00623508 /* ios_printer.h */; };
 		9A9577EA1F6212AD00623508 /* ios_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577BF1F6212AD00623508 /* ios_state.h */; };
-		9A9577EB1F6212AD00623508 /* ios_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577C01F6212AD00623508 /* ios_trace.cpp */; };
-		9A9577EC1F6212AD00623508 /* ios_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577C11F6212AD00623508 /* ios_util.cpp */; };
 		9A9577ED1F6212AD00623508 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9577C21F6212AD00623508 /* os.h */; };
 		9A9578AE1F62236A00623508 /* antialias_8bit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7A331F5D6362009EC103 /* antialias_8bit.cpp */; };
 		9A9578AF1F62236A00623508 /* detect_8bit_borders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7A341F5D6362009EC103 /* detect_8bit_borders.cpp */; };
@@ -438,6 +421,22 @@
 		9AB6283E1F3D116D0007966E /* NSPasteboard++.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AB6283D1F3D116D0007966E /* NSPasteboard++.mm */; };
 		9ACBD0BF1DDFAEB2004AF08F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF11DDFAB4D00C57231 /* libcrypto.a */; };
 		9ACBD0C01DDFAEB5004AF08F /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A18AAF21DDFAB4D00C57231 /* libssl.a */; };
+		9AE1AB461F7856BD0005113C /* ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A31F6212AD00623508 /* ios.cpp */; };
+		9AE1AB471F7856BD0005113C /* ios_axis_dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A51F6212AD00623508 /* ios_axis_dir.cpp */; };
+		9AE1AB481F7856BD0005113C /* ios_axis_file_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A71F6212AD00623508 /* ios_axis_file_system.cpp */; };
+		9AE1AB491F7856BD0005113C /* ios_copydesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A91F6212AD00623508 /* ios_copydesk.cpp */; };
+		9AE1AB4A1F7856BD0005113C /* ios_crypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AB1F6212AD00623508 /* ios_crypto.cpp */; };
+		9AE1AB4B1F7856BD0005113C /* ios_dumpinit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AD1F6212AD00623508 /* ios_dumpinit.cpp */; };
+		9AE1AB4C1F7856BD0005113C /* ios_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AE1F6212AD00623508 /* ios_exception.cpp */; };
+		9AE1AB4D1F7856BD0005113C /* ios_factory_exchange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AF1F6212AD00623508 /* ios_factory_exchange.cpp */; };
+		9AE1AB4E1F7856BD0005113C /* ios_file_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B11F6212AD00623508 /* ios_file_set.cpp */; };
+		9AE1AB4F1F7856BD0005113C /* ios_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B51F6212AD00623508 /* ios_ios.cpp */; };
+		9AE1AB501F7856BD0005113C /* ios_ip_enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B61F6212AD00623508 /* ios_ip_enum.cpp */; };
+		9AE1AB511F7856BD0005113C /* ios_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B91F6212AD00623508 /* ios_main.cpp */; };
+		9AE1AB521F7856BD0005113C /* ios_port_forward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577BB1F6212AD00623508 /* ios_port_forward.cpp */; };
+		9AE1AB531F7856BD0005113C /* ios_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577BD1F6212AD00623508 /* ios_printer.cpp */; };
+		9AE1AB541F7856BD0005113C /* ios_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577C01F6212AD00623508 /* ios_trace.cpp */; };
+		9AE1AB551F7856BD0005113C /* ios_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577C11F6212AD00623508 /* ios_util.cpp */; };
 		9AE24D461904CEFF001AEFFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24D361904CEFE001AEFFB /* Foundation.framework */; };
 		9AE24D4B1904CEFF001AEFFB /* libios_axis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24D341904CEFE001AEFFB /* libios_axis.a */; };
 		9AEE31261EB7DDEB00BF9A29 /* fs_native_fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEE31251EB7DDEB00BF9A29 /* fs_native_fs.h */; };
@@ -799,7 +798,6 @@
 		9A9577B41F6212AD00623508 /* ios_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_internal.h; sourceTree = "<group>"; };
 		9A9577B51F6212AD00623508 /* ios_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_ios.cpp; sourceTree = "<group>"; };
 		9A9577B61F6212AD00623508 /* ios_ip_enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_ip_enum.cpp; sourceTree = "<group>"; };
-		9A9577B71F6212AD00623508 /* ios_ip_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_ip_enum.h; sourceTree = "<group>"; };
 		9A9577B81F6212AD00623508 /* ios_m.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_m.h; sourceTree = "<group>"; };
 		9A9577B91F6212AD00623508 /* ios_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_main.cpp; sourceTree = "<group>"; };
 		9A9577BA1F6212AD00623508 /* ios_mm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_mm.h; sourceTree = "<group>"; };
@@ -1588,7 +1586,6 @@
 				9A9577B21F6212AD00623508 /* ios_file_set.h */,
 				9A9577B31F6212AD00623508 /* ios_implementation.h */,
 				9A9577B41F6212AD00623508 /* ios_internal.h */,
-				9A9577B71F6212AD00623508 /* ios_ip_enum.h */,
 				9A9577B81F6212AD00623508 /* ios_m.h */,
 				9A9577BA1F6212AD00623508 /* ios_mm.h */,
 				9A9577BC1F6212AD00623508 /* ios_port_forward.h */,
@@ -1677,7 +1674,6 @@
 				0747A5D71B26226300E85AC7 /* user_elemental.h in Headers */,
 				0747A6AE1B2637BB00E85AC7 /* database.h in Headers */,
 				0747A6D21B2637BB00E85AC7 /* db_str_set.h in Headers */,
-				9A9577E21F6212AD00623508 /* ios_ip_enum.h in Headers */,
 				0747A5F61B26226300E85AC7 /* user_keyboard.h in Headers */,
 				0747A6061B26226300E85AC7 /* user_print_job.h in Headers */,
 				0747A6BA1B2637BB00E85AC7 /* database_field_definition.h in Headers */,
@@ -2040,22 +2036,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A9577CE1F6212AD00623508 /* ios.cpp in Sources */,
 				9A9D7A551F5D6362009EC103 /* visual_font.cpp in Sources */,
 				9A9D7A541F5D6362009EC103 /* visual_font_list_data.cpp in Sources */,
 				9A9D7AE81F5D63BD009EC103 /* fs_link.cpp in Sources */,
 				9A9874B41F5CBCAD00CB62EB /* macos.cpp in Sources */,
-				9A9577EB1F6212AD00623508 /* ios_trace.cpp in Sources */,
-				9A9577DA1F6212AD00623508 /* ios_factory_exchange.cpp in Sources */,
-				9A9577D41F6212AD00623508 /* ios_copydesk.cpp in Sources */,
 				9A9D7B061F5D63FF009EC103 /* html_lite_html_attributes.cpp in Sources */,
 				9A9D7AE21F5D63BD009EC103 /* fs_ifs.cpp in Sources */,
 				9A9D7AEA1F5D63BD009EC103 /* fs_native_fs.cpp in Sources */,
 				9A9874701F5CBBB800CB62EB /* geoip_city.cpp in Sources */,
-				9A9577E61F6212AD00623508 /* ios_port_forward.cpp in Sources */,
 				9A9874671F5CBB9900CB62EB /* axis.cpp in Sources */,
 				9A9D79D81F5D6305009EC103 /* database_event_change.cpp in Sources */,
-				9A9577E01F6212AD00623508 /* ios_ios.cpp in Sources */,
 				9A9D7A0D1F5D6321009EC103 /* simpledb_file_set.cpp in Sources */,
 				07A376901B26054200E4F888 /* macos_cross_user.mm in Sources */,
 				077C2A1D190F144000A1F6B0 /* framework.cpp in Sources */,
@@ -2079,7 +2069,6 @@
 				9A9D7ADB1F5D63BD009EC103 /* fs_fs.cpp in Sources */,
 				9A9D7B161F5D6418009EC103 /* user_copydesk.cpp in Sources */,
 				9A9D7A1B1F5D6321009EC103 /* simpledb_stra_set.cpp in Sources */,
-				9A9577D81F6212AD00623508 /* ios_dumpinit.cpp in Sources */,
 				9A9D7A0E1F5D6321009EC103 /* simpledb_im_post.cpp in Sources */,
 				9A9D79DB1F5D6305009EC103 /* database_key.cpp in Sources */,
 				9A9D7A4A1F5D6362009EC103 /* detect_8bit_borders.cpp in Sources */,
@@ -2092,7 +2081,6 @@
 				9A9D7A5C1F5D6362009EC103 /* visual_rgb_quad_array.cpp in Sources */,
 				9A9D7A101F5D6321009EC103 /* simpledb_manager.cpp in Sources */,
 				9A9D7B191F5D6418009EC103 /* user_keyboard_layout.cpp in Sources */,
-				9A9577D01F6212AD00623508 /* ios_axis_dir.cpp in Sources */,
 				9A9D7B1B1F5D6418009EC103 /* user_print_job.cpp in Sources */,
 				9A9D7B081F5D63FF009EC103 /* html_lite_html_reader.cpp in Sources */,
 				9A9D79D51F5D6305009EC103 /* database_base.cpp in Sources */,
@@ -2106,7 +2094,6 @@
 				9A9D7A581F5D6362009EC103 /* visual_glyph.cpp in Sources */,
 				9A9874B21F5CBCAD00CB62EB /* macos_time.cpp in Sources */,
 				9A9D7A561F5D6362009EC103 /* visual_FreeImageFileProc.cpp in Sources */,
-				9A9577DC1F6212AD00623508 /* ios_file_set.cpp in Sources */,
 				9A9D79D61F5D6305009EC103 /* database_client.cpp in Sources */,
 				9A9874741F5CBBB800CB62EB /* geoip.cpp in Sources */,
 				9AB6283E1F3D116D0007966E /* NSPasteboard++.mm in Sources */,
@@ -2114,11 +2101,9 @@
 				9A9D7B071F5D63FF009EC103 /* html_lite_html_entity_resolver.cpp in Sources */,
 				9A9D7A531F5D6362009EC103 /* visual_font_enumeration.cpp in Sources */,
 				9A9874861F5CBBF600CB62EB /* macos_axis_file_system.cpp in Sources */,
-				9A9577E81F6212AD00623508 /* ios_printer.cpp in Sources */,
 				9A9874A61F5CBCAD00CB62EB /* macos_base_user.cpp in Sources */,
 				9A9D7A501F5D6362009EC103 /* visual_dib.cpp in Sources */,
 				9A9D7AEC1F5D63BD009EC103 /* fs_remote_native_fs.cpp in Sources */,
-				9A9577E41F6212AD00623508 /* ios_main.cpp in Sources */,
 				9A9D7B091F5D63FF009EC103 /* html_lite_html_tag.cpp in Sources */,
 				9A9D7A521F5D6362009EC103 /* visual_font_department.cpp in Sources */,
 				9A9D7A5D1F5D6362009EC103 /* visual_visual.cpp in Sources */,
@@ -2128,7 +2113,6 @@
 				9A9D7AE11F5D63BD009EC103 /* fs_ifs_file.cpp in Sources */,
 				9A9D7A1D1F5D6321009EC103 /* simpledb_veiev_post.cpp in Sources */,
 				9A9D7A161F5D6321009EC103 /* simpledb_set.cpp in Sources */,
-				9A9577D61F6212AD00623508 /* ios_crypto.cpp in Sources */,
 				9A9D79D71F5D6305009EC103 /* database_definition.cpp in Sources */,
 				9A9D7AE61F5D63BD009EC103 /* fs_item.cpp in Sources */,
 				9A9874A91F5CBCAD00CB62EB /* macos_crypt.cpp in Sources */,
@@ -2151,7 +2135,6 @@
 				9A9D7A0B1F5D6321009EC103 /* simpledb_dataset.cpp in Sources */,
 				9A9D7ADF1F5D63BD009EC103 /* fs_ftp.cpp in Sources */,
 				9A9D7A191F5D6321009EC103 /* simpledb_socket.cpp in Sources */,
-				9A9577E11F6212AD00623508 /* ios_ip_enum.cpp in Sources */,
 				9A9874AC1F5CBCAD00CB62EB /* macos_lock.cpp in Sources */,
 				9A9874641F5CBB9900CB62EB /* axis_session.cpp in Sources */,
 				9A9D79E01F5D6305009EC103 /* database_stringhelper.cpp in Sources */,
@@ -2161,7 +2144,6 @@
 				9A9D7B1C1F5D6418009EC103 /* user_validate.cpp in Sources */,
 				9A9D7A4C1F5D6362009EC103 /* load_gif_frame.cpp in Sources */,
 				9A9D7B171F5D6418009EC103 /* user_elemental.cpp in Sources */,
-				9A9577D91F6212AD00623508 /* ios_exception.cpp in Sources */,
 				0747A6FD1B2637BC00E85AC7 /* sqlitedb_base.cpp in Sources */,
 				9A9D7ABF1F5D63A3009EC103 /* filesystem_axis_application.cpp in Sources */,
 				9A9874711F5CBBB800CB62EB /* geoip_region_name.cpp in Sources */,
@@ -2172,14 +2154,12 @@
 				9A9874B81F5CBFCA00CB62EB /* userpresence_userpresence.cpp in Sources */,
 				9A9D7A091F5D6321009EC103 /* simpledb_base.cpp in Sources */,
 				9A9D7A121F5D6321009EC103 /* simpledb_result.cpp in Sources */,
-				9A9577EC1F6212AD00623508 /* ios_util.cpp in Sources */,
 				9A9D7AED1F5D63BD009EC103 /* fs_set.cpp in Sources */,
 				9A9D79DF1F5D6305009EC103 /* database_set.cpp in Sources */,
 				9A9D7A0A1F5D6321009EC103 /* simpledb_database.cpp in Sources */,
 				9A9D7A511F5D6362009EC103 /* visual_fastblur.cpp in Sources */,
 				9A9D7A8E1F5D6376009EC103 /* dib_console.cpp in Sources */,
 				9A9874881F5CBBF600CB62EB /* macos_crypto.cpp in Sources */,
-				9A9577D21F6212AD00623508 /* ios_axis_file_system.cpp in Sources */,
 				9A9D7A131F5D6321009EC103 /* simpledb_server.cpp in Sources */,
 				9A9D7A571F5D6362009EC103 /* visual_glyph_set.cpp in Sources */,
 				9A9874B01F5CBCAD00CB62EB /* macos_simple_app 2.cpp in Sources */,
@@ -2191,6 +2171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9D7B0D1F5D6405009EC103 /* html_lite_html_tag.cpp in Sources */,
+				9AE1AB541F7856BD0005113C /* ios_trace.cpp in Sources */,
 				07EDC2C41B4ECB3C00AF8928 /* ios_win_base.cpp in Sources */,
 				9A9578C01F62236A00623508 /* visual_rgb_quad_array.cpp in Sources */,
 				9A9D7AF21F5D63D5009EC103 /* fs_ftp.cpp in Sources */,
@@ -2198,6 +2179,7 @@
 				9A9D7A201F5D6333009EC103 /* simpledb_dataset.cpp in Sources */,
 				9A9D7AFC1F5D63DD009EC103 /* filesystem_axis_application.cpp in Sources */,
 				9A9D79F01F5D630E009EC103 /* database_set.cpp in Sources */,
+				9AE1AB521F7856BD0005113C /* ios_port_forward.cpp in Sources */,
 				9A9D7A251F5D6333009EC103 /* simpledb_manager.cpp in Sources */,
 				9A9D7AF81F5D63D5009EC103 /* fs_native_fs.cpp in Sources */,
 				9A9578BD1F62236A00623508 /* visual_graphics_extension.cpp in Sources */,
@@ -2220,6 +2202,8 @@
 				9A9D79E81F5D630E009EC103 /* database_definition.cpp in Sources */,
 				9A9D7B0A1F5D6405009EC103 /* html_lite_html_attributes.cpp in Sources */,
 				9A9578BA1F62236A00623508 /* visual_FreeImageFileProc.cpp in Sources */,
+				9AE1AB4A1F7856BD0005113C /* ios_crypto.cpp in Sources */,
+				9AE1AB4B1F7856BD0005113C /* ios_dumpinit.cpp in Sources */,
 				9A9D7AF51F5D63D5009EC103 /* fs_item_array.cpp in Sources */,
 				07EDC2B61B4ECB3C00AF8928 /* ios_fontopus.cpp in Sources */,
 				9A9D7A2F1F5D6333009EC103 /* simpledb_str_set.cpp in Sources */,
@@ -2233,6 +2217,7 @@
 				9A9D79EC1F5D630E009EC103 /* database_key.cpp in Sources */,
 				9A9D7B1E1F5D6420009EC103 /* user_copydesk.cpp in Sources */,
 				07EDC2B51B4ECB3C00AF8928 /* ios_file_watcher.cpp in Sources */,
+				9AE1AB4C1F7856BD0005113C /* ios_exception.cpp in Sources */,
 				07EDC2B21B4ECB3C00AF8928 /* ios_crypt.cpp in Sources */,
 				07EDC2BA1B4ECB3C00AF8928 /* ios_lock.cpp in Sources */,
 				9A9D79E51F5D630E009EC103 /* database_application.cpp in Sources */,
@@ -2248,6 +2233,7 @@
 				9A9D7AEF1F5D63D5009EC103 /* fs_data.cpp in Sources */,
 				9A9D7AFB1F5D63D5009EC103 /* fs_set.cpp in Sources */,
 				07EDC4FC1B4F0C3E00AF8928 /* sqlitedb_base.cpp in Sources */,
+				9AE1AB4F1F7856BD0005113C /* ios_ios.cpp in Sources */,
 				9A9D7AFF1F5D63DD009EC103 /* filesystem_dir_axis_system.cpp in Sources */,
 				07EDC2B81B4ECB3C00AF8928 /* ios_launcher.cpp in Sources */,
 				9A9D7A2B1F5D6333009EC103 /* simpledb_set.cpp in Sources */,
@@ -2255,6 +2241,7 @@
 				9A9D7B201F5D6420009EC103 /* user_job.cpp in Sources */,
 				9A9D79E61F5D630E009EC103 /* database_base.cpp in Sources */,
 				9A9D7B211F5D6420009EC103 /* user_keyboard_layout.cpp in Sources */,
+				9AE1AB4E1F7856BD0005113C /* ios_file_set.cpp in Sources */,
 				07EDC2AF1B4ECB3C00AF8928 /* ios_cross_gdi.mm in Sources */,
 				9A9D79F21F5D630E009EC103 /* database_update_hint.cpp in Sources */,
 				9A9D7A311F5D6333009EC103 /* simpledb_table.cpp in Sources */,
@@ -2270,6 +2257,7 @@
 				9A9D79F11F5D630E009EC103 /* database_stringhelper.cpp in Sources */,
 				9A9D7A2C1F5D6333009EC103 /* simpledb_simpledb.cpp in Sources */,
 				07EDC2C31B4ECB3C00AF8928 /* ios_user.mm in Sources */,
+				9AE1AB501F7856BD0005113C /* ios_ip_enum.cpp in Sources */,
 				9A9578BF1F62236A00623508 /* visual_imaging.cpp in Sources */,
 				9A9D7A2A1F5D6333009EC103 /* simpledb_session.cpp in Sources */,
 				9A9D7AF31F5D63D5009EC103 /* fs_ifs_file.cpp in Sources */,
@@ -2277,21 +2265,29 @@
 				9A9578AF1F62236A00623508 /* detect_8bit_borders.cpp in Sources */,
 				9A9D7A1F1F5D6333009EC103 /* simpledb_database.cpp in Sources */,
 				9A9D7B0B1F5D6405009EC103 /* html_lite_html_entity_resolver.cpp in Sources */,
+				9AE1AB481F7856BD0005113C /* ios_axis_file_system.cpp in Sources */,
 				9A9578B31F62236A00623508 /* visual_buffered_graphics.cpp in Sources */,
+				9AE1AB471F7856BD0005113C /* ios_axis_dir.cpp in Sources */,
 				9A9D7B231F5D6420009EC103 /* user_print_job.cpp in Sources */,
 				9A9D7AF61F5D63D5009EC103 /* fs_item.cpp in Sources */,
 				07EDC2BB1B4ECB3C00AF8928 /* ios_message_loop.cpp in Sources */,
 				9A9D7A241F5D6333009EC103 /* simpledb_long_set.cpp in Sources */,
 				9A9D7AFE1F5D63DD009EC103 /* filesystem_dir_axis_application.cpp in Sources */,
+				9AE1AB531F7856BD0005113C /* ios_printer.cpp in Sources */,
+				9AE1AB461F7856BD0005113C /* ios.cpp in Sources */,
 				9A9578B91F62236A00623508 /* visual_font.cpp in Sources */,
 				9A9578B81F62236A00623508 /* visual_font_list_data.cpp in Sources */,
+				9AE1AB511F7856BD0005113C /* ios_main.cpp in Sources */,
 				9A9D7A261F5D6333009EC103 /* simpledb_record_row.cpp in Sources */,
+				9AE1AB551F7856BD0005113C /* ios_util.cpp in Sources */,
 				9A9D7AFD1F5D63DD009EC103 /* filesystem_axis_system.cpp in Sources */,
 				9A9D79ED1F5D630E009EC103 /* database_selection_item.cpp in Sources */,
+				9AE1AB491F7856BD0005113C /* ios_copydesk.cpp in Sources */,
 				9A9578B71F62236A00623508 /* visual_font_enumeration.cpp in Sources */,
 				07EDC2B01B4ECB3C00AF8928 /* ios_cross_win.cpp in Sources */,
 				9A9D7B241F5D6420009EC103 /* user_validate.cpp in Sources */,
 				07EDC2B31B4ECB3C00AF8928 /* ios_debug.cpp in Sources */,
+				9AE1AB4D1F7856BD0005113C /* ios_factory_exchange.cpp in Sources */,
 				9A9D7A271F5D6333009EC103 /* simpledb_result.cpp in Sources */,
 				9A9D79EB1F5D630E009EC103 /* database_id.cpp in Sources */,
 			);

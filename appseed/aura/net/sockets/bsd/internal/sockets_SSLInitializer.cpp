@@ -62,7 +62,6 @@ SSLInitializer_rand_seed(const void * buf, int32_t num);
 extern "C" int32_t SSLInitializer_rand_bytes(uchar * buf, int32_t num);
 extern "C" void SSLInitializer_rand_cleanup();
 extern "C"
-extern "C"
 #if defined(METROWIN) || defined(LINUX)
 void
 #else
@@ -169,71 +168,6 @@ namespace sockets
       //ENGINE_load_builtin_engines();
 
 
-      /* Ignore broken pipes which would cause our program to terminate
-         prematurely */
-
-
-//      bio_err = BIO_new_fp(stderr, BIO_NOCLOSE);
-
-
-      /*   char *randfile =
-         char *home = getenv("HOME");
-         if (!randfile && !home)
-         {
-            char *homepath = getenv("HOMEPATH");
-            if (homepath)
-            {
-               Utility::SetEnv("HOME", homepath);
-            }
-         }*/
-
-         //memory memstorage;
-         //memstorage.allocate(5000);
-         //memstorage.allocate(5000);
-         //System.math().gen_rand(memstorage.get_data(), memstorage.get_size());
-
-         /*for(int32_t i = 0; i < memstorage.get_size(); i += 3)
-         {
-            int32_t iValue = System.math().RandRange(0, 0x00ffffff);
-            memstorage.get_data()[i] = iValue & 0xff;
-            memstorage.get_data()[i+1] = (iValue >> 8) & 0xff;
-            memstorage.get_data()[i+2] = (iValue >> 16) & 0xff;
-         }*/
-
-         /*m_rand_file = System.file().time_square();
-         //*path = 0;
-         //RAND_file_name(path, 512);
-         //if (*path)
-         //{
-
-
-
-         int32_t iWritten = RAND_write_file(m_rand_file);
-         m_rand_size = iWritten;
-         //}
-         //else
-         //{
-      //TRACE("SSLInitializer: no random file generated\n");
-      //   }
-
-         ::file::file_sp spfile(allocer());
-
-         spfile->open(m_rand_file, ::file::type_binary | ::file::mode_read);
-
-
-         //memstorage.FullLoad(spfile);
-
-         /* Load randomness */
-         /*if (!m_rand_file.get_length())
-         {
-      TRACE("SSLInitializer: PRNG not initialized\n");
-         }*/
-         /*RAND_add(
-               memstorage.get_data(),
-               memstorage.get_size(),
-               memstorage.get_size());*/
-
-               //RAND_seed(memstorage.get_data(), memstorage.get_size());
 
    }
 

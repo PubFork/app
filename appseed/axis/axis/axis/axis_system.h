@@ -39,7 +39,7 @@ namespace axis
       system(::aura::application * papp);
       virtual ~system();
 
-      bool initialize();
+      bool initialize() override;
 
 
 

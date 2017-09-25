@@ -338,7 +338,7 @@ bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::ar
 #if defined(ANDROID) && defined(__arm__)
          COLORREF crQuad = ARGB(255, quad.rgbRed, quad.rgbGreen, quad.rgbBlue);
 #else
-         COLORREF crQuad = ARGB(255, quad.rgbBlue, quad.rgbGreen, quad.rgbRed);
+         //COLORREF crQuad = ARGB(255, quad.rgbBlue, quad.rgbGreen, quad.rgbRed);
 #endif
 
          //if (transparentIndex >= pdiba->m_cra.get_size() || crQuad != pdiba->m_cra[transparentIndex])

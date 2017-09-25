@@ -74,63 +74,6 @@ string Login()
 
 
 
-/*bool Get(const string& url_in,string & document)
-{
-   bool https = !strcasecmp(url.substr(0,8), "https://");
-	int32_t port = https ? 443 : 80;
-	string url = url_in;
-	string file; // get filename at end of url
-	string dir; // get filename at end of url
-	{
-		Parse pa(url,"/");
-		string tmp = pa.getword();
-      string lastfile;
-		while (tmp.size())
-		{
-			file = tmp;
-         dir = "/" + lastfile;
-         lastfile = file;
-			tmp = pa.getword();
-		}
-	}
-	SocketHandler h;
-	bool complete = false;
-
-	if (!strcasecmp(protocol,"http") || https)
-	{
-		HttpGetSocket s(h, host, port, dir, file);
-		uchar *p = new uchar[32000]; // MAX doc size
-		memset_dup(p, 0, 32000);
-		s.SetDataPtr(p, 31999); // preserve zero at end of document
-/*		if (https)
-		{
-			s.EnableSSL();
-		}*/
-/*		h.add(&s);
-		h.Select(240,0);
-		while (h.get_count())
-		{
-			h.Select(240,0);
-		}
-		complete = s.Complete();
-		if (complete)
-		{
-			document = static_cast<string>( (char *)s.GetDataPtr());
-		}
-		delete[] s.GetDataPtr();
-	}
-	else
-	{
-		printf_dup("Unknown protocol: '%s'\n",protocol);
-	}
-	if (complete)
-	{
-		printf_dup("%s\n", document);
-	}
-	return complete;
-}*/
-
-
 
 
 

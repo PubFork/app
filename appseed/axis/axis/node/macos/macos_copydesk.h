@@ -15,8 +15,8 @@ namespace macos
       virtual ~copydesk();
 
 
-      virtual bool initialize();
-      virtual bool finalize();
+      virtual bool initialize() override;
+      virtual bool finalize() override;
 
       virtual void set_filea(const ::file::patha & stra) override;
 
@@ -27,7 +27,7 @@ namespace macos
       virtual string get_plain_text() override;
 
 
-      virtual bool desk_to_dib(::draw2d::dib * pdib);
+      virtual bool desk_to_dib(::draw2d::dib * pdib) override;
       
 
    };

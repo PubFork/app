@@ -639,7 +639,7 @@ namespace visual
 #else
 
 
-      DWORD dw1 = get_tick_count();
+      //DWORD dw1 = get_tick_count();
 
 #ifdef __arm__
 

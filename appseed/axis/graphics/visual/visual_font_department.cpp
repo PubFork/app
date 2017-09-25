@@ -38,7 +38,7 @@ font_department::~font_department()
 
 bool font_department::IsInitialized()
 {
-   if(this == NULL)
+   if(is_null(*this))
       return false;
    else
       return m_bInitialized;

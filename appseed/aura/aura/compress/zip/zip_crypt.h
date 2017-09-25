@@ -60,12 +60,12 @@ static_function int32_t update_keys(uint32_t * pkeys,const z_crc_t * pcrc_32_tab
 static_function int32_t update_keys(uint32_t * pkeys, const uLongf * pcrc_32_tab, int32_t ca)
 #endif
 {
-    (*(pkeys+0)) = CRC32((*(pkeys+0)), ca);
+    (*(pkeys+0)) = (unsigned int) CRC32((*(pkeys+0)), ca);
     (*(pkeys+1)) += (*(pkeys+0)) & 0xff;
     (*(pkeys+1)) = (*(pkeys+1)) * 134775813L + 1;
     {
       int32_t keyshift = (int32_t)((*(pkeys+1)) >> 24);
-      (*(pkeys+2)) = CRC32((*(pkeys+2)), keyshift);
+      (*(pkeys+2)) = (unsigned int) CRC32((*(pkeys+2)), keyshift);
     }
     return ca;
 }

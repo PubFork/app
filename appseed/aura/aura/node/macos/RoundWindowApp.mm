@@ -89,7 +89,7 @@ void macos_on_app_activate();
       
    }
    
-   defer_run_system(psza, ulCount);
+   defer_run_system(psza, (int) ulCount);
    
    
 }

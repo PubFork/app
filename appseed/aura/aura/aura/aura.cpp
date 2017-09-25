@@ -323,13 +323,13 @@ CLASS_DECL_AURA void c_function_call(void * p)
 END_EXTERN_C
 
 
-template < >
-CLASS_DECL_AURA void function_call(const ::object * p)
-{
-
-   const char * psz = reinterpret_cast< const char * > (p);
-
-}
+//template < >
+//CLASS_DECL_AURA void function_call(const ::object * p)
+//{
+//
+//   const char * psz = reinterpret_cast< const char * > (p);
+//
+//}
 
 
 

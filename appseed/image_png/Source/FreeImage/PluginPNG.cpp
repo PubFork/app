@@ -118,7 +118,7 @@ ReadMetadata(png_structp png_ptr, png_infop info_ptr, FIBITMAP *dib) {
             }
             else
             {
-               tag_length = text_ptr[i].itxt_length;
+               tag_length = (uint32_t) text_ptr[i].itxt_length;
             }
          #else
             continue;
@@ -127,7 +127,7 @@ ReadMetadata(png_structp png_ptr, png_infop info_ptr, FIBITMAP *dib) {
          #ifdef PNG_iTXt_SUPPORTED
          else if(text_ptr[i].itxt_length & 0x80000000)
          {
-            tag_length = text_ptr[i].text_length;
+            tag_length = (uint32_t) text_ptr[i].text_length;
          }
          #endif
          else

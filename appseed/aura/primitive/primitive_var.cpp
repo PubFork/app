@@ -3685,8 +3685,8 @@ var::operator bool() const
    else if (m_etype == type_pid)
    {
 
-      return m_pid != NULL && (m_pid->is_text() && m_pid->m_psz != NULL && stricmp(m_pid->m_psz, "true"))
-         || (m_pid->is_integer() && m_pid->m_i != 0);
+      return m_pid != NULL && ((m_pid->is_text() && m_pid->m_psz != NULL && stricmp(m_pid->m_psz, "true"))
+         || (m_pid->is_integer() && m_pid->m_i != 0));
 
    }
    else if (m_etype == type_inta)

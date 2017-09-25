@@ -199,7 +199,7 @@ bool file_get_memory_dup(::primitive::memory_base & memory, const char * path)
 
       int iRead;
 
-      while((iRead = fread(mem.get_data(),1,mem.get_size(),f)) > 0)
+      while((iRead = (int) fread(mem.get_data(),1,mem.get_size(),f)) > 0)
       {
 
          memory.append(mem.get_data(), iRead);
@@ -533,8 +533,8 @@ int_bool file_is_equal_path(const char * psz1,const char * psz2)
          iCmp = stricmp_dup(p1,p2);
       //}
    //}
-   delete pwszPath1;
-   delete pwszPath2;
+   delete[] pwszPath1;
+   delete[] pwszPath2;
    return iCmp == 0;
 
 }

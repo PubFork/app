@@ -2517,11 +2517,21 @@ restart:
 
                bool bRawHttp1 = (bool)varFile["http_set"]["raw_http"];
 
-               UNUSED(bRawHttp1);
+               if(bRawHttp1)
+               {
+                
+                  output_debug_string("\nbRawHttp1");
+                  
+               }
 
                bool bRawHttp2 = (bool)spfile->oprop("http_set")["raw_http"];
 
-               UNUSED(bRawHttp2);
+               if(bRawHttp2)
+               {
+                  
+                  output_debug_string("\nbRawHttp2");
+                  
+               }
 
                if (Application.http().get(strPath, *pfile->get_memory(), set))
                {

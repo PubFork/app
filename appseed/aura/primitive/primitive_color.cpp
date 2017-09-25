@@ -309,28 +309,6 @@ void color::get_hls(
    */
 }
 
-/* utility routine for HLStoRGB */
-
-/*double HueToRGB(
-   double d1,
-   double d2,
-   double dHue)
-{
-   /* range check: note values passed add/subtract thirds of range */
-   /*   if (dHue < 0.0)
-         dHue += HLSMAX;
-      if (dHue > HLSMAX)
-         dHue -= HLSMAX;
-      /* return r,g, or b value from this tridrant */
-      /*   if (dHue < (HLSMAX/6))
-            return ( d1 + (((d2-d1)*dHue+(HLSMAX/12))/(HLSMAX/6)) );
-         if (dHue < (HLSMAX/2))
-            return ( d2 );
-         if (dHue < ((HLSMAX*2)/3))
-            return ( d1 + (((d2-d1)*(((HLSMAX*2)/3)-dHue)+(HLSMAX/12))/(HLSMAX/6)));
-         else
-            return ( d1 );
-      } */
 
 double primitive_color_round(double d)
 {

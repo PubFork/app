@@ -399,7 +399,7 @@ namespace aura
 #else
 
          char * psz = strTarget.GetBufferSetLength(4096);
-         int count = readlink(pszSource, psz, 4096);
+         int count = (int) readlink(pszSource, psz, 4096);
          if (count < 0)
          {
 

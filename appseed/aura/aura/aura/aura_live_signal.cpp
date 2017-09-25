@@ -67,26 +67,26 @@ namespace aura
 
       return true;
 
-      for(int32_t i = 0; i < m_ptraLive.get_count(); i++)
-      {
-
-         try
-         {
-
-            if(!m_ptraLive.element_at(i)->is_alive())
-               return false;
-
-         }
-         catch(...)
-         {
-
-            return false;
-
-         }
-
-      }
-
-      return true;
+//      for(int32_t i = 0; i < m_ptraLive.get_count(); i++)
+//      {
+//
+//         try
+//         {
+//
+//            if(!m_ptraLive.element_at(i)->is_alive())
+//               return false;
+//
+//         }
+//         catch(...)
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//
+//      return true;
 
    }
 

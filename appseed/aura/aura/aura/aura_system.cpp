@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 #include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
@@ -2011,72 +2011,72 @@ RetryBuildNumber:
 
       /*      m_spfilehandler(new ::core::filehandler::handler(this));*/
 
-      m_mapAppLibrary.remove_all();
-
-      string strLibraryId;
-
-      ::file::listing straTitle(this);
-
-      ::file::path pathCa2Module = System.dir().ca2module();
-
-      ::output_debug_string("\n\n::aura::system::find_applications_to_cache\n\n");
-
-      ::output_debug_string("ca2 module folder : " + pathCa2Module);
-
-      ::output_debug_string("\n\n\n");
-
-      straTitle.ls_pattern(pathCa2Module, { "*.*" });
-
-      for(int32_t i = 0; i < straTitle.get_count(); i++)
-      {
-
-         strLibraryId = straTitle[i];
-
-
-         if(::str::ends_eat_ci(strLibraryId,".dll")
-               || ::str::ends_eat_ci(strLibraryId,".so")
-               || ::str::ends_eat_ci(strLibraryId,".dylib"))
-         {
-
-            if(::str::begins_ci(strLibraryId,"libdraw2d_")
-                  || ::str::begins_ci(strLibraryId,"libbase"))
-            {
-               continue;
-            }
-
-            ::output_debug_string("library("+::str::from(i)+") : " + strLibraryId+"\n\n");
-
-            map_application_library(strLibraryId);
-
-         }
-
-      }
-
-      if(!bSave)
-         return true;
-
-      ::file::file_sp file;
-
-      try
-      {
-
-         file = Session.file().get_file(System.dir().appdata() / "applibcache.bin",::file::defer_create_directory | ::file::type_binary | ::file::mode_create | ::file::mode_write);
-
-      }
-      catch(::exception::base &)
-      {
-
-         return false;
-
-      }
-
-      ::file::byte_ostream os(file);
-
-      os << m_mapAppLibrary;
-
-      on_end_find_applications_to_cache(os);
-
-      return true;
+//      m_mapAppLibrary.remove_all();
+//
+//      string strLibraryId;
+//
+//      ::file::listing straTitle(this);
+//
+//      ::file::path pathCa2Module = System.dir().ca2module();
+//
+//      ::output_debug_string("\n\n::aura::system::find_applications_to_cache\n\n");
+//
+//      ::output_debug_string("ca2 module folder : " + pathCa2Module);
+//
+//      ::output_debug_string("\n\n\n");
+//
+//      straTitle.ls_pattern(pathCa2Module, { "*.*" });
+//
+//      for(int32_t i = 0; i < straTitle.get_count(); i++)
+//      {
+//
+//         strLibraryId = straTitle[i];
+//
+//
+//         if(::str::ends_eat_ci(strLibraryId,".dll")
+//               || ::str::ends_eat_ci(strLibraryId,".so")
+//               || ::str::ends_eat_ci(strLibraryId,".dylib"))
+//         {
+//
+//            if(::str::begins_ci(strLibraryId,"libdraw2d_")
+//                  || ::str::begins_ci(strLibraryId,"libbase"))
+//            {
+//               continue;
+//            }
+//
+//            ::output_debug_string("library("+::str::from(i)+") : " + strLibraryId+"\n\n");
+//
+//            map_application_library(strLibraryId);
+//
+//         }
+//
+//      }
+//
+//      if(!bSave)
+//         return true;
+//
+//      ::file::file_sp file;
+//
+//      try
+//      {
+//
+//         file = Session.file().get_file(System.dir().appdata() / "applibcache.bin",::file::defer_create_directory | ::file::type_binary | ::file::mode_create | ::file::mode_write);
+//
+//      }
+//      catch(::exception::base &)
+//      {
+//
+//         return false;
+//
+//      }
+//
+//      ::file::byte_ostream os(file);
+//
+//      os << m_mapAppLibrary;
+//
+//      on_end_find_applications_to_cache(os);
+//
+//      return true;
 
    }
 

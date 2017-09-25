@@ -814,9 +814,12 @@ namespace simpledb
       {
          return set::SetFieldValue(f_name, value);
       }
-      throw ::database::DbErrors("Not in Insert or Edit or Select state");
+      
+      //throw ::database::DbErrors("Not in Insert or Edit or Select state");
       //  return false;
+      
    }
+   
 
    bool set::SetFieldValue(index iFieldIndex, const var &value)
    {

@@ -744,110 +744,110 @@ bool event::lock(const duration & durationTimeout)
 
    return wait(durationTimeout).succeeded();
 
-#ifdef WINDOWS
-
-   uint32_t dwRet = ::WaitForSingleObjectEx((HANDLE)m_object,durationTimeout.lock_duration(),FALSE);
-
-   if (dwRet == WAIT_OBJECT_0 || dwRet == WAIT_ABANDONED)
-      return true;
-   else
-      return false;
-
-#elif defined(ANDROID)
-
-   pthread_mutex_lock((pthread_mutex_t *) m_pmutex);
-
-   ((duration & ) durationTimeout).normalize();
-
-
-   if(m_bManualEvent)
-   {
-
-      int32_t iSignal = m_iSignalId;
-
-      while(!m_bSignaled && iSignal == m_iSignalId)
-      {
-
-         timespec delay;
-         delay.tv_sec = durationTimeout.m_iSeconds;
-         delay.tv_nsec = durationTimeout.m_iNanoseconds;
-         if(pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_pmutex, &delay))
-            break;
-
-      }
-
-      return m_bSignaled;
-
-   }
-   else
-   {
-
-      timespec delay;
-      delay.tv_sec = durationTimeout.m_iSeconds;
-      delay.tv_nsec = durationTimeout.m_iNanoseconds;
-      pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_pmutex, &delay);
-
-      return is_locked();
-
-   }
-
-   pthread_mutex_unlock((pthread_mutex_t *) m_pmutex);
-
-#else
-
-
-   timespec delay;
-
-
-   if(m_bManualEvent)
-   {
-
-      wait(durationTimeout);
-
-      return m_bSignaled;
-
-   }
-   else
-   {
-
-      uint32_t timeout = durationTimeout.lock_duration();
-
-      uint32_t start = ::get_tick_count();
-
-      while(::get_tick_count() - start < timeout)
-      {
-
-         sembuf sb;
-
-         sb.sem_op   = -1;
-         sb.sem_num  = 0;
-         sb.sem_flg  = IPC_NOWAIT;
-
-         int32_t ret = semop((int32_t) m_object, &sb, 1);
-
-         if(ret < 0)
-         {
-            if(ret == EPERM)
-            {
-               nanosleep(&delay, NULL);
-            }
-            else
-            {
-               return false;
-            }
-         }
-         else
-         {
-            return true;
-         }
-
-      }
-
-   }
-
-	return false;
-
-#endif
+//#ifdef WINDOWS
+//
+//   uint32_t dwRet = ::WaitForSingleObjectEx((HANDLE)m_object,durationTimeout.lock_duration(),FALSE);
+//
+//   if (dwRet == WAIT_OBJECT_0 || dwRet == WAIT_ABANDONED)
+//      return true;
+//   else
+//      return false;
+//
+//#elif defined(ANDROID)
+//
+//   pthread_mutex_lock((pthread_mutex_t *) m_pmutex);
+//
+//   ((duration & ) durationTimeout).normalize();
+//
+//
+//   if(m_bManualEvent)
+//   {
+//
+//      int32_t iSignal = m_iSignalId;
+//
+//      while(!m_bSignaled && iSignal == m_iSignalId)
+//      {
+//
+//         timespec delay;
+//         delay.tv_sec = durationTimeout.m_iSeconds;
+//         delay.tv_nsec = durationTimeout.m_iNanoseconds;
+//         if(pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_pmutex, &delay))
+//            break;
+//
+//      }
+//
+//      return m_bSignaled;
+//
+//   }
+//   else
+//   {
+//
+//      timespec delay;
+//      delay.tv_sec = durationTimeout.m_iSeconds;
+//      delay.tv_nsec = durationTimeout.m_iNanoseconds;
+//      pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_pmutex, &delay);
+//
+//      return is_locked();
+//
+//   }
+//
+//   pthread_mutex_unlock((pthread_mutex_t *) m_pmutex);
+//
+//#else
+//
+//
+//   timespec delay;
+//
+//
+//   if(m_bManualEvent)
+//   {
+//
+//      wait(durationTimeout);
+//
+//      return m_bSignaled;
+//
+//   }
+//   else
+//   {
+//
+//      uint32_t timeout = durationTimeout.lock_duration();
+//
+//      uint32_t start = ::get_tick_count();
+//
+//      while(::get_tick_count() - start < timeout)
+//      {
+//
+//         sembuf sb;
+//
+//         sb.sem_op   = -1;
+//         sb.sem_num  = 0;
+//         sb.sem_flg  = IPC_NOWAIT;
+//
+//         int32_t ret = semop((int32_t) m_object, &sb, 1);
+//
+//         if(ret < 0)
+//         {
+//            if(ret == EPERM)
+//            {
+//               nanosleep(&delay, NULL);
+//            }
+//            else
+//            {
+//               return false;
+//            }
+//         }
+//         else
+//         {
+//            return true;
+//         }
+//
+//      }
+//
+//   }
+//
+//   return false;
+//
+//#endif
 
 }
 

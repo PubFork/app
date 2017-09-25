@@ -29,7 +29,7 @@ return   mach_absolute_time() * g_machtime_conversion_factor;
 CLASS_DECL_AURA void sleep(const duration & duration)
 {
 
-   ns_Sleep(duration.get_total_milliseconds());
+   ns_Sleep((unsigned int) duration.get_total_milliseconds());
    
 }
 

@@ -232,9 +232,9 @@ namespace visual
       pgraphics->text_out(lpcrect.left, lpcrect.top, psz);
       return;
 
-      string str;
-      str = ::str::international::utf8_to_unicode(psz);
-      ::TextOutU((HDC)pgraphics->get_os_data(), lpcrect.left, lpcrect.top, str, (int32_t)str.get_length());
+//      string str;
+//      str = ::str::international::utf8_to_unicode(psz);
+//      ::TextOutU((HDC)pgraphics->get_os_data(), lpcrect.left, lpcrect.top, str, (int32_t)str.get_length());
    }
 
 

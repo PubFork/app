@@ -41,7 +41,7 @@ namespace user
       enum AdjustType { adjustBorder = 0,adjustOutside = 1 };
       virtual void CalcWindowRect(LPRECT lpClientRect,UINT nAdjustType = adjustBorder) override;
 
-      virtual bool SetFocus();
+      virtual bool SetFocus() override;
 
       //void RepositionBars(UINT nIDFirst,UINT nIDLast,id nIDLeftOver,UINT nFlags,LPRECT lpRectParam,LPCRECT lpRectClient,bool bStretch);
 

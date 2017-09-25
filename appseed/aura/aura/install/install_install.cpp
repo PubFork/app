@@ -660,6 +660,8 @@ namespace install
       throw "TODO";
 
 #endif
+      
+#ifdef WINDOWSEX
 
       if (!file_exists_dup(::dir::system() / "config\\plugin\\do_not_download_file_list.txt") && bPrivileged)
       {
@@ -726,7 +728,7 @@ namespace install
                return "";
 
             }
-
+            
 #ifdef WINDOWSEX
 
             // first try to copy from current path (may be there is a version of app_app_admin at the same folder).
@@ -769,6 +771,8 @@ namespace install
 
       }
 
+#endif
+      
       return strPath;
 
    }

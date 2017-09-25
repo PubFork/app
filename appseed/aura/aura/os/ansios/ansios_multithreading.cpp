@@ -851,11 +851,10 @@ static UINT g_uiMainThread = -1;
 CLASS_DECL_AURA void set_main_thread(HANDLE hThread)
 {
 
-   //   MESSAGE msg;
+   // MESSAGE msg;
 
-   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
-
-   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
+   // PeekMessage function used to create message queue Windows Desktop
+   // PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
    g_hMainThread = hThread;
 
@@ -866,9 +865,8 @@ CLASS_DECL_AURA void set_main_thread_id(UINT uiThread)
 
    //   MESSAGE msg;
 
-   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
-
-   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
+   // PeekMessage function used to create message queue Windows Desktop
+   // PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
    g_uiMainThread = uiThread;
 
@@ -888,36 +886,9 @@ CLASS_DECL_AURA UINT   get_main_thread_id()
 
 CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach)
 {
-   return;
-   //   MESSAGE msg;
-
-   // metrowin todo
-   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
-
-   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
-
-   //   AttachThreadInput(::GetCurrentThreadId(), get_main_thread_id(), bAttach ? TRUE : FALSE); // AttachThreadInput function used to attach thread input to main thread in Windows Desktop
 
 }
 
-//DWORD WINAPI thread_layer::proc(LPVOID lp)
-//{
-//
-//   thread_layer * player   = (thread_layer *)lp;
-//
-//   return player->run();
-//
-//}
-//
-//
-//bool is_thread(HTHREAD h)
-//{
-//   return GetThreadId(h) != 0;
-//}
-
-//mutex * g_pmutexMq = NULL;
-
-//map < HTHREAD, HTHREAD, mq *, mq * > * g_pmapMq = NULL;
 
 
 LPVOID WINAPI thread_get_data(HTHREAD hthread,DWORD dwIndex);
@@ -926,168 +897,6 @@ LPVOID WINAPI thread_get_data(HTHREAD hthread,DWORD dwIndex);
 int_bool WINAPI thread_set_data(HTHREAD hthread,DWORD dwIndex,LPVOID lpTlsValue);
 
 
-//mq * __get_mq(HTHREAD hthread)
-//{
-//
-//   synch_lock sl(g_pmutexMq);
-//
-//   auto pmq = (mq *) thread_get_data(hthread, TLS_MESSAGE_QUEUE);
-//
-//   if(pmq != NULL)
-//      return pmq;
-//
-//   pmq   = new mq();
-//
-//   pmq->m_hthread    = hthread;
-//
-//   thread_set_data(hthread,TLS_MESSAGE_QUEUE,pmq);
-//
-//   return pmq;
-//
-//}
-//
-//
-//
-
-//CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg,oswindow oswindow,UINT wMsgFilterMin,UINT wMsgFilterMax)
-//{
-//
-//
-//   bool bFirst = true;
-//
-//   mq * pmq = __get_mq();
-//
-//   if(pmq == NULL)
-//      return FALSE;
-//
-//   single_lock ml(&pmq->m_mutex,false);
-//
-//   if(wMsgFilterMax == 0)
-//      wMsgFilterMax = (UINT)-1;
-//
-//#if defined(LINUX) || defined(ANDROID)
-//   HTHREAD hthread = ::GetCurrentThread();
-//   DWORD idThre = ::GetCurrentThreadId();
-//#endif
-//
-//restart:
-//
-//   ml.lock();
-//
-//   if(aura_defer_process_x_message(hthread,lpMsg,oswindow,false))
-//      return TRUE;
-//
-//#endif
-//
-//   if(bFirst)
-//   {
-//
-//      pmq->m_eventNewMessage.wait(millis(11));
-//
-//      pmq->m_eventNewMessage.ResetEvent();
-//
-//      bFirst = false;
-//
-//      goto restart;
-//
-//   }
-//   else
-//   {
-//
-//      lpMsg->message = 0xffffffff;
-//      lpMsg->hwnd    = NULL;
-//      lpMsg->wParam  = 0;
-//      lpMsg->lParam  = 0;
-//      lpMsg->pt.x    = 0x80000000;
-//      lpMsg->pt.y    = 0x80000000;
-//
-//      return TRUE;
-//
-//   }
-//
-//
-//
-//
-//
-//
-//}
-//
-//
-//CLASS_DECL_AURA int_bool WINAPI PeekMessageW(LPMESSAGE lpMsg,oswindow oswindow,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg)
-//{
-//
-//   mq * pmq = __get_mq();
-//
-//   if(pmq == NULL)
-//      return FALSE;
-//
-//#if defined(LINUX) || defined(ANDROID)
-//   HTHREAD hthread = ::GetCurrentThread();
-//   DWORD idThre = ::GetCurrentThreadId();
-//#endif
-//
-//   synch_lock ml(&pmq->m_mutex);
-//
-//   if(wMsgFilterMax == 0)
-//      wMsgFilterMax = (UINT)-1;
-//
-//   for(int32_t i = 0; i < pmq->ma.get_count(); i++)
-//   {
-//      MESSAGE & msg = pmq->ma[i];
-//
-//      if((oswindow == NULL || msg.hwnd == oswindow) && msg.message >= wMsgFilterMin && msg.message <= wMsgFilterMax)
-//      {
-//         *lpMsg = msg;
-//         if(wRemoveMsg & PM_REMOVE)
-//         {
-//            pmq->ma.remove_at(i);
-//         }
-//         return TRUE;
-//      }
-//   }
-//
-//   ml.unlock();
-//
-//#if defined(LINUX) // || defined(ANDROID)
-//   if(aura_defer_process_x_message(hthread,lpMsg,oswindow,!(wRemoveMsg & PM_REMOVE)))
-//      return TRUE;
-//#endif
-//
-//   return FALSE;
-//
-//}
-
-
-
-//CLASS_DECL_AURA DWORD WINAPI GetThreadId(HTHREAD Thread)
-//{
-//
-//   synch_lock mlThreadId(g_pmutexThreadIdLock);
-//
-//   map < HTHREAD,HTHREAD,DWORD,DWORD >::pair * p = thread_id_map().PLookup(Thread);
-//
-//   if(p == NULL)
-//      return -1;
-//
-//
-//   return p->m_element2;
-//
-//}
-
-//CLASS_DECL_AURA HTHREAD  WINAPI get_thread_handle(DWORD dw)
-//{
-//
-//   synch_lock mlThreadIdHandle(g_pmutexThreadIdHandleLock);
-//
-//   map < DWORD,DWORD,HTHREAD,HTHREAD >::pair * p = thread_id_handle_map().PLookup(dw);
-//
-//   if(p == NULL)
-//      return NULL;
-//
-//
-//   return p->m_element2;
-//
-//}
 
 DWORD g_dwDebug_post_thread_msg_time;
 int g_iDebug_post_thread_msg_time;

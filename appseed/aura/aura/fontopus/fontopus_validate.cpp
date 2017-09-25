@@ -467,10 +467,10 @@ namespace fontopus
          return false;
 
 
-         m_loginthread.m_strModHash.Empty();
-         m_loginthread.m_strKeyHash.Empty();
-         m_loginthread.m_strCa2Hash.Empty();
-         return m_bLicense;
+//         m_loginthread.m_strModHash.Empty();
+//         m_loginthread.m_strKeyHash.Empty();
+//         m_loginthread.m_strCa2Hash.Empty();
+//         return m_bLicense;
 
       }
 

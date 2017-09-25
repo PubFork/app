@@ -678,7 +678,8 @@ jpeg_read_jfxx(FIBITMAP *dib, const BYTE *dataptr, unsigned int datalen) {
 	unsigned remaining = datalen - id_length;
 
 	const BYTE type = *data;
-	++data, --remaining;
+   ++data;
+   --remaining;
 
 	switch(type) {
 		case JFXX_TYPE_JPEG:
@@ -778,7 +779,7 @@ jpeg_write_comment(j_compress_ptr cinfo, FIBITMAP *dib) {
 
 		if(NULL != tag_value) {
 			for(long i = 0; i < (long)strlen(tag_value); i+= MAX_BYTES_IN_MARKER) {
-				jpeg_write_marker(cinfo, JPEG_COM, (BYTE*)tag_value + i, MIN((long)strlen(tag_value + i), MAX_BYTES_IN_MARKER));
+				jpeg_write_marker(cinfo, JPEG_COM, (BYTE*)tag_value + i, (unsigned int) MIN((long)strlen(tag_value + i), MAX_BYTES_IN_MARKER));
 			}
 			return TRUE;
 		}
@@ -804,7 +805,7 @@ jpeg_write_icc_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 		memcpy(profile, icc_signature, 12);
 
 		for(long i = 0; i < (long)iccProfile->size; i += MAX_DATA_BYTES_IN_MARKER) {
-			unsigned length = MIN((long)(iccProfile->size - i), MAX_DATA_BYTES_IN_MARKER);
+			unsigned length = (unsigned) MIN((long)(iccProfile->size - i), MAX_DATA_BYTES_IN_MARKER);
 			// sequence number
 			profile[12] = (BYTE) ((i / MAX_DATA_BYTES_IN_MARKER) + 1);
 			// number of markers
@@ -840,8 +841,8 @@ jpeg_write_iptc_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 
 			// write the profile
 			for(long i = 0; i < (long)profile_size; i += 65517L) {
-				unsigned length = MIN((long)profile_size - i, 65517L);
-				unsigned roundup = length & 0x01;	// needed for Photoshop
+				unsigned length = (unsigned) MIN((long)profile_size - i, 65517L);
+				unsigned roundup = (unsigned) (length & 0x01);	// needed for Photoshop
 				BYTE *iptc_profile = (BYTE*)malloc(length + roundup + tag_length);
 				if(iptc_profile == NULL) break;
 				// Photoshop identification string
@@ -895,7 +896,7 @@ jpeg_write_xmp_profile(j_compress_ptr cinfo, FIBITMAP *dib) {
 			memcpy(profile, xmp_signature, xmp_header_size);
 
 			for(DWORD i = 0; i < tag_length; i += 65504L) {
-				unsigned length = MIN((long)(tag_length - i), 65504L);
+				unsigned length = (unsigned) MIN((long)(tag_length - i), 65504L);
 
 				memcpy(profile + xmp_header_size, tag_value + i, length);
 				jpeg_write_marker(cinfo, EXIF_MARKER, profile, (length + xmp_header_size));
@@ -938,7 +939,7 @@ jpeg_write_exif_profile_raw(j_compress_ptr cinfo, FIBITMAP *dib) {
 			if(profile == NULL) return FALSE;
 
 			for(DWORD i = 0; i < tag_length; i += 65504L) {
-				unsigned length = MIN((long)(tag_length - i), 65504L);
+				unsigned length = (unsigned) MIN((long)(tag_length - i), 65504L);
 
 				memcpy(profile, tag_value + i, length);
 				jpeg_write_marker(cinfo, EXIF_MARKER, profile, length);

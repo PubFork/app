@@ -93,7 +93,7 @@ namespace user
 
 
 //      virtual bool is_window_enabled();
-         virtual bool enable_window(bool bEnable = true);
+         virtual bool enable_window(bool bEnable = true) override;
          virtual void _000OnDraw(::draw2d::graphics * pgraphics) override;
 
          virtual void PreSubClassWindow();
@@ -186,7 +186,7 @@ namespace user
          void set_timer(spa(::aura::timer_item) timera);
 
 
-         virtual bool IsWindow() const;
+         virtual bool IsWindow() const override;
 
          virtual LONG get_window_long(int32_t nIndex) const;
          virtual LONG set_window_long(int32_t nIndex,LONG lValue);

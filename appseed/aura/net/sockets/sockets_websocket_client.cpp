@@ -662,7 +662,7 @@ namespace sockets
    {
 
 
-      int iResult = SSL_get_verify_result(m_ssl);
+      int iResult = (int) SSL_get_verify_result(m_ssl);
 
       return iResult;
 

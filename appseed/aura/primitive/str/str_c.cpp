@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 ////#include "ca/x/x_defines.h"
 ////#include "ca/x/x_tables.h"
 ////#include "ca/x/x_charcategory_names.h"
@@ -727,13 +727,6 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
       while ( (*(++p) != DQUOTECHAR) && (*p != NULCHAR) )
       {
 
-         /*#ifdef _MBCS
-                         if (_ismbblead(*p)) {
-                             ++*numchars;
-                             if ( args )
-                                 *args++ = *p++;
-                         }
-         #endif  /* _MBCS */
          ++*numchars;
          if ( args )
             *args++ = *p;
@@ -757,14 +750,7 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
             *args++ = *p;
 
          c = (char) *p++;
-         /*#ifdef _MBCS
-                         if (_ismbblead(c)) {
-                             ++*numchars;
-                             if (args)
-                                 *args++ = *p;   /* copy 2nd byte too */
-         //                p++;  /* skip over trail byte */
-         //              }
-//#endif  /* _MBCS */
+
 
       }
       while ( c != SPACECHAR && c != NULCHAR && c != TABCHAR );
@@ -857,25 +843,6 @@ void __cdecl parse_cmdline(char *cmdstart, char **argv, char *args, int32_t * nu
          if (*p == NULCHAR || (!inquote && (*p == SPACECHAR || *p == TABCHAR)))
             break;
 
-         /* copy character into argument */
-         /*#ifdef _MBCS
-                     if (copychar) {
-                         if (args) {
-                             if (_ismbblead(*p)) {
-                                 *args++ = *p++;
-                                 ++*numchars;
-                             }
-                             *args++ = *p;
-                         } else {
-                             if (_ismbblead(*p)) {
-                                 ++p;
-                                 ++*numchars;
-                             }
-                         }
-                         ++*numchars;
-                     }
-                     ++p;
-         #else  /* _MBCS */
          if (copychar)
          {
             if (args)
@@ -1600,7 +1567,7 @@ strsize utf32_to_utf16_len(const unichar32 * codepoints, strsize input_size)
          // invalid code_point, do something !
          throw simple_exception(::get_thread_app(), "utf32_to_utf16_len :: invalid code_point, do something ! ");
 
-         ++len;
+         //++len;
 
       }
 

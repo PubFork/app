@@ -147,8 +147,6 @@ void object::dump(dump_context & dumpcontext) const
 
    dumpcontext << "a " << typeid(*this).name() << " at " << (void *)this << "\n";
 
-   UNUSED(dumpcontext); // unused in release build
-
 }
 
 

@@ -23,9 +23,9 @@ bool detect_8bit_borders(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * 
 
    int64_t iB = 0;
 
-   int iLight = 0;
+   //int iLight = 0;
 
-   int iDark = 0;
+   //int iDark = 0;
 
    // Roughly detect colors on transparency borders...
 

@@ -22,11 +22,20 @@ void foo()
    throw simple_exception(::get_thread_app());
 }
 
-void aura_auto_debug_teste() {
-   return;
+void aura_auto_debug_teste()
+{
+   
+   if(!file_exists_dup("/ca2/debug_test"))
+   {
+      
+      return;
+      
+   }
+   
    try
    {
-      if(true) {
+      if(true)
+      {
          AUTO(debug_puts("two"));
          debug_puts("one"); // compiler knows this doesn't throw
       }

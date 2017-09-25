@@ -36,18 +36,7 @@
 #	endif
 #endif
 
-/*#ifdef __GNUC__
-#ifndef UNUSED
-#	define UNUSED(x) __attribute__((__unused__))
-#endif
-#elif defined(_MSC_VER)
-#	ifndef UNUSED
-#		define UNUSED(x) x
-#		pragma warning( disable : 4100 ) /* unreferenced formal parameter */
-/*#	endif
-#else
-#	define UNUSED(x) x
-#endif*/
+
 
 void scIsInNet(CScriptVar *ca, void *data);
 bool is_only_digits(const char * psz);

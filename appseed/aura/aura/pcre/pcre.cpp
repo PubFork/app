@@ -177,7 +177,7 @@ public:
    }
 
 
-   virtual int matches(const string & str,pcre_context * pcreContext)
+   virtual int matches(const string & str,pcre_context * pcreContext) override
    {
 
       int c = pcre2_match(m_pc,(PCRE2_SPTR)(const char *)str,str.get_length(),0,0,PC().m_pmd,NULL);
@@ -185,7 +185,7 @@ public:
       return c;
    }
 
-   virtual int matches(const char * psz, strsize len, pcre_context * pcreContext)
+   virtual int matches(const char * psz, strsize len, pcre_context * pcreContext) override
    {
 
       int c = pcre2_match(m_pc,(PCRE2_SPTR)psz,len,0,0,PC().m_pmd,NULL);
@@ -194,7 +194,7 @@ public:
    }
 
 
-   virtual void matches(strsize_array & ia, const string & str, pcre_context * pcreContext)
+   virtual void matches(strsize_array & ia, const string & str, pcre_context * pcreContext) override
    {
 
       int c = matches(str, pcreContext);
@@ -215,7 +215,7 @@ public:
 
    }
 
-   virtual void matches(strsize_array & ia,const char * psz, strsize len,pcre_context * pcreContext)
+   virtual void matches(strsize_array & ia,const char * psz, strsize len,pcre_context * pcreContext) override
    {
 
       int c = matches(psz, len,pcreContext);

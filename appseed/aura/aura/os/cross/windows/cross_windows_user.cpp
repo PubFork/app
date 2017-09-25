@@ -274,7 +274,7 @@ MultiByteToWideChar(
 
          iconv_close(iconvPlease);
 
-         return ((sOutIn - sOut) / sizeof(unichar)) + (cbMultiByte < 0 ? 1 : 0);
+         return (int32_t) (((sOutIn - sOut) / sizeof(unichar)) + (cbMultiByte < 0 ? 1 : 0));
 
       }
       else
@@ -292,7 +292,7 @@ MultiByteToWideChar(
 
          iconv_close(iconvPlease);
 
-         return ((sOutIn - sOut) / sizeof(unichar))  + (cbMultiByte < 0 ? 1 : 0);
+         return (int32_t) (((sOutIn - sOut) / sizeof(unichar))  + (cbMultiByte < 0 ? 1 : 0));
 
       }
 

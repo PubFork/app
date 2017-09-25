@@ -25,7 +25,7 @@ string GeoIP_get_host_or_proxy ();
  */
 const char *GeoIPUpdateHost = "updates.maxmind.com";
 /* This is the direct, or proxy port number. */
-static int32_t GeoIPHTTPPort = 80;
+//static int32_t GeoIPHTTPPort = 80;
 /* License-only format (OLD) */
 const char *GeoIPHTTPRequest = "GET %s%s/app/update?license_key=%s&md5=%s HTTP/1.0\nHost: updates.maxmind.com\n\n";
 /* General DB Types formats */
@@ -145,9 +145,9 @@ void GeoIP_printf(void (*f)(char *), const char *str,...) {
  */
 
 /* The Protocol is usually "" OR "http://" with a proxy. */
-static const char * GeoIPProxyHTTP = "";
+//static const char * GeoIPProxyHTTP = "";
 /* GeoIP Hostname where proxy forwards requests. */
-static const char * GeoIPProxiedHost = "";
+//static const char * GeoIPProxiedHost = "";
 
 /* read http_proxy env. var & parse it.
  * -----------------------------------------

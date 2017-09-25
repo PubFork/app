@@ -31,7 +31,7 @@ namespace sqlite
       port = "";
       db = "sqlite.db";
       login = "root";
-      passwd, "";
+      passwd = "";
       conn = NULL;
    }
 

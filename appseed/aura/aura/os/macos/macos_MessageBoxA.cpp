@@ -26,8 +26,8 @@ int MessageBoxW(oswindow window, const unichar * pszMessageParam, const unichar 
    string pszHeader(pszHeaderParam);
    
    //convert the strings from char* to CFStringRef
-   CFStringRef header_ref      = CFStringCreateWithCString( NULL, pszHeader,     strlen(pszHeader)    );
-   CFStringRef message_ref  = CFStringCreateWithCString( NULL, pszMessage,  strlen(pszMessage) );
+   CFStringRef header_ref      = CFStringCreateWithCString( NULL, pszHeader,     (unsigned int) strlen(pszHeader)    );
+   CFStringRef message_ref  = CFStringCreateWithCString( NULL, pszMessage,  (unsigned int) strlen(pszMessage) );
    
    CFOptionFlags result;  //result code from the message box
    
@@ -76,11 +76,11 @@ int MessageBoxW(oswindow window, const unichar * pszMessageParam, const unichar 
    CFStringRef button3_ref = NULL;
    
    if(strButton1.has_char() || strButton1.compare_ci("ok") != 0)
-      button1_ref = CFStringCreateWithCString(NULL, strButton1, strButton1.length());
+      button1_ref = CFStringCreateWithCString(NULL, strButton1, (unsigned int) strButton1.length());
    if(strButton2.has_char())
-      button2_ref = CFStringCreateWithCString(NULL, strButton2, strButton2.length());
+      button2_ref = CFStringCreateWithCString(NULL, strButton2, (unsigned int) strButton2.length());
    if(strButton3.has_char())
-      button3_ref = CFStringCreateWithCString(NULL, strButton3, strButton3.length());
+      button3_ref = CFStringCreateWithCString(NULL, strButton3, (unsigned int) strButton3.length());
    
    
    //launch the message box

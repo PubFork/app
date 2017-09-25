@@ -80,131 +80,6 @@ WINBOOL cg_release_color(CGColorRef colorref)
     return TRUE;
 }
 
-/*
-
-HDC GetWindowDC(oswindow hwnd)
-{
-   return GetDC(hwnd);
-}
-
-
-
-WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
-{
-
-   if(hdc == NULL)
-      return FALSE;
-   
-   /*QDEndCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
-   
-   if(hdc->m_wasSwapped)
-   {
-      QDSwapPort(hdc->m_savedPort, &hdc->m_savedPort);
-   }*/
-
- /*  delete hdc;
-   return TRUE;
-
-}
-  
-  */
-
-
-//WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
-//{
-/*   XWindowAttributes attrs;
-   /* Fill attribute structure with information about root window */
-  /* if(XGetWindowAttributes(XOpenDisplay(NULL), hwnd, &attrs) == 0)
-   {
-      return false;
-   }
-   lprect->left      = 0;
-   lprect->top       = 0;
-   lprect->right     = lprect->left    + attrs.width;
-   lprect->bottom    = lprect->top     + attrs.height;*/
-    
-    /*if(!GetWindowRect(hwnd, lprect))
-        return FALSE;
-    
-    lprect->right   -=  lprect->left;
-    lprect->bottom  -=  lprect->top;
-    lprect->left    =   0;
-    lprect->top     =   0;
-    
-    return TRUE;
-    
-}
-
-
-WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
-{*/
-  /* XWindowAttributes attrs;
-   /* Fill attribute structure with information about root window */
-/*   if(XGetWindowAttributes(XOpenDisplay(NULL), hwnd, &attrs) == 0)
-   {
-      return false;
-   }
-   lprect->left      = attrs.x;
-   lprect->top       = attrs.y;
-   lprect->right     = lprect->left    + attrs.width;
-   lprect->bottom    = lprect->top     + attrs.height;*/
-    
-/*   return get_nswindow_rect(hwnd, lprect) ? 1 : 0;
-    
-    
-}
-*/
-
-/*
-int FillRect(HDC hdc, const RECT * lprc, HBRUSH hbr)
-{
-    
-   CGRect rect;
-   
-   rect.origin.x     = lprc->left;
-   rect.origin.y     = lprc->top;
-   rect.size.width   = lprc->right - lprc->left;
-   rect.size.height  = lprc->bottom - lprc->top;
-   
-   CGContextSetRGBFillColor(hdc->m_cgcontext, argb_get_r_value(hbr->lbColor), argb_get_g_value(hbr->lbColor), argb_get_b_value(hbr->lbColor), argb_get_a_value(hbr->lbColor));
-    
-   CGContextFillRect(hdc->m_cgcontext, rect);
-   
-   return 1;
-}
-*/
-
-/*
-
-HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
-
-   HDC hdc = GetDC(hwnd);
-
-   GetClientRect(hwnd, &ps->rcPaint);
-
-   return hdc;
-
-}
-
-
-WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
-
-   return ReleaseDC(hwnd, ps->hdc);
-
-}
-*/
-
-
-
-
-
-
-/*int _c_XErrorHandler(Display * display, XErrorEvent * perrorevent)
-{
-   return 0;
-}*/
 
 
 
@@ -313,7 +188,7 @@ CTFontDescriptorRef CreateFontDescriptorFromFamilyAndTraits(CFStringRef iFamilyN
       // Create the traits dictionary.
       symTraits = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &iTraits);
       
-      (symTraits != NULL);
+      ASSERT(symTraits != NULL);
       
       if (symTraits != NULL)
       {

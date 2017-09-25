@@ -79,6 +79,7 @@ void StyledHRDMapper::saveRegionMappings(::file::ostream & writer) const
 /*  writer->write(string("<?xml version=\"1.0\"?>\n\
 <!DOCTYPE hrd SYSTEM \"../hrd.dtd\">\n\n\
 <hrd>\n"));
+ */
 /*  for(string *key = regionDefines.enumerateKey(); key; key=regionDefines.nextkey()){
     const StyledRegion *rdef = StyledRegion::cast(regionDefines.get(key));
     char temporary[256];

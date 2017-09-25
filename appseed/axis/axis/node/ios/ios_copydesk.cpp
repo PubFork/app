@@ -5,7 +5,7 @@ namespace ios
 {
 
 
-   copydesk::copydesk(sp(::aura::application) papp) :
+   copydesk::copydesk(::aura::application * papp) :
       ::object(papp),
       ::user::copydesk(papp)
    {

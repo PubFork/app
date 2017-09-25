@@ -35,8 +35,8 @@ namespace base
       virtual void set_cursor(::visual::cursor * pcursor);
       virtual void set_cursor(::visual::e_cursor ecursor);
       virtual void set_default_cursor(::visual::e_cursor ecursor);
-      virtual ::visual::cursor * get_cursor();
-      virtual ::visual::cursor * get_default_cursor();
+      virtual ::visual::cursor * get_cursor() override;
+      virtual ::visual::cursor * get_default_cursor() override;
 
       virtual bool on_ui_mouse_message(::user::mouse * pmouse);
 
@@ -79,7 +79,7 @@ namespace base
 
       virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
 
-      virtual oswindow get_capture();
+      virtual oswindow get_capture() override;
 
 
       virtual void defer_create_user_style(const char * pszUiInteractionLibrary = NULL);
