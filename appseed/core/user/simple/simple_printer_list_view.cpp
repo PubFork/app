@@ -60,7 +60,7 @@ void simple_printer_list_view::_001OnCreate(::message::message * pobj)
 
    free(infoa);
 #else
-   throw todo(get_app());
+   //throw todo(get_app());
 #endif
 
 

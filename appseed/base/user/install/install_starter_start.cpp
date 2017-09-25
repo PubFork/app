@@ -94,7 +94,7 @@ namespace install
 
       keep_true keepStarting(m_bStarting);
 
-      int32_t i = 0;
+      //int32_t i = 0;
 
       string strBuild;
 

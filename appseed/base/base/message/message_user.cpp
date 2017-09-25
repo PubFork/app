@@ -347,21 +347,20 @@ namespace message
 
 #endif
 
-#ifdef WINDOWSEX
-
    LPNMHDR notify::get_lpnmhdr()
    {
+
       return (LPNMHDR)m_lparam.m_lparam;
+      
    }
 
+   
    int32_t notify::get_ctrl_id()
    {
+   
       return (int32_t)m_wparam;
+      
    }
-
-#endif
-
-
 
 
 } // namespace message

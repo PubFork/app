@@ -1524,6 +1524,8 @@ namespace user
 #else
       oswindow w = ::SetCapture(get_handle());
 #endif
+      
+      output_debug_string("\nSet Capture: oswindow=0x" + ::hex::lower_from((int_ptr) w));
 
       Session.m_puiCapture = pui;
 

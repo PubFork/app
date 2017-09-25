@@ -87,9 +87,9 @@ public:
       return this != p;
    }
    
-   bool is_null();
+   //bool is_null();
    
-   nswindow window()
+   nswindow window() const
    {
       return is_null() ? NULL : m_nswindow;
    }
@@ -163,12 +163,12 @@ inline int ShowWindow(::oswindow window, int32_t nCmdShow)
 
 inline int32_t GetWindowLongA(::oswindow window, int32_t nIndex)
 {
-   return window->get_window_long(nIndex);
+   return (int32_t) window->get_window_long(nIndex);
 }
 
 inline int32_t SetWindowLongA(::oswindow window, int32_t nIndex, int32_t l)
 {
-   return window->set_window_long(nIndex, l);
+   return (int32_t) window->set_window_long(nIndex, l);
 }
 
 inline int ClientToScreen(::oswindow window, POINT * lppoint)

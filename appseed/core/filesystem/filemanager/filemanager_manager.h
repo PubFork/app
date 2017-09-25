@@ -46,18 +46,18 @@ namespace filemanager
       manager(::aura::application * papp);
       virtual ~manager();
 
-      virtual int64_t add_ref()
+      virtual int64_t add_ref() override
       {
          return ::object::add_ref();
       }
 
-      virtual int64_t dec_ref()
+      virtual int64_t dec_ref() override
       {
          return ::object::dec_ref();
       }
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
 
       virtual ::fs::data *                         get_fs_data();
@@ -113,9 +113,9 @@ namespace filemanager
       virtual void handle_file_action(::file_watcher::file_watch_id watchid, const char * dir, const char * filename, ::file_watcher::e_action action) override;
 
 
-      string calc_data_key(::database::id & id);
+      string calc_data_key(::database::id & id) override;
 
-      virtual void on_create(::create * pcreate);
+      virtual void on_create(::create * pcreate) override;
 
 
       operation_document * get_operation_doc(bool bSwitch);
@@ -124,8 +124,8 @@ namespace filemanager
       virtual void on_command(::user::command * pcommand) override;
       virtual void on_command_probe(::user::command * pcommand) override;
 
-      virtual bool on_new_document();
-      virtual bool on_open_document(var varFile);
+      virtual bool on_new_document() override;
+      virtual bool on_open_document(var varFile) override;
 
       virtual bool HandleDefaultFileManagerItemCmdMsg(::user::command * pcommand,::fs::item_array & itema);
 

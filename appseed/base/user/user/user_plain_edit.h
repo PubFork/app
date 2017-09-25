@@ -119,10 +119,10 @@ namespace user
       virtual colorertake5::base_editor * colorertake5();
 
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
 
-      virtual void on_viewport_offset(::draw2d::graphics * pgraphics);
+      virtual void on_viewport_offset(::draw2d::graphics * pgraphics) override;
 
       
       //void on_change_view_size();
@@ -137,7 +137,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnMouseLeave);
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnKeyUp);
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnChar);
       DECL_GEN_SIGNAL(_001OnUniChar);
 
@@ -157,12 +157,12 @@ namespace user
 //      DECL_GEN_SIGNAL(_001OnChar);
       DECL_GEN_SIGNAL(_001OnSysChar);
 
-      DECL_GEN_SIGNAL(keyboard_focus_OnKeyDown);
-      DECL_GEN_SIGNAL(keyboard_focus_OnKeyUp);
-      DECL_GEN_SIGNAL(keyboard_focus_OnChar);
+      DECL_GEN_SIGNAL(keyboard_focus_OnKeyDown) override;
+      DECL_GEN_SIGNAL(keyboard_focus_OnKeyUp) override;
+      DECL_GEN_SIGNAL(keyboard_focus_OnChar) override;
 
-      virtual bool keyboard_focus_is_focusable();
-      virtual bool keyboard_focus_OnSetFocus();
+      virtual bool keyboard_focus_is_focusable() override;
+      virtual bool keyboard_focus_OnSetFocus() override;
 
 
       virtual int32_t get_wheel_scroll_delta() override;
@@ -172,11 +172,11 @@ namespace user
 
       virtual bool get_line_color(COLORREF & crOverride, const string & strLine);
 
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
       void key_to_char(::message::key * pkey);
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
       virtual void OnDraw(::draw2d::dib * pdib);      // overridden to draw this ::user::impact
       virtual void _001OnInitialUpdate();
 
@@ -196,14 +196,14 @@ namespace user
       virtual void _001OnUpdate(::action::context actioncontext);
       virtual void _001OnSetText(::action::context actioncontext);
 
-      virtual bool has_action_hover();
-      virtual bool has_text_input();
+      virtual bool has_action_hover() override;
+      virtual bool has_text_input() override;
 
 
       virtual void on_updata_data(::data::simple_data * pdata, int32_t iHint);
 
 
-      virtual bool create_control(class ::user::control_descriptor * pdescriptor);
+      virtual bool create_control(class ::user::control_descriptor * pdescriptor) override;
 
       virtual strsize char_hit_test(int32_t x, int32_t y);
       virtual strsize line_char_hit_test(int32_t x, index iLine);
@@ -211,13 +211,13 @@ namespace user
       colorertake5::file_type * colorer_select_type();
 
       virtual strsize _001GetTextLength() const;
-      virtual void _001GetText(string & str) const;
-      virtual void _001GetSelText(string & str) const;
+      virtual void _001GetText(string & str) const override;
+      virtual void _001GetSelText(string & str) const override;
       virtual void _001GetSelText(string & str, index iSelStart, index iSelEnd) const;
 
       void _001GetViewSel(strsize &iSelStart, strsize &iSelEnd);
 
-      void _001SetText(const string & str, ::action::context actioncontext);
+      void _001SetText(const string & str, ::action::context actioncontext) override;
       void _001SetSelText(const char * psz, ::action::context actioncontext);
       void _001SetSelEnd(strsize iSelEnd);
       void _001SetSel(strsize iSelStart, strsize iSelEnd);
@@ -276,14 +276,14 @@ namespace user
 
       void set_root(plain_text_tree * pdata, bool bOwnData);
 
-      virtual void on_layout();
+      virtual void on_layout() override;
 
-      virtual bool ShowWindow(int32_t nCmdShow);
+      virtual bool ShowWindow(int32_t nCmdShow) override;
 
-      virtual void on_change_viewport_offset();
+      virtual void on_change_viewport_offset() override;
 
 
-      virtual size get_total_size();
+      virtual size get_total_size() override;
 
 
       virtual var get_ex_value();

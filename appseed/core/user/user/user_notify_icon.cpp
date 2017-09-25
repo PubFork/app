@@ -293,6 +293,10 @@ namespace user
          return false;
 
       }
+      
+      m_piconCurrent = hicon;
+      
+      return true;
 
 #else
 
@@ -300,9 +304,6 @@ namespace user
 
 #endif
 
-      m_piconCurrent = hicon;
-
-      return true;
 
    }
 

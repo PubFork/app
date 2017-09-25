@@ -50,14 +50,14 @@ namespace user
       virtual ~menu();
       
       
-      virtual int64_t add_ref()
+      virtual int64_t add_ref() override
       {
          
          return ::object::add_ref();
          
       }
       
-      virtual int64_t dec_ref()
+      virtual int64_t dec_ref() override
       {
          
          return ::object::dec_ref();
@@ -78,9 +78,9 @@ namespace user
       virtual bool create_inline_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
       virtual bool track_popup_menu(::user::interaction * puiNotify = NULL, ::user::interaction * puiParent = NULL);
       
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
       
-      void _001OnDraw(::draw2d::graphics * pgraphics);
+      void _001OnDraw(::draw2d::graphics * pgraphics) override;
       
       DECL_GEN_SIGNAL(_001OnLButtonDown);
       DECL_GEN_SIGNAL(_001OnCreate);
@@ -92,11 +92,11 @@ namespace user
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnClose);
 
-      virtual bool BaseOnControlEvent(::user::control_event * pevent);
+      virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
       
-      bool pre_create_window(::user::create_struct& cs);
+      bool pre_create_window(::user::create_struct& cs) override;
       
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
       
       sp(::user::menu_item) get_item();
       
@@ -104,7 +104,7 @@ namespace user
       
       virtual bool get_color(COLORREF & cr,::user::e_color ecolor, ::user::interaction * pui) override;
       virtual bool get_translucency(::user::e_translucency & etranslucency, ::user::e_element eelement, ::user::interaction * pui) override;
-      virtual bool has_pending_graphical_update();
+      virtual bool has_pending_graphical_update() override;
       
       virtual bool create_menu(const stringa & straCommand, const stringa & straCommandTitle);
 

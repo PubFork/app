@@ -15,8 +15,8 @@ namespace user
       {
 
          m_iIcon = 0x80000000;
-         m_pszPath = "";
-         m_pszShellThemePrefix = "";
+         m_pszPath = NULL;
+         m_pszShellThemePrefix = NULL;
 
       }
 

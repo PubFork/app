@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 #include "aura/user/colorertake5/colorertake5.h"
 
@@ -445,7 +445,7 @@ namespace user
          else
          {
 
-            COLORREF crOverride;
+            COLORREF crOverride = ARGB(255, 0, 0, 0);
 
             bool bOverride = false;
 
@@ -1548,7 +1548,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      const int iLenUniText = 14;
+      //const int iLenUniText = 14;
 
       sized sizeUniText;
 
@@ -1917,7 +1917,7 @@ namespace user
 
       select_font(pgraphics, font_plain_edit);
 
-      const int iLenUniText = 14;
+      //const int iLenUniText = 14;
 
       sized sizeUniText;
 
@@ -2544,7 +2544,7 @@ namespace user
 
       synch_lock sl(m_pmutex);
 
-      stringa & straLines = m_plines->lines;
+      //stringa & straLines = m_plines->lines;
 
       strsize i1;
 
@@ -2670,7 +2670,7 @@ namespace user
 
       int32_t lim = 0;
 
-      bool bFound = false;
+      //bool bFound = false;
 
       string strLine = get_line(iLine);
 
@@ -3208,7 +3208,7 @@ end:
 
                }
 
-               iLastR = 0;
+               //iLastR = 0;
 
             }
             else

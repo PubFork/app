@@ -228,7 +228,9 @@ namespace user
    void check_box::_001OnCreate(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      //SCAST_PTR(::message::create, pcreate, pobj);
+      
+      UNREFERENCED_PARAMETER(pobj);
 
       m_puserstyle = Application.userstyle();
 

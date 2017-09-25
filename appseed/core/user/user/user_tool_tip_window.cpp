@@ -84,8 +84,6 @@ namespace user
       m_ealign = m_ealignDefault;
 
 
-#ifdef WINDOWSEX
-
       sp(::user::interaction) pwnd = m_pwnd;
       ::user::tool_tip_tool * ptool = GetTool(iTool);
 
@@ -146,11 +144,6 @@ namespace user
          break;
       }
 
-#else
-
-      throw todo(get_app());
-
-#endif
 
       SetWindowPos(
          ZORDER_TOPMOST,

@@ -91,7 +91,7 @@ namespace core
 
 
       //virtual int32_t main();
-      virtual bool InitApplication();
+      virtual bool InitApplication() override;
 
       virtual bool initialize() override;
       virtual bool initialize1() override;

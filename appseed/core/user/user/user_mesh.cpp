@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
@@ -753,7 +753,8 @@ namespace user
 
    void mesh::_001OnSize(::message::message * pobj)
    {
-      SCAST_PTR(::message::size,psize,pobj);
+      UNREFERENCED_PARAMETER(pobj);
+      //SCAST_PTR(::message::size,psize,pobj);
       //on_layout();
       //psize->m_bRet = false;
    }

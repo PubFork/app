@@ -15,7 +15,7 @@ namespace filemanager
       child_frame(::aura::application * papp);
       virtual ~child_frame();
 
-      void install_message_routing(::message::sender * pinterface);
+      void install_message_routing(::message::sender * pinterface) override;
 
       void OnChangeEditSearch();
 
@@ -24,7 +24,7 @@ namespace filemanager
 
       void GetSelected(::fs::item_array &itema);
 
-      bool on_create_bars();
+      bool on_create_bars() override;
       bool DestroyBars();
       virtual void _001OnCmdMsg(::user::command * pcommand) override;
 

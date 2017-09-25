@@ -81,7 +81,7 @@ namespace install
       virtual ~plugin();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
 
 
@@ -89,13 +89,13 @@ namespace install
       virtual void run_start_install(const char * pszType, const char * pszRun, const char * pszLocale, const char * pszSchema);
 
 
-      virtual void start_ca2();
+      virtual void start_ca2() override;
 
       virtual bool thread_start_ca2_on_idle();
 
-      virtual bool plugin_initialize();
+      virtual bool plugin_initialize() override;
 
-      virtual void on_paint(::draw2d::graphics * pgraphics, const RECT & lprect);
+      virtual void on_paint(::draw2d::graphics * pgraphics, const RECT & lprect) override;
 
       virtual void on_prepare_memory();
 
@@ -105,15 +105,15 @@ namespace install
       
       virtual void message_handler(::message::base * pbase) override;
 
-      virtual void on_paint_progress(::draw2d::graphics * pgraphics, const RECT & lprect);
+      virtual void on_paint_progress(::draw2d::graphics * pgraphics, const RECT & lprect) override;
 
-      virtual double extract_spa_progress_rate();
+      virtual double extract_spa_progress_rate() override;
 
-      virtual void deferred_prodevian_redraw();
+      virtual void deferred_prodevian_redraw() override;
 
 #ifndef METROWIN
 
-      virtual void on_post(::aura::ipc::rx * prx, int64_t a, int64_t b);
+      virtual void on_post(::aura::ipc::rx * prx, int64_t a, int64_t b) override;
 
       using ::hotplugin::plugin::on_receive;
 
@@ -123,30 +123,30 @@ namespace install
 
       virtual bool native_launch();
 
-      virtual bool is_installing();
+      virtual bool is_installing() override;
 
-      virtual void restart_aura_ipc();
+      virtual void restart_aura_ipc() override;
 
       using ::hotplugin::plugin::SetWindowPos;
-      virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW);
+      virtual bool SetWindowPos(int_ptr z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags = SWP_SHOWWINDOW) override;
 
-      virtual void on_ready();
+      virtual void on_ready() override;
 
-      virtual string defer_get_plugin();
+      virtual string defer_get_plugin() override;
 
       using ::hotplugin::plugin::viewport_screen_to_client;
-      virtual void viewport_screen_to_client(POINT * ppt);
+      virtual void viewport_screen_to_client(POINT * ppt) override;
       
       using ::hotplugin::plugin::viewport_client_to_screen;
-      virtual void viewport_client_to_screen(POINT * ppt);
+      virtual void viewport_client_to_screen(POINT * ppt) override;
 
-      virtual bool set_host(::hotplugin::host * phost);
+      virtual bool set_host(::hotplugin::host * phost) override;
 
       //sp(::user::interaction) GetFocus();
 
       //sp(::user::interaction) SetFocus();
 
-      virtual void on_host_timer();
+      virtual void on_host_timer() override;
 
    };
 

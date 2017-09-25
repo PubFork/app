@@ -1764,8 +1764,10 @@ restart:
    bool interaction::is_this_visible()
    {
 
-      return (::user::interaction_base::is_this_visible() ||
-              (m_pimpl.is_set() && (m_pimpl->m_bShowFlags && (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)))
+      return
+      (
+       ::user::interaction_base::is_this_visible() &&
+       (m_pimpl.is_set() && (m_pimpl->m_bShowFlags && (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW)))
               && !(m_pimpl->m_bShowFlags && (m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)));
 
    }
@@ -2823,7 +2825,7 @@ restart:
 
       UNREFERENCED_PARAMETER(pobj);
 
-      SCAST_PTR(::message::base, pbase, pobj);
+      //SCAST_PTR(::message::base, pbase, pobj);
 
       //if(pbase->m_id == WM_KEYDOWN)
       //{
@@ -4586,7 +4588,7 @@ restart:
 
       // for tracking the idle time state
       bool bIdle = TRUE;
-      LONG lIdleCount = 0;
+      //LONG lIdleCount = 0;
       //      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
       bool bShowIdle = !(GetStyle() & WS_VISIBLE);
       //      oswindow oswindow_Parent = ::GetParent(get_handle());

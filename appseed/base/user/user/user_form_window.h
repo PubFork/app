@@ -67,7 +67,7 @@ namespace user
       DECL_GEN_SIGNAL(_000OnPosCreate);
       DECL_GEN_SIGNAL(_001OnCreate);
 
-      virtual void install_message_routing(::message::sender *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface) override;
       virtual void _001InitializeFormPreData();
       virtual void _001OnUpdate(sp(::user::impact) pviewSender,LPARAM lhint,object* phint);
       virtual void _001Update(sp(control) pcontrol);
@@ -96,7 +96,7 @@ namespace user
 
       bool operator == (const control & control) const;
 
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      bool BaseOnControlEvent(::user::control_event * pevent) override;
       void _001SetControlFactory();
 
 
@@ -118,7 +118,7 @@ namespace user
       //void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
       //      virtual bool BaseOnControlEvent(::user::control_event * pevent);
       //      DECL_GEN_SIGNAL(_001OnCreate);
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnUser123);
       //      virtual void install_message_routing(::message::sender * pinterface);
 

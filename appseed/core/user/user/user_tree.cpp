@@ -298,7 +298,7 @@ namespace user
 
          ::draw2d::brush_sp brushText(allocer());
 
-         COLORREF crText = _001GetColor(color_text, ARGB(255, 0, 0, 0));
+         //COLORREF crText = _001GetColor(color_text, ARGB(255, 0, 0, 0));
 
          if(bSelected) // selected
          {

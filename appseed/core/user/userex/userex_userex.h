@@ -42,9 +42,9 @@ namespace userex
 
       ::user::shell::shell * shell();
 
-      virtual bool initialize1();
-      virtual bool initialize2();
-      virtual bool initialize();
+      virtual bool initialize1() override;
+      virtual bool initialize2() override;
+      virtual bool initialize() override;
 
 
 
@@ -65,7 +65,7 @@ namespace userex
 
       virtual void AddToRecentFileList(const char * lpszPathName);
 
-      virtual bool finalize();
+      virtual bool finalize() override;
 
       virtual bool _001OnCmdMsg(::user::command * pcommand);
 

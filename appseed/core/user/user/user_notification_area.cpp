@@ -51,11 +51,10 @@ namespace user
       m_pil16 = canew(image_list(papp));
       m_pil16->create(16,16,ILC_COLOR24,16,16);
 
-#else
-      throw todo(get_app());
 #endif
 
       ListTrayIcons();
+      
    }
 
    void notification_area::ListTrayIcons(int32_t defindex /*= 0*/)

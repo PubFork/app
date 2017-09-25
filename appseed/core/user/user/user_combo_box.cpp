@@ -608,9 +608,12 @@ namespace user
    void combo_box::_001OnKeyUp(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::key,pkey,pobj);
+      //SCAST_PTR(::message::key,pkey,pobj);
+      
+      UNREFERENCED_PARAMETER(pobj);
 
    }
+   
 
    void combo_box::_001OnLButtonDown(::message::message * pobj)
    {

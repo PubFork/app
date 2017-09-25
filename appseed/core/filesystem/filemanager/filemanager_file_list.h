@@ -70,20 +70,20 @@ namespace filemanager
 
       void schedule_file_size(const char * psz);
 
-      virtual void _017OpenContextMenuFolder(sp(::fs::item) item, ::action::context actioncontext);
-      virtual void _017OpenContextMenuFile(const ::fs::item_array &itema, ::action::context actioncontext);
-      virtual void _017OpenContextMenu(::action::context actioncontext);
-      virtual void _017OpenFile(const ::fs::item_array & itema, ::action::context actioncontext);
-      virtual void _017OpenFolder(sp(::fs::item)  item, ::action::context actioncontext);
-      void StartAnimation();
+      virtual void _017OpenContextMenuFolder(sp(::fs::item) item, ::action::context actioncontext) override;
+      virtual void _017OpenContextMenuFile(const ::fs::item_array &itema, ::action::context actioncontext) override;
+      virtual void _017OpenContextMenu(::action::context actioncontext) override;
+      virtual void _017OpenFile(const ::fs::item_array & itema, ::action::context actioncontext) override;
+      virtual void _017OpenFolder(sp(::fs::item)  item, ::action::context actioncontext) override;
+      void StartAnimation() override;
       void RenameFile(int32_t iLine, string & str, ::action::context actioncontext);
       static UINT c_cdecl ThreadProcFileSize(LPVOID lpparam);
 
       void FileSize();
 
       virtual void _001OnCmdMsg(::user::command * pcommand) override;
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
-      virtual bool pre_create_window(::user::create_struct& cs);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
+      virtual bool pre_create_window(::user::create_struct& cs) override;
 
       virtual void on_command_probe(::user::command * pcommand) override;
       virtual void on_command(::user::command * pcommand) override;
@@ -99,17 +99,17 @@ namespace filemanager
 
 
 
-      virtual id data_get_current_list_layout_id();
+      virtual id data_get_current_list_layout_id() override;
 
       virtual ~file_list();
 #ifdef DEBUG
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 #endif
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnContextMenu);
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
 
       DECL_GEN_SIGNAL(_001OnShellCommand);
       DECL_GEN_SIGNAL(_001OnFileManagerItemCommand);
@@ -126,23 +126,23 @@ namespace filemanager
       DECL_GEN_SIGNAL(_001OnSpafy2);
       DECL_GEN_SIGNAL(_001OnUpdateSpafy2);
 
-      virtual bool _001OnClick(uint_ptr nFlags, point point);
-      virtual bool _001OnRightClick(uint_ptr nFlags, point point);
+      virtual bool _001OnClick(uint_ptr nFlags, point point) override;
+      virtual bool _001OnRightClick(uint_ptr nFlags, point point) override;
 
-      virtual void _001OnAfterSort();
+      virtual void _001OnAfterSort() override;
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
-      virtual void _001InsertColumns();
+      virtual void _001InsertColumns() override;
 
       virtual void file_size_add_request(bool bClear);
 
 
-      virtual COLORREF get_background_color();
+      virtual COLORREF get_background_color() override;
       bool add_item(const char * pszPath, const char * pszTitle);
       //virtual void schedule_file_size(const char * psz) = 0;
       // Attributes
-      virtual void browse_sync(::action::context actioncontext);
+      virtual void browse_sync(::action::context actioncontext) override;
 
       sp(image_list) GetActionButtonImageList(index i);
 
@@ -150,14 +150,14 @@ namespace filemanager
 
       void GetSelected(::fs::item_array & itema);
 
-      void _001OnInitializeForm(sp(::user::control) pcontrol);
-      void _001OnButtonAction(sp(::user::control) pcontrol);
+      void _001OnInitializeForm(sp(::user::control) pcontrol) override;
+      void _001OnButtonAction(sp(::user::control) pcontrol) override;
 
-      virtual void _017OpenSelected(bool bOpenFile, ::action::context actioncontext);
-      virtual void _017OpenContextMenuSelected(::action::context actioncontext);
+      virtual void _017OpenSelected(bool bOpenFile, ::action::context actioncontext) override;
+      virtual void _017OpenContextMenuSelected(::action::context actioncontext) override;
       void _017PreSynchronize(::action::context actioncontext);
       void TakeAnimationSnapshot();
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       ::fs::item & GetFileManagerItem();
       DECL_GEN_SIGNAL(_001OnMainPostMessage);
       void _017UpdateList(::action::context actioncontext);
@@ -165,9 +165,9 @@ namespace filemanager
       //virtual bool TwiHasTranslucency();
       //void _001CreateImageList();
       //bool _001CreateImageListStep();
-      virtual void _001GetItemImage(::user::mesh_item * pitem);
-      virtual void _001GetItemText(::user::mesh_item * pitem);
-      virtual count _001GetItemCount();
+      virtual void _001GetItemImage(::user::mesh_item * pitem) override;
+      virtual void _001GetItemText(::user::mesh_item * pitem) override;
+      virtual count _001GetItemCount() override;
       void _017Browse(const char * lpcsz, ::action::context actioncontext);
       void _017UpdateList(const char * lpcsz, ::action::context actioncontext);
       void _017UpdateZipList(const char * lpcsz, ::action::context actioncontext);
@@ -176,12 +176,12 @@ namespace filemanager
       DECL_GEN_SIGNAL(_001OnVScroll);
 
 
-      virtual void _001InitializeFormPreData();
+      virtual void _001InitializeFormPreData() override;
 
 
 
-      virtual bool query_drop(index iDisplayDrop, index iDisplayDrag);
-      virtual bool do_drop(index iDisplayDrop, index iDisplayDrag);
+      virtual bool query_drop(index iDisplayDrop, index iDisplayDrag) override;
+      virtual bool do_drop(index iDisplayDrop, index iDisplayDrag) override;
 
 
    };

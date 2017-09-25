@@ -382,6 +382,10 @@ bool macos_set_user_wallpaper(const char * psz)
       
       NSURL * u = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen: screen];
       
+      NSLog(@"current wallpaper %s (screen=%d)", [[u absoluteString] UTF8String], i);
+      
+      NSLog(@"gonna set to %s", [[url absoluteString] UTF8String]);
+      
       error = NULL;
       
       [[[NSWorkspace sharedWorkspace] dd_invokeOnMainThreadAndWaitUntilDone:FALSE ] setDesktopImageURL:url forScreen: screen options:options error:&error];

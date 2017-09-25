@@ -19,13 +19,13 @@ namespace userex
       virtual ~top_view();
 
 
-      virtual void assert_valid() const;
+      virtual void assert_valid() const override;
 
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void dump(dump_context & dumpcontext) const override;
 
-      void on_create_views();
+      void on_create_views() override;
 
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
       virtual bool is_this_visible() override;
 

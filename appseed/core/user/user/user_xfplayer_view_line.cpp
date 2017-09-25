@@ -337,7 +337,7 @@ bool xfplayer_view_line::to(::draw2d::graphics * pgraphics, bool bDraw, const RE
             }
          }
 
-         if (&rectaModified != NULL)
+         if (is_set(rectaModified))
          {
             ::rect baserect;
             rgn.get_bounding_box(baserect);

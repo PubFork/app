@@ -17,7 +17,7 @@ namespace user
       virtual ~list_view();
 
 
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
 
 
       virtual void _001OnInitialUpdate() override;

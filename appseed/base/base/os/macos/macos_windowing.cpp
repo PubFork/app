@@ -121,7 +121,7 @@ bool oswindow_remove(nswindow window)
 void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 {
 
-   if(this == NULL)
+   if(is_null())
       throw "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
 
    m_pimpl = pimpl;
@@ -132,7 +132,7 @@ void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 ::user::interaction * oswindow_data::get_user_interaction_base()
 {
 
-   if(this == NULL)
+   if(is_null())
    {
       
       return NULL;
@@ -154,7 +154,7 @@ void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 ::user::interaction * oswindow_data::get_user_interaction_base() const
 {
    
-   if(this == NULL)
+   if(is_null())
    {
       
       return NULL;
@@ -176,7 +176,7 @@ void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 ::user::interaction * oswindow_data::get_user_interaction()
 {
    
-   if(this == NULL)
+   if(is_null())
    {
       
       return NULL;
@@ -198,7 +198,7 @@ void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 ::user::interaction * oswindow_data::get_user_interaction() const
 {
    
-   if(this == NULL)
+   if(is_null())
    {
       
       return NULL;
@@ -220,7 +220,7 @@ void oswindow_data::set_user_interaction_impl(::user::interaction_impl * pimpl)
 oswindow oswindow_data::get_parent()
 {
 
-   if(this == NULL)
+   if(is_null())
       return NULL;
 
    return m_pimpl->m_pui->GetParentHandle();
@@ -231,7 +231,7 @@ oswindow oswindow_data::get_parent()
 oswindow oswindow_data::set_parent(oswindow oswindow)
 {
 
-   if(this == NULL)
+   if(is_null())
       return NULL;
 
    ::oswindow oswindowOldParent = get_parent();
@@ -258,7 +258,7 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
 int_ptr oswindow_data::get_window_long(int_ptr iIndex)
 {
 
-   if(this == NULL)
+   if(is_null())
       return 0;
 
    if(m_plongmap == NULL)
@@ -272,7 +272,7 @@ int_ptr oswindow_data::get_window_long(int_ptr iIndex)
 int_ptr oswindow_data::set_window_long(int_ptr iIndex, int_ptr iNewLong)
 {
 
-   if(this == NULL)
+   if(is_null())
       return 0;
 
    if(m_plongmap == NULL)
@@ -508,7 +508,7 @@ WINBOOL DestroyWindow(oswindow w)
 
 
 
-bool oswindow_data::is_null()
+bool oswindow_data::is_null() const
 {
    
    return ::is_null(this);

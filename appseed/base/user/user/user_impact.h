@@ -281,7 +281,7 @@ namespace user
       }
 
 
-      virtual bool pre_create_window(::user::create_struct& cs)
+      virtual bool pre_create_window(::user::create_struct& cs) override
       {
 
          if(!::user::impact::pre_create_window(cs))
@@ -295,7 +295,7 @@ namespace user
       }
 
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics)
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override
       {
 
          VIEW::_001OnDraw(pgraphics);

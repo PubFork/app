@@ -428,7 +428,7 @@ namespace user
 
       }
 
-      ::count count2 = m_templateptra.get_count();
+      //::count count2 = m_templateptra.get_count();
 
       if (bEndApp)
       {

@@ -51,9 +51,9 @@ namespace user
 
       virtual void on_update(::user::document * pdocument, ::user::impact * pSender, LPARAM lHint, object* pHint);
 
-      virtual ::user::interaction * get_view();
+      virtual ::user::interaction * get_view() override;
 
-      virtual id get_view_id();
+      virtual id get_view_id() override;
 
       virtual ::user::view_creator_data * get(id id);
 

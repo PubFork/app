@@ -40,11 +40,11 @@ namespace filemanager
       save_as_button(::aura::application * papp);
       
       
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
       
 
       virtual bool _001OnClick(uint_ptr nFlag, point point) override;
-      void on_update(user::impact *, LPARAM, object *);
+      void on_update(user::impact *, LPARAM, object *) override;
 
    };
 

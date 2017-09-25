@@ -517,51 +517,51 @@ namespace user
 
 
                }
-               else
-               {
-
-                  ::rect rectParentBefore;
-                  pwnd->GetWindowRect(rectParentBefore);
-                  pwnd->SetWindowPos(ZORDER_TOP, rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), m_uiSWPFlags | SWP_NOREDRAW);
-
-                  ::rect rectParentAfter;
-                  pwnd->GetWindowRect(rectParentAfter);
-
-                  ::rect rectParent;
-                  rectParent.unite(rectParentBefore, rectParentAfter);
-                  pwnd->ScreenToClient(rectParent);
-
-                  TRACE("CWndMovingManager::relay_event\n");
-                  TRACE("Before.left %d\n", rectParentBefore.left);
-                  TRACE("Before.right %d\n", rectParentBefore.right);
-                  TRACE("Before.top %d\n", rectParentBefore.top);
-                  TRACE("Before.bottom %d\n", rectParentBefore.bottom);
-
-                  TRACE("CWndMovingManager::relay_event\n");
-                  TRACE("After.left %d\n", rectParentAfter.left);
-                  TRACE("After.right %d\n", rectParentAfter.right);
-                  TRACE("After.top %d\n", rectParentAfter.top);
-                  TRACE("After.bottom %d\n", rectParentAfter.bottom);
-
-                  TRACE("CWndMovingManager::relay_event\n");
-                  TRACE("union.left %d\n", rectParent.left);
-                  TRACE("union.right %d\n", rectParent.right);
-                  TRACE("union.top %d\n", rectParent.top);
-                  TRACE("union.bottom %d\n", rectParent.bottom);
-
-                  pwnd->RedrawWindow();
-               }
+//               else
+//               {
+//
+//                  ::rect rectParentBefore;
+//                  pwnd->GetWindowRect(rectParentBefore);
+//                  pwnd->SetWindowPos(ZORDER_TOP, rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), m_uiSWPFlags | SWP_NOREDRAW);
+//
+//                  ::rect rectParentAfter;
+//                  pwnd->GetWindowRect(rectParentAfter);
+//
+//                  ::rect rectParent;
+//                  rectParent.unite(rectParentBefore, rectParentAfter);
+//                  pwnd->ScreenToClient(rectParent);
+//
+//                  TRACE("CWndMovingManager::relay_event\n");
+//                  TRACE("Before.left %d\n", rectParentBefore.left);
+//                  TRACE("Before.right %d\n", rectParentBefore.right);
+//                  TRACE("Before.top %d\n", rectParentBefore.top);
+//                  TRACE("Before.bottom %d\n", rectParentBefore.bottom);
+//
+//                  TRACE("CWndMovingManager::relay_event\n");
+//                  TRACE("After.left %d\n", rectParentAfter.left);
+//                  TRACE("After.right %d\n", rectParentAfter.right);
+//                  TRACE("After.top %d\n", rectParentAfter.top);
+//                  TRACE("After.bottom %d\n", rectParentAfter.bottom);
+//
+//                  TRACE("CWndMovingManager::relay_event\n");
+//                  TRACE("union.left %d\n", rectParent.left);
+//                  TRACE("union.right %d\n", rectParent.right);
+//                  TRACE("union.top %d\n", rectParent.top);
+//                  TRACE("union.bottom %d\n", rectParent.bottom);
+//
+//                  pwnd->RedrawWindow();
+//               }
             }
-            else
-            {
-               pwnd->SetWindowPos(
-                  ZORDER_TOP,
-                  rectWindow.
-                  left, rectWindow.top,
-                  rectWindow.width(),
-                  rectWindow.height(),
-                  m_uiSWPFlags);
-            }
+//            else
+//            {
+//               pwnd->SetWindowPos(
+//                  ZORDER_TOP,
+//                  rectWindow.
+//                  left, rectWindow.top,
+//                  rectWindow.width(),
+//                  rectWindow.height(),
+//                  m_uiSWPFlags);
+//            }
 
          }
 

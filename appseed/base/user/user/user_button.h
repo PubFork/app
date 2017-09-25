@@ -76,24 +76,24 @@ namespace user
 
       virtual void resize_to_fit() override;
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual void _001OnDrawPush(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawList(::draw2d::graphics * pgraphics);
       virtual void _001OnDrawBitmap(::draw2d::graphics * pgraphics);
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _002OnDraw(::draw2d::graphics * pgraphics);
 
-      virtual bool is_custom_draw();
+      virtual bool is_custom_draw() override;
 
-      virtual void _001SetCheck(check::e_check check, ::action::context actioncontext);
-      virtual check::e_check _001GetCheck();
+      virtual void _001SetCheck(check::e_check check, ::action::context actioncontext) override;
+      virtual check::e_check _001GetCheck() override;
 
       virtual bool is_pressed();
 
 
-      virtual index hit_test(point pt, e_element & eelement);
+      virtual index hit_test(point pt, e_element & eelement) override;
 
       DECL_GEN_SIGNAL(_001OnKeyDown);
       DECL_GEN_SIGNAL(_001OnLButtonDown);
@@ -107,9 +107,9 @@ namespace user
 
       ::size calc_text_size();
 
-      virtual bool keyboard_focus_is_focusable();
+      virtual bool keyboard_focus_is_focusable() override;
 
-      virtual bool has_action_hover(); 
+      virtual bool has_action_hover() override;
 
       bool LoadBitmaps(::var var,::var varSel = ::var::type_null,::var varFocus = ::var::type_null,::var varDisabled = ::var::type_null,::var varHover = ::var::type_null);
 
@@ -122,10 +122,10 @@ namespace user
       virtual void BaseToolTipGetRect(LPRECT lprect);
       virtual int32_t BaseToolTipGetIndex();
 
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
-      virtual void on_layout();
+      virtual void on_layout() override;
 
 
       virtual void set_stock_icon(e_stock_icon eicon);

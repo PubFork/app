@@ -36,15 +36,15 @@ namespace calculator
       plain_edit_view(::aura::application * papp);
       virtual ~plain_edit_view();
 
-      virtual void _001OnAfterChangeText(::action::context actioncontext);
+      virtual void _001OnAfterChangeText(::action::context actioncontext) override;
 
-      void on_update(::user::impact * pSender,LPARAM lHint,object* phint);
+      void on_update(::user::impact * pSender,LPARAM lHint,object* phint) override;
 
-      bool keyboard_focus_is_focusable();
+      bool keyboard_focus_is_focusable() override;
 
-      virtual int64_t add_ref();
+      virtual int64_t add_ref() override;
 
-      virtual int64_t dec_ref();
+      virtual int64_t dec_ref() override;
 
       virtual var get_ex_value() override;
 

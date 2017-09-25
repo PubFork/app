@@ -103,7 +103,7 @@ namespace user
 //         HFONT hFont = (HFONT)send_message(WM_GETFONT);
       ::draw2d::graphics_sp spgraphicsScreen(allocer());
 
-      throw todo(get_app());
+      //throw todo(get_app());
       /*         HGDIOBJ hOldFont = NULL;
                if (hFont != NULL)
                   hOldFont = spgraphicsScreen->SelectObject(hFont);*/

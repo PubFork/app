@@ -514,7 +514,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
       ::user::toolbar_item & item = m_itema(i);
 
-      int32_t cySep = item.m_iImage;
+      //int32_t cySep = item.m_iImage;
 
       if (m_itema[i]->m_fsStyle & TBSTYLE_SEP)
       {
@@ -1161,7 +1161,7 @@ void simple_toolbar::SetSizes(SIZE sizeButton, SIZE sizeImage)
       VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
       VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
 #else
-      throw todo(get_app());
+      //throw todo(get_app());
 #endif
 
       Invalidate();   // just to be nice if called when toolbar is visible

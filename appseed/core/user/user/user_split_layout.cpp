@@ -1178,7 +1178,7 @@ namespace user
       if (iPane < 0 || iPane >= get_pane_count())
       {
 
-         return *((rect*)NULL);
+         throw invalid_argument_exception(get_app());
 
       }
 

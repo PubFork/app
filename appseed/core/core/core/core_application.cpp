@@ -259,8 +259,6 @@ namespace core
       if (!is_system() && !is_session())
       {
 
-         ::aura::session * paurasession = m_paurasession;
-
          Session.register_bergedge_application(this);
 
       }

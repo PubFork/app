@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -12,6 +12,8 @@
 bool wm_set_icon(oswindow w, ::draw2d::dib * p);
 bool wm_set_icon(oswindow w, stringa & straMatter);
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
+
+bool load_icon(::visual::dib_sp & d, ::aura::application * papp, stringa & straMatter, string strIcon);
 
 manual_reset_event * simple_frame_window::helper_task::g_pevent = NULL;
 

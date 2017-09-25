@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "framework.h"
 
 
@@ -366,10 +366,11 @@ namespace filemanager
 
    COLORREF folder_list::get_background_color()
    {
+      
       if (get_filemanager_data()->is_topic())
       {
 
-         COLORREF cr;
+         COLORREF cr = 0;
 
          if (m_pmanager->m_emode == manager::mode_saving)
          {
@@ -397,11 +398,15 @@ namespace filemanager
          }
 
          return cr;
+         
       }
       else
       {
+         
          return RGB(200, 255, 255);
+         
       }
+      
    }
 
 

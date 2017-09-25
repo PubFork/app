@@ -406,22 +406,22 @@ namespace user
 
       //      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
       //    item.m_iItem = pcontrol->m_iEditItem;
-      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
-
-      item.m_iSubItem = pcontrol->descriptor().m_iSubItem;
-      item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
-      item.m_iListItem = -1;
-      //_001GetElementRect(&item, ::user::mesh::element_sub_item);
-      rectControl = item.m_rectSubItem;
-      ClientToScreen(rectControl);
-      rect64 rectForm;
-      GetWindowRect(rectForm);
-      rect64 rectClient;
-      rectClient.top = rectForm.top;
-      rectClient.bottom = rectForm.bottom;
-      rectClient.left = rectControl.left;
-      rectClient.right = rectControl.right;
-      return rectClient.contains(point) != FALSE;
+//      item.m_iDisplayItem = DisplayToStrict(pcontrol->m_iEditItem);
+//
+//      item.m_iSubItem = pcontrol->descriptor().m_iSubItem;
+//      item.m_iOrder = _001MapSubItemToOrder(item.m_iSubItem);
+//      item.m_iListItem = -1;
+//      //_001GetElementRect(&item, ::user::mesh::element_sub_item);
+//      rectControl = item.m_rectSubItem;
+//      ClientToScreen(rectControl);
+//      rect64 rectForm;
+//      GetWindowRect(rectForm);
+//      rect64 rectClient;
+//      rectClient.top = rectForm.top;
+//      rectClient.bottom = rectForm.bottom;
+//      rectClient.left = rectControl.left;
+//      rectClient.right = rectControl.right;
+//      return rectClient.contains(point) != FALSE;
    }
 
    //void form_mesh::_001OnColumnChange()

@@ -1199,10 +1199,14 @@ throw todo(get_app());
       return lResult;
    }
 
+   
    void toolbar::_001OnPreserveZeroBorderHelper(::message::message * pobj)
    {
+      
       LRESULT lResult = 0;
+      
       SCAST_PTR(::message::base, pbase, pobj);
+      
 #ifdef LRESULT
 
       bool bModify = FALSE;
@@ -1215,11 +1219,13 @@ throw todo(get_app());
       if (bModify)
          SetWindowLong(GWL_STYLE, dwStyle);
 #else
-      throw todo(get_app());
+      //throw todo(get_app());
 #endif
 
       pbase->set_lresult(lResult);
+      
    }
+   
 
    void toolbar::_001OnSysColorChange(::message::message * pobj)
    {

@@ -24,7 +24,7 @@ namespace filemanager
       m_bShow = false;
       m_dwLastFileSize = ::get_tick_count();
 
-      bool bDoubleClickInWebView = true;
+      //bool bDoubleClickInWebView = true;
 
       //#ifdef WINDOWSEX
       //
@@ -436,7 +436,7 @@ namespace filemanager
       DBFileSystemSizeSet * pset = pcentral->m_pfilesystemsizeset;
 
       int32_t i;
-      while (true)
+      while (::get_thread_run())
       {
          i = 0;
          while (i < get_fs_mesh_data()->m_itema.get_count() || IsWindowVisible())
@@ -445,7 +445,7 @@ namespace filemanager
             bool bPendingSize;
             single_lock lock(m_pauraapp->m_pmutex);
             if (!lock.lock(millis(1984)))
-               return;
+               break;
             if (i >= get_fs_mesh_data()->m_itema.get_count())
                i = 0;
             bPendingSize = false;
@@ -913,17 +913,7 @@ namespace filemanager
 
          ::file::path filepath = itema[0]->m_filepath;
 
-#ifdef WINDOWSEX
-
-         ::aura::shell_launcher launcher(NULL, "open", m_straOpenWith[iPos], filepath, filepath.name(), SW_SHOW);
-
-         launcher.execute();
-
-#else
-
-         throw todo(get_app());
-
-#endif
+         System.os().file_open(filepath);
 
          pcommand->m_bRet = true;
 
@@ -958,7 +948,7 @@ namespace filemanager
       for (int32_t i = 0; i < itema.get_size(); i++)
       {
 
-         if (Application.dir().is(itema[i]->m_filepath) && itema[i]->m_filepath.name() != ".svn")
+         if (Application.dir().is(itema[i]->m_filepath) && strcmp(itema[i]->m_filepath.name(), ".svn"))
          {
 
             straSub.rls(itema[i]->m_filepath);
@@ -1027,7 +1017,7 @@ namespace filemanager
       for (int32_t i = 0; i < pdata->m_itema.get_count(); i++)
       {
          if (::userfs::list::get_document()->get_fs_data()->is_dir(pdata->m_itema.get_item(i).m_filepath)
-               && pdata->m_itema.get_item(i).m_filepath.name() != ".svn")
+               && strcmp(pdata->m_itema.get_item(i).m_filepath.name(), ".svn"))
          {
             straSub.rls(pdata->m_itema.get_item(i).m_filepath);
             for (int32_t j = 0; j < straSub.get_size(); j++)

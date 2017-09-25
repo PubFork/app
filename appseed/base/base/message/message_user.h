@@ -240,7 +240,6 @@ namespace message
          virtual void set(::user::primitive * pwnd,UINT uiMessage,WPARAM wparam,::lparam lparam,LRESULT & lresult);
    };
 
-#ifdef WINDOWSEX
 
    class CLASS_DECL_BASE notify: public base
    {
@@ -252,20 +251,6 @@ namespace message
          int32_t get_ctrl_id();
    };
 
-#endif
-
-   //class CLASS_DECL_BASE update_::user::command:
-   //   public ::user::command
-   //{
-   //public:
-
-   //   update_::user::command(::aura::application * papp) :
-   //      ::user::command(papp)
-   //   {
-   //
-   //   }
-
-   //};
 
    class CLASS_DECL_BASE command: public base
    {

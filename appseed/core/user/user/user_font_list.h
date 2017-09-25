@@ -37,12 +37,12 @@ namespace user
          virtual bool get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui) override;
 
 
-         virtual void install_message_routing(::message::sender * psender);
+         virtual void install_message_routing(::message::sender * psender) override;
 
-         virtual void _001OnNcDraw(::draw2d::graphics * pgraphics);
-         virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+         virtual void _001OnNcDraw(::draw2d::graphics * pgraphics) override;
+         virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
-         virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
+         virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint) override;
 
 
          string      get_cur_sel_face_name();
@@ -60,7 +60,7 @@ namespace user
 
          virtual index hit_test(point pt);
 
-         virtual void on_layout();
+         virtual void on_layout() override;
 
          bool set_sel_by_name(string str);
 

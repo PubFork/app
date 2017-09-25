@@ -64,7 +64,7 @@ namespace simple_ui
    void tap::_001OnCreate(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::create, pcreate, pobj);
+      //SCAST_PTR(::message::create, pcreate, pobj);
 
       pobj->previous();
 

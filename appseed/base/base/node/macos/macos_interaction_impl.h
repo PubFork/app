@@ -41,23 +41,23 @@ namespace macos
       virtual void release_graphics_resources();
 
 
-      virtual bool create_message_queue(::user::interaction * pui, const char * pszName);
+      virtual bool create_message_queue(::user::interaction * pui, const char * pszName) override;
 
 		static_function const MESSAGE* PASCAL GetCurrentMessage();
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       //bool operator==(const ::user::interaction & wnd) const;
       //bool operator!=(const ::user::interaction & wnd) const;
 
-      DWORD GetStyle() const;
-      DWORD GetExStyle() const;
-      bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
-      bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
+      DWORD GetStyle() const override;
+      DWORD GetExStyle() const override;
+      bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0) override;
+      bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0) override;
 
       //virtual ::user::interaction *   GetOwner();
-      virtual ::user::interaction *  SetOwner(::user::interaction *   pOwnerWnd);
+      virtual ::user::interaction *  SetOwner(::user::interaction *   pOwnerWnd) override;
 
-      virtual ::user::interaction * get_wnd() const;
+      virtual ::user::interaction * get_wnd() const override;
 
       virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
@@ -79,7 +79,7 @@ namespace macos
 #endif   // WINVER >= 0x0500
 
         virtual ::user::interaction_impl * from_os_data(void * pdata) override;
-        virtual void * get_os_data() const;
+        virtual void * get_os_data() const override;
 
         static_function ::user::interaction_impl * from_handle(oswindow hWnd);
         static_function ::user::interaction_impl * FromHandlePermanent(oswindow hWnd);
@@ -88,14 +88,14 @@ namespace macos
         oswindow Detach();
 
       // subclassing/unsubclassing functions
-      virtual void pre_subclass_window();
+      virtual void pre_subclass_window() override;
       bool SubclassWindow(oswindow hWnd);
       //bool SubclassDlgItem(UINT nID, ::interaction_impl * pParent);
       oswindow UnsubclassWindow();
 
       // handling of RT_DLGINIT resource (extension to RT_DIALOG)
-      bool ExecuteDlgInit(const char * lpszResourceName);
-      bool ExecuteDlgInit(LPVOID lpResource);
+      bool ExecuteDlgInit(const char * lpszResourceName) override;
+      bool ExecuteDlgInit(LPVOID lpResource) override;
 
       using ::user::interaction_impl::create_window;
       // for child windows, views, panes etc
@@ -106,11 +106,7 @@ namespace macos
                           sp(::create) pContext = NULL);
 
       // advanced creation (allows access to extended styles)
-      virtual bool create_window_ex(::user::interaction * pui, DWORD dwExStyle = 0, const char * lpszClassName=0,
-                            const char * lpszWindowName= 0, DWORD dwStyle= 0,
-                            const RECT& rect= null_rect(),
-                                    ::user::interaction *   pParentWnd=NULL, id id=::id(),
-                            LPVOID lpParam = NULL);
+      virtual bool create_window_ex(::user::interaction * pui, DWORD dwExStyle = 0, const char * lpszClassName=0, const char * lpszWindowName= 0, DWORD dwStyle= 0, const RECT& rect= null_rect(), ::user::interaction *   pParentWnd=NULL, id id=::id(),                      LPVOID lpParam = NULL) override;
 
        virtual bool native_create_window_ex(::user::interaction * pui, DWORD dwExStyle= 0, const char * lpszClassName= NULL,
                                      const char * lpszWindowName= 0, DWORD dwStyle= 0,
@@ -118,14 +114,14 @@ namespace macos
                                             oswindow hwndParent= NULL, id id=::id(),
                                      LPVOID lpParam = NULL);
 
-      virtual bool DestroyWindow();
+      virtual bool DestroyWindow() override;
 
       // special pre-creation and ::interaction_impl rect adjustment hooks
-       virtual bool pre_create_window(::user::create_struct& cs);
+       virtual bool pre_create_window(::user::create_struct& cs) override;
 
       // Advanced: virtual AdjustWindowRect
       enum AdjustType { adjustBorder = 0, adjustOutside = 1 };
-      virtual void CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType = adjustBorder);
+      virtual void CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType = adjustBorder) override;
 
 
       // get immediate child with given ID
@@ -135,11 +131,11 @@ namespace macos
       using ::user::interaction_impl::GetDescendantWindow;
       ::user::interaction *  GetDescendantWindow(id id);
       // like get_child_by_id but recursive
-      void send_message_to_descendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
+      void send_message_to_descendants(UINT message, WPARAM wParam = 0,lparam lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE) override;
 
       static_function ::user::interaction * PASCAL GetSafeOwner(::user::interaction * pParent = NULL, oswindow* pWndTop = NULL);
 
-      virtual bool IsWindow() const;
+      virtual bool IsWindow() const override;
 
 #if(WINVER >= 0x0500)
 
@@ -147,28 +143,28 @@ namespace macos
 
 #endif   // WINVER >= 0x0500
 
-      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
-      bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
+      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = 0) override;
+      bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = 0) override;
 
       bool SendNotifyMessage(UINT message, WPARAM wParam, LPARAM lParam);
       bool SendChildNotifyLastMsg(LRESULT* pResult = NULL);
 
-      bool DragDetect(POINT pt) const;
+      bool DragDetect(POINT pt) const override;
 
 
 
       // oswindow Text Functions
-      void set_window_text(const char * lpszString);
+      void set_window_text(const char * lpszString) override;
       //strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
-      void get_window_text(string & str);
+      void get_window_text(string & str) override;
       //strsize GetWindowTextLength();
 //      void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
   //    ::draw2d::font* GetFont();
 
 
       // oswindow size and position Functions
-      virtual bool WfiIsIconic();
-      virtual bool WfiIsZoomed();
+      virtual bool WfiIsIconic() override;
+      virtual bool WfiIsZoomed() override;
       void MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
                       bool bRepaint = TRUE);
       void MoveWindow(LPCRECT lpRect, bool bRepaint = TRUE);
@@ -177,22 +173,22 @@ namespace macos
 
 
       //virtual bool SetWindowPos(int_ptr z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags);
-        virtual UINT ArrangeIconicWindows();
-        virtual void BringToTop(int nCmdShow);
-        virtual bool BringWindowToTop();
+        virtual UINT ArrangeIconicWindows() override;
+        virtual void BringToTop(int nCmdShow) override;
+        virtual bool BringWindowToTop() override;
         using ::user::interaction_impl::GetWindowRect;
-        virtual bool GetWindowRect(RECT64 * lpRect);
+        virtual bool GetWindowRect(RECT64 * lpRect) override;
         using ::user::interaction_impl::GetClientRect;
-        virtual bool GetClientRect(RECT64 * lpRect);
+        virtual bool GetClientRect(RECT64 * lpRect) override;
 
-        virtual bool ClientToScreen(LPRECT lprect);
-        virtual bool ClientToScreen(LPPOINT lppoint);
-        virtual bool ClientToScreen(RECT64 * lprect);
-        virtual bool ClientToScreen(POINT64 * lppoint);
-        virtual bool ScreenToClient(LPRECT lprect);
-        virtual bool ScreenToClient(LPPOINT lppoint);
-        virtual bool ScreenToClient(RECT64 * lprect);
-        virtual bool ScreenToClient(POINT64 * lppoint);
+        virtual bool ClientToScreen(LPRECT lprect) override;
+        virtual bool ClientToScreen(LPPOINT lppoint) override;
+        virtual bool ClientToScreen(RECT64 * lprect) override;
+        virtual bool ClientToScreen(POINT64 * lppoint) override;
+        virtual bool ScreenToClient(LPRECT lprect) override;
+        virtual bool ScreenToClient(LPPOINT lppoint) override;
+        virtual bool ScreenToClient(RECT64 * lprect) override;
+        virtual bool ScreenToClient(POINT64 * lppoint) override;
 
         virtual bool GetWindowPlacement(WINDOWPLACEMENT* lpwndpl);
         virtual bool SetWindowPlacement(const WINDOWPLACEMENT* lpwndpl);
@@ -203,42 +199,42 @@ namespace macos
         virtual ::draw2d::graphics * GetDC();
         virtual ::draw2d::graphics * GetWindowDC();
         virtual bool ReleaseDC(::draw2d::graphics * pgraphics);
-        virtual void Print(::draw2d::graphics * pgraphics, DWORD dwFlags) const;
-        virtual void PrintClient(::draw2d::graphics * pgraphics, DWORD dwFlags) const;
+        virtual void Print(::draw2d::graphics * pgraphics, DWORD dwFlags) const override;
+        virtual void PrintClient(::draw2d::graphics * pgraphics, DWORD dwFlags) const override;
 
-        virtual void UpdateWindow();
-        virtual void SetRedraw(bool bRedraw = TRUE);
-        virtual bool GetUpdateRect(LPRECT lpRect, bool bErase = FALSE);
-        virtual int32_t GetUpdateRgn(::draw2d::region* pRgn, bool bErase = FALSE);
-        virtual void Invalidate(bool bErase = TRUE);
-        virtual void InvalidateRect(LPCRECT lpRect, bool bErase = TRUE);
-        virtual void InvalidateRgn(::draw2d::region* pRgn, bool bErase = TRUE);
-        virtual void ValidateRect(LPCRECT lpRect);
-        virtual void ValidateRgn(::draw2d::region* pRgn);
-        virtual bool ShowWindow(int32_t nCmdShow);
-        virtual void _001WindowMaximize();
-        virtual void _001WindowRestore();
-        virtual bool IsWindowVisible();
-        virtual void ShowOwnedPopups(bool bShow = TRUE);
+        virtual void UpdateWindow() override;
+        virtual void SetRedraw(bool bRedraw = TRUE) override;
+        virtual bool GetUpdateRect(LPRECT lpRect, bool bErase = FALSE) override;
+        virtual int32_t GetUpdateRgn(::draw2d::region* pRgn, bool bErase = FALSE) override;
+        virtual void Invalidate(bool bErase = TRUE) override;
+        virtual void InvalidateRect(LPCRECT lpRect, bool bErase = TRUE) override;
+        virtual void InvalidateRgn(::draw2d::region* pRgn, bool bErase = TRUE) override;
+        virtual void ValidateRect(LPCRECT lpRect) override;
+        virtual void ValidateRgn(::draw2d::region* pRgn) override;
+        virtual bool ShowWindow(int32_t nCmdShow) override;
+        virtual void _001WindowMaximize() override;
+        virtual void _001WindowRestore() override;
+        virtual bool IsWindowVisible() override;
+        virtual void ShowOwnedPopups(bool bShow = TRUE) override;
 
-        virtual void round_window_draw(CGContextRef cgc);
-        virtual void round_window_mouse_down(int iButton, double x, double y);
-        virtual void round_window_mouse_up(int iButton, double x, double y);
-        virtual void round_window_mouse_moved(double x, double y);
-        virtual void round_window_mouse_dragged(double x, double y);
-        virtual void round_window_double_click(int iButton, double x, double y);
-        virtual bool round_window_key_down(unsigned int vk, unsigned int scan);
-        virtual bool round_window_key_up(unsigned int vk, unsigned int scan);
-        virtual bool round_window_key_down(unsigned int uiKeyCode);
-        virtual bool round_window_key_up(unsigned int uiKeyCode);
+        virtual void round_window_draw(CGContextRef cgc) override;
+        virtual void round_window_mouse_down(int iButton, double x, double y) override;
+        virtual void round_window_mouse_up(int iButton, double x, double y) override;
+        virtual void round_window_mouse_moved(double x, double y) override;
+        virtual void round_window_mouse_dragged(double x, double y) override;
+        virtual void round_window_double_click(int iButton, double x, double y) override;
+        virtual bool round_window_key_down(unsigned int vk, unsigned int scan) override;
+        virtual bool round_window_key_up(unsigned int vk, unsigned int scan) override;
+        virtual bool round_window_key_down(unsigned int uiKeyCode) override;
+        virtual bool round_window_key_up(unsigned int uiKeyCode) override;
       
       
-      virtual void round_window_activate();
-      virtual void round_window_deactivate();
+      virtual void round_window_activate() override;
+      virtual void round_window_deactivate() override;
 
 
-       virtual void round_window_resized(CGRect rect);
-       virtual void round_window_moved(CGPoint point);
+       virtual void round_window_resized(CGRect rect) override;
+       virtual void round_window_moved(CGPoint point) override;
       virtual void round_window_iconified() override;
       virtual void round_window_deiconified() override;
       
@@ -246,24 +242,24 @@ namespace macos
    
 
    
-      virtual void round_window_on_show();
-      virtual void round_window_on_hide();
+      virtual void round_window_on_show() override;
+      virtual void round_window_on_hide() override;
 
        
-        void set_viewport_org(::draw2d::graphics * pgraphics);
+        void set_viewport_org(::draw2d::graphics * pgraphics) override;
         void offset_viewport_org(LPRECT lprectScreen);
 
 
-        virtual ::draw2d::graphics * GetDCEx(::draw2d::region* prgnClip, DWORD flags);
-        virtual bool LockWindowUpdate();
-        virtual void UnlockWindowUpdate();
+        virtual ::draw2d::graphics * GetDCEx(::draw2d::region* prgnClip, DWORD flags) override;
+        virtual bool LockWindowUpdate() override;
+        virtual void UnlockWindowUpdate() override;
 //        virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL, ::draw2d::region* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_ERASE);
-      virtual void _001UpdateScreen();
+      virtual void _001UpdateScreen() override;
       //virtual votru8id _001UpdateWindow(bool bUpdateBuffer = false) override;
       // xxx      virtual bool EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
-        virtual bool DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
-        virtual bool DrawCaption(::draw2d::graphics * pgraphics, LPCRECT lprc, UINT uFlags);
+        virtual bool DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo) override;
+        virtual bool DrawCaption(::draw2d::graphics * pgraphics, LPCRECT lprc, UINT uFlags) override;
 
 #if(WINVER >= 0x0500)
 
@@ -295,20 +291,20 @@ namespace macos
 
 
         // Timer Functions
-        virtual bool SetTimer(uint_ptr nIDEvent, UINT nElapse, PFN_TIMER pfnTimer);
-        virtual bool KillTimer(uint_ptr nIDEvent);
+        virtual bool SetTimer(uint_ptr nIDEvent, UINT nElapse, PFN_TIMER pfnTimer) override;
+        virtual bool KillTimer(uint_ptr nIDEvent) override;
 
         // oswindow State Functions
         virtual bool IsWindowEnabled();
         virtual bool EnableWindow(bool bEnable = TRUE);
 
-       virtual ::user::interaction *  GetActiveWindow();
-       virtual ::user::interaction *  SetActiveWindow();
+       virtual ::user::interaction *  GetActiveWindow() override;
+       virtual ::user::interaction *  SetActiveWindow() override;
 
-       virtual bool SetForegroundWindow();
+       virtual bool SetForegroundWindow() override;
        static_function ::user::interaction * PASCAL GetForegroundWindow();
 
-       virtual id SetDlgCtrlId(id id);
+       virtual id SetDlgCtrlId(id id) override;
        virtual id GetDlgCtrlId();
 
 
@@ -316,55 +312,55 @@ namespace macos
        //virtual ::user::interaction *  GetCapture();
 //       virtual ::user::interaction *  SetCapture(::user::interaction *   pinterface = NULL);
   //     virtual ::user::interaction *  ReleaseCapture();
-       virtual ::user::interaction *  GetFocus();
-      bool  SetFocus();
+       virtual ::user::interaction *  GetFocus() override;
+      bool  SetFocus() override;
 
        virtual ::user::interaction *  GetDesktopWindow();
 
-       virtual void CloseWindow();
-       virtual bool OpenIcon();
+       virtual void CloseWindow() override;
+       virtual bool OpenIcon() override;
 
-       virtual void CheckDlgButton(int32_t nIDButton, UINT nCheck);
-       virtual void CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton, int32_t nIDCheckButton);
-      virtual int32_t GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton);
+       virtual void CheckDlgButton(int32_t nIDButton, UINT nCheck) override;
+       virtual void CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton, int32_t nIDCheckButton) override;
+      virtual int32_t GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton) override;
       virtual int32_t DlgDirList(LPTSTR lpPathSpec, int32_t nIDListBox,
-                                 int32_t nIDStaticPath, UINT nFileType);
+                                 int32_t nIDStaticPath, UINT nFileType) override;
       virtual int32_t DlgDirListComboBox(LPTSTR lpPathSpec, int32_t nIDComboBox,
-                                         int32_t nIDStaticPath, UINT nFileType);
-      virtual bool DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox);
-      virtual bool DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox);
+                                         int32_t nIDStaticPath, UINT nFileType) override;
+      virtual bool DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox) override;
+      virtual bool DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox) override;
 
       //virtual UINT GetChildByIdInt(int32_t nID, bool * lpTrans = NULL, bool bSigned = TRUE) const;
       //virtual int32_t GetChildByIdText(int32_t nID, LPTSTR lpStr, int32_t nMaxCount) const;
       //virtual int32_t GetChildByIdText(int32_t nID, string & rString) const;
         virtual ::user::interaction * GetNextDlgGroupItem(::user::interaction * pWndCtl, bool bPrevious = FALSE) const;
         virtual ::user::interaction * GetNextDlgTabItem(::user::interaction * pWndCtl, bool bPrevious = FALSE) const;
-        virtual UINT IsDlgButtonChecked(int32_t nIDButton) const;
-        virtual LRESULT SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
-        virtual void SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned = TRUE);
-        virtual void SetDlgItemText(int32_t nID, const char * lpszString);
+        virtual UINT IsDlgButtonChecked(int32_t nIDButton) const override;
+        virtual LRESULT SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam = 0, LPARAM lParam = 0) override;
+        virtual void SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned = TRUE) override;
+        virtual void SetDlgItemText(int32_t nID, const char * lpszString) override;
 
       // Scrolling Functions
-      virtual int32_t GetScrollPos(int32_t nBar) const;
-      virtual void GetScrollRange(int32_t nBar, LPINT lpMinPos, LPINT lpMaxPos) const;
+      virtual int32_t GetScrollPos(int32_t nBar) const override;
+      virtual void GetScrollRange(int32_t nBar, LPINT lpMinPos, LPINT lpMaxPos) const override;
       virtual void ScrollWindow(int32_t xAmount, int32_t yAmount,
                                 LPCRECT lpRect = NULL,
-                                LPCRECT lpClipRect = NULL);
-      virtual int32_t SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw = TRUE);
+                                LPCRECT lpClipRect = NULL) override;
+      virtual int32_t SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw = TRUE) override;
       virtual void SetScrollRange(int32_t nBar, int32_t nMinPos, int32_t nMaxPos,
-                                  bool bRedraw = TRUE);
-      virtual void ShowScrollBar(UINT nBar, bool bShow = TRUE);
-      virtual void EnableScrollBarCtrl(int32_t nBar, bool bEnable = TRUE);
+                                  bool bRedraw = TRUE) override;
+      virtual void ShowScrollBar(UINT nBar, bool bShow = TRUE) override;
+      virtual void EnableScrollBarCtrl(int32_t nBar, bool bEnable = TRUE) override;
 //      virtual CScrollBar* GetScrollBarCtrl(int32_t nBar) const;
       // return sibling scrollbar control (or NULL if none)
 
       virtual int32_t ScrollWindowEx(int32_t dx, int32_t dy,
                                      LPCRECT lpRectScroll, LPCRECT lpRectClip,
-                                     ::draw2d::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags);
+                                     ::draw2d::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags) override;
       //xxx      virtual bool SetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo,
       //xxx         bool bRedraw = TRUE);
       //xxx      virtual bool GetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, UINT nMask = SIF_ALL);
-      virtual int32_t GetScrollLimit(int32_t nBar);
+      virtual int32_t GetScrollLimit(int32_t nBar) override;
 
 #if(WINVER >= 0x0500)
 
@@ -373,28 +369,28 @@ namespace macos
 #endif   // WINVER >= 0x0500
 
       // oswindow Access Functions
-      virtual ::user::interaction *  ChildWindowFromPoint(POINT point);
-      virtual ::user::interaction *  ChildWindowFromPoint(POINT point, UINT nFlags);
+      virtual ::user::interaction *  ChildWindowFromPoint(POINT point) override;
+      virtual ::user::interaction *  ChildWindowFromPoint(POINT point, UINT nFlags) override;
         static_function ::user::interaction * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
         static_function ::user::interaction * FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual ::user::interaction *  GetNextWindow(UINT nFlag = GW_HWNDNEXT);
-      virtual ::user::interaction *  GetTopWindow();
+      virtual ::user::interaction *  GetTopWindow() override;
 
       virtual ::user::interaction *  GetWindow(UINT nCmd);
-      virtual ::user::interaction *  GetLastActivePopup();
+      virtual ::user::interaction *  GetLastActivePopup() override;
 
       virtual bool IsChild(::user::interaction *    pWnd);
-      virtual ::user::interaction * GetParent() const;
+      virtual ::user::interaction * GetParent() const override;
        using ::user::interaction_impl::SetParent;
-      ::user::interaction * SetParent(::user::interaction * pWndNewParent);
+      ::user::interaction * SetParent(::user::interaction * pWndNewParent) override;
       static_function ::user::interaction * PASCAL oswindowFromPoint(POINT point);
 
       // Alert Functions
 
       bool FlashWindow(bool bInvert);
 
-      virtual int32_t message_box(const char * lpszText, const char * lpszCaption = NULL, UINT nType = MB_OK);
+      virtual int32_t message_box(const char * lpszText, const char * lpszCaption = NULL, UINT nType = MB_OK) override;
 
 
 #if(WINVER >= 0x0500)
@@ -404,32 +400,32 @@ namespace macos
 #endif   // WINVER >= 0x0500
 
       // Clipboard Functions
-      virtual bool ChangeClipboardChain(oswindow hWndNext);
-      virtual oswindow  SetClipboardViewer();
-      virtual bool OpenClipboard();
+      virtual bool ChangeClipboardChain(oswindow hWndNext) override;
+      virtual oswindow  SetClipboardViewer() override;
+      virtual bool OpenClipboard() override;
       static_function ::user::interaction * PASCAL GetClipboardOwner();
       static_function ::user::interaction * PASCAL GetClipboardViewer();
       static_function ::user::interaction * PASCAL GetOpenClipboardWindow();
 
       // Caret Functions
-      virtual void CreateCaret(::draw2d::bitmap* pBitmap);
-      virtual void CreateSolidCaret(int32_t nWidth, int32_t nHeight);
-      virtual void CreateGrayCaret(int32_t nWidth, int32_t nHeight);
+      virtual void CreateCaret(::draw2d::bitmap* pBitmap) override;
+      virtual void CreateSolidCaret(int32_t nWidth, int32_t nHeight) override;
+      virtual void CreateGrayCaret(int32_t nWidth, int32_t nHeight) override;
       static_function point PASCAL GetCaretPos();
       static_function void PASCAL SetCaretPos(POINT point);
-      virtual void HideCaret();
-      virtual void ShowCaret();
+      virtual void HideCaret() override;
+      virtual void ShowCaret() override;
 
       // Shell Interaction Functions
-      virtual void DragAcceptFiles(bool bAccept = TRUE);
+      virtual void DragAcceptFiles(bool bAccept = TRUE) override;
 
       // icon Functions
 //      virtual HICON SetIcon(HICON hIcon, bool bBigIcon);
 //      virtual HICON GetIcon(bool bBigIcon) const;
 
       // Context Help Functions
-      virtual bool SetWindowContextHelpId(DWORD dwContextHelpId);
-      virtual DWORD GetWindowContextHelpId() const;
+      virtual bool SetWindowContextHelpId(DWORD dwContextHelpId) override;
+      virtual DWORD GetWindowContextHelpId() const override;
 
       // Dialog Data support
       //virtual bool update_data(bool bSaveAndValidate = TRUE);
@@ -456,8 +452,8 @@ namespace macos
 
 
       // dialog support
-      void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
-      void CenterWindow(::user::interaction *   pAlternateOwner = NULL);
+      void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler) override;
+      void CenterWindow(::user::interaction *   pAlternateOwner = NULL) override;
 
 
       void OnActivate(UINT nState, ::user::interaction * pWndOther, bool bMinimized);
@@ -609,23 +605,23 @@ namespace macos
       //      virtual void do_data_exchange(CDataExchange* pDX);
 
       // for modality
-      virtual void BeginModalState();
-      virtual void EndModalState();
+      virtual void BeginModalState() override;
+      virtual void EndModalState() override;
 
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual void pre_translate_message(::message::message * pobj) override;
 
 
       // for processing oswindows messages
-      virtual void message_handler(::message::base * pbase);
+      virtual void message_handler(::message::base * pbase) override;
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
-      LRESULT Default();
+      LRESULT Default() override;
       virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 
       // for custom cleanup after WM_NCDESTROY
-      virtual void PostNcDestroy();
+      virtual void PostNcDestroy() override;
 
       // for notifications from parent
       virtual bool OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
@@ -633,28 +629,28 @@ namespace macos
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
 
-      virtual bool CheckAutoCenter();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual bool CheckAutoCenter() override;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                       HBRUSH hbrGray, COLORREF clrText);
 
 
       // helper routines for implementation
-      bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
-      bool IsTopParentActive();
-      void ActivateTopParent();
+      bool HandleFloatingSysCommand(UINT nID, LPARAM lParam) override;
+      bool IsTopParentActive() override;
+      void ActivateTopParent() override;
       virtual void WalkPreTranslateTree(::user::interaction *   puiStop, ::message::message * pobj);
       static_function ::user::interaction *   PASCAL GetDescendantWindow(::user::interaction *   hWnd, id id);
       static_function void PASCAL send_message_to_descendants(void*  hWnd, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
-      virtual void on_final_release();
+      virtual void on_final_release() override;
       static_function bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static_function bool PASCAL ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static_function void PASCAL _FilterToolTipMessage(MESSAGE* pMsg, ::user::interaction * pWnd);
-      bool _EnableToolTips(bool bEnable, UINT nFlag);
+      bool _EnableToolTips(bool bEnable, UINT nFlag) override;
       static_function oswindow PASCAL GetSafeOwner_(oswindow hWnd, oswindow* pWndTop);
-      void PrepareForHelp();
+      void PrepareForHelp() override;
 
       //UINT m_nFlags;      // see WF_ flags above
 
@@ -692,14 +688,14 @@ namespace macos
       virtual LONG GetWindowLong(int32_t nIndex);
       virtual LONG SetWindowLong(int32_t nIndex, LONG lValue);
 
-      virtual void _001BaseWndInterfaceMap();
+      virtual void _001BaseWndInterfaceMap() override;
 
 
       void _001WindowMinimize();
 
-      void _001OnTriggerMouseInside();
+      void _001OnTriggerMouseInside() override;
 
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
 
    };
 

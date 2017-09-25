@@ -170,6 +170,28 @@ extern "C"
 CLASS_DECL_CORE bool defer_core_term();
 
 
+namespace core
+{
+   
+   
+   namespace static_start
+   {
+      
+      
+      CLASS_DECL_CORE void init(void);
+      
+      CLASS_DECL_CORE void term(void);
+      
+      
+   } // namespace static_start
+   
+   
+} // namespace core
+
+
+
+
+
 #undef App
 #define App(pbaseapp) CoreApp(pbaseapp)
 

@@ -67,16 +67,16 @@ public:
    int32_t WrapToolBar(int32_t nCount, int32_t nWidth);
    void SizeToolBar( int32_t nCount, int32_t nLength, bool bVert = FALSE);
 
-   size CalcDynamicLayout(int32_t nLength, uint32_t dwMode);
-   size CalcLayout(uint32_t dwMode, int32_t nLength = -1);
+   size CalcDynamicLayout(int32_t nLength, uint32_t dwMode) override;
+   size CalcLayout(uint32_t dwMode, int32_t nLength = -1) override;
    //bool CalcSize(size & size, bool bHorz);
    size CalcSize(int32_t nCount);
-   virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle);
-   virtual size CalcFixedLayout(bool bStretch, bool bHorz);
+   virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle) override;
+   virtual size CalcFixedLayout(bool bStretch, bool bHorz) override;
 
 
    void RemoveAllTools();
-   virtual int32_t _001GetHoverItem();
+   virtual int32_t _001GetHoverItem() override;
    virtual void OnUpdateHover();
    void SetItemImage(int32_t iItem, int32_t iImage);
    void GetButtonText(int32_t i, string & str);
@@ -92,7 +92,7 @@ public:
    void _001Hover(bool bRedraw = true);
 
 
-   void on_layout();
+   void on_layout() override;
 
 
    void _001DrawItem(::draw2d::graphics * pgraphics, int32_t iItem);
@@ -106,32 +106,32 @@ public:
 */
 
 //  virtual bool _001GetItemRect(int32_t iItem,LPRECT lprect)
-   virtual bool _001GetElementRect(int32_t iItem,LPRECT lprect,e_element eelement);
+   virtual bool _001GetElementRect(int32_t iItem,LPRECT lprect,e_element eelement) override;
 
 
 
 //   bool SetButtons(const UINT* lpIDArray, int32_t nIDCount);
    void SetSizes(SIZE sizeButton, SIZE sizeImage);
 
-   void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler);
+   void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) override;
 
 
    void TransparentEraseNonClient(::draw2d::graphics * pgraphics);
    void SetTransparentBackground(bool bSet);
-   virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+   virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
    size CalcSimpleLayout();
 
    void _001OnImageListAttrib();
    DECL_GEN_SIGNAL(_001OnCreate);
    DECL_GEN_SIGNAL(_001OnMouseMove);
    DECL_GEN_SIGNAL(_001OnLButtonDown);
-   void _001OnTimer(::timer * ptimer);
+   void _001OnTimer(::timer * ptimer) override;
    DECL_GEN_SIGNAL(_001OnLButtonUp);
    DECL_GEN_SIGNAL(_001OnNcCalcSize);
    DECL_GEN_SIGNAL(_001OnNcHitTest);
    DECL_GEN_SIGNAL(_001OnMouseLeave);
 
-   virtual void install_message_routing(::message::sender * psender);
+   virtual void install_message_routing(::message::sender * psender) override;
 
 
 };

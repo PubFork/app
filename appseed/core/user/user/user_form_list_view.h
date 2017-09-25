@@ -19,7 +19,7 @@ namespace user
 
       virtual bool pre_create_window(::user::create_struct & createstruct) override;
 
-      virtual void install_message_routing(::message::sender *pinterface);
+      virtual void install_message_routing(::message::sender *pinterface) override;
 
       virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _001OnTimer(::timer * ptime) override;

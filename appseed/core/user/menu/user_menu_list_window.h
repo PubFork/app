@@ -18,9 +18,9 @@ namespace user
       menu_list_window(::aura::application * papp, menu_item * pitem);
       virtual ~menu_list_window();
 
-      void on_layout();
+      void on_layout() override;
 
-      virtual void install_message_routing(::message::sender * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface) override;
 
       virtual bool get_color(COLORREF & cr, e_color ecolor, ::user::interaction * pui) override;
 
@@ -28,9 +28,9 @@ namespace user
       DECL_GEN_SIGNAL(_001OnDestroy);
       DECL_GEN_SIGNAL(_001OnClose);
       
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
 
-      void _001OnDraw(::draw2d::graphics * pgraphics);
+      void _001OnDraw(::draw2d::graphics * pgraphics) override;
 
       //bool BaseOnControlEvent(::user::control_event * pevent);
 

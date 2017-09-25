@@ -735,8 +735,8 @@ namespace filemanager
          bool Item::IsFolder()
          {
             return m_iFolder >= 0;
-            return m_etype == ItemTypeFolder ||
-               m_etype == ItemTypeArtist;
+//            return m_etype == ItemTypeFolder ||
+  //             m_etype == ItemTypeArtist;
          }
 
          void list_view::_001OnEraseBkgnd(::message::message * pobj)

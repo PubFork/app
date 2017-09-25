@@ -86,10 +86,10 @@ namespace user
 
       void user_tree_common_construct();
 
-      virtual void _001OnDraw(::draw2d::graphics * pgraphics);
+      virtual void _001OnDraw(::draw2d::graphics * pgraphics) override;
       virtual void _001DrawItem(tree_draw_item & data);
 
-      void on_layout();
+      void on_layout() override;
 
       virtual sp(::data::tree) find_tree(::data::tree_item * pitem) const;
       virtual sp(::data::tree_item) find(::data::item * pitem, index * piIndex = NULL);
@@ -97,7 +97,7 @@ namespace user
       virtual bool contains(::data::tree_item * pitem);
 
 
-      void on_change_view_size();
+      void on_change_view_size() override;
 
       void _001OnTreeDataChange();
       sp(::data::tree_item) CalcFirstVisibleItem(index & iProperIndex);
@@ -116,7 +116,7 @@ namespace user
       virtual void _001OnItemExpand(::data::tree_item * pitem, ::action::context actioncontext);
       virtual void _001OnItemCollapse(::data::tree_item * pitem, ::action::context actioncontext);
       virtual bool _001GetItemElementRect(LPRECT lprect, tree_draw_item & drawitem, ::user::e_tree_element eelement);
-      virtual void install_message_routing(::message::sender * psender);
+      virtual void install_message_routing(::message::sender * psender) override;
       int32_t _001GetItemHeight();
       virtual index _001GetIndentation();
 
@@ -131,9 +131,9 @@ namespace user
 
       virtual void perform_right_click(uint_ptr uiFlags, point pt);
 
-      virtual int32_t get_wheel_scroll_delta();
+      virtual int32_t get_wheel_scroll_delta() override;
 
-      virtual void on_change_viewport_offset();
+      virtual void on_change_viewport_offset() override;
 
       sp(image_list) get_image_list();
 
@@ -145,7 +145,7 @@ namespace user
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
       DECL_GEN_SIGNAL(_001OnRButtonDown);
       DECL_GEN_SIGNAL(_001OnRButtonUp);
-      void _001OnTimer(::timer * ptimer);
+      void _001OnTimer(::timer * ptimer) override;
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnVScroll);
       DECL_GEN_SIGNAL(_001OnHScroll);
@@ -189,13 +189,13 @@ namespace user
 
       virtual void      _001EnsureVisible(::data::tree_item * pitem);
 
-      virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint) override;
 
-      virtual bool keyboard_focus_is_focusable();
+      virtual bool keyboard_focus_is_focusable() override;
 
-      virtual size get_total_size();
+      virtual size get_total_size() override;
 
-      virtual void on_viewport_offset(::draw2d::graphics * pgraphics);
+      virtual void on_viewport_offset(::draw2d::graphics * pgraphics) override;
 
 
    };

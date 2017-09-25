@@ -9,6 +9,9 @@
 // CLASS_DECL_CORE string astr.strNote;
 
 
+::aura::system * core_create_aura_system(void);
+
+
 namespace core
 {
 

@@ -250,9 +250,9 @@ namespace user
    void interaction_impl_base::on_translate()
    {
 
-      ::rect64 rectOld = m_rectParentClient;
+      //::rect64 rectOld = m_rectParentClient;
 
-      ::rect64 rectNew = m_rectParentClientRequest;
+      //::rect64 rectNew = m_rectParentClientRequest;
 
       m_rectParentClient = m_rectParentClientRequest;
 
@@ -1093,7 +1093,7 @@ namespace user
       
       LONG l = GetStyle();
 
-      LONG lAdd = dwAdd;
+      //LONG lAdd = dwAdd;
 
       l |= dwAdd;
 
@@ -1145,7 +1145,7 @@ namespace user
    LONG_PTR interaction_impl_base::set_window_long_ptr(int32_t nIndex,LONG_PTR lValue)
    {
 
-      LONG_PTR valOld = m_longptr[nIndex];
+      //LONG_PTR valOld = m_longptr[nIndex];
 
       m_longptr[nIndex] = lValue;
 

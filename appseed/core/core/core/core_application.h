@@ -88,41 +88,41 @@ namespace core
 
 
 
-      virtual void construct(const char * pszId);
+      virtual void construct(const char * pszId) override;
 
-      virtual bool process_initialize();
+      virtual bool process_initialize() override;
 
-      virtual bool initialize1(); // first initialization
-      virtual bool initialize2(); // second initialization
-      virtual bool initialize3(); // third initialization and so on...
+      virtual bool initialize1() override; // first initialization
+      virtual bool initialize2() override; // second initialization
+      virtual bool initialize3() override; // third initialization and so on...
 
-      virtual bool initialize(); // last initialization
+      virtual bool initialize() override; // last initialization
 
       virtual bool bergedge_start();
-      virtual bool os_native_bergedge_start();
+      virtual bool os_native_bergedge_start() override;
 
       virtual int32_t exit_application() override;
 
-      virtual bool finalize();
+      virtual bool finalize() override;
 
-      virtual int32_t main();
+      virtual int32_t main() override;
 
       virtual application * get_app() const;
 
-      virtual bool is_system();
-      virtual bool is_session();
+      virtual bool is_system() override;
+      virtual bool is_session() override;
 
-      virtual bool is_installing();
-      virtual bool is_uninstalling();
+      virtual bool is_installing() override;
+      virtual bool is_uninstalling() override;
 
-      virtual bool is_serviceable();
-
-
-
-      virtual void pre_translate_message(::message::message * pobj);
+      virtual bool is_serviceable() override;
 
 
-      virtual void install_message_routing(::message::sender * psender);
+
+      virtual void pre_translate_message(::message::message * pobj) override;
+
+
+      virtual void install_message_routing(::message::sender * psender) override;
 
       //virtual int32_t run();
 
@@ -132,7 +132,7 @@ namespace core
 
 
 
-      virtual void _001CloseApplication();
+      virtual void _001CloseApplication() override;
 
 
 
@@ -148,15 +148,15 @@ namespace core
 
       virtual bool base_support();
 
-      virtual string message_box(const string & pszMatter,property_set & propertyset);
+      virtual string message_box(const string & pszMatter,property_set & propertyset) override;
 
 
       virtual sp(::user::interaction) uie_from_point(point pt);
 
 
 
-      virtual bool on_install();
-      virtual bool on_uninstall();
+      virtual bool on_install() override;
+      virtual bool on_uninstall() override;
       virtual bool on_run_install();
       virtual bool on_run_uninstall();
 
@@ -169,7 +169,7 @@ namespace core
 
       // overrides for implementation
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual void process_window_procedure_exception(::exception::base* e,::message::message * pobj);
+      virtual void process_window_procedure_exception(::exception::base* e,::message::message * pobj) override;
 
 
       void EnableModelessEx(bool bEnable);
@@ -191,7 +191,7 @@ namespace core
       void OnUpdateRecentFileMenu(::user::command * pcommand);
 
       //virtual void send_app_language_changed();
-      virtual void _001OnCmdMsg(::user::command * pcommand);
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
 
 
@@ -199,12 +199,12 @@ namespace core
       void EnableHtmlHelp();
 
 
-      virtual int32_t simple_message_box_timeout(::user::primitive * puiOwner,const char * pszMessage,::duration durationTimeout,UINT fuStyle = MB_OK);
-      virtual int32_t simple_message_box(::user::primitive * puiOwner,const char * pszMessage,UINT fuStyle = MB_OK);
+      virtual int32_t simple_message_box_timeout(::user::primitive * puiOwner,const char * pszMessage,::duration durationTimeout,UINT fuStyle = MB_OK) override;
+      virtual int32_t simple_message_box(::user::primitive * puiOwner,const char * pszMessage,UINT fuStyle = MB_OK) override;
 
 
 
-      virtual bool on_run_exception(::exception::exception &);
+      virtual bool on_run_exception(::exception::exception &) override;
 
 
       // set regsitry key name to be used by application's
@@ -290,7 +290,7 @@ namespace core
       // registered with the doc manager.
       int32_t get_open_document_count();
 
-      bool do_prompt_file_name(var & varFile,UINT nIDSTitle,uint32_t lFlags,bool bOpenFileDialog, ::user::impact_system * ptemplate,::user::document * pdocument);
+      bool do_prompt_file_name(var & varFile,UINT nIDSTitle,uint32_t lFlags,bool bOpenFileDialog, ::user::impact_system * ptemplate,::user::document * pdocument) override;
 
       void EnableModeless(bool bEnable); // to disable OLE in-place dialogs
 
@@ -326,16 +326,16 @@ namespace core
       virtual bool activate_app();
 
       // Hooks for your initialization code
-      virtual bool InitApplication();
+      virtual bool InitApplication() override;
 
 
 
-      virtual bool initialize_application();
+      virtual bool initialize_application() override;
 
 
 
 
-      virtual bool final_handle_exception(::exception::exception &);
+      virtual bool final_handle_exception(::exception::exception &) override;
 
 
 
@@ -347,10 +347,10 @@ namespace core
 
 
       //      virtual ::core::file_system & file_system();
-      virtual bool _001OnDDECommand(const char * lpcsz);
+      virtual bool _001OnDDECommand(const char * lpcsz) override;
       virtual ::user::document * _001OpenDocumentFile(var varFile);
       //virtual bool on_open_document_file(var varFile) override;
-      DECL_GEN_SIGNAL(_001OnFileNew);
+      DECL_GEN_SIGNAL(_001OnFileNew) override;
 
 
       //virtual string get_version();
@@ -358,11 +358,11 @@ namespace core
 
       virtual ::window_sp get_desktop_window();
 
-      virtual int32_t run();
+      virtual int32_t run() override;
 
       ::aura::application * get_system();
 
-      virtual bool set_keyboard_layout(const char * pszPath,::action::context actioncontext);
+      virtual bool set_keyboard_layout(const char * pszPath,::action::context actioncontext) override;
 
       ::user::wndfrm::wndfrm * wndfrm();
       ::user::document_manager * document_manager();
@@ -401,10 +401,10 @@ namespace core
       virtual int32_t send_simple_command(const char * psz,void * osdataSender);
       virtual int32_t send_simple_command(void * osdata,const char * psz,void * osdataSender);
 
-      virtual sp(::aura::printer) get_printer(const char * pszDeviceName);
+      virtual sp(::aura::printer) get_printer(const char * pszDeviceName) override;
 
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
 
 
@@ -506,9 +506,9 @@ namespace core
       virtual int32_t GetVisibleTopLevelFrameCountExcept(sp(::user::interaction) pwndExcept);
       virtual int32_t GetVisibleFrameCount();
 
-      virtual void on_create_keyboard();
+      virtual void on_create_keyboard() override;
 
-      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type e_type);
+      virtual sp(type) user_default_controltype_to_typeinfo(::user::e_control_type e_type) override;
 
       virtual void set_form_impact_system(::user::impact_system * pdoctemplate,::user::impact_system * pdoctemplateChild,::user::impact_system * pdoctemplatePlaceHolder);
 
@@ -530,10 +530,10 @@ namespace core
 
       virtual string get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive);
       virtual string get_cred(string & strUsername, string & strPassword, string strToken);
-      virtual void set_cred(string strToken, const char * pszUsername, const char * pszPassword);
-      virtual void set_cred_ok(string strToken, bool bOk);
+      virtual void set_cred(string strToken, const char * pszUsername, const char * pszPassword) override;
+      virtual void set_cred_ok(string strToken, bool bOk) override;
 
-      virtual void remove_document_template(::user::impact_system * pimpactsystem);
+      virtual void remove_document_template(::user::impact_system * pimpactsystem) override;
 
       virtual bool _001OnAgreeExit() override;
       virtual void _001OnFranceExit() override;

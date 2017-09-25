@@ -1896,7 +1896,7 @@ namespace user
    }
 
 
-   void frame_window::CommonConstruct()
+   void frame_window::common_construct()
    {
       // trans ASSERT(get_handle() == NULL);
 

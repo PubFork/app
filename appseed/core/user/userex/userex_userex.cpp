@@ -343,92 +343,92 @@ namespace userex
 
       return iRet;
 
-      class ::userex::message_box box(get_app());
-
-      property_set propertyset;
-
-      propertyset["message"] = pszMessage;
-
-      propertyset["application_name"] = pwndOwner == NULL ? Application.m_strAppName : App(pwndOwner->get_app()).m_strAppName;
-
-      string strMatter;
-
-      if(fuStyle & MB_YESNOCANCEL)
-      {
-
-         strMatter = "system\\user\\simple_message_box\\yesnocancel.xhtml";
-
-      }
-      else
-      {
-
-         strMatter = "system\\user\\simple_message_box\\ok.xhtml";
-
-      }
-
-      try
-      {
-
-         if(!box.show(strMatter,&propertyset))
-         {
-
-            string strMessage = pszMessage;
-
-            strMessage.replace("<br>","\r\n");
-
-            return ::simple_message_box(pwndOwner->get_safe_handle(),strMessage,Application.m_strAppName,fuStyle);
-
-         }
-
-      }
-      catch(...)
-      {
-
-         string strMessage = pszMessage;
-
-         strMessage.replace("<br>","\r\n");
-
-         return ::simple_message_box(pwndOwner == NULL ? NULL : pwndOwner->get_handle(),strMessage,Application.m_strAppName,fuStyle);
-
-      }
-
-      if(box.m_strResponse == "ok")
-      {
-
-         return IDOK;
-
-      }
-      else if(box.m_strResponse == "yes")
-      {
-
-         return IDYES;
-
-      }
-      else if(box.m_strResponse == "no")
-      {
-
-         return IDNO;
-
-      }
-      else if(box.m_strResponse == "cancel")
-      {
-
-         return IDCANCEL;
-
-      }
-
-      if(fuStyle & MB_YESNOCANCEL)
-      {
-
-         return IDCANCEL;
-
-      }
-      else
-      {
-
-         return 0;
-
-      }
+//      class ::userex::message_box box(get_app());
+//      
+//      property_set propertyset;
+//      
+//      propertyset["message"] = pszMessage;
+//      
+//      propertyset["application_name"] = pwndOwner == NULL ? Application.m_strAppName : App(pwndOwner->get_app()).m_strAppName;
+//      
+//      string strMatter;
+//      
+//      if(fuStyle & MB_YESNOCANCEL)
+//      {
+//         
+//         strMatter = "system\\user\\simple_message_box\\yesnocancel.xhtml";
+//         
+//      }
+//      else
+//      {
+//         
+//         strMatter = "system\\user\\simple_message_box\\ok.xhtml";
+//         
+//      }
+//      
+//      try
+//      {
+//         
+//         if(!box.show(strMatter,&propertyset))
+//         {
+//            
+//            string strMessage = pszMessage;
+//            
+//            strMessage.replace("<br>","\r\n");
+//            
+//            return ::simple_message_box(pwndOwner->get_safe_handle(),strMessage,Application.m_strAppName,fuStyle);
+//            
+//         }
+//         
+//      }
+//      catch(...)
+//      {
+//         
+//         string strMessage = pszMessage;
+//         
+//         strMessage.replace("<br>","\r\n");
+//         
+//         return ::simple_message_box(pwndOwner == NULL ? NULL : pwndOwner->get_handle(),strMessage,Application.m_strAppName,fuStyle);
+//         
+//      }
+//      
+//      if(box.m_strResponse == "ok")
+//      {
+//         
+//         return IDOK;
+//         
+//      }
+//      else if(box.m_strResponse == "yes")
+//      {
+//         
+//         return IDYES;
+//         
+//      }
+//      else if(box.m_strResponse == "no")
+//      {
+//         
+//         return IDNO;
+//         
+//      }
+//      else if(box.m_strResponse == "cancel")
+//      {
+//         
+//         return IDCANCEL;
+//         
+//      }
+//      
+//      if(fuStyle & MB_YESNOCANCEL)
+//      {
+//         
+//         return IDCANCEL;
+//         
+//      }
+//      else
+//      {
+//         
+//         return 0;
+//         
+//      }
 
    }
 

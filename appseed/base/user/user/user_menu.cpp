@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -553,7 +553,7 @@ namespace user
 
       ::count iItemCount = spitema->get_size();
 
-      int32_t iSeparatorCount = pitem->m_iSeparatorCount;
+      //int32_t iSeparatorCount = pitem->m_iSeparatorCount;
 
       int x = rectMargin.left;
 

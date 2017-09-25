@@ -651,7 +651,7 @@ namespace user
          if (pdrawitem->m_plist->m_bMorePlain)
          {
 
-            ::rect r = pdrawitem->m_rectItem;
+            //::rect r = pdrawitem->m_rectItem;
 
             COLORREF cr = _001GetColor(color_text, ARGB(255, 96, 96, 96));
 
@@ -787,7 +787,9 @@ namespace user
    void list::_001OnSize(::message::message * pobj)
    {
 
-      SCAST_PTR(::message::size, psize, pobj);
+      //SCAST_PTR(::message::size, psize, pobj);
+      
+      UNREFERENCED_PARAMETER(pobj);
 
    }
 
@@ -841,7 +843,7 @@ namespace user
                iIconSize = MAX(32, m_columna[0]->m_sizeIcon.cy);
             else
                iIconSize = 32;
-            index iItemSize = iIconSize * 2;
+            //index iItemSize = iIconSize * 2;
 
          }
 

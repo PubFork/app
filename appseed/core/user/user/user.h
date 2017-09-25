@@ -14,6 +14,12 @@
 #endif
 
 
+#ifdef MACOS
+
+CLASS_DECL_CORE stringa macos_get_user_wallpaper(void);
+
+#endif
+
 namespace html
 {
 
@@ -416,6 +422,11 @@ namespace core
       void close_all_documents();
 
    };
+   
+   
+   session_docs * create_session_docs();
+   void destroy_session_docs(session_docs * pdocs);
+
 
 } // namespace core
 

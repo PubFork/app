@@ -34,7 +34,7 @@ namespace html
       elemental(data * pdoc, elemental * pparent = NULL);
       virtual ~elemental();
 
-      virtual void _001SetText(const string & str, ::action::context actioncontext);
+      virtual void _001SetText(const string & str, ::action::context actioncontext) override;
 
       DECL_GEN_SIGNAL(OnLButtonDown);
       DECL_GEN_SIGNAL(OnMouseMove);

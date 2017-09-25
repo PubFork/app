@@ -252,47 +252,51 @@ DBFileSystemSizeSet::~DBFileSystemSizeSet()
 
 bool DBFileSystemSizeSet::get_cache_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
 {
+   
    return false;
-   single_lock sl(m_table.m_pmutex, FALSE);
-  // Wait for mutex. Once it is obtained, no other client may
-  // communicate with the server
-   if(!sl.lock(duration::zero()))
-      return false;
-   if(!m_table.check_map())
-      return false;
-
-   m_table.m_pwnd->get_fs_size(i64Size, pszPath, bPending);
-   file_size_table::get_fs_size size;
-   FileSystemSizeWnd::size_map::pair * ppair = m_table.m_pwnd->m_map.PLookup(pszPath);
-   if(ppair != NULL)
-   {
-      i64Size     = ppair->m_element2.m_iSize;
-      bPending    = ppair->m_element2.m_bPending;
-      return true;
-   }
-   return  false;
-
-    // Fill shared memory
-    //::ZeroMemory(&m_pMsg, sizeof(TSharedMemory));
-    //m_pMsg->m_dwProcessID = m_dwProcessId;
-/*    _tcscpy(m_table.m_pgetfssize->m_szPath, pszPath);
-
-    // Signal server to process this request
-    m_table.m_pevExec->SetEvent();
-    // Wait for server to finish
-    if (m_table.m_pevDone->lock(0))
-    {
-      // Server finished processing data, handle data returned by the Server
-       i64Size = m_table.m_pgetfssize->m_iSize;
-       bPending = m_table.m_pgetfssize->m_bPending;
-       return m_table.m_pgetfssize->m_bRet;
-    }
-    else
-    {
-      // Timeout waiting for response from server
-       return false;
-    }*/
+   
+//   single_lock sl(m_table.m_pmutex, FALSE);
+//  // Wait for mutex. Once it is obtained, no other client may
+//  // communicate with the server
+//   if(!sl.lock(duration::zero()))
+//      return false;
+//   if(!m_table.check_map())
+//      return false;
+//
+//   m_table.m_pwnd->get_fs_size(i64Size, pszPath, bPending);
+//   file_size_table::get_fs_size size;
+//   FileSystemSizeWnd::size_map::pair * ppair = m_table.m_pwnd->m_map.PLookup(pszPath);
+//   if(ppair != NULL)
+//   {
+//      i64Size     = ppair->m_element2.m_iSize;
+//      bPending    = ppair->m_element2.m_bPending;
+//      return true;
+//   }
+//   return  false;
+//
+//    // Fill shared memory
+//    //::ZeroMemory(&m_pMsg, sizeof(TSharedMemory));
+//    //m_pMsg->m_dwProcessID = m_dwProcessId;
+///*    _tcscpy(m_table.m_pgetfssize->m_szPath, pszPath);
+//
+//    // Signal server to process this request
+//    m_table.m_pevExec->SetEvent();
+//    // Wait for server to finish
+//    if (m_table.m_pevDone->lock(0))
+//    {
+//      // Server finished processing data, handle data returned by the Server
+//       i64Size = m_table.m_pgetfssize->m_iSize;
+//       bPending = m_table.m_pgetfssize->m_bPending;
+//       return m_table.m_pgetfssize->m_bRet;
+//    }
+//    else
+//    {
+//      // Timeout waiting for response from server
+//       return false;
+//    }*/
+   
 }
+
 
 bool DBFileSystemSizeSet::get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
 {

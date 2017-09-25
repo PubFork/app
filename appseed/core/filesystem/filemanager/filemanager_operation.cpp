@@ -1,10 +1,16 @@
 #include "framework.h"
 
 
+
 namespace filemanager
 {
 
+   bool has_digit(string strName);
+   string get_number_mask(string strName);
+   int64_t get_number_value(string strName);
+   string set_number_value(string strName, int64_t iValue);
 
+   
    operation::operation(::aura::application * papp):
       object(papp)
    {

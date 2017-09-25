@@ -2436,6 +2436,7 @@ namespace macos
       }
    };
 
+   
    void interaction_impl::_001DeferPaintLayeredWindowBackground(HDC hdc)
    {
 
@@ -2456,165 +2457,167 @@ namespace macos
       user::oswindow_array wndaApp;
 
 
-      //      HRGN rgnWindow;
-      //      HRGN rgnIntersect;
-      //      HRGN rgnUpdate = NULL;
-
-      throw not_implemented(get_app());
-      /*
-       rgnWindow = CreateRectRgn(0, 0, 0, 0);
-       rgnIntersect = CreateRectRgn(0, 0, 0, 0);
-       */
-       //      int32_t iCount = wndaApp.get_count();
-
-      throw not_implemented(get_app());
-      //      try
-      //      {
-      //
-      //         if(GetWindowLong(GWL_EXSTYLE) & WS_EX_LAYERED)
-      //         {
-      //            rect rect5;
-      //            rect rect9;
-      //
-      //            rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
-      //            oswindow hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
-      //            for(;;)
-      //            {
-      //               //            char szText[1024];
-      //               //::GetWindowTextA(hwndOrder, szText, sizeof(szText));
-      //               if(hwndOrder == NULL ||
-      //                  !::IsWindow(hwndOrder))
-      //                  break;
-      //               if(!::IsWindowVisible(hwndOrder) ||
-      //                  ::IsIconic(hwndOrder) ||
-      //                  hwndOrder == get_handle()
-      //                  || wndaApp.contains(hwndOrder))
-      //               {
-      //                  if(hwndOrder == get_handle())
-      //                  {
-      //                     // add as bookmark - doesn't paint it
-      //                     wndaApp.add(hwndOrder);
-      //                  }
-      //               }
-      //               else
-      //               {
-      //                  rect rectWindow;
-      //                  ::GetWindowRect(hwndOrder, rectWindow);
-      //                  SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
-      //                  SetRectRgn(rgnIntersect, 0, 0, 0, 0);
-      //                  CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
-      //                  rect rectIntersectBox;
-      //                  GetRgnBox(rgnIntersect, rectIntersectBox);
-      //                  if(rectIntersectBox.is_empty())
-      //                  {
-      //                  }
-      //                  else
-      //                  {
-      //                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
-      //                     rect rectDiffBox;
-      //                     GetRgnBox(rgnUpdate, rectDiffBox);
-      //                     wndaApp.add(hwndOrder);
-      //                     if(rectDiffBox.is_empty())
-      //                     {
-      //                        break;
-      //                     }
-      //                  }
-      //               }
-      //               hwndOrder = ::GetWindow(hwndOrder, GW_HWNDNEXT);
-      //
-      //
-      //            }
-      //            for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
-      //            {
-      //               oswindow hWnd = wndaApp[j];
-      //               if(hWnd == get_handle())
-      //                  break;
-      //               if(!::IsWindowVisible(hWnd) || ::IsIconic(hWnd))
-      //                  continue;
-      //               ::GetWindowRect(hWnd, rect5);
-      //               rect9.intersect(rect5, rectUpdate);
-      //               if(rect9.width() >0 && rect9.height() > 0)
-      //               {
-      //                  /*::user::interaction * pwnd = dynamic_cast < ::user::interaction * > (interaction_impl::FromHandlePermanent(hWnd));
-      //                  if(pwnd == NULL)
-      //                  {
-      //                  for(int32_t l = 0; l < wndpa.get_count(); l++)
-      //                  {
-      //                  if(wndpa[l]->get_safe_handle() == hWnd)
-      //                  {
-      //                  pwnd = dynamic_cast < ::user::interaction * > (wndpa[l]->m_pimpl);
-      //                  break;
-      //                  }
-      //                  }
-      //                  }
-      //                  if(pwnd != NULL)
-      //                  {
-      //                  pwnd->_001Print(pgraphics);
-      //                  }*/
-      //                  //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
-      //                  if(true)
-      //                  {
-      //                     HDC hDCMem = CreateCompatibleDC(NULL);
-      //                     HBITMAP hBmp = NULL;
-      //                     {
-      //                        HDC hDC = ::GetWindowDC(hWnd);
-      //                        hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
-      //                        ::ReleaseDC(hWnd, hDC);
-      //                     }
-      //                     HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
-      //                     //print_window printwindow(get_app(), hWnd, hDCMem, 284);
-      //                     ::PrintWindow(hWnd, hDCMem, 0);
-      //                     ::BitBlt(
-      //                        hdc ,
-      //                        //rect5.left,
-      //                        //rect5.top,
-      //                        0, 0,
-      //                        rect5.width(), rect5.height(),
-      //                        hDCMem,
-      //                        rectUpdate.left - rect5.left,
-      //                        rectUpdate.top - rect5.top,
-      //                        SRCCOPY);
-      //                     ::SelectObject(hDCMem, hOld);
-      //                     ::DeleteObject(hDCMem);
-      //                     ::DeleteObject(hBmp);
-      //                  }
-      //                  else
-      //                  {
-      //                     SetViewportOrgEx(hdc, 0, 0, NULL);
-      //                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
-      //                     if(hdcWindow == NULL)
-      //                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
-      //                     if(hdcWindow != NULL)
-      //                     {
-      //                        ::BitBlt(
-      //                           hdc,
-      //                           rect5.left - rectUpdate.left,
-      //                           rect5.top - rectUpdate.top,
-      //                           rect5.width(), rect5.height(),
-      //                           hdcWindow,
-      //                           rect5.left - rect5.left,
-      //                           rect5.top - rect5.top,
-      //                           SRCCOPY);
-      //                        ::ReleaseDC(wndaApp[j], hdcWindow);
-      //                     }
-      //                     else
-      //                     {
-      //                        TRACE0("WARNING: failed to draw a background. this surface probably will be black.");
-      //                     }
-      //                  }
-      //               }
-      //            }
-      //         }
-      //      }
-      //      catch(...)
-      //      {
-      //
-      //      }
-      //
-      //      ::DeleteObject(rgnWindow);
-      //      ::DeleteObject(rgnIntersect);
-      //      ::DeleteObject(rgnUpdate);
+//      //      HRGN rgnWindow;
+//      //      HRGN rgnIntersect;
+//      //      HRGN rgnUpdate = NULL;
+//
+//      throw not_implemented(get_app());
+//      /*
+//       rgnWindow = CreateRectRgn(0, 0, 0, 0);
+//       rgnIntersect = CreateRectRgn(0, 0, 0, 0);
+//       */
+//       //      int32_t iCount = wndaApp.get_count();
+//
+//      throw not_implemented(get_app());
+//      //      try
+//      //      {
+//      //
+//      //         if(GetWindowLong(GWL_EXSTYLE) & WS_EX_LAYERED)
+//      //         {
+//      //            rect rect5;
+//      //            rect rect9;
+//      //
+//      //            rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
+//      //            oswindow hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
+//      //            for(;;)
+//      //            {
+//      //               //            char szText[1024];
+//      //               //::GetWindowTextA(hwndOrder, szText, sizeof(szText));
+//      //               if(hwndOrder == NULL ||
+//      //                  !::IsWindow(hwndOrder))
+//      //                  break;
+//      //               if(!::IsWindowVisible(hwndOrder) ||
+//      //                  ::IsIconic(hwndOrder) ||
+//      //                  hwndOrder == get_handle()
+//      //                  || wndaApp.contains(hwndOrder))
+//      //               {
+//      //                  if(hwndOrder == get_handle())
+//      //                  {
+//      //                     // add as bookmark - doesn't paint it
+//      //                     wndaApp.add(hwndOrder);
+//      //                  }
+//      //               }
+//      //               else
+//      //               {
+//      //                  rect rectWindow;
+//      //                  ::GetWindowRect(hwndOrder, rectWindow);
+//      //                  SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
+//      //                  SetRectRgn(rgnIntersect, 0, 0, 0, 0);
+//      //                  CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
+//      //                  rect rectIntersectBox;
+//      //                  GetRgnBox(rgnIntersect, rectIntersectBox);
+//      //                  if(rectIntersectBox.is_empty())
+//      //                  {
+//      //                  }
+//      //                  else
+//      //                  {
+//      //                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
+//      //                     rect rectDiffBox;
+//      //                     GetRgnBox(rgnUpdate, rectDiffBox);
+//      //                     wndaApp.add(hwndOrder);
+//      //                     if(rectDiffBox.is_empty())
+//      //                     {
+//      //                        break;
+//      //                     }
+//      //                  }
+//      //               }
+//      //               hwndOrder = ::GetWindow(hwndOrder, GW_HWNDNEXT);
+//      //
+//      //
+//      //            }
+//      //            for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
+//      //            {
+//      //               oswindow hWnd = wndaApp[j];
+//      //               if(hWnd == get_handle())
+//      //                  break;
+//      //               if(!::IsWindowVisible(hWnd) || ::IsIconic(hWnd))
+//      //                  continue;
+//      //               ::GetWindowRect(hWnd, rect5);
+//      //               rect9.intersect(rect5, rectUpdate);
+//      //               if(rect9.width() >0 && rect9.height() > 0)
+//      //               {
+//      //                  /*::user::interaction * pwnd = dynamic_cast < ::user::interaction * > (interaction_impl::FromHandlePermanent(hWnd));
+//      //                  if(pwnd == NULL)
+//      //                  {
+//      //                  for(int32_t l = 0; l < wndpa.get_count(); l++)
+//      //                  {
+//      //                  if(wndpa[l]->get_safe_handle() == hWnd)
+//      //                  {
+//      //                  pwnd = dynamic_cast < ::user::interaction * > (wndpa[l]->m_pimpl);
+//      //                  break;
+//      //                  }
+//      //                  }
+//      //                  }
+//      //                  if(pwnd != NULL)
+//      //                  {
+//      //                  pwnd->_001Print(pgraphics);
+//      //                  }*/
+//      //                  //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
+//      //                  if(true)
+//      //                  {
+//      //                     HDC hDCMem = CreateCompatibleDC(NULL);
+//      //                     HBITMAP hBmp = NULL;
+//      //                     {
+//      //                        HDC hDC = ::GetWindowDC(hWnd);
+//      //                        hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
+//      //                        ::ReleaseDC(hWnd, hDC);
+//      //                     }
+//      //                     HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
+//      //                     //print_window printwindow(get_app(), hWnd, hDCMem, 284);
+//      //                     ::PrintWindow(hWnd, hDCMem, 0);
+//      //                     ::BitBlt(
+//      //                        hdc ,
+//      //                        //rect5.left,
+//      //                        //rect5.top,
+//      //                        0, 0,
+//      //                        rect5.width(), rect5.height(),
+//      //                        hDCMem,
+//      //                        rectUpdate.left - rect5.left,
+//      //                        rectUpdate.top - rect5.top,
+//      //                        SRCCOPY);
+//      //                     ::SelectObject(hDCMem, hOld);
+//      //                     ::DeleteObject(hDCMem);
+//      //                     ::DeleteObject(hBmp);
+//      //                  }
+//      //                  else
+//      //                  {
+//      //                     SetViewportOrgEx(hdc, 0, 0, NULL);
+//      //                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
+//      //                     if(hdcWindow == NULL)
+//      //                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
+//      //                     if(hdcWindow != NULL)
+//      //                     {
+//      //                        ::BitBlt(
+//      //                           hdc,
+//      //                           rect5.left - rectUpdate.left,
+//      //                           rect5.top - rectUpdate.top,
+//      //                           rect5.width(), rect5.height(),
+//      //                           hdcWindow,
+//      //                           rect5.left - rect5.left,
+//      //                           rect5.top - rect5.top,
+//      //                           SRCCOPY);
+//      //                        ::ReleaseDC(wndaApp[j], hdcWindow);
+//      //                     }
+//      //                     else
+//      //                     {
+//      //                        TRACE0("WARNING: failed to draw a background. this surface probably will be black.");
+//      //                     }
+//      //                  }
+//      //               }
+//      //            }
+//      //         }
+//      //      }
+//      //      catch(...)
+//      //      {
+//      //
+//      //      }
+//      //
+//      //      ::DeleteObject(rgnWindow);
+//      //      ::DeleteObject(rgnIntersect);
+//      //      ::DeleteObject(rgnUpdate);
+      
    }
+   
 
    void interaction_impl::_001OnProdevianSynch(::message::message * pobj)
    {
@@ -2789,7 +2792,7 @@ namespace macos
          // DispatchMessage(&msg);
       }
 
-      Default();
+      //Default();
    }
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::user::interaction * pWnd, UINT)
@@ -3495,26 +3498,26 @@ namespace macos
 
       return ::user::interaction_impl::GetWindowRect(lprect);
 
-      //      if(!::IsWindow(get_handle()))
-        //       throw simple_exception(get_app(), "no more a user::interaction");
-      if (!::IsWindow(get_handle()))
-      {
-
-         return false;
-
-      }
-      // if it is temporary user::interaction - probably not ca2 wrapped user::interaction
-      rect rect32;
-
-      if (!::GetWindowRect(get_handle(), rect32))
-      {
-
-         return false;
-
-      }
-      ::copy(lprect, rect32);
-
-      return true;
+//      //      if(!::IsWindow(get_handle()))
+//        //       throw simple_exception(get_app(), "no more a user::interaction");
+//      if (!::IsWindow(get_handle()))
+//      {
+//
+//         return false;
+//
+//      }
+//      // if it is temporary user::interaction - probably not ca2 wrapped user::interaction
+//      rect rect32;
+//
+//      if (!::GetWindowRect(get_handle(), rect32))
+//      {
+//
+//         return false;
+//
+//      }
+//      ::copy(lprect, rect32);
+//
+//      return true;
 
    }
 
@@ -5402,18 +5405,18 @@ namespace macos
       //       hWnd = ::GetLastActivePopup(hWnd);
 
       // disable and store top level parent ::user::interaction if specified
-      if (pWndTop != NULL)
-      {
-         /*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
-          {
-          *pWndTop = hWndTop;
-          ::EnableWindow(hWndTop, FALSE);
-          }
-          else
-          *pWndTop = ::caNULL;*/
-      }
-
-      return hWnd;    // return the owner as oswindow
+//      if (pWndTop != NULL)
+//      {
+//         /*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
+//          {
+//          *pWndTop = hWndTop;
+//          ::EnableWindow(hWndTop, FALSE);
+//          }
+//          else
+//          *pWndTop = ::caNULL;*/
+//      }
+//
+//      return hWnd;    // return the owner as oswindow
    }
 
    LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wparam, LPARAM lparam)

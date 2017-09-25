@@ -170,14 +170,21 @@ namespace userex
       ::user::view_creator::on_show_view();
       if(m_pviewdataOld != NULL && ::str::begins_ci(m_pviewdataOld->m_id, "file_manager"))
       {
+         
          if(GetParentFrame()->ContinueModal(0))
          {
+            
             GetParentFrame()->EndModalLoop("yes");
+            
          }
-         if(&filemanager_manager() != NULL)
+         
+         if(is_set(filemanager_manager()))
          {
+            
             filemanager_manager().get_filemanager_data()->m_pdocumentTopic = NULL;
+            
          }
+         
       }
 
       if (m_pviewdata != NULL)
@@ -597,7 +604,7 @@ namespace userex
 
       ::user::tab::_001OnTabClose(iTab);
 
-      if(GetParentFrame()->ContinueModal(0) && &filemanager_manager() != NULL
+      if(GetParentFrame()->ContinueModal(0) && is_set(filemanager_manager())
             && filemanager_manager().get_filemanager_data()->m_pdocumentTopic!= NULL)
       {
          GetParentFrame()->EndModalLoop("yes");
