@@ -302,7 +302,7 @@ namespace userstack
 
       }
        
-      if(&App(papp) == NULL)
+      if(is_null(App(papp)))
       {
       
          return NULL;

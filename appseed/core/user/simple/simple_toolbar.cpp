@@ -476,7 +476,7 @@ size simple_toolbar::CalcSize(int32_t nCount)
 
    rect rBorder = get_bar_border();
 
-   size sPress = get_press_shift();
+   //size sPress = get_press_shift();
 
    size sSpacing = get_item_spacing();
 
@@ -766,9 +766,9 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
    }
 
-   int iOffsetX = 0;
-
-   int iOffsetY = 0;
+//   int iOffsetX = 0;
+//
+//   int iOffsetY = 0;
 
    _001GetElementRect(iItem, rectItem, eelement);
 
@@ -1031,7 +1031,7 @@ bool simple_toolbar::_001GetElementRect(int32_t iItem, LPRECT lprect, e_element 
 
    rect rItemPad = get_item_pad();
 
-   size sPress = get_press_shift();
+//   size sPress = get_press_shift();
 
    int iImageSpacing = get_image_spacing();
 
@@ -1039,9 +1039,9 @@ bool simple_toolbar::_001GetElementRect(int32_t iItem, LPRECT lprect, e_element 
 
    ::user::toolbar_item & item = m_itema(iItem);
 
-   BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
+//   BaseMenuCentral * pmenucentral = BaseMenuCentral::GetMenuCentral(get_app());
 
-   UINT uiImage = pmenucentral->CommandToImage(item.m_id);
+//   UINT uiImage = pmenucentral->CommandToImage(item.m_id);
 
    if ((item.m_fsStyle & TBSTYLE_SEP) != 0)
    {
@@ -1154,19 +1154,19 @@ void simple_toolbar::SetSizes(SIZE sizeButton, SIZE sizeImage)
    ASSERT(sizeButton.cy >= sizeImage.cy + 6);
 
    //   if (::IsWindow(get_handle()))
-   if (false)
-   {
-      // set the sizes via TB_SETBITMAPSIZE and TB_SETBUTTONSIZE
-#ifdef WINDOWSEX
-      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
-      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
-#else
-      //throw todo(get_app());
-#endif
-
-      Invalidate();   // just to be nice if called when toolbar is visible
-   }
-   else
+//   if (false)
+//   {
+//      // set the sizes via TB_SETBITMAPSIZE and TB_SETBUTTONSIZE
+//#ifdef WINDOWSEX
+//      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
+//      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
+//#else
+//      //throw todo(get_app());
+//#endif
+//
+//      Invalidate();   // just to be nice if called when toolbar is visible
+//   }
+//   else
    {
       // just set our internal values for later
       m_sizeButton = sizeButton;
@@ -1264,7 +1264,7 @@ void simple_toolbar::on_layout()
 
    }
 
-   if (m_dwCtrlStyle &TBSTYLE_ALIGN_CENTER)
+   if (m_dwCtrlStyle & TBSTYLE_ALIGN_CENTER)
    {
 
       output_debug_string("please_center_align");
@@ -1273,7 +1273,7 @@ void simple_toolbar::on_layout()
 
       GetClientRect(rectClient);
 
-      size s = CalcSize( (int32_t) (m_itema.get_count()));
+      CalcSize((int32_t) (m_itema.get_count()));
 
       for (index i = 0; i < m_itema.get_count(); i++)
       {
@@ -1882,7 +1882,7 @@ int32_t simple_toolbar::WrapToolBar(int32_t nCount, int32_t nWidth)
 
    size sSpacing = get_item_spacing();
 
-   size sPress = get_press_shift();
+   //size sPress = get_press_shift();
 
    rect rItemPad = get_item_pad();
 

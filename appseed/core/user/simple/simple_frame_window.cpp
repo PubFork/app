@@ -1351,7 +1351,9 @@ void simple_frame_window::_001OnActivateApp(::message::message * pobj)
    SCAST_PTR(::message::base, pbase, pobj);
 
    pbase->previous();
-   bool bActive = pbase->m_wparam != FALSE;
+   
+   //bool bActive = pbase->m_wparam != FALSE;
+   
    if (GetParent() == NULL && GetExStyle() & WS_EX_LAYERED)
    {
 
@@ -1381,7 +1383,7 @@ void simple_frame_window::_001OnActivate(::message::message * pobj)
 
    pactivate->previous();
 
-   bool bMinimized = HIWORD(pactivate->m_lparam);
+//   bool bMinimized = HIWORD(pactivate->m_lparam);
 
    int iActive = LOWORD(pactivate->m_wparam);
    if (iActive)

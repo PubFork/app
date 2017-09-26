@@ -334,7 +334,7 @@ namespace prompt
 
 #else
 
-         throw todo(get_app());
+         //throw todo(get_app());
 
 #endif
 

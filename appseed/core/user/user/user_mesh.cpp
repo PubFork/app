@@ -759,17 +759,18 @@ namespace user
       //psize->m_bRet = false;
    }
 
+   
    void mesh::on_layout()
    {
 
       synch_lock sl(m_pmutex);
 
       if(m_bTopText)
+      {
+         
          _001LayoutTopText();
-
-      ::count iCount = m_nItemCount;
-      int32_t iMaxWidth = 0;
-      //int32_t iWidth;
+         
+      }
 
       m_iTopIndex       = _001CalcDisplayTopIndex();
 
@@ -781,6 +782,7 @@ namespace user
       }
 
       index iLow = 0;
+      
       for(m_iTopGroup = 0; m_iTopGroup < m_nGroupCount; m_iTopGroup++)
       {
 
@@ -1108,11 +1110,11 @@ namespace user
 
       return;
 
-      synch_lock sl(&m_mutexData);
+//      synch_lock sl(&m_mutexData);
 
 //      index iColumn;
 
-      index_array iaVisible;
+//      index_array iaVisible;
 
 
    }
@@ -2037,10 +2039,13 @@ namespace user
 
       if(m_eview == view_icon)
       {
+         
          pdrawitem->m_rectSubItem     = pdrawitem->m_rectItem;
+         
          return_(pdrawitem->m_bOk,true);
-         return;
-         throw "subitem rectangle on icon view? why are you asking for that now?";
+         
+         //return;
+         //throw "subitem rectangle on icon view? why are you asking for that now?";
       }
 
       pdrawitem->m_bOk = false;
@@ -2871,7 +2876,7 @@ namespace user
          if (m_eview != view_icon)
          {
 
-            index iItemOld = m_iItemDrop;
+            //index iItemOld = m_iItemDrop;
 
             if (_001DisplayHitTest(pt, m_iItemDrop))
             {
@@ -4748,7 +4753,7 @@ namespace user
    void mesh::_001ItemScroll(index iItem,bool bRedraw)
    {
 
-      ::point ptScroll = get_viewport_offset();
+      //::point ptScroll = get_viewport_offset();
 
       if(iItem < m_nItemCount)
       {
@@ -6333,7 +6338,7 @@ namespace user
 
          GetClientRect(rectClient);
 
-         point ptScroll = get_viewport_offset();
+         //point ptScroll = get_viewport_offset();
 
          size sizePage;
 

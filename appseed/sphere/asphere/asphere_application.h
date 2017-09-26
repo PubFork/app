@@ -43,8 +43,8 @@ namespace asphere
 
 
       virtual bool initialize_application() override;
-      virtual bool initialize1();
-      virtual bool initialize();
+      virtual bool initialize1() override;
+      virtual bool initialize() override;
 
 
       virtual void get_theme_text_color(COLORREF & crText, COLORREF & crBack);

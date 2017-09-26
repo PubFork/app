@@ -26,6 +26,7 @@ namespace install
       m_dProgress2 = -1.0;
 
       m_pthreadSsl = NULL;
+      
 #ifdef WINDOWS
 
       m_hinstance = ::GetModuleHandleA(NULL);
@@ -37,9 +38,6 @@ namespace install
       m_emessage = message_none;
 
       m_bInstallerInstalling = false;
-
-      construct(NULL);
-
 
    }
 

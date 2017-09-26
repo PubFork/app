@@ -1765,7 +1765,7 @@ namespace user
 
             }
 
-            bool bOk;
+            bool bOk = false;
 
             if (pkey->m_ekey == key_left)
             {
@@ -1799,9 +1799,7 @@ namespace user
 
                _001PlaceControl(pcontrol, iItem);
 
-
                sp(::user::plain_edit) pedit = m_pcontrolEdit;
-
 
                if(pedit.is_set())
                {

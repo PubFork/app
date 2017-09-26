@@ -1048,18 +1048,22 @@ namespace user
          }
          else
          {
+            
             draw_list_item itemFirst(this);
 
             itemFirst.m_iItem = 0;
+            
             itemFirst.m_iDisplayItem = 0;
+            
             itemFirst.m_iGroup = 0;
+            
             _001GetItemRect(&itemFirst);
 
             rect = itemFirst.m_rectItem;
 
             rect.top = 0;
 
-            rect.bottom = (index) ((_001GetItemCount() + (m_bHeaderCtrl ? 1 : 0)) * m_iItemHeight);
+            rect.bottom = (LONG) ((_001GetItemCount() + (m_bHeaderCtrl ? 1 : 0)) * m_iItemHeight);
 
             //            draw_list_item itemLast(this);
             //
@@ -1313,27 +1317,27 @@ namespace user
 
       return;
 
-      synch_lock sl(&m_mutexData);
-
-      //index iColumn;
-
-      index_array iaVisible;
-
-      data_load("VisibleSubItem", iaVisible);
-
-      for(index iColumn = 0; iColumn < m_columna.get_count(); iColumn++)
-      {
-
-         list_column * pcolumn = m_columna[iColumn];
-
-         if (pcolumn != NULL)
-         {
-
-            pcolumn->m_bVisible = iaVisible.contains(iColumn);
-
-         }
-
-      }
+//      synch_lock sl(&m_mutexData);
+//
+//      //index iColumn;
+//
+//      index_array iaVisible;
+//
+//      data_load("VisibleSubItem", iaVisible);
+//
+//      for(index iColumn = 0; iColumn < m_columna.get_count(); iColumn++)
+//      {
+//
+//         list_column * pcolumn = m_columna[iColumn];
+//
+//         if (pcolumn != NULL)
+//         {
+//
+//            pcolumn->m_bVisible = iaVisible.contains(iColumn);
+//
+//         }
+//
+//      }
 
    }
 
@@ -2314,10 +2318,15 @@ namespace user
 
       if (m_eview == view_icon)
       {
+
          pdrawitem->m_rectSubItem = pdrawitem->m_rectItem;
+         
          return_(pdrawitem->m_bOk, true);
-         return;
-         throw "subitem rectangle on icon view? why are you asking for that now?";
+         
+//         return;
+         
+//         throw "subitem rectangle on icon view? why are you asking for that now?";
+         
       }
 
       pdrawitem->m_bOk = false;
@@ -6001,20 +6010,34 @@ namespace user
 
    bool list::query_drop(index iDisplayDrop, index iDisplayDrag)
    {
+      
       if (iDisplayDrag < 0)
+      {
+         
          return false;
+         
+      }
+      
       if (iDisplayDrop < 0)
+      {
+         
          return false;
+         
+      }
+      
       if (m_iItemDrag != m_iItemDrop)
       {
+         
          if (m_eview == view_icon)
          {
+            
             return m_iconlayout.m_iaDisplayToStrict[m_iItemDrag] != -1;
 
-            if (m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] == -1 || m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] >= m_nItemCount)
-            {
-               return true;
-            }
+//            if (m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] == -1 || m_iconlayout.m_iaDisplayToStrict[m_iItemDrop] >= m_nItemCount)
+//            {
+//               return true;
+//            }
+            
          }
          else
          {
@@ -6357,7 +6380,8 @@ namespace user
       {
          synch_lock sl(get_image_list()->m_pmutex);
 
-         if (m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0 || m_plist->m_dIconSaturation < 1.0)
+         if ((m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
+             || (m_plist->m_dIconSaturation < 1.0))
          {
 
             auto & dib = m_plist->m_mapIconBlur[m_iImage];
@@ -6383,7 +6407,7 @@ namespace user
                else
                {
 
-                  dib->create(m_rectImage.size() + size(m_plist->m_iIconBlurRadius * iRate * 2, m_plist->m_iIconBlurRadius * iRate * 2));
+                  dib->create(m_rectImage.size());
 
                }
 

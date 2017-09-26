@@ -71,14 +71,6 @@ m_visual(this),
    }
 
 
-   void system::construct(const char * pszAppId)
-   {
-
-      ::axis::application::construct(pszAppId);
-
-   }
-
-
    system::~system()
    {
 

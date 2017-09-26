@@ -983,7 +983,7 @@ namespace introjection
       }
 
 
-      int err = errno;
+      //int err = errno;
       strLog= file_as_string_dup(strClog);
 
 #else
@@ -1162,9 +1162,9 @@ namespace introjection
          //process->create_child_process(strLCmd,false,NULL,::multithreading::priority_highest);
 #endif
 
-         uint32_t dwStart = ::get_tick_count();
+         //uint32_t dwStart = ::get_tick_count();
 
-         uint32_t dwExitCode;
+         //uint32_t dwExitCode;
 
          string strLog;
 #ifdef MACOS

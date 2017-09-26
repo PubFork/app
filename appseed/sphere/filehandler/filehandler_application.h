@@ -18,13 +18,13 @@ namespace filehandler
       application();
       virtual ~application();
 
-      virtual void construct();
+      void construct();
 
-      virtual bool initialize_application();
+      virtual bool initialize_application() override;
       virtual int32_t exit_application() override;
 
 
-      virtual void on_request(::create * pcreate);
+      virtual void on_request(::create * pcreate) override;
 
 
    };

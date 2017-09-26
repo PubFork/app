@@ -271,47 +271,34 @@ namespace xml
 //
 
 
-
-
-
-
-
-
-
-
-
 namespace aura
 {
 
-   // impl
+   
    template < class APP >
    sp(::aura::application) single_application_library < APP > ::get_new_application(const char * pszAppId)
    {
 
       if(!contains_app(pszAppId))
+      {
+         
          return NULL;
+         
+      }
 
       sp(::aura::application) papp = canew(APP());
 
       if(papp == NULL)
-         return NULL;
-
-      try
       {
-
-         papp->construct(pszAppId);
-
-      }
-      catch(...)
-      {
-
+         
          return NULL;
-
+         
       }
 
       return papp;
 
    }
+   
 
    template < typename T >
    void application::alloc(T * & pt)
@@ -331,6 +318,7 @@ namespace aura
       pt->add_ref();
 
    }
+   
 
 } // namespace aura
 

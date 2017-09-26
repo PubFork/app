@@ -116,22 +116,11 @@ namespace core
    }
 
 
-
-   void system::construct(const char * pszAppId)
-   {
-
-      ::core::application::construct(pszAppId);
-
-      ::base::system::construct(pszAppId);
-
-   }
-
-
-
-
    void system::discard_to_factory(sp(object) pca)
    {
+
       UNREFERENCED_PARAMETER(pca);
+      
    }
 
 

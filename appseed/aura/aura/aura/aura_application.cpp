@@ -2319,12 +2319,6 @@ namespace aura
    }
 
 
-   void application::construct(const char * pszAppId)
-   {
-
-   }
-
-
    void application::TermThread(HINSTANCE hInstTerm)
    {
 
@@ -5874,8 +5868,6 @@ retry_license:
 
          papp = create_platform(m_pauraapp->m_paurasession);
 
-         papp->construct("session");
-
          papp->m_strAppId = "session";
 
       }
@@ -5885,7 +5877,11 @@ retry_license:
          papp = Session.get_new_application(pbias == NULL ? this : pbias->get_app(), strAppId);
 
          if (papp == NULL)
+         {
+            
             return NULL;
+            
+         }
 
          papp->m_paurasession = m_paurasession;
 

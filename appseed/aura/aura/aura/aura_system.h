@@ -155,12 +155,6 @@ namespace aura
          virtual ~system();
 
 
-
-
-
-
-         virtual void construct(const char * pszAppId) override;
-
          virtual bool initialize_application() override;
          virtual int32_t exit_application() override;
 

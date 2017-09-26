@@ -74,9 +74,6 @@ namespace core
       }
 
 
-      virtual void construct(const char * pszAppId) override;
-
-
       virtual void install_message_routing(::message::sender * psender) override;
 
       virtual bool process_initialize_userex();

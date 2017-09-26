@@ -1,11 +1,20 @@
 #pragma once
 
-namespace userex {
+
+namespace userex
+{
+
+   
    class pane_tab_view;
-}
+   
+   
+} // namespace userex
+
+
 namespace core
 {
 
+   
    enum e_end
    {
 
@@ -16,15 +25,13 @@ namespace core
 
    };
 
+   
    class CLASS_DECL_CORE application:
       virtual public ::base::application,
-//      virtual public ::html_lite::application,
       virtual public ::filemanager::callback
    {
    public:
 
-
-//      ::calculator::calculator *             m_pcalculator;
 
       ::userex::pane_tab_view *              m_pmainpane;
 
@@ -32,7 +39,6 @@ namespace core
 
       ::userfs::userfs *                     m_puserfs;
 
-      // class signal                           m_signalAppLanguageChange;
       string                                 m_strHelpFilePath;
 
 #ifdef WINDOWS
@@ -86,9 +92,6 @@ namespace core
       application();
       virtual ~application();
 
-
-
-      virtual void construct(const char * pszId) override;
 
       virtual bool process_initialize() override;
 

@@ -456,8 +456,6 @@ namespace hotplugin
 
          paxissystem->m_bSystemSynchronizedCursor = false;
 
-         paxissystem->construct(NULL);
-
 #ifdef WINDOWS
 
          paxissystem->m_hinstance = (HINSTANCE)get_hinstance();

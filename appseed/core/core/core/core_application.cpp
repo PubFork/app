@@ -93,50 +93,12 @@ namespace core
    }
 
 
-
-   void application::construct(const char * pszId)
-   {
-
-      if (pszId == NULL)
-      {
-
-         m_strId = "";
-
-      }
-      else
-      {
-
-         m_strId = pszId;
-
-      }
-
-      ::base::application::construct(m_strId);
-
-      if (m_strAppName.is_empty())
-      {
-
-         if (m_strAppId.has_char())
-         {
-
-            m_strAppName = m_strAppId;
-
-         }
-         else if (m_strInstallToken.has_char())
-         {
-
-            m_strAppName = m_strInstallToken;
-         }
-
-      }
-
-   }
-
    application * application::get_app() const
    {
+
       return (application *) this;
+      
    }
-
-
 
 
    bool application::is_system()

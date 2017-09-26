@@ -218,10 +218,9 @@ namespace console
       IGUI_MSG_LINK(WM_APP + 2000  , pinterface, this, &prompt_frame::_001OnApp2000);
    }
 
+
    void prompt_frame::_001OnCreate(::message::message * pobj)
    {
-
-      SCAST_PTR(::message::create, pcreate, pobj);
 
       pobj->previous();
 

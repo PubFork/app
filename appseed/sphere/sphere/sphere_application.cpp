@@ -15,44 +15,19 @@ namespace sphere
 
    application::application(const char * pszId)
    {
-      construct(pszId);
+      
    }
 
 
    application::~application()
    {
+      
    }
 
+   
    sp(::aura::application) application::get_system()
    {
       return new application();
-   }
-
-   void application::construct(const char * pszAppId)
-   {
-      string strId = pszAppId;
-      m_strId = pszAppId;
-      char chFirst = '\0';
-      if(strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
-      if(chFirst == 'd')
-      {
-         if(strId == "default_file_handler")
-         {
-            return ::filehandler::application::construct();
-         }
-      }
-      else if(chFirst == 'u')
-      {
-         if(strId == "userstack")
-         {
-            return ::userstack::application::construct();
-         }
-      }
-
-
    }
 
 

@@ -72,8 +72,6 @@ namespace core
       virtual ~system();
 
 
-      virtual void construct(const char * pszAppId) override;
-
       virtual void discard_to_factory(sp(object) pca);
 
       virtual bool is_system() override;

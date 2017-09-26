@@ -390,28 +390,6 @@ namespace aura
 
    }
 
-//
-//
-//   bool system::verb()
-//   {
-//
-//
-//      return (this->*m_pfnVerb)();
-//
-//
-//   }
-
-
-   void system::construct(const char * pszAppId)
-   {
-
-
-      ::aura::application::construct(pszAppId);
-
-   }
-
-
-
 
    base_factory & system::factory()
    {
@@ -421,13 +399,6 @@ namespace aura
    }
 
 
-   //::exception::engine & system::eengine()
-   //{
-
-   //   return *m_peengine;
-
-   //}
-
    ::datetime::department & system::datetime()
    {
 
@@ -435,6 +406,7 @@ namespace aura
 
    }
 
+   
    ::aura::str & system::str()
    {
 

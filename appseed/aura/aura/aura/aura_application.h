@@ -337,7 +337,6 @@ namespace aura
 
 
          virtual string get_version();
-         virtual void construct(const char * pszAppId);
 
 //#ifndef METROWIN
          virtual ::aura::ipi * create_ipi();

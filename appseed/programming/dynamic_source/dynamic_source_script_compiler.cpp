@@ -793,7 +793,7 @@ void script_compiler::compile(ds_script * pscript)
 
       }
 
-      strBuildCmd;
+      //strBuildCmd;
 
 #ifdef LINUX
       strBuildCmd.Format(System.dir().element() / "nodeapp\\stage\\dynamic_source" / m_strDynamicSourceConfiguration + "_cl" + m_strPlat1 + ".bash");

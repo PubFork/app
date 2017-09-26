@@ -59,8 +59,6 @@ namespace hotplugin
 
          g_paxissystem->m_bSystemSynchronizedCursor = false;
 
-         g_paxissystem->construct(NULL);
-
 #ifdef WINDOWS
 
          g_paxissystem->m_hinstance = (HINSTANCE)get_hinstance();

@@ -54,6 +54,13 @@ namespace axis
 
       application();
       virtual ~application();
+      
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+      
+      
+
 
       virtual bool app_data_get(class id id, ::file::ostream & os);
       virtual bool app_data_set(class id id, ::file::istream & is);
@@ -150,9 +157,8 @@ namespace axis
 
 
 
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
-
+      
+      
       virtual bool final_handle_exception(::exception::exception & e) override;
 
 
@@ -206,9 +212,6 @@ namespace axis
       virtual string get_license_id() override;
 
 
-
-
-      virtual void construct(const char * pszAppId) override;
 
 
       virtual bool process_initialize() override;

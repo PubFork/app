@@ -59,6 +59,12 @@ namespace core
 
       m_puserex                           = NULL;
       m_pfilemanager = NULL;
+      
+      m_strAppName         = "session";
+      m_strBaseSupportId   = "ca2_bergedge";
+      m_strInstallToken    = "session";
+      m_bLicense           = false;
+      m_eexclusiveinstance = ExclusiveInstanceNone;
 
    }
 
@@ -71,18 +77,18 @@ namespace core
    }
 
 
-   void session::construct(const char * pszAppId)
-   {
-
-      ::core::application::construct("session");
-
-      m_strAppName         = "session";
-      m_strBaseSupportId   = "ca2_bergedge";
-      m_strInstallToken    = "session";
-      m_bLicense           = false;
-      m_eexclusiveinstance = ExclusiveInstanceNone;
-
-   }
+//   void session::construct(const char * pszAppId)
+//   {
+//
+//      ::core::application::construct("session");
+//
+//      m_strAppName         = "session";
+//      m_strBaseSupportId   = "ca2_bergedge";
+//      m_strInstallToken    = "session";
+//      m_bLicense           = false;
+//      m_eexclusiveinstance = ExclusiveInstanceNone;
+//
+//   }
 
 
    void session::install_message_routing(::message::sender * psender)
