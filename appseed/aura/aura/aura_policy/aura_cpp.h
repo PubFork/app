@@ -1881,17 +1881,7 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/user/user/user_controller.h"
 
 
-//template < typename TYPE >
-//void function_call(const TYPE * p)
-//{
-//
-//   const char * psz = reinterpret_cast < const char * > (p);
-//
-//}
-//
-//
-//template < >
-//CLASS_DECL_AURA void function_call(const ::object * p);
+#include "aura/aura/aura/aura_serial.h"
 
 
 

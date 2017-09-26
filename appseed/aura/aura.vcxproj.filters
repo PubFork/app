@@ -2927,6 +2927,12 @@
     <ClInclude Include="multimedia\multimedia_c.h">
       <Filter>Header Files\multimedia</Filter>
     </ClInclude>
+    <ClInclude Include="aura\aura\aura_serial.h">
+      <Filter>Header Files\aura\aura</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows\windows_serial.h">
+      <Filter>Header Files\aura\os\windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">
@@ -4860,6 +4866,12 @@
     </ClCompile>
     <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
       <Filter>Source Files\multimedia\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_serial.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_serial.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

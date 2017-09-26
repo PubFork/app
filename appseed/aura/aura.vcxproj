@@ -727,9 +727,11 @@
     </ClCompile>
     <ClCompile Include="aura\os\cross\ansios\ansios_file_raw.cpp">
     </ClCompile>
+    <ClCompile Include="aura\os\os_serial.cpp" />
     <ClCompile Include="aura\os\os_windowing.cpp" />
     <ClCompile Include="aura\os\windows\windows_application.cpp">
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_serial.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp">
     </ClCompile>
     <ClCompile Include="aura\scripting\javascript\javascript.cpp" />
@@ -1055,6 +1057,7 @@
     <ClInclude Include="aura\aura\aura_printf.h" />
     <ClInclude Include="aura\aura\aura_restore.h" />
     <ClInclude Include="aura\aura\aura_savings.h" />
+    <ClInclude Include="aura\aura\aura_serial.h" />
     <ClInclude Include="aura\aura\aura_session.h" />
     <ClInclude Include="aura\aura\aura_session_common.h" />
     <ClInclude Include="aura\aura\aura_session_heap.h" />
@@ -1286,6 +1289,7 @@
     <ClInclude Include="aura\os\windows\windows_port_forward.h" />
     <ClInclude Include="aura\os\windows\windows_process.h" />
     <ClInclude Include="aura\os\windows\windows_process_env_reader.h" />
+    <ClInclude Include="aura\os\windows\windows_serial.h" />
     <ClInclude Include="aura\os\windows\windows_shell.h" />
     <ClInclude Include="aura\os\windows\windows_simple_hold_handle.h" />
     <ClInclude Include="aura\os\windows\windows_utils.h" />
