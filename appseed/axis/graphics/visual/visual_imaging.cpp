@@ -322,6 +322,9 @@ FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)
     }*/
 
 #else
+
+   int iStrideSrc = pdib->m_iScan;
+
    for(int i = 0; i < pdib->m_size.cy; i++)
    {
 
@@ -3734,7 +3737,7 @@ void imaging::blur_32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc,int32_t 
    }
 
    delete[] pFilter;
-   
+
 }
 
 
@@ -4638,9 +4641,9 @@ bool imaging::channel_gray_blur_32CC(::draw2d::dib * pdibDst,::draw2d::dib * pdi
    }
 
    delete[]pFilter;
-   
+
    return true;
-   
+
 }
 
 
@@ -5229,7 +5232,7 @@ void imaging::alpha_spread_R2_24CC(LPBYTE lpbDst,int32_t xDest,int32_t yDest,int
    }
 
    delete[] pFilter;
-   
+
 }
 
 

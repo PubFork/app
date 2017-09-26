@@ -30,7 +30,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
    {
 
       detect_8bit_borders(pdibCompose, pdiba, pointer, uFrameIndex, ba, iScan, cra, transparentIndex);
-   
+
    }
 
    //pointer->m_bTransparent = pdiba->m_bTransparent;
@@ -39,7 +39,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
    //{
 
    //   gif_draw_frame(pdibCompose, pdiba, pointer, uFrameIndex, ba, iScan, cra, transparentIndex);
-   //   
+   //
    //   if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::dib_sp::pointer::disposal_background)
    //   {
 
@@ -178,7 +178,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
    //   //   f.blur();
    //   //   f->channel_multiply(::visual::rgba::channel_red, 1.4);
    //   //   f.blur();
-   //   //   
+   //   //
    //   //         f.blur();
 
    //   //   f->channel_invert(::visual::rgba::channel_red);
@@ -328,22 +328,22 @@ bool gif_draw_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
          COLORREF cr = cra[iIndex];
 
-         //byte bA = argb_get_a_value(cr);
-         
+         byte bA = argb_get_a_value(cr);
+
 //#if defined(__APPLE__) || (defined(ANDROID) && defined(__arm__))
 //#if defined(__APPLE__) || defined(ANDROID)
 // ANDROID -> // LITTLE_LIT_LIGHT_LITE_LITLE_ENDIANS!!!!!!!!!!
-#if defined(__APPLE__) || defined(ANDROID)
-         
-         //byte bR = argb_get_r_value(cr);
-         //byte bG = argb_get_g_value(cr);
-         //byte bB = argb_get_b_value(cr);
-
-         //pointer->m_dib->m_pcolorref[y*w + x] = ARGB(bA, bB, bG, bR);
-
-         pointer->m_dib->m_pcolorref[y*w + x] = ((cr << 16) & 0xff0000) | ((cr >> 16) & 0xff) | (cr & 0xff00ff00);
-         
-#else
+//#if defined(__APPLE__) || defined(ANDROID)
+//
+//         //byte bR = argb_get_r_value(cr);
+//         //byte bG = argb_get_g_value(cr);
+//         //byte bB = argb_get_b_value(cr);
+//
+//         //pointer->m_dib->m_pcolorref[y*w + x] = ARGB(bA, bB, bG, bR);
+//
+//         pointer->m_dib->m_pcolorref[y*w + x] = ((cr << 16) & 0xff0000) | ((cr >> 16) & 0xff) | (cr & 0xff00ff00);
+//
+//#else
          byte bR = argb_get_r_value(cr);
          byte bG = argb_get_g_value(cr);
          byte bB = argb_get_b_value(cr);
@@ -353,8 +353,8 @@ bool gif_draw_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
             output_debug_string("test255");
          }
          pointer->m_dib->m_pcolorref[y*w + x] = ARGB(bA, bA * bR / 255, bA * bG / 255, bA * bB / 255);
-         
-#endif
+
+//#endif
 
       }
 
