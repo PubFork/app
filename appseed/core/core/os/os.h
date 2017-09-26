@@ -9,7 +9,11 @@
 #pragma once
 
 
+#if defined(APPLE_IOS)
+
 #include "ios/ios_main.h"
+
+#endif
 
 
 
