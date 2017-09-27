@@ -19,31 +19,31 @@ namespace aura
 {
 
 
-   class chronometer
+   class CLASS_DECL_AURA chronometer
    {
-   public:
+      public:
 
 
-      
-      bool           m_bStopped; /// stop flag
-      uint64_t       m_beg; // nanos
-      uint64_t       m_end; // nanos
+
+         bool           m_bStopped; /// stop flag
+         uint64_t       m_beg; // nanos
+         uint64_t       m_end; // nanos
 
 
-      chronometer();                                    // default constructor
-      ~chronometer();                                   // default destructor
+         chronometer();                                    // default constructor
+         ~chronometer();                                   // default destructor
 
-      void   start();                             // start timer
-      void   stop();                              // stop the timer
-      double getElapsedTime();                    // get elapsed time in second
-      double getElapsedTimeInSec();               // get elapsed time in second (same as getElapsedTime)
-      double getElapsedTimeInMilliSec();          // get elapsed time in milli-second
-      double getElapsedTimeInMicroSec();          // get elapsed time in micro-second
+         void   start();                             // start timer
+         void   stop();                              // stop the timer
+         double getElapsedTime();                    // get elapsed time in second
+         double getElapsedTimeInSec();               // get elapsed time in second (same as getElapsedTime)
+         double getElapsedTimeInMilliSec();          // get elapsed time in milli-second
+         double getElapsedTimeInMicroSec();          // get elapsed time in micro-second
 
-      double getTime();                           // get time in second
-      double getTimeInSec();                      // get time in second (same as getElapsedTime)
-      double getTimeInMilliSec();                 // get time in milli-second
-      double getTimeInMicroSec();                 // get time in micro-second
+         double getTime();                           // get time in second
+         double getTimeInSec();                      // get time in second (same as getElapsedTime)
+         double getTimeInMilliSec();                 // get time in milli-second
+         double getTimeInMicroSec();                 // get time in micro-second
 
    };
 

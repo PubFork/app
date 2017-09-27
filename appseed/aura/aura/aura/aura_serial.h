@@ -100,7 +100,7 @@ namespace serial
     *
     * In order to disable the interbyte timeout, set it to Timeout::max().
     */
-   struct Timeout
+   struct CLASS_DECL_AURA Timeout
    {
 #ifdef max
 # undef max
@@ -154,7 +154,7 @@ namespace serial
    /*!
     * Class that provides a portable serial port interface.
     */
-   class Serial :
+   class CLASS_DECL_AURA Serial :
       virtual public object
    {
       public:
@@ -722,7 +722,8 @@ namespace serial
             char * error_str = strerror(errnum);
 #endif
             ss << "IO Exception (" << errno_ << "): " << error_str;
-            ss << ", file " << file_ << ", line " << line_ << ".";
+            set_file(file_);
+            m_iLine = line_;
             e_what_ = ss.str();
          }
          explicit IOException (string file, int line, const char * description)
@@ -730,7 +731,8 @@ namespace serial
          {
             std::stringstream ss;
             ss << "IO Exception: " << description;
-            ss << ", file " << file_ << ", line " << line_ << ".";
+            set_file(file_);
+            m_iLine = line_;
             e_what_ = ss.str();
          }
          virtual ~IOException() throw() {}

@@ -24,6 +24,10 @@ namespace exception
 
       m_pszException = NULL;
 
+      m_pszFile = NULL;
+
+      m_iLine = -1;
+
    }
 
    exception::exception(e_context_switcher_failed efail)
@@ -93,6 +97,13 @@ namespace exception
 
       }
 
+      if (m_pszFile != NULL)
+      {
+
+         free((void *)m_pszFile);
+
+      }
+
    }
 
 
@@ -105,6 +116,21 @@ namespace exception
 
    }
 
+   const char * exception::set_file(const char * pszFile)
+   {
+
+      if (m_pszFile != NULL)
+      {
+
+         free((void *) m_pszFile);
+
+      }
+
+      m_pszFile = strdup(pszFile);
+
+      return m_pszFile;
+
+   }
 
    const char * exception::cat_exception(const char * pszException)
    {
@@ -182,21 +208,21 @@ errno_t c_runtime_error_check(errno_t error)
 {
    switch(error)
    {
-      case ENOMEM:
-         throw memory_exception(get_thread_app());
-         break;
-      case EINVAL:
-      case ERANGE:
-         throw invalid_argument_exception(get_thread_app());
-         break;
+   case ENOMEM:
+      throw memory_exception(get_thread_app());
+      break;
+   case EINVAL:
+   case ERANGE:
+      throw invalid_argument_exception(get_thread_app());
+      break;
 #if defined(WINDOWS)
-      case STRUNCATE:
+   case STRUNCATE:
 #endif
-      case 0:
-         break;
-      default:
-         throw invalid_argument_exception(get_thread_app());
-         break;
+   case 0:
+      break;
+   default:
+      throw invalid_argument_exception(get_thread_app());
+      break;
    }
    return error;
 }
@@ -254,31 +280,31 @@ namespace exception
          this->pred_each(
 
             [&](auto & pe)
+         {
+
+            str += ::str::from(++i);
+
+            str += ". ";
+
+            str += pe->m_pszMessage;
+
+            str += ";";
+
+            if (i < c)
             {
 
-               str += ::str::from(++i);
-
-               str += ". ";
-
-               str += pe->m_pszMessage;
-
-               str += ";";
-
-               if (i < c)
-               {
-
-                  str += " ";
-
-               }
+               str += " ";
 
             }
+
+         }
 
          );
 
          return str;
 
       }
-   
+
    }
 
 
