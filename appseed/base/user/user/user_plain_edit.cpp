@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 #include "aura/user/colorertake5/colorertake5.h"
 
@@ -4802,7 +4802,7 @@ finished_update:
       if (nCmdShow != SW_HIDE)
       {
 
-         TRACE0("Going to Show plain_edit");
+         TRACE("Going to Show plain_edit");
 
       }
 

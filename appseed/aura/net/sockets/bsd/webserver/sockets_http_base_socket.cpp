@@ -80,39 +80,38 @@ namespace sockets
 #ifndef DEBUG
       ::output_debug_string(m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string() + "\n");
 #endif
-      TRACE0("\n");
-      TRACE0(m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string() + "\n");
+      TRACE("%s://%s%s", m_request.attr("http_protocol").get_string(), m_request.header("host").get_string(), m_request.attr("request_uri").get_string());
       if(m_request.attr("request_uri").get_string().find("/passthrough/") >= 0)
       {
-         TRACE0( "Passthrought");
+         TRACE("Passthrough");
       }
       if(m_request.headers().has_property(__id(user_agent)))
       {
 #ifndef DEBUG
          ::output_debug_string("user-agent: " + m_request.header(__id(user_agent)) + "\n");
 #endif
-         TRACE0("user-agent: " + m_request.header(__id(user_agent)) + " :[ " + inattr("remote_addr") + "] \n");
+         TRACE("user-agent: %s:[%s]", m_request.header(__id(user_agent)), inattr("remote_addr"));
       }
       else
       {
 #ifndef DEBUG
          ::output_debug_string("user-agent: " + m_request.header(__id(user_agent)) + "\n");
 #endif
-         TRACE0("user-agent: () :[ " + inattr("remote_addr") + " ]\n");
+         TRACE("user-agent: () :[%s]", inattr("remote_addr"));
       }
       if(m_request.headers().has_property(__id(from)))
       {
 #ifndef DEBUG
          ::output_debug_string("from: " + m_request.header(__id(from)) + "\n");
 #endif
-         TRACE0("from: " + m_request.header(__id(from)) + "\n");
+         TRACE("from: %s", m_request.header(__id(from)));
       }
       if(m_request.headers().has_property(__id(accept_language)))
       {
 #ifndef DEBUG
          ::output_debug_string("accept-language: " + m_request.header(__id(accept_language)) + "\n");
 #endif
-         TRACE0("accept-language: " + m_request.header(__id(accept_language)) + "\n");
+         TRACE("accept-language: %s", m_request.header(__id(accept_language)));
       }
 
 

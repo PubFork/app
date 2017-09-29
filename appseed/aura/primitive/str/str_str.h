@@ -318,19 +318,19 @@ namespace str
    template < class TYPE >
    inline TYPE from_string(const char * psz);
 
-   CLASS_DECL_AURA void format(string_format * pformat,char const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, char const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,byte const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, byte const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,int16_t const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, int16_t const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,uint16_t const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, uint16_t const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,int32_t const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, int32_t const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,uint32_t const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, uint32_t const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,int64_t const & i);
+   CLASS_DECL_AURA void format(string_format * pformat, int64_t const & i);
 
 #ifdef ANDROID
 
@@ -338,23 +338,28 @@ namespace str
 
 #endif
 
-   CLASS_DECL_AURA void format(string_format * pformat,uint64_t const & i);
+   CLASS_DECL_AURA void format(string_format * pformat, uint64_t const & i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,double const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, double const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,float const &  i);
+   CLASS_DECL_AURA void format(string_format * pformat, float const &  i);
 
-   CLASS_DECL_AURA void format(string_format * pformat,void * const & p);
+   CLASS_DECL_AURA void format(string_format * pformat, void * const & p);
 
-   CLASS_DECL_AURA void format(string_format * pformat,const void * const & p);
+   CLASS_DECL_AURA void format(string_format * pformat, const void * const & p);
 
-   CLASS_DECL_AURA void format(string_format * pformat,byte * const & p);
+   CLASS_DECL_AURA void format(string_format * pformat, byte * const & p);
 
-   CLASS_DECL_AURA void format(string_format * pformat,const char * const & psz);
+   CLASS_DECL_AURA void format(string_format * pformat, const char * const & psz);
 
-   CLASS_DECL_AURA void format(string_format * pformat,const string & str);
+   CLASS_DECL_AURA void format(string_format * pformat, const string & str);
 
-   CLASS_DECL_AURA void format(string_format * pformat,const lparam & lparam);
+   CLASS_DECL_AURA void format(string_format * pformat, const lparam & lparam);
+   
+   CLASS_DECL_AURA void format(string_format * pformat, const var & var);
+   
+   CLASS_DECL_AURA void format(string_format * pformat, const property & property);
+   
 //
 //#ifdef LINUX
 //

@@ -345,7 +345,7 @@ namespace sockets
       if(strHost.has_char())
       {
          msg += "Host: " + strHost + "\r\n";
-         TRACE0("Host: " + strHost  + "\n");
+         TRACE("Host: %s", strHost);
       }
       
       
@@ -385,7 +385,7 @@ namespace sockets
             string strValue = straValue[j];
             //         strLine = ;
             msg += strKey + ": " + strValue + "\r\n";
-            TRACE0(strKey + ": " + strValue + "\n");
+            TRACE("%s: %s", strKey, strValue);
          }
          //TRACE(strTrace + "\n");
       }

@@ -568,7 +568,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
    try
    {
@@ -579,7 +579,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
    try
    {
@@ -590,7 +590,7 @@ void script_compiler::compile(ds_script * pscript)
    }
    catch(string strError)
    {
-      TRACE0(strError + "\n");
+      TRACE("%s", strError);
    }
 #ifndef LINUX
 

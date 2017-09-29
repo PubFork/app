@@ -187,16 +187,26 @@ extern CLASS_DECL_AURA bool g_bTraceEnabled;
 
 
 #ifdef DEBUG
+
+
 #define DEBUG_NOTE __FILE__
+
 #ifdef __MCRTDBG
 #define AURA_NEW new
 #else
 #define AURA_NEW new(DEBUG_NOTE, __LINE__)
 #endif
+
 #define THREAD_NOTE __get_thread_note()
 #define SET_THREAD_NOTE(x) __set_thread_note(x);
+
+
 #else
+
+
 #define SET_THREAD_NOTE(x)
+
+
 #endif
 
 
@@ -205,44 +215,7 @@ CLASS_DECL_AURA void __set_thread_note(const char * pszNote);
 
 
 
-/////////////////////////////////////////////////////////////////////////////
-// Diagnostic support
-
-
-
-CLASS_DECL_AURA int __assert_failed_line(const char * lpszFileName, int nLine);
-
-CLASS_DECL_AURA void c_cdecl __trace(const char * lpszFormat, ...);
-// Note: file names are still ANSI strings (filenames rarely need UNICODE)
-CLASS_DECL_AURA void assert_valid_object(const object* pOb,
-            const char * lpszFileName, int32_t nLine);
-CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
-
-#define THIS_FILE          __FILE__
-
-
-// extern ::core::CTrace TRACE;
 #ifdef DEBUG
-#ifndef TRACE
-#define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
-#define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
-//#define TRACE2 TRACE
-#endif
-//#define VERIFY(f)          ASSERT(f)
-//#define DEBUG_ONLY(f)      (f)
-
-// The following trace macros are provided for backward compatiblity
-//  (they also take a fixed number of parameters which provides
-//   some amount of extra error checking)
-#define TRACE0(sz)              TRACE("%s", (const char *) (sz))
-#define TRACE1(sz, p1)          TRACE(sz, p1)
-#define TRACE2(sz, p1, p2)      TRACE(sz, p1, p2)
-#define TRACE3(sz, p1, p2, p3)  TRACE(sz, p1, p2, p3)
-
-// These __dump macros also provided for backward compatibility
-#define __dump0(spgraphics, sz)   dumpcontext << _T(sz)
-#define __dump1(spgraphics, sz, p1) dumpcontext << _T(sz) << p1
-
 
 #define DEBUG_ONLY(f)      f
 
@@ -250,25 +223,9 @@ CLASS_DECL_AURA void __dump(const object* pOb); // dump an object from CodeView
 
 #define DEBUG_ONLY(f)
 
-//#define VERIFY(f)          ((void)(f))
-//#define DEBUG_ONLY(f)      ((void)0)
-#pragma warning(push)
-#pragma warning(disable : 4793)
-inline void c_cdecl __trace(...) { }
-#pragma warning(pop)
-#if defined(APPLEOS) || defined(ANDROID)
-#define TRACE
-#define APPTRACE
-#else
-#define TRACE              __noop
-#define APPTRACE           __noop
-#endif
-#define TRACE0(sz)
-#define TRACE1(sz, p1)
-#define TRACE2(sz, p1, p2)
-#define TRACE3(sz, p1, p2, p3)
-
 #endif // !DEBUG*/
+
+
 
 #include "exception_debug.h"
 
@@ -367,6 +324,39 @@ do { \
 
 CLASS_DECL_AURA errno_t c_runtime_error_check(errno_t error);
 CLASS_DECL_AURA void __cdecl __clearerr_s(FILE *stream);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Diagnostic support
+CLASS_DECL_AURA int __assert_failed_line(const char * lpszFileName, int nLine);
+//CLASS_DECL_AURA void c_cdecl __trace(const char * lpszFormat, ...);
+CLASS_DECL_AURA void __assert_valid_object(const object* pOb, const char * lpszFileName, int32_t nLine);
+CLASS_DECL_AURA void __dump(const object* pOb);
+
+#define THIS_FILE          __FILE__
+
+#ifndef TRACE
+#define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
+#define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
+#endif
+
+
+
+
 
 
 

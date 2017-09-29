@@ -47,7 +47,7 @@ namespace message
    void create::error(const char * lpcszErrorMessage)
    {
       set_lresult(-1);
-      TRACE0(lpcszErrorMessage);
+      TRACE("%s", lpcszErrorMessage);
       System.log().print(lpcszErrorMessage);
    }
 

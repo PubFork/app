@@ -149,7 +149,7 @@ void html_document::soft_reload()
    {
       get_html_data()->m_propertyset.replace_gen(str);
    }
-   TRACE0(str);
+   TRACE("%s", str);
    get_html_data()->load(str);
    html_view_update_hint uh;
    uh.m_etype = html_view_update_hint::type_document_complete;

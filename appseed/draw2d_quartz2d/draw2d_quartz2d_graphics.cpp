@@ -4526,12 +4526,12 @@ namespace draw2d_quartz2d
 
          size.cy += ascent + descent + leading;
          
-         if(leading <= 0)
-         {
-            
-            size.cy += descent;
-            
-         }
+//         if(leading <= 0)
+//         {
+//
+//            size.cy += descent;
+//
+//         }
 
          size.cx = MAX(size.cx, width);
          
@@ -5096,6 +5096,8 @@ namespace draw2d_quartz2d
       return true;
 
    }
+   
+   
    bool graphics::draw_inline(const ::draw2d::path * ppath, ::draw2d::pen * ppen)
    {
 
@@ -5109,6 +5111,8 @@ namespace draw2d_quartz2d
       return true;
 
    }
+   
+   
    bool graphics::fill_inline(const ::draw2d::path * ppath, ::draw2d::brush * pbrush)
    {
 
@@ -5149,6 +5153,7 @@ namespace draw2d_quartz2d
       return false;
 
    }
+   
 
    bool graphics::draw_inline(const ::draw2d_quartz2d::path::element & e, ::draw2d::pen * ppen)
    {
@@ -5165,6 +5170,8 @@ namespace draw2d_quartz2d
       return false;
 
    }
+   
+   
    bool graphics::fill_inline(const ::draw2d_quartz2d::path::element & e, ::draw2d::brush * pbrush)
    {
 
@@ -5268,12 +5275,12 @@ namespace draw2d_quartz2d
             
          offsety += ascent + descent + leading;
          
-         if(leading <= 0)
-         {
-            
-            offsety += descent;
-            
-         }
+//         if(leading <= 0)
+//         {
+//            
+//            offsety += descent;
+//            
+//         }
          
       }
          
@@ -5314,12 +5321,12 @@ namespace draw2d_quartz2d
             
          offsety += ascent + descent + leading;
          
-         if(leading <= 0)
-         {
-            
-            offsety += descent;
-            
-         }
+//         if(leading <= 0)
+//         {
+//
+//            offsety += descent;
+//
+//         }
          
       }
       
@@ -5499,12 +5506,12 @@ namespace draw2d_quartz2d
             
                y += ascent + descent + leading;
             
-               if(leading <= 0)
-               {
-               
-                  y += descent;
-               
-               }
+//               if(leading <= 0)
+//               {
+//
+//                  y += descent;
+//
+//               }
                
             }
             
@@ -5534,13 +5541,13 @@ namespace draw2d_quartz2d
                   
                   y -= ascent + descent + leading;
                   
-                  if(leading <= 0)
-                  {
-                     
-                     y -= descent;
-                     
-                  }
-                  
+//                  if(leading <= 0)
+//                  {
+//
+//                     y -= descent;
+//
+//                  }
+               
                }
             
             }
@@ -5577,12 +5584,12 @@ namespace draw2d_quartz2d
                   
                   double dy = ascent + descent + leading;
                   
-                  if(leading <= 0)
-                  {
-                     
-                     dy += descent;
-                     
-                  }
+//                  if(leading <= 0)
+//                  {
+//
+//                     dy += descent;
+//
+//                  }
                   
                   rectUpper.bottom -= dy/2.0;
                   

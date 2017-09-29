@@ -11,19 +11,13 @@ ErrorHandlerWriter::~ErrorHandlerWriter()
 };
 
 void ErrorHandlerWriter::error(const string &msg){
-  TRACE0("error: ");
-  TRACE0(msg);
-  TRACE0("\n");
+  TRACE("error: %s", msg);
 };
 void ErrorHandlerWriter::fatalError(const string &msg){
-  TRACE0("fatal: ");
-  TRACE0(msg);
-  TRACE0("\n");
+  TRACE("fatal: %s", msg);
 };
 void ErrorHandlerWriter::warning(const string &msg){
-  TRACE0("warn : ");
-  TRACE0(msg);
-  TRACE0("\n");
+  TRACE("warn : %s", msg);
 };
 
 /* ***** BEGIN LICENSE BLOCK *****

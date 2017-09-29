@@ -237,23 +237,22 @@ void script_manager::handle(::dynamic_source::httpd_socket * pdssocket)
          string str;
          e.get_error_message(str);
          pinstance->dprint("str");
-         TRACE0("Error: exception at script_manager::handle run");
-         TRACE0(str);
+         TRACE("Error: exception at script_manager::handle run");
+         TRACE("%s", str);
       }
       catch(::exception::base * pe)
       {
          string str;
          pe->get_error_message(str);
          pinstance->dprint("str");
-
-         TRACE0("Error: exception * at script_manager::handle run");
-         TRACE0(str);
+         TRACE("Error: exception * at script_manager::handle run");
+         TRACE("%s", str);
 
          delete pe;
       }
       catch(...)
       {
-         TRACE0("Error: Exception at script_manager::handle run");
+         TRACE("Error: Exception at script_manager::handle run");
       }
       try
       {
@@ -261,11 +260,11 @@ void script_manager::handle(::dynamic_source::httpd_socket * pdssocket)
       }
       catch(const ::exception::exception &)
       {
-         TRACE0("Error: exception at script_manager::handle main_finalize");
+         TRACE("Error: exception at script_manager::handle main_finalize");
       }
       catch(...)
       {
-         TRACE0("Error: Exception at script_manager::handle main_finalize");
+         TRACE("Error: Exception at script_manager::handle main_finalize");
       }
       try
       {
@@ -273,11 +272,11 @@ void script_manager::handle(::dynamic_source::httpd_socket * pdssocket)
       }
       catch(const ::exception::exception &)
       {
-         TRACE0("Error: exception at script_manager::handle destroy pinstance");
+         TRACE("Error: exception at script_manager::handle destroy pinstance");
       }
       catch(...)
       {
-         TRACE0("Error: Exception at script_manager::handle destroy pinstance");
+         TRACE("Error: Exception at script_manager::handle destroy pinstance");
       }
       try
       {
@@ -285,12 +284,13 @@ void script_manager::handle(::dynamic_source::httpd_socket * pdssocket)
       }
       catch(const ::exception::exception &)
       {
-         TRACE0("Error: exception at script_manager::handle destroy pinstance");
+         TRACE("Error: exception at script_manager::handle destroy pinstance");
       }
       catch(...)
       {
-         TRACE0("Error: Exception at script_manager::handle destroy pinstance");
+         TRACE("Error: Exception at script_manager::handle destroy pinstance");
       }
+      
    }
    //else
    //{

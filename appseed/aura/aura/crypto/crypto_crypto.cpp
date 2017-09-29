@@ -1691,7 +1691,7 @@ namespace crypto
       if (i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1722,7 +1722,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1749,7 +1749,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1779,7 +1779,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1808,7 +1808,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1922,7 +1922,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 
@@ -1951,7 +1951,7 @@ namespace crypto
       if(i < 0 || i >(1024 * 1024))
       {
 
-         TRACE0(strError);
+         TRACE("%s", strError);
 
       }
 

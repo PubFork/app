@@ -202,7 +202,7 @@ namespace user
       m_cyTopBorder = cyHeight - m_sizeButton.cy - m_cyBottomBorder;
       if (m_cyTopBorder < 0)
       {
-         TRACE1("Warning: toolbar::SetHeight(%d) is smaller than button.\n",
+         TRACE("Warning: toolbar::SetHeight(%d) is smaller than button.",
             nHeight);
          m_cyBottomBorder += m_cyTopBorder;
          m_cyTopBorder = 0;  // will clip at bottom

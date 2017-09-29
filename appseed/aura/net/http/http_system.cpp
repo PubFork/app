@@ -682,7 +682,7 @@ namespace http
 
          uint32_t dwTimeProfile2 = get_tick_count();
 
-         TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\")", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
          return NULL;
 
@@ -1088,27 +1088,41 @@ retry:
          {
             if(psession != NULL)
             {
+               
                string strCa2Realm = psession->outheader("ca2realm-x");
+               
                if(::str::begins_ci(strCa2Realm,"not licensed: "))
                {
+                  
                   uint32_t dwTimeProfile2 = get_tick_count();
-                  TRACE0("Not Licensed Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+                  
+                  TRACE("Not Licensed Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
+                  
                   string strLocation = psession->outheader("Location");
+                  
                   psession.release();
+                  
                   throw not_licensed(get_app(),strCa2Realm,strLocation);
+                  
                   return NULL;
+                  
                }
+               
             }
+            
          }
          else
          {
+            
             estatus = status_fail;
+            
          }
 
          set["get_status"] = (int64_t)estatus;
 
          uint32_t dwTimeProfile2 = get_tick_count();
-         TRACE0("Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         
+         TRACE("Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
       }
       catch(...)
@@ -1638,7 +1652,7 @@ retry_session:
             
             uint32_t dwTimeProfile2 = get_tick_count();
             
-            TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255, strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+            TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255, strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
             
             return NULL;
 
@@ -1652,7 +1666,7 @@ retry_session:
 
          uint32_t dwTimeProfile2 = get_tick_count();
 
-         TRACE0("Not Opened/Connected Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\")  " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         TRACE("Not Opened/Connected Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
          return NULL;
 
@@ -1770,7 +1784,7 @@ retry_session:
          if(::str::begins_ci(strCa2Realm, "not licensed: "))
          {
             uint32_t dwTimeProfile2 = get_tick_count();
-            TRACE0("Not Licensed Result Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+            TRACE("Not Licensed Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
             string strLocation = psocket->outheader("Location");
 //            delete psocket;
             throw not_licensed(get_app(), strCa2Realm, strLocation);
@@ -1902,7 +1916,7 @@ retry_session:
 //      }
 
       uint32_t dwTimeProfile2 = get_tick_count();
-      TRACE0("Total time ::http::system::get(\"" + strUrl.Left(MIN(255,strUrl.get_length())) + "\") " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+      TRACE("Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
 
       return true;
 

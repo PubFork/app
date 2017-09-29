@@ -150,7 +150,7 @@ void object::dump(dump_context & dumpcontext) const
 }
 
 
-void assert_valid_object(const object * pOb, const char * lpszFileName, int32_t nLine)
+void __assert_valid_object(const object * pOb, const char * lpszFileName, int32_t nLine)
 {
    if (pOb == NULL)
    {

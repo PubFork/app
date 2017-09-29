@@ -432,7 +432,12 @@ namespace macos
       file* pFile = (file*)this;
       dwCur = pFile->seek(0L, ::file::seek_current);
       dwLen = pFile->seek_to_end();
-      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset_t) dwCur, ::file::seek_begin));
+      if(dwCur != (uint64_t)pFile->seek((file_offset_t) dwCur, ::file::seek_begin))
+      {
+         
+         throw io_exception(get_app(), "failed to seek back to the original position on get_length");
+         
+      }
 
       return (file_size_t) dwLen;
    }

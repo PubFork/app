@@ -285,9 +285,12 @@ namespace introjection
       throw todo(get_app());
 
 #elif defined(LINUX)
+      
 #else
+      
       var var = System.process().get_output("\"" + m_strEnv + "\" " + m_strPlat2 + " 10.0.15063.0");
-      TRACE0(var.get_string());
+      
+      TRACE("%s", var.get_string());
 
 #endif
 

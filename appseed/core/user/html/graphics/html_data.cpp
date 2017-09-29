@@ -713,7 +713,7 @@ restart:
       {
         m_propertyset.replace_gen(str);
       }
-      TRACE0(str);
+      TRACE("%s", str);
       if(str.has_char())
       {
          load(str);

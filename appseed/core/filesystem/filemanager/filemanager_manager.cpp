@@ -1299,7 +1299,7 @@ namespace filemanager
       if (!pframe->LoadToolBar("filemanager", strToolbar))
       {
 
-         TRACE0("Failed to create filemanager toolbar\n");
+         TRACE("Failed to create filemanager toolbar");
 
          return false;      // fail to create
 

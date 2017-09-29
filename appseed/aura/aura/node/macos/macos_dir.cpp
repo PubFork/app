@@ -143,9 +143,9 @@ namespace macos
            
            ::dir::ls(straPath, listing.m_path);
            
-           //            file_find file_find;
+           // file_find file_find;
            
-           //          bool bWorking = file_find.FindFile(listing.m_path / listing.os_pattern()) != FALSE;
+           // bool bWorking = file_find.FindFile(listing.m_path / listing.os_pattern()) != FALSE;
            
            for(auto & strPath : straPath)
            {
@@ -165,13 +165,12 @@ namespace macos
               }
               
            }
-
-            
-        }
+           
+       }
         
-        return listing;
+       return listing;
         
-    }
+   }
 
     
 

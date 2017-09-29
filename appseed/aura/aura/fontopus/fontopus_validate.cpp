@@ -1006,7 +1006,7 @@ namespace fontopus
          *pestatus = (::http::e_status) set["get_status"].int64();
          uint32_t dwTimeProfile2 = get_tick_count();
 
-         TRACE0("login_thread::NetLogin Total time Application.http().get(\"" + strAuthUrl + "\") : " + ::str::from(dwTimeProfile2 - dwTimeProfile1));
+         TRACE("login_thread::NetLogin Total time Application.http().get(\"%s\") : %d", strAuthUrl, dwTimeProfile2 - dwTimeProfile1);
 
       }
       DWORD dwAuthEnd = ::get_tick_count();
@@ -1036,7 +1036,7 @@ namespace fontopus
          System.http().download(m_httpexecutea[i]->m_strUrl,strFilename,set);
 
          strResponse = Application.file().as_string(strFilename);
-         TRACE0(strResponse);
+         TRACE("%s", strResponse);
          m_httpexecutea[i]->m_strResponse = strResponse;
       }
    }
@@ -1047,8 +1047,8 @@ namespace fontopus
    {
       ::net::address address(m_loginthread.m_strFontopusServer);
       m_loginthread.m_puser->m_strFontopusServerInfo = m_loginthread.m_strFontopusServer + " : " + address.get_display_number() ;
-      TRACE0("The authentication has succeeded (" + m_loginthread.m_strFontopusServer + "[" + address.get_display_number()+ "]).");
-      TRACE0("Fontopus Server info = " + m_loginthread.m_puser->m_strFontopusServerInfo);
+      TRACE("The authentication has succeeded (%s[%s]).", m_loginthread.m_strFontopusServer, address.get_display_number());
+      TRACE("Fontopus Server info = %s", m_loginthread.m_puser->m_strFontopusServerInfo);
 
       
 

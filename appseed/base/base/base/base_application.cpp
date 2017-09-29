@@ -719,7 +719,7 @@ namespace base
          if(lpmsg->message == 126)
          {
 
-            TRACE0("WM_DISPLAYCHANGE");
+            TRACE("WM_DISPLAYCHANGE");
 
          }
 
