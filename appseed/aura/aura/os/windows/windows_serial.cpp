@@ -345,6 +345,19 @@ Serial::SerialImpl::reconfigurePort ()
    {
       THROW (IOException, "Error setting timeouts.");
    }
+
+
+   // Update byte_time_ based on the new settings.
+   uint32_t bit_time_ns = 1e9 / baudrate_;
+   byte_time_ns_ = bit_time_ns * (1 + bytesize_ + parity_ + stopbits_);
+
+   // Compensate for the stopbits_one_point_five enum being equal to int 3,
+   // and not 1.5.
+   if (stopbits_ == stopbits_one_point_five)
+   {
+      byte_time_ns_ += ((1.5 - stopbits_one_point_five) * bit_time_ns);
+   }
+
 }
 
 void
@@ -402,9 +415,14 @@ Serial::SerialImpl::waitReadable (uint32_t /*timeout*/)
 }
 
 void
-Serial::SerialImpl::waitByteTimes (size_t /*count*/)
+Serial::SerialImpl::waitByteTimes (size_t count)
 {
-   THROW (IOException, "waitByteTimes is not implemented on Windows.");
+   //THROW (IOException, "waitByteTimes is not implemented on Windows.");
+   duration dur;
+   dur.m_iNanoseconds = count * byte_time_ns_;
+   dur.normalize();
+   sleep(dur);
+
 }
 
 size_t
