@@ -5481,7 +5481,7 @@ namespace draw2d_quartz2d
          
          CGFloat ascent, descent, leading;
          
-         if(nFormat & DT_TOP)
+         if(!(nFormat & DT_BOTTOM) && ! (nFormat & DT_VCENTER))
          {
          
             for(auto str : stra)

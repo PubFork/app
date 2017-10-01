@@ -383,7 +383,7 @@ namespace aura
       {
 
          System.on_run_exception(e);
-
+         
          throw exit_exception(e.get_app());
 
       }
@@ -2549,7 +2549,11 @@ namespace aura
       }
       catch(::exit_exception &)
       {
+         
+         thisexit << "exit_exception: " << m_iReturnCode;
 
+         m_iReturnCode = -1001;
+         
          dappy(string(typeid(*this).name()) + " : on_run exit_exception");
 
          ::multithreading::post_quit(&System);
@@ -2597,10 +2601,12 @@ exit_application:
       }
       catch(::exit_exception &)
       {
+         
+         thisexit << "exit_exception: " << m_iReturnCode;
 
          ::multithreading::post_quit(&System);
 
-         m_iReturnCode = -1;
+         m_iReturnCode = -1001;
 
       }
       catch(...)
@@ -2622,90 +2628,8 @@ exit_application:
 
       return m_iReturnCode;
 
-//
-//      TRACE(string(typeid(*this).name()) + " main");;
-//
-//      dappy(string(typeid(*this).name()) + " : application::main 1");
-//
-//      try
-//      {
-//
-//         TRACE(string(typeid(*this).name()) + " on_run");;
-//         dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-//         m_iReturnCode = 0;
-//         m_bReady = true;
-//         m_iReturnCode = on_run();
-//         if (m_iReturnCode != 0)
-//         {
-//            dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
-//            ::output_debug_string("application::main on_run termination failure");
-//         }
-//
-//      }
-//      catch (::exit_exception &)
-//      {
-//
-//         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
-//
-//         ::multithreading::post_quit(&System);
-//
-//         goto exit_application;
-//
-//      }
-//      catch (...)
-//      {
-//
-//         dappy(string(typeid(*this).name()) + " : on_run general exception");
-//
-//         goto exit_application;
-//
-//      }
-//
-//      try
-//      {
-//
-//         if (is_system())
-//         {
-//
-//            dappy(string(typeid(*this).name()) + " : quiting main");
-//
-//
-//         }
-//
-//      }
-//      catch (...)
-//      {
-//
-//      }
-//
-//   exit_application:
-//
-//      try
-//      {
-//
-//         m_iReturnCode = exit_application();
-//
-//      }
-//      catch(::exit_exception &)
-//      {
-//
-//         ::multithreading::post_quit(&System);
-//
-//         m_iReturnCode = -1;
-//
-//      }
-//      catch(...)
-//      {
-//
-//         m_iReturnCode = -1;
-//
-//      }
-//
-//      return m_iReturnCode;
-
-
-
    }
+   
 
    bool application::initialize_thread()
    {
@@ -2873,9 +2797,11 @@ exit_application:
       }
       catch (::exit_exception &)
       {
+         
+         thisexc << "exit_exception (4): " << m_iReturnCode;
 
-         thisexc << 4;
-
+         m_iReturnCode = -1001;
+         
       }
       catch (...)
       {
@@ -2948,7 +2874,7 @@ run:
          }
          catch (::exit_exception & e)
          {
-
+            
             throw e;
 
          }
@@ -2977,7 +2903,7 @@ run:
             }
             catch (::exit_exception & e)
             {
-
+               
                throw e;
 
             }
@@ -2995,7 +2921,7 @@ run:
       }
       catch (::exit_exception & e)
       {
-
+         
          throw e;
 
       }
@@ -3145,7 +3071,7 @@ InitFailure:
       }
       catch (::exit_exception & e)
       {
-
+         
          thisexit << 1 << m_iReturnCode;
 
          throw e;
@@ -3229,9 +3155,9 @@ InitFailure:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (const ::exit_exception & e)
       {
-
+         
          thisexit << 3 << m_iReturnCode;
 
          throw e;
@@ -3278,7 +3204,7 @@ InitFailure:
       }
       catch (::exit_exception & e)
       {
-
+         
          thisexit << 3.1 << m_iReturnCode;
 
          throw e;
@@ -4795,11 +4721,21 @@ retry_license:
             {
                // Should in some way activate the other instance
                TRACE("A instance of the application:<br><br>           - " + string(m_strAppName) + "<br><br>seems to be already running at the same account.<br>Only one instance of this application can run locally: at the same account.<br><br>Exiting this new instance.");
+               
                bHandled = on_exclusive_instance_conflict(ExclusiveInstanceLocal);
+               
             }
             catch (...)
             {
             }
+
+            if(bHandled)
+            {
+               
+               throw exit_exception(&System);
+               
+            }
+            
             //::aura::post_quit_thread(&System);
             return false;
          }
@@ -4995,10 +4931,15 @@ retry_license:
 
             int_map < var > map = m_pipi->ecall(m_pipi->m_strApp, { System.os().get_pid() }, "application", "on_exclusive_instance_local_conflict", System.file().module(), System.os().get_pid(), string(System.handler()->m_spcommandline->m_strCommandLine));
 
-            if (!map[System.os().get_pid()].is_new())
+            for(auto & p : map)
             {
 
-               return true;
+               if((bool) p.element2())
+               {
+               
+                  return true;
+                  
+               }
 
             }
 

@@ -5,7 +5,6 @@ namespace user
 {
 
 
-
    menu::menu() :
       menu(get_app())
    {

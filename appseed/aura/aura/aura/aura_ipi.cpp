@@ -48,9 +48,9 @@ namespace aura
 
       string strVara = str_from_va(va);
 
-      txc.send("call " + strObject + "." + strMember + " : " + strVara, duration);
+      bool bSendOk = txc.send("call " + strObject + "." + strMember + " : " + strVara, duration);
 
-      return ::var();
+      return bSendOk;
 
    }
 

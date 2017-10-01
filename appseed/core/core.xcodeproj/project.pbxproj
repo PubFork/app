@@ -1851,14 +1851,14 @@
 		07A6D6F2173C27E9009E6FB8 /* menu */ = {
 			isa = PBXGroup;
 			children = (
-				9A7F2E791F41C014006F97CD /* user_menu_button.cpp */,
-				9A7F2E7A1F41C014006F97CD /* user_menu_central.cpp */,
-				9A7F2E7C1F41C014006F97CD /* user_menu_list_view.cpp */,
-				9A7F2E7D1F41C014006F97CD /* user_menu_list_window.cpp */,
 				9A7F2E781F41C014006F97CD /* menu.h */,
+				9A7F2E791F41C014006F97CD /* user_menu_button.cpp */,
 				07A6D6F5173C27E9009E6FB8 /* user_menu_button.h */,
+				9A7F2E7A1F41C014006F97CD /* user_menu_central.cpp */,
 				07A6D6F6173C27E9009E6FB8 /* user_menu_central.h */,
+				9A7F2E7C1F41C014006F97CD /* user_menu_list_view.cpp */,
 				07A6D6F8173C27E9009E6FB8 /* user_menu_list_view.h */,
+				9A7F2E7D1F41C014006F97CD /* user_menu_list_window.cpp */,
 				07A6D6F9173C27E9009E6FB8 /* user_menu_list_window.h */,
 			);
 			path = menu;

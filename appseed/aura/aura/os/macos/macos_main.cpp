@@ -102,7 +102,8 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
       if(pszaFile != NULL)
       {
       
-         macos_on_open_file(pszaFile, iCount, strExtra);
+         macos_accumulate_on_open_file(pszaFile, iCount, strExtra, 500);
+//         macos_on_open_file(pszaFile, iCount, strExtra);
          
       }
     
@@ -117,6 +118,7 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
       stringa stra;
       
       stra.c_add((char **) pszaFile, iCount);
+
       ::count c= stra.get_count();
       
       for(index i = 0; i < c; i++)
@@ -128,8 +130,11 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
          
          if(iFindColon == 0)
          {
+            
             stra.remove_at(i, stra.get_count() - i);
+            
             break;
+            
          }
          
       }

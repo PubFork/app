@@ -26,6 +26,7 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
 int32_t aura_main_command_line(const char * pszParams, int argc, char *argv[]);
 
 void macos_on_open_file(const char ** psza, int iCount, const char * pszExtra);
+void macos_accumulate_on_open_file(const char ** psza, int iCount, const char * pszExtra, int iMillisDelay);
 void macos_on_new_file();
 
 

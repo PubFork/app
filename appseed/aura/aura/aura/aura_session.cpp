@@ -542,7 +542,8 @@ namespace aura
 
             }
 
-            ::aura::application * papp = (application_get(strApp, true, true, pcreate->m_spCommandLine->m_pbiasCreate));
+            ::aura::application * papp = application_get(strApp, true, true, pcreate->m_spCommandLine->m_pbiasCreate);
+            
             if (papp == NULL)
             {
 

@@ -2692,6 +2692,12 @@
 		9AE7258217E83B69003E47F9 /* primitive_var.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F817E83B69003E47F9 /* primitive_var.h */; };
 		9AE7258317E83B69003E47F9 /* primitive_var2.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722F917E83B69003E47F9 /* primitive_var2.h */; };
 		9AE7258517E83B69003E47F9 /* primitive_virtual_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE722FB17E83B69003E47F9 /* primitive_virtual_memory.h */; };
+		9AE9FBB31F7F4D4800367001 /* audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBA91F7F4D3C00367001 /* audio.h */; };
+		9AE9FBB41F7F4D4800367001 /* audio_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBAA1F7F4D3C00367001 /* audio_c.h */; };
+		9AE9FBB51F7F4D4800367001 /* audio_wave_out.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */; };
+		9AE9FBB61F7F4D4800367001 /* audio_wave_out.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBAC1F7F4D3C00367001 /* audio_wave_out.h */; };
+		9AE9FBB71F7F4D4800367001 /* multimedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBAD1F7F4D3C00367001 /* multimedia.h */; };
+		9AE9FBB81F7F4D4800367001 /* multimedia_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9FBAE1F7F4D3C00367001 /* multimedia_c.h */; };
 		9AEEADB519C4E10900866C9E /* simple_message_box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEEADB319C4E10900866C9E /* simple_message_box.cpp */; };
 		9AEEADB619C4E10900866C9E /* simple_message_box.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AEEADB419C4E10900866C9E /* simple_message_box.h */; };
 		9AF885B519D42E2400A3117D /* exception_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF885B319D42E2400A3117D /* exception_throw.h */; };
@@ -4687,6 +4693,12 @@
 		9AE722F817E83B69003E47F9 /* primitive_var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_var.h; sourceTree = "<group>"; };
 		9AE722F917E83B69003E47F9 /* primitive_var2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_var2.h; sourceTree = "<group>"; };
 		9AE722FB17E83B69003E47F9 /* primitive_virtual_memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primitive_virtual_memory.h; sourceTree = "<group>"; };
+		9AE9FBA91F7F4D3C00367001 /* audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
+		9AE9FBAA1F7F4D3C00367001 /* audio_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_c.h; sourceTree = "<group>"; };
+		9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_wave_out.cpp; sourceTree = "<group>"; };
+		9AE9FBAC1F7F4D3C00367001 /* audio_wave_out.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_wave_out.h; sourceTree = "<group>"; };
+		9AE9FBAD1F7F4D3C00367001 /* multimedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multimedia.h; sourceTree = "<group>"; };
+		9AE9FBAE1F7F4D3C00367001 /* multimedia_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multimedia_c.h; sourceTree = "<group>"; };
 		9AEEADB319C4E10900866C9E /* simple_message_box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_message_box.cpp; sourceTree = "<group>"; };
 		9AEEADB419C4E10900866C9E /* simple_message_box.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_message_box.h; sourceTree = "<group>"; };
 		9AF885B319D42E2400A3117D /* exception_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exception_throw.h; sourceTree = "<group>"; };
@@ -5705,10 +5717,10 @@
 				9A26A62D1D7F0018001F47A8 /* charguess */,
 				9A0254891EA59238003C82CF /* compress */,
 				9A640E631EA6BC5800866C2C /* crypto */,
+				9A163DD919C4A4CD00966C5E /* exception */,
 				9A640DFE1EA6BABB00866C2C /* fontopus */,
 				9A2A535A1F1FEE49001AB0F8 /* install */,
 				9A26A6931D7F0018001F47A8 /* pcre */,
-				9A163DD919C4A4CD00966C5E /* exception */,
 				9A163E3519C4A4CD00966C5E /* message */,
 				9A163E3F19C4A4CD00966C5E /* node */,
 				9A163F6519C4A4CD00966C5E /* os */,
@@ -5728,8 +5740,6 @@
 			children = (
 				9A6FAA481F5C6EA400AF31B2 /* os_alloc */,
 				9A6FAA451F5C6EA400AF31B2 /* aura.cpp */,
-				9AB6283B1F3CE4F70007966E /* aura_session.cpp */,
-				9AB628391F3CDC0D0007966E /* aura_system.cpp */,
 				9A4421861D5B231E00199308 /* aura_application.cpp */,
 				9A6FA9CE1F5C6EA300AF31B2 /* aura_action_context.cpp */,
 				9A6FA9CF1F5C6EA300AF31B2 /* aura_allocate_mid_big.cpp */,
@@ -5790,12 +5800,14 @@
 				9A6FAA281F5C6EA400AF31B2 /* aura_profiler.cpp */,
 				9A6FAA2A1F5C6EA400AF31B2 /* aura_progress.cpp */,
 				9A6FAA2C1F5C6EA400AF31B2 /* aura_savings.cpp */,
+				9AB6283B1F3CE4F70007966E /* aura_session.cpp */,
 				9A6FAA2F1F5C6EA400AF31B2 /* aura_shell_launcher.cpp */,
 				9A6FAA311F5C6EA400AF31B2 /* aura_simple_log.cpp */,
 				9A6FAA331F5C6EA400AF31B2 /* aura_speaker.cpp */,
 				9A6FAA351F5C6EA400AF31B2 /* aura_sprintf.cpp */,
 				9A6FAA361F5C6EA400AF31B2 /* aura_static_start.cpp */,
 				9A6FAA371F5C6EA400AF31B2 /* aura_str_context.cpp */,
+				9AB628391F3CDC0D0007966E /* aura_system.cpp */,
 				9A6FAA3B1F5C6EA400AF31B2 /* aura_system_trace.cpp */,
 				9A6FAA3C1F5C6EA400AF31B2 /* aura_template.cpp */,
 				9A6FAA3D1F5C6EA400AF31B2 /* aura_timer_array.cpp */,
@@ -7246,6 +7258,27 @@
 			path = user;
 			sourceTree = "<group>";
 		};
+		9AE9FBA71F7F4D3C00367001 /* multimedia */ = {
+			isa = PBXGroup;
+			children = (
+				9AE9FBA81F7F4D3C00367001 /* audio */,
+				9AE9FBAD1F7F4D3C00367001 /* multimedia.h */,
+				9AE9FBAE1F7F4D3C00367001 /* multimedia_c.h */,
+			);
+			path = multimedia;
+			sourceTree = "<group>";
+		};
+		9AE9FBA81F7F4D3C00367001 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				9AE9FBA91F7F4D3C00367001 /* audio.h */,
+				9AE9FBAA1F7F4D3C00367001 /* audio_c.h */,
+				9AE9FBAB1F7F4D3C00367001 /* audio_wave_out.cpp */,
+				9AE9FBAC1F7F4D3C00367001 /* audio_wave_out.h */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 		9AEEADB219C4E10900866C9E /* simple */ = {
 			isa = PBXGroup;
 			children = (
@@ -7274,6 +7307,7 @@
 				9A163D3019C4A4CC00966C5E /* aura */,
 				07F5B12D184A3B420092C3E1 /* filesystem */,
 				9A2A52F81F1FEDFD001AB0F8 /* graphics */,
+				9AE9FBA71F7F4D3C00367001 /* multimedia */,
 				9AE7226817E83B68003E47F9 /* multithreading */,
 				07502CA81B251B15008D207C /* net */,
 				9AE722BF17E83B69003E47F9 /* primitive */,
@@ -8145,6 +8179,7 @@
 				070214221C51488700DB16A7 /* aura_ipi.h in Headers */,
 				9A6FAE6C1F5C773700AF31B2 /* datetime_time_span.h in Headers */,
 				9ADD53EB1F20E1B70008AA41 /* zip_crypt.h in Headers */,
+				9AE9FBB81F7F4D4800367001 /* multimedia_c.h in Headers */,
 				07B0954D18495C2B007A0560 /* str_simple.h in Headers */,
 				9A16454319C4A56200966C5E /* math_mkint_c.h in Headers */,
 				9A16451419C4A4CF00966C5E /* xml_document.h in Headers */,
@@ -8289,6 +8324,7 @@
 				9A6FAFC81F5C796800AF31B2 /* multithreading_pred_holder.h in Headers */,
 				9A6FADE61F5C76BD00AF31B2 /* math_number_integer.h in Headers */,
 				9A0256CD1EA593AC003C82CF /* sockets_config.h in Headers */,
+				9AE9FBB71F7F4D4800367001 /* multimedia.h in Headers */,
 				9A1641FF19C4A4CE00966C5E /* exception_engine.h in Headers */,
 				9A6FAE271F5C771400AF31B2 /* str_stdstring.h in Headers */,
 				9A0254DF1EA59238003C82CF /* zip_internal.h in Headers */,
@@ -8353,6 +8389,7 @@
 				9A26A6D11D7F0019001F47A8 /* SBCSGroupProber.h in Headers */,
 				9A1643A519C4A4CE00966C5E /* windows_crtdefs.h in Headers */,
 				07B094B218495C2A007A0560 /* collection_bit_array.h in Headers */,
+				9AE9FBB31F7F4D4800367001 /* audio.h in Headers */,
 				9A0256591EA593AC003C82CF /* webserver_http_request.h in Headers */,
 				9A6FAA731F5C6EA400AF31B2 /* aura_department_container.h in Headers */,
 				9A02568D1EA593AC003C82CF /* sockets_base_socket_handler.h in Headers */,
@@ -8368,6 +8405,7 @@
 				07B094DF18495C2B007A0560 /* collection_simple_object_array.h in Headers */,
 				9A1641E019C4A4CE00966C5E /* aura_types.h in Headers */,
 				9A02568F1EA593AC003C82CF /* resolv_server.h in Headers */,
+				9AE9FBB41F7F4D4800367001 /* audio_c.h in Headers */,
 				07B0951D18495C2B007A0560 /* geometry_types.h in Headers */,
 				9A16450D19C4A4CF00966C5E /* xml_base_array.h in Headers */,
 				9A6FAD781F5C766800AF31B2 /* collection.h in Headers */,
@@ -8620,6 +8658,7 @@
 				9A0256CC1EA593AC003C82CF /* sockets_bsd.h in Headers */,
 				9A6FAF071F5C77F800AF31B2 /* version.h in Headers */,
 				9A26A6B01D7F0019001F47A8 /* charguess.h in Headers */,
+				9AE9FBB61F7F4D4800367001 /* audio_wave_out.h in Headers */,
 				9AC315C3198E4CB8008FB109 /* colorertake5_hrc_parser_helpers.h in Headers */,
 				9A16445C19C4A4CF00966C5E /* macos_file_watcher.h in Headers */,
 				9A16423B19C4A4CE00966C5E /* exception_todo.h in Headers */,
@@ -9814,6 +9853,7 @@
 				9A6FAEED1F5C778800AF31B2 /* collection_string_list.cpp in Sources */,
 				9A6FB0AF1F5C7A9B00AF31B2 /* xml_node.cpp in Sources */,
 				9A6FAF771F5C791500AF31B2 /* mail_simple_pop3.cpp in Sources */,
+				9AE9FBB51F7F4D4800367001 /* audio_wave_out.cpp in Sources */,
 				9A6FB07F1F5C7A0C00AF31B2 /* filesystem_dir_system.cpp in Sources */,
 				9A6FAAB61F5C6EA400AF31B2 /* aura_speaker.cpp in Sources */,
 				9A0254ED1EA5927C003C82CF /* compress_bz.cpp in Sources */,

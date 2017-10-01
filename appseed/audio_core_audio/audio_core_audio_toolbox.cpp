@@ -16,7 +16,7 @@ namespace multimedia
    {
       
       
-      toolbox::toolbox(sp(::aura::application) papp) :
+      toolbox::toolbox(::aura::application * papp) :
          object(papp),
          ::thread(papp),
          wave_base(papp)
@@ -38,7 +38,7 @@ namespace multimedia
       }
       
       
-      void toolbox::wave_allocate_buffer_data(::multimedia::audio::wave_buffer::buffer * pbuffer, memory_size_t len, uint32_t uiAlign)
+      void toolbox::wave_allocate_buffer_data(::multimedia::audio::wave_buffer::buffer * pbuffer, memory_size_t len, memory_size_t uiAlign)
       {
          
          AudioQueueBufferRef buf = NULL;
@@ -106,14 +106,14 @@ namespace multimedia
       }
       
       
-      AudioQueueBufferRef toolbox::audio_buffer(int iBuffer)
+      AudioQueueBufferRef toolbox::audio_buffer(index iBuffer)
       {
          
          return m_Buffers[iBuffer];
          
       }
       
-       bool toolbox::initialize_thread()
+       bool toolbox::initialize_instance()
       {
          
          m_runloop = CFRunLoopGetCurrent();
@@ -138,7 +138,7 @@ namespace multimedia
       }
       
       
-      int32_t toolbox::exit_thread()
+      int32_t toolbox::exit_instance()
       {
 
          if(m_runmode != NULL)

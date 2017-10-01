@@ -33,9 +33,6 @@ namespace aura
 
          ::dump_context *                          m_pdumpcontext;
 
-
-
-
          ::aura::session::map                         m_aurabergedgemap;
 
          ::object *                                   m_pDraw2dFactoryExchange;
@@ -149,7 +146,12 @@ namespace aura
 
 #endif
 
-
+         stringa                                      m_straCommandLineAccumul;
+         stringa                                      m_straCommandLineExtra;
+         DWORD                                        m_dwCommandLineLast;
+         int                                          m_iCommandLineDelay;
+         sp(::thread)                                 m_pthreadCommandLine;
+      
 
          system(::aura::application * papp, void * pdata);
          virtual ~system();
@@ -478,6 +480,7 @@ namespace aura
 
 #endif
 
+         virtual bool accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay);
 
          virtual bool on_open_file(var varFile, string strExtra);
 

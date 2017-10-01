@@ -30,8 +30,7 @@ void macos_on_app_activate();
 }
 
 
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender
-                    hasVisibleWindows:(BOOL)flag
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
    
    //MessageBox(NULL, "applicationShouldHandleReopen", "applicationShouldHandleReopen", MB_OK);
@@ -85,7 +84,11 @@ void macos_on_app_activate();
    for(unsigned long ul = 0; ul < ulCount; ul++)
    {
       
-      psza[ul] = strdup([[filenames objectAtIndex:ul] UTF8String]);
+      char * psz = strdup([[filenames objectAtIndex:ul] UTF8String]);
+      
+      NSLog(@"XXXXX %s", psz);
+      
+      psza[ul] = psz;
       
    }
    
