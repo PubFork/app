@@ -85,7 +85,7 @@ static void str2OSType (const char * inString, OSType &outType)
    }
    
    if (len <= 8) {
-      if (sscanf (inString, "%lx", &outType) == 0) {
+      if (sscanf (inString, "%ulx", &outType) == 0) {
          printf ("* * Bad conversion for OSType\n");
          exit(1);
       }

@@ -268,7 +268,7 @@ namespace music
             /*string str;
              str.load_string(IDS_PREROLLUSERERROR001);
              pme->SetUserText(str);*/
-            throw pme;
+            //throw pme;
          }
          
          //    if(!get_sequence()->IsInSpecialModeV001())
@@ -404,7 +404,7 @@ namespace music
       void sequence_thread::_ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
       {
       
-      ::multimedia::e_result mmrc = ::multimedia::result_success;
+      //::multimedia::e_result mmrc = ::multimedia::result_success;
          switch(spcommand->GetCommand())
          {
             case ::music::midi::player::command_play:

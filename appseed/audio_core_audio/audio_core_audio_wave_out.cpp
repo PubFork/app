@@ -672,7 +672,9 @@ namespace multimedia
             if(!(stamp.mFlags & kAudioTimeStampSampleTimeValid))
                return 0;
             
-            return (imedia_time) stamp.mSampleTime * 1000 / m_pwaveformat->nSamplesPerSec;
+            imedia_time iTime = (imedia_time) stamp.mSampleTime * 1000 / m_pwaveformat->nSamplesPerSec;
+            
+            return iTime;
             
          }
          else
