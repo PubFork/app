@@ -120,7 +120,7 @@ bool oswindow_remove(nswindow window)
 void oswindow_data::set_user_interaction(::user::interaction_impl * pui)
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       throw "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
 
    m_pimpl = pui;
@@ -131,7 +131,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pui)
 ::user::interaction_impl * oswindow_data::get_user_interaction_base()
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return NULL;
 
    return m_pimpl;
@@ -141,7 +141,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pui)
 ::user::interaction_impl * oswindow_data::get_user_interaction_base() const
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return NULL;
 
    return m_pimpl;
@@ -151,7 +151,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pui)
 ::user::interaction_impl * oswindow_data::get_user_interaction()
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return NULL;
 
    if(m_pimpl == NULL)
@@ -164,7 +164,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pui)
 ::user::interaction_impl * oswindow_data::get_user_interaction() const
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return NULL;
 
    if(m_pimpl == NULL)
@@ -219,7 +219,7 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
 int32_t oswindow_data::get_window_long(int32_t iIndex)
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return 0;
 
    if(m_plongmap == NULL)
@@ -233,7 +233,7 @@ int32_t oswindow_data::get_window_long(int32_t iIndex)
 int32_t oswindow_data::set_window_long(int32_t iIndex, int32_t iNewLong)
 {
 
-   if(this == NULL)
+   if(::is_null(*this))
       return 0;
 
    if(m_plongmap == NULL)

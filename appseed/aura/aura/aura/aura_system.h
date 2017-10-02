@@ -140,7 +140,7 @@ namespace aura
          string                                       m_strIosTemp;
          string_to_string                             m_mapCachedLatestBuild;
 
-#if !defined(METROWIN)
+#if defined(INSTALL_SUBSYSTEM)
 
          sp(::install::install)                       m_spinstall;
 
@@ -415,7 +415,7 @@ namespace aura
 
          virtual void * & ftlibrary();
 
-#if !defined(METROWIN)
+#if defined(INSTALL_SUBSYSTEM)
 
          ::install::install                           & install()
          {

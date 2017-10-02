@@ -1,6 +1,6 @@
 #include "framework.h"
 
-#include <crt_externs.h>
+//#include <crt_externs.h>
 CLASS_DECL_AURA int32_t ca2_main();
 
 

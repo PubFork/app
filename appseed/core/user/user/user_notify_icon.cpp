@@ -352,17 +352,17 @@ namespace user
 #elif defined(MACOS)
 
       notify_icon_destroy();
-
+      
+      m_bCreated = false;
+      
+      return true;
+      
 #else
 
 
       throw todo(get_app());
 
 #endif
-
-      m_bCreated = false;
-
-      return true;
 
    }
 

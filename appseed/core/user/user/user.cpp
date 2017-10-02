@@ -198,6 +198,13 @@ namespace user
 
    }
 
+   CLASS_DECL_CORE stringa get_wallpaper()
+   {
+
+      return stringa();
+
+   }
+
 #elif defined(ANDROID)
 
    CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath)
@@ -226,6 +233,7 @@ namespace user
       return stringa();
 
    }
+
 #else
 
    CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath)

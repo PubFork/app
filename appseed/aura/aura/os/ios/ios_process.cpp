@@ -182,7 +182,7 @@ CLASS_DECL_AURA DWORD call_sync(
 int get_current_process_affinity_order()
 {
    
-   int numCPU = sysconf(_SC_NPROCESSORS_ONLN);
+   int numCPU = (int) sysconf(_SC_NPROCESSORS_ONLN);
    
    return numCPU;
 }
@@ -195,7 +195,7 @@ int get_current_process_affinity_order()
 bool shell_execute_sync(const char * pszFile, const char * pszParams,  ::duration durationTimeout )
 {
    
-   return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, durationTimeout.get_total_milliseconds());
+   return call_sync(pszFile, pszParams, ::file::path(pszFile).folder() , 0, false, (int) durationTimeout.get_total_milliseconds());
    
 }
 

@@ -5,7 +5,7 @@
 bool mm1_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const char * psz);
 
 
-HDC GetDC(oswindow hwnd);
+//HDC GetDC(oswindow hwnd);
 
 #ifdef DEBUG
 #undef DEBUG
@@ -25,37 +25,37 @@ HDC GetDC(oswindow hwnd);
 #endif
 
 
-device_context::device_context()
-:
-/*  m_colour(wxColourDisplay())
- , m_ok(true)
- , m_clipping(false)
- , m_isInteractive(0)
- , m_isBBoxValid(false)
- , */ m_logicalOriginX(0), m_logicalOriginY(0)
-, m_deviceOriginX(0), m_deviceOriginY(0)
-, m_logicalScaleX(1.0), m_logicalScaleY(1.0)
-, m_userScaleX(1.0), m_userScaleY(1.0)
-, m_scaleX(1.0), m_scaleY(1.0)
-, m_signX(1), m_signY(1)
-, m_minX(0), m_minY(0), m_maxX(0), m_maxY(0)
-, m_clipX1(0), m_clipY1(0), m_clipX2(0), m_clipY2(0)
-/*  , m_logicalFunction(wxCOPY)
- , m_backgroundMode(wxTRANSPARENT)
- , m_mappingMode(wxMM_TEXT)
- , m_pen() */
-/* , m_brush()
- , m_backgroundBrush(*wxTRANSPARENT_BRUSH)
- , m_textForegroundColour(*wxBLACK)
- , m_textBackgroundColour(*wxWHITE)
- , m_font()
- #if wxUSE_PALETTE
- , m_palette()
- , m_hasCustomPalette(false)
- #endif // wxUSE_PALETTE */   
-{
-    m_cgcontext = NULL;
-}
+// device_context::device_context()
+// :
+// /*  m_colour(wxColourDisplay())
+//  , m_ok(true)
+//  , m_clipping(false)
+//  , m_isInteractive(0)
+//  , m_isBBoxValid(false)
+//  , */ m_logicalOriginX(0), m_logicalOriginY(0)
+// , m_deviceOriginX(0), m_deviceOriginY(0)
+// , m_logicalScaleX(1.0), m_logicalScaleY(1.0)
+// , m_userScaleX(1.0), m_userScaleY(1.0)
+// , m_scaleX(1.0), m_scaleY(1.0)
+// , m_signX(1), m_signY(1)
+// , m_minX(0), m_minY(0), m_maxX(0), m_maxY(0)
+// , m_clipX1(0), m_clipY1(0), m_clipX2(0), m_clipY2(0)
+// /*  , m_logicalFunction(wxCOPY)
+//  , m_backgroundMode(wxTRANSPARENT)
+//  , m_mappingMode(wxMM_TEXT)
+//  , m_pen() */
+// /* , m_brush()
+//  , m_backgroundBrush(*wxTRANSPARENT_BRUSH)
+//  , m_textForegroundColour(*wxBLACK)
+//  , m_textBackgroundColour(*wxWHITE)
+//  , m_font()
+//  #if wxUSE_PALETTE
+//  , m_palette()
+//  , m_hasCustomPalette(false)
+//  #endif // wxUSE_PALETTE */   
+// {
+//     m_cgcontext = NULL;
+// }
 
 
 
@@ -85,63 +85,63 @@ WINBOOL cg_release_color(CGColorRef colorref)
 
 
 
-HDC GetWindowDC(oswindow hwnd)
-{
-   return GetDC(hwnd);
-}
+// HDC GetWindowDC(oswindow hwnd)
+// {
+//    return GetDC(hwnd);
+// }
 
-HDC GetDC(oswindow hwnd)
-{
+// HDC GetDC(oswindow hwnd)
+// {
     
-    HDC hdc = new device_context;
-    
-    
-    hdc->m_window = hwnd;
-    hdc->m_cgcontext = get_nswindow_cgcontext(hwnd);
-/*    hdc->m_windowPort = GetWindowPort(hwnd);
-    GetPortBounds(hdc->m_windowPort, &hdc->m_portBounds);
-    
-    hdc->m_wasSwapped = QDSwapPort(hdc->m_windowPort, &hwnd->m_savedPort);
+//     HDC hdc = new device_context;
     
     
-    /* ... QuickDraw Drawing Commands ... */
-    // at windowPort
+//     hdc->m_window = hwnd;
+//     hdc->m_cgcontext = get_nswindow_cgcontext(hwnd);
+// /*    hdc->m_windowPort = GetWindowPort(hwnd);
+//     GetPortBounds(hdc->m_windowPort, &hdc->m_portBounds);
+    
+//     hdc->m_wasSwapped = QDSwapPort(hdc->m_windowPort, &hwnd->m_savedPort);
     
     
-  /*  QDBeginCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
-    SyncCGContextOriginWithPort(hdc->m_cgcontext, hdc->m_windowPort);
-    //ClipCGContextToRegion(cgContext, &portBounds, clippingRegion);
-    //DisposeRgn(clippingRegion);
-    //clippingRegion = NULL;
-    
-    /* ... Quartz Drawing Commands ... */
+//     /* ... QuickDraw Drawing Commands ... */
+//     // at windowPort
     
     
-    hdc->m_cgcolorrefText = cg_create_color(0);
-    hdc->m_cgcolorrefBk = cg_create_color(RGB(255, 255, 255));
+//   /*  QDBeginCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
+//     SyncCGContextOriginWithPort(hdc->m_cgcontext, hdc->m_windowPort);
+//     //ClipCGContextToRegion(cgContext, &portBounds, clippingRegion);
+//     //DisposeRgn(clippingRegion);
+//     //clippingRegion = NULL;
     
-    return hdc;
+//     /* ... Quartz Drawing Commands ... */
     
-}
+    
+//     hdc->m_cgcolorrefText = cg_create_color(0);
+//     hdc->m_cgcolorrefBk = cg_create_color(RGB(255, 255, 255));
+    
+//     return hdc;
+    
+// }
 
 
-WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
-{
+// WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
+// {
 
-   if(hdc == NULL)
-      return FALSE;
+//    if(hdc == NULL)
+//       return FALSE;
    
-   /*QDEndCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
+//    /*QDEndCGContext(hdc->m_windowPort, &hdc->m_cgcontext);
    
-   if(hdc->m_wasSwapped)
-   {
-      QDSwapPort(hdc->m_savedPort, &hdc->m_savedPort);
-   }*/
+//    if(hdc->m_wasSwapped)
+//    {
+//       QDSwapPort(hdc->m_savedPort, &hdc->m_savedPort);
+//    }*/
 
-   delete hdc;
-   return TRUE;
+//    delete hdc;
+//    return TRUE;
 
-}
+// }
 
 
 WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
@@ -211,24 +211,24 @@ int FillRect(HDC hdc, const RECT * lprc, HBRUSH hbr)
 }
 */
 
-HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
+// HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps)
+// {
 
-   HDC hdc = GetDC(hwnd);
+//    HDC hdc = GetDC(hwnd);
 
-   GetClientRect(hwnd, &ps->rcPaint);
+//    GetClientRect(hwnd, &ps->rcPaint);
 
-   return hdc;
+//    return hdc;
 
-}
+// }
 
 
-WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
+// WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
+// {
 
-   return ReleaseDC(hwnd, ps->hdc);
+//    return ReleaseDC(hwnd, ps->hdc);
 
-}
+// }
 
 
 
@@ -244,73 +244,73 @@ WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
 
 
 
-HFONT CreateFontIndirect(const LOGFONT * lf)
-{
-    return NULL;
-}
-HPEN CreatePen(int iPenStyle, int iWidth, COLORREF crColor)
-{
-    return NULL;
-}
-HGDIOBJ GetStockObject(int iStockObject)
-{
-    return NULL;
-}
-WINBOOL SelectObject(HDC hdc, HGDIOBJ hgdiobj)
-{
-    return FALSE;
-}
-WINBOOL Rectangle(HDC hdc, int x1, int y1, int x2, int y2)
-{
-    return FALSE;
-}
-WINBOOL DeleteObject(HGDIOBJ hgdiobj)
-{
-    return FALSE;
-}
-HDC CreateCompatibleDC(HDC hdc)
-{
-    return NULL;
-}
-HBITMAP WINAPI CreateDIBSection(HDC hdc, const BITMAPINFO *lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
-{
-    return NULL;
-}
-WINBOOL SetBkMode(HDC hdc, int iMode)
-{
-    return FALSE;
-}
-WINBOOL DeleteDC(HDC hdc)
-{
-    return FALSE;
-}
-WINBOOL AlphaBlend(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, BLENDFUNCTION ftn)
-{
-    return FALSE;
-}
-WINBOOL GetObject(HGDIOBJ hgdiobj, int iSize, void * object)
-{
-    return FALSE;
-}
-WINBOOL GetTextExtentPoint(HDC hdc, const char * pszText, int iSize, SIZE * psize)
-{
-    return FALSE;
-}
+// HFONT CreateFontIndirect(const LOGFONT * lf)
+// {
+//     return NULL;
+// }
+// HPEN CreatePen(int iPenStyle, int iWidth, COLORREF crColor)
+// {
+//     return NULL;
+// }
+// HGDIOBJ GetStockObject(int iStockObject)
+// {
+//     return NULL;
+// }
+// WINBOOL SelectObject(HDC hdc, HGDIOBJ hgdiobj)
+// {
+//     return FALSE;
+// }
+// WINBOOL Rectangle(HDC hdc, int x1, int y1, int x2, int y2)
+// {
+//     return FALSE;
+// }
+// WINBOOL DeleteObject(HGDIOBJ hgdiobj)
+// {
+//     return FALSE;
+// }
+// HDC CreateCompatibleDC(HDC hdc)
+// {
+//     return NULL;
+// }
+// HBITMAP WINAPI CreateDIBSection(HDC hdc, const BITMAPINFO *lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
+// {
+//     return NULL;
+// }
+// WINBOOL SetBkMode(HDC hdc, int iMode)
+// {
+//     return FALSE;
+// }
+// WINBOOL DeleteDC(HDC hdc)
+// {
+//     return FALSE;
+// }
+// WINBOOL AlphaBlend(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, BLENDFUNCTION ftn)
+// {
+//     return FALSE;
+// }
+// WINBOOL GetObject(HGDIOBJ hgdiobj, int iSize, void * object)
+// {
+//     return FALSE;
+// }
+// WINBOOL GetTextExtentPoint(HDC hdc, const char * pszText, int iSize, SIZE * psize)
+// {
+//     return FALSE;
+// }
 
 
 
-WINBOOL SetTextColor(HDC hdc, COLORREF crText)
-{
+// WINBOOL SetTextColor(HDC hdc, COLORREF crText)
+// {
    
-   cg_release_color(hdc->m_cgcolorrefText);
-   hdc->m_cgcolorrefText = cg_create_color(crText);
-   return TRUE;
-}
+//    cg_release_color(hdc->m_cgcolorrefText);
+//    hdc->m_cgcolorrefText = cg_create_color(crText);
+//    return TRUE;
+// }
 
-HBRUSH CreateSolidBrush(COLORREF cr)
-{
-    return NULL;
-}
+// HBRUSH CreateSolidBrush(COLORREF cr)
+// {
+//     return NULL;
+// }
 
 
 
@@ -438,81 +438,81 @@ CTFontRef CreateFontConvertedToFamily(CTFontRef iFont, CFStringRef iFamily)
    
 }
 
-bool TextOutU_dup(HDC hdc, int x, int y, const char * pszUtf8, int iSize)
-{    
+// bool TextOutU_dup(HDC hdc, int x, int y, const char * pszUtf8, int iSize)
+// {    
    
-   CGContextRef context = hdc->m_cgcontext;
+//    CGContextRef context = hdc->m_cgcontext;
    
 
-   CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+//    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
    
    
-   // Initialize an attributed string.
-   CFStringRef    string            = CFStringCreateWithCString(kCFAllocatorDefault, pszUtf8, kCFStringEncodingUTF8);
-   CTFontRef      ctfontrefText     = hdc->m_ctfontref; 
-   CGColorRef     cgcolorrefText    = hdc->m_cgcolorrefText;
-   
-   
-   
-   // Initialize string, font, and context
-   CFStringRef keys[] = { kCTFontAttributeName, kCTForegroundColorAttributeName };
-   CFTypeRef values[] = { ctfontrefText, cgcolorrefText };
-   CFDictionaryRef attributes = CFDictionaryCreate(
-                      kCFAllocatorDefault, (const void**)&keys,
-                      (const void**)&values, sizeof(keys) / sizeof(keys[0]),
-                      &kCFTypeDictionaryKeyCallBacks,
-                      &kCFTypeDictionaryValueCallBacks);
-   
-   
-//   CFIndex iLen = CFStringGetLength(string);
-   
-   
-   CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, string, attributes);
-   
-   CFRelease(attributes);
+//    // Initialize an attributed string.
+//    CFStringRef    string            = CFStringCreateWithCString(kCFAllocatorDefault, pszUtf8, kCFStringEncodingUTF8);
+//    CTFontRef      ctfontrefText     = hdc->m_ctfontref; 
+//    CGColorRef     cgcolorrefText    = hdc->m_cgcolorrefText;
    
    
    
-//   CFAttributedStringSetAttribute(attrString, CFRangeMake(0, iLen), (CFStringRef) , (CFTypeRef) textcolor);
+//    // Initialize string, font, and context
+//    CFStringRef keys[] = { kCTFontAttributeName, kCTForegroundColorAttributeName };
+//    CFTypeRef values[] = { ctfontrefText, cgcolorrefText };
+//    CFDictionaryRef attributes = CFDictionaryCreate(
+//                       kCFAllocatorDefault, (const void**)&keys,
+//                       (const void**)&values, sizeof(keys) / sizeof(keys[0]),
+//                       &kCFTypeDictionaryKeyCallBacks,
+//                       &kCFTypeDictionaryValueCallBacks);
    
    
-  // CFStringGetLength
-   
-   CTLineRef line = CTLineCreateWithAttributedString(attrString);
+// //   CFIndex iLen = CFStringGetLength(string);
    
    
+//    CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, string, attributes);
    
-   // Set text position and draw the line into the graphics context
-   
-   CGContextSetTextPosition(context, x, y);
-   
-   CTLineDraw(line, context);
-   
-   CFRelease(line);
+//    CFRelease(attributes);
    
    
-   CFRelease(attrString);
-   CFRelease(string);
+   
+// //   CFAttributedStringSetAttribute(attrString, CFRangeMake(0, iLen), (CFStringRef) , (CFTypeRef) textcolor);
    
    
-   return TRUE;
+//   // CFStringGetLength
+   
+//    CTLineRef line = CTLineCreateWithAttributedString(attrString);
    
    
-}
+   
+//    // Set text position and draw the line into the graphics context
+   
+//    CGContextSetTextPosition(context, x, y);
+   
+//    CTLineDraw(line, context);
+   
+//    CFRelease(line);
+   
+   
+//    CFRelease(attrString);
+//    CFRelease(string);
+   
+   
+//    return TRUE;
+   
+   
+// }
 
 
 
-void FillSolidRect_dup(HDC hdc, LPCRECT lpRect, COLORREF clr)
-{
-   CGColorRef color = cg_create_color(clr);
-   CGRect rect;
-   rect.origin.x = lpRect->left;
-   rect.origin.y = lpRect->top;
-   rect.size.width = lpRect->right - lpRect->left;
-   rect.size.height = lpRect->bottom - lpRect->top;
-   CGContextFillRect(hdc->m_cgcontext, rect);
-   cg_release_color(color);
-}
+// void FillSolidRect_dup(HDC hdc, LPCRECT lpRect, COLORREF clr)
+// {
+//    CGColorRef color = cg_create_color(clr);
+//    CGRect rect;
+//    rect.origin.x = lpRect->left;
+//    rect.origin.y = lpRect->top;
+//    rect.size.width = lpRect->right - lpRect->left;
+//    rect.size.height = lpRect->bottom - lpRect->top;
+//    CGContextFillRect(hdc->m_cgcontext, rect);
+//    cg_release_color(color);
+// }
 
 HFONT CreatePointFontIndirect_dup(const LOGFONT* lpLogFont, HDC hdcParam);
 HFONT CreatePointBoldFont_dup(int nPointSize, const char * lpszFaceName, int BOLD, HDC hdc);
@@ -534,48 +534,7 @@ HFONT CreatePointBoldFont_dup(int nPointSize, const char * lpszFaceName, int BOL
 HFONT CreatePointFontIndirect_dup(const LOGFONT* lpLogFont, HDC hdcParam)
 {
    
-#ifdef WINDOWS
-   
-   HDC hDC;
-   if (hdcParam != NULL)
-   {
-      hDC = hdcParam;
-   }
-   else
-      hDC = ::GetDC(NULL);
-   
-   // convert nPointSize to logical units based on pgraphics
-   LOGFONT logFont = *lpLogFont;
-   POINT pt;
-   // 72 points/inch, 10 decipoints/point
-   pt.y = ::MulDiv(::GetDeviceCaps(hDC, LOGPIXELSY), logFont.lfHeight, 720);
-   pt.x = 0;
-   ::DPtoLP(hDC, &pt, 1);
-   POINT ptOrg = { 0, 0 };
-   ::DPtoLP(hDC, &ptOrg, 1);
-   logFont.lfHeight = -abs_dup(pt.y - ptOrg.y);
-   
-   if(hdcParam == NULL)
-      ReleaseDC(NULL, hDC);
-   
-   return ::CreateFontIndirect(&logFont);
-   
-#else
-   
-   /*HDC hDC;
-    if (hdcParam != NULL)
-    {
-    hDC = hdcParam;
-    }
-    else
-    hDC = ::GetDC(NULL);*/
-   
    return ::CreateFontIndirect(lpLogFont);
-   
-   /*if(hdcParam == NULL)
-    ReleaseDC(NULL, hDC);*/
-   
-#endif
    
 }
 

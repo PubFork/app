@@ -11,7 +11,7 @@
 
 #include "aura_types.h"
 
-#if !defined(METROWIN)
+#if !defined(METROWIN) && !defined(APPLE_IOS) && !defined(VSNORD)
 
 #define INSTALL_SUBSYSTEM
 #define HOTPLUGIN_SUBSYSTEM

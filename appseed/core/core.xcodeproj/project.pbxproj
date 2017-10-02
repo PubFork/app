@@ -279,7 +279,6 @@
 		9A957BD71F622A0400623508 /* user_notification_area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CEC1F5D7359009EC103 /* user_notification_area.cpp */; };
 		9A957BD81F622A0400623508 /* user_notify_icon_listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CED1F5D7359009EC103 /* user_notify_icon_listener.cpp */; };
 		9A957BD91F622A0400623508 /* user_notify_icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CEE1F5D7359009EC103 /* user_notify_icon.cpp */; };
-		9A957BDA1F622A0400623508 /* user_shell_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7E85BF1E169A9F00B4534B /* user_shell_macos.cpp */; };
 		9A957BDB1F622A0400623508 /* wndfrm_interaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C461F5D72E0009EC103 /* wndfrm_interaction.cpp */; };
 		9A957BDC1F622A0400623508 /* wndfrm_wndfrm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C471F5D72E0009EC103 /* wndfrm_wndfrm.cpp */; };
 		9A9D7C481F5D72E0009EC103 /* wndfrm_interaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C461F5D72E0009EC103 /* wndfrm_interaction.cpp */; };
@@ -603,7 +602,6 @@
 		9A9D7EB91F5D751C009EC103 /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7EA71F5D751C009EC103 /* core.cpp */; };
 		9A9D7EBA1F5D751C009EC103 /* core1.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9D7EA81F5D751C009EC103 /* core1.h */; };
 		9A9D7EBB1F5D762A009EC103 /* user_tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ADD53D71F20D9B90008AA41 /* user_tree.cpp */; };
-		9A9D7EBC1F5D762A009EC103 /* user_shell_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7E85BF1E169A9F00B4534B /* user_shell_macos.cpp */; };
 		9A9D7EBD1F5D762B009EC103 /* user_check_box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CC61F5D7359009EC103 /* user_check_box.cpp */; };
 		9A9D7EBE1F5D762B009EC103 /* user_combo_box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CC71F5D7359009EC103 /* user_combo_box.cpp */; };
 		9A9D7EBF1F5D762B009EC103 /* user_combo_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7CC81F5D7359009EC103 /* user_combo_list.cpp */; };
@@ -685,6 +683,8 @@
 		9AE9BF081EA7D4A900E8A026 /* userhtml_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9BEF81EA7D4A900E8A026 /* userhtml_frame.h */; };
 		9AE9BF0A1EA7D4A900E8A026 /* userhtml_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9BEFA1EA7D4A900E8A026 /* userhtml_view.h */; };
 		9AE9BF0C1EA7D4A900E8A026 /* userhtml_view_update_hint.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9BEFC1EA7D4A900E8A026 /* userhtml_view_update_hint.h */; };
+		9AEB6A021F81D3A200F40B32 /* user_shell_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */; };
+		9AEB6A031F81D75E00F40B32 /* user_shell_macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A7E85BF1E169A9F00B4534B /* user_shell_macos.cpp */; };
 		9AFEDB401EB9B4D9008F0D19 /* os_cross_windows_crt_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A6D5D7173C27E9009E6FB8 /* os_cross_windows_crt_debug.cpp */; };
 /* End PBXBuildFile section */
 
@@ -1358,6 +1358,7 @@
 		9AE9BEF81EA7D4A900E8A026 /* userhtml_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userhtml_frame.h; sourceTree = "<group>"; };
 		9AE9BEFA1EA7D4A900E8A026 /* userhtml_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userhtml_view.h; sourceTree = "<group>"; };
 		9AE9BEFC1EA7D4A900E8A026 /* userhtml_view_update_hint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userhtml_view_update_hint.h; sourceTree = "<group>"; };
+		9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_shell_ios.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2030,6 +2031,7 @@
 				07184B551C9AA804009E07F2 /* user_notify_icon_mm_bridge.mm */,
 				9A7E85BF1E169A9F00B4534B /* user_shell_macos.cpp */,
 				9A7E85C21E169ABB00B4534B /* user_shell_macos_mm.mm */,
+				9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */,
 				9A9D7D141F5D735A009EC103 /* user.inl */,
 				9A9D7CCF1F5D7359009EC103 /* user_font_list.h */,
 				9A9D7CD11F5D7359009EC103 /* user_form_list_view.h */,
@@ -2762,7 +2764,6 @@
 				9A9D7C971F5D7315009EC103 /* userex_form_child_frame.cpp in Sources */,
 				9A9D7D2E1F5D735A009EC103 /* user_list.cpp in Sources */,
 				9A9D7DD01F5D744D009EC103 /* html_impl_table_elemental.cpp in Sources */,
-				9A9D7EBC1F5D762A009EC103 /* user_shell_macos.cpp in Sources */,
 				9A9D7D371F5D735A009EC103 /* user_mesh.cpp in Sources */,
 				9A9D7D981F5D740E009EC103 /* userhtml_child_frame.cpp in Sources */,
 				9A9D7C941F5D7315009EC103 /* userex_dialog.cpp in Sources */,
@@ -2835,6 +2836,7 @@
 				9A9D7D851F5D73CF009EC103 /* simple_mesh_data.cpp in Sources */,
 				9A9D7DD11F5D744D009EC103 /* html_impl_table_row.cpp in Sources */,
 				9A9D7E1F1F5D74AA009EC103 /* userfs_list.cpp in Sources */,
+				9AEB6A031F81D75E00F40B32 /* user_shell_macos.cpp in Sources */,
 				9A9D7F001F5D7678009EC103 /* user_menu_button.cpp in Sources */,
 				9A9D7DB91F5D742D009EC103 /* html_tag.cpp in Sources */,
 				9A9D7D9A1F5D740E009EC103 /* userhtml_form_view.cpp in Sources */,
@@ -2967,6 +2969,7 @@
 				9A957BA71F622A0400623508 /* html_impl_table_row.cpp in Sources */,
 				9A957BA81F622A0400623508 /* html_impl_table.cpp in Sources */,
 				9A957BA91F622A0400623508 /* html_impl_text.cpp in Sources */,
+				9AEB6A021F81D3A200F40B32 /* user_shell_ios.cpp in Sources */,
 				9A957BAA1F622A0400623508 /* html_impl.cpp in Sources */,
 				9A957BAB1F622A0400623508 /* html_attribute.cpp in Sources */,
 				9A957BAC1F622A0400623508 /* html_base.cpp in Sources */,
@@ -3015,7 +3018,6 @@
 				9A957BD71F622A0400623508 /* user_notification_area.cpp in Sources */,
 				9A957BD81F622A0400623508 /* user_notify_icon_listener.cpp in Sources */,
 				9A957BD91F622A0400623508 /* user_notify_icon.cpp in Sources */,
-				9A957BDA1F622A0400623508 /* user_shell_macos.cpp in Sources */,
 				9A957BDB1F622A0400623508 /* wndfrm_interaction.cpp in Sources */,
 				9A957BDC1F622A0400623508 /* wndfrm_wndfrm.cpp in Sources */,
 				9A957B0C1F6227A000623508 /* core_application.cpp in Sources */,

@@ -8,7 +8,8 @@
 inline __EXCEPTION_CONTEXT* __get_exception_context()
 {
    DWORD lError = GetLastError();
-   __EXCEPTION_CONTEXT* pContext = gen_ThreadState->m_exceptionContext;
+   //__EXCEPTION_CONTEXT* pContext = ::get_thread()->m_exceptionContext;
+   __EXCEPTION_CONTEXT* pContext = NULL;
    SetLastError(lError);
    return pContext;
 }

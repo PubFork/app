@@ -723,9 +723,9 @@ WINBOOL GetWindowRect(oswindow hwnd,LPRECT lprect);
 
 int32_t FillRect(HDC hDC,const RECT *lprc,HBRUSH hbr);
 
-WINBOOL ReleaseDC(oswindow hwnd,HDC hdc);
+//WINBOOL ReleaseDC(oswindow hwnd,HDC hdc);
 
-HDC GetWindowDC(oswindow hwnd);
+//HDC GetWindowDC(oswindow hwnd);
 
 
 HBRUSH CreateSolidBrush(COLORREF color);

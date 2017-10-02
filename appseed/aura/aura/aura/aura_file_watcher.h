@@ -34,7 +34,7 @@ namespace file_watcher
 
 
 	/// Type for a watch id
-	typedef uint64_t file_watch_id;
+	typedef int64_t file_watch_id;
 	typedef array < file_watch_id > file_watch_array;
 
 	// forward declarations

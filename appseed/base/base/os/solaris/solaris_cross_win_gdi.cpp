@@ -2,61 +2,61 @@
 #include "ca_os_cross_win_gdi_internal.h"
 
 
-device_context::device_context()
-{
+// device_context::device_context()
+// {
 
 
-   m_display   = NULL;
-   m_d         = 0;
-   m_gc        = NULL;
-   m_hwnd      = NULL;
-
-
-
-}
+//    m_display   = NULL;
+//    m_d         = 0;
+//    m_gc        = NULL;
+//    m_hwnd      = NULL;
 
 
 
-HDC GetDC(oswindow hwnd)
-{
+// }
 
 
-   HDC hdc = new device_context;
 
-   hdc->m_display    = XOpenDisplay(NULL);
-   hdc->m_hwnd       = hwnd;
-   hdc->m_d          = (Drawable) (hwnd == NULL || hwnd->window() == NULL ? DefaultRootWindow(hdc->m_display) : hwnd->window());
-   hdc->m_gc         = XCreateGC(hdc->m_display, hdc->m_d, 0, 0);
-
-   return hdc;
-
-}
+// HDC GetDC(oswindow hwnd)
+// {
 
 
-HDC GetWindowDC(oswindow hwnd)
-{
+//    HDC hdc = new device_context;
 
-   return GetDC(hwnd);
-}
+//    hdc->m_display    = XOpenDisplay(NULL);
+//    hdc->m_hwnd       = hwnd;
+//    hdc->m_d          = (Drawable) (hwnd == NULL || hwnd->window() == NULL ? DefaultRootWindow(hdc->m_display) : hwnd->window());
+//    hdc->m_gc         = XCreateGC(hdc->m_display, hdc->m_d, 0, 0);
 
+//    return hdc;
 
-WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
-{
-
-
-   mutex_lock sl(user_mutex(), true);
+// }
 
 
-   if(hdc == NULL)
-      return FALSE;
+// HDC GetWindowDC(oswindow hwnd)
+// {
 
-   XFreeGC(hdc->m_display, hdc->m_gc);
-   XCloseDisplay(hdc->m_display);
+//    return GetDC(hwnd);
+// }
 
-   delete hdc;
-   return TRUE;
 
-}
+// WINBOOL ReleaseDC(oswindow hwnd, HDC hdc)
+// {
+
+
+//    mutex_lock sl(user_mutex(), true);
+
+
+//    if(hdc == NULL)
+//       return FALSE;
+
+//    XFreeGC(hdc->m_display, hdc->m_gc);
+//    XCloseDisplay(hdc->m_display);
+
+//    delete hdc;
+//    return TRUE;
+
+// }
 
 
 WINBOOL GetClientRect(oswindow hwnd, LPRECT lprect)
@@ -136,35 +136,35 @@ WINBOOL GetWindowRect(oswindow hwnd, LPRECT lprect)
 
 
 
-int32_t FillRect(HDC hdc, const RECT * lprc, HBRUSH hbr)
-{
+// int32_t FillRect(HDC hdc, const RECT * lprc, HBRUSH hbr)
+// {
 
-   mutex_lock sl(user_mutex(), true);
-
-
-   XFillRectangle(hdc->m_display, hdc->m_d, hdc->m_gc, lprc->left, lprc->top, lprc->right - lprc->left, lprc->bottom - lprc->top);
-   return 1;
-}
+//    mutex_lock sl(user_mutex(), true);
 
 
-HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
-
-   HDC hdc = GetDC(hwnd);
-
-   GetClientRect(hwnd, &ps->rcPaint);
-
-   return hdc;
-
-}
+//    XFillRectangle(hdc->m_display, hdc->m_d, hdc->m_gc, lprc->left, lprc->top, lprc->right - lprc->left, lprc->bottom - lprc->top);
+//    return 1;
+// }
 
 
-WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
-{
+// HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps)
+// {
 
-   return ReleaseDC(hwnd, ps->hdc);
+//    HDC hdc = GetDC(hwnd);
 
-}
+//    GetClientRect(hwnd, &ps->rcPaint);
+
+//    return hdc;
+
+// }
+
+
+// WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps)
+// {
+
+//    return ReleaseDC(hwnd, ps->hdc);
+
+// }
 
 
 WINBOOL GetCursorPos(LPPOINT lpptCursor)

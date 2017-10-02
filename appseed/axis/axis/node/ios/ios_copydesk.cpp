@@ -64,9 +64,9 @@ namespace ios
 
       strsize iLen = 0;
 
-      for(int32_t i = 0; i < stra.get_size(); i++)
+      for(int32_t i = 0; i < patha.get_size(); i++)
       {
-         iLen += ::str::international::utf8_to_unicode_count(stra[i]) + 1;
+         iLen += ::str::international::utf8_to_unicode_count(patha[i]) + 1;
       }
 
       throw todo(get_app());

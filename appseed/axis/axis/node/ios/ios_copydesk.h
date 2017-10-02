@@ -11,7 +11,7 @@ namespace ios
    public:
 
 
-      copydesk(sp(::aura::application) papp);
+      copydesk(::aura::application * papp);
       virtual ~copydesk();
 
 

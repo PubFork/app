@@ -713,7 +713,7 @@ namespace ios
       virtual bool on_keyboard_focus(::user::elemental * pfocus) override;
       
       
-      virtual bool has_pending_graphical_update();
+      virtual bool has_pending_graphical_update() override;
       
    };
    

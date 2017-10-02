@@ -77,3 +77,28 @@ WINBOOL BringWindowToTop(oswindow window)
 
 
 
+
+
+WINBOOL set_nswindow_frame(oswindow hwnd, LPCRECT lpcrect, int iDisplay)
+{
+   
+   CGRect rect;
+   
+   CGRect frame = [[UIScreen mainScreen] applicationFrame];
+   
+   rect.origin.x     = lpcrect->left;
+   rect.origin.y     = frame.size.height  -     lpcrect->bottom;
+   rect.size.width   = lpcrect->right     -     lpcrect->left;
+   rect.size.height  = lpcrect->bottom    -     lpcrect->top;
+   
+   //   rect.origin.x     = 500;
+   //   rect.origin.y     = 400;
+   //   rect.size.width   = 500;
+   //   rect.size.height  = 500;
+   
+   
+   hwnd->window().frame = rect;
+   
+   return 1;
+   
+}

@@ -329,6 +329,15 @@
 		9AE24D4B1904CEFF001AEFFB /* libios_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE24D341904CEFE001AEFFB /* libios_base.a */; };
 		9AE9BEE71EA7D05100E8A026 /* cross.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9BEE01EA7D05100E8A026 /* cross.h */; };
 		9AE9BEEA1EA7D05100E8A026 /* windows.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE9BEE51EA7D05100E8A026 /* windows.h */; };
+		9AEB69D81F81C77800F40B32 /* user_control_descriptor_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C1E1F5D690D009EC103 /* user_control_descriptor_set.cpp */; };
+		9AEB69D91F81C77800F40B32 /* user_control_descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C201F5D690D009EC103 /* user_control_descriptor.cpp */; };
+		9AEB69DA1F81C77800F40B32 /* user_menu_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C221F5D690D009EC103 /* user_menu_command.cpp */; };
+		9AEB69F81F81CC3700F40B32 /* database_user_interaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B761F5D672D009EC103 /* database_user_interaction.cpp */; };
+		9AEB69F91F81CC3D00F40B32 /* simpledb_file_system_size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B781F5D6738009EC103 /* simpledb_file_system_size.cpp */; };
+		9AEB69FA1F81CC4600F40B32 /* graphics_window_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B7A1F5D67EA009EC103 /* graphics_window_buffer.cpp */; };
+		9AEB69FB1F81CC4600F40B32 /* graphics_window_dc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B7B1F5D67EA009EC103 /* graphics_window_dc.cpp */; };
+		9AEB69FC1F81CC4600F40B32 /* graphics_window_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B7C1F5D67EA009EC103 /* graphics_window_graphics.cpp */; };
+		9AEB69FD1F81CC7900F40B32 /* wndfrm_frame_updowninterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C2D1F5D69AB009EC103 /* wndfrm_frame_updowninterface.cpp */; };
 		9AF67C551EB6BFA400919B4D /* graphics_window_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF67BF41EB6BFA400919B4D /* graphics_window_buffer.h */; };
 		9AF67C571EB6BFA400919B4D /* graphics_window_dc.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF67BF61EB6BFA400919B4D /* graphics_window_dc.h */; };
 		9AF67C591EB6BFA400919B4D /* graphics_window_graphics.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF67BF81EB6BFA400919B4D /* graphics_window_graphics.h */; };
@@ -1862,6 +1871,7 @@
 				9AFEDB3F1EB9B3E6008F0D19 /* install_canvas.cpp in Sources */,
 				9A9D7B9C1F5D6847009EC103 /* hotplugin_composer.cpp in Sources */,
 				9A9D7BC61F5D6895009EC103 /* simple_ui_message_box.cpp in Sources */,
+				9AEB69F91F81CC3D00F40B32 /* simpledb_file_system_size.cpp in Sources */,
 				9A9D7B681F5D66D9009EC103 /* ios_message_loop.cpp in Sources */,
 				9A9D7C011F5D6900009EC103 /* user_interaction.cpp in Sources */,
 				9A9D7C001F5D6900009EC103 /* user_impact_update_hint.cpp in Sources */,
@@ -1873,9 +1883,11 @@
 				9A9D7C141F5D6900009EC103 /* user_tooltip.cpp in Sources */,
 				9A9D7BC51F5D6895009EC103 /* simple_ui_label.cpp in Sources */,
 				9A9D7C0C1F5D6900009EC103 /* user_plain_edit.cpp in Sources */,
+				9AEB69F81F81CC3700F40B32 /* database_user_interaction.cpp in Sources */,
 				9A9D7B691F5D66D9009EC103 /* ios_simple_app.cpp in Sources */,
 				9A9D7C371F5D6DF2009EC103 /* base_application.cpp in Sources */,
 				9A9D7C0B1F5D6900009EC103 /* user_place_holder_container.cpp in Sources */,
+				9AEB69DA1F81C77800F40B32 /* user_menu_command.cpp in Sources */,
 				9A9D7B991F5D683C009EC103 /* fontopus_login.cpp in Sources */,
 				9A9D7B6A1F5D66D9009EC103 /* ios_windowing.cpp in Sources */,
 				9A920FF21F3C05E500CD9D94 /* ios_interaction_impl.cpp in Sources */,
@@ -1885,6 +1897,7 @@
 				9A9D7C181F5D6900009EC103 /* user_wait_cursor.cpp in Sources */,
 				9A9D7C111F5D6900009EC103 /* user_style_base.cpp in Sources */,
 				07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */,
+				9AEB69D81F81C77800F40B32 /* user_control_descriptor_set.cpp in Sources */,
 				9A9D7B3F1F5D6604009EC103 /* ios_ios.cpp in Sources */,
 				9A9D7C1B1F5D6900009EC103 /* user_windowing.cpp in Sources */,
 				9A9D7BFD1F5D6900009EC103 /* user_form_window.cpp in Sources */,
@@ -1899,6 +1912,7 @@
 				9A9D7B9F1F5D6847009EC103 /* hotplugin_plugin.cpp in Sources */,
 				9A9D7C381F5D6DF2009EC103 /* base_session.cpp in Sources */,
 				9A9D7BC41F5D6895009EC103 /* simple_ui_interaction.cpp in Sources */,
+				9AEB69FA1F81CC4600F40B32 /* graphics_window_buffer.cpp in Sources */,
 				9A9D7C131F5D6900009EC103 /* user_style.cpp in Sources */,
 				9A9D7BFE1F5D6900009EC103 /* user_frame_window.cpp in Sources */,
 				9A9D7BF41F5D6900009EC103 /* user.cpp in Sources */,
@@ -1911,6 +1925,7 @@
 				9A9D7C101F5D6900009EC103 /* user_server.cpp in Sources */,
 				9A9D7BC91F5D6895009EC103 /* simple_ui_tap.cpp in Sources */,
 				9A9D7BC81F5D6895009EC103 /* simple_ui_style.cpp in Sources */,
+				9AEB69D91F81C77800F40B32 /* user_control_descriptor.cpp in Sources */,
 				9A9D7BF91F5D6900009EC103 /* user_control_event.cpp in Sources */,
 				9A9D7C1C1F5D6900009EC103 /* user_mouse.cpp in Sources */,
 				07EDC59D1B4F234300AF8928 /* RoundWindowFrameView.mm in Sources */,
@@ -1926,12 +1941,14 @@
 				9A9D7B9A1F5D683C009EC103 /* fontopus_simple_ui.cpp in Sources */,
 				9A9D7BFB1F5D6900009EC103 /* user_form_callback.cpp in Sources */,
 				07EDC52A1B4F1BB300AF8928 /* ios_cross_gdi.mm in Sources */,
+				9AEB69FD1F81CC7900F40B32 /* wndfrm_frame_updowninterface.cpp in Sources */,
 				9A9D7C041F5D6900009EC103 /* user_interaction_impl.cpp in Sources */,
 				9A9D7BF71F5D6900009EC103 /* user_control.cpp in Sources */,
 				9A9D7BCA1F5D6895009EC103 /* simple_ui_top.cpp in Sources */,
 				9A9D7BFF1F5D6900009EC103 /* user_impact_system.cpp in Sources */,
 				9A9D7B6B1F5D66D9009EC103 /* ios.cpp in Sources */,
 				9A9D7C171F5D6900009EC103 /* user_view_creator.cpp in Sources */,
+				9AEB69FC1F81CC4600F40B32 /* graphics_window_graphics.cpp in Sources */,
 				9A9D7BC71F5D6895009EC103 /* simple_ui_password.cpp in Sources */,
 				9A9D7B9B1F5D683C009EC103 /* fontopus.cpp in Sources */,
 				9A9D7C0D1F5D6900009EC103 /* user_plain_text_data.cpp in Sources */,
@@ -1939,6 +1956,7 @@
 				9A9D7BF81F5D6900009EC103 /* user_control_bar.cpp in Sources */,
 				9A9D7BF51F5D6900009EC103 /* user_button.cpp in Sources */,
 				9A9D7B9E1F5D6847009EC103 /* hotplugin_host.cpp in Sources */,
+				9AEB69FB1F81CC4600F40B32 /* graphics_window_dc.cpp in Sources */,
 				9A9D7C121F5D6900009EC103 /* user_style_composite.cpp in Sources */,
 				9A9D7B651F5D66D9009EC103 /* ios_app.cpp in Sources */,
 				07EDC52C1B4F1BB300AF8928 /* ios_user.mm in Sources */,

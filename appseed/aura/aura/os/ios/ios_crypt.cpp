@@ -134,9 +134,9 @@ int crypt_encrypt(memory & storageEncrypt, const memory & storageDecrypt, memory
     
    }
     
-   /* Encrypt the data. */
+    Encrypt the data.
                             
- /*  CFDataRef data = (CFDataRef) SecTransformExecute(transform, &error);
+   CFDataRef data = (CFDataRef) SecTransformExecute(transform, &error);
                              
    if(error != NULL)
    {
@@ -306,9 +306,9 @@ int crypt_decrypt(memory & storageDecrypt, const memory & storageEncrypt, memory
       
    }
    
-   /* Decrypt the data. */
+    Decrypt the data.
    
-/*   CFDataRef data = (CFDataRef) SecTransformExecute(transform, &error);
+   CFDataRef data = (CFDataRef) SecTransformExecute(transform, &error);
    
    if(error != NULL)
    {

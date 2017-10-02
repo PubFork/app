@@ -8,7 +8,7 @@
 #include "framework.h"
 
 
-#ifdef MACOS
+#ifdef __APPLE__
 
 // http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x
 // http://stackoverflow.com/users/346736/jbenet
@@ -179,7 +179,7 @@ namespace aura
 
          QueryPerformanceFrequency(&g_freq);
 
-#elif defined(MACOS)
+#elif defined(__APPLE__)
 
 
          {

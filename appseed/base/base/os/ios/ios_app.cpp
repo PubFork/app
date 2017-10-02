@@ -93,7 +93,7 @@ ui_window_ptr plane_system::init_part_2ex(CGRect rect)
    
    //m_psystem->m_window = ios_start_window(this, rect);
    
-   int nReturnCode = 0;
+   //int nReturnCode = 0;
    
    manual_reset_event ev(m_psystem);
    

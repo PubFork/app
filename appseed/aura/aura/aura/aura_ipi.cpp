@@ -205,7 +205,7 @@ namespace aura
       }
 
 
-#ifdef METROWIN
+#if !defined(INSTALL_SUBSYSTEM)
 
       //throw todo(get_app());
 

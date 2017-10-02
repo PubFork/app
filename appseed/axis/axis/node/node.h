@@ -7,10 +7,12 @@
 
 #elif defined(APPLE_IOS)
 
+#include "apple/apple.h"
 #include "ios/ios.h"
 
 #elif defined(MACOS)
 
+#include "apple/apple.h"
 #include "macos/macos.h"
 
 #endif

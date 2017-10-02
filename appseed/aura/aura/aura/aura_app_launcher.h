@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if !defined(METROWIN)
+#ifdef INSTALL_SUBSYSTEM
 
 
 namespace aura

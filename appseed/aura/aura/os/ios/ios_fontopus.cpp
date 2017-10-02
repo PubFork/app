@@ -570,7 +570,7 @@ namespace fontopus
       if (m_login.on_lbutton_up(x, y))
          return true;
 
-      /*
+ 
       rect rectLogin;
 
       m_login.get_window_rect(rectLogin);
@@ -582,17 +582,17 @@ namespace fontopus
       ReleaseCapture();
       DestroyWindow(m_oswindow);
       }
-      */
+ 
 
-      /*      {
+            {
       rect rectWindow;
       m_login.get_window_rect(&rectWindow);
       POINT ptCursor;
       ::GetCursorPos(&ptCursor);
       if (!rectWindow.contains(ptCursor))
       DestroyWindow(hWnd);
-      }*/
-/*
+      }
+
       return true;
 
 

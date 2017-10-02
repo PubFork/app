@@ -46,7 +46,7 @@ CTFontDescriptorRef CreateFontDescriptorFromFamilyAndTraits(CFStringRef iFamilyN
       // Create the traits dictionary.
       symTraits = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &iTraits);
       
-      (symTraits != NULL);
+      //(symTraits != NULL);
       
       if (symTraits != NULL)
       {

@@ -1586,7 +1586,7 @@ namespace user
 
             image_key imagekey;
 
-            imagekey.m_pszPath = "foo";
+            imagekey.m_pszPath = (char *) (const char *) "foo";
 
             imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
 
@@ -1659,7 +1659,7 @@ namespace user
                ::draw2d::dib & d = *m_pilHover[iSize]->m_spdib;
                size s = m_pil[iSize]->m_spdib->m_size;
                ::draw2d::dib_sp dib(allocer());
-               dib->create(d.size());
+               dib->create(s);
                dib->Fill(255, argb_get_r_value(crBk), argb_get_g_value(crBk), argb_get_b_value(crBk));
                dib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
                dib->get_graphics()->BitBlt(null_point(), d.size(), d.get_graphics());

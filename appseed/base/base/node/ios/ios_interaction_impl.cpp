@@ -3013,7 +3013,7 @@ namespace ios
        */
       //      int32_t iCount = wndaApp.get_count();
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       //      try
       //      {
       //
@@ -3333,7 +3333,7 @@ namespace ios
          // DispatchMessage(&msg);
       }
 
-      Default();
+      //Default();
    }
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::user::interaction * pWnd, UINT)
@@ -3867,34 +3867,34 @@ namespace ios
       
       // if it is temporary user::interaction - probably not ca2 wrapped user::interaction
 
-      rect rect32;
-
-      if(m_pui == m_pauraapp->m_pbasesystem->m_possystemwindow->m_pui)
-      {
-
-         if(!GetMainScreenRect(rect32))
-         {
-
-            return false;
-
-         }
-
-      }
-      else
-      {
-
-         if(!::GetWindowRect(get_handle(), rect32))
-         {
-
-            return false;
-
-         }
-
-      }
-
-      ::copy(lprect, rect32);
-
-      return true;
+//      rect rect32;
+//
+//      if(m_pui == m_pauraapp->m_pbasesystem->m_possystemwindow->m_pui)
+//      {
+//
+//         if(!GetMainScreenRect(rect32))
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         if(!::GetWindowRect(get_handle(), rect32))
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//
+//      ::copy(lprect, rect32);
+//
+//      return true;
 
    }
 
@@ -4314,10 +4314,13 @@ namespace ios
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-      ASSERT(::IsWindow(get_handle()));
-      ::draw2d::graphics_sp g(allocer());
-      g->attach(::GetWindowDC(get_handle()));
-      return g.detach();
+      //ASSERT(::IsWindow(get_handle()));
+      //::draw2d::graphics_sp g(allocer());
+      //g->attach(::GetWindowDC(get_handle()));
+      //return g.detach();
+      
+      return NULL;
+      
    }
 
    bool interaction_impl::ReleaseDC(::draw2d::graphics * pgraphics)
@@ -5624,18 +5627,18 @@ namespace ios
       //       hWnd = ::GetLastActivePopup(hWnd);
 
       // disable and store top level parent ::user::interaction if specified
-      if (pWndTop != NULL)
-      {
-         /*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
-          {
-          *pWndTop = hWndTop;
-          ::EnableWindow(hWndTop, FALSE);
-          }
-          else
-          *pWndTop = ::caNULL;*/
-      }
-
-      return hWnd;    // return the owner as oswindow
+//      if (pWndTop != NULL)
+//      {
+//         /*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
+//          {
+//          *pWndTop = hWndTop;
+//          ::EnableWindow(hWndTop, FALSE);
+//          }
+//          else
+//          *pWndTop = ::caNULL;*/
+//      }
+//
+//      return hWnd;    // return the owner as oswindow
    }
 
 
