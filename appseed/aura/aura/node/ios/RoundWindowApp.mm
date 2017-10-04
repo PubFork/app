@@ -8,6 +8,16 @@
 
 #import "AppDelegate.h"
 
+int32_t defer_run_system();
+
+int32_t defer_run_system(const char * pszFileName);
+
+int32_t defer_run_system(char * * psza, int c);
+
+void macos_on_app_activate();
+
+
+
 plane_system * new_system(const char * pszId);
 
 UIWindow * init_part_2ex(plane_system * psystem, CGRect rect);
@@ -21,21 +31,23 @@ void system_begin_main(plane_system * psystem);
    
 //   [application _setApplicationIsOpaque : NO];
   
-   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
+//   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
+//
+//   m_psystem = new_system([ca2_command_line UTF8String]);
+//
+//   CGRect rect =[[UIScreen mainScreen] bounds];
+//
+//   self.window = init_part_2ex(m_psystem, rect);
+//
+//   self.window.backgroundColor = [UIColor whiteColor];
+//
+//   self.window.opaque = NO;
+//
+//   [self.window makeKeyAndVisible];
    
-   m_psystem = new_system([ca2_command_line UTF8String]);
+   //system_begin_main(m_psystem);
    
-   CGRect rect =[[UIScreen mainScreen] bounds];
-   
-   self.window = init_part_2ex(m_psystem, rect);
-
-   self.window.backgroundColor = [UIColor whiteColor];
-   
-   self.window.opaque = NO;
-   
-   [self.window makeKeyAndVisible];
-   
-   system_begin_main(m_psystem);
+   defer_run_system();
    
    return YES;
    
