@@ -172,6 +172,7 @@
 				9A9F0A551D7F346600ED6D8A /* axispng.xcodeproj */,
 				07A371871B25E34D00E4F888 /* Source */,
 				9A574B9916AAB906000CC4EF /* Products */,
+				9AF4C75F1F83E63000197385 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +194,13 @@
 				9A9F0A601D7F346600ED6D8A /* axispng_iosTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9AF4C75F1F83E63000197385 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,7 +429,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				EXECUTABLE_EXTENSION = a;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;

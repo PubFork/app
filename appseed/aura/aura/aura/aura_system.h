@@ -28,6 +28,12 @@ namespace aura
       public:
 
 
+#ifdef APPLE_IOS
+      
+         plane_system *                        m_pplanesystem;
+      
+#endif
+      
          bool                                      m_bAcid;
 
 
@@ -486,7 +492,14 @@ namespace aura
 
          virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback) override;
 
+#ifdef APPLE_IOS
 
+         virtual bool initialize_native_window1();
+      
+         virtual void * initialize_native_window2(LPCRECT lpcrect);
+      
+#endif
+      
    };
 
 

@@ -21,15 +21,14 @@ namespace filemanager
    {
    }
 
+
    bool filemanager::initialize()
    {
       
-      
-
       set_data_server(&Application.dataserver());
 
-      if(!filemanager::file_list_callback::initialize())
-         return false;
+//      if(!filemanager::file_list_callback::initialize())
+//         return false;
 
       InitializeFileManager("filemanager/filemanager");
 

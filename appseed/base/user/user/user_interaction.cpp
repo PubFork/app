@@ -118,25 +118,22 @@ namespace user
       return m_ptooltip.cast<tooltip>();
 
    }
+   
 
    bool interaction::defer_check_layout()
    {
+      
+      if(!m_bLayoutEnable)
+      {
+       
+         return false;
+         
+      }
 
-      if (!check_need_layout() || !m_bLayoutEnable)
+      if (!check_need_layout())
       {
 
-         if (m_bLayoutEnable)
-         {
-
-            return defer_check_translation();
-
-         }
-         else
-         {
-
-            return false;
-
-         }
+         return defer_check_translation();
 
       }
 
@@ -213,8 +210,15 @@ namespace user
 
    bool interaction::defer_check_translation()
    {
+      
+      if(!m_bLayoutEnable)
+      {
+       
+         return false;
+         
+      }
 
-      if (!check_need_translation() || !m_bLayoutEnable)
+      if (!check_need_translation())
       {
 
          return defer_check_show_flags();
@@ -264,8 +268,15 @@ namespace user
 
    bool interaction::defer_check_show_flags()
    {
+      
+      if(!m_bLayoutEnable)
+      {
+       
+         return false;
+         
+      }
 
-      if (!check_show_flags() || !m_bLayoutEnable)
+      if (!check_show_flags())
       {
 
          return false;
@@ -313,8 +324,15 @@ namespace user
 
    bool interaction::defer_check_zorder()
    {
+      
+      if(!m_bLayoutEnable)
+      {
+       
+         return false;
+         
+      }
 
-      if (!check_need_zorder() || !m_bLayoutEnable)
+      if (!check_need_zorder())
       {
 
          return false;
@@ -1311,6 +1329,8 @@ restart:
 
    void interaction::do_show_flags()
    {
+      
+      output_debug_string("\ninteraction::do_show_flags " + string(typeid(*this).name()));
 
       m_pimpl->on_do_show_flags();
 
@@ -1707,6 +1727,10 @@ restart:
       {
 
          ::draw2d::keep k(pgraphics);
+         
+         //int iGet = (get_tick_count() / 10) % 256;
+         
+         //pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, iGet, iGet));
 
          try
          {
@@ -6623,7 +6647,8 @@ restart:
          SetWindowPlacement(&wp);
 
 #else
-
+         
+         output_debug_string("\ninteraction::bestmonitor TRUE " + string(typeid(*this).name()) + string(" rectNewArea") + ::str::from(rectNew.area()) + string(" 0x") + ::hex::upper_from(uiSwpFlags));
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
 

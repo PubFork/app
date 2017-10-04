@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface RoundWindowApp : UIResponder <UIApplicationDelegate>
 {
    
 @public
@@ -17,7 +17,7 @@
    
 }
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow * window;
 
 
 @end

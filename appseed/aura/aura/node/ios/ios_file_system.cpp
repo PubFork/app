@@ -1288,7 +1288,7 @@ namespace ios
       
       uint32_t size = 1024;
       
-      if(_ui_get_executable_path(lpsz, &size) == 0)
+      if(_ui_get_executable_path(lpsz, &size))
       {
          
          str.ReleaseBuffer();
@@ -1299,7 +1299,7 @@ namespace ios
          
          lpsz = str.GetBufferSetLength(size);
          
-         if(_ui_get_executable_path(lpsz, &size) == 0)
+         if(_ui_get_executable_path(lpsz, &size))
          {
             
             str.ReleaseBuffer();

@@ -681,6 +681,7 @@ namespace ios
       
       
       void _001UpdateWindow();
+      void _001UpdateScreen() override;
       
       
       void _001OnTriggerMouseInside() override;
@@ -695,6 +696,7 @@ namespace ios
       virtual bool round_window_key_down(::user::e_key ekey) override;
       virtual bool round_window_key_up(::user::e_key ekey) override;
       virtual bool round_window_on_text(const char * pszText) override;
+      virtual bool round_window_on_sel_text(int iBeg, int iEnd) override;
 
       
       virtual void round_window_resized(CGRect rect) override;

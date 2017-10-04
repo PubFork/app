@@ -1089,6 +1089,15 @@ error:;
 
    }
 
+   
+   bool system::initialize_native_window1()
+   {
+    
+      m_possystemwindow->m_pui = new ::user::interaction(this);
+      
+      return true;
+      
+   }
 
 
 } // namespace base

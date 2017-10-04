@@ -154,6 +154,10 @@
 		9AE24E201904CF99001AEFFB /* draw2d_quartz2d_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "draw2d_quartz2d_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9AE24E221904CF99001AEFFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9AEAFBD11DC1B4B00035AD42 /* draw2d_mm_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = draw2d_mm_mac.mm; sourceTree = "<group>"; };
+		9AF4C42F1F83D6D400197385 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		9AF4C4311F83D76600197385 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		9AF4C4331F83D79200197385 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		9AF4C4351F83D7B400197385 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A1CFD778154F5EAA007447E2 /* libdraw2d_quartz2d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libdraw2d_quartz2d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -189,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				9A8ED56A1F204554007DB75C /* libaura.dylib */,
-				9A8ED56C1F204554007DB75C /* libios_aura.a */,
+				9A8ED56C1F204554007DB75C /* libios_aura.dylib */,
 				9A8ED56E1F204554007DB75C /* aura_iosTests.xctest */,
 			);
 			name = Products;
@@ -198,6 +202,10 @@
 		9AA2192C1DC6B1A300C06987 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AF4C4351F83D7B400197385 /* UIKit.framework */,
+				9AF4C4331F83D79200197385 /* CoreFoundation.framework */,
+				9AF4C4311F83D76600197385 /* CoreText.framework */,
+				9AF4C42F1F83D6D400197385 /* CoreGraphics.framework */,
 				9AA2192D1DC6B1A300C06987 /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -436,10 +444,10 @@
 			remoteRef = 9A8ED5691F204554007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A8ED56C1F204554007DB75C /* libios_aura.a */ = {
+		9A8ED56C1F204554007DB75C /* libios_aura.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libios_aura.a;
+			path = libios_aura.dylib;
 			remoteRef = 9A8ED56B1F204554007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -544,8 +552,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_EXTENSION = a;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
 			};
@@ -555,8 +561,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_EXTENSION = a;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
 			};
@@ -660,6 +664,8 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_DEBUG,
 					"$(inherited)",
@@ -727,6 +733,8 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -758,8 +766,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
 			};
 			name = Debug;
 		};
@@ -767,8 +773,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
 			};
 			name = Release;
 		};

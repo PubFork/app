@@ -1359,6 +1359,9 @@
 		9AE9BEFA1EA7D4A900E8A026 /* userhtml_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userhtml_view.h; sourceTree = "<group>"; };
 		9AE9BEFC1EA7D4A900E8A026 /* userhtml_view_update_hint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userhtml_view_update_hint.h; sourceTree = "<group>"; };
 		9AEB69FF1F81D38D00F40B32 /* user_shell_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_shell_ios.cpp; sourceTree = "<group>"; };
+		9AF75DCD1F83E97D00FDE7CC /* libios_aura.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libios_aura.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AF75DD01F83E98900FDE7CC /* libios_axis.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_axis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AF75DD31F83E9AA00FDE7CC /* libios_ace.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_ace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2172,7 +2175,7 @@
 			isa = PBXGroup;
 			children = (
 				9A4E85241D1FD49A008A419B /* libbase.dylib */,
-				9A4E85261D1FD49A008A419B /* libios_base.a */,
+				9A4E85261D1FD49A008A419B /* libios_base.dylib */,
 				9A4E85281D1FD49A008A419B /* base_iosTests.xctest */,
 			);
 			name = Products;
@@ -2201,6 +2204,7 @@
 				07A6D694173C27E9009E6FB8 /* user */,
 				9AE24DF41904CF6E001AEFFB /* core_iosTests */,
 				9A4E84461D1FD1AC008A419B /* Products */,
+				9AF75DCB1F83E97C00FDE7CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2304,6 +2308,16 @@
 				9AE9BEFC1EA7D4A900E8A026 /* userhtml_view_update_hint.h */,
 			);
 			path = user;
+			sourceTree = "<group>";
+		};
+		9AF75DCB1F83E97C00FDE7CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9AF75DD31F83E9AA00FDE7CC /* libios_ace.dylib */,
+				9AF75DD01F83E98900FDE7CC /* libios_axis.dylib */,
+				9AF75DCD1F83E97D00FDE7CC /* libios_aura.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2554,10 +2568,10 @@
 			remoteRef = 9A4E85231D1FD49A008A419B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A4E85261D1FD49A008A419B /* libios_base.a */ = {
+		9A4E85261D1FD49A008A419B /* libios_base.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libios_base.a;
+			path = libios_base.dylib;
 			remoteRef = 9A4E85251D1FD49A008A419B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -3349,7 +3363,6 @@
 				EXECUTABLE_EXTENSION = a;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/iPhoneSimulator10.1-x86_64.sdk/include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../.. $(WorkspaceDir)/../../base/include $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/base";
 			};
 			name = Debug;
 		};
@@ -3359,7 +3372,6 @@
 				EXECUTABLE_EXTENSION = a;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/iPhoneSimulator10.1-x86_64.sdk/include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../.. $(WorkspaceDir)/../../base/include $(WorkspaceDir)/../../../app/base/include $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/base";
 			};
 			name = Release;
 		};

@@ -130,22 +130,22 @@ namespace user
       {
 
 
-         single_lock sl(m_pmutex, true);
-
-         int iImage;
-         for (auto iSize : m_iaSize)
-         {
-
-            iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
-
-            add_hover_image(iSize, iImage, 0);
-
-
-            iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
-
-            add_hover_image(iSize, iImage, 0);
-
-         }
+//         single_lock sl(m_pmutex, true);
+//
+//         int iImage;
+//         for (auto iSize : m_iaSize)
+//         {
+//
+//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_off_16.png");
+//
+//            add_hover_image(iSize, iImage, 0);
+//
+//
+//            iImage = GetImageList(iSize)->add_matter("filemanager\\check_on_16.png");
+//
+//            add_hover_image(iSize, iImage, 0);
+//
+//         }
 
       }
 

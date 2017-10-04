@@ -23,6 +23,8 @@ namespace ios
 //    System.factory().cloneable_small < folder_watch         >   (System.type_info < ::ca2::folder_watch     > ());
 //      System.factory().creatable < window_draw                >   (System.type_info < ::user::window_draw     > (), 1);
 //      System.factory().creatable_large < thread               >   (System.type_info < ::thread_impl                > ());
+      System.factory().creatable < window_double_buffer                 >   (System.type_info < ::window_graphics        > (), 1);
+
       System.factory().creatable_large < interaction_impl               >   (System.type_info < ::user::interaction_impl          > ());
 //      System.factory().creatable < os                         >   (System.type_info < ::core::os              > (), 1);
 //      System.factory().creatable < port_forward               >   (System.type_info < ::net::port_forward     > (), 1);

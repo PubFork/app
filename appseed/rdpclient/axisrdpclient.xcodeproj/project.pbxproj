@@ -482,7 +482,8 @@
 		9A97F31F1D80E679000B4EC2 /* libios_axiswinpr.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libios_axiswinpr.a;
+			name = libios_axiswinpr.a;
+			path = libios_axiswinpr.dylib;
 			remoteRef = 9A97F31E1D80E679000B4EC2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -552,7 +553,6 @@
 		07DD62481B5F0B8D003A1CE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
@@ -562,7 +562,6 @@
 		07DD62491B5F0B8D003A1CE1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;

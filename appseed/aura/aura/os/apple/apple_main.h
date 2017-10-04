@@ -5,8 +5,9 @@
 //  Created by Camilo Sasuke Tsumanuma on 02/10/17.
 //
 
-#ifndef apple_main_h
-#define apple_main_h
+#pragma once
+
+uint32_t __start_system_with_file(const char ** psza, int iCount);
+uint32_t __start_system_with_file(const char * pszFile);
 
 
-#endif /* apple_main_h */

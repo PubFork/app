@@ -914,14 +914,15 @@ namespace aura
 
                ::output_debug_string("\n\n::aura::session::get_new_application Found library : " + strLibrary + "\n\n");
 
-               if (!plibrary->is_opened())
-               {
-
-                  ::output_debug_string("\n\n::aura::session::get_new_application Failed to load library : " + strLibrary + "\n\n");
-
-                  return NULL;
-
-               }
+               // error anticipation maybe counter-self-healing
+//               if (!plibrary->is_opened())
+//               {
+//
+//                  ::output_debug_string("\n\n::aura::session::get_new_application Failed to load library : " + strLibrary + "\n\n");
+//
+//                  return NULL;
+//
+//               }
 
                ::output_debug_string("\n\n::aura::session::get_new_application Opened library : " + strLibrary + "\n\n");
 

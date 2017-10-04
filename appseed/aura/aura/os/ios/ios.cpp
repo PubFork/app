@@ -5,50 +5,50 @@
 
 
 
-string & get_command_line_string()
-{
-   static string g_strCommandLine;
-   return g_strCommandLine;
-}
-
-wstring & get_command_line_wstring()
-{
-   static wstring g_wstrCommandLine;
-   return g_wstrCommandLine;
-}
-
-
-void SetCommandLineA(const char * psz)
-{
-
-   get_command_line_string()     = psz;
-   get_command_line_wstring()    = psz;
-
-}
-
-void SetCommandLineW(const unichar * pwsz)
-{
-
-   get_command_line_string()     = pwsz;
-      get_command_line_wstring()     = pwsz;
-
-}
+//string & get_command_line_string()
+//{
+//   static string g_strCommandLine;
+//   return g_strCommandLine;
+//}
+//
+//wstring & get_command_line_wstring()
+//{
+//   static wstring g_wstrCommandLine;
+//   return g_wstrCommandLine;
+//}
 
 
-LPSTR GetCommandLineA()
-{
+//void SetCommandLineA(const char * psz)
+//{
+//
+//   get_command_line_string()     = psz;
+//   get_command_line_wstring()    = psz;
+//
+//}
+//
+//void SetCommandLineW(const unichar * pwsz)
+//{
+//
+//   get_command_line_string()     = pwsz;
+//      get_command_line_wstring()     = pwsz;
+//
+//}
 
-   return (LPSTR) (LPCSTR) get_command_line_string();
-
-}
-
-LPWSTR GetCommandLineW()
-{
-
-   return (LPWSTR) (LPCWSTR)    get_command_line_wstring() ;
-
-}
-
+//
+//LPSTR GetCommandLineA()
+//{
+//
+//   return (LPSTR) (LPCSTR) get_command_line_string();
+//
+//}
+//
+//LPWSTR GetCommandLineW()
+//{
+//
+//   return (LPWSTR) (LPCWSTR)    get_command_line_wstring() ;
+//
+//}
+//
 
 
 
@@ -206,27 +206,27 @@ CLASS_DECL_AURA bool __node_aura_pos_term()
 
 
 
-int _get_exe_path_len();
-void _get_exe_path(char * pszPath, int size);
-
-
-string get_exe_path()
-{
-   
-   string str;
-   
-   int len = _get_exe_path_len();
-   
-   char * psz = str.GetBufferSetLength(len);
-   
-   _get_exe_path(psz, len);
-   
-   str.ReleaseBuffer(len);
-   
-   return str;
-   
-}
-
+//int _get_exe_path_len();
+//void _get_exe_path(char * pszPath, int size);
+//
+//
+//string get_exe_path()
+//{
+//   
+//   string str;
+//   
+//   int len = _get_exe_path_len();
+//   
+//   char * psz = str.GetBufferSetLength(len);
+//   
+//   _get_exe_path(psz, len);
+//   
+//   str.ReleaseBuffer(len);
+//   
+//   return str;
+//   
+//}
+//
 
 
 //class ios_aura_init

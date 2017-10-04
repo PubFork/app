@@ -42,11 +42,29 @@
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
    
-   [childContentView on_text : text ];
-   
-   return FALSE;
+   return YES;
    
 }
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+   
+   NSString * text = [textView text];
+   
+   [childContentView on_text : text ];
+   
+}
+
+
+- (void)textViewDidChangeSelection:(UITextView *)textView
+{
+   
+   UITextRange * sel = [textView selectedTextRange];
+   
+   [childContentView on_sel : sel ];
+   
+}
+
 
 - (void)didReceiveMemoryWarning
 {

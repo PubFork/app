@@ -15,12 +15,16 @@ namespace core
 
 #include "framework.h"
 
+#if defined(CUBE) || defined(APPLE_IOS)
+extern "C"
+::aura::library * core_get_new_library(::aura::application * papp);
 
+#else
 #ifndef _WIN32
 extern "C"
 #endif
 ::aura::library * get_new_library(::aura::application * papp);
-
+#endif
 
 namespace core
 {
@@ -82,10 +86,15 @@ namespace core
 
 
 
+#if defined(CUBE) || defined(APPLE_IOS)
+extern "C"
+::aura::library * core_get_new_library(::aura::application * papp)
+#else
 #ifndef _WIN32
 extern "C"
 #endif
 ::aura::library * get_new_library(::aura::application * papp)
+#endif
 {
 
    return canew(::core::library(papp));

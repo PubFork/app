@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ca2 Desenvolvimento de Sofware Ltda. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "RoundWindowApp.h"
 
 int32_t defer_run_system();
 
@@ -24,30 +24,28 @@ UIWindow * init_part_2ex(plane_system * psystem, CGRect rect);
 
 void system_begin_main(plane_system * psystem);
 
-@implementation AppDelegate
+@implementation RoundWindowApp
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
    
 //   [application _setApplicationIsOpaque : NO];
   
-//   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
-//
-//   m_psystem = new_system([ca2_command_line UTF8String]);
-//
-//   CGRect rect =[[UIScreen mainScreen] bounds];
-//
-//   self.window = init_part_2ex(m_psystem, rect);
-//
-//   self.window.backgroundColor = [UIColor whiteColor];
-//
-//   self.window.opaque = NO;
-//
-//   [self.window makeKeyAndVisible];
+   NSString *ca2_command_line = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"ca2_command_line"];
+
+   m_psystem = new_system([ca2_command_line UTF8String]);
+
+   CGRect rect = [[UIScreen mainScreen] bounds];
+
+   self.window = init_part_2ex(m_psystem, rect);
+
+   self.window.backgroundColor = [UIColor whiteColor];
+
+   self.window.opaque = NO;
+
+   [self.window makeKeyAndVisible];
    
-   //system_begin_main(m_psystem);
-   
-   defer_run_system();
+   system_begin_main(m_psystem);
    
    return YES;
    

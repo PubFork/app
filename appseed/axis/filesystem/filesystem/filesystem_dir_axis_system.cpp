@@ -1468,476 +1468,479 @@ namespace file
 
          ::file::path system::matter(::aura::application * papp, const ::file::path & str, bool bDir, const ::file::path & root, const ::file::path & domain)
          {
-
-            ::aura::str_context * pcontext = Sess(papp).str_context();
-
-            string strLocale;
-
-            string strSchema;
-
-            ::file::path strLs;
-
-            ::file::path strPath;
-
-            ::file::path strFile;
-
-            ::file::patha straLs;
-
-            string strExistsQuestion;
-
-            if (root.has_char() && domain.has_char())
-            {
-
-               if (Session.m_bMatterFromHttpCache)
-               {
-
-                  ::file::patha patha;
-
-                  strLocale = pcontext->m_plocaleschema->m_idLocale;
-                  strSchema = pcontext->m_plocaleschema->m_idSchema;
-                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                  strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
-
-                  strsize iFind = strFile.find(DIR_SEPARATOR);
-
-                  if (iFind > 0)
-                  {
-
-                     strFile.replace(":", "_", iFind + 1);
-
-                  }
-
-                  strPath = Application.file().as_string(strFile);
-
-                  if (strPath.has_char())
-                  {
-                     // todo: keep cache timeout information;
-                     return strPath;
-                  }
-
-
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-
-                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-                  {
-                     strLocale = pcontext->localeschema().m_idaLocale[i];
-                     strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-                     for (int k = 0; k < straLs.get_count(); k++)
-                     {
-
-                        strLs = straLs[k];
-
-                        patha.add(strLs / str);
-                     }
-                  }
-
-                  straLs = locale_schema_matter(papp, "en", "en");
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-
-                  property_set set(papp);
-
-                  set["raw_http"] = true;
-
-
-                  string strCandidate = patha.implode("|");
-
-                  string strParam = System.url().url_encode(strCandidate);
-
-                  if (bDir)
-                  {
-                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
-                  }
-                  else
-                  {
-                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
-                  }
-
-                  strPath.trim();
-
-                  if (strPath.has_char())
-                     goto ret;
-
-               }
-
-               else
-
-               {
-
-                  strLocale = pcontext->m_plocaleschema->m_idLocale;
-                  strSchema = pcontext->m_plocaleschema->m_idSchema;
-                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-
-                  }
-
-
-                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-                  {
-
-                     strLocale = pcontext->localeschema().m_idaLocale[i];
-                     strSchema = pcontext->localeschema().m_idaSchema[i];
-                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
-
-                     for (index l = 0; l < straLs.get_count(); l++)
-                     {
-                        strLs = straLs[l];
-
-                        strPath = strLs / str;
-                        if (bDir)
-                        {
-                           if (System.dir().is(strPath, papp))
-                              goto ret;
-                        }
-                        else
-                        {
-                           if (System.file().exists(strPath, papp))
-                              goto ret;
-                        }
-                     }
-
-                  }
-
-
-                  straLs = locale_schema_matter(papp, "en", "en", root, domain);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-                  }
-
-               }
-
-
-
-
-            }
-
-
-            if (Session.m_bMatterFromHttpCache)
-            {
-
-
-               ::file::patha patha;
-
-               strLocale = pcontext->m_plocaleschema->m_idLocale;
-               strSchema = pcontext->m_plocaleschema->m_idSchema;
-               straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-               strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
-
-               strsize iFind = strFile.find(DIR_SEPARATOR);
-
-               if (iFind > 0)
-               {
-
-                  strFile.replace(":", "_", iFind + 1);
-
-               }
-
-               strPath = Application.file().as_string(strFile);
-
-               if (strPath.has_char())
-               {
-                  // todo: keep cache timeout information;
-                  return strPath;
-               }
-
-
-               for (int k = 0; k < straLs.get_count(); k++)
-               {
-
-                  strLs = straLs[k];
-
-                  patha.add(strLs / str);
-
-               }
-
-               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-               {
-                  strLocale = pcontext->localeschema().m_idaLocale[i];
-                  strSchema = pcontext->localeschema().m_idaSchema[i];
-                  straLs = locale_schema_matter(papp, strLocale, strSchema);
-                  for (int k = 0; k < straLs.get_count(); k++)
-                  {
-
-                     strLs = straLs[k];
-
-                     patha.add(strLs / str);
-                  }
-               }
-
-               straLs = locale_schema_matter(papp, "en", "en");
-               for (int k = 0; k < straLs.get_count(); k++)
-               {
-
-                  strLs = straLs[k];
-
-                  patha.add(strLs / str);
-               }
-
-               string strUrl;
-               
-               string strCandidate = patha.implode("|");
-
-               string strParam = System.url().url_encode(strCandidate);
-
-               if (bDir)
-               {
-                  strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
-               }
-               else
-               {
-                  strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
-               }
-
-               property_set set(papp);
-
-               set["raw_http"] = true;
-               
-               output_debug_string("\n");
-               output_debug_string(strUrl);
-               output_debug_string("\n");
-
-               auto & http = App(papp).http();
-
-               strPath = http.get(strUrl, set);
-
-               strPath.trim();
-
-               if (strPath.has_char())
-                  goto ret;
-
-            }
-
-            else
-
-            {
-
-               strLocale = pcontext->m_plocaleschema->m_idLocale;
-               strSchema = pcontext->m_plocaleschema->m_idSchema;
-               straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-               for (index l = 0; l < straLs.get_count(); l++)
-               {
-                  strLs = straLs[l];
-
-                  strPath = strLs / str;
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-
-               }
-
-
-               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
-               {
-
-                  strLocale = pcontext->localeschema().m_idaLocale[i];
-                  strSchema = pcontext->localeschema().m_idaSchema[i];
-                  straLs = locale_schema_matter(papp, strLocale, strSchema);
-
-                  for (index l = 0; l < straLs.get_count(); l++)
-                  {
-                     strLs = straLs[l];
-
-                     strPath = strLs / str;
-                     if (bDir)
-                     {
-                        if (System.dir().is(strPath, papp))
-                           goto ret;
-                     }
-                     else
-                     {
-                        if (System.file().exists(strPath, papp))
-                           goto ret;
-                     }
-
-                  }
-
-               }
-
-
-               straLs = locale_schema_matter(papp, "en", "en");
-
-               for (index l = 0; l < straLs.get_count(); l++)
-               {
-                  strLs = straLs[l];
-
-                  strPath = strLs / str;
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-
-               }
-
-
-               if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
-                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp
-                  && papp->m_paxissession->m_bAxisInitialize1)
-               {
-                  strPath = matter(papp->m_paxissession, str, bDir);
-                  if (bDir)
-                  {
-                     if (System.dir().is(strPath, papp))
-                        goto ret;
-                  }
-                  else
-                  {
-                     if (System.file().exists(strPath, papp))
-                        goto ret;
-                  }
-               }
-
-            }
-
-
-
-            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
-               dynamic_cast < ::aura::application * >(papp->m_paxissystem) != dynamic_cast < ::aura::application * >(papp->m_paxissession)
-               && papp->m_paxissystem->m_bAxisInitialize1)
-            {
-               strPath = matter(papp->m_paxissystem, str, bDir);
-               if (bDir)
-               {
-                  if (System.dir().is(strPath, get_app()))
-                     goto ret;
-               }
-               else
-               {
-                  if (System.file().exists(strPath, get_app()))
-                     goto ret;
-               }
-
-            }
-
-            strPath = strLs / str;
-
-         ret:
-
-            if (Session.m_bMatterFromHttpCache)
-
-            {
-               Application.file().put_contents(strFile, strPath);
-
-               strFile = strPath;
-
-               strFile.replace(":", "_");
-               strFile.replace("//", "/");
-               strFile.replace("?", "%19");
-               strFile = System.dir().appdata() / "cache" / strFile + ".exists_question";
-
-               Application.file().put_contents(strFile, "yes");
-
-
-            }
-
-            return strPath;
-
-
-            /*static const string strEn("en");
-            //static const string strStd("_std");
-            //static const string strEmpty("");
-            string strPath;
-            string strLs = locale_schema_matter(papp, strEmpty, strEmpty);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strLs = locale_schema_matter(papp, strEn, strEmpty);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strStd, strEmpty), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, App(papp).get_locale()), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, strEn), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strEmpty, strStd), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strLs = locale_schema_matter(papp, strEn, strEn);
-            strPath = strLs / str;
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, strStd, strStd), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            strPath = path(locale_schema_matter(papp, "se", "se"), str);
-            if(System.file().exists(strPath, papp))
-               return strPath;
-            if(papp->m_psession != NULL && papp->m_psession != papp &&
-               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
-            {
-               strPath = matter(papp->m_psession, str);
-               if(System.file().exists(strPath, papp))
-                  return strPath;
-            }
-            if(papp->m_psystem != NULL && papp->m_psystem != papp &&
-               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
-            {
-               strPath = matter(papp->m_psystem, str);
-               if(System.file().exists(strPath, papp))
-                  return strPath;
-            }
-            return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
+            
+            
+            return ::file::dir::system::matter(papp, str, bDir, root, domain);
+
+//            ::aura::str_context * pcontext = Sess(papp).str_context();
+//
+//            string strLocale;
+//
+//            string strSchema;
+//
+//            ::file::path strLs;
+//
+//            ::file::path strPath;
+//
+//            ::file::path strFile;
+//
+//            ::file::patha straLs;
+//
+//            string strExistsQuestion;
+//
+//            if (root.has_char() && domain.has_char())
+//            {
+//
+//               if (Session.m_bMatterFromHttpCache)
+//               {
+//
+//                  ::file::patha patha;
+//
+//                  strLocale = pcontext->m_plocaleschema->m_idLocale;
+//                  strSchema = pcontext->m_plocaleschema->m_idSchema;
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                  strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+//
+//                  strsize iFind = strFile.find(DIR_SEPARATOR);
+//
+//                  if (iFind > 0)
+//                  {
+//
+//                     strFile.replace(":", "_", iFind + 1);
+//
+//                  }
+//
+//                  strPath = Application.file().as_string(strFile);
+//
+//                  if (strPath.has_char())
+//                  {
+//                     // todo: keep cache timeout information;
+//                     return strPath;
+//                  }
+//
+//
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//
+//                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//                  {
+//                     strLocale = pcontext->localeschema().m_idaLocale[i];
+//                     strSchema = pcontext->localeschema().m_idaSchema[i];
+//                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//                     for (int k = 0; k < straLs.get_count(); k++)
+//                     {
+//
+//                        strLs = straLs[k];
+//
+//                        patha.add(strLs / str);
+//                     }
+//                  }
+//
+//                  straLs = locale_schema_matter(papp, "en", "en");
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//
+//                  property_set set(papp);
+//
+//                  set["raw_http"] = true;
+//
+//
+//                  string strCandidate = patha.implode("|");
+//
+//                  string strParam = System.url().url_encode(strCandidate);
+//
+//                  if (bDir)
+//                  {
+//                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_dir?candidate=" + strCandidate, set);
+//                  }
+//                  else
+//                  {
+//                     strPath = Sess(papp).http().get("http://" + get_api_cc() + "/api/matter/query_file?candidate=" + strCandidate, set);
+//                  }
+//
+//                  strPath.trim();
+//
+//                  if (strPath.has_char())
+//                     goto ret;
+//
+//               }
+//
+//               else
+//
+//               {
+//
+//                  strLocale = pcontext->m_plocaleschema->m_idLocale;
+//                  strSchema = pcontext->m_plocaleschema->m_idSchema;
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//
+//                  }
+//
+//
+//                  for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//                  {
+//
+//                     strLocale = pcontext->localeschema().m_idaLocale[i];
+//                     strSchema = pcontext->localeschema().m_idaSchema[i];
+//                     straLs = locale_schema_matter(papp, strLocale, strSchema, root, domain);
+//
+//                     for (index l = 0; l < straLs.get_count(); l++)
+//                     {
+//                        strLs = straLs[l];
+//
+//                        strPath = strLs / str;
+//                        if (bDir)
+//                        {
+//                           if (System.dir().is(strPath, papp))
+//                              goto ret;
+//                        }
+//                        else
+//                        {
+//                           if (System.file().exists(strPath, papp))
+//                              goto ret;
+//                        }
+//                     }
+//
+//                  }
+//
+//
+//                  straLs = locale_schema_matter(papp, "en", "en", root, domain);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//                  }
+//
+//               }
+//
+//
+//
+//
+//            }
+//
+//
+//            if (Session.m_bMatterFromHttpCache)
+//            {
+//
+//
+//               ::file::patha patha;
+//
+//               strLocale = pcontext->m_plocaleschema->m_idLocale;
+//               strSchema = pcontext->m_plocaleschema->m_idSchema;
+//               straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//               strFile = System.dir().commonappdata() / "cache" / papp->m_paxissession->get_locale_schema_dir(strLocale, strSchema) / str + ".map_question";
+//
+//               strsize iFind = strFile.find(DIR_SEPARATOR);
+//
+//               if (iFind > 0)
+//               {
+//
+//                  strFile.replace(":", "_", iFind + 1);
+//
+//               }
+//
+//               strPath = Application.file().as_string(strFile);
+//
+//               if (strPath.has_char())
+//               {
+//                  // todo: keep cache timeout information;
+//                  return strPath;
+//               }
+//
+//
+//               for (int k = 0; k < straLs.get_count(); k++)
+//               {
+//
+//                  strLs = straLs[k];
+//
+//                  patha.add(strLs / str);
+//
+//               }
+//
+//               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//               {
+//                  strLocale = pcontext->localeschema().m_idaLocale[i];
+//                  strSchema = pcontext->localeschema().m_idaSchema[i];
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema);
+//                  for (int k = 0; k < straLs.get_count(); k++)
+//                  {
+//
+//                     strLs = straLs[k];
+//
+//                     patha.add(strLs / str);
+//                  }
+//               }
+//
+//               straLs = locale_schema_matter(papp, "en", "en");
+//               for (int k = 0; k < straLs.get_count(); k++)
+//               {
+//
+//                  strLs = straLs[k];
+//
+//                  patha.add(strLs / str);
+//               }
+//
+//               string strUrl;
+//
+//               string strCandidate = patha.implode("|");
+//
+//               string strParam = System.url().url_encode(strCandidate);
+//
+//               if (bDir)
+//               {
+//                  strUrl = "https://ca2.cc/api/matter/query_dir?candidate=" + strParam;
+//               }
+//               else
+//               {
+//                  strUrl = "https://ca2.cc/api/matter/query_file?candidate=" + strParam;
+//               }
+//
+//               property_set set(papp);
+//
+//               set["raw_http"] = true;
+//               
+//               output_debug_string("\n");
+//               output_debug_string(strUrl);
+//               output_debug_string("\n");
+//
+//               auto & http = App(papp).http();
+//
+//               strPath = http.get(strUrl, set);
+//
+//               strPath.trim();
+//
+//               if (strPath.has_char())
+//                  goto ret;
+//
+//            }
+//
+//            else
+//
+//            {
+//
+//               strLocale = pcontext->m_plocaleschema->m_idLocale;
+//               strSchema = pcontext->m_plocaleschema->m_idSchema;
+//               straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//               for (index l = 0; l < straLs.get_count(); l++)
+//               {
+//                  strLs = straLs[l];
+//
+//                  strPath = strLs / str;
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//
+//               }
+//
+//
+//               for (int32_t i = 0; i < pcontext->localeschema().m_idaLocale.get_count(); i++)
+//               {
+//
+//                  strLocale = pcontext->localeschema().m_idaLocale[i];
+//                  strSchema = pcontext->localeschema().m_idaSchema[i];
+//                  straLs = locale_schema_matter(papp, strLocale, strSchema);
+//
+//                  for (index l = 0; l < straLs.get_count(); l++)
+//                  {
+//                     strLs = straLs[l];
+//
+//                     strPath = strLs / str;
+//                     if (bDir)
+//                     {
+//                        if (System.dir().is(strPath, papp))
+//                           goto ret;
+//                     }
+//                     else
+//                     {
+//                        if (System.file().exists(strPath, papp))
+//                           goto ret;
+//                     }
+//
+//                  }
+//
+//               }
+//
+//
+//               straLs = locale_schema_matter(papp, "en", "en");
+//
+//               for (index l = 0; l < straLs.get_count(); l++)
+//               {
+//                  strLs = straLs[l];
+//
+//                  strPath = strLs / str;
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//
+//               }
+//
+//
+//               if (papp->m_paxissession != NULL && papp->m_paxissession != papp &&
+//                  (sp(::aura::application)) papp->m_paxissystem != (sp(::aura::application)) papp
+//                  && papp->m_paxissession->m_bAxisInitialize1)
+//               {
+//                  strPath = matter(papp->m_paxissession, str, bDir);
+//                  if (bDir)
+//                  {
+//                     if (System.dir().is(strPath, papp))
+//                        goto ret;
+//                  }
+//                  else
+//                  {
+//                     if (System.file().exists(strPath, papp))
+//                        goto ret;
+//                  }
+//               }
+//
+//            }
+//
+//
+//
+//            if (papp->m_paxissystem != NULL && papp->m_paxissystem != papp &&
+//               dynamic_cast < ::aura::application * >(papp->m_paxissystem) != dynamic_cast < ::aura::application * >(papp->m_paxissession)
+//               && papp->m_paxissystem->m_bAxisInitialize1)
+//            {
+//               strPath = matter(papp->m_paxissystem, str, bDir);
+//               if (bDir)
+//               {
+//                  if (System.dir().is(strPath, get_app()))
+//                     goto ret;
+//               }
+//               else
+//               {
+//                  if (System.file().exists(strPath, get_app()))
+//                     goto ret;
+//               }
+//
+//            }
+//
+//            strPath = strLs / str;
+//
+//         ret:
+//
+//            if (Session.m_bMatterFromHttpCache)
+//
+//            {
+//               Application.file().put_contents(strFile, strPath);
+//
+//               strFile = strPath;
+//
+//               strFile.replace(":", "_");
+//               strFile.replace("//", "/");
+//               strFile.replace("?", "%19");
+//               strFile = System.dir().appdata() / "cache" / strFile + ".exists_question";
+//
+//               Application.file().put_contents(strFile, "yes");
+//
+//
+//            }
+//
+//            return strPath;
+//
+//
+//            /*static const string strEn("en");
+//            //static const string strStd("_std");
+//            //static const string strEmpty("");
+//            string strPath;
+//            string strLs = locale_schema_matter(papp, strEmpty, strEmpty);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strLs = locale_schema_matter(papp, strEn, strEmpty);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strStd, strEmpty), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, App(papp).get_locale()), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, strEn), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strEmpty, strStd), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strLs = locale_schema_matter(papp, strEn, strEn);
+//            strPath = strLs / str;
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, strStd, strStd), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            strPath = path(locale_schema_matter(papp, "se", "se"), str);
+//            if(System.file().exists(strPath, papp))
+//               return strPath;
+//            if(papp->m_psession != NULL && papp->m_psession != papp &&
+//               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp)
+//            {
+//               strPath = matter(papp->m_psession, str);
+//               if(System.file().exists(strPath, papp))
+//                  return strPath;
+//            }
+//            if(papp->m_psystem != NULL && papp->m_psystem != papp &&
+//               (sp(::aura::application)) papp->m_psystem != (sp(::aura::application)) papp->m_psession)
+//            {
+//               strPath = matter(papp->m_psystem, str);
+//               if(System.file().exists(strPath, papp))
+//                  return strPath;
+//            }
+//            return path(locale_schema_matter(papp, strEmpty, strEmpty), str);*/
          }
 
          //string system::matter(::aura::application * papp, const char * psz, bool bDir, const char * pszRoot, const char * pszApp)

@@ -283,20 +283,44 @@ void __ios_do_events();
 
 -(void)on_text : (NSString *) text
 {
-   
 
    round_window * p = m_roundwindow->m_pwindow;
    
    const char * pszText = [text UTF8String];
-//   if(pszText == NULL || *pszText == '\0') // Thank you MRS!!
-//   {
-//      return;
    
    if(p->round_window_on_text(pszText))
-      return;
-   
+         return;
    
 }
+
+-(void)on_sel : (UITextRange *) sel
+{
+
+   round_window * p = m_roundwindow->m_pwindow;
+   
+   if(sel == NULL)
+   {
+
+      p->round_window_on_sel_text(-1, -1);
+      
+      return;
+
+   }
+   
+   UITextPosition * beg = [self beginningOfDocument];
+   
+   UITextPosition * selbeg = [[self selectedTextRange] start];
+   
+   UITextPosition * selend = [[self selectedTextRange] start];
+   
+   int iBeg = [self offsetFromPosition: beg toPosition: selbeg];
+   
+   int iEnd = [self offsetFromPosition: beg toPosition: selend];
+
+   p->round_window_on_sel_text(iBeg, iEnd);
+   
+}
+
 
 - (BOOL)shouldChangeTextInRange:(UITextRange *)range
                 replacementText:(NSString *)text
@@ -677,7 +701,7 @@ void __ios_do_events();
     
     round_window * p = m_roundwindow->m_pwindow;
  
-//    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
+    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
 
 //    if ([touches count] == 1 && allTouchesEnded) {
     if ([touches count] == 1) {
@@ -701,6 +725,13 @@ void __ios_do_events();
             int y = point.y;
            
             p->round_window_mouse_down(x, y);
+           
+           if(allTouchesEnded)
+           {
+              
+              p->round_window_mouse_up(x, y);
+              
+           }
             
         } else {
             
@@ -795,11 +826,27 @@ void __ios_do_events();
 	}*/
 }
 
+//- (void)drawLayer:(CALayer *)layer
+//        inContext:(CGContextRef)ctx;
+//{
+//   if(m_roundwindow == nil)
+//      return;
 //
-// drawRect:
+//   round_window * p = m_roundwindow->m_pwindow;
 //
-// Draws the frame of the window.
+//   CGContextRef context = ctx;
 //
+//   CGContextSaveGState(context);
+//
+//   CGContextTranslateCTM(context, p->round_window_get_x(), p->round_window_get_y());
+//
+//   p->round_window_draw(context);
+//
+//   CGContextRestoreGState(context);
+//
+//
+//}
+
 - (void)drawRect:(CGRect)rect
 {
    
@@ -807,94 +854,22 @@ void __ios_do_events();
    
    UIRectFill(rect);
    
-   
-/*
-	NSBezierPath * rectPath = [NSBezierPath bezierPathWithRect : [self bounds]];
-	
-	NSGradient * gradient = [[NSGradient alloc] initWithColorsAndLocations : [NSColor whiteColor], (CGFloat) 0.0, [NSColor lightGrayColor], (CGFloat)1.0, nil];
-
-   [gradient drawInBezierPath : rectPath angle:90];
-
-	[[NSColor whiteColor] set];
-	[rectPath stroke];
-	
-   CGRect resizeRect = [self resizeRect];
-	NSBezierPath *resizePath = [NSBezierPath bezierPathWithRect:resizeRect];
-
-	[[NSColor lightGrayColor] set];
-	[resizePath fill];
-
-	[[NSColor darkGrayColor] set];
-	[resizePath stroke];
-	
-
-   [[NSColor blackColor] set];
-	NSString *windowTitle = [[self window] title];
-	CGRect titleRect = [self bounds];
-	titleRect.origin.y = titleRect.size.height - (WINDOW_FRAME_PADDING - 7);
-	titleRect.size.height = (WINDOW_FRAME_PADDING - 7);
-	NSMutableParagraphStyle *paragraphStyle =
-		[[NSMutableParagraphStyle alloc] init];
-	[paragraphStyle setAlignment:NSCenterTextAlignment];
-	[windowTitle
-		drawWithRect:titleRect
-		options:0
-		attributes:[NSDictionary
-			dictionaryWithObjectsAndKeys:
-				paragraphStyle, NSParagraphStyleAttributeName,
-				[NSFont systemFontOfSize:14], NSFontAttributeName,
-			nil]];
- */
-   
    if(m_roundwindow == nil)
       return;
   
    round_window * p = m_roundwindow->m_pwindow;
    
-   //   [m_roundwindow disableScreenUpdatesUntilFlush];
-   
-//   [m_roundwindow disableFlushWindow];
-   
-   
-   
    CGContextRef context = UIGraphicsGetCurrentContext();
    
    CGContextSaveGState(context);
    
-   //int iTopAssembledBarHeight = m_roundwindow.navigationController.navigationBar.frame.size.height;
+   int x = p->round_window_get_x();
    
-   //iTopAssembledBarHeight = 16;
+   int y = p->round_window_get_y();
    
-   CGContextTranslateCTM(context, p->round_window_get_x(), p->round_window_get_y());
-   
-//   {
-//      
-//       CGRect rectangle = CGRectMake(0, 100, 100, 100);
-//   ;;CGContextSetRGBFillColor(context, 1.0, 0.0, 0.0, 0.5);
-//      CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 0.5);
-//      CGContextFillRect(context, rectangle);
-//      CGContextSetLineWidth(context, 5.0f);
-//      CGContextStrokeRect(context, rectangle);
-//      
-//   }
+   CGContextTranslateCTM(context, x, y);
    
    p->round_window_draw(context);
-   
-//   {
-//      
-//      CGRect rectangle = CGRectMake(100, 200, 100, 100);
-//      CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-//      CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 0.5);
-//      CGContextFillRect(context, rectangle);
-//      
-//   }
-
-   
-   
-   
-  // [m_roundwindow enableFlushWindow];
-   
-//   [m_roundwindow flushWindow];
    
    CGContextRestoreGState(context);
    

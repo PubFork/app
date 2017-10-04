@@ -3870,8 +3870,11 @@ finished_update:
                   }
                   else if (pkey->m_ekey == ::user::key_refer_to_text_member)
                   {
-
                      str = pkey->m_strText;
+//                     if(bShift)
+//                     {
+//                        str.make_upper();
+//                     }
                   }
                   else
                   {
@@ -4614,6 +4617,40 @@ finished_update:
          return false;
 
       }
+      
+#if defined(APPLE_IOS)
+      
+      sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
+      
+      string strText;
+      
+      _001GetText(strText);
+      
+      pimpl->round_window_set_text(strText);
+      
+      strsize iBeg = -1;
+      
+      strsize iEnd = -1;
+      
+      _001GetSel(iBeg, iEnd);
+      
+      if(iBeg < 0 || iBeg > strText.get_length())
+      {
+       
+         iBeg = strText.get_length();
+         
+      }
+      
+      if(iEnd < 0 || iEnd > strText.get_length())
+      {
+       
+         iEnd = strText.get_length();
+         
+      }
+      
+      pimpl->round_window_set_sel(iBeg, iEnd);
+      
+#endif
 
       return true;
 

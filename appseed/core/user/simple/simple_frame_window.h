@@ -64,7 +64,7 @@ public:
 
    };
 
-
+   bool                                m_bDefaultCreateToolbar;
    helper_task *                       m_phelpertask;
    bool                                m_bFullScreenAlt;
    bool                                m_bFullScreenCtrl;
@@ -72,7 +72,7 @@ public:
    bool                                m_bCustomFrameBefore;
    rect                                m_FullScreenWindowRect;
    visual::fastblur                    m_fastblur;
-   ::user::e_translucency               m_etranslucency;
+   ::user::e_translucency              m_etranslucency;
 
 
    map < ::id, const ::id &, ::user::toolbar * > m_toolbarmap;

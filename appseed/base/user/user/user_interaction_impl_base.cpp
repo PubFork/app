@@ -289,10 +289,35 @@ namespace user
 
    void interaction_impl_base::on_do_show_flags()
    {
+      
+      if(m_bShowFlags)
+      {
+         
+         output_debug_string("\ninteraction_impl_base::on_do_show_flags TRUE " + string(typeid(*m_pui).name()) + string(" 0x") + ::hex::upper_from(m_iShowFlags));
+         
+      }
+      else
+      {
+
+         output_debug_string("\ninteraction_impl_base::on_do_show_flags FALSE" + string(typeid(*m_pui).name()));
+         
+      }
 
       ::rect64 rectOld = m_rectParentClient;
 
       ::rect64 rectNew = m_rectParentClientRequest;
+
+      output_debug_string("\ninteraction_impl_base::rectOld " + string(typeid(*m_pui).name())
+                          + string(" ") + ::str::from(rectOld.left)
+                          + string(" ") + ::str::from(rectOld.top)
+                          + string(" ") + ::str::from(rectOld.right)
+                          + string(" ") + ::str::from(rectOld.bottom));
+
+      output_debug_string("\ninteraction_impl_base::rectNew " + string(typeid(*m_pui).name())
+                          + string(" ") + ::str::from(rectNew.left)
+                          + string(" ") + ::str::from(rectNew.top)
+                          + string(" ") + ::str::from(rectNew.right)
+                          + string(" ") + ::str::from(rectNew.bottom));
 
       m_rectParentClient = m_rectParentClientRequest;
 
@@ -322,11 +347,15 @@ namespace user
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
       {
 
+         output_debug_string("\ninteraction_impl_base::on_do_show_flags SHOW_WINDOW " + string(typeid(*m_pui).name()));
+         
          m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
+
+         output_debug_string("\ninteraction_impl_base::on_do_show_flags HIDE_WINDOW " + string(typeid(*m_pui).name()));
 
          m_pui->message_call(WM_SHOWWINDOW, 0);
 
@@ -901,8 +930,26 @@ namespace user
       }
 
       LONG lNoZ = ~(SWP_NOZORDER);
+      
+      if(m_bShowFlags)
+      {
 
-      m_iShowFlags = nFlags & lNoZ;
+         m_iShowFlags |= nFlags & lNoZ;
+         
+      }
+      else
+      {
+         
+         m_iShowFlags = nFlags & lNoZ;
+         
+      }
+      
+      if(strstr(typeid(*m_pui).name(), "main_frame") != NULL)
+      {
+      
+         output_debug_string("\nmainframe m_iShowFlags = 0x" + ::hex::upper_from(m_iShowFlags));
+         
+      }
 
       bool bShowFlags = m_bShowFlags;
 

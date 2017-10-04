@@ -134,7 +134,6 @@
 		07EDC2B11B4ECB3C00AF8928 /* ios_cross_win_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2861B4ECB3C00AF8928 /* ios_cross_win_file.cpp */; };
 		07EDC2B21B4ECB3C00AF8928 /* ios_crypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2881B4ECB3C00AF8928 /* ios_crypt.cpp */; };
 		07EDC2B31B4ECB3C00AF8928 /* ios_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC2891B4ECB3C00AF8928 /* ios_debug.cpp */; };
-		07EDC2B41B4ECB3C00AF8928 /* ios_error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC28A1B4ECB3C00AF8928 /* ios_error.cpp */; };
 		07EDC2B51B4ECB3C00AF8928 /* ios_file_watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC28B1B4ECB3C00AF8928 /* ios_file_watcher.cpp */; };
 		07EDC2B61B4ECB3C00AF8928 /* ios_fontopus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC28D1B4ECB3C00AF8928 /* ios_fontopus.cpp */; };
 		07EDC2B71B4ECB3C00AF8928 /* ios_genResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC28F1B4ECB3C00AF8928 /* ios_genResource.cpp */; };
@@ -423,11 +422,8 @@
 		9AE1AB481F7856BD0005113C /* ios_axis_file_system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A71F6212AD00623508 /* ios_axis_file_system.cpp */; };
 		9AE1AB491F7856BD0005113C /* ios_copydesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577A91F6212AD00623508 /* ios_copydesk.cpp */; };
 		9AE1AB4A1F7856BD0005113C /* ios_crypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AB1F6212AD00623508 /* ios_crypto.cpp */; };
-		9AE1AB4B1F7856BD0005113C /* ios_dumpinit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AD1F6212AD00623508 /* ios_dumpinit.cpp */; };
-		9AE1AB4C1F7856BD0005113C /* ios_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AE1F6212AD00623508 /* ios_exception.cpp */; };
 		9AE1AB4D1F7856BD0005113C /* ios_factory_exchange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577AF1F6212AD00623508 /* ios_factory_exchange.cpp */; };
 		9AE1AB4E1F7856BD0005113C /* ios_file_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B11F6212AD00623508 /* ios_file_set.cpp */; };
-		9AE1AB4F1F7856BD0005113C /* ios_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B51F6212AD00623508 /* ios_ios.cpp */; };
 		9AE1AB511F7856BD0005113C /* ios_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577B91F6212AD00623508 /* ios_main.cpp */; };
 		9AE1AB521F7856BD0005113C /* ios_port_forward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577BB1F6212AD00623508 /* ios_port_forward.cpp */; };
 		9AE1AB541F7856BD0005113C /* ios_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9577C01F6212AD00623508 /* ios_trace.cpp */; };
@@ -573,6 +569,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9AE24D331904CEFE001AEFFB;
 			remoteInfo = base_ios;
+		};
+		9AF4BED41F834D9D00197385 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 07108B6F1B4C97D500A28F80;
+			remoteInfo = ios_axisfreeimage;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -725,7 +728,6 @@
 		07EDC2871B4ECB3C00AF8928 /* ios_cross_win_gdi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_cross_win_gdi.h; sourceTree = "<group>"; };
 		07EDC2881B4ECB3C00AF8928 /* ios_crypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_crypt.cpp; sourceTree = "<group>"; };
 		07EDC2891B4ECB3C00AF8928 /* ios_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_debug.cpp; sourceTree = "<group>"; };
-		07EDC28A1B4ECB3C00AF8928 /* ios_error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_error.cpp; sourceTree = "<group>"; };
 		07EDC28B1B4ECB3C00AF8928 /* ios_file_watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_file_watcher.cpp; sourceTree = "<group>"; };
 		07EDC28C1B4ECB3C00AF8928 /* ios_file_watcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_file_watcher.h; sourceTree = "<group>"; };
 		07EDC28D1B4ECB3C00AF8928 /* ios_fontopus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_fontopus.cpp; sourceTree = "<group>"; };
@@ -799,15 +801,12 @@
 		9A9577AA1F6212AD00623508 /* ios_copydesk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_copydesk.h; sourceTree = "<group>"; };
 		9A9577AB1F6212AD00623508 /* ios_crypto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_crypto.cpp; sourceTree = "<group>"; };
 		9A9577AC1F6212AD00623508 /* ios_crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_crypto.h; sourceTree = "<group>"; };
-		9A9577AD1F6212AD00623508 /* ios_dumpinit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_dumpinit.cpp; sourceTree = "<group>"; };
-		9A9577AE1F6212AD00623508 /* ios_exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_exception.cpp; sourceTree = "<group>"; };
 		9A9577AF1F6212AD00623508 /* ios_factory_exchange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_factory_exchange.cpp; sourceTree = "<group>"; };
 		9A9577B01F6212AD00623508 /* ios_factory_exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_factory_exchange.h; sourceTree = "<group>"; };
 		9A9577B11F6212AD00623508 /* ios_file_set.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_file_set.cpp; sourceTree = "<group>"; };
 		9A9577B21F6212AD00623508 /* ios_file_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_file_set.h; sourceTree = "<group>"; };
 		9A9577B31F6212AD00623508 /* ios_implementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_implementation.h; sourceTree = "<group>"; };
 		9A9577B41F6212AD00623508 /* ios_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_internal.h; sourceTree = "<group>"; };
-		9A9577B51F6212AD00623508 /* ios_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_ios.cpp; sourceTree = "<group>"; };
 		9A9577B81F6212AD00623508 /* ios_m.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_m.h; sourceTree = "<group>"; };
 		9A9577B91F6212AD00623508 /* ios_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_main.cpp; sourceTree = "<group>"; };
 		9A9577BA1F6212AD00623508 /* ios_mm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_mm.h; sourceTree = "<group>"; };
@@ -961,6 +960,8 @@
 		9AEB686E1F81BBDA00F40B32 /* apple_ip_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple_ip_enum.h; sourceTree = "<group>"; };
 		9AEB68721F81BC1500F40B32 /* apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple.h; sourceTree = "<group>"; };
 		9AEE31251EB7DDEB00BF9A29 /* fs_native_fs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_native_fs.h; sourceTree = "<group>"; };
+		9AF4BEE01F834F3400197385 /* libios_ace.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libios_ace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AF4BEE11F834F3C00197385 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		CE931714155F1599005F90F6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -1393,7 +1394,6 @@
 				07EDC2861B4ECB3C00AF8928 /* ios_cross_win_file.cpp */,
 				07EDC2881B4ECB3C00AF8928 /* ios_crypt.cpp */,
 				07EDC2891B4ECB3C00AF8928 /* ios_debug.cpp */,
-				07EDC28A1B4ECB3C00AF8928 /* ios_error.cpp */,
 				07EDC28B1B4ECB3C00AF8928 /* ios_file_watcher.cpp */,
 				07EDC28D1B4ECB3C00AF8928 /* ios_fontopus.cpp */,
 				07EDC28F1B4ECB3C00AF8928 /* ios_genResource.cpp */,
@@ -1484,7 +1484,7 @@
 			isa = PBXGroup;
 			children = (
 				9A19A0D519C68DDA0018DF7D /* libaura.dylib */,
-				076A1FE81B6E65F800BF6C7D /* libios_aura.a */,
+				076A1FE81B6E65F800BF6C7D /* libios_aura.dylib */,
 				9A19A0D919C68DDA0018DF7D /* aura_iosTests.xctest */,
 			);
 			name = Products;
@@ -1503,7 +1503,7 @@
 			isa = PBXGroup;
 			children = (
 				9A8ED48F1F2009C9007DB75C /* libaxisfreeimage.dylib */,
-				9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.a */,
+				9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1575,11 +1575,8 @@
 				9A9577A71F6212AD00623508 /* ios_axis_file_system.cpp */,
 				9A9577A91F6212AD00623508 /* ios_copydesk.cpp */,
 				9A9577AB1F6212AD00623508 /* ios_crypto.cpp */,
-				9A9577AD1F6212AD00623508 /* ios_dumpinit.cpp */,
-				9A9577AE1F6212AD00623508 /* ios_exception.cpp */,
 				9A9577AF1F6212AD00623508 /* ios_factory_exchange.cpp */,
 				9A9577B11F6212AD00623508 /* ios_file_set.cpp */,
-				9A9577B51F6212AD00623508 /* ios_ios.cpp */,
 				9A9577B91F6212AD00623508 /* ios_main.cpp */,
 				9A9577BB1F6212AD00623508 /* ios_port_forward.cpp */,
 				9A9577C01F6212AD00623508 /* ios_trace.cpp */,
@@ -1615,7 +1612,7 @@
 			isa = PBXGroup;
 			children = (
 				9A9F0A311D7F341700ED6D8A /* libaxisidn.dylib */,
-				9A9F0A331D7F341700ED6D8A /* libios_axisidn.a */,
+				9A9F0A331D7F341700ED6D8A /* libios_axisidn.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1623,6 +1620,8 @@
 		9AE24D351904CEFE001AEFFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AF4BEE11F834F3C00197385 /* libsqlite3.tbd */,
+				9AF4BEE01F834F3400197385 /* libios_ace.dylib */,
 				9A8087611DE1101F00F70A07 /* libcrypto.a */,
 				9A8087621DE1101F00F70A07 /* libssl.a */,
 				9A18AAF11DDFAB4D00C57231 /* libcrypto.a */,
@@ -1892,6 +1891,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AF4BED51F834D9D00197385 /* PBXTargetDependency */,
 				9A80875A1DE10FDF00F70A07 /* PBXTargetDependency */,
 				9A2116E21D832A41000C4336 /* PBXTargetDependency */,
 				07108A9F1B4C958000A28F80 /* PBXTargetDependency */,
@@ -1971,10 +1971,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		076A1FE81B6E65F800BF6C7D /* libios_aura.a */ = {
+		076A1FE81B6E65F800BF6C7D /* libios_aura.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libios_aura.a;
+			path = libios_aura.dylib;
 			remoteRef = 076A1FE71B6E65F800BF6C7D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1999,10 +1999,10 @@
 			remoteRef = 9A8ED48E1F2009C9007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.a */ = {
+		9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libios_axisfreeimage.a;
+			path = libios_axisfreeimage.dylib;
 			remoteRef = 9A8ED4901F2009C9007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2027,10 +2027,10 @@
 			remoteRef = 9A9F0A301D7F341700ED6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A9F0A331D7F341700ED6D8A /* libios_axisidn.a */ = {
+		9A9F0A331D7F341700ED6D8A /* libios_axisidn.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libios_axisidn.a;
+			path = libios_axisidn.dylib;
 			remoteRef = 9A9F0A321D7F341700ED6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2221,7 +2221,6 @@
 				9A9D7B0A1F5D6405009EC103 /* html_lite_html_attributes.cpp in Sources */,
 				9A9578BA1F62236A00623508 /* visual_FreeImageFileProc.cpp in Sources */,
 				9AE1AB4A1F7856BD0005113C /* ios_crypto.cpp in Sources */,
-				9AE1AB4B1F7856BD0005113C /* ios_dumpinit.cpp in Sources */,
 				9A9D7AF51F5D63D5009EC103 /* fs_item_array.cpp in Sources */,
 				07EDC2B61B4ECB3C00AF8928 /* ios_fontopus.cpp in Sources */,
 				9AEB69F01F81CB0C00F40B32 /* userpresence_user_presence.cpp in Sources */,
@@ -2237,7 +2236,6 @@
 				9A9D79EC1F5D630E009EC103 /* database_key.cpp in Sources */,
 				9A9D7B1E1F5D6420009EC103 /* user_copydesk.cpp in Sources */,
 				07EDC2B51B4ECB3C00AF8928 /* ios_file_watcher.cpp in Sources */,
-				9AE1AB4C1F7856BD0005113C /* ios_exception.cpp in Sources */,
 				07EDC2B21B4ECB3C00AF8928 /* ios_crypt.cpp in Sources */,
 				9AEB69D71F81C74100F40B32 /* axis.cpp in Sources */,
 				9AEB69EF1F81CAF300F40B32 /* html_html.cpp in Sources */,
@@ -2257,7 +2255,6 @@
 				07EDC4FC1B4F0C3E00AF8928 /* sqlitedb_base.cpp in Sources */,
 				9AEB68701F81BBDB00F40B32 /* apple_ip_enum.cpp in Sources */,
 				9AEB69F61F81CB8C00F40B32 /* geoip_update.cpp in Sources */,
-				9AE1AB4F1F7856BD0005113C /* ios_ios.cpp in Sources */,
 				9A9D7AFF1F5D63DD009EC103 /* filesystem_dir_axis_system.cpp in Sources */,
 				07EDC2B81B4ECB3C00AF8928 /* ios_launcher.cpp in Sources */,
 				9A9D7A2B1F5D6333009EC103 /* simpledb_set.cpp in Sources */,
@@ -2270,7 +2267,6 @@
 				07EDC2AF1B4ECB3C00AF8928 /* ios_cross_gdi.mm in Sources */,
 				9A9D79F21F5D630E009EC103 /* database_update_hint.cpp in Sources */,
 				9A9D7A311F5D6333009EC103 /* simpledb_table.cpp in Sources */,
-				07EDC2B41B4ECB3C00AF8928 /* ios_error.cpp in Sources */,
 				9A9578BB1F62236A00623508 /* visual_glyph_set.cpp in Sources */,
 				9A9578B01F62236A00623508 /* freeimage.cpp in Sources */,
 				9A9D79EF1F5D630E009EC103 /* database_server.cpp in Sources */,
@@ -2371,6 +2367,11 @@
 			target = 9AE24D331904CEFE001AEFFB /* ios_axis */;
 			targetProxy = 9AE24D491904CEFF001AEFFB /* PBXContainerItemProxy */;
 		};
+		9AF4BED51F834D9D00197385 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ios_axisfreeimage;
+			targetProxy = 9AF4BED41F834D9D00197385 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2402,11 +2403,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_EXTENSION = a;
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"$(inherited)",
-					"$(TARGET_BUILD_DIR)",
-					"$(WorkspaceDir)/../../../nodeapp/iPhoneSimulator10.1-x86_64.sdk/lib",
-				);
 				MACH_O_TYPE = staticlib;
 				SDKROOT = iphoneos;
 			};

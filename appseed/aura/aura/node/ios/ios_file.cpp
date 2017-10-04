@@ -98,7 +98,14 @@ namespace ios
 
       if(nOpenFlags & ::file::defer_create_directory)
       {
-         Application.dir().mk(::file::path(lpszFileName).folder());
+         
+         if(!Application.dir().mk(::file::path(lpszFileName).folder()))
+         {
+            
+            return canew(::file::exception(get_app(), file_exception::OsErrorToException(ERROR_NOT_FOUND), ERROR_NOT_FOUND, lpszFileName));
+            
+         }
+         
       }
 
 //      m_bCloseOnDelete = FALSE;

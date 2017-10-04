@@ -99,6 +99,10 @@ namespace base
       
       virtual void on_setting_changed(::aura::e_setting) override;
       
+      virtual bool initialize_native_window1() override;
+      virtual void * initialize_native_window2(LPCRECT lpcrect) override;
+      
+      
    };
 
 

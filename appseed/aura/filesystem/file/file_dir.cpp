@@ -8,7 +8,28 @@
 #include <link.h>
 #include <sys/stat.h>
 #include <dirent.h>
+
 #endif
+
+
+void TranslateLastError()
+{
+   
+   if(errno == EEXIST)
+   {
+      
+      SetLastError(ERROR_ALREADY_EXISTS);
+      
+   }
+   else
+   {
+    
+      SetLastError(0);
+      
+   }
+   
+   
+}
 
 #ifdef WINDOWS
 
@@ -600,6 +621,13 @@ string ca2_module_dup()
 
       str = get_exe_path();
 
+      if(str.has_char())
+      {
+         
+         goto found;
+         
+      }
+      
       str = ::dir::pathfind(::file::path(str).folder(), "libaura.dylib", "rfs"); // readable - normal file - non zero sized
 
       if(str.has_char())
@@ -672,88 +700,134 @@ found:
 
 }
 
-bool dir::mk(const ::file::path & lpcsz)
+
+bool dir::mkdir(const ::file::path & path)
 {
-
-#ifdef WINDOWS
-
-   if(is(lpcsz))
+   
+   if(is(path))
    {
-
+      
       return true;
-
+      
    }
 
-   string url(lpcsz);
-   string tmp;
-   string dir;
-   index oldpos = -1;
-   index pos = url.find("\\");
-   string unc("\\\\?\\");
-   while (pos >= 0)
+   if(file_exists_dup(path))
    {
-      tmp = url.substr(oldpos + 1, pos - oldpos -1 );
-      dir += tmp + "\\";
-      wstring wstr;
-      if(is_absolute_path(dir))
+      
+      if(!file_delete_dup(path))
       {
-         wstr = unc + dir;
+       
+         return false;
+         
+      }
+      
+   }
+
+#ifdef WINDOWS
+   
+   wstring wstr;
+
+   if(is_absolute_path(path))
+   {
+      
+      wstr = "\\\\?\\" + path;
+      
+   }
+   else
+   {
+      
+      wstr = path;
+      
+   }
+
+   if(!::CreateDirectoryW(wstr, NULL))
+   {
+      
+      return false;
+      
+   }
+
+#else
+   
+   if(::mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+   {
+      
+      TranslateLastError();
+      
+      return false;
+         
+   }
+      
+#endif
+   
+   return true;
+   
+}
+
+
+bool dir::mk(const ::file::path & path)
+{
+
+   if(is(path))
+   {
+      
+      return true;
+      
+   }
+   
+   string strName;
+   
+   ::file::path pathDir;
+   
+   strsize iLastPos = -1;
+   
+   while (true)
+   {
+
+      strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
+      
+      if(iPos < 0)
+      {
+         
+         strName = path.substr(iLastPos + 1);
+         
       }
       else
       {
-         wstr = dir;
+      
+         strName = path.substr(iLastPos + 1, iPos - iLastPos - 1);
+         
       }
-      uint32_t dw = ::GetFileAttributesW(wstr);
-      if(dw == INVALID_FILE_ATTRIBUTES)
+      
+      pathDir /= strName;
+      
+      if(!::dir::is(pathDir))
       {
-         ::CreateDirectoryW(wstr, NULL);
+         
+         if(!::dir::mkdir(pathDir))
+         {
+            
+            return false;
+            
+         }
+         
       }
-      oldpos = pos;
-      pos = url.find("\\", oldpos + 1);
-
-   }
-   tmp = url.substr(oldpos + 1);
-   dir += tmp + "\\";
-   wstring wstr(unc + dir);
-   if(::GetFileAttributesW(wstr) == INVALID_FILE_ATTRIBUTES)
-   {
-      ::CreateDirectoryW(wstr, NULL);
-   }
-   return true;
-
-#else
-
-   // stat -> Sir And Arthur - Serenato
-   struct stat st;
-
-   string url(lpcsz);
-   string tmp;
-   string dir;
-   ::index oldpos = -1;
-   ::index pos = url.find("/");
-   while (pos >= 0)
-   {
-      tmp = url.substr(oldpos + 1, pos - oldpos -1 );
-      dir += tmp + "/";
-      if(stat(dir, &st))
+      
+      if(iPos < 0)
       {
-         mkdir(dir, S_IRWXU | S_IRWXG | S_IRWXO);
+       
+         return true;
+         
       }
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
+      
+      iLastPos = iPos;
 
    }
-   tmp = url.substr(oldpos + 1);
-   dir += tmp + "/";
-   if(stat(dir, &st))
-   {
-      mkdir(dir, S_IRWXU | S_IRWXG | S_IRWXO);
-   }
+   
    return true;
-
-#endif
 
 }
+
 
 ::file::path dir::module()
 {

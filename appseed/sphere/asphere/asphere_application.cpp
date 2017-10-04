@@ -40,8 +40,10 @@ namespace asphere
 
    }
 
+   
    application::~application()
    {
+      
    }
 
 
@@ -55,8 +57,8 @@ namespace asphere
 
       }
 
-
-
+#if !defined(APPLE_IOS)
+      
       Sess(this).userex()->shell()->m_straThemeableIconName.add("google-android.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("Folders-OS-Windows-8-Metro.ico");
       Sess(this).userex()->shell()->m_straThemeableIconName.add("firefox_weather.ico");
@@ -84,7 +86,7 @@ namespace asphere
       }
 
       connect_command("theme", &application::_001OnTheme);
-
+      
       calc_theme();
 
       ::fork(this, [&]()
@@ -102,12 +104,12 @@ namespace asphere
          TRACE("finished calc theme thread");
 
       });
+      
+#endif
 
       return true;
 
    }
-
-
 
 
    bool application::initialize1()

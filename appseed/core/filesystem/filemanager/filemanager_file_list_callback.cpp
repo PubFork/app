@@ -19,19 +19,25 @@ namespace filemanager
 
    }
 
-   bool file_list_callback::initialize()
+
+   bool file_list_callback::initialize_file_list_callback()
    {
-      ::aura::application * papp = get_app();
-      m_pimagelistSubItemHover = canew(image_list(papp));
-      m_pimagelistItemHover = canew(image_list(papp));
-      m_pimagelistNormal = canew(image_list(papp));
+      
+      m_pimagelistSubItemHover = canew(image_list(get_app()));
+      
+      m_pimagelistItemHover = canew(image_list(get_app()));
+      
+      m_pimagelistNormal = canew(image_list(get_app()));
 
       ::draw2d::graphics_sp spgraphics(allocer());
+      
       spgraphics->CreateCompatibleDC(NULL);
 
       m_pimagelistSubItemHover->create(16, 16, 0, 10, 10);
 
       m_pimagelistSubItemHover->add_matter("filemanager/execute_16.png");
+      m_pimagelistSubItemHover->add_matter("filemanager/check_off_16.png");
+      m_pimagelistSubItemHover->add_matter("filemanager/check_on_16.png");
 
       System.visual().imaging().CreateHueImageList(
          spgraphics,
@@ -45,7 +51,9 @@ namespace filemanager
          m_pimagelistSubItemHover,
          RGB(220, 220, 215),
          127);
+      
       return true;
+      
    }
 
 

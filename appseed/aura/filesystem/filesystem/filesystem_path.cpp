@@ -481,9 +481,24 @@ namespace file
 
       }
       
-      strPath += sep();
+      if(strPath.is_empty())
+      {
+       
+         strPath = sep();
+         
+      }
+      else if(strPath.get_length() == 1 && strPath[0] == sep())
+      {
+         
+      }
+      else
+      {
+      
+         strPath += sep();
 
-      str.trim_left("\\/");
+         str.trim_left("\\/");
+         
+      }
 
       return operator = (::file::path(strPath + str, m_epath));
 
@@ -760,7 +775,11 @@ namespace file
 
       }
 
+#ifdef WINDOWS
       if(!bOnlyNativeFileSep && epath == path_file)
+#else
+      if(!bOnlyNativeFileSep)
+#endif
       {
 
 #ifdef WINDOWS

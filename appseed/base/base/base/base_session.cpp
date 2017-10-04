@@ -1037,7 +1037,7 @@ namespace base
 
       return pschema;
 
-   }
+}
 
 
    void session::on_finally_focus_set(::user::elemental * pelementalFocus)

@@ -119,7 +119,12 @@ bool db_server::initialize()
 
    }
 
-   Application.dir().mk(str.folder());
+   if(!Application.dir().mk(str.folder()))
+   {
+    
+      return false;
+      
+   }
 
    m_pdb->setDatabase(str);
 

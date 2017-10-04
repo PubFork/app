@@ -731,12 +731,20 @@ typedef void * HDWP;
 
 #endif
 
+#ifdef APPLE_IOS
+
+struct plane_system;
+
+#endif
 
 typedef  void(*PFN_ca2_factory_exchange)(::aura::application * papp);
 
 #ifdef WINDOWS
 CLASS_DECL_AURA bool defer_co_initialize_ex(bool bMultiThread);
 #endif
+
+
+void register_library(const char * psz, void * p);
 
 CLASS_DECL_AURA bool aura_init();
 CLASS_DECL_AURA bool aura_term();

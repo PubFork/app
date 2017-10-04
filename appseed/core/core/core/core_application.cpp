@@ -32,6 +32,11 @@
    #endif
 #endif
 
+#ifdef CUBE
+
+DECL_LIB(wndfrm_core);
+
+#endif
 
 namespace core
 {
@@ -48,6 +53,12 @@ namespace core
       thread(NULL)
    {
 
+#ifdef CUBE
+      
+      REG_LIB(wndfrm_core);
+      
+#endif
+      
       m_pmainpane = NULL;
 
       if (m_pauraapp == NULL)

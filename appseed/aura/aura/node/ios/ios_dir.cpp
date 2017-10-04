@@ -1,4 +1,5 @@
 
+bool _ui_library_dir(char * psz, unsigned int * puiSize);
 
 namespace ios
 {
@@ -654,28 +655,44 @@ namespace ios
       
       
       if(::file::dir::system::is(lpcszPath, papp))
+      {
+         
          return true;
       
+      }
       
       string strPath(lpcszPath);
+      
+#ifdef WINDOWS
+      
       if(strPath.get_length() >= MAX_PATH)
       {
+         
          if(::str::begins(strPath, "\\\\"))
          {
+            
             strPath = "\\\\?\\UNC" + strPath.Mid(1);
+            
          }
          else
          {
+            
             strPath = "\\\\?\\" + strPath;
+       
          }
+         
       }
+      
+#endif
       
       bIsDir = ::dir::is(strPath);
       
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
       
       return bIsDir;
+      
    }
+   
    
    //   bool dir::is(const string & strPath, ::aura::application *   papp)
    //   {
@@ -814,73 +831,57 @@ namespace ios
       
       lpcsz.ascendants_path(stra);
       
-      for(int32_t i = 0; i < stra.get_size(); i++)
+      index i = stra.get_upper_bound();
+      
+      for(; i >= 0; i--)
+      {
+         
+         if(is(stra[i], papp))
+         {
+            
+            i++;
+            
+            break;
+            
+         }
+         
+      }
+      
+      if(i < 0)
+      {
+       
+         return true;
+         
+      }
+
+      for(; i < stra.get_size(); i++)
       {
          
          if(!is(stra[i], papp))
          {
             
-            if(!::dir::mk(stra[i]))
+            if(::dir::mkdir(stra[i]))
             {
                
-               DWORD dwError = ::GetLastError();
-               
-               if(dwError == ERROR_ALREADY_EXISTS)
-               {
-                  
-                  string str;
-                  str = "\\\\?\\" + stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     App(papp).file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  str = stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     App(papp).file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                  if(::dir::mk("\\\\?\\" + stra[i]))
-                  {
-                     m_isdirmap.set(stra[i], true, 0);
-                     goto try1;
-                  }
-                  else
-                  {
-                     dwError = ::GetLastError();
-                  }
-               }
-               char * pszError;
-               //               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
-//               FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
-               
-               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-               // xxx               ::LocalFree(pszError);
-               //m_isdirmap.set(stra[i], false);
             }
-            else
-            {
-               m_isdirmap.set(stra[i], true, 0);
-            }
-         try1:
             
-            if(!is(stra[i], papp))
+            if(!::dir::is(stra[i]))
             {
+               
                return false;
+               
             }
+            
+            m_isdirmap.set(stra[i], true, 0);
             
          }
+         
       }
+      
       return true;
+      
    }
+   
    
    //   bool dir::rm(::aura::application *   papp, const ::file::path & psz, bool bRecursive)
    //   {
@@ -1582,52 +1583,56 @@ namespace ios
    bool dir::initialize()
    {
       
-      update_module_path();
+      if(!update_module_path())
+      {
+       
+         return false;
+         
+      }
       
-      string strCa2Module = ca2module();
+//      m_strCa2 = ::file::path(getenv("HOME")) / "Library/Application Support";
+      {
+         
+         string str;
+         
+         unsigned int uiSize = 4096;
+    
+         char * psz = str.GetBufferSetLength(uiSize);
       
-      m_strCa2 = strCa2Module;
+         _ui_library_dir(psz, &uiSize);
+         
+         str.ReleaseBuffer(uiSize);
+         
+         m_strCa2 = str;
+                      
+      }
       
-#if !defined(CUBE) && !defined(VSNORD)
       
-      m_strCa2 -= 2;
+      ::file::path pathHome;
       
-#endif
-      
-      ::file::path pathHome = ::file::path(getenv("HOME")) ;
+      pathHome = "Documents";
       
       System.m_strIosHome = pathHome;
       
       ios_set_home(System.m_strIosHome);
       
-      ::file::path str = pathHome/ ".ca2/appdata";
+      ::file::path str = m_strCa2 / ".ca2/appdata";
       
-      m_pathUser = pathHome / ".ca2";
+      m_pathUser = m_strCa2 / ".ca2/user";
       
       string strRelative;
       
       strRelative = element();
-      //index iFind = strRelative.find(':');
-      //if(iFind >= 0)
-      {
-         // strsize iFind1 = strRelative.reverse_find("\\", iFind);
-         //strsize iFind2 = strRelative.reverse_find("/", iFind);
-         //strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
-         
-         //strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
-      }
       
       m_strCa2AppData = str / "ca2" / strRelative;
       
       str = m_pathModule.folder();
       
-      str -= 2;
-      
       m_strCommonAppData = str / "commonappdata";
       
       xml::document doc(get_app());
       
-      string strPath = appdata() / "configuration\\directory.xml";
+      string strPath = appdata() / "configuration/directory.xml";
       
       string strDocument = Application.file().as_string(strPath);
       
@@ -1646,27 +1651,42 @@ namespace ios
       }
       
       if(m_strTimeFolder.is_empty())
-         m_strTimeFolder = appdata() / "time";
+      {
+         
+         m_strTimeFolder = m_strCa2 / "Library/Cache/time";
+         
+      }
       
       if(m_strNetSeedFolder.is_empty())
+      {
+         
          m_strNetSeedFolder = element() / "net";
+         
+      }
       
       mk(m_strTimeFolder, get_app());
       
       if(!is(m_strTimeFolder, get_app()))
+      {
+         
          return false;
+         
+      }
       
       string strTime = m_strTimeFolder / "time";
       
       mk(strTime, get_app());
       
       if(!is(strTime, get_app()))
+      {
+         
          return false;
+         
+      }
       
       System.m_strIosTemp = strTime;
       
       ios_set_temp(System.m_strIosTemp);
-      
       
       str = "/usr/bin";
       

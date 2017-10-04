@@ -132,7 +132,7 @@ namespace aura
 
       {
 #if defined(CUBE)
-         pfn_get_new_library = (PFN_GET_NEW_LIBRARY)(INT_PTR)__library()[m_strPath + "_get_new_library"];
+         pfn_get_new_library = (PFN_GET_NEW_LIBRARY)(INT_PTR)__library()[m_strPath];
 #else
          string strPath = m_strPath.title();
          if((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)

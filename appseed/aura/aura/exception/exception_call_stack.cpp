@@ -3,11 +3,15 @@
 
 #if defined(APPLE_IOS)
 
-bool call_stack::s_bDoStackTrace = true;
+bool call_stack::s_bDoStackTrace = false;
 
 #elif defined(VSNORD)
 
 bool call_stack::s_bDoStackTrace = true;
+
+#elif defined(MACOS)
+
+bool call_stack::s_bDoStackTrace = false;
 
 #else
 

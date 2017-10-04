@@ -32,7 +32,8 @@
 
 -(void)redraw_view;
 -(void)on_text : (NSString *) text;
-- (BOOL)roundBecomeFirstResponder;
+-(void)on_sel : (UITextRange *) sel;
+-(BOOL)roundBecomeFirstResponder;
 
 
 @end

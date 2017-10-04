@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 //#ifdef WINDOWS
 //#undef new
@@ -2692,6 +2692,8 @@ else
 
       if(ptimer->m_nIDEvent == 5432187)
       {
+         // hey hey hey
+         //return;
          get_data()->m_bDrag = true;
          KillTimer(5432187);
          post_message(message_start_tab_drag);

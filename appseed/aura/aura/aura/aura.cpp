@@ -87,15 +87,19 @@ void __post_quit_message(int32_t nExitCode)
 
 }
 
-string_map < INT_PTR,INT_PTR > * g_pmapLibrary = NULL;
+string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary = NULL;
 
-string_map < INT_PTR, INT_PTR > & __library()
+string_map < ::aura::PFN_GET_NEW_LIBRARY , ::aura::PFN_GET_NEW_LIBRARY  > & __library()
 {
    return *g_pmapLibrary;
 }
 
 
-
+void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
+{
+   __library()[psz] = p;
+   
+}
 
 
 int g_iAuraRefCount = 0;

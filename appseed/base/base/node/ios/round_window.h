@@ -38,6 +38,7 @@ bool m_bDirty;
    virtual bool round_window_key_down(::user::e_key ekey) = 0;
    virtual bool round_window_key_up(::user::e_key ekey) = 0;
    virtual bool round_window_on_text(const char * pszText) = 0;
+   virtual bool round_window_on_sel_text(int iBeg, int iEnd) = 0;
    
    virtual int round_window_get_x() = 0;
    virtual int round_window_get_y() = 0;
@@ -61,7 +62,17 @@ bool m_bDirty;
    virtual void round_window_set_title(const char * pszTitle);
    virtual void round_window_get_title(char * pszTitle, int iSize);
 
+   
+   virtual void round_window_set_sel(int iBeg, int iEnd);
+   virtual void round_window_get_sel(int & iBeg, int & iEnd);
+
+   
+   virtual void round_window_set_text(const char * pszText);
+   virtual void round_window_get_text(char * pszText, int iSize);
+
+
    virtual void round_window_destroy();
+   
    
 };
 

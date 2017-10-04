@@ -175,7 +175,9 @@
    frameView->m_bControl = false;
    frameView->m_bAlt = false;
    
-		
+   [frameView setTintColor:[UIColor clearColor]];
+   [frameView setTextColor:[UIColor clearColor]];
+   //[frameView setContentInset:UIEdgeInsetsMake(0, -4, 0, 0)];
 //	[super setContentView : frameView];
 
 	[frameView setFrame : bounds];

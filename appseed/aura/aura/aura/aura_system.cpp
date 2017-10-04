@@ -2980,6 +2980,22 @@ found:
 
    }
 
+   
+   bool system::initialize_native_window1()
+   {
+   
+      return true;
+      
+   }
+   
+   
+   void * system::initialize_native_window2(LPCRECT lpcrect)
+   {
+      
+      return NULL;
+      
+   }
+   
 
 } // namespace aura
 

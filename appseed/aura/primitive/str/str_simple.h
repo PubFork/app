@@ -835,9 +835,9 @@ public:
    }
 #endif
 
-   inline static strsize __cdecl StringLength(const char * psz ) NOTHROW
+   inline static strsize __cdecl StringLength(const char * psz ) 
    {
-      return psz == NULL ? 0 : strlen(psz);
+      return psz == NULL || *psz == '\0' ? 0 : strlen(psz);
       //strsize nLength = 0;
       //if( psz != NULL )
       //{

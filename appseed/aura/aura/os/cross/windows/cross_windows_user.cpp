@@ -183,7 +183,6 @@ string iconv_charset_from_windows_code_page(UINT CodePage)
 
 }
 
-#ifndef APPLE_IOS
 int32_t
 WINAPI
 MultiByteToWideChar(
@@ -394,7 +393,6 @@ WideCharToMultiByte(
 
 }
 
-#endif
 
 CLASS_DECL_AURA string get_system_error_message(uint32_t dwError)
 {
