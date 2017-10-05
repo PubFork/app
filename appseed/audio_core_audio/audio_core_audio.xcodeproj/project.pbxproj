@@ -80,12 +80,12 @@
 			remoteGlobalIDString = 9AEB75A216F78DF10085103B;
 			remoteInfo = multimedia;
 		};
-		9AF4C4701F83DD7500197385 /* PBXContainerItemProxy */ = {
+		9AF764101F85FE2900FDE7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 07D4207E1B71F7700065510D /* multimedia.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 9AEB75A216F78DF10085103B;
-			remoteInfo = multimedia;
+			remoteGlobalIDString = 07B6578D190F3CAF002DAADE;
+			remoteInfo = ios_multimedia;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -147,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				07D420851B71F7700065510D /* libmultimedia.dylib */,
-				07D420871B71F7700065510D /* libios_multimedia.dylib */,
+				07D420871B71F7700065510D /* libios_multimedia.a */,
 				07D420891B71F7700065510D /* multlimedia_iosTests.xctest */,
 			);
 			name = Products;
@@ -261,7 +261,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AF4C46F1F83DD7500197385 /* PBXTargetDependency */,
+				9AF764111F85FE2900FDE7CC /* PBXTargetDependency */,
 			);
 			name = ios_audio_core_audio;
 			productName = os;
@@ -327,10 +327,10 @@
 			remoteRef = 07D420841B71F7700065510D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		07D420871B71F7700065510D /* libios_multimedia.dylib */ = {
+		07D420871B71F7700065510D /* libios_multimedia.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libios_multimedia.dylib;
+			path = libios_multimedia.a;
 			remoteRef = 07D420861B71F7700065510D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -382,10 +382,10 @@
 			name = multimedia;
 			targetProxy = 9A4E832A1D1FCCE0008A419B /* PBXContainerItemProxy */;
 		};
-		9AF4C46F1F83DD7500197385 /* PBXTargetDependency */ = {
+		9AF764111F85FE2900FDE7CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = multimedia;
-			targetProxy = 9AF4C4701F83DD7500197385 /* PBXContainerItemProxy */;
+			name = ios_multimedia;
+			targetProxy = 9AF764101F85FE2900FDE7CC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -463,7 +463,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = audio_core_audio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";
@@ -516,7 +516,7 @@
 					"$(TARGET_BUILD_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = audio_core_audio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/core $(WorkspaceDir)/../../../app/appseed/base $(WorkspaceDir)/../../../app/appseed/axis $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../../../app/base $(WorkspaceDir)/../../../app/axis $(WorkspaceDir)/../../../app/aura $(WorkspaceDir)/../../../app/atom";

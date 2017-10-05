@@ -3399,7 +3399,208 @@ finished_update:
       internal_edit_update(bFullUpdate, iLineUpdate);
 
    }
+   
+   void plain_edit::_001DeleteSel()
+   {
+      
+      bool bFullUpdate = true;
+      
+      index iLineUpdate = -1;
+      
+      if(_001DeleteSel(bFullUpdate, iLineUpdate))
+      {
 
+         internal_edit_update(bFullUpdate, iLineUpdate);
+         
+      }
+
+   }
+   
+   
+   bool plain_edit::_001DeleteSel(bool & bFullUpdate, index & iLineUpdate)
+   {
+      
+      strsize i1 = m_ptree->m_iSelStart;
+      
+      strsize i2 = m_ptree->m_iSelEnd;
+
+      ::sort::sort_non_negative(i1, i2);
+      
+      if(i1 < 0 || i1 > _001GetTextLength())
+      {
+         
+         i1  = _001GetTextLength();
+         
+      }
+      
+      if(i2 < 0 || i2 > _001GetTextLength())
+      {
+         
+         i2 = _001GetTextLength();
+         
+      }
+
+      if(i1 >= i2)
+      {
+       
+         return false;
+         
+      }
+      
+      plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
+      
+      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+      
+      psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+      
+      string strSel;
+      
+      _001GetSelText(strSel, i1, i2);
+      
+      bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+      
+      if (!bFullUpdate)
+      {
+      
+         iLineUpdate = SelToLine(i1);
+         
+      }
+         
+      m_ptree->m_editfile.seek(i1, ::file::seek_begin);
+      
+      m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
+         
+      m_pinsert = NULL;
+         
+      IndexRegisterDelete(i1, i2 - i1);
+      
+      m_ptree->m_iSelEnd = i1;
+      
+      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+      
+      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+      
+      psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
+      
+      MacroBegin();
+      
+      MacroRecord(psetsel);
+      
+      MacroRecord(canew(plain_text_file_command()));
+      
+      MacroEnd();
+      
+      return true;
+         
+   }
+
+   
+   void plain_edit::_001ReplaceSel(const char * pszText)
+   {
+
+      bool bFullUpdate = true;
+      
+      index iLineUpdate = -1;
+      
+      if(_001ReplaceSel(pszText, bFullUpdate, iLineUpdate))
+      {
+         
+         internal_edit_update(bFullUpdate, iLineUpdate);
+         
+      }
+      
+   }
+   
+   
+   bool plain_edit::_001ReplaceSel(const char * pszText, bool & bFullUpdate, index & iLineUpdate)
+   {
+      
+      strsize i1 = m_ptree->m_iSelStart;
+      
+      strsize i2 = m_ptree->m_iSelEnd;
+      
+      ::sort::sort_non_negative(i1, i2);
+      
+      if(i1 < 0 || i1 > _001GetTextLength())
+      {
+         
+         i1  = _001GetTextLength();
+         
+      }
+      
+      if(i2 < 0 || i2 > _001GetTextLength())
+      {
+         
+         i2 = _001GetTextLength();
+         
+      }
+      
+      if(i2 < i1)
+      {
+         
+         return false;
+         
+      }
+
+      plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
+      
+      psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
+      
+      psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
+      
+      string strSel;
+      
+      _001GetSelText(strSel, i1, i2);
+      
+      bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
+      
+      if (!bFullUpdate)
+      {
+         
+         iLineUpdate = SelToLine(i1);
+         
+      }
+      
+      m_ptree->m_editfile.seek(i1, ::file::seek_begin);
+      
+      if(i2 > i1)
+      {
+      
+         m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
+         
+         IndexRegisterDelete(i1, i2);
+         
+      }
+      
+      m_ptree->m_editfile.Insert(pszText, strlen_dup(pszText));
+      
+      IndexRegisterInsert(i1, pszText);
+      
+      m_pinsert = NULL;
+      
+      IndexRegisterDelete(i1, i2 - i1);
+      
+      m_ptree->m_iSelEnd = i1;
+      
+      m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
+      
+      psetsel->m_iSelStart = m_ptree->m_iSelStart;
+      
+      psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
+      
+      MacroBegin();
+      
+      MacroRecord(psetsel);
+      
+      MacroRecord(canew(plain_text_file_command()));
+      
+      MacroEnd();
+      
+      return true;
+      
+   }
+   
+   
    void plain_edit::_001OnChar(::message::message * pobj)
    {
 
@@ -3549,38 +3750,16 @@ finished_update:
 
                   if (!m_bReadOnly)
                   {
+                     
                      strsize i1 = m_ptree->m_iSelStart;
+                     
                      strsize i2 = m_ptree->m_iSelEnd;
+                     
                      if (i1 != i2)
                      {
-                        plain_text_set_sel_command * psetsel = canew(plain_text_set_sel_command);
-                        psetsel->m_iPreviousSelStart = m_ptree->m_iSelStart;
-                        psetsel->m_iPreviousSelEnd = m_ptree->m_iSelEnd;
-                        ::sort::sort_non_negative(i1, i2);
-
-                        string strSel;
-                        _001GetSelText(strSel, i1, i2);
-                        bFullUpdate = strSel.find('\n') >= 0 || strSel.find('\r') >= 0;
-                        if (!bFullUpdate)
-                        {
-                           iLineUpdate = SelToLine(i1);
-                        }
-
-                        m_ptree->m_editfile.seek(i1, ::file::seek_begin);
-                        m_ptree->m_editfile.Delete((memory_size_t)(i2 - i1));
-
-                        m_pinsert = NULL;
-
-                        IndexRegisterDelete(i1, i2 - i1);
-                        m_ptree->m_iSelEnd = i1;
-                        m_ptree->m_iSelStart = m_ptree->m_iSelEnd;
-                        psetsel->m_iSelStart = m_ptree->m_iSelStart;
-                        psetsel->m_iSelEnd = m_ptree->m_iSelEnd;
-                        MacroBegin();
-                        MacroRecord(psetsel);
-                        MacroRecord(canew(plain_text_file_command()));
-                        MacroEnd();
-
+                        
+                        _001DeleteSel();
+                        
                      }
                      else if (m_ptree->m_iSelEnd >= 0 && m_ptree->m_editfile.get_length() > 0)
                      {
@@ -4618,40 +4797,6 @@ finished_update:
 
       }
       
-#if defined(APPLE_IOS)
-      
-      sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
-      
-      string strText;
-      
-      _001GetText(strText);
-      
-      pimpl->round_window_set_text(strText);
-      
-      strsize iBeg = -1;
-      
-      strsize iEnd = -1;
-      
-      _001GetSel(iBeg, iEnd);
-      
-      if(iBeg < 0 || iBeg > strText.get_length())
-      {
-       
-         iBeg = strText.get_length();
-         
-      }
-      
-      if(iEnd < 0 || iEnd > strText.get_length())
-      {
-       
-         iEnd = strText.get_length();
-         
-      }
-      
-      pimpl->round_window_set_sel(iBeg, iEnd);
-      
-#endif
-
       return true;
 
    }

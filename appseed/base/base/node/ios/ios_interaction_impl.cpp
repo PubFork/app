@@ -123,6 +123,8 @@ strsize str_ends_eat_common(string & str1, string & str2, string & str)
 
 void process_process_new_text(
    string & strInsert,
+   int & iInsBeg,
+   int & iInsEnd,
    int & iSelBeg,
    int & iSelEnd,
    string strPrevious,
@@ -137,9 +139,22 @@ void process_process_new_text(
    
    iSelBeg = iBeg;
    
-   iSelEnd = strPrevious.get_length() - iEnd;
+   iInsBeg = iBeg;
    
-   strInsert = strNow.Mid(iBeg, strNow.get_length() - iEnd);
+   iInsEnd = strPrevious.get_length() - iEnd;
+   
+   strInsert = strNow.Mid(iBeg, strNow.get_length() - iEnd - iBeg);
+
+   iSelEnd = iBeg + strInsert.get_length();
+   
+   const char * psz = ::str::utf8_inc(strInsert);
+   
+   if(psz == NULL || *psz == '\0')
+   {
+      
+      iSelBeg = iSelEnd;
+      
+   }
    
 }
 
@@ -6096,87 +6111,126 @@ namespace ios
 
    }
 
+   
+   void interaction_impl::defer_update_text_view()
+   {
+      
+      sp(::user::interaction) pui = Session.get_keyboard_focus();
+      
+      sp(::user::plain_edit) pedit = pui;
+
+      if(pedit.is_set())
+      {
+         
+         string strTextPrevious;
+         
+         int iSelBegPrevious = -1;
+         
+         int iSelEndPrevious = -1;
+         
+         string strText;
+         
+         strsize iSelBeg = -1;
+         
+         strsize iSelEnd = -1;
+         
+         {
+         
+            int iSize = round_window_get_text_length();
+         
+            char * psz = strTextPrevious.GetBufferSetLength(iSize);
+         
+            round_window_get_text(psz, iSize);
+         
+            strTextPrevious.ReleaseBuffer(iSize);
+                               
+         }
+            
+         pedit->_001GetText(strText);
+         
+         if(strText != strTextPrevious)
+         {
+          
+            round_window_set_text(strText);
+            
+         }
+
+         round_window_get_sel(iSelBegPrevious, iSelEndPrevious);
+         
+         pedit->_001GetSel(iSelBeg, iSelEnd);
+         
+         if(iSelEndPrevious != iSelEnd || iSelBegPrevious != iSelBeg)
+         {
+          
+            round_window_set_sel(iSelBeg, iSelEnd);
+            
+         }
+         
+      }
+
+   }
+   
 
    bool interaction_impl::round_window_on_text(const char * pszText)
    {
 
-      sp(::message::base) spbase;
+      sp(::user::interaction) pui = Session.get_keyboard_focus();
 
-      ::message::key * pkey = canew(::message::key(get_app()));
-
-      pkey->m_id = WM_KEYDOWN;
-
-      if(pszText == NULL || strlen(pszText) <= 0)
+      sp(::user::plain_edit) pedit = pui;
+         
+      if(pedit.is_set())
       {
-
-         pkey->m_ekey = ::user::key_back;
-
-         spbase = pkey;
          
-         send(spbase);
+         string strText;
          
-         return spbase->m_bRet;
+         int iSize = round_window_get_text_length();
          
-      }
-      else if(*pszText == '\t' && pszText[1] == '\0')
-      {
-
-         pkey->m_ekey = ::user::key_tab;
-
-         spbase = pkey;
+         char * pszText = strText.GetBufferSetLength(iSize);
          
-         send(spbase);
+         round_window_get_text(pszText, iSize);
          
-         return spbase->m_bRet;
-
-      }
-      else if(*pszText == '\n' && pszText[1] == '\0')
-      {
-
-         pkey->m_ekey = ::user::key_return;
+         strText.ReleaseBuffer(iSize);
          
-         spbase = pkey;
+         pedit->_001SetText(strText, ::action::source_user);
          
-         send(spbase);
+         int iSelBeg = -1;
          
-         return spbase->m_bRet;
-
+         int iSelEnd = -1;
+         
+         round_window_get_sel(iSelBeg, iSelEnd);
+         
+         pedit->_001SetSel(iSelBeg, iSelEnd);
+         
+         return true;
+            
       }
       else
       {
+            
+         sp(::message::base) spbase;
+            
+         ::message::key * pkey = canew(::message::key(get_app()));
+            
+         pkey->m_id = WM_KEYDOWN;
          
-         sp(::user::interaction) pui = Session.get_keyboard_focus();
-
-         sp(::user::plain_edit) pedit = pui;
+         string strText(pszText);
          
-         if(pedit.is_set())
+         if(strText.is_empty())
+         {
+          
+            pkey->m_ekey = ::user::key_back;
+            
+         }
+         else if(strText == '\t')
          {
             
-            string strNow;
+            pkey->m_ekey = ::user::key_tab;
             
-            strNow = pszText;
+         }
+         else if(strText == '\n')
+         {
             
-            string strPrevious;
-            
-            pedit->_001GetText(strPrevious);
-            
-            int iSelBeg = 0;
-            
-            int iSelEnd = 0;
-            
-            string strInsert;
-            
-            process_process_new_text(strInsert, iSelBeg, iSelEnd, strPrevious, strNow);
-            
-            pedit->MacroBegin();
-         
-            pedit->_001SetSel(iSelBeg, iSelEnd);
-            
-            pedit->_001SetSelText(strInsert, ::action::source_user);
-            
-            pedit->MacroEnd();
-            
-            return true;
+            pkey->m_ekey = ::user::key_return;
             
          }
          else
@@ -6184,17 +6238,17 @@ namespace ios
 
             pkey->m_ekey = ::user::key_refer_to_text_member;
             
-            pkey->m_strText = pszText;
+            pkey->m_strText = strText;
             
-            spbase = pkey;
-            
-            send(spbase);
-            
-            return spbase->m_bRet;
-
          }
-
-         //pkey->m_strText.make_lower();
+         
+         round_window_set_text("");
+            
+         spbase = pkey;
+            
+         send(spbase);
+            
+         return spbase->m_bRet;
 
       }
 

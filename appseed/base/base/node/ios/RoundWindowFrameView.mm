@@ -281,6 +281,7 @@ void __ios_do_events();
    //return YES;
 //}
 
+
 -(void)on_text : (NSString *) text
 {
 
@@ -292,6 +293,7 @@ void __ios_do_events();
          return;
    
 }
+
 
 -(void)on_sel : (UITextRange *) sel
 {
@@ -326,18 +328,31 @@ void __ios_do_events();
                 replacementText:(NSString *)text
 
 {
+   
    return YES;
+   
 }
+
 
 - (void)deleteBackward
 {
 
-   ::user::e_key ekey = ::user::key_back;
+//   ::user::e_key ekey = ::user::key_back;
+//
+//   round_window * p = m_roundwindow->m_pwindow;
+//
+//   if(p->round_window_key_down(ekey))
+//      return;
+   
+   [super deleteBackward];
    
    round_window * p = m_roundwindow->m_pwindow;
    
-   if(p->round_window_key_down(ekey))
+   const char * pszText = [[self text] UTF8String];
+   
+   if(p->round_window_on_text(pszText))
       return;
+   
 }
 
 - (void)keyDown:(UIEvent *)event {

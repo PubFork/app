@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace sphere
@@ -202,38 +202,16 @@ namespace sphere
 
    }
 
+   
+   bool main_frame::has_pending_graphical_update()
+   {
+   
+      return IsWindowVisible();
+      
+   }
 
 
-} // namespace asphere
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} // namespace sphere
 
 
 

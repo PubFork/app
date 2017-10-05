@@ -1610,9 +1610,11 @@ namespace ios
       
       ::file::path pathHome;
       
-      pathHome = "Documents";
+      pathHome = m_strCa2/"Documents";
       
       System.m_strIosHome = pathHome;
+      
+      m_pathHome = m_strCa2/"Documents";
       
       ios_set_home(System.m_strIosHome);
       

@@ -124,7 +124,12 @@ namespace user
 
       virtual void on_viewport_offset(::draw2d::graphics * pgraphics) override;
 
-      
+      virtual void _001DeleteSel();
+      virtual bool _001DeleteSel(bool & bFullUpdate, index & iLineUpdate);
+
+      virtual void _001ReplaceSel(const char * pszText);
+      virtual bool _001ReplaceSel(const char * pszText, bool & bFullUpdate, index & iLineUpdate);
+
       //void on_change_view_size();
 
       // virtual bool get_font(::draw2d::font_sp & spfont, e_font efont, ::user::interaction * pui) override;

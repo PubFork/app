@@ -59,9 +59,9 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
    
-   UITextRange * sel = [textView selectedTextRange];
+   //UITextRange * sel = [textView selectedTextRange];
    
-   [childContentView on_sel : sel ];
+   //[childContentView on_sel : sel ];
    
 }
 

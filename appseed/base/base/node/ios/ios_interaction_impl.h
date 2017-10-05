@@ -158,6 +158,7 @@ namespace ios
       //      void SetFont(::draw2d::font* pFont, bool bRedraw = TRUE);
       //    ::draw2d::font* GetFont();
       
+      virtual void defer_update_text_view();
       
       // oswindow size and position Functions
       virtual bool WfiIsIconic() override;

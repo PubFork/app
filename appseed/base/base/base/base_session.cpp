@@ -1067,6 +1067,22 @@ namespace base
 
          puiFocus->send_message(WM_SETFOCUS);
 
+
+#if defined(APPLE_IOS)
+         
+         sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
+         
+         if(pimpl.is_set())
+         {
+            
+            pimpl->defer_update_text_view();
+            
+         }
+         
+#endif
+   
+   
+
       }
 
 

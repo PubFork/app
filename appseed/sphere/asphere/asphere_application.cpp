@@ -12,7 +12,7 @@ namespace asphere
 
    application::application()
    {
-
+      
       m_mapBg["dark"] = ARGB(160, 0x16, 0x19, 0x1e);
       m_mapBg["blue"] = ARGB(160, 0xA0, 0xA8, 0xB8);
       m_mapBg["lite"] = ARGB(160, 0xff, 0xff, 0xff);
@@ -87,6 +87,8 @@ namespace asphere
 
       connect_command("theme", &application::_001OnTheme);
       
+#endif
+      
       calc_theme();
 
       ::fork(this, [&]()
@@ -105,8 +107,6 @@ namespace asphere
 
       });
       
-#endif
-
       return true;
 
    }
@@ -208,6 +208,7 @@ namespace asphere
       m_crFg = m_mapFg[strTheme];
       m_crBg = m_mapBg[strTheme];
       m_crMg = m_mapMg[strTheme];
+      
       m_crIconGlow = m_mapIconGlow[strTheme];
 
       if (!m_mapText.Lookup(get_theme(), m_crText))
@@ -302,6 +303,12 @@ namespace asphere
 
             }
 
+         }
+         else
+         {
+          
+            strTheme = "dark";
+            
          }
 
       }

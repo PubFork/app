@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		077C88F41B51A06D00AB2A41 /* libaxisfreeimage.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07A371651B25DE2A00E4F888 /* libaxisfreeimage.dylib */; };
 		07A371B11B25E34E00E4F888 /* PluginPNG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A371891B25E34D00E4F888 /* PluginPNG.cpp */; };
-		07B6577B190F3CA2002DAADE /* libimage_decode_png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libimage_decode_png.a */; };
+		07B6577B190F3CA2002DAADE /* libios_image_decode_png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libios_image_decode_png.a */; };
 		07D6A8151B4CB87C004FEBC2 /* PluginPNG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A371891B25E34D00E4F888 /* PluginPNG.cpp */; };
 		9A331C4B1D4BC84C00255105 /* libaxispng.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331C4A1D4BC84C00255105 /* libaxispng.dylib */; };
 /* End PBXBuildFile section */
@@ -102,7 +102,7 @@
 /* Begin PBXFileReference section */
 		07A371601B25DE2A00E4F888 /* axisfreeimage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisfreeimage.xcodeproj; path = ../freeimage/axisfreeimage.xcodeproj; sourceTree = "<group>"; };
 		07A371891B25E34D00E4F888 /* PluginPNG.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PluginPNG.cpp; sourceTree = "<group>"; };
-		07B65764190F3CA2002DAADE /* libimage_decode_png.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libimage_decode_png.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		07B65764190F3CA2002DAADE /* libios_image_decode_png.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libios_image_decode_png.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07B65773190F3CA2002DAADE /* axispng_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = axispng_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A331C4A1D4BC84C00255105 /* libaxispng.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxispng.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-osx-dyhrstllhpqabhamryoxyuxzxxbr/Build/Products/Debug/libaxispng.dylib"; sourceTree = "<group>"; };
 		9A574B9816AAB906000CC4EF /* libimage_decode_png.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libimage_decode_png.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07B6577B190F3CA2002DAADE /* libimage_decode_png.a in Frameworks */,
+				07B6577B190F3CA2002DAADE /* libios_image_decode_png.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				9A574B9816AAB906000CC4EF /* libimage_decode_png.dylib */,
-				07B65764190F3CA2002DAADE /* libimage_decode_png.a */,
+				07B65764190F3CA2002DAADE /* libios_image_decode_png.a */,
 				07B65773190F3CA2002DAADE /* axispng_iosTests.xctest */,
 			);
 			name = Products;
@@ -232,7 +232,7 @@
 			);
 			name = ios_image_decode_png;
 			productName = math_ios;
-			productReference = 07B65764190F3CA2002DAADE /* libimage_decode_png.a */;
+			productReference = 07B65764190F3CA2002DAADE /* libios_image_decode_png.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		07B65772190F3CA2002DAADE /* axispng_iosTests */ = {
@@ -434,7 +434,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MACH_O_TYPE = staticlib;
-				PRODUCT_NAME = image_decode_png;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -456,7 +455,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MACH_O_TYPE = staticlib;
-				PRODUCT_NAME = image_decode_png;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -595,7 +593,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -657,7 +655,7 @@
 					"$(TARGET_BUILD_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(WorkspaceDir)/../../../include $(WorkspaceDir)/../../../nodeapp/include $(WorkspaceDir)/../../../app/include . .. $(WorkspaceDir)/../../.. $(WorkspaceDir)/../../../app $(WorkspaceDir)/../../../app/appseed $(WorkspaceDir)/../../../app/appseed/aura $(WorkspaceDir)/../.. $(WorkspaceDir)/../../appseed $(WorkspaceDir)/../../../app/appseed/freeImage/Source $(WorkspaceDir)/../../../app/appseed/freeimage/Source/FreeImage";
@@ -670,7 +668,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				PRODUCT_NAME = image_decode_png;
 			};
 			name = Debug;
 		};
@@ -679,7 +676,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				PRODUCT_NAME = image_decode_png;
 			};
 			name = Release;
 		};

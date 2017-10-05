@@ -174,9 +174,25 @@ void round_window::round_window_set_sel(int iBeg, int iEnd)
    
    UITextPosition * beg = [pview beginningOfDocument];
    
-   UITextPosition * selbeg = [pview positionFromPosition: beg offset: iBeg];
+   UITextPosition * selbeg = [pview endOfDocument];
    
-   UITextPosition * selend = [pview positionFromPosition: beg offset: iEnd];
+   UITextPosition * selend = selbeg;
+   
+   int iLen = strlen([[pview text] UTF8String]);
+   
+   if(iBeg >= 0 && iBeg < iLen)
+   {
+   
+      selbeg = [pview positionFromPosition: beg offset: iBeg];
+      
+   }
+   
+   if(iEnd >= 0 && iEnd < iLen)
+   {
+      
+      selend = [pview positionFromPosition: beg offset: iEnd];
+      
+   }
    
    UITextRange * sel = [pview textRangeFromPosition: selbeg toPosition: selend];
    
@@ -216,6 +232,14 @@ void round_window::round_window_get_text(char * pszText, int iSize)
 {
    
    strncpy(pszText, [[m_proundwindow->m_controller->childContentView text] UTF8String], iSize);
+   
+}
+
+
+int round_window::round_window_get_text_length()
+{
+   
+   return strlen([[m_proundwindow->m_controller->childContentView text] UTF8String]);
    
 }
 

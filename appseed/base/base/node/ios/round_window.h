@@ -69,6 +69,7 @@ bool m_bDirty;
    
    virtual void round_window_set_text(const char * pszText);
    virtual void round_window_get_text(char * pszText, int iSize);
+   virtual int round_window_get_text_length();
 
 
    virtual void round_window_destroy();
