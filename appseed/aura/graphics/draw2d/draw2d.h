@@ -16,7 +16,7 @@ namespace draw2d
 
 } // namespace draw2d
 
-#if defined(CUBE) || defined(VSNORD)
+#if (defined(CUBE) || defined(VSNORD)) && !defined(APPLE_IOS)
 
 
 extern "C"
