@@ -54,11 +54,11 @@ namespace core
    {
 
 #ifdef CUBE
-      
+
       REG_LIB(wndfrm_core);
-      
+
 #endif
-      
+
       m_pmainpane = NULL;
 
       if (m_pauraapp == NULL)
@@ -108,7 +108,7 @@ namespace core
    {
 
       return (application *) this;
-      
+
    }
 
 
@@ -262,7 +262,7 @@ namespace core
                   try
                   {
                      data_set(".local://system_locale", Session.get_locale());
-                     data_set("locale", Session.get_locale());
+                     data_set(".local://locale", Session.get_locale());
                   }
                   catch (...)
                   {
@@ -279,7 +279,7 @@ namespace core
          {
             str = handler()->m_varTopicQuery["locale"].stra()[0];
             data_set(".local://system_locale", str);
-            data_set("locale", str);
+            data_set(".local://locale", str);
             Session.set_locale(str, ::action::source::database());
          }
          else if (handler()->m_varTopicQuery["lang"].get_count() > 0)
@@ -307,7 +307,7 @@ namespace core
                   try
                   {
                      data_set(".local://system_schema", Session.get_schema());
-                     data_set("schema", Session.get_schema());
+                     data_set(".local://schema", Session.get_schema());
                   }
                   catch (...)
                   {
@@ -677,7 +677,7 @@ namespace core
 //       message.m_id = ::message::type_language;
 
 //       route_message(&message);
-      
+
 //    }
 
 
@@ -984,10 +984,10 @@ namespace core
       }
    }
 
-   
+
    void application::_001OnCmdMsg(::user::command * pcommand)
    {
-      
+
       ::base::application::_001OnCmdMsg(pcommand);
 
    }
@@ -2404,24 +2404,24 @@ namespace core
 
    bool application::does_launch_window_on_startup()
    {
-      
+
       return true;
-      
+
    }
 
-   
+
    bool application::activate_app()
    {
-      
+
       if (m_puiMain != NULL)
       {
-         
+
          m_puiMain->m_puiThis->ShowWindow(SW_SHOWNORMAL);
-         
+
       }
-      
+
       return true;
-      
+
    }
 
 
@@ -2511,14 +2511,14 @@ namespace core
    }
 
 
-   
+
 //   bool application::on_open_document_file(var varFile)
 //   {
-//   
+//
 //      return _001OpenDocumentFile(varFile);
-//      
+//
 //   }
-   
+
    ::user::document * application::_001OpenDocumentFile(var varFile)
    {
 
@@ -3097,18 +3097,18 @@ namespace core
 
    bool application::_001CloseApplicationByUser(sp(::user::interaction) pwndExcept)
    {
-      
+
       // Closing just this application.
       // It is different of a system exit.
       // System (a single ca2 process) can host
       // multiple ca2 application objects.
-      
+
       // attempt to save all documents
       if (!save_all_modified())
       {
-         
+
          return false;     // don't close it
-         
+
       }
 
       // hide the application's windows before closing all the documents
@@ -3189,9 +3189,9 @@ namespace core
 
    ::aura::application * application::get_system()
    {
-      
+
       return new application();
-      
+
    }
 
 
