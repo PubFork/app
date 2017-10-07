@@ -1,6 +1,8 @@
 #pragma once
 //#include <X11/extensions/Xrender.h>
 
+#include "app/appseed/base/graphics/graphics_window_buffer.h"
+
 
 class CLASS_DECL_AURA window_xlib :
    virtual public window_buffer

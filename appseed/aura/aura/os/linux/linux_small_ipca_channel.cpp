@@ -357,7 +357,7 @@ namespace aura
       {
       }
 
-      void rx::receiver::on_post(rx * prx,long long int a,long long int b)
+      void rx::receiver::on_post(rx * prx, int64_t a, int64_t b)
       {
       }
 
@@ -394,7 +394,7 @@ namespace aura
 
 
 
-      void * rx::on_post(rx * prx,long long int a,long long int b)
+      void * rx::on_post(rx * prx, int64_t a, int64_t b)
       {
 
          if(m_preceiver != NULL)

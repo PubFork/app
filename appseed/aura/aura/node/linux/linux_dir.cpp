@@ -1280,6 +1280,8 @@ namespace linux
 
       }
 
+      m_pathHome = getenv("HOME");
+
       string strca2Module = ca2module();
 
       m_strCa2 = strca2Module;

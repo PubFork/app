@@ -406,7 +406,7 @@ namespace aura
 
    }
 
-   
+
    ::aura::str & system::str()
    {
 
@@ -2825,84 +2825,84 @@ found:
 
    }
 
-   
+
    bool system::accumulate_on_open_file(stringa stra, string strExtra, int iMillisDelay)
    {
 
       synch_lock sl(m_pmutex);
-   
+
       m_dwCommandLineLast = get_tick_count();
-   
+
       m_iCommandLineDelay = MAX(1000, iMillisDelay);
-   
+
       index iIndex = stra.find_first(":");
 
       if(iIndex >= 0)
       {
-         
+
          if(iIndex > 0)
          {
-            
+
             m_straCommandLineAccumul.add(stra.slice(0, iIndex));
-            
+
          }
-         
+
          m_straCommandLineExtra.add(stra.slice(iIndex));
-         
+
       }
       else
       {
-      
+
          if(m_straCommandLineExtra.has_elements())
          {
-         
+
             m_straCommandLineExtra.add(stra);
-         
+
          }
          else
          {
-         
+
             m_straCommandLineAccumul.add(stra);
-            
+
          }
-         
+
       }
-   
+
       if(m_pthreadCommandLine.is_null())
       {
-   
+
          m_pthreadCommandLine = fork([&]()
          {
-                                                            
+
             while(::get_thread_run())
             {
-               
+
                {
-               
+
                   synch_lock sl(m_pmutex);
-                  
+
                   if((m_straCommandLineAccumul.has_elements() ||
                       m_straCommandLineExtra.has_elements())
                      && get_tick_count() - m_dwCommandLineLast > m_iCommandLineDelay)
                   {
-                     
+
                      stringa straAccumul = m_straCommandLineAccumul;
-                     
+
                      stringa straExtra = m_straCommandLineExtra;
 
                      m_straCommandLineAccumul.remove_all();
-                     
+
                      m_straCommandLineExtra.remove_all();
-                     
+
                      sl.unlock();
 
                      if(straExtra.has_elements())
                      {
-                        
+
                         on_open_file(
                             straAccumul,
                             straExtra.slice(1).implode(" "));
-                        
+
                      }
                      else
                      {
@@ -2910,23 +2910,23 @@ found:
                         on_open_file(
                             straAccumul,
                             "");
-                        
+
                      }
-                     
+
                   }
-                                                                  
+
                }
-                                                               
+
                Sleep(300);
-                                                               
+
             }
-                                                            
+
          });
-         
+
       }
 
    }
-   
+
 
    bool system::on_open_file(var varFile, string strExtra)
    {
@@ -2980,22 +2980,22 @@ found:
 
    }
 
-   
+
    bool system::initialize_native_window1()
    {
-   
+
       return true;
-      
+
    }
-   
-   
+
+
    void * system::initialize_native_window2(LPCRECT lpcrect)
    {
-      
+
       return NULL;
-      
+
    }
-   
+
 
 } // namespace aura
 

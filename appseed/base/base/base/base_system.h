@@ -18,9 +18,9 @@ namespace base
       public:
 
          bool                                         m_bWindowSizeChange;
-      
+
          sp(::user::interaction)                      m_pui;
-         
+
          ::axis::system_window ^                      m_pwindow;
 
          os_system_window();
@@ -28,7 +28,7 @@ namespace base
       };
 
 #elif defined(APPLE_IOS)
-      
+
       class os_system_window
       {
       public:
@@ -96,13 +96,20 @@ namespace base
 
       virtual ::user::interaction_impl * impl_from_handle(void * pdata) override;
       virtual ::user::interaction * ui_from_handle(void * pdata) override;
-      
+
       virtual void on_setting_changed(::aura::e_setting) override;
-      
+
+
+
       virtual bool initialize_native_window1() override;
+
+      #ifdef APPLE_IOS
+
       virtual void * initialize_native_window2(LPCRECT lpcrect) override;
-      
-      
+
+      #endif
+
+
    };
 
 

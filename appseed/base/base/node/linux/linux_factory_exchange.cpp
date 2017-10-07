@@ -21,6 +21,15 @@ namespace linux
 
 //         System.factory().creatable < window_draw                 >  (System. type_info < ::user::window_draw      > (), 1);
          System.factory().creatable_large < interaction_impl      >  (System. type_info < ::user::interaction_impl > ());
+      #if defined(LINUX)
+
+      System.factory().cloneable_large < window_xlib                 >  (System.type_info <window_graphics                > ());
+
+      //#elif defined(ANDROID)
+
+      //System.factory().cloneable_large < window_double_buffer        >  (System.type_info <window_graphics                >());
+
+      #endif
 
 
       }

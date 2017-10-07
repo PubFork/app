@@ -4432,9 +4432,10 @@ m_pui->SetOwner((pOwnerWnd));
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
-      ::draw2d::graphics_sp g(allocer());
-      g->attach(::GetWindowDC(get_handle()));
-      return g.detach();
+      //::draw2d::graphics_sp g(allocer());
+      //g->attach(::GetWindowDC(get_handle()));
+      //return g.detach();
+      return NULL;
    }
 
    bool interaction_impl::ReleaseDC(::draw2d::dib * pdib)

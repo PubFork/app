@@ -192,33 +192,33 @@ namespace base
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pbasesystem == this)
                {
-                  
+
                   pair.m_element2->m_pbasesystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }         
+
+      }
 
 #ifdef WINDOWSEX
 
@@ -1022,14 +1022,14 @@ error:;
    {
 
       sp(::user::interaction) pui;
-      
+
       ::base::session * psession = m_pbasesession;
-      
+
       if(psession == NULL)
       {
-         
+
          return;
-         
+
       }
 
       while(psession->get_frame(pui))
@@ -1074,9 +1074,9 @@ error:;
       if (!::axis::system::process_initialize())
          return false;
 
-      
+
       //System.factory().cloneable_large < ::OS::window_buffer >   (System.type_info < ::window_graphics > ());
-      
+
 
 
       m_spos.alloc(allocer());
@@ -1089,14 +1089,18 @@ error:;
 
    }
 
-   
+
    bool system::initialize_native_window1()
    {
-    
+
+    #if !defined(LINUX)
+
       m_possystemwindow->m_pui = new ::user::interaction(this);
-      
+
+      #endif
+
       return true;
-      
+
    }
 
 

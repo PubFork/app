@@ -29,11 +29,11 @@ namespace aura
 
 
 #ifdef APPLE_IOS
-      
+
          plane_system *                        m_pplanesystem;
-      
+
 #endif
-      
+
          bool                                      m_bAcid;
 
 
@@ -157,7 +157,7 @@ namespace aura
          DWORD                                        m_dwCommandLineLast;
          int                                          m_iCommandLineDelay;
          sp(::thread)                                 m_pthreadCommandLine;
-      
+
 
          system(::aura::application * papp, void * pdata);
          virtual ~system();
@@ -492,14 +492,10 @@ namespace aura
 
          virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback) override;
 
-#ifdef APPLE_IOS
-
          virtual bool initialize_native_window1();
-      
+
          virtual void * initialize_native_window2(LPCRECT lpcrect);
-      
-#endif
-      
+
    };
 
 

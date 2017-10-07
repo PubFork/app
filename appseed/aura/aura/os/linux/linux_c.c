@@ -4,6 +4,6 @@
 off_t tell64(int fd)
 {
 
-   return lseek64(fd, 0, SEEK_CUR);
+   return lseek(fd, 0, SEEK_CUR);
 
 }
