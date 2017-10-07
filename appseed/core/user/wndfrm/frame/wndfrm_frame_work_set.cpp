@@ -580,7 +580,12 @@ namespace user
                if (m_pframeschema->m_spcontrolbox.is_null())
                   return;
 
-               m_pframeschema->m_spcontrolbox->set_need_layout();
+               if(GetAppearance() != appearance_iconic)
+               {
+
+                  m_pframeschema->m_spcontrolbox->set_need_layout();
+
+               }
 
             }
             catch (...)

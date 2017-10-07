@@ -118,16 +118,16 @@ namespace user
       return m_ptooltip.cast<tooltip>();
 
    }
-   
+
 
    bool interaction::defer_check_layout()
    {
-      
+
       if(!m_bLayoutEnable)
       {
-       
+
          return false;
-         
+
       }
 
       if (!check_need_layout())
@@ -210,12 +210,12 @@ namespace user
 
    bool interaction::defer_check_translation()
    {
-      
+
       if(!m_bLayoutEnable)
       {
-       
+
          return false;
-         
+
       }
 
       if (!check_need_translation())
@@ -268,12 +268,12 @@ namespace user
 
    bool interaction::defer_check_show_flags()
    {
-      
+
       if(!m_bLayoutEnable)
       {
-       
+
          return false;
-         
+
       }
 
       if (!check_show_flags())
@@ -324,12 +324,12 @@ namespace user
 
    bool interaction::defer_check_zorder()
    {
-      
+
       if(!m_bLayoutEnable)
       {
-       
+
          return false;
-         
+
       }
 
       if (!check_need_zorder())
@@ -1329,7 +1329,7 @@ restart:
 
    void interaction::do_show_flags()
    {
-      
+
       output_debug_string("\ninteraction::do_show_flags " + string(typeid(*this).name()));
 
       m_pimpl->on_do_show_flags();
@@ -1727,9 +1727,9 @@ restart:
       {
 
          ::draw2d::keep k(pgraphics);
-         
+
          //int iGet = (get_tick_count() / 10) % 256;
-         
+
          //pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, iGet, iGet));
 
          try
@@ -6647,7 +6647,7 @@ restart:
          SetWindowPlacement(&wp);
 
 #else
-         
+
          output_debug_string("\ninteraction::bestmonitor TRUE " + string(typeid(*this).name()) + string(" rectNewArea") + ::str::from(rectNew.area()) + string(" 0x") + ::hex::upper_from(uiSwpFlags));
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
@@ -7226,8 +7226,11 @@ restart:
 
          SetWindowPlacement(&wp);
 
-#else
+#elif defined(LINUX)
 
+         ::ShowWindow(get_handle(), SW_MINIMIZE);
+
+#else
 
          SetWindowPos(iZOrder, rectNew, uiSwpFlags);
 

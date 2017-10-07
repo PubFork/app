@@ -40,24 +40,6 @@ namespace sphere
       {
 
          cr = Application.get_theme_fg_color();
-         //if (Application.get_theme() == theme_dark)
-         //{
-
-         //   cr = ARGB(255, 250, 250, 250);
-
-         //}
-         //else if (Application.get_theme() == theme_blue)
-         //{
-
-         //   cr = ARGB(255, 0, 0, 0);
-
-         //}
-         //else
-         //{
-
-         //   cr = ARGB(255, 0, 0, 0);
-
-         //}
 
       }
       else if (ecolor == ::user::color_text_selected)
@@ -78,63 +60,11 @@ namespace sphere
          cr = ARGB(255, 102, 153, 255);
 
       }
-      else if (ecolor == ::user::color_background 
+      else if (ecolor == ::user::color_background
          || ecolor == ::user::color_edit_background
          || ecolor == ::user::color_toolbar_background)
       {
 
-         //if (Application.get_theme() == theme_dark)
-         //{
-
-         //   if (_001IsTranslucent())
-         //   {
-
-         //      cr = ARGB(184, 55, 55, 55);
-
-         //   }
-         //   else
-         //   {
-
-         //      cr = ARGB(255, 55, 55, 55);
-
-         //   }
-
-         //}
-         //else if (Application.get_theme() == theme_blue)
-         //{
-
-         //   if (_001IsTranslucent())
-         //   {
-
-         //      cr = ARGB(184, 55, 155, 255);
-
-         //   }
-         //   else
-         //   {
-
-         //      cr = ARGB(255, 55, 155, 255);
-
-         //   }
-
-         //}
-         //else
-         //{
-
-         //   if (_001IsTranslucent())
-         //   {
-
-         //      cr = ARGB(184, 255, 255, 255);
-
-         //   }
-         //   else
-         //   {
-
-         //      cr = ARGB(255, 255, 255, 255);
-
-         //   }
-
-
-         //}
 
          cr = Application.get_theme_bg_color();
 
@@ -202,12 +132,12 @@ namespace sphere
 
    }
 
-   
+
    bool main_frame::has_pending_graphical_update()
    {
-   
+
       return IsWindowVisible();
-      
+
    }
 
 

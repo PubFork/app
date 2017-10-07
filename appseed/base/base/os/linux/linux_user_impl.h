@@ -142,6 +142,7 @@ public:
    }
 
 
+   void send_client_event(Atom atom, unsigned int numArgs, ...);
    int32_t store_name(const char * psz);
    int32_t select_input(int32_t iInput);
    int32_t select_all_input();

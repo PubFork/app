@@ -181,16 +181,16 @@ namespace user
 
    bool interaction_impl_base::has_pending_redraw_flags()
    {
-      
+
       bool bNeedLayout = m_pui->m_bNeedLayout;
-      
+
       bool bNeedRedraw = m_pui->m_bRedraw;
-      
+
       if(bNeedLayout || bNeedRedraw)
       {
-         
+
          return true;
-         
+
       }
 
       return m_bZ
@@ -213,7 +213,7 @@ namespace user
       {
 
          m_pui->message_call(WM_MOVE);
-         
+
          sp(::user::interaction) pui;
 
          while (m_pui->get_child(pui))
@@ -224,7 +224,7 @@ namespace user
          }
 
       }
-       
+
       m_pui->message_call(WM_SIZE);
 
       m_pui->m_dwLastSizeMove = ::get_tick_count();
@@ -232,10 +232,10 @@ namespace user
       m_pui->m_bSizeMove = true;
 
       if (m_bShowFlags && (m_iShowFlags & SWP_SHOWWINDOW))
-      { 
-         
+      {
+
          m_pui->message_call(WM_SHOWWINDOW, 1);
-         
+
       }
       else if (m_bShowFlags && (m_iShowFlags & SWP_HIDEWINDOW))
       {
@@ -246,7 +246,7 @@ namespace user
 
    }
 
-   
+
    void interaction_impl_base::on_translate()
    {
 
@@ -289,18 +289,18 @@ namespace user
 
    void interaction_impl_base::on_do_show_flags()
    {
-      
+
       if(m_bShowFlags)
       {
-         
+
          output_debug_string("\ninteraction_impl_base::on_do_show_flags TRUE " + string(typeid(*m_pui).name()) + string(" 0x") + ::hex::upper_from(m_iShowFlags));
-         
+
       }
       else
       {
 
          output_debug_string("\ninteraction_impl_base::on_do_show_flags FALSE" + string(typeid(*m_pui).name()));
-         
+
       }
 
       ::rect64 rectOld = m_rectParentClient;
@@ -348,7 +348,7 @@ namespace user
       {
 
          output_debug_string("\ninteraction_impl_base::on_do_show_flags SHOW_WINDOW " + string(typeid(*m_pui).name()));
-         
+
          m_pui->message_call(WM_SHOWWINDOW, 1);
 
       }
@@ -386,7 +386,7 @@ namespace user
 
    }
 
-   
+
    void interaction_impl_base::_001WindowDock(::user::e_appearance eappearance)
    {
 
@@ -502,12 +502,12 @@ namespace user
 
       }
 
-      
+
       if((nFlags & ~reposNoPosLeftOver) == reposQuery)
       {
 
          ASSERT(lpRectParam != NULL);
-         
+
          if (bStretch)
          {
 
@@ -527,7 +527,7 @@ namespace user
 
       }
 
-      
+
       if(!idLeft.is_empty() && puiLeft != NULL)
       {
 
@@ -542,12 +542,12 @@ namespace user
             on_layout.rect.bottom -= lpRectParam->bottom;
 
          }
-         
+
          if((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
          {
 
             puiLeft->CalcWindowRect(&on_layout.rect);
-            
+
             puiLeft->SetPlacement(on_layout.rect, SWP_SHOWWINDOW | SWP_NOZORDER);
 
          }
@@ -809,11 +809,11 @@ namespace user
 //
 //      }
 //
-      
-      
+
+
       *lprect = m_rectParentClient;
-      
-     
+
+
       return true;
 
    }
@@ -924,31 +924,31 @@ namespace user
       {
 
          m_bZ = true;
-         
+
          m_iZ = z;
 
       }
 
       LONG lNoZ = ~(SWP_NOZORDER);
-      
+
       if(m_bShowFlags)
       {
 
          m_iShowFlags |= nFlags & lNoZ;
-         
+
       }
       else
       {
-         
+
          m_iShowFlags = nFlags & lNoZ;
-         
+
       }
-      
+
       if(strstr(typeid(*m_pui).name(), "main_frame") != NULL)
       {
-      
+
          output_debug_string("\nmainframe m_iShowFlags = 0x" + ::hex::upper_from(m_iShowFlags));
-         
+
       }
 
       bool bShowFlags = m_bShowFlags;
@@ -1137,7 +1137,7 @@ namespace user
 
    bool interaction_impl_base::ModifyStyle(uint32_t dwRemove,uint32_t dwAdd,UINT nFlags)
    {
-      
+
       LONG l = GetStyle();
 
       //LONG lAdd = dwAdd;
@@ -1771,7 +1771,7 @@ namespace user
       {
          m_bShowFlags = true;
 
-         m_iShowFlags &= ~SWP_SHOWWINDOW; 
+         m_iShowFlags &= ~SWP_SHOWWINDOW;
          m_iShowFlags |= SWP_HIDEWINDOW;
 
       }
@@ -1846,15 +1846,15 @@ namespace user
       return false;
 
    }
-   
-   
+
+
    void interaction_impl_base::queue_message_handler(::message::base * pbase)
    {
-      
-      
+
+
       return m_pui->message_handler(pbase);
-      
-      
+
+
    }
 
 

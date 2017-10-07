@@ -3737,11 +3737,39 @@ throw not_implemented(get_app());
          if(z == ZORDER_TOP)
          {
 
+            Atom atom;
+
+            XEvent xev;
+
+            ZERO(xev);
+
+            Window w = RootWindow(get_handle()->display(), get_handle()->m_iScreen);
+
+            atom = XInternAtom (d, "_NET_ACTIVE_WINDOW", False);
+
+            xev.xclient.type = ClientMessage;
+            xev.xclient.send_event = True;
+            xev.xclient.display = get_handle()->display();
+            xev.xclient.window = get_handle()->window();
+            xev.xclient.message_type = atom;
+            xev.xclient.format = 32;
+            xev.xclient.data.l[0] = 1;
+            xev.xclient.data.l[1] = 0;
+            xev.xclient.data.l[2] = 0;
+            xev.xclient.data.l[3] = 0;
+            xev.xclient.data.l[4] = 0;
+
+            XSendEvent (d, w, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
+
             XRaiseWindow(m_oswindow->display(), m_oswindow->window());
 
          }
 
       }
+
+      XFlush(m_oswindow->display());
+
+      XSync(m_oswindow->display(), False);
 
    }
 

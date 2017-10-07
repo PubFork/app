@@ -4,7 +4,7 @@
 
 Display * x11_get_display();
 void wm_toolwindow(oswindow w,bool bToolWindow);
-
+void wm_state_hidden_raw(oswindow w, bool bSet);
 
 struct MWMHints
 {
@@ -513,6 +513,37 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
 
 }
 
+
+/**
+ * Post an event from the client to the X server
+ */
+void oswindow_data::send_client_event(Atom atom, unsigned int numArgs, ...)
+{
+	XEvent xevent;
+	unsigned int i;
+	va_list argp;
+	va_start(argp, numArgs);
+   ZERO(xevent);
+	xevent.xclient.type = ClientMessage;
+	xevent.xclient.serial = 0;
+	xevent.xclient.send_event = False;
+	xevent.xclient.display = display();
+	xevent.xclient.window = window();
+	xevent.xclient.message_type = atom;
+	xevent.xclient.format = 32;
+
+	for (i = 0; i < numArgs; i++)
+	{
+		xevent.xclient.data.l[i] = va_arg(argp, int);
+	}
+
+//	DEBUG_X11("Send ClientMessage Event: wnd=0x%04X",
+	//          (unsigned int) xevent.xclient.window);
+	XSendEvent(display(), RootWindow(display(), m_iScreen), False, SubstructureRedirectMask | SubstructureNotifyMask, &xevent);
+	XSync(display(), False);
+	va_end(argp);
+}
+
 bool oswindow_data::show_window(int32_t nCmdShow)
 {
 
@@ -532,17 +563,64 @@ bool oswindow_data::show_window(int32_t nCmdShow)
    if(nCmdShow == SW_HIDE)
    {
 
-      XUnmapWindow(display(), window());
+      XWindowAttributes attr;
+
+      if(!XGetWindowAttributes(display(), window(), &attr))
+      {
+
+         return false;
+
+      }
+
+      if(attr.map_state == IsViewable)
+      {
+
+         XWithdrawWindow(display(), window(), m_iScreen);
+         //XUnmapWindow();
+
+      }
+
+   }
+   else if(nCmdShow == SW_MAXIMIZE)
+   {
+
+			/* Set the window as maximized */
+      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 4,
+                        XInternAtom(display(), "_NET_WM_STATE_ADD", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
+
+			/*
+			 * This is a workaround for the case where the window is maximized locally before the rail server is told to maximize
+			 * the window, this appears to be a race condition where the local window with incomplete data and once the window is
+			 * actually maximized on the server - an update of the new areas may not happen. So, we simply to do a full update of
+			 * the entire window once the rail server notifies us that the window is now maximized.
+			 */
+//			if (appWindow->rail_state == WINDOW_SHOW_MAXIMIZED)
+//			{
+//				xf_UpdateWindowArea(xfc, appWindow, 0, 0, appWindow->windowWidth,
+//				                    appWindow->windowHeight);
+//			}
+
+   }
+   else if(nCmdShow == SW_MINIMIZE)
+   {
+
+      XIconifyWindow(display(), window(), m_iScreen);
 
    }
    else
    {
 
-      XMapWindow(display(), window());
+      /* Ensure the window is not maximized */
+      send_client_event(XInternAtom(display(), "_NET_WM_STATE", false), 4,
+                        XInternAtom(display(), "_NET_WM_STATE_REMOVE", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_VERT", false),
+                        XInternAtom(display(), "_NET_WM_STATE_MAXIMIZED_HORZ", false), 0);
 
    }
 
-   XSync(display(), False);
+   XFlush(display());
 
 }
 

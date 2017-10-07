@@ -182,7 +182,7 @@ bool image_list::draw(::draw2d::graphics * pgraphics, int32_t iImage, point pt, 
 
 int32_t image_list::add_icon_os_data(void * pvoid)
 {
-   
+
    ::visual::icon icon(get_app(), pvoid);
 
    return add(&icon);
@@ -329,14 +329,14 @@ int32_t image_list::add_dib(::draw2d::dib * pdib, int x, int y)
 
 int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp)
 {
-   
+
    string strMatter;
 
    if(papp == NULL)
    {
 
       auto & dir = Application.dir();
-      
+
       strMatter = dir.matter(lpcsz);
 
    }
@@ -344,7 +344,7 @@ int32_t image_list::add_matter(const char * lpcsz, ::aura::application * papp)
    {
 
       auto & dir = Sess(papp).dir();
-      
+
       strMatter = dir.matter(lpcsz);
 
    }
@@ -382,7 +382,7 @@ int32_t image_list::add_image(image_list * pil, int iImage)
    draw(d->get_graphics(), iImage, null_point(), 0);
 
    return d;
-   
+
 }
 
 int32_t image_list::add_std_matter(const char * lpcsz)
@@ -431,6 +431,7 @@ bool image_list::_grow()
    return true;
 }
 
+
 bool image_list::get_image_info(int32_t nImage, info * pinfo) const
 {
 
@@ -439,35 +440,56 @@ bool image_list::get_image_info(int32_t nImage, info * pinfo) const
 
       ASSERT(pinfo != NULL);
 
+      bool bOk = true;
+
       if(nImage < 0 || nImage >= get_image_count())
-         return FALSE;
+      {
 
+         bOk = false;
 
-      if(m_spdib.is_null())
-         return FALSE;
+         nImage = 0;
 
-      if(const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap().is_null())
-         return FALSE;
+      }
 
-      if((HBITMAP) const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap()->get_os_data() == NULL)
-         return FALSE;
+      if(bOk && m_spdib.is_null())
+      {
+
+         bOk = false;
+
+      }
+
+      if(bOk && const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap().is_null())
+      {
+
+         bOk = false;
+
+      }
+
+      if(bOk && (HBITMAP) const_cast < ::draw2d::dib_sp & > (m_spdib)->get_bitmap()->get_os_data() == NULL)
+      {
+
+         bOk = false;
+
+      }
 
       pinfo->m_rect.left      = nImage * m_size.cx;
       pinfo->m_rect.right     = pinfo->m_rect.left + m_size.cx;
       pinfo->m_rect.top       = 0;
       pinfo->m_rect.bottom    = m_size.cy;
       pinfo->m_pdib           = ((image_list *) this)->m_spdib;
-//      pImageInfo->hbmMask           = NULL;
 
-      return TRUE;
+      return bOk;
 
    }
    catch(...)
    {
-      return FALSE;
+
    }
 
+   return false;
+
 }
+
 
 void image_list::remove_all()
 {
