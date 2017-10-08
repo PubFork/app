@@ -55,7 +55,7 @@ namespace windows
       sp(::windows::file) pFile = new file(get_app(), hFileNull);
       HANDLE hFile;
       if (!::DuplicateHandle(::GetCurrentProcess(), (HANDLE)m_hFile,
-         ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
+                             ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
       {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -72,9 +72,9 @@ namespace windows
    cres file::open(const ::file::path & lpszFileName, UINT nOpenFlags)
    {
 
-      if(*lpszFileName == '\0') 
+      if(*lpszFileName == '\0')
       {
-         
+
          TRACE("windows::file::open file with empty name!!");
 
          return failure;
@@ -94,7 +94,7 @@ namespace windows
 
       if(nOpenFlags & ::file::defer_create_directory)
       {
-         
+
          Application.dir().mk(lpszFileName.folder());
 
       }
@@ -174,31 +174,31 @@ namespace windows
          dwCreateFlag = OPEN_EXISTING;
 
       HANDLE hFile = INVALID_HANDLE_VALUE;
-      
+
       DWORD dwWaitSharingViolation = 84;
-      
+
       DWORD dwStart = ::get_tick_count();
-   
-      DWORD dwFileSharingViolationRetryTimeout = ::get_thread() != NULL ? ::get_thread()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
-   
-   retry:
+
+      //DWORD dwFileSharingViolationRetryTimeout = ::get_thread() != NULL ? ::get_thread()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
+
+retry:
 
       wstring wstrFileName(m_strFileName);
-      
+
       // attempt file creation
       //HANDLE hFile = shell::CreateFile(::str::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
-      
+
       hFile = ::CreateFileW(wstrFileName, dwAccess, dwShareMode, psa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
 
       if (hFile == INVALID_HANDLE_VALUE)
       {
-      
+
          DWORD dwLastError = ::GetLastError();
 
-         if(dwLastError == ERROR_SHARING_VIOLATION && ::get_thread_run() &&  (::get_tick_count() - dwStart) < dwFileSharingViolationRetryTimeout)
+         if(dwLastError == ERROR_SHARING_VIOLATION && ::get_thread_run() &&  (::get_tick_count() - dwStart) < m_dwErrorBlockTimeout)
          {
-         
-            Sleep(dwWaitSharingViolation);
+
+            Sleep(MAX(m_dwErrorBlockTimeout / 10, 50));
 
             goto retry;
 
@@ -313,7 +313,7 @@ namespace windows
       {
          DWORD dwLastError = ::GetLastError();
          if(dwLastError == ERROR_INVALID_HANDLE
-         || dwLastError == ERROR_ACCESS_DENIED)
+               || dwLastError == ERROR_ACCESS_DENIED)
          {
          }
          else
@@ -344,7 +344,7 @@ namespace windows
 
       m_hFile = hFileNull;
 
-      m_dwAccessMode = 0; 
+      m_dwAccessMode = 0;
 
       if (bError)
          file_exception::ThrowOsError(get_app(), dwLastError, m_strFileName);
@@ -410,7 +410,7 @@ namespace windows
 
    // file does not support direct buffering (CMemFile does)
    uint64_t file::GetBufferPtr(UINT nCommand, uint64_t /*nCount*/,
-      void ** /*ppBufStart*/, void ** /*ppBufMax*/)
+                               void ** /*ppBufStart*/, void ** /*ppBufMax*/)
    {
       ASSERT(nCommand == bufferCheck);
       UNUSED(nCommand);    // not used in retail build
@@ -1039,9 +1039,9 @@ namespace windows
 
 // turn a file, relative path or other into an absolute path
 bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
 {
 
    strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
@@ -1263,9 +1263,9 @@ string CLASS_DECL_AURA vfxStringFromCLSID(REFCLSID rclsid)
 {
    WCHAR szCLSID[256];
    wsprintfW(szCLSID, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
-      rclsid.Data1, rclsid.Data2, rclsid.Data3,
-      rclsid.Data4[0], rclsid.Data4[1], rclsid.Data4[2], rclsid.Data4[3],
-      rclsid.Data4[4], rclsid.Data4[5], rclsid.Data4[6], rclsid.Data4[7]);
+             rclsid.Data1, rclsid.Data2, rclsid.Data3,
+             rclsid.Data4[0], rclsid.Data4[1], rclsid.Data4[2], rclsid.Data4[3],
+             rclsid.Data4[4], rclsid.Data4[5], rclsid.Data4[6], rclsid.Data4[7]);
    return szCLSID;
 }
 
@@ -1280,13 +1280,13 @@ bool CLASS_DECL_AURA vfxGetInProcServer(const char * lpszCLSID, string & str)
       {
          HKEY hKeyInProc = NULL;
          if (RegOpenKey(hKeyCLSID, "InProcServer32", &hKeyInProc) ==
-            ERROR_SUCCESS)
+               ERROR_SUCCESS)
          {
             LPTSTR lpsz = str.GetBuffer(_MAX_PATH);
             DWORD dwSize = _MAX_PATH * sizeof(char);
             DWORD dwType;
             LONG lRes = ::RegQueryValueEx(hKeyInProc, "",
-               NULL, &dwType, (BYTE*)lpsz, &dwSize);
+                                          NULL, &dwType, (BYTE*)lpsz, &dwSize);
             str.ReleaseBuffer();
             b = (lRes == ERROR_SUCCESS);
             RegCloseKey(hKeyInProc);
@@ -1303,9 +1303,9 @@ bool CLASS_DECL_AURA vfxGetInProcServer(const char * lpszCLSID, string & str)
 
 // turn a file, relative path or other into an absolute path
 bool CLASS_DECL_AURA vfxFullPath(unichar * lpszPathOut, const unichar * lpszFileIn)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
 {
    ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
 
@@ -1499,7 +1499,7 @@ return TRUE;
 UINT CLASS_DECL_AURA vfxGetFileName(const unichar * lpszPathName, unichar * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
-      __is_valid_address(lpszTitle, _MAX_FNAME));
+          __is_valid_address(lpszTitle, _MAX_FNAME));
    ASSERT(__is_valid_string(lpszPathName));
 
    // always capture the complete file name including extension (if present)

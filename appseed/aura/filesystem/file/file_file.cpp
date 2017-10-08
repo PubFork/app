@@ -33,6 +33,9 @@ namespace file
 
    file::file()
    {
+
+      m_dwErrorBlockTimeout = 0;
+
    }
 
 
@@ -46,7 +49,7 @@ namespace file
       return NULL;
    }
 
-   
+
    cres file::open(const ::file::path & lpszFileName,UINT nOpenFlags)
    {
       UNREFERENCED_PARAMETER(lpszFileName);
@@ -54,7 +57,7 @@ namespace file
       return failure;
    }
 
-   
+
    file_position_t file::seek(file_offset_t lOff, ::file::e_seek nFrom)
    {
       UNREFERENCED_PARAMETER(lOff);
@@ -70,7 +73,7 @@ namespace file
 
    }
 
-   
+
    file_position_t file::seek_to_begin(file_position_t lPos)
    {
 
@@ -125,7 +128,7 @@ namespace file
 
          if(uiRead <= 0)
          {
-   
+
             return false;
 
          }
@@ -214,31 +217,31 @@ namespace file
       return 0;
    }
 
-/*   void file::Rename(const char * lpszOldName, const char * lpszNewName)
-   {
-      UNREFERENCED_PARAMETER(lpszOldName);
-      UNREFERENCED_PARAMETER(lpszNewName);
-   }
+   /*   void file::Rename(const char * lpszOldName, const char * lpszNewName)
+      {
+         UNREFERENCED_PARAMETER(lpszOldName);
+         UNREFERENCED_PARAMETER(lpszNewName);
+      }
 
-   void file::remove(const char * lpszFileName)
-   {
-      UNREFERENCED_PARAMETER(lpszFileName);
-   }*/
+      void file::remove(const char * lpszFileName)
+      {
+         UNREFERENCED_PARAMETER(lpszFileName);
+      }*/
 
    void file::assert_valid() const
    {
-   //   object::assert_valid();
+      //   object::assert_valid();
       // we permit the descriptor m_hFile to be any value for derived classes
    }
 
    void file::dump(dump_context & dumpcontext) const
    {
       UNREFERENCED_PARAMETER(dumpcontext);
-   //   object::dump(dumpcontext);
+      //   object::dump(dumpcontext);
 
-   //   dumpcontext << "with handle " << (UINT)m_hFile;
-   //   dumpcontext << " and name \"" << m_wstrFileName << "\"";
-   //   dumpcontext << "\n";
+      //   dumpcontext << "with handle " << (UINT)m_hFile;
+      //   dumpcontext << " and name \"" << m_wstrFileName << "\"";
+      //   dumpcontext << "\n";
    }
 
 
@@ -246,75 +249,75 @@ namespace file
    /////////////////////////////////////////////////////////////////////////////
    // file_exception helpers
 
-/*   #ifdef DEBUG
-   static const char * rgszFileExceptionCause[] =
-   {
-      "none",
-      "generic",
-      "fileNotFound",
-      "badPath",
-      "tooManyOpenFiles",
-      "accessDenied",
-      "invalidFile",
-      "removeCurrentDir",
-      "directoryFull",
-      "badSeek",
-      "hardIO",
-      "sharingViolation",
-      "lockViolation",
-      "diskFull",
-      "endOfFile",
-   };
-   static const char szUnknown[] = "unknown";
-   #endif*/
+   /*   #ifdef DEBUG
+      static const char * rgszFileExceptionCause[] =
+      {
+         "none",
+         "generic",
+         "fileNotFound",
+         "badPath",
+         "tooManyOpenFiles",
+         "accessDenied",
+         "invalidFile",
+         "removeCurrentDir",
+         "directoryFull",
+         "badSeek",
+         "hardIO",
+         "sharingViolation",
+         "lockViolation",
+         "diskFull",
+         "endOfFile",
+      };
+      static const char szUnknown[] = "unknown";
+      #endif*/
 
 
 
    /* Error Codes */
 
-   #define EPERM           1
-   #define ENOENT          2
-   #define ESRCH           3
-   #define EINTR           4
-   #define EIO             5
-   #define ENXIO           6
-   #define E2BIG           7
-   #define ENOEXEC         8
-   #define EBADF           9
-   #define ECHILD          10
+#define EPERM           1
+#define ENOENT          2
+#define ESRCH           3
+#define EINTR           4
+#define EIO             5
+#define ENXIO           6
+#define E2BIG           7
+#define ENOEXEC         8
+#define EBADF           9
+#define ECHILD          10
 #ifndef APPLEOS
-   #define EAGAIN          11
+#define EAGAIN          11
 #endif
-   #define ENOMEM          12
-   #define EACCES          13
-   #define EFAULT          14
-   #define EBUSY           16
-   #define EEXIST          17
-   #define EXDEV           18
-   #define ENODEV          19
-   #define ENOTDIR         20
-   #define EISDIR          21
-   #define EINVAL          22
-   #define ENFILE          23
-   #define EMFILE          24
-   #define ENOTTY          25
-   #define EFBIG           27
-   #define ENOSPC          28
-   #define ESPIPE          29
-   #define EROFS           30
-   #define EMLINK          31
-   #define EPIPE           32
-   #define EDOM            33
-   #define ERANGE          34
+#define ENOMEM          12
+#define EACCES          13
+#define EFAULT          14
+#define EBUSY           16
+#define EEXIST          17
+#define EXDEV           18
+#define ENODEV          19
+#define ENOTDIR         20
+#define EISDIR          21
+#define EINVAL          22
+#define ENFILE          23
+#define EMFILE          24
+#define ENOTTY          25
+#define EFBIG           27
+#define ENOSPC          28
+#define ESPIPE          29
+#define EROFS           30
+#define EMLINK          31
+#define EPIPE           32
+#define EDOM            33
+#define ERANGE          34
 
 #if defined(WINDOWS)
 
-   #define EDEADLK         36
-   #define ENAMETOOLONG    38
-   #define ENOLCK          39
-   #define ENOSYS          40
-   #define ENOTEMPTY       41
-   #define EILSEQ          42
+#define EDEADLK         36
+#define ENAMETOOLONG    38
+#define ENOLCK          39
+#define ENOSYS          40
+#define ENOTEMPTY       41
+#define EILSEQ          42
 
 #endif
 
@@ -322,7 +325,7 @@ namespace file
     * Support EDEADLOCK for compatibiity with older MS-C versions.
     */
 #ifndef EDEADLOCK
-   #define EDEADLOCK       EDEADLK
+#define EDEADLOCK       EDEADLK
 #endif
 
 
@@ -443,8 +446,8 @@ namespace file
    {
       if(read(puch, 1) == 1)
       {
-seek(-1, ::file::seek_current);
-return true;
+         seek(-1, ::file::seek_current);
+         return true;
       }
       else
       {
@@ -631,7 +634,7 @@ return true;
 
    }
 
-   
+
    file & file::operator = (const file & file)
    {
 
