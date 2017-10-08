@@ -2190,7 +2190,7 @@ restart:
       y2 = pdibAlf->m_size.cy + y1;
 
 
-      int a;
+      //int a;
 
       for (int y = 0; y < yEnd; y++)
       {

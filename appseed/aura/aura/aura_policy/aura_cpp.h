@@ -72,11 +72,27 @@ namespace aura
 
    };
 
-} // namespace system
+   class library;
+
+   class application;
+
+#if defined(APPLE_IOS)
+   extern "C"
+#endif
+   typedef ::aura::library * (*PFN_GET_NEW_LIBRARY)(::aura::application * papp);
+
+#if defined(APPLE_IOS)
+   extern "C"
+#endif
+   typedef ::aura::application * (*PFN_GET_NEW_APP)(::aura::application * papp);
+
+} // namespace aura
 
 
 namespace install
 {
+
+
 
    class installer;
 
@@ -756,6 +772,8 @@ CLASS_DECL_AURA bool __node_aura_pre_term();
 CLASS_DECL_AURA bool __node_aura_pos_term();
 
 
+CLASS_DECL_AURA ::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz);
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p);
 CLASS_DECL_AURA ::aura::application * get_thread_app();
 
 #include "aura/primitive/primitive_cflag.h"

@@ -16,7 +16,7 @@ namespace axis
    system::system(::aura::application * papp):
       aura::system(this, NULL),
 //      m_httpsystem(this),
-m_visual(this),
+      m_visual(this),
 
       m_emaildepartment(this)
    {
@@ -276,33 +276,33 @@ m_visual(this),
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paxissystem == this)
                {
-                  
+
                   pair.m_element2->m_paxissystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }         
+
+      }
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -915,7 +915,7 @@ namespace axis
    string system::url_encode(const string & str)
    {
 
-	   return m_purldepartment->url_encode(str);
+      return m_purldepartment->url_encode(str);
 
    }
 
@@ -971,7 +971,7 @@ namespace axis
 
       MONITORINFO mi = m_monitorinfoa.last();
 
-      TRACE0("session::monitor_enum\n");
+      TRACE("session::monitor_enum\n");
       TRACE("upper_bound %d\n",m_monitorinfoa.get_upper_bound());
       TRACE("rcMonitor(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcMonitor.left,mi.rcMonitor.top,mi.rcMonitor.right,mi.rcMonitor.bottom);
       TRACE("rcWork(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcWork.left,mi.rcWork.top,mi.rcWork.right,mi.rcWork.bottom);

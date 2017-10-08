@@ -28,7 +28,7 @@ CLASS_DECL_AURA void debug_print(const char * pszFormat,...)
    {
 
       return;
-   
+
    }
 
    //if (strstr(pszFormat, "%") == NULL)
@@ -89,16 +89,22 @@ void __post_quit_message(int32_t nExitCode)
 
 string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary = NULL;
 
-string_map < ::aura::PFN_GET_NEW_LIBRARY , ::aura::PFN_GET_NEW_LIBRARY  > & __library()
+CLASS_DECL_AURA string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > & __library()
 {
    return *g_pmapLibrary;
 }
 
+CLASS_DECL_AURA::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
+{
 
-void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
+   return __library()[psz];
+
+}
+
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
 {
    __library()[psz] = p;
-   
+
 }
 
 
@@ -113,7 +119,7 @@ CLASS_DECL_AURA int get_aura_init()
 }
 
 
-::aura::system * aura_create_aura_system()
+CLASS_DECL_AURA ::aura::system * aura_create_aura_system()
 {
 
    return new ::aura::system(NULL, NULL);

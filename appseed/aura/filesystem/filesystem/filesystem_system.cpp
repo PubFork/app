@@ -56,7 +56,7 @@ namespace file
 
    }
 
-   
+
 
    bool system::exists(const ::file::path & pszPath, ::aura::application * papp)
    {
@@ -324,7 +324,7 @@ restart:
             }
             else if(iMax == 99)
             {
-               
+
                iIncLevel = iMaxLevel - 1;
 
                goto restart;
@@ -384,7 +384,7 @@ restart:
                continue;
 
             }
-            
+
             if(!isdigit((uchar) str[0]) || !isdigit((uchar) str[1]))
             {
 
@@ -533,7 +533,7 @@ restart:
             }
 
             ::memory_file memfile(papp, &storage);
-            
+
             zip::in_file infile(papp);
 
             if (!infile.unzip_open(strFilePath, 0))
@@ -578,7 +578,7 @@ restart:
 
          }
          else if (::str::begins(strFilePath, astr.strHttpProtocol)
-            || ::str::begins(strFilePath, astr.strHttpsProtocol))
+                  || ::str::begins(strFilePath, astr.strHttpsProtocol))
          {
 
             if (!exists(strFilePath, &varQuery, papp))
@@ -636,16 +636,16 @@ restart:
       string strResult;
 
       if (storage.get_size() >= 2
-         && storage.get_data()[0] == 255
-         && storage.get_data()[1] == 60)
+            && storage.get_data()[0] == 255
+            && storage.get_data()[1] == 60)
       {
 
          ::str::international::unicode_to_utf8(strResult, (const unichar *)&storage.get_data()[2], (int32_t)(storage.get_size() - 2));
 
       }
       else if (storage.get_size() >= 2
-         && storage.get_data()[0] == 255
-         && storage.get_data()[1] == 254)
+               && storage.get_data()[0] == 255
+               && storage.get_data()[1] == 254)
       {
 
 #ifdef VSNORD
@@ -660,17 +660,17 @@ restart:
 
       }
       else if (storage.get_size() >= 3
-         && storage.get_data()[0] == 0xef
-         && storage.get_data()[1] == 0xbb
-         && storage.get_data()[2] == 0xbf)
+               && storage.get_data()[0] == 0xef
+               && storage.get_data()[1] == 0xbb
+               && storage.get_data()[2] == 0xbf)
       {
-         
+
          strResult = string((const char *)(const unichar *)&storage.get_data()[3], (int32_t)(storage.get_size() - 3));
 
       }
       else
       {
-         
+
          strResult = string((const char *)storage.get_data(), (int32_t)storage.get_size());
 
       }
@@ -1201,8 +1201,8 @@ restart:
 #ifdef WINDOWSEX
 
       if (!::MoveFileW(
-         ::str::international::utf8_to_unicode(psz),
-         ::str::international::utf8_to_unicode(pszNew)))
+               ::str::international::utf8_to_unicode(psz),
+               ::str::international::utf8_to_unicode(pszNew)))
       {
 
          uint32_t dwError = ::GetLastError();
@@ -1211,9 +1211,9 @@ restart:
          {
 
             if (::CopyFileW(
-               ::str::international::utf8_to_unicode(psz),
-               ::str::international::utf8_to_unicode(pszNew),
-               FALSE))
+                     ::str::international::utf8_to_unicode(psz),
+                     ::str::international::utf8_to_unicode(pszNew),
+                     FALSE))
             {
 
                if (!::DeleteFileW(::str::international::utf8_to_unicode(psz)))
@@ -1225,7 +1225,7 @@ restart:
 
                   strError.Format("Failed to delete the file to move \"%s\" error=%d", psz, dwError);
 
-                  TRACE0(strError);
+                  TRACE("%s", strError);
 
                }
 
@@ -1408,22 +1408,22 @@ restart:
 
    ::file::path system::paste(const ::file::path & pathLocation,const ::file::path & path,::aura::application * papp)
    {
-      
+
       ::file::path pathDir = path.folder();
-      
+
       ::file::path pathDst = pathLocation;
-      
+
       ::file::path pathSrc = pathDir;
-      
+
       if (pathDst == pathSrc)
       {
-         
+
          return duplicate(path, papp);
 
       }
       else
       {
-         
+
          ::file::path pathNew = pathDst / path.name();
 
          copy(pathNew, path, false, extract_all, papp);
@@ -1670,8 +1670,8 @@ restart:
       }
 
       while(str.has_char() &&
-         (str.Right(1) == "\\" ||
-         str.Right(1) == "/"))
+            (str.Right(1) == "\\" ||
+             str.Right(1) == "/"))
       {
          str = str.Left(str.get_length() - 1);
       }
@@ -2519,18 +2519,18 @@ restart:
 
                if(bRawHttp1)
                {
-                
+
                   output_debug_string("\nbRawHttp1");
-                  
+
                }
 
                bool bRawHttp2 = (bool)spfile->oprop("http_set")["raw_http"];
 
                if(bRawHttp2)
                {
-                  
+
                   output_debug_string("\nbRawHttp2");
-                  
+
                }
 
                if (Application.http().get(strPath, *pfile->get_memory(), set))
@@ -2600,7 +2600,7 @@ restart:
          else
          {
 
-          //  return NULL;
+            //  return NULL;
 
 
 

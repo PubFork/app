@@ -259,10 +259,10 @@ void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
          // format names.
       }
 
-      __trace(
-         "%s: Advise item='%s', Format='%s', Ack=%d, Defer Update= %d\n",
-         lpszPrefix, szItem, szFormat, lpAdvise->fAckReq,
-         lpAdvise->fDeferUpd);
+      //__trace(
+      //   "%s: Advise item='%s', Format='%s', Ack=%d, Defer Update= %d\n",
+      //   lpszPrefix, szItem, szFormat, lpAdvise->fAckReq,
+      //   lpAdvise->fDeferUpd);
       ::GlobalUnlock(hAdvise);
    }
 }

@@ -623,9 +623,9 @@ namespace base
 
       // Get the number of physical monitors.
       BOOL bSuccess = GetNumberOfPhysicalMonitorsFromHMONITOR(
-         m_hmonitora[iMonitor],
-         &cPhysicalMonitors
-      );
+                         m_hmonitora[iMonitor],
+                         &cPhysicalMonitors
+                      );
 
       if (!bSuccess || cPhysicalMonitors <= 0)
       {
@@ -761,7 +761,7 @@ namespace base
       }
 
       int iRepeat = 0;
-      repeat:
+repeat:
 
       bDifferent = false;
 
@@ -858,10 +858,12 @@ namespace base
 
       }
       Sleep(500);
-   finalize:;
+finalize:
+      ;
       DestroyPhysicalMonitors(1, &monitor);
       return true;
-error:;
+error:
+      ;
       Sleep(500);
       // Close the monitor handles.
       DestroyPhysicalMonitors(1, &monitor);
@@ -916,10 +918,10 @@ error:;
                //      lprect->top = 0;
                //      lprect->bottom= HeightOfScreen(DefaultScreenOfDisplay(d.m_pdata->m_pdisplay));
 
-               //					for (int x=0; x<heads; ++x)
-               //						cout << "Head " << x+1 << " of " << heads << ": " <<
-               //							p[x].width << "x" << p[x].height << " at " <<
-               //							p[x].x_org << "," << p[x].y_org << endl;
+               //             for (int x=0; x<heads; ++x)
+               //                cout << "Head " << x+1 << " of " << heads << ": " <<
+               //                   p[x].width << "x" << p[x].height << " at " <<
+               //                   p[x].x_org << "," << p[x].y_org << endl;
                success = true;
             }
 
@@ -1093,11 +1095,11 @@ error:;
    bool system::initialize_native_window1()
    {
 
-    #if !defined(LINUX)
+#if !defined(LINUX) && !defined(WINDOWSEX)
 
       m_possystemwindow->m_pui = new ::user::interaction(this);
 
-      #endif
+#endif
 
       return true;
 
@@ -1120,27 +1122,28 @@ error:;
 
 
 
-  /* colorramp.c -- color temperature calculation source
-  This file is part of Redshift.
-  Redshift is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  Redshift is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  You should have received a copy of the GNU General Public License
-  along with Redshift.  If not, see <http://www.gnu.org/licenses/>.
-  Copyright (c) 2013-2014  Jon Lund Steffensen <jonlst@gmail.com>
-  Copyright (c) 2013  Ingo Thies <ithies@astro.uni-bonn.de>
-  */
+/* colorramp.c -- color temperature calculation source
+This file is part of Redshift.
+Redshift is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+Redshift is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with Redshift.  If not, see <http://www.gnu.org/licenses/>.
+Copyright (c) 2013-2014  Jon Lund Steffensen <jonlst@gmail.com>
+Copyright (c) 2013  Ingo Thies <ithies@astro.uni-bonn.de>
+*/
 
-  /* Whitepoint values for temperatures at 100K intervals.
-  These will be interpolated for the actual temperature.
-  This table was provided by Ingo Thies, 2013. See
-  the file README-colorramp for more information. */
-static const float g_fa_blackbody_color[] = {
+/* Whitepoint values for temperatures at 100K intervals.
+These will be interpolated for the actual temperature.
+This table was provided by Ingo Thies, 2013. See
+the file README-colorramp for more information. */
+static const float g_fa_blackbody_color[] =
+{
    1.00000000,  0.18172716,  0.00000000, /* 1000K */
    1.00000000,  0.25503671,  0.00000000, /* 1100K */
    1.00000000,  0.30942099,  0.00000000, /* 1200K */

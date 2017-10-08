@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-string_map < INT_PTR,INT_PTR > & __library();
+
 
 
 namespace aura
@@ -66,11 +66,16 @@ namespace aura
 
       m_strMessage.Empty();
 
-#if defined(CUBE)
+      auto pfn_get_new_library = get_library_factory(m_strPath);
 
-      m_strPath = pszPath;
+      if (pfn_get_new_library != NULL)
+      {
 
-#else
+         m_strPath = pszPath;
+
+         return true;
+
+      }
 
       try
       {
@@ -109,8 +114,6 @@ namespace aura
 
       }
 
-#endif
-
       thisend << m_strMessage;
 
       return true;
@@ -129,24 +132,34 @@ namespace aura
       PFN_GET_NEW_LIBRARY pfn_get_new_library = NULL;
 
       try
-
       {
-#if defined(CUBE)
-         pfn_get_new_library = (PFN_GET_NEW_LIBRARY)(INT_PTR)__library()[m_strPath];
-#else
-         string strPath = m_strPath.title();
-         if((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)
+
+         pfn_get_new_library = get_library_factory(m_strPath);
+
+         if (pfn_get_new_library == NULL)
          {
-            if(::str::begins_eat(strPath, "lib"))
+
+            string strPath = m_strPath.title();
+
+            if ((pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library")) == NULL)
             {
-               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
+               if (::str::begins_eat(strPath, "lib"))
+               {
+
+                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >(strPath + "_get_new_library");
+
+               }
+
+               if (pfn_get_new_library == NULL)
+               {
+
+                  pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
+
+               }
+
             }
-            if(pfn_get_new_library == NULL)
-            {
-               pfn_get_new_library = get < PFN_GET_NEW_LIBRARY >("get_new_library");
-            }
+
          }
-#endif
 
       }
       catch(...)

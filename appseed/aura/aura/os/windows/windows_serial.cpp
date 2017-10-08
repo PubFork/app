@@ -347,15 +347,21 @@ Serial::SerialImpl::reconfigurePort ()
    }
 
 
-   // Update byte_time_ based on the new settings.
-   uint32_t bit_time_ns = 1e9 / baudrate_;
-   byte_time_ns_ = bit_time_ns * (1 + bytesize_ + parity_ + stopbits_);
-
    // Compensate for the stopbits_one_point_five enum being equal to int 3,
    // and not 1.5.
+   // Update byte_time_ based on the new settings.
+
    if (stopbits_ == stopbits_one_point_five)
    {
-      byte_time_ns_ += ((1.5 - stopbits_one_point_five) * bit_time_ns);
+
+      byte_time_ns_ = (uint32_t)(((((uint64_t)1000LL * 1000LL * 1000LL) *(1 + bytesize_ + parity_)) + (1500LL*1000LL*1000LL))/((uint64_t)(baudrate_)));
+
+   }
+   else
+   {
+
+      byte_time_ns_ = (uint32_t) ((((uint64_t)1000LL * 1000LL * 1000LL) *(1 + bytesize_ + parity_ + stopbits_))/((uint64_t)(baudrate_)));
+
    }
 
 }

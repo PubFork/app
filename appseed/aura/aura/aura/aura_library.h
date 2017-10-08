@@ -100,13 +100,6 @@ namespace aura
    };
 
 
-#if defined(APPLE_IOS)
-   extern "C"
-#endif
-   typedef ::aura::library * (* PFN_GET_NEW_LIBRARY)(::aura::application * papp);
-
-   typedef ::aura::application * (* PFN_GET_NEW_APP)(::aura::application * papp);
-
 
 } // namespace aura
 

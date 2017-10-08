@@ -2990,7 +2990,7 @@ namespace windows
                      else
                      {
 
-                        TRACE0("WARNING: failed to draw a background. this surface probably will be black.");
+                        TRACE("WARNING: failed to draw a background. this surface probably will be black.");
 
                      }
 

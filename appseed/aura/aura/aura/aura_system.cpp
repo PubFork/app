@@ -2882,8 +2882,8 @@ found:
                   synch_lock sl(m_pmutex);
 
                   if((m_straCommandLineAccumul.has_elements() ||
-                      m_straCommandLineExtra.has_elements())
-                     && get_tick_count() - m_dwCommandLineLast > m_iCommandLineDelay)
+                        m_straCommandLineExtra.has_elements())
+                        && ::comparison::gt(get_tick_count() - m_dwCommandLineLast, m_iCommandLineDelay))
                   {
 
                      stringa straAccumul = m_straCommandLineAccumul;
@@ -2900,16 +2900,16 @@ found:
                      {
 
                         on_open_file(
-                            straAccumul,
-                            straExtra.slice(1).implode(" "));
+                           straAccumul,
+                           straExtra.slice(1).implode(" "));
 
                      }
                      else
                      {
 
                         on_open_file(
-                            straAccumul,
-                            "");
+                           straAccumul,
+                           "");
 
                      }
 
@@ -2924,6 +2924,8 @@ found:
          });
 
       }
+
+      return true;
 
    }
 

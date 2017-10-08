@@ -5,13 +5,13 @@ static ::user::notify_icon * g_pnotifyiconLast = NULL;
 
 #ifdef LINUX
 
-   #include <dlfcn.h>
-   BEGIN_EXTERN_C
-   typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, i_close_quit *);
-   typedef void BASECORE_APP_INDICATOR_TERM(void *);
-   typedef void BASECORE_APP_INDICATOR_STEP(void *);
-   END_EXTERN_C
-   extern void * g_pbasecore;
+#include <dlfcn.h>
+BEGIN_EXTERN_C
+typedef void * BASECORE_APP_INDICATOR_NEW(const char *, const char *, const char *, i_close_quit *);
+typedef void BASECORE_APP_INDICATOR_TERM(void *);
+typedef void BASECORE_APP_INDICATOR_STEP(void *);
+END_EXTERN_C
+extern void * g_pbasecore;
 
 #endif
 
@@ -293,9 +293,9 @@ namespace user
          return false;
 
       }
-      
+
       m_piconCurrent = hicon;
-      
+
       return true;
 
 #else
@@ -339,6 +339,8 @@ namespace user
 
       DestroyWindow();
 
+      return true;
+
 #elif defined(LINUX)
 
       {
@@ -352,11 +354,11 @@ namespace user
 #elif defined(MACOS)
 
       notify_icon_destroy();
-      
+
       m_bCreated = false;
-      
+
       return true;
-      
+
 #else
 
 

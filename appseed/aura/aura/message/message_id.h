@@ -83,11 +83,20 @@ namespace message
 
          }
 
+
+         bool operator == (const string & str) const
+         {
+
+            return is_text() && str.compare(m_psz) == 0;
+
+         }
+
+
          bool operator == (const char * psz) const
          {
-         
+
             return is_text() && !strcmp(m_psz, psz);
-         
+
          }
 
          bool operator == (const id & id) const

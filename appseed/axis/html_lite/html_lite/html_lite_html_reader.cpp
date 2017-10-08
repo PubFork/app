@@ -77,19 +77,19 @@ ILiteHTMLReaderEvents::~ILiteHTMLReaderEvents()
 
 
 lite_html_reader::lite_html_reader(::aura::application * papp)  :
-::object(papp)
+   ::object(papp)
 {
    m_bResolveEntities = true;   // entities are resolved, by default
    m_dwAppData = 0L;   // reasonable default!
    m_dwBufPos = 0L;   // start from the very beginning
-                      //m_dwBufLen = 0L;   // buffer length is unknown yet
+   //m_dwBufLen = 0L;   // buffer length is unknown yet
 
-                      // default is to raise all of the events
+   // default is to raise all of the events
    m_eventMask = (EventMaskEnum)(notifyStartStop |
-      notifyTagStart |
-      notifyTagEnd |
-      notifyCharacters |
-      notifyComment);
+                                 notifyTagStart |
+                                 notifyTagEnd |
+                                 notifyCharacters |
+                                 notifyComment);
 
    m_pEventHandler = NULL;   // no event handler is associated
 }
@@ -165,110 +165,110 @@ uint_ptr lite_html_reader::parseDocument()
       switch (ch)
       {
 
-         // tag starting delimeter?
+      // tag starting delimeter?
       case '<':
+      {
+         UngetChar();
+
+         strComment.Empty();
+         if (!parseComment(strComment))
          {
-            UngetChar();
-
-            strComment.Empty();
-            if (!parseComment(strComment))
+            bIsOpeningTag = false;
+            bIsClosingTag = false;
+            if (!parseTag(oTag, bIsOpeningTag, bIsClosingTag))
             {
-               bIsOpeningTag = false;
-               bIsClosingTag = false;
-               if (!parseTag(oTag, bIsOpeningTag, bIsClosingTag))
-               {
-                  ++dwCharDataLen;
-
-                  // manually advance buffer position
-                  // because the last call to UngetChar()
-                  // moved it back one character
-                  ch = ReadChar();
-
-                  break;
-               }
-            }
-
-            // clear pending notifications
-            if ( (dwCharDataLen) || (strCharacters.get_length()) )
-            {
-               strCharacters += string(&m_strBuffer[dwCharDataStart], dwCharDataLen);
-               NormalizeCharacters(strCharacters);
-
-               if ( (strCharacters.get_length()) &&
-                  (getEventNotify(notifyCharacters)) )
-               {
-                  bAbort = false;
-                  m_pEventHandler->Characters(strCharacters, m_dwAppData, bAbort);
-                  if (bAbort)   goto LEndParse;
-               }
-
-               strCharacters.Empty();
-            }
-
-            dwCharDataLen = 0L;
-            dwCharDataStart = m_dwBufPos;
-
-            if (strComment.get_length())
-            {
-               if (getEventNotify(notifyComment))
-               {
-                  bAbort = false;
-                  m_pEventHandler->Comment(strComment, m_dwAppData, bAbort);
-                  if (bAbort)   goto LEndParse;
-               }
-            }
-            else
-            {
-               if ( (bIsOpeningTag) && (getEventNotify(notifyTagStart)) )
-               {
-                  bAbort = false;
-                  m_pEventHandler->StartTag(&oTag, m_dwAppData, bAbort);
-                  if (bAbort)   goto LEndParse;
-               }
-
-               if ( (bIsClosingTag) && (getEventNotify(notifyTagEnd)) )
-               {
-                  bAbort = false;
-                  m_pEventHandler->EndTag(&oTag, m_dwAppData, bAbort);
-                  if (bAbort)   goto LEndParse;
-               }
-            }
-
-            break;
-         }
-
-         // entity reference beginning delimeter?
-      case '&':
-         {
-            UngetChar();
-
-            lTemp = 0;
-            string strChar;
-            if (m_bResolveEntities)
-               lTemp = System.m_phtml->resolve_entity(&m_strBuffer[m_dwBufPos], strChar);
-
-            if (lTemp)
-            {
-               strCharacters += string(&m_strBuffer[dwCharDataStart], dwCharDataLen) + strChar;
-               m_dwBufPos += lTemp;
-               dwCharDataStart = m_dwBufPos;
-               dwCharDataLen = 0L;
-            }
-            else
-            {
-               ch = ReadChar();
                ++dwCharDataLen;
+
+               // manually advance buffer position
+               // because the last call to UngetChar()
+               // moved it back one character
+               ch = ReadChar();
+
+               break;
+            }
+         }
+
+         // clear pending notifications
+         if ( (dwCharDataLen) || (strCharacters.get_length()) )
+         {
+            strCharacters += string(&m_strBuffer[dwCharDataStart], dwCharDataLen);
+            NormalizeCharacters(strCharacters);
+
+            if ( (strCharacters.get_length()) &&
+                  (getEventNotify(notifyCharacters)) )
+            {
+               bAbort = false;
+               m_pEventHandler->Characters(strCharacters, m_dwAppData, bAbort);
+               if (bAbort)   goto LEndParse;
             }
 
-            break;
+            strCharacters.Empty();
          }
 
-         // any other character
-      default:
+         dwCharDataLen = 0L;
+         dwCharDataStart = m_dwBufPos;
+
+         if (strComment.get_length())
          {
-            ++dwCharDataLen;
-            break;
+            if (getEventNotify(notifyComment))
+            {
+               bAbort = false;
+               m_pEventHandler->Comment(strComment, m_dwAppData, bAbort);
+               if (bAbort)   goto LEndParse;
+            }
          }
+         else
+         {
+            if ( (bIsOpeningTag) && (getEventNotify(notifyTagStart)) )
+            {
+               bAbort = false;
+               m_pEventHandler->StartTag(&oTag, m_dwAppData, bAbort);
+               if (bAbort)   goto LEndParse;
+            }
+
+            if ( (bIsClosingTag) && (getEventNotify(notifyTagEnd)) )
+            {
+               bAbort = false;
+               m_pEventHandler->EndTag(&oTag, m_dwAppData, bAbort);
+               if (bAbort)   goto LEndParse;
+            }
+         }
+
+         break;
+      }
+
+      // entity reference beginning delimeter?
+      case '&':
+      {
+         UngetChar();
+
+         lTemp = 0;
+         string strChar;
+         if (m_bResolveEntities)
+            lTemp = System.m_phtml->resolve_entity(&m_strBuffer[m_dwBufPos], strChar);
+
+         if (lTemp)
+         {
+            strCharacters += string(&m_strBuffer[dwCharDataStart], dwCharDataLen) + strChar;
+            m_dwBufPos += lTemp;
+            dwCharDataStart = m_dwBufPos;
+            dwCharDataLen = 0L;
+         }
+         else
+         {
+            ch = ReadChar();
+            ++dwCharDataLen;
+         }
+
+         break;
+      }
+
+      // any other character
+      default:
+      {
+         ++dwCharDataLen;
+         break;
+      }
       }
    }
 
@@ -280,7 +280,7 @@ uint_ptr lite_html_reader::parseDocument()
       strCharacters.trim_right();   // explicit trailing white-space removal
 
       if ( (strCharacters.get_length()) &&
-         (getEventNotify(notifyCharacters)) )
+            (getEventNotify(notifyCharacters)) )
       {
          bAbort = false;
          m_pEventHandler->Characters(strCharacters, m_dwAppData, bAbort);
@@ -345,9 +345,9 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    strsize dwBufLen = ::GetFileSize(hFile, NULL);
    if (dwBufLen == INVALID_FILE_SIZE)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-         " GetFileSize() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE("(Error) lite_html_reader::read:"
+            " GetFileSize() failed;"
+            " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
@@ -359,9 +359,10 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
 #endif
    if (hFileMap == NULL)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-         " CreateFileMapping() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE
+      ("(Error) lite_html_reader::read:"
+       " CreateFileMapping() failed;"
+       " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
@@ -373,9 +374,10 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
 #endif
    if (lpsz == NULL)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-         " MapViewOfFile() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE
+      ("(Error) lite_html_reader::read:"
+       " MapViewOfFile() failed;"
+       " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
@@ -422,19 +424,19 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    if (dwBufLen == INVALID_FILE_SIZE)
    {
       TRACE1("(Error) lite_html_reader::read:"
-         " GetFileSize() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+             " GetFileSize() failed;"
+             " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
    // create a file-mapping object for the file
 #ifdef METROWIN
-         hFileMap = CreateFileMappingFromApp(
-            hFile,
-            NULL,
-            PAGE_READWRITE,
-            dwBufLen,
-            NULL);
+   hFileMap = CreateFileMappingFromApp(
+                 hFile,
+                 NULL,
+                 PAGE_READWRITE,
+                 dwBufLen,
+                 NULL);
 
 #else
    hFileMap = ::CreateFileMapping(hFile, NULL, PAGE_READONLY, 0L, 0L, NULL);
@@ -442,17 +444,17 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    if (hFileMap == NULL)
    {
       TRACE1("(Error) lite_html_reader::read:"
-         " CreateFileMapping() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+             " CreateFileMapping() failed;"
+             " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
 #ifdef METROWIN
-      lpsz = (const char *) MapViewOfFileFromApp(
-         hFileMap,
-         FILE_MAP_READ | FILE_MAP_WRITE,
-         0,
-         0);
+   lpsz = (const char *) MapViewOfFileFromApp(
+             hFileMap,
+             FILE_MAP_READ | FILE_MAP_WRITE,
+             0,
+             0);
 #else
    // map the entire file into the address-space of the application
    lpsz = (const char *)::MapViewOfFile(hFileMap, FILE_MAP_READ, 0L, 0L, 0L);
@@ -460,8 +462,8 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    if (lpsz == NULL)
    {
       TRACE1("(Error) lite_html_reader::read:"
-         " MapViewOfFile() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+             " MapViewOfFile() failed;"
+             " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
@@ -527,8 +529,8 @@ uint_ptr lite_html_reader::read_html_file(int32_t fd)
    if(lpsz == MAP_FAILED)
    {
       TRACE("(Error) lite_html_reader::read:"
-         " CreateFileMapping() failed;"
-         " GetLastError() returns 0x%08x.\n", ::GetLastError());
+            " CreateFileMapping() failed;"
+            " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto map_error;
    }
 
@@ -592,10 +594,10 @@ char lite_html_reader::UngetChar()
 bool lite_html_reader::getEventNotify(uint32_t dwEvent) const
 {
    ASSERT(dwEvent == notifyStartStop  ||
-      dwEvent == notifyTagStart   ||
-      dwEvent == notifyTagEnd     ||
-      dwEvent == notifyCharacters ||
-      dwEvent == notifyComment);
+          dwEvent == notifyTagStart   ||
+          dwEvent == notifyTagEnd     ||
+          dwEvent == notifyCharacters ||
+          dwEvent == notifyComment);
    if (m_pEventHandler == NULL)
       return (false);
    return ((m_eventMask & dwEvent) == dwEvent);
@@ -650,16 +652,16 @@ bool lite_html_reader::getBoolOption(ReaderOptionsEnum option, bool& bCurVal) co
    switch (option)
    {
    case resolveEntities:
-      {
-         bCurVal = m_bResolveEntities;
-         bSuccess = true;
-         break;
-      }
+   {
+      bCurVal = m_bResolveEntities;
+      bSuccess = true;
+      break;
+   }
    default:
-      {
-         bSuccess = false;
-         break;
-      }
+   {
+      bSuccess = false;
+      break;
+   }
    }
    return (bSuccess);
 }
@@ -684,16 +686,16 @@ bool lite_html_reader::setBoolOption(ReaderOptionsEnum option, bool bNewVal)
    switch (option)
    {
    case resolveEntities:
-      {
-         m_bResolveEntities = bNewVal;
-         bSuccess = true;
-         break;
-      }
+   {
+      m_bResolveEntities = bNewVal;
+      bSuccess = true;
+      break;
+   }
    default:
-      {
-         bSuccess = false;
-         break;
-      }
+   {
+      bSuccess = false;
+      break;
+   }
    }
    return (bSuccess);
 }

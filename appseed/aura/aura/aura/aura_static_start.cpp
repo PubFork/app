@@ -8,6 +8,8 @@
 #include "framework.h"
 
 
+extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
+
 #ifdef __APPLE__
 
 // http://stackoverflow.com/questions/5167269/clock-gettime-alternative-in-mac-os-x
@@ -52,8 +54,6 @@ namespace str
 extern ::map < void *, void *,::aura::application *, ::aura::application * > * g_pmapAura;
 
 extern string_map < sp(::aura::library) > * g_pmapLibCall;
-
-extern string_map < INT_PTR,INT_PTR > * g_pmapLibrary;
 
 extern plex_heap_alloc_array * g_pheap;
 
@@ -346,7 +346,7 @@ namespace aura
 
          ::str::international::g_pmapRTL = new ::map < ::id,const ::id &,::id,const ::id & >();
 
-         g_pmapLibrary = new string_map < INT_PTR,INT_PTR >();
+         g_pmapLibrary = new string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY >();
 
          g_pmutexFactory = new mutex;
 #ifndef METROWIN
