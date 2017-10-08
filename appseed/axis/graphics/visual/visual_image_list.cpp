@@ -1,7 +1,7 @@
 #include "framework.h"
 
 #ifndef METROWIN
-   //#include "freeimage/Source/FreeImage.h"
+//#include "freeimage/Source/FreeImage.h"
 #endif
 
 
@@ -146,9 +146,21 @@ int32_t image_list::get_image_count() const
 bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, int32_t iFlag)
 {
 
-   UNREFERENCED_PARAMETER(iFlag);
+   try
+   {
 
-   return pgraphics->BitBlt(pt.x, pt.y, m_size.cx, m_size.cy, m_spdib->get_graphics(), iImage * m_size.cx, 0, SRCCOPY);
+      UNREFERENCED_PARAMETER(iFlag);
+
+      return pgraphics->BitBlt(pt.x, pt.y, m_size.cx, m_size.cy, m_spdib->get_graphics(), iImage * m_size.cx, 0, SRCCOPY);
+
+   }
+   catch(...)
+   {
+
+
+   }
+
+   return true;
 
 }
 
