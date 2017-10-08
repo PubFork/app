@@ -1716,27 +1716,20 @@ retry:
 //
 //#else
 
-   bool os::file_open(::file::path str)
+
+   bool os::file_open(::file::path path)
    {
 
-      manual_reset_event ev(get_app());
-
-      int iRet = -1;
-
-      ::fork(get_app(), [&]()
+      fork([=]()
       {
 
          ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
-         iRet = (int) (int_ptr) ::ShellExecute(NULL, "open", str, NULL, NULL, SW_RESTORE);
-
-         ev.set_event();
+         ::ShellExecuteW(NULL, L"open", wstring(path), NULL, NULL, SW_RESTORE);
 
       });
 
-      ev.wait();
-
-      return iRet >= 32;
+      return true;
 
    }
 
