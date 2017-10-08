@@ -30,9 +30,9 @@ namespace android
 
    ::file::listing & dir::root_ones(::file::listing & listing, ::aura::application *  papp)
    {
-      
+
       listing.add("/");
-	   
+
       listing.m_straTitle.add("File System");
 
       return listing;
@@ -43,124 +43,124 @@ namespace android
    ::file::listing & dir::ls(::aura::application * papp, ::file::listing & listing)
    {
 
-	   if (::file::dir::system::ls(papp, listing))
-	   {
+      if (::file::dir::system::ls(papp, listing))
+      {
 
-		   return listing;
+         return listing;
 
-	   }
-
-
-	   if (listing.m_bRecursive)
-	   {
-
-		   index iStart = listing.get_count();
-
-		   {
-
-			   RESTORE(listing.m_path);
-
-			   RESTORE(listing.m_eextract);
-
-			   ::file::listing straDir(papp);
-
-			   straDir.ls_dir(listing.m_path);
-
-			   for (int32_t i = 0; i < straDir.get_count(); i++)
-			   {
-
-				   string strDir = straDir[i];
-
-				   if (strDir == listing.m_path)
-					   continue;
-
-				   if (listing.m_bDir)
-				   {
-
-					   ::file::path & path = listing.add(::file::path(strDir));
-
-					   path.m_iSize = 0;
-
-					   path.m_iDir = 1;
-
-				   }
-
-				   listing.m_path = strDir;
-
-				   listing.ls();
+      }
 
 
-			   }
+      if (listing.m_bRecursive)
+      {
 
-		   }
+         index iStart = listing.get_count();
 
-		   if (listing.m_bFile)
-		   {
+         {
 
-			   RESTORE(listing.m_bRecursive);
+            RESTORE(listing.m_path);
 
-			   listing.m_bRecursive = false;
+            RESTORE(listing.m_eextract);
 
-			   listing.ls_file(listing.m_path);
+            ::file::listing straDir(papp);
 
-		   }
+            straDir.ls_dir(listing.m_path);
 
-		   for (index i = iStart; i < listing.get_size(); i++)
-		   {
+            for (int32_t i = 0; i < straDir.get_count(); i++)
+            {
 
-			   listing[i].m_iRelative = listing.m_path.get_length() + 1;
+               string strDir = straDir[i];
 
-		   }
+               if (strDir == listing.m_path)
+                  continue;
 
-	   }
-	   else
-	   {
+               if (listing.m_bDir)
+               {
+
+                  ::file::path & path = listing.add(::file::path(strDir));
+
+                  path.m_iSize = 0;
+
+                  path.m_iDir = 1;
+
+               }
+
+               listing.m_path = strDir;
+
+               listing.ls();
 
 
-		   ::file::patha stra;
+            }
 
-		   ::dir::ls(stra, listing.m_path);
+         }
 
-		   for (int32_t i = 0; i < stra.get_count(); i++)
-		   {
+         if (listing.m_bFile)
+         {
 
-			   ::file::path strPath = stra[i];
+            RESTORE(listing.m_bRecursive);
 
-			   if (!::str::begins(strPath, listing.m_path))
-				   continue;
+            listing.m_bRecursive = false;
 
-			   bool bIsDir;
+            listing.ls_file(listing.m_path);
 
-			   bIsDir = ::dir::is(strPath);
+         }
 
-			   if (!bIsDir && !matches_wildcard_criteria(listing.m_straPattern, strPath.name()))
-				   continue;
+         for (index i = iStart; i < listing.get_size(); i++)
+         {
 
-			   if ((bIsDir && !listing.m_bDir) || (!bIsDir && !listing.m_bFile))
-				   continue;
+            listing[i].m_iRelative = listing.m_path.get_length() + 1;
 
-			   ::file::path & path = listing.add(strPath);
+         }
 
-			   path.m_iDir = bIsDir ? 1 : 0;
+      }
+      else
+      {
 
-			   if (bIsDir)
-			   {
 
-				   path.m_iSize = 0;
+         ::file::patha stra;
 
-			   }
-			   else
-			   {
+         ::dir::ls(stra, listing.m_path);
 
-				   path.m_iSize = file_length_dup(strPath);
+         for (int32_t i = 0; i < stra.get_count(); i++)
+         {
 
-			   }
+            ::file::path strPath = stra[i];
 
-		   }
+            if (!::str::begins(strPath, listing.m_path))
+               continue;
 
-	   }
+            bool bIsDir;
 
-	   return listing;
+            bIsDir = ::dir::is(strPath);
+
+            if (!bIsDir && !matches_wildcard_criteria(listing.m_straPattern, strPath.name()))
+               continue;
+
+            if ((bIsDir && !listing.m_bDir) || (!bIsDir && !listing.m_bFile))
+               continue;
+
+            ::file::path & path = listing.add(strPath);
+
+            path.m_iDir = bIsDir ? 1 : 0;
+
+            if (bIsDir)
+            {
+
+               path.m_iSize = 0;
+
+            }
+            else
+            {
+
+               path.m_iSize = file_length_dup(strPath);
+
+            }
+
+         }
+
+      }
+
+      return listing;
 
    }
 
@@ -814,24 +814,24 @@ namespace android
 
    ::file::path dir::stage()
    {
-      
-	   return element() / "stage";
+
+      return element() / "stage";
 
    }
 
-   
+
    ::file::path dir::stageapp()
    {
-      
-	   return stage() / "basis";
+
+      return stage() / "basis";
 
    }
 
-   
+
    ::file::path dir::netseed()
    {
-      
-	   return m_strNetSeedFolder;
+
+      return m_strNetSeedFolder;
 
    }
 
@@ -845,146 +845,146 @@ namespace android
 
    }
 
-   
+
    //::file::path dir::module()
    //{
 
-	  // return System.get_module_folder();
+   // return System.get_module_folder();
 
    //}
 
 
    //::file::path dir::ca2module()
    //{
-   //   
-	  // return System.get_ca2_module_folder();
-   //   
+   //
+   // return System.get_ca2_module_folder();
+   //
    //}
 
 
    ::file::path dir::time_square(::aura::application * papp, const string & strPrefix, const string & strSuffix)
    {
 
-	   UNREFERENCED_PARAMETER(papp);
-	   UNREFERENCED_PARAMETER(strPrefix);
-	   UNREFERENCED_PARAMETER(strSuffix);
-	   return time() / "time";
+      UNREFERENCED_PARAMETER(papp);
+      UNREFERENCED_PARAMETER(strPrefix);
+      UNREFERENCED_PARAMETER(strSuffix);
+      return time() / "time";
 
    }
 
-   
+
    ::file::path dir::time_log()
    {
-      
-	   return appdata() / "log";
+
+      return appdata() / "log";
 
    }
 
    bool dir::mk(const ::file::path & lpcsz, ::aura::application * papp)
    {
 
-	   if (is(lpcsz, papp))
-		   return true;
+      if (is(lpcsz, papp))
+         return true;
 
-	   ::file::patha stra;
+      ::file::patha stra;
 
-	   lpcsz.ascendants_path(stra);
+      lpcsz.ascendants_path(stra);
 
-	   for (int32_t i = 0; i < stra.get_size(); i++)
-	   {
+      for (int32_t i = 0; i < stra.get_size(); i++)
+      {
 
-		   if (!is(stra[i], papp))
-		   {
+         if (!is(stra[i], papp))
+         {
 
-			   if (!::dir::mk(stra[i]))
-			   {
-				   DWORD dwError = ::GetLastError();
-				   if (dwError == ERROR_ALREADY_EXISTS)
-				   {
-					   string str;
-					   str = "\\\\?\\" + stra[i];
-					   str.trim_right("\\/");
-					   try
-					   {
-						   Application.file().del(str);
-					   }
-					   catch (...)
-					   {
-					   }
-					   str = stra[i];
-					   str.trim_right("\\/");
-					   try
-					   {
-						   Application.file().del(str);
-					   }
-					   catch (...)
-					   {
-					   }
-					   //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-					   if (::dir::mk("\\\\?\\" + stra[i]))
-					   {
-						   m_isdirmap.set(stra[i], true, 0);
-						   goto try1;
-					   }
-					   else
-					   {
-						   dwError = ::GetLastError();
-					   }
-				   }
-				   char * pszError;
-				   FormatMessage(FORMAT_MESSAGE_ALLOcaTE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
+            if (!::dir::mk(stra[i]))
+            {
+               DWORD dwError = ::GetLastError();
+               if (dwError == ERROR_ALREADY_EXISTS)
+               {
+                  string str;
+                  str = "\\\\?\\" + stra[i];
+                  str.trim_right("\\/");
+                  try
+                  {
+                     Application.file().del(str);
+                  }
+                  catch (...)
+                  {
+                  }
+                  str = stra[i];
+                  str.trim_right("\\/");
+                  try
+                  {
+                     Application.file().del(str);
+                  }
+                  catch (...)
+                  {
+                  }
+                  //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                  if (::dir::mk("\\\\?\\" + stra[i]))
+                  {
+                     m_isdirmap.set(stra[i], true, 0);
+                     goto try1;
+                  }
+                  else
+                  {
+                     dwError = ::GetLastError();
+                  }
+               }
+               //char * pszError;
+               //FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
 
-				   //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-				   // xxx               ::LocalFree(pszError);
-				   //m_isdirmap.set(stra[i], false);
-			   }
-			   else
-			   {
-				   m_isdirmap.set(stra[i], true, 0);
-			   }
-		   try1:
+               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+               // xxx               ::LocalFree(pszError);
+               //m_isdirmap.set(stra[i], false);
+            }
+            else
+            {
+               m_isdirmap.set(stra[i], true, 0);
+            }
+try1:
 
-			   if (!is(stra[i], papp))
-			   {
-				   return false;
-			   }
+            if (!is(stra[i], papp))
+            {
+               return false;
+            }
 
-		   }
-	   }
-	   return true;
+         }
+      }
+      return true;
 
    }
 
    bool dir::rm(::aura::application * papp, const ::file::path & psz, bool bRecursive)
    {
-	   if (bRecursive)
-	   {
+      if (bRecursive)
+      {
 
-		   ::file::listing straPath(papp);
+         ::file::listing straPath(papp);
 
-		   straPath.ls(psz);
+         straPath.ls(psz);
 
-		   for (int32_t i = 0; i < straPath.get_count(); i++)
-		   {
+         for (int32_t i = 0; i < straPath.get_count(); i++)
+         {
 
-			   if (is(straPath[i], papp))
-			   {
+            if (is(straPath[i], papp))
+            {
 
-				   rm(papp, psz / straPath[i].name(), true);
+               rm(papp, psz / straPath[i].name(), true);
 
-			   }
-			   else
-			   {
+            }
+            else
+            {
 
-				   ::unlink(straPath[i]);
+               ::unlink(straPath[i]);
 
-			   }
+            }
 
-		   }
+         }
 
-	   }
+      }
 
-	   return ::rmdir(psz) != FALSE;
+      return ::rmdir(psz) != FALSE;
    }
 
 
@@ -997,7 +997,7 @@ namespace android
 
       m_pathUser = m_strCa2 / "userfolder";
 
-      m_strCommonAppData = m_strCa2 / "commonappdata"; 
+      m_strCommonAppData = m_strCa2 / "commonappdata";
 
       mk(m_strCommonAppData, get_app());
 
@@ -1033,11 +1033,11 @@ namespace android
 
    ::file::path dir::trash_that_is_not_trash(const ::file::path & pszParam)
    {
-      
-	   if(pszParam == NULL)
+
+      if(pszParam == NULL)
          return "";
 
-	   ::file::path psz(pszParam);
+      ::file::path psz(pszParam);
 
       if(psz[1] == ':')
       {
@@ -1079,7 +1079,7 @@ namespace android
       //index iFind = strRelative.find(':');
       //if(iFind >= 0)
       {
-        // strsize iFind1 = strRelative.reverse_find("\\", iFind);
+         // strsize iFind1 = strRelative.reverse_find("\\", iFind);
          //strsize iFind2 = strRelative.reverse_find("/", iFind);
          //strsize iStart = MAX(iFind1 + 1, iFind2 + 1);
 
@@ -1145,7 +1145,7 @@ namespace android
 //         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
 //      }
 //
-//	  ::file::path strUserFolderShift;
+//   ::file::path strUserFolderShift;
 //
 //      if(App(papp).handler()->m_varTopicQuery.has_property("user_folder_relative_path"))
 //      {
@@ -1204,7 +1204,7 @@ namespace android
    ::file::path dir::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
    {
 
-	   return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
+      return default_userfolder(papp, lpcszPrefix, lpcszLogin) / "data";
 
    }
 
@@ -1212,23 +1212,23 @@ namespace android
    ::file::path dir::default_userfolder(::aura::application *  papp, const string & lpcszPrefix, const string & lpcszLogin)
    {
 
-	   return userfolder(papp);
+      return userfolder(papp);
 
    }
 
-   
+
    ::file::path dir::userquicklaunch(::aura::application * papp)
    {
-   
-	   return ::dir::root() /  ".ca2/app/Microsoft/Internet Explorer/Quick Launch";
-   
+
+      return ::dir::root() /  ".ca2/app/Microsoft/Internet Explorer/Quick Launch";
+
    }
 
 
    ::file::path dir::userprograms(::aura::application * papp)
    {
 
-	   return ::dir::root() / system::userprograms(papp);
+      return ::dir::root() / system::userprograms(papp);
 
    }
 
@@ -1236,7 +1236,7 @@ namespace android
    ::file::path dir::commonprograms()
    {
 
-	   return ::dir::root() / system::commonprograms();
+      return ::dir::root() / system::commonprograms();
 
    }
 
@@ -1261,7 +1261,7 @@ namespace android
    bool dir::has_subdir(::aura::application * papp, const ::file::path & pszDir)
    {
 
-	   ::file::listing ls(papp);
+      ::file::listing ls(papp);
 
       ls.ls_dir(pszDir);
 

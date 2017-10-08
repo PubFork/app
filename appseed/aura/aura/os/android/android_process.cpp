@@ -8,25 +8,27 @@
 //extern thread_pointer < os_thread > t_posthread;
 //extern thread_pointer < hthread > currentThread;
 
+void get_os_priority(int32_t * piPolicy, sched_param * pparam, int32_t nCa2Priority);
+
 
 int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 {
    char *   exec_path_name = NULL;
-   char *	cmd_line;
+   char *   cmd_line;
 
    cmd_line = (char *) memory_alloc(strlen(_cmd_line ) + 1 );
 
    if(cmd_line == NULL)
-            return 0;
+      return 0;
 
    strcpy_dup(cmd_line, _cmd_line);
 
    if((*pprocessId = fork()) == 0)
    {
       // child
-      char		*pArg, *pPtr;
-      char		*argv[1024 + 1];
-      int32_t		 argc;
+      char     *pArg, *pPtr;
+      char     *argv[1024 + 1];
+      int32_t      argc;
       if( ( pArg = strrchr_dup( exec_path_name, '/' ) ) != NULL )
          pArg++;
       else
@@ -64,79 +66,79 @@ int32_t create_process(const char * _cmd_line, int32_t * pprocessId)
 }
 
 CLASS_DECL_AURA int32_t call_async(
-                            const char * pszPath,
-                            const char * pszParam,
-                            const char * pszDir,
-                            int32_t iShow,
-							bool bPrivileged,
+   const char * pszPath,
+   const char * pszParam,
+   const char * pszDir,
+   int32_t iShow,
+   bool bPrivileged,
    unsigned int * puiPid)
 {
-    string strCmdLine;
+   string strCmdLine;
 
-    strCmdLine = pszPath;
-    if(strlen_dup(pszParam) > 0)
-    {
-        strCmdLine +=  " ";
-        strCmdLine += pszParam;
-    }
+   strCmdLine = pszPath;
+   if(strlen_dup(pszParam) > 0)
+   {
+      strCmdLine +=  " ";
+      strCmdLine += pszParam;
+   }
 
-    int32_t processId;
+   int32_t processId;
 
-    if(!create_process(strCmdLine, &processId))
-        return -1;
+   if(!create_process(strCmdLine, &processId))
+      return -1;
 
-    if (puiPid != NULL)
-    {
+   if (puiPid != NULL)
+   {
 
-       *puiPid = processId;
+      *puiPid = processId;
 
-    }
+   }
 
-    return 0;
+   return 0;
 
 }
 
 CLASS_DECL_AURA DWORD call_sync(
-                             const char * pszPath,
-                             const char * pszParam,
-                             const char * pszDir,
-                             int32_t iShow,
-                             int32_t iRetry,
-                             int32_t iSleep,
-                             int32_t (* pfnOnRetry)(int32_t iTry, dword_ptr dwParam),
-                             dword_ptr dwParam,
-                             unsigned int * puiId)
+   const char * pszPath,
+   const char * pszParam,
+   const char * pszDir,
+   int32_t iShow,
+   int32_t iRetry,
+   int32_t iSleep,
+   int32_t (* pfnOnRetry)(int32_t iTry, dword_ptr dwParam),
+   dword_ptr dwParam,
+   unsigned int * puiId)
 {
-    string strCmdLine;
+   string strCmdLine;
 
-    strCmdLine = pszPath;
-    if(strlen_dup(pszParam) > 0)
-    {
-        strCmdLine +=  " ";
-        strCmdLine += pszParam;
-    }
+   strCmdLine = pszPath;
+   if(strlen_dup(pszParam) > 0)
+   {
+      strCmdLine +=  " ";
+      strCmdLine += pszParam;
+   }
 
-    int32_t processId;
+   int32_t processId;
 
-    if(!create_process(strCmdLine, &processId))
-        return -1;
+   if(!create_process(strCmdLine, &processId))
+      return -1;
 
-    if (puiId != NULL)
-    {
+   if (puiId != NULL)
+   {
 
-       *puiId = processId;
+      *puiId = processId;
 
-    }
+   }
 
-    while(true)
-    {
+   while(true)
+   {
 
-        if(kill(processId, 0) == -1 && errno == ESRCH) // No process can be found corresponding to processId
-            break;
-        sleep(1);
-    }
+      if(kill(processId, 0) == -1 && errno == ESRCH) // No process can be found corresponding to processId
+         break;
+      sleep(1);
+   }
 
-    return 0;
+   return 0;
 }
 
 

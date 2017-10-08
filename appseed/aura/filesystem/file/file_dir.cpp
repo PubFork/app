@@ -8,27 +8,29 @@
 #include <link.h>
 #include <sys/stat.h>
 #include <dirent.h>
-
+#elif defined(ANDROID)
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
 
 
 void TranslateLastError()
 {
-   
+
    if(errno == EEXIST)
    {
-      
+
       SetLastError(ERROR_ALREADY_EXISTS);
-      
+
    }
    else
    {
-    
+
       SetLastError(0);
-      
+
    }
-   
-   
+
+
 }
 
 #ifdef WINDOWS
@@ -40,15 +42,15 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
 
 #if defined(METROWIN)
 
-   #pragma push_macro("System")
+#pragma push_macro("System")
 
-   #undef System
+#undef System
 
-   using namespace ::Windows::System;
+using namespace ::Windows::System;
 
-   #pragma pop_macro("System")
+#pragma pop_macro("System")
 
-   CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
+CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath, string & strPrefix);
 
 #endif
 
@@ -120,10 +122,10 @@ bool __win_file_find_is_dots(WIN32_FIND_DATA & data);
       PWSTR pwstr = NULL;
 
       HRESULT hr = SHGetKnownFolderPath(
-         FOLDERID_ProgramFilesX86,
-         KF_FLAG_DEFAULT,
-         NULL,
-         &pwstr);
+                      FOLDERID_ProgramFilesX86,
+                      KF_FLAG_DEFAULT,
+                      NULL,
+                      &pwstr);
 
       wcscpy(lpszModuleFilePath, pwstr);
 
@@ -623,11 +625,11 @@ string ca2_module_dup()
 
       if(str.has_char())
       {
-         
+
          goto found;
-         
+
       }
-      
+
       str = ::dir::pathfind(::file::path(str).folder(), "libaura.dylib", "rfs"); // readable - normal file - non zero sized
 
       if(str.has_char())
@@ -703,65 +705,65 @@ found:
 
 bool dir::mkdir(const ::file::path & path)
 {
-   
+
    if(is(path))
    {
-      
+
       return true;
-      
+
    }
 
    if(file_exists_dup(path))
    {
-      
+
       if(!file_delete_dup(path))
       {
-       
+
          return false;
-         
+
       }
-      
+
    }
 
 #ifdef WINDOWS
-   
+
    wstring wstr;
 
    if(is_absolute_path(path))
    {
-      
+
       wstr = "\\\\?\\" + path;
-      
+
    }
    else
    {
-      
+
       wstr = path;
-      
+
    }
 
    if(!::CreateDirectoryW(wstr, NULL))
    {
-      
+
       return false;
-      
+
    }
 
 #else
-   
+
    if(::mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
    {
-      
+
       TranslateLastError();
-      
+
       return false;
-         
+
    }
-      
+
 #endif
-   
+
    return true;
-   
+
 }
 
 
@@ -770,60 +772,60 @@ bool dir::mk(const ::file::path & path)
 
    if(is(path))
    {
-      
+
       return true;
-      
+
    }
-   
+
    string strName;
-   
+
    ::file::path pathDir;
-   
+
    strsize iLastPos = -1;
-   
+
    while (true)
    {
 
       strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
-      
+
       if(iPos < 0)
       {
-         
+
          strName = path.substr(iLastPos + 1);
-         
+
       }
       else
       {
-      
+
          strName = path.substr(iLastPos + 1, iPos - iLastPos - 1);
-         
+
       }
-      
+
       pathDir /= strName;
-      
+
       if(!::dir::is(pathDir))
       {
-         
+
          if(!::dir::mkdir(pathDir))
          {
-            
+
             return false;
-            
+
          }
-         
+
       }
-      
+
       if(iPos < 0)
       {
-       
+
          return true;
-         
+
       }
-      
+
       iLastPos = iPos;
 
    }
-   
+
    return true;
 
 }

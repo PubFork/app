@@ -1,5 +1,5 @@
 #include "framework.h"
-#if defined(APPLEOS) || defined(LINUX)
+#if defined(APPLEOS) || defined(LINUX) || defined(ANDROID)
 #include <iconv.h>
 #else
 //#include "atom/iconv/include/iconv.h"
@@ -11,14 +11,14 @@ CLASS_DECL_AURA COLORREF GetSysColor(DWORD dw)
 
    switch(dw)
    {
-      case COLOR_HIGHLIGHT:
-         return ARGB(255, 200, 200, 196);
-      case COLOR_BTNSHADOW:
-         return ARGB(84, 192, 192, 187);
-      case COLOR_BTNTEXT:
-         return ARGB(255, 0, 0, 0);
-      default:
-         return ARGB(255, 0, 0, 0);
+   case COLOR_HIGHLIGHT:
+      return ARGB(255, 200, 200, 196);
+   case COLOR_BTNSHADOW:
+      return ARGB(84, 192, 192, 187);
+   case COLOR_BTNTEXT:
+      return ARGB(255, 0, 0, 0);
+   default:
+      return ARGB(255, 0, 0, 0);
    };
 
 }
@@ -61,7 +61,7 @@ CLASS_DECL_AURA int_bool CopyRect(LPRECT prectDest, LPCRECT pcrectSrc)
 CLASS_DECL_AURA int_bool PtInRect(LPCRECT prect, POINT point)
 {
    return point.x >= prect->left && point.x <= prect->right
-   && point.y >= prect->top && point.y <= prect->bottom;
+          && point.y >= prect->top && point.y <= prect->bottom;
 
 }
 
@@ -87,29 +87,29 @@ CLASS_DECL_AURA int_bool SetRectEmpty(LPRECT prect)
 
 CLASS_DECL_AURA int_bool EqualRect(LPCRECT prect1, LPCRECT prect2)
 {
-      return prect1->left == prect2->left
-         &&  prect1->top == prect2->top
-         &&  prect1->right == prect2->right
-         &&  prect1->bottom == prect2->bottom;
+   return prect1->left == prect2->left
+          &&  prect1->top == prect2->top
+          &&  prect1->right == prect2->right
+          &&  prect1->bottom == prect2->bottom;
 }
 
 
 CLASS_DECL_AURA int_bool InflateRect(LPRECT prect, int32_t x, int32_t y)
 {
-      prect->left -= x;
-      prect->top -= y;
-      prect->right += x;
-      prect->bottom += y;
-      return true;
+   prect->left -= x;
+   prect->top -= y;
+   prect->right += x;
+   prect->bottom += y;
+   return true;
 }
 
 CLASS_DECL_AURA int_bool OffsetRect(LPRECT prect, int32_t x, int32_t y)
 {
-      prect->left += x;
-      prect->top += y;
-      prect->right += x;
-      prect->bottom += y;
-      return true;
+   prect->left += x;
+   prect->top += y;
+   prect->right += x;
+   prect->bottom += y;
+   return true;
 }
 
 /*
@@ -186,12 +186,12 @@ string iconv_charset_from_windows_code_page(UINT CodePage)
 int32_t
 WINAPI
 MultiByteToWideChar(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPWSTR  lpWideCharStr,
-    int32_t      cchWideChar)
+   UINT     CodePage,
+   DWORD    dwFlags,
+   LPCSTR   lpMultiByteStr,
+   int32_t      cbMultiByte,
+   LPWSTR  lpWideCharStr,
+   int32_t      cchWideChar)
 {
    string str(lpMultiByteStr, cbMultiByte);
 
@@ -308,14 +308,14 @@ MultiByteToWideChar(
 int32_t
 WINAPI
 WideCharToMultiByte(
-    UINT     CodePage,
-    DWORD    dwFlags,
-    LPCWSTR  lpWideCharStr,
-    int32_t      cchWideChar,
-    LPSTR   lpMultiByteStr,
-    int32_t      cbMultiByte,
-    LPCSTR   lpDefaultChar,
-    LPBOOL  lpUsedDefaultChar)
+   UINT     CodePage,
+   DWORD    dwFlags,
+   LPCWSTR  lpWideCharStr,
+   int32_t      cchWideChar,
+   LPSTR   lpMultiByteStr,
+   int32_t      cbMultiByte,
+   LPCSTR   lpDefaultChar,
+   LPBOOL  lpUsedDefaultChar)
 {
 
    wstring wstr(lpWideCharStr, cchWideChar);

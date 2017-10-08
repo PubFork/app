@@ -53,13 +53,13 @@ void Sleep(DWORD dwMillis)
 
 
 
-void output_debug_string(const char * psz)
-{
-
-   output_debug_string(psz);
-
-}
-
+//void output_debug_string(const char * psz)
+//{
+//
+//   output_debug_string(psz);
+//
+//}
+//
 
 
 

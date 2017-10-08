@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #elif defined(LINUX)
 #include <sys/stat.h>
+#elif defined(ANDROID)
+#include <sys/stat.h>
 #endif
 //////#include <errno.h>
 ////#include <io.h>
@@ -73,7 +75,7 @@ namespace file
 
       // add '+' if necessary (when read/write modes mismatched)
       if ((szMode[0] == 'r' && (nOpenFlags & mode_read_write)) ||
-         (szMode[0] != 'r' && !(nOpenFlags & mode_write)))
+            (szMode[0] != 'r' && !(nOpenFlags & mode_write)))
       {
          // ::file::seek_current szMode mismatched, need to add '+' to fix
          szMode[nMode++] = '+';
@@ -179,13 +181,13 @@ namespace file
          {
             clearerr(m_pfile);
             throw_exception(get_app(), ::file::exception::type_generic, _doserrno,
-               m_strFileName);
+                            m_strFileName);
          }
 
          // if string is read completely or EOF
          if (lpszResult == NULL ||
-            (nLen = strlen(lpsz)) < nMaxSize ||
-            lpsz[nLen-1] == '\n')
+               (nLen = strlen(lpsz)) < nMaxSize ||
+               lpsz[nLen-1] == '\n')
             break;
 
          nLen = rString.get_length();
@@ -233,7 +235,7 @@ namespace file
 
       if (fseek(m_pfile, (long) lOff, nFrom) != 0)
          throw_exception(get_app(), ::file::exception::badSeek, _doserrno,
-         m_strFileName);
+                         m_strFileName);
 
       long pos = ftell(m_pfile);
       return pos;
@@ -247,7 +249,7 @@ namespace file
       long pos = ftell(m_pfile);
       if (pos == -1)
          throw_exception(get_app(), ::file::exception::invalidFile, _doserrno,
-         m_strFileName);
+                         m_strFileName);
       return pos;
    }
 
@@ -370,14 +372,14 @@ namespace file
 
    void CLASS_DECL_AURA throw_exception(::aura::application * papp,::file::exception::e_cause cause,LONG lOsError,const char * lpszFileName /* == NULL */)
    {
-   //#ifdef DEBUG
-   //   const char * lpsz;
-   //   if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
-   //      lpsz = rgszFileExceptionCause[cause];
-   //   else
-   //      lpsz = szUnknown;
-   //   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
-   //#endif
+      //#ifdef DEBUG
+      //   const char * lpsz;
+      //   if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
+      //      lpsz = rgszFileExceptionCause[cause];
+      //   else
+      //      lpsz = szUnknown;
+      //   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
+      //#endif
       throw ::file::exception(papp, cause, lOsError, lpszFileName);
    }
 
@@ -408,7 +410,7 @@ namespace file
       return status.m_strFullName;
    }
 
-      /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
    // file Status implementation
 
    bool simple_binary_file::GetStatus(::file::file_status& rStatus) const
@@ -433,29 +435,29 @@ namespace file
          rStatus.m_size = st.st_size;
 
          //if ((rStatus.m_size = ::GetFileSize((HANDLE)m_iFile, NULL)) == (DWORD)-1L)
-           // return FALSE;
+         // return FALSE;
 
 
          //if (m_strFileName.is_empty())
          // throw todo(get_app());
-            rStatus.m_attribute = 0;
-/*         else
-         {
-            DWORD dwAttribute = ::GetFileAttributesW(::core::international::utf8_to_unicode(m_strFileName));
+         rStatus.m_attribute = 0;
+         /*         else
+                  {
+                     DWORD dwAttribute = ::GetFileAttributesW(::core::international::utf8_to_unicode(m_strFileName));
 
-            // don't return an error for this because previous versions of core API didn't
-            if (dwAttribute == 0xFFFFFFFF)
-               rStatus.m_attribute = 0;
-            else
-            {
-               rStatus.m_attribute = (BYTE) dwAttribute;
-#ifdef DEBUG
-               // core API BUG: m_attribute is only a BYTE wide
-               if (dwAttribute & ~0xFF)
-                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
-#endif
-            }
-         }*/
+                     // don't return an error for this because previous versions of core API didn't
+                     if (dwAttribute == 0xFFFFFFFF)
+                        rStatus.m_attribute = 0;
+                     else
+                     {
+                        rStatus.m_attribute = (BYTE) dwAttribute;
+         #ifdef DEBUG
+                        // core API BUG: m_attribute is only a BYTE wide
+                        if (dwAttribute & ~0xFF)
+                           TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
+         #endif
+                     }
+                  }*/
 
          // convert times as appropriate
          //rStatus.m_ctime = ::datetime::time(ftCreate);

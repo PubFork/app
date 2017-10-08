@@ -37,7 +37,7 @@ VOID WINAPI output_debug_string(LPCSTR lpOutputString)
    //      for (auto str : stra)
    //      {
 
-            //__android_log_print(ANDROID_LOG_INFO, "output_debug_string", str);
+   //__android_log_print(ANDROID_LOG_INFO, "output_debug_string", str);
 
    __android_log_print(ANDROID_LOG_INFO,"output_debug_string", "%s", lpOutputString);
 
@@ -110,7 +110,7 @@ FormatMessage(
    LPSTR lpBuffer,
    DWORD nSize,
    va_list *Arguments
-   )
+)
 {
 
 

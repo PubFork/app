@@ -63,3 +63,14 @@ CLASS_DECL_AURA void dll_processes(uint_array & dwa, stringa & straProcesses, co
    return getenv("HOME");
 
 }
+
+
+
+::file::path dir::favorites()
+{
+
+   return ::dir::local() / "localconfig/favorites";
+
+}
+
+

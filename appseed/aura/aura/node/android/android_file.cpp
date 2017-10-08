@@ -1,13 +1,13 @@
 #include "framework.h"
 //#include "android.h"
 
-//#include <fcntl.h>
-//#include <unistd.h>
-//#include <dlfcn.h>
-//#include <link.h>
-//#include <ctype.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <dlfcn.h>
+#include <link.h>
+#include <ctype.h>
 
-//#include <sys/stat.h>
+#include <sys/stat.h>
 
 
 struct errentry
@@ -167,7 +167,8 @@ namespace android
       if(hFile == -1)
       {
 
-         static struct errentry errtable[] = {
+         static struct errentry errtable[] =
+         {
             { ERROR_INVALID_FUNCTION,       EINVAL },  /* 1 */
             { ERROR_FILE_NOT_FOUND,         ENOENT },  /* 2 */
             { ERROR_PATH_NOT_FOUND,         ENOENT },  /* 3 */
@@ -227,7 +228,7 @@ namespace android
                break;
             }
          }
-         
+
          DWORD dwLastError = ::GetLastError();
 
          if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
@@ -365,7 +366,7 @@ namespace android
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       //if (iWrite != nCount)
-         //vfxThrowFileException(get_app(), ::file::exception::diskFull, -1, m_strFileName);
+      //vfxThrowFileException(get_app(), ::file::exception::diskFull, -1, m_strFileName);
    }
 
    file_position_t file::seek(file_offset_t lOff, ::file::e_seek nFrom)
@@ -399,7 +400,7 @@ namespace android
 //      LONG lHiOffset = 0;
 
       file_position_t pos = ::lseek64(m_iFile, lLoOffset, SEEK_CUR);
-  //    pos |= ((file_position_t)lHiOffset) << 32;
+      //    pos |= ((file_position_t)lHiOffset) << 32;
       if(pos  == (file_position_t)-1)
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
@@ -409,17 +410,17 @@ namespace android
    void file::Flush()
    {
 
-/*      ::open
-      ::read
-      ::write
+      /*      ::open
+            ::read
+            ::write
 
-      access the system directly no buffering : direct I/O - efficient for large writes - innefficient for lots of single byte writes
+            access the system directly no buffering : direct I/O - efficient for large writes - innefficient for lots of single byte writes
 
-      */
+            */
 
       /*ASSERT_VALID(this);
 
-    /*  if (m_iFile == hFileNull)
+      /*  if (m_iFile == hFileNull)
          return;
 
       if (!::FlushFileBuffers((HANDLE)m_iFile))
@@ -469,8 +470,8 @@ namespace android
       ASSERT_VALID(this);
       ASSERT(m_iFile != hFileNull);
 
-/*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+      /*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
+               file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
    }
 
    void file::set_length(file_size_t dwNewLen)
@@ -506,7 +507,7 @@ namespace android
 
    // file does not support direct buffering (CMemFile does)
    uint64_t file::GetBufferPtr(UINT nCommand, uint64_t /*nCount*/,
-      void ** /*ppBufStart*/, void ** /*ppBufMax*/)
+                               void ** /*ppBufStart*/, void ** /*ppBufMax*/)
    {
       ASSERT(nCommand == bufferCheck);
       UNREFERENCED_PARAMETER(nCommand);    // not used in retail build
@@ -852,29 +853,29 @@ namespace android
          rStatus.m_size = st.st_size;
 
          //if ((rStatus.m_size = ::GetFileSize((HANDLE)m_iFile, NULL)) == (DWORD)-1L)
-           // return FALSE;
+         // return FALSE;
 
 
          //if (m_strFileName.is_empty())
          // throw todo(get_app());
-            rStatus.m_attribute = 0;
-/*         else
-         {
-            DWORD dwAttribute = ::GetFileAttributesW(::str::international::utf8_to_unicode(m_strFileName));
+         rStatus.m_attribute = 0;
+         /*         else
+                  {
+                     DWORD dwAttribute = ::GetFileAttributesW(::str::international::utf8_to_unicode(m_strFileName));
 
-            // don't return an error for this because previous versions of ca2 API didn't
-            if (dwAttribute == 0xFFFFFFFF)
-               rStatus.m_attribute = 0;
-            else
-            {
-               rStatus.m_attribute = (BYTE) dwAttribute;
-#ifdef DEBUG
-               // ca2 API BUG: m_attribute is only a BYTE wide
-               if (dwAttribute & ~0xFF)
-                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
-#endif
-            }
-         }*/
+                     // don't return an error for this because previous versions of ca2 API didn't
+                     if (dwAttribute == 0xFFFFFFFF)
+                        rStatus.m_attribute = 0;
+                     else
+                     {
+                        rStatus.m_attribute = (BYTE) dwAttribute;
+         #ifdef DEBUG
+                        // ca2 API BUG: m_attribute is only a BYTE wide
+                        if (dwAttribute & ~0xFF)
+                           TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
+         #endif
+                     }
+                  }*/
 
          // convert times as appropriate
          //rStatus.m_ctime = ::datetime::time(ftCreate);
@@ -911,7 +912,7 @@ namespace android
       if(stat(lpszFileName, &st) == -1)
          return false;
       //if (hFind == INVALID_HANDLE_VALUE)
-        // return FALSE;
+      // return FALSE;
       //VERIFY(FindClose(hFind));
 
       // strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
@@ -1130,9 +1131,9 @@ namespace android
 
 // turn a file, relative path or other into an absolute path
 bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
 {
 
 
@@ -1154,10 +1155,10 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
    if(dwLen == 0)
    {
-#ifdef DEBUG
+   #ifdef DEBUG
       //      if (lpszFileIn[0] != '\0')
       //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
+   #endif
       wstrFullPath = wstrPath; // take it literally
       return FALSE;
    }
@@ -1170,10 +1171,10 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
       if(dwLen == 0 || dwLen > dwAllocLen)
       {
-#ifdef DEBUG
+   #ifdef DEBUG
          //      if (lpszFileIn[0] != '\0')
          //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
-#endif
+   #endif
          wstrFullPath = wstrPath; // take it literally
          return FALSE;
       }
@@ -1414,53 +1415,53 @@ bool CLASS_DECL_AURA vfxGetInProcServer(const char * lpszCLSID, string & str)
 
 // turn a file, relative path or other into an absolute path
 //bool CLASS_DECL_AURA vfxFullPath(unichar * lpszPathOut, const unichar * lpszFileIn)
-   // lpszPathOut = buffer of _MAX_PATH
-   // lpszFileIn = file, relative path or absolute path
-   // (both in ANSI character set)
+// lpszPathOut = buffer of _MAX_PATH
+// lpszFileIn = file, relative path or absolute path
+// (both in ANSI character set)
 //{
-   /*
-   ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
+/*
+ASSERT(__is_valid_address(lpszPathOut, _MAX_PATH));
 
-   // first, fully qualify the path name
-   unichar * lpszFilePart;
-   if (!GetFullPathNameW(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
-   {
+// first, fully qualify the path name
+unichar * lpszFilePart;
+if (!GetFullPathNameW(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
+{
 #ifdef DEBUG
-      //      if (lpszFileIn[0] != '\0')
-      //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
+   //      if (lpszFileIn[0] != '\0')
+   //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
 #endif
-      lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
-      return FALSE;
-   }
+   lstrcpynW(lpszPathOut, lpszFileIn, _MAX_PATH); // take it literally
+   return FALSE;
+}
 
-   string strRoot;
-   // determine the root name of the volume
-   vfxGetRoot(lpszPathOut, strRoot);
+string strRoot;
+// determine the root name of the volume
+vfxGetRoot(lpszPathOut, strRoot);
 
-   // get file system information for the volume
-   DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(::str::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+// get file system information for the volume
+DWORD dwFlags, dwDummy;
+if (!GetVolumeInformationW(::str::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+{
+   //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
+   return FALSE;   // preserving case may not be correct
+}
+
+// not all characters have complete uppercase/lowercase
+if (!(dwFlags & FS_caSE_IS_PRESERVED))
+   CharUpperW(lpszPathOut);
+
+// assume non-UNICODE file systems, use OEM character set
+if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
+{
+   WIN32_FIND_DATAW data;
+   HANDLE h = FindFirstFileW(lpszFileIn, &data);
+   if (h != INVALID_HANDLE_VALUE)
    {
-      //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
-      return FALSE;   // preserving case may not be correct
+      FindClose(h);
+      lstrcpyW(lpszFilePart, data.cFileName);
    }
-
-   // not all characters have complete uppercase/lowercase
-   if (!(dwFlags & FS_caSE_IS_PRESERVED))
-      CharUpperW(lpszPathOut);
-
-   // assume non-UNICODE file systems, use OEM character set
-   if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
-   {
-      WIN32_FIND_DATAW data;
-      HANDLE h = FindFirstFileW(lpszFileIn, &data);
-      if (h != INVALID_HANDLE_VALUE)
-      {
-         FindClose(h);
-         lstrcpyW(lpszFilePart, data.cFileName);
-      }
-   }
-   return TRUE;*/
+}
+return TRUE;*/
 //}
 
 
@@ -1658,31 +1659,31 @@ namespace android
 {
 
 
-	::file::exception::e_cause PASCAL file_exception::ErrnoToException(int32_t nErrno)
-    {
-       switch(nErrno)
-       {
-       case EPERM:
-       case EACCES:
-          return ::file::exception::accessDenied;
-       case EBADF:
-          return ::file::exception::invalidFile;
-       case EDEADLOCK:
-          return ::file::exception::sharingViolation;
-       case EMFILE:
-          return ::file::exception::tooManyOpenFiles;
-       case ENOENT:
-       case ENFILE:
-          return ::file::exception::fileNotFound;
-       case ENOSPC:
-          return ::file::exception::diskFull;
-       case EINVAL:
-       case EIO:
-          return ::file::exception::hardIO;
-       default:
-          return ::file::exception::type_generic;
-       }
-    }
+   ::file::exception::e_cause PASCAL file_exception::ErrnoToException(int32_t nErrno)
+   {
+      switch(nErrno)
+      {
+      case EPERM:
+      case EACCES:
+         return ::file::exception::accessDenied;
+      case EBADF:
+         return ::file::exception::invalidFile;
+      case EDEADLOCK:
+         return ::file::exception::sharingViolation;
+      case EMFILE:
+         return ::file::exception::tooManyOpenFiles;
+      case ENOENT:
+      case ENFILE:
+         return ::file::exception::fileNotFound;
+      case ENOSPC:
+         return ::file::exception::diskFull;
+      case EINVAL:
+      case EIO:
+         return ::file::exception::hardIO;
+      default:
+         return ::file::exception::type_generic;
+      }
+   }
 
 
 } // namespace android

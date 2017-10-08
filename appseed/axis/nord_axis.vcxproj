@@ -94,6 +94,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <CLanguageStandard>gnu11</CLanguageStandard>
+      <ObjectFileName>$(IntDir)%(Directory)%(Filename).o</ObjectFileName>
     </ClCompile>
     <Link />
     <Link>
@@ -113,6 +114,7 @@
       <EnableNeonCodegen>false</EnableNeonCodegen>
       <Optimization>Disabled</Optimization>
       <OmitFramePointers>false</OmitFramePointers>
+      <ObjectFileName>$(IntDir)%(Directory)%(Filename).o</ObjectFileName>
     </ClCompile>
     <Link />
     <Link>
@@ -133,6 +135,7 @@
       <PreprocessorDefinitions>ENABLE_FIASCO_FINDER;AXIS_FREEIMAGE;_AXIS_LIBRARY</PreprocessorDefinitions>
       <AdditionalOptions>-Wno-attributes -Wno-sign-compare -Wno-comment -Wno-strict-overflow -Wno-unused-local-typedefs -Wno-unknown-pragmas -Wno-unused-function -Wno-unused-variable -Wno-unused-value -Wno-reorder -Wno-overloaded-virtual -Wno-unused-private-field -Wno-inconsistent-missing-override -Wno-char-subscripts</AdditionalOptions>
       <Optimization>Disabled</Optimization>
+      <ObjectFileName>$(IntDir)%(Directory)%(Filename).o</ObjectFileName>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainVersion)\$(PlatformShortName);$(StlLibraryPath)</AdditionalLibraryDirectories>
@@ -151,6 +154,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../../nodeapp/platform_configuration/$(Platform)/$(Configuration);$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(ProjectDir)../../axis/freetype/include;$(NDKRoot)\platforms\$(AndroidAPILevel)\arch-x86\usr\include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ENABLE_FIASCO_FINDER;AXIS_FREEIMAGE;_AXIS_LIBRARY</PreprocessorDefinitions>
       <AdditionalOptions>-Wno-attributes -Wno-sign-compare -Wno-comment -Wno-strict-overflow -Wno-unused-local-typedefs -Wno-unknown-pragmas -Wno-unused-function -Wno-unused-variable -Wno-unused-value -Wno-reorder -Wno-overloaded-virtual -Wno-unused-private-field -Wno-inconsistent-missing-override -Wno-char-subscripts</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(Directory)%(Filename).o</ObjectFileName>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\..\nodeapp\thirdparty\library\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\i686-linux-android\$(ToolchainVersion);$(StlLibraryPath)</AdditionalLibraryDirectories>

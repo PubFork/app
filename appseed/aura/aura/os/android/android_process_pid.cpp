@@ -1,5 +1,5 @@
 #include "framework.h"
-//#include <dirent.h>
+#include <dirent.h>
 
 //using namespace std;
 
@@ -40,7 +40,7 @@ int32_t get_process_pid(const char * procNameParam)
                   cmdLine = cmdLine.substr(pos + 1);
                // compare against requested process name
                if (procName == cmdLine)
-               pid = id;
+                  pid = id;
             }
             fclose(cmdFile);
          }

@@ -70,7 +70,7 @@ namespace aura
       }
 
 
-      bool tx::send(const char * pszMessage,DWORD dwTimeout)
+      bool tx::send(const char * pszMessage,duration durationTimeout)
       {
 
          data_struct data;
@@ -94,7 +94,7 @@ namespace aura
       }
 
 
-      bool tx::send(int32_t message,void * pdata,int32_t len,DWORD dwTimeout)
+      bool tx::send(int32_t message,void * pdata,int32_t len,duration durationTimeout)
       {
 
          if(message == (int32_t) 0x80000000)
@@ -374,7 +374,8 @@ namespace aura
                if(data.size < 512)
                   break;
 
-            } while(true);
+            }
+            while(true);
 
 
             if(data.request == 0)
