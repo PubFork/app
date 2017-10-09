@@ -483,6 +483,7 @@ namespace aura
 #ifdef VSNORD
 
          virtual bool android_set_user_wallpaper(string strUrl);
+         virtual bool android_get_user_wallpaper(string & strUrl);
 
 #endif
 

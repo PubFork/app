@@ -234,9 +234,9 @@ FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)
 
    COLORREF * psrc = pdib->m_pcolorref;
 
-   //int iStrideSrc = pdib->m_iScan;
-
 #if  defined(VSNORD)
+
+   int iStrideSrc = pdib->m_iScan;
 
    for (index y = 0; y < pdib->m_size.cy; y++)
    {
@@ -574,6 +574,8 @@ bool imaging::from(::draw2d::dib * pdib,::draw2d::graphics * pgraphics,FIBITMAP 
    //   pdib->m_iScan,
    //   (COLORREF *)pdata,
    //   stride);
+
+   int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
 
    for (index y = 0; y < pdib->m_size.cy; y++)
    {

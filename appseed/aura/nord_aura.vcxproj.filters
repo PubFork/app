@@ -1846,6 +1846,12 @@
     <ClCompile Include="aura\os\os_windowing.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_controller.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_create.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

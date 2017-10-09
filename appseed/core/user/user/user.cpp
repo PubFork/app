@@ -214,6 +214,25 @@ namespace user
 
    }
 
+   CLASS_DECL_CORE stringa get_wallpaper()
+   {
+
+      stringa stra;
+
+      string strLocalImagePath;
+
+      if( ::aura::system::g_p->android_get_user_wallpaper(strLocalImagePath) && strLocalImagePath.has_char())
+      {
+
+        stra.add(strLocalImagePath);
+
+      }
+
+      return stra;
+    
+   }
+   
+
 #elif defined(METROWIN)
 
    CLASS_DECL_CORE bool set_wallpaper(string strLocalImagePath)

@@ -2808,6 +2808,58 @@ found:
 
    }
 
+   bool system::android_get_user_wallpaper(string & strUrl)
+   {
+
+      if (m_pandroidinitdata->m_pszGetUserWallpaper != NULL)
+      {
+
+         goto success;
+
+      }
+
+      m_pandroidinitdata->m_pszGetUserWallpaper = NULL;
+
+      m_pandroidinitdata->m_bGetUserWallpaper = true;
+
+      for(int i = 0; i < 20; i++)
+      {
+
+         if (m_pandroidinitdata->m_pszGetUserWallpaper != NULL)
+         {
+
+            break;
+
+         }
+
+
+
+         Sleep(50);
+
+      }
+
+      m_pandroidinitdata->m_bGetUserWallpaper = false;
+
+      if (m_pandroidinitdata->m_pszGetUserWallpaper == NULL)
+      {
+
+         return false;
+
+      }
+
+success:
+
+      strUrl = m_pandroidinitdata->m_pszGetUserWallpaper;
+
+      free(m_pandroidinitdata->m_pszGetUserWallpaper);
+
+      m_pandroidinitdata->m_pszGetUserWallpaper = NULL;
+
+      return true;
+
+   }
+
+
 #endif
 
    class ::crypto::crypto & system::crypto()

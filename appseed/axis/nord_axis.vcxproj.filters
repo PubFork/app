@@ -340,6 +340,12 @@
     <ClCompile Include="axis\geoip\geoip_update.cpp">
       <Filter>Source Files\axis\geoip</Filter>
     </ClCompile>
+    <ClCompile Include="filesystem\fs\fs_ftp_file.cpp">
+      <Filter>Source Files\filesystem\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\fs\fs_ftp.cpp">
+      <Filter>Source Files\filesystem\fs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -441,13 +447,7 @@
     <ClInclude Include="axis\node\windows\windows.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="axis\node\windows\windows_crypto.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
     <ClInclude Include="axis\node\windows\windows_factory_exchange.h">
-      <Filter>Header Files\axis\node\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="axis\node\windows\windows_ip_enum.h">
       <Filter>Header Files\axis\node\windows</Filter>
     </ClInclude>
     <ClInclude Include="axis\node\windows\windows_port_forward.h">
@@ -781,9 +781,6 @@
     </Filter>
     <Filter Include="Header Files\axis\os\cross">
       <UniqueIdentifier>{a89eebfa-4500-4ddd-b45e-4f304b2d068f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\axis\os\cross\NewFilter1">
-      <UniqueIdentifier>{ae996bb2-2c96-4351-a940-629e630418ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\axis\os\cross">
       <UniqueIdentifier>{d6890dd3-c60f-4bf4-8ba6-2a8c01cd076a}</UniqueIdentifier>

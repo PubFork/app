@@ -4,20 +4,11 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base\_base_base.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\android\_android_os.cpp">
-      <Filter>Source Files\base\os\android</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\android\android_simple_app.cpp">
       <Filter>Source Files\base\os\android</Filter>
     </ClCompile>
     <ClCompile Include="base\os\android\android.cpp">
       <Filter>Source Files\base\os\android</Filter>
-    </ClCompile>
-    <ClCompile Include="base\base\_base_base_base.cpp">
-      <Filter>Source Files\base\base</Filter>
     </ClCompile>
     <ClCompile Include="base\base\base.cpp">
       <Filter>Source Files\base\base</Filter>
@@ -37,15 +28,6 @@
     <ClCompile Include="base\os\android\android_message_loop.cpp">
       <Filter>Source Files\base\os\android</Filter>
     </ClCompile>
-    <ClCompile Include="base\os\_os.cpp">
-      <Filter>Source Files\base\os</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\_node.cpp">
-      <Filter>Source Files\base\node</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\android\_android_node.cpp">
-      <Filter>Source Files\base\node\android</Filter>
-    </ClCompile>
     <ClCompile Include="base\node\android\android_android.cpp">
       <Filter>Source Files\base\node\android</Filter>
     </ClCompile>
@@ -58,13 +40,7 @@
     <ClCompile Include="base\node\android\android2.cpp">
       <Filter>Source Files\base\node\android</Filter>
     </ClCompile>
-    <ClCompile Include="user\_user.cpp">
-      <Filter>Source Files\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_application_as_proxy_document.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_control.cpp">
@@ -115,12 +91,6 @@
     <ClCompile Include="user\user\user_interaction_impl_base.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_menu_base.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_menu_base_item.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_message.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -137,15 +107,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_plain_text_data.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema_layered_frame.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_schema_simple_impl.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_scroll.cpp">
@@ -167,9 +128,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_wait_cursor.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_window_draw.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_window_map.cpp">
@@ -214,9 +172,6 @@
     <ClCompile Include="user\simple_ui\simple_ui_tap.cpp">
       <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
-    <ClCompile Include="user\hotplugin\_hotplugin.cpp">
-      <Filter>Source Files\user\hotplugin</Filter>
-    </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin.cpp">
       <Filter>Source Files\user\hotplugin</Filter>
     </ClCompile>
@@ -244,187 +199,13 @@
     <ClCompile Include="base\os\android\android_windowing.cpp">
       <Filter>Source Files\base\os\android</Filter>
     </ClCompile>
-    <ClCompile Include="base\node\ios\ios.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_application.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_copydesk.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_crypto.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_dir.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_dumpinit.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_exception.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_factory_exchange.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_file.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_file_set.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_file_system.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_ios.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_ip_enum.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_main.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_os.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_port_forward.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_printer.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_shell.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_stdio_file.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_thread.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_trace.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_util.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_window.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\ios\ios_window_draw.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\_windows_node.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\windows_factory_exchange.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\windows_interaction_impl.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\windows\windows_window_draw.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\_windows_os.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_dll.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_gdi.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_simple_app.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_system_interaction_impl.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_window_gdi.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\android\android_view_bitmap.cpp">
       <Filter>Source Files\base\os\android</Filter>
     </ClCompile>
     <ClCompile Include="base\node\android\android_interaction_impl.cpp">
       <Filter>Source Files\base\node\android</Filter>
     </ClCompile>
-    <ClCompile Include="base\node\linux\_linux_node.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_dumpinit.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_error.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_exception.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_factory_exchange.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_interaction_impl.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_main.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_root_tools.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_trace.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_util.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux_window_draw.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux1.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\linux\linux2.cpp">
-      <Filter>Source Files\base\node\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\_macos_node.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_copydesk.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_factory_exchange copy.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_factory_exchange.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_interaction_impl.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_main.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_message_queue.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_printer.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
-    <ClCompile Include="base\node\macos\macos_window_draw.cpp">
-      <Filter>Source Files\base\node\macos</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\ansios\ansios_multithreading.cpp">
-      <Filter>Source Files\base\os\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\ansios\_ansios_os.cpp">
       <Filter>Source Files\base\os\ansios</Filter>
     </ClCompile>
     <ClCompile Include="base\os\ansios\ansios_cross_win.cpp">
@@ -439,12 +220,6 @@
     <ClCompile Include="base\os\ansios\ansios_file_std.cpp">
       <Filter>Source Files\base\os\ansios</Filter>
     </ClCompile>
-    <ClCompile Include="base\node\ios\ios_interaction_impl.cpp">
-      <Filter>Source Files\base\node\ios</Filter>
-    </ClCompile>
-    <ClCompile Include="database\_database.cpp">
-      <Filter>Source Files\database</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\cross\windows\base_cross_windows_threading.cpp">
       <Filter>Source Files\base\os\cross\windows</Filter>
     </ClCompile>
@@ -454,17 +229,68 @@
     <ClCompile Include="base\install\install_canvas.cpp">
       <Filter>Source Files\base\install</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="base\os\android\android_window_buffer.cpp">
       <Filter>Source Files\base\os\android</Filter>
     </ClCompile>
-    <ClCompile Include="base\os\windows\windows_window_buffer.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
+    <ClCompile Include="graphics\graphics_window_buffer.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="base\os\android\android_window_anative.cpp">
-      <Filter>Source Files\base\os\android</Filter>
+    <ClCompile Include="graphics\graphics_window_dc.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\graphics_window_graphics.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="database\database\database_user_interaction.cpp">
+      <Filter>Source Files\database\database</Filter>
+    </ClCompile>
+    <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp">
+      <Filter>Source Files\database\simpledb</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_box.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_button.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control_descriptor.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_control_descriptor_set.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_command.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_item.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_mouse.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_base.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_composite.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_tooltip.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\fontopus\fontopus_dialog.cpp">
+      <Filter>Source Files\user\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="base\message\message_user.cpp">
+      <Filter>Source Files\base\message</Filter>
+    </ClCompile>
+    <ClCompile Include="user\simple_ui\simple_ui_top.cpp">
+      <Filter>Source Files\user\simple_ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -615,40 +441,13 @@
     <ClInclude Include="base\node\windows\windows_interaction_impl.h">
       <Filter>Header Files\base\node\windows</Filter>
     </ClInclude>
-    <ClInclude Include="base\os\windows\windows.h">
-      <Filter>Header Files\base\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="base\os\windows\windows_internal.h">
-      <Filter>Header Files\base\os\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="base\os\windows\windows_system_interaction_impl.h">
-      <Filter>Header Files\base\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="base\os\android\android_view_bitmap.h">
       <Filter>Header Files\base\os\android</Filter>
     </ClInclude>
     <ClInclude Include="base\node\android\android_interaction_impl.h">
       <Filter>Header Files\base\node\android</Filter>
     </ClInclude>
-    <ClInclude Include="base\node\linux\linux.h">
-      <Filter>Header Files\base\node\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\linux\linux_factory_exchange.h">
-      <Filter>Header Files\base\node\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\linux\linux_interaction_impl.h">
-      <Filter>Header Files\base\node\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\linux\linux_internal.h">
-      <Filter>Header Files\base\node\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="base\node\linux\linux_root_tools.h">
-      <Filter>Header Files\base\node\linux</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_application_as_proxy_document.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_control.h">
@@ -705,12 +504,6 @@
     <ClInclude Include="user\user\user_interaction_impl_base.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_menu_base.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_menu_base_item.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_message.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -730,15 +523,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_plain_text_data.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_schema.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_schema_layered_frame.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_schema_simple_impl.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_scroll.h">
@@ -806,20 +590,11 @@
     <Filter Include="Header Files\user\simple">
       <UniqueIdentifier>{c36bfa7d-8c04-4e36-9719-0bff6a4c8153}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\user\userpresence">
-      <UniqueIdentifier>{f2ed2c2c-55e4-4a8a-b53c-4d467f4313b9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\user\fontopus">
       <UniqueIdentifier>{0e0293fb-d645-4602-b1ba-c22601601f98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\graphics">
       <UniqueIdentifier>{445df80a-1ec0-411c-8594-9fc3243bcdc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\filesystem">
-      <UniqueIdentifier>{6078656d-b261-4957-813a-16a777a4b844}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\filesystem\file">
-      <UniqueIdentifier>{6edf364f-595c-4962-bf31-d4a26eb02768}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\base">
       <UniqueIdentifier>{a1a750d9-611d-405b-9179-1f1c21159556}</UniqueIdentifier>
@@ -908,9 +683,6 @@
     <Filter Include="Source Files\user\user">
       <UniqueIdentifier>{bf163e23-043e-4492-b022-f6c369604d5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\user\userex">
-      <UniqueIdentifier>{fdcca2ef-5095-4e7e-a1e6-2c2967e7dffe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\user\hotplugin">
       <UniqueIdentifier>{5eecece5-257f-41bc-9569-4b6124c6f2ee}</UniqueIdentifier>
     </Filter>
@@ -922,30 +694,6 @@
     </Filter>
     <Filter Include="Source Files\database">
       <UniqueIdentifier>{9ee81ee4-02f3-455f-9be5-9224c47911ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\os\ios">
-      <UniqueIdentifier>{202418d6-df37-4784-a4f9-89d6874530df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\node\ios">
-      <UniqueIdentifier>{85c0d851-42ad-4aff-915c-a443a807e312}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\node\windows">
-      <UniqueIdentifier>{7b17699e-b9ba-42a4-aaf7-ebe59f4fcb54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\os\windows">
-      <UniqueIdentifier>{e688a422-8cc1-43ab-9ea3-83bdf3effaee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\base\os\windows">
-      <UniqueIdentifier>{6ff77fea-31c0-4859-b43a-7b6355af363b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\node\linux">
-      <UniqueIdentifier>{5d36e175-b94b-4f37-aaf2-61c9f43c9dbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\base\node\macos">
-      <UniqueIdentifier>{4a9dde9b-d3f0-42e6-81ce-ba88442a145e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\base\node\linux">
-      <UniqueIdentifier>{5b0a040f-93a1-418b-bfbb-d55c674541cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\user\wndfrm">
       <UniqueIdentifier>{aedd0780-8452-469a-9c2b-c2af541849d8}</UniqueIdentifier>
@@ -962,8 +710,14 @@
     <Filter Include="Source Files\base\install">
       <UniqueIdentifier>{a4e327c2-1699-4c2b-bbfc-2ee74f6bfd77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\graphics\draw2d">
-      <UniqueIdentifier>{f0ed1f88-4f89-4fd0-945b-b1c239ce43a8}</UniqueIdentifier>
+    <Filter Include="Source Files\database\simpledb">
+      <UniqueIdentifier>{998629e8-1bc4-40df-a146-de6cbaff8a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\database\database">
+      <UniqueIdentifier>{d317f03e-9ff6-4979-82b3-40a39ad53e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\base\message">
+      <UniqueIdentifier>{229e3897-d5cb-4712-b255-b0ed9a20c012}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

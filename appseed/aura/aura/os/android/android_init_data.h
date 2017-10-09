@@ -5,16 +5,19 @@
 
 class android_init_data
 {
-public:
+   public:
 
-   int            m_iScreenWidth;
-   int            m_iScreenHeight;
-   const char *   m_pszCommandLine;
-   const char *   m_pszCacheDir;
-   bool           m_bShowKeyboard;
-   bool           m_bHideKeyboard;
-   const char *   m_pszOpenUrl;
-   const char *   m_pszUserWallpaper;
+      int            m_iScreenWidth;
+      int            m_iScreenHeight;
+      const char *   m_pszCommandLine;
+      const char *   m_pszCacheDir;
+      bool           m_bShowKeyboard;
+      bool           m_bHideKeyboard;
+      const char *   m_pszOpenUrl;
+      const char *   m_pszUserWallpaper;
+      const char *   m_pszGetUserWallpaper;
+      bool           m_bGetUserWallpaper;
+      bool           m_bGetttingUserWallpaper;
 
 };
 

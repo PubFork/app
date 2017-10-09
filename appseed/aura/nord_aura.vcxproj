@@ -1066,6 +1066,8 @@
     <ClCompile Include="user\colorertake5\colorertake5_text_parser_impl.cpp" />
     <ClCompile Include="user\simple\simple_message_box.cpp" />
     <ClCompile Include="user\user\user_command.cpp" />
+    <ClCompile Include="user\user\user_controller.cpp" />
+    <ClCompile Include="user\user\user_create.cpp" />
     <ClCompile Include="user\user\user_frame.cpp" />
     <ClCompile Include="user\user\user_interactive.cpp" />
     <ClCompile Include="user\user\user_primitive.cpp" />

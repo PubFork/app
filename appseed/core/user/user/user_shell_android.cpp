@@ -25,7 +25,7 @@ namespace user
 
       android::android(::aura::application * papp) :
          ::object(papp),
-      m_evKey(papp),
+         m_evKey(papp),
          //::thread(papp),
          ::user::shell::shell(papp),
          m_mutexQueue(papp)
@@ -39,16 +39,16 @@ namespace user
          //SHGetImageList(SHIL_EXTRALARGE, IID_IImageList, m_pilExtraLarge);
          //SHGetImageList(SHIL_JUMBO, IID_IImageList, m_pilJumbo);
          /// SHGetMalloc(&m_pmalloc);
-         
+
          //int iThreadCount = get_processor_count() * 2;
-         
+
          int iThreadCount = 1; // for android
 
          for (index i = 0; i < iThreadCount; i++)
          {
 
             m_threadaGetImage.add(::fork(get_app(),
-               [&]()
+                                         [&]()
             {
 
                ::multithreading::set_priority(::multithreading::priority_highest);
@@ -104,10 +104,10 @@ namespace user
 //
 //            pfork->m_pfolder = lpsf;
 //
-//            pfork->m_strFolder = ::file::path(imagekey.m_pszPath).folder();
+//            pfork->m_strFolder = ::file::path(imagekey.m_strPath).folder();
 //
 //         }
-//         
+//
 //         if (lpsf.is_null())
 //         {
 //
@@ -131,13 +131,13 @@ namespace user
 //         }
 //
 //
-//         string strFilePath(imagekey.m_pszPath);
+//         string strFilePath(imagekey.m_strPath);
 //
 //         CHAR szPath[_MAX_PATH * 6];
 //         WCHAR wszPath[_MAX_PATH * 6];
 //         string strPath;
 //
-//         const char * pszPathParam = imagekey.m_pszPath;
+//         const char * pszPathParam = imagekey.m_strPath;
 //
 //         HICON hicon16 = NULL;
 //         HICON hicon48 = NULL;
@@ -192,8 +192,8 @@ namespace user
 //                  strsize iFind = strFilePath.reverse_find('.');
 //
 //                  imagekey.m_iIcon = 0x80000000;
-//                  imagekey.m_pszExtension = (char*)&strFilePath[iFind+1];
-//                  imagekey.m_pszPath = "";
+//                  imagekey.m_strExtension = (char*)&strFilePath[iFind+1];
+//                  imagekey.m_strPath = "";
 //
 //                  bMaybeLink = false;
 //
@@ -226,7 +226,7 @@ namespace user
 //                           index i = m_straThemeableIconName.pred_find_first(
 //                              [=](auto & str)
 //                           {
-//                              return ::str::ends_ci(imagekey.m_pszPath, str);
+//                              return ::str::ends_ci(imagekey.m_strPath, str);
 //                           }
 //                           );
 //
@@ -235,12 +235,12 @@ namespace user
 //
 //                              string str = m_straThemeableIconName[i];
 //
-//                              if (::str::ends_ci(imagekey.m_pszPath, str))
+//                              if (::str::ends_ci(imagekey.m_strPath, str))
 //                              {
 //
-//                                 strExpandEnv = imagekey.m_pszPath;
+//                                 strExpandEnv = imagekey.m_strPath;
 //                                 strExpandEnv.replace_ci(str, m_strShellThemePrefix + str);
-//                                 imagekey.m_pszPath = (char*)strExpandEnv.c_str();
+//                                 imagekey.m_strPath = (char*)strExpandEnv.c_str();
 //
 //                              }
 //
@@ -254,7 +254,7 @@ namespace user
 //
 //                  imagekey.m_iIcon = iIcon;
 //
-//                  imagekey.m_pszExtension = "";
+//                  imagekey.m_strExtension = "";
 //
 //               }
 //            }
@@ -280,15 +280,15 @@ namespace user
 //                  strsize iFind = strFilePath.reverse_find('.');
 //
 //                  imagekey.m_iIcon = 0x80000000;
-//                  imagekey.m_pszExtension = (char *)&strFilePath.Mid(iFind);
-//                  imagekey.m_pszPath = "";
+//                  imagekey.m_strExtension = (char *)&strFilePath.Mid(iFind);
+//                  imagekey.m_strPath = "";
 //               }
 //               else
 //               {
 //                  strFilePath = expand_env(szPath);
-//                  imagekey.m_pszPath = (char *)strFilePath.c_str();
+//                  imagekey.m_strPath = (char *)strFilePath.c_str();
 //                  imagekey.m_iIcon = iIcon;
-//                  imagekey.m_pszExtension = "";
+//                  imagekey.m_strExtension = "";
 //               }
 //            }
 //         }
@@ -319,28 +319,28 @@ namespace user
 //                  strsize iFind = strFilePath.reverse_find('.');
 //
 //                  imagekey.m_iIcon = 0x80000000;
-//                  imagekey.m_pszExtension = (char *)&strFilePath.Mid(iFind);
-//                  imagekey.m_pszPath = "";
+//                  imagekey.m_strExtension = (char *)&strFilePath.Mid(iFind);
+//                  imagekey.m_strPath = "";
 //               }
 //               else
 //               {
 //                  //imagekey.m_strPath = expand_env(strP);
 //                  strFilePath = expand_env(strP);
-//                  imagekey.m_pszPath = (char *)strFilePath.c_str();
+//                  imagekey.m_strPath = (char *)strFilePath.c_str();
 //                  imagekey.m_iIcon = iIcon;
-//                  imagekey.m_pszExtension = "";
+//                  imagekey.m_strExtension = "";
 //               }
 //            }
 //         }
 //         else
 //         {
 //
-//            imagekey.m_pszPath = (char *)strFilePath.c_str();
+//            imagekey.m_strPath = (char *)strFilePath.c_str();
 //            imagekey.m_iIcon = iIcon;
-//            imagekey.m_pszExtension = "";
+//            imagekey.m_strExtension = "";
 //
 //         }
-//         
+//
 //         if (bMaybeLink && imagekey.m_iIcon == 0x80000000)
 //         {
 //
@@ -388,9 +388,9 @@ namespace user
 //
 //                     string strFooPath = m_strShellThemePrefix + "foo." + strExtension;
 //
-//                     imagekey.m_pszPath = (char *)(const char *)strFooPath;
+//                     imagekey.m_strPath = (char *)(const char *)strFooPath;
 //                     imagekey.m_iIcon = 0;
-//                     imagekey.m_pszExtension = "";
+//                     imagekey.m_strExtension = "";
 //
 //                     {
 //
@@ -433,7 +433,7 @@ namespace user
 //
 //                     strPath.free_extra();
 //
-//                     strPath = imagekey.m_pszPath;
+//                     strPath = imagekey.m_strPath;
 //
 //                     HICON hicon32 = NULL;
 //
@@ -499,7 +499,7 @@ namespace user
 //
 //               try
 //               {
-//                  
+//
 //                  HICON hicon32 = NULL;
 //
 //                  if (strlen(pszPathParam) > 0)
@@ -544,22 +544,22 @@ namespace user
 //                  {
 //                     HICON hicon16;
 //                     ExtractIconExW(
-//                        wstring(imagekey.m_pszPath),
+//                        wstring(imagekey.m_strPath),
 //                        imagekey.m_iIcon,
 //                        &hicon32,
 //                        &hicon16,
 //                        1);
 //
-//                     if (hicon48 == NULL && ::str::ends_ci(imagekey.m_pszPath, ".ico"))
+//                     if (hicon48 == NULL && ::str::ends_ci(imagekey.m_strPath, ".ico"))
 //                     {
 //
-//                        hicon48 = (HICON)LoadImage(NULL, imagekey.m_pszPath, IMAGE_ICON, 48, 48, LR_LOADFROMFILE);
+//                        hicon48 = (HICON)LoadImage(NULL, imagekey.m_strPath, IMAGE_ICON, 48, 48, LR_LOADFROMFILE);
 //
 //                     }
 //                     if (hicon48 == NULL)
 //                     {
 //
-//                        hicon48 = ExtractResourceIcon(imagekey.m_pszPath, 48, 48, imagekey.m_iIcon);
+//                        hicon48 = ExtractResourceIcon(imagekey.m_strPath, 48, 48, imagekey.m_iIcon);
 //
 //                     }
 //
@@ -621,7 +621,7 @@ namespace user
 //                     m_imagemap.set_at(imagekey, iImage);
 //
 //                  }
-//                  
+//
 //               }
 //               catch (...)
 //               {
@@ -651,9 +651,9 @@ namespace user
 //
 //         wstring wstrFilePath;
 //
-//         imagekey.m_pszPath = "foo";
+//         imagekey.m_strPath = "foo";
 //
-//         imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+//         imagekey.m_strShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
 //
 //         {
 //
@@ -693,7 +693,7 @@ namespace user
 //         else
 //         {
 //
-//            wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_pszExtension);
+//            wstrFilePath = wstring(L"foo.") + wstring(imagekey.m_strExtension);
 //
 //            SHGetFileInfoW(
 //               wstrFilePath,
@@ -839,14 +839,14 @@ namespace user
       //            strsize iFind = strFilePath.reverse_find('.');
 
       //            imagekey.m_iIcon = 0x80000000;
-      //            imagekey.m_pszExtension = (char*)&strFilePath[iFind];
-      //            imagekey.m_pszPath = "";
+      //            imagekey.m_strExtension = (char*)&strFilePath[iFind];
+      //            imagekey.m_strPath = "";
       //         }
       //         else
       //         {
-      //            imagekey.m_pszPath = (char *)strPath.c_str();
+      //            imagekey.m_strPath = (char *)strPath.c_str();
       //            imagekey.m_iIcon = iIcon;
-      //            imagekey.m_pszExtension = NULL;
+      //            imagekey.m_strExtension = NULL;
       //         }
       //      }
       //   }
@@ -873,7 +873,7 @@ namespace user
       //      }
       //      else
       //      {
-      //         strPath = "foo." + string(imagekey.m_pszExtension);
+      //         strPath = "foo." + string(imagekey.m_strExtension);
       //         SHGetFileInfo(
       //            strPath,
       //            FILE_ATTRIBUTE_NORMAL,
@@ -901,7 +901,7 @@ namespace user
       //         hicon16 = NULL;
       //         strPath.Truncate(0);
       //         strPath.free_extra();
-      //         strPath = imagekey.m_pszPath;
+      //         strPath = imagekey.m_strPath;
       //         iIcon = imagekey.m_iIcon;
       //         bool bExtract = false;
       //         //HGLOBAL hglobal = ::GlobalAlloc(GPTR, strPath.get_length() + 1);
@@ -931,7 +931,7 @@ namespace user
       //         //::GlobalFree(hglobal);
       //         if (!bExtract)
       //         {
-      //            if (strlen(imagekey.m_pszPath) <= 0)
+      //            if (strlen(imagekey.m_strPath) <= 0)
       //            {
       //               SHGetFileInfo(
       //                  (const char *)lpiidlAbsolute,
@@ -956,7 +956,7 @@ namespace user
       //            else
       //            {
       //               ExtractIconEx(
-      //                  imagekey.m_pszPath,
+      //                  imagekey.m_strPath,
       //                  imagekey.m_iIcon,
       //                  &hicon48,
       //                  &hicon16,
@@ -1195,7 +1195,7 @@ namespace user
 
          int32_t iImage = 0x80000000;
 
-         if (::str::begins_ci(imagekey.m_pszPath, "uifs:"))
+         if (::str::begins_ci(imagekey.m_strPath, "uifs:"))
          {
 
             ::file::path path = Application.dir().matter("cloud.ico");
@@ -1217,7 +1217,7 @@ namespace user
             return iImage;
 
          }
-         else if (::str::begins_ci(imagekey.m_pszPath, "fs:"))
+         else if (::str::begins_ci(imagekey.m_strPath, "fs:"))
          {
 
             ::file::path path = Application.dir().matter("remote.ico");
@@ -1239,7 +1239,7 @@ namespace user
             return iImage;
 
          }
-         else if (::str::begins_ci(imagekey.m_pszPath, "ftp:"))
+         else if (::str::begins_ci(imagekey.m_strPath, "ftp:"))
          {
 
             ::file::path path = Application.dir().matter("ftp.ico");
@@ -1266,9 +1266,9 @@ namespace user
 
 
 
-         if (::str::ends_ci(imagekey.m_pszPath, ".core"))
+         if (::str::ends_ci(imagekey.m_strPath, ".core"))
          {
-            string str = Application.file().as_string(imagekey.m_pszPath);
+            string str = Application.file().as_string(imagekey.m_strPath);
             if (::str::begins_eat_ci(str, "ca2prompt\r\n"))
             {
                str.trim();
@@ -1297,11 +1297,11 @@ namespace user
          }
          // try to find "uifs:// http:// ftp:// like addresses"
          // then should show icon by extension or if is folder
-         strsize iFind = imagekey.m_pszPath == NULL ? -1 : ::str::find_ci("://", imagekey.m_pszPath);
-         strsize iFind2 = imagekey.m_pszPath == NULL ? -1 : ::str::find_ci(":", imagekey.m_pszPath);
+         strsize iFind = imagekey.m_strPath == NULL ? -1 : ::str::find_ci("://", imagekey.m_strPath);
+         strsize iFind2 = imagekey.m_strPath == NULL ? -1 : ::str::find_ci(":", imagekey.m_strPath);
          if (iFind >= 0 || iFind2 >= 2)
          {
-            string strProtocol = string(imagekey.m_pszPath).Left(MAX(iFind, iFind2));
+            string strProtocol = string(imagekey.m_strPath).Left(MAX(iFind, iFind2));
             int32_t i = 0;
 
             while (i < strProtocol.get_length() && isalnum_dup(strProtocol[i]))
@@ -1332,7 +1332,7 @@ namespace user
 
          string strExtension;
 
-         if (::str::ends_ci(imagekey.m_pszPath, ".sln"))
+         if (::str::ends_ci(imagekey.m_strPath, ".sln"))
          {
             output_debug_string("test");
          }
@@ -1342,8 +1342,8 @@ namespace user
          dib48->create(48, 48);
 
          dib48->Fill(0);
-         
-         string strPath = imagekey.m_pszPath;
+
+         string strPath = imagekey.m_strPath;
 
          if (android_get_file_image(dib48, strPath))
          {
@@ -1354,26 +1354,26 @@ namespace user
             dib16->Fill(0);
 
             {
-            synch_lock sl1(m_pilHover[16]->m_pmutex);
-            synch_lock sl2(m_pil[16]->m_pmutex);
-            if (android_get_file_image(dib16, strPath))
-            {
-               iImage = m_pil[16]->add_dib(dib16, 0, 0);
-               m_pilHover[16]->add_dib(dib16, 0, 0);
+               synch_lock sl1(m_pilHover[16]->m_pmutex);
+               synch_lock sl2(m_pil[16]->m_pmutex);
+               if (android_get_file_image(dib16, strPath))
+               {
+                  iImage = m_pil[16]->add_dib(dib16, 0, 0);
+                  m_pilHover[16]->add_dib(dib16, 0, 0);
 
 
-            }
-            else
-            {
-               dib16->get_graphics()->SetStretchBltMode(HALFTONE);
+               }
+               else
+               {
+                  dib16->get_graphics()->SetStretchBltMode(HALFTONE);
 
-               dib16->get_graphics()->StretchBlt(0, 0, 48, 48, dib48->get_graphics(), 0, 0, dib48->m_size.cx, dib48->m_size.cy);
+                  dib16->get_graphics()->StretchBlt(0, 0, 48, 48, dib48->get_graphics(), 0, 0, dib48->m_size.cx, dib48->m_size.cy);
 
-               iImage = m_pil[16]->add_dib(dib16, 0, 0);
-               m_pilHover[16]->add_dib(dib16, 0, 0);
+                  iImage = m_pil[16]->add_dib(dib16, 0, 0);
+                  m_pilHover[16]->add_dib(dib16, 0, 0);
 
-            }
-               
+               }
+
             }
             synch_lock sl1(m_pilHover[48]->m_pmutex);
             synch_lock sl2(m_pil[48]->m_pmutex);
@@ -1399,7 +1399,7 @@ namespace user
          }
 
 
-         string str(imagekey.m_pszPath);
+         string str(imagekey.m_strPath);
 
          iImage = -1;
 
@@ -1409,7 +1409,7 @@ namespace user
          return iImage;
 
       }
-      
+
       android::per_fork::per_fork(bool bInit)
       {
          if (bInit)
@@ -1420,14 +1420,14 @@ namespace user
          }
 
       }
-      
-      
+
+
       android::per_fork::~per_fork()
       {
 
       }
-      
-      
+
+
       void android::per_fork::init()
       {
 
@@ -1446,7 +1446,7 @@ namespace user
          per_fork fork;
 
 
-     
+
 
          synch_lock sl(&m_mutexQueue);
 
@@ -1454,7 +1454,7 @@ namespace user
          {
 
             if(m_keyptra.is_empty())
-            { 
+            {
 
                sl.unlock();
 
@@ -1464,23 +1464,23 @@ namespace user
             else
             {
 
-              image_key * pkey = m_keyptra.first();
+               image_key * pkey = m_keyptra.first();
 
-              m_keyptra.remove_at(0);
+               m_keyptra.remove_at(0);
 
-              sl.unlock();
+               sl.unlock();
 
-              int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
+               int iImage = get_image(&fork, pkey->m_oswindow, *pkey, NULL, pkey->m_cr);
 
-              {
+               {
 
-                 synch_lock s(m_pmutex);
+                  synch_lock s(m_pmutex);
 
-                 m_imagemap.set_at(*pkey, iImage);
+                  m_imagemap.set_at(*pkey, iImage);
 
-              }
+               }
 
-              delete pkey;
+               delete pkey;
 
             }
 
@@ -1513,7 +1513,7 @@ namespace user
 
             imagekey.set_path(strPath);
 
-            imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+            imagekey.m_strShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
 
             imagekey.m_eattribute = eattribute;
 
@@ -1539,7 +1539,7 @@ namespace user
             }
 
             image_key_store * pstore = new image_key_store(imagekey);
-            
+
             {
 
                synch_lock sl(&m_mutexQueue);
@@ -1586,18 +1586,18 @@ namespace user
 
             image_key imagekey;
 
-            imagekey.m_pszPath = "foo";
+            imagekey.m_strPath = "foo";
 
-            imagekey.m_pszShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
+            imagekey.m_strShellThemePrefix = (char *)m_strShellThemePrefix.c_str();
 
-            imagekey.m_pszExtension = (char *)strExtension.c_str();
+            imagekey.m_strExtension = (char *)strExtension.c_str();
 
             imagekey.m_eattribute = eattribute;
 
             imagekey.m_eicon = eicon;
 
             imagekey.m_iIcon = 0;
-            
+
             {
 
                synch_lock sl(m_pmutex);

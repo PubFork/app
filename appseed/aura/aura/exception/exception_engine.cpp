@@ -261,7 +261,7 @@ int_bool __stdcall My_ReadProcessMemory (
    if(!ReadProcessMemory(hProcess, (LPCVOID) qwBaseAddress, (LPVOID) lpBuffer, nSize, &size))
       return FALSE;
    *lpNumberOfBytesRead = (uint32_t) size;
-   
+
    return TRUE;
 #endif
 
@@ -1296,7 +1296,9 @@ namespace exception
       if (iSkip == max - 1)
       {
 
-         return "";
+         strcpy(_strS, "");
+
+         return _strS;
 
       }
 

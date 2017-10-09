@@ -12,15 +12,15 @@ bool TranslateMessage(LPMESSAGE lpmessage)
 }
 
 
-LRESULT DispatchMessage(LPMESSAGE lpmessage)
-{
-
-   if(lpmessage->hwnd == NULL)
-      return false;
-
-   return window_from_handle(lpmessage->hwnd)->message_handler(lpmessage);
-
-}
+//LRESULT DispatchMessage(LPMESSAGE lpmessage)
+//{
+//
+//   if(lpmessage->hwnd == NULL)
+//      return false;
+//
+//   return window_from_handle(lpmessage->hwnd)->message_handler(lpmessage);
+//
+//}
 
 
 
@@ -29,14 +29,14 @@ void _c_simple_message_loop()
 
    MESSAGE msg;
 
-	while(GetMessage(&msg, NULL, 0, 0))
-	{
+   while(GetMessage(&msg, NULL, 0, 0))
+   {
 
-		TranslateMessage(&msg);
+      TranslateMessage(&msg);
 
-		DispatchMessage(&msg);
+      DispatchMessage(&msg);
 
-	}
+   }
 
 
 }
