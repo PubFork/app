@@ -15,6 +15,10 @@
 #include "apple/apple.h"
 #include "macos/macos.h"
 
+#elif defined(ANDROID)
+
+#include "android/android.h"
+
 #endif
 
 

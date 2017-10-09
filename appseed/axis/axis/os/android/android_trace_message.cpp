@@ -9,16 +9,16 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    SCAST_PTR(::message::base,pbase,pobj);
 
    if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_NCMOUSEMOVE ||
-      pbase->m_id == WM_NCHITTEST || pbase->m_id == WM_SETCURSOR ||
-      pbase->m_id == WM_CTLCOLORBTN ||
-      pbase->m_id == WM_CTLCOLORDLG ||
-      pbase->m_id == WM_CTLCOLOREDIT ||
-      pbase->m_id == WM_CTLCOLORLISTBOX ||
-      pbase->m_id == WM_CTLCOLORMSGBOX ||
-      pbase->m_id == WM_CTLCOLORSCROLLBAR ||
-      pbase->m_id == WM_CTLCOLORSTATIC ||
-      pbase->m_id == WM_ENTERIDLE || pbase->m_id == WM_CANCELMODE ||
-      pbase->m_id == 0x0118)    // WM_SYSTIMER (caret blink)
+         pbase->m_id == WM_NCHITTEST || pbase->m_id == WM_SETCURSOR ||
+         pbase->m_id == WM_CTLCOLORBTN ||
+         pbase->m_id == WM_CTLCOLORDLG ||
+         pbase->m_id == WM_CTLCOLOREDIT ||
+         pbase->m_id == WM_CTLCOLORLISTBOX ||
+         pbase->m_id == WM_CTLCOLORMSGBOX ||
+         pbase->m_id == WM_CTLCOLORSCROLLBAR ||
+         pbase->m_id == WM_CTLCOLORSTATIC ||
+         pbase->m_id == WM_ENTERIDLE || pbase->m_id == WM_CANCELMODE ||
+         pbase->m_id == 0x0118)    // WM_SYSTIMER (caret blink)
    {
       // don't report very frequently sent messages
       return;
@@ -38,7 +38,7 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    else if(pbase->m_id >= WM_USER)
    {
       // User message
-      sprintf(szBuf,"WM_USER+0x%04X",pbase->m_id - WM_USER);
+      sprintf(szBuf,"WM_USER+0x%04X",pbase->m_id.int64() - WM_USER);
       lpszMsgName = szBuf;
    }
    else

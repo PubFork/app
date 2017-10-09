@@ -25,34 +25,13 @@
     <ClCompile Include="axis\axis\axis_system.cpp">
       <Filter>Source Files\axis\axis</Filter>
     </ClCompile>
-    <ClCompile Include="database\database\_database.cpp">
-      <Filter>Source Files\database\database</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\_simpledb.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
     <ClCompile Include="database\sqlitedb\sqlitedb_base.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
     <ClCompile Include="database\sqlitedb\sqlitedb_set.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
-    <ClCompile Include="axis\fontopus\_fontopus.cpp">
-      <Filter>Source Files\axis\fontopus</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\node\android\_android_node.cpp">
-      <Filter>Source Files\axis\node\android</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\fs\_fs.cpp">
-      <Filter>Source Files\filesystem\fs</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\android\_android_os.cpp">
-      <Filter>Source Files\axis\os\android</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\android\android_win_base.cpp">
-      <Filter>Source Files\axis\os\android</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\android\android_message_loop.cpp">
       <Filter>Source Files\axis\os\android</Filter>
     </ClCompile>
     <ClCompile Include="axis\os\android\android_multithreading.cpp">
@@ -84,18 +63,6 @@
     </ClCompile>
     <ClCompile Include="axis\node\android\android1.cpp">
       <Filter>Source Files\axis\node\android</Filter>
-    </ClCompile>
-    <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
-      <Filter>Source Files\filesystem\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="user\_user.cpp">
-      <Filter>Source Files\user</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\message\_message.cpp">
-      <Filter>Source Files\axis\message</Filter>
-    </ClCompile>
-    <ClCompile Include="app_install_plugin_library_list.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="database\database\database_application.cpp">
       <Filter>Source Files\database\database</Filter>
@@ -139,9 +106,6 @@
     <ClCompile Include="database\database\database_update_hint.cpp">
       <Filter>Source Files\database\database</Filter>
     </ClCompile>
-    <ClCompile Include="database\database\database_user_interaction.cpp">
-      <Filter>Source Files\database\database</Filter>
-    </ClCompile>
     <ClCompile Include="database\simpledb\simpledb_base.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
@@ -164,12 +128,6 @@
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
     <ClCompile Include="database\simpledb\simpledb_manager.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\simpledb_mysql_database.cpp">
-      <Filter>Source Files\database\simpledb</Filter>
-    </ClCompile>
-    <ClCompile Include="database\simpledb\simpledb_mysql_result.cpp">
       <Filter>Source Files\database\simpledb</Filter>
     </ClCompile>
     <ClCompile Include="database\simpledb\simpledb_record_row.cpp">
@@ -268,9 +226,6 @@
     <ClCompile Include="filesystem\fs\fs_set.cpp">
       <Filter>Source Files\filesystem\fs</Filter>
     </ClCompile>
-    <ClCompile Include="filesystem\_filesystem.cpp">
-      <Filter>Source Files\filesystem</Filter>
-    </ClCompile>
     <ClCompile Include="filesystem\filesystem\filesystem_axis_application.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
@@ -283,35 +238,107 @@
     <ClCompile Include="filesystem\filesystem\filesystem_dir_axis_system.cpp">
       <Filter>Source Files\filesystem\filesystem</Filter>
     </ClCompile>
-    <ClCompile Include="axis\axis\_axis_axis_axis.cpp">
-      <Filter>Source Files\axis\axis</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\_os.cpp">
-      <Filter>Source Files\axis\os</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\ansios\ansios_multithreading.cpp">
-      <Filter>Source Files\axis\os\ansios</Filter>
-    </ClCompile>
-    <ClCompile Include="axis\os\ansios\_ansios_os.cpp">
       <Filter>Source Files\axis\os\ansios</Filter>
     </ClCompile>
     <ClCompile Include="axis\node\android\android_copydesk.cpp">
       <Filter>Source Files\axis\node\android</Filter>
     </ClCompile>
-    <ClCompile Include="axis\node\android\aaa_want_to_remove_android_file_set.cpp">
-      <Filter>Source Files\axis\node\android</Filter>
+    <ClCompile Include="graphics\dib_console.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="axis\geoip\_geoip.cpp">
+    <ClCompile Include="graphics\visual\antialias_8bit.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\freeimage.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\load_gif_frame.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_api.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_dib.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_font.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_font_department.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_glyph.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_glyph_set.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_image_list.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_imaging.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_visual.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_water_routine.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html\html_html.cpp">
+      <Filter>Source Files\html_lite\html</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html_lite\html_lite_html_attributes.cpp">
+      <Filter>Source Files\html_lite\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html_lite\html_lite_html_entity_resolver.cpp">
+      <Filter>Source Files\html_lite\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html_lite\html_lite_html_reader.cpp">
+      <Filter>Source Files\html_lite\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="html_lite\html_lite\html_lite_html_tag.cpp">
+      <Filter>Source Files\html_lite\html_lite</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\geoip\geoip.cpp">
       <Filter>Source Files\axis\geoip</Filter>
     </ClCompile>
-    <ClCompile Include="html_lite\_html_lite_html_lite.cpp">
-      <Filter>Source Files\html_lite</Filter>
+    <ClCompile Include="axis\geoip\geoip_city.cpp">
+      <Filter>Source Files\axis\geoip</Filter>
     </ClCompile>
-    <ClCompile Include="axis\_axis_axis.cpp">
-      <Filter>Source Files\axis</Filter>
+    <ClCompile Include="axis\geoip\geoip_region_name.cpp">
+      <Filter>Source Files\axis\geoip</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="axis\geoip\geoip_time_zone.cpp">
+      <Filter>Source Files\axis\geoip</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\geoip\geoip_update.cpp">
+      <Filter>Source Files\axis\geoip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -740,9 +767,6 @@
     <Filter Include="Source Files\axis\node\ansios">
       <UniqueIdentifier>{e951b1ed-dd0e-4e34-9301-79a002dcb0c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\axis\fontopus">
-      <UniqueIdentifier>{e4b2702f-cdad-4ec3-9cdc-5e5e8172b562}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\database">
       <UniqueIdentifier>{0f205395-f538-45e7-a7a3-865dd1555ef2}</UniqueIdentifier>
     </Filter>
@@ -773,9 +797,6 @@
     <Filter Include="Source Files\user">
       <UniqueIdentifier>{b0b5ddce-af0a-4e9e-8918-47765a512a7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\axis\message">
-      <UniqueIdentifier>{d7512f7c-45c0-433e-8b64-361ab37a2c10}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\user\user">
       <UniqueIdentifier>{cd1ee619-17ec-4fc5-8dd7-ab0b09653573}</UniqueIdentifier>
     </Filter>
@@ -796,6 +817,15 @@
     </Filter>
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{c24f5a5c-1b43-4344-8400-e7425c000fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\visual">
+      <UniqueIdentifier>{12b95527-3f02-408f-82b6-191a5c7b84d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\html_lite\html">
+      <UniqueIdentifier>{1f76b015-444e-4cb6-98d0-8eed9e161a9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\html_lite\html_lite">
+      <UniqueIdentifier>{8366dbf8-2620-4f52-b7ea-1f861a4bfec5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

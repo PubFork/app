@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 
 namespace android
@@ -24,7 +24,7 @@ namespace android
    void copydesk::get_filea(::file::patha & patha)
    {
 
-      stra.add("this_file_does_not_exist_please_implement_android_copydesk_get_filea.txt");
+      patha.add("this_file_does_not_exist_please_implement_android_copydesk_get_filea.txt");
 
    }
 
@@ -58,9 +58,9 @@ namespace android
 
 //      if(::window_sp::is_set() && ::window_sp::m_p->IsWindow())
       {
-  //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
+         //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
       }
-    //  else
+      //  else
       {
          bOk = false;
       }

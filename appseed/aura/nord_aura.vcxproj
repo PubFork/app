@@ -1089,17 +1089,12 @@
     <ClInclude Include="aura\aura\aura_class.h" />
     <ClInclude Include="aura\aura\aura_cmp.h" />
     <ClInclude Include="aura\aura\aura_cmp2.h" />
-    <ClInclude Include="aura\aura\aura_command.h" />
-    <ClInclude Include="aura\aura\aura_command_msg.h" />
     <ClInclude Include="aura\aura\aura_command_target.h" />
-    <ClInclude Include="aura\aura\aura_command_ui.h" />
-    <ClInclude Include="aura\aura\aura_command_ui_test.h" />
     <ClInclude Include="aura\aura\aura_common.h" />
     <ClInclude Include="aura\aura\aura_console_window.h" />
     <ClInclude Include="aura\aura\aura_conv.h" />
     <ClInclude Include="aura\aura\aura_core.h" />
     <ClInclude Include="aura\aura\aura_cpu_architecture.h" />
-    <ClInclude Include="aura\aura\aura_create_context.h" />
     <ClInclude Include="aura\aura\aura_cregexp.h" />
     <ClInclude Include="aura\aura\aura_cregexp_util.h" />
     <ClInclude Include="aura\aura\aura_debug.h" />
@@ -1109,12 +1104,10 @@
     <ClInclude Include="aura\aura\aura_draw2d.h" />
     <ClInclude Include="aura\aura\aura_draw_context.h" />
     <ClInclude Include="aura\aura\aura_draw_interface.h" />
-    <ClInclude Include="aura\aura\aura_element.h" />
     <ClInclude Include="aura\aura\aura_enum.h" />
     <ClInclude Include="aura\aura\aura_file_watcher.h" />
     <ClInclude Include="aura\aura\aura_file_watcher_impl.h" />
     <ClInclude Include="aura\aura\aura_file_watcher_listener_thread.h" />
-    <ClInclude Include="aura\aura\aura_file_watcher_thread.h" />
     <ClInclude Include="aura\aura\aura_fixed_alloc.h" />
     <ClInclude Include="aura\aura\aura_fixed_alloc_impl.h" />
     <ClInclude Include="aura\aura\aura_flags.h" />
@@ -1130,7 +1123,6 @@
     <ClInclude Include="aura\aura\aura_keep_true.h" />
     <ClInclude Include="aura\aura\aura_launcher.h" />
     <ClInclude Include="aura\aura\aura_library.h" />
-    <ClInclude Include="aura\aura\aura_live_object.h" />
     <ClInclude Include="aura\aura\aura_live_signal.h" />
     <ClInclude Include="aura\aura\aura_local_memory_map.h" />
     <ClInclude Include="aura\aura\aura_log.h" />
@@ -1138,10 +1130,8 @@
     <ClInclude Include="aura\aura\aura_machine_event.h" />
     <ClInclude Include="aura\aura\aura_machine_event_central.h" />
     <ClInclude Include="aura\aura\aura_machine_event_data.h" />
-    <ClInclude Include="aura\aura\aura_main_init_data.h" />
     <ClInclude Include="aura\aura\aura_math.h" />
     <ClInclude Include="aura\aura\aura_message_loop.h" />
-    <ClInclude Include="aura\aura\aura_microtimer.h" />
     <ClInclude Include="aura\aura\aura_muldiv64.h" />
     <ClInclude Include="aura\aura\aura_net.h" />
     <ClInclude Include="aura\aura\aura_new.h" />
@@ -1160,7 +1150,6 @@
     <ClInclude Include="aura\aura\aura_session.h" />
     <ClInclude Include="aura\aura\aura_shell_launcher.h" />
     <ClInclude Include="aura\aura\aura_simple_app.h" />
-    <ClInclude Include="aura\aura\aura_simple_pixel_font.h" />
     <ClInclude Include="aura\aura\aura_smart_pointer1.h" />
     <ClInclude Include="aura\aura\aura_smart_pointer2.h" />
     <ClInclude Include="aura\aura\aura_speaker.h" />
@@ -1178,9 +1167,7 @@
     <ClInclude Include="aura\aura\aura_timer_item.h" />
     <ClInclude Include="aura\aura\aura_trace.h" />
     <ClInclude Include="aura\aura\aura_types.h" />
-    <ClInclude Include="aura\aura\aura_url.h" />
     <ClInclude Include="aura\aura\aura_user.h" />
-    <ClInclude Include="aura\aura\axis.h" />
     <ClInclude Include="aura\aura_policy\aura_c.h" />
     <ClInclude Include="aura\aura_policy\aura_cpp.h" />
     <ClInclude Include="aura\aura_policy\aura_policy.h" />
@@ -1280,7 +1267,6 @@
     <ClInclude Include="aura\message\message_base.h" />
     <ClInclude Include="aura\message\message_cross_windows.h" />
     <ClInclude Include="aura\message\message_definition.h" />
-    <ClInclude Include="aura\message\message_dispatch.h" />
     <ClInclude Include="aura\node\android\android.h" />
     <ClInclude Include="aura\node\android\android1.h" />
     <ClInclude Include="aura\node\android\android_application.h" />
@@ -1747,7 +1733,6 @@
     <ClInclude Include="primitive\primitive_color.h" />
     <ClInclude Include="primitive\primitive_command.h" />
     <ClInclude Include="primitive\primitive_command_line.h" />
-    <ClInclude Include="primitive\primitive_command_thread.h" />
     <ClInclude Include="primitive\primitive_create.h" />
     <ClInclude Include="primitive\primitive_edit.h" />
     <ClInclude Include="primitive\primitive_factory.h" />
@@ -1768,7 +1753,6 @@
     <ClInclude Include="primitive\primitive_request_interface.h" />
     <ClInclude Include="primitive\primitive_request_signal.h" />
     <ClInclude Include="primitive\primitive_shared_memory.h" />
-    <ClInclude Include="primitive\primitive_signal.h" />
     <ClInclude Include="primitive\primitive_type.h" />
     <ClInclude Include="primitive\primitive_var.h" />
     <ClInclude Include="primitive\primitive_var2.h" />
