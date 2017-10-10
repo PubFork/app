@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h" // from "axis/net/net_sockets.h"
 #include "fiasco_finder.h"
 
@@ -703,8 +703,8 @@ namespace axis
 
       lprect->left = 0;
       lprect->top = 0;
-      lprect->right = m_pandroidinitdata->m_iScreenWidth;
-      lprect->bottom = m_pandroidinitdata->m_iScreenHeight;
+      lprect->right = m_pdataexchange->m_iScreenWidth;
+      lprect->bottom = m_pdataexchange->m_iScreenHeight;
 
 #endif
 

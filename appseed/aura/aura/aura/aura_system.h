@@ -1,18 +1,4 @@
-#pragma once
-
-
-
-class CLASS_DECL_AURA ptra:
-   virtual public spa(object)
-{
-   public:
-
-
-};
-
-
-typedef ::map < sp(object),sp(object),sp(object),sp(object) > element_map;
-typedef ::map < sp(object),sp(object),ptra,ptra > map_many;
+﻿#pragma once
 
 
 namespace aura
@@ -81,7 +67,7 @@ namespace aura
          //ID2D1DeviceContext *                         m_pdevicecontext;
          //mutex                                        m_mutexDc;
 #elif defined(VSNORD)
-         android_init_data *                          m_pandroidinitdata;
+         android_data_exchange *                      m_pdataexchange;
 #endif
 
          void *                                       m_ftlibrary;
@@ -496,6 +482,9 @@ namespace aura
          virtual bool initialize_native_window1();
 
          virtual void * initialize_native_window2(LPCRECT lpcrect);
+
+         virtual void on_os_text(e_os_text etext, string strText);
+
 
    };
 

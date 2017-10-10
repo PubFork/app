@@ -1819,9 +1819,6 @@
     <ClCompile Include="build_debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\os_alloc.cpp">
-      <Filter>Source Files\aura\aura</Filter>
-    </ClCompile>
     <ClCompile Include="multithreading\multithreading_tools.cpp">
       <Filter>Source Files\multithreading</Filter>
     </ClCompile>
@@ -1851,6 +1848,36 @@
     </ClCompile>
     <ClCompile Include="user\user\user_create.cpp">
       <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\aura\_aura_aura.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\charguess\_charguess.cpp">
+      <Filter>Source Files\aura\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_alloc.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\exception\_exception.cpp">
+      <Filter>Source Files\aura\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\fontopus\_fontopus.cpp">
+      <Filter>Source Files\aura\fontopus</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\install\_install.cpp">
+      <Filter>Source Files\aura\install</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\message\_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\android\_node_android.cpp">
+      <Filter>Source Files\aura\node\android</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\android\_os_android.cpp">
+      <Filter>Source Files\aura\os\android</Filter>
+    </ClCompile>
+    <ClCompile Include="user\colorertake5\_colorertake5.cpp">
+      <Filter>Source Files\user\colorertake5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2954,9 +2981,6 @@
     </ClInclude>
     <ClInclude Include="aura\aura\aura_allocate_processor_cache_oriented.h">
       <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\os\android\android_init_data.h">
-      <Filter>Header Files\aura\os\android</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_department.h">
       <Filter>Header Files\aura\aura</Filter>
@@ -4172,6 +4196,12 @@
     </ClInclude>
     <ClInclude Include="graphics\draw2d\draw2d_region.h">
       <Filter>Header Files\graphics\draw2d</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\os_text.h">
+      <Filter>Header Files\aura\os</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\android\android_data_exchange.h">
+      <Filter>Header Files\aura\os\android</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

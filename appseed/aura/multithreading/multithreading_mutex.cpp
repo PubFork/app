@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #if defined(LINUX) || defined(SOLARIS) || defined(APPLEOS)
@@ -160,7 +160,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir) / "var/tmp/ca2/lock/mutex" / string(pstrName);
+         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "var/tmp/ca2/lock/mutex" / string(pstrName);
 
 #else
 
@@ -174,7 +174,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
 #ifdef ANDROID
 
-         path = ::file::path(::aura::system::g_p->m_pandroidinitdata->m_pszCacheDir) / "home/user/ca2/lock/mutex" / string(pstrName);
+         path = ::file::path(::aura::system::g_p->m_pdataexchange->m_pszCacheDir) / "home/user/ca2/lock/mutex" / string(pstrName);
 
 #else
 
@@ -255,16 +255,16 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
       bool bAlreadyExists;
 
-      get_existing:
+get_existing:
 
       SetLastError(0);
 
       m_semid = semget(
-                  m_key, // a unique identifier to identify semaphore set
-                  1,  // number of semaphore in the semaphore set
-                  0// permissions (rwxrwxrwx) on the new
-                       //semaphore set and creation flag
-                  );
+                   m_key, // a unique identifier to identify semaphore set
+                   1,  // number of semaphore in the semaphore set
+                   0// permissions (rwxrwxrwx) on the new
+                   //semaphore set and creation flag
+                );
 
       if(m_semid >= 0)
       {
@@ -275,7 +275,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          if(bAlreadyExists)
          {
-                  SetLastError(ERROR_ALREADY_EXISTS);
+            SetLastError(ERROR_ALREADY_EXISTS);
 
          }
 
@@ -286,11 +286,11 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          bAlreadyExists = false;
 
          m_semid = semget(
-                     m_key, // a unique identifier to identify semaphore set
-                     1,  // number of semaphore in the semaphore set
-                     0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
-                          //semaphore set and creation flag
-                     );
+                      m_key, // a unique identifier to identify semaphore set
+                      1,  // number of semaphore in the semaphore set
+                      0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
+                      //semaphore set and creation flag
+                   );
 
          if(m_semid == -1 && errno == EEXIST)
          {
@@ -361,8 +361,8 @@ mutex::mutex(::aura::application * papp, const char * pstrName, void * h, bool b
 }
 
 mutex::mutex(const mutex & m):
-object(m.get_app()),
-sync_object(m.m_pszName)
+   object(m.get_app()),
+   sync_object(m.m_pszName)
 {
    m_bOwner = false;
    m_object = m.m_object;
@@ -509,7 +509,7 @@ mutex::~mutex()
 
          semun ignored_argument;
 
-         semctl(m_semid, 1, IPC_RMID , ignored_argument);
+         semctl(m_semid, 1, IPC_RMID, ignored_argument);
 
       }
 
@@ -571,7 +571,7 @@ wait_result mutex::wait(const duration & duration)
       return wait();
 
    }
-   
+
 #if defined(MUTEX_NAMED_POSIX)
 
    if (m_psem != SEM_FAILED)
@@ -1299,7 +1299,7 @@ bool mutex::unlock()
 
 #ifdef MUTEX_COND_TIMED
 
-  {
+   {
 
       int rc = pthread_mutex_lock(&m_mutex);
 
@@ -1488,11 +1488,11 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    key_t key = ftok(strName, 0); //Generate a unique key or supply a value
 
    int32_t semid = semget(
-               key, // a unique identifier to identify semaphore set
-               1,  // number of semaphore in the semaphore set
-               0666 // permissions (rwxrwxrwx) on the new
-                    //semaphore set and creation flag
-                  );
+                      key, // a unique identifier to identify semaphore set
+                      1,  // number of semaphore in the semaphore set
+                      0666 // permissions (rwxrwxrwx) on the new
+                      //semaphore set and creation flag
+                   );
    if(semid < 0)
    {
 
@@ -1539,7 +1539,7 @@ mutex * g_pmutexUiDestroyed = NULL;
 CLASS_DECL_AURA mutex * get_ui_destroyed_mutex()
 {
 
-  return g_pmutexUiDestroyed;
+   return g_pmutexUiDestroyed;
 
 }
 
@@ -1590,7 +1590,7 @@ namespace install
       ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
       , sync_object("Global\\::ca2::fontopus::ccvotagus::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #else
-   ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)NULL)
+      ::mutex(NULL, false, "Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)NULL)
       , sync_object("Global\\::ca2::fontopus::ccvotagus::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #endif
 

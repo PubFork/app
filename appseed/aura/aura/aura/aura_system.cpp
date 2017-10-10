@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 #include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
@@ -60,7 +60,7 @@ namespace aura
 
 #ifdef VSNORD
 
-      m_pandroidinitdata = (android_init_data *) pdata;
+      m_pdataexchange = (android_data_exchange *) pdata;
 
 #endif
 
@@ -2802,7 +2802,7 @@ found:
    bool system::android_set_user_wallpaper(string strUrl)
    {
 
-      m_pandroidinitdata->m_pszUserWallpaper = strdup(strUrl);
+      m_pdataexchange->m_pszUserWallpaper = strdup(strUrl);
 
       return true;
 
@@ -2811,36 +2811,34 @@ found:
    bool system::android_get_user_wallpaper(string & strUrl)
    {
 
-      if (m_pandroidinitdata->m_pszGetUserWallpaper != NULL)
+      if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
       {
 
          goto success;
 
       }
 
-      m_pandroidinitdata->m_pszGetUserWallpaper = NULL;
+      m_pdataexchange->m_pszGetUserWallpaper = NULL;
 
-      m_pandroidinitdata->m_bGetUserWallpaper = true;
+      m_pdataexchange->m_bGetUserWallpaper = true;
 
-      for(int i = 0; i < 20; i++)
+      for(int i = 0; i < 10; i++)
       {
 
-         if (m_pandroidinitdata->m_pszGetUserWallpaper != NULL)
+         if (m_pdataexchange->m_pszGetUserWallpaper != NULL)
          {
 
             break;
 
          }
 
-
-
          Sleep(50);
 
       }
 
-      m_pandroidinitdata->m_bGetUserWallpaper = false;
+      m_pdataexchange->m_bGetUserWallpaper = false;
 
-      if (m_pandroidinitdata->m_pszGetUserWallpaper == NULL)
+      if (m_pdataexchange->m_pszGetUserWallpaper == NULL)
       {
 
          return false;
@@ -2849,11 +2847,21 @@ found:
 
 success:
 
-      strUrl = m_pandroidinitdata->m_pszGetUserWallpaper;
+      strUrl = m_pdataexchange->m_pszGetUserWallpaper;
 
-      free(m_pandroidinitdata->m_pszGetUserWallpaper);
+      try
+      {
 
-      m_pandroidinitdata->m_pszGetUserWallpaper = NULL;
+         free(m_pdataexchange->m_pszGetUserWallpaper);
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+      m_pdataexchange->m_pszGetUserWallpaper = NULL;
 
       return true;
 
@@ -3047,6 +3055,13 @@ success:
    {
 
       return NULL;
+
+   }
+
+
+   void system::on_os_text(e_os_text etext, string strText)
+   {
+
 
    }
 

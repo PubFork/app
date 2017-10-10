@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "android.h"
 
 
@@ -1073,7 +1073,7 @@ try1:
          CSIDL_COMMON_APPDATA,
          FALSE);*/
 
-      str = string(System.m_pandroidinitdata->m_pszCacheDir) / ".ca2/app/appdata";
+      str = string(System.m_pdataexchange->m_pszCacheDir) / ".ca2/app/appdata";
       string strRelative;
       strRelative = element();
       //index iFind = strRelative.find(':');

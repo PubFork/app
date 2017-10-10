@@ -1257,66 +1257,62 @@ int translate_android_key_message(::message::key * pkey, int keyCode, int iUni)
 void _android_on_text(string str);
 
 extern "C"
-void android_on_text(const wchar_t * pwch, size_t len)
+void android_on_text(e_os_text etext, const wchar_t * pwch, size_t len)
 {
 
    output_debug_string("here???222");
 
    string strText(pwch, len);
 
-   ::fork(::aura::system::g_p, [=]()
+   ::aura::system::g_p->fork([=]()
    {
 
-      _android_on_text(strText);
+      ::aura::system::g_p->on_os_text(strText);
 
    });
 
 }
 
 
-void _android_on_text(string strText)
+namespace base
 {
 
-   if(::aura::system::g_p == NULL)
-      return;
-
-   if(::aura::system::g_p->m_pbasesystem == NULL)
-      return;
-
-   if(::aura::system::g_p->m_pbasesystem->m_possystemwindow == NULL)
-      return;
-
-   if(::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui == NULL)
-      return;
-
-   sp(::message::key) pkey = canew(::message::key(get_thread_app()));
-
-   pkey->m_id = WM_KEYDOWN;
-
-   pkey->m_ekey      = ::user::key_refer_to_text_member;
-
-   pkey->m_strText   = strText;
-
-   if (pkey->m_strText == "\n" || pkey->m_strText == "\r\n" || pkey->m_strText == "\r")
+   void system::on_os_text(e_os_text etext, string strText)
    {
 
-      pkey->m_strText.Empty();
+      if (m_possystemwindow == NULL || m_possystemwindow->m_pui == NULL)
+         return;
 
-      pkey->m_ekey = ::user::key_return;
+      sp(::message::key) pkey = canew(::message::key(get_thread_app()));
 
-      ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->message_handler(pkey);
+      pkey->m_id = WM_KEYDOWN;
 
-   }
-   else
-   {
+      pkey->m_ekey = ::user::key_refer_to_text_member;
 
-      ::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui->message_handler(pkey);
+      pkey->m_strText = strText;
+
+      if (pkey->m_strText == "\n" || pkey->m_strText == "\r\n" || pkey->m_strText == "\r")
+      {
+
+         pkey->m_strText.Empty();
+
+         pkey->m_ekey = ::user::key_return;
+
+         m_possystemwindow->m_pui->message_handler(pkey);
+
+      }
+      else
+      {
+
+         m_possystemwindow->m_pui->message_handler(pkey);
+
+      }
+
 
    }
 
 
-}
-
+} // namespace base
 
 
 CLASS_DECL_BASE void defer_dock_application(bool bDock)

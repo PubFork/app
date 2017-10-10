@@ -1,9 +1,7 @@
-#pragma once
+﻿#pragma once
 
 
-
-
-class android_init_data
+class android_data_exchange
 {
    public:
 
@@ -17,12 +15,12 @@ class android_init_data
       const char *   m_pszUserWallpaper;
       const char *   m_pszGetUserWallpaper;
       bool           m_bGetUserWallpaper;
-      bool           m_bGetttingUserWallpaper;
+      bool           m_bGettingUserWallpaper;
 
 };
 
 
 
 
-typedef void FN_native_activity_android_start(android_init_data * pinitdata);
+typedef void FN_native_activity_android_start(android_data_exchange * pinitdata);
 typedef FN_native_activity_android_start * PFN_native_activity_android_start;

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #ifdef LINUX
@@ -383,7 +383,7 @@ namespace aura
       {
 
          System.on_run_exception(e);
-         
+
          throw exit_exception(e.get_app());
 
       }
@@ -1838,14 +1838,24 @@ namespace aura
 
          string strOpenUrl;
 
-         if (System.m_pandroidinitdata->m_pszOpenUrl != NULL)
+         if (System.m_pdataexchange->m_pszOpenUrl != NULL)
          {
 
-            strOpenUrl = System.m_pandroidinitdata->m_pszOpenUrl;
+            strOpenUrl = System.m_pdataexchange->m_pszOpenUrl;
 
-            ::free((void *)System.m_pandroidinitdata->m_pszOpenUrl);
+            try
+            {
 
-            System.m_pandroidinitdata->m_pszOpenUrl = NULL;
+               ::free((void *)System.m_pdataexchange->m_pszOpenUrl);
+
+            }
+            catch (...)
+            {
+
+
+            }
+
+            System.m_pdataexchange->m_pszOpenUrl = NULL;
 
          }
 
@@ -1857,7 +1867,7 @@ namespace aura
 
             // System.m_pandroidinitdata->m_pszOpenUrl = strdup(strLink);
 
-            System.m_pandroidinitdata->m_pszOpenUrl = strdup(strUrl);
+            System.m_pdataexchange->m_pszOpenUrl = strdup(strUrl);
 
          }
 
@@ -2549,11 +2559,11 @@ namespace aura
       }
       catch(::exit_exception &)
       {
-         
+
          thisexit << "exit_exception: " << m_iReturnCode;
 
          m_iReturnCode = -1001;
-         
+
          dappy(string(typeid(*this).name()) + " : on_run exit_exception");
 
          ::multithreading::post_quit(&System);
@@ -2601,7 +2611,7 @@ exit_application:
       }
       catch(::exit_exception &)
       {
-         
+
          thisexit << "exit_exception: " << m_iReturnCode;
 
          ::multithreading::post_quit(&System);
@@ -2629,7 +2639,7 @@ exit_application:
       return m_iReturnCode;
 
    }
-   
+
 
    bool application::initialize_thread()
    {
@@ -2797,11 +2807,11 @@ exit_application:
       }
       catch (::exit_exception &)
       {
-         
+
          thisexc << "exit_exception (4): " << m_iReturnCode;
 
          m_iReturnCode = -1001;
-         
+
       }
       catch (...)
       {
@@ -2874,7 +2884,7 @@ run:
          }
          catch (::exit_exception & e)
          {
-            
+
             throw e;
 
          }
@@ -2903,7 +2913,7 @@ run:
             }
             catch (::exit_exception & e)
             {
-               
+
                throw e;
 
             }
@@ -2921,7 +2931,7 @@ run:
       }
       catch (::exit_exception & e)
       {
-         
+
          throw e;
 
       }
@@ -3071,7 +3081,7 @@ InitFailure:
       }
       catch (::exit_exception & e)
       {
-         
+
          thisexit << 1 << m_iReturnCode;
 
          throw e;
@@ -3157,7 +3167,7 @@ InitFailure:
       }
       catch (const ::exit_exception & e)
       {
-         
+
          thisexit << 3 << m_iReturnCode;
 
          throw e;
@@ -3204,7 +3214,7 @@ InitFailure:
       }
       catch (::exit_exception & e)
       {
-         
+
          thisexit << 3.1 << m_iReturnCode;
 
          throw e;
@@ -4721,9 +4731,9 @@ retry_license:
             {
                // Should in some way activate the other instance
                TRACE("A instance of the application:<br><br>           - " + string(m_strAppName) + "<br><br>seems to be already running at the same account.<br>Only one instance of this application can run locally: at the same account.<br><br>Exiting this new instance.");
-               
+
                bHandled = on_exclusive_instance_conflict(ExclusiveInstanceLocal);
-               
+
             }
             catch (...)
             {
@@ -4731,11 +4741,11 @@ retry_license:
 
             if(bHandled)
             {
-               
+
                throw exit_exception(&System);
-               
+
             }
-            
+
             //::aura::post_quit_thread(&System);
             return false;
          }
@@ -4936,9 +4946,9 @@ retry_license:
 
                if((bool) p.element2())
                {
-               
+
                   return true;
-                  
+
                }
 
             }
@@ -5819,9 +5829,9 @@ retry_license:
 
          if (papp == NULL)
          {
-            
+
             return NULL;
-            
+
          }
 
          papp->m_paurasession = m_paurasession;

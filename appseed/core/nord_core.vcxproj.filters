@@ -924,16 +924,10 @@
     <ClInclude Include="user\userex\userex_split_view.h">
       <Filter>Header Files\user\userex</Filter>
     </ClInclude>
-    <ClInclude Include="user\menu\user_menu.h">
-      <Filter>Header Files\user\menu</Filter>
-    </ClInclude>
     <ClInclude Include="user\menu\user_menu_button.h">
       <Filter>Header Files\user\menu</Filter>
     </ClInclude>
     <ClInclude Include="user\menu\user_menu_central.h">
-      <Filter>Header Files\user\menu</Filter>
-    </ClInclude>
-    <ClInclude Include="user\menu\user_menu_item.h">
       <Filter>Header Files\user\menu</Filter>
     </ClInclude>
     <ClInclude Include="user\menu\user_menu_list_view.h">
@@ -946,9 +940,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_00.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_button.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_check_box.h">
@@ -1081,9 +1072,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_toolbar_control.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_tool_cmd_ui.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_tool_tip_tool.h">
@@ -1501,9 +1489,6 @@
     </Filter>
     <Filter Include="Header Files\filesystem\filehandler">
       <UniqueIdentifier>{c8b61747-0896-4209-8c64-d39c3faa2020}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\filesystem\file">
-      <UniqueIdentifier>{90aa2f85-2e7b-4729-8ef2-bc2f7d040d97}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\core">
       <UniqueIdentifier>{419b7e39-5919-4e23-9241-a94f418624ca}</UniqueIdentifier>

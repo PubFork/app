@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -1331,9 +1331,24 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/aura/aura/aura_cregexp.h"
 #include "aura/aura/aura/aura_cregexp_util.h"
 
+
+class CLASS_DECL_AURA ptra :
+   virtual public spa(object)
+{
+   public:
+
+
+};
+
+
+typedef ::map < sp(object), sp(object), sp(object), sp(object) > element_map;
+typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
+
+#include "aura/aura/os/os_text.h"
+
 #ifdef VSNORD
 
-#include "aura/aura/os/android/android_init_data.h"
+#include "aura/aura/os/android/android_data_exchange.h"
 
 #endif
 

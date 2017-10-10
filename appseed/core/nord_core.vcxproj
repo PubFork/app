@@ -1456,10 +1456,8 @@
     <ClInclude Include="user\databaseuser\databaseuser_mesh_data.h" />
     <ClInclude Include="user\fontopus\fontopus_view.h" />
     <ClInclude Include="user\menu\menu.h" />
-    <ClInclude Include="user\menu\user_menu.h" />
     <ClInclude Include="user\menu\user_menu_button.h" />
     <ClInclude Include="user\menu\user_menu_central.h" />
-    <ClInclude Include="user\menu\user_menu_item.h" />
     <ClInclude Include="user\menu\user_menu_list_view.h" />
     <ClInclude Include="user\menu\user_menu_list_window.h" />
     <ClInclude Include="user\simple\simple.h" />
@@ -1501,7 +1499,6 @@
     <ClInclude Include="user\userex\userex_wait_message_dialog.h" />
     <ClInclude Include="user\user\user.h" />
     <ClInclude Include="user\user\user_00.h" />
-    <ClInclude Include="user\user\user_button.h" />
     <ClInclude Include="user\user\user_check_box.h" />
     <ClInclude Include="user\user\user_combo_box.h" />
     <ClInclude Include="user\user\user_combo_list.h" />
@@ -1548,7 +1545,6 @@
     <ClInclude Include="user\user\user_thread.h" />
     <ClInclude Include="user\user\user_toolbar.h" />
     <ClInclude Include="user\user\user_toolbar_control.h" />
-    <ClInclude Include="user\user\user_tool_cmd_ui.h" />
     <ClInclude Include="user\user\user_tool_tip_tool.h" />
     <ClInclude Include="user\user\user_tool_tip_window.h" />
     <ClInclude Include="user\user\user_tree.h" />
