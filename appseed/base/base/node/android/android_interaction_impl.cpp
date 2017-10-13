@@ -430,6 +430,8 @@ namespace android
 
       m_oswindow->set_impl(this);
 
+      install_message_routing(this);
+
       m_pui->SetWindowPos(ZORDER_TOP, pinitialize->m_rect, SWP_SHOWWINDOW);
 
       m_pui->ModifyStyle(0, WS_VISIBLE);
@@ -5427,7 +5429,7 @@ namespace android
 
       UNREFERENCED_PARAMETER(pfocus);
 
-      System.m_pandroidinitdata->m_bShowKeyboard = true;
+      System.m_pdataexchange->m_bShowKeyboard = true;
 
       return true;
 
@@ -5439,7 +5441,7 @@ namespace android
 
       output_debug_string("::android::interaction_impl::keyboard_focus_OnKillFocus() (1) \n");
 
-      System.m_pandroidinitdata->m_bHideKeyboard = true;
+      System.m_pdataexchange->m_bHideKeyboard = true;
 
       return true;
 
@@ -5450,7 +5452,7 @@ namespace android
 
       output_debug_string("::android::interaction_impl::keyboard_focus_OnChildKillFocus() (2) \n");
 
-      System.m_pandroidinitdata->m_bHideKeyboard = true;
+      System.m_pdataexchange->m_bHideKeyboard = true;
 
       return true;
 

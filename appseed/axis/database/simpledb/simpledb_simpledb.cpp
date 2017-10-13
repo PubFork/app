@@ -53,16 +53,16 @@ namespace simpledb
 //#endif
       }
 
-         m_pserver = new db_server(m_pauraapp);
+      m_pserver = new db_server(m_pauraapp);
 
 
-         m_pserver->add_client(this);
+      m_pserver->add_client(this);
 
-         if (!m_pserver->initialize())
-         {
-            Application.simple_message_box(NULL, "Could not initialize simpledb.", MB_OK);
-            return false;
-         }
+      if (!m_pserver->initialize())
+      {
+         Application.simple_message_box(NULL, "Could not initialize simpledb.", MB_OK);
+         return false;
+      }
 
       m_bInitialized = true;
 
@@ -108,7 +108,7 @@ namespace simpledb
 
       try
       {
-         
+
          m_pserver->finalize();
 
       }
@@ -144,7 +144,7 @@ namespace simpledb
       }
 
 //      if(&AppUser(this) == NULL)
-  //       return false;
+      //       return false;
 
       if(!InitializeDataCentral())
       {
@@ -153,21 +153,6 @@ namespace simpledb
       }
 
       ::database::client::initialize_data_client(m_pserver);
-
-      
-
-//      ::core::application_request * prequest = System.get_application_request();
-
-
-      m_pauraapp->m_paxissession->fill_locale_schema(*m_pauraapp->m_paxissession->str_context()->m_plocaleschema);
-
-
-      //if(!m_pauraapp->m_pcoreapp->is_installing() && !m_pauraapp->m_pcoreapp->is_uninstalling() && !m_pauraapp->m_pcoreapp->is_system())
-      //{
-
-      //   set_keyboard_layout(NULL, ::action::source::system());
-
-      //}
 
 
       return true;
@@ -198,7 +183,7 @@ namespace simpledb
 
       try
       {
-       //  ::database::database::finalize();
+         //  ::database::database::finalize();
       }
       catch(...)
       {

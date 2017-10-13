@@ -4,32 +4,32 @@
 
 
 #ifdef WINDOWS
-   #include <Wtsapi32.h>
-   #include <Userenv.h>
+#include <Wtsapi32.h>
+#include <Userenv.h>
 #endif
 #ifdef WINDOWSEX
-   #include "base/os/windows/windows_system_interaction_impl.h"
+#include "base/os/windows/windows_system_interaction_impl.h"
 #endif
 
 #ifdef LINUX
 
-   Display * x11_get_display();
+Display * x11_get_display();
 
-   //#include <dlfcn.h>
-   //#include <link.h>
-   //#include <ctype.h>
-   //#include <unistd.h>
+//#include <dlfcn.h>
+//#include <link.h>
+//#include <ctype.h>
+//#include <unistd.h>
 #elif defined(APPLEOS)
-   //#include <dlfcn.h>
-   //#include <mach-o/dyld.h>
+//#include <dlfcn.h>
+//#include <mach-o/dyld.h>
 #endif
 
 #ifdef WINDOWS
-   //#include <cderr.h>      // Commdlg Error definitions
-   //#include <winspool.h>
-   #ifdef WINDOWSEX
-      //#include "app/appseed/aura/aura/node/windows/windows.h"
-   #endif
+//#include <cderr.h>      // Commdlg Error definitions
+//#include <winspool.h>
+#ifdef WINDOWSEX
+//#include "app/appseed/aura/aura/node/windows/windows.h"
+#endif
 #endif
 
 #ifdef CUBE
@@ -337,10 +337,6 @@ namespace core
 
 
          data_pulse_change("ca2.local://savings", NULL);
-
-
-         Sess(this).fill_locale_schema(*Session.str_context()->m_plocaleschema);
-
 
          Sys(this).appa_load_string_table();
 
@@ -3621,7 +3617,8 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
          }
       }
 
-   } while (Process32Next(hSnap, &procEntry));
+   }
+   while (Process32Next(hSnap, &procEntry));
 
    ////////////////////////////////////////////////////////////////////////
 

@@ -1732,15 +1732,6 @@
     <ClCompile Include="aura\install\install_window.cpp">
       <Filter>Source Files\aura\install</Filter>
     </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_boot.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_service.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="aura\install\windows\install_windows_win.cpp">
-      <Filter>Source Files\aura\install\windows</Filter>
-    </ClCompile>
     <ClCompile Include="aura\message\message_id.cpp">
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
@@ -1878,6 +1869,138 @@
     </ClCompile>
     <ClCompile Include="user\colorertake5\_colorertake5.cpp">
       <Filter>Source Files\user\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\file\_file.cpp">
+      <Filter>Source Files\filesystem\file</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\xml\_xml.cpp">
+      <Filter>Source Files\aura\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\_aura.cpp">
+      <Filter>Source Files\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\_compress.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\compress\zip\_zip.cpp">
+      <Filter>Source Files\aura\compress\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\crypto\_crypto.cpp">
+      <Filter>Source Files\aura\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\_scripting.cpp">
+      <Filter>Source Files\aura\scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\scripting\javascript\_javascript.cpp">
+      <Filter>Source Files\aura\scripting\javascript</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\process\_process.cpp">
+      <Filter>Source Files\aura\process</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\_os.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\windows\_os_cross_windows.cpp">
+      <Filter>Source Files\aura\os\cross\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\cross\_os_cross.cpp">
+      <Filter>Source Files\aura\os\cross</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\ansios\_os_ansios.cpp">
+      <Filter>Source Files\aura\os\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\_node.cpp">
+      <Filter>Source Files\aura\node</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\ansios\_node_ansios.cpp">
+      <Filter>Source Files\aura\node\ansios</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\draw2d\_draw2d.cpp">
+      <Filter>Source Files\graphics\draw2d</Filter>
+    </ClCompile>
+    <ClCompile Include="multithreading\_multithreading.cpp">
+      <Filter>Source Files\multithreading</Filter>
+    </ClCompile>
+    <ClCompile Include="net\_net.cpp">
+      <Filter>Source Files\net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\ftp\_ftp.cpp">
+      <Filter>Source Files\net\ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\http\_http.cpp">
+      <Filter>Source Files\net\http</Filter>
+    </ClCompile>
+    <ClCompile Include="net\http\webserver\_http_webserver.cpp">
+      <Filter>Source Files\net\http\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\_mail.cpp">
+      <Filter>Source Files\net\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="net\netserver\_netserver.cpp">
+      <Filter>Source Files\net\netserver</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\_sockets.cpp">
+      <Filter>Source Files\net\sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\base\_sockets_base.cpp">
+      <Filter>Source Files\net\sockets\base</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\http\_sockets_http.cpp">
+      <Filter>Source Files\net\sockets\http</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\_sockets_bsd.cpp">
+      <Filter>Source Files\net\sockets\bsd</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\asynch_dns\_sockets_bsd_asynch_dns.cpp">
+      <Filter>Source Files\net\sockets\bsd\asynch_dns</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\basic\_sockets_bsd_basic.cpp">
+      <Filter>Source Files\net\sockets\bsd\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\sip\_sockets_bsd_sip.cpp">
+      <Filter>Source Files\net\sockets\bsd\sip</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\smtp\_sockets_bsd_smtp.cpp">
+      <Filter>Source Files\net\sockets\bsd\smtp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\timer\_sockets_bsd_timer.cpp">
+      <Filter>Source Files\net\sockets\bsd\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="net\sockets\bsd\webserver\_sockets_bsd_webserver.cpp">
+      <Filter>Source Files\net\sockets\bsd\webserver</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\_primitive.cpp">
+      <Filter>Source Files\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\collection\_collection.cpp">
+      <Filter>Source Files\primitive\collection</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\comparison\_comparison.cpp">
+      <Filter>Source Files\primitive\comparison</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\data\_data.cpp">
+      <Filter>Source Files\primitive\data</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\datetime\_datetime.cpp">
+      <Filter>Source Files\primitive\datetime</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\geometry\_geometry.cpp">
+      <Filter>Source Files\primitive\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\math\_math.cpp">
+      <Filter>Source Files\primitive\math</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive\str\_str.cpp">
+      <Filter>Source Files\primitive\str</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\_user.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\filesystem\_filesystem.cpp">
+      <Filter>Source Files\filesystem\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\audio_wave_out.cpp">
+      <Filter>Source Files\multimedia\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4556,9 +4679,6 @@
     <Filter Include="Source Files\aura\install">
       <UniqueIdentifier>{20a328e7-dd0e-46ed-bc43-94d0ce103e51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\aura\install\windows">
-      <UniqueIdentifier>{e0542f0a-9f9b-4756-9fc3-631c4af6349b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\aura\message">
       <UniqueIdentifier>{b0140367-ed4c-4411-94ec-3f4da9e94ea0}</UniqueIdentifier>
     </Filter>
@@ -4588,6 +4708,12 @@
     </Filter>
     <Filter Include="Header Files\graphics\draw2d">
       <UniqueIdentifier>{12bddb1a-2c12-4f34-9bd4-f6f4e8358541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia">
+      <UniqueIdentifier>{f1ecc46a-341e-4426-9136-d31f91d9463b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia\audio">
+      <UniqueIdentifier>{b0827325-e6ab-48c3-a79a-f5b2b7a609c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

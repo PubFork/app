@@ -47,7 +47,7 @@ typedef uint32_t IDTHREAD;
 
 #else
 
-typedef HTHREAD IDTHREAD;
+typedef pthread_t IDTHREAD;
 
 #endif
 

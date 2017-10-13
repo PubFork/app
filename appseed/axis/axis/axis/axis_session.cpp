@@ -41,9 +41,9 @@ namespace axis
 
 //      m_puserstyle                 = &m_schemasimple;
 
-  //    m_schemasimple.m_pfont.alloc(allocer());
+      //    m_schemasimple.m_pfont.alloc(allocer());
 
-    //  m_schemasimple.m_pfont->create_pixel_font(FONT_SANS,16);
+      //  m_schemasimple.m_pfont->create_pixel_font(FONT_SANS,16);
 
       m_puserpresence               = NULL;
 
@@ -195,7 +195,7 @@ namespace axis
       if (m_pifs == NULL)
       {
 
-         m_pifs = new ifs(this, ""); 
+         m_pifs = new ifs(this, "");
 
       }
 
@@ -240,6 +240,8 @@ namespace axis
          return false;
 
       }
+
+      fill_locale_schema(*str_context()->m_plocaleschema);
 
       thisend;
 
@@ -308,12 +310,6 @@ namespace axis
 
       }
 
-
-      str_context()->localeschema().m_idaLocale.add(get_locale());
-
-      str_context()->localeschema().m_idaSchema.add(get_schema());
-
-
       return true;
 
    }
@@ -327,8 +323,6 @@ namespace axis
 
       if(!::axis::application::initialize2())
          return false;
-
-      fill_locale_schema(*str_context()->m_plocaleschema);
 
       return true;
 
@@ -347,7 +341,7 @@ namespace axis
       }
 
       if(Application.handler()->m_varTopicQuery.has_property("uninstall")
-         || Application.handler()->m_varTopicQuery.has_property("install"))
+            || Application.handler()->m_varTopicQuery.has_property("install"))
       {
 
          if(is_null(m_pfontopus->create_system_user("system")))
@@ -613,32 +607,32 @@ namespace axis
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paxissession == this)
                {
-                  
+
                   pair.m_element2->m_paxissession = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
+
       }
 
       try
@@ -680,7 +674,7 @@ namespace axis
 
    }
 
-   
+
    DWORD session::get_Long_PhRESSing_time()
    {
 
@@ -1549,7 +1543,7 @@ namespace axis
 
       }
 
-   ret:
+ret:
 
       return bPressed;
 
@@ -1624,7 +1618,7 @@ namespace axis
 
    //}
 
-   
+
    string session::fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive)
    {
 
@@ -1807,7 +1801,7 @@ namespace axis
    void session::on_finally_focus_set(::user::elemental * pelementalFocus)
    {
 
-      
+
 
    }
 
@@ -1837,7 +1831,7 @@ namespace axis
 
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
-      
+
       throw interface_only_exception(this);
 
    }

@@ -526,11 +526,11 @@ CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa,uint_ptr cbStac
    if(puiId != NULL)
    {
 
-    *puiId = thread;
+      *puiId = thread;
 
    }
 
-   return thread;
+   return (void *) (long) thread;
 
 
 #endif

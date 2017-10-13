@@ -78,7 +78,7 @@ namespace user
       if(iLButtonUp == m_iLButtonDown)
       {
 
-         m_scalar = iLButtonUp;
+         m_scalar.set(iLButtonUp);
 
       }
 

@@ -1,4 +1,4 @@
-/* crypt.h -- axis code for crypt/uncrypt ZIPfile
+﻿/* crypt.h -- axis code for crypt/uncrypt ZIPfile
 
 
    Version 1.00, September 10th, 2003
@@ -34,40 +34,40 @@
 /***********************************************************************
  * Return the next byte in the pseudo-random sequence
  */
-static_function int32_t decrypt_byte(uint32_t  * pkeys,
+static int32_t decrypt_byte(uint32_t  * pkeys,
 #if defined(WINDOWS) || defined(LINUX)
-   const z_crc_t * pcrc_32_tab
+                            const z_crc_t * pcrc_32_tab
 #else
-   const uLongf * pcrc_32_tab
+                            const uLongf * pcrc_32_tab
 #endif
 
-)
+                           )
 {
-    uint32_t temp;  /* POTENTIAL BUG:  temp*(temp^1) may overflow in an
-                     * unpredictable manner on 16-bit systems; not a problem
-                     * with any known compiler so far, though */
+   uint32_t temp;  /* POTENTIAL BUG:  temp*(temp^1) may overflow in an
+                      * unpredictable manner on 16-bit systems; not a problem
+                      * with any known compiler so far, though */
 
-    temp = ((uint32_t)(*(pkeys+2)) & 0xffff) | 2;
-    return (int32_t)(((temp * (temp ^ 1)) >> 8) & 0xff);
+   temp = ((uint32_t)(*(pkeys+2)) & 0xffff) | 2;
+   return (int32_t)(((temp * (temp ^ 1)) >> 8) & 0xff);
 }
 
 /***********************************************************************
  * Update the encryption keys with the next byte of plain text
  */
 #if defined(WINDOWS) || defined(LINUX)
-static_function int32_t update_keys(uint32_t * pkeys,const z_crc_t * pcrc_32_tab,int32_t ca)
+static int32_t update_keys(uint32_t * pkeys, const z_crc_t * pcrc_32_tab, int32_t ca)
 #else
-static_function int32_t update_keys(uint32_t * pkeys, const uLongf * pcrc_32_tab, int32_t ca)
+static int32_t update_keys(uint32_t * pkeys, const uLongf * pcrc_32_tab, int32_t ca)
 #endif
 {
-    (*(pkeys+0)) = (unsigned int) CRC32((*(pkeys+0)), ca);
-    (*(pkeys+1)) += (*(pkeys+0)) & 0xff;
-    (*(pkeys+1)) = (*(pkeys+1)) * 134775813L + 1;
-    {
+   (*(pkeys+0)) = (unsigned int) CRC32((*(pkeys+0)), ca);
+   (*(pkeys+1)) += (*(pkeys+0)) & 0xff;
+   (*(pkeys+1)) = (*(pkeys+1)) * 134775813L + 1;
+   {
       int32_t keyshift = (int32_t)((*(pkeys+1)) >> 24);
       (*(pkeys+2)) = (unsigned int) CRC32((*(pkeys+2)), keyshift);
-    }
-    return ca;
+   }
+   return ca;
 }
 
 
@@ -76,18 +76,19 @@ static_function int32_t update_keys(uint32_t * pkeys, const uLongf * pcrc_32_tab
  * the given password.
  */
 #if defined(WINDOWS) || defined(LINUX)
-static_function void init_keys(const char* passwd, uint32_t * pkeys,const z_crc_t * pcrc_32_tab)
+static void init_keys(const char* passwd, uint32_t * pkeys,const z_crc_t * pcrc_32_tab)
 #else
-static_function void init_keys(const char* passwd, uint32_t * pkeys, const uLongf * pcrc_32_tab)
+static void init_keys(const char* passwd, uint32_t * pkeys, const uLongf * pcrc_32_tab)
 #endif
 {
-    *(pkeys+0) = 305419896L;
-    *(pkeys+1) = 591751049L;
-    *(pkeys+2) = 878082192L;
-    while (*passwd != '\0') {
-        update_keys(pkeys,pcrc_32_tab,(int32_t)*passwd);
-        passwd++;
-    }
+   *(pkeys+0) = 305419896L;
+   *(pkeys+1) = 591751049L;
+   *(pkeys+2) = 878082192L;
+   while (*passwd != '\0')
+   {
+      update_keys(pkeys,pcrc_32_tab,(int32_t)*passwd);
+      passwd++;
+   }
 }
 
 #define zdecode(pkeys,pcrc_32_tab,ca) \
@@ -99,55 +100,55 @@ static_function void init_keys(const char* passwd, uint32_t * pkeys, const uLong
 #ifdef INCLUDECRYPTINGCODE_IFCRYPTALLOWED
 
 #define RAND_HEAD_LEN  12
-   /* "last resort" source for m_element2 part of crypt seed pattern */
+/* "last resort" source for m_element2 part of crypt seed pattern */
 #  ifndef ZCR_SEED2
 #    define ZCR_SEED2 3141592654UL     /* use PI as default pattern */
 #  endif
 
 static_function int32_t crypthead(
-    const char *passwd,         /* password string */
-    uchar *buf,         /* where to write header */
-    int32_t bufSize,
-    uint32_t * pkeys,
+   const char *passwd,         /* password string */
+   uchar *buf,         /* where to write header */
+   int32_t bufSize,
+   uint32_t * pkeys,
 #if defined(WINDOWS) || defined(LINUX)
-    const z_crc_t * pcrc_32_tab,
+   const z_crc_t * pcrc_32_tab,
 #else
-    const uLongf * pcrc_32_tab,
+   const uLongf * pcrc_32_tab,
 #endif
-    uint32_t  crcForCrypting)
+   uint32_t  crcForCrypting)
 {
-    int32_t n;                       /* index in random header */
-    int32_t t;                       /* temporary */
-    int32_t ca;                       /* random byte */
-    uchar header[RAND_HEAD_LEN-2]; /* random header */
-    static uint32_t calls = 0;   /* ensure different random header each time */
+   int32_t n;                       /* index in random header */
+   int32_t t;                       /* temporary */
+   int32_t ca;                       /* random byte */
+   uchar header[RAND_HEAD_LEN-2]; /* random header */
+   static uint32_t calls = 0;   /* ensure different random header each time */
 
-    if (bufSize<RAND_HEAD_LEN)
+   if (bufSize<RAND_HEAD_LEN)
       return 0;
 
-    /* First generate RAND_HEAD_LEN-2 random bytes. We encrypt the
-     * output of rand() to get less predictability, since rand() is
-     * often poorly implemented.
-     */
-    if (++calls == 1)
-    {
-        srand((uint32_t)(time(NULL) ^ ZCR_SEED2));
-    }
-    init_keys(passwd, pkeys, pcrc_32_tab);
-    for (n = 0; n < RAND_HEAD_LEN-2; n++)
-    {
-        ca = (rand() >> 7) & 0xff;
-        header[n] = (uchar)zencode(pkeys, pcrc_32_tab, ca, t);
-    }
-    /* Encrypt random header (last two bytes is high uint16_t of crc) */
-    init_keys(passwd, pkeys, pcrc_32_tab);
-    for (n = 0; n < RAND_HEAD_LEN-2; n++)
-    {
-        buf[n] = (uchar)zencode(pkeys, pcrc_32_tab, header[n], t);
-    }
-    buf[n++] = zencode(pkeys, pcrc_32_tab, (int32_t)(crcForCrypting >> 16) & 0xff, t);
-    buf[n++] = zencode(pkeys, pcrc_32_tab, (int32_t)(crcForCrypting >> 24) & 0xff, t);
-    return n;
+   /* First generate RAND_HEAD_LEN-2 random bytes. We encrypt the
+    * output of rand() to get less predictability, since rand() is
+    * often poorly implemented.
+    */
+   if (++calls == 1)
+   {
+      srand((uint32_t)(time(NULL) ^ ZCR_SEED2));
+   }
+   init_keys(passwd, pkeys, pcrc_32_tab);
+   for (n = 0; n < RAND_HEAD_LEN-2; n++)
+   {
+      ca = (rand() >> 7) & 0xff;
+      header[n] = (uchar)zencode(pkeys, pcrc_32_tab, ca, t);
+   }
+   /* Encrypt random header (last two bytes is high uint16_t of crc) */
+   init_keys(passwd, pkeys, pcrc_32_tab);
+   for (n = 0; n < RAND_HEAD_LEN-2; n++)
+   {
+      buf[n] = (uchar)zencode(pkeys, pcrc_32_tab, header[n], t);
+   }
+   buf[n++] = zencode(pkeys, pcrc_32_tab, (int32_t)(crcForCrypting >> 16) & 0xff, t);
+   buf[n++] = zencode(pkeys, pcrc_32_tab, (int32_t)(crcForCrypting >> 24) & 0xff, t);
+   return n;
 }
 
 #endif

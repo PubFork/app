@@ -30,7 +30,7 @@ CLASS_DECL_BASE int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
    if(h == 0)
       return FALSE;
 
-   mq * pmq = __get_mq(h, oswindow != NULL || Msg != WM_QUIT);
+   mq * pmq = __get_mq((HTHREAD) h, oswindow != NULL || Msg != WM_QUIT);
 
    if(pmq == NULL)
       return FALSE;
@@ -74,7 +74,7 @@ CLASS_DECL_BASE int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
 
 CLASS_DECL_BASE int_bool mq_remove_window_from_all_queues(oswindow oswindow)
 {
-   
+
    ::user::interaction * pui = oswindow_interaction(oswindow);
 
    if(pui == NULL)
@@ -89,14 +89,15 @@ CLASS_DECL_BASE int_bool mq_remove_window_from_all_queues(oswindow oswindow)
       return FALSE;
 
 
-   mq * pmq = __get_mq(h, false);
+   mq * pmq = __get_mq((HTHREAD) h, false);
 
    if(pmq == NULL)
       return FALSE;
 
    synch_lock ml(&pmq->m_mutex);
 
-   pmq->ma.pred_remove([=](MESSAGE & item) {
+   pmq->ma.pred_remove([=](MESSAGE & item)
+   {
       return item.hwnd == oswindow;
    });
 

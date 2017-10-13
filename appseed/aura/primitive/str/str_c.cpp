@@ -1429,6 +1429,12 @@ strsize utf32_to_utf8(char * psz,const unichar32 * pwsz, strsize srclen)
    //unsigned short * pwsz = (unsigned short *)pwszParam;
    strsize c = 0;
    int32_t n;
+   if (srclen < 0)
+   {
+
+      srclen = wcslen(pwsz);
+
+   }
    while(srclen > 0 && *pwsz != L'\0')
    {
       n = uni_to_utf8(psz,*pwsz);

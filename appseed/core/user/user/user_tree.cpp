@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <math.h>
 
 
@@ -1141,7 +1141,7 @@ namespace user
       index nOffset;
 
       if (_001GetItemHeight() == 0)
-         return NULL;
+         return 0;
 
       point ptOffset = get_viewport_offset();
 

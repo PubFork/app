@@ -42,7 +42,7 @@ map < HTHREAD,HTHREAD,mq *,mq * > * g_pmapMq = NULL;
 //
 //   synch_lock sl(g_pmutexMq);
 //
-//   auto pmq = (mq *)__thread_get_data(idthread,TLS_MESSAGE_QUEUE);
+//   auto pmq = (mq *)__thread_get_data((IDTHREAD) idthread,TLS_MESSAGE_QUEUE);
 //
 //   if(pmq != NULL)
 //      return pmq;
@@ -66,7 +66,7 @@ CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg,oswindow oswindow,UI
 
    bool bFirst = true;
 
-   mq * pmq = __get_mq(GetCurrentThreadId(), true);
+   mq * pmq = __get_mq(GetCurrentThread(), true);
 
    if(pmq == NULL)
       return FALSE;
@@ -112,7 +112,7 @@ restart:
 #if defined(LINUX) // || defined(ANDROID)
 
    //if(aura_defer_process_x_message(hthread,lpMsg,oswindow,false))
-     // return TRUE;
+   // return TRUE;
 
 #endif
 
@@ -161,7 +161,7 @@ restart:
 CLASS_DECL_AURA int_bool WINAPI PeekMessageW(LPMESSAGE lpMsg,oswindow oswindow,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg)
 {
 
-   mq * pmq = __get_mq(GetCurrentThreadId(), true);
+   mq * pmq = __get_mq(GetCurrentThread(), true);
 
    if(pmq == NULL)
       return FALSE;
@@ -738,7 +738,7 @@ void * __thread_get_data(IDTHREAD hthread,uint32_t dwIndex)
 
 
 
-mq * __get_mq(IDTHREAD  h, bool bCreate);
+mq * __get_mq(HTHREAD  h, bool bCreate);
 
 
 mq * __get_mq()
@@ -763,12 +763,12 @@ mq * __get_mq()
 
 
 
-mq * __get_mq(IDTHREAD idthread, bool bCreate)
+mq * __get_mq(HTHREAD idthread, bool bCreate)
 {
 
    synch_lock sl(g_pmutexMq);
 
-   mq * pmq = (mq *)__thread_get_data(idthread,TLS_MESSAGE_QUEUE);
+   mq * pmq = (mq *)__thread_get_data((IDTHREAD) idthread,TLS_MESSAGE_QUEUE);
 
    if(pmq != NULL)
       return pmq;
@@ -778,9 +778,9 @@ mq * __get_mq(IDTHREAD idthread, bool bCreate)
 
    pmq   = new mq();
 
-   pmq->m_idthread    = idthread;
+   pmq->m_idthread = (IDTHREAD) idthread;
 
-   __thread_set_data(idthread,TLS_MESSAGE_QUEUE,pmq);
+   __thread_set_data((IDTHREAD)idthread,TLS_MESSAGE_QUEUE,pmq);
 
    return pmq;
 
@@ -798,7 +798,7 @@ void __clear_mq()
 
    IDTHREAD idthread = get_current_thread_id();
 
-   auto pmq = (mq *) __thread_get_data(idthread, TLS_MESSAGE_QUEUE);
+   auto pmq = (mq *) __thread_get_data((IDTHREAD) idthread, TLS_MESSAGE_QUEUE);
 
    if(pmq == NULL)
       return;
@@ -824,9 +824,9 @@ mq::mq():
 void __node_init_cross_windows_threading()
 {
 
-allthreaddata = new map < IDTHREAD,IDTHREAD,ThreadLocalData *,ThreadLocalData * >();
+   allthreaddata = new map < IDTHREAD,IDTHREAD,ThreadLocalData *,ThreadLocalData * >();
 
-freeTlsIndices = new raw_array<DWORD>();
+   freeTlsIndices = new raw_array<DWORD>();
 
 
 }

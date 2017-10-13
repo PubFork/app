@@ -424,7 +424,7 @@ namespace axis
 //      }
 
 //      string str(lpPathBuffer);
-      
+
       string str = System.dir().time();
 
 #endif
@@ -597,15 +597,15 @@ namespace axis
 
 
 
-/*
-   void application::process_machine_event_data(machine_event_data * pdata)
-   {
-      if(pdata->m_fixed.m_bRequestCloseApplication)
+   /*
+      void application::process_machine_event_data(machine_event_data * pdata)
       {
-         _001CloseApplication();
+         if(pdata->m_fixed.m_bRequestCloseApplication)
+         {
+            _001CloseApplication();
+         }
       }
-   }
-   */
+      */
 
    void application::_001CloseApplication()
    {
@@ -757,49 +757,49 @@ namespace axis
 
 
 
-/*
+   /*
 
-   ::visual::icon * application::set_icon(object * pobject,::visual::icon * picon,bool bBigIcon)
-   {
-
-      ::visual::icon * piconOld = get_icon(pobject,bBigIcon);
-
-      if(bBigIcon)
+      ::visual::icon * application::set_icon(object * pobject,::visual::icon * picon,bool bBigIcon)
       {
 
-         pobject->oprop("big_icon").operator =((sp(object)) picon);
+         ::visual::icon * piconOld = get_icon(pobject,bBigIcon);
 
-      }
-      else
-      {
+         if(bBigIcon)
+         {
 
-         pobject->oprop("small_icon").operator =((sp(object)) picon);
+            pobject->oprop("big_icon").operator =((sp(object)) picon);
 
-      }
+         }
+         else
+         {
 
-      return piconOld;
+            pobject->oprop("small_icon").operator =((sp(object)) picon);
 
-   }
+         }
 
-
-   ::visual::icon * application::get_icon(object * pobject,bool bBigIcon) const
-   {
-
-      if(bBigIcon)
-      {
-
-         return const_cast <object *> (pobject)->oprop("big_icon").cast < ::visual::icon >();
-
-      }
-      else
-      {
-
-         return const_cast <object *> (pobject)->oprop("small_icon").cast < ::visual::icon >();
+         return piconOld;
 
       }
 
-   }
-*/
+
+      ::visual::icon * application::get_icon(object * pobject,bool bBigIcon) const
+      {
+
+         if(bBigIcon)
+         {
+
+            return const_cast <object *> (pobject)->oprop("big_icon").cast < ::visual::icon >();
+
+         }
+         else
+         {
+
+            return const_cast <object *> (pobject)->oprop("small_icon").cast < ::visual::icon >();
+
+         }
+
+      }
+   */
 
 
    bool application::final_handle_exception(::exception::exception & e)
@@ -825,7 +825,7 @@ namespace axis
 
    int32_t application::main()
    {
-      
+
       return ::aura::application::main();
 
 
@@ -902,9 +902,9 @@ namespace axis
 
       try
       {
-         
+
          ::aura::application_message signal(::aura::application_message_start);
-         
+
          route_message(&signal);
 
       }
@@ -931,7 +931,7 @@ namespace axis
          catch(...)
          {
          }
-      run:
+run:
          try
          {
             m_iReturnCode = run();
@@ -1031,7 +1031,7 @@ namespace axis
          // - ...
 
       }
-   InitFailure:
+InitFailure:
       try
       {
          if(m_peventReady != NULL)
@@ -1095,99 +1095,99 @@ namespace axis
    {
 
 
-	   if (!::aura::application::check_install())
-	   {
-
-		   return false;
-
-	   }
-
-/*
-      if (handler()->m_varTopicQuery.has_property("install"))
+      if (!::aura::application::check_install())
       {
 
-         if (!on_install())
-         {
-            
-            ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
-            
-            System.m_iReturnCode = -1;
-            
-            return false;
-
-         }
-
-         string strBuild; 
-
-         string strAppId = m_strAppId;
-
-         xxdebug_box("on_install1", strAppId, 0);
-
-         if (strAppId.is_empty())
-         {
-
-            strAppId = m_strAppName;
-
-         }
-
-         if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
-         {
-
-            system_add_app_install(strAppId, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(strAppId, strBuild);
-
-            }
-
-         }
-         else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
-         {
-
-            system_add_app_install(strAppId, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(strAppId, strBuild);
-
-            }
-
-         }
-         else if (m_strInstallToken.has_char())
-         {
-
-            system_add_app_install(m_strInstallToken, "installed");
-
-            if (strBuild.has_char())
-            {
-
-               system_add_app_install(m_strInstallToken, strBuild);
-
-            }
-
-         }
+         return false;
 
       }
-      else if (handler()->m_varTopicQuery.has_property("uninstall"))
-      {
 
-         if (!on_uninstall())
-         {
+      /*
+            if (handler()->m_varTopicQuery.has_property("install"))
+            {
 
-            return false;
+               if (!on_install())
+               {
 
-         }
+                  ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
-#ifdef INSTALL_SUBSYSTEM
+                  System.m_iReturnCode = -1;
 
-         System.install().remove_spa_start(m_strAppId);
+                  return false;
 
-#endif
+               }
 
-      }*/
+               string strBuild;
+
+               string strAppId = m_strAppId;
+
+               xxdebug_box("on_install1", strAppId, 0);
+
+               if (strAppId.is_empty())
+               {
+
+                  strAppId = m_strAppName;
+
+               }
+
+               if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("app") && strAppId == handler()->m_varTopicQuery["app"])
+               {
+
+                  system_add_app_install(strAppId, "installed");
+
+                  if (strBuild.has_char())
+                  {
+
+                     system_add_app_install(strAppId, strBuild);
+
+                  }
+
+               }
+               else if (strAppId.has_char() && handler()->m_varTopicQuery.has_property("session_start") && strAppId == handler()->m_varTopicQuery["session_start"])
+               {
+
+                  system_add_app_install(strAppId, "installed");
+
+                  if (strBuild.has_char())
+                  {
+
+                     system_add_app_install(strAppId, strBuild);
+
+                  }
+
+               }
+               else if (m_strInstallToken.has_char())
+               {
+
+                  system_add_app_install(m_strInstallToken, "installed");
+
+                  if (strBuild.has_char())
+                  {
+
+                     system_add_app_install(m_strInstallToken, strBuild);
+
+                  }
+
+               }
+
+            }
+            else if (handler()->m_varTopicQuery.has_property("uninstall"))
+            {
+
+               if (!on_uninstall())
+               {
+
+                  return false;
+
+               }
+
+      #ifdef INSTALL_SUBSYSTEM
+
+               System.install().remove_spa_start(m_strAppId);
+
+      #endif
+
+            }*/
 
       return true;
 
@@ -1200,12 +1200,12 @@ namespace axis
    bool application::initial_check_directrix()
    {
 
-	   if (!::aura::application::initial_check_directrix())
-	   {
+      if (!::aura::application::initial_check_directrix())
+      {
 
-		   return false;
+         return false;
 
-	   }
+      }
 
       //string strLicense = get_license_id();
 
@@ -1343,10 +1343,10 @@ namespace axis
 
 
 
-/*
-   typedef  void(*PFN_ca2_factory_exchange)(sp(application) papp);
+   /*
+      typedef  void(*PFN_ca2_factory_exchange)(sp(application) papp);
 
-*/
+   */
 
 
    /*::file::file_sp application::friendly_get_file(var varFile, UINT nOpenFlags)
@@ -1557,13 +1557,15 @@ namespace axis
    bool application::initialize1()
    {
 
-      if(m_bAxisInitialize1)
+      if (m_bAxisInitialize1)
+      {
+
          return m_bAxisInitialize1Result;
+
+      }
 
       if (m_bInitializeDataCentral)
       {
-
-
 
          m_simpledb.construct(this);
 
@@ -1657,28 +1659,28 @@ namespace axis
 
       if(is_system())
       {
-         
+
          if(handler()->m_varTopicQuery.propset().has_property("save_processing"))
          {
-            
+
             Session.savings().save(::aura::resource_processing);
-            
+
          }
-         
+
          if(handler()->m_varTopicQuery.propset().has_property("save_blur_back"))
          {
-            
+
             Session.savings().save(::aura::resource_blur_background);
-            
+
          }
-         
+
          if(handler()->m_varTopicQuery.propset().has_property("save_transparent_back"))
          {
-            
+
             Session.savings().save(::aura::resource_translucent_background);
-            
+
          }
-         
+
       }
 
       if(handler()->m_varTopicQuery.propset().has_property("install"))
@@ -1705,9 +1707,9 @@ namespace axis
          hprocess = ::GetCurrentProcess();
 
          if(!OpenProcessToken(
-            hprocess,
-            TOKEN_ALL_ACCESS,
-            &htoken))
+                  hprocess,
+                  TOKEN_ALL_ACCESS,
+                  &htoken))
             return false;
 
          if(!ImpersonateLoggedOnUser(htoken))
@@ -1721,10 +1723,10 @@ namespace axis
       m_dwAlive = ::get_tick_count();
 
       if(is_system()
-         && !handler()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
-         && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-         && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
-         && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
+            && !handler()->m_varTopicQuery["app"].get_string().begins_ci("app-core/netnode")
+            && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
+            && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
+            && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
       {
          System.http().defer_auto_initialize_proxy_configuration();
       }
@@ -1745,32 +1747,32 @@ namespace axis
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_paxisapp == this)
                {
-                  
+
                   pair.m_element2->m_paxisapp = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
+
       }
 
       try
@@ -1794,110 +1796,104 @@ namespace axis
       //{
 
 
-         /*      try
-         {
-         if(m_plemonarray != NULL)
-         {
-         delete m_plemonarray;
-         }
-         }
-         catch(...)
-         {
-         }
-         m_plemonarray = NULL;
-         */
+      /*      try
+      {
+      if(m_plemonarray != NULL)
+      {
+      delete m_plemonarray;
+      }
+      }
+      catch(...)
+      {
+      }
+      m_plemonarray = NULL;
+      */
 
 
-         //m_pcommandthread.release();
+      //m_pcommandthread.release();
 
-         release_exclusive();
+      release_exclusive();
 
 //         if(m_spuiMessage.is_set())
+      {
+
+         //if(!destroy_message_queue())
          {
 
-            //if(!destroy_message_queue())
-            {
-
-               // TRACE("Could not finalize message interaction_impl");
-
-            }
+            // TRACE("Could not finalize message interaction_impl");
 
          }
 
-
-         ::aura::application_message signal(::aura::application_message_exit_instance);
-
-         try
-         {
-
-            route_message(&signal);
-
-         }
-         catch(...)
-         {
-
-         }
+      }
 
 
-         //try
-         //{
-         //   if (!is_system())
-         //   {
-         //      System.unregister_bergedge_application(this);
+      ::aura::application_message signal(::aura::application_message_exit_instance);
+
+      try
+      {
+
+         route_message(&signal);
+
+      }
+      catch(...)
+      {
+
+      }
+
+
+      //try
+      //{
+      //   if (!is_system())
+      //   {
+      //      System.unregister_bergedge_application(this);
+      //   }
+      //}
+      //catch (...)
+      //{
+      //}
+
+      /*try
+      {
+      ::release(smart_pointer <thread>::m_p);
+      }
+      catch(...)
+      {
+      }*/
+
+
+      if(is_system())
+      {
+
+         //         try
+         //       {
+         //        if(m_spfilesystem.m_p != NULL)
+         //      {
+         //       ::core::del(m_spfilesystem.m_p);
+         //  }
+         //         }
+         //       catch(...)
+         //     {
          //   }
-         //}
-         //catch (...)
-         //{
-         //}
-
-         /*try
-         {
-         ::release(smart_pointer <thread>::m_p);
-         }
-         catch(...)
-         {
-         }*/
+      }
 
 
-         if(is_system())
-         {
+      if (m_paurasystem->m_phtml != NULL)
+      {
 
-            //         try
-            //       {
-            //        if(m_spfilesystem.m_p != NULL)
-            //      {
-            //       ::core::del(m_spfilesystem.m_p);
-            //  }
-            //         }
-            //       catch(...)
-            //     {
-            //   }
-         }
+         ::aura::del(m_paurasystem->m_phtml);
+
+         m_paurasystem->m_phtml = NULL;
+
+      }
 
 
-         if (m_paurasystem->m_phtml != NULL)
-         {
-
-            ::aura::del(m_paurasystem->m_phtml);
-
-            m_paurasystem->m_phtml = NULL;
-
-         }
-
+      try
+      {
 
          try
          {
 
-               try
-               {
-
-                  aura::application::exit_application();
-
-               }
-               catch(...)
-               {
-
-               }
+            aura::application::exit_application();
 
          }
          catch(...)
@@ -1905,29 +1901,35 @@ namespace axis
 
          }
 
-         /*try
-         {
+      }
+      catch(...)
+      {
 
-            m_pthreadimpl.release();
+      }
 
-         }
-         catch(...)
-         {
+      /*try
+      {
 
-         }
-         */
+         m_pthreadimpl.release();
 
-         try
-         {
+      }
+      catch(...)
+      {
 
-            m_simpledb.finalize();
+      }
+      */
 
-         }
-         catch (...)
-         {
+      try
+      {
+
+         m_simpledb.finalize();
+
+      }
+      catch (...)
+      {
 
 
-         }
+      }
 
       return m_iReturnCode;
 
@@ -2581,9 +2583,9 @@ namespace axis
    {
 
       //SCAST_PTR(::message::base,pbase,pobj);
-      
+
       UNREFERENCED_PARAMETER(code);
-      
+
       UNREFERENCED_PARAMETER(pobj);
 
 
@@ -3555,7 +3557,7 @@ namespace axis
 
    }
 
-   
+
    //sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
    //{
 
@@ -3647,52 +3649,52 @@ namespace axis
    {
 
 
-         if(get_app()->m_pbasesession == NULL)
-            return false;
+      if(get_app()->m_pbasesession == NULL)
+         return false;
 
-         if(pszPath == NULL)
+      if(pszPath == NULL)
+      {
+
+         if(is_set(Session.keyboard().on_layout()))
          {
 
-            if(is_set(Session.keyboard().on_layout()))
-            {
+            //            if(Session.fontopus()->m_puser != NULL
+            //             && Session.fontopus()->m_puser->m_strFontopusServerSessId.has_char())
+            //        {
 
-               //            if(Session.fontopus()->m_puser != NULL
-               //             && Session.fontopus()->m_puser->m_strFontopusServerSessId.has_char())
-               //        {
+            // xxx data_set("keyboard_layout", keyboard().on_layout().m_strPath);
 
-               // xxx data_set("keyboard_layout", keyboard().on_layout().m_strPath);
-
-               //      }
-
-               return true;
-            }
-
-            string strCurrentSystemLayout = Session.keyboard().get_current_system_layout();
-
-            if(strCurrentSystemLayout.is_empty())
-               return false;
-
-            if(!set_keyboard_layout(strCurrentSystemLayout,::action::source_database))
-               return false;
-
-            //         if(Session.fontopus()->m_puser != NULL
-            //          && Session.fontopus()->m_puser->m_strFontopusServerSessId.has_char())
-            //     {
-
-            // xxx            data_set("keyboard_layout", keyboard().on_layout().m_strPath);
-
-            //   }
+            //      }
 
             return true;
          }
 
-         if(!Session.keyboard().load_layout(pszPath,actioncontext))
+         string strCurrentSystemLayout = Session.keyboard().get_current_system_layout();
+
+         if(strCurrentSystemLayout.is_empty())
             return false;
 
-         // xxx Application.simpledb().on_set_keyboard_layout(pszPath, actioncontext);
+         if(!set_keyboard_layout(strCurrentSystemLayout,::action::source_database))
+            return false;
+
+         //         if(Session.fontopus()->m_puser != NULL
+         //          && Session.fontopus()->m_puser->m_strFontopusServerSessId.has_char())
+         //     {
+
+         // xxx            data_set("keyboard_layout", keyboard().on_layout().m_strPath);
+
+         //   }
 
          return true;
       }
+
+      if(!Session.keyboard().load_layout(pszPath,actioncontext))
+         return false;
+
+      // xxx Application.simpledb().on_set_keyboard_layout(pszPath, actioncontext);
+
+      return true;
+   }
 
 
 
@@ -3888,7 +3890,7 @@ namespace axis
 
    }
 
-   
+
    bool application::compress_ungz(::primitive::memory_base & mem)
    {
 

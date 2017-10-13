@@ -73,11 +73,9 @@ inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
 
 #else
 
-#ifdef LINUX
-typedef HTHREAD IDTHREAD;
-#else
+
 typedef pthread_t IDTHREAD;
-#endif // LINUX
+
 
 inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
 
@@ -142,7 +140,7 @@ T * c_new(T * p)
 template < class THREAD_TYPE >
 THREAD_TYPE * __begin_thread(::aura::application * papp,int32_t epriority = ::multithreading::priority_normal,UINT nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL)
 {
-   
+
    THREAD_TYPE * pthread = new THREAD_TYPE(papp);
 
    pthread->begin(epriority,nStackSize,dwCreateFlags,lpSecurityAttrs, puiId);
@@ -184,23 +182,23 @@ CLASS_DECL_AURA void __dec_threading_count();
 
 class CLASS_DECL_AURA keep_threading_count
 {
-public:
+   public:
 
 
-   keep_threading_count()
-   {
+      keep_threading_count()
+      {
 
-      __inc_threading_count();
+         __inc_threading_count();
 
-   }
+      }
 
 
-   ~keep_threading_count()
-   {
+      ~keep_threading_count()
+      {
 
-      __dec_threading_count();
+         __dec_threading_count();
 
-   }
+      }
 
 
 };
@@ -254,33 +252,33 @@ CLASS_DECL_AURA void __term_thread(::aura::application * papp);
 
 #ifdef WINDOWS
 
-///  \brief		global function to wait on a object item for a specified time
-///  \param		waitableItem item to wait for (can be event, socket, file, semaphore, ...)
-///  \param		duration time period to wait for item (default: infinite)
-///  \return	result of waiting action as defined in wait_result
+///  \brief    global function to wait on a object item for a specified time
+///  \param    waitableItem item to wait for (can be event, socket, file, semaphore, ...)
+///  \param    duration time period to wait for item (default: infinite)
+///  \return   result of waiting action as defined in wait_result
 inline wait_result wait(event_base & waitableItem,const duration & duration = duration::infinite())
 {
    return waitableItem.wait(duration);
 }
 
-///  \brief		global function to wait on a object item for a specified time
-///  \param		waitableItem item to wait for (item can be thread, event, socket, file, semaphore, ...)
-///  \param		duration time period to wait for item (default: infinite)
-///  \return	result of waiting action as defined in wait_result
+///  \brief    global function to wait on a object item for a specified time
+///  \param    waitableItem item to wait for (item can be thread, event, socket, file, semaphore, ...)
+///  \param    duration time period to wait for item (default: infinite)
+///  \return   result of waiting action as defined in wait_result
 wait_result wait(size_t numberOfItems,event_base * waitableItems[],const duration & duration = duration::infinite(),bool waitForAll = false);
 
 #else
 
-///  \brief		global function to wait on a object item for a specified time
-///  \param		waitableItem item to wait for (can be event, socket, file, semaphore, ...)
-///  \param		duration time period to wait for item (default: infinite)
-///  \return	result of waiting action as defined in wait_result
+///  \brief    global function to wait on a object item for a specified time
+///  \param    waitableItem item to wait for (can be event, socket, file, semaphore, ...)
+///  \param    duration time period to wait for item (default: infinite)
+///  \return   result of waiting action as defined in wait_result
 wait_result wait(event_base & waitableItem,const duration & duration = duration::infinite());
 
-///  \brief		global function to wait on a object item for a specified time
-///  \param		waitableItem item to wait for (item can be thread, event, socket, file, semaphore, ...)
-///  \param		duration time period to wait for item (default: infinite)
-///  \return	result of waiting action as defined in wait_result
+///  \brief    global function to wait on a object item for a specified time
+///  \param    waitableItem item to wait for (item can be thread, event, socket, file, semaphore, ...)
+///  \param    duration time period to wait for item (default: infinite)
+///  \return   result of waiting action as defined in wait_result
 wait_result wait(size_t numberOfItems,event_base * waitableItems[],const duration& duration = duration::infinite(),bool waitForAll = false);
 
 #endif

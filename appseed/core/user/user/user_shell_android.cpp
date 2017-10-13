@@ -1,4 +1,4 @@
-//
+﻿//
 //  user_shell_ios.cpp
 //  core
 //
@@ -1297,8 +1297,8 @@ namespace user
          }
          // try to find "uifs:// http:// ftp:// like addresses"
          // then should show icon by extension or if is folder
-         strsize iFind = imagekey.m_strPath == NULL ? -1 : ::str::find_ci("://", imagekey.m_strPath);
-         strsize iFind2 = imagekey.m_strPath == NULL ? -1 : ::str::find_ci(":", imagekey.m_strPath);
+         strsize iFind = imagekey.m_strPath.find_ci("://");
+         strsize iFind2 = imagekey.m_strPath.find_ci(":");
          if (iFind >= 0 || iFind2 >= 2)
          {
             string strProtocol = string(imagekey.m_strPath).Left(MAX(iFind, iFind2));

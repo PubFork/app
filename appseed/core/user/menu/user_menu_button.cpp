@@ -1,26 +1,26 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
 {
 
-   
+
    menu_button::menu_button(::aura::application * papp):
       object(papp),
       ::user::interaction(papp),
       ::user::button(papp)
    {
-      
+
       set_user_schema(schema_menu_button);
-      
+
    }
-   
+
 
    menu_button::~menu_button()
    {
-      
+
    }
-   
+
 
    void menu_button::install_message_routing(::message::sender * pinterface)
    {
@@ -50,7 +50,7 @@ namespace user
          pgraphics->SelectObject(pen);
 
          pgraphics->MoveTo(rectClient.left, (rectClient.top + rectClient.bottom) / 2);
-         
+
          pgraphics->LineTo(rectClient.right, (rectClient.top + rectClient.bottom) / 2);
 
          return;
@@ -110,7 +110,7 @@ namespace user
 //      }
 
    }
-   
+
    void menu_button::_001OnNcDraw(::draw2d::graphics * pgraphics)
    {
 
@@ -125,7 +125,7 @@ namespace user
 
    void menu_button::_001DrawCheck(::draw2d::graphics * pgraphics)
    {
-      
+
       UINT uiImage = 0xffffffffu;
 
       if(m_pmenuitem != NULL)
@@ -138,7 +138,7 @@ namespace user
       if(uiImage != 0xffffffffu)
       {
 
-         
+
 
          rect rectImage = m_rectCheckBox;
          rect rectImageBorder = rectImage;
@@ -161,7 +161,7 @@ namespace user
          if(m_echeck == check::checked)
          {
 
-            
+
             pgraphics->FillSolidRect(rectImageBorder, RGB(127, 127, 127));
             pgraphics->Draw3dRect(rectImageBorder, Session.get_default_color(COLOR_3DSHADOW), Session.get_default_color(COLOR_3DHILIGHT));
          }

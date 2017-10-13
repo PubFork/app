@@ -1,0 +1,25 @@
+﻿#include "framework.h"
+
+
+#include "xml.cpp"
+#include "xml_attr.cpp"
+#include "xml_base_array.cpp"
+#include "xml_data.cpp"
+#include "xml_disp_option.cpp"
+#include "xml_document.cpp"
+#include "xml_edit.cpp"
+#include "xml_entity.cpp"
+#include "xml_exportable.cpp"
+#include "xml_importable.cpp"
+#include "xml_input_tree.cpp"
+#include "xml_node.cpp"
+#include "xml_output_tree.cpp"
+#include "xml_parse_info.cpp"
+#include "xml_property_exchange.cpp"
+#include "xml_tree_base.cpp"
+#include "xml_tree_schema.cpp"
+#include "xml_var_exchange.cpp"
+#include "xml_xml.cpp"
+#include "xml_xmlite.cpp"
+
+

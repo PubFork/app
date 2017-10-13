@@ -1,0 +1,26 @@
+﻿#include "framework.h"
+
+
+#include "antialias_8bit.cpp"
+#include "detect_8bit_borders.cpp"
+#include "freeimage.cpp"
+#include "load_gif_frame.cpp"
+#include "visual_api.cpp"
+#include "visual_buffered_graphics.cpp"
+#include "visual_dib.cpp"
+#include "visual_fastblur.cpp"
+#include "visual_font.cpp"
+#include "visual_font_department.cpp"
+#include "visual_font_enumeration.cpp"
+#include "visual_font_list_data.cpp"
+#include "visual_FreeImageFileProc.cpp"
+#include "visual_glyph.cpp"
+#include "visual_glyph_set.cpp"
+#include "visual_graphics_extension.cpp"
+#include "visual_image_list.cpp"
+#include "visual_imaging.cpp"
+#include "visual_rgb_quad_array.cpp"
+#include "visual_visual.cpp"
+#include "visual_water_routine.cpp"
+
+

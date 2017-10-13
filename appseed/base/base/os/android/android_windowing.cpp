@@ -1267,7 +1267,7 @@ void android_on_text(e_os_text etext, const wchar_t * pwch, size_t len)
    ::aura::system::g_p->fork([=]()
    {
 
-      ::aura::system::g_p->on_os_text(strText);
+      ::aura::system::g_p->on_os_text(etext, strText);
 
    });
 

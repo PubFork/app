@@ -1,7 +1,6 @@
 ﻿#include "framework.h"
 
 
-//#include "aaa_want_to_remove_android_window_android.cpp"
 #include "android_base.cpp"
 #include "android_base_file.cpp"
 #include "android_c.cpp"
@@ -22,6 +21,5 @@
 #include "android_small_ipca_channel.cpp"
 #include "android_window_impl.cpp"
 #include "android_win_base.cpp"
-
 
 

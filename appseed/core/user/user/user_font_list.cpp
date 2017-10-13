@@ -172,8 +172,16 @@ namespace user
 
    }
 
+
    void font_list::_001OnDraw(::draw2d::graphics * pgraphics)
    {
+
+      if (m_pfontlistdata == NULL)
+      {
+
+         return;
+
+      }
 
       synch_lock sl(m_pfontlistdata->m_pmutex);
 
@@ -209,6 +217,13 @@ namespace user
       GetClientRect(rectClient);
 
       if (rectClient.area() <= 0)
+      {
+
+         return;
+
+      }
+
+      if (m_pfontlistdata.is_null())
       {
 
          return;

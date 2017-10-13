@@ -1,0 +1,35 @@
+﻿#include "framework.h"
+
+
+
+#include "primitive_application_bias.cpp"
+#include "primitive_bit.cpp"
+#include "primitive_color.cpp"
+#include "primitive_command.cpp"
+#include "primitive_command_line.cpp"
+#include "primitive_create.cpp"
+#include "primitive_edit.cpp"
+#include "primitive_factory.cpp"
+#include "primitive_handler.cpp"
+#include "primitive_id.cpp"
+#include "primitive_id_space.cpp"
+#include "primitive_interlocked_long.cpp"
+#include "primitive_interlocked_long_pulse.cpp"
+#include "primitive_job.cpp"
+#include "primitive_memory.cpp"
+#include "primitive_memory_base.cpp"
+#include "primitive_memory_c.cpp"
+#include "primitive_memory_container.cpp"
+#include "primitive_object.cpp"
+#include "primitive_property.cpp"
+#include "primitive_property_set.cpp"
+#include "primitive_relation_set.cpp"
+#include "primitive_request_interface.cpp"
+#include "primitive_request_signal.cpp"
+#include "primitive_shared_memory.cpp"
+#include "primitive_type.cpp"
+#include "primitive_var.cpp"
+#include "primitive_virtual_memory.cpp"
+
+
+

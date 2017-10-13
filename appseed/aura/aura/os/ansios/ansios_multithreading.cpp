@@ -75,10 +75,10 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
    if(dwWakeMask > 0)
    {
 
-      pmq = __get_mq(pthread_self(), false);
+      pmq = __get_mq((HTHREAD)pthread_self(), false);
 
       //if(pmq == NULL)
-        // return 0;
+      // return 0;
 
    }
 
@@ -146,9 +146,9 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
             }
 
          }
-   //      for(j = 0; j < dwSize; j++)
-     //    {
-       //     pobjectptra[j]->unlock();
+         //      for(j = 0; j < dwSize; j++)
+         //    {
+         //     pobjectptra[j]->unlock();
          //}
 
          return WAIT_OBJECT_0;
@@ -164,7 +164,7 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
       while(true)
       {
 
-         for(i = 0; comparison::lt(i, dwSize);i++)
+         for(i = 0; comparison::lt(i, dwSize); i++)
          {
 
             if(pmq != NULL)
@@ -274,7 +274,7 @@ void * thread_data::get()
 void thread_data::set(void * p)
 {
 
-	pthread_setspecific(m_key,p);
+   pthread_setspecific(m_key,p);
 
 }
 
@@ -648,15 +648,15 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
    //if(threadInfo == NULL)
    //{
 
-      int32_t iPolicy;
+   int32_t iPolicy;
 
-      sched_param schedparam;
+   sched_param schedparam;
 
-      thread_get_os_priority(&iPolicy,&schedparam,nCa2Priority);
+   thread_get_os_priority(&iPolicy,&schedparam,nCa2Priority);
 
-      pthread_setschedparam( hThread,iPolicy,&schedparam);
+   pthread_setschedparam((IDTHREAD) hThread,iPolicy,&schedparam);
 
-      return TRUE;
+   return TRUE;
 
    //}
 
@@ -683,15 +683,15 @@ int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
    //if(threadInfo == NULL)
    //{
 
-      int iOsPolicy = SCHED_OTHER;
+   int iOsPolicy = SCHED_OTHER;
 
-      sched_param schedparam;
+   sched_param schedparam;
 
-      schedparam.sched_priority = 0;
+   schedparam.sched_priority = 0;
 
-      pthread_getschedparam(hthread,&iOsPolicy,&schedparam);
+   pthread_getschedparam((IDTHREAD) hthread,&iOsPolicy,&schedparam);
 
-      return thread_get_scheduling_priority(iOsPolicy,&schedparam);
+   return thread_get_scheduling_priority(iOsPolicy,&schedparam);
 
 //   return threadInfo->m_element2.nPriority;
 
@@ -1014,7 +1014,7 @@ CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,W
 CLASS_DECL_AURA HTHREAD GetCurrentThread()
 {
 
-   return pthread_self();
+   return (HTHREAD) pthread_self();
 
 }
 
@@ -1088,7 +1088,7 @@ bool on_term_thread()
 
 CLASS_DECL_AURA DWORD_PTR translate_processor_affinity(int iOrder)
 {
-   
+
    return 1 << iOrder;
-   
+
 }

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "android.h"
 
 
@@ -38,7 +38,7 @@ void __trace_message(const char * lpszPrefix,::message::message * pobj)
    else if(pbase->m_id >= WM_USER)
    {
       // User message
-      sprintf(szBuf,"WM_USER+0x%04X",pbase->m_id.int64() - WM_USER);
+      sprintf(szBuf,"WM_USER+0x%04X", (unsigned int) (pbase->m_id.int64() - WM_USER));
       lpszMsgName = szBuf;
    }
    else

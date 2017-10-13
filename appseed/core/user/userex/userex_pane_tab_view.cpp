@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userex
@@ -170,21 +170,21 @@ namespace userex
       ::user::view_creator::on_show_view();
       if(m_pviewdataOld != NULL && ::str::begins_ci(m_pviewdataOld->m_id, "file_manager"))
       {
-         
+
          if(GetParentFrame()->ContinueModal(0))
          {
-            
+
             GetParentFrame()->EndModalLoop("yes");
-            
+
          }
-         
+
          if(is_set(filemanager_manager()))
          {
-            
+
             filemanager_manager().get_filemanager_data()->m_pdocumentTopic = NULL;
-            
+
          }
-         
+
       }
 
       if (m_pviewdata != NULL)
@@ -424,7 +424,7 @@ namespace userex
 
          Session.use_font_sel();
 
-         auto pdoc = Session.userex()->m_ptemplateFontSel->open_document_file(NULL, false, pcreatordata->m_pholder);
+         auto pdoc = Session.userex()->m_ptemplateFontSel->open_document_file(::var::type_null, false, pcreatordata->m_pholder);
 
          m_pfontview = pdoc->get_typed_view<font_view>();
 
