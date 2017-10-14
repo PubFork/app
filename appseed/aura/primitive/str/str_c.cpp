@@ -1424,6 +1424,21 @@ strsize utf32_to_utf8_len(const unichar32 * pwsz, strsize input_size)
    return len;
 }
 
+strsize utf32_len(const unichar32 * pwsz)
+{
+
+   if (pwsz == NULL)
+   {
+      return 0;
+   }
+   strsize s = 0;
+   while (*pwsz != 0)
+   {
+      s++;
+      pwsz++;
+   }
+   return s;
+}
 strsize utf32_to_utf8(char * psz,const unichar32 * pwsz, strsize srclen)
 {
    //unsigned short * pwsz = (unsigned short *)pwszParam;
@@ -1432,7 +1447,7 @@ strsize utf32_to_utf8(char * psz,const unichar32 * pwsz, strsize srclen)
    if (srclen < 0)
    {
 
-      srclen = wcslen(pwsz);
+      srclen = utf32_len(pwsz);
 
    }
    while(srclen > 0 && *pwsz != L'\0')

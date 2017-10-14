@@ -11,15 +11,15 @@
 
 namespace aura
 {
-   
+
    class library;
-   
+
    class application;
-   
+
    extern "C"
    typedef class library * (*PFN_GET_NEW_LIBRARY)(::aura::application * papp);
-   
-   
+
+
 } // namespace aura
 
 
@@ -29,15 +29,6 @@ extern ::aura::PFN_GET_NEW_LIBRARY g_pfnNewLibrary;
 int ios_core_main(int argc, char * argv[]);
 
 
-void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
-
-
-#define DECL_LIB(X) extern "C" \
-::aura::library * X##_get_new_library(::aura::application * papp)
-
-#define SET_LIB(X) g_pfnNewLibrary = &X##_get_new_library
-
-#define REG_LIB(X) register_library(#X, &X##_get_new_library)
 
 extern "C" bool defer_core_init(void);
 

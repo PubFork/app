@@ -4,11 +4,11 @@
 #include "openssl/err.h"
 #endif
 
-//#ifndef METROWIN
+#ifndef SMALLCODE
 
 #include "freeimage/Source/FreeImage.h"
 
-//#endif
+#endif
 
 
 
@@ -40,7 +40,7 @@ CLASS_DECL_AXIS int_bool defer_axis_init()
    if(!defer_aura_init())
       return false;
 
-
+#ifndef SMALLCODE
 
    try
    {
@@ -57,6 +57,7 @@ CLASS_DECL_AXIS int_bool defer_axis_init()
 
    }
 
+#endif // SMALLCODE
 
    g_iAxisRefCount++;
 
@@ -97,6 +98,8 @@ CLASS_DECL_AXIS int_bool defer_axis_term()
 
    ::axis::static_start::term();
 
+#ifndef SMALLCODE
+
    try
    {
 
@@ -108,7 +111,7 @@ CLASS_DECL_AXIS int_bool defer_axis_term()
 
    }
 
-
+#endif SMALLCODE
 
    defer_aura_term();
 
@@ -124,7 +127,7 @@ bool axis_init()
    g_axisoninitthread = &axis_on_init_thread;
    g_axisontermthread = &axis_on_term_thread;
    //if(!defer_axis_init())
-     // return false;
+   // return false;
 
    //::axis::static_start::init();
 
@@ -181,7 +184,7 @@ bool axis_term()
 //#ifndef WINDOWS
 
 //#ifdef BSD_STYLE_SOCKETS
-//   
+//
 //   ERR_remove_state(::GetCurrentProcessId());
 //
 //#endif
@@ -229,17 +232,17 @@ void axis_on_term_thread()
 {
 
 #ifdef BSD_STYLE_SOCKETS
-   
+
    if (thread_has_sockets())
    {
-      
+
 #if OPENSSL_API_COMPAT < 0x10100000L
-    
+
       ERR_free_strings();
-      
+
 #endif
 //      CRYPTO_THREADID tid;
-  //    CRYPTO_THREADID_current(&tid);
+      //    CRYPTO_THREADID_current(&tid);
       //ERR_remove_thread_state(&tid);
 
    }

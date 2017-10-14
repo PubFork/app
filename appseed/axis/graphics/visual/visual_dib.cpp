@@ -110,7 +110,7 @@ namespace visual
 #else
 
       todo(get_app());
-      
+
       return false;
 
 #endif
@@ -131,7 +131,7 @@ namespace visual
       }
 
       if (varFile.get_file_path().extension().compare_ci("svg") == 0
-         || varFile.get_file_path().find_ci(".svg?") > 0)
+            || varFile.get_file_path().find_ci(".svg?") > 0)
       {
 
          m_p->create_nanosvg(App(m_p->m_pauraapp).file().as_string(varFile));
@@ -150,7 +150,7 @@ namespace visual
       }
 
       if (varFile.get_file_path().extension().compare_ci("gif") == 0
-         || varFile.get_file_path().find_ci(".gif?") > 0)
+            || varFile.get_file_path().find_ci(".gif?") > 0)
       {
 
          m_sparray = canew(array(m_p->m_pauraapp));
@@ -275,126 +275,6 @@ namespace visual
       return write_to_file(spfile, psaveimage);
    }
 
-   bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
-   {
-      save_image saveimageDefault;
-      if (psaveimage == NULL)
-         psaveimage = &saveimageDefault;
-//#ifdef WINDOWS
-
-  //    return windows_write_dib_to_file(pfile, m_p, psaveimage, m_p->get_app());
-
-//#else
-
-
-      bool bOk = false;
-
-      bool b8 = false;
-      bool b24 = false;
-      int iFreeImageSave = 0;
-      FREE_IMAGE_FORMAT eformat = (FREE_IMAGE_FORMAT)0;
-      string strFile;
-      switch (psaveimage->m_eformat)
-      {
-      case ::visual::image::format_png:
-         eformat = FreeImage_GetFIFFromFormat("PNG");
-         strFile = "foo.png";
-         break;
-      case ::visual::image::format_bmp:
-         eformat = FIF_BMP;
-         strFile = "foo.bmp";
-         break;
-      case ::visual::image::format_gif:
-         b8 = true;
-         eformat = FIF_GIF;
-         strFile = "foo.gif";
-         break;
-      case ::visual::image::format_jpeg:
-         b24 = true;
-         eformat = FreeImage_GetFIFFromFormat("JPEG");
-         strFile = "foo.jpg";
-         if (psaveimage->m_iQuality > 80)
-         {
-            iFreeImageSave |= JPEG_QUALITYSUPERB;
-         }
-         else if (psaveimage->m_iQuality > 67)
-         {
-            iFreeImageSave |= JPEG_QUALITYGOOD;
-         }
-         else if (psaveimage->m_iQuality > 33)
-         {
-            iFreeImageSave |= JPEG_QUALITYNORMAL;
-         }
-         else if (psaveimage->m_iQuality > 15)
-         {
-            iFreeImageSave |= JPEG_QUALITYAVERAGE;
-         }
-         else
-         {
-            iFreeImageSave |= JPEG_QUALITYBAD;
-         }
-         break;
-      default:
-         return false;
-      }
-
-      eformat = FreeImage_GetFIFFromFilename(strFile);
-
-
-      FIMEMORY * pfm1 = FreeImage_OpenMemory();
-      FIBITMAP * pfi7 = Sys(m_p->m_pauraapp).visual().imaging().dib_to_FI(m_p);
-      FIBITMAP * pfi8 = NULL;
-      bool bConv;
-      if (b8)
-      {
-         pfi8 = FreeImage_ConvertTo8Bits(pfi7);
-         bConv = true;
-      }
-      else if (b24)
-      {
-         pfi8 = FreeImage_ConvertTo24Bits(pfi7);
-         bConv = true;
-      }
-      else
-      {
-         //FreeImage_SetTransparent(pfi8,true);
-         pfi8 = pfi7;
-         bConv = false;
-      }
-
-      bOk = FreeImage_SaveToMemory(eformat, pfi8, pfm1, iFreeImageSave) != FALSE;
-
-      BYTE * pbData = NULL;
-      DWORD dwSize = 0;
-      if (bOk)
-         bOk = FreeImage_AcquireMemory(pfm1, &pbData, &dwSize) != FALSE;
-      if (bOk)
-      {
-         try
-         {
-            pfile->write(pbData, dwSize);
-         }
-         catch (...)
-         {
-            bOk = false;
-         }
-      }
-
-      FreeImage_CloseMemory(pfm1);
-      if (bConv)
-      {
-         FreeImage_Unload(pfi8);
-      }
-      FreeImage_Unload(pfi7);
-
-
-
-      return bOk != FALSE;
-
-//#endif
-
-   }
-
 
 
 
@@ -438,7 +318,7 @@ namespace visual
          //if (!m_p->create(m_sparray->m_size))
          //{
 
-           // return false;
+         // return false;
 
          //}
          if (!m_sparray->m_bStart)
@@ -507,7 +387,7 @@ namespace visual
              }
 
 
-    */
+         */
 
          if (m_sparray->m_iLastFrame != iCurrentFrame)
          {
@@ -614,7 +494,7 @@ namespace visual
       m_p->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
       m_p->get_graphics()->BitBlt(0, 0, m_p->m_size.cx, m_p->m_size.cy,
-         m_sparray->m_dibCompose->get_graphics());
+                                  m_sparray->m_dibCompose->get_graphics());
 
 
 
@@ -814,7 +694,7 @@ bool windows_load_dib_from_frame(
 
 HRESULT windows_GetBackgroundColor(::visual::dib_sp::array * pdiba,
 
-   IWICImagingFactory * piFactory, IWICBitmapDecoder * piDecoder, IWICMetadataQueryReader *pMetadataQueryReader)
+                                   IWICImagingFactory * piFactory, IWICBitmapDecoder * piDecoder, IWICMetadataQueryReader *pMetadataQueryReader)
 {
    DWORD dwBGColor;
    WICColor rgColors[256];
@@ -827,8 +707,8 @@ HRESULT windows_GetBackgroundColor(::visual::dib_sp::array * pdiba,
 
    // If we have a global palette, get the palette and background color
    HRESULT hr = pMetadataQueryReader->GetMetadataByName(
-      L"/logscrdesc/GlobalColorTableFlag",
-      &propVariant);
+                   L"/logscrdesc/GlobalColorTableFlag",
+                   &propVariant);
    if (SUCCEEDED(hr))
    {
       hr = (propVariant.vt != VT_BOOL || !propVariant.boolVal) ? E_FAIL : S_OK;
@@ -839,8 +719,8 @@ HRESULT windows_GetBackgroundColor(::visual::dib_sp::array * pdiba,
    {
       // Background color index
       hr = pMetadataQueryReader->GetMetadataByName(
-         L"/logscrdesc/BackgroundColorIndex",
-         &propVariant);
+              L"/logscrdesc/BackgroundColorIndex",
+              &propVariant);
       if (SUCCEEDED(hr))
       {
          hr = (propVariant.vt != VT_UI1) ? E_FAIL : S_OK;
@@ -868,9 +748,9 @@ HRESULT windows_GetBackgroundColor(::visual::dib_sp::array * pdiba,
    if (SUCCEEDED(hr))
    {
       hr = pWicPalette->GetColors(
-         ARRAYSIZE(rgColors),
-         rgColors,
-         &cColorsCopied);
+              ARRAYSIZE(rgColors),
+              rgColors,
+              &cColorsCopied);
    }
 
    if (SUCCEEDED(hr))
@@ -935,12 +815,12 @@ HRESULT windows_GetRawFrame(
    {
 
       hr = pbitmap->Initialize(
-         pframe,
-         GUID_WICPixelFormat8bppIndexed,
-         WICBitmapDitherTypeNone,
-         nullptr,
-         0.f,
-         WICBitmapPaletteTypeCustom);
+              pframe,
+              GUID_WICPixelFormat8bppIndexed,
+              WICBitmapDitherTypeNone,
+              nullptr,
+              0.f,
+              WICBitmapPaletteTypeCustom);
 
    }
 
@@ -1071,8 +951,8 @@ HRESULT windows_GetRawFrame(
 
       // Get delay from the optional Graphic Control Extension
       if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-         L"/grctlext/Delay",
-         &propValue)))
+                       L"/grctlext/Delay",
+                       &propValue)))
       {
 
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -1130,8 +1010,8 @@ HRESULT windows_GetRawFrame(
    {
 
       if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-         L"/grctlext/Disposal",
-         &propValue)))
+                       L"/grctlext/Disposal",
+                       &propValue)))
       {
 
          hr = (propValue.vt == VT_UI1) ? S_OK : E_FAIL;
@@ -1163,8 +1043,8 @@ HRESULT windows_GetRawFrame(
    {
 
       hr = pFrameMetadataQueryReader->GetMetadataByName(
-         L"/grctlext/TransparencyFlag",
-         &propValue);
+              L"/grctlext/TransparencyFlag",
+              &propValue);
 
       if (SUCCEEDED(hr))
       {
@@ -1191,8 +1071,8 @@ HRESULT windows_GetRawFrame(
       {
 
          hr = pFrameMetadataQueryReader->GetMetadataByName(
-            L"/grctlext/TransparentColorIndex",
-            &propValue);
+                 L"/grctlext/TransparentColorIndex",
+                 &propValue);
 
          if (SUCCEEDED(hr))
          {
@@ -1649,10 +1529,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -1728,10 +1608,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -1814,10 +1694,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -1893,10 +1773,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -1981,10 +1861,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -2060,10 +1940,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -2148,10 +2028,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -2227,10 +2107,10 @@ HRESULT windows_GetRawFrame(
 
                   f->m_pcolorref[iPixel] = (byte)(dA * dA2 / 255.0);
                   pointer->m_dib->m_pcolorref[iPixel] = ARGB(
-                     (byte)255,
-                     (byte)dR,
-                     (byte)dG,
-                     (byte)dB);
+                        (byte)255,
+                        (byte)dR,
+                        (byte)dG,
+                        (byte)dB);
 
                   continue;
 
@@ -2391,7 +2271,7 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
       comptr<IWICMetadataQueryReader> pMetadataQueryReader;
 
       HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,
-         (LPVOID*)&piFactory);
+                                    (LPVOID*)&piFactory);
 
       if (FAILED(hr))
       {
@@ -2447,8 +2327,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
       // Get global frame size
       // Get width
       hr = pMetadataQueryReader->GetMetadataByName(
-         L"/logscrdesc/Width",
-         &propValue);
+              L"/logscrdesc/Width",
+              &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -2461,8 +2341,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 
       // Get height
       hr = pMetadataQueryReader->GetMetadataByName(
-         L"/logscrdesc/Height",
-         &propValue);
+              L"/logscrdesc/Height",
+              &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -2475,8 +2355,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 
       // Get pixel aspect ratio
       hr = pMetadataQueryReader->GetMetadataByName(
-         L"/logscrdesc/PixelAspectRatio",
-         &propValue);
+              L"/logscrdesc/PixelAspectRatio",
+              &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI1 ? S_OK : E_FAIL);
@@ -2521,12 +2401,12 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
             //
             // If we fail to get the looping information, loop the animation infinitely.
             if (SUCCEEDED(pMetadataQueryReader->GetMetadataByName(
-               L"/appext/application",
-               &propValue)) &&
-               propValue.vt == (VT_UI1 | VT_VECTOR) &&
-               propValue.caub.cElems == 11 &&  // Length of the application block
-               (!memcmp(propValue.caub.pElems, "NETSCAPE2.0", propValue.caub.cElems) ||
-                  !memcmp(propValue.caub.pElems, "ANIMEXTS1.0", propValue.caub.cElems)))
+                             L"/appext/application",
+                             &propValue)) &&
+                  propValue.vt == (VT_UI1 | VT_VECTOR) &&
+                  propValue.caub.cElems == 11 &&  // Length of the application block
+                  (!memcmp(propValue.caub.pElems, "NETSCAPE2.0", propValue.caub.cElems) ||
+                   !memcmp(propValue.caub.pElems, "ANIMEXTS1.0", propValue.caub.cElems)))
             {
                PropVariantClear(&propValue);
 
@@ -2540,12 +2420,12 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
                   //  byte 3: loop count (most significant byte)
                   //  byte 4: set to zero
                   if (propValue.vt == (VT_UI1 | VT_VECTOR) &&
-                     propValue.caub.cElems >= 4 &&
-                     propValue.caub.pElems[0] > 0 &&
-                     propValue.caub.pElems[1] == 1)
+                        propValue.caub.cElems >= 4 &&
+                        propValue.caub.pElems[0] > 0 &&
+                        propValue.caub.pElems[1] == 1)
                   {
                      pdiba->m_uiLoopCount = MAKEWORD(propValue.caub.pElems[2],
-                        propValue.caub.pElems[3]);
+                                                     propValue.caub.pElems[3]);
 
                      // If the total loop count is not zero, we then have a loop count
                      // If it is 0, then we repeat infinitely
@@ -2624,11 +2504,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
 
       comptr< IWICBitmapDecoder > decoder;
       HRESULT hr = CoCreateInstance(
-         CLSID_WICImagingFactory,
-         NULL,
-         CLSCTX_INPROC_SERVER,
-         IID_IWICImagingFactory,
-         (LPVOID*)&piFactory);
+                      CLSID_WICImagingFactory,
+                      NULL,
+                      CLSCTX_INPROC_SERVER,
+                      IID_IWICImagingFactory,
+                      (LPVOID*)&piFactory);
 
       if (SUCCEEDED(hr))
       {
@@ -2666,11 +2546,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
    //}
    return true;
 
-   }
+}
 
 #ifdef METROWIN
 
-bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream , ::aura::application * papp)
+bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp)
 {
 
    if (!defer_co_initialize_ex(true))
@@ -2687,11 +2567,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams:
 
       comptr< IWICBitmapDecoder > decoder;
       HRESULT hr = CoCreateInstance(
-         CLSID_WICImagingFactory,
-         NULL,
-         CLSCTX_INPROC_SERVER,
-         IID_IWICImagingFactory,
-         (LPVOID*)&piFactory);
+                      CLSID_WICImagingFactory,
+                      NULL,
+                      CLSCTX_INPROC_SERVER,
+                      IID_IWICImagingFactory,
+                      (LPVOID*)&piFactory);
 
       if (SUCCEEDED(hr))
       {
@@ -2766,11 +2646,11 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
    UINT uiHeight = pdib->size().cy;
 
    HRESULT hr = CoCreateInstance(
-      CLSID_WICImagingFactory,
-      NULL,
-      CLSCTX_INPROC_SERVER,
-      IID_IWICImagingFactory,
-      (LPVOID*)&piFactory);
+                   CLSID_WICImagingFactory,
+                   NULL,
+                   CLSCTX_INPROC_SERVER,
+                   IID_IWICImagingFactory,
+                   (LPVOID*)&piFactory);
 
    if (SUCCEEDED(hr))
    {
@@ -2913,14 +2793,14 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
          if (SUCCEEDED(hr))
          {
             hr = piFactory->CreateBitmapFromMemory(
-               pdib->size().cx,
-               pdib->size().cy,
-               GUID_WICPixelFormat32bppBGRA,
-               pdib->m_iScan,
-               pdib->m_iScan * pdib->size().cy,
-               (BYTE *)pdib->m_pcolorref,
-               &pbitmap.get()
-            );
+                    pdib->size().cx,
+                    pdib->size().cy,
+                    GUID_WICPixelFormat32bppBGRA,
+                    pdib->m_iScan,
+                    pdib->m_iScan * pdib->size().cy,
+                    (BYTE *)pdib->m_pcolorref,
+                    &pbitmap.get()
+                 );
          }
 
          comptr<IWICFormatConverter> pconverter;
@@ -3023,7 +2903,8 @@ bool windows_write_dib_to_file(::file::file_sp pfile, ::draw2d::dib * pdib, ::vi
 
       }
 
-   } while (ulRead > 0 && stg.cbSize.QuadPart - ulPos > 0);
+   }
+   while (ulRead > 0 && stg.cbSize.QuadPart - ulPos > 0);
 
    //pstream->Release();
 

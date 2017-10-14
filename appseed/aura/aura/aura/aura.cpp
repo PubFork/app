@@ -89,11 +89,15 @@ void __post_quit_message(int32_t nExitCode)
 
 string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary = NULL;
 
+extern "C"
 CLASS_DECL_AURA string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > & __library()
 {
+
    return *g_pmapLibrary;
+
 }
 
+extern "C"
 CLASS_DECL_AURA::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
 {
 
@@ -101,6 +105,7 @@ CLASS_DECL_AURA::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz)
 
 }
 
+extern "C"
 CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p)
 {
    __library()[psz] = p;

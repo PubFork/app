@@ -88,6 +88,16 @@ namespace aura
 
 } // namespace aura
 
+extern "C"
+void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
+
+
+#define DECL_LIB(X) extern "C" \
+::aura::library * X##_get_new_library(::aura::application * papp)
+
+#define SET_LIB(X) g_pfnNewLibrary = &X##_get_new_library
+
+#define REG_LIB(X) register_library(#X, &X##_get_new_library)
 
 namespace install
 {
@@ -760,8 +770,6 @@ CLASS_DECL_AURA bool defer_co_initialize_ex(bool bMultiThread);
 #endif
 
 
-void register_library(const char * psz, void * p);
-
 CLASS_DECL_AURA bool aura_init();
 CLASS_DECL_AURA bool aura_term();
 
@@ -771,9 +779,12 @@ CLASS_DECL_AURA bool __node_aura_pos_init();
 CLASS_DECL_AURA bool __node_aura_pre_term();
 CLASS_DECL_AURA bool __node_aura_pos_term();
 
-
+extern "C"
 CLASS_DECL_AURA ::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz);
+
+extern "C"
 CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p);
+
 CLASS_DECL_AURA ::aura::application * get_thread_app();
 
 #include "aura/primitive/primitive_cflag.h"

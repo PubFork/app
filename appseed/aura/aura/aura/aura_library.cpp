@@ -66,7 +66,7 @@ namespace aura
 
       m_strMessage.Empty();
 
-      auto pfn_get_new_library = get_library_factory(m_strPath);
+      auto pfn_get_new_library = get_library_factory(pszPath);
 
       if (pfn_get_new_library != NULL)
       {
