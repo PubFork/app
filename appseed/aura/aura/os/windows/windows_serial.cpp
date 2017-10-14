@@ -366,6 +366,7 @@ Serial::SerialImpl::reconfigurePort ()
 
 }
 
+
 void
 Serial::SerialImpl::close ()
 {
