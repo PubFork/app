@@ -850,9 +850,6 @@
     <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\freeimage.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\visual\load_gif_frame.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
@@ -878,9 +875,6 @@
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
     <ClCompile Include="graphics\visual\visual_glyph.cpp">
@@ -918,6 +912,9 @@
     </ClCompile>
     <ClCompile Include="axis\node\windows\windows_copydesk.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\_graphics.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

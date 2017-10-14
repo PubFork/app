@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #include "os_alloc.cpp"
@@ -12,7 +12,7 @@
 
 
 #if !defined(ANDROID)
-#include "os_file.cpp"
+#include "os_debug.cpp"
 #include "os_http.cpp"
 #include "os_os.cpp"
 #include "os_thread.cpp"
@@ -23,6 +23,10 @@
 #if defined(ANDROID)
 #include "ansios/_os_ansios.cpp"
 #include "android/_os_android.cpp"
+#elif defined(WINDOWS)
+#include "ansios/_os_ansios.cpp"
+#include "windows/_os_windows.cpp"
+#include "windows_common/_os_windows_common.cpp"
 #endif
 
 

@@ -1,10 +1,15 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #if defined(ANDROID)
 
 #include "ansios/_node_ansios.cpp"
 #include "android/_node_android.cpp"
+
+#elif defined(WINDOWSEX)
+
+#include "ansios/_node_ansios.cpp"
+#include "windows/_node_windows.cpp"
 
 #else
 
@@ -13,7 +18,7 @@
 #include "linux/_node_linux.cpp"
 #include "macos/_node_macos.cpp"
 #include "metrowin/_node_metrowin.cpp"
-#include "windows/_node_windows.cpp"
+
 
 #endif
 

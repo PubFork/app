@@ -1,4 +1,4 @@
-﻿/* crypt.h -- axis code for crypt/uncrypt ZIPfile
+/* crypt.h -- axis code for crypt/uncrypt ZIPfile
 
 
    Version 1.00, September 10th, 2003
@@ -27,7 +27,11 @@
    Encryption is not supported.
 */
 
+#pragma once
+
 #include <time.h>
+
+#define INCLUDECRYPTINGCODE_IFCRYPTALLOWED
 
 #define CRC32(ca, b) ((*(pcrc_32_tab+(((int32_t)(ca) ^ (b)) & 0xff))) ^ ((ca) >> 8))
 

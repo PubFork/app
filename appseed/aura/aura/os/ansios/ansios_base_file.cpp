@@ -1,7 +1,8 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #ifdef WINDOWS
 #include <io.h>
+#include <stdio.h>
 #else
 #include <sys/stat.h>
 //Copy file using mmap()
@@ -427,14 +428,14 @@ int_bool file_copy_dup(const char * pszNew, const char * pszSrc, int_bool bOverw
       flags |= O_EXCL;
    if((output = open(pszNew, flags, 0666)) == -1)
    {
-      fprintf(stderr, "%s: Error: opening file: %s\n", PACKAGE, pszNew);
+      fprintf(stderr, "Error: opening file: %s\n", pszNew);
       return false;
    }
 
 
    if((input = open(pszSrc, O_RDONLY)) == -1)
    {
-      fprintf(stderr, "%s: Error: opening file: %s\n", PACKAGE, pszSrc);
+      fprintf(stderr, "Error: opening file: %s\n", pszSrc);
       return false;
    }
 

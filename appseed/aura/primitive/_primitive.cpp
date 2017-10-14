@@ -1,5 +1,13 @@
-﻿#include "framework.h"
+#include "framework.h"
 
+
+#include "collection/_collection.cpp"
+#include "comparison/_comparison.cpp"
+#include "data/_data.cpp"
+#include "datetime/_datetime.cpp"
+#include "geometry/_geometry.cpp"
+#include "math/_math.cpp"
+#include "str/_str.cpp"
 
 
 #include "primitive_application_bias.cpp"

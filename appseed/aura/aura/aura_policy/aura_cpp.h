@@ -89,7 +89,7 @@ namespace aura
 } // namespace aura
 
 extern "C"
-void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
+CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY pfnNewLibrary);
 
 
 #define DECL_LIB(X) extern "C" \

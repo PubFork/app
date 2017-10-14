@@ -4,6 +4,371 @@
 #include <stdio.h>
 
 #include "freeimage/Source/FreeImage.h"
+
+
+FIBITMAP * fi_from_dib(::draw2d::dib * pdib)
+{
+
+   if (pdib == NULL)
+      return NULL;
+
+   if (pdib->area() <= 0)
+      return NULL;
+
+   FIBITMAP * fi;
+
+   //   if(bm.bmBitsPixel == 32)
+   {
+      fi = FreeImage_AllocateT(FIT_BITMAP, pdib->m_size.cx, pdib->m_size.cy, 32);
+   }
+   // else
+   {
+      //  fi = FreeImage_Allocate(bm.bmWidth,bm.bmHeight,bm.bmBitsPixel);
+   }
+   // The GetDIBits function clears the biClrUsed and biClrImportant BITMAPINFO members (dont't know why)
+   // So we save these infos below. This is needed for palettized images only.
+   int32_t nColors = FreeImage_GetColorsUsed(fi);
+   //HDC hdc = ::CreateCompatibleDC(NULL);
+
+   int iWidth;
+   int iHeight;
+   COLORREF * pcolorref;
+   int iStrideDst;
+
+   iWidth = FreeImage_GetWidth(fi);
+
+   iHeight = FreeImage_GetHeight(fi);
+
+   pcolorref = (COLORREF *)FreeImage_GetBits(fi);
+
+   if (FreeImage_GetInfo(fi)->bmiHeader.biSizeImage <= 0)
+   {
+
+      iStrideDst = iWidth * sizeof(COLORREF);
+
+   }
+   else
+   {
+
+      iStrideDst = FreeImage_GetInfo(fi)->bmiHeader.biSizeImage / iHeight;
+
+   }
+
+   COLORREF * pdst = pcolorref;
+
+   COLORREF * psrc = pdib->m_pcolorref;
+
+#if  defined(VSNORD)
+
+   int iStrideSrc = pdib->m_iScan;
+
+   for (index y = 0; y < pdib->m_size.cy; y++)
+   {
+
+      byte * pbDst = ((byte *)pdst) + ((pdib->m_size.cy - y - 1) * iStrideDst);
+
+      byte * pbSrc = (byte *)psrc + (y * iStrideSrc);
+
+      for (index x = 0; x < pdib->m_size.cx; x++)
+      {
+
+         pbDst[0] = pbSrc[2];
+
+         pbDst[1] = pbSrc[1];
+
+         pbDst[2] = pbSrc[0];
+
+         pbDst[3] = pbSrc[3];
+
+         pbDst += 4;
+
+         pbSrc += 4;
+
+      }
+
+   }
+
+#elif defined(APPLEOS)
+
+   byte * pbDst = (byte *)pdst;
+
+   byte * pbSrc = (byte *)psrc;
+
+   ::count c = (count)pdib->area();
+
+   while (c-- > 0)
+   {
+
+      pbDst[0] = pbSrc[2];
+
+      pbDst[1] = pbSrc[1];
+
+      pbDst[2] = pbSrc[0];
+
+      pbDst[3] = pbSrc[3];
+
+      pbDst += 4;
+
+      pbSrc += 4;
+
+   }
+
+   /*
+
+   byte * pbDst;
+
+   byte * pbSrc;
+
+   for(int i = 0; i < pdib->m_size.cy; i++)
+   {
+
+   pbDst = &((byte *) pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)];
+
+   pbSrc = &((byte *) pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i];
+
+   for(int j = 0; j < pdib->m_size.cx; j++)
+   {
+
+   pbDst[0] = pbSrc[2];
+
+   pbDst[1] = pbSrc[1];
+
+   pbDst[2] = pbSrc[0];
+
+   pbDst[3] = pbSrc[3];
+
+   pbDst += 4;
+
+   pbSrc += 4;
+
+   }
+
+   }*/
+
+#else
+
+   int iStrideSrc = pdib->m_iScan;
+
+   for (int i = 0; i < pdib->m_size.cy; i++)
+   {
+
+      memcpy(
+         &((byte *)pdst)[iStrideDst * (pdib->m_size.cy - i - 1)],
+         &((byte *)psrc)[iStrideSrc * i],
+         iStrideDst);
+
+   }
+#endif
+
+   //GetDIBits(hdc,(HBITMAP)hbitmap,0,FreeImage_GetHeight(fi),FreeImage_GetBits(fi),FreeImage_GetInfo(fi),DIB_RGB_COLORS);
+
+   //::DeleteDC(hdc);
+
+   //pbitmap->ReleaseHBITMAP(hbitmap);
+
+   // restore BITMAPINFO members
+   FreeImage_GetInfoHeader(fi)->biClrUsed = nColors;
+   FreeImage_GetInfoHeader(fi)->biClrImportant = nColors;
+   return fi;
+
+
+}
+
+
+bool dib_from_fi(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, ::aura::application * papp)
+{
+
+   if (pfibitmap == NULL)
+      return false;
+
+   if (papp == NULL)
+      papp = ::get_thread_app();
+
+   BITMAPINFO * pbi = NULL;
+
+   void * pdata = NULL;
+   FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
+
+   if (pimage32 == NULL)
+   {
+
+      return false;
+
+   }
+
+   pbi = FreeImage_GetInfo(pimage32);
+
+   pdata = FreeImage_GetBits(pimage32);
+
+
+   if (!pdib->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
+      return false;
+
+
+   /*   COLORREF * pcolorref = NULL;
+
+   HBITMAP hbitmap = ::CreateDIBSection(NULL, &pdib->m_info, DIB_RGB_COLORS, (void **)&pcolorref, NULL, 0);
+
+   if (hbitmap == NULL)
+   {
+   pdib->Destroy();
+   return false;
+   }
+
+   HDC hdc = ::CreateCompatibleDC(NULL);
+
+   if (pbi->bmiHeader.biHeight != SetDIBits(
+   hdc,
+   hbitmap,
+   0,
+   pbi->bmiHeader.biHeight,
+   pdata,
+   pbi,
+   DIB_RGB_COLORS))
+   {
+   pdib->Destroy();
+   if (bUnloadFI)
+   {
+   FreeImage_Unload(pfibitmap);
+   }
+   return false;
+   }
+   */
+
+   pdib->map();
+
+   //int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
+
+   //#if defined(VSNORD) && defined(__arm__)
+#if defined(ANDROID)
+
+   // LITTLE_LIT_LIGHT_LITE_LITLE_ENDIANS!!!!!!!!!!
+
+   //::draw2d::copy_colorref(
+   //   pdib->m_size.cx,
+   //   pdib->m_size.cy,
+   //   pdib->m_pcolorref,
+   //   pdib->m_iScan,
+   //   (COLORREF *)pdata,
+   //   stride);
+
+   int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
+
+   for (index y = 0; y < pdib->m_size.cy; y++)
+   {
+
+      byte * pbDst = ((byte *)pdib->m_pcolorref) + ((pdib->m_size.cy - y - 1) * pdib->m_iScan);
+
+      byte * pbSrc = (byte *)pdata + (y * stride);
+
+      for (index x = 0; x < pdib->m_size.cx; x++)
+      {
+
+         pbDst[0] = pbSrc[2];
+
+         pbDst[1] = pbSrc[1];
+
+         pbDst[2] = pbSrc[0];
+
+         pbDst[3] = pbSrc[3];
+
+         pbDst += 4;
+
+         pbSrc += 4;
+
+      }
+
+   }
+
+#elif defined(APPLEOS)
+
+   byte * pbDst = (byte *)pdib->m_pcolorref;
+
+   byte * pbSrc = (byte *)pdata;
+
+   ::count c = (count)pdib->area();
+
+   while (c-- > 0)
+   {
+
+      pbDst[0] = pbSrc[2];
+
+      pbDst[1] = pbSrc[1];
+
+      pbDst[2] = pbSrc[0];
+
+      pbDst[3] = pbSrc[3];
+
+      pbDst += 4;
+
+      pbSrc += 4;
+
+   }
+
+   /*
+
+   byte * pbDst;
+
+   byte * pbSrc;
+
+   for(int i = 0; i < pdib->m_size.cy; i++)
+   {
+
+   pbDst = &((byte *) pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)];
+
+   pbSrc = &((byte *) pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i];
+
+   for(int j = 0; j < pdib->m_size.cx; j++)
+   {
+
+   pbDst[0] = pbSrc[2];
+
+   pbDst[1] = pbSrc[1];
+
+   pbDst[2] = pbSrc[0];
+
+   pbDst[3] = pbSrc[3];
+
+   pbDst += 4;
+
+   pbSrc += 4;
+
+   }
+
+   }*/
+
+#else
+   for (int i = 0; i < pdib->m_size.cy; i++)
+   {
+
+      memcpy(
+         &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)],
+         &((byte *)pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i],
+         pdib->m_iScan);
+
+   }
+#endif
+
+   //#if defined(LINUX) || defined(VSNORD) || defined(METROWIN)
+   pdib->mult_alpha_fast();
+   //#endif
+
+
+
+   //   RGBQUAD bkcolor;
+   FreeImage_Unload(pimage32);
+   if (bUnloadFI)
+   {
+
+      FreeImage_Unload(pfibitmap);
+
+   }
+
+   return true;
+
+}
+
+
 //#include "visual_FreeImageFileProc.h"
 
 /*uint32_t ___ReadProc    (void *buffer, uint32_t size, uint32_t count, fi_handle handle)
@@ -385,7 +750,7 @@ namespace visual
 
 
       FIMEMORY * pfm1 = FreeImage_OpenMemory();
-      FIBITMAP * pfi7 = Sys(m_p->m_pauraapp).visual().imaging().dib_to_FI(m_p);
+      FIBITMAP * pfi7 = dib_to_FI(m_p);
       FIBITMAP * pfi8 = NULL;
       bool bConv;
       if (b8)
@@ -435,701 +800,6 @@ namespace visual
       return bOk != FALSE;
 
       //#endif
-
-   }
-
-   FIBITMAP * imaging::LoadImageFile(var varFile, ::aura::application * papp)
-   {
-      ::memory_file memfile(get_app());
-      System.file().as_memory(varFile, *memfile.get_memory(), papp);
-      if (memfile.get_size() <= 0)
-         return NULL;
-      return LoadImageFile(&memfile);
-   }
-   void imaging::SavePng(const char * lpcszFile, FIBITMAP *dib, bool bUnload)
-   {
-
-
-#ifdef METROWIN
-
-      throw todo(get_app());
-
-#else
-
-      if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), dib, lpcszFile, 0))
-      {
-         //
-      }
-      if (bUnload)
-      {
-         FreeImage_Unload(dib);
-      }
-#endif
-
-   }
-
-
-   FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)
-   {
-
-      if (pdib == NULL)
-         return NULL;
-
-      if (pdib->area() <= 0)
-         return NULL;
-
-      FIBITMAP * fi;
-
-      //   if(bm.bmBitsPixel == 32)
-      {
-         fi = FreeImage_AllocateT(FIT_BITMAP, pdib->m_size.cx, pdib->m_size.cy, 32);
-      }
-      // else
-      {
-         //  fi = FreeImage_Allocate(bm.bmWidth,bm.bmHeight,bm.bmBitsPixel);
-      }
-      // The GetDIBits function clears the biClrUsed and biClrImportant BITMAPINFO members (dont't know why)
-      // So we save these infos below. This is needed for palettized images only.
-      int32_t nColors = FreeImage_GetColorsUsed(fi);
-      //HDC hdc = ::CreateCompatibleDC(NULL);
-
-      int iWidth;
-      int iHeight;
-      COLORREF * pcolorref;
-      int iStrideDst;
-
-      iWidth = FreeImage_GetWidth(fi);
-
-      iHeight = FreeImage_GetHeight(fi);
-
-      pcolorref = (COLORREF *)FreeImage_GetBits(fi);
-
-      if (FreeImage_GetInfo(fi)->bmiHeader.biSizeImage <= 0)
-      {
-
-         iStrideDst = iWidth * sizeof(COLORREF);
-
-      }
-      else
-      {
-
-         iStrideDst = FreeImage_GetInfo(fi)->bmiHeader.biSizeImage / iHeight;
-
-      }
-
-      COLORREF * pdst = pcolorref;
-
-      COLORREF * psrc = pdib->m_pcolorref;
-
-#if  defined(VSNORD)
-
-      int iStrideSrc = pdib->m_iScan;
-
-      for (index y = 0; y < pdib->m_size.cy; y++)
-      {
-
-         byte * pbDst = ((byte *)pdst) + ((pdib->m_size.cy - y - 1) * iStrideDst);
-
-         byte * pbSrc = (byte *)psrc + (y * iStrideSrc);
-
-         for (index x = 0; x < pdib->m_size.cx; x++)
-         {
-
-            pbDst[0] = pbSrc[2];
-
-            pbDst[1] = pbSrc[1];
-
-            pbDst[2] = pbSrc[0];
-
-            pbDst[3] = pbSrc[3];
-
-            pbDst += 4;
-
-            pbSrc += 4;
-
-         }
-
-      }
-
-#elif defined(APPLEOS)
-
-      byte * pbDst = (byte *)pdst;
-
-      byte * pbSrc = (byte *)psrc;
-
-      ::count c = (count)pdib->area();
-
-      while (c-- > 0)
-      {
-
-         pbDst[0] = pbSrc[2];
-
-         pbDst[1] = pbSrc[1];
-
-         pbDst[2] = pbSrc[0];
-
-         pbDst[3] = pbSrc[3];
-
-         pbDst += 4;
-
-         pbSrc += 4;
-
-      }
-
-      /*
-
-      byte * pbDst;
-
-      byte * pbSrc;
-
-      for(int i = 0; i < pdib->m_size.cy; i++)
-      {
-
-      pbDst = &((byte *) pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)];
-
-      pbSrc = &((byte *) pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i];
-
-      for(int j = 0; j < pdib->m_size.cx; j++)
-      {
-
-      pbDst[0] = pbSrc[2];
-
-      pbDst[1] = pbSrc[1];
-
-      pbDst[2] = pbSrc[0];
-
-      pbDst[3] = pbSrc[3];
-
-      pbDst += 4;
-
-      pbSrc += 4;
-
-      }
-
-      }*/
-
-#else
-
-      int iStrideSrc = pdib->m_iScan;
-
-      for (int i = 0; i < pdib->m_size.cy; i++)
-      {
-
-         memcpy(
-            &((byte *)pdst)[iStrideDst * (pdib->m_size.cy - i - 1)],
-            &((byte *)psrc)[iStrideSrc * i],
-            iStrideDst);
-
-      }
-#endif
-
-      //GetDIBits(hdc,(HBITMAP)hbitmap,0,FreeImage_GetHeight(fi),FreeImage_GetBits(fi),FreeImage_GetInfo(fi),DIB_RGB_COLORS);
-
-      //::DeleteDC(hdc);
-
-      //pbitmap->ReleaseHBITMAP(hbitmap);
-
-      // restore BITMAPINFO members
-      FreeImage_GetInfoHeader(fi)->biClrUsed = nColors;
-      FreeImage_GetInfoHeader(fi)->biClrImportant = nColors;
-      return fi;
-
-
-   }
-
-
-
-   ::draw2d::bitmap_sp imaging::FItoHBITMAP(FIBITMAP * pfibitmap, bool bUnloadFI)
-   {
-
-      if (pfibitmap == NULL)
-         return NULL;
-
-      //   BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
-      // void * pData = FreeImage_GetBits(pfibitmap);
-
-
-      ::draw2d::dib_sp dib(allocer());
-
-      //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
-
-      ::draw2d::graphics_sp spgraphics(allocer());
-      spgraphics->CreateCompatibleDC(NULL);
-
-      if (!from(dib, spgraphics, pfibitmap, false))
-         return NULL;
-
-      return dib->detach_bitmap();
-
-      /*::draw2d::graphics_sp spgraphics(allocer());
-      spgraphics->CreateCompatibleDC(NULL);
-
-      ::draw2d::dib_sp dibSource(get_app());
-      dibSource->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight);
-
-      dibSource->dc_select(false);
-
-      if(pbi->bmiHeader.biHeight != SetDIBits(
-      (HDC)spgraphics->get_os_data(),
-      (HBITMAP) dibSource->get_bitmap()->get_os_data(),
-      0,
-      pbi->bmiHeader.biHeight,
-      pData,
-      pbi,
-      DIB_RGB_COLORS))
-      {
-      if(bUnloadFI)
-      {
-      FreeImage_Unload(pfibitmap);
-      }
-      return NULL;
-      }
-
-      if(bUnloadFI)
-      {
-      FreeImage_Unload(pfibitmap);
-      }
-      */
-
-      //return dibSource->detach_bitmap();
-   }
-
-   ::draw2d::bitmap_sp imaging::CreateDIBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
-   {
-
-
-#ifdef WINDOWSEX
-      ::draw2d::bitmap_sp bitmap(get_app());
-
-      if (!bitmap->CreateDIBitmap(pgraphics, FreeImage_GetInfoHeader(pFreeImage), CBM_INIT, FreeImage_GetBits(pFreeImage), FreeImage_GetInfo(pFreeImage), DIB_RGB_COLORS))
-      {
-
-         TRACELASTERROR();
-
-         return NULL;
-
-      }
-
-      return bitmap;
-#else
-
-      throw todo(get_app());
-
-#endif
-      return NULL;
-   }
-
-
-   ::draw2d::bitmap_sp imaging::CreateBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
-   {
-      ::visual::dib_sp dib(allocer());
-
-#ifdef METROWIN
-
-      throw todo(get_app());
-
-#else
-
-      //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
-
-
-
-      from(dib, pgraphics, pFreeImage, false);
-
-
-      return dib->detach_bitmap();
-
-#endif
-
-      /*   ::draw2d::bitmap_sp bitmap(get_app());
-      void * pBits = FreeImage_GetBits(pFreeImage);
-      if(!bitmap->CreateDIBitmap(pgraphics,
-      FreeImage_GetInfoHeader(pFreeImage),
-      CBM_INIT,
-      pBits,
-      FreeImage_GetInfo(pFreeImage),
-      DIB_RGB_COLORS))
-      {
-      TRACELASTERROR();
-      return (::draw2d::bitmap *) NULL;
-      }
-
-      //   LPVOID lpBits;
-      //   BITMAPINFO *pbi = FreeImage_GetInfo(pFreeImage);
-      //   HBITMAP hBitmap = ::CreateDIBSection(
-      //      NULL,
-      //      pbi,
-      //      DIB_RGB_COLORS,
-      //      &lpBits,
-      //      NULL,
-      //      0);
-      //   memcpy(lpBits, FreeImage_GetBits(pFreeImage), pbi->bmiHeader.biSize);
-      LPBITMAPINFO pbi = FreeImage_GetInfo(pFreeImage);
-      int32_t iSizeBitsZ = ((pbi->bmiHeader.biWidth * pbi->bmiHeader.biBitCount / 8 + 3) & ~3) * pbi->bmiHeader.biHeight;
-      void * pDataZ = malloc(iSizeBitsZ);
-      if(pbi->bmiHeader.biHeight != GetDIBits(
-      (HDC)pgraphics->get_os_data(),           // handle to device context
-      (HBITMAP)bitmap->get_os_data(),      // handle to bitmap
-      0,   // first scan line to set in destination bitmap
-      FreeImage_GetInfo(pFreeImage)->bmiHeader.biHeight,   // number of scan lines to copy
-      pDataZ,    // address of array for bitmap bits
-      FreeImage_GetInfo(pFreeImage), // address of structure with bitmap data
-      DIB_RGB_COLORS        // RGB or palette index
-      ))
-      {
-      //      int32_t i = 1 +1;
-      TRACELASTERROR();
-      }
-      return bitmap;*/
-   }
-
-
-
-   bool imaging::from(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI, ::aura::application * papp)
-   {
-
-      if (pfibitmap == NULL)
-         return false;
-
-      if (papp == NULL)
-         papp = get_app();
-
-      BITMAPINFO * pbi = NULL;
-
-      void * pdata = NULL;
-      FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
-
-      if (pimage32 == NULL)
-      {
-
-         return false;
-
-      }
-
-      pbi = FreeImage_GetInfo(pimage32);
-
-      pdata = FreeImage_GetBits(pimage32);
-
-
-      if (!pdib->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
-         return false;
-
-
-      /*   COLORREF * pcolorref = NULL;
-
-      HBITMAP hbitmap = ::CreateDIBSection(NULL, &pdib->m_info, DIB_RGB_COLORS, (void **)&pcolorref, NULL, 0);
-
-      if (hbitmap == NULL)
-      {
-      pdib->Destroy();
-      return false;
-      }
-
-      HDC hdc = ::CreateCompatibleDC(NULL);
-
-      if (pbi->bmiHeader.biHeight != SetDIBits(
-      hdc,
-      hbitmap,
-      0,
-      pbi->bmiHeader.biHeight,
-      pdata,
-      pbi,
-      DIB_RGB_COLORS))
-      {
-      pdib->Destroy();
-      if (bUnloadFI)
-      {
-      FreeImage_Unload(pfibitmap);
-      }
-      return false;
-      }
-      */
-
-      pdib->map();
-
-      //int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
-
-      //#if defined(VSNORD) && defined(__arm__)
-#if defined(ANDROID)
-
-      // LITTLE_LIT_LIGHT_LITE_LITLE_ENDIANS!!!!!!!!!!
-
-      //::draw2d::copy_colorref(
-      //   pdib->m_size.cx,
-      //   pdib->m_size.cy,
-      //   pdib->m_pcolorref,
-      //   pdib->m_iScan,
-      //   (COLORREF *)pdata,
-      //   stride);
-
-      int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
-
-      for (index y = 0; y < pdib->m_size.cy; y++)
-      {
-
-         byte * pbDst = ((byte *)pdib->m_pcolorref) + ((pdib->m_size.cy - y - 1) * pdib->m_iScan);
-
-         byte * pbSrc = (byte *)pdata + (y * stride);
-
-         for (index x = 0; x < pdib->m_size.cx; x++)
-         {
-
-            pbDst[0] = pbSrc[2];
-
-            pbDst[1] = pbSrc[1];
-
-            pbDst[2] = pbSrc[0];
-
-            pbDst[3] = pbSrc[3];
-
-            pbDst += 4;
-
-            pbSrc += 4;
-
-         }
-
-      }
-
-#elif defined(APPLEOS)
-
-      byte * pbDst = (byte *)pdib->m_pcolorref;
-
-      byte * pbSrc = (byte *)pdata;
-
-      ::count c = (count)pdib->area();
-
-      while (c-- > 0)
-      {
-
-         pbDst[0] = pbSrc[2];
-
-         pbDst[1] = pbSrc[1];
-
-         pbDst[2] = pbSrc[0];
-
-         pbDst[3] = pbSrc[3];
-
-         pbDst += 4;
-
-         pbSrc += 4;
-
-      }
-
-      /*
-
-      byte * pbDst;
-
-      byte * pbSrc;
-
-      for(int i = 0; i < pdib->m_size.cy; i++)
-      {
-
-      pbDst = &((byte *) pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)];
-
-      pbSrc = &((byte *) pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i];
-
-      for(int j = 0; j < pdib->m_size.cx; j++)
-      {
-
-      pbDst[0] = pbSrc[2];
-
-      pbDst[1] = pbSrc[1];
-
-      pbDst[2] = pbSrc[0];
-
-      pbDst[3] = pbSrc[3];
-
-      pbDst += 4;
-
-      pbSrc += 4;
-
-      }
-
-      }*/
-
-#else
-      for (int i = 0; i < pdib->m_size.cy; i++)
-      {
-
-         memcpy(
-            &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)],
-            &((byte *)pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i],
-            pdib->m_iScan);
-
-      }
-#endif
-
-      //#if defined(LINUX) || defined(VSNORD) || defined(METROWIN)
-      pdib->mult_alpha_fast();
-      //#endif
-
-
-
-      //   RGBQUAD bkcolor;
-      FreeImage_Unload(pimage32);
-      if (bUnloadFI)
-      {
-
-         FreeImage_Unload(pfibitmap);
-
-      }
-
-      return true;
-
-   }
-   FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
-   {
-
-      if (pfile == NULL)
-         return NULL;
-
-      FreeImageIO io;
-      io.read_proc = __ReadProc2;
-      io.seek_proc = __SeekProc2;
-      io.tell_proc = __TellProc2;
-      io.write_proc = __WriteProc2;
-      FIBITMAP *lpVoid = NULL;
-      try
-      {
-         pfile->seek_to_begin();
-         FREE_IMAGE_FORMAT format;
-         format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile.m_p);
-         pfile->seek_to_begin();
-         if (true)
-         {
-            lpVoid = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile.m_p);
-         }
-      }
-      catch (...)
-      {
-      }
-      if(pfi == NULL)
-      {
-
-         return false;
-
-      }
-
-      ::draw2d::graphics_sp spgraphics(allocer());
-
-      spgraphics->CreateCompatibleDC(NULL);
-
-      int iExifOrientation = -1;
-
-      bool bOrientation = false;
-
-      FITAG *tag = NULL;
-
-      FIMETADATA *mdhandle = FreeImage_FindFirstMetadata(FIMD_EXIF_MAIN, pfi, &tag);
-
-      if (mdhandle)
-      {
-
-         do
-         {
-
-            auto type = FreeImage_GetTagType(tag);
-
-            auto value = FreeImage_GetTagValue(tag);
-
-            if (!_stricmp(FreeImage_GetTagKey(tag), "orientation"))
-            {
-
-               bOrientation = true;
-
-               if (type == FIDT_SHORT)
-               {
-
-                  iExifOrientation = *((unsigned short*)value);
-
-               }
-
-            }
-
-            if (bOrientation)
-            {
-
-               break;
-
-            }
-
-         }
-         while (FreeImage_FindNextMetadata(mdhandle, &tag));
-
-         FreeImage_FindCloseMetadata(mdhandle);
-
-      }
-
-      if(!from(pdib,spgraphics,(FIBITMAP *)pfi,true))
-      {
-
-         return false;
-
-      }
-
-      if (bOrientation)
-      {
-
-         ::draw2d::dib_sp dib(allocer());
-
-         //double dPiQuarter = ::atan(1.0);
-
-         //double dPi = dPiQuarter * 4.0;
-
-         // http://sylvana.net/jpegcrop/exif_orientation.html
-         //1) transform = "";;
-         //2) transform = "-flip horizontal";;
-         //3) transform = "-rotate 180";;
-         //4) transform = "-flip vertical";;
-         //5) transform = "-transpose";;
-         //6) transform = "-rotate 90";;
-         //7) transform = "-transverse";;
-         //8) transform = "-rotate 270";;
-         //*) transform = "";;
-         switch (iExifOrientation)
-         {
-         case 2:
-            dib->flip_horizontal(pdib);
-            pdib->from(dib);
-            break;
-         case 3:
-            dib->rotate(pdib, 180.0);
-            pdib->from(dib);
-            break;
-         case 4:
-            dib->flip_vertical(pdib);
-            pdib->from(dib);
-            break;
-         case 5:
-            dib->flip_horizontal(pdib);
-            pdib->rotate(dib, -270.0);
-            break;
-         case 6:
-            dib->rotate(pdib, -90.0);
-            pdib->from(dib);
-            break;
-         case 7:
-            dib->flip_horizontal(pdib);
-            pdib->rotate(dib, -90.0);
-            break;
-         case 8:
-            dib->rotate(pdib, -270.0);
-            pdib->from(dib);
-            break;
-         case 1:
-         default:
-            break;
-         }
-
-
-
-      }
-
-      return true;
-
-
-      return lpVoid;
-
 
    }
 
@@ -1220,5 +890,343 @@ namespace visual
 
 
 } // namespace visual
+
+
+
+
+//bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application * papp)
+//{
+//
+//   ::memory_file memfile(get_app());
+//
+//   System.file().as_memory(varFile, *memfile.get_memory(), papp);
+//
+//   if (memfile.get_size() <= 0)
+//      return false;
+//
+//   return load_image(dib, &memfile);
+//
+//}
+
+
+
+bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
+{
+
+   auto * fi = dib_to_FI(&dib);
+
+
+   if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), fi, lpcszFile, 0))
+   {
+      //
+   }
+
+   FreeImage_Unload(fi);
+
+}
+
+
+
+::draw2d::bitmap_sp FItoHBITMAP(FIBITMAP * pfibitmap, ::aura::application * papp)
+{
+
+   if (pfibitmap == NULL)
+      return NULL;
+
+   //   BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
+   // void * pData = FreeImage_GetBits(pfibitmap);
+
+
+   ::draw2d::dib_sp dib(papp->allocer());
+
+   //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
+
+   ::draw2d::graphics_sp spgraphics(papp->allocer());
+   spgraphics->CreateCompatibleDC(NULL);
+
+   if (!dib_from_fi(dib, spgraphics, pfibitmap, false))
+      return NULL;
+
+   return dib->detach_bitmap();
+
+   /*::draw2d::graphics_sp spgraphics(allocer());
+   spgraphics->CreateCompatibleDC(NULL);
+
+   ::draw2d::dib_sp dibSource(get_app());
+   dibSource->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight);
+
+   dibSource->dc_select(false);
+
+   if(pbi->bmiHeader.biHeight != SetDIBits(
+   (HDC)spgraphics->get_os_data(),
+   (HBITMAP) dibSource->get_bitmap()->get_os_data(),
+   0,
+   pbi->bmiHeader.biHeight,
+   pData,
+   pbi,
+   DIB_RGB_COLORS))
+   {
+   if(bUnloadFI)
+   {
+   FreeImage_Unload(pfibitmap);
+   }
+   return NULL;
+   }
+
+   if(bUnloadFI)
+   {
+   FreeImage_Unload(pfibitmap);
+   }
+   */
+
+   //return dibSource->detach_bitmap();
+}
+
+::draw2d::bitmap_sp imaging::CreateDIBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
+{
+
+
+#ifdef WINDOWSEX
+   ::draw2d::bitmap_sp bitmap(get_app());
+
+   if (!bitmap->CreateDIBitmap(pgraphics, FreeImage_GetInfoHeader(pFreeImage), CBM_INIT, FreeImage_GetBits(pFreeImage), FreeImage_GetInfo(pFreeImage), DIB_RGB_COLORS))
+   {
+
+      TRACELASTERROR();
+
+      return NULL;
+
+   }
+
+   return bitmap;
+#else
+
+   throw todo(get_app());
+
+#endif
+   return NULL;
+}
+
+
+::draw2d::bitmap_sp imaging::CreateBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
+{
+   ::visual::dib_sp dib(allocer());
+
+#ifdef METROWIN
+
+   throw todo(get_app());
+
+#else
+
+   //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
+
+
+
+   from(dib, pgraphics, pFreeImage, false);
+
+
+   return dib->detach_bitmap();
+
+#endif
+
+   /*   ::draw2d::bitmap_sp bitmap(get_app());
+   void * pBits = FreeImage_GetBits(pFreeImage);
+   if(!bitmap->CreateDIBitmap(pgraphics,
+   FreeImage_GetInfoHeader(pFreeImage),
+   CBM_INIT,
+   pBits,
+   FreeImage_GetInfo(pFreeImage),
+   DIB_RGB_COLORS))
+   {
+   TRACELASTERROR();
+   return (::draw2d::bitmap *) NULL;
+   }
+
+   //   LPVOID lpBits;
+   //   BITMAPINFO *pbi = FreeImage_GetInfo(pFreeImage);
+   //   HBITMAP hBitmap = ::CreateDIBSection(
+   //      NULL,
+   //      pbi,
+   //      DIB_RGB_COLORS,
+   //      &lpBits,
+   //      NULL,
+   //      0);
+   //   memcpy(lpBits, FreeImage_GetBits(pFreeImage), pbi->bmiHeader.biSize);
+   LPBITMAPINFO pbi = FreeImage_GetInfo(pFreeImage);
+   int32_t iSizeBitsZ = ((pbi->bmiHeader.biWidth * pbi->bmiHeader.biBitCount / 8 + 3) & ~3) * pbi->bmiHeader.biHeight;
+   void * pDataZ = malloc(iSizeBitsZ);
+   if(pbi->bmiHeader.biHeight != GetDIBits(
+   (HDC)pgraphics->get_os_data(),           // handle to device context
+   (HBITMAP)bitmap->get_os_data(),      // handle to bitmap
+   0,   // first scan line to set in destination bitmap
+   FreeImage_GetInfo(pFreeImage)->bmiHeader.biHeight,   // number of scan lines to copy
+   pDataZ,    // address of array for bitmap bits
+   FreeImage_GetInfo(pFreeImage), // address of structure with bitmap data
+   DIB_RGB_COLORS        // RGB or palette index
+   ))
+   {
+   //      int32_t i = 1 +1;
+   TRACELASTERROR();
+   }
+   return bitmap;*/
+}
+
+
+
+FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
+{
+
+   if (pfile == NULL)
+      return NULL;
+
+   FreeImageIO io;
+   io.read_proc = __ReadProc2;
+   io.seek_proc = __SeekProc2;
+   io.tell_proc = __TellProc2;
+   io.write_proc = __WriteProc2;
+   FIBITMAP *lpVoid = NULL;
+   try
+   {
+      pfile->seek_to_begin();
+      FREE_IMAGE_FORMAT format;
+      format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile.m_p);
+      pfile->seek_to_begin();
+      if (true)
+      {
+         lpVoid = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile.m_p);
+      }
+   }
+   catch (...)
+   {
+   }
+   if (pfi == NULL)
+   {
+
+      return false;
+
+   }
+
+   ::draw2d::graphics_sp spgraphics(allocer());
+
+   spgraphics->CreateCompatibleDC(NULL);
+
+   int iExifOrientation = -1;
+
+   bool bOrientation = false;
+
+   FITAG *tag = NULL;
+
+   FIMETADATA *mdhandle = FreeImage_FindFirstMetadata(FIMD_EXIF_MAIN, pfi, &tag);
+
+   if (mdhandle)
+   {
+
+      do
+      {
+
+         auto type = FreeImage_GetTagType(tag);
+
+         auto value = FreeImage_GetTagValue(tag);
+
+         if (!_stricmp(FreeImage_GetTagKey(tag), "orientation"))
+         {
+
+            bOrientation = true;
+
+            if (type == FIDT_SHORT)
+            {
+
+               iExifOrientation = *((unsigned short*)value);
+
+            }
+
+         }
+
+         if (bOrientation)
+         {
+
+            break;
+
+         }
+
+      }
+      while (FreeImage_FindNextMetadata(mdhandle, &tag));
+
+      FreeImage_FindCloseMetadata(mdhandle);
+
+   }
+
+   if (!from(pdib, spgraphics, (FIBITMAP *)pfi, true))
+   {
+
+      return false;
+
+   }
+
+   if (bOrientation)
+   {
+
+      ::draw2d::dib_sp dib(allocer());
+
+      //double dPiQuarter = ::atan(1.0);
+
+      //double dPi = dPiQuarter * 4.0;
+
+      // http://sylvana.net/jpegcrop/exif_orientation.html
+      //1) transform = "";;
+      //2) transform = "-flip horizontal";;
+      //3) transform = "-rotate 180";;
+      //4) transform = "-flip vertical";;
+      //5) transform = "-transpose";;
+      //6) transform = "-rotate 90";;
+      //7) transform = "-transverse";;
+      //8) transform = "-rotate 270";;
+      //*) transform = "";;
+      switch (iExifOrientation)
+      {
+      case 2:
+         dib->flip_horizontal(pdib);
+         pdib->from(dib);
+         break;
+      case 3:
+         dib->rotate(pdib, 180.0);
+         pdib->from(dib);
+         break;
+      case 4:
+         dib->flip_vertical(pdib);
+         pdib->from(dib);
+         break;
+      case 5:
+         dib->flip_horizontal(pdib);
+         pdib->rotate(dib, -270.0);
+         break;
+      case 6:
+         dib->rotate(pdib, -90.0);
+         pdib->from(dib);
+         break;
+      case 7:
+         dib->flip_horizontal(pdib);
+         pdib->rotate(dib, -90.0);
+         break;
+      case 8:
+         dib->rotate(pdib, -270.0);
+         pdib->from(dib);
+         break;
+      case 1:
+      default:
+         break;
+      }
+
+
+
+   }
+
+   return true;
+
+
+   return lpVoid;
+
+
+}
 
 
