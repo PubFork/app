@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "fiasco_finder.h"
 
 
@@ -12,12 +12,21 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
 bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba, int iFrame, FIBITMAP * pfi, ::aura::application * papp);
 
-bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory);
 
+bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory);
+//bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::aura::application * papp);
+//bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_sp pfile, ::aura::application * papp);
+
+/******************************************************************
+*                                                                 *
+*  DemoApp::GetBackgroundColor()                                  *
+*                                                                 *
+*  Reads and stores the background color for gif.                 *
+*                                                                 *
+******************************************************************/
 
 COLORREF metadata_GetBackgroundColor(IWICMetadataQueryReader *pMetadataQueryReader, IWICBitmapDecoder * piDecoder, IWICImagingFactory * piFactory)
 {
-
    DWORD dwBGColor;
    BYTE backgroundIndex = 0;
    WICColor rgColors[256];
@@ -91,9 +100,441 @@ COLORREF metadata_GetBackgroundColor(IWICMetadataQueryReader *pMetadataQueryRead
 
 }
 
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::GetGlobalMetadata()                                   *
+//*                                                                 *
+//*  Retrieves global metadata which pertains to the entire image.  *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::GetGlobalMetadata()
+//{
+//   PROPVARIANT propValue;
+//   PropVariantInit(&propValue);
+//   IWICMetadataQueryReader *pMetadataQueryReader = nullptr;
+//
+//
+//}
+
+/******************************************************************
+*                                                                 *
+*  DemoApp::GetRawFrame()                                         *
+*                                                                 *
+*  Decodes the current raw frame, retrieves its timing            *
+*  information, disposal method, and frame dimension for          *
+*  rendering.  Raw frame is the frame read directly from the gif  *
+*  file without composing.                                        *
+*                                                                 *
+******************************************************************/
+
+
+/******************************************************************
+*                                                                 *
+*  DemoApp::CalculateDrawRectangle()                              *
+*                                                                 *
+*  Calculates a specific rectangular area of the hwnd             *
+*  render target to draw a bitmap containing the current          *
+*  composed frame.                                                *
+*                                                                 *
+******************************************************************/
+
+//HRESULT DemoApp::CalculateDrawRectangle(D2D1_RECT_F &drawRect)
+//{
+//   HRESULT hr = S_OK;
+//   RECT rcClient;
+//
+//   // Top and left of the client rectangle are both 0
+//   if (!GetClientRect(m_hWnd, &rcClient))
+//   {
+//      hr = HRESULT_FROM_WIN32(GetLastError());
+//   }
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      // Calculate the area to display the image
+//      // Center the image if the client rectangle is larger
+//      drawRect.left = (static_cast<float>(rcClient.right) - m_cxGifImagePixel) / 2.f;
+//      drawRect.top = (static_cast<float>(rcClient.bottom) - m_cyGifImagePixel) / 2.f;
+//      drawRect.right = drawRect.left + m_cxGifImagePixel;
+//      drawRect.bottom = drawRect.top + m_cyGifImagePixel;
+//
+//      // If the client area is resized to be smaller than the image size, scale
+//      // the image, and preserve the aspect ratio
+//      auto aspectRatio = static_cast<float>(m_cxGifImagePixel) /
+//                         static_cast<float>(m_cyGifImagePixel);
+//
+//      if (drawRect.left < 0)
+//      {
+//         auto newWidth = static_cast<float>(rcClient.right);
+//         float newHeight = newWidth / aspectRatio;
+//         drawRect.left = 0;
+//         drawRect.top = (static_cast<float>(rcClient.bottom) - newHeight) / 2.f;
+//         drawRect.right = newWidth;
+//         drawRect.bottom = drawRect.top + newHeight;
+//      }
+//
+//      if (drawRect.top < 0)
+//      {
+//         auto newHeight = static_cast<float>(rcClient.bottom);
+//         float newWidth = newHeight * aspectRatio;
+//         drawRect.left = (static_cast<float>(rcClient.right) - newWidth) / 2.f;
+//         drawRect.top = 0;
+//         drawRect.right = drawRect.left + newWidth;
+//         drawRect.bottom = newHeight;
+//      }
+//   }
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::RestoreSavedFrame()                                   *
+//*                                                                 *
+//*  Copys the saved frame to the frame in the bitmap render        *
+//*  target.                                                        *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::RestoreSavedFrame()
+//{
+//   HRESULT hr = S_OK;
+//
+//   ID2D1Bitmap *pFrameToCopyTo = nullptr;
+//
+//   hr = m_pSavedFrame ? S_OK : E_FAIL;
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      hr = m_pFrameComposeRT->GetBitmap(&pFrameToCopyTo);
+//   }
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      // Copy the whole bitmap
+//      hr = pFrameToCopyTo->CopyFromBitmap(nullptr, m_pSavedFrame, nullptr);
+//   }
+//
+//   SafeRelease(pFrameToCopyTo);
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::ClearCurrentFrameArea()                               *
+//*                                                                 *
+//*  Clears a rectangular area equal to the area overlaid by the    *
+//*  current raw frame in the bitmap render target with background  *
+//*  color.                                                         *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::ClearCurrentFrameArea()
+//{
+//   m_pFrameComposeRT->BeginDraw();
+//
+//   // Clip the render target to the size of the raw frame
+//   m_pFrameComposeRT->PushAxisAlignedClip(
+//      &m_framePosition,
+//      D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+//
+//   m_pFrameComposeRT->Clear(m_backgroundColor);
+//
+//   // Remove the clipping
+//   m_pFrameComposeRT->PopAxisAlignedClip();
+//
+//   return m_pFrameComposeRT->EndDraw();
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::DisposeCurrentFrame()                                 *
+//*                                                                 *
+//*  At the end of each delay, disposes the current frame           *
+//*  based on the disposal method specified.                        *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::DisposeCurrentFrame()
+//{
+//   HRESULT hr = S_OK;
+//
+//   switch (m_uFrameDisposal)
+//   {
+//   case DM_UNDEFINED:
+//   case DM_NONE:
+//      // We simply draw on the previous frames. Do nothing here.
+//      break;
+//   case DM_BACKGROUND:
+//      // Dispose background
+//      // Clear the area covered by the current raw frame with background color
+//      hr = ClearCurrentFrameArea();
+//      break;
+//   case DM_PREVIOUS:
+//      // Dispose previous
+//      // We restore the previous composed frame first
+//      hr = RestoreSavedFrame();
+//      break;
+//   default:
+//      // Invalid disposal method
+//      hr = E_FAIL;
+//   }
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::OverlayNextFrame()                                    *
+//*                                                                 *
+//*  Loads and draws the next raw frame into the composed frame     *
+//*  render target. This is called after the current frame is       *
+//*  disposed.                                                      *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::OverlayNextFrame()
+//{
+//   // Get Frame information
+//   HRESULT hr = GetRawFrame(m_uNextFrameIndex);
+//   if (SUCCEEDED(hr))
+//   {
+//      // For disposal 3 method, we would want to save a copy of the current
+//      // composed frame
+//      if (m_uFrameDisposal == DM_PREVIOUS)
+//      {
+//         hr = SaveComposedFrame();
+//      }
+//   }
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      // Start producing the next bitmap
+//      m_pFrameComposeRT->BeginDraw();
+//
+//      // If starting a new animation loop
+//      if (m_uNextFrameIndex == 0)
+//      {
+//         // Draw background and increase loop count
+//         m_pFrameComposeRT->Clear(m_backgroundColor);
+//         m_uLoopNumber++;
+//      }
+//
+//      // Produce the next frame
+//      m_pFrameComposeRT->DrawBitmap(
+//         m_pRawFrame,
+//         m_framePosition);
+//
+//      hr = m_pFrameComposeRT->EndDraw();
+//   }
+//
+//   // To improve performance and avoid decoding/composing this frame in the
+//   // following animation loops, the composed frame can be cached here in system
+//   // or video memory.
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      // Increase the frame index by 1
+//      m_uNextFrameIndex = (++m_uNextFrameIndex) % m_cFrames;
+//   }
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::SaveComposedFrame()                                   *
+//*                                                                 *
+//*  Saves the current composed frame in the bitmap render target   *
+//*  into a temporary bitmap. Initializes the temporary bitmap if   *
+//*  needed.                                                        *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::SaveComposedFrame()
+//{
+//   HRESULT hr = S_OK;
+//
+//   ID2D1Bitmap *pFrameToBeSaved = nullptr;
+//
+//   hr = m_pFrameComposeRT->GetBitmap(&pFrameToBeSaved);
+//   if (SUCCEEDED(hr))
+//   {
+//      // Create the temporary bitmap if it hasn't been created yet
+//      if (m_pSavedFrame == nullptr)
+//      {
+//         auto bitmapSize = pFrameToBeSaved->GetPixelSize();
+//         D2D1_BITMAP_PROPERTIES bitmapProp;
+//         pFrameToBeSaved->GetDpi(&bitmapProp.dpiX, &bitmapProp.dpiY);
+//         bitmapProp.pixelFormat = pFrameToBeSaved->GetPixelFormat();
+//
+//         hr = m_pFrameComposeRT->CreateBitmap(
+//                 bitmapSize,
+//                 bitmapProp,
+//                 &m_pSavedFrame);
+//      }
+//   }
+//
+//   if (SUCCEEDED(hr))
+//   {
+//      // Copy the whole bitmap
+//      hr = m_pSavedFrame->CopyFromBitmap(nullptr, pFrameToBeSaved, nullptr);
+//   }
+//
+//   SafeRelease(pFrameToBeSaved);
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::SelectAndDisplayGif()                                 *
+//*                                                                 *
+//*  Opens a dialog and displays a selected image.                  *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::SelectAndDisplayGif()
+//{
+//   HRESULT hr = S_OK;
+//
+//   WCHAR szFileName[MAX_PATH];
+//   RECT rcClient = {};
+//   RECT rcWindow = {};
+//
+//   // If the user cancels selection, then nothing happens
+//   if (GetFileOpen(szFileName, ARRAYSIZE(szFileName)))
+//   {
+//      // Reset the states
+//      m_uNextFrameIndex = 0;
+//      m_uFrameDisposal = DM_NONE;  // No previous frame, use disposal none
+//      m_uLoopNumber = 0;
+//      m_fHasLoop = false;
+//      SafeRelease(m_pSavedFrame);
+//
+//      // Create a decoder for the gif file
+//      SafeRelease(m_pDecoder);
+//      hr = m_pIWICFactory->CreateDecoderFromFilename(
+//              szFileName,
+//              nullptr,
+//              GENERIC_READ,
+//              WICDecodeMetadataCacheOnLoad,
+//              &m_pDecoder);
+//      if (SUCCEEDED(hr))
+//      {
+//         hr = GetGlobalMetadata();
+//      }
+//
+//      if (SUCCEEDED(hr))
+//      {
+//         rcClient.right = m_cxGifImagePixel;
+//         rcClient.bottom = m_cyGifImagePixel;
+//
+//         if (!AdjustWindowRect(&rcClient, WS_OVERLAPPEDWINDOW, TRUE))
+//         {
+//            hr = HRESULT_FROM_WIN32(GetLastError());
+//         }
+//      }
+//
+//      if (SUCCEEDED(hr))
+//      {
+//         // Get the upper left corner of the current window
+//         if (!GetWindowRect(m_hWnd, &rcWindow))
+//         {
+//            hr = HRESULT_FROM_WIN32(GetLastError());
+//         }
+//      }
+//
+//      if (SUCCEEDED(hr))
+//      {
+//         // Resize the window to fit the gif
+//         MoveWindow(
+//            m_hWnd,
+//            rcWindow.left,
+//            rcWindow.top,
+//            RectWidth(rcClient),
+//            RectHeight(rcClient),
+//            TRUE);
+//
+//         hr = CreateDeviceResources();
+//      }
+//
+//      if (SUCCEEDED(hr))
+//      {
+//         // If we have at least one frame, start playing
+//         // the animation from the first frame
+//         if (m_cFrames > 0)
+//         {
+//            hr = ComposeNextFrame();
+//            InvalidateRect(m_hWnd, nullptr, FALSE);
+//         }
+//      }
+//   }
+//
+//   return hr;
+//}
+//
+///******************************************************************
+//*                                                                 *
+//*  DemoApp::ComposeNextFrame()                                    *
+//*                                                                 *
+//*  Composes the next frame by first disposing the current frame   *
+//*  and then overlaying the next frame. More than one frame may    *
+//*  be processed in order to produce the next frame to be          *
+//*  displayed due to the use of zero delay intermediate frames.    *
+//*  Also, sets a timer that is equal to the delay of the frame.    *
+//*                                                                 *
+//******************************************************************/
+//
+//HRESULT DemoApp::ComposeNextFrame()
+//{
+//   HRESULT hr = S_OK;
+//
+//   // Check to see if the render targets are initialized
+//   if (m_pHwndRT && m_pFrameComposeRT)
+//   {
+//      // First, kill the timer since the delay is no longer valid
+//      KillTimer(m_hWnd, DELAY_TIMER_ID);
+//
+//      // Compose one frame
+//      hr = DisposeCurrentFrame();
+//      if (SUCCEEDED(hr))
+//      {
+//         hr = OverlayNextFrame();
+//      }
+//
+//      // Keep composing frames until we see a frame with delay greater than
+//      // 0 (0 delay frames are the invisible intermediate frames), or until
+//      // we have reached the very last frame.
+//      while (SUCCEEDED(hr) && m_uFrameDelay == 0 && !IsLastFrame())
+//      {
+//         hr = DisposeCurrentFrame();
+//         if (SUCCEEDED(hr))
+//         {
+//            hr = OverlayNextFrame();
+//         }
+//      }
+//
+//      // If we have more frames to play, set the timer according to the delay.
+//      // Set the timer regardless of whether we succeeded in composing a frame
+//      // to try our best to continue displaying the animation.
+//      if (!EndOfAnimation() && m_cFrames > 1)
+//      {
+//         // Set the timer according to the delay
+//         SetTimer(m_hWnd, DELAY_TIMER_ID, m_uFrameDelay, nullptr);
+//      }
+//   }
+//
+//   return hr;
+//}
+//
 
 bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_sp pfile, ::aura::application * papp)
 {
+
+   return windows_load_diba_from_file(pdiba, pfile, papp);
 
    defer_co_initialize_ex(false);
 
@@ -135,6 +576,12 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    }
 
+
+   // xxx
+
+
+   // Get the frame count
+
    UINT cFrames = 0;
 
    hr = piDecoder->GetFrameCount(&cFrames);
@@ -165,7 +612,6 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
    hr = piMetadataQueryReader->GetMetadataByName(
            L"/logscrdesc/Width",
            &propValue);
-
    if (hr != S_OK)
    {
 
@@ -174,7 +620,6 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
    }
 
    hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
-
    if (hr != S_OK)
    {
 
@@ -323,7 +768,6 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
       p->m_dib.alloc(papp->allocer());
 
       {
-
          ::windows::comptr<IWICFormatConverter> pConverter;
          ::windows::comptr<IWICBitmapFrameDecode> pWicFrame;
          ::windows::comptr<IWICMetadataQueryReader > pFrameMetadataQueryReader;
@@ -504,53 +948,6 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          PropVariantClear(&propValue);
 
       }
-
-      if (uFrameIndex > 0 && pdiba->element_at(uFrameIndex - 1)->m_edisposal == ::visual::dib_sp::pointer::disposal_background)
-      {
-
-         dibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-
-         COLORREF crBack = pdiba->m_crBack;
-
-         byte bAlpha = argb_get_a_value(crBack);
-
-         if (bAlpha == 0)
-         {
-
-            crBack = 0;
-
-         }
-         else
-         {
-
-            output_debug_string("non zero alpha");
-
-         }
-
-         ::rect r = pdiba->element_at(uFrameIndex - 1)->m_rect;
-
-         dibCompose->get_graphics()->FillSolidRect(r, crBack);
-
-      }
-
-      //pdibCompose->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
-
-      ::point pt = p->m_rect.top_left();
-
-      ::size sz = p->m_rect.size();
-
-      if (uFrameIndex <= 0)
-      {
-
-         dibCompose->create(pdiba->m_size);
-
-      }
-
-      dibCompose->precision_blend(pt, p->m_dib, ::null_point(), sz);
-
-      p->m_dib->from(dibCompose);
-
-      p->m_dib->create_helper_map();
 
 
       pdiba->m_dwTotal += p->m_dwTime;

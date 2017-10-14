@@ -533,9 +533,6 @@
     <ClInclude Include="graphics\visual\visual_font_list_data.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\visual\visual_FreeImageFileProc.h">
-      <Filter>Header Files\graphics\visual</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\visual\visual_glyph.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
@@ -568,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="axis\node\windows\windows_copydesk.h">
       <Filter>Header Files\axis\node\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\visual\visual_freeimage_image.h">
+      <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -916,6 +916,18 @@
     <ClCompile Include="graphics\_graphics.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\visual\visual_freeimage_image.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_freeimage_image_gif.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="axis\axis\axis.inl">
@@ -927,5 +939,10 @@
     <None Include="graphics\visual\visual.inl">
       <Filter>Header Files\graphics\visual</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="visual_gdiplus_image_gif.txt">
+      <Filter>Source Files\graphics\visual</Filter>
+    </Text>
   </ItemGroup>
 </Project>

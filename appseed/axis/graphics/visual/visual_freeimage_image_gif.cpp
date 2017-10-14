@@ -5,7 +5,7 @@
 #include <math.h>
 
 #include "freeimage/Source/FreeImage.h"
-#include "graphics/visual/visual_FreeImageFileProc.h"
+#include "graphics/visual/visual_freeimage_image.h"
 
 
 void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount);
@@ -242,16 +242,16 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
 
             }
-      }
-      catch (...)
-      {
+         }
+         catch (...)
+         {
 
-
-      }
-
-      FreeImage_CloseMultiBitmap(m);
 
          }
+
+         FreeImage_CloseMultiBitmap(m);
+
+      }
 
    }
    catch (...)
@@ -323,7 +323,7 @@ bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::ar
 
          cra_from_quada(cra, pbi->bmiColors, pbi->bmiHeader.biClrUsed);
 
-         if (!gif_load_frame(pdibCompose, pdiba, p, iFrame, (byte *)pdata, iScan , cra, transparentIndex))
+         if (!gif_load_frame(pdibCompose, pdiba, p, iFrame, (byte *)pdata, iScan, cra, transparentIndex))
          {
 
             return false;
@@ -362,10 +362,10 @@ bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::ar
    }
    else if (FreeImage_GetBPP(pfi) == 32)
    {
-      
+
       ::draw2d::copy_colorref(
-         p->m_dib->m_size.cx, 
-         p->m_dib->m_size.cy, 
+         p->m_dib->m_size.cx,
+         p->m_dib->m_size.cy,
          p->m_dib->m_pcolorref,
          p->m_dib->m_iScan,
          (COLORREF*) pdata, iScan);

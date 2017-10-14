@@ -6,7 +6,7 @@
 #include "freeimage/Source/FreeImage.h"
 
 
-FIBITMAP * fi_from_dib(::draw2d::dib * pdib)
+FIBITMAP * freeimage_from_dib(::draw2d::dib * pdib)
 {
 
    if (pdib == NULL)
@@ -175,18 +175,27 @@ FIBITMAP * fi_from_dib(::draw2d::dib * pdib)
 }
 
 
-bool dib_from_fi(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, ::aura::application * papp)
+bool dib_from_freeimage(::draw2d::dib * pdib, FIBITMAP *pfibitmap)
 {
 
-   if (pfibitmap == NULL)
+   if (pdib == NULL)
+   {
+
       return false;
 
-   if (papp == NULL)
-      papp = ::get_thread_app();
+   }
+
+   if (pfibitmap == NULL)
+   {
+
+      return false;
+
+   }
 
    BITMAPINFO * pbi = NULL;
 
    void * pdata = NULL;
+
    FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
 
    if (pimage32 == NULL)
@@ -200,57 +209,16 @@ bool dib_from_fi(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP 
 
    pdata = FreeImage_GetBits(pimage32);
 
-
    if (!pdib->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
+   {
+
       return false;
 
-
-   /*   COLORREF * pcolorref = NULL;
-
-   HBITMAP hbitmap = ::CreateDIBSection(NULL, &pdib->m_info, DIB_RGB_COLORS, (void **)&pcolorref, NULL, 0);
-
-   if (hbitmap == NULL)
-   {
-   pdib->Destroy();
-   return false;
    }
-
-   HDC hdc = ::CreateCompatibleDC(NULL);
-
-   if (pbi->bmiHeader.biHeight != SetDIBits(
-   hdc,
-   hbitmap,
-   0,
-   pbi->bmiHeader.biHeight,
-   pdata,
-   pbi,
-   DIB_RGB_COLORS))
-   {
-   pdib->Destroy();
-   if (bUnloadFI)
-   {
-   FreeImage_Unload(pfibitmap);
-   }
-   return false;
-   }
-   */
 
    pdib->map();
 
-   //int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
-
-   //#if defined(VSNORD) && defined(__arm__)
 #if defined(ANDROID)
-
-   // LITTLE_LIT_LIGHT_LITE_LITLE_ENDIANS!!!!!!!!!!
-
-   //::draw2d::copy_colorref(
-   //   pdib->m_size.cx,
-   //   pdib->m_size.cy,
-   //   pdib->m_pcolorref,
-   //   pdib->m_iScan,
-   //   (COLORREF *)pdata,
-   //   stride);
 
    int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
 
@@ -305,39 +273,9 @@ bool dib_from_fi(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP 
 
    }
 
-   /*
-
-   byte * pbDst;
-
-   byte * pbSrc;
-
-   for(int i = 0; i < pdib->m_size.cy; i++)
-   {
-
-   pbDst = &((byte *) pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)];
-
-   pbSrc = &((byte *) pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i];
-
-   for(int j = 0; j < pdib->m_size.cx; j++)
-   {
-
-   pbDst[0] = pbSrc[2];
-
-   pbDst[1] = pbSrc[1];
-
-   pbDst[2] = pbSrc[0];
-
-   pbDst[3] = pbSrc[3];
-
-   pbDst += 4;
-
-   pbSrc += 4;
-
-   }
-
-   }*/
 
 #else
+
    for (int i = 0; i < pdib->m_size.cy; i++)
    {
 
@@ -347,22 +285,12 @@ bool dib_from_fi(::draw2d::dib * pdib, ::draw2d::graphics * pgraphics, FIBITMAP 
          pdib->m_iScan);
 
    }
+
 #endif
 
-   //#if defined(LINUX) || defined(VSNORD) || defined(METROWIN)
    pdib->mult_alpha_fast();
-   //#endif
 
-
-
-   //   RGBQUAD bkcolor;
    FreeImage_Unload(pimage32);
-   if (bUnloadFI)
-   {
-
-      FreeImage_Unload(pfibitmap);
-
-   }
 
    return true;
 
@@ -750,7 +678,7 @@ namespace visual
 
 
       FIMEMORY * pfm1 = FreeImage_OpenMemory();
-      FIBITMAP * pfi7 = dib_to_FI(m_p);
+      FIBITMAP * pfi7 = freeimage_from_dib(m_p);
       FIBITMAP * pfi8 = NULL;
       bool bConv;
       if (b8)
@@ -909,16 +837,22 @@ namespace visual
 //}
 
 
-
 bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 {
 
-   auto * fi = dib_to_FI(&dib);
+   auto * fi = freeimage_from_dib(&dib);
 
+   if (fi == NULL)
+   {
+
+      return false;
+
+   }
 
    if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), fi, lpcszFile, 0))
    {
-      //
+
+
    }
 
    FreeImage_Unload(fi);
@@ -926,68 +860,36 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 }
 
 
-
-::draw2d::bitmap_sp FItoHBITMAP(FIBITMAP * pfibitmap, ::aura::application * papp)
+::draw2d::bitmap_sp freeimage_to_hbitmap(FIBITMAP * pfibitmap, ::aura::application * papp)
 {
 
    if (pfibitmap == NULL)
+   {
+
       return NULL;
 
-   //   BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
-   // void * pData = FreeImage_GetBits(pfibitmap);
-
+   }
 
    ::draw2d::dib_sp dib(papp->allocer());
 
-   //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
+   if (!dib_from_freeimage(dib, pfibitmap))
+   {
 
-   ::draw2d::graphics_sp spgraphics(papp->allocer());
-   spgraphics->CreateCompatibleDC(NULL);
-
-   if (!dib_from_fi(dib, spgraphics, pfibitmap, false))
       return NULL;
+
+   }
 
    return dib->detach_bitmap();
 
-   /*::draw2d::graphics_sp spgraphics(allocer());
-   spgraphics->CreateCompatibleDC(NULL);
-
-   ::draw2d::dib_sp dibSource(get_app());
-   dibSource->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight);
-
-   dibSource->dc_select(false);
-
-   if(pbi->bmiHeader.biHeight != SetDIBits(
-   (HDC)spgraphics->get_os_data(),
-   (HBITMAP) dibSource->get_bitmap()->get_os_data(),
-   0,
-   pbi->bmiHeader.biHeight,
-   pData,
-   pbi,
-   DIB_RGB_COLORS))
-   {
-   if(bUnloadFI)
-   {
-   FreeImage_Unload(pfibitmap);
-   }
-   return NULL;
-   }
-
-   if(bUnloadFI)
-   {
-   FreeImage_Unload(pfibitmap);
-   }
-   */
-
-   //return dibSource->detach_bitmap();
 }
 
-::draw2d::bitmap_sp imaging::CreateDIBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
+
+::draw2d::bitmap_sp di_bitmap_from_freeimage(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
 {
 
-
 #ifdef WINDOWSEX
-   ::draw2d::bitmap_sp bitmap(get_app());
+
+   ::draw2d::bitmap_sp bitmap(pgraphics->get_app());
 
    if (!bitmap->CreateDIBitmap(pgraphics, FreeImage_GetInfoHeader(pFreeImage), CBM_INIT, FreeImage_GetBits(pFreeImage), FreeImage_GetInfo(pFreeImage), DIB_RGB_COLORS))
    {
@@ -999,116 +901,84 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
    }
 
    return bitmap;
+
 #else
 
    throw todo(get_app());
 
 #endif
+
    return NULL;
+
 }
 
 
-::draw2d::bitmap_sp imaging::CreateBitmap(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
+::draw2d::bitmap_sp bitmap_from_freeimage(::draw2d::graphics * pgraphics, FIBITMAP * pfibitmap)
 {
-   ::visual::dib_sp dib(allocer());
 
-#ifdef METROWIN
+   ::visual::dib_sp dib(pgraphics->allocer());
 
-   throw todo(get_app());
-
-#else
-
-   //BITMAPINFO * pi = FreeImage_GetInfo(pFreeImage);
-
-
-
-   from(dib, pgraphics, pFreeImage, false);
-
+   dib_from_freeimage(dib, pfibitmap);
 
    return dib->detach_bitmap();
 
-#endif
-
-   /*   ::draw2d::bitmap_sp bitmap(get_app());
-   void * pBits = FreeImage_GetBits(pFreeImage);
-   if(!bitmap->CreateDIBitmap(pgraphics,
-   FreeImage_GetInfoHeader(pFreeImage),
-   CBM_INIT,
-   pBits,
-   FreeImage_GetInfo(pFreeImage),
-   DIB_RGB_COLORS))
-   {
-   TRACELASTERROR();
-   return (::draw2d::bitmap *) NULL;
-   }
-
-   //   LPVOID lpBits;
-   //   BITMAPINFO *pbi = FreeImage_GetInfo(pFreeImage);
-   //   HBITMAP hBitmap = ::CreateDIBSection(
-   //      NULL,
-   //      pbi,
-   //      DIB_RGB_COLORS,
-   //      &lpBits,
-   //      NULL,
-   //      0);
-   //   memcpy(lpBits, FreeImage_GetBits(pFreeImage), pbi->bmiHeader.biSize);
-   LPBITMAPINFO pbi = FreeImage_GetInfo(pFreeImage);
-   int32_t iSizeBitsZ = ((pbi->bmiHeader.biWidth * pbi->bmiHeader.biBitCount / 8 + 3) & ~3) * pbi->bmiHeader.biHeight;
-   void * pDataZ = malloc(iSizeBitsZ);
-   if(pbi->bmiHeader.biHeight != GetDIBits(
-   (HDC)pgraphics->get_os_data(),           // handle to device context
-   (HBITMAP)bitmap->get_os_data(),      // handle to bitmap
-   0,   // first scan line to set in destination bitmap
-   FreeImage_GetInfo(pFreeImage)->bmiHeader.biHeight,   // number of scan lines to copy
-   pDataZ,    // address of array for bitmap bits
-   FreeImage_GetInfo(pFreeImage), // address of structure with bitmap data
-   DIB_RGB_COLORS        // RGB or palette index
-   ))
-   {
-   //      int32_t i = 1 +1;
-   TRACELASTERROR();
-   }
-   return bitmap;*/
 }
 
 
-
-FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
+bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 {
 
    if (pfile == NULL)
-      return NULL;
-
-   FreeImageIO io;
-   io.read_proc = __ReadProc2;
-   io.seek_proc = __SeekProc2;
-   io.tell_proc = __TellProc2;
-   io.write_proc = __WriteProc2;
-   FIBITMAP *lpVoid = NULL;
-   try
-   {
-      pfile->seek_to_begin();
-      FREE_IMAGE_FORMAT format;
-      format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile.m_p);
-      pfile->seek_to_begin();
-      if (true)
-      {
-         lpVoid = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile.m_p);
-      }
-   }
-   catch (...)
-   {
-   }
-   if (pfi == NULL)
    {
 
       return false;
 
    }
 
-   ::draw2d::graphics_sp spgraphics(allocer());
+   if (is_null(dib))
+   {
 
-   spgraphics->CreateCompatibleDC(NULL);
+      return false;
+
+   }
+
+   FreeImageIO io;
+
+   io.read_proc = __ReadProc2;
+
+   io.seek_proc = __SeekProc2;
+
+   io.tell_proc = __TellProc2;
+
+   io.write_proc = __WriteProc2;
+
+   FIBITMAP * pfibitmap = NULL;
+
+   try
+   {
+
+      pfile->seek_to_begin();
+
+      FREE_IMAGE_FORMAT format;
+
+      format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile.m_p);
+
+      pfile->seek_to_begin();
+
+      pfibitmap = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile.m_p);
+
+   }
+   catch (...)
+   {
+
+   }
+
+   if (pfibitmap == NULL)
+   {
+
+      return false;
+
+   }
 
    int iExifOrientation = -1;
 
@@ -1116,7 +986,7 @@ FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
 
    FITAG *tag = NULL;
 
-   FIMETADATA *mdhandle = FreeImage_FindFirstMetadata(FIMD_EXIF_MAIN, pfi, &tag);
+   FIMETADATA *mdhandle = FreeImage_FindFirstMetadata(FIMD_EXIF_MAIN, pfibitmap, &tag);
 
    if (mdhandle)
    {
@@ -1150,14 +1020,17 @@ FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
          }
 
       }
+
       while (FreeImage_FindNextMetadata(mdhandle, &tag));
 
       FreeImage_FindCloseMetadata(mdhandle);
 
    }
 
-   if (!from(pdib, spgraphics, (FIBITMAP *)pfi, true))
+   if(!dib_from_freeimage(&dib, pfibitmap))
    {
+
+      FreeImage_Unload(pfibitmap);
 
       return false;
 
@@ -1166,7 +1039,7 @@ FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
    if (bOrientation)
    {
 
-      ::draw2d::dib_sp dib(allocer());
+      ::draw2d::dib_sp dib2(allocer());
 
       //double dPiQuarter = ::atan(1.0);
 
@@ -1185,46 +1058,46 @@ FIBITMAP * imaging::LoadImageFile(::file::file_sp  pfile)
       switch (iExifOrientation)
       {
       case 2:
-         dib->flip_horizontal(pdib);
-         pdib->from(dib);
+         dib2->flip_horizontal(&dib);
+         dib.from(dib2);
          break;
       case 3:
-         dib->rotate(pdib, 180.0);
-         pdib->from(dib);
+         dib2->rotate(&dib, 180.0);
+         dib.from(dib2);
          break;
       case 4:
-         dib->flip_vertical(pdib);
-         pdib->from(dib);
+         dib2->flip_vertical(&dib);
+         dib.from(dib2);
          break;
       case 5:
-         dib->flip_horizontal(pdib);
-         pdib->rotate(dib, -270.0);
+         dib2->flip_horizontal(&dib);
+         dib.rotate(dib2, -270.0);
          break;
       case 6:
-         dib->rotate(pdib, -90.0);
-         pdib->from(dib);
+         dib2->rotate(&dib, -90.0);
+         dib.from(dib2);
          break;
       case 7:
-         dib->flip_horizontal(pdib);
-         pdib->rotate(dib, -90.0);
+         dib2->flip_horizontal(&dib);
+         dib.rotate(dib2, -90.0);
          break;
       case 8:
-         dib->rotate(pdib, -270.0);
-         pdib->from(dib);
+         dib2->rotate(&dib, -270.0);
+         dib.from(dib2);
          break;
       case 1:
       default:
          break;
+
       }
-
-
 
    }
 
+   FreeImage_Unload(pfibitmap);
+
+
+
    return true;
-
-
-   return lpVoid;
 
 
 }

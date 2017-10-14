@@ -1,9 +1,16 @@
 #include "framework.h"
 
+#ifdef SMALLCODE
+
+// With TBS<3 in
+#define USE_OS_IMAGE_LOADER
+
+#endif
+
 
 #include "antialias_8bit.cpp"
 #include "detect_8bit_borders.cpp"
-#ifdef SMALLCODE
+#ifdef USE_OS_IMAGE_LOADER
 #if defined(WINDOWSEX)
 #include "visual_gdiplus_image.cpp"
 #include "visual_gdiplus_image_gif.cpp"
@@ -11,7 +18,7 @@
 #endif
 #else
 #include "visual_freeimage_image.cpp"
-#include "visual_freeimage.cpp"
+#include "visual_freeimage_image_gif.cpp"
 #endif
 #include "load_gif_frame.cpp"
 #include "visual_api.cpp"

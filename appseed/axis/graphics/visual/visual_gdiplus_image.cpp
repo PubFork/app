@@ -674,6 +674,61 @@ bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
 //   return true;
 //
 //}
+
+
+bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory)
+{
+
+   windows::comptr < IWICBitmap > piBmp;
+
+   HRESULT hr = piFactory->CreateBitmapFromSource(piConverter, WICBitmapCacheOnLoad, &piBmp);
+
+   if (hr != S_OK) return false;
+
+   UINT uiWidth;
+
+   UINT uiHeight;
+
+   hr = piBmp->GetSize(&uiWidth, &uiHeight);
+
+   if (hr != S_OK) return false;
+
+   WICRect rc;
+
+   rc.X = 0;
+   rc.Y = 0;
+   rc.Width = uiWidth;
+   rc.Height = uiHeight;
+
+   windows::comptr < IWICBitmapLock > piLock;
+
+   hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
+
+   if (hr != S_OK) return false;
+
+   UINT cbStride;
+
+   piLock->GetStride(&cbStride);
+
+   if (hr != S_OK) return false;
+
+   UINT uiArea;
+
+   BYTE * pData;
+
+   hr = piLock->GetDataPointer(&uiArea, &pData);
+
+   if (hr != S_OK) return false;
+
+   dib.create(uiWidth, uiHeight);
+
+   ::draw2d::copy_colorref(uiWidth, uiHeight, dib.m_pcolorref, dib.m_iScan, (COLORREF *)pData, cbStride);
+
+   return true;
+
+
+}
+
 bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 {
 
@@ -747,52 +802,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    if (hr != S_OK) return false;
 
-   windows::comptr < IWICBitmap > piBmp;
-
-   hr = piFactory->CreateBitmapFromSource(piConverter, WICBitmapCacheOnLoad, &piBmp);
-
-   if (hr != S_OK) return false;
-
-   UINT uiWidth;
-
-   UINT uiHeight;
-
-   hr = piBmp->GetSize(&uiWidth, &uiHeight);
-
-   if (hr != S_OK) return false;
-
-   WICRect rc;
-
-   rc.X = 0;
-   rc.Y = 0;
-   rc.Width = uiWidth;
-   rc.Height = uiHeight;
-
-   windows::comptr < IWICBitmapLock > piLock;
-
-   hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
-
-   if (hr != S_OK) return false;
-
-   UINT cbStride;
-
-   piLock->GetStride(&cbStride);
-
-   if (hr != S_OK) return false;
-
-   UINT uiArea;
-
-   BYTE * pData;
-
-   hr = piLock->GetDataPointer(&uiArea, &pData);
-
-   if (hr != S_OK) return false;
-
-   pdib->create(uiWidth, uiHeight);
-
-   ::draw2d::copy_colorref(uiWidth, uiHeight, pdib->m_pcolorref, pdib->m_iScan, (COLORREF *) pData, cbStride);
-
-   return true;
+   return dib_from_wicbitmapsource(dib, piConverter, piFactory);
 
 }
 
@@ -879,5 +889,7 @@ return hBitmapSource;
 
 
 //#endif // WINDOWSEX
+
+
 
 
