@@ -1,7 +1,7 @@
 #include "framework.h"
+int my_main(::aura::application * papp);
 
-
-namespace helloworld
+namespace helloaxis
 {
 
 
@@ -9,12 +9,8 @@ namespace helloworld
       m_mutexAiFont(this)
    {
 
-      m_ptemplateHelloMultiverseMain = NULL;
-      m_ptemplateHelloMultiverseView = NULL;
-      m_ptemplateHelloMultiverseSwitcher = NULL;
-
-      m_strAppName = "app/helloworld";
-      m_strLibraryName = "app/helloworld";
+      m_strAppName = "app/helloaxis";
+      m_strLibraryName = "app/helloaxis";
       m_strBaseSupportId = "ca2_flag";
       m_bLicense = false;
 
@@ -49,25 +45,14 @@ namespace helloworld
 
       ::core::session * pcoression = m_pauraapp->m_pcoresession;
 
-      pcoression->use_font_sel();
-
-      System.factory().creatable_small < ::helloworld::document >();
-      System.factory().creatable_small < ::helloworld::frame >();
-      System.factory().creatable_small < ::helloworld::main_frame >();
-      System.factory().creatable_small < ::user::button_view >();
-      System.factory().creatable_small < ::helloworld::view >();
-      System.factory().creatable_small < ::helloworld::main_view >();
-      System.factory().creatable_small < ::helloworld::switcher_view >();
-      System.factory().creatable_small < ::helloworld::pane_view >();
-
-      if (!::core::application::initialize_application())
+      if (!::axis::application::initialize_application())
       {
 
          return false;
 
       }
 
-      string str = handler()->m_varTopicQuery["helloworld"];
+      string str = handler()->m_varTopicQuery["helloaxis"];
 
       if (str.has_char())
       {
@@ -78,37 +63,6 @@ namespace helloworld
 
       m_dataid.m_id = m_dataid.m_id + ".local://";
 
-      ::user::single_document_template* pDocTemplate;
-
-
-      pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "main",
-                              System.type_info < document >(),
-                              System.type_info < main_frame >(),
-                              System.type_info < pane_view >()));
-      m_ptemplateHelloMultiverseMain = pDocTemplate;
-      add_document_template(pDocTemplate);
-
-
-      pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "main",
-                              System.type_info < document >(),
-                              System.type_info < frame >(),
-                              System.type_info < main_view >()));
-      m_ptemplateHelloMultiverseView = pDocTemplate;
-      add_document_template(pDocTemplate);
-
-
-      pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "switcher",
-                              System.type_info < document >(),
-                              System.type_info < frame >(),
-                              System.type_info < switcher_view >()));
-      m_ptemplateHelloMultiverseSwitcher = pDocTemplate;
-      add_document_template(pDocTemplate);
 
 
       return true;
@@ -119,7 +73,7 @@ namespace helloworld
    int32_t application::exit_application()
    {
 
-      return ::core::application::exit_application();
+      return ::axis::application::exit_application();
 
    }
 
@@ -147,38 +101,18 @@ namespace helloworld
 
       m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
-      if (m_ptemplateHelloMultiverseMain->get_document_count() == 0)
+      output_debug_string("\nfinished helloaxis::on_request");
+
+      fork([&]()
       {
-
-         m_ptemplateHelloMultiverseMain->request_create(pcreate);
-
+         my_main(this);
       }
-
-      if (pcreate->m_spCommandLine->m_varFile.has_char())
-      {
-
-         m_ptemplateHelloMultiverseView->request_create(pcreate);
-
-      }
-
-      if (handler()->m_varTopicQuery["wfi_maximize"].is_set())
-      {
-
-         pcreate->m_spCommandLine->m_varQuery["document"].cast < document >()->get_typed_view < ::userex::pane_tab_view >()->GetTopLevelFrame()->_001WindowMaximize();
-
-      }
-
-      output_debug_string("\nfinished helloworld::on_request");
+          );
 
    }
 
 
-   string application::preferred_userschema()
-   {
 
-      return "core";
-
-   }
 
 
    int64_t application::add_ref()
@@ -195,17 +129,37 @@ namespace helloworld
 
    }
 
+   void application::paint(HWND hwnd, HDC hdc)
+   {
+      ::draw2d::graphics_sp g(allocer());
 
-} // namespace helloworld
+      g->Attach(hdc);
+
+      paint(hwnd, g);
+
+   }
+
+   void application::paint(HWND hwnd, ::draw2d::graphics * pgraphics)
+   {
+      rect rcClient;
+      ::GetClientRect(hwnd, rcClient);
+      ::draw2d::brush_sp br(allocer());
+
+      br->create_solid(ARGB(255, 255, 0, 0));
+      pgraphics->SelectObject(br);
+      pgraphics->FillEllipse(rcClient);
+   }
+
+} // namespace helloaxis
 
 
 
 
 extern "C"
-::aura::library * app_helloworld_get_new_library(::aura::application * papp)
+::aura::library * app_helloaxis_get_new_library(::aura::application * papp)
 {
 
-   return new ::aura::single_application_library < ::helloworld::application >(papp, "app/helloworld");
+   return new ::aura::single_application_library < ::helloaxis::application >(papp, "app/helloaxis");
 
 }
 

@@ -1,6 +1,6 @@
 //
-//  helloworld_render.cpp
-//  app_core_helloworld
+//  helloaxis_render.cpp
+//  app_core_helloaxis
 //
 //  Created by Camilo Sasuke Tsumanuma on 8/6/15 23:27;24.
 //  Copyright (c) 2015 Camilo Sasuke Tsumanuma. All rights reserved.
@@ -11,7 +11,7 @@
 #include <math.h>
 
 
-namespace helloworld
+namespace helloaxis
 {
 
    render::bilbo::bilbo()
@@ -64,8 +64,6 @@ namespace helloworld
       m_dwLastOk = 0;
 
 
-
-      m_pview = NULL;
 
       m_bImageEnable = true;
 
@@ -152,8 +150,8 @@ namespace helloworld
 
       }
 
-      helloworld_draw();
-      helloworld_render();
+      helloaxis_draw();
+      helloaxis_render();
 
       //if(m_bFirstDone)
       {
@@ -205,7 +203,7 @@ namespace helloworld
       for (auto & bilbo : m_bilboa)
       {
 
-         m_pview->data_get("bilbo." + bilbo.m_strPath, bilbo.m_bNew);
+         //m_pview->data_get("bilbo." + bilbo.m_strPath, bilbo.m_bNew);
 
          i++;
 
@@ -224,7 +222,9 @@ namespace helloworld
 
       ::multithreading::set_priority(::multithreading::priority_time_critical);
 
-      double dFps = m_pview->get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->m_dFps;
+//      double dFps = m_pview->get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->m_dFps;
+
+      double dFps = 0.2;
 
       double dPeriod = 1000.0 / dFps;
 
@@ -322,7 +322,7 @@ namespace helloworld
    }
 
 
-   void render::helloworld_render()
+   void render::helloaxis_render()
    {
 
       {
@@ -336,14 +336,14 @@ namespace helloworld
 
          pdib->Fill(0, 0, 0, 0);
 
-         helloworld_render(pdib->get_graphics());
+         helloaxis_render(pdib->get_graphics());
 
 
       }
 
    }
 
-   void render::helloworld_render(::draw2d::graphics * pgraphics)
+   void render::helloaxis_render(::draw2d::graphics * pgraphics)
    {
 
 
@@ -351,20 +351,20 @@ namespace helloworld
       //   if(m_bLite)
       {
 
-         helloworld_render_lite_view(pgraphics);
+         helloaxis_render_lite_view(pgraphics);
 
       }
       //   else
       //   {
       //
-      //      helloworld_render_full_view(pdib->get_graphics());
+      //      helloaxis_render_full_view(pdib->get_graphics());
       //
       //   }
 
    }
 
 
-   void render::helloworld_draw()
+   void render::helloaxis_draw()
    {
 
       if (m_bVoidTransfer)
@@ -406,7 +406,7 @@ namespace helloworld
 
    }
 
-   void render::helloworld_render_lite_view(::draw2d::graphics * pgraphics)
+   void render::helloaxis_render_lite_view(::draw2d::graphics * pgraphics)
    {
 
       if (m_dibWork->area() <= 0)
@@ -468,7 +468,7 @@ namespace helloworld
 
          synch_lock slText(m_pmutexText);
 
-         strHelloMultiverse = get_helloworld().c_str(); // rationale : string allocation fork *for multithreading*
+         strHelloMultiverse = get_helloaxis().c_str(); // rationale : string allocation fork *for multithreading*
 
       }
 
@@ -542,7 +542,7 @@ namespace helloworld
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse != get_helloworld() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
+         if (strHelloMultiverse != get_helloaxis() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
             return;
 
       }
@@ -645,7 +645,7 @@ namespace helloworld
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse == get_helloworld() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
+         if (strHelloMultiverse == get_helloaxis() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
          {
 
             m_bFirstDone = true;
@@ -657,7 +657,7 @@ namespace helloworld
    }
 
 
-   void render::helloworld_render_full_view(::draw2d::graphics * pgraphics)
+   void render::helloaxis_render_full_view(::draw2d::graphics * pgraphics)
    {
 
       if (m_dibWork->area() <= 0)
@@ -743,7 +743,7 @@ namespace helloworld
 
       pgraphics->set_font(m_font);
 
-      string strHelloMultiverse = get_helloworld();
+      string strHelloMultiverse = get_helloaxis();
 
       ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -985,7 +985,7 @@ namespace helloworld
 
 #endif
 
-      if (strHelloMultiverse == get_helloworld() && m_cx == m_rectClient.width() && m_cy == m_rectClient.height())
+      if (strHelloMultiverse == get_helloaxis() && m_cx == m_rectClient.width() && m_cy == m_rectClient.height())
       {
 
          m_bFirstDone = true;
@@ -1136,9 +1136,11 @@ namespace helloworld
 
             {
 
-               synch_lock slText(&m_pview->m_mutexText);
+               //synch_lock slText(&m_pview->m_mutexText);
 
-               strHelloMultiverse = m_pview->get_processed_helloworld().c_str();
+               //strHelloMultiverse = m_pview->get_processed_helloaxis().c_str();
+
+               strHelloMultiverse = "Hello Axis!!";
 
             }
 
@@ -1200,7 +1202,7 @@ namespace helloworld
       if (m_bFast || !m_bFirstDone || ::get_tick_count() - m_dwLastFast < m_dwFastAnime)
       {
 
-         synch_lock sl1(m_pview->get_wnd()->m_pmutex);
+//         synch_lock sl1(m_pview->get_wnd()->m_pmutex);
 
          synch_lock slDraw(&m_mutexDraw);
 
@@ -1211,9 +1213,10 @@ namespace helloworld
 
             {
 
-               synch_lock slText(&m_pview->m_mutexText);
+               //synch_lock slText(&m_pview->m_mutexText);
 
-               helloworld_fast_render(m_pview->get_processed_helloworld());
+               //helloaxis_fast_render(m_pview->get_processed_helloaxis());
+               helloaxis_fast_render("Hello Axis!!");
 
             }
 
@@ -1234,20 +1237,20 @@ namespace helloworld
 
          //pgraphics->FillSolidRect(400,400,100,100,ARGB(128,0,0,128));
 
-         m_pview->m_bOkPending = true;
+//         m_pview->m_bOkPending = true;
 
          return;
 
       }
 
-      if (m_pview->m_bOkPending)
-      {
+      //if (m_pview->m_bOkPending)
+      //{
 
-         m_pview->m_bOkPending = false;
+      //   m_pview->m_bOkPending = false;
 
-         m_dwLastOk = ::get_tick_count();
+      //   m_dwLastOk = ::get_tick_count();
 
-      }
+      //}
 
       ::draw2d::dib * pdib = NULL;
 
@@ -1337,7 +1340,7 @@ namespace helloworld
 
             bilbo.m_b = true;
 
-            m_pview->data_set("bilbo." + bilbo.m_strPath, bilbo.m_b);
+//            m_pview->data_set("bilbo." + bilbo.m_strPath, bilbo.m_b);
 
          }
          else if (!bilbo.m_bNew && bilbo.m_b)
@@ -1347,7 +1350,7 @@ namespace helloworld
 
             bilbo.m_b = false;
 
-            m_pview->data_set("bilbo." + bilbo.m_strPath, bilbo.m_b);
+//            m_pview->data_set("bilbo." + bilbo.m_strPath, bilbo.m_b);
 
          }
 
@@ -1373,7 +1376,7 @@ namespace helloworld
       return false;
    }
 
-   void render::helloworld_fast_render(const string & strHelloMultiverse)
+   void render::helloaxis_fast_render(const string & strHelloMultiverse)
    {
 
       if (m_cx <= 0 || m_cy <= 0)
@@ -1400,7 +1403,7 @@ namespace helloworld
 
       ::draw2d::font_sp font(allocer());
 
-      font->create_pixel_font(m_pview->m_strFont, fHeight, FW_BOLD);
+//      font->create_pixel_font(m_pview->m_strFont, fHeight, FW_BOLD);
 
       pgraphics->set_font(font);
 
@@ -1410,7 +1413,7 @@ namespace helloworld
 
       double ratey = fHeight * 0.84 / size.cy;
 
-      font->create_pixel_font(m_pview->m_strFont, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
+//      font->create_pixel_font(m_pview->m_strFont, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
 
       m_dMinRadius = MAX(1.0, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx) / 46.0);
 
@@ -1449,7 +1452,7 @@ namespace helloworld
    }
 
 
-} // namespace helloworld
+} // namespace helloaxis
 
 
 

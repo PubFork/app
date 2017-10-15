@@ -1,6 +1,6 @@
 //
-//  helloworld_render.h
-//  app_core_helloworld
+//  helloaxis_render.h
+//  app_core_helloaxis
 //
 //  Created by Camilo Sasuke Tsumanuma on 8/6/15 23:27;24.
 //  Copyright (c) 2015 Camilo Sasuke Tsumanuma. All rights reserved.
@@ -10,11 +10,11 @@
 #pragma once
 
 
-namespace helloworld
+namespace helloaxis
 {
 
 
-   class CLASS_DECL_APP_CORE_HELLOMULTIVERSE render :
+   class CLASS_DECL_APP_CORE_HELLOAXIS render :
       virtual public ::thread
    {
       public:
@@ -83,9 +83,6 @@ namespace helloworld
 
          mutex *                          m_pmutexText;
 
-         view *                           m_pview;
-
-
          DWORD                            m_dwAnime;
          DWORD                            m_dwLastFast;
          DWORD                            m_dwFastAnime;
@@ -113,7 +110,7 @@ namespace helloworld
          virtual ~render();
 
 
-         string get_helloworld() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+         string get_helloaxis() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
 
 
          virtual int32_t run();
@@ -122,13 +119,13 @@ namespace helloworld
 
 
          virtual void full_render();
-         virtual void helloworld_render();
-         virtual void helloworld_draw();
-         virtual void helloworld_render(::draw2d::graphics * pgraphics);
-         //virtual void helloworld_render(::draw2d::graphics * pgraphics);
+         virtual void helloaxis_render();
+         virtual void helloaxis_draw();
+         virtual void helloaxis_render(::draw2d::graphics * pgraphics);
+         //virtual void helloaxis_render(::draw2d::graphics * pgraphics);
 
-         virtual void helloworld_render_full_view(::draw2d::graphics * pgraphics);
-         virtual void helloworld_render_lite_view(::draw2d::graphics * pgraphics);
+         virtual void helloaxis_render_full_view(::draw2d::graphics * pgraphics);
+         virtual void helloaxis_render_lite_view(::draw2d::graphics * pgraphics);
 
 
          virtual void _001OnHelloDraw(::draw2d::graphics * pgraphics);
@@ -138,12 +135,12 @@ namespace helloworld
          ::visual::dib_sp & dib23(string strDib);
 
          virtual bool in_anime();
-         virtual void helloworld_fast_render(const string & strHelloMultiverse);
+         virtual void helloaxis_fast_render(const string & strHelloMultiverse);
 
 
    };
 
 
-} // namespace helloworld
+} // namespace helloaxis
 
 

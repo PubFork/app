@@ -36,9 +36,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C7AFCEFA-3079-4B23-8F97-4543BB980265}</ProjectGuid>
-    <RootNamespace>_app_helloworld</RootNamespace>
+    <RootNamespace>_app_helloaxis</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>_app_helloworld</ProjectName>
+    <ProjectName>_app_helloaxis</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -539,7 +539,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>_pcre.lib;_zlib.lib;_bzip2.lib;_libssl.lib;_libcrypto.lib;_sqlite.lib;_png.lib;_jpeg.lib;Ws2_32.lib;Dxva2.lib;Normaliz.lib;Secur32.lib;Crypt32.lib;windowscodecs.lib;gdiplus.lib;winmm.lib;version.lib;vfw32.lib;opengl32.lib;glu32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libssl.lib;_libcrypto.lib;_sqlite.lib;_png.lib;_jpeg.lib;Ws2_32.lib;Dxva2.lib;Normaliz.lib;Secur32.lib;Crypt32.lib;windowscodecs.lib;gdiplus.lib;winmm.lib;version.lib;vfw32.lib;opengl32.lib;glu32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
@@ -929,7 +929,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>_pcre.lib;_zlib.lib;_bzip2.lib;_libssl.lib;_libcrypto.lib;_sqlite.lib;_png.lib;_jpeg.lib;Ws2_32.lib;Dxva2.lib;Normaliz.lib;Secur32.lib;Crypt32.lib;windowscodecs.lib;gdiplus.lib;winmm.lib;version.lib;vfw32.lib;opengl32.lib;glu32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libssl.lib;_libcrypto.lib;_sqlite.lib;_png.lib;_jpeg.lib;Ws2_32.lib;Dxva2.lib;Normaliz.lib;Secur32.lib;Crypt32.lib;windowscodecs.lib;gdiplus.lib;winmm.lib;version.lib;vfw32.lib;opengl32.lib;glu32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
@@ -978,13 +978,10 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include=".\helloworld_application.cpp" />
-    <ClCompile Include=".\helloworld_document.cpp" />
-    <ClCompile Include=".\helloworld_frame.cpp" />
+    <ClCompile Include=".\helloaxis_application.cpp" />
+    <ClCompile Include="helloaxis_main.cpp" />
     <ClCompile Include="_cube.cpp" />
-    <ClCompile Include="helloworld.cpp" />
-    <ClCompile Include=".\helloworld_pane_view.cpp" />
-    <ClCompile Include=".\helloworld_pane_view_update_hint.cpp" />
+    <ClCompile Include="helloaxis.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">Create</PrecompiledHeader>
@@ -995,27 +992,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='small|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include=".\helloworld_view.cpp" />
-    <ClCompile Include="helloworld_main_frame.cpp" />
-    <ClCompile Include="helloworld_main_view.cpp" />
-    <ClCompile Include="helloworld_render.cpp" />
-    <ClCompile Include="helloworld_switcher_view.cpp" />
-    <ClCompile Include="helloworld_view_base.cpp" />
+    <ClCompile Include="helloaxis_render.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="helloworld_application.h" />
-    <ClInclude Include="helloworld_document.h" />
-    <ClInclude Include="helloworld_frame.h" />
-    <ClInclude Include="helloworld.h" />
-    <ClInclude Include="helloworld_main_frame.h" />
-    <ClInclude Include="helloworld_main_view.h" />
-    <ClInclude Include="helloworld_pane_view.h" />
-    <ClInclude Include="helloworld_pane_view_update_hint.h" />
+    <ClInclude Include="helloaxis_application.h" />
+    <ClInclude Include="helloaxis.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="helloworld_render.h" />
-    <ClInclude Include="helloworld_switcher_view.h" />
-    <ClInclude Include="helloworld_view.h" />
-    <ClInclude Include="helloworld_view_base.h" />
+    <ClInclude Include="helloaxis_render.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app-core\appseed\wndfrm_core\_wndfrm_core.vcxproj">
@@ -1036,6 +1021,13 @@
     <ProjectReference Include="..\core\_core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico" />
+    <Image Include="WindowsProject2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

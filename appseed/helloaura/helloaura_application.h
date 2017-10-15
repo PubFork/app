@@ -2,12 +2,12 @@
 
 
 
-namespace helloworld
+namespace helloaxis
 {
 
 
-   class CLASS_DECL_APP_CORE_HELLOMULTIVERSE application :
-      virtual public ::core::application
+   class CLASS_DECL_APP_CORE_HELLOAXIS application :
+      virtual public ::axis::application
    {
       public:
 
@@ -29,30 +29,6 @@ namespace helloworld
          bool                                   m_bMultiverseChat;
 
          ::user::document *                     m_pdocMenu;
-//      ::calculator::plain_edit_view *        m_prollfps;
-         ::user::plain_edit_view *              m_prollfps;
-         ::user::single_document_template *     m_ptemplateHelloMultiverseMain;
-         ::user::single_document_template *     m_ptemplateHelloMultiverseView;
-         ::user::single_document_template *     m_ptemplateHelloMultiverseSwitcher;
-
-
-         //::user::split_view *                             m_ptopviewLast;
-         //view *                                 m_pviewLast;
-
-         //::user::split_view *                             m_ptopviewMain;
-         //view *                                 m_pviewMain;
-         //::user::button_view *                          m_ptoggleviewMain;
-         //::user::plain_edit_view *              m_peditMain;
-
-         //::user::split_view *                             m_ptopviewSwitcher;
-         //view *                                 m_pviewSwitcher;
-         //::user::button_view *                          m_ptoggleviewSwitcher;
-         //::user::plain_edit_view *              m_peditSwitcher;
-
-         //::user::split_view *                             m_ptopviewFont;
-         //::user::font_list_view *               m_pfontlistview;
-         //::user::button_view *                          m_ptoggleviewFontSel;
-         //::user::plain_edit_view *              m_peditFontSel;
 
          mutex                                  m_mutexAiFont;
          int32_t                                m_iErrorAiFont;
@@ -62,7 +38,6 @@ namespace helloworld
          application();
          virtual ~application();
 
-         virtual string preferred_userschema() override;
          virtual bool initialize_application() override;
          virtual int32_t  exit_application() override;
 
@@ -71,10 +46,14 @@ namespace helloworld
          virtual int64_t add_ref() override;
          virtual int64_t dec_ref() override;
 
+         void paint(HWND hwnd, HDC hdc);
+
+         void paint(HWND hwnd, ::draw2d::graphics * pgraphics);
+
    };
 
 
-} // namespace helloworld
+} // namespace helloaxis
 
 
 

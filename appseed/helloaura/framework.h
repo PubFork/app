@@ -3,6 +3,6 @@
 #endif
 
 
-#include "helloworld.h"
+#include "helloaxis.h"
 
-
+#include "resource.h"
