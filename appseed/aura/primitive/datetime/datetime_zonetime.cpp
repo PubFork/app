@@ -272,6 +272,8 @@ namespace datetime
 } // namespace datetime
 
 
+#ifdef DEBUG
+
 
 dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zonetime)
 {
@@ -292,6 +294,7 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::zonetime zone
    return dumpcontext << "::datetime::zonetime(\"" << psz << "\")";
 }
 
+#endif
 
 ::file::ostream & operator <<(::file::ostream & os, ::datetime::zonetime zonetime)
 {

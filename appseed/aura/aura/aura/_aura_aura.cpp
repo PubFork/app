@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #include "aura.cpp"
@@ -34,7 +34,6 @@
 #include "aura_file_watcher_thread.cpp"
 #include "aura_fixed_alloc.cpp"
 #include "aura_flags.cpp"
-#include "aura_gudo.cpp"
 #include "aura_heap.cpp"
 //#include "aura_heap_bare.cpp"
 //#include "aura_heap_mcheck.cpp"
@@ -56,7 +55,7 @@
 #include "aura_machine_event_central.cpp"
 #include "aura_machine_event_data.cpp"
 #include "aura_math.cpp"
-#include "aura_md5.cpp"
+//#include "aura_md5.cpp"
 #include "aura_mktime.cpp"
 #include "aura_muldiv64.cpp"
 #include "aura_net.cpp"

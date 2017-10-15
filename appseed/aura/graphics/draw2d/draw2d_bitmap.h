@@ -9,54 +9,58 @@ namespace draw2d
    class CLASS_DECL_AURA bitmap :
       virtual public ::draw2d::object
    {
-   public:
+      public:
 
-      int                  m_iStride;
+         int                  m_iStride;
 
 #ifdef WINDOWSEX
 
-      HBITMAP              m_hbitmapGet;
+         HBITMAP              m_hbitmapGet;
 
 #endif
 
 
 
-      bitmap();
-      virtual ~bitmap();
+         bitmap();
+         virtual ~bitmap();
 
+#ifdef DEBUG
 
-      virtual bool CreateBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
-      virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
-      virtual bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      virtual bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
-      virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
-      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+         virtual void dump(dump_context & dumpcontext) const;
 
-      virtual bool attach(void * posdata);
-      virtual void * detach();
+#endif
 
-      virtual class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
-      virtual class size set_size(class size size);
+         virtual bool CreateBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
+         virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
+         virtual bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
+         virtual bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
+         virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
+         virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
+         virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
 
-      virtual class size GetBitmapDimension() const;
-      virtual class size get_size() const;
-      virtual class size size() const;
+         virtual bool attach(void * posdata);
+         virtual void * detach();
 
-   // Operations
-      virtual uint32_t SetBitmapBits(uint32_t dwCount, const void * lpBits);
-      virtual uint32_t GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const;
+         virtual class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
+         virtual class size set_size(class size size);
 
-      virtual void dump(dump_context & dumpcontext) const;
+         virtual class size GetBitmapDimension() const;
+         virtual class size get_size() const;
+         virtual class size size() const;
+
+         // Operations
+         virtual uint32_t SetBitmapBits(uint32_t dwCount, const void * lpBits);
+         virtual uint32_t GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const;
+
 
 
 #ifdef WINDOWSEX
 
-      virtual HBITMAP GetHBITMAP();
-      virtual void ReleaseHBITMAP(HBITMAP hbitmap);
+         virtual HBITMAP GetHBITMAP();
+         virtual void ReleaseHBITMAP(HBITMAP hbitmap);
 
-      virtual HBITMAP _GetHBITMAP();
-      virtual void _ReleaseHBITMAP(HBITMAP hbitmap);
+         virtual HBITMAP _GetHBITMAP();
+         virtual void _ReleaseHBITMAP(HBITMAP hbitmap);
 
 #endif
 

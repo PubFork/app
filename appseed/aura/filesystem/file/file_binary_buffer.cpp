@@ -23,7 +23,7 @@ namespace file
 
    void binary_file::write(ostream & ostream)
    {
-      
+
       seek_to_begin();
 
       transfer_to(*ostream.m_spfile);
@@ -33,7 +33,7 @@ namespace file
 
    void binary_file::read(istream & istream)
    {
-   
+
       transfer_from(*istream.m_spfile);
 
       seek_to_begin();
@@ -113,34 +113,37 @@ namespace file
       return 0;
    }
 
-/*   void file::Rename(const char * lpszOldName, const char * lpszNewName)
-   {
-      UNREFERENCED_PARAMETER(lpszOldName);
-      UNREFERENCED_PARAMETER(lpszNewName);
-   }
+   /*   void file::Rename(const char * lpszOldName, const char * lpszNewName)
+      {
+         UNREFERENCED_PARAMETER(lpszOldName);
+         UNREFERENCED_PARAMETER(lpszNewName);
+      }
 
-   void file::remove(const char * lpszFileName)
-   {
-      UNREFERENCED_PARAMETER(lpszFileName);
-   }*/
+      void file::remove(const char * lpszFileName)
+      {
+         UNREFERENCED_PARAMETER(lpszFileName);
+      }*/
+
+#ifdef DEBUG
+
 
    void binary_file::assert_valid() const
    {
-   //   object::assert_valid();
+      //   object::assert_valid();
       // we permit the descriptor m_hFile to be any value for derived classes
    }
 
    void binary_file::dump(dump_context & dumpcontext) const
    {
       UNREFERENCED_PARAMETER(dumpcontext);
-   //   object::dump(dumpcontext);
+      //   object::dump(dumpcontext);
 
-   //   dumpcontext << "with handle " << (UINT)m_hFile;
-   //   dumpcontext << " and name \"" << m_wstrFileName << "\"";
-   //   dumpcontext << "\n";
+      //   dumpcontext << "with handle " << (UINT)m_hFile;
+      //   dumpcontext << " and name \"" << m_wstrFileName << "\"";
+      //   dumpcontext << "\n";
    }
 
-
+#endif
 
 
 

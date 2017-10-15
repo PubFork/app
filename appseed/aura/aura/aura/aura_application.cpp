@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #ifdef LINUX
@@ -228,6 +228,7 @@ namespace aura
 
    }
 
+#ifdef DEBUG
 
    void application::assert_valid() const
    {
@@ -256,6 +257,7 @@ namespace aura
 
    }
 
+#endif
 
    void application::install_message_routing(::message::sender * psender)
    {
@@ -6528,9 +6530,7 @@ retry_license:
    bool application::compress_ungz(::file::ostream & ostreamUncompressed, const ::file::path & lpcszGzFileCompressed)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().ungz(this, ostreamUncompressed, lpcszGzFileCompressed);
 
    }
 
@@ -6538,9 +6538,7 @@ retry_license:
    bool application::compress_ungz(::primitive::memory_base & mem)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().ungz(this, mem);
 
    }
 
@@ -6548,9 +6546,7 @@ retry_license:
    bool application::compress_gz(::file::file * pfileOut, const ::file::path & lpcszUncompressed, int iLevel)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().gz(this, pfileOut, lpcszUncompressed, iLevel);
 
    }
 
@@ -6558,12 +6554,9 @@ retry_license:
    bool application::compress_gz(::file::file * pfileOut, ::file::file * pfileIn, int iLevel)
    {
 
-      throw interface_only_exception(this);
-
-      return false;
+      return System.compress().gz(this, pfileOut, pfileIn, iLevel);
 
    }
-
 
    string application::fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive)
    {

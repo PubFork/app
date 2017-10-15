@@ -2,12 +2,12 @@
 
 
 
-namespace helloaxis
+namespace helloaura
 {
 
 
-   class CLASS_DECL_APP_CORE_HELLOAXIS application :
-      virtual public ::axis::application
+   class CLASS_DECL_APP_CORE_HELLOAURA application :
+      virtual public ::aura::application
    {
       public:
 
@@ -20,6 +20,7 @@ namespace helloaxis
 
          };
 
+         double                                 m_dFps;
          e_type                                 m_etype;
          string                                 m_strHelloMultiverse;
          string                                 m_strHelloMultiverseDefault;
@@ -34,6 +35,7 @@ namespace helloaxis
          int32_t                                m_iErrorAiFont;
          bool                                   m_bLoadAiFont;
          void *                                 m_faceAi; // FT_Face m_faceAi;
+         render *                               m_prender;
 
          application();
          virtual ~application();
@@ -50,10 +52,12 @@ namespace helloaxis
 
          void paint(HWND hwnd, ::draw2d::graphics * pgraphics);
 
+         virtual string get_helloaura();
+
    };
 
 
-} // namespace helloaxis
+} // namespace helloaura
 
 
 

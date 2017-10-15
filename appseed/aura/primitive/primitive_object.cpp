@@ -31,10 +31,10 @@ object::object(const object& objectSrc)
       m_psetObject = NULL;
 
    }
-   
+
    if (objectSrc.m_pmutex != NULL)
    {
-   
+
       m_pmutex = new mutex(objectSrc.m_pauraapp);
 
    }
@@ -75,9 +75,9 @@ object::~object()
    threadrefa_post_quit_and_wait(one_minute());
 
    ::aura::del(m_pthreadrefa);
-   
+
    ::aura::del(m_psetObject);
-   
+
    ::aura::del(m_pmutex);
 
 }
@@ -88,7 +88,7 @@ int64_t object::add_ref()
 
 #ifdef WINDOWS
 
-	return InterlockedIncrement64(&m_countReference);
+   return InterlockedIncrement64(&m_countReference);
 
 #else
 
@@ -104,7 +104,7 @@ int64_t object::dec_ref()
 
 #ifdef WINDOWS
 
-	return InterlockedDecrement64(&m_countReference);
+   return InterlockedDecrement64(&m_countReference);
 
 #else
 
@@ -130,6 +130,8 @@ int64_t object::release()
    return i;
 
 }
+
+#ifdef DEBUG
 
 
 
@@ -188,6 +190,7 @@ void __assert_valid_object(const object * pOb, const char * lpszFileName, int32_
    pOb->assert_valid();
 }
 
+#endif
 
 
 
@@ -242,7 +245,7 @@ bool object::is_alive()
 //}
 //
 //
-/////  \brief		destructor
+/////  \brief     destructor
 //object::~waitable()
 //{
 //
@@ -257,7 +260,7 @@ bool object::is_alive()
 //
 //}
 
-///  \brief		abstract function to initialize a waiting action without a timeout
+///  \brief    abstract function to initialize a waiting action without a timeout
 wait_result sync_object::wait()
 {
 
@@ -265,9 +268,9 @@ wait_result sync_object::wait()
 
 }
 
-///  \brief		abstract function to initialize a waiting action with a timeout
-///  \param		duration time period to wait for item
-///  \return	waiting action result as wait_result
+///  \brief    abstract function to initialize a waiting action with a timeout
+///  \param    duration time period to wait for item
+///  \return   waiting action result as wait_result
 //wait_result object::wait(const duration & duration)
 //{
 //
@@ -306,12 +309,12 @@ waitable_callback::~waitable_callback()
 
 /// called on signalization of a event_base
 /// \param signaling event_base
-//	virtual void callback(const event_base& waitItem) = 0;
+// virtual void callback(const event_base& waitItem) = 0;
 //};
 
 
-///  \brief		pauses waitable for specified time
-///  \param		duration sleeping time of waitable
+///  \brief    pauses waitable for specified time
+///  \param    duration sleeping time of waitable
 /*CLASS_DECL_AURA void sleep(const duration & duration)
 {
 Sleep((uint32_t)duration.total_milliseconds());
@@ -434,46 +437,46 @@ bool sync_object::is_locked() const
 
 void object::handle(::command::command * pcommand)
 {
-   
+
    on_handle(pcommand);
-   
+
 }
 
 
 void object::handle(::create * pcreate)
 {
-   
+
    if(pcreate->m_spCommandLine->m_varQuery.has_property("client_only"))
    {
-      
+
       pcreate->m_bClientOnly = true;
-      
+
    }
 
    request_create(pcreate);
-   
+
 }
 
 
 void object::add_line(const char * pszCommandLine, application_bias * pbiasCreate)
 {
-   
+
    ::command::command command;
-   
+
    command.m_strCommandLine = pszCommandLine;
-   
+
    add_line(&command, pbiasCreate);
-   
+
 }
 
 
 void object::add_line(::command::command * pcommand,application_bias * pbiasCreate)
 {
-   
+
    ::handler * commandcentral = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(commandcentral)));
-   
+
    create->m_spApplicationBias = pbiasCreate;
 
    if (Application.m_strAppId == "acid")
@@ -537,7 +540,7 @@ void object::add_line(::command::command * pcommand,application_bias * pbiasCrea
       }
 
    }
-   
+
    create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
 
    if(!create->m_spCommandLine->m_varFile.is_empty())
@@ -563,75 +566,75 @@ void object::add_line(::command::command * pcommand,application_bias * pbiasCrea
 
 void object::add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate)
 {
-   
+
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
-   
+
    create->m_spApplicationBias = pbiasCreate;
-   
+
    create->m_spCommandLine->_001ParseCommandLineUri(pszCommandLine);
-   
+
    handler->merge(create);
-   
+
    System.handler()->merge(create);
-   
+
    handle(create);
-   
+
 }
 
 
 void object::add_fork(const char * pszCommandLine, application_bias * pbiasCreate)
 {
-   
+
    ::command::command command;
-   
+
    command.m_strCommandLine = pszCommandLine;
-   
+
    add_fork(&command, pbiasCreate);
-   
+
 }
 
 
 void object::add_fork(::command::command * pcommand, application_bias * pbiasCreate)
 {
-   
+
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
-   
+
    create->m_spApplicationBias = pbiasCreate;
-   
+
    create->m_spCommandLine->_001ParseCommandFork(pcommand->m_strCommandLine);
-   
+
    create->m_spCommandLine->m_varFile._001Add(pcommand->m_varFile.stra());
-   
+
    handler->merge(create);
-   
+
    System.handler()->merge(create);
-   
+
    handle(create);
-   
+
 }
 
 
 void object::add_fork_uri(const char * pszCommandFork,application_bias * pbiasCreate)
 {
-   
+
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
-   
+
    create->m_spApplicationBias = pbiasCreate;
-   
+
    create->m_spCommandLine->_001ParseCommandForkUri(pszCommandFork);
-   
+
    handler->merge(create);
-   
+
    System.handler()->merge(create);
-   
+
    handle(create);
-   
+
 }
 
 
@@ -639,7 +642,7 @@ void object::request_file(var & varFile)
 {
 
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
 
    create->m_spCommandLine->m_varFile              = varFile;
@@ -655,16 +658,16 @@ void object::request_file_query(var & varFile,var & varQuery)
 {
 
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
 
    create->m_spCommandLine->m_varFile              = varFile;
-   
+
    create->m_spCommandLine->m_varQuery             = varQuery;
-   
+
    if(!varFile.is_empty())
    {
-      
+
       create->m_spCommandLine->m_ecommand = command_line::command_file_open;
 
    }
@@ -678,7 +681,7 @@ void object::request_file_query(var & varFile,var & varQuery)
    request_create(create);
 
    varFile                       = create->m_spCommandLine->m_varFile;
-   
+
    varQuery                      = create->m_spCommandLine->m_varQuery;
 
 }
@@ -688,7 +691,7 @@ void object::request_command(command_line * pcommandline)
 {
 
    sp(::handler) handler = get_app()->handler();
-   
+
    sp(::create) create(canew(::create(handler)));
 
    create->m_spCommandLine = pcommandline;
@@ -700,9 +703,9 @@ void object::request_command(command_line * pcommandline)
 
 void object::request_create(::create * pcreate)
 {
-   
+
    on_request(pcreate);
-   
+
 }
 
 
@@ -805,10 +808,10 @@ namespace aura
 
    }
 
-   
-   
-   
-   
+
+
+
+
 
 
 } // namespace aura
@@ -867,9 +870,9 @@ object & object::operator = (const object & o)
 
 void object::on_handle(::command::command * pcommand)
 {
-   
-   
-   
+
+
+
 }
 
 
@@ -877,23 +880,23 @@ void object::on_handle(::command::command * pcommand)
 
 void object::on_handle(::create * pcreate)
 {
-   
-   
-   
-   
+
+
+
+
 }
 
 
 void object::threadrefa_post_quit_and_wait(::duration duration)
 {
-   
+
    if (m_pthreadrefa != NULL)
    {
-      
+
       m_pthreadrefa->post_quit_and_wait(duration);
-      
+
    }
-   
+
 }
 
 
@@ -903,51 +906,51 @@ void object::threadrefa_add(::thread * pthread)
 
    if (pthread == NULL)
    {
-    
+
       return;
-      
+
    }
 
    if (m_pthreadrefa == NULL)
    {
-   
+
       m_pthreadrefa = new thread_refa;
-   
+
    }
 
    {
-      
+
       synch_lock sl(m_pthreadrefa->m_pmutex);
-   
+
       m_pthreadrefa->add(pthread);
-      
+
       pthread->m_objectrefaDependent.add(this);
-   
+
    }
-   
+
 }
 
 void object::threadrefa_remove(::thread * pthread)
 {
-   
+
    if (m_pthreadrefa == NULL)
    {
-      
+
       return;
-      
+
    }
-   
+
    synch_lock sl(m_pthreadrefa->m_pmutex);
-   
+
    if (pthread != NULL)
    {
-      
+
       m_pthreadrefa->remove(pthread);
-      
+
       pthread->m_objectrefaDependent.remove(this);
-      
+
    }
-   
+
 }
 
 

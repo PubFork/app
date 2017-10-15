@@ -89,7 +89,7 @@ namespace sockets
       m_request.attr(__id(request_uri))         = strRequestUri;
       m_response.attr(__id(request_uri))        = strRequestUri;
       m_strUrl                                  = strUrlParam;
-      
+
       if (m_host.is_empty())
       {
 
@@ -136,7 +136,9 @@ namespace sockets
    {
       if (!IsResponse())
       {
+#ifdef DEBUG
          log("OnFirst", 0, "Response expected but not received - aborting", ::aura::log::level_fatal);
+#endif
          SetCloseAndDelete();
       }
       m_content = m_response.attr(__id(http_version)) + " " +
@@ -174,12 +176,12 @@ namespace sockets
       if(m_content_length != ((size_t) (-1)))
       {
          m_memoryfile.allocate_internal(m_content_length);
-          if(outheader(__id(content_encoding)).compare_value_ci("gzip") != 0
-             && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
-          {
+         if(outheader(__id(content_encoding)).compare_value_ci("gzip") != 0
+               && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
+         {
 
-              m_iFinalSize = m_content_length;
-          }
+            m_iFinalSize = m_content_length;
+         }
       }
 
       m_memoryfile.seek_to_begin();
@@ -230,7 +232,7 @@ namespace sockets
       }
 
       if(m_pfile != NULL && (m_response.attr(__id(http_status_code)) < 300 || m_response.attr(__id(http_status_code)) >= 400))
-      { 
+      {
 
          m_pfile->write(m_memoryfile.get_data(), m_memoryfile.get_size());
 

@@ -152,7 +152,7 @@ namespace sockets
       m_fileBody.Truncate(0);
       m_fileBody.seek_to_begin();
    }
-   
+
    void http_tunnel::OnData(const char * psz, size_t size)
    {
 
@@ -175,7 +175,9 @@ namespace sockets
       {
          if (!Connecting())
          {
+#ifdef DEBUG
             log("http_get_socket", -1, "connect() failed miserably", ::aura::log::level_fatal);
+#endif
             SetCloseAndDelete();
          }
          return false;
@@ -208,7 +210,9 @@ namespace sockets
             if (!Connecting())
             {
 
+#ifdef DEBUG
                log("http_get_socket", -1, "connect() failed miserably", ::aura::log::level_fatal);
+#endif
 
                SetCloseAndDelete();
 

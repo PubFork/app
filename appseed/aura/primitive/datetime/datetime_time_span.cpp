@@ -20,17 +20,17 @@ namespace datetime
    /////////////////////////////////////////////////////////////////////////////
 
    string time_span::Format(const char * pFormat) const
-      // formatting timespans is a little trickier than formatting CTimes
-      //  * we are only interested in relative time formats, ie. it is illegal
-      //      to format anything dealing with absolute time (i.e. years, months,
-      //         day of week, day of year, timezones, ...)
-      //  * the only valid formats:
-      //      %D - # of days
-      //      %H - hour in 24 hour format
-      //      %M - minute (0-59)
-      //      %S - seconds (0-59)
-      //      %% - percent sign
-      //   %#<any_of_mods> - skip leading zeros
+   // formatting timespans is a little trickier than formatting CTimes
+   //  * we are only interested in relative time formats, ie. it is illegal
+   //      to format anything dealing with absolute time (i.e. years, months,
+   //         day of week, day of year, timezones, ...)
+   //  * the only valid formats:
+   //      %D - # of days
+   //      %H - hour in 24 hour format
+   //      %M - minute (0-59)
+   //      %S - seconds (0-59)
+   //      %% - percent sign
+   //   %#<any_of_mods> - skip leading zeros
    {
       ASSERT(pFormat != NULL);
       if(pFormat == NULL)
@@ -105,14 +105,18 @@ namespace datetime
 
 
 
+#ifdef DEBUG
+
 
 dump_context & operator <<(dump_context & dumpcontext,::datetime::time_span timeSpan)
 {
    return dumpcontext << "time_span(" << timeSpan.GetDays() << " days, " <<
-      timeSpan.GetHours() << " hours, " <<
-      timeSpan.GetMinutes() << " minutes and " <<
-      timeSpan.GetSeconds() << " seconds)";
+          timeSpan.GetHours() << " hours, " <<
+          timeSpan.GetMinutes() << " minutes and " <<
+          timeSpan.GetSeconds() << " seconds)";
 }
+
+#endif
 
 ::file::ostream & operator <<(::file::ostream & os,::datetime::time_span span)
 {

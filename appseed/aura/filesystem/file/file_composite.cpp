@@ -46,7 +46,7 @@ namespace file
       return m_spfile->GetFileTitle();
 
    }
-   
+
    string composite::GetFilePath() const
    {
 
@@ -102,7 +102,7 @@ namespace file
       return m_spfile->set_length(dwNewLen);
 
    }
-   
+
    file_size_t composite::get_length() const
    {
 
@@ -130,7 +130,7 @@ namespace file
       return m_spfile->Abort();
 
    }
-   
+
    void composite::flush()
    {
 
@@ -173,10 +173,14 @@ namespace file
       return m_spfile->IsOpened();
 
    }
-   
+
    composite::~composite()
    {
    }
+
+
+#ifdef DEBUG
+
 
    void composite::assert_valid() const
    {
@@ -184,7 +188,7 @@ namespace file
       return m_spfile->assert_valid();
 
    }
-   
+
    void composite::dump(dump_context & dumpcontext) const
    {
 
@@ -192,6 +196,7 @@ namespace file
 
    }
 
+#endif
 
    uint64_t composite::GetBufferPtr(UINT nCommand, uint64_t nCount, void ** ppBufStart, void ** ppBufMax)
    {

@@ -131,19 +131,21 @@ namespace draw2d
       return false;
    }
 
+#ifdef DEBUG
+
    void ::draw2d::bitmap::dump(dump_context & dumpcontext) const
    {
       UNREFERENCED_PARAMETER(dumpcontext);
       ::exception::throw_interface_only(get_app());
    }
 
-
+#endif
    class size bitmap::SetBitmapDimension(int32_t nWidth,int32_t nHeight)
    {
-      UNREFERENCED_PARAMETER(nWidth);
-      UNREFERENCED_PARAMETER(nHeight);
-      ::exception::throw_not_implemented(get_app());
-      return ::size(0,0);
+         UNREFERENCED_PARAMETER(nWidth);
+         UNREFERENCED_PARAMETER(nHeight);
+         ::exception::throw_not_implemented(get_app());
+         return ::size(0,0);
    }
 
 
@@ -164,7 +166,7 @@ namespace draw2d
    {
 
 
-      return SetBitmapDimension(size.cx,size.cy);
+         return SetBitmapDimension(size.cx,size.cy);
 
 
    }
@@ -173,9 +175,9 @@ namespace draw2d
    {
 
 
-      ::exception::throw_not_implemented(get_app());
-      class size sizeRet(0,0);
-      return sizeRet;
+         ::exception::throw_not_implemented(get_app());
+         class size sizeRet(0,0);
+         return sizeRet;
 
 
    }
@@ -184,7 +186,7 @@ namespace draw2d
    {
 
 
-      return GetBitmapDimension();
+         return GetBitmapDimension();
 
 
    }
@@ -193,42 +195,42 @@ namespace draw2d
    {
 
 
-      return GetBitmapDimension();
+         return GetBitmapDimension();
 
 
    }
 
-   
+
    void vertical_swap_copy_colorref(int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)
    {
-      
+
       if(iStrideSrc <= 0)
       {
-         
-         iStrideSrc = cxParam * sizeof(COLORREF);
-         
-      }
-      
 
-     int wsrc = iStrideSrc / sizeof(COLORREF);
-     int wdst = iStrideDst / sizeof(COLORREF);
-     int cw = cxParam * sizeof(COLORREF);
-         
-         
-     COLORREF * psrc = pcolorrefSrc;
-     COLORREF * pdst = (COLORREF * )((byte *) (pcolorrefDst) + iStrideDst * (cyParam - 1));
-         
-     for(int i = 0; i < cyParam; i++)
-     {
-            
-        memcpy(pdst,psrc,cw);
-            
-        pdst -= wdst;
-            
-        psrc += wsrc;
-            
-     }
-         
+         iStrideSrc = cxParam * sizeof(COLORREF);
+
+      }
+
+
+      int wsrc = iStrideSrc / sizeof(COLORREF);
+      int wdst = iStrideDst / sizeof(COLORREF);
+      int cw = cxParam * sizeof(COLORREF);
+
+
+      COLORREF * psrc = pcolorrefSrc;
+      COLORREF * pdst = (COLORREF * )((byte *) (pcolorrefDst) + iStrideDst * (cyParam - 1));
+
+      for(int i = 0; i < cyParam; i++)
+      {
+
+         memcpy(pdst,psrc,cw);
+
+         pdst -= wdst;
+
+         psrc += wsrc;
+
+      }
+
    }
 
    void copy_colorref(int cxParam,int cyParam,COLORREF * pcolorrefDst,int iStrideDst,COLORREF * pcolorrefSrc,int iStrideSrc)

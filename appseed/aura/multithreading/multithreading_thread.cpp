@@ -1,4 +1,4 @@
-	#include "framework.h"
+#include "framework.h"
 
 
 #ifdef LINUX
@@ -1546,26 +1546,26 @@ bool thread::begin(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,
 
 bool thread::begin_synch(int32_t * piStartupError,int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
 {
-   
+
    int32_t iStartupError = 0;
 
    if(!create_thread_synch(&iStartupError, epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId))
    {
-      
+
       if(piStartupError != NULL)
       {
-       
+
          *piStartupError = iStartupError;
-         
+
       }
 
       if(iStartupError == -1001)
       {
-       
+
          throw exit_exception(&System);
-         
+
       }
-         
+
       return false;
 
    }
@@ -1783,7 +1783,7 @@ uint32_t __thread_entry(void * pparam)
       {
 
          pthread->m_iReturnCode = -1001;
-         
+
          bError = true;
 
       }
@@ -2298,6 +2298,7 @@ run:
 
 }
 
+#ifdef DEBUG
 
 void thread::assert_valid() const
 {
@@ -2314,6 +2315,7 @@ void thread::dump(dump_context & dumpcontext) const
 
 }
 
+#endif
 
 int32_t thread::thread_term()
 {

@@ -41,7 +41,8 @@ namespace aura
    system::system(::aura::application * papp, void * pdata) :
       m_process(this),
       m_base64(this),
-      m_httpsystem(this)
+      m_httpsystem(this),
+      m_visual(this)
    {
 
       m_bThreadToolsForIncreasedFps = false;
@@ -50,7 +51,12 @@ namespace aura
 
       m_bAcid = false;
 
+
+#ifdef DEBUG
+
       m_pdumpcontext = new dump_context();
+
+#endif
 
 #ifndef WINDOWS
 
@@ -139,13 +145,15 @@ namespace aura
 
       xxdebug_box("Going to start Log","Just before initialize log",0);
 
+#ifdef DEBUG
+
       // log starts here
       if(!initialize_log(strId))
       {
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
          throw "failed to initialize log";
       }
-
+#endif
 
       /*
       if(psystemParent == NULL)
@@ -281,9 +289,11 @@ namespace aura
 
 #endif
 
+#ifdef DEBUG
+
       ::aura::del(m_pdumpcontext);
 
-
+#endif
 
 
 
@@ -592,6 +602,13 @@ namespace aura
       if(!str().initialize())
          return false;
 
+         m_visual.construct(this);
+         
+               if (!m_visual.initialize1())
+                  return false;
+         
+         
+
       return true;
 
    }
@@ -779,7 +796,11 @@ namespace aura
 
       }
 
+#ifdef DEBUG
+
       m_plog.release();
+
+#endif
 
       m_pmath.release();
 
@@ -826,10 +847,11 @@ namespace aura
       }
 
 
+#ifdef DEBUG
 
       m_plog.release();
 
-
+#endif
 
       {
 
@@ -909,6 +931,7 @@ namespace aura
 
 
 
+#ifdef DEBUG
 
 
    int32_t system::_001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args)
@@ -1014,6 +1037,8 @@ namespace aura
       UNREFERENCED_PARAMETER(iLine);
       return true;
    }
+
+#endif
 
    mutex * system::get_openweather_city_mutex()
    {
@@ -1154,14 +1179,14 @@ namespace aura
 
    }
 
-
+#ifdef DEBUG
 
    ::aura::log & system::log()
    {
       return *m_plog;
    }
 
-
+#endif
 
 
 
@@ -1202,6 +1227,7 @@ namespace aura
 
    }
 
+#ifdef DEBUG
 
    bool system::initialize_log(const char * pszId)
    {
@@ -1220,7 +1246,7 @@ namespace aura
    }
 
 
-
+#endif
 
 
 

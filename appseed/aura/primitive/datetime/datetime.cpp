@@ -153,6 +153,8 @@ namespace datetime
          }
          else if(strChar == "+")
          {
+#ifdef DEBUG
+
             if(bAdd)
             {
                Sys(pbaseapp->m_paurasystem).log().trace("strtotime: invalid char +");
@@ -161,12 +163,16 @@ namespace datetime
             {
                Sys(pbaseapp->m_paurasystem).log().trace("strtotime: invalid char + on Minus state");
             }
+
+#endif
             bAdd = true;
             bMinus = false;
             strNumber.Empty();
          }
          else if(strChar == "-")
          {
+#ifdef DEBUG
+
             if(bAdd)
             {
                Sys(pbaseapp->m_paurasystem).log().trace("strtotime: invalid char - on add state");
@@ -175,6 +181,7 @@ namespace datetime
             {
                Sys(pbaseapp->m_paurasystem).log().trace("strtotime: invalid char - on Minus state");
             }
+#endif
             bAdd = false;
             bMinus = true;
             strNumber.Empty();

@@ -1,6 +1,6 @@
 //
-//  helloaxis_render.cpp
-//  app_core_helloaxis
+//  helloaura_render.cpp
+//  app_core_helloaura
 //
 //  Created by Camilo Sasuke Tsumanuma on 8/6/15 23:27;24.
 //  Copyright (c) 2015 Camilo Sasuke Tsumanuma. All rights reserved.
@@ -11,7 +11,7 @@
 #include <math.h>
 
 
-namespace helloaxis
+namespace helloaura
 {
 
    render::bilbo::bilbo()
@@ -63,6 +63,7 @@ namespace helloaxis
       m_dwFastAnime = 500;
       m_dwLastOk = 0;
 
+      m_strNewFont = FONT_SANS;
 
 
       m_bImageEnable = true;
@@ -75,8 +76,6 @@ namespace helloaxis
 
       m_bNewLayout = false;
       m_bHelloRender = false;
-      m_cx = 0;
-      m_cy = 0;
       m_cxCache1 = 0;
       m_cyCache1 = 0;
 
@@ -92,10 +91,6 @@ namespace helloaxis
       m_bVoidTransfer = false;
 
       m_bFirstDone = true;
-
-      m_cx = 0;
-
-      m_cy = 0;
 
       m_dMinRadius = 1.0;
 
@@ -118,13 +113,21 @@ namespace helloaxis
 
    }
 
+   string render::get_helloaura()
+   {
+
+      synch_lock slText(m_pmutexText);
+
+      return Application.get_helloaura();
+
+   }
 
    void render::full_render()
    {
 
       ::draw2d::lock draw2dlock;
 
-      size sizeNew = size(m_cx, m_cy);
+      size sizeNew = m_rectClient.size();
 
       if (m_bNewLayout)
       {
@@ -150,8 +153,8 @@ namespace helloaxis
 
       }
 
-      helloaxis_draw();
-      helloaxis_render();
+      helloaura_draw();
+      helloaura_render();
 
       //if(m_bFirstDone)
       {
@@ -224,7 +227,9 @@ namespace helloaxis
 
 //      double dFps = m_pview->get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->m_dFps;
 
-      double dFps = 0.2;
+      double dFps = Application.m_dFps;
+
+      //double dFps = 0.2;
 
       double dPeriod = 1000.0 / dFps;
 
@@ -322,7 +327,7 @@ namespace helloaxis
    }
 
 
-   void render::helloaxis_render()
+   void render::helloaura_render()
    {
 
       {
@@ -336,14 +341,14 @@ namespace helloaxis
 
          pdib->Fill(0, 0, 0, 0);
 
-         helloaxis_render(pdib->get_graphics());
+         helloaura_render(pdib->get_graphics());
 
 
       }
 
    }
 
-   void render::helloaxis_render(::draw2d::graphics * pgraphics)
+   void render::helloaura_render(::draw2d::graphics * pgraphics)
    {
 
 
@@ -351,20 +356,20 @@ namespace helloaxis
       //   if(m_bLite)
       {
 
-         helloaxis_render_lite_view(pgraphics);
+         helloaura_render_lite_view(pgraphics);
 
       }
       //   else
       //   {
       //
-      //      helloaxis_render_full_view(pdib->get_graphics());
+      //      helloaura_render_full_view(pdib->get_graphics());
       //
       //   }
 
    }
 
 
-   void render::helloaxis_draw()
+   void render::helloaura_draw()
    {
 
       if (m_bVoidTransfer)
@@ -406,7 +411,7 @@ namespace helloaxis
 
    }
 
-   void render::helloaxis_render_lite_view(::draw2d::graphics * pgraphics)
+   void render::helloaura_render_lite_view(::draw2d::graphics * pgraphics)
    {
 
       if (m_dibWork->area() <= 0)
@@ -414,21 +419,7 @@ namespace helloaxis
 
       ::get_thread()->m_bThreadToolsForIncreasedFps = true;
 
-      rect rectClient;
-
-      rectClient.left = 0;
-
-      rectClient.top = 0;
-
-      rectClient.right = m_cx;
-
-      rectClient.bottom = m_cy;
-
-      //pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
-
-      //pgraphics->FillSolidRect(rectClient,ARGB(0, 0, 0, 0));
-
-      //      int32_t iCount = 30;
+      rect rectClient = m_rectClient;
 
       ::draw2d::brush_sp brushText(allocer());
 
@@ -468,7 +459,7 @@ namespace helloaxis
 
          synch_lock slText(m_pmutexText);
 
-         strHelloMultiverse = get_helloaxis().c_str(); // rationale : string allocation fork *for multithreading*
+         strHelloMultiverse = get_helloaura().c_str(); // rationale : string allocation fork *for multithreading*
 
       }
 
@@ -542,7 +533,7 @@ namespace helloaxis
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse != get_helloaxis() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
+         if (strHelloMultiverse != get_helloaura() || m_cxCache1 != m_cxTarget || m_cyCache1 != m_cyTarget || m_dibTemplate->area() <= 0)
             return;
 
       }
@@ -594,7 +585,8 @@ namespace helloaxis
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
       System.visual().imaging().bitmap_blend(pgraphics,
-                                             point((m_cx - m_dibTemplate2->m_size.cx) / 2, (m_cy - m_dibTemplate2->m_size.cy) / 2)
+                                             point((m_rectClient.width() - m_dibTemplate2->m_size.cx) / 2,
+                                                   (m_rectClient.height() - m_dibTemplate2->m_size.cy) / 2)
                                              , m_dibTemplate2->m_size,
                                              m_dibTemplate2->get_graphics(), null_point(), byte (128 + (255 - 128) * r));
 
@@ -633,7 +625,7 @@ namespace helloaxis
       //if(!m_bAlternate)
       {
 
-         pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+         pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
 
       }
       //      pgraphics->FillSolidRect(200,00,100,100,ARGB(128,128,128,255));
@@ -645,7 +637,7 @@ namespace helloaxis
 
          synch_lock slText(m_pmutexText);
 
-         if (strHelloMultiverse == get_helloaxis() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
+         if (strHelloMultiverse == get_helloaura() && m_cxCache1 == m_cxTarget && m_cyCache1 == m_cyTarget)
          {
 
             m_bFirstDone = true;
@@ -657,7 +649,7 @@ namespace helloaxis
    }
 
 
-   void render::helloaxis_render_full_view(::draw2d::graphics * pgraphics)
+   void render::helloaura_render_full_view(::draw2d::graphics * pgraphics)
    {
 
       if (m_dibWork->area() <= 0)
@@ -669,9 +661,9 @@ namespace helloaxis
 
       rectClient.top = 0;
 
-      rectClient.right = m_cx;
+      rectClient.right = m_rectClient.width();
 
-      rectClient.bottom = m_cy;
+      rectClient.bottom = m_rectClient.height();
 
       if (rectClient.area() <= 0)
          return;
@@ -743,7 +735,7 @@ namespace helloaxis
 
       pgraphics->set_font(m_font);
 
-      string strHelloMultiverse = get_helloaxis();
+      string strHelloMultiverse = get_helloaura();
 
       ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
@@ -784,12 +776,12 @@ namespace helloaxis
 
             m_dib->get_graphics()->set_font(m_font);
 
-            m_dib->get_graphics()->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+            m_dib->get_graphics()->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
 
             if (m_dMinRadius > 3.0)
             {
 
-               m_dib.blur(m_cx, m_cy);
+               m_dib.blur(m_rectClient.width(), m_rectClient.height());
 
             }
             else
@@ -798,7 +790,7 @@ namespace helloaxis
                for (int32_t i = 0; i < dBlur * 2; i++)
                {
 
-                  m_dib.blur(m_cx, m_cy);
+                  m_dib.blur(m_rectClient.width(), m_rectClient.height());
 
                }
 
@@ -851,7 +843,7 @@ namespace helloaxis
 
       pgraphics->SelectObject(brushText);
 
-      pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+      pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
 
       byte a, R, g, b;
 
@@ -920,7 +912,7 @@ namespace helloaxis
 
                      pgraphics->StretchBlt(0, 0, dib->get_size().cx / 40, dib->get_size().cy / 40, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
 
-                     pgraphics->StretchBlt(0, m_cy - dib->get_size().cy / 40, dib->get_size().cx / 40, dib->get_size().cy / 40, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
+                     pgraphics->StretchBlt(0, m_rectClient.height() - dib->get_size().cy / 40, dib->get_size().cx / 40, dib->get_size().cy / 40, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
 
                   }
 
@@ -969,9 +961,9 @@ namespace helloaxis
 
                      pgraphics->SetStretchBltMode(HALFTONE);
 
-                     pgraphics->StretchBlt(m_cx - dib->get_size().cx / 32, 0, dib->get_size().cx / 32, dib->get_size().cy / 32, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
+                     pgraphics->StretchBlt(m_rectClient.width() - dib->get_size().cx / 32, 0, dib->get_size().cx / 32, dib->get_size().cy / 32, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
 
-                     pgraphics->StretchBlt(m_cx - dib->get_size().cx / 32, m_cy - dib->get_size().cy / 32, dib->get_size().cx / 32, dib->get_size().cy / 32, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
+                     pgraphics->StretchBlt(m_rectClient.width() - dib->get_size().cx / 32, m_rectClient.height() - dib->get_size().cy / 32, dib->get_size().cx / 32, dib->get_size().cy / 32, dib->get_graphics(), 0, 0, dib->get_size().cx, dib->get_size().cy, SRCCOPY);
 
                   }
 
@@ -985,7 +977,7 @@ namespace helloaxis
 
 #endif
 
-      if (strHelloMultiverse == get_helloaxis() && m_cx == m_rectClient.width() && m_cy == m_rectClient.height())
+      if (strHelloMultiverse == get_helloaura() && m_rectClient.width() == m_rectClient.width() && m_rectClient.height() == m_rectClient.height())
       {
 
          m_bFirstDone = true;
@@ -1002,8 +994,8 @@ namespace helloaxis
 
       rectClient.left = 0;
       rectClient.top = 0;
-      rectClient.right = m_cx;
-      rectClient.bottom = m_cy;
+      rectClient.right = m_rectClient.width();
+      rectClient.bottom = m_rectClient.height();
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
       int period = 5000;
@@ -1136,11 +1128,7 @@ namespace helloaxis
 
             {
 
-               //synch_lock slText(&m_pview->m_mutexText);
-
-               //strHelloMultiverse = m_pview->get_processed_helloaxis().c_str();
-
-               strHelloMultiverse = "Hello Axis!!";
+               strHelloMultiverse = get_helloaura();
 
             }
 
@@ -1161,7 +1149,7 @@ namespace helloaxis
 
                double ratey = fHeight * 0.84 / size.cy;
 
-               font->create_pixel_font(FONT_SANS, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
+               font->create_pixel_font(FONT_SANS, MIN(m_rectClient.height() * ratey, m_rectClient.width() * size.cy * ratey / size.cx), FW_BOLD);
 
                m_font = font;
 
@@ -1189,7 +1177,7 @@ namespace helloaxis
 
             ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
-            pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+            pgraphics->text_out((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse);
 
             return;
 
@@ -1215,8 +1203,7 @@ namespace helloaxis
 
                //synch_lock slText(&m_pview->m_mutexText);
 
-               //helloaxis_fast_render(m_pview->get_processed_helloaxis());
-               helloaxis_fast_render("Hello Axis!!");
+               helloaura_fast_render(get_helloaura());
 
             }
 
@@ -1233,7 +1220,7 @@ namespace helloaxis
 
          pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         pgraphics->BitBlt(null_point(), size(m_cx, m_cy), m_dibFast->get_graphics());
+         pgraphics->BitBlt(null_point(), size(m_rectClient.width(), m_rectClient.height()), m_dibFast->get_graphics());
 
          //pgraphics->FillSolidRect(400,400,100,100,ARGB(128,0,0,128));
 
@@ -1376,15 +1363,15 @@ namespace helloaxis
       return false;
    }
 
-   void render::helloaxis_fast_render(const string & strHelloMultiverse)
+   void render::helloaura_fast_render(const string & strHelloMultiverse)
    {
 
-      if (m_cx <= 0 || m_cy <= 0)
+      if (m_rectClient.width() <= 0 || m_rectClient.height() <= 0)
          return;
 
       synch_lock slDraw(&m_mutexDraw);
 
-      ::size sizeNew = ::size(m_cx, m_cy);
+      ::size sizeNew = ::size(m_rectClient.width(), m_rectClient.height());
 
       bool bNewSize = m_dibFast->m_size.cx != sizeNew.cx || m_dibFast->m_size.cy != sizeNew.cy;
 
@@ -1403,7 +1390,7 @@ namespace helloaxis
 
       ::draw2d::font_sp font(allocer());
 
-//      font->create_pixel_font(m_pview->m_strFont, fHeight, FW_BOLD);
+      font->create_pixel_font(m_strFont, fHeight, FW_BOLD);
 
       pgraphics->set_font(font);
 
@@ -1413,9 +1400,9 @@ namespace helloaxis
 
       double ratey = fHeight * 0.84 / size.cy;
 
-//      font->create_pixel_font(m_pview->m_strFont, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
+      font->create_pixel_font(m_strFont, MIN(m_rectClient.height() * ratey, m_rectClient.width() * size.cy * ratey / size.cx), FW_BOLD);
 
-      m_dMinRadius = MAX(1.0, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx) / 46.0);
+      m_dMinRadius = MAX(1.0, MIN(m_rectClient.height() * ratey, m_rectClient.width() * size.cy * ratey / size.cx) / 46.0);
 
       m_dMaxRadius = m_dMinRadius * 2.3;
 
@@ -1429,7 +1416,7 @@ namespace helloaxis
 
       path->m_bFill = false;
 
-      path->add_string((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse, m_font);
+      path->add_string((m_rectClient.width() - size.cx) / 2, (m_rectClient.height() - size.cy) / 2, strHelloMultiverse, m_font);
 
       ::draw2d::pen_sp pen(allocer());
 
@@ -1441,7 +1428,7 @@ namespace helloaxis
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
 
-      //      pgraphics->FillSolidRect((m_cx - size.cx) / 2,(m_cy - size.cy) / 2, 100, 100, ARGB(255,255,200,240));
+      //      pgraphics->FillSolidRect((m_rectClient.width() - size.cx) / 2,(m_rectClient.height() - size.cy) / 2, 100, 100, ARGB(255,255,200,240));
 
       pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -1452,7 +1439,7 @@ namespace helloaxis
    }
 
 
-} // namespace helloaxis
+} // namespace helloaura
 
 
 

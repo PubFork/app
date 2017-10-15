@@ -156,9 +156,6 @@
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{a0c83851-cf47-4335-a020-02535adcc2d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\graphics\visual">
-      <UniqueIdentifier>{8169e692-0d0c-4fe6-b5f5-13e686588fd8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="filesystem\filesystem.h">
@@ -892,20 +889,8 @@
     <ClCompile Include="database\sqlitedb\_sqlitedb.cpp">
       <Filter>Source Files\database\sqlitedb</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_freeimage_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_freeimage_image_gif.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
+    <ClCompile Include="graphics\visual\visual_windows_image.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -914,9 +899,6 @@
     </None>
     <None Include="axis.def">
       <Filter>Source Files</Filter>
-    </None>
-    <None Include="graphics\visual\visual_windows_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
     </None>
   </ItemGroup>
 </Project>

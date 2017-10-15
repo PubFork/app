@@ -29,6 +29,12 @@ class string_array :
       string_array(const string_array & array);
       virtual ~string_array();
 
+#ifdef DEBUG
+
+      void dump(dump_context &) const;
+      void assert_valid() const;
+
+#endif
 
 
       ::count get_size() const;
@@ -320,9 +326,6 @@ class string_array :
 
       Type & get_json(Type & str, bool bNewLine = true) const;
 
-      void dump(dump_context &) const;
-
-      void assert_valid() const;
 
       typedef Type BASE_TYPE;
 
@@ -1003,8 +1006,7 @@ ar >> this->m_pData[i];
 }
 */
 
-
-
+#ifdef DEBUG
 
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::dump(dump_context & dumpcontext) const
@@ -1042,7 +1044,7 @@ void string_array < Type, RawType >::assert_valid() const
 }
 
 
-
+#endif
 
 
 template < typename Type, typename RawType >
@@ -1607,9 +1609,6 @@ void string_array < Type, RawType > ::_001AddTokens(const char * lpcsz)
    }
 
 }
-
-
-extern int32_t g_add_smallest_tokens;
 
 
 template < class Type, class RawType >

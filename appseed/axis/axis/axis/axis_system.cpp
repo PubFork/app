@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "framework.h" // from "axis/net/net_sockets.h"
 #include "fiasco_finder.h"
 
@@ -16,7 +16,7 @@ namespace axis
    system::system(::aura::application * papp):
       aura::system(this, NULL),
 //      m_httpsystem(this),
-      m_visual(this),
+//      m_visual(this),
 
       m_emaildepartment(this)
    {
@@ -135,11 +135,6 @@ namespace axis
       if(!::axis::application::initialize1())
          return false;
 
-
-      m_visual.construct(this);
-
-      if (!m_visual.initialize1())
-         return false;
 
       Session.m_puserstrcontext->defer_ok(m_puserstr);
 

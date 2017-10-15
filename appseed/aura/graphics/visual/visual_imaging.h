@@ -9,7 +9,7 @@
 
 class image_list;
 
-class CLASS_DECL_AXIS imaging :
+class CLASS_DECL_AURA imaging :
    virtual public ::object
 {
    public:

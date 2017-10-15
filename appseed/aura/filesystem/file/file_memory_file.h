@@ -31,6 +31,14 @@ class CLASS_DECL_AURA memory_file :
       virtual ~memory_file();
 
 
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
+
       virtual bool IsValid() const;
       memory_size_t remove_begin(void * lpBuf, memory_size_t uiCount);
       void load_string(string & str);
@@ -60,9 +68,6 @@ class CLASS_DECL_AURA memory_file :
 
 
       virtual void full_load(var varFile);
-
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
 
       using ::file::file::get_internal_data;
       virtual void * get_internal_data();

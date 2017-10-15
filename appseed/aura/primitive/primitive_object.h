@@ -3,77 +3,77 @@
 
 //class CLASS_DECL_AURA ::object :
 class CLASS_DECL_AURA mini_object
-   // virtual public element
-   //class CLASS_DECL_AURA waitable :
-   //class CLASS_DECL_AURA object
-   //   virtual public ::object
+// virtual public element
+//class CLASS_DECL_AURA waitable :
+//class CLASS_DECL_AURA object
+//   virtual public ::object
 {
-public:
+   public:
 
 
-   int64_t m_countReference;
+      int64_t m_countReference;
 
-   mini_object()
-   {
-      m_countReference = 1;
-   }
-   virtual ~mini_object()
-   {
-
-   }
-
-   virtual int64_t add_ref()
-   {
-
-#ifdef WINDOWS
-
-      return InterlockedIncrement64(&m_countReference);
-
-#else
-
-      return __sync_add_and_fetch(&m_countReference, 1);
-
-#endif
-
-   }
-
-
-   int64_t dec_ref()
-   {
-
-#ifdef WINDOWS
-
-      return InterlockedDecrement64(&m_countReference);
-
-#else
-
-      return  __sync_sub_and_fetch(&m_countReference, 1);
-
-#endif
-
-   }
-
-
-   int64_t release()
-   {
-
-      int64_t i = dec_ref();
-
-      if (i == 0)
+      mini_object()
       {
-
-         delete this;
+         m_countReference = 1;
+      }
+      virtual ~mini_object()
+      {
 
       }
 
-      return i;
+      virtual int64_t add_ref()
+      {
 
-   }
+#ifdef WINDOWS
 
-   inline void set_heap_alloc()
-   {
+         return InterlockedIncrement64(&m_countReference);
 
-   }
+#else
+
+         return __sync_add_and_fetch(&m_countReference, 1);
+
+#endif
+
+      }
+
+
+      int64_t dec_ref()
+      {
+
+#ifdef WINDOWS
+
+         return InterlockedDecrement64(&m_countReference);
+
+#else
+
+         return  __sync_sub_and_fetch(&m_countReference, 1);
+
+#endif
+
+      }
+
+
+      int64_t release()
+      {
+
+         int64_t i = dec_ref();
+
+         if (i == 0)
+         {
+
+            delete this;
+
+         }
+
+         return i;
+
+      }
+
+      inline void set_heap_alloc()
+      {
+
+      }
 
 
 };
@@ -91,163 +91,168 @@ class thread_refa;
 
 class CLASS_DECL_AURA object
 {
-public:
+   public:
 
 
-   enum flag
-   {
+      enum flag
+      {
 
-      flag_auto_clean = 1 << 0,
-      flag_discard_to_factory = 1 << 1,
-      flag_ready_for_delete = 1 << 2,
-      flag_auto_delete = 1 << 3,
-      flag_heap_alloc = 1 << 4,
-      flag_locked = 1 << 5
+         flag_auto_clean = 1 << 0,
+         flag_discard_to_factory = 1 << 1,
+         flag_ready_for_delete = 1 << 2,
+         flag_auto_delete = 1 << 3,
+         flag_heap_alloc = 1 << 4,
+         flag_locked = 1 << 5
 
-   };
-
-
-   uint64_t                      m_ulFlags;
-   factory_item_base *           m_pfactoryitembase;
-   void *                        m_pthis;
-   int64_t                       m_countReference;
-   ::aura::application *         m_pauraapp;
-   mutex *                       m_pmutex;
-   property_set *                m_psetObject;
-   thread_refa *                 m_pthreadrefa;
+      };
 
 
-   object();
-   object(::aura::application * papp);
-   object(const object & objectSrc);              // no implementation
-   virtual ~object();  // virtual destructors are necessary
+      uint64_t                      m_ulFlags;
+      factory_item_base *           m_pfactoryitembase;
+      void *                        m_pthis;
+      int64_t                       m_countReference;
+      ::aura::application *         m_pauraapp;
+      mutex *                       m_pmutex;
+      property_set *                m_psetObject;
+      thread_refa *                 m_pthreadrefa;
 
 
-   template < typename PRED >
-   inline ::thread * fork(PRED pred);
-
-   void defer_create_mutex();
-
-
-   virtual void delete_this();
+      object();
+      object(::aura::application * papp);
+      object(const object & objectSrc);              // no implementation
+      virtual ~object();  // virtual destructors are necessary
 
 
-   virtual object * clone();
+#ifdef DEBUG
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+#endif
 
 
-   static void system(const char * pszProjectName);
-
-   inline ::aura::allocatorsp & allocer();
-
-   inline ::aura::allocatorsp & allocer() const { return ((object *)this)->allocer(); }
-
-   inline ::aura::application * get_app() const { return m_pauraapp; }
-
-   virtual void set_app(::aura::application * papp);
-
-   inline bool is_set_ca_flag(object::flag eflag)
-   {
-      return (m_ulFlags & ((uint32_t)eflag)) == (uint32_t)eflag;
-   }
-
-   inline void clear_ca_flag(object::flag eflag)
-   {
-      m_ulFlags &= ~eflag;
-   }
-
-   inline void set_ca_flag(object::flag eflag)
-   {
-
-      m_ulFlags |= eflag;
-
-   }
 
 
-   object & operator = (const object & o);
+      template < typename PRED >
+      inline ::thread * fork(PRED pred);
 
-   void copy_this(const object & o);
-
-   inline void set_heap_alloc()
-   {
-
-      m_ulFlags |= (uint64_t) ::object::flag_heap_alloc;
-
-   }
+      void defer_create_mutex();
 
 
-   inline int64_t get_ref_count()
-   {
-
-      return m_countReference;
-
-   }
-
-   inline bool is_heap()
-   {
-
-      return (m_ulFlags & (uint64_t) flag_heap_alloc) != 0;
-
-   }
+      virtual void delete_this();
 
 
-   virtual int64_t add_ref();
-   virtual int64_t dec_ref();
-   virtual int64_t release();
-
-   
-   virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);
-   virtual void add_line(const char * pszCommandLine, application_bias * pbiasCreate = NULL);
-   virtual void add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
-
-   virtual void add_fork(::command::command * pcommand, application_bias * pbiasCreate = NULL);
-   virtual void add_fork(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
-   virtual void add_fork_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
+      virtual object * clone();
 
 
-   // semantics defined by the requested object - ::object implementator
-   virtual void request_file(var & varFile);
-   virtual void request_file_query(var & varFile,var & varQuery);
-   virtual void request_command(command_line * pcommandline);
-   virtual void request_create(::create * pcreate);
-   
-   virtual void handle(::command::command * pcommand);
-   virtual void handle(::create * pcreate);
+      static void system(const char * pszProjectName);
 
-   virtual void on_handle(::command::command * pcommand);
-   virtual void on_handle(::create * pcreate);
+      inline ::aura::allocatorsp & allocer();
 
-   virtual void threadrefa_add(::thread * pthread);
-   virtual void threadrefa_post_quit_and_wait(::duration duration);
-   virtual void threadrefa_remove(::thread * pthread);
+      inline ::aura::allocatorsp & allocer() const { return ((object *)this)->allocer(); }
 
-   // main loosely coupled semantics :
-   // varFile   : empty, one file path, many file paths, one file object, one or more file objects, or Url, of cached, downloaded, dowloading or queuing files to be opened
-   // varQuery  : more ellaborated requests for the requested object - syntax and semantic defined by requested object - ::object implementator
-   // virtual void on_request(sp(command_line) pcommandline);
-   virtual void on_request(::create * pcreate);
+      inline ::aura::application * get_app() const { return m_pauraapp; }
 
+      virtual void set_app(::aura::application * papp);
 
-   virtual string lstr(id id, string strDefault = "");
+      inline bool is_set_ca_flag(object::flag eflag)
+      {
+         return (m_ulFlags & ((uint32_t)eflag)) == (uint32_t)eflag;
+      }
 
-   //void common_construct();
+      inline void clear_ca_flag(object::flag eflag)
+      {
+         m_ulFlags &= ~eflag;
+      }
 
-   bool IsSerializable() const;
+      inline void set_ca_flag(object::flag eflag)
+      {
+
+         m_ulFlags |= eflag;
+
+      }
 
 
-   property & oprop(const char * psz);
-   property & oprop(const char * psz) const;
-   property_set & oprop_set();
+      object & operator = (const object & o);
+
+      void copy_this(const object & o);
+
+      inline void set_heap_alloc()
+      {
+
+         m_ulFlags |= (uint64_t) ::object::flag_heap_alloc;
+
+      }
 
 
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
+      inline int64_t get_ref_count()
+      {
 
-   inline sp(::handler) handler();
+         return m_countReference;
+
+      }
+
+      inline bool is_heap()
+      {
+
+         return (m_ulFlags & (uint64_t) flag_heap_alloc) != 0;
+
+      }
 
 
-   virtual void keep_alive();
-   virtual void on_keep_alive();
-   virtual bool is_alive();
+      virtual int64_t add_ref();
+      virtual int64_t dec_ref();
+      virtual int64_t release();
+
+
+      virtual void add_line(::command::command * pcommand, application_bias * pbiasCreate = NULL);
+      virtual void add_line(const char * pszCommandLine, application_bias * pbiasCreate = NULL);
+      virtual void add_line_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
+
+      virtual void add_fork(::command::command * pcommand, application_bias * pbiasCreate = NULL);
+      virtual void add_fork(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
+      virtual void add_fork_uri(const char * pszCommandLine,application_bias * pbiasCreate = NULL);
+
+
+      // semantics defined by the requested object - ::object implementator
+      virtual void request_file(var & varFile);
+      virtual void request_file_query(var & varFile,var & varQuery);
+      virtual void request_command(command_line * pcommandline);
+      virtual void request_create(::create * pcreate);
+
+      virtual void handle(::command::command * pcommand);
+      virtual void handle(::create * pcreate);
+
+      virtual void on_handle(::command::command * pcommand);
+      virtual void on_handle(::create * pcreate);
+
+      virtual void threadrefa_add(::thread * pthread);
+      virtual void threadrefa_post_quit_and_wait(::duration duration);
+      virtual void threadrefa_remove(::thread * pthread);
+
+      // main loosely coupled semantics :
+      // varFile   : empty, one file path, many file paths, one file object, one or more file objects, or Url, of cached, downloaded, dowloading or queuing files to be opened
+      // varQuery  : more ellaborated requests for the requested object - syntax and semantic defined by requested object - ::object implementator
+      // virtual void on_request(sp(command_line) pcommandline);
+      virtual void on_request(::create * pcreate);
+
+
+      virtual string lstr(id id, string strDefault = "");
+
+      //void common_construct();
+
+      bool IsSerializable() const;
+
+
+      property & oprop(const char * psz);
+      property & oprop(const char * psz) const;
+      property_set & oprop_set();
+
+
+      inline sp(::handler) handler();
+
+
+      virtual void keep_alive();
+      virtual void on_keep_alive();
+      virtual bool is_alive();
 
 
 };
@@ -261,10 +266,10 @@ namespace aura
    class CLASS_DECL_AURA allocator:
       virtual public object
    {
-   public:
+      public:
 
 
-      virtual ~allocator();
+         virtual ~allocator();
 
 
    };
@@ -273,10 +278,10 @@ namespace aura
    class CLASS_DECL_AURA allocatorsp:
       public sp(allocator)
    {
-   public:
+      public:
 
 
-      allocatorsp(::aura::application * papp);
+         allocatorsp(::aura::application * papp);
 
 
    };
@@ -288,45 +293,6 @@ namespace aura
 
 
 
-
-
-//class CLASS_DECL_AURA object :
-//   virtual public waitable
-//{
-//public:
-//
-//
-//   property_set *     m_psetObject;
-//
-//
-//   object();
-//   object(const object & objectSrc);              // no implementation
-//   virtual ~object();  // virtual destructors are necessary
-//
-//
-//   void common_construct();
-//
-//   bool IsSerializable() const;
-//
-//
-//   property & oprop(const char * psz);
-//   property & oprop(const char * psz) const;
-//   property_set & oprop_set();
-//
-//
-//   virtual void assert_valid() const;
-//   virtual void dump(dump_context & dumpcontext) const;
-//
-//   object & operator = (const object & objectSrc);       // no implementation
-//
-//
-//   inline sp(::handler) handler();
-//
-//
-//   DECLARE_AND_IMPLEMENT_DEFAULT_ALLOCATION
-//
-//};
-//
 
 
 

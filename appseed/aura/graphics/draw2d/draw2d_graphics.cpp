@@ -2523,6 +2523,7 @@ namespace draw2d
 
    /////////////////////////////////////////////////////////////////////////////
    // ::draw2d::graphics_sp
+#ifdef DEBUG
 
    void graphics::assert_valid() const
    {
@@ -2534,7 +2535,7 @@ namespace draw2d
       UNREFERENCED_PARAMETER(dumpcontext);
       throw interface_only_exception(get_app());
    }
-
+#endif
 
 
 

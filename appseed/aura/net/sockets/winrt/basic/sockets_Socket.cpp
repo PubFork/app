@@ -131,7 +131,7 @@ namespace sockets
       if(close_socket(m_socket) == -1)
       {
          // failed...
-         log("close", Errno, StrError(Errno), ::aura::log::level_error);
+         log("close", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
          n = -1;
       }
       Handler().set(m_socket, false, false, false); // remove from fd_set's

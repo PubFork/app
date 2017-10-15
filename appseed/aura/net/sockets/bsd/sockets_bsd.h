@@ -52,17 +52,17 @@ struct ssl_ticket_key
 #include "webserver/http_base_socket.h"
 #include "webserver/httpd_socket.h"
 
-#include "sip/sip_base.h"
-
-#include "sip/sip_transaction.h"
-#include "sip/sip_request.h"
-#include "sip/sip_response.h"
-
-#include "sip/sip_base_client_socket.h"
-#include "sip/sip_tcp_client_socket.h"
-#include "sip/sip_udp_client_socket.h"
-#include "sip/sip_client.h"
-#include "sip/sip_server.h"
+//#include "sip/sip_base.h"
+//
+//#include "sip/sip_transaction.h"
+//#include "sip/sip_request.h"
+//#include "sip/sip_response.h"
+//
+//#include "sip/sip_base_client_socket.h"
+//#include "sip/sip_tcp_client_socket.h"
+//#include "sip/sip_udp_client_socket.h"
+//#include "sip/sip_client.h"
+//#include "sip/sip_server.h"
 
 
 #include "smtp/smtp_socket.h"

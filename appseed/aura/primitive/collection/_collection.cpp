@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #include "collection_2d_array.cpp"
@@ -10,11 +10,9 @@
 #include "collection_key_sort_array.cpp"
 #include "collection_map_misc.cpp"
 #include "collection_numeric_array.cpp"
-#include "collection_object_list.cpp"
-#include "collection_pointer_list.cpp"
 #include "collection_point_array.cpp"
 #include "collection_rect_array.cpp"
-#include "collection_ref_array.cpp"
+//#include "collection_ref_array.cpp"
 #include "collection_sort.cpp"
 #include "collection_stringa.cpp"
 #include "collection_stringl.cpp"

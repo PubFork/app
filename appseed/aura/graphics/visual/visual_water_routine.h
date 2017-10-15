@@ -5,7 +5,7 @@ namespace visual
 {
 
 
-   class CLASS_DECL_AXIS water_routine  
+   class CLASS_DECL_AURA water_routine  
    {
    public:
       water_routine();

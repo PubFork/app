@@ -167,6 +167,14 @@ namespace aura
          application();
          virtual ~application();
 
+
+#ifdef DEBUG
+         virtual void assert_valid() const override;
+         virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
          virtual bool app_data_set(class id id, ::file::ostream & os);
          virtual bool app_data_get(class id id, ::file::istream & is);
 
@@ -429,14 +437,6 @@ namespace aura
          virtual bool get_temp_file_name_template(string & str,const char * pszName,const char * pszExtension,const char * pszTemplate);
 
          virtual bool get_temp_file_name(string & str,const char * pszName,const char * pszExtension);
-
-
-
-
-
-         virtual void assert_valid() const override;
-         virtual void dump(dump_context & dumpcontext) const override;
-
          virtual bool final_handle_exception(::exception::exception & e);
 
 

@@ -204,7 +204,7 @@ namespace sockets
             if (Errno == EINPROGRESS)
    #endif
             {
-               log("connect: connection pending", Errno, StrError(Errno), ::aura::log::level_info);
+               log("connect: connection pending", Errno, bsd_socket_error(Errno), ::aura::log::level_info);
                SetConnecting( true ); // this flag will control fd_set's
             }
             else
@@ -339,7 +339,7 @@ namespace sockets
       int n = sctp_recvmsg(GetSocket(), m_buf, SCTP_BUFSIZE_READ, &sa, &sa_len, &sinfo, &flags);
       if (n == -1)
       {
-         log("SctpSocket", Errno, StrError(Errno), ::aura::log::level_fatal);
+         log("SctpSocket", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
          SetCloseAndDelete();
       }
       else
@@ -369,7 +369,7 @@ namespace sockets
             SetCallOnConnect();
             return;
          }
-         log("sctp: connect failed", err, StrError(err), ::aura::log::level_fatal);
+         log("sctp: connect failed", err, bsd_socket_error(err), ::aura::log::level_fatal);
          Set(false, false); // no more monitoring because connection failed
 
          // failed
@@ -466,7 +466,7 @@ namespace sockets
       // %! exception doesn't always mean something bad happened, this code should be reworked
       // errno valid here?
       int err = SoError();
-      log("exception on select", err, StrError(err), ::aura::log::level_fatal);
+      log("exception on select", err, bsd_socket_error(err), ::aura::log::level_fatal);
       SetCloseAndDelete();
    }
    #endif // _WIN32

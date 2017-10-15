@@ -220,7 +220,7 @@ namespace visual
    bool dib_sp::load_from_matter(const char * pszMatter, bool bCache, bool bCreateHelperMaps)
    {
 
-      ::file::path path = m_p->m_pauraapp->m_paxisapp->dir().matter(pszMatter);
+      ::file::path path = m_p->m_pauraapp->dir().matter(pszMatter);
 
       if (!Sys(m_p->m_pauraapp).visual().imaging().load_from_file(m_p, path, bCache))
       {
@@ -508,7 +508,7 @@ namespace visual
 #if 0
 
 
-CLASS_DECL_AXIS void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32_t dy, void * pftbitmap, int xParam, int yParam)
+CLASS_DECL_AURA void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32_t dy, void * pftbitmap, int xParam, int yParam)
 {
 
    FT_Bitmap * bitmap = (FT_Bitmap *)pftbitmap;
@@ -538,7 +538,7 @@ CLASS_DECL_AXIS void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32
 }
 
 
-CLASS_DECL_AXIS void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32_t dy, void * pftbitmap, int xParam, int yParam, byte aParam, byte r, byte g, byte b)
+CLASS_DECL_AURA void draw_freetype_bitmap(::draw2d::dib * m_p, int32_t dx, int32_t dy, void * pftbitmap, int xParam, int yParam, byte aParam, byte r, byte g, byte b)
 {
 
    FT_Bitmap * bitmap = (FT_Bitmap *)pftbitmap;

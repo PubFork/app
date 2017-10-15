@@ -1,4 +1,4 @@
-; example2.nsi
+﻿; example2.nsi
 ;
 ; This script is based on example1.nsi, but it remember the directory, 
 ; has uninstall support and (optionally) installs start menu shortcuts.
@@ -60,12 +60,12 @@ Section "HelloMultiverse (required)"
   File "C:\ca2\time\x64\stage\ace.dll"
   File "C:\ca2\time\x64\stage\aqua.dll"
   File "C:\ca2\time\x64\stage\aura.dll"
-  File "C:\ca2\time\x64\stage\axis.dll"
+  File "C:\ca2\time\x64\stage\aura.dll"
   File "C:\ca2\time\x64\stage\base.dll"
   File "C:\ca2\time\x64\stage\core.dll"
   File "C:\ca2\time\x64\stage\draw2d_gdiplus.dll"
   File "C:\ca2\time\x64\stage\wndfrm_core.dll"
-  File "C:\ca2\time\x64\stage\axisfreeimage.dll"
+  File "C:\ca2\time\x64\stage\aurafreeimage.dll"
   File "C:\ca2\time\x64\stage\image_decode_png.dll"
   File "C:\ca2\time\x64\stage\image_decode_jpeg.dll"
   File "C:\ca2\time\x64\stage\gcom.dll"

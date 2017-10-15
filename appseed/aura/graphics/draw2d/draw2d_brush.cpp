@@ -27,29 +27,29 @@ namespace draw2d
    }
 
 
-/*
-   void brush::construct(COLORREF crColor)
-   {
+   /*
+      void brush::construct(COLORREF crColor)
+      {
 
-      m_crColor   = crColor;
-      m_etype     = type_solid;
-      m_bUpdated  = false;
+         m_crColor   = crColor;
+         m_etype     = type_solid;
+         m_bUpdated  = false;
 
-   }
+      }
 
-   void brush::construct(int32_t nIndex, COLORREF crColor)
-   {
-      UNREFERENCED_PARAMETER(nIndex);
-      UNREFERENCED_PARAMETER(crColor);
-      ::exception::throw_interface_only(get_app());
-   }
-   void brush::construct(::draw2d::bitmap* pBitmap)
-   {
-      UNREFERENCED_PARAMETER(pBitmap);
-      ::exception::throw_interface_only(get_app());
-   }
+      void brush::construct(int32_t nIndex, COLORREF crColor)
+      {
+         UNREFERENCED_PARAMETER(nIndex);
+         UNREFERENCED_PARAMETER(crColor);
+         ::exception::throw_interface_only(get_app());
+      }
+      void brush::construct(::draw2d::bitmap* pBitmap)
+      {
+         UNREFERENCED_PARAMETER(pBitmap);
+         ::exception::throw_interface_only(get_app());
+      }
 
-*/
+   */
 
 
 #ifdef WINDOWS
@@ -62,11 +62,18 @@ namespace draw2d
    }
 #endif
 
+
+#ifdef DEBUG
+
+
    void brush::dump(dump_context & dumpcontext) const
    {
       UNREFERENCED_PARAMETER(dumpcontext);
       ::exception::throw_interface_only(get_app());
    }
+
+#endif
+
 
    bool brush::create_null()
    {
@@ -86,7 +93,7 @@ namespace draw2d
 
       if(m_cr != crColor || m_etype != type_solid)
       {
-       
+
          m_cr        = crColor;
 
          m_etype     = type_solid;
@@ -115,10 +122,10 @@ namespace draw2d
       return false;
    }
 
-   
+
    bool brush::CreatePatternBrush(::draw2d::dib * pdib)
    {
-      
+
       if (m_dib != pdib || m_etype != type_pattern)
       {
 
@@ -173,10 +180,10 @@ namespace draw2d
    {
 
       if (m_etype == type_linear_gradient_point_color
-         && m_pt1 == p1
-         && m_pt2 == p2
-         && m_cr1 == cr1
-         && m_cr2 == cr2)
+            && m_pt1 == p1
+            && m_pt2 == p2
+            && m_cr1 == cr1
+            && m_cr2 == cr2)
          return true;
 
       m_etype           = type_linear_gradient_point_color;
@@ -194,8 +201,8 @@ namespace draw2d
    {
 
       if(m_etype == type_radial_gradient_color
-         && m_pt == p
-         && m_size == s)
+            && m_pt == p
+            && m_size == s)
          return true;
 
       m_etype           = type_radial_gradient_color;

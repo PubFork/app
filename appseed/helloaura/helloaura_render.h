@@ -1,6 +1,6 @@
 //
-//  helloaxis_render.h
-//  app_core_helloaxis
+//  helloaura_render.h
+//  app_core_helloaura
 //
 //  Created by Camilo Sasuke Tsumanuma on 8/6/15 23:27;24.
 //  Copyright (c) 2015 Camilo Sasuke Tsumanuma. All rights reserved.
@@ -10,11 +10,11 @@
 #pragma once
 
 
-namespace helloaxis
+namespace helloaura
 {
 
 
-   class CLASS_DECL_APP_CORE_HELLOAXIS render :
+   class CLASS_DECL_APP_CORE_HELLOAURA render :
       virtual public ::thread
    {
       public:
@@ -51,12 +51,16 @@ namespace helloaxis
 
          bool                             m_bNewLayout;
          bool                             m_bHelloRender;
-         int                              m_cx;
-         int                              m_cy;
+         //int                              m_cx;
+         //int                              m_cy;
          int                              m_cxCache1;
          int                              m_cyCache1;
          int                              m_cxTarget;
          int                              m_cyTarget;
+
+
+         ::draw2d::dib_sp                 m_dibWindow;
+
 
          ::visual::fastblur               m_dibImage;
          ::draw2d::dib_sp                 m_dibOut;
@@ -104,13 +108,16 @@ namespace helloaxis
 
          bool                             m_bFast;
          bool                             m_bFastOnEmpty;
+         string                  m_strHoverFont;
+         string                  m_strNewFont;
+         string                  m_strFont;
 
 
          render(::aura::application * papp);
          virtual ~render();
 
 
-         string get_helloaxis() { synch_lock slText(m_pmutexText);  string str(m_strHelloMultiverse.c_str()); return str; }
+         string get_helloaura();
 
 
          virtual int32_t run();
@@ -119,13 +126,13 @@ namespace helloaxis
 
 
          virtual void full_render();
-         virtual void helloaxis_render();
-         virtual void helloaxis_draw();
-         virtual void helloaxis_render(::draw2d::graphics * pgraphics);
-         //virtual void helloaxis_render(::draw2d::graphics * pgraphics);
+         virtual void helloaura_render();
+         virtual void helloaura_draw();
+         virtual void helloaura_render(::draw2d::graphics * pgraphics);
+         //virtual void helloaura_render(::draw2d::graphics * pgraphics);
 
-         virtual void helloaxis_render_full_view(::draw2d::graphics * pgraphics);
-         virtual void helloaxis_render_lite_view(::draw2d::graphics * pgraphics);
+         virtual void helloaura_render_full_view(::draw2d::graphics * pgraphics);
+         virtual void helloaura_render_lite_view(::draw2d::graphics * pgraphics);
 
 
          virtual void _001OnHelloDraw(::draw2d::graphics * pgraphics);
@@ -135,12 +142,12 @@ namespace helloaxis
          ::visual::dib_sp & dib23(string strDib);
 
          virtual bool in_anime();
-         virtual void helloaxis_fast_render(const string & strHelloMultiverse);
+         virtual void helloaura_fast_render(const string & strHelloMultiverse);
 
 
    };
 
 
-} // namespace helloaxis
+} // namespace helloaura
 
 

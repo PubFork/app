@@ -3,39 +3,39 @@
 
 inline byte clip_byte(int i)
 {
-   
+
    if (i > 255)
    {
-      
+
       return 255;
-      
+
    }
    else
    {
-      
+
       return i;
-      
+
    }
-   
+
 }
 
 
 inline byte clip_zero(int i)
 {
-   
+
    if (i < 0)
    {
-      
+
       return 0;
-      
+
    }
    else
    {
-      
+
       return i;
-      
+
    }
-   
+
 }
 
 
@@ -92,7 +92,7 @@ inline byte clip_zero(int i)
 
 #include "aura/graphics/draw3d/draw3d.h"
 
-#include "axis/graphics/visual/visual.h"
+#include "aura/graphics/visual/visual.h"
 
 
 #include "dib_console.h"

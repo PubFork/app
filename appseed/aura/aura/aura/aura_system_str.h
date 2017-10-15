@@ -69,6 +69,9 @@ namespace str
 } // namespace str
 
 
+#ifdef DEBUG
+
+
 inline static string log_level_name(::aura::log::e_level elevel)
 {
    switch (elevel)
@@ -86,7 +89,7 @@ inline static string log_level_name(::aura::log::e_level elevel)
    }
 }
 
-
+#endif
 
 
 

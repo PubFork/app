@@ -73,8 +73,8 @@ namespace user
    class control_event;
    class form_window;
    class style;
-   
-   
+
+
 } // namespace user
 
 
@@ -111,14 +111,14 @@ namespace axis
 #if defined METROWIN && defined(__cplusplus_winrt)
 
    interface class system_window
-   {
+      {
 
-      virtual Windows::Foundation::Rect get_window_rect() = 0;
-      virtual Windows::Foundation::Point get_cursor_pos() = 0;
+            virtual Windows::Foundation::Rect get_window_rect() = 0;
+            virtual Windows::Foundation::Point get_cursor_pos() = 0;
 
 
 
-   };
+      };
 
    CLASS_DECL_AXIS bool get_window_rect(system_window ^ pwindow,RECTD * lprect);
    CLASS_DECL_AXIS bool get_window_rect(system_window ^ pwindow,LPRECT lprect);
@@ -246,7 +246,7 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 //#include "axis/axis/crypto/crypto.h"
 
-#include "axis/graphics/graphics.h"
+#include "aura/graphics/graphics.h"
 
 #include "axis_system.h"
 
@@ -284,6 +284,24 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 #include "app/appseed/axis/axis/node/node.h"
 
 
+namespace user
+{
+
+   inline oswindow primitive::get_safe_handle() const
+   {
+      if (((byte *)this) < (byte *)(((byte *)NULL) + (16 * 1024))) // consider invalid
+      {
+         return NULL;
+      }
+      return get_handle();
+   }
+
+
+
+
+
+
+} // namespace user
 
 
 #include "primitive/data/data_tree_item.h"
@@ -308,7 +326,7 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 #include "axis.inl"
 
 
-#include "axis/graphics/visual/visual.inl"
+
 
 
 

@@ -6,249 +6,252 @@ template <class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE 
 class fifo_map :
    virtual public ::object
 {
-public:
-
-
-   typedef KEY                         AXIS_KEY;
-   typedef ARG_KEY                     AXIS_ARG_KEY;
-   typedef VALUE                       AXIS_VALUE;
-   typedef ARG_VALUE                   AXIS_ARG_VALUE;
-   typedef COMPARE                     AXIS_COMPARE;
-
-
-   typedef ::pair < KEY, VALUE >       pair;
-
-
-   class iterator
-   {
    public:
 
 
-      index          m_i;
-      fifo_map *     m_pmap;
+      typedef KEY                         AXIS_KEY;
+      typedef ARG_KEY                     AXIS_ARG_KEY;
+      typedef VALUE                       AXIS_VALUE;
+      typedef ARG_VALUE                   AXIS_ARG_VALUE;
+      typedef COMPARE                     AXIS_COMPARE;
 
 
-      iterator()
+      typedef ::pair < KEY, VALUE >       pair;
+
+
+      class iterator
       {
-         m_i      = 0;
-         m_pmap   = NULL;
+         public:
+
+
+            index          m_i;
+            fifo_map *     m_pmap;
+
+
+            iterator()
+            {
+               m_i      = 0;
+               m_pmap   = NULL;
+            }
+
+            iterator(const iterator & iterator)
+            {
+               m_i      = iterator.m_i;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            iterator(index i, fifo_map * pmap)
+            {
+               if(i < 0)
+                  m_i = 0;
+               else if(i >= pmap->m_ptra.get_size())
+                  m_i = 0;
+               else
+                  m_i = i + 1;
+               m_pmap   = pmap;
+            }
+
+            pair * operator -> ()
+            {
+               return m_pmap->m_ptra[m_i - 1];
+            }
+
+            const pair * operator -> () const
+            {
+               return m_pmap->m_ptra[m_i - 1];
+            }
+
+
+            iterator & operator ++ ()
+            {
+               if(m_i != 0 && m_pmap != NULL)
+               {
+                  m_i++;
+                  if(m_i > m_pmap->m_ptra.get_size())
+                  {
+                     m_i = 0;
+                  }
+               }
+               return *this;
+            }
+
+            iterator operator ++ (int32_t)
+            {
+               if(m_i != 0 && m_pmap != NULL)
+               {
+                  m_i++;
+                  if(m_i > m_pmap->m_ptra.get_size())
+                  {
+                     m_i = 0;
+                  }
+               }
+               return *this;
+            }
+
+            bool operator == (const iterator & it) const
+            {
+
+               if(this == &it)
+                  return true;
+
+               if(m_i == 0 && it.m_i == 0)
+                  return true;
+
+               return m_pmap == it.m_pmap && m_i == it.m_i;
+
+            }
+
+            bool operator != (const iterator & it) const
+            {
+
+               return !operator == (it);
+
+            }
+
+            iterator & operator = (const iterator & it)
+            {
+
+               if(this != &it)
+               {
+
+                  m_pmap         = it.m_pmap;
+
+                  m_i            = it.m_i;
+
+               }
+
+               return *this;
+
+            }
+
+      };
+
+
+      ref_array < pair >   m_ptra;
+
+
+
+
+
+      fifo_map(::count nBlockSize = 10);
+      fifo_map(pair pairs[], int32_t iCount, ::count nBlockSize = 10);
+      virtual ~fifo_map();
+
+
+      void construct(::count nBlockSize = 10);
+
+
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
+
+      iterator begin()
+      {
+         return iterator(0, this);
       }
 
-      iterator(const iterator & iterator)
+
+      iterator end()
       {
-         m_i      = iterator.m_i;
-         m_pmap   = iterator.m_pmap;
+         return iterator(-1, this);
       }
 
-      iterator(index i, fifo_map * pmap)
+      ::count get_count() const;
+      ::count get_size() const;
+      ::count size() const;
+      ::count count() const;
+      bool is_empty() const;
+
+      // Lookup
+      bool Lookup(ARG_KEY key, VALUE& rValue) const;
+      const pair *PLookup(ARG_KEY key) const;
+      pair *PLookup(ARG_KEY key);
+
+
+      VALUE * pget(ARG_KEY key);
+
+      // Operations
+      // Lookup and add if not there
+      VALUE & operator[](ARG_KEY key);
+
+      // add a new (key, value) pair
+      void set_at(ARG_KEY key, ARG_VALUE newValue);
+
+      // removing existing (key, ?) pair
+      bool remove_key(ARG_KEY key);
+      void erase(iterator it);
+      ::count erase(const KEY & key);
+      void erase ( iterator first, iterator last );
+      void remove_all();
+      void clear();
+
+
+      ::count count(const KEY & t) const;
+      bool has(const KEY & t) const;
+      bool contains(const KEY & t) const;
+
+      // iterating all (key, value) pairs
+      POSITION get_start_position() const;
+
+      const pair *PGetFirstAssoc() const;
+      pair *PGetFirstAssoc();
+
+      void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
+
+      const pair *PGetNextAssoc(const pair *passocRet) const;
+      pair *PGetNextAssoc(const pair *passocRet);
+
+      VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
+
+      pair * next(pair * & ppair)
       {
-         if(i < 0)
-            m_i = 0;
-         else if(i >= pmap->m_ptra.get_size())
-            m_i = 0;
+         if(ppair == NULL)
+         {
+            ppair = PGetFirstAssoc();
+         }
          else
-            m_i = i + 1;
-         m_pmap   = pmap;
-      }
-
-      pair * operator -> ()
-      {
-         return m_pmap->m_ptra[m_i - 1];
-      }
-
-      const pair * operator -> () const
-      {
-         return m_pmap->m_ptra[m_i - 1];
-      }
-
-
-      iterator & operator ++ ()
-      {
-         if(m_i != 0 && m_pmap != NULL)
          {
-            m_i++;
-            if(m_i > m_pmap->m_ptra.get_size())
-            {
-               m_i = 0;
-            }
+            ppair = PGetNextAssoc(ppair);
          }
-         return *this;
+         return ppair;
       }
 
-      iterator operator ++ (int32_t)
+      const pair * next(const pair * & ppair) const
       {
-         if(m_i != 0 && m_pmap != NULL)
+         if(ppair == NULL)
          {
-            m_i++;
-            if(m_i > m_pmap->m_ptra.get_size())
-            {
-               m_i = 0;
-            }
+            ppair = PGetFirstAssoc();
          }
-         return *this;
-      }
-
-      bool operator == (const iterator & it) const
-      {
-
-         if(this == &it)
-            return true;
-
-         if(m_i == 0 && it.m_i == 0)
-            return true;
-
-         return m_pmap == it.m_pmap && m_i == it.m_i;
-
-      }
-
-      bool operator != (const iterator & it) const
-      {
-
-         return !operator == (it);
-
-      }
-
-      iterator & operator = (const iterator & it)
-      {
-
-         if(this != &it)
+         else
          {
-
-            m_pmap         = it.m_pmap;
-
-            m_i            = it.m_i;
-
+            ppair = PGetNextAssoc(ppair);
          }
-
-         return *this;
-
+         return ppair;
       }
 
-   };
 
-
-   ref_array < pair >   m_ptra;
-
-
-
-
-
-   fifo_map(::count nBlockSize = 10);
-   fifo_map(pair pairs[], int32_t iCount, ::count nBlockSize = 10);
-   virtual ~fifo_map();
-
-
-
-   void construct(::count nBlockSize = 10);
-
-
-   void dump(dump_context &) const;
-   void assert_valid() const;
-
-
-   iterator begin()
-   {
-      return iterator(0, this);
-   }
-
-
-   iterator end()
-   {
-      return iterator(-1, this);
-   }
-
-   ::count get_count() const;
-   ::count get_size() const;
-   ::count size() const;
-   ::count count() const;
-   bool is_empty() const;
-
-   // Lookup
-   bool Lookup(ARG_KEY key, VALUE& rValue) const;
-   const pair *PLookup(ARG_KEY key) const;
-   pair *PLookup(ARG_KEY key);
-
-
-   VALUE * pget(ARG_KEY key);
-
-   // Operations
-   // Lookup and add if not there
-   VALUE & operator[](ARG_KEY key);
-
-   // add a new (key, value) pair
-   void set_at(ARG_KEY key, ARG_VALUE newValue);
-
-   // removing existing (key, ?) pair
-   bool remove_key(ARG_KEY key);
-   void erase(iterator it);
-   ::count erase(const KEY & key);
-   void erase ( iterator first, iterator last );
-   void remove_all();
-   void clear();
-
-
-   ::count count(const KEY & t) const;
-   bool has(const KEY & t) const;
-   bool contains(const KEY & t) const;
-
-   // iterating all (key, value) pairs
-   POSITION get_start_position() const;
-
-   const pair *PGetFirstAssoc() const;
-   pair *PGetFirstAssoc();
-
-   void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
-
-   const pair *PGetNextAssoc(const pair *passocRet) const;
-   pair *PGetNextAssoc(const pair *passocRet);
-
-   VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
-
-   pair * next(pair * & ppair)
-   {
-      if(ppair == NULL)
+      void set(fifo_map & fifo_map)
       {
-         ppair = PGetFirstAssoc();
+         pair * ppair = NULL;
+         while(fifo_map.next(ppair) != NULL)
+         {
+            set_at(ppair->m_element1, ppair->m_element2);
+         }
       }
-      else
-      {
-         ppair = PGetNextAssoc(ppair);
-      }
-      return ppair;
-   }
-
-   const pair * next(const pair * & ppair) const
-   {
-      if(ppair == NULL)
-      {
-         ppair = PGetFirstAssoc();
-      }
-      else
-      {
-         ppair = PGetNextAssoc(ppair);
-      }
-      return ppair;
-   }
 
 
-   void set(fifo_map & fifo_map)
-   {
-      pair * ppair = NULL;
-      while(fifo_map.next(ppair) != NULL)
-      {
-         set_at(ppair->m_element1, ppair->m_element2);
-      }
-   }
+      index    find_pair(pair * ppair) const;
+      bool     find_key(ARG_KEY key, index & i) const;
 
+      index    add_key(ARG_KEY key);
+      index    add_pair(ARG_KEY key, ARG_VALUE value);
 
-   index    find_pair(pair * ppair) const;
-   bool     find_key(ARG_KEY key, index & i) const;
-
-   index    add_key(ARG_KEY key);
-   index    add_pair(ARG_KEY key, ARG_VALUE value);
-
-   // sort by key
-   void sort(bool bAsc = true);
+      // sort by key
+      void sort(bool bAsc = true);
 
 };
 
@@ -459,7 +462,7 @@ VALUE& fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::operator[](ARG_KEY 
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 bool fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::remove_key(ARG_KEY key)
-   // remove key - return TRUE if removed
+// remove key - return TRUE if removed
 {
 
    ASSERT_VALID(this);
@@ -669,7 +672,7 @@ void fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::get_next_assoc(POSITI
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair*
-   fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::PGetNextAssoc(const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair* pPairRet) const
+fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::PGetNextAssoc(const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair* pPairRet) const
 {
 
    ASSERT_VALID(this);
@@ -694,7 +697,7 @@ const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair*
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair*
-   fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::PGetNextAssoc(const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair* pPairRet)
+fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::PGetNextAssoc(const typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair* pPairRet)
 {
 
    ASSERT_VALID(this);
@@ -719,7 +722,7 @@ typename fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::pair*
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 VALUE fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE > ::
-   get(ARG_KEY argkey, ARG_VALUE valueDefault)
+get(ARG_KEY argkey, ARG_VALUE valueDefault)
 {
    pair * ppair = PLookup(argkey);
    if(ppair == NULL)
@@ -728,7 +731,7 @@ VALUE fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE > ::
       return ppair->m_element2;
 }
 
-
+#ifdef DEBUG
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 void fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::dump(dump_context & dumpcontext) const
 {
@@ -761,21 +764,21 @@ void fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::assert_valid() const
 
 }
 
-
+#endif
 
 template < class type_map >
 class fifo_attrib_map :
    virtual public type_map
 {
-public:
+   public:
 
 
-   fifo_attrib_map(int_ptr nBlockSize = 10);
-   fifo_attrib_map(const fifo_attrib_map & fifo_map);
+      fifo_attrib_map(int_ptr nBlockSize = 10);
+      fifo_attrib_map(const fifo_attrib_map & fifo_map);
 
-   fifo_attrib_map & operator = (const fifo_attrib_map & fifo_map);
+      fifo_attrib_map & operator = (const fifo_attrib_map & fifo_map);
 
-   bool operator == (const fifo_attrib_map & fifo_map) const;
+      bool operator == (const fifo_attrib_map & fifo_map) const;
 
 
 };
@@ -808,7 +811,7 @@ bool fifo_attrib_map < type_map >::operator == (const fifo_attrib_map & attribma
    {
 
       if(attribmap.m_ptra[i]->m_element1       != this->m_ptra[i]->m_element1
-         || attribmap.m_ptra[i]->m_element2     != this->m_ptra[i]->m_element2)
+            || attribmap.m_ptra[i]->m_element2     != this->m_ptra[i]->m_element2)
       {
 
          return false;
@@ -826,14 +829,14 @@ template < class VALUE, class ARG_VALUE = const VALUE &, class COMPARE = ::compa
 class fifo_string_map :
    virtual public fifo_attrib_map < fifo_map < string, const string &, VALUE, ARG_VALUE, COMPARE > >
 {
-public:
+   public:
 
 
-   fifo_string_map(::count nBlockSize = 10);
-   fifo_string_map(const fifo_string_map & fifo_map);
+      fifo_string_map(::count nBlockSize = 10);
+      fifo_string_map(const fifo_string_map & fifo_map);
 
 
-   fifo_string_map & operator = (const fifo_string_map & fifo_map);
+      fifo_string_map & operator = (const fifo_string_map & fifo_map);
 
 
 };
@@ -869,13 +872,13 @@ template < class VALUE, class ARG_VALUE = const VALUE &   >
 class fifo_strid_map :
    virtual public fifo_attrib_map < fifo_map < id, const id &, VALUE, ARG_VALUE > >
 {
-public:
+   public:
 
-   fifo_strid_map(::count nBlockSize = 256);
-   fifo_strid_map(const fifo_strid_map & fifo_map);
+      fifo_strid_map(::count nBlockSize = 256);
+      fifo_strid_map(const fifo_strid_map & fifo_map);
 
 
-   fifo_strid_map & operator = (const fifo_strid_map & fifo_map);
+      fifo_strid_map & operator = (const fifo_strid_map & fifo_map);
 
 
 };
@@ -911,13 +914,13 @@ template < class VALUE, class ARG_VALUE = const VALUE &, class COMPARE = ::compa
 class fifo_int_map :
    virtual public fifo_attrib_map < fifo_map < int32_t, int32_t, VALUE, ARG_VALUE, COMPARE > >
 {
-public:
+   public:
 
-   fifo_int_map(::count nBlockSize = 10);
-   fifo_int_map(const fifo_int_map & fifo_map);
+      fifo_int_map(::count nBlockSize = 10);
+      fifo_int_map(const fifo_int_map & fifo_map);
 
 
-   fifo_int_map & operator = (const fifo_int_map & fifo_map);
+      fifo_int_map & operator = (const fifo_int_map & fifo_map);
 
 };
 
@@ -954,59 +957,59 @@ template < class T >
 class CLASS_DECL_AURA fifo_string_to_pointer :
    virtual public string_to_ptr
 {
-public:
-
-   class pair
-   {
    public:
-      const string first;
-      T * second;
-   };
 
-   bool Lookup(string key, T * & rValue) const
-   {
-      return string_to_ptr::Lookup(key, rValue);
-   }
-   const pair *PLookup(string key) const
-   {
-      return reinterpret_cast < const fifo_string_to_pointer::pair * > (string_to_ptr::PLookup(key));
-   }
-   pair *PLookup(string key)
-   {
-      return reinterpret_cast < fifo_string_to_pointer::pair * > (string_to_ptr::PLookup(key));
-   }
+      class pair
+      {
+         public:
+            const string first;
+            T * second;
+      };
 
-
-   T ** pget(string key)
-   {
-      return (T**) string_to_ptr::pget(key);
-   }
-   T * get(string key)
-   {
-      T ** p = (T **) string_to_ptr::pget(key);
-      if(p == NULL)
-         return NULL;
-      else
-         return (T*) *p;
-   }
-
-   // Operations
-   // Lookup and add if not there
-   T * & operator[](string key)
-   {
-      return (T * &) string_to_ptr::operator[](key);
-   }
+      bool Lookup(string key, T * & rValue) const
+      {
+         return string_to_ptr::Lookup(key, rValue);
+      }
+      const pair *PLookup(string key) const
+      {
+         return reinterpret_cast < const fifo_string_to_pointer::pair * > (string_to_ptr::PLookup(key));
+      }
+      pair *PLookup(string key)
+      {
+         return reinterpret_cast < fifo_string_to_pointer::pair * > (string_to_ptr::PLookup(key));
+      }
 
 
-   pair * PGetFirstAssoc()
-   {
-      return (pair *) string_to_ptr::PGetFirstAssoc();
-   }
+      T ** pget(string key)
+      {
+         return (T**) string_to_ptr::pget(key);
+      }
+      T * get(string key)
+      {
+         T ** p = (T **) string_to_ptr::pget(key);
+         if(p == NULL)
+            return NULL;
+         else
+            return (T*) *p;
+      }
 
-   pair * PGetNextAssoc(pair * & rPpair)
-   {
-      return (pair *) string_to_ptr::PGetNextAssoc((string_to_ptr::pair * &) rPpair);
-   }
+      // Operations
+      // Lookup and add if not there
+      T * & operator[](string key)
+      {
+         return (T * &) string_to_ptr::operator[](key);
+      }
+
+
+      pair * PGetFirstAssoc()
+      {
+         return (pair *) string_to_ptr::PGetFirstAssoc();
+      }
+
+      pair * PGetNextAssoc(pair * & rPpair)
+      {
+         return (pair *) string_to_ptr::PGetNextAssoc((string_to_ptr::pair * &) rPpair);
+      }
 
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 
 
-class CLASS_DECL_AXIS rgb_quad_array : 
+class CLASS_DECL_AURA rgb_quad_array : 
    public array < RGBQUAD, RGBQUAD >
 {
 public:

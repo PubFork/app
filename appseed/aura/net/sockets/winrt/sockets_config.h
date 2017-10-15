@@ -100,7 +100,7 @@ in read operations - helps on ECOS */
 // because some System's will already have one or more of the type defined.
 typedef int SOCKET;
 #define Errno errno
-#define StrError strerror
+#define bsd_socket_error strerror
 
 #ifdef sockets
 namespace sockets {
@@ -201,7 +201,7 @@ namespace sockets {
 
 #elif defined(METROWIN)
 
-CLASS_DECL_AURA const char *StrError(int x);
+CLASS_DECL_AURA const char *bsd_socket_error(int x);
 #define Errno GetLastError()
 
 #elif defined(WINDOWSEX)
@@ -217,7 +217,7 @@ CLASS_DECL_AURA const char *StrError(int x);
 #define SHUT_WR 1
 
 #define Errno WSAGetLastError()
-CLASS_DECL_AXIS const char *StrError(int x);
+CLASS_DECL_AXIS const char *bsd_socket_error(int x);
 
 namespace sockets
 {

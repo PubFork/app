@@ -102,10 +102,11 @@ in read operations - helps on ECOS */
 // because some System's will already have one or more of the type defined.
 typedef int32_t SOCKET;
 #define Errno errno
-#define wsa_str_error strerror
+#define bsd_socket_error strerror
 
 #ifdef sockets
-namespace sockets {
+namespace sockets
+{
 #endif
 
 
@@ -140,7 +141,8 @@ namespace sockets {
 // Solaris
 typedef uint16_t port_t;
 #ifdef sockets
-namespace sockets {
+namespace sockets
+{
 #endif
    // no defs
 
@@ -162,7 +164,8 @@ namespace sockets {
 typedef   in_addr_t ipaddr_t;
 typedef   in_port_t port_t;
 #ifdef sockets
-namespace sockets {
+namespace sockets
+{
 #endif
    // no defs
 
@@ -185,7 +188,8 @@ typedef uint16_t port_t;
 #include <mach/port.h>
 #endif // __DARWIN_UNIX03
 #ifdef sockets
-namespace sockets {
+namespace sockets
+{
 #endif
    // no defs
 
@@ -215,7 +219,7 @@ namespace sockets {
 #define SHUT_WR 1
 
 #define Errno WSAGetLastError()
-CLASS_DECL_AURA string wsa_str_error(int32_t x);
+CLASS_DECL_AURA string bsd_socket_error(int32_t x);
 
 //namespace sockets
 //{
@@ -245,7 +249,7 @@ CLASS_DECL_AURA string wsa_str_error(int32_t x);
 
 #elif defined(METROWIN)
 
-CLASS_DECL_AURA const char *StrError(int32_t x);
+CLASS_DECL_AURA const char *bsd_socket_error(int32_t x);
 #define Errno GetLastError()
 
 

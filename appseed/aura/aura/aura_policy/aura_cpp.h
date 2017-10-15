@@ -266,7 +266,9 @@ class compress_department; // only usable from axis.dll and dependants
 
 class command_target;
 
+#ifdef DEBUG
 class dump_context;
+#endif
 //class string_interface;
 class id_space;
 class type;
@@ -1130,7 +1132,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 //#include "user/user/user_buffer.h"
 #include "aura/aura/aura/aura_keep.h"
 #include "aura/aura/aura/aura_restore.h"
-#include "aura/aura/aura/aura_md5.h"
+//#include "aura/aura/aura/aura_md5.h"
 #include "aura/filesystem/file/file_stream2.h"
 //#include "user/user/user_interaction.h"
 //#include "user/user/user_interaction_impl_base.h"
@@ -1378,6 +1380,12 @@ typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 #include "aura/aura/crypto/crypto.h"
 
 #include "aura/multimedia/multimedia.h"
+
+#include "aura/aura/aura/aura_console_window.h"
+
+#include "aura/primitive/primitive_color.h"
+
+#include "aura/graphics/graphics.h"
 
 #include "aura/aura/aura/aura_system.h"
 
@@ -1961,11 +1969,13 @@ namespace user
 
 #include "aura/primitive/primitive.inl"
 
+#include "aura/primitive/geometry/geometry.inl"
+
 #include "aura/filesystem/filesystem.inl"
 
 #include "aura/net/net.inl"
 
-
+#include "aura/graphics/visual/visual.inl"
 
 
 

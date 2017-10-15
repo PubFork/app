@@ -460,9 +460,14 @@ class map :
       assoc * get_assoc_at(ARG_KEY, UINT&, UINT&) const;
 
       virtual ~map();
-//      void Serialize(CArchive&);
-      void dump(dump_context &) const;
-      void assert_valid() const;
+
+
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
 
       template < class ARRAY >
       bool remove_key_array(ARRAY a)
@@ -1608,6 +1613,9 @@ set_at(newKey[0], newValue[0]);
 }
 */
 
+
+#ifdef DEBUG
+
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class PAIR >
 void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::dump(dump_context & dumpcontext) const
 {
@@ -1642,7 +1650,7 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::assert_valid() const
    // non-is_empty map should have hash table
 }
 
-
+#endif
 
 
 

@@ -33,7 +33,7 @@ namespace file
 
       if(m_pfile != NULL)
       {
-         
+
          fclose_dup(m_pfile);
 
       }
@@ -45,7 +45,7 @@ namespace file
       return NULL;
    }
 
-   
+
    cres stdio_file::open(const ::file::path & lpszFileName,UINT nOpenFlags)
    {
 
@@ -73,7 +73,7 @@ namespace file
 
       if(m_pfile == NULL)
          return canew(::file::exception(get_app()));
-      
+
       return ::no_exception;
 
    }
@@ -114,7 +114,7 @@ namespace file
 
    void stdio_file::flush()
    {
-      
+
       fflush_dup(m_pfile);
 
    }
@@ -129,7 +129,7 @@ namespace file
 
    memory_size_t stdio_file::read(void *lpBuf,memory_size_t nCount)
    {
-      
+
       return fread_dup(lpBuf, nCount, 1, m_pfile);
 
    }
@@ -191,6 +191,8 @@ namespace file
    UNREFERENCED_PARAMETER(lpszFileName);
    }*/
 
+#ifdef DEBUG
+
    void stdio_file::assert_valid() const
    {
       //   object::assert_valid();
@@ -207,7 +209,7 @@ namespace file
       //   dumpcontext << "\n";
    }
 
-
+#endif
 
 
    string stdio_file::GetFileName() const

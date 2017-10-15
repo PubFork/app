@@ -2,6 +2,8 @@
 #include "aura/net/net_sockets.h"
 
 
+#ifdef DEBUG
+
 namespace sockets
 {
 
@@ -27,3 +29,4 @@ namespace sockets
 
 
 
+#endif

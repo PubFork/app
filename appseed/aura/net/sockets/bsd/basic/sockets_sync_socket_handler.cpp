@@ -6,9 +6,17 @@ namespace sockets
 {
 
 
+#ifdef DEBUG
    sync_socket_handler::sync_socket_handler(::aura::application * papp, logger * plog) :
+#else
+   sync_socket_handler::sync_socket_handler(::aura::application * papp) :
+#endif
       ::object(papp),
+#ifdef DEBUG
       m_handler(papp, plog),
+#else
+      m_handler(papp),
+#endif
       m_file(papp)
    {
 
@@ -120,7 +128,7 @@ namespace sockets
       memory memory;
       memory.allocate(uiLen);
       if(read(memory, uiLen) != uiLen)
-        throw simple_exception(get_app());
+         throw simple_exception(get_app());
       memory.to_string(xml_payload);
    }
 

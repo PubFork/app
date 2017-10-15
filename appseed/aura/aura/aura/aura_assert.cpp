@@ -1,6 +1,9 @@
 #include "framework.h"
 #include <stdio.h>
 
+#ifdef DEBUG
+
+
 CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLineNumber);
 
 BEGIN_EXTERN_C
@@ -36,7 +39,7 @@ CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLin
    sprintf(szMessage,"Assert failed!\n\nFile: %s\nLine: %d\n\nYou can choose to:\n\n\t - \"Cancel\": cancel debugging.\n\t - \"Try\": try debug break where assertion occurred.\n\t - \"Continue\": continue running",lpszFileName,iLineNumber);
 
 #ifdef WINDOWSEX
-   
+
    int iResult = ::MessageBoxW(NULL,wstring(szMessage),wstring(szTitle),MB_CANCELTRYCONTINUE | MB_ICONERROR);
 
 #else
@@ -74,3 +77,4 @@ CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLin
 
 
 
+#endif

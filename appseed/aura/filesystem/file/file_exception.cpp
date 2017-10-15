@@ -66,7 +66,7 @@ namespace file
 
    }
 
-   exception::exception(::aura::application * papp, exception::e_cause cause , LONG lOsError, const char * lpszArchiveName, UINT nOpenFlags) :
+   exception::exception(::aura::application * papp, exception::e_cause cause, LONG lOsError, const char * lpszArchiveName, UINT nOpenFlags) :
       object(papp),
       ::call_stack(papp, should_ignore_file_exception_call_stack(cause) ? SKIP_CALL_STACK : CALL_STACK_DEFAULT_SKIP),
       ::exception::base(papp),
@@ -186,7 +186,7 @@ namespace file
                LIBCALL(shlwapi,PathStripPathA)(tcFileName);
                stInfo.csProcess = tcFileName;
                SHFILEINFO stIcon = {0};
-               /*			   if( SHGetFileInfo( csModule, 0, &stIcon, sizeof( stIcon), SHGFI_ICON ))
+               /*          if( SHGetFileInfo( csModule, 0, &stIcon, sizeof( stIcon), SHGFI_ICON ))
                {
                stInfo.dwImageListIndex = m_imgListCtrl.add( stIcon.hIcon );
                DestroyIcon( stIcon.hIcon );
@@ -197,7 +197,7 @@ namespace file
          // Insert Process name, PID and file name
          //m_list.InsertItem( m_nCount, stInfo.csProcess, stInfo.dwImageListIndex );
          string csPid;
-         csPid.Format( _T("%d ( 0x%x )"), OpenedFileInfo.dwPID , OpenedFileInfo.dwPID );
+         csPid.Format( _T("%d ( 0x%x )"), OpenedFileInfo.dwPID, OpenedFileInfo.dwPID );
          m_strAdd += "PID: " + csPid + " Process Name : " + stInfo.csProcess;
          //m_list.set_item_text( m_nCount, 2, OpenedFileInfo.lpFile );
          //m_list.SetItemData( m_nCount, (uint_ptr)OpenedFileInfo.hFile );
@@ -297,6 +297,8 @@ namespace file
    }
    */
 
+#ifdef DEBUG
+
    /////////////////////////////////////////////////////////////////////////////
    // exception diagnostics
 
@@ -315,6 +317,7 @@ namespace file
       dumpcontext << "\n";*/
    }
 
+#endif
 
 
 } // namespace file

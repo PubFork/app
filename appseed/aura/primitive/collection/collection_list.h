@@ -8,473 +8,473 @@ template<class TYPE, class ARG_TYPE = const TYPE & >
 class list_data :
    virtual public ::object
 {
-public:
-
-   class node
-   {
    public:
 
-      node *   m_pnext;
-      node *   m_pprev;
-      TYPE     m_value;
-
-      node(ARG_TYPE t, node * pprev, node * pnext) : m_value(t), m_pprev(pprev), m_pnext(pnext) { }
-
-   };
-
-
-   class iterator
-   {
-   public:
-
-
-      node *         m_pnode;
-      list_data *    m_plist;
-
-      iterator()
+      class node
       {
-         m_pnode = 0;
-         m_plist = NULL;
-      }
+         public:
 
-      iterator(POSITION i, list_data * plist)
+            node *   m_pnext;
+            node *   m_pprev;
+            TYPE     m_value;
+
+            node(ARG_TYPE t, node * pprev, node * pnext) : m_value(t), m_pprev(pprev), m_pnext(pnext) { }
+
+      };
+
+
+      class iterator
       {
-         m_pnode = (node *)i;
-         m_plist = plist;
-      }
-
-      iterator(const iterator & it)
-      {
-         operator = (it);
-      }
-
-      TYPE & operator * ()
-      {
-         return m_pnode->m_value;
-      }
-
-      const TYPE & operator * () const
-      {
-         return m_pnode->m_value;
-      }
-
-      iterator & operator = (const iterator & it)
-      {
-         if (this != &it)
-         {
-            m_pnode = it.m_pnode;
-            m_plist = it.m_plist;
-         }
-         return *this;
-      }
-
-      bool operator == (const iterator & it)
-      {
-         return m_pnode == it.m_pnode;
-      }
-
-      bool operator != (const iterator & it)
-      {
-         return !operator==(it);
-      }
-
-      iterator operator ++ (int)
-      {
-
-         if (m_pnode == NULL || m_pnode == (node *) m_plist->get_tail_position())
-            return *this;
-
-         iterator i(*this);
-
-         m_pnode = m_pnode->m_pnext;
-
-         return i;
-
-      }
-
-      iterator & operator ++ ()
-      {
-
-         if (m_pnode == NULL)
-            return *this;
-
-         if (m_pnode == (const node *)m_plist->get_tail_position())
-         {
-            m_pnode = NULL;
-            return *this;
-         }
-
-         m_pnode = m_pnode->m_pnext;
-
-         return *this;
-
-      }
-
-      iterator & operator +(int32_t i)
-      {
-
-         while (m_pnode != NULL && m_pnode != (node *)m_plist->get_tail_position() && i > 0)
-         {
-
-            i--;
-            m_pnode = m_pnode->m_pnext;
-
-         }
-
-         return *this;
-
-      }
-
-      iterator operator -- (int)
-      {
-
-         if (m_pnode == NULL || m_pnode == (node *)m_plist->get_head_position())
-            return *this;
-
-         iterator it(*this);
-
-         m_pnode = m_pnode->m_pprev;
-
-         return it;
-
-      }
-
-      iterator & operator -- ()
-      {
-
-         if (m_pnode == NULL || m_pnode == (node *)m_plist->get_head_position())
-            return *this;
-
-         m_pnode = m_pnode->m_pprev;
-
-         return *this;
-
-      }
-
-      iterator & operator -(int32_t i)
-      {
-
-         while (m_pnode != NULL && m_pnode != (node *)m_plist->get_tail_position() && i > 0)
-         {
-            i--;
-            m_pnode = m_pnode->m_pprev;
-         }
-
-         return *this;
-
-      }
+         public:
 
 
-      ::count operator -(const iterator & i) const
-      {
+            node *         m_pnode;
+            list_data *    m_plist;
 
-         node * pnode = m_pnode;
-
-         ::count c = 0;
-
-         while (pnode != NULL)
-         {
-            
-            if (pnode == i.m_pnode)
+            iterator()
             {
-
-               return c;
-
+               m_pnode = 0;
+               m_plist = NULL;
             }
-            
-            c++;
 
-            pnode = pnode->m_pprev;
+            iterator(POSITION i, list_data * plist)
+            {
+               m_pnode = (node *)i;
+               m_plist = plist;
+            }
 
-         }
+            iterator(const iterator & it)
+            {
+               operator = (it);
+            }
 
-         return -1;
+            TYPE & operator * ()
+            {
+               return m_pnode->m_value;
+            }
 
-      }
+            const TYPE & operator * () const
+            {
+               return m_pnode->m_value;
+            }
 
-   };
+            iterator & operator = (const iterator & it)
+            {
+               if (this != &it)
+               {
+                  m_pnode = it.m_pnode;
+                  m_plist = it.m_plist;
+               }
+               return *this;
+            }
 
+            bool operator == (const iterator & it)
+            {
+               return m_pnode == it.m_pnode;
+            }
 
-   class const_iterator
-   {
-   public:
+            bool operator != (const iterator & it)
+            {
+               return !operator==(it);
+            }
 
-
-      const node *          m_pnode;
-      const list_data *     m_plist;
-
-      const_iterator()
-      {
-         m_pnode = 0;
-         m_plist = NULL;
-      }
-
-      const_iterator(POSITION i, const list_data * plist)
-      {
-         m_pnode = (node *)i;
-         m_plist = plist;
-      }
-
-      const_iterator(const const_iterator & it)
-      {
-         operator = (it);
-      }
-
-      const_iterator(const iterator & it)
-      {
-         operator = (it);
-      }
-
-      const TYPE & operator * ()
-      {
-         return m_pnode->m_value;
-      }
-
-      const TYPE & operator * () const
-      {
-         return m_pnode->m_value;
-      }
-
-      const_iterator & operator = (const const_iterator & it)
-      {
-         if (this != &it)
-         {
-            m_pnode = it.m_pnode;
-            m_plist = it.m_plist;
-         }
-         return *this;
-      }
-
-      const_iterator & operator = (const iterator & it)
-      {
-         m_pnode = it.m_pnode;
-         m_plist = it.m_plist;
-         return *this;
-      }
-
-      bool operator == (const const_iterator & it)
-      {
-         return m_pnode == it.m_pnode;
-      }
-
-      bool operator != (const const_iterator & it)
-      {
-         return !operator==(it);
-      }
-
-      const_iterator & operator ++()
-      {
-
-         if (m_pnode == NULL)
-            return *this;
-
-         if (m_pnode == (const node *)m_plist->get_tail_position())
-         {
-            m_pnode = NULL;
-            return *this;
-         }
-
-         m_pnode = m_pnode->m_pnext;
-
-         return *this;
-
-      }
-
-      const_iterator operator ++ (int)
-      {
-
-         if (m_pnode == NULL || (const node *)m_pnode ==(const node *) m_plist->get_tail_position())
-            return *this;
-
-         const_iterator i(*this);
-
-         m_pnode = m_pnode->m_pnext;
-
-         return i;
-
-      }
-      const_iterator & operator +(int32_t i)
-      {
-
-         while (m_pnode != NULL && m_pnode != (const node *)m_plist->get_tail_position() && i > 0)
-         {
-
-            i--;
-            m_pnode = m_pnode->m_pnext;
-
-         }
-
-         return *this;
-
-      }
-
-      const_iterator & operator --()
-      {
-
-         if (m_pnode == NULL || m_pnode == (const node *)m_plist->get_head_position())
-            return *this;
-
-         m_pnode = m_pnode->m_pprev;
-
-         return *this;
-
-      }
-
-
-
-      const_iterator operator -- (int)
-      {
-
-         if (m_pnode == NULL || m_pnode == (const node *)m_plist->get_head_position())
-            return *this;
-
-         const_iterator it(*this);
-
-         m_pnode = m_pnode->m_pprev;
-
-         return it;
-
-      }
-
-
-      const_iterator & operator -(int32_t i)
-      {
-
-         while (m_pnode != NULL && m_pnode != (const node *)m_plist->get_head_position() && i > 0)
-         {
-            i--;
-            m_pnode = m_pnode->m_pprev;
-         }
-
-         return *this;
-
-      }
-
-      ::count operator -(const const_iterator & i) const
-      {
-
-         node * pnode = m_pnode;
-
-         ::count c = 0;
-
-         while (pnode != NULL)
-         {
-
-            if (pnode == i.m_pnode)
+            iterator operator ++ (int)
             {
 
-               return c;
+               if (m_pnode == NULL || m_pnode == (node *) m_plist->get_tail_position())
+                  return *this;
+
+               iterator i(*this);
+
+               m_pnode = m_pnode->m_pnext;
+
+               return i;
 
             }
 
-            c++;
+            iterator & operator ++ ()
+            {
 
-            pnode = pnode->m_pprev;
+               if (m_pnode == NULL)
+                  return *this;
 
-         }
+               if (m_pnode == (const node *)m_plist->get_tail_position())
+               {
+                  m_pnode = NULL;
+                  return *this;
+               }
 
-         return -1;
+               m_pnode = m_pnode->m_pnext;
 
+               return *this;
+
+            }
+
+            iterator & operator +(int32_t i)
+            {
+
+               while (m_pnode != NULL && m_pnode != (node *)m_plist->get_tail_position() && i > 0)
+               {
+
+                  i--;
+                  m_pnode = m_pnode->m_pnext;
+
+               }
+
+               return *this;
+
+            }
+
+            iterator operator -- (int)
+            {
+
+               if (m_pnode == NULL || m_pnode == (node *)m_plist->get_head_position())
+                  return *this;
+
+               iterator it(*this);
+
+               m_pnode = m_pnode->m_pprev;
+
+               return it;
+
+            }
+
+            iterator & operator -- ()
+            {
+
+               if (m_pnode == NULL || m_pnode == (node *)m_plist->get_head_position())
+                  return *this;
+
+               m_pnode = m_pnode->m_pprev;
+
+               return *this;
+
+            }
+
+            iterator & operator -(int32_t i)
+            {
+
+               while (m_pnode != NULL && m_pnode != (node *)m_plist->get_tail_position() && i > 0)
+               {
+                  i--;
+                  m_pnode = m_pnode->m_pprev;
+               }
+
+               return *this;
+
+            }
+
+
+            ::count operator -(const iterator & i) const
+            {
+
+               node * pnode = m_pnode;
+
+               ::count c = 0;
+
+               while (pnode != NULL)
+               {
+
+                  if (pnode == i.m_pnode)
+                  {
+
+                     return c;
+
+                  }
+
+                  c++;
+
+                  pnode = pnode->m_pprev;
+
+               }
+
+               return -1;
+
+            }
+
+      };
+
+
+      class const_iterator
+      {
+         public:
+
+
+            const node *          m_pnode;
+            const list_data *     m_plist;
+
+            const_iterator()
+            {
+               m_pnode = 0;
+               m_plist = NULL;
+            }
+
+            const_iterator(POSITION i, const list_data * plist)
+            {
+               m_pnode = (node *)i;
+               m_plist = plist;
+            }
+
+            const_iterator(const const_iterator & it)
+            {
+               operator = (it);
+            }
+
+            const_iterator(const iterator & it)
+            {
+               operator = (it);
+            }
+
+            const TYPE & operator * ()
+            {
+               return m_pnode->m_value;
+            }
+
+            const TYPE & operator * () const
+            {
+               return m_pnode->m_value;
+            }
+
+            const_iterator & operator = (const const_iterator & it)
+            {
+               if (this != &it)
+               {
+                  m_pnode = it.m_pnode;
+                  m_plist = it.m_plist;
+               }
+               return *this;
+            }
+
+            const_iterator & operator = (const iterator & it)
+            {
+               m_pnode = it.m_pnode;
+               m_plist = it.m_plist;
+               return *this;
+            }
+
+            bool operator == (const const_iterator & it)
+            {
+               return m_pnode == it.m_pnode;
+            }
+
+            bool operator != (const const_iterator & it)
+            {
+               return !operator==(it);
+            }
+
+            const_iterator & operator ++()
+            {
+
+               if (m_pnode == NULL)
+                  return *this;
+
+               if (m_pnode == (const node *)m_plist->get_tail_position())
+               {
+                  m_pnode = NULL;
+                  return *this;
+               }
+
+               m_pnode = m_pnode->m_pnext;
+
+               return *this;
+
+            }
+
+            const_iterator operator ++ (int)
+            {
+
+               if (m_pnode == NULL || (const node *)m_pnode ==(const node *) m_plist->get_tail_position())
+                  return *this;
+
+               const_iterator i(*this);
+
+               m_pnode = m_pnode->m_pnext;
+
+               return i;
+
+            }
+            const_iterator & operator +(int32_t i)
+            {
+
+               while (m_pnode != NULL && m_pnode != (const node *)m_plist->get_tail_position() && i > 0)
+               {
+
+                  i--;
+                  m_pnode = m_pnode->m_pnext;
+
+               }
+
+               return *this;
+
+            }
+
+            const_iterator & operator --()
+            {
+
+               if (m_pnode == NULL || m_pnode == (const node *)m_plist->get_head_position())
+                  return *this;
+
+               m_pnode = m_pnode->m_pprev;
+
+               return *this;
+
+            }
+
+
+
+            const_iterator operator -- (int)
+            {
+
+               if (m_pnode == NULL || m_pnode == (const node *)m_plist->get_head_position())
+                  return *this;
+
+               const_iterator it(*this);
+
+               m_pnode = m_pnode->m_pprev;
+
+               return it;
+
+            }
+
+
+            const_iterator & operator -(int32_t i)
+            {
+
+               while (m_pnode != NULL && m_pnode != (const node *)m_plist->get_head_position() && i > 0)
+               {
+                  i--;
+                  m_pnode = m_pnode->m_pprev;
+               }
+
+               return *this;
+
+            }
+
+            ::count operator -(const const_iterator & i) const
+            {
+
+               node * pnode = m_pnode;
+
+               ::count c = 0;
+
+               while (pnode != NULL)
+               {
+
+                  if (pnode == i.m_pnode)
+                  {
+
+                     return c;
+
+                  }
+
+                  c++;
+
+                  pnode = pnode->m_pprev;
+
+               }
+
+               return -1;
+
+            }
+
+      };
+
+
+      iterator lower_bound()
+      {
+         return iterator(NULL, this);
       }
 
-   };
+
+      iterator begin()
+      {
+         return iterator(get_head_position(), this);
+      }
 
 
-   iterator lower_bound()
-   {
-      return iterator(NULL, this);
-   }
+      iterator end()
+      {
+         return iterator(NULL, this);
+      }
 
 
-   iterator begin()
-   {
-      return iterator(get_head_position(), this);
-   }
+      iterator upper_bound()
+      {
+         return iterator(get_tail_position(), this);
+      }
+
+      const_iterator lower_bound() const
+      {
+         return const_iterator(NULL, this);
+      }
 
 
-   iterator end()
-   {
-      return iterator(NULL, this);
-   }
+      const_iterator begin() const
+      {
+         return const_iterator(get_head_position(), this);
+      }
 
 
-   iterator upper_bound()
-   {
-      return iterator(get_tail_position(), this);
-   }
+      const_iterator end() const
+      {
+         return const_iterator(NULL, this);
+      }
 
-   const_iterator lower_bound() const
-   {
-      return const_iterator(NULL, this);
-   }
-
-
-   const_iterator begin() const
-   {
-      return const_iterator(get_head_position(), this);
-   }
-
-
-   const_iterator end() const
-   {
-      return const_iterator(NULL, this);
-   }
-
-   const_iterator upper_bound() const
-   {
-      return const_iterator(get_tail_position(), this);
-   }
+      const_iterator upper_bound() const
+      {
+         return const_iterator(get_tail_position(), this);
+      }
 
 
 
-   node *         m_phead;
-   node *         m_ptail;
-   ::count        m_count;
+      node *         m_phead;
+      node *         m_ptail;
+      ::count        m_count;
 
-   inline list_data();
-   inline list_data(const class list_data < TYPE, ARG_TYPE >  & l);
-   inline list_data(const class list < TYPE, ARG_TYPE > & l);
+      inline list_data();
+      inline list_data(const class list_data < TYPE, ARG_TYPE >  & l);
+      inline list_data(const class list < TYPE, ARG_TYPE > & l);
 
-   inline static void from(list_data < TYPE, ARG_TYPE >  & l, node * p);
-   inline static list_data < TYPE, ARG_TYPE >  from(node * p);
+      inline static void from(list_data < TYPE, ARG_TYPE >  & l, node * p);
+      inline static list_data < TYPE, ARG_TYPE >  from(node * p);
 
-   // helper functions (note: O(n) speed)
-   // defaults to starting at the HEAD, return NULL if not found
-   iterator index_iterator(index nIndex);
-   // get the 'nIndex'th element (may return NULL)
-   index iterator_index(iterator iterator);
-   // get the reverse 'nIndex' of the position (may return -1)
-   iterator reverse_index_iterator(int_ptr nIndex);
-
-
-
-   const_iterator index_iterator(index nIndex) const
-   {
-      return ((list_data *)this)->index_iterator(nIndex);
-   }
-
-   const_iterator reverse_index_iterator(index nIndex) const
-   {
-      return ((list_data *)this)->reverse_index_iterator(nIndex);
-   }
+      // helper functions (note: O(n) speed)
+      // defaults to starting at the HEAD, return NULL if not found
+      iterator index_iterator(index nIndex);
+      // get the 'nIndex'th element (may return NULL)
+      index iterator_index(iterator iterator);
+      // get the reverse 'nIndex' of the position (may return -1)
+      iterator reverse_index_iterator(int_ptr nIndex);
 
 
-   index iterator_index(const_iterator it) const
-   {
-      return ((list_data *)this)->iterator_index(iterator((POSITION)(node *)it.m_pnode, (list_data *) this));
-   }
+
+      const_iterator index_iterator(index nIndex) const
+      {
+         return ((list_data *)this)->index_iterator(nIndex);
+      }
+
+      const_iterator reverse_index_iterator(index nIndex) const
+      {
+         return ((list_data *)this)->reverse_index_iterator(nIndex);
+      }
 
 
-   // getting/modifying an element at a given position
-   TYPE& get_at(POSITION position);
-   const TYPE& get_at(POSITION position) const;
-   void set_at(POSITION pos, ARG_TYPE newElement);
+      index iterator_index(const_iterator it) const
+      {
+         return ((list_data *)this)->iterator_index(iterator((POSITION)(node *)it.m_pnode, (list_data *) this));
+      }
 
-   // iteration
-   POSITION get_head_position() const;
-   POSITION get_tail_position() const;
-   /////////////////////////////////////////////////////////////////////////////
-   // slow operations
+
+      // getting/modifying an element at a given position
+      TYPE& get_at(POSITION position);
+      const TYPE& get_at(POSITION position) const;
+      void set_at(POSITION pos, ARG_TYPE newElement);
+
+      // iteration
+      POSITION get_head_position() const;
+      POSITION get_tail_position() const;
+      /////////////////////////////////////////////////////////////////////////////
+      // slow operations
 
 
 
@@ -560,136 +560,142 @@ template < class TYPE, class ARG_TYPE >
 class list :
    public list_data < TYPE, ARG_TYPE >
 {
-public:
+   public:
 
-   typedef typename list_data < TYPE, ARG_TYPE >::node node;
-   typedef typename list_data < TYPE, ARG_TYPE >::iterator iterator;
+      typedef typename list_data < TYPE, ARG_TYPE >::node node;
+      typedef typename list_data < TYPE, ARG_TYPE >::iterator iterator;
 
-   list();
-   list(const class list & l);
-   list(const class list_data < TYPE, ARG_TYPE > & l);
+      list();
+      list(const class list & l);
+      list(const class list_data < TYPE, ARG_TYPE > & l);
 #ifdef MOVE_SEMANTICS
-   list(class list && l);
+      list(class list && l);
 #endif
-   virtual ~list();
+      virtual ~list();
 
-   //void Serialize(CArchive&);
+
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
+      //void Serialize(CArchive&);
 // Attributes (head and tail)
-   // ::count of elements
-   ::count get_count() const;
-   ::count get_size() const;
-   ::count size() const;
-   bool is_empty(::count countMinimum = 1) const;
-   bool has_elements(::count countMinimum = 1) const;
-   bool empty(::count countMinimum = 1) const;
+      // ::count of elements
+      ::count get_count() const;
+      ::count get_size() const;
+      ::count size() const;
+      bool is_empty(::count countMinimum = 1) const;
+      bool has_elements(::count countMinimum = 1) const;
+      bool empty(::count countMinimum = 1) const;
 
-   // peek at head or tail
-   TYPE& get_head();
-   const TYPE& get_head() const;
-   TYPE& get_tail();
-   const TYPE& get_tail() const;
+      // peek at head or tail
+      TYPE& get_head();
+      const TYPE& get_head() const;
+      TYPE& get_tail();
+      const TYPE& get_tail() const;
 
-   // Operations
+      // Operations
       // get head or tail (and remove it) - don't call on is_empty list !
-   void remove_head();
-   void remove_tail();
+      void remove_head();
+      void remove_tail();
 
-   TYPE pop_head();
-   TYPE pop_tail();
+      TYPE pop_head();
+      TYPE pop_tail();
 
-   // add before head or after tail
-   POSITION add_head(ARG_TYPE newElement);
-   POSITION add_tail(ARG_TYPE newElement);
+      // add before head or after tail
+      POSITION add_head(ARG_TYPE newElement);
+      POSITION add_tail(ARG_TYPE newElement);
 
-   void push_front(ARG_TYPE newElement);
-   void push_back(ARG_TYPE newElement);
+      void push_front(ARG_TYPE newElement);
+      void push_back(ARG_TYPE newElement);
 
-   // add another list of elements before head or after tail
-   void copy_head(const list_data < TYPE, ARG_TYPE > & l);
-   void copy_tail(const list_data < TYPE, ARG_TYPE > & l);
-   void copy(const list_data < TYPE, ARG_TYPE > & l);
+      // add another list of elements before head or after tail
+      void copy_head(const list_data < TYPE, ARG_TYPE > & l);
+      void copy_tail(const list_data < TYPE, ARG_TYPE > & l);
+      void copy(const list_data < TYPE, ARG_TYPE > & l);
 
-   // remove all elements
-   void remove_all();
-   void clear();
+      // remove all elements
+      void remove_all();
+      void clear();
 
-   TYPE & front();
-   const TYPE & front() const;
-   TYPE & back();
-   const TYPE & back() const;
+      TYPE & front();
+      const TYPE & front() const;
+      TYPE & back();
+      const TYPE & back() const;
 
-   TYPE pop_front();
+      TYPE pop_front();
 
-   TYPE& get_next(POSITION& rPosition); // return *position++
-   const TYPE& get_next(POSITION& rPosition) const; // return *position++
-   TYPE& get_previous(POSITION& rPosition); // return *position--
-   const TYPE& get_previous(POSITION& rPosition) const; // return *position--
-
-
-   void remove_at(index i);
+      TYPE& get_next(POSITION& rPosition); // return *position++
+      const TYPE& get_next(POSITION& rPosition) const; // return *position++
+      TYPE& get_previous(POSITION& rPosition); // return *position--
+      const TYPE& get_previous(POSITION& rPosition) const; // return *position--
 
 
-   void erase(node * & pnode);
-   void erase(POSITION & position);
-   void erase(iterator & it);
+      void remove_at(index i);
 
 
-   node * detach(node * pnode);
-   node * detach(POSITION position);
-   node * detach(iterator it);
-
-   ::count detach(iterator first, iterator last);
-
-   iterator insert(iterator position, ARG_TYPE newElement);
-   iterator insert(iterator position, iterator it);
-   iterator insert(iterator position, node * pnode);
-   iterator insert(iterator position, list_data < TYPE, ARG_TYPE > & l);
-   iterator insert(iterator position, iterator first, iterator last);
-
-   iterator insert_before(iterator position, ARG_TYPE newElement);
-   iterator insert_before(iterator position, iterator it);
-   iterator insert_before(iterator position, node * pnode);
-   iterator insert_before(iterator position, list_data < TYPE, ARG_TYPE > & l);
-   iterator insert_before(iterator position, iterator first, iterator last);
-
-   iterator insert_after(iterator position, ARG_TYPE newElement);
-   iterator insert_after(iterator position, iterator it);
-   iterator insert_after(iterator position, node * pnode);
-   iterator insert_after(iterator position, list_data < TYPE, ARG_TYPE > & l);
-   iterator insert_after(iterator position, iterator first, iterator last);
-
-   POSITION insert(POSITION position, ARG_TYPE newElement);
-   POSITION insert(POSITION position, iterator it);
-   POSITION insert(POSITION position, node * pnode);
-   POSITION insert(POSITION position, list_data < TYPE, ARG_TYPE > & l);
-   POSITION insert(POSITION position, iterator first, iterator last);
-
-   POSITION insert_before(POSITION position, ARG_TYPE newElement);
-   POSITION insert_before(POSITION position, iterator it);
-   POSITION insert_before(POSITION position, node * pnode);
-   POSITION insert_before(POSITION position, list_data < TYPE, ARG_TYPE > & l);
-   POSITION insert_before(POSITION position, iterator first, iterator last);
-
-   POSITION insert_after(POSITION position, ARG_TYPE newElement);
-   POSITION insert_after(POSITION position, iterator it);
-   POSITION insert_after(POSITION position, node * pnode);
-   POSITION insert_after(POSITION position, list_data < TYPE, ARG_TYPE > & l);
-   POSITION insert_after(POSITION position, iterator first, iterator last);
+      void erase(node * & pnode);
+      void erase(POSITION & position);
+      void erase(iterator & it);
 
 
-   void splice(iterator position, list & l);
-   void splice(iterator position, list & l, iterator i);
-   void splice(iterator position, list & l, iterator first, iterator last);
-   void swap(POSITION position1, POSITION position2);
+      node * detach(node * pnode);
+      node * detach(POSITION position);
+      node * detach(iterator it);
+
+      ::count detach(iterator first, iterator last);
+
+      iterator insert(iterator position, ARG_TYPE newElement);
+      iterator insert(iterator position, iterator it);
+      iterator insert(iterator position, node * pnode);
+      iterator insert(iterator position, list_data < TYPE, ARG_TYPE > & l);
+      iterator insert(iterator position, iterator first, iterator last);
+
+      iterator insert_before(iterator position, ARG_TYPE newElement);
+      iterator insert_before(iterator position, iterator it);
+      iterator insert_before(iterator position, node * pnode);
+      iterator insert_before(iterator position, list_data < TYPE, ARG_TYPE > & l);
+      iterator insert_before(iterator position, iterator first, iterator last);
+
+      iterator insert_after(iterator position, ARG_TYPE newElement);
+      iterator insert_after(iterator position, iterator it);
+      iterator insert_after(iterator position, node * pnode);
+      iterator insert_after(iterator position, list_data < TYPE, ARG_TYPE > & l);
+      iterator insert_after(iterator position, iterator first, iterator last);
+
+      POSITION insert(POSITION position, ARG_TYPE newElement);
+      POSITION insert(POSITION position, iterator it);
+      POSITION insert(POSITION position, node * pnode);
+      POSITION insert(POSITION position, list_data < TYPE, ARG_TYPE > & l);
+      POSITION insert(POSITION position, iterator first, iterator last);
+
+      POSITION insert_before(POSITION position, ARG_TYPE newElement);
+      POSITION insert_before(POSITION position, iterator it);
+      POSITION insert_before(POSITION position, node * pnode);
+      POSITION insert_before(POSITION position, list_data < TYPE, ARG_TYPE > & l);
+      POSITION insert_before(POSITION position, iterator first, iterator last);
+
+      POSITION insert_after(POSITION position, ARG_TYPE newElement);
+      POSITION insert_after(POSITION position, iterator it);
+      POSITION insert_after(POSITION position, node * pnode);
+      POSITION insert_after(POSITION position, list_data < TYPE, ARG_TYPE > & l);
+      POSITION insert_after(POSITION position, iterator first, iterator last);
 
 
-   list < TYPE, ARG_TYPE > & operator = (const class list & l);
+      void splice(iterator position, list & l);
+      void splice(iterator position, list & l, iterator i);
+      void splice(iterator position, list & l, iterator first, iterator last);
+      void swap(POSITION position1, POSITION position2);
+
+
+      list < TYPE, ARG_TYPE > & operator = (const class list & l);
 #ifdef MOVE_SEMANTICS
-   list < TYPE, ARG_TYPE > & operator = (class list && l);
+      list < TYPE, ARG_TYPE > & operator = (class list && l);
 #endif
 
-   void dump(dump_context &) const;
-   void assert_valid() const;
 
 };
 
@@ -1745,7 +1751,7 @@ void list<TYPE, ARG_TYPE>::erase(node * &  pnode)
 template<class TYPE, class ARG_TYPE>
 void list<TYPE, ARG_TYPE>::erase(POSITION & pos)
 {
-   
+
    this->erase((node * &)pos);
 
 }
@@ -1754,7 +1760,7 @@ void list<TYPE, ARG_TYPE>::erase(POSITION & pos)
 template<class TYPE, class ARG_TYPE>
 void list<TYPE, ARG_TYPE>::erase(iterator & it)
 {
-   
+
    this->erase(it.m_pnode);
 
 }
@@ -2059,6 +2065,8 @@ void list<TYPE, ARG_TYPE>::Serialize(CArchive& ar)
    }
 }*/
 
+#ifdef DEBUG
+
 template<class TYPE, class ARG_TYPE>
 void list<TYPE, ARG_TYPE>::dump(dump_context & dumpcontext) const
 {
@@ -2098,6 +2106,8 @@ void list<TYPE, ARG_TYPE>::assert_valid() const
       ASSERT(__is_valid_address(this->m_ptail, sizeof(node)));
    }
 }
+
+#endif
 
 template<class TYPE, class ARG_TYPE>
 list < TYPE, ARG_TYPE > &

@@ -435,10 +435,10 @@ retry:
 
 
 
+#ifdef DEBUG
 
    /////////////////////////////////////////////////////////////////////////////
    // file diagnostics
-
 
    void file::assert_valid() const
    {
@@ -456,7 +456,7 @@ retry:
    }
 
 
-
+#endif
 
 
 

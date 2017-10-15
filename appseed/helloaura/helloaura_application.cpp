@@ -1,7 +1,33 @@
 #include "framework.h"
-int my_main(::aura::application * papp);
+#include <commctrl.h >
+#pragma comment(linker,"\"/manifestdependency:type='win32' \
+name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
+processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#pragma comment(lib,"comctl32.lib")
 
-namespace helloaxis
+
+int main_window(::helloaura::render * papp);
+
+
+INT_PTR CALLBACK DialogProc(HWND h, UINT u, WPARAM, LPARAM)
+{
+
+   if (u == WM_CLOSE)
+   {
+      return DestroyWindow(h);
+   }
+   else if(u == WM_INITDIALOG)
+   {
+      return 1;
+   }
+   else if(u==WM_PAINT)
+   {
+      //return 1;
+   }
+
+   return 0;
+}
+namespace helloaura
 {
 
 
@@ -9,15 +35,15 @@ namespace helloaxis
       m_mutexAiFont(this)
    {
 
-      m_strAppName = "app/helloaxis";
-      m_strLibraryName = "app/helloaxis";
+      m_strAppName = "app/helloaura";
+      m_strLibraryName = "app/helloaura";
       m_strBaseSupportId = "ca2_flag";
       m_bLicense = false;
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Multiverse!!";
-      m_strAlternateHelloMultiverseDefault = "Hello!!";
+      m_strHelloMultiverseDefault = "Hello Aura!!";
+      m_strAlternateHelloMultiverseDefault = "Hello Aura!!";
 
       m_strHelloMultiverse = m_strHelloMultiverseDefault;
       m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
@@ -45,14 +71,14 @@ namespace helloaxis
 
       ::core::session * pcoression = m_pauraapp->m_pcoresession;
 
-      if (!::axis::application::initialize_application())
+      if (!::aura::application::initialize_application())
       {
 
          return false;
 
       }
 
-      string str = handler()->m_varTopicQuery["helloaxis"];
+      string str = handler()->m_varTopicQuery["helloaura"];
 
       if (str.has_char())
       {
@@ -61,7 +87,7 @@ namespace helloaxis
 
       }
 
-      m_dataid.m_id = m_dataid.m_id + ".local://";
+//      m_dataid.m_id = m_dataid.m_id + ".local://";
 
 
 
@@ -73,7 +99,7 @@ namespace helloaxis
    int32_t application::exit_application()
    {
 
-      return ::axis::application::exit_application();
+      return ::aura::application::exit_application();
 
    }
 
@@ -99,15 +125,63 @@ namespace helloaxis
 
 #endif
 
+
       m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
-      output_debug_string("\nfinished helloaxis::on_request");
+      output_debug_string("\nfinished helloaura::on_request");
+
+      //property_set set;
+
+      //set["raw_http"] = true;
+      //set["disable_common_name_cert_check"] = true;
+
+      //string str = Application.http().get("https://ca2.cc/", set);
+
+      //Application.file().put_contents("C:/archive/hhh.html", str);
+
+      //fork([&]()
+      //{
+
+      //   HWND hDlg;
+      //   hDlg = CreateDialogParam(System.m_hinstance, MAKEINTRESOURCE(IDD_DIALOG1), 0, DialogProc, 0);
+      //   //ShowWindow(hDlg, SW_SHOW);
+
+      //   rect r;
+      //   GetWindowRect(GetDesktopWindow(), r);
+      //   rect r2;
+      //   GetWindowRect(hDlg, r2);
+
+      //   r2.Align(align_horizontal_center, r);
+
+      //   r2.top = (r.height() - r2.height()) / 3;
+
+      //   SetWindowPos(hDlg, HWND_TOP, r2.left, r2.top, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE);
+
+      //   BOOL ret;
+      //   MSG msg;
+      //   while ((ret = GetMessage(&msg, 0, 0, 0)) != 0)
+      //   {
+      //      if (ret == -1) /* error found */
+      //         return -1;
+
+      //      if (!IsDialogMessage(hDlg, &msg))
+      //      {
+      //         TranslateMessage(&msg); /* translate virtual-key messages */
+      //         DispatchMessage(&msg); /* send it to dialog procedure */
+      //      }
+      //   }
+      //});
+
+      m_dFps = 60;
+
+      m_prender = new render(this);
 
       fork([&]()
       {
-         my_main(this);
-      }
-          );
+
+         main_window(m_prender);
+
+      });
 
    }
 
@@ -150,16 +224,24 @@ namespace helloaxis
       pgraphics->FillEllipse(rcClient);
    }
 
-} // namespace helloaxis
+
+   string application::get_helloaura()
+   {
+
+      return "Hello Aura!!";
+
+   }
+
+} // namespace helloaura
 
 
 
 
 extern "C"
-::aura::library * app_helloaxis_get_new_library(::aura::application * papp)
+::aura::library * app_helloaura_get_new_library(::aura::application * papp)
 {
 
-   return new ::aura::single_application_library < ::helloaxis::application >(papp, "app/helloaxis");
+   return new ::aura::single_application_library < ::helloaura::application >(papp, "app/helloaura");
 
 }
 

@@ -2,6 +2,8 @@
 //#include <float.h>
 
 
+#ifdef DEBUG
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Diagnostic Stream output for floating point numbers
@@ -25,3 +27,4 @@ dump_context & dump_context::operator<<(double d)
    return *this;
 }
 
+#endif

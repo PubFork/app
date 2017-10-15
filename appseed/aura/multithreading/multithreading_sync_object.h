@@ -12,35 +12,40 @@
 class CLASS_DECL_AURA sync_object :
    virtual public object
 {
-public:
+   public:
 
 #ifdef WINDOWS
-   HANDLE      m_object;
+      HANDLE      m_object;
 #endif
-   char *                  m_pszName;
-   bool                    m_bOwner;
+      char *                  m_pszName;
+      bool                    m_bOwner;
 
 
-   sync_object(const char * pstrName);
-   virtual ~sync_object();
+      sync_object(const char * pstrName);
+      virtual ~sync_object();
 
-   virtual void * get_os_data() const;
 
-   operator HANDLE() const;
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
 
-   virtual bool lock();
-   virtual bool lock(const duration & durationTimeout);
 
-   virtual wait_result wait();
-   virtual wait_result wait(const duration & durationTimeout);
 
-   virtual bool is_locked() const;
+      virtual void * get_os_data() const;
 
-   virtual bool unlock();
-   virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
+      operator HANDLE() const;
 
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
+      virtual bool lock();
+      virtual bool lock(const duration & durationTimeout);
+
+      virtual wait_result wait();
+      virtual wait_result wait(const duration & durationTimeout);
+
+      virtual bool is_locked() const;
+
+      virtual bool unlock();
+      virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
 
 };
 

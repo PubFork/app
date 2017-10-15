@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 
@@ -38,6 +38,8 @@ namespace draw2d
 
    }
 
+#ifdef DEBUG
+
 
    void font::dump(dump_context & dumpcontext) const
    {
@@ -45,10 +47,10 @@ namespace draw2d
       ::exception::throw_interface_only(get_app());
    }
 
-
+#endif
    bool font::create_pixel_font(const char * lpszFacename, double dSize, int32_t iWeight, bool bItalic, bool bUnderline, bool bStrikeOut, double dWidth)
    {
-      
+
       synch_lock sl(m_pmutex);
 
 #ifdef WINDOWS
@@ -80,7 +82,7 @@ namespace draw2d
 
    bool font::create_point_font(const char * lpszFacename, double dSize, int32_t iWeight, bool bItalic, bool bUnderline, bool bStrikeOut, double dWidth)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       m_strFontFamilyName     = lpszFacename;
@@ -106,7 +108,7 @@ namespace draw2d
 
    font & font::operator = (const font & fontSrc)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       if(this != &fontSrc)
@@ -129,7 +131,7 @@ namespace draw2d
 
    void font::set_family_name(const char * pszFamilyName)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       m_strFontFamilyName  = pszFamilyName;
@@ -142,7 +144,7 @@ namespace draw2d
    {
 
       synch_lock sl(m_pmutex);
-      
+
       m_dFontSize       = dSize;
       m_eunitFontSize   = eunit;
       m_bUpdated        = false;
@@ -152,7 +154,7 @@ namespace draw2d
 
    void font::set_bold(bool bBold)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       if(bBold)
@@ -170,7 +172,7 @@ namespace draw2d
 
    void font::set_italic(bool bItalic)
    {
-      
+
       synch_lock sl(m_pmutex);
 
       m_bItalic      = bItalic;
@@ -182,7 +184,7 @@ namespace draw2d
    {
 
       synch_lock sl(m_pmutex);
-      
+
       m_bUnderline   = bUnderline;
       m_bUpdated     = false;
 
@@ -190,8 +192,8 @@ namespace draw2d
 
    void font::set_strikeout(bool bStrikeout)
    {
-      
-      
+
+
       synch_lock sl(m_pmutex);
 
       m_bStrikeout   = bStrikeout;
@@ -223,89 +225,89 @@ namespace draw2d
    }
 
 
-    string font::get_sample_text(e_cs ecs)
+   string font::get_sample_text(e_cs ecs)
    {
 
-       if (ecs == cs_chinesebig5)
-       {
+      if (ecs == cs_chinesebig5)
+      {
 
-          return unitext("示例文本");
+         return unitext("示例文本");
 
-       }
-       else if (ecs == cs_gb2312)
-       {
+      }
+      else if (ecs == cs_gb2312)
+      {
 
-          return unitext("示例文本");
+         return unitext("示例文本");
 
-       }
-       else if (ecs == cs_shiftjis)
-       {
+      }
+      else if (ecs == cs_shiftjis)
+      {
 
-          return unitext("サンプルテキスト");
+         return unitext("サンプルテキスト");
 
-       }
-       else if (ecs == cs_hebrew)
-       {
+      }
+      else if (ecs == cs_hebrew)
+      {
 
-          return unitext("טקסט לדוגמה");
+         return unitext("טקסט לדוגמה");
 
-       }
-       else if (ecs == cs_arabic)
-       {
+      }
+      else if (ecs == cs_arabic)
+      {
 
-          return unitext("نص بسيط");
+         return unitext("نص بسيط");
 
-       }
-       else if (ecs == font::cs_greek)
-       {
+      }
+      else if (ecs == font::cs_greek)
+      {
 
-          return unitext("Δείγμα κειμένου");
+         return unitext("Δείγμα κειμένου");
 
-       }
-       else if (ecs == font::cs_turkish)
-       {
+      }
+      else if (ecs == font::cs_turkish)
+      {
 
-          return unitext("Örnek yazı");
+         return unitext("Örnek yazı");
 
-       }
-       else if (ecs == font::cs_vietnamese)
-       {
+      }
+      else if (ecs == font::cs_vietnamese)
+      {
 
-          return unitext("văn bản mẫu");
+         return unitext("văn bản mẫu");
 
-       }
-       else if (ecs == font::cs_thai)
-       {
+      }
+      else if (ecs == font::cs_thai)
+      {
 
-          return unitext("ตัวอย่างข้อความ");
+         return unitext("ตัวอย่างข้อความ");
 
-       }
-       else if (ecs == font::cs_easteurope)
-       {
+      }
+      else if (ecs == font::cs_easteurope)
+      {
 
-          return unitext("Sample Text");
+         return unitext("Sample Text");
 
-       }
-       else if (ecs == font::cs_russian)
-       {
+      }
+      else if (ecs == font::cs_russian)
+      {
 
-          return unitext("Образец текста");
+         return unitext("Образец текста");
 
-       }
-       else if (ecs == font::cs_johab)
-       {
+      }
+      else if (ecs == font::cs_johab)
+      {
 
-          return unitext("샘플 텍스트");
+         return unitext("샘플 텍스트");
 
-       }
-       else if (ecs == font::cs_hangul)
-       {
+      }
+      else if (ecs == font::cs_hangul)
+      {
 
-          return unitext("샘플 텍스트");
+         return unitext("샘플 텍스트");
 
-       }
+      }
 
-       return "";
+      return "";
 
    }
 
@@ -323,7 +325,7 @@ namespace draw2d
          return str;
 
       }
-      
+
       return m_strFontFamilyName;
 
    }

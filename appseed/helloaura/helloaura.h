@@ -1,17 +1,17 @@
-#pragma once
+﻿#pragma once
 
 
-#include "axis/axis/axis.h"
+#include "aura/aura/aura.h"
 
 
-#ifdef _APP_CORE_HELLOAXIS_LIBRARY
-#define CLASS_DECL_APP_CORE_HELLOAXIS  CLASS_DECL_EXPORT
+#ifdef _APP_CORE_HELLOAURA_LIBRARY
+#define CLASS_DECL_APP_CORE_HELLOAURA  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_APP_CORE_HELLOAXIS  CLASS_DECL_IMPORT
+#define CLASS_DECL_APP_CORE_HELLOAURA  CLASS_DECL_IMPORT
 #endif
 
 
-namespace helloaxis
+namespace helloaura
 {
 
    class application;
@@ -20,11 +20,11 @@ namespace helloaxis
 
 
 #undef App
-#define App(pbaseapp) (pbaseapp->m_paxisapp->cast_app < ::helloaxis::application > ())
+#define App(pbaseapp) (pbaseapp->m_pauraapp->cast_app < ::helloaura::application > ())
 
 
-#include "helloaxis_render.h"
+#include "helloaura_render.h"
 
 
-#include "helloaxis_application.h"
+#include "helloaura_application.h"
 

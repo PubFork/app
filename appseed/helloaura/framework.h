@@ -1,8 +1,8 @@
-#ifndef __GNUC__
+﻿#ifndef __GNUC__
 #pragma once
 #endif
 
 
-#include "helloaxis.h"
+#include "helloaura.h"
 
 #include "resource.h"

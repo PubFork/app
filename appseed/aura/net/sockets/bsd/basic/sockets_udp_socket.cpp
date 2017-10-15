@@ -10,13 +10,13 @@ namespace sockets
       object(h.get_app())
       ,base_socket(h)
       ,socket(h)
-   , m_ibuf(new char[ibufsz])
-   , m_ibufsz(ibufsz)
-   , m_bind_ok(false)
-   , m_port(0)
-   , m_last_size_written(-1)
-   , m_retries(retries)
-   , m_b_read_ts(false)
+      , m_ibuf(new char[ibufsz])
+      , m_ibufsz(ibufsz)
+      , m_bind_ok(false)
+      , m_port(0)
+      , m_last_size_written(-1)
+      , m_retries(retries)
+      , m_b_read_ts(false)
    {
       m_iWriteFlags = 0;
       SetIpv6(ipv6);
@@ -100,7 +100,9 @@ namespace sockets
          }
          if (n == -1)
          {
-            log("bind", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+            log("bind", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
             SetCloseAndDelete();
             throw simple_exception(get_app(), "bind() failed for udp_socket, port:range: " + ::str::from(ad.get_service_number()) + ":" + ::str::from(range));
             return -1;
@@ -132,7 +134,7 @@ namespace sockets
 
    bool udp_socket::open(struct in6_addr& a, port_t port)
    {
-     ::net::address ad(a, port);
+      ::net::address ad(a, port);
       return open(ad);
    }
 
@@ -148,7 +150,9 @@ namespace sockets
          SetNonblocking(true);
          if (connect(GetSocket(), ad.sa(), ad.sa_len()) == -1)
          {
-            log("connect", Errno, wsa_str_error(Errno), ::aura::log::level_fatal);
+#ifdef DEBUG
+            log("connect", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
             SetCloseAndDelete();
             return false;
          }
@@ -219,7 +223,9 @@ namespace sockets
          SetNonblocking(true);
          if ((m_last_size_written = sendto(GetSocket(), data, len, flags, ad.sa(), (int32_t) ad.sa_len())) == -1)
          {
-            log("sendto", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+            log("sendto", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
          }
       }
    }
@@ -256,8 +262,9 @@ namespace sockets
       if (!IsConnected())
       {
 
+#ifdef DEBUG
          log("write", 0, "not connected", ::aura::log::level_error);
-
+#endif
          return;
 
       }
@@ -265,7 +272,9 @@ namespace sockets
       if ((m_last_size_written = send(GetSocket(), (const char *) data, (int32_t)len, m_iWriteFlags)) == -1)
       {
 
-         log("write", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+#ifdef DEBUG
+         log("write", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
 
       }
 
@@ -273,23 +282,24 @@ namespace sockets
 
 
 
-   #if defined(LINUX) || defined(MACOSX)
+#if defined(LINUX) || defined(MACOSX)
    int32_t udp_socket::ReadTS(char *ioBuf, int32_t inBufSize, struct sockaddr *from, socklen_t fromlen, struct timeval *ts)
    {
       struct msghdr msg;
       struct iovec vec[1];
-      union {
+      union
+      {
          struct cmsghdr cm;
-   #ifdef MACOSX
-   #ifdef __DARWIN_UNIX03
-   #define ALIGNBYTES __DARWIN_ALIGNBYTES
-   #endif
-   #define myALIGN(p) (((uint32_t)(p) + ALIGNBYTES) &~ ALIGNBYTES)
-   #define myCMSG_SPACE(l) (myALIGN(sizeof(struct cmsghdr)) + myALIGN(l))
+#ifdef MACOSX
+#ifdef __DARWIN_UNIX03
+#define ALIGNBYTES __DARWIN_ALIGNBYTES
+#endif
+#define myALIGN(p) (((uint32_t)(p) + ALIGNBYTES) &~ ALIGNBYTES)
+#define myCMSG_SPACE(l) (myALIGN(sizeof(struct cmsghdr)) + myALIGN(l))
          char data[ myCMSG_SPACE(sizeof(struct timeval)) ];
-   #else
+#else
          char data[ CMSG_SPACE(sizeof(struct timeval)) ];
-   #endif
+#endif
       } cmsg_un;
       struct cmsghdr *cmsg;
       struct timeval *tv;
@@ -340,7 +350,7 @@ namespace sockets
       // The address is in network order, but that's OK right now
       return n;
    }
-   #endif
+#endif
 
 
    void udp_socket::OnRead()
@@ -353,24 +363,28 @@ namespace sockets
          {
             struct timeval ts;
             System.get_time(&ts);
-   #if !defined(LINUX) && !defined(MACOSX)
+#if !defined(LINUX) && !defined(MACOSX)
             size_t n = recvfrom(GetSocket(), m_ibuf, m_ibufsz, 0, (struct sockaddr *)&sa, &sa_len);
-   #else
+#else
             int32_t n = ReadTS(m_ibuf, m_ibufsz, (struct sockaddr *)&sa, sa_len, &ts);
-   #endif
+#endif
             if (n > 0)
             {
                this -> OnRawData(m_ibuf, n, (struct sockaddr *)&sa, sa_len, &ts);
             }
-            else
-            if (n == -1)
+            else if (n == -1)
             {
-   #ifdef _WIN32
+#ifdef _WIN32
                if (Errno != WSAEWOULDBLOCK)
-   #else
+               {
+#else
                if (Errno != EWOULDBLOCK)
-   #endif
-                  log("recvfrom", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+               {
+#endif
+#ifdef DEBUG
+                  log("recvfrom", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
+               }
             }
             return;
          }
@@ -380,7 +394,9 @@ namespace sockets
          {
             if (sa_len != sizeof(sa))
             {
+#ifdef DEBUG
                log("recvfrom", 0, "unexpected address struct size", ::aura::log::level_warning);
+#endif
             }
             this -> OnRawData(m_ibuf, n, (struct sockaddr *)&sa, sa_len);
             if (!q--)
@@ -390,12 +406,17 @@ namespace sockets
          }
          if (n == -1)
          {
-   #ifdef _WIN32
+#ifdef _WIN32
             if (Errno != WSAEWOULDBLOCK)
-   #else
+            {
+#else
             if (Errno != EWOULDBLOCK)
-   #endif
-               log("recvfrom", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+            {
+#endif
+#ifdef DEBUG
+               log("recvfrom", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
+            }
          }
          return;
       }
@@ -405,24 +426,29 @@ namespace sockets
       {
          struct timeval ts;
          System.get_time(&ts);
-   #if !defined(LINUX) && !defined(MACOSX)
+#if !defined(LINUX) && !defined(MACOSX)
          size_t n = recvfrom(GetSocket(), m_ibuf, m_ibufsz, 0, (struct sockaddr *)&sa, &sa_len);
-   #else
+#else
          int32_t n = ReadTS(m_ibuf, m_ibufsz, (struct sockaddr *)&sa, sa_len, &ts);
-   #endif
+#endif
          if (n > 0)
          {
             this -> OnRawData(m_ibuf, n, (struct sockaddr *)&sa, sa_len, &ts);
          }
-         else
-         if (n == -1)
+         else if (n == -1)
          {
-   #ifdef _WIN32
+#ifdef _WIN32
             if (Errno != WSAEWOULDBLOCK)
-   #else
+            {
+#else
             if (Errno != EWOULDBLOCK)
-   #endif
-               log("recvfrom", Errno, wsa_str_error(Errno), ::aura::log::level_error);
+            {
+#endif
+#ifdef DEBUG
+
+               log("recvfrom", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
+            }
          }
          return;
       }
@@ -432,7 +458,9 @@ namespace sockets
       {
          if (sa_len != sizeof(sa))
          {
+#ifdef DEBUG
             log("recvfrom", 0, "unexpected address struct size", ::aura::log::level_warning);
+#endif
          }
          this -> OnRawData(m_ibuf, n, (struct sockaddr *)&sa, sa_len);
          if (!q--)
@@ -442,56 +470,18 @@ namespace sockets
       }
       if (n == -1)
       {
-   #ifdef _WIN32
+#ifdef _WIN32
          if (Errno != WSAEWOULDBLOCK)
-   #else
+         {
+#else
          if (Errno != EWOULDBLOCK)
-   #endif
-            log("recvfrom", Errno, wsa_str_error(Errno), ::aura::log::level_error);
-      }
-   }
-
-
-   void udp_socket::SetBroadcast(bool b)
-   {
-      int32_t one = 1;
-      int32_t zero = 0;
-
-      if (GetSocket() == INVALID_SOCKET)
-      {
-         CreateConnection();
-      }
-      if (b)
-      {
-         if (setsockopt(GetSocket(), SOL_SOCKET, SO_BROADCAST, (char *) &one, sizeof(one)) == -1)
          {
-            log("SetBroadcast", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#endif
+#ifdef DEBUG
+            log("recvfrom", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
          }
       }
-      else
-      {
-         if (setsockopt(GetSocket(), SOL_SOCKET, SO_BROADCAST, (char *) &zero, sizeof(zero)) == -1)
-         {
-            log("SetBroadcast", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
-         }
-      }
-   }
-
-
-   bool udp_socket::IsBroadcast()
-   {
-      int32_t is_broadcast = 0;
-      socklen_t size;
-
-      if (GetSocket() == INVALID_SOCKET)
-      {
-         CreateConnection();
-      }
-      if (getsockopt(GetSocket(), SOL_SOCKET, SO_BROADCAST, (char *)&is_broadcast, &size) == -1)
-      {
-         log("IsBroadcast", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
-      }
-      return is_broadcast != 0;
    }
 
 
@@ -503,7 +493,9 @@ namespace sockets
       }
       if (setsockopt(GetSocket(), SOL_IP, IP_MULTICAST_TTL, (char *)&ttl, sizeof(int32_t)) == -1)
       {
-         log("SetMulticastTTL", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("SetMulticastTTL", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
    }
 
@@ -519,7 +511,9 @@ namespace sockets
       }
       if (getsockopt(GetSocket(), SOL_IP, IP_MULTICAST_TTL, (char *)&ttl, &size) == -1)
       {
-         log("GetMulticastTTL", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("GetMulticastTTL", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
       return ttl;
    }
@@ -536,14 +530,18 @@ namespace sockets
          int32_t val = x ? 1 : 0;
          if (setsockopt(GetSocket(), IPPROTO_IPV6, IPV6_MULTICAST_LOOP, (char *)&val, sizeof(int32_t)) == -1)
          {
-            log("SetMulticastLoop", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+            log("SetMulticastLoop", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
          }
          return;
       }
       int32_t val = x ? 1 : 0;
       if (setsockopt(GetSocket(), SOL_IP, IP_MULTICAST_LOOP, (char *)&val, sizeof(int32_t)) == -1)
       {
-         log("SetMulticastLoop", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("SetMulticastLoop", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
    }
 
@@ -560,7 +558,9 @@ namespace sockets
          socklen_t size = sizeof(int32_t);
          if (getsockopt(GetSocket(), IPPROTO_IPV6, IPV6_MULTICAST_LOOP, (char *)&is_loop, &size) == -1)
          {
-            log("IsMulticastLoop", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+            log("IsMulticastLoop", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
          }
          return is_loop ? true : false;
       }
@@ -568,7 +568,9 @@ namespace sockets
       socklen_t size = sizeof(int32_t);
       if (getsockopt(GetSocket(), SOL_IP, IP_MULTICAST_LOOP, (char *)&is_loop, &size) == -1)
       {
-         log("IsMulticastLoop", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("IsMulticastLoop", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
       return is_loop ? true : false;
    }
@@ -590,7 +592,9 @@ namespace sockets
             x.ipv6mr_interface = if_index;
             if (setsockopt(GetSocket(), IPPROTO_IPV6, IPV6_ADD_MEMBERSHIP, (char *)&x, sizeof(struct ipv6_mreq)) == -1)
             {
-               log("AddMulticastMembership", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+               log("AddMulticastMembership", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
             }
          }
          return;
@@ -602,10 +606,12 @@ namespace sockets
          memcpy(&x.imr_multiaddr.s_addr, &addr, sizeof(addr));
          Session.sockets().net().convert(addr,  local_if);
          memcpy(&x.imr_interface.s_addr, &addr, sizeof(addr));
-   //      x.imr_ifindex = if_index;
+         //      x.imr_ifindex = if_index;
          if (setsockopt(GetSocket(), SOL_IP, IP_ADD_MEMBERSHIP, (char *)&x, sizeof(struct ip_mreq)) == -1)
          {
-            log("AddMulticastMembership", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+            log("AddMulticastMembership", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
          }
       }
    }
@@ -627,7 +633,9 @@ namespace sockets
             x.ipv6mr_interface = if_index;
             if (setsockopt(GetSocket(), IPPROTO_IPV6, IPV6_DROP_MEMBERSHIP, (char *)&x, sizeof(struct ipv6_mreq)) == -1)
             {
-               log("DropMulticastMembership", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+               log("DropMulticastMembership", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
             }
          }
          return;
@@ -639,10 +647,12 @@ namespace sockets
          memcpy(&x.imr_multiaddr.s_addr, &addr, sizeof(addr));
          Session.sockets().net().convert(addr, local_if);
          memcpy(&x.imr_interface.s_addr, &addr, sizeof(addr));
-   //      x.imr_ifindex = if_index;
+         //      x.imr_ifindex = if_index;
          if (setsockopt(GetSocket(), SOL_IP, IP_DROP_MEMBERSHIP, (char *)&x, sizeof(struct ip_mreq)) == -1)
          {
-            log("DropMulticastMembership", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+            log("DropMulticastMembership", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
          }
       }
    }
@@ -656,12 +666,16 @@ namespace sockets
       }
       if (!IsIpv6())
       {
+#ifdef DEBUG
          log("SetMulticastHops", 0, "Ipv6 only", ::aura::log::level_error);
+#endif
          return;
       }
       if (setsockopt(GetSocket(), IPPROTO_IPV6, IPV6_MULTICAST_HOPS, (char *)&hops, sizeof(int32_t)) == -1)
       {
-         log("SetMulticastHops", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("SetMulticastHops", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
    }
 
@@ -674,14 +688,18 @@ namespace sockets
       }
       if (!IsIpv6())
       {
+#ifdef DEBUG
          log("SetMulticastHops", 0, "Ipv6 only", ::aura::log::level_error);
+#endif
          return -1;
       }
       int32_t hops = 0;
       socklen_t size = sizeof(int32_t);
       if (getsockopt(GetSocket(), IPPROTO_IPV6, IPV6_MULTICAST_HOPS, (char *)&hops, &size) == -1)
       {
-         log("GetMulticastHops", Errno, wsa_str_error(Errno), ::aura::log::level_warning);
+#ifdef DEBUG
+         log("GetMulticastHops", Errno, bsd_socket_error(Errno), ::aura::log::level_warning);
+#endif
       }
       return hops;
    }

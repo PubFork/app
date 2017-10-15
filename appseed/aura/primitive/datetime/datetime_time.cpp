@@ -44,7 +44,7 @@ namespace datetime
 
 
    time::time(int32_t nYear, int32_t nMonth, int32_t nDay, int32_t nHour, int32_t nMin, int32_t nSec,
-      int32_t nDST)
+              int32_t nDST)
    {
 #pragma warning (push)
 #pragma warning (disable: 4127)  // conditional expression constant
@@ -496,14 +496,14 @@ namespace datetime
       }
 
       str.ReleaseBuffer();
-      
+
       return str;
-      
+
 #elif defined(APPLEOS)
 
-   #if __WORDSIZE != 64
-   #pragma error "error: long should 8-byte on APPLEOS"
-   #endif
+#if __WORDSIZE != 64
+#pragma error "error: long should 8-byte on APPLEOS"
+#endif
 
       char * szBuffer = str.GetBufferSetLength(maxTimeBufferSize);
 
@@ -515,15 +515,15 @@ namespace datetime
          szBuffer[0] = '\0';
 
       }
-      
+
       str.ReleaseBuffer();
-      
+
       return str;
 
 #elif _SECURE_TEMPLATE
 
       char * szBuffer = str.GetBufferSetLength(maxTimeBufferSize);
-      
+
       struct tm ptmTemp;
 
       errno_t err = _localtime64_s(&ptmTemp, &m_time);
@@ -534,12 +534,12 @@ namespace datetime
          szBuffer[0] = '\0';
 
       }
-      
-      
+
+
       str.ReleaseBuffer();
-      
+
       return str;
-      
+
 //#elif defined(ANDROID) || defined(SOLARIS)
 //
 //      struct tm* ptmTemp = localtime(&m_time);
@@ -554,7 +554,7 @@ namespace datetime
 #else
 
       str = strFormat;
-      
+
       str.replace("%Y",::str::from(GetYear()));
       str.replace("%m",::str::zero_pad(::str::from(GetMonth()), 2));
       str.replace("%d",::str::zero_pad(::str::from(GetDay()),2));
@@ -636,7 +636,7 @@ namespace datetime
    SYSTEMTIME time::to_system_time() const
    {
 
-      SYSTEMTIME st ={};
+      SYSTEMTIME st = {};
 
       struct tm ttm;
 
@@ -661,7 +661,7 @@ namespace datetime
 
    FILETIME time::to_file_time() const
    {
-      
+
       SYSTEMTIME st = to_system_time();
 
       FILETIME ft;
@@ -669,7 +669,7 @@ namespace datetime
       SystemTimeToFileTime(&st,&ft);
 
       return ft;
-      
+
    }
 
 
@@ -731,6 +731,8 @@ namespace datetime
 
 
 
+#ifdef DEBUG
+
 dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
 {
    char psz[32];
@@ -750,6 +752,7 @@ dump_context & operator <<(dump_context & dumpcontext, ::datetime::time time)
    return dumpcontext << "::datetime::time(\"" << psz << "\")";
 }
 
+#endif
 
 ::file::ostream & operator <<(::file::ostream & os, ::datetime::time time)
 {

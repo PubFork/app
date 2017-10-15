@@ -23,31 +23,40 @@ namespace sockets
 
    void base_socket_handler::pool_socket::OnRead()
    {
+#ifdef DEBUG
       log("OnRead", 0, "data on hibernating socket", ::aura::log::level_fatal);
+#endif
       SetCloseAndDelete();
       SetLost();
    }
 
    void base_socket_handler::pool_socket::OnOptions(int, int, int, SOCKET)
    {
-   
+
    }
 
 
+#ifdef DEBUG
    base_socket_handler::base_socket_handler(::aura::application * papp, logger * plogger) :
       ::object(papp),
       m_splogger(plogger)
    {
 
    }
+#else
+   base_socket_handler::base_socket_handler(::aura::application * papp) :
+      ::object(papp)
+   {
 
+   }
+#endif
 
    base_socket_handler::~base_socket_handler()
    {
 
    }
 
-
+#ifdef DEBUG
    void base_socket_handler::set_logger(logger * plogger)
    {
 
@@ -63,7 +72,7 @@ namespace sockets
       string strLog;
 
       strLog.Format("%s - %s [%d]", strUser, strSystem, iError);
-      
+
       output_debug_string(strLog);
 
 #endif
@@ -77,6 +86,7 @@ namespace sockets
       m_splogger->log(this, psocket, strUser, iError, strSystem, elevel);
 
    }
+#endif
 
 
 } // namespace sockets

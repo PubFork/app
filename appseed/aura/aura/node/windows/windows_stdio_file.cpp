@@ -42,9 +42,9 @@ namespace windows
 
       m_pStream = NULL;
 //      if(!::windows::file::open(lpszFileName,(nOpenFlags & ~::file::type_text)))
-  //    {
+      //    {
 
-    //     return failure;
+      //     return failure;
 
       //}
 
@@ -68,7 +68,7 @@ namespace windows
 
       // add '+' if necessary (when read/write modes mismatched)
       if (szMode[0] == 'r' && (nOpenFlags & ::file::mode_read_write) ||
-         szMode[0] != 'r' && !(nOpenFlags & ::file::mode_write))
+            szMode[0] != 'r' && !(nOpenFlags & ::file::mode_write))
       {
          // ::file::seek_current szMode mismatched, need to add '+' to fix
          szMode[nMode++] = '+';
@@ -186,13 +186,13 @@ namespace windows
          {
             clearerr(m_pStream);
             throw_file_exception(get_app(), ::file::exception::type_generic, _doserrno,
-               m_strFileName);
+                                 m_strFileName);
          }
 
          // if string is read completely or EOF
          if (lpszResult == NULL ||
-            (nLen = lstrlen(lpsz)) < nMaxSize ||
-            lpsz[nLen-1] == '\n')
+               (nLen = lstrlen(lpsz)) < nMaxSize ||
+               lpsz[nLen-1] == '\n')
             break;
 
          nLen = rString.get_length();
@@ -240,7 +240,7 @@ namespace windows
 
       if (fseek(m_pStream, (long) lOff, nFrom) != 0)
          throw_file_exception(get_app(), ::file::exception::badSeek, _doserrno,
-         m_strFileName);
+                              m_strFileName);
 
       long pos = ftell(m_pStream);
       return pos;
@@ -254,7 +254,7 @@ namespace windows
       long pos = ftell(m_pStream);
       if (pos == -1)
          throw_file_exception(get_app(), ::file::exception::invalidFile, _doserrno,
-         m_strFileName);
+                              m_strFileName);
       return pos;
    }
 
@@ -264,7 +264,7 @@ namespace windows
 
       if (m_pStream != NULL && fflush(m_pStream) != 0)
          throw_file_exception(get_app(), ::file::exception::diskFull, _doserrno,
-         m_strFileName);
+                              m_strFileName);
    }
 
    void stdio_file::close()
@@ -288,7 +288,7 @@ namespace windows
 
       if (nErr != 0)
          throw_file_exception(get_app(), ::file::exception::diskFull, _doserrno,
-         m_strFileName);
+                              m_strFileName);
    }
 
 
@@ -338,6 +338,8 @@ namespace windows
    }
 
 
+#ifdef DEBUG
+
    void stdio_file::dump(dump_context & dumpcontext) const
    {
 
@@ -349,7 +351,7 @@ namespace windows
 
    }
 
-
+#endif
 
 
    file_size_t stdio_file::get_length() const
@@ -363,21 +365,21 @@ namespace windows
       nCurrent = ftell(m_pStream);
       if (nCurrent == -1)
          throw_file_exception(get_app(), ::file::exception::invalidFile, _doserrno,
-         m_strFileName);
+                              m_strFileName);
 
       nResult = fseek(m_pStream, 0, SEEK_END);
       if (nResult != 0)
          throw_file_exception(get_app(), ::file::exception::badSeek, _doserrno,
-         m_strFileName);
+                              m_strFileName);
 
       nLength = ftell(m_pStream);
       if (nLength == -1)
          throw_file_exception(get_app(), ::file::exception::invalidFile, _doserrno,
-         m_strFileName);
+                              m_strFileName);
       nResult = fseek(m_pStream, nCurrent, SEEK_SET);
       if (nResult != 0)
          throw_file_exception(get_app(), ::file::exception::badSeek, _doserrno,
-         m_strFileName);
+                              m_strFileName);
 
       return nLength;
    }

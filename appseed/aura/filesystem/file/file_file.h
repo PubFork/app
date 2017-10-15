@@ -66,6 +66,13 @@ namespace file
          virtual ~file();
 
 
+#ifdef DEBUG
+         virtual void assert_valid() const override;
+         virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
          virtual file_position_t get_position() const;
          virtual file_position_t tell() const;
          virtual bool GetStatus(file_status& rStatus) const;
@@ -104,9 +111,6 @@ namespace file
          virtual void write(const void * lpBuf, memory_size_t nCount);
          virtual string get_location() const;
 
-
-         virtual void assert_valid() const;
-         virtual void dump(dump_context & dumpcontext) const;
 
          virtual bool IsOpened();
          virtual bool is_open();

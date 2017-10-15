@@ -8,7 +8,7 @@ Copyright (C) 2005,2007  Anders Hedstrom
 This library is made available under the terms of the GNU GPL.
 
 If you would like to use this library in a closed-source application,
-a separate license agreement is available. For information about 
+a separate license agreement is available. For information about
 the closed-source license agreement for the C++ sockets library,
 please visit http://www.alhem.net/Sockets/license.html and/or
 email license@alhem.net.
@@ -44,33 +44,36 @@ namespace sockets
       \ingroup timer */
    class EventHandler : public socket_handler,public IEventHandler
    {
-   public:
+      public:
 
 
-      list<Event *>   m_events;
-      bool                          m_quit;
-      tcp_socket *                  m_socket;
-      port_t                        m_port;
+         list<Event *>   m_events;
+         bool                          m_quit;
+         tcp_socket *                  m_socket;
+         port_t                        m_port;
 
 
 
+#ifdef DEBUG
+         EventHandler(::aura::application * papp, logger * = NULL);
+#else
+         EventHandler(::aura::application * papp);
+#endif
+         //EventHandler(::aura::application * papp, mutex &,logger * = NULL);
+         ~EventHandler();
 
-      EventHandler(::aura::application * papp, logger * = NULL);
-      //EventHandler(::aura::application * papp, mutex &,logger * = NULL);
-      ~EventHandler();
+         bool GetTimeUntilNextEvent(struct timeval *tv);
+         void CheckEvents();
+         long AddEvent(IEventOwner *from,long sec,long usec);
+         void ClearEvents(IEventOwner *from);
+         void RemoveEvent(IEventOwner *from,long eid);
 
-      bool GetTimeUntilNextEvent(struct timeval *tv);
-      void CheckEvents();
-      long AddEvent(IEventOwner *from,long sec,long usec);
-      void ClearEvents(IEventOwner *from);
-      void RemoveEvent(IEventOwner *from,long eid);
+         /** socket_handler while() loop implemented with event functionality. */
+         void EventLoop();
+         /** Stop event loop. */
+         void SetQuit(bool = true);
 
-      /** socket_handler while() loop implemented with event functionality. */
-      void EventLoop();
-      /** Stop event loop. */
-      void SetQuit(bool = true);
-
-      void add(base_socket *);
+         void add(base_socket *);
 
 
    };

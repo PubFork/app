@@ -5,13 +5,13 @@
 namespace zip
 {
 
-   
+
    in_file::in_file(::aura::application * papp):
       ::object(papp)
    {
 
    }
-   
+
 
    in_file::~in_file()
    {
@@ -46,262 +46,262 @@ namespace zip
    {
 
       m_filea.remove_all();
-      
+
       m_infilea.remove_all();
-      
+
       m_straPath.remove_all();
-      
+
       m_straPrefix.remove_all();
 
       string strFile;
-      
+
       strFile = lpszFileName;
-      
+
       index iFind = -1;
-      
+
       index iStart = 0;
-      
+
       while((iFind = ::str::find_file_extension("zip:",lpszFileName,iStart)) >= 0)
       {
-         
+
          m_straPath.add(string(&lpszFileName[iStart],iFind + strlen(".zip")));
-         
+
          iStart = iFind + strlen(".zip:");
-         
+
       }
-      
+
       if(::str::ends_ci(lpszFileName,".zip"))
       {
-         
+
          m_straPath.add(string(&lpszFileName[iStart]));
-         
+
       }
 
       if(m_straPath.get_size() == 0)
       {
-       
+
          return false;
-         
+
       }
 
       m_filea.add(canew(::zip::file(get_app())));
-      
+
       if(!m_filea.last().zip_open(m_straPath[0]))
       {
-         
+
          return false;
-         
+
       }
 
       string str;
-      
+
       int32_t i;
-      
+
       for(i = 1; i < m_straPath.get_size(); i++)
       {
-         
+
          m_infilea.add(canew(::zip::in_file(get_app())));
-         
+
          str = m_straPath[i];
-         
+
          if(!m_infilea.last().zip_open(m_filea.last_sp(),str))
          {
-            
+
             m_filea.remove_all();
-            
+
             m_infilea.remove_all();
-            
+
             return false;
-            
+
          }
-         
+
          m_filea.add(canew(::zip::file(get_app())));
-         
+
          if(!m_filea.last_sp()->zip_open((::file::file_sp) m_infilea.last_sp()))
          {
-            
+
             m_filea.remove_all();
-            
+
             m_infilea.remove_all();
-            
+
             return false;
-            
+
          }
-         
+
          m_straPrefix.add(m_straPath[i]);
-         
+
       }
-      
+
       if(::str::ends(strFile,":"))
       {
-         
+
          return true;
-         
+
       }
-      
+
       iFind = strFile.reverse_find(L':');
-      
+
       strFile = strFile.Mid(iFind + 1);
-      
+
       ::str::begins_eat(strFile,"/");
-      
+
       ::str::begins_eat(strFile,"\\");
-      
+
       return true;
-      
+
    }
 
-   
+
    bool in_file::unzip_open(::file::file * pfile, int iBufferLevel)
    {
 
       m_filea.remove_all();
-      
+
       m_infilea.remove_all();
-      
+
       m_straPath.remove_all();
-      
+
       m_straPrefix.remove_all();
 
       m_filea.add(canew(::zip::file(get_app())));
-      
+
       if(!m_filea.last_sp()->unzip_open(pfile, iBufferLevel))
       {
-         
+
          return false;
-         
+
       }
 
       return true;
 
    }
-   
+
 
    bool in_file::unzip_open(const char * lpszFileName,UINT)
    {
 
       m_filea.remove_all();
-      
+
       m_infilea.remove_all();
-      
+
       m_straPath.remove_all();
-      
+
       m_straPrefix.remove_all();
 
       string strFile;
-      
+
       strFile = lpszFileName;
 
       bool bFinalIsZip = false;
 
       index iFind = -1;
-      
+
       index iStart = 0;
-      
+
       while((iFind = ::str::find_ci(".zip:",lpszFileName,iStart)) >= 0)
       {
-         
+
          m_straPath.add(string(&lpszFileName[iStart],iFind + strlen(".zip")));
-         
+
          iStart = iFind + strlen(".zip:");
-         
+
       }
-      
+
       if(::str::ends_ci(lpszFileName,".zip"))
       {
-         
+
          m_straPath.add(string(&lpszFileName[iStart]));
-         
+
          bFinalIsZip = true;
-         
+
       }
 
       if(m_straPath.get_size() == 0)
       {
-         
+
          return false;
-         
+
       }
 
       m_filea.add(canew(::zip::file(get_app())));
-      
+
       if(!m_filea.last_sp()->unzip_open(m_straPath[0]))
       {
-         
+
          return false;
-         
+
       }
 
       string str;
-      
+
       int32_t i;
-      
+
       for(i = 1; i < m_straPath.get_size(); i++)
       {
-         
+
          m_infilea.add(canew(::zip::in_file(get_app())));
-         
+
          str = m_straPath[i];
-         
+
          if(!m_infilea.last_sp()->unzip_open(m_filea.last_sp(),str))
          {
-            
+
             m_filea.remove_all();
-            
+
             m_infilea.remove_all();
-            
+
             return false;
-            
+
          }
-         
+
          m_filea.add(canew(::zip::file(get_app())));
-         
+
          if(!m_filea.last_sp()->unzip_open((::file::file_sp)m_infilea.last_sp()))
          {
-            
+
             m_filea.remove_all();
-            
+
             m_infilea.remove_all();
-            
+
             return false;
-            
+
          }
-         
+
          m_straPrefix.add(m_straPath[i]);
-         
+
       }
-      
+
       if(::str::ends(strFile,":") || bFinalIsZip)
       {
-         
+
          return true;
-         
+
       }
-      
-      
+
+
       iFind = strFile.reverse_find(L':');
-      
+
       strFile = strFile.Mid(iFind + 1);
-      
+
       ::str::begins_eat(strFile,"/");
-      
+
       ::str::begins_eat(strFile,"\\");
-      
+
       if(!locate(strFile))
       {
-         
+
          if(!locate(strFile + "/"))
          {
-            
+
             return false;
-            
+
          }
-         
-      
+
+
       }
-      
+
       return true;
-      
+
    }
 
 
@@ -323,13 +323,13 @@ namespace zip
       if(unzOpenCurrentFile(get_zip_file()->m_pfUnzip) != UNZ_OK)
          return false;
       if(unzGetCurrentFileInfo(get_zip_file()->m_pfUnzip,
-         &m_fi,
-         NULL,
-         0,
-         NULL,
-         0,
-         NULL,
-         0) != UNZ_OK)
+                               &m_fi,
+                               NULL,
+                               0,
+                               NULL,
+                               0,
+                               NULL,
+                               0) != UNZ_OK)
          return false;
 
       m_iPosition = 0;
@@ -337,33 +337,33 @@ namespace zip
       return true;
    }
 
-   
+
    bool in_file::unzip_open(::zip::file * pzfile,const char * lpcszFileName)
    {
-      
+
       ASSERT(__is_valid_string(lpcszFileName));
-      
+
       m_filea.add(pzfile);
-      
+
       if(!locate(lpcszFileName))
       {
-         
+
          return false;
-         
+
       }
-      
+
       return true;
-      
+
    }
-   
+
 
    bool in_file::zip_open(::zip::file * pzfile,const char * lpcszFileName)
    {
-      
+
       ASSERT(__is_valid_string(lpcszFileName));
-      
+
       m_filea.add(pzfile);
-      
+
       m_strZipFile = lpcszFileName;
       return TRUE;
    }
@@ -594,7 +594,7 @@ namespace zip
    return CO_E_ERRORINDLL;
    }*/
 
-
+#ifdef DEBUG
    /////////////////////////////////////////////////////////////////////////////
    // in_file diagnostics
 
@@ -613,9 +613,7 @@ namespace zip
       dumpcontext << "\n";
    }
 
-
-   // IMPLEMENT_DYNAMIC(in_file, object)
-
+#endif
 
    /////////////////////////////////////////////////////////////////////////////
    // FileException helpers

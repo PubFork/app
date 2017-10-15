@@ -15,7 +15,7 @@ namespace visual
 typedef spa(visual::font) visual_font_spa;
 
 
-class CLASS_DECL_AXIS font_department :
+class CLASS_DECL_AURA font_department :
    virtual public ::aura::department
 {
 public:

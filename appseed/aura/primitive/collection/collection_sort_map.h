@@ -8,480 +8,483 @@ template <class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, typename COMPA
 class sort_map :
    virtual public ::object
 {
-public:
-
-
-   typedef KEY          AXIS_KEY;
-   typedef ARG_KEY      AXIS_ARG_KEY;
-   typedef VALUE        AXIS_VALUE;
-   typedef ARG_VALUE    AXIS_ARG_VALUE;
-   typedef COMPARE      AXIS_COMPARE;
-
-
-   class node :
-      public ::pair < KEY,VALUE >
-   {
    public:
 
-      node * left;
-      node * right;
+
+      typedef KEY          AXIS_KEY;
+      typedef ARG_KEY      AXIS_ARG_KEY;
+      typedef VALUE        AXIS_VALUE;
+      typedef ARG_VALUE    AXIS_ARG_VALUE;
+      typedef COMPARE      AXIS_COMPARE;
 
 
-      node()
+      class node :
+         public ::pair < KEY,VALUE >
       {
-         left = NULL;
-         right = NULL;
+         public:
+
+            node * left;
+            node * right;
+
+
+            node()
+            {
+               left = NULL;
+               right = NULL;
+            }
+
+            node(const KEY & element1)
+            {
+               this->m_element1 = element1;
+               left = NULL;
+               right = NULL;
+            }
+
+            node(const KEY & element1,const VALUE & element2)
+            {
+               this->m_element1 = element1;
+               this->m_element2 = element2;
+               left = NULL;
+               right = NULL;
+            }
+            node(const pair < KEY,VALUE > & pair)
+            {
+               this->m_element1 = pair.m_element1;
+               this->m_element2 = pair.m_element2;
+               left = NULL;
+               right = NULL;
+            }
+
+
+            void copy_value(const pair < KEY,VALUE > & key)
+            {
+
+               this->m_element1 = key.m_element1;
+               this->m_element2 = key.m_element2;
+
+            }
+
+
+            node * min() const
+            {
+               if(left == NULL)
+                  return (node *) this;
+               return left;
+            }
+
+
+            node * max() const
+            {
+               if(right == NULL)
+                  return (node *) this;
+               return right;
+            }
+
+            ::count children_count() const
+            {
+
+               ::count c = 0;
+
+               if(left != NULL)
+                  return left->children_count() + 1;
+
+               if(right != NULL)
+                  return right->children_count() + 1;
+
+               return c;
+
+            }
+
+            void remove_all()
+            {
+
+               if(left != NULL)
+               {
+
+                  left->remove_all();
+
+                  delete left;
+
+                  left = NULL;
+
+               }
+
+               if(right != NULL)
+               {
+
+                  right->remove_all();
+
+                  delete right;
+
+                  right = NULL;
+
+               }
+
+            }
+
+      };
+
+
+
+      class iterator
+      {
+         public:
+
+
+            node *         m_pnode;
+            sort_map *     m_pmap;
+
+
+            iterator()
+            {
+               m_pnode  = NULL;
+               m_pmap   = NULL;
+            }
+
+            iterator(const iterator & iterator)
+            {
+               m_pnode  = iterator.m_pnode;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            iterator(node * pnode, sort_map * pmap)
+            {
+               m_pnode  = pnode;
+               m_pmap   = pmap;
+            }
+
+
+            node & operator * ()
+            {
+
+               return *m_pnode;
+
+            }
+
+
+            node * operator -> ()
+            {
+               return m_pnode;
+            }
+
+            node * operator -> () const
+            {
+               return m_pnode;
+            }
+
+
+            iterator & operator ++ ()
+            {
+               if(m_pnode != NULL && m_pmap != NULL)
+                  m_pnode = m_pmap->PGetNextAssoc(m_pnode);
+               return *this;
+            }
+
+            iterator operator ++ (int32_t)
+            {
+               if(m_pnode != NULL && m_pmap != NULL)
+                  m_pnode = m_pmap->PGetNextAssoc(m_pnode);
+               return *this;
+            }
+
+            bool operator == (const iterator & it) const
+            {
+               if(this == &it)
+                  return true;
+               if(m_pnode == NULL && it.m_pnode == NULL && it.m_pmap == NULL)
+                  return true;
+               if(m_pmap != it.m_pmap)
+                  return false;
+               return m_pnode == it.m_pnode;
+            }
+
+            bool operator != (const iterator & it) const
+            {
+               return !operator == (it);
+            }
+
+            iterator & operator = (const iterator & it)
+            {
+               if(this != &it)
+               {
+                  m_pmap         = it.m_pmap;
+                  m_pnode        = it.m_pnode;
+               }
+               return *this;
+            }
+
+      };
+
+      class const_iterator
+      {
+         public:
+
+
+            const node *         m_pnode;
+            const sort_map *     m_pmap;
+
+
+            const_iterator()
+            {
+               m_pnode  = NULL;
+               m_pmap   = NULL;
+            }
+
+            const_iterator(const iterator & iterator)
+            {
+               m_pnode  = iterator.m_pnode;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            const_iterator(const const_iterator & iterator)
+            {
+               m_pnode  = iterator.m_pnode;
+               m_pmap   = iterator.m_pmap;
+            }
+
+            const_iterator(const node * pnode, const sort_map * pmap)
+            {
+               m_pnode  = pnode;
+               m_pmap   = pmap;
+            }
+
+            const node * operator -> ()
+            {
+               return m_pnode;
+            }
+
+            const node * operator -> () const
+            {
+               return m_pnode;
+            }
+
+
+            const_iterator & operator ++ ()
+            {
+               if(m_pnode != NULL && m_pmap != NULL)
+                  m_pnode = m_pmap->PGetNextAssoc(m_pnode);
+               return *this;
+            }
+
+            const_iterator operator ++ (int32_t)
+            {
+               if(m_pnode != NULL && m_pmap != NULL)
+                  m_pnode = m_pmap->PGetNextAssoc(m_pnode);
+               return *this;
+            }
+
+            bool operator == (const const_iterator & it) const
+            {
+               if(this == &it)
+                  return true;
+               if(m_pnode == NULL && it.m_pnode == NULL && it.m_pmap == NULL)
+                  return true;
+               if(m_pmap != it.m_pmap)
+                  return false;
+               return m_pnode == it.m_pnode;
+            }
+
+            bool operator != (const const_iterator & it) const
+            {
+               return !operator == (it);
+            }
+
+            const_iterator & operator = (const const_iterator & it)
+            {
+               if(this != &it)
+               {
+                  m_pmap         = it.m_pmap;
+                  m_pnode        = it.m_pnode;
+               }
+               return *this;
+            }
+
+            const_iterator & operator = (const iterator & it)
+            {
+               m_pmap         = it.m_pmap;
+               m_pnode        = it.m_pnode;
+               return *this;
+            }
+
+      };
+
+      node * m_pnode;
+      COMPARE m_compare;
+
+
+
+
+
+      sort_map(::count nBlockSize = 10);
+      sort_map(node nodes[], int32_t iCount, ::count nBlockSize = 10);
+      virtual ~sort_map();
+
+
+      void construct(::count nBlockSize = 10);
+
+
+#ifdef DEBUG
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+#endif
+
+
+
+
+      iterator begin()
+      {
+         return iterator(PGetFirstAssoc(), this);
       }
 
-      node(const KEY & element1)
+
+      iterator end()
       {
-         this->m_element1 = element1;
-         left = NULL;
-         right = NULL;
+         return iterator(NULL, this);
       }
 
-      node(const KEY & element1,const VALUE & element2)
+      const_iterator begin() const
       {
-         this->m_element1 = element1;
-         this->m_element2 = element2;
-         left = NULL;
-         right = NULL;
-      }
-      node(const pair < KEY,VALUE > & pair)
-      {
-         this->m_element1 = pair.m_element1;
-         this->m_element2 = pair.m_element2;
-         left = NULL;
-         right = NULL;
+         return const_iterator(PGetFirstAssoc(), this);
       }
 
 
-      void copy_value(const pair < KEY,VALUE > & key)
+      const_iterator end() const
       {
-
-         this->m_element1 = key.m_element1;
-         this->m_element2 = key.m_element2;
-
+         return const_iterator(NULL, this);
       }
 
+      iterator lower_bound (ARG_KEY k);
+      const_iterator lower_bound (ARG_KEY k) const;
+      iterator upper_bound (ARG_KEY k);
+      const_iterator upper_bound (ARG_KEY k) const;
+
+      ::count get_size() const;
+      ::count size() const;
+      ::count count() const;
+      bool is_empty() const;
+      bool empty() const;
+
+      // Lookup
+      bool Lookup(ARG_KEY key, VALUE& rValue) const;
+      const node *PLookup(ARG_KEY key) const;
+      node *PLookup(ARG_KEY key);
+
+
+      VALUE * pget(ARG_KEY key);
+
+      // Operations
+      // Lookup and add if not there
+      VALUE & operator[](ARG_KEY key);
+
+      // add a new (key, value) node
+      void set_at(ARG_KEY key, ARG_VALUE newValue);
+
+      // removing existing (key, ?) node
+      ::count remove_key(ARG_KEY key);
+      void erase(iterator it);
+      ::count erase(const KEY & key);
+      void erase ( iterator m_element1, iterator last );
+      void remove_all();
+      void clear();
+
+
+      bool remove_node(node * pnode);
+
+      bool delete_node(node * pnode, node * pnodeParent);
+
+
+      ::count count(const KEY & t) const;
+      bool has(const KEY & t) const;
+      bool contains(const KEY & t) const;
+
+      // iterating all (key, value) nodes
+      POSITION get_start_position() const;
+
+      const node *PGetFirstAssoc() const;
+      node *PGetFirstAssoc();
+
+      void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
+
+      const node *PGetNextAssoc(const node * pnode) const;
+      node *PGetNextAssoc(const node * pnode);
+      const node *PGetPrevAssoc(const node * pnode) const;
+      node *PGetPrevAssoc(const node * pnode);
+
+      VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
+
+      node * next(const node * pnode);
+      const node * next(const node * pnode) const;
+      node * prev(const node * pnode);
+      const node * prev(const node * pnode) const;
+
+
+      void set(sort_map & sort_map)
+      {
+         node * pnode = NULL;
+         while(sort_map.next(pnode) != NULL)
+         {
+            set_at(pnode->m_element1, pnode->m_element2);
+         }
+      }
+
+      node * parent_node(const node * pnode) const;
+
+      node *   equally_keyed_next_node(const node * pnode) const;
+      node *   equally_keyed_prev_node(const node * pnode) const;
+      node *   find_node(ARG_KEY key) const;
+      node *   rfind_node(ARG_KEY key) const;
+
+      iterator find(ARG_KEY key);
+      const_iterator find(ARG_KEY key) const;
+      iterator rfind(ARG_KEY key);
+      const_iterator rfind(ARG_KEY key) const;
+
+      void    add_pair(ARG_KEY key, ARG_VALUE value);
+      void    insert(const pair < KEY, VALUE  > & pair);
 
       node * min() const
       {
-         if(left == NULL)
-            return (node *) this;
-         return left;
+         if(m_pnode == NULL)
+            return NULL;
+         return m_pnode->min();
       }
-
 
       node * max() const
       {
-         if(right == NULL)
-            return (node *) this;
-         return right;
+         if(m_pnode == NULL)
+            return NULL;
+         return m_pnode->max();
       }
 
-      ::count children_count() const
+
+      inline bool compare(ARG_KEY a,ARG_KEY b) const
       {
-
-         ::count c = 0;
-
-         if(left != NULL)
-            return left->children_count() + 1;
-
-         if(right != NULL)
-            return right->children_count() + 1;
-
-         return c;
-
+         return m_compare(a,b);
       }
 
-      void remove_all()
+      inline bool is_equal(ARG_KEY a,ARG_KEY b) const
       {
-
-         if(left != NULL)
-         {
-
-            left->remove_all();
-
-            delete left;
-
-            left = NULL;
-
-         }
-
-         if(right != NULL)
-         {
-
-            right->remove_all();
-
-            delete right;
-
-            right = NULL;
-
-         }
-
+         return !compare(a,b) && !compare(b,a);
       }
 
-   };
-
-
-
-   class iterator
-   {
-   public:
-
-
-      node *         m_pnode;
-      sort_map *     m_pmap;
-
-
-      iterator()
+      inline bool compare(node a,node b) const
       {
-         m_pnode  = NULL;
-         m_pmap   = NULL;
+         return compare(a.m_element1,b.m_element1);
       }
 
-      iterator(const iterator & iterator)
+      inline bool is_equal(node a,node b) const
       {
-         m_pnode  = iterator.m_pnode;
-         m_pmap   = iterator.m_pmap;
+         return !compare(a,b) && !compare(b,a);
       }
 
-      iterator(node * pnode, sort_map * pmap)
+
+      ::count get_count() const
       {
-         m_pnode  = pnode;
-         m_pmap   = pmap;
+         if(m_pnode == NULL)
+            return 0;
+         else
+            return m_pnode->children_count() + 1;
       }
-
-
-      node & operator * ()
-      {
-
-         return *m_pnode;
-
-      }
-
-
-      node * operator -> ()
-      {
-         return m_pnode;
-      }
-
-      node * operator -> () const
-      {
-         return m_pnode;
-      }
-
-
-      iterator & operator ++ ()
-      {
-         if(m_pnode != NULL && m_pmap != NULL)
-            m_pnode = m_pmap->PGetNextAssoc(m_pnode);
-         return *this;
-      }
-
-      iterator operator ++ (int32_t)
-      {
-         if(m_pnode != NULL && m_pmap != NULL)
-            m_pnode = m_pmap->PGetNextAssoc(m_pnode);
-         return *this;
-      }
-
-      bool operator == (const iterator & it) const
-      {
-         if(this == &it)
-            return true;
-         if(m_pnode == NULL && it.m_pnode == NULL && it.m_pmap == NULL)
-            return true;
-         if(m_pmap != it.m_pmap)
-            return false;
-         return m_pnode == it.m_pnode;
-      }
-
-      bool operator != (const iterator & it) const
-      {
-         return !operator == (it);
-      }
-
-      iterator & operator = (const iterator & it)
-      {
-         if(this != &it)
-         {
-            m_pmap         = it.m_pmap;
-            m_pnode        = it.m_pnode;
-         }
-         return *this;
-      }
-
-   };
-
-   class const_iterator
-   {
-   public:
-
-
-      const node *         m_pnode;
-      const sort_map *     m_pmap;
-
-
-      const_iterator()
-      {
-         m_pnode  = NULL;
-         m_pmap   = NULL;
-      }
-
-      const_iterator(const iterator & iterator)
-      {
-         m_pnode  = iterator.m_pnode;
-         m_pmap   = iterator.m_pmap;
-      }
-
-      const_iterator(const const_iterator & iterator)
-      {
-         m_pnode  = iterator.m_pnode;
-         m_pmap   = iterator.m_pmap;
-      }
-
-      const_iterator(const node * pnode, const sort_map * pmap)
-      {
-         m_pnode  = pnode;
-         m_pmap   = pmap;
-      }
-
-      const node * operator -> ()
-      {
-         return m_pnode;
-      }
-
-      const node * operator -> () const
-      {
-         return m_pnode;
-      }
-
-
-      const_iterator & operator ++ ()
-      {
-         if(m_pnode != NULL && m_pmap != NULL)
-            m_pnode = m_pmap->PGetNextAssoc(m_pnode);
-         return *this;
-      }
-
-      const_iterator operator ++ (int32_t)
-      {
-         if(m_pnode != NULL && m_pmap != NULL)
-            m_pnode = m_pmap->PGetNextAssoc(m_pnode);
-         return *this;
-      }
-
-      bool operator == (const const_iterator & it) const
-      {
-         if(this == &it)
-            return true;
-         if(m_pnode == NULL && it.m_pnode == NULL && it.m_pmap == NULL)
-            return true;
-         if(m_pmap != it.m_pmap)
-            return false;
-         return m_pnode == it.m_pnode;
-      }
-
-      bool operator != (const const_iterator & it) const
-      {
-         return !operator == (it);
-      }
-
-      const_iterator & operator = (const const_iterator & it)
-      {
-         if(this != &it)
-         {
-            m_pmap         = it.m_pmap;
-            m_pnode        = it.m_pnode;
-         }
-         return *this;
-      }
-
-      const_iterator & operator = (const iterator & it)
-      {
-         m_pmap         = it.m_pmap;
-         m_pnode        = it.m_pnode;
-         return *this;
-      }
-
-   };
-
-   node * m_pnode;
-   COMPARE m_compare;
-
-
-
-
-
-   sort_map(::count nBlockSize = 10);
-   sort_map(node nodes[], int32_t iCount, ::count nBlockSize = 10);
-   virtual ~sort_map();
-
-
-
-   void construct(::count nBlockSize = 10);
-
-
-   void dump(dump_context &) const;
-   void assert_valid() const;
-
-
-   iterator begin()
-   {
-      return iterator(PGetFirstAssoc(), this);
-   }
-
-
-   iterator end()
-   {
-      return iterator(NULL, this);
-   }
-
-   const_iterator begin() const
-   {
-      return const_iterator(PGetFirstAssoc(), this);
-   }
-
-
-   const_iterator end() const
-   {
-      return const_iterator(NULL, this);
-   }
-
-   iterator lower_bound (ARG_KEY k);
-   const_iterator lower_bound (ARG_KEY k) const;
-   iterator upper_bound (ARG_KEY k);
-   const_iterator upper_bound (ARG_KEY k) const;
-
-   ::count get_size() const;
-   ::count size() const;
-   ::count count() const;
-   bool is_empty() const;
-   bool empty() const;
-
-   // Lookup
-   bool Lookup(ARG_KEY key, VALUE& rValue) const;
-   const node *PLookup(ARG_KEY key) const;
-   node *PLookup(ARG_KEY key);
-
-
-   VALUE * pget(ARG_KEY key);
-
-   // Operations
-   // Lookup and add if not there
-   VALUE & operator[](ARG_KEY key);
-
-   // add a new (key, value) node
-   void set_at(ARG_KEY key, ARG_VALUE newValue);
-
-   // removing existing (key, ?) node
-   ::count remove_key(ARG_KEY key);
-   void erase(iterator it);
-   ::count erase(const KEY & key);
-   void erase ( iterator m_element1, iterator last );
-   void remove_all();
-   void clear();
-
-
-   bool remove_node(node * pnode);
-
-   bool delete_node(node * pnode, node * pnodeParent);
-
-
-   ::count count(const KEY & t) const;
-   bool has(const KEY & t) const;
-   bool contains(const KEY & t) const;
-
-   // iterating all (key, value) nodes
-   POSITION get_start_position() const;
-
-   const node *PGetFirstAssoc() const;
-   node *PGetFirstAssoc();
-
-   void get_next_assoc(POSITION& rNextPosition, KEY& rKey, VALUE& rValue) const;
-
-   const node *PGetNextAssoc(const node * pnode) const;
-   node *PGetNextAssoc(const node * pnode);
-   const node *PGetPrevAssoc(const node * pnode) const;
-   node *PGetPrevAssoc(const node * pnode);
-
-   VALUE get(ARG_KEY argkey, ARG_VALUE valueDefault);
-
-   node * next(const node * pnode);
-   const node * next(const node * pnode) const;
-   node * prev(const node * pnode);
-   const node * prev(const node * pnode) const;
-
-
-   void set(sort_map & sort_map)
-   {
-      node * pnode = NULL;
-      while(sort_map.next(pnode) != NULL)
-      {
-         set_at(pnode->m_element1, pnode->m_element2);
-      }
-   }
-
-   node * parent_node(const node * pnode) const;
-
-   node *   equally_keyed_next_node(const node * pnode) const;
-   node *   equally_keyed_prev_node(const node * pnode) const;
-   node *   find_node(ARG_KEY key) const;
-   node *   rfind_node(ARG_KEY key) const;
-
-   iterator find(ARG_KEY key);
-   const_iterator find(ARG_KEY key) const;
-   iterator rfind(ARG_KEY key);
-   const_iterator rfind(ARG_KEY key) const;
-
-   void    add_pair(ARG_KEY key, ARG_VALUE value);
-   void    insert(const pair < KEY, VALUE  > & pair);
-
-   node * min() const
-   {
-      if(m_pnode == NULL)
-         return NULL;
-      return m_pnode->min();
-   }
-
-   node * max() const
-   {
-      if(m_pnode == NULL)
-         return NULL;
-     return m_pnode->max();
-   }
-
-
-   inline bool compare(ARG_KEY a,ARG_KEY b) const
-   {
-      return m_compare(a,b);
-   }
-
-   inline bool is_equal(ARG_KEY a,ARG_KEY b) const
-   {
-      return !compare(a,b) && !compare(b,a);
-   }
-
-   inline bool compare(node a,node b) const
-   {
-      return compare(a.m_element1,b.m_element1);
-   }
-
-   inline bool is_equal(node a,node b) const
-   {
-      return !compare(a,b) && !compare(b,a);
-   }
-
-
-   ::count get_count() const
-   {
-      if(m_pnode == NULL)
-         return 0;
-      else
-         return m_pnode->children_count() + 1;
-   }
 
 };
 
@@ -1224,7 +1227,7 @@ sort_map < KEY,ARG_KEY,VALUE,ARG_VALUE,COMPARE,m_bMultiKey >::next(const typenam
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE, bool m_bMultiKey >
 typename sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::node*
-   sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::next(const typename sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::node * pnode)
+sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::next(const typename sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::node * pnode)
 {
 
    if(pnode->right != NULL)
@@ -1378,7 +1381,7 @@ sort_map < KEY,ARG_KEY,VALUE,ARG_VALUE,COMPARE,m_bMultiKey >::PGetPrevAssoc(cons
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE, bool m_bMultiKey >
 VALUE sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey > ::
-   get(ARG_KEY argkey, ARG_VALUE valueDefault)
+get(ARG_KEY argkey, ARG_VALUE valueDefault)
 {
    node * pnode = PLookup(argkey);
    if(pnode == NULL)
@@ -1387,6 +1390,8 @@ VALUE sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey > ::
       return pnode->m_element2;
 }
 
+
+#ifdef DEBUG
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE, bool m_bMultiKey >
 void sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::dump(dump_context & dumpcontext) const
@@ -1420,21 +1425,22 @@ void sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::assert_v
 
 }
 
+#endif
 
 
 template < class type_map >
 class sort_attrib_map :
    virtual public type_map
 {
-public:
+   public:
 
 
-   sort_attrib_map(int_ptr nBlockSize = 10);
-   sort_attrib_map(const sort_attrib_map & sort_map);
+      sort_attrib_map(int_ptr nBlockSize = 10);
+      sort_attrib_map(const sort_attrib_map & sort_map);
 
-   sort_attrib_map & operator = (const sort_attrib_map & sort_map);
+      sort_attrib_map & operator = (const sort_attrib_map & sort_map);
 
-   bool operator == (const sort_attrib_map & sort_map) const;
+      bool operator == (const sort_attrib_map & sort_map) const;
 
 
 };
@@ -1467,7 +1473,7 @@ bool sort_attrib_map < type_map >::operator == (const sort_attrib_map & attribma
    {
 
       if(attribmap.m_ptra[i]->m_element1       != this->m_ptra[i]->m_element1
-         || attribmap.m_ptra[i]->m_element2     != this->m_ptra[i]->m_element2)
+            || attribmap.m_ptra[i]->m_element2     != this->m_ptra[i]->m_element2)
       {
 
          return false;
@@ -1485,14 +1491,14 @@ template < class VALUE, class ARG_VALUE = const VALUE &, class COMPARE = ::compa
 class sort_string_map :
    virtual public sort_attrib_map < sort_map < string, const string &, VALUE, ARG_VALUE, COMPARE > >
 {
-public:
+   public:
 
 
-   sort_string_map(::count nBlockSize = 10);
-   sort_string_map(const sort_string_map & sort_map);
+      sort_string_map(::count nBlockSize = 10);
+      sort_string_map(const sort_string_map & sort_map);
 
 
-   sort_string_map & operator = (const sort_string_map & sort_map);
+      sort_string_map & operator = (const sort_string_map & sort_map);
 
 
 };
@@ -1528,13 +1534,13 @@ template < class VALUE, class ARG_VALUE = const VALUE & >
 class sort_strid_map :
    virtual public sort_attrib_map < sort_map < id, const id &, VALUE, ARG_VALUE > >
 {
-public:
+   public:
 
-   sort_strid_map(::count nBlockSize = 256);
-   sort_strid_map(const sort_strid_map & sort_map);
+      sort_strid_map(::count nBlockSize = 256);
+      sort_strid_map(const sort_strid_map & sort_map);
 
 
-   sort_strid_map & operator = (const sort_strid_map & sort_map);
+      sort_strid_map & operator = (const sort_strid_map & sort_map);
 
 
 };
@@ -1570,13 +1576,13 @@ template < class VALUE, class ARG_VALUE = const VALUE &, class COMPARE = ::compa
 class sort_int_map :
    virtual public sort_attrib_map < sort_map < int32_t, int32_t, VALUE, ARG_VALUE, COMPARE > >
 {
-public:
+   public:
 
-   sort_int_map(::count nBlockSize = 10);
-   sort_int_map(const sort_int_map & sort_map);
+      sort_int_map(::count nBlockSize = 10);
+      sort_int_map(const sort_int_map & sort_map);
 
 
-   sort_int_map & operator = (const sort_int_map & sort_map);
+      sort_int_map & operator = (const sort_int_map & sort_map);
 
 };
 
@@ -1613,59 +1619,59 @@ template < class T >
 class CLASS_DECL_AURA sort_string_to_pointer :
    virtual public string_to_ptr
 {
-public:
-
-   class node
-   {
    public:
-      const string m_element1;
-      T * m_element2;
-   };
 
-   bool Lookup(string key, T * & rValue) const
-   {
-      return string_to_ptr::Lookup(key, rValue);
-   }
-   const node *PLookup(string key) const
-   {
-      return reinterpret_cast < const sort_string_to_pointer::node * > (string_to_ptr::PLookup(key));
-   }
-   node *PLookup(string key)
-   {
-      return reinterpret_cast < sort_string_to_pointer::node * > (string_to_ptr::PLookup(key));
-   }
+      class node
+      {
+         public:
+            const string m_element1;
+            T * m_element2;
+      };
 
-
-   T ** pget(string key)
-   {
-      return (T**) string_to_ptr::pget(key);
-   }
-   T * get(string key)
-   {
-      T ** p = (T **) string_to_ptr::pget(key);
-      if(p == NULL)
-         return NULL;
-      else
-         return (T*) *p;
-   }
-
-   // Operations
-   // Lookup and add if not there
-   T * & operator[](string key)
-   {
-      return (T * &) string_to_ptr::operator[](key);
-   }
+      bool Lookup(string key, T * & rValue) const
+      {
+         return string_to_ptr::Lookup(key, rValue);
+      }
+      const node *PLookup(string key) const
+      {
+         return reinterpret_cast < const sort_string_to_pointer::node * > (string_to_ptr::PLookup(key));
+      }
+      node *PLookup(string key)
+      {
+         return reinterpret_cast < sort_string_to_pointer::node * > (string_to_ptr::PLookup(key));
+      }
 
 
-   node * PGetFirstAssoc()
-   {
-      return (node *) string_to_ptr::PGetFirstAssoc();
-   }
+      T ** pget(string key)
+      {
+         return (T**) string_to_ptr::pget(key);
+      }
+      T * get(string key)
+      {
+         T ** p = (T **) string_to_ptr::pget(key);
+         if(p == NULL)
+            return NULL;
+         else
+            return (T*) *p;
+      }
 
-   node * PGetNextAssoc(node * & rPnode)
-   {
-      return (node *) string_to_ptr::PGetNextAssoc((node * &) rPnode);
-   }
+      // Operations
+      // Lookup and add if not there
+      T * & operator[](string key)
+      {
+         return (T * &) string_to_ptr::operator[](key);
+      }
+
+
+      node * PGetFirstAssoc()
+      {
+         return (node *) string_to_ptr::PGetFirstAssoc();
+      }
+
+      node * PGetNextAssoc(node * & rPnode)
+      {
+         return (node *) string_to_ptr::PGetNextAssoc((node * &) rPnode);
+      }
 
 };
 
@@ -1682,7 +1688,7 @@ typedef CLASS_DECL_AURA sort_string_map < string, const string & > sort_string_t
 
 
 /*
- 
+
 inline void sort_map_test()
 {
    sort_string_to_intptr m;

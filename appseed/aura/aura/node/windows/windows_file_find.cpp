@@ -29,7 +29,7 @@ namespace windows
    {
 
       //::aura::del(m_pFoundInfo);
-      
+
       //::aura::del(m_pNextInfo);
 
       CloseContext();
@@ -41,7 +41,7 @@ namespace windows
 
    void file_find::CloseContext()
    {
-      
+
       if(m_hContext != NULL && m_hContext != INVALID_HANDLE_VALUE)
       {
 
@@ -50,7 +50,7 @@ namespace windows
          m_hContext = NULL;
 
       }
-      
+
    }
 
 
@@ -63,7 +63,7 @@ namespace windows
 
       if (m_pNextInfo == NULL)
       {
-       
+
          m_pNextInfo = &m_dataNext;
 
       }
@@ -153,7 +153,7 @@ namespace windows
 
    bool file_find::GetLastAccessTime(FILETIME* pTimeStamp) const
    {
-      
+
       ASSERT(m_hContext != NULL);
       ASSERT(pTimeStamp != NULL);
       ASSERT_VALID(this);
@@ -170,7 +170,7 @@ namespace windows
 
    bool file_find::GetLastWriteTime(FILETIME* pTimeStamp) const
    {
-      
+
       ASSERT(m_hContext != NULL);
       ASSERT(pTimeStamp != NULL);
       ASSERT_VALID(this);
@@ -188,7 +188,7 @@ namespace windows
 
    bool file_find::GetCreationTime(FILETIME* pTimeStamp) const
    {
-      
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
@@ -205,7 +205,7 @@ namespace windows
 
    bool file_find::GetLastAccessTime(::datetime::time& refTime) const
    {
-     
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
@@ -222,7 +222,7 @@ namespace windows
 
    bool file_find::GetLastWriteTime(::datetime::time& refTime) const
    {
-      
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
@@ -250,7 +250,7 @@ namespace windows
          return false;
    }
 
-   
+
    bool file_find::IsDots() const
    {
 
@@ -264,15 +264,15 @@ namespace windows
 
       if (m_pFoundInfo != NULL && IsDirectory())
       {
-      
+
          LPWIN32_FIND_DATAW pFindData = m_pFoundInfo;
 
          if (pFindData->cFileName[0] == '.')
          {
 
             if (pFindData->cFileName[1] == '\0' ||
-               (pFindData->cFileName[1] == '.' &&
-               pFindData->cFileName[2] == '\0'))
+                  (pFindData->cFileName[1] == '.' &&
+                   pFindData->cFileName[2] == '\0'))
             {
 
                bResult = TRUE;
@@ -290,7 +290,7 @@ namespace windows
 
    bool file_find::FindNextFile()
    {
-   
+
       //ASSERT(m_hContext != NULL);
 
       if (m_hContext == NULL)
@@ -298,7 +298,7 @@ namespace windows
 
       if (m_pFoundInfo == NULL)
       {
-       
+
          m_pFoundInfo = &m_dataFound;
 
       }
@@ -318,7 +318,7 @@ namespace windows
 
    string file_find::GetFileURL() const
    {
-   
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
@@ -333,7 +333,7 @@ namespace windows
 
    string file_find::GetRoot() const
    {
-   
+
       ASSERT(m_hContext != NULL);
 
       ASSERT_VALID(this);
@@ -345,14 +345,14 @@ namespace windows
 
    ::file::path file_find::GetFilePath() const
    {
-   
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string strResult = GetRoot();
 
       if (strResult[strResult.get_length()-1] != '\\' &&
-         strResult[strResult.get_length()-1] != '/')
+            strResult[strResult.get_length()-1] != '/')
          strResult += m_chDirSeparator;
 
       strResult += GetFileName();
@@ -361,19 +361,19 @@ namespace windows
 
    }
 
-   
+
    string file_find::GetFileTitle() const
    {
-   
+
       ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string strFullName = GetFileName();
-      
+
       string strResult;
 
       _splitpath(strFullName, NULL, NULL, strResult.GetBuffer(_MAX_PATH), NULL);
-      
+
       strResult.ReleaseBuffer();
 
       return strResult;
@@ -382,7 +382,7 @@ namespace windows
 
    ::file::path file_find::GetFileName() const
    {
-      
+
       //ASSERT(m_hContext != NULL);
       //ASSERT_VALID(this);
 
@@ -417,9 +417,11 @@ namespace windows
 
 
 
+#ifdef DEBUG
+
    void file_find::dump(dump_context & dumpcontext) const
    {
-    
+
       object::dump(dumpcontext);
 
       dumpcontext << "\nm_hContext = " << m_hContext;
@@ -429,7 +431,7 @@ namespace windows
 
    void file_find::assert_valid() const
    {
-      
+
       // if you trip the ASSERT in the else side, you've called
       // a get() function without having done at least one
       // FindNext() call
@@ -441,6 +443,7 @@ namespace windows
 
    }
 
+#endif
 
 } // namespace windows
 

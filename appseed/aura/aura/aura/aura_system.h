@@ -23,11 +23,19 @@ namespace aura
          bool                                      m_bAcid;
 
 
+
+
+#ifdef DEBUG
+
          ::dump_context *                          m_pdumpcontext;
+
+#endif
 
          ::aura::session::map                         m_aurabergedgemap;
 
          ::object *                                   m_pDraw2dFactoryExchange;
+         ::visual::visual                             m_visual;
+
 
 
          sp(class ::datetime::department)            m_pdatetime;
@@ -42,7 +50,9 @@ namespace aura
          sp(base_factory)                             m_pfactory;
          sp(class ::xml::department)                 m_pxml;
          const id_pool                                m_cidpool;
+#ifdef DEBUG
          sp(class ::aura::log)                        m_plog;
+#endif
          sp(math::math)                               m_pmath;
          sp(geometry::geometry)                       m_pgeometry;
 
@@ -170,8 +180,10 @@ namespace aura
 
          ::xml::department                            &  xml();
          class ::str::base64                          &  base64();
+#ifdef DEBUG
 
          class ::aura::log                            &  log();
+#endif
 
          class ::machine_event_central                &  machine_event_central();
 
@@ -183,6 +195,9 @@ namespace aura
          {
             return *m_pmath;
          }
+
+         inline class ::visual::visual                & visual() { return m_visual; }
+
          //::colorertake5::ParserFactory                &  parser_factory();
          inline ::url::department                     &  url()
          {
@@ -289,12 +304,13 @@ namespace aura
          inline class id id(const var & var);
          inline class id id(const property & prop);
 
+#ifdef DEBUG
 
          virtual int32_t _001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args);
          virtual int32_t _debug_logging_report(int32_t iReportType, const char * pszFilename, int32_t iLinenumber, const char * iModuleName, const char * pszFormat, va_list list);
          virtual bool assert_failed_line(const char * lpszFileName,int32_t iLine);
          virtual bool on_assert_failed_line(const char * pszFileName,int32_t iLine);
-
+#endif
 
          void set_enum_name(sp(type) etype,int32_t i,const char * psz)
          {
@@ -371,8 +387,10 @@ namespace aura
 
          virtual ::aura::session * query_session(index iEdge);
 
-         virtual bool initialize_log(const char * pszId);
+#ifdef DEBUG
 
+         virtual bool initialize_log(const char * pszId);
+#endif
 
          virtual void appa_load_string_table();
          virtual void appa_set_locale(const char * pszLocale,::action::context actioncontext);
