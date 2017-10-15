@@ -10,14 +10,14 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(::aura::application * papp, HINSTANCE, int);
+BOOL                InitInstance(::helloaura::render * prender, HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int my_main(::aura::application * papp)
+int main_window(::helloaura::render * prender)
 {
 
-   HINSTANCE hInstance = Sys(papp).m_hinstance;
+   HINSTANCE hInstance = Sys(prender->get_app()).m_hinstance;
    // TODO: Place code here.
 
    // Initialize global strings
@@ -26,7 +26,7 @@ int my_main(::aura::application * papp)
    MyRegisterClass(hInstance);
 
    // Perform application initialization:
-   if (!InitInstance(papp, hInstance, SW_SHOW))
+   if (!InitInstance(prender, hInstance, SW_SHOW))
    {
       return FALSE;
    }
@@ -86,12 +86,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-BOOL InitInstance(::aura::application * papp, HINSTANCE hInstance, int nCmdShow)
+BOOL InitInstance(::helloaura::render * prender, HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-                             CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, papp);
+                             CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, prender);
 
    if (!hWnd)
    {
@@ -116,16 +116,28 @@ BOOL InitInstance(::aura::application * papp, HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   ::aura::application * papp;
+
+   ::helloaura::render * prender;
+
    if (message == WM_CREATE)
    {
-      papp = (::aura::application *)((LPCREATESTRUCT)lParam)->lpCreateParams;
-      SetWindowLongPtr(hWnd, GWL_USERDATA, (LONG_PTR)papp);
+
+      prender = (::helloaura::render *)((LPCREATESTRUCT)lParam)->lpCreateParams;
+
+      SetWindowLongPtr(hWnd, GWL_USERDATA, (LONG_PTR)prender);
+
+      prender->begin();
+
+      SetTimer(hWnd, 123, 50, NULL);
+
    }
    else
    {
-      papp = (::aura::application *) GetWindowLongPtr(hWnd, GWL_USERDATA);
+
+      prender = (::helloaura::render *) GetWindowLongPtr(hWnd, GWL_USERDATA);
+
    }
+
    switch (message)
    {
    case WM_COMMAND:
@@ -145,15 +157,65 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       }
    }
    break;
+   case WM_TIMER:
+   {
+      if (wParam == 123)
+      {
+
+         RedrawWindow(hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+      }
+   }
+   break
+   ;
+   case WM_ERASEBKGND:
+      return 1;
    case WM_PAINT:
    {
       PAINTSTRUCT ps;
       HDC hdc = BeginPaint(hWnd, &ps);
-      App(papp).paint(hWnd, hdc);
+
+      ::draw2d::graphics_sp g(prender->allocer());
+
+      g->Attach(hdc);
+
+      auto & dib = prender->m_dibWindow;
+
+      if (dib.is_set() && dib->m_pcolorref != NULL)
+      {
+
+         dib->get_graphics()->FillSolidRect(prender->m_rectClient, ARGB(255, 255, 255, 255));
+
+         prender->_001OnHelloDraw(dib->get_graphics());
+
+      }
+
+      g->BitBlt(0, 0, dib->m_size.cx, dib->m_size.cy, prender->m_dibWindow->get_graphics());
+
+      ::GdiFlush();
 
       EndPaint(hWnd, &ps);
+
    }
    break;
+   case WM_SIZE:
+   {
+
+      ::GetClientRect(hWnd, prender->m_rectClient);
+
+      prender->m_dibWindow.alloc(prender->allocer());
+
+      if (prender->m_dibWindow.is_set())
+      {
+
+         prender->m_dibWindow->create(prender->m_rectClient.size());
+
+      }
+
+      prender->m_bNewLayout = true;
+
+      prender->m_bFast = true;
+
+   } break;
    case WM_DESTROY:
       PostQuitMessage(0);
       break;
