@@ -4849,6 +4849,12 @@
     <ClCompile Include="aura\_aura.cpp">
       <Filter>Source Files\aura</Filter>
     </ClCompile>
+    <ClCompile Include="aura\compress\_compress_internal.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
+    <ClCompile Include="user\_user.cpp">
+      <Filter>Source Files\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

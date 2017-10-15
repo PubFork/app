@@ -991,6 +991,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\compress\_compress_internal.cpp" />
     <ClCompile Include="aura\crypto\crypto_crypto.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
@@ -1812,7 +1813,10 @@
     <ClCompile Include="primitive\str\_str.cpp" />
     <ClCompile Include="primitive\str\_str_pool.cpp" />
     <ClCompile Include="primitive\_primitive.cpp" />
-    <ClCompile Include="user\colorertake5\_colorertake5.cpp" />
+    <ClCompile Include="user\colorertake5\_colorertake5.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\user_command.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -1853,7 +1857,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="user\user\_user.cpp" />
+    <ClCompile Include="user\user\_user.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\_user.cpp" />
     <ClInclude Include="aura\aura\aura.h" />
     <ClInclude Include="aura\aura\aura_action_context.h" />
     <ClInclude Include="aura\aura\aura_action_source.h" />
@@ -4469,6 +4477,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="user\simple\simple_message_box.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClInclude Include="user\user\user_const.h" />
     <ClInclude Include="user\user\user_interactive.h" />

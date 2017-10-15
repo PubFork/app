@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -183,7 +183,7 @@ namespace aura
          {
             return *m_pmath;
          }
-         ::colorertake5::ParserFactory                &  parser_factory();
+         //::colorertake5::ParserFactory                &  parser_factory();
          inline ::url::department                     &  url()
          {
             return *m_purldepartment;   // only usable from base.dll and dependants

@@ -60,6 +60,31 @@ inline byte clip_zero(int i)
 #ifndef WS_EX_LAYOUTRTL
 #define WS_EX_LAYOUTRTL                    0x00400000L
 #endif
+#pragma once
+
+/////////////////////////////////////////////////////////////////////////////
+// mirroring support
+
+//WINBUG: some mirroring stuff will be in wingdi.h someday
+#ifndef LAYOUT_RTL
+#define LAYOUT_RTL                         0x00000001
+#define NOMIRRORBITMAP                     0x80000000
+#endif
+
+#ifndef LAYOUT_LTR
+#define LAYOUT_LTR                               0x00000000
+#endif
+
+#ifndef NOMIRRORBITMAP
+#define NOMIRRORBITMAP                     0x80000000
+#endif
+
+//WINBUG: some mirroring stuff will be in winuser.h someday
+#ifndef WS_EX_LAYOUTRTL
+#define WS_EX_LAYOUTRTL                    0x00400000L
+#endif
+
+
 
 
 #include "aura/graphics/draw2d/draw2d.h"
@@ -67,9 +92,10 @@ inline byte clip_zero(int i)
 
 #include "aura/graphics/draw3d/draw3d.h"
 
+#include "axis/graphics/visual/visual.h"
 
-#include "aura/graphics/visual/visual.h"
 
+#include "dib_console.h"
 
 //#include "dib_console.h"
 

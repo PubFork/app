@@ -5,6 +5,10 @@
 #include "draw3d/_draw3d.cpp"
 #include "visual/_visual.cpp"
 
+#include "dib_console.cpp"
+
+
+
 
 
 

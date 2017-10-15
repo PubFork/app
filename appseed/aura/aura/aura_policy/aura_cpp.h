@@ -1903,10 +1903,10 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/user/user.h"
 
 
-#include "aura/pcre/pcre.h"
+//#include "aura/pcre/pcre.h"
 
 
-#include "aura/charguess/charguess.h"
+//#include "aura/charguess/charguess.h"
 
 
 #include "aura/net/net.h"

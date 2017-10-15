@@ -1,5 +1,5 @@
-﻿#include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
+#include "framework.h" // previously aura/user/user.h
+//#include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
 
@@ -1600,19 +1600,19 @@ namespace aura
 
    //}
 
-   colorertake5::ParserFactory & system::parser_factory()
-   {
+   //colorertake5::ParserFactory & system::parser_factory()
+   //{
 
-      if(m_pparserfactory == NULL)
-      {
+   //   if(m_pparserfactory == NULL)
+   //   {
 
-         m_pparserfactory = new colorertake5::ParserFactory(this);
+   //      m_pparserfactory = new colorertake5::ParserFactory(this);
 
-      }
+   //   }
 
-      return *m_pparserfactory;
+   //   return *m_pparserfactory;
 
-   }
+   //}
 
 
    ::file::path system::dir_appmatter_locator(::aura::application * papp)
