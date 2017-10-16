@@ -34,9 +34,10 @@ CLASS_DECL_AURA HMONITOR GetPrimaryMonitorHandle();
 CLASS_DECL_AURA bool GetPrimaryMonitorRect(LPRECT lprect);
 
 #ifdef __cplusplus
-
+class memory;
 CLASS_DECL_AURA string key_to_char(WPARAM wparam, LPARAM lparam);
 CLASS_DECL_AURA string read_resource_as_string_dup(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType);
+CLASS_DECL_AURA bool read_resource_as_memory_dup(memory & m, HINSTANCE hinst, UINT nID, LPCTSTR lpcszType);
 
 #endif
 

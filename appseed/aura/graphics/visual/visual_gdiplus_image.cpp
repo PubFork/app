@@ -745,7 +745,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    windows::comptr < IWICImagingFactory > piFactory;
 
-   HRESULT hr = piFactory.CoCreateInstance(CLSID_WICImagingFactory);
+   HRESULT hr = piFactory.CoCreateInstance(CLSID_WICImagingFactory1);
 
    if (hr != S_OK) return false;
 

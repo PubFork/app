@@ -1384,7 +1384,7 @@ int_bool EnableTokenPrivilege(LPCTSTR pszPrivilege)
 
 
 
-CLASS_DECL_AURA int_bool read_resource_as_memory_dup(memory & m, HINSTANCE hinstance, UINT nID, LPCTSTR lpcszType)
+CLASS_DECL_AURA bool read_resource_as_memory_dup(memory & m, HINSTANCE hinstance, UINT nID, LPCTSTR lpcszType)
 {
 
    HRSRC hrsrc = FindResource(hinstance, MAKEINTRESOURCE(nID), lpcszType);
