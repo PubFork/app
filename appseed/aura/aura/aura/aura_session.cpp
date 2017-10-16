@@ -16,6 +16,22 @@ namespace aura
       ::thread(papp)
    {
 
+      m_ecursorDefault = ::visual::cursor_arrow;
+
+      m_ecursor = ::visual::cursor_default;
+
+      m_ecursorDefault = ::visual::cursor_arrow;
+
+      m_ecursor = ::visual::cursor_default;
+
+      m_bDrawCursor = false;
+
+
+      m_bDrawCursor = false;
+
+      m_ecursorDefault = ::visual::cursor_arrow;
+
+      m_ecursor = ::visual::cursor_default;
       m_pappCurrent = NULL;
       m_psockets = NULL;
       m_paurasession = this;
@@ -225,6 +241,9 @@ namespace aura
       }
 
       m_splicensing = canew(class ::fontopus::licensing(this));
+
+      m_pwindowmap = canew(class ::user::window_map(get_app()));
+
 
       thisend;
 
@@ -543,7 +562,7 @@ namespace aura
             }
 
             ::aura::application * papp = application_get(strApp, true, true, pcreate->m_spCommandLine->m_pbiasCreate);
-            
+
             if (papp == NULL)
             {
 
@@ -1147,28 +1166,28 @@ namespace aura
    }
 
 
-   ::visual::cursor * session::get_cursor()
-   {
+   //::visual::cursor * session::get_cursor()
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
-
-
-   ::visual::cursor * session::get_default_cursor()
-   {
-
-      return NULL;
-
-   }
+   //}
 
 
-   oswindow session::get_capture()
-   {
+   //::visual::cursor * session::get_default_cursor()
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
+
+
+   //oswindow session::get_capture()
+   //{
+
+   //   return NULL;
+
+   //}
 
 
    string session::fontopus_get_user_sessid(const string & str)
@@ -1274,6 +1293,1771 @@ namespace aura
 
    }
 
+   void session::translate_os_key_message(::user::key * pkey)
+   {
+
+   }
+
+   void session::set_cursor(::visual::cursor * pcursor)
+   {
+
+      m_ecursor = ::visual::cursor_visual;
+
+#ifdef WINDOWSEX
+
+      m_pcursor = pcursor;
+
+      if (pcursor != NULL)
+      {
+
+         ::SetCursor(pcursor->get_HCURSOR());
+
+      }
+
+#endif
+
+   }
+
+   void session::set_cursor(::visual::e_cursor ecursor)
+   {
+
+      m_ecursor = ecursor;
+
+#ifdef WINDOWSEX
+
+      ::visual::cursor * pcursor = get_cursor();
+
+      if (pcursor != NULL)
+      {
+
+         ::SetCursor(pcursor->get_HCURSOR());
+
+      }
+      else
+      {
+
+         ::SetCursor(NULL);
+
+      }
+
+#endif
+
+   }
+
+
+   void session::set_default_cursor(::visual::e_cursor ecursor)
+   {
+
+      if (ecursor == ::visual::cursor_default)
+      {
+
+         m_ecursorDefault = ::visual::cursor_arrow;
+
+      }
+      else
+      {
+
+         m_ecursorDefault = ecursor;
+
+      }
+
+   }
+
+
+   bool session::on_create_frame_window()
+   {
+
+      if (m_pcopydesk != NULL)
+         return true;
+
+      alloc(m_pcopydesk);
+
+      if (!m_pcopydesk->initialize())
+         return false;
+
+      return true;
+
+   }
+
+
+   ::user::primitive * session::GetFocus()
+   {
+
+#ifdef METROWIN
+
+      return System.ui_from_handle(::WinGetFocus());
+
+#else
+
+      return System.ui_from_handle(::GetFocus());
+
+#endif
+
+   }
+
+
+   ::user::primitive * session::GetActiveWindow()
+   {
+
+#ifdef METROWIN
+
+      return System.ui_from_handle(::WinGetActiveWindow());
+
+#else
+
+      return System.ui_from_handle(::GetActiveWindow());
+
+#endif
+
+   }
+
+
+   ::user::elemental * session::get_keyboard_focus()
+   {
+
+      if (m_pauraapp == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      if (Application.is_session())
+      {
+
+         sp(::user::elemental) puieFocus;
+
+         try
+         {
+
+            puieFocus = Session.get_focus_ui();
+
+         }
+         catch (...)
+         {
+
+         }
+
+         if (m_pkeyboardfocus != NULL && puieFocus != NULL)
+         {
+
+
+            if ((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
+            {
+
+               return NULL;
+
+            }
+
+            return m_pkeyboardfocus;
+
+         }
+         else
+         {
+
+            return NULL;
+
+         }
+
+      }
+      else if (Application.is_system())
+      {
+
+         return m_pkeyboardfocus;
+
+      }
+      else if (Application.m_pbasesession != NULL)
+      {
+
+         return Sess(get_app()).get_keyboard_focus();
+
+      }
+      else if (Application.m_pbasesystem != NULL)
+      {
+
+         return Sess(get_app()).get_keyboard_focus();
+
+      }
+      else
+      {
+
+         return NULL;
+
+      }
+
+   }
+
+
+   void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
+   {
+
+      if (m_pkeyboardfocus != NULL && m_pkeyboardfocus != pkeyboardfocus)
+      {
+
+         ::user::elemental * pkeyboardfocusOld = m_pkeyboardfocus;
+
+
+         try
+         {
+
+            if (pkeyboardfocusOld != NULL)
+            {
+
+               output_debug_string("axis::session::set_keyboard_focus pkeyboardfocusOld->keyboard_focus_OnKillFocus()\n");
+
+               if (!pkeyboardfocusOld->keyboard_focus_OnKillFocus())
+               {
+
+                  return;
+
+               }
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+      if (pkeyboardfocus != NULL)
+      {
+
+         if (!pkeyboardfocus->keyboard_focus_OnSetFocus())
+         {
+
+            return;
+
+         }
+
+         if (pkeyboardfocus->get_wnd() != NULL)
+         {
+
+            if (!pkeyboardfocus->get_wnd_elemental()->on_keyboard_focus(pkeyboardfocus))
+            {
+
+               return;
+
+            }
+
+         }
+
+      }
+
+      m_pkeyboardfocus = pkeyboardfocus;
+
+      on_finally_focus_set(pkeyboardfocus);
+
+   }
+
+
+   //void session::on_finally_focus_set(::user::elemental * pelementalFocus)
+   //{
+
+
+
+   //}
+
+   ::user::primitive * session::get_active_ui()
+   {
+
+      return NULL;
+
+   }
+
+
+   ::user::primitive * session::get_focus_ui()
+   {
+
+      return NULL;
+
+   }
+
+
+
+   void session::on_finally_focus_set(::user::elemental * pelementalFocus)
+   {
+
+      if (pelementalFocus == NULL)
+         return;
+
+      sp(::user::interaction) puiFocus = pelementalFocus;
+
+      if (puiFocus.is_set())
+      {
+
+         if (puiFocus->GetActiveWindow() != puiFocus->get_wnd())
+         {
+
+            puiFocus->get_wnd()->SetActiveWindow();
+
+         }
+
+         if (puiFocus->GetFocus() != puiFocus->get_wnd())
+         {
+
+            puiFocus->get_wnd()->SetFocus();
+
+         }
+
+         puiFocus->send_message(WM_SETFOCUS);
+
+
+#if defined(APPLE_IOS)
+
+         sp(::ios::interaction_impl) pimpl = System.m_possystemwindow->m_pui->m_pimpl;
+
+         if (pimpl.is_set())
+         {
+
+            pimpl->defer_update_text_view();
+
+         }
+
+#endif
+
+
+
+      }
+
+
+   }
+
+   bool session::on_ui_mouse_message(::user::mouse * pmouse)
+   {
+
+
+      //::axis::session::on_ui_mouse_message(pmouse);
+
+      if (pmouse->m_pt == pmouse->m_ptDesired)
+      {
+
+         m_ptCursor = pmouse->m_pt;
+
+      }
+
+
+      return true;
+
+   }
+
+
+   ::visual::cursor * session::get_cursor()
+   {
+
+      if (m_ecursor == ::visual::cursor_visual)
+      {
+
+         return m_pcursor;
+
+      }
+
+      return NULL;
+
+   }
+
+
+   ::visual::cursor * session::get_default_cursor()
+   {
+
+      return NULL;
+
+   }
+
+
+   void session::get_cursor_pos(LPPOINT lppoint)
+   {
+
+      if (m_bSystemSynchronizedCursor)
+      {
+
+#ifdef METROWIN
+
+         Windows::Foundation::Point p;
+
+         p = System.m_possystemwindow->m_pwindow->get_cursor_pos();
+
+         m_ptCursor.x = (LONG)p.X;
+
+         m_ptCursor.y = (LONG)p.Y;
+
+#else
+
+         ::GetCursorPos(&m_ptCursor);
+
+#endif
+
+      }
+
+      if (lppoint != NULL)
+      {
+
+         *lppoint = m_ptCursor;
+
+      }
+   }
+
+
+   oswindow session::get_capture()
+   {
+
+#ifdef METROWIN
+
+      return ::WinGetCapture();
+
+#else
+
+      return ::GetCapture();
+
+#endif
+
+   }
+
+   bool session::ReleaseCapture()
+   {
+
+#ifdef METROWIN
+      oswindow oswindowCapture = ::WinGetCapture();
+#else
+      oswindow oswindowCapture = ::GetCapture();
+#endif
+
+      if (oswindowCapture == NULL)
+         return false;
+
+#ifdef METROWIN
+      ::WinReleaseCapture();
+#else
+      ::ReleaseCapture();
+#endif
+
+      m_puiCapture = NULL;
+
+      return true;
+
+
+   }
+
+
+   sp(::user::interaction) session::GetCapture()
+   {
+
+#ifdef METROWIN
+      oswindow oswindowCapture = ::WinGetCapture();
+#else
+      oswindow oswindowCapture = ::GetCapture();
+#endif
+
+      if (oswindowCapture == NULL)
+         return NULL;
+
+      sp(::user::interaction) pui = System.ui_from_handle(oswindowCapture);
+
+      if (pui == NULL)
+         return NULL;
+
+      return pui->GetCapture();
+
+   }
+
+
+
+
+
+   //::user::elemental * session::get_keyboard_focus()
+   //{
+
+   //   if (m_pauraapp == NULL)
+   //      return NULL;
+
+
+   //   if (m_pkeyboardfocus == NULL)
+   //      return NULL;
+
+   //   //sp(::user::elemental) puieFocus;
+
+   //   //try
+   //   //{
+
+   //   //   puieFocus = System.ui_.get_focus_ui();
+
+   //   //}
+   //   //catch(...)
+   //   //{
+
+   //   //}
+
+   //   //if(puieFocus == NULL)
+   //   //   return NULL;
+
+   //   //sp(::user::interaction) puiFocus = m_pkeyboardfocus;
+
+   //   //if(puiFocus.is_null())
+   //   //   return NULL;
+
+   //   //if(!puiFocus->is_descendant_of(puieFocus.cast < ::user::interaction >()))
+   //   //   return NULL;
+
+
+   //   //if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
+   //   //   return NULL;
+   //   return m_pkeyboardfocus;
+
+   //}
+
+
+
+
+   ::user::copydesk & session::copydesk()
+   {
+
+      return *m_pcopydesk;
+
+   }
+
+
+
+   index session::get_main_wkspace(LPRECT lprect)
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         if (m_iMainWkspace >= 0 && m_iMainWkspace < System.get_monitor_count())
+         {
+
+            return System.get_main_wkspace(lprect);
+
+         }
+         else
+         {
+
+            if (System.get_monitor_rect(m_iMainWkspace, lprect))
+            {
+
+               return m_iMainMonitor;
+
+            }
+            else
+            {
+
+               System.get_wkspace_rect(0, lprect);
+
+               return 0;
+
+            }
+
+         }
+
+      }
+      else
+      {
+
+         index iMainWkspace = m_iMainWkspace;
+
+         if (iMainWkspace < 0 || iMainWkspace >= m_rectaWkspace.get_count())
+         {
+
+            iMainWkspace = 0;
+
+         }
+
+         if (m_rectaWkspace.get_count() <= 0)
+         {
+
+            return -1;
+
+         }
+
+         *lprect = m_rectaWkspace[iMainWkspace];
+
+         return iMainWkspace;
+
+      }
+
+   }
+
+
+   bool session::set_main_wkspace(index iWkspace)
+   {
+
+      if (iWkspace == -1)
+      {
+
+         m_iMainWkspace = -1;
+
+         return true;
+
+      }
+      else if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+      {
+
+         return false;
+
+      }
+      else
+      {
+
+         m_iMainWkspace = iWkspace;
+
+         return true;
+
+      }
+
+   }
+
+   index session::get_main_monitor(LPRECT lprect)
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         if (m_iMainMonitor < 0 || m_iMainMonitor >= System.get_monitor_count())
+         {
+
+            return System.get_main_monitor(lprect);
+
+         }
+         else
+         {
+
+            if (System.get_monitor_rect(m_iMainMonitor, lprect))
+            {
+
+               return m_iMainMonitor;
+
+            }
+            else
+            {
+
+               System.get_monitor_rect(0, lprect);
+
+               return 0;
+
+            }
+
+         }
+
+      }
+      else
+      {
+
+         index iMainMonitor = m_iMainMonitor;
+
+         if (iMainMonitor < 0 || iMainMonitor >= m_rectaMonitor.get_count())
+         {
+
+            iMainMonitor = 0;
+
+         }
+
+         if (m_rectaMonitor.get_count() <= 0)
+         {
+
+            return -1;
+
+         }
+
+         *lprect = m_rectaMonitor[iMainMonitor];
+
+         return iMainMonitor;
+
+      }
+
+   }
+
+
+   bool session::set_main_monitor(index iMonitor)
+   {
+
+      if (iMonitor == -1)
+      {
+
+         m_iMainMonitor = -1;
+
+         return true;
+
+      }
+      else if (iMonitor < 0 || iMonitor >= get_monitor_count())
+      {
+
+         return false;
+
+      }
+      else
+      {
+
+         m_iMainMonitor = iMonitor;
+
+         return true;
+
+      }
+
+   }
+
+
+   ::count session::get_wkspace_count()
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         return System.get_wkspace_count();
+
+      }
+      else
+      {
+
+         return m_rectaWkspace.get_count();
+
+      }
+
+   }
+
+
+   ::count session::get_monitor_count()
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         return System.get_monitor_count();
+
+      }
+      else
+      {
+
+         return m_rectaMonitor.get_count();
+
+      }
+
+   }
+
+
+   bool session::get_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         return System.get_monitor_rect(iMonitor, lprect);
+
+      }
+      else
+      {
+
+         if (iMonitor < 0 || iMonitor >= m_rectaMonitor.get_count())
+         {
+
+            return false;
+
+         }
+
+         *lprect = m_rectaMonitor[iMonitor];
+
+         return true;
+
+      }
+
+   }
+
+   bool session::wkspace_to_monitor(LPRECT lprect, index iMonitor, index iWkspace)
+   {
+
+      rect rect(lprect);
+
+      ::rect rectWkspace;
+
+      if (!get_wkspace_rect(iWkspace, rectWkspace))
+         return false;
+
+      rect -= rectWkspace.top_left();
+
+      ::rect rectMonitor;
+
+      if (!get_monitor_rect(iMonitor, rectMonitor))
+         return false;
+
+      rect += rectMonitor.top_left();
+
+      *lprect = rect;
+
+      return true;
+
+   }
+
+
+   bool session::wkspace_to_monitor(LPRECT lprect)
+   {
+
+      index iWkspace = get_best_wkspace(NULL, rect(lprect));
+
+      return wkspace_to_monitor(lprect, iWkspace, iWkspace);
+
+   }
+
+
+   bool session::monitor_to_wkspace(LPRECT lprect)
+   {
+
+      index iMonitor = get_best_monitor(NULL, rect(lprect));
+
+      return monitor_to_wkspace(lprect, iMonitor, iMonitor);
+
+   }
+
+
+   bool session::monitor_to_wkspace(LPRECT lprect, index iWkspace, index iMonitor)
+   {
+
+      rect rect(lprect);
+
+      ::rect rectMonitor;
+
+      if (!get_monitor_rect(iMonitor, rectMonitor))
+         return false;
+
+      rect -= rectMonitor.top_left();
+
+      ::rect rectWkspace;
+
+      if (!get_wkspace_rect(iWkspace, rectWkspace))
+         return false;
+
+      rect += rectWkspace.top_left();
+
+      *lprect = rect;
+
+      return true;
+
+   }
+
+
+
+
+   bool session::get_wkspace_rect(index iWkspace, LPRECT lprect)
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         return System.get_wkspace_rect(iWkspace, lprect);
+
+      }
+      else
+      {
+
+         if (iWkspace < 0 || iWkspace >= m_rectaWkspace.get_count())
+         {
+
+            return false;
+
+         }
+
+         *lprect = m_rectaWkspace[iWkspace];
+
+         return true;
+
+      }
+
+   }
+
+   ::count session::get_desk_monitor_count()
+   {
+
+      return get_monitor_count();
+
+   }
+
+
+   bool session::get_desk_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+      return get_monitor_rect(iMonitor, lprect);
+
+   }
+
+
+   void session::get_monitor(rect_array & rectaMonitor, rect_array & rectaIntersect, const RECT & rectParam)
+   {
+
+      for (index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
+      {
+
+         rect rectIntersect;
+
+         rect rectMonitor;
+
+         if (get_monitor_rect(iMonitor, rectMonitor))
+         {
+
+            if (rectIntersect.top_left_null_intersect(&rectParam, rectMonitor))
+            {
+
+               if (rectIntersect.area() >= 0)
+               {
+
+                  rectaMonitor.add(rectMonitor);
+
+                  rectaIntersect.add(rectIntersect);
+
+               }
+
+            }
+
+         }
+
+      }
+
+   }
+
+   index session::get_zoneing(LPRECT lprect, const RECT & rectParam, ::user::e_appearance eappearance)
+   {
+
+      index iMonitor = get_best_wkspace(lprect, rectParam);
+
+      int cx = width(lprect);
+      int cy = height(lprect);
+
+      if (cx <= 0 || cy <= 0)
+      {
+
+         return -1;
+
+      }
+
+      if (width(rectParam) <= 0 || height(rectParam) <= 0)
+      {
+
+         return -1;
+
+      }
+
+
+      int midcx = cx / 2;
+      int midcy = cy / 2;
+
+      if (eappearance == ::user::appearance_top)
+      {
+         *lprect = rect_dim(0, 0, cx, midcy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_left)
+      {
+         *lprect = rect_dim(0, 0, midcx, cy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_right)
+      {
+         *lprect = rect_dim(midcx, 0, midcx, cy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_bottom)
+      {
+         *lprect = rect_dim(0, midcy, cx, midcy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_top_left)
+      {
+         *lprect = rect_dim(0, 0, midcx, midcy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_top_right)
+      {
+         *lprect = rect_dim(midcx, 0, midcx, midcy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_bottom_left)
+      {
+         *lprect = rect_dim(0, midcy, midcx, midcy) + top_left(lprect);
+      }
+      else if (eappearance == ::user::appearance_bottom_right)
+      {
+         *lprect = rect_dim(midcx, midcy, midcx, midcy) + top_left(lprect);
+      }
+      else
+      {
+         return -1;
+      }
+
+      return iMonitor;
+
+   }
+
+   index session::get_best_zoneing(::user::e_appearance * peappearance, LPRECT lprect, const RECT & rectParam)
+   {
+
+      index iMonitor = get_best_monitor(lprect, rectParam);
+
+      int cx = width(lprect);
+      int cy = height(lprect);
+
+      if (cx <= 0 || cy <= 0)
+      {
+
+         *peappearance = ::user::appearance_zoomed;
+
+         return iMonitor;
+
+      }
+
+      if (width(rectParam) <= 0 || height(rectParam) <= 0)
+      {
+
+         *peappearance = ::user::appearance_zoomed;
+
+         return iMonitor;
+
+      }
+
+
+      int midcx = cx / 2;
+      int midcy = cy / 2;
+
+      rect_array recta;
+      array < ::user::e_appearance > aa;
+
+      aa.add(::user::appearance_top);
+      recta.add_dim(0, 0, cx, midcy);
+
+      aa.add(::user::appearance_left);
+      recta.add_dim(0, 0, midcx, cy);
+
+      aa.add(::user::appearance_right);
+      recta.add_dim(midcx, 0, midcx, cy);
+
+      aa.add(::user::appearance_bottom);
+      recta.add_dim(0, midcy, cx, midcy);
+
+      aa.add(::user::appearance_top_left);
+      recta.add_dim(0, 0, midcx, midcy);
+
+      aa.add(::user::appearance_top_right);
+      recta.add_dim(midcx, 0, midcx, midcy);
+
+      aa.add(::user::appearance_bottom_left);
+      recta.add_dim(0, midcy, midcx, midcy);
+
+      aa.add(::user::appearance_bottom_right);
+      recta.add_dim(midcx, midcy, midcx, midcy);
+
+      index iFoundAppearance = recta.max_normal_intersect_area(rectParam, *lprect);
+
+      if (iFoundAppearance < 0)
+      {
+
+         *peappearance = ::user::appearance_zoomed;
+
+         return iMonitor;
+
+      }
+
+      if (lprect != NULL)
+      {
+
+         *lprect = recta[iFoundAppearance];
+
+      }
+
+      *peappearance = aa[iFoundAppearance];
+
+      return iMonitor;
+
+   }
+
+   index session::get_best_monitor(LPRECT lprect, const RECT & rectParam)
+   {
+
+      index iMatchingMonitor = -1;
+      int64_t iBestArea = -1;
+      rect rectMatch;
+      rect r(rectParam);
+
+      if (r.is_null())
+      {
+
+         get_cursor_pos((POINT *)&r.left);
+         *((POINT*)&r.right) = *((POINT*)&r.left);
+
+      }
+
+      for (index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
+      {
+
+         rect rectIntersect;
+
+         rect rectMonitor;
+
+         if (get_monitor_rect(iMonitor, rectMonitor))
+         {
+
+            if (rectIntersect.top_left_null_intersect(&r, rectMonitor))
+            {
+
+               if (rectIntersect.area() > iBestArea)
+               {
+
+                  iMatchingMonitor = iMonitor;
+
+                  iBestArea = rectIntersect.area();
+
+                  rectMatch = rectMonitor;
+
+               }
+
+            }
+            else if (rectMonitor.contains(r))
+            {
+
+               iMatchingMonitor = iMonitor;
+
+               rectMatch = rectMonitor;
+
+            }
+
+         }
+
+      }
+
+      if (iMatchingMonitor >= 0)
+      {
+
+         if (lprect != NULL)
+         {
+
+            *lprect = rectMatch;
+
+         }
+
+         return iMatchingMonitor;
+
+      }
+
+      iMatchingMonitor = get_main_monitor(lprect);
+
+      return iMatchingMonitor;
+
+   }
+
+
+   index session::get_best_wkspace(LPRECT lprect, const RECT & rectParam)
+   {
+
+      index iMatchingWkspace = -1;
+      int64_t iBestArea = -1;
+      rect rectMatch;
+      rect r(rectParam);
+
+      if (r.is_null())
+      {
+
+         get_cursor_pos((POINT *)&r.left);
+         *((POINT*)&r.right) = *((POINT*)&r.left);
+
+      }
+
+      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
+      {
+
+         rect rectIntersect;
+
+         rect rectMonitor;
+
+         if (get_wkspace_rect(iWkspace, rectMonitor))
+         {
+
+            if (rectIntersect.top_left_null_intersect(&r, rectMonitor))
+            {
+
+               if (rectIntersect.area() > iBestArea)
+               {
+
+                  iMatchingWkspace = iWkspace;
+
+                  iBestArea = rectIntersect.area();
+
+                  rectMatch = rectMonitor;
+
+               }
+
+            }
+            else if (rectMonitor.contains(r))
+            {
+
+               iMatchingWkspace = iWkspace;
+
+               rectMatch = rectMonitor;
+
+            }
+
+
+         }
+
+      }
+
+      if (iMatchingWkspace >= 0)
+      {
+
+         *lprect = rectMatch;
+
+         return iMatchingWkspace;
+
+      }
+
+      iMatchingWkspace = get_main_wkspace(lprect);
+
+      return iMatchingWkspace;
+
+   }
+
+
+   index session::get_good_iconify(LPRECT lprect, const RECT & rectParam)
+   {
+
+      rect rectMonitor;
+
+      index iMatchingMonitor = get_best_monitor(rectMonitor, rectParam);
+
+      lprect->left = rectMonitor.left;
+      lprect->top = rectMonitor.top;
+      lprect->right = rectMonitor.left;
+      lprect->bottom = rectMonitor.top;
+
+      return iMatchingMonitor;
+
+   }
+
+
+
+
+
+   index session::initial_frame_position(LPRECT lprect, const RECT & rectParam, bool bMove, ::user::interaction * pui)
+   {
+
+      rect rectRestore(rectParam);
+
+      rect rectMonitor;
+
+      index iMatchingMonitor = get_best_monitor(rectMonitor, rectParam);
+
+      ::size sizeMin;
+
+      if (pui != NULL)
+      {
+
+         pui->get_window_minimum_size(sizeMin);
+
+      }
+      else
+      {
+
+         get_window_minimum_size(&sizeMin);
+
+      }
+
+      rect rectIntersect;
+
+      if (bMove)
+      {
+
+         rect_array rectaMonitor;
+
+         rect_array rectaIntersect;
+
+         get_monitor(rectaMonitor, rectaIntersect, rectParam);
+
+         rectaIntersect.get_box(rectIntersect);
+
+      }
+      else
+      {
+
+         rectIntersect.intersect(rectMonitor, &rectParam);
+
+      }
+
+      if (rectIntersect.width() < sizeMin.cx
+            || rectIntersect.height() < sizeMin.cy)
+      {
+
+         if (rectMonitor.width() / 7 + MAX(sizeMin.cx, rectMonitor.width() * 2 / 5) > rectMonitor.width()
+               || rectMonitor.height() / 7 + MAX(sizeMin.cy, rectMonitor.height() * 2 / 5) > rectMonitor.width())
+         {
+
+            rectRestore = rectMonitor;
+
+         }
+         else
+         {
+
+            rectRestore.left = rectMonitor.left + rectMonitor.width() / 7;
+
+            rectRestore.top = rectMonitor.top + rectMonitor.height() / 7;
+
+            rectRestore.right = rectRestore.left + MAX(sizeMin.cx, rectMonitor.width() * 2 / 5);
+
+            rectRestore.bottom = rectRestore.top + MAX(sizeMin.cy, rectMonitor.height() * 2 / 5);
+
+            if (rectRestore.right > rectMonitor.right - rectMonitor.width() / 7)
+            {
+
+               rectRestore.offset(rectMonitor.right - rectMonitor.width() / 7 - rectRestore.right, 0);
+
+            }
+
+            if (rectRestore.bottom > rectMonitor.bottom - rectMonitor.height() / 7)
+            {
+
+               rectRestore.offset(0, rectMonitor.bottom - rectMonitor.height() / 7 - rectRestore.bottom);
+
+            }
+
+         }
+
+         *lprect = rectRestore;
+
+         return iMatchingMonitor;
+
+      }
+      else
+      {
+
+         if (!bMove)
+         {
+
+            *lprect = rectIntersect;
+
+         }
+
+         return -1;
+
+      }
+
+   }
+
+
+
+   index session::get_good_restore(LPRECT lprect, const RECT & rectParam, ::user::interaction * pui)
+   {
+
+      return initial_frame_position(lprect, rectParam, false, pui);
+
+   }
+
+
+   index session::get_good_move(LPRECT lprect, const RECT & rectParam, ::user::interaction * pui)
+   {
+
+      index iMatchingMonitor = initial_frame_position(lprect, rectParam, true, pui);
+
+      if (memcmp(lprect, &rectParam, sizeof(RECT)))
+      {
+
+         return iMatchingMonitor;
+
+      }
+      else
+      {
+
+         return -1;
+
+      }
+
+
+   }
+
+
+
+
+   index session::get_ui_wkspace(::user::interaction * pui)
+   {
+
+      if (m_bSystemSynchronizedScreen)
+      {
+
+         return System.get_ui_wkspace(pui);
+
+      }
+      else
+      {
+
+         ::rect rect;
+
+         pui->GetWindowRect(rect);
+
+         return get_best_wkspace(NULL, rect);
+
+      }
+
+
+   }
+
+
+
+
+
+   //   void session::get_cursor_pos(LPPOINT lppoint)
+   //    {
+
+
+   //       if(lppoint != NULL)
+   //       {
+
+   //          *lppoint = m_ptCursor;
+
+   //       }
+
+   //    }
+
+
+
+
+
+
+   bool session::is_key_pressed(::user::e_key ekey)
+   {
+
+      if (m_pmapKeyPressed == NULL)
+      {
+
+         m_pmapKeyPressed = new ::map < ::user::e_key, ::user::e_key, bool, bool >;
+
+      }
+
+      bool bPressed = false;
+      if (ekey == ::user::key_shift)
+      {
+         m_pmapKeyPressed->Lookup(::user::key_shift, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_lshift, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_rshift, bPressed);
+         if (bPressed)
+            goto ret;
+      }
+      else if (ekey == ::user::key_control)
+      {
+         m_pmapKeyPressed->Lookup(::user::key_control, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_lcontrol, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_rcontrol, bPressed);
+         if (bPressed)
+            goto ret;
+      }
+      else if (ekey == ::user::key_alt)
+      {
+         m_pmapKeyPressed->Lookup(::user::key_alt, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_lalt, bPressed);
+         if (bPressed)
+            goto ret;
+         m_pmapKeyPressed->Lookup(::user::key_ralt, bPressed);
+         if (bPressed)
+            goto ret;
+      }
+      else
+      {
+
+         m_pmapKeyPressed->Lookup(ekey, bPressed);
+
+      }
+
+ret:
+
+      return bPressed;
+
+   }
+
+   void session::set_key_pressed(::user::e_key ekey, bool bPressed)
+   {
+
+      if (m_pmapKeyPressed == NULL)
+      {
+
+         m_pmapKeyPressed = new ::map < ::user::e_key, ::user::e_key, bool, bool >;
+
+      }
+
+      (*m_pmapKeyPressed)[ekey] = bPressed;
+
+   }
+
+   sp(::user::style) session::get_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
+   {
+
+      sp(::user::style) & p = m_mapStyle[pszUinteractionLibrary];
+
+      if (p.is_null())
+      {
+
+         p = create_new_user_style(pszUinteractionLibrary, papp);
+
+      }
+
+      return p;
+
+   }
+
+   sp(::user::style) session::create_new_user_style(const char * pszUinteractionLibrary, ::aura::application * papp)
+   {
+
+      thisstart;
+
+      if (papp == NULL)
+      {
+
+         papp = get_app();
+
+      }
+
+      stringa straLibrary;
+
+      {
+
+         string strId(pszUinteractionLibrary);
+
+         if (strId.has_char())
+         {
+
+            straLibrary.add(strId);
+
+         }
+
+      }
+
+
+      {
+
+         string strId(App(papp).preferred_userschema());
+
+         if (strId.has_char())
+         {
+
+            straLibrary.add(strId);
+
+         }
+
+      }
+
+      {
+
+         string strConfig = Application.handler()->m_varTopicQuery["wndfrm"];
+
+         if (strConfig.has_char())
+         {
+
+            string strLibrary = string("wndfrm_") + strConfig;
+
+            straLibrary.add(strConfig);
+
+         }
+
+      }
+
+
+
+      {
+
+         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / App(papp).m_strAppName / "wndfrm.txt");
+
+         if (strWndFrm.has_char())
+         {
+
+            straLibrary.add(strWndFrm);
+
+         }
+
+      }
+
+      {
+
+         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / ::file::path(App(papp).m_strAppName).folder() / "wndfrm.txt");
+
+         if (strWndFrm.has_char())
+         {
+
+            straLibrary.add(strWndFrm);
+
+         }
+
+      }
+
+      {
+
+         string strWndFrm = App(papp).file().as_string(::dir::system() / "config" / ::file::path(App(papp).m_strAppName).name() / "wndfrm.txt");
+
+         if (strWndFrm.has_char())
+         {
+
+            straLibrary.add(strWndFrm);
+
+         }
+
+      }
+
+
+      {
+
+         string strWndFrm = App(papp).file().as_string(::dir::system() / "config/system/wndfrm.txt");
+
+         if (strWndFrm.has_char())
+         {
+
+            straLibrary.add(strWndFrm);
+
+         }
+
+      }
+
+      straLibrary.add("wndfrm_metro");
+
+      straLibrary.add("wndfrm_rootkiller");
+
+      straLibrary.add("wndfrm_hyper");
+
+      straLibrary.add("wndfrm_core");
+
+      sp(::user::style) pschema;
+
+      for (string strLibrary : straLibrary)
+      {
+
+         ::aura::library * plibrary = new ::aura::library(papp, 0, NULL);
+
+         strLibrary.replace("-", "_");
+
+         strLibrary.replace("/", "_");
+
+         if (!::str::begins_ci(strLibrary, "wndfrm_"))
+         {
+
+            strLibrary = "wndfrm_" + strLibrary;
+
+         }
+
+         if (!plibrary->open(strLibrary, false))
+         {
+
+            thisinfo << "Failed to load " << strLibrary;
+
+            ::aura::del(plibrary);
+
+            continue;
+
+         }
+
+         if (!plibrary->open_ca2_library())
+         {
+
+            thisinfo << "Failed to load (2) " << strLibrary;
+
+            ::aura::del(plibrary);
+
+            continue;
+
+         }
+
+         stringa stra;
+
+         plibrary->get_app_list(stra);
+
+         if (stra.get_size() != 1)
+         {
+
+            // a wndfrm OSLibrary should have one wndfrm
+            thisinfo << "a wndfrm OSLibrary should have one wndfrm " << strLibrary;
+
+            ::aura::del(plibrary);
+
+            continue;
+
+         }
+
+         string strAppId = stra[0];
+
+         if (strAppId.is_empty())
+         {
+
+            // trivial validity check
+            thisinfo << "app id should not be empty " << strLibrary;
+
+            ::aura::del(plibrary);
+
+            continue;
+
+         }
+
+         pschema = plibrary->create_object(papp, "user_style", NULL);
+
+         if (pschema.is_null())
+         {
+
+            thisinfo << "could not create user_style from " << strLibrary;
+
+            ::aura::del(plibrary);
+
+            continue;
+
+         }
+
+         pschema->m_plibrary = plibrary;
+
+         break;
+
+      }
+
+      if (pschema.is_null())
+      {
+
+         pschema = canew(::user::style(this));
+
+      }
+
+      return pschema;
+
+   }
+
+
+
+   void session::defer_create_user_style(const char * pszUiInteractionLibrary)
+   {
+
+      if (m_puserstyle == NULL)
+      {
+
+         m_puserstyle = get_user_style(pszUiInteractionLibrary);
+
+         if (m_puserstyle == NULL)
+         {
+
+            thisfail << 1;
+
+            throw resource_exception(this);
+
+         }
+
+      }
+
+   }
+
+
+
+   class ::user::window_map & session::window_map()
+   {
+
+         return *m_pwindowmap;
+
+   }
+
+
+   void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
+   {
+
+      throw interface_only_exception(this);
+
+   }
 
 } // namespace aura
 

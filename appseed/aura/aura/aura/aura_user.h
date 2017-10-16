@@ -105,7 +105,7 @@ namespace draw2d
 
 #include "aura_draw_interface.h"
 #include "aura/user/user/user_primitive.h"
-#include "aura/user/user/user_frame.h"
+//#include "aura/user/user/user_frame.h"
 
 
 

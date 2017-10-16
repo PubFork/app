@@ -45,30 +45,6 @@ namespace user
    public:
    };
 
-   class CLASS_DECL_AXIS key :
-      public ::message::base
-   {
-   public:
-
-      int               m_iCode;
-      uint_ptr          m_nChar;
-      uint_ptr          m_nScanCode;
-      UINT              m_nRepCnt;
-      UINT              m_nFlags;
-      bool              m_bExt;
-
-      ::user::e_key     m_ekey;
-
-      string            m_strText;
-
-      //key();
-      key(::aura::application * papp);
-      key(const ::user::key & key);
-
-      void copy_this(const key & key);
-
-   };
-
 
    class CLASS_DECL_AXIS keyboard_layout :
       virtual public ::object,

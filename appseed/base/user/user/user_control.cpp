@@ -244,7 +244,7 @@ namespace user
          for (int32_t i = 0; i < str.get_length(); i++)
          {
             if (str[i] >= L'0'
-               && str[i] <= L'9')
+                  && str[i] <= L'9')
             {
             }
             else
@@ -302,7 +302,7 @@ namespace user
 
    class control_descriptor & control::descriptor()
    {
-      return *m_pdescriptor;
+         return *m_pdescriptor;
    }
 
 
@@ -324,12 +324,26 @@ namespace user
 
       }
 
-      if (!::user::interaction::create_control(pdescriptor))
+      try
+      {
+
+         if (!create_window(pdescriptor->m_rect, pdescriptor->m_puiParent, pdescriptor->m_id))
+         {
+
+            return false;
+
+         }
+
+      }
+      catch (...)
       {
 
          return false;
 
       }
+
+
+
 
       m_pdescriptor = pdescriptor;
 
@@ -588,7 +602,7 @@ namespace user
 //
 //   void control_view_impl::BaseControlExOnUpdateCmdUI(sp(::user::frame_window) pTarget, bool bDisableIfNoHndler)
 //   {
-//      
+//
 //      sp(::user::interaction) pview = get_window();
 //
 //      ::user::command & state = m_commandui;
@@ -618,7 +632,7 @@ namespace user
 //         }
 //         if (pcontrolex != NULL)
 //         {
-//            
+//
 //            id idControl = pwnd->GetDlgCtrlId();
 //
 //            // xxx         state.m_nIndex = uiID;
@@ -770,8 +784,8 @@ namespace user
    }
 
 
-   // the value -1 indicates outside the control,
-   // other values may be control specific and are client hits
+// the value -1 indicates outside the control,
+// other values may be control specific and are client hits
    index control::hit_test(point ptScreen, e_element & eelement)
    {
 
@@ -807,10 +821,10 @@ namespace user
    }
 
 
-   //control_view_impl::control_view_impl() :
-   //   m_commandui(NULL)
-   //{
-   //}
+//control_view_impl::control_view_impl() :
+//   m_commandui(NULL)
+//{
+//}
 
 
    bool control::BaseOnControlEvent(::user::control_event * pevent)

@@ -99,21 +99,21 @@ namespace user
    class control_descriptor * control_descriptor_set::get_by_sub_item(int32_t iSubItem)
    {
 
-      for (int32_t i = 0; i < this->get_size(); i++)
-      {
-
-         class control_descriptor & control_descriptor = *this->element_at(i);
-
-         if (control_descriptor.m_iSubItem == iSubItem)
+         for (int32_t i = 0; i < this->get_size(); i++)
          {
 
-            return &control_descriptor;
+            class control_descriptor & control_descriptor = *this->element_at(i);
+
+            if (control_descriptor.m_iSubItem == iSubItem)
+            {
+
+               return &control_descriptor;
+
+            }
 
          }
 
-      }
-
-      return NULL;
+         return NULL;
 
    }
 

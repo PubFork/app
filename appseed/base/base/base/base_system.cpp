@@ -1,5 +1,5 @@
 #include "framework.h" // from "axis/user/user.h"
-#include "base/user/user/user_windowing.h"
+//#include "base/user/user/user_windowing.h"
 #include "base/user/user.h"
 #include "base/node/node.h"
 
@@ -15,7 +15,7 @@ CLASS_DECL_BASE void black_body(float * r, float * g, float * b, DWORD dwTemp);
 
 
 
-#include "base/os/windows/windows_system_interaction_impl.h"
+//#include "base/os/windows/windows_system_interaction_impl.h"
 
 
 #include <HighLevelMonitorConfigurationAPI.h>
@@ -256,72 +256,7 @@ namespace base
 
 
 
-   bool system::defer_create_system_frame_window()
-   {
 
-
-#ifdef WINDOWSEX
-
-      if (m_psystemwindow != NULL)
-         return true;
-
-      m_psystemwindow = new system_interaction_impl(this);
-
-#endif
-
-
-
-#ifdef WINDOWSEX
-
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iReturnCode));
-
-      if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
-      {
-
-         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iReturnCode));
-
-         return false;
-
-      }
-
-#endif
-
-      return true;
-
-   }
-
-
-
-
-   index system::get_ui_wkspace(::user::interaction * pui)
-   {
-
-      index iMainWkspace = 0;
-
-#ifdef WINDOWSEX
-
-      HMONITOR hwkspacePrimary = GetUiMonitorHandle(pui->get_handle());
-
-      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
-      {
-
-         if (m_hmonitora[iWkspace] == hwkspacePrimary)
-         {
-
-            iMainWkspace = iWkspace;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      return iMainWkspace;
-
-   }
 
 
 
@@ -984,41 +919,6 @@ error:
    }
 
 
-   ::user::interaction_impl * system::impl_from_handle(void * pdata)
-   {
-
-      return oswindow_get((oswindow)pdata);
-
-   }
-
-   ::user::interaction * system::ui_from_handle(void * pdata)
-   {
-
-      ::user::interaction_impl * pimpl = impl_from_handle(pdata);
-
-      if (pimpl == NULL)
-      {
-
-         return NULL;
-
-      }
-
-      try
-      {
-
-         return pimpl->m_pui;
-
-      }
-      catch (...)
-      {
-
-         throw resource_exception(this, "not good window anymore");
-
-      }
-
-      return NULL;
-
-   }
 
    void system::on_setting_changed(::aura::e_setting esetting)
    {
@@ -1059,8 +959,6 @@ error:
       }
 
 #endif
-
-      enum_display_monitors();
 
       //if (m_peengine != NULL)
       //{

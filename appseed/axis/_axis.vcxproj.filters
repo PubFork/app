@@ -892,6 +892,9 @@
     <ClCompile Include="graphics\visual\visual_windows_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\_user.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="axis\axis\axis.inl">

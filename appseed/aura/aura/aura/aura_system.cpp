@@ -42,7 +42,8 @@ namespace aura
       m_process(this),
       m_base64(this),
       m_httpsystem(this),
-      m_visual(this)
+      m_visual(this),
+      m_emaildepartment(this)
    {
 
       m_bThreadToolsForIncreasedFps = false;
@@ -580,6 +581,8 @@ namespace aura
          output_debug_string("Unable to find ANY *DRAW2D* plugin. Quitting...");
 
       }
+      enum_display_monitors();
+
 
 
       return true;
@@ -602,12 +605,12 @@ namespace aura
       if(!str().initialize())
          return false;
 
-         m_visual.construct(this);
-         
-               if (!m_visual.initialize1())
-                  return false;
-         
-         
+      m_visual.construct(this);
+
+      if (!m_visual.initialize1())
+         return false;
+
+
 
       return true;
 
@@ -3090,6 +3093,409 @@ success:
 
 
    }
+
+   ::user::interaction_impl * system::impl_from_handle(void * pdata)
+   {
+
+      return oswindow_get((oswindow)pdata);
+
+   }
+
+   ::user::interaction * system::ui_from_handle(void * pdata)
+   {
+
+      ::user::interaction_impl * pimpl = impl_from_handle(pdata);
+
+      if (pimpl == NULL)
+      {
+
+         return NULL;
+
+      }
+
+      try
+      {
+
+         return pimpl->m_pui;
+
+      }
+      catch (...)
+      {
+
+         throw resource_exception(this, "not good window anymore");
+
+      }
+
+      return NULL;
+
+   }
+
+
+
+
+   bool system::defer_create_system_frame_window()
+   {
+
+
+#ifdef WINDOWSEX
+
+      if (m_psystemwindow != NULL)
+         return true;
+
+      m_psystemwindow = new ::user::system_interaction_impl(this);
+
+#endif
+
+
+
+#ifdef WINDOWSEX
+
+      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iReturnCode));
+
+      if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
+      {
+
+         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iReturnCode));
+
+         return false;
+
+      }
+
+#endif
+
+      return true;
+
+   }
+
+   ::net::email_department & system::email()
+   {
+
+      return m_emaildepartment;
+
+   }
+   void system::enum_display_monitors()
+   {
+
+#ifdef WINDOWSEX
+
+      m_monitorinfoa.remove_all();
+
+      ::EnumDisplayMonitors(NULL, NULL, &system::monitor_enum_proc, (LPARAM)(dynamic_cast < ::aura::system * > (this)));
+
+#else
+
+      // todo
+      //      m_monitorinfoa.remove_all();
+
+
+#endif
+
+   }
+
+
+
+#ifdef WINDOWSEX
+   BOOL CALLBACK system::monitor_enum_proc(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
+   {
+
+      ::aura::system * psystem = (::aura::system *) dwData;
+
+      psystem->monitor_enum(hmonitor, hdcMonitor, lprcMonitor);
+
+      return TRUE; // to enumerate all
+
+   }
+
+   void system::monitor_enum(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor)
+   {
+
+      UNREFERENCED_PARAMETER(hdcMonitor);
+      UNREFERENCED_PARAMETER(lprcMonitor);
+
+      m_monitorinfoa.allocate(m_monitorinfoa.get_size() + 1);
+
+      ZERO(m_monitorinfoa.last());
+
+      m_hmonitora.add(hmonitor);
+
+      m_monitorinfoa.last().cbSize = sizeof(MONITORINFO);
+
+      ::GetMonitorInfo(hmonitor, &m_monitorinfoa.last());
+
+      MONITORINFO mi = m_monitorinfoa.last();
+
+      TRACE("session::monitor_enum\n");
+      TRACE("upper_bound %d\n", m_monitorinfoa.get_upper_bound());
+      TRACE("rcMonitor(left, top, right, bottom) %d, %d, %d, %d\n", mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right, mi.rcMonitor.bottom);
+      TRACE("rcWork(left, top, right, bottom) %d, %d, %d, %d\n", mi.rcWork.left, mi.rcWork.top, mi.rcWork.right, mi.rcWork.bottom);
+
+   }
+
+
+#endif
+
+
+   index system::get_main_monitor(LPRECT lprect)
+   {
+
+      index iMainMonitor = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hmonitorPrimary = GetPrimaryMonitorHandle();
+
+      for (index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
+      {
+
+         if (m_hmonitora[iMonitor] == hmonitorPrimary)
+         {
+
+            iMainMonitor = iMonitor;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      if (lprect != NULL)
+      {
+
+         get_monitor_rect(iMainMonitor, lprect);
+
+      }
+
+      return iMainMonitor;
+
+   }
+
+
+   ::count system::get_monitor_count()
+   {
+
+#ifdef WINDOWSEX
+
+      return m_monitorinfoa.get_count();
+
+#elif defined(MACOS)
+
+      return GetScreenCount();
+
+#else
+
+      return 1;
+
+#endif
+
+   }
+
+
+   bool system::get_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+#ifdef WINDOWSEX
+
+      if (iMonitor < 0 || iMonitor >= get_monitor_count())
+         return false;
+
+      *lprect = m_monitorinfoa[iMonitor].rcMonitor;
+
+#elif defined(METROWIN)
+
+
+      return false;
+
+
+#elif defined(LINUX)
+
+
+      return false;
+
+
+#elif defined(APPLEOS)
+
+      if (iMonitor < 0 || iMonitor >= get_monitor_count())
+         return false;
+
+      GetScreenRect(lprect, iMonitor);
+
+#else
+
+      lprect->left = 0;
+      lprect->top = 0;
+      lprect->right = m_pdataexchange->m_iScreenWidth;
+      lprect->bottom = m_pdataexchange->m_iScreenHeight;
+
+#endif
+
+      return true;
+
+   }
+
+
+   ::count system::get_desk_monitor_count()
+   {
+
+      return get_monitor_count();
+
+   }
+
+
+   bool system::get_desk_monitor_rect(index iMonitor, LPRECT lprect)
+   {
+
+      return get_monitor_rect(iMonitor, lprect);
+
+   }
+
+
+
+
+   index system::get_main_wkspace(LPRECT lprect)
+   {
+
+      index iMainWkspace = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hwkspacePrimary = GetPrimaryMonitorHandle();
+
+      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
+      {
+
+         if (m_hmonitora[iWkspace] == hwkspacePrimary)
+         {
+
+            iMainWkspace = iWkspace;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      if (lprect != NULL)
+      {
+
+         get_wkspace_rect(iMainWkspace, lprect);
+
+      }
+
+      return iMainWkspace;
+
+   }
+
+
+   ::count system::get_wkspace_count()
+   {
+
+#ifdef WINDOWSEX
+
+      return m_monitorinfoa.get_count();
+
+#else
+
+      return get_monitor_count();
+
+#endif
+
+   }
+
+
+   bool system::get_wkspace_rect(index iWkspace, LPRECT lprect)
+   {
+
+#ifdef WINDOWSEX
+
+      if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+         return false;
+
+      *lprect = m_monitorinfoa[iWkspace].rcWork;
+
+#elif defined(METROWIN)
+
+      return get_monitor_rect(iWkspace, lprect);
+
+      //#elif defined(LINUX)
+      //
+      //return false;
+      //
+#elif defined(APPLEOS)
+
+      if (iWkspace < 0 || iWkspace >= get_wkspace_count())
+         return false;
+
+      GetWkspaceRect(lprect, iWkspace);
+
+      //      lprect->top += ::mac::get_system_main_menu_bar_height();
+      //    lprect->bottom -= ::mac::get_system_dock_height();
+
+#else
+
+      //throw todo(get_app());
+
+      //::GetWindowRect(::GetDesktopWindow(),lprect);
+
+      get_monitor_rect(iWkspace, lprect);
+
+#endif
+
+      return true;
+
+   }
+
+
+   ::count system::get_desk_wkspace_count()
+   {
+
+      return get_wkspace_count();
+
+   }
+
+
+   bool system::get_desk_wkspace_rect(index iWkspace, LPRECT lprect)
+   {
+
+      return get_wkspace_rect(iWkspace, lprect);
+
+   }
+
+   index system::get_ui_wkspace(::user::interaction * pui)
+   {
+
+      index iMainWkspace = 0;
+
+#ifdef WINDOWSEX
+
+      HMONITOR hwkspacePrimary = GetUiMonitorHandle(pui->get_handle());
+
+      for (index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
+      {
+
+         if (m_hmonitora[iWkspace] == hwkspacePrimary)
+         {
+
+            iMainWkspace = iWkspace;
+
+            break;
+
+         }
+
+      }
+
+
+#endif
+
+      return iMainWkspace;
+
+   }
+
 
 
 } // namespace aura

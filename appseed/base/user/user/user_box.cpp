@@ -8,7 +8,7 @@ namespace user
    box::box() :
       ::object(get_app())
    {
-      
+
       m_strWindowRectDataAddUp = ".local://";
 
    }
@@ -401,16 +401,16 @@ namespace user
 
    }
 
-   
+
    void box::on_simple_command(::message::simple_command * psimplecommand)
    {
 
       switch (psimplecommand->m_esimplecommand)
       {
       case simple_command_load_window_rect:
-         
+
          WindowDataLoadWindowRect(psimplecommand->m_lparam != FALSE);
-         
+
          psimplecommand->m_bRet = true;
 
          break;
@@ -477,7 +477,29 @@ namespace user
    string box::calc_data_id()
    {
 
-      return ::simple_ui::interaction::calc_data_id();
+      string str;
+
+      if (Application.m_dataid.m_id.is_empty())
+      {
+
+         str = Application.m_strAppId;
+
+      }
+      else
+      {
+
+         str = Application.m_dataid.m_id;
+
+      }
+
+      if (str.has_char())
+      {
+
+         str += ".";
+
+      }
+
+      return str + m_id;
 
    }
 

@@ -2,16 +2,6 @@
 #include "base/user/user.h"
 
 
-namespace user
-{
-
-
-   CLASS_DECL_BASE void init_windowing();
-   CLASS_DECL_BASE void term_windowing();
-
-
-} // namespace user
-
 /*
 namespace std
 {
@@ -111,8 +101,6 @@ bool base_init()
    if(!__node_base_pre_init())
       return false;
 
-   ::user::init_windowing();
-
 
    //::base::static_start::init();
 
@@ -132,8 +120,6 @@ bool base_term()
    __wait_threading_count(::millis((5000) * 8));
 
    __node_base_pre_term();
-
-   ::user::term_windowing();
 
    __node_base_pos_term();
 

@@ -19,18 +19,18 @@ namespace filemanager
    {
 
    }
-   
-   
+
+
    void left_view::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::user::split_view::install_message_routing(psender);
-      
+
    }
-   
-   
-   
+
+
+
 
    void left_view::assert_valid() const
    {
@@ -46,9 +46,9 @@ namespace filemanager
 
    void left_view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
-      
+
       ::filemanager::impact::on_update(pSender, lHint, phint);
-      
+
       ::user::split_view::on_update(pSender, lHint, phint);
 
       if (phint != NULL)
@@ -62,7 +62,7 @@ namespace filemanager
                {
                   string str;
                   str.Format("frame(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
-                  sp(frame) pframe = GetParentFrame();
+                  sp(::user::frame_window) pframe = GetParentFrame();
                   if (pframe != NULL)
                   {
                      pframe->m_dataid = str;
@@ -88,7 +88,7 @@ namespace filemanager
       initialize_split_layout();
 
       /*
-      
+
       set_position_rate(0, 0.30);
 
 

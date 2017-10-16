@@ -41,33 +41,30 @@ namespace core
 
 
 #ifdef METROWIN
-         m_window                                  = nullptr;
+      m_window                                  = nullptr;
 #endif
 
-         m_pcoresystem                            = this;
-         set_app(this);
+      m_pcoresystem                            = this;
+      set_app(this);
 
 
-         if(papp == NULL)
-         {
+      if(papp == NULL)
+      {
 
-            oprop("parent_system") = (sp(object)) NULL;
+         oprop("parent_system") = (sp(object)) NULL;
 
-         }
-         else
-         {
+      }
+      else
+      {
 
-            oprop("parent_system") = papp->m_pcoresystem;
+         oprop("parent_system") = papp->m_pcoresystem;
 
-         }
+      }
 
-         string strId;
-         //strId = m_strAppName;
-         //strId += ::str::has_char(m_strAppId, ".");
-         //strId += ::str::has_char(m_strBaseSupportId, ".");
-
-
-
+      string strId;
+      //strId = m_strAppName;
+      //strId += ::str::has_char(m_strAppId, ".");
+      //strId += ::str::has_char(m_strBaseSupportId, ".");
 
 
 
@@ -75,37 +72,40 @@ namespace core
 
 
 
-         m_userset.set_app(this);
-         //      m_email.set_app(this);
+
+
+
+      m_userset.set_app(this);
+      //      m_email.set_app(this);
 
 
 
 
 
 
-         m_bInitApplication         = false;
-         m_bInitApplicationResult   = FALSE;
-         m_bProcessInitialize       = false;
-         m_bProcessInitializeResult = false;
+      m_bInitApplication         = false;
+      m_bInitApplicationResult   = FALSE;
+      m_bProcessInitialize       = false;
+      m_bProcessInitializeResult = false;
 
-         //m_puserstr                 = NULL;
+      //m_puserstr                 = NULL;
 
-         m_pparserfactory           = NULL;
+      m_pparserfactory           = NULL;
 
-         m_bLicense                 = false;
+      m_bLicense                 = false;
 
-         //m_prunstartinstaller       = NULL;
-         m_bLicense                 = false;
+      //m_prunstartinstaller       = NULL;
+      m_bLicense                 = false;
 
 #ifdef WINDOWSEX
 
-         m_uiWindowsTaskbarCreatedMessage = 0;
+      m_uiWindowsTaskbarCreatedMessage = 0;
 
 #endif
 
 
 
-      }
+   }
 
 
    system::~system()
@@ -120,7 +120,7 @@ namespace core
    {
 
       UNREFERENCED_PARAMETER(pca);
-      
+
    }
 
 
@@ -209,17 +209,17 @@ namespace core
 
 #ifdef LINUX
 
-   ::fork(get_app(),[=]()
-         {
+      ::fork(get_app(),[=]()
+      {
 
-            ::get_thread()->unregister_from_required_threads();
+         ::get_thread()->unregister_from_required_threads();
 
          g_pbasecore = dlopen("libbasecore.so", RTLD_LOCAL | RTLD_NOW);
          BASECORE_INIT * f =  (BASECORE_INIT *) dlsym(g_pbasecore, "basecore_init");
          (*f)();
-output_debug_string("gtk_main exited");
+         output_debug_string("gtk_main exited");
 
-         });
+      });
 
 #endif
 
@@ -422,33 +422,33 @@ output_debug_string("gtk_main exited");
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pcoresystem == this)
                {
-                  
+
                   pair.m_element2->m_pcoresystem = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
-      }     
+
+      }
 
       __wait_threading_count(::millis((5000) * 8));
 
@@ -787,12 +787,6 @@ output_debug_string("gtk_main exited");
    }
 
 
-   uint32_t system::guess_code_page(const string & str)
-   {
-
-      return charguess(str)();
-
-   }
 
 
    ::user::document * system::place_hold(::user::interaction * pui)

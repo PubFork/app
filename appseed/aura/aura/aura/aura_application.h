@@ -51,7 +51,8 @@ namespace aura
       virtual public ::thread,
       virtual public int_scalar_source,
       virtual public ::file::listing_provider,
-      virtual public ::user::interactive
+      virtual public ::user::interactive,
+      virtual public ::user::style
    {
       public:
 
@@ -105,6 +106,10 @@ namespace aura
 
          bool                                            m_bAuraInitialize;
          bool                                            m_bAuraInitializeResult;
+
+
+         mutex                                           m_mutexFrame;
+         ::user::interaction_spa *                       m_puiptraFrame;
 
          string_map < ::aura::application * >            m_appmap;
          string                                          m_strAppName;
@@ -661,9 +666,31 @@ namespace aura
 
 #endif
 
+         virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
+         virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
+
+         virtual ::user::interaction * main_window();
+
+//         virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg) override;
+
+         virtual bool get_frame(sp(::user::interaction) & pui);
+         virtual void add_frame(::user::interaction * pwnd);
+         virtual void remove_frame(::user::interaction * pwnd);
+
+         virtual bool send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam); // with tbs in <3
+         virtual bool route_message_to_windows(::message::message * pmessage); // with tbs in <3
+
+
+         virtual void send_language_change_message();
+
 
          virtual LPWAVEOUT waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback);
 
+
+         virtual string preferred_userschema();
+
+
+         virtual ::user::document * place_hold(::user::interaction * pui);
    };
 
 

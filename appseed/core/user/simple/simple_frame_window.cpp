@@ -92,6 +92,7 @@ void simple_frame_window::helper_task::defer_save_window_rect()
 }
 
 
+
 simple_frame_window::simple_frame_window(::aura::application * papp) :
    object(papp),
    m_dibBk(allocer()),
@@ -99,7 +100,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 {
 
    m_bDefaultCreateToolbar = true;
-   
+
    m_etranslucency = ::user::translucency_undefined;
 
    m_bShowTask = true;
@@ -110,17 +111,17 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 
    m_bblur_Background = false;
    m_bCustomFrameBefore = true;
-   
+
 #if defined(APPLE_IOS) || defined(VSNORD)
-   
+
    m_bWindowFrame = false;
-   
+
 #else
-   
+
    m_bWindowFrame = true;
-   
+
 #endif
-   
+
    m_bLayered = true;
    m_pframeschema = NULL;
    m_pdocumenttemplate = NULL;
@@ -368,14 +369,14 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
    SCAST_PTR(::message::create, pcreate, pobj);
 
 #if !defined(APPLE_IOS) && !defined(VSNORD)
-   
+
    if (m_pdocumenttemplate->m_strMatter.has_char())
    {
-      
+
       m_varFrame = Application.file().as_json("matter://" + m_pdocumenttemplate->m_strMatter + "/frame.json");
 
    }
-   
+
 #endif
 
    if (m_varFrame["schema"].is_empty())
@@ -729,15 +730,15 @@ void simple_frame_window::_001OnShowWindow(::message::message * pobj)
 
    if(pshow->m_bShow)
    {
-      
+
       output_debug_string("\nsimple_frame_window::_001OnShowWindow TRUE " + string(typeid(*this).name()));
 
    }
    else
    {
-    
+
       output_debug_string("\nsimple_frame_window::_001OnShowWindow FALSE " + string(typeid(*this).name()));
-      
+
    }
 
    defer_set_icon();
@@ -1373,9 +1374,9 @@ void simple_frame_window::_001OnActivateApp(::message::message * pobj)
    SCAST_PTR(::message::base, pbase, pobj);
 
    pbase->previous();
-   
+
    //bool bActive = pbase->m_wparam != FALSE;
-   
+
    if (GetParent() == NULL && GetExStyle() & WS_EX_LAYERED)
    {
 
@@ -1561,11 +1562,11 @@ bool simple_frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultSt
 
    if(pParentWnd == NULL)
    {
-      
+
       m_bLayoutEnable = false;
-      
+
    }
-   
+
    output_debug_string("\nm_bLayoutEnable FALSE");
 
    if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, pParentWnd, /*nIDResource*/ 0, pcreate))
@@ -1718,89 +1719,89 @@ void simple_frame_window::pre_translate_message(::message::message * pmessage)
 
 void simple_frame_window::InitialFramePosition(bool bForceRestore)
 {
-   
+
    try
    {
 
-   if(m_bFrameMoveEnable)
-   {
+      if(m_bFrameMoveEnable)
+      {
 
-      if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
-            && (GetParent() == NULL
+         if(Application.handler()->m_varTopicQuery.has_property("wfi_maximize")
+               && (GetParent() == NULL
 #if defined(ANDROID) || defined(METROWIN) || defined(APPLE_IOS)
-                || GetParent() == System.m_possystemwindow->m_pui
+                   || GetParent() == System.m_possystemwindow->m_pui
 #endif
-               ))
-      {
-
-         WfiMaximize();
-
-      }
-      else if(Application.handler()->m_varTopicQuery.has_property("client_only")
-              || Application.handler()->m_varTopicQuery.has_property("full_screen"))
-      {
-
-         if(m_workset.IsAppearanceEnabled())
+                  ))
          {
 
-            WfiFullScreen();
+            WfiMaximize();
+
+         }
+         else if(Application.handler()->m_varTopicQuery.has_property("client_only")
+                 || Application.handler()->m_varTopicQuery.has_property("full_screen"))
+         {
+
+            if(m_workset.IsAppearanceEnabled())
+            {
+
+               WfiFullScreen();
+
+            }
+            else
+            {
+
+               best_monitor(NULL,::null_rect(),true);
+
+            }
 
          }
          else
          {
 
-            best_monitor(NULL,::null_rect(),true);
+
+            WindowDataLoadWindowRect(bForceRestore,true);
+
+            WindowDataEnableSaveWindowRect(true);
 
          }
 
       }
-      else
+
+      ActivateTopParent();
+
+      BringToTop(-1);
+
+      if (m_workset.IsAppearanceEnabled())
       {
 
+         if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
+         {
 
-         WindowDataLoadWindowRect(bForceRestore,true);
+            WfiRestore(false);
 
-         WindowDataEnableSaveWindowRect(true);
+         }
 
       }
 
-   }
+      //on_layout();
 
-   ActivateTopParent();
-
-   BringToTop(-1);
-
-   if (m_workset.IsAppearanceEnabled())
-   {
-
-      if (m_workset.get_appearance() != NULL && m_workset.GetAppearance() == ::user::appearance_iconic)
+      if (m_palphasource != NULL)
       {
 
-         WfiRestore(false);
+         m_palphasource->on_alpha_target_initial_frame_position();
 
       }
 
-   }
-
-   //on_layout();
-
-   if (m_palphasource != NULL)
-   {
-
-      m_palphasource->on_alpha_target_initial_frame_position();
-
-   }
-      
    }
    catch(...)
    {
-      
+
    }
 
    m_bLayoutEnable = true;
-   
+
    output_debug_string("\nm_bLayoutEnable TRUE");
-   
+
    m_bInitialFramePosition = false;
 
 
@@ -3257,12 +3258,12 @@ bool simple_frame_window::create_bars()
 
 bool simple_frame_window::on_create_bars()
 {
-   
+
    if(!m_bDefaultCreateToolbar)
    {
-      
+
       return true;
-      
+
    }
 
    ::file::path path = Application.dir().matter(m_pdocumenttemplate->m_strMatter / "toolbar.xml");

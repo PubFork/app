@@ -217,7 +217,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CUBE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SMALLCODE;CUBE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
@@ -584,7 +584,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CUBE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SMALLCODE;CUBE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include/;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -884,18 +884,13 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="base\install\install_canvas.cpp" />
-    <ClCompile Include="base\message\message_user.cpp" />
     <ClCompile Include="base\node\windows\windows_interaction_impl.cpp" />
     <ClCompile Include="base\node\windows\windows_print_job.cpp" />
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp" />
     <ClCompile Include="base\os\windows\windows_gdi.cpp" />
-    <ClCompile Include="base\os\windows\windows_system_interaction_impl.cpp" />
     <ClCompile Include="base\os\windows\windows_window_buffer.cpp" />
     <ClCompile Include="database\database\database_user_interaction.cpp" />
     <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp" />
-    <ClCompile Include="graphics\graphics_window_buffer.cpp" />
-    <ClCompile Include="graphics\graphics_window_dc.cpp" />
-    <ClCompile Include="graphics\graphics_window_graphics.cpp" />
     <ClCompile Include="user\fontopus\fontopus.cpp" />
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp" />
@@ -926,7 +921,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_control_bar.cpp" />
     <ClCompile Include="user\user\user_control_descriptor.cpp" />
     <ClCompile Include="user\user\user_control_descriptor_set.cpp" />
-    <ClCompile Include="user\user\user_control_event.cpp" />
     <ClCompile Include="user\user\user_document.cpp" />
     <ClCompile Include="user\user\user_form_callback.cpp" />
     <ClCompile Include="user\user\user_form_update_hint.cpp" />
@@ -935,35 +929,17 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClCompile Include="user\user\user_impact.cpp" />
     <ClCompile Include="user\user\user_impact_system.cpp" />
     <ClCompile Include="user\user\user_impact_update_hint.cpp" />
-    <ClCompile Include="user\user\user_interaction.cpp" />
-    <ClCompile Include="user\user\user_interaction_base.cpp" />
-    <ClCompile Include="user\user\user_interaction_child.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
-    <ClCompile Include="user\user\user_menu.cpp" />
-    <ClCompile Include="user\user\user_menu_command.cpp" />
-    <ClCompile Include="user\user\user_menu_item.cpp" />
     <ClCompile Include="user\user\user_message.cpp" />
     <ClCompile Include="user\user\user_message_queue.cpp" />
-    <ClCompile Include="user\user\user_place_holder.cpp" />
-    <ClCompile Include="user\user\user_place_holder_container.cpp" />
     <ClCompile Include="user\user\user_plain_edit.cpp" />
     <ClCompile Include="user\user\user_plain_text_data.cpp" />
     <ClCompile Include="user\user\user_scroll.cpp" />
     <ClCompile Include="user\user\user_scroll_bar.cpp" />
     <ClCompile Include="user\user\user_server.cpp" />
-    <ClCompile Include="user\user\user_style.cpp" />
-    <ClCompile Include="user\user\user_style_base.cpp" />
-    <ClCompile Include="user\user\user_style_composite.cpp" />
-    <ClCompile Include="user\user\user_tooltip.cpp" />
     <ClCompile Include="user\user\user_user.cpp" />
     <ClCompile Include="user\user\user_view_container.cpp" />
     <ClCompile Include="user\user\user_view_creator.cpp" />
     <ClCompile Include="user\user\user_wait_cursor.cpp" />
-    <ClCompile Include="user\user\user_windowing.cpp" />
-    <ClCompile Include="user\user\user_window_map.cpp" />
-    <ClCompile Include="user\user\user_window_util.cpp" />
-    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp" />
     <ClInclude Include="base\install\install_canvas.h" />
     <ClInclude Include="base\message\message_user.h" />
     <ClInclude Include="base\node\ansios\ansios.h">
@@ -1016,7 +992,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="base\os\windows\windows_c.h" />
     <ClInclude Include="base\os\windows\windows_extract_icon.h" />
     <ClInclude Include="base\os\windows\windows_internal.h" />
-    <ClInclude Include="base\os\windows\windows_system_interaction_impl.h" />
+    <ClInclude Include="base\os\windows\aaa_want_to_remove_windows_system_interaction_impl.h" />
     <ClInclude Include="base\os\windows\windows_window_buffer.h" />
     <ClInclude Include="database\database.h" />
     <ClInclude Include="database\database\database.h" />
@@ -1115,7 +1091,6 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="user\user\user_window_map.h" />
     <ClInclude Include="user\user\user_window_util.h" />
     <ClInclude Include="user\user_prelude.h" />
-    <ClInclude Include="user\wndfrm\frame\wndfrm_frame_updowninterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\base\base.cpp" />

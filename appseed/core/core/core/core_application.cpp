@@ -7,9 +7,9 @@
 #include <Wtsapi32.h>
 #include <Userenv.h>
 #endif
-#ifdef WINDOWSEX
-#include "base/os/windows/windows_system_interaction_impl.h"
-#endif
+//#ifdef WINDOWSEX
+//#include "base/os/windows/windows_system_interaction_impl.h"
+//#endif
 
 #ifdef LINUX
 

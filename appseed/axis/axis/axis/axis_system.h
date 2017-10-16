@@ -14,25 +14,13 @@ namespace axis
 
          //::url::department                           m_urldepartment;
 
-         ::net::email_department                     m_emaildepartment;
+         //::net::email_department                     m_emaildepartment;
 
-         string_map < int_to_string >                 m_mapEnumToName;
-         string_map < string_to_int >                 m_mapNameToEnum;
-
-
-
-         bool                                         m_bSystemSynchronizedCursor;
-         bool                                         m_bSystemSynchronizedScreen;
+      //    string_map < int_to_string >                 m_mapEnumToName;
+      //    string_map < string_to_int >                 m_mapNameToEnum;
 
 
-#ifdef WINDOWSEX
 
-
-         raw_array < MONITORINFO >                    m_monitorinfoa;
-         raw_array < HMONITOR >                       m_hmonitora;
-         raw_array < MONITORINFO >                    m_monitorinfoaDesk;
-
-#endif
 
          system(::aura::application * papp);
          virtual ~system();
@@ -51,7 +39,6 @@ namespace axis
          //::url::department                           & url()     { return m_urldepartment; }
 
 
-         ::net::email_department               & email();
 
 
 
@@ -132,30 +119,9 @@ namespace axis
 
 
 
-         virtual ::user::document * place_hold(::user::interaction * pui);
+         
 
          virtual ::aura::session * query_session(index iEdge) override;
-
-
-
-         void enum_display_monitors();
-
-#if defined(WINDOWS)
-         static_function BOOL CALLBACK monitor_enum_proc(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
-         void monitor_enum(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor);
-#endif
-
-         virtual index get_main_monitor(LPRECT lprect = NULL);
-         virtual ::count get_monitor_count();
-         virtual bool  get_monitor_rect(index iMonitor,LPRECT lprect);
-         virtual ::count get_desk_monitor_count();
-         virtual bool  get_desk_monitor_rect(index iMonitor,LPRECT lprect);
-
-         virtual index get_main_wkspace(LPRECT lprect = NULL);
-         virtual ::count get_wkspace_count();
-         virtual bool  get_wkspace_rect(index iWkspace,LPRECT lprect);
-         virtual ::count get_desk_wkspace_count();
-         virtual bool  get_desk_wkspace_rect(index iWkspace,LPRECT lprect);
 
 
          /*
@@ -169,8 +135,6 @@ namespace axis
 
          //virtual string dir_appmatter_locator(::aura::application * papp);
 
-         virtual ::user::interaction_impl * impl_from_handle(void * posdata);
-         virtual ::user::interaction * ui_from_handle(void * posdata);
 
          virtual void hist_hist(const char * psz);
 

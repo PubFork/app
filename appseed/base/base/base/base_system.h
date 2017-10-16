@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace base
@@ -11,70 +11,16 @@ namespace base
    {
       public:
 
-#if defined METROWIN && defined(__cplusplus_winrt)
-
-         class os_system_window
-         {
-            public:
-
-               bool                                         m_bWindowSizeChange;
-
-               sp(::user::interaction)                      m_pui;
-
-               ::axis::system_window ^                      m_pwindow;
-
-               os_system_window();
-
-         };
-
-#elif defined(APPLE_IOS)
-
-         class os_system_window
-         {
-            public:
-
-               sp(::user::interaction)                      m_pui;
-
-         };
-
-#elif defined(VSNORD)
-
-         class os_system_window
-         {
-            public:
-
-               sp(::user::interaction)                      m_pui;
-
-               oswindow                                     m_oswindow;
-
-         };
-
-#else
-
-         class os_system_window;
-
-#endif
-
-#ifdef WINDOWSEX
-
-         ::base::system_interaction_impl *      m_psystemwindow;
-
-#endif
-
-         os_system_window *                     m_possystemwindow;
-
 
          system(::aura::application * papp);
          virtual ~system();
 
-         virtual bool defer_create_system_frame_window();
+         //virtual bool defer_create_system_frame_window();
 
          virtual bool process_initialize() override;
          virtual int32_t exit_application() override;
 
          virtual ::aura::session * on_create_session() override;
-
-         virtual index get_ui_wkspace(::user::interaction * pui);
 
          virtual void set_active_guie(::user::interaction * pui);
          virtual void set_focus_guie(::user::interaction * pui);
@@ -94,8 +40,8 @@ namespace base
 
          bool get_wkspace_rect(index iWkspace,LPRECT lprect) override;
 
-         virtual ::user::interaction_impl * impl_from_handle(void * pdata) override;
-         virtual ::user::interaction * ui_from_handle(void * pdata) override;
+         //virtual ::user::interaction_impl * impl_from_handle(void * pdata) override;
+         //virtual ::user::interaction * ui_from_handle(void * pdata) override;
 
          virtual void on_setting_changed(::aura::e_setting) override;
 

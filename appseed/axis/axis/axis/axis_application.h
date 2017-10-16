@@ -253,13 +253,11 @@ namespace axis
 
 #endif
 
-         virtual bool BaseOnControlEvent(::user::control_event * pevent);
-
          virtual void on_update_view(::user::impact * pview, ::user::impact * pviewSender, LPARAM lHint, object* pHint);
 
-         virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
-         virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
-
+         virtual bool BaseOnControlEvent(::user::control_event * pevent);
+         
+               
 
          virtual bool on_open_document(::user::document * pdocument, var varFile);
          virtual bool on_save_document(::user::document * pdocument, var varFile);

@@ -1,6 +1,6 @@
 #include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
-#include "aura/user/colorertake5/colorertake5.h"
+//#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace simple_ui
@@ -44,7 +44,7 @@ namespace simple_ui
 
 //      SCAST_PTR(::message::mouse,pmouse,pobj);
 
-  //    keyboard_set_focus();
+      //    keyboard_set_focus();
 
 //      pmouse->m_bRet = true;
       pobj->previous();

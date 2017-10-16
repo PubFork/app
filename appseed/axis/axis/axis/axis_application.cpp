@@ -3792,20 +3792,6 @@ namespace axis
    }
 
 
-   bool application::keyboard_focus_is_focusable(::user::elemental * pue)
-   {
-
-      return false;
-
-   }
-
-
-   bool application::keyboard_focus_OnSetFocus(::user::elemental * pue)
-   {
-
-      return true;
-
-   }
 
 
    string application::fontopus_get_cred(::aura::application * papp,const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive)

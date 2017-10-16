@@ -75,9 +75,6 @@ CLASS_DECL_AXIS bool vfxResolveShortcut(string & strTarget,const char * pszSourc
 
 
 
-CLASS_DECL_AXIS HMONITOR GetUiMonitorHandle(HWND hwnd);
-CLASS_DECL_AXIS HMONITOR GetPrimaryMonitorHandle();
-CLASS_DECL_AXIS bool GetPrimaryMonitorRect(LPRECT lprect);
 CLASS_DECL_AXIS WSADATA get_wsadata();
 
 #ifdef HOTPLUGIN_SUBSYSTEM

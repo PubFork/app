@@ -23,7 +23,7 @@ namespace user
 
       namespace frame
       {
-         
+
          class WorkSetClientInterface;
 
          class WorkSetUpDownInterface;
@@ -59,7 +59,6 @@ namespace user
 
 #endif
 
-   CLASS_DECL_BASE bool is_docking_appearance(::user::e_appearance eappearance);
 
 
 } // namespace user
@@ -98,8 +97,6 @@ namespace visual
 } // namespace visual
 
 
-
-using window_sp = sp(::user::interaction_impl);
 
 
 namespace plane
@@ -273,7 +270,7 @@ CLASS_DECL_BASE bool __node_base_pos_init();
 CLASS_DECL_BASE bool __node_base_pre_term();
 CLASS_DECL_BASE bool __node_base_pos_term();
 
-#include "base/graphics/graphics.h"
+//#include "base/graphics/graphics.h"
 
 
 #if defined(LINUX)

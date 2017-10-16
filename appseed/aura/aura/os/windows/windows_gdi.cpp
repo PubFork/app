@@ -53,7 +53,7 @@ HFONT wingdi_CreatePointFontIndirect(LOGFONTW* lpLogFont, HDC hdc)
    ::DPtoLP(hdc, &ptOrg, 1);
    logFont.lfHeight = -abs(pt.y - ptOrg.y);
 
-   logFont.lfQuality = ANTIALIASED_QUALITY;
+   logFont.lfQuality = CLEARTYPE_NATURAL_QUALITY;
 
    HFONT hfont = ::CreateFontIndirectW(&logFont);
 

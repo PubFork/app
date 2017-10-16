@@ -97,6 +97,8 @@ inline byte clip_zero(int i)
 
 #include "dib_console.h"
 
+#include "graphics_window.h"
+
 //#include "dib_console.h"
 
 

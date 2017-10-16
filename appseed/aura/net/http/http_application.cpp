@@ -26,14 +26,14 @@ namespace http
          return set;
 
       if ((bool)set["raw_http"] || (bool)set["disable_ca2_sessid"]
-         || ::str::find_ci("/matter.ca2.cc/", pszUrl) >= 0 || ::str::find_ci("-matter.ca2.cc/", pszUrl) >= 0
-         || ::str::find_ci("/get_fontopus_login",pszUrl) >= 0
-         || ::str::find_ci("sessid=noauth", pszUrl) >= 0
-         || ::str::find_ci("/matter/",System.url().get_script(pszUrl)) == 0
-         || set["user"].cast < ::fontopus::user >() != NULL
-         || 
-         !(::str::find_wwci("ca2",pszUrl) >= 0
-          || ::str::find_wwci("veriwell",pszUrl) >= 0))
+            || ::str::find_ci("/matter.ca2.cc/", pszUrl) >= 0 || ::str::find_ci("-matter.ca2.cc/", pszUrl) >= 0
+            || ::str::find_ci("/get_fontopus_login",pszUrl) >= 0
+            || ::str::find_ci("sessid=noauth", pszUrl) >= 0
+            || ::str::find_ci("/matter/",System.url().get_script(pszUrl)) == 0
+            || set["user"].cast < ::fontopus::user >() != NULL
+            ||
+            !(::str::find_wwci("ca2",pszUrl) >= 0
+              || ::str::find_wwci("veriwell",pszUrl) >= 0))
          return set;
 
       string strWorkUrl;
@@ -51,6 +51,13 @@ namespace http
       {
          if (Session.fontopus()->m_puser != NULL)
             set["user"] = get_app()->m_paurasession->fontopus()->get_user(true,pszUrl);
+      }
+      else if (get_app() == NULL ||
+               get_app()->m_paurasession == NULL
+               || get_app()->m_paurasession->fontopus() == NULL)
+      {
+
+         return set;
       }
       else
       {
@@ -135,12 +142,12 @@ namespace http
 
    }
 
-  
+
    string application::api_get(const char * pszUrl, property_set & set)
    {
 
       ::file::path url("https://api.ca2.cc/");
-      
+
       url /= pszUrl;
 
       return get(url, set);
@@ -271,7 +278,7 @@ namespace http
 
    bool application::request(const char * pszRequest, const char * pszUrl, property_set & set)
    {
-      
+
       return System.http().request(pszRequest, pszUrl, process_set(set, pszUrl));
 
    }
@@ -348,7 +355,7 @@ namespace http
       string strFontopusServer;
 
       if(atoi(System.url().get_param(pszUrl, "authnone")) == 1
-         || System.url().get_param(pszUrl,"sessid").compare_ci("noauth") == 0)
+            || System.url().get_param(pszUrl,"sessid").compare_ci("noauth") == 0)
       {
 
          strFontopusServer = pszUrl;

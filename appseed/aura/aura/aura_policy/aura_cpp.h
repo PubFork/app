@@ -1112,7 +1112,7 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError);
 #include "aura/aura/message/message_base.h"
 #include "aura/aura/message/message_timer.h"
 
-#include "aura/user/user/user_const.h"
+//#include "aura/user/user/user_const.h"
 
 #include "aura/user/user/user_command.h"
 //#include "aura/aura/aura/aura_::user::command.h"
@@ -1289,20 +1289,6 @@ CLASS_DECL_AURA string get_exe_path();
 #include "aura/user/user/user_interactive.h"
 
 
-//#include "aura/aura/aura/aura_application_interface.h"
-#include "aura/aura/aura/aura_application.h"
-#include "aura/aura/aura/aura_application_ptra.h"
-
-
-#include "aura/aura/aura/aura_gudo_application.inl"
-
-
-#include "aura/aura/aura/aura_application_message.h"
-
-#include "aura/aura/fontopus/fontopus.h"
-
-#include "aura/aura/aura/aura_session.h"
-
 
 
 #include "aura/aura/exception/exception_engine.h"
@@ -1386,6 +1372,28 @@ typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 #include "aura/primitive/primitive_color.h"
 
 #include "aura/graphics/graphics.h"
+
+#include "aura/user/user/user.h"
+
+//#include "aura/aura/aura/aura_application_interface.h"
+#include "aura/aura/aura/aura_application.h"
+#include "aura/aura/aura/aura_application_ptra.h"
+
+
+#include "aura/aura/aura/aura_gudo_application.inl"
+
+
+#include "aura/aura/aura/aura_application_message.h"
+
+#include "aura/aura/fontopus/fontopus.h"
+
+
+
+
+#include "aura/aura/aura/aura_session.h"
+
+#include "aura/net/net_email_department.h"
+
 
 #include "aura/aura/aura/aura_system.h"
 
@@ -1920,7 +1928,6 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/net/net.h"
 
 
-#include "aura/net/net_email_department.h"
 
 
 #include "aura/aura/scripting/javascript/javascript.h"
@@ -1942,7 +1949,6 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 
 #include "aura/aura/aura/aura_serial.h"
-
 
 
 
@@ -1976,6 +1982,9 @@ namespace user
 #include "aura/net/net.inl"
 
 #include "aura/graphics/visual/visual.inl"
+
+
+
 
 
 

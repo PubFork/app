@@ -1060,6 +1060,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="user\user\_user.cpp" />
     <ClCompile Include="user\_user.cpp" />
     <ClInclude Include="app_install_launcher.h" />
     <ClInclude Include="axis\axis\axis.h" />

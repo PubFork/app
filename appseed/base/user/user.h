@@ -15,7 +15,7 @@
 
 
 //#include "axis/base/base_print_job.h"
-#include "base/user/user/user_control_event.h"
+//#include "base/user/user/user_control_event.h"
 
 #include "base/user/user/user_control.h"
 #include "base/user/user/user_scroll_bar.h"
@@ -38,8 +38,8 @@
 
 
 
-#include "base/user/user/user_place_holder.h"
-#include "base/user/user/user_place_holder_container.h"
+//#include "base/user/user/user_place_holder.h"
+//#include "base/user/user/user_place_holder_container.h"
 #include "base/user/user/user_view_creator_data.h"
 #include "base/user/user/user_view_container.h"
 #include "base/user/user/user_view_creator.h"
@@ -78,16 +78,16 @@
 #include "base/user/user/user.h"
 
 
-#include "base/user/wndfrm/frame/wndfrm_frame_updowninterface.h"
+//#include "base/user/wndfrm/frame/wndfrm_frame_updowninterface.h"
 
 namespace user
 {
-   
+
    typedef show < control > scroll_view;
-   
+
    typedef show < plain_edit > plain_edit_view;
-   
-   
+
+
 } // namespace user
 
 

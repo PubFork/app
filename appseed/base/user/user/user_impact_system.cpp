@@ -142,7 +142,7 @@ namespace user
          ASSERT(FALSE);
          return NULL;
       }
-      
+
       ::aura::application * papp = pcreate->get_app() != NULL ? pcreate->get_app() : get_app();
 
       sp(::user::document) pdocument = App(papp).alloc(m_typeinfoDocument);
@@ -167,10 +167,10 @@ namespace user
       // create a frame wired to the specified ::user::document
 
       ASSERT(m_strMatter.get_length() > 0); // must have a resource ID to load from
-      
+
       ::user::create usercreate;
 
-      SRESTORE(pcreate->m_pusercreate.m_p, &usercreate);
+      SRESTORE(pcreate->m_pusercreate, &usercreate);
 
       usercreate.m_puiCurrentFrame = pOther;
 
@@ -184,7 +184,7 @@ namespace user
       }
       else
       {
-      
+
          usercreate.m_typeinfoNewView = m_typeinfoView;
 
       }
@@ -212,7 +212,7 @@ namespace user
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: Dynamic create of frame %hs failed.\n", m_typeinfoFrame->name());
 
          string strMessage;
-         
+
          strMessage.Format("Warning: Dynamic create of frame %hs failed.\n\n(Does allocation was implemented)?",m_typeinfoFrame->name());
 
          Application.simple_message_box(NULL, strMessage);
@@ -244,19 +244,19 @@ namespace user
                              WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,   // default frame styles
                              dynamic_cast < ::user::interaction * > (pcreate->m_puiParent), pcreate))
       {
-         
+
          TRACE(::aura::trace::category_AppMsg, 0, "Warning: impact_system couldn't create a frame.\n");
-         
+
          // frame will be deleted in PostNcDestroy cleanup
-         
+
          return NULL;
-         
+
       }
 
       return pframe;
-      
+
    }
-   
+
 
    void impact_system::InitialUpdateFrame(sp(::user::frame_window) pFrame, ::user::document * pdocument,
                                           bool bMakeVisible)

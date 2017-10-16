@@ -32,18 +32,10 @@ namespace user
 
 
       System.factory().creatable_small < ::user::document >();
-     // System.factory().creatable_small < ::user::application_as_proxy_document >();
+      // System.factory().creatable_small < ::user::application_as_proxy_document >();
       System.factory().creatable_small < ::user::message_queue >();
 
 
-      if(m_pauraapp->is_session())
-      {
-         m_pwindowmap = canew(class ::user::window_map(get_app()));
-      }
-      else
-      {
-         m_pwindowmap = Session.user()->m_pwindowmap;
-      }
 
       if(m_pauraapp->is_system())
       {
@@ -135,7 +127,7 @@ namespace user
 
    bool user::finalize()
    {
-      
+
 
       //m_puserstyle.release();
 //      ::aura::del(m_pufeschema);
@@ -190,12 +182,7 @@ namespace user
 
    }
 
-   class window_map & user::window_map()
-   {
 
-      return *m_pwindowmap;
-
-   }
 
 
    void user::SendMessageToWindows(UINT message,WPARAM wparam,LPARAM lparam)
@@ -294,20 +281,20 @@ namespace user
 
    }
 
-   
+
 //   sp(::user::impact) user::get_view()
 //   {
-//   
+//
 //      return NULL;
-//      
+//
 //   }
 
-   
+
 //   ::user::style * user::get_user_style()
 //   {
-//      
+//
 //      retu
-//      
+//
 //   }
 
 } //namespace user

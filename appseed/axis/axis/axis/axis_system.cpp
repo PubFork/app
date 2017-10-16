@@ -14,11 +14,11 @@ namespace axis
 
 
    system::system(::aura::application * papp):
-      aura::system(this, NULL),
+      aura::system(this, NULL)//,
 //      m_httpsystem(this),
 //      m_visual(this),
 
-      m_emaildepartment(this)
+      //m_emaildepartment(this)
    {
 
       m_paxissystem = this;
@@ -527,12 +527,6 @@ namespace axis
    }
 
 
-   ::net::email_department & system::email()
-   {
-
-      return m_emaildepartment;
-
-   }
 
 
    void system::on_request(::create * pcreate)
@@ -583,18 +577,18 @@ namespace axis
 
 
 
-   ::user::document * system::place_hold(::user::interaction * pui)
-   {
+   //::user::document * system::place_hold(::user::interaction * pui)
+   //{
 
 
-      //if(m_pcubeInterface != NULL)
-      //{
-      // return m_pcubeInterface->hold(pui);
-      //}
+   //   //if(m_pcubeInterface != NULL)
+   //   //{
+   //   // return m_pcubeInterface->hold(pui);
+   //   //}
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
 
    ::aura::session * system::query_session(index iEdge)
@@ -604,239 +598,6 @@ namespace axis
 
    }
 
-
-
-
-   index system::get_main_monitor(LPRECT lprect)
-   {
-
-      index iMainMonitor = 0;
-
-#ifdef WINDOWSEX
-
-      HMONITOR hmonitorPrimary = GetPrimaryMonitorHandle();
-
-      for(index iMonitor = 0; iMonitor < get_monitor_count(); iMonitor++)
-      {
-
-         if(m_hmonitora[iMonitor] == hmonitorPrimary)
-         {
-
-            iMainMonitor = iMonitor;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      if(lprect != NULL)
-      {
-
-         get_monitor_rect(iMainMonitor,lprect);
-
-      }
-
-      return iMainMonitor;
-
-   }
-
-
-   ::count system::get_monitor_count()
-   {
-
-#ifdef WINDOWSEX
-
-      return m_monitorinfoa.get_count();
-
-#elif defined(MACOS)
-
-      return GetScreenCount();
-
-#else
-
-      return 1;
-
-#endif
-
-   }
-
-
-   bool system::get_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-#ifdef WINDOWSEX
-
-      if(iMonitor < 0 || iMonitor >= get_monitor_count())
-         return false;
-
-      *lprect = m_monitorinfoa[iMonitor].rcMonitor;
-
-#elif defined(METROWIN)
-
-
-      return false;
-
-
-#elif defined(LINUX)
-
-
-      return false;
-
-
-#elif defined(APPLEOS)
-
-      if(iMonitor < 0 || iMonitor >= get_monitor_count())
-         return false;
-
-      GetScreenRect(lprect,iMonitor);
-
-#else
-
-      lprect->left = 0;
-      lprect->top = 0;
-      lprect->right = m_pdataexchange->m_iScreenWidth;
-      lprect->bottom = m_pdataexchange->m_iScreenHeight;
-
-#endif
-
-      return true;
-
-   }
-
-
-   ::count system::get_desk_monitor_count()
-   {
-
-      return get_monitor_count();
-
-   }
-
-
-   bool system::get_desk_monitor_rect(index iMonitor,LPRECT lprect)
-   {
-
-      return get_monitor_rect(iMonitor,lprect);
-
-   }
-
-
-
-
-   index system::get_main_wkspace(LPRECT lprect)
-   {
-
-      index iMainWkspace = 0;
-
-#ifdef WINDOWSEX
-
-      HMONITOR hwkspacePrimary = GetPrimaryMonitorHandle();
-
-      for(index iWkspace = 0; iWkspace < get_wkspace_count(); iWkspace++)
-      {
-
-         if(m_hmonitora[iWkspace] == hwkspacePrimary)
-         {
-
-            iMainWkspace = iWkspace;
-
-            break;
-
-         }
-
-      }
-
-
-#endif
-
-      if(lprect != NULL)
-      {
-
-         get_wkspace_rect(iMainWkspace,lprect);
-
-      }
-
-      return iMainWkspace;
-
-   }
-
-
-   ::count system::get_wkspace_count()
-   {
-
-#ifdef WINDOWSEX
-
-      return m_monitorinfoa.get_count();
-
-#else
-
-      return get_monitor_count();
-
-#endif
-
-   }
-
-
-   bool system::get_wkspace_rect(index iWkspace,LPRECT lprect)
-   {
-
-#ifdef WINDOWSEX
-
-      if(iWkspace < 0 || iWkspace >= get_wkspace_count())
-         return false;
-
-      *lprect = m_monitorinfoa[iWkspace].rcWork;
-
-#elif defined(METROWIN)
-
-      return get_monitor_rect(iWkspace,lprect);
-
-//#elif defined(LINUX)
-//
-//return false;
-//
-#elif defined(APPLEOS)
-
-      if(iWkspace < 0 || iWkspace >= get_wkspace_count())
-         return false;
-
-      GetWkspaceRect(lprect,iWkspace);
-
-      //      lprect->top += ::mac::get_system_main_menu_bar_height();
-      //    lprect->bottom -= ::mac::get_system_dock_height();
-
-#else
-
-      //throw todo(get_app());
-
-      //::GetWindowRect(::GetDesktopWindow(),lprect);
-
-      get_monitor_rect(iWkspace, lprect);
-
-#endif
-
-      return true;
-
-   }
-
-
-   ::count system::get_desk_wkspace_count()
-   {
-
-      return get_wkspace_count();
-
-   }
-
-
-   bool system::get_desk_wkspace_rect(index iWkspace,LPRECT lprect)
-   {
-
-      return get_wkspace_rect(iWkspace,lprect);
-
-   }
 
 
 
@@ -892,19 +653,19 @@ namespace axis
 
    //}
 
-   ::user::interaction_impl * system::impl_from_handle(void * posdata)
-   {
+   //::user::interaction_impl * system::impl_from_handle(void * posdata)
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
-   ::user::interaction * system::ui_from_handle(void * posdata)
-   {
+   //::user::interaction * system::ui_from_handle(void * posdata)
+   //{
 
-      return NULL;
+   //   return NULL;
 
-   }
+   //}
 
 
    string system::url_encode(const string & str)
@@ -915,66 +676,6 @@ namespace axis
    }
 
 
-   void system::enum_display_monitors()
-   {
-
-#ifdef WINDOWSEX
-
-      m_monitorinfoa.remove_all();
-
-      ::EnumDisplayMonitors(NULL,NULL,&system::monitor_enum_proc,(LPARAM)(dynamic_cast < ::axis::system * > (this)));
-
-#else
-
-      // todo
-      //      m_monitorinfoa.remove_all();
-
-
-#endif
-
-   }
-
-
-
-#ifdef WINDOWSEX
-   BOOL CALLBACK system::monitor_enum_proc(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData)
-   {
-
-      ::axis::system * psystem = (::axis::system *) dwData;
-
-      psystem->monitor_enum(hmonitor,hdcMonitor,lprcMonitor);
-
-      return TRUE; // to enumerate all
-
-   }
-
-   void system::monitor_enum(HMONITOR hmonitor,HDC hdcMonitor,LPRECT lprcMonitor)
-   {
-
-      UNREFERENCED_PARAMETER(hdcMonitor);
-      UNREFERENCED_PARAMETER(lprcMonitor);
-
-      m_monitorinfoa.allocate(m_monitorinfoa.get_size() + 1);
-
-      ZERO(m_monitorinfoa.last());
-
-      m_hmonitora.add(hmonitor);
-
-      m_monitorinfoa.last().cbSize = sizeof(MONITORINFO);
-
-      ::GetMonitorInfo(hmonitor,&m_monitorinfoa.last());
-
-      MONITORINFO mi = m_monitorinfoa.last();
-
-      TRACE("session::monitor_enum\n");
-      TRACE("upper_bound %d\n",m_monitorinfoa.get_upper_bound());
-      TRACE("rcMonitor(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcMonitor.left,mi.rcMonitor.top,mi.rcMonitor.right,mi.rcMonitor.bottom);
-      TRACE("rcWork(left, top, right, bottom) %d, %d, %d, %d\n",mi.rcWork.left,mi.rcWork.top,mi.rcWork.right,mi.rcWork.bottom);
-
-   }
-
-
-#endif
 
 } // namespace axis
 

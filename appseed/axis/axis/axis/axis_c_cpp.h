@@ -206,9 +206,9 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 
 
 
-#include "axis/user/user/user_enum.h"
+//#include "axis/user/user/user_enum.h"
 
-#include "axis/user/user/user_key_enum.h"
+//#include "axis/user/user/user_key_enum.h"
 
 #include "axis/user/user/user_keyboard_layout.h"
 
@@ -287,14 +287,14 @@ CLASS_DECL_AXIS bool __node_axis_pos_term();
 namespace user
 {
 
-   inline oswindow primitive::get_safe_handle() const
-   {
-      if (((byte *)this) < (byte *)(((byte *)NULL) + (16 * 1024))) // consider invalid
-      {
-         return NULL;
-      }
-      return get_handle();
-   }
+   //inline oswindow primitive::get_safe_handle() const
+   //{
+   //   if (((byte *)this) < (byte *)(((byte *)NULL) + (16 * 1024))) // consider invalid
+   //   {
+   //      return NULL;
+   //   }
+   //   return get_handle();
+   //}
 
 
 

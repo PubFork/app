@@ -1,10 +1,10 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 #include "base/user/user.h"
 #include "aura/node/windows/windows.h"
 #include "windows.h"
 #include <windows.h>
 #include <shobjidl.h>
-#include "base/os/windows/windows_system_interaction_impl.h"
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
 // const GUID CLSID_TaskbarList = { 0x56FDF344, 0xFD6D, 0x11D0,{ 0x95, 0x8A, 0x00, 0x60, 0x97, 0xC9, 0xA0, 0x90 } };
@@ -2475,7 +2475,7 @@ namespace windows
       Default();
 
       if (m_pui->is_message_only_window()
-            || dynamic_cast <::base::system_interaction_impl *>(m_pui) != NULL)
+            || dynamic_cast <::user::system_interaction_impl *>(m_pui) != NULL)
       {
 
          TRACE("good : opt out!");

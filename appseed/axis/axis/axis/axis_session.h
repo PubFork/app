@@ -19,184 +19,130 @@ namespace axis
       virtual public ::aura::session,
       virtual public ::axis::application
    {
-   public:
+      public:
 
 
-      ::map < ::user::e_key,::user::e_key,bool,bool > *         m_pmapKeyPressed;
+         ::user::keyboard *                              m_pkeyboard;
 
 
 
+         ::userpresence::userpresence *                           m_puserpresence;
+         sp(::ftpfs)                                              m_pftpfs;
+         sp(::fs::remote_native)                                  m_prfs;
+         sp(::fs::fs)                                             m_spfs;
+         sp(class ::fs::data)                                     m_spfsdata;
 
 
-      ::user::elemental *                             m_pkeyboardfocus;
-      ::user::keyboard *                              m_pkeyboard;
+         //::sockets::sockets *                                     m_psockets;
+         bool                                                     m_bIfs;
 
 
 
-      ::userpresence::userpresence *                           m_puserpresence;
-      sp(::ftpfs)                                              m_pftpfs;
-      sp(::fs::remote_native)                                  m_prfs;
-      sp(::fs::fs)                                             m_spfs;
-      sp(class ::fs::data)                                     m_spfsdata;
+         //::user::style_simple_impl                               m_schemasimple;
 
+         ::user::interaction *                                    m_puiMouseMoveCapture;
+         ::user::interaction *                                    m_puiLastLButtonDown;
 
-      //::sockets::sockets *                                     m_psockets;
-      bool                                                     m_bIfs;
-      
+         bool                                                     m_bMatterFromHttpCache;
 
 
-      //::user::style_simple_impl                               m_schemasimple;
 
-      ::user::interaction *                                    m_puiMouseMoveCapture;
-      ::user::interaction *                                    m_puiLastLButtonDown;
 
-      bool                                                     m_bMatterFromHttpCache;
 
-      bool                                                     m_bSystemSynchronizedCursor;
-      point                                                    m_ptCursor;
-      bool                                                     m_bSystemSynchronizedScreen;
-      rect_array                                               m_rectaMonitor;
-      rect_array                                               m_rectaWkspace;
-      index                                                    m_iMainMonitor;
-      index                                                    m_iMainWkspace;
 
+         DWORD                                                    m_dwLongPhRESSingTime;
 
 
 
-      bool                                                     m_bDrawCursor;
 
+         session(::aura::application * papp);
+         virtual ~session_parent;
 
-      ::user::copydesk *                                       m_pcopydesk;
+         inline ::userpresence::userpresence & userpresence() { return *m_puserpresence; }
 
-      DWORD                                                    m_dwLongPhRESSingTime;
+         //application_ptra & appptra();
 
+         virtual bool is_session() override;
 
 
+         void construct(::aura::application * papp, int iPhase) override;
 
-      session(::aura::application * papp);
-      virtual ~session_parent;
+         virtual bool process_initialize() override;
 
-      inline ::userpresence::userpresence & userpresence() { return *m_puserpresence; }
+         virtual bool initialize1() override;
 
-      //application_ptra & appptra();
+         virtual bool initialize2() override;
 
-      virtual bool is_session() override;
+         virtual bool initialize_application() override;
 
+         virtual bool initialize() override;
 
-      void construct(::aura::application * papp, int iPhase) override;
+         virtual bool finalize() override;
 
-      virtual bool process_initialize() override;
+         virtual int32_t exit_application() override;
 
-      virtual bool initialize1() override;
 
-      virtual bool initialize2() override;
+         inline sp(class ::fs::data)               fs()           { return m_spfsdata; }
+         //inline ::sockets::sockets &               sockets()      { return *m_psockets; }
 
-      virtual bool initialize_application() override;
 
-      virtual bool initialize() override;
+         virtual bool  get_window_minimum_size(LPSIZE lpsize) override;
 
-      virtual bool finalize() override;
 
-      virtual int32_t exit_application() override;
+         //virtual void  get_cursor_pos(LPPOINT lppoint);
 
 
-      inline sp(class ::fs::data)               fs()           { return m_spfsdata; }
-      //inline ::sockets::sockets &               sockets()      { return *m_psockets; }
+         virtual void on_request(::create * pcreate) override;
 
 
-      virtual bool  get_window_minimum_size(LPSIZE lpsize) override;
+         //virtual string matter_as_string(const char * pszMatter,const char * pszMatter2);
+         //virtual string dir().matter(const char * pszMatter,const char * pszMatter2);
 
+         //virtual bool is_inside_time_dir(const char * pszPath);
+         //virtual bool file_is_read_only(const char * pszPath);
 
-      //virtual void  get_cursor_pos(LPPOINT lppoint);
+         // Long PhRESSing time
+         // time in milliseconds that a pressing is considered a double click
+         virtual DWORD get_Long_PhRESSing_time();
 
+         virtual void defer_initialize_user_presence() override;
 
-      virtual void on_request(::create * pcreate) override;
-      
 
-      //virtual string matter_as_string(const char * pszMatter,const char * pszMatter2);
-      //virtual string dir().matter(const char * pszMatter,const char * pszMatter2);
+         virtual string fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive = NULL) override;
+         //virtual bool is_session();
 
-      //virtual bool is_inside_time_dir(const char * pszPath);
-      //virtual bool file_is_read_only(const char * pszPath);
 
-      // Long PhRESSing time
-      // time in milliseconds that a pressing is considered a double click
-      virtual DWORD get_Long_PhRESSing_time();
+         //void construct(::aura::application * papp,int iPhase);
 
-      virtual void defer_initialize_user_presence() override;
+         //virtual bool process_initialize();
 
+         //virtual bool initialize1();
 
-      virtual string fontopus_get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive, ::user::interactive * pinteractive = NULL) override;
-      //virtual bool is_session();
+         /*virtual bool initialize2();*/
 
+         //virtual bool initialize_application() override;
 
-      //void construct(::aura::application * papp,int iPhase);
+         //virtual bool initialize();
 
-      //virtual bool process_initialize();
+         //virtual bool finalize();
 
-      //virtual bool initialize1();
+         /*virtual int32_t exit_instance();*/
 
-      /*virtual bool initialize2();*/
 
-      //virtual bool initialize_application() override;
 
-      //virtual bool initialize();
 
-      //virtual bool finalize();
 
-      /*virtual int32_t exit_instance();*/
+         //virtual bool get_auth(const string & pszForm,string & strUsername,string & strPassword);
 
 
-      ::user::copydesk &                           copydesk();
+         // virtual bool on_create_frame_window();
 
-
-
-      //virtual bool get_auth(const string & pszForm,string & strUsername,string & strPassword);
-
-
-      virtual bool on_create_frame_window();
-
-
-
-      virtual COLORREF get_default_color(uint64_t ui) override;
-
-
-
-
-
-
-      virtual index get_main_monitor(LPRECT lprect = NULL);
-      virtual bool set_main_monitor(index iMonitor);
-      virtual ::count get_monitor_count();
-      virtual bool  get_monitor_rect(index iMonitor,LPRECT lprect);
-
-      virtual index get_main_wkspace(LPRECT lprect = NULL);
-      virtual bool set_main_wkspace(index iWkspace);
-      virtual ::count get_wkspace_count();
-      virtual bool  get_wkspace_rect(index iWkspace,LPRECT lprect);
-
-      virtual bool wkspace_to_monitor(LPRECT lprect,index iMonitor,index iWkspace);
-      virtual bool monitor_to_wkspace(LPRECT lprect,index iWkspace,index iMonitor);
-
-      virtual bool wkspace_to_monitor(LPRECT lprect);
-      virtual bool monitor_to_wkspace(LPRECT lprect);
-
-      virtual ::count get_desk_monitor_count();
-      virtual bool  get_desk_monitor_rect(index iMonitor,LPRECT lprect);
-
-      virtual void  get_monitor(rect_array & rectaMonitor,rect_array & rectaIntersect,const RECT & rect);
-
-      virtual index get_zoneing(LPRECT lprect,const RECT & rect,::user::e_appearance eappearance);
-      virtual index get_best_zoneing(::user::e_appearance * peappearance,LPRECT lprect,const RECT & rect);
-      virtual index get_best_monitor(LPRECT lprect,const RECT & rect);
-      virtual index get_best_wkspace(LPRECT lprect,const RECT & rect);
-      virtual index get_good_iconify(LPRECT lprect,const RECT & rect);
 
 
 //      virtual bool  get_window_minimum_size(LPSIZE lpsize);
 
 
-      virtual void  get_cursor_pos(LPPOINT lppoint);
+         //virtual void  get_cursor_pos(LPPOINT lppoint);
 
 
 
@@ -207,36 +153,25 @@ namespace axis
 
 
 
-      //virtual bool is_licensed(const char * pszId,bool bInteractive = true);
+         //virtual bool is_licensed(const char * pszId,bool bInteractive = true);
 
-      //virtual void defer_initialize_user_presence();
+         //virtual void defer_initialize_user_presence();
 
-      //virtual string get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive);
+         //virtual string get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive);
 
-      //virtual void on_request(::create * pcreate);
-
-
-      virtual void on_user_login(::fontopus::user * puser) override;
-
-      ::user::keyboard & keyboard();
-
-      virtual bool is_key_pressed(::user::e_key ekey);
-
-      virtual void set_key_pressed(::user::e_key ekey,bool bPressed);
-
-      virtual ::user::elemental * get_keyboard_focus();
-      virtual void set_keyboard_focus(::user::elemental * pkeyboardfocus);
-
-      virtual ::user::primitive * get_active_ui() override;
-      virtual ::user::primitive * get_focus_ui();
-
-      virtual void on_finally_focus_set(::user::elemental * pelementalFocus);
+         //virtual void on_request(::create * pcreate);
 
 
-      virtual string fontopus_get_user_sessid(const string & str) override;
+         virtual void on_user_login(::fontopus::user * puser) override;
+
+         ::user::keyboard & keyboard();
 
 
-      virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
+
+         virtual string fontopus_get_user_sessid(const string & str) override;
+
+
+         //virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 
 
    };

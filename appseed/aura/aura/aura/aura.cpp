@@ -4,6 +4,16 @@
 
 
 
+namespace user
+{
+
+
+   CLASS_DECL_AURA void init_windowing();
+   CLASS_DECL_AURA void term_windowing();
+
+
+} // namespace user
+
 //CLASS_DECL_AURA aura_str_pool * s_paurastrpool = NULL;
 
 
@@ -147,7 +157,10 @@ CLASS_DECL_AURA int_bool defer_aura_init()
 
    s_paurastrpool = new aura_str_pool();
 
+
+   ::user::init_windowing();
    g_bAura = 1;
+
 
 
    return TRUE;
@@ -162,6 +175,8 @@ CLASS_DECL_AURA int_bool defer_aura_term()
 
    if(g_iAuraRefCount >= 1)
       return TRUE;
+
+   ::user::term_windowing();
 
    g_bAura = 0;
 

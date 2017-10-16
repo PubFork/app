@@ -1,7 +1,7 @@
 #include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
-#include "base/os/windows/windows_system_interaction_impl.h"
+//#include "base/os/windows/windows_system_interaction_impl.h"
 
 
 
@@ -91,19 +91,19 @@ namespace base
       ::aura::del(m_puiptraFrame);
    }
 
-   
+
    bool application::process_initialize()
    {
 
       if(::axis::application::process_initialize())
       {
-         
+
          return true;
-         
+
       }
-      
+
       return true;
-      
+
    }
 
 
@@ -128,9 +128,9 @@ namespace base
       //return;
 
       case MSGF_MENU:
-            
+
          pMsgWnd = dynamic_cast < ::user::interaction * > (pbase->m_pwnd);
-            
+
          if(pMsgWnd != NULL)
          {
             pTopFrameWnd = pMsgWnd->GetTopLevelFrame();
@@ -190,253 +190,10 @@ namespace base
 
 
 
-   bool application::get_frame(sp(::user::interaction) & pui)
-   {
 
-#ifdef VSNORD
 
-      if (System.m_possystemwindow != NULL)
-      {
 
-         if (System.m_possystemwindow->m_pui != NULL)
-         {
 
-            return System.m_possystemwindow->m_pui->m_uiptraChild.get_child(pui);
-
-         }
-
-      }
-
-#endif
-
-      synch_lock sl(&m_mutexFrame);
-
-      return m_puiptraFrame->get_child(pui);
-
-   }
-
-
-
-
-
-
-
-
-
-
-   void application::add_frame(::user::interaction * pwnd)
-   {
-
-#if !defined(LINUX) && !defined(METROWIN) && !defined(APPLEOS) && !defined(VSNORD)
-      
-      if (dynamic_cast <::base::system_interaction_impl *>(pwnd) != NULL)
-      {
-      
-         return;
-
-      }
-
-#endif
-
-      if (pwnd == NULL)
-      {
-
-         return;
-
-      }
-
-      synch_lock sl(&m_mutexFrame); // recursive lock (on m_framea.add(pwnd)) but m_puiMain is "cared" by m_frame.m_mutex
-
-      if(m_puiptraFrame->add_unique(pwnd))
-      {
-
-         TRACE("::base::application::add_frame ::user::interaction = %0x016x (%s) app=%s", pwnd, typeid(*pwnd).name(), typeid(*this).name());
-
-         System.defer_create_system_frame_window();
-
-         Session.on_create_frame_window();
-
-         if(m_puiMain == NULL)
-         {
-
-            m_puiMain = pwnd;
-
-         }
-
-      }
-
-   }
-
-
-   void application::remove_frame(::user::interaction * pwnd)
-   {
-
-      synch_lock sl(&m_mutexFrame); // recursive lock (on m_framea.remove(pwnd)) but m_puiMain is "cared" by m_frame.m_mutex
-
-
-      //if(get_active_uie() == pwnd)
-      //{
-
-      //   set_a
-
-      //}
-
-
-      if(m_puiMain == pwnd)
-      {
-
-         m_puiMain = NULL;
-
-      }
-
-      if (m_puiptraFrame != NULL)
-      {
-
-         if (m_puiptraFrame->remove(pwnd) > 0)
-         {
-
-            TRACE("::base::application::remove_frame ::user::interaction = %0x016x (%s) app=%s", pwnd, typeid(*pwnd).name(), typeid(*this).name());
-
-         }
-
-      }
-
-
-   }
-
-
-
-   bool application::send_message_to_windows(UINT message, WPARAM wparam, LPARAM lparam) // with tbs in <3
-   {
-
-      sp(::user::interaction) pwnd;
-
-      try
-      {
-
-         while (get_frame(pwnd))
-         {
-
-            try
-            {
-
-               if (pwnd != NULL && pwnd->IsWindow())
-               {
-
-                  try
-                  {
-
-                     pwnd->send_message(message, wparam, lparam);
-
-                  }
-                  catch (...)
-                  {
-
-                  }
-
-                  try
-                  {
-
-                     pwnd->send_message_to_descendants(message, wparam, lparam);
-
-                  }
-                  catch (...)
-                  {
-
-
-                  }
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return true;
-
-   }
-
-
-   bool application::route_message_to_windows(::message::message * pmessage) // with tbs in <3
-   {
-
-      sp(::user::interaction) pwnd;
-
-      try
-      {
-
-         while (get_frame(pwnd))
-         {
-
-            try
-            {
-
-               if (pwnd != NULL && pwnd->IsWindow())
-               {
-
-                  try
-                  {
-
-                     pwnd->route_message(pmessage);
-
-                  }
-                  catch (...)
-                  {
-
-                  }
-
-                  try
-                  {
-
-                     pwnd->route_message_to_descendants(pmessage);
-
-                  }
-                  catch (...)
-                  {
-
-
-                  }
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return true;
-
-   }
-
-
-   void application::send_language_change_message()
-   {
-
-      ::message::message message(::message::type_language);
-
-      route_message_to_windows(&message);
-
-   }
 
 
 
@@ -643,7 +400,7 @@ namespace base
       return pui->m_puiThis->send_message(message,wparam,lparam);
 
    }
-   
+
 
    oswindow application::get_safe_handle(::user::primitive * pui)
    {
@@ -708,168 +465,6 @@ namespace base
    }
 
 
-   sp(::message::base) application::get_message_base(LPMESSAGE lpmsg)
-   {
-
-      ::user::interaction * pui = NULL;
-
-      if(pui == NULL && lpmsg->hwnd != NULL)
-      {
-
-         if(lpmsg->message == 126)
-         {
-
-            TRACE("WM_DISPLAYCHANGE");
-
-         }
-
-         ::user::interaction_impl * pimpl = System.impl_from_handle(lpmsg->hwnd);
-
-         if(pimpl != NULL)
-         {
-            
-            try
-            {
-               
-               pui = pimpl->m_pui;
-
-            }
-            catch(...)
-            {
-
-               pui = NULL;
-
-            }
-
-         }
-
-         if(pui == NULL)
-            return NULL;
-
-      }
-
-      if (pui != NULL)
-      {
-
-         return pui->get_message_base(lpmsg->message, lpmsg->wParam, lpmsg->lParam);
-
-      }
-
-      return ::axis::application::get_message_base(lpmsg);
-
-
-   }
-
-
-   void application::process_message(::message::base * pbase)
-   {
-
-      if(pbase->m_pwnd == NULL)
-      {
-
-         try
-         {
-
-            message_handler(pbase);
-
-         }
-         catch(const ::exception::exception & e)
-         {
-
-            TRACE("application::process_message : error processing application thread message (const ::exception::exception & )");
-
-            if(App(this).on_run_exception((::exception::exception &) e))
-               goto run;
-
-            if(App(this).final_handle_exception((::exception::exception &) e))
-               goto run;
-
-            __post_quit_message(-1);
-
-            pbase->set_lresult(-1);
-
-            return;
-
-         }
-         catch(::exception::base * pe)
-         {
-
-            process_window_procedure_exception(pe,pbase);
-
-            TRACE(::aura::trace::category_AppMsg,0,"Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing application thread message).\n",(int_ptr)pbase->get_lresult());
-
-            pe->Delete();
-
-         }
-         catch(...)
-         {
-
-            TRACE("application::process_message : error processing application thread message (...)");
-
-         }
-
-         return;
-
-      }
-
-      try
-      {
-
-         pbase->m_pwnd->m_puiThis->message_handler(pbase);
-
-
-      }
-      catch(const ::exception::exception & e)
-      {
-
-         TRACE("application::process_message : error processing window message (const ::exception::exception & )");
-
-         if(App(this).on_run_exception((::exception::exception &) e))
-            goto run;
-
-         if(App(this).final_handle_exception((::exception::exception &) e))
-            goto run;
-
-         __post_quit_message(-1);
-
-         pbase->set_lresult(-1);
-
-         return;
-
-      }
-      catch(::exception::base * pe)
-      {
-
-         process_window_procedure_exception(pe,pbase);
-
-         TRACE(::aura::trace::category_AppMsg,0,"Warning: Uncaught exception in message_handler (returning %ld) (application::process_message : error processing window message).\n",(int_ptr)pbase->get_lresult());
-
-         pe->Delete();
-
-      }
-      catch(...)
-      {
-
-         TRACE("application::process_message : error processing window message (...)");
-
-      }
-
-run:
-      ;
-
-   }
-
-
-   ::user::interaction * application::main_window()
-   {
-
-      if(m_puiMain == NULL)
-         return NULL;
-
-      return m_puiMain->m_puiThis;
-
-   }
-
 
    sp(type) application::user_default_controltype_to_typeinfo(::user::e_control_type e_type)
    {
@@ -916,12 +511,7 @@ run:
    }
 
 
-   string application::preferred_userschema()
-   {
 
-      return "";
-
-   }
 
 //   ::user::style_base * application::userstyle()
 //   {
@@ -937,21 +527,21 @@ run:
 //
 //   }
 //
-//   
+//
 //   ::user::style_base * application::userstyle(::user::e_schema estyle)
 //   {
-//      
+//
 //      ::user::style * puserstyle = userstyle();
-//      
+//
 //      if(puserstyle == NULL)
 //      {
-//       
+//
 //         return NULL;
-//         
+//
 //      }
-//      
+//
 //      return puserstyle->operator[](estyle);
-//      
+//
 //   }
 
 
@@ -969,8 +559,8 @@ run:
       return ::thread::process_message(lpmessage);
 
    }
-   
-   
+
+
    void application::SetCurrentHandles()
    {
 
@@ -985,38 +575,38 @@ run:
 
       try
       {
-         
+
          for(auto & pair : System.m_appmap)
          {
-            
+
             try
             {
-               
+
                if(pair.m_element2->m_pbaseapp == this)
                {
-                  
+
                   pair.m_element2->m_pbaseapp = NULL;
-                  
+
                }
-               
+
             }
             catch(...)
             {
-               
+
             }
-            
+
          }
-         
+
       }
       catch(...)
       {
-   
+
       }
 
       try
       {
 
-            axis::application::exit_application();
+         axis::application::exit_application();
 
       }
       catch(...)
@@ -1104,7 +694,7 @@ run:
       {
 
          if (pevent->m_puie->m_id == __id(system_startup_checkbox)
-            && pevent->m_actioncontext.is_user_source())
+               && pevent->m_actioncontext.is_user_source())
          {
 
             try
@@ -1131,14 +721,14 @@ run:
 
    }
 
-   
+
    ::user::interaction * application::create_menu_interaction()
    {
-      
+
       return canew(::user::button);
-      
+
    }
-   
+
 
 } // namespace base
 

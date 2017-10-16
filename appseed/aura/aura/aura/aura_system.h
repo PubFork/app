@@ -13,6 +13,58 @@ namespace aura
    {
       public:
 
+#if defined METROWIN && defined(__cplusplus_winrt)
+
+         class os_system_window
+         {
+            public:
+
+               bool                                         m_bWindowSizeChange;
+
+               sp(::user::interaction)                      m_pui;
+
+               ::axis::system_window ^                      m_pwindow;
+
+               os_system_window();
+
+         };
+
+#elif defined(APPLE_IOS)
+
+         class os_system_window
+         {
+            public:
+
+               sp(::user::interaction)                      m_pui;
+
+         };
+
+#elif defined(VSNORD)
+
+         class os_system_window
+         {
+            public:
+
+               sp(::user::interaction)                      m_pui;
+
+               oswindow                                     m_oswindow;
+
+         };
+
+#else
+
+         class os_system_window;
+
+#endif
+
+#ifdef WINDOWSEX
+
+         ::user::system_interaction_impl *      m_psystemwindow;
+
+#endif
+
+         os_system_window *                     m_possystemwindow;
+
 
 #ifdef APPLE_IOS
 
@@ -148,6 +200,8 @@ namespace aura
 
 #endif
 
+         ::net::email_department                     m_emaildepartment;
+
          stringa                                      m_straCommandLineAccumul;
          stringa                                      m_straCommandLineExtra;
          DWORD                                        m_dwCommandLineLast;
@@ -155,6 +209,18 @@ namespace aura
          sp(::thread)                                 m_pthreadCommandLine;
 
 
+         bool                                         m_bSystemSynchronizedCursor;
+         bool                                         m_bSystemSynchronizedScreen;
+
+
+#ifdef WINDOWSEX
+
+
+         raw_array < MONITORINFO >                    m_monitorinfoa;
+         raw_array < HMONITOR >                       m_hmonitora;
+         raw_array < MONITORINFO >                    m_monitorinfoaDesk;
+
+#endif
          system(::aura::application * papp, void * pdata);
          virtual ~system();
 
@@ -216,6 +282,7 @@ namespace aura
          {
             return *m_spdir;
          }
+         ::net::email_department               & email();
 
          ::fontopus::user_set                         & userset();
 
@@ -502,6 +569,33 @@ namespace aura
          virtual void * initialize_native_window2(LPCRECT lpcrect);
 
          virtual void on_os_text(e_os_text etext, string strText);
+
+         virtual ::user::interaction_impl * impl_from_handle(void * posdata);
+         virtual ::user::interaction * ui_from_handle(void * posdata);
+
+         virtual bool defer_create_system_frame_window();
+
+         void enum_display_monitors();
+
+#if defined(WINDOWS)
+         static_function BOOL CALLBACK monitor_enum_proc(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData);
+         void monitor_enum(HMONITOR hmonitor, HDC hdcMonitor, LPRECT lprcMonitor);
+#endif
+
+         virtual index get_main_monitor(LPRECT lprect = NULL);
+         virtual ::count get_monitor_count();
+         virtual bool  get_monitor_rect(index iMonitor, LPRECT lprect);
+         virtual ::count get_desk_monitor_count();
+         virtual bool  get_desk_monitor_rect(index iMonitor, LPRECT lprect);
+
+         virtual index get_main_wkspace(LPRECT lprect = NULL);
+         virtual ::count get_wkspace_count();
+         virtual bool  get_wkspace_rect(index iWkspace, LPRECT lprect);
+         virtual ::count get_desk_wkspace_count();
+         virtual bool  get_desk_wkspace_rect(index iWkspace, LPRECT lprect);
+         virtual index get_ui_wkspace(::user::interaction * pui);
+
+
 
 
    };

@@ -29,6 +29,9 @@ CLASS_DECL_AURA void attach_thread_input_to_main_thread(bool bAttach = true);
 
 #endif
 
+CLASS_DECL_AURA HMONITOR GetUiMonitorHandle(HWND hwnd);
+CLASS_DECL_AURA HMONITOR GetPrimaryMonitorHandle();
+CLASS_DECL_AURA bool GetPrimaryMonitorRect(LPRECT lprect);
 
 #ifdef __cplusplus
 
