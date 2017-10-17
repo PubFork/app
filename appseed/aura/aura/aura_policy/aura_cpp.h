@@ -1916,7 +1916,7 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 #include "aura/aura/os/os_cpp.h"
 
 
-#include "aura/user/user.h"
+#include "aura/user/user/user.h"
 
 
 //#include "aura/pcre/pcre.h"
