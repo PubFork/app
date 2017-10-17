@@ -1,12 +1,14 @@
 #include "framework.h"
-int my_main(::aura::application * papp);
+
+
+int main_window(::helloaura::render * prender);
+
 
 namespace helloaxis
 {
 
 
-   application::application() :
-      m_mutexAiFont(this)
+   application::application()
    {
 
       m_strAppName = "app/helloaxis";
@@ -16,8 +18,8 @@ namespace helloaxis
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Multiverse!!";
-      m_strAlternateHelloMultiverseDefault = "Hello!!";
+      m_strHelloMultiverseDefault = "Hello Axis!!";
+      m_strAlternateHelloMultiverseDefault = "Hi Axis!!";
 
       m_strHelloMultiverse = m_strHelloMultiverseDefault;
       m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
@@ -103,11 +105,11 @@ namespace helloaxis
 
       output_debug_string("\nfinished helloaxis::on_request");
 
-      fork([&]()
-      {
-         my_main(this);
-      }
-          );
+      m_prender = new ::helloaxis::render(this);
+
+      ::main_window(m_prender);
+
+      System.post_quit();
 
    }
 
@@ -115,40 +117,6 @@ namespace helloaxis
 
 
 
-   int64_t application::add_ref()
-   {
-
-      return ::object::add_ref();
-
-   }
-
-   int64_t application::dec_ref()
-   {
-
-      return ::object::dec_ref();
-
-   }
-
-   void application::paint(HWND hwnd, HDC hdc)
-   {
-      ::draw2d::graphics_sp g(allocer());
-
-      g->Attach(hdc);
-
-      paint(hwnd, g);
-
-   }
-
-   void application::paint(HWND hwnd, ::draw2d::graphics * pgraphics)
-   {
-      rect rcClient;
-      ::GetClientRect(hwnd, rcClient);
-      ::draw2d::brush_sp br(allocer());
-
-      br->create_solid(ARGB(255, 255, 0, 0));
-      pgraphics->SelectObject(br);
-      pgraphics->FillEllipse(rcClient);
-   }
 
 } // namespace helloaxis
 

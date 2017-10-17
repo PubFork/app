@@ -16,9 +16,6 @@
     <ClCompile Include="helloaxis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="helloaxis_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

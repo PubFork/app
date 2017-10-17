@@ -1,7 +1,9 @@
 #pragma once
 
 
+#include "app/appseed/helloaura/helloaura.h"
 #include "axis/axis/axis.h"
+
 
 
 #ifdef _APP_CORE_HELLOAXIS_LIBRARY

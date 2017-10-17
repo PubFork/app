@@ -79,18 +79,18 @@ namespace aura
 
 #ifdef DEBUG
 
-         ::dump_context *                          m_pdumpcontext;
+         ::dump_context *                             m_pdumpcontext;
 
 #endif
 
          ::aura::session::map                         m_aurabergedgemap;
 
          ::object *                                   m_pDraw2dFactoryExchange;
-         ::visual::visual                             m_visual;
+         sp(::visual::visual)                         m_pvisual;
 
 
 
-         sp(class ::datetime::department)            m_pdatetime;
+         sp(class ::datetime::department)             m_pdatetime;
          ::crypto::crypto_sp                          m_spcrypto;
          class ::fontopus::user_set                   m_userset;
 
@@ -262,7 +262,7 @@ namespace aura
             return *m_pmath;
          }
 
-         inline class ::visual::visual                & visual() { return m_visual; }
+         inline class ::visual::visual                & visual() { return *m_pvisual; }
 
          //::colorertake5::ParserFactory                &  parser_factory();
          inline ::url::department                     &  url()
@@ -347,6 +347,8 @@ namespace aura
          virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
 
          virtual bool process_initialize() override;
+
+         virtual bool initialize() override;
 
          virtual bool initialize1() override;
 

@@ -176,12 +176,9 @@ namespace helloaura
 
       m_prender = new render(this);
 
-      fork([&]()
-      {
+      ::main_window(m_prender);
 
-         main_window(m_prender);
-
-      });
+      System.post_quit();
 
    }
 

@@ -188,7 +188,7 @@
       <AdditionalOptions>/bigobj</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include;$(SolutionDir)../../../nodeapp/include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(IntDir);$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CUBE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SMALLCODE;CUBE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -979,7 +979,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include=".\helloaxis_application.cpp" />
-    <ClCompile Include="helloaxis_main.cpp" />
     <ClCompile Include="_cube.cpp" />
     <ClCompile Include="helloaxis.cpp" />
     <ClCompile Include="framework.cpp">
@@ -1003,8 +1002,8 @@
     <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\app-core\appseed\wndfrm_core\_wndfrm_core.vcxproj">
-      <Project>{e2d7833b-9b59-4826-bbdf-c270a2115e86}</Project>
+    <ProjectReference Include="..\..\..\..\basis\app\appseed\helloaura\_helloaura.vcxproj">
+      <Project>{df41f4ca-e115-416f-9a54-4673473fb593}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\nodeapp\appseed\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
       <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
@@ -1014,12 +1013,6 @@
     </ProjectReference>
     <ProjectReference Include="..\axis\_axis.vcxproj">
       <Project>{31d9e148-1c40-45e1-b3d5-20d8b6738b8e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\base\_base.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\core\_core.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

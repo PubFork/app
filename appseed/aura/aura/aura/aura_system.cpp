@@ -42,7 +42,6 @@ namespace aura
       m_process(this),
       m_base64(this),
       m_httpsystem(this),
-      m_visual(this),
       m_emaildepartment(this)
    {
 
@@ -144,7 +143,7 @@ namespace aura
       strId = "ca2log";
 
 
-      xxdebug_box("Going to start Log","Just before initialize log",0);
+      xxdebug_box("Going to start Log","Just before (initialize) log",0);
 
 #ifdef DEBUG
 
@@ -581,6 +580,19 @@ namespace aura
          output_debug_string("Unable to find ANY *DRAW2D* plugin. Quitting...");
 
       }
+
+
+      m_pvisual = canew(::visual::visual(this));
+
+      m_pvisual->construct(this);
+
+      if (!m_pvisual->initialize1())
+      {
+
+         return false;
+
+      }
+
       enum_display_monitors();
 
 
@@ -588,6 +600,29 @@ namespace aura
       return true;
 
    }
+
+
+   bool system::initialize()
+   {
+
+      if (!::aura::application::initialize1())
+      {
+
+         return false;
+
+      }
+
+      if (!m_pvisual->initialize())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
 
    bool system::initialize1()
    {
@@ -605,10 +640,6 @@ namespace aura
       if(!str().initialize())
          return false;
 
-      m_visual.construct(this);
-
-      if (!m_visual.initialize1())
-         return false;
 
 
 
@@ -784,6 +815,8 @@ namespace aura
       multithreading::post_quit_and_wait(m_paurasession, seconds(60));
 
 //      m_basesessionptra.remove_all();
+
+      m_pvisual.release();
 
       m_spfile.release();
 

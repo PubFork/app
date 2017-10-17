@@ -248,22 +248,27 @@ namespace axis
       return bOk;
 
    }
+
+
    bool system::initialize()
    {
 
       if (!::axis::application::initialize())
+      {
+
          return false;
+
+      }
+
       if (!::aura::system::initialize())
+      {
+
          return false;
 
-      if (!m_visual.initialize())
-         return false;
-
-
-
-
+      }
 
       return true;
+
    }
 
    int32_t system::exit_application()
