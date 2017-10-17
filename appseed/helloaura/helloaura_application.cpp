@@ -200,32 +200,12 @@ namespace helloaura
 
    }
 
-   void application::paint(HWND hwnd, HDC hdc)
-   {
-      ::draw2d::graphics_sp g(allocer());
-
-      g->Attach(hdc);
-
-      paint(hwnd, g);
-
-   }
-
-   void application::paint(HWND hwnd, ::draw2d::graphics * pgraphics)
-   {
-      rect rcClient;
-      ::GetClientRect(hwnd, rcClient);
-      ::draw2d::brush_sp br(allocer());
-
-      br->create_solid(ARGB(255, 255, 0, 0));
-      pgraphics->SelectObject(br);
-      pgraphics->FillEllipse(rcClient);
-   }
 
 
    string application::get_helloaura()
    {
 
-      return "Hello Aura!!";
+      return "Hello Axis!!";
 
    }
 
@@ -235,7 +215,7 @@ namespace helloaura
 
 
 extern "C"
-::aura::library * app_helloaura_get_new_library(::aura::application * papp)
+::aura::library * app_helloaxis_get_new_library(::aura::application * papp)
 {
 
    return new ::aura::single_application_library < ::helloaura::application >(papp, "app/helloaura");

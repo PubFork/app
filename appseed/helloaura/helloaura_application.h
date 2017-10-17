@@ -48,10 +48,6 @@ namespace helloaura
          virtual int64_t add_ref() override;
          virtual int64_t dec_ref() override;
 
-         void paint(HWND hwnd, HDC hdc);
-
-         void paint(HWND hwnd, ::draw2d::graphics * pgraphics);
-
          virtual string get_helloaura();
 
    };

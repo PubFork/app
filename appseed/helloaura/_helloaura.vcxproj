@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C7AFCEFA-3079-4B23-8F97-4543BB980265}</ProjectGuid>
+    <ProjectGuid>{DF41F4CA-E115-416F-9A54-4673473FB593}</ProjectGuid>
     <RootNamespace>_app_helloaura</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>_app_helloaura</ProjectName>
