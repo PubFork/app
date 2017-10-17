@@ -413,6 +413,12 @@ namespace asphere
 //   return m_etheme;
 
 //}
+   uint32_t application::guess_code_page(const string & str)
+   {
+
+      return charguess(str)();
+
+   }
 
 
 
