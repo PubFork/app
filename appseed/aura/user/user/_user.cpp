@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #include "user_command.cpp"
@@ -16,6 +16,7 @@
 #include "user_interaction_impl_base.cpp"
 #include "user_interactive.cpp"
 #include "user_job.cpp"
+#include "user_key.cpp"
 #include "user_menu.cpp"
 #include "user_menu_command.cpp"
 #include "user_menu_item.cpp"

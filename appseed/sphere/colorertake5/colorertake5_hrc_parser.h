@@ -11,26 +11,26 @@ namespace colorertake5
    class HRCParserException :
       virtual public exception
    {
-   public:
+      public:
 
-      HRCParserException(::aura::application * papp) :
-         object(papp),
-         ::call_stack(papp),
-         ::exception::base(papp),
-         ::colorertake5::exception(papp)
-      {
+         HRCParserException(::aura::application * papp) :
+            object(papp),
+            ::call_stack(papp),
+            ::exception::base(papp),
+            ::colorertake5::exception(papp)
+         {
 
-      }
+         }
 
 
-      HRCParserException(::aura::application * papp, const string & msg) :
-         object(papp),
-         ::call_stack(papp),
-         ::exception::base(papp),
-         ::colorertake5::exception(papp)
-      {
-         m_pszMessage = strcat_and_dup(strcat_and_dup(m_pszMessage, "colorertake5::HRCParserException: "), msg);
-      }
+         HRCParserException(::aura::application * papp, const string & msg) :
+            object(papp),
+            ::call_stack(papp),
+            ::exception::base(papp),
+            ::colorertake5::exception(papp)
+         {
+            m_pszMessage = strcat_and_dup(strcat_and_dup(m_pszMessage, "colorertake5::HRCParserException: "), msg);
+         }
 
 
    };
@@ -41,63 +41,63 @@ namespace colorertake5
    HRC information.
    @ingroup colorer
    */
-   class CLASS_DECL_AURA HRCParser :
+   class CLASS_DECL_SPHERE HRCParser :
       virtual public ::object
    {
-   public:
-      /** Error Handler, used to inform application about different error conditions
-      @param eh ErrorHandler instance, or NULL to drop error handling.
-      */
-      virtual void setErrorHandler(ErrorHandler *eh) = 0;
-      /** Loads HRC from specified input_source stream.
-      Referred HRC file can contain prototypes and
-      real types definitions. If it contains just prototype definition,
-      real type load must be performed before using with #loadType() method
-      @param is input_source stream of HRC file
-      */
-      virtual void loadSource(const char * pszSourceLocation, const char * pszSource) = 0;
+      public:
+         /** Error Handler, used to inform application about different error conditions
+         @param eh ErrorHandler instance, or NULL to drop error handling.
+         */
+         virtual void setErrorHandler(ErrorHandler *eh) = 0;
+         /** Loads HRC from specified input_source stream.
+         Referred HRC file can contain prototypes and
+         real types definitions. If it contains just prototype definition,
+         real type load must be performed before using with #loadType() method
+         @param is input_source stream of HRC file
+         */
+         virtual void loadSource(const char * pszSourceLocation, const char * pszSource) = 0;
 
-      /** Enumerates sequentially all prototypes
-      @param index index of type.
-      @return Requested type, or NULL, if #index is too big
-      */
-      virtual file_type *enumerateFileTypes(int32_t index) = 0;
+         /** Enumerates sequentially all prototypes
+         @param index index of type.
+         @return Requested type, or NULL, if #index is too big
+         */
+         virtual file_type *enumerateFileTypes(int32_t index) = 0;
 
-      /** @param name Requested type name.
-      @return File type, or NULL, there are no type with specified name.
-      */
-      virtual file_type *getFileType(const char * name) = 0;
+         /** @param name Requested type name.
+         @return File type, or NULL, there are no type with specified name.
+         */
+         virtual file_type *getFileType(const char * name) = 0;
 
-      /** Searches and returns the best type for specified spfile->
-      This method uses fileName and firstLine parameters
-      to perform selection of the best HRC type from database.
-      @param fileName Name of file
-      @param firstLine First line of this file, could be NULL
-      @param typeNo Sequential number of type, if more than one type
-      satisfy these input parameters.
-      */
-      virtual file_type *chooseFileType(const char * fileName, const char * firstLine, int32_t typeNo = 0) = 0;
+         /** Searches and returns the best type for specified spfile->
+         This method uses fileName and firstLine parameters
+         to perform selection of the best HRC type from database.
+         @param fileName Name of file
+         @param firstLine First line of this file, could be NULL
+         @param typeNo Sequential number of type, if more than one type
+         satisfy these input parameters.
+         */
+         virtual file_type *chooseFileType(const char * fileName, const char * firstLine, int32_t typeNo = 0) = 0;
 
-      /** Total number of declared regions
-      */
-      virtual ::count getRegionCount() = 0;
-      /** Returns region by internal id
-      */
-      virtual class region *getRegion(int32_t id) = 0;
-      /** Returns region by name
-      @note Also loads referred type, if it is not yet loaded.
-      */
-      virtual class region *getRegion(const char * name) = 0;
+         /** Total number of declared regions
+         */
+         virtual ::count getRegionCount() = 0;
+         /** Returns region by internal id
+         */
+         virtual class region *getRegion(int32_t id) = 0;
+         /** Returns region by name
+         @note Also loads referred type, if it is not yet loaded.
+         */
+         virtual class region *getRegion(const char * name) = 0;
 
-      /** HRC aura version.
-      Usually this is the 'version' attribute of 'hrc' element
-      of the first loaded HRC spfile->
-      */
-      virtual string getVersion() = 0;
+         /** HRC aura version.
+         Usually this is the 'version' attribute of 'hrc' element
+         of the first loaded HRC spfile->
+         */
+         virtual string getVersion() = 0;
 
-      virtual ~HRCParser(){};
-   protected:
-      HRCParser(){};
+         virtual ~HRCParser() {};
+      protected:
+         HRCParser() {};
    };
 
 } // namespace colorertake5

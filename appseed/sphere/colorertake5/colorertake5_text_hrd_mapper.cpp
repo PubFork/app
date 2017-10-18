@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -39,7 +38,7 @@ namespace colorertake5
          {
             string name = (curel)->attr("name");
             if(name.is_empty())
-             continue;
+               continue;
 
             if (regionDefines[name] != NULL)
             {
@@ -103,10 +102,11 @@ namespace colorertake5
       if (rd_new->eback .has_char()) eback = (rd_new->eback);
 
       RegionDefine *rd_old = regionDefines[name];
-      if (rd_old != NULL){
+      if (rd_old != NULL)
+      {
          const TextRegion *rdef = TextRegion::cast(rd_old);
 //         delete rdef->stext; delete rdef->etext;
-  //       delete rdef->sback; delete rdef->eback;
+         //       delete rdef->sback; delete rdef->eback;
          delete rdef;
       };
 
@@ -115,7 +115,8 @@ namespace colorertake5
 
       // Searches and replaces old region references
       for(int32_t idx = 0; idx < regionDefinesVector.get_size(); idx++)
-         if (regionDefinesVector.element_at(idx) == rd_old){
+         if (regionDefinesVector.element_at(idx) == rd_old)
+         {
             regionDefinesVector.set_at(idx, new_region);
             break;
          };

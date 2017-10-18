@@ -5,17 +5,17 @@ namespace colorertake5
 {
 
 
-   class CLASS_DECL_AURA colorertake5 :
+   class CLASS_DECL_SPHERE colorertake5 :
       virtual public ::aura::department
    {
-   public:
+      public:
 
 
-      colorertake5(::aura::application * papp);
-      virtual ~colorertake5();
+         colorertake5(::aura::application * papp);
+         virtual ~colorertake5();
 
 
-      virtual bool initialize();
+         virtual bool initialize();
 
 
    };

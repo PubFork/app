@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 #include <stdio.h>
 
 
@@ -10,205 +9,218 @@ namespace colorertake5
    @ingroup colorer_viewer
    */
 
-      /** Writes given line of text using list of passed line regions.
-      Formats output with class of each token, enclosed in
-      \<span class='regionName'>...\</span>
-      @param markupWriter writer, used for markup output
-      @param textWriter writer, used for text output
-      @param line Line of text
-      @param lineRegions Linked list of LineRegion structures.
-      Only region references are used there.
-      */
-      void ParsedLineWriter::tokenWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string * docLinkHash, const char  *line, LineRegion *lineRegions)
+   /** Writes given line of text using list of passed line regions.
+   Formats output with class of each token, enclosed in
+   \<span class='regionName'>...\</span>
+   @param markupWriter writer, used for markup output
+   @param textWriter writer, used for text output
+   @param line Line of text
+   @param lineRegions Linked list of LineRegion structures.
+   Only region references are used there.
+   */
+   void ParsedLineWriter::tokenWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string * docLinkHash, const char  *line, LineRegion *lineRegions)
+   {
+      UNREFERENCED_PARAMETER(docLinkHash);
+      index pos = 0;
+      for(LineRegion *l1 = lineRegions; l1; l1 = l1->next)
       {
-         UNREFERENCED_PARAMETER(docLinkHash);
-         index pos = 0;
-         for(LineRegion *l1 = lineRegions; l1; l1 = l1->next){
-            if (l1->special || l1->region == NULL) continue;
-            if (l1->start == l1->end) continue;
-            index end = l1->end;
-            if (end == -1) end = strlen(line);
-            if (l1->start > pos){
-               textWriter.write(&line[pos], l1->start - pos);
-               pos = l1->start;
-            }
-            markupWriter << "<span class='";
-
-            class region *region = l1->region;
-            while(region != NULL){
-               string token0 = ::str::replace(":", "-", region->getName());
-               string token = ::str::replace(".", "-", token0);
-               markupWriter << token;
-               region = region->getParent();
-               if (region != NULL){
-                  markupWriter << " ";
-               }
-            }
-
-            markupWriter << "'>";
-            textWriter.write(&line[pos], end - l1->start);
-            markupWriter << "</span>";
-            pos += end - l1->start;
-         }
-         if ((uint32_t) pos < strlen(line)){
-            textWriter.write(&line[pos], strlen(line) - pos);
-         }
-      }
-
-
-      /** write specified line of text using list of LineRegion's.
-      This method uses text fields of LineRegion class to enwrap each line
-      region.
-      It uses two Writers - @ca markupWriter and @ca textWriter.
-      @ca markupWriter is used to write markup elements of LineRegion,
-      and @ca textWriter is used to write line content.
-      @param markupWriter writer, used for markup output
-      @param textWriter writer, used for text output
-      @param line Line of text
-      @param lineRegions Linked list of LineRegion structures
-      */
-      void ParsedLineWriter::markupWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
-      {
-         UNREFERENCED_PARAMETER(docLinkHash);
-
-         index pos = 0;
-
-         for(LineRegion *l1 = lineRegions; l1; l1 = l1->next)
+         if (l1->special || l1->region == NULL) continue;
+         if (l1->start == l1->end) continue;
+         index end = l1->end;
+         if (end == -1) end = strlen(line);
+         if (l1->start > pos)
          {
+            textWriter.write(&line[pos], l1->start - pos);
+            pos = l1->start;
+         }
+         markupWriter << "<span class='";
 
-            if(l1->special || l1->rdef == NULL)
-               continue;
-
-            if(l1->start == l1->end)
-               continue;
-
-            index end = l1->end;
-
-            if (end == -1)
-               end = strlen(line);
-
-            if (l1->start > pos)
+         class region *region = l1->region;
+         while(region != NULL)
+         {
+            string token0 = ::str::replace(":", "-", region->getName());
+            string token = ::str::replace(".", "-", token0);
+            markupWriter << token;
+            region = region->getParent();
+            if (region != NULL)
             {
-               textWriter.write(&line[pos], l1->start - pos);
-               pos = l1->start;
+               markupWriter << " ";
             }
-
-            if (l1->texted()->sback.has_char())
-               markupWriter << l1->texted()->sback;
-
-            if (l1->texted()->stext.has_char())
-               markupWriter << l1->texted()->stext;
-
-            textWriter.write(&line[pos], end - l1->start);
-
-            if (l1->texted()->etext.has_char())
-               markupWriter << l1->texted()->etext;
-
-            if (l1->texted()->eback.has_char())
-               markupWriter << l1->texted()->eback;
-
-            pos += end - l1->start;
-
          }
 
-         if((uint32_t) pos < strlen(line))
-         {
-            textWriter.write(&line[pos], strlen(line) - pos);
-         }
+         markupWriter << "'>";
+         textWriter.write(&line[pos], end - l1->start);
+         markupWriter << "</span>";
+         pos += end - l1->start;
       }
+      if ((uint32_t) pos < strlen(line))
+      {
+         textWriter.write(&line[pos], strlen(line) - pos);
+      }
+   }
 
 
-      /** write specified line of text using list of LineRegion's.
-      This method uses integer fields of LineRegion class
-      to enwrap each line region with generated HTML markup.
-      Each region is
-      @param markupWriter writer, used for markup output
-      @param textWriter writer, used for text output
-      @param line Line of text
-      @param lineRegions Linked list of LineRegion structures
-      */
-      void ParsedLineWriter::htmlRGBWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
+   /** write specified line of text using list of LineRegion's.
+   This method uses text fields of LineRegion class to enwrap each line
+   region.
+   It uses two Writers - @ca markupWriter and @ca textWriter.
+   @ca markupWriter is used to write markup elements of LineRegion,
+   and @ca textWriter is used to write line content.
+   @param markupWriter writer, used for markup output
+   @param textWriter writer, used for text output
+   @param line Line of text
+   @param lineRegions Linked list of LineRegion structures
+   */
+   void ParsedLineWriter::markupWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
+   {
+      UNREFERENCED_PARAMETER(docLinkHash);
+
+      index pos = 0;
+
+      for(LineRegion *l1 = lineRegions; l1; l1 = l1->next)
       {
 
-         index pos = 0;
+         if(l1->special || l1->rdef == NULL)
+            continue;
 
-         for(LineRegion *l1 = lineRegions; l1; l1 = l1->next)
+         if(l1->start == l1->end)
+            continue;
+
+         index end = l1->end;
+
+         if (end == -1)
+            end = strlen(line);
+
+         if (l1->start > pos)
          {
-
-            if (l1->special || l1->rdef == NULL)
-               continue;
-
-            if (l1->start == l1->end)
-               continue;
-
-            index end = l1->end;
-
-            if (end == -1)
-               end = int32_t(strlen(line));
-
-            if (l1->start > pos)
-            {
-               textWriter.write(&line[pos], l1->start - pos);
-               pos = l1->start;
-            }
-
-            if (docLinkHash->get_size() > 0)
-               writeHref(markupWriter, docLinkHash, l1->scheme, string(&line[pos], (int32_t)(end - l1->start)), true);
-            writeStart(markupWriter, l1->styled());
-            textWriter.write(&line[pos], end - l1->start);
-            writeEnd(markupWriter, l1->styled());
-            if (docLinkHash->get_size() > 0)
-               writeHref(markupWriter, docLinkHash, l1->scheme, string(&line[pos], (int32_t)(end - l1->start)), false);
-            pos += end - l1->start;
+            textWriter.write(&line[pos], l1->start - pos);
+            pos = l1->start;
          }
-         if((uint32_t) pos < strlen(line)){
-            textWriter.write(&line[pos], strlen(line) - pos);
-         }
+
+         if (l1->texted()->sback.has_char())
+            markupWriter << l1->texted()->sback;
+
+         if (l1->texted()->stext.has_char())
+            markupWriter << l1->texted()->stext;
+
+         textWriter.write(&line[pos], end - l1->start);
+
+         if (l1->texted()->etext.has_char())
+            markupWriter << l1->texted()->etext;
+
+         if (l1->texted()->eback.has_char())
+            markupWriter << l1->texted()->eback;
+
+         pos += end - l1->start;
+
       }
 
-      /** Puts into stream style attributes from RegionDefine object.
-      */
-      void ParsedLineWriter::writeStyle(::file::ostream & writer, const StyledRegion *lr){
-         static char span[256];
-         int32_t cp = 0;
-         if (lr->bfore) cp += sprintf(span, "color:#%.6x; ", lr->fore);
-         if (lr->bback) cp += sprintf(span+cp, "background:#%.6x; ", lr->back);
-         if (lr->style&StyledRegion::RD_BOLD) cp += sprintf(span+cp, "font-weight:bold; ");
-         if (lr->style&StyledRegion::RD_ITALIC) cp += sprintf(span+cp, "font-style:italic; ");
-         if (lr->style&StyledRegion::RD_UNDERLINE) cp += sprintf(span+cp, "text-decoration:underline; ");
-         if (lr->style&StyledRegion::RD_STRIKEOUT) cp += sprintf(span+cp, "text-decoration:strikeout; ");
-         if (cp > 0) writer << span;
+      if((uint32_t) pos < strlen(line))
+      {
+         textWriter.write(&line[pos], strlen(line) - pos);
       }
+   }
 
-      /** Puts into stream starting HTML \<span> tag with requested style specification
-      */
-      void ParsedLineWriter::writeStart(::file::ostream & writer, const StyledRegion *lr){
-         if (!lr->bfore && !lr->bback) return;
-         writer << "<span style='";
-         writeStyle(writer, lr);
-         writer << "'>";
-      }
 
-      /** Puts into stream ending HTML \</span> tag
-      */
-      void ParsedLineWriter::writeEnd(::file::ostream & writer, const StyledRegion *lr){
-         if (!lr->bfore && !lr->bback) return;
-         writer << "</span>";
-      }
+   /** write specified line of text using list of LineRegion's.
+   This method uses integer fields of LineRegion class
+   to enwrap each line region with generated HTML markup.
+   Each region is
+   @param markupWriter writer, used for markup output
+   @param textWriter writer, used for text output
+   @param line Line of text
+   @param lineRegions Linked list of LineRegion structures
+   */
+   void ParsedLineWriter::htmlRGBWrite(::file::ostream & markupWriter, ::file::ostream & textWriter, string_to_string *docLinkHash, const char *line, LineRegion *lineRegions)
+   {
 
-      void ParsedLineWriter::writeHref(::file::ostream & writer, string_to_string *docLinkHash, const class scheme *scheme, const string &token, bool start){
-         string url;
-         if (scheme != NULL){
-            url = docLinkHash->operator [](token + "--" + scheme->getName());
+      index pos = 0;
+
+      for(LineRegion *l1 = lineRegions; l1; l1 = l1->next)
+      {
+
+         if (l1->special || l1->rdef == NULL)
+            continue;
+
+         if (l1->start == l1->end)
+            continue;
+
+         index end = l1->end;
+
+         if (end == -1)
+            end = int32_t(strlen(line));
+
+         if (l1->start > pos)
+         {
+            textWriter.write(&line[pos], l1->start - pos);
+            pos = l1->start;
          }
-         if (url.is_empty()){
-            url = docLinkHash->operator[](token);
-         }
-         if (url.has_char()){
-            if (start) writer << "<a href='" +url + "'>";
-            else writer << "</a>";
-         }
+
+         if (docLinkHash->get_size() > 0)
+            writeHref(markupWriter, docLinkHash, l1->scheme, string(&line[pos], (int32_t)(end - l1->start)), true);
+         writeStart(markupWriter, l1->styled());
+         textWriter.write(&line[pos], end - l1->start);
+         writeEnd(markupWriter, l1->styled());
+         if (docLinkHash->get_size() > 0)
+            writeHref(markupWriter, docLinkHash, l1->scheme, string(&line[pos], (int32_t)(end - l1->start)), false);
+         pos += end - l1->start;
       }
+      if((uint32_t) pos < strlen(line))
+      {
+         textWriter.write(&line[pos], strlen(line) - pos);
+      }
+   }
+
+   /** Puts into stream style attributes from RegionDefine object.
+   */
+   void ParsedLineWriter::writeStyle(::file::ostream & writer, const StyledRegion *lr)
+   {
+      static char span[256];
+      int32_t cp = 0;
+      if (lr->bfore) cp += sprintf(span, "color:#%.6x; ", lr->fore);
+      if (lr->bback) cp += sprintf(span+cp, "background:#%.6x; ", lr->back);
+      if (lr->style&StyledRegion::RD_BOLD) cp += sprintf(span+cp, "font-weight:bold; ");
+      if (lr->style&StyledRegion::RD_ITALIC) cp += sprintf(span+cp, "font-style:italic; ");
+      if (lr->style&StyledRegion::RD_UNDERLINE) cp += sprintf(span+cp, "text-decoration:underline; ");
+      if (lr->style&StyledRegion::RD_STRIKEOUT) cp += sprintf(span+cp, "text-decoration:strikeout; ");
+      if (cp > 0) writer << span;
+   }
+
+   /** Puts into stream starting HTML \<span> tag with requested style specification
+   */
+   void ParsedLineWriter::writeStart(::file::ostream & writer, const StyledRegion *lr)
+   {
+      if (!lr->bfore && !lr->bback) return;
+      writer << "<span style='";
+      writeStyle(writer, lr);
+      writer << "'>";
+   }
+
+   /** Puts into stream ending HTML \</span> tag
+   */
+   void ParsedLineWriter::writeEnd(::file::ostream & writer, const StyledRegion *lr)
+   {
+      if (!lr->bfore && !lr->bback) return;
+      writer << "</span>";
+   }
+
+   void ParsedLineWriter::writeHref(::file::ostream & writer, string_to_string *docLinkHash, const class scheme *scheme, const string &token, bool start)
+   {
+      string url;
+      if (scheme != NULL)
+      {
+         url = docLinkHash->operator [](token + "--" + scheme->getName());
+      }
+      if (url.is_empty())
+      {
+         url = docLinkHash->operator[](token);
+      }
+      if (url.has_char())
+      {
+         if (start) writer << "<a href='" +url + "'>";
+         else writer << "</a>";
+      }
+   }
 
 
 } // namespace colorertake5

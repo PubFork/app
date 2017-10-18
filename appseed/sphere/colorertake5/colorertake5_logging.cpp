@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 //#include <stdarg.h>
 #include <stdio.h>
 
@@ -7,20 +6,22 @@
 namespace colorertake5
 {
 
-   static const char *levelNames[] ={"QUIET","ERROR","WARN","TRACE","INFO"};
+   static const char *levelNames[] = {"QUIET","ERROR","WARN","TRACE","INFO"};
 
    // base_editor, text_parser_impl, TPCache
    // ParserFactory, BaseEditorNative, NSC:JHRCParser:getRegion
 
-   static const char *toTrace[] ={"BaseEditorNative","JavaLineSource"};
+   static const char *toTrace[] = {"BaseEditorNative","JavaLineSource"};
 
    static FILE * log = 0;
 
-   static void file_logger(int32_t level,const char *cname,const char *msg,va_list v){
+   static void file_logger(int32_t level,const char *cname,const char *msg,va_list v)
+   {
 
       int32_t idx = 0;
 
-      while(log == 0 && idx < 10){
+      while(log == 0 && idx < 10)
+      {
          char log_name[30];
 #ifdef __unix__
          sprintf(log_name, "/tmp/clr-trace%d.log", idx);
@@ -53,9 +54,11 @@ namespace colorertake5
    }
 
 
-   void colorer_logger_set_target(const char *logfile){
+   void colorer_logger_set_target(const char *logfile)
+   {
       if(logfile == 0) return;
-      if(log != 0){
+      if(log != 0)
+      {
          fclose(log);
       }
       log = fopen(logfile,"ab+");
@@ -63,26 +66,30 @@ namespace colorertake5
 
 
 
-   void colorer_logger_error(const char *cname,const char *msg,...){
+   void colorer_logger_error(const char *cname,const char *msg,...)
+   {
       va_list v;
       va_start(v,msg);
       colorer_logger(COLORER_FEATURE_LOGLEVEL_ERROR,cname,msg,v);
       va_end(v);
    }
 
-   void colorer_logger_warn(const char *cname,const char *msg,...){
+   void colorer_logger_warn(const char *cname,const char *msg,...)
+   {
       va_list v;
       va_start(v,msg);
       colorer_logger(COLORER_FEATURE_LOGLEVEL_WARN,cname,msg,v);
       va_end(v);
    }
-   void colorer_logger_trace(const char *cname,const char *msg,...){
+   void colorer_logger_trace(const char *cname,const char *msg,...)
+   {
       va_list v;
       va_start(v,msg);
       colorer_logger(COLORER_FEATURE_LOGLEVEL_TRACE,cname,msg,v);
       va_end(v);
    }
-   void colorer_logger_info(const char *cname,const char *msg,...){
+   void colorer_logger_info(const char *cname,const char *msg,...)
+   {
       va_list v;
       va_start(v,msg);
       colorer_logger(COLORER_FEATURE_LOGLEVEL_INFO,cname,msg,v);
@@ -91,7 +98,8 @@ namespace colorertake5
 
 
 
-   void colorer_logger(int32_t level,const char *cname,const char *msg,va_list v){
+   void colorer_logger(int32_t level,const char *cname,const char *msg,va_list v)
+   {
 
       bool found = false;
 
@@ -102,7 +110,8 @@ namespace colorertake5
             found = true;
          }
       }
-      if(!found){
+      if(!found)
+      {
          //  return;
       }
       //*/

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "user_const.h"
@@ -73,4 +73,9 @@ class simple_scroll_bar;
 #include "aura/user/user/user_validate.h"
 
 
+#ifdef WINDOWSEX
+
+#include "aura/aura/node/windows/windows_user.h"
+
+#endif
 

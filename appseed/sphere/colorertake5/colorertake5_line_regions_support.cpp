@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -46,14 +45,14 @@ namespace colorertake5
 
    void LineRegionsSupport::clear()
    {
-      
+
       for(index idx = 0; idx < lineRegions.get_size(); idx++)
       {
-         
+
          LineRegion *ln = lineRegions.element_at(idx);
-         
+
          lineRegions.set_at(idx, NULL);
-         
+
          while(ln != NULL)
          {
             LineRegion *lnn = ln->next;
@@ -67,7 +66,7 @@ namespace colorertake5
 
    index LineRegionsSupport::getLineIndex(index lno) const
    {
-      
+
       return ((firstLineNo % lineCount) + lno - firstLineNo) % lineCount;
 
    }
@@ -120,7 +119,7 @@ namespace colorertake5
       {
          CLR_WARN("LineRegionsSupport", "checkLine: line %d out of range", lno);
          return false;
-      
+
       }
       return true;
 
@@ -148,14 +147,14 @@ namespace colorertake5
 
    void LineRegionsSupport::clearLine(index lno, const char * pszLine)
    {
-      
+
       UNREFERENCED_PARAMETER(pszLine);
-      
+
       if(!checkLine(lno))
          return;
 
       LineRegion *ln = getLineRegions(lno);
-      
+
       while(ln != NULL)
       {
          LineRegion *lnn = ln->next;
@@ -174,12 +173,12 @@ namespace colorertake5
 
    void LineRegionsSupport::addRegion(index lno, const char *line, strsize sx, strsize ex, class region* region)
    {
-      
+
       UNREFERENCED_PARAMETER(line);
 
       // ignoring out of cached interval lines
 
-      if (!checkLine(lno)) 
+      if (!checkLine(lno))
          return;
 
       LineRegion *lnew = new LineRegion();
@@ -213,10 +212,10 @@ namespace colorertake5
       lr->end = -1;
       if (regionMapper != NULL)
       {
-         
+
          const RegionDefine *rd = regionMapper->getRegionDefine(region);
-         
-         if (rd == NULL) 
+
+         if (rd == NULL)
             rd = schemeStack.last()->rdef;
 
          if (rd != NULL)
@@ -252,7 +251,8 @@ namespace colorertake5
       // ignoring out of cached interval lines
       if (!checkLine(lno)) return;
       // we have to skip transparent regions
-      if (scheme_region != NULL){
+      if (scheme_region != NULL)
+      {
          LineRegion *lr = new LineRegion(*schemeStack.last());
          lr->start = ex;
          lr->end = -1;
@@ -264,9 +264,9 @@ namespace colorertake5
 
    void LineRegionsSupport::addLineRegion(index lno, LineRegion *lr)
    {
-      
+
       LineRegion *lstart = getLineRegions(lno);
-      
+
       lr->next = NULL;
       lr->prev = lr;
 

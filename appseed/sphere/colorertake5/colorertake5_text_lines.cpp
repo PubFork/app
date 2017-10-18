@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -35,8 +34,8 @@ namespace colorertake5
 
    string text_lines::getLine(index lno)
    {
-      
-      if (lines.get_size() <= lno) 
+
+      if (lines.get_size() <= lno)
          return "";
 
       return lines.element_at(lno);

@@ -51,6 +51,39 @@
     <Filter Include="Source Files\console">
       <UniqueIdentifier>{9d61e0ed-7d0c-4d0e-9855-d62d4566646e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\charguess">
+      <UniqueIdentifier>{0e4ff1c3-2310-4d08-b935-bc9fe2a0bb86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colorertake5">
+      <UniqueIdentifier>{d5569df6-6e1d-42d3-9baf-cdf0d3eb022a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\charguess">
+      <UniqueIdentifier>{1fd41552-6b70-4445-b6a1-2bef0cf4d34c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\colorertake5">
+      <UniqueIdentifier>{1d1f74d1-af4f-41ac-9f95-65ffff13c6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pcre">
+      <UniqueIdentifier>{ad567c8a-bb21-4908-9644-e77494cfc143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\pcre">
+      <UniqueIdentifier>{4410f029-b66e-41cf-8898-014276fd6fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net">
+      <UniqueIdentifier>{c092377a-d69b-4c4d-863b-368c15b1eb25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\mail">
+      <UniqueIdentifier>{feda6fb6-41e8-455b-b2c4-a0bfe6199ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\sockets">
+      <UniqueIdentifier>{1dc3ea51-13f5-4dc1-b220-c0c45d8c1ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net">
+      <UniqueIdentifier>{9d3e69b4-0a57-4c91-b401-6ec71b560ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\net\mail">
+      <UniqueIdentifier>{ed1815e7-2168-461c-8b8f-d29a2bd575aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="command\command.h">
@@ -179,6 +212,240 @@
     <ClInclude Include="sphere\sphere_main_frame.h">
       <Filter>Header Files\sphere</Filter>
     </ClInclude>
+    <ClInclude Include="charguess\big5Prober.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\charDistribution.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\charguess.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\charguess_c.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\charguess_private.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\charsetProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\codingStateMachine.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\config.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\EscCharsetProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\EUCJPProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\EUCKRProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\EUCTWProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\GB2312Prober.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\jpCntx.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\Latin1Prober.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\MBCSGroupProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\pkgInt.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\SBCharsetProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\SBCSGroupProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\SJISProber.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\types.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\universal.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="charguess\UTF8Prober.h">
+      <Filter>Header Files\charguess</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_base_editor.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_colorertake5.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_cregexp.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_default_error_handler.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_editor_listener.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_error_handler.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_error_handler_writer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_exception.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_features.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_file_input_source.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_file_type.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_file_type_impl.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_file_writer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_hrc_parser.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_hrc_parser_helpers.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_hrc_parser_impl.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_line_region.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_line_regions_compact_support.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_line_regions_support.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_line_source.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_logging.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_memory_chunks.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_memory_file.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_outline_item.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_outliner.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_pair_match.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_parsed_line_writer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_parser_factory.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_parser_factory_exception.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_region.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_region_define.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_region_handler.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_region_mapper.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_region_mapper_impl.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_scheme.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_shared_input_source.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_string_buffer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_styled_hrd_mapper.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_styled_region.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_console_viewer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_hrd_mapper.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_lines.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_parser.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_parser_helpers.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_parser_impl.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_text_region.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_Writer.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="colorertake5\colorertake5_xmldom.h">
+      <Filter>Header Files\colorertake5</Filter>
+    </ClInclude>
+    <ClInclude Include="pcre\pcre.h">
+      <Filter>Header Files\pcre</Filter>
+    </ClInclude>
+    <ClInclude Include="pcre\pcre_util.h">
+      <Filter>Header Files\pcre</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\mail.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\mail_pop3.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\pop3_socket.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="net\mail\simple_pop3.h">
+      <Filter>Header Files\net\mail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="calculator\calculator_application.cpp">
@@ -288,6 +555,153 @@
     </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\_charguess.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\_colorertake5.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_base_editor.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_colorertake5.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_default_error_handler.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_error_handler_writer.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_exception.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_helpers.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_regions_compact_support.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_regions_support.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_source.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_logging.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_outliner.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_parsed_line_writer.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_parser_factory.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_region_handler.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_region_mapper_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_styled_hrd_mapper.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_hrd_mapper.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_lines.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_parser_helpers.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_parser_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\TextConsoleViewer.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\big5Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\charDistribution.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\charguess.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EscCharsetProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EscSM.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCJPProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCKRProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCTWProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\GB2312Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\jpCntx.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangBulgarianModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangCyrillicModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangGreekModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangHungarianModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangThaiModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\Latin1Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\MBCSGroupProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\MBCSSM.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SBCharsetProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SBCSGroupProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SJISProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\universal.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\UTF8Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="pcre\pcre.cpp">
+      <Filter>Source Files\pcre</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\_mail.cpp">
+      <Filter>Source Files\net\mail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

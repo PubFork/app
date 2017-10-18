@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -46,6 +46,8 @@ namespace aura
 
          ::user::copydesk *                                       m_pcopydesk;
 
+         ::user::interaction *                                    m_puiMouseMoveCapture;
+         ::user::interaction *                                    m_puiLastLButtonDown;
 
 
          index                                                    m_iEdge;
@@ -234,7 +236,7 @@ namespace aura
          virtual bool ReleaseCapture();
          virtual sp(::user::interaction) GetCapture();
 
-         void translate_os_key_message(::user::key * pkey);
+         virtual void translate_os_key_message(::user::key * pkey);
          virtual bool on_create_frame_window();
 //         virtual void on_finally_focus_set(::user::elemental * pelementalFocus);
 

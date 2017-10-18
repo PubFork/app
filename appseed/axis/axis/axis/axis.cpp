@@ -40,24 +40,6 @@ CLASS_DECL_AXIS int_bool defer_axis_init()
    if(!defer_aura_init())
       return false;
 
-#ifndef SMALLCODE
-
-   try
-   {
-
-      FreeImage_Initialise(FALSE);
-
-   }
-   catch (...)
-   {
-
-      ::simple_message_box(NULL, "Failure to initialize FreeImage (::core::init_core)", "FreeImage_Initialise failure", MB_ICONEXCLAMATION);
-
-      return false;
-
-   }
-
-#endif // SMALLCODE
 
    g_iAxisRefCount++;
 
@@ -97,21 +79,6 @@ CLASS_DECL_AXIS int_bool defer_axis_term()
    __node_axis_pos_term();
 
    ::axis::static_start::term();
-
-#ifndef SMALLCODE
-
-   try
-   {
-
-      FreeImage_DeInitialise();
-
-   }
-   catch (...)
-   {
-
-   }
-
-#endif SMALLCODE
 
    defer_aura_term();
 

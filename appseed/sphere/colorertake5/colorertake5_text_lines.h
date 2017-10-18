@@ -11,34 +11,34 @@ namespace colorertake5
 
    @ingroup colorer_viewer
    */
-   class CLASS_DECL_AURA text_lines :
+   class CLASS_DECL_SPHERE text_lines :
       public line_source
    {
-   public:
+      public:
 
 
-      stringa lines;
+         stringa lines;
 
 
-      /** Empty constructor. Does nothing.
-      */
-      text_lines();
-      ~text_lines();
+         /** Empty constructor. Does nothing.
+         */
+         text_lines();
+         ~text_lines();
 
-      /** Loads specified file into vector of strings.
-      @param fileName File to load.
-      @param inputEncoding Input file encoding.
-      @param tab2spaces Points, if we have to convert all tabs in file into spaces.
-      */
-      //  void loadFile(string fileName, string inputEncoding, bool tab2spaces);
-      /** Returns loaded file name.
-      */
-      //string getFileName();
-      /** Returns total lines ::count in text. */
-      ::count getLineCount();
-      string getLine(index lno);
+         /** Loads specified file into vector of strings.
+         @param fileName File to load.
+         @param inputEncoding Input file encoding.
+         @param tab2spaces Points, if we have to convert all tabs in file into spaces.
+         */
+         //  void loadFile(string fileName, string inputEncoding, bool tab2spaces);
+         /** Returns loaded file name.
+         */
+         //string getFileName();
+         /** Returns total lines ::count in text. */
+         ::count getLineCount();
+         string getLine(index lno);
 
-      void replaceTabs(index lno);
+         void replaceTabs(index lno);
 
    };
 

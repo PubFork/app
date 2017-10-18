@@ -6,31 +6,31 @@
  * Parsing problems and warning.
  * @ingroup colorer
  */
-class CLASS_DECL_AURA ErrorHandler
+class CLASS_DECL_SPHERE ErrorHandler
 {
-public:
-  /**
-   * Nonfatal parse error.
-   * Called when target class finds some non-fatal error.
-   * @param msg Error message
-   */
-  virtual void error(const string & msg) = 0;
-  /**
-   * Fatal parse error.
-   * Called when target class finds fatal error, which could
-   * significantly change or break expected behaviour.
-   * @param msg Error message
-   */
-  virtual void fatalError(const string & msg) = 0;
-  /**
-   * Simple warnings/info messages.
-   * Called when target class want to inform application
-   * about some warnings or informational messages.
-   * @param msg Warning message
-   */
-  virtual void warning(const string & msg) = 0;
+   public:
+      /**
+       * Nonfatal parse error.
+       * Called when target class finds some non-fatal error.
+       * @param msg Error message
+       */
+      virtual void error(const string & msg) = 0;
+      /**
+       * Fatal parse error.
+       * Called when target class finds fatal error, which could
+       * significantly change or break expected behaviour.
+       * @param msg Error message
+       */
+      virtual void fatalError(const string & msg) = 0;
+      /**
+       * Simple warnings/info messages.
+       * Called when target class want to inform application
+       * about some warnings or informational messages.
+       * @param msg Warning message
+       */
+      virtual void warning(const string & msg) = 0;
 
-  virtual ~ErrorHandler(){};
+      virtual ~ErrorHandler() {};
 };
 
 /* ***** BEGIN LICENSE BLOCK *****
@@ -51,7 +51,7 @@ public:
  * The Initial Developer of the Original Code is
  * Cail Lomecb <cail@nm.ru>.
  * Portions created by the Initial Developer are Copyright (C) 1999-2005
- * the Initial Developer. 
+ * the Initial Developer.
  *
  * Contributor(s):
  *

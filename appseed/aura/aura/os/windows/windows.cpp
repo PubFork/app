@@ -1,6 +1,11 @@
 #include "framework.h"
 #include <VersionHelpers.h>
 
+#ifndef USE_OS_IMAGE_LOADER
+
+#include "FreeImage/FreeImage.h"
+
+#endif
 
 #undef new
 #define min MIN
@@ -93,9 +98,9 @@ bool defer_co_initialize_ex(bool bMultiThread)
 
 }
 
+
 bool __node_aura_pre_init()
 {
-
 
    g_iWsaStartup = WSAStartup(0x101, &g_wsadata);
 
@@ -108,13 +113,16 @@ bool __node_aura_pre_init()
 
    }
 
-
    output_debug_string(L"__node_aura_pre_init\n");
 
    xxdebug_box("__node_aura_pre_init","box",MB_OK);
+
    g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
+
    g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
+
    g_gdiplusToken             = NULL;
+
    g_gdiplusHookToken         = NULL;
 
    g_pgdiplusStartupInput->SuppressBackgroundThread = TRUE;
@@ -130,11 +138,7 @@ bool __node_aura_pre_init()
 
    }
 
-
-
-
    statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
-
 
    if(statusStartup != Gdiplus::Ok)
    {
@@ -144,6 +148,26 @@ bool __node_aura_pre_init()
       return 0;
 
    }
+
+#ifndef USE_OS_IMAGE_LOADER
+
+   try
+   {
+
+      FreeImage_Initialise(FALSE);
+
+   }
+   catch (...)
+   {
+
+      ::simple_message_box(NULL, "Failure to initialize FreeImage (::core::init_core)", "FreeImage_Initialise failure", MB_ICONEXCLAMATION);
+
+      return false;
+
+   }
+
+#endif // SMALLCODE
+
 
 
    return true;
@@ -180,6 +204,24 @@ bool __node_aura_pre_term()
 
 bool __node_aura_pos_term()
 {
+
+
+#ifndef USE_OS_IMAGE_LOADER
+
+   try
+   {
+
+      FreeImage_DeInitialise();
+
+   }
+   catch (...)
+   {
+
+   }
+
+#endif // USE_OS_IMAGE_LOADER
+
+
    g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
 
 

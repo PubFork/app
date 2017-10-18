@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
 //#include "fiasco_finder.h"
 
@@ -808,6 +808,12 @@ namespace axis
    }
 
 
+   void session::translate_os_key_message(::user::key * pkey)
+   {
+
+      Session.keyboard().translate_os_key_message(pkey);
+
+   }
 
 
 

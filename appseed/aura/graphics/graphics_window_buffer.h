@@ -65,7 +65,7 @@ class CLASS_DECL_AURA window_double_buffer :
 
 #ifdef WINDOWSEX
 
-#include "base/base/os/windows/windows_window_buffer.h"
+#include "aura/aura/os/windows/windows_window_buffer.h"
 
 #endif
 

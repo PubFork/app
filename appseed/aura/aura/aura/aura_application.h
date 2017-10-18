@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef INSTALL_SUBSYSTEM
 
@@ -691,6 +691,13 @@ namespace aura
 
 
          virtual ::user::document * place_hold(::user::interaction * pui);
+
+
+         virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
+         virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
+
+
+
    };
 
 

@@ -799,7 +799,14 @@ namespace user
 
 
 
+namespace user
+{
 
+
+   CLASS_DECL_AURA void __reposition_window(SIZEPARENTPARAMS * lpLayout, ::user::interaction * pui, LPCRECT lpRect);
+
+
+} // namespace user
 
 
 

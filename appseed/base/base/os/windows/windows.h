@@ -64,13 +64,9 @@ namespace base
 } // namespace base
 
 
-
-
-
 #endif
 
-
-#include "windows_window_buffer.h"
+//#include "windows_window_buffer.h"
 
 #include "windows_extract_icon.h"
 

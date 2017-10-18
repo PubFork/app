@@ -5,7 +5,7 @@ namespace user
 {
 
 
-   class CLASS_DECL_AURA control_descriptor :
+   class CLASS_DECL_BASE control_descriptor :
       virtual public object
    {
       public:

@@ -1,39 +1,43 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
+
 
 
 namespace colorertake5
 {
 
 
-RegionDefine *RegionMapperImpl::getRegionDefine(class region *region){
-  if (region == NULL) return NULL;
-  RegionDefine *rd = NULL;
-  if (region->getID() < regionDefinesVector.get_size())
-    rd = regionDefinesVector.element_at(region->getID());
-  if (rd != NULL) return rd;
+   RegionDefine *RegionMapperImpl::getRegionDefine(class region *region)
+   {
+      if (region == NULL) return NULL;
+      RegionDefine *rd = NULL;
+      if (region->getID() < regionDefinesVector.get_size())
+         rd = regionDefinesVector.element_at(region->getID());
+      if (rd != NULL) return rd;
 
-  if (regionDefinesVector.get_size() < region->getID()+1)
-    regionDefinesVector.allocate(region->getID()*2);
+      if (regionDefinesVector.get_size() < region->getID()+1)
+         regionDefinesVector.allocate(region->getID()*2);
 
-  RegionDefine *rd_new = regionDefines[region->getName()];
-  if (rd_new != NULL){
-    regionDefinesVector.set_at(region->getID(), rd_new);
-    return rd_new;
-  };
+      RegionDefine *rd_new = regionDefines[region->getName()];
+      if (rd_new != NULL)
+      {
+         regionDefinesVector.set_at(region->getID(), rd_new);
+         return rd_new;
+      };
 
-  if (region->getParent()){
-    rd = getRegionDefine(region->getParent());
-    regionDefinesVector.set_at(region->getID(), rd);
-  };
-  return rd;
-};
+      if (region->getParent())
+      {
+         rd = getRegionDefine(region->getParent());
+         regionDefinesVector.set_at(region->getID(), rd);
+      };
+      return rd;
+   };
 
-/** Returns region mapping by it's full qualified name.
-*/
-RegionDefine *RegionMapperImpl::getRegionDefine(const char * name){
-  return regionDefines[name];
-};
+   /** Returns region mapping by it's full qualified name.
+   */
+   RegionDefine *RegionMapperImpl::getRegionDefine(const char * name)
+   {
+      return regionDefines[name];
+   };
 
 
 } // namespace colorertake5

@@ -1,9 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
-#include "base/user/user.h"
-#include "aura/node/windows/windows.h"
-#include "windows.h"
-#include <windows.h>
-#include <shobjidl.h>
+﻿#include "framework.h"
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
@@ -12,13 +7,13 @@
 //const GUID IID_ITaskbarList2 = { 0x602D4995, 0xB13A, 0x429b,{ 0xA6, 0x6E, 0x19, 0x35, 0xE4, 0x4F, 0x43, 0x17 } };
 //const GUID IID_ITaskList3 = { 0xEA1AFB91, 0x9E28, 0x4B86,{ 0x90, 0xE9, 0x9E, 0x9F, 0x8A, 0x5E, 0xEF, 0xAF } };
 
-CLASS_DECL_BASE int g_iMouseDown = 0;
+CLASS_DECL_AURA int g_iMouseDown = 0;
 
-CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
-CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time2;
+CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
+CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time2;
 
 
-extern CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
+extern CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
 thread_int_ptr < HHOOK > t_hHookOldCbtFilter;
 thread_pointer < ::windows::interaction_impl  > t_pwndInit;
@@ -26,6 +21,8 @@ thread_pointer < ::windows::interaction_impl  > t_pwndInit;
 //LRESULT CALLBACK __activation_window_procedure(oswindow oswindow,UINT nMsg,WPARAM wParam,LPARAM lParam);
 
 const char * gen_OldWndProc = "::core::OldWndProc423";
+
+CLASS_DECL_AURA bool hook_window_create(::windows::interaction_impl * pwindow);
 
 
 #define __WNDCLASS(s)    L"ca2" L##s
@@ -318,7 +315,7 @@ namespace windows
 
    // Change a interaction_impl's style
 
-   __STATIC bool CLASS_DECL_BASE __modify_style(oswindow oswindow, int32_t nStyleOffset,
+   __STATIC bool CLASS_DECL_AURA __modify_style(oswindow oswindow, int32_t nStyleOffset,
          uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       ASSERT(oswindow != NULL);
@@ -1171,30 +1168,30 @@ namespace windows
 
    bool interaction_impl::GetWindowInfo(PWINDOWINFO pwi) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
-      return ::GetWindowInfo(((interaction_impl *) this)->get_handle(), pwi) != FALSE;
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
+      return ::GetWindowInfo(((interaction_impl *)this)->get_handle(), pwi) != FALSE;
    }
 
    ::window_sp interaction_impl::GetAncestor(UINT gaFlags) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
-      return  System.ui_from_handle(::GetAncestor(((interaction_impl *) this)->get_handle(), gaFlags));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
+      return  System.ui_from_handle(::GetAncestor(((interaction_impl *)this)->get_handle(), gaFlags));
    }
 
 
 
    bool interaction_impl::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
       ASSERT(psbi != NULL);
-      return ::GetScrollBarInfo(((interaction_impl *) this)->get_handle(), idObject, psbi) != FALSE;
+      return ::GetScrollBarInfo(((interaction_impl *)this)->get_handle(), idObject, psbi) != FALSE;
    }
 
    bool interaction_impl::GetTitleBarInfo(PTITLEBARINFO pti) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
       ASSERT(pti != NULL);
-      return ::GetTitleBarInfo(((interaction_impl *) this)->get_handle(), pti) != FALSE;
+      return ::GetTitleBarInfo(((interaction_impl *)this)->get_handle(), pti) != FALSE;
    }
 
    bool interaction_impl::AnimateWindow(uint32_t dwTime, uint32_t dwFlags)
@@ -1237,13 +1234,13 @@ namespace windows
 
    bool interaction_impl::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, uint32_t *pdwFlags) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
-      return ::GetLayeredWindowAttributes(((interaction_impl *) this)->get_handle(), pcrKey, pbAlpha, (LPDWORD)pdwFlags) != FALSE;
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
+      return ::GetLayeredWindowAttributes(((interaction_impl *)this)->get_handle(), pcrKey, pbAlpha, (LPDWORD)pdwFlags) != FALSE;
    }
 
    bool interaction_impl::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
       ::exception::throw_not_implemented(get_app());
       //      return ::PrintWindow(get_handle(), (HDC)(dynamic_cast<::windows::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
       return false;
@@ -1283,7 +1280,7 @@ namespace windows
       TRACE(::aura::trace::category_AppMsg, 0, "WinHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
       // finally, run the Windows Help engine
-      /* trans   if (!::WinHelp(NODE_WINDOW(pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
+      /* trans   if (!::WinHelp((pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
       {
       // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
       System.simple_message_box("Failed to launch help");
@@ -1311,7 +1308,7 @@ namespace windows
    TRACE(::aura::trace::category_AppMsg, 0, "HtmlHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
    // run the HTML Help engine
-   /* trans   if (!::core::HtmlHelp(NODE_WINDOW(pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
+   /* trans   if (!::core::HtmlHelp((pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
    {
    // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
    System.simple_message_box("Failed to launch help");
@@ -1338,8 +1335,8 @@ namespace windows
 
       // need to use top level parent (for the case where get_handle() is in DLL)
       sp(::user::interaction) pwindow = EnsureTopLevel();
-      NODE_WINDOW(pwindow.m_p)->send_message(WM_CANCELMODE);
-      NODE_WINDOW(pwindow.m_p)->send_message_to_descendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
+      (pwindow.m_p)->send_message(WM_CANCELMODE);
+      (pwindow.m_p)->send_message_to_descendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // attempt to cancel capture
       oswindow oswindow_Capture = ::GetCapture();
@@ -1379,7 +1376,7 @@ namespace windows
 
       command_target::_001OnCmdMsg(pcommand);
 
-      if(pcommand->m_bRet)
+      if (pcommand->m_bRet)
          return;
 
       command_target * pcmdtarget = dynamic_cast <command_target *> (this);
@@ -1532,9 +1529,9 @@ namespace windows
          bool bIconic = ::IsIconic(get_handle()) != FALSE;
          Session.m_puiLastLButtonDown = m_pui;
       }
-      else if(uiMessage == WM_MOUSEMOVE
-              || uiMessage == WM_SETCURSOR
-              || uiMessage == WM_NCMOUSEMOVE)
+      else if (uiMessage == WM_MOUSEMOVE
+               || uiMessage == WM_SETCURSOR
+               || uiMessage == WM_NCMOUSEMOVE)
       {
 
       }
@@ -1669,6 +1666,15 @@ namespace windows
             //if(rectWindow.top >= 0)
             pmouse->m_pt.y += (LONG)rectWindow.top;
          }
+
+
+         if (uiMessage == WM_LBUTTONDOWN)
+         {
+
+            TRACE("WM_LBUTTONDOWN");
+
+         }
+
 
          if (uiMessage == WM_MOUSEMOVE)
          {
@@ -1845,7 +1851,7 @@ namespace windows
    {
       // special activate logic for floating toolbars and palettes
       ::window_sp pActiveWnd = GetForegroundWindow();
-      if (pActiveWnd == NULL || !(NODE_WINDOW(pActiveWnd)->get_handle() == get_handle() || ::IsChild(NODE_WINDOW(pActiveWnd)->get_handle(), get_handle())))
+      if (pActiveWnd == NULL || !((pActiveWnd)->get_handle() == get_handle() || ::IsChild((pActiveWnd)->get_handle(), get_handle())))
       {
          // clicking on floating frame when it does not have
          // focus itself -- activate the toplevel frame instead.
@@ -2245,7 +2251,7 @@ namespace windows
 
       // check if in permanent map, if it is reflect it (could be OLE control)
       ::window_sp pwindow = System.ui_from_handle(oswindow_Child);
-      ASSERT(pwindow == NULL || NODE_WINDOW(pwindow)->get_handle() == oswindow_Child);
+      ASSERT(pwindow == NULL || (pwindow)->get_handle() == oswindow_Child);
       if (pwindow == NULL)
       {
          return FALSE;
@@ -2253,7 +2259,7 @@ namespace windows
 
       // only OLE controls and permanent windows will get reflected msgs
       ASSERT(pwindow != NULL);
-      return NODE_WINDOW(pwindow)->OnChildNotify(pbase);
+      return (pwindow)->OnChildNotify(pbase);
    }
 
    bool interaction_impl::OnChildNotify(::message::base * pbase)
@@ -2591,7 +2597,7 @@ namespace windows
                      }
 
                   }
-                  else if(::IsWindowVisible(get_handle()))
+                  else if (::IsWindowVisible(get_handle()))
                   {
 
                      ::RedrawWindow(get_handle(), NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);
@@ -2608,7 +2614,7 @@ namespace windows
 
                   double dWait = dPeriod - fmod(dNow, dPeriod);
 
-                  iFrameId = (index) (dNow / dPeriod);
+                  iFrameId = (index)(dNow / dPeriod);
 
                   ::count cLost = iFrameId - iLastFrameId - 1;
 
@@ -2626,7 +2632,7 @@ namespace windows
                   if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE))
                   {
 
-                     Sleep(DWORD (dWait));
+                     Sleep(DWORD(dWait));
 
                   }
                   else
@@ -2661,7 +2667,7 @@ namespace windows
 
                   }
 
-                  m_dUpdateScreenFps = (double) (daFrame.get_size());
+                  m_dUpdateScreenFps = (double)(daFrame.get_size());
 
                   daFrame.add(dNow);
 
@@ -2741,7 +2747,7 @@ namespace windows
             m_event.ResetEvent();
             m_oswindow = oswindow;
             m_hdc = hdc;
-            __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::multithreading::priority_above_normal);
+            __begin_thread(papp, &print_window::s_print_window, (LPVOID)this, ::multithreading::priority_above_normal);
             if (m_event.wait(millis(dwTimeout)).timeout())
             {
                TRACE("print_window::time_out");
@@ -3163,9 +3169,9 @@ namespace windows
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::window_sp pwindow, UINT)
    {
-      ASSERT(pwindow != NULL && NODE_WINDOW(pwindow)->get_handle() != NULL);
+      ASSERT(pwindow != NULL && (pwindow)->get_handle() != NULL);
       //      LRESULT lResult;
-      //if (NODE_WINDOW(pwindow)->OnChildNotify(&lResult))
+      //if ((pwindow)->OnChildNotify(&lResult))
       //   return (HBRUSH)lResult;     // eat it
       return (HBRUSH)Default();
    }
@@ -3552,10 +3558,10 @@ namespace windows
 
       ASSERT(pParent != NULL);
 
-      ASSERT(::IsWindow(NODE_WINDOW(pParent)->get_handle()));
+      ASSERT(::IsWindow((pParent)->get_handle()));
 
       // check for normal dialog control first
-      oswindow oswindow_Control = ::GetDlgItem(NODE_WINDOW(pParent)->get_handle(), nID);
+      oswindow oswindow_Control = ::GetDlgItem((pParent)->get_handle(), nID);
       if (oswindow_Control != NULL)
          return subclass_window(oswindow_Control);
 
@@ -4262,7 +4268,7 @@ namespace windows
    bool interaction_impl::operator==(const interaction_impl& wnd) const
    {
 
-      return (NODE_WINDOW((interaction_impl *)&wnd)->get_handle()) == ((interaction_impl *) this)->get_handle();
+      return (((interaction_impl *)&wnd)->get_handle()) == ((interaction_impl *)this)->get_handle();
 
    }
 
@@ -4270,7 +4276,7 @@ namespace windows
    bool interaction_impl::operator!=(const interaction_impl& wnd) const
    {
 
-      return (NODE_WINDOW((interaction_impl *)&wnd)->get_handle()) != ((interaction_impl *) this)->get_handle();
+      return (((interaction_impl *)&wnd)->get_handle()) != ((interaction_impl *)this)->get_handle();
 
    }
 
@@ -4338,9 +4344,9 @@ namespace windows
    bool interaction_impl::DragDetect(POINT pt) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return ::DragDetect(((interaction_impl *) this)->get_handle(), pt) != FALSE;
+      return ::DragDetect(((interaction_impl *)this)->get_handle(), pt) != FALSE;
 
    }
 
@@ -4952,11 +4958,11 @@ namespace windows
    void interaction_impl::get_child_by_id(id id, oswindow* poswindow_) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
       ASSERT(poswindow_ != NULL);
 
-      *poswindow_ = ::GetDlgItem(((interaction_impl *) this)->get_handle(), (int32_t)id);
+      *poswindow_ = ::GetDlgItem(((interaction_impl *)this)->get_handle(), (int32_t)id);
 
    }
 
@@ -4964,9 +4970,9 @@ namespace windows
    UINT interaction_impl::GetChildByIdInt(int32_t nID, BOOL * lpTrans, bool bSigned) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return ::GetDlgItemInt(((interaction_impl *) this)->get_handle(), nID, lpTrans, bSigned);
+      return ::GetDlgItemInt(((interaction_impl *)this)->get_handle(), nID, lpTrans, bSigned);
 
    }
 
@@ -4974,9 +4980,9 @@ namespace windows
    int32_t interaction_impl::GetChildByIdText(int32_t nID, LPTSTR lpStr, int32_t nMaxCount) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return ::GetDlgItemText(((interaction_impl *) this)->get_handle(), nID, lpStr, nMaxCount);
+      return ::GetDlgItemText(((interaction_impl *)this)->get_handle(), nID, lpStr, nMaxCount);
 
    }
 
@@ -4984,9 +4990,9 @@ namespace windows
    ::window_sp interaction_impl::GetNextDlgGroupItem(::window_sp pWndCtl, bool bPrevious) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return System.ui_from_handle(::GetNextDlgGroupItem(((interaction_impl *) this)->get_handle(), pWndCtl->get_handle(), bPrevious));
+      return System.ui_from_handle(::GetNextDlgGroupItem(((interaction_impl *)this)->get_handle(), pWndCtl->get_handle(), bPrevious));
 
    }
 
@@ -4994,22 +5000,22 @@ namespace windows
    ::window_sp interaction_impl::GetNextDlgTabItem(::window_sp pWndCtl, bool bPrevious) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return System.ui_from_handle(::GetNextDlgTabItem(((interaction_impl *) this)->get_handle(), pWndCtl->get_handle(), bPrevious));
+      return System.ui_from_handle(::GetNextDlgTabItem(((interaction_impl *)this)->get_handle(), pWndCtl->get_handle(), bPrevious));
 
    }
 
 
    UINT interaction_impl::IsDlgButtonChecked(int32_t nIDButton) const
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
-      return ::IsDlgButtonChecked(((interaction_impl *) this)->get_handle(), nIDButton);
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
+      return ::IsDlgButtonChecked(((interaction_impl *)this)->get_handle(), nIDButton);
    }
    LPARAM interaction_impl::SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam, LPARAM lParam)
    {
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
-      return ::SendDlgItemMessage(((interaction_impl *) this)->get_handle(), nID, message, wParam, lParam);
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
+      return ::SendDlgItemMessage(((interaction_impl *)this)->get_handle(), nID, message, wParam, lParam);
    }
    void interaction_impl::SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned)
    {
@@ -5244,7 +5250,7 @@ namespace windows
    HICON interaction_impl::GetIcon(bool bBigIcon) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
       return (HICON)const_cast <::windows::interaction_impl *> (this)->send_message(WM_GETICON, bBigIcon);
 
@@ -5253,7 +5259,7 @@ namespace windows
    void interaction_impl::Print(::draw2d::graphics * pgraphics, uint32_t dwFlags) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
       ::exception::throw_not_implemented(get_app());
       //      const_cast < ::windows::interaction_impl * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::windows::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
@@ -5263,7 +5269,7 @@ namespace windows
    void interaction_impl::PrintClient(::draw2d::graphics * pgraphics, uint32_t dwFlags) const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
       ::exception::throw_not_implemented(get_app());
       //const_cast < ::windows::interaction_impl * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::windows::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
@@ -5273,18 +5279,18 @@ namespace windows
    bool interaction_impl::SetWindowContextHelpId(uint32_t dwContextHelpId)
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return ::SetWindowContextHelpId(((interaction_impl *) this)->get_handle(), dwContextHelpId) != FALSE;
+      return ::SetWindowContextHelpId(((interaction_impl *)this)->get_handle(), dwContextHelpId) != FALSE;
 
    }
 
    uint32_t interaction_impl::GetWindowContextHelpId() const
    {
 
-      ASSERT(::IsWindow(((interaction_impl *) this)->get_handle()));
+      ASSERT(::IsWindow(((interaction_impl *)this)->get_handle()));
 
-      return ::GetWindowContextHelpId(((interaction_impl *) this)->get_handle());
+      return ::GetWindowContextHelpId(((interaction_impl *)this)->get_handle());
 
    }
 
@@ -6248,14 +6254,14 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
 
    }
 
-   if (::aura::system::g_p->m_pbasesystem == NULL)
+   if (::aura::system::g_p->m_paurasystem == NULL)
    {
 
       return 0;
 
    }
 
-   ::user::interaction * pui = ::aura::system::g_p->m_pbasesystem->ui_from_handle(oswindow);
+   ::user::interaction * pui = ::aura::system::g_p->m_paurasystem->ui_from_handle(oswindow);
 
    //if(message == WM_SETCURSOR)
    //{
@@ -6327,7 +6333,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT message, WPARAM wpar
 
 
 // always indirectly accessed via __get_window_procedure
-WNDPROC CLASS_DECL_BASE __get_window_procedure()
+WNDPROC CLASS_DECL_AURA __get_window_procedure()
 {
    //return __get_module_state()->m_pfn_window_procedure;
    return &::__window_procedure;
@@ -6336,7 +6342,7 @@ WNDPROC CLASS_DECL_BASE __get_window_procedure()
 
 
 
-CLASS_DECL_BASE bool hook_window_create(::windows::interaction_impl * pwindow)
+CLASS_DECL_AURA bool hook_window_create(::windows::interaction_impl * pwindow)
 {
 
    if (pwindow == NULL)
@@ -6375,7 +6381,7 @@ CLASS_DECL_BASE bool hook_window_create(::windows::interaction_impl * pwindow)
 
 }
 
-CLASS_DECL_BASE bool unhook_window_create()
+CLASS_DECL_AURA bool unhook_window_create()
 {
 
    if (t_pwndInit != NULL)
@@ -6390,7 +6396,7 @@ CLASS_DECL_BASE bool unhook_window_create()
 
 __declspec(thread) unichar t_szTempClassName[___TEMP_CLASS_NAME_SIZE] = { 0 };
 
-CLASS_DECL_BASE const unichar * __register_window_class(::aura::application * papp, UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
+CLASS_DECL_AURA const unichar * __register_window_class(::aura::application * papp, UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
    // Returns a temporary string name for the class
    //  Save in a string if you want to use it for a long time
@@ -6410,7 +6416,7 @@ CLASS_DECL_BASE const unichar * __register_window_class(::aura::application * pa
 
    // see if the class already exists
    WNDCLASSW wndcls;
-   if (::GetClassInfoW(papp->m_paxissystem->m_hinstance, lpszName, &wndcls))
+   if (::GetClassInfoW(papp->m_paurasystem->m_hinstance, lpszName, &wndcls))
    {
       // already registered, assert everything is good
       ASSERT(wndcls.style == nClassStyle);
@@ -6441,28 +6447,28 @@ CLASS_DECL_BASE const unichar * __register_window_class(::aura::application * pa
 }
 
 
-__STATIC void CLASS_DECL_BASE
+__STATIC void CLASS_DECL_AURA
 __handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
 {
    ASSERT(pwindow != NULL);
 
    // send WM_ACTIVATETOPLEVEL when top-level parents change
-   if (!(NODE_WINDOW(pwindow)->GetStyle() & WS_CHILD))
+   if (!((pwindow)->GetStyle() & WS_CHILD))
    {
-      sp(::user::interaction) pTopLevel = NODE_WINDOW(pwindow)->GetTopLevel();
-      if (pTopLevel && (pWndOther == NULL || !::IsWindow(NODE_WINDOW(pWndOther)->get_handle()) || pTopLevel != NODE_WINDOW(pWndOther)->GetTopLevel()))
+      sp(::user::interaction) pTopLevel = (pwindow)->GetTopLevel();
+      if (pTopLevel && (pWndOther == NULL || !::IsWindow((pWndOther)->get_handle()) || pTopLevel != (pWndOther)->GetTopLevel()))
       {
          // lParam points to interaction_impl getting the WM_ACTIVATE message and
          //  oswindow_Other from the WM_ACTIVATE.
          oswindow oswindow_2[2];
-         oswindow_2[0] = NODE_WINDOW(pwindow)->get_handle();
-         if (pWndOther == NULL || NODE_WINDOW(pWndOther) == NULL)
+         oswindow_2[0] = (pwindow)->get_handle();
+         if (pWndOther == NULL || (pWndOther) == NULL)
          {
             oswindow_2[1] = NULL;
          }
          else
          {
-            oswindow_2[1] = NODE_WINDOW(pWndOther)->get_handle();
+            oswindow_2[1] = (pWndOther)->get_handle();
          }
          // send it...
          pTopLevel->send_message(WM_ACTIVATETOPLEVEL, nState, (LPARAM)&oswindow_2[0]);
@@ -6470,7 +6476,7 @@ __handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
    }
 }
 
-//__STATIC bool CLASS_DECL_BASE
+//__STATIC bool CLASS_DECL_AURA
 //__handle_set_cursor(::window_sp pwindow,UINT nHitTest,UINT nMsg)
 //{
 //   if(nHitTest == HTERROR &&
@@ -6478,7 +6484,7 @@ __handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
 //      nMsg == WM_RBUTTONDOWN))
 //   {
 //      // activate the last active interaction_impl if not active
-//      sp(::user::interaction) pLastActive = NODE_WINDOW(pwindow)->GetTopLevel();
+//      sp(::user::interaction) pLastActive = (pwindow)->GetTopLevel();
 //      if(pLastActive != NULL)
 //         pLastActive = pLastActive->GetLastActivePopup();
 //      if(pLastActive != NULL &&
@@ -6497,7 +6503,7 @@ __handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
 /////////////////////////////////////////////////////////////////////////////
 // Standard init called by WinMain
 
-__STATIC bool CLASS_DECL_BASE __register_with_icon(WNDCLASSW* pWndCls,
+__STATIC bool CLASS_DECL_AURA __register_with_icon(WNDCLASSW* pWndCls,
       const unichar * lpszClassName, UINT nIDIcon)
 {
    pWndCls->lpszClassName = lpszClassName;
@@ -6506,7 +6512,7 @@ __STATIC bool CLASS_DECL_BASE __register_with_icon(WNDCLASSW* pWndCls,
 }
 
 
-wstring CLASS_DECL_BASE get_user_interaction_window_class(::user::interaction * pui)
+wstring CLASS_DECL_AURA get_user_interaction_window_class(::user::interaction * pui)
 {
 
    ::user::interaction::e_type etype = pui->get_window_type();
@@ -6607,7 +6613,7 @@ wstring CLASS_DECL_BASE get_user_interaction_window_class(::user::interaction * 
 // Additional helpers for WNDCLASS init
 
 // like RegisterClass, except will automatically call UnregisterClass
-bool CLASS_DECL_BASE __register_class(WNDCLASSW* lpWndClass)
+bool CLASS_DECL_AURA __register_class(WNDCLASSW* lpWndClass)
 {
 
    WNDCLASSW wndcls;

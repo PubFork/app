@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -164,7 +163,8 @@ namespace colorertake5
    //if (hash == NULL) return "";
    //return hash->key(idx);
    //};
-   string ParserFactory::getHRDescription(const string &classID, const string &nameID){
+   string ParserFactory::getHRDescription(const string &classID, const string &nameID)
+   {
       return hrdDescriptions[classID+"-"+nameID];
    };
 
@@ -238,7 +238,8 @@ namespace colorertake5
       return hrcParser;
    }
 
-   text_parser *ParserFactory::createTextParser(){
+   text_parser *ParserFactory::createTextParser()
+   {
       return new text_parser_impl();
    };
 
@@ -309,7 +310,8 @@ namespace colorertake5
 
    }
 
-   TextHRDMapper *ParserFactory::createTextMapper(string nameID){
+   TextHRDMapper *ParserFactory::createTextMapper(string nameID)
+   {
       // fixed class 'text'
       string_map<stringa> *hrdClass = hrdLocations.pget(("text"));
       if (hrdClass == NULL) throw ParserFactoryException(get_app(), string("can't find hrdClass 'text'"));

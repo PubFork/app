@@ -5,7 +5,7 @@ namespace user
 {
 
 
-   class CLASS_DECL_AURA control_descriptor_set :
+   class CLASS_DECL_BASE control_descriptor_set :
       public smart_pointer_array < control_descriptor >
    {
       public:

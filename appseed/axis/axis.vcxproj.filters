@@ -147,17 +147,11 @@
     <Filter Include="Header Files\html_lite\html">
       <UniqueIdentifier>{90d87260-7262-40b1-87bf-aa8e5835e0bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{f5886d58-9ab2-46c8-9783-0b9b55fe9850}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\graphics">
       <UniqueIdentifier>{f1f1fdcd-f8f5-45e5-bb97-8e8c275463e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\graphics\visual">
       <UniqueIdentifier>{2fd8069a-04bf-4fa7-9504-9fe0322ce2cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics\visual">
-      <UniqueIdentifier>{abfed922-579a-4284-98d6-8ae12d276ebb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -805,23 +799,11 @@
     <ClCompile Include="user\userpresence\userpresence_userpresence.cpp">
       <Filter>Source Files\user\userpresence</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_print_job.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_copydesk.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_elemental.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="axis\node\metrowin\metrowin_axis_file_system.cpp">
       <Filter>Source Files\axis\node\metrowin</Filter>
     </ClCompile>
     <ClCompile Include="filesystem\file\file.cpp">
       <Filter>Source Files\filesystem</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_validate.cpp">
-      <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="html_lite\html_lite\html_lite_html_tag.cpp">
       <Filter>Source Files\html_lite\html_lite</Filter>
@@ -844,89 +826,11 @@
     <ClCompile Include="filesystem\fs\fs_ftp_file.cpp">
       <Filter>Source Files\filesystem\fs</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\antialias_8bit.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\load_gif_frame.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_api.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_dib.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_fastblur.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_department.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_glyph_set.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_image_list.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_imaging.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_visual.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_water_routine.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\dib_console.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="axis\os\windows\windows_hotplugin.cpp">
       <Filter>Source Files\axis\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_job.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="axis\node\windows\windows_copydesk.cpp">
       <Filter>Source Files\axis\node\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\_graphics.cpp">
-      <Filter>Source Files\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_freeimage_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_freeimage_image_gif.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -939,10 +843,5 @@
     <None Include="graphics\visual\visual.inl">
       <Filter>Header Files\graphics\visual</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="visual_gdiplus_image_gif.txt">
-      <Filter>Source Files\graphics\visual</Filter>
-    </Text>
   </ItemGroup>
 </Project>

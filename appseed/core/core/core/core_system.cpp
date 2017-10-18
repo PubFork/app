@@ -644,17 +644,6 @@ namespace core
 
       bool bOk = true;
 
-      try
-      {
-
-         m_visual.finalize();
-
-      }
-      catch (...)
-      {
-
-
-      }
 
 
       if(!::base::system::finalize())

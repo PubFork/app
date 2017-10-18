@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace userpresence
@@ -40,8 +40,6 @@ namespace axis
 
          //::user::style_simple_impl                               m_schemasimple;
 
-         ::user::interaction *                                    m_puiMouseMoveCapture;
-         ::user::interaction *                                    m_puiLastLButtonDown;
 
          bool                                                     m_bMatterFromHttpCache;
 
@@ -170,6 +168,8 @@ namespace axis
 
          virtual string fontopus_get_user_sessid(const string & str) override;
 
+
+         virtual void translate_os_key_message(::user::key * pkey);
 
          //virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 

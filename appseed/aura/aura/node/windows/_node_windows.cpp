@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "windows.h"
 #include <Wtsapi32.h>
 #include <Psapi.h>
@@ -20,6 +20,7 @@
 #include "windows_file_find.cpp"
 #include "windows_file_system.cpp"
 #include "windows_folder_watch.cpp"
+//#include "windows_interaction_impl.cpp"
 #include "windows_ip_enum.cpp"
 #include "windows_os.cpp"
 #include "windows_pipe.cpp"

@@ -11,6 +11,8 @@ namespace asphere
       public:
 
 
+         colorertake5::ParserFactory *                m_pparserfactory;
+
 
          stringa                                      m_straTheme;
          string                                       m_strTheme;
@@ -55,7 +57,10 @@ namespace asphere
          inline COLORREF get_theme_icon_glow_color() { return m_crIconGlow; }
 
          virtual void _001OnTheme(::message::message * pobj);
+
          virtual uint32_t guess_code_page(const string & str);
+
+         ::colorertake5::ParserFactory                &  parser_factory();
 
    };
 

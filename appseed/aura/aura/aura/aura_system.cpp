@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
@@ -695,6 +695,23 @@ namespace aura
       __wait_threading_count_except(this,::millis((5000) * 77));
 
       bool bOk = false;
+
+      try
+      {
+
+         if (m_pvisual.is_set())
+         {
+
+            m_pvisual->finalize();
+
+         }
+
+      }
+      catch(...)
+      {
+
+
+      }
 
       try
       {
@@ -3528,6 +3545,10 @@ success:
       return iMainWkspace;
 
    }
+
+
+
+
 
 
 

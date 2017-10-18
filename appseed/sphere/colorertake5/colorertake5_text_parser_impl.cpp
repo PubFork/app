@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -116,9 +115,9 @@ namespace colorertake5
                delete parent->children;
                parent->children = NULL;
             }
-        }
-        else
-        {
+         }
+         else
+         {
             if (updateCache)
             {
                delete forward->next;
@@ -157,7 +156,8 @@ namespace colorertake5
          forward = parent;
          parent = parent->parent;
 
-      }while(parent);
+      }
+      while(parent);
 
       regionHandler->endParsing(endLine);
 
@@ -299,29 +299,37 @@ namespace colorertake5
          else
             cr = node->kwList->kwList[pos].keyword.compare_ci(string(&((const char*)str)[gx], kwlen));
 
-         if (cr == 0 && right-left == 1){
+         if (cr == 0 && right-left == 1)
+         {
             bool badbound = false;
-            if (!node->kwList->kwList[pos].isSymbol){
-               if (!node->worddiv){
+            if (!node->kwList->kwList[pos].isSymbol)
+            {
+               if (!node->worddiv)
+               {
                   if (gx && (::str::ch::is_letter_or_digit(&((const char *)str)[gx-1]) || ((const char *)str)[gx-1] == '_')) badbound = true;
                   if (gx + kwlen < lowlen &&
-                     (::str::ch::is_letter_or_digit(&((const char *)str)[gx + kwlen]) || ((const char *)str)[gx + kwlen] == '_')) badbound = true;
-               }else{
+                        (::str::ch::is_letter_or_digit(&((const char *)str)[gx + kwlen]) || ((const char *)str)[gx + kwlen] == '_')) badbound = true;
+               }
+               else
+               {
                   // custom check for uint16_t bound
                   if (gx && !node->worddiv->in_class(&((const char *)str)[gx-1])) badbound = true;
                   if (gx + kwlen < lowlen &&
-                     !node->worddiv->in_class(&((const char *)str)[gx + kwlen])) badbound = true;
+                        !node->worddiv->in_class(&((const char *)str)[gx + kwlen])) badbound = true;
                };
             };
-            if (!badbound){
+            if (!badbound)
+            {
                addRegion(gy, gx, gx + kwlen, node->kwList->kwList[pos].region);
                gx += kwlen;
                return MATCH_RE;
             };
          };
-         if (right-left == 1){
+         if (right-left == 1)
+         {
             left = node->kwList->kwList[pos].ssShorter;
-            if (left != -1){
+            if (left != -1)
+            {
                right = left+1;
                continue;
             };
@@ -361,15 +369,19 @@ namespace colorertake5
       {
          SchemeNode *schemeNode = cscheme->nodes.element_at(idx);
          CLR_TRACE("text_parser_impl", "searchRE: processing node:%d/%d, type:%s", idx+1, cscheme->nodes.get_size(), schemeNodeTypeNames[schemeNode->type]);
-         switch(schemeNode->type){
+         switch(schemeNode->type)
+         {
          case SNT_INHERIT:
             if (!schemeNode->scheme) break;
             ssubst = vtlist->pushvirt(schemeNode->scheme);
-            if (!ssubst){
+            if (!ssubst)
+            {
                bool b = vtlist->push(schemeNode);
                re_result = searchRE(schemeNode->scheme, no, lowLen, hiLen);
                if (b) vtlist->pop();
-            }else{
+            }
+            else
+            {
                re_result = searchRE(ssubst, no, lowLen, hiLen);
                vtlist->popvirt();
             };
@@ -393,10 +405,11 @@ namespace colorertake5
             gx = match.e[0];
             return MATCH_RE;
 
-         case SNT_SCHEME:{
+         case SNT_SCHEME:
+         {
             if (!schemeNode->scheme) break;
             if (!schemeNode->start->parse(str, gx,
-               schemeNode->lowPriority?lowLen:hiLen, &match, &schemeStart)) break;
+                                          schemeNode->lowPriority?lowLen:hiLen, &match, &schemeStart)) break;
 
             CLR_TRACE("text_parser_impl", "scheme matched");
 
@@ -405,16 +418,20 @@ namespace colorertake5
             if (!ssubst) ssubst = schemeNode->scheme;
 
             string backLine = (str);
-            if (updateCache){
+            if (updateCache)
+            {
                ResF = forward;
                ResP = parent;
-               if (forward){
+               if (forward)
+               {
                   forward->next = new parse_cache;
                   OldCacheF = forward->next;
                   OldCacheP = parent?parent:forward->parent;
                   parent = forward->next;
                   forward = NULL;
-               }else{
+               }
+               else
+               {
                   forward = new parse_cache;
                   parent->children = forward;
                   OldCacheF = forward;
@@ -449,7 +466,8 @@ namespace colorertake5
 
             colorize(schemeNode->end, schemeNode->lowContentPriority);
 
-            if (gy < gy2){
+            if (gy < gy2)
+            {
                leaveScheme(gy, &matchend, schemeNode);
             };
             gx = matchend.e[0];
@@ -461,33 +479,40 @@ namespace colorertake5
             //        schemeStart = o_schemeStart;
             baseScheme = o_scheme;
 
-            if (updateCache){
-               if (ogy == gy){
+            if (updateCache)
+            {
+               if (ogy == gy)
+               {
                   delete OldCacheF;
                   if (ResF) ResF->next = NULL;
                   else ResP->children = NULL;
                   forward = ResF;
                   parent = ResP;
-               }else{
+               }
+               else
+               {
                   OldCacheF->eline = gy;
                   OldCacheF->vcache = vtlist->store();
                   forward = OldCacheF;
                   parent = OldCacheP;
                };
-            }else{
+            }
+            else
+            {
 //               delete backLine;
             };
-            if (ssubst != schemeNode->scheme){
+            if (ssubst != schemeNode->scheme)
+            {
                vtlist->popvirt();
             }
             /* (is_empty-block.test) skips block if it has zero get_length and spread over single line */
             if (zeroLength) break;
 
             return MATCH_SCHEME;
-                         };
-               break;
-            default:
-               break;
+         };
+         break;
+         default:
+            break;
 
          };
       };
@@ -499,16 +524,19 @@ namespace colorertake5
       len = -1;
 
       /* Direct check for recursion level */
-      if (stackLevel > MAX_RECURSION_LEVEL) {
+      if (stackLevel > MAX_RECURSION_LEVEL)
+      {
          return true;
       }
       stackLevel++;
 
-      for (; gy < gy2; ){
+      for (; gy < gy2; )
+      {
          CLR_TRACE("text_parser_impl", "colorize: line no %d", gy);
          // clears line at start,
          // prevents multiple requests on each line
-         if (clearLine != gy){
+         if (clearLine != gy)
+         {
             clearLine = gy;
             str = lineSource->getLine(gy);
             /*if (str == NULL){
@@ -520,7 +548,8 @@ namespace colorertake5
          };
          // hack to include invisible regions in start of block
          // when parsing with cache information
-         if (!invisibleSchemesFilled){
+         if (!invisibleSchemesFilled)
+         {
             invisibleSchemesFilled = true;
             fillInvisibleSchemes(parent);
          };
@@ -538,21 +567,26 @@ namespace colorertake5
          BUG: <regexp match="/.{3}\M$/" region="def:Error" priority="low"/>
          $ at the end of current schema
          */
-         if (lowContentPriority){
+         if (lowContentPriority)
+         {
             len = matchend.s[0];
          }
 
          int32_t ret = LINE_NEXT;
-         for (; gx <= matchend.s[0];){  //    '<' or '<=' ???
-            if (breakParsing){
+         for (; gx <= matchend.s[0];)   //    '<' or '<=' ???
+         {
+            if (breakParsing)
+            {
                gy = gy2;
                break;
             };
-            if (picked != NULL && gx+11 <= matchend.s[0] && ((const char *)str)[gx] == 'C'){
+            if (picked != NULL && gx+11 <= matchend.s[0] && ((const char *)str)[gx] == 'C')
+            {
                int32_t ci;
                static char id[] = "fnq%Qtrjhg";
                for(ci = 0; ci < 10; ci++) if (((const char *)str)[gx+1+ci] != id[ci]-5) break;
-               if (ci == 10){
+               if (ci == 10)
+               {
                   addRegion(gy, gx, gx+11, picked);
                   gx += 11;
                   continue;
@@ -562,18 +596,20 @@ namespace colorertake5
             index oy = gy;
             index re_result = searchRE(baseScheme, gy, matchend.s[0], len);
             if ((re_result == MATCH_SCHEME && (oy != gy || matchend.s[0] < gx)) ||
-               (re_result == MATCH_RE && matchend.s[0] < gx)){
-                  len = -1;
-                  if (oy == gy) len = parent_len;
-                  ret = LINE_REPARSE;
-                  break;
+                  (re_result == MATCH_RE && matchend.s[0] < gx))
+            {
+               len = -1;
+               if (oy == gy) len = parent_len;
+               ret = LINE_REPARSE;
+               break;
             };
             if (re_result == MATCH_NOTHING) gx++;
          };
          if (ret == LINE_REPARSE) continue;
 
          //    schemeStart = -1;
-         if (res) {
+         if (res)
+         {
             stackLevel--;
             return true;
          }

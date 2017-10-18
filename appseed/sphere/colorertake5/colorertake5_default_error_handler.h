@@ -8,15 +8,15 @@ namespace colorertake5
     *
     * @ingroup colorer_handlers
     */
-   class CLASS_DECL_AURA DefaultErrorHandler: public ErrorHandler
+   class CLASS_DECL_SPHERE DefaultErrorHandler: public ErrorHandler
    {
-   public:
-     DefaultErrorHandler();
-     virtual ~DefaultErrorHandler();
+      public:
+         DefaultErrorHandler();
+         virtual ~DefaultErrorHandler();
 
-     virtual void fatalError(const string &msg);
-     virtual void error(const string &msg);
-     virtual void warning(const string &msg);
+         virtual void fatalError(const string &msg);
+         virtual void error(const string &msg);
+         virtual void warning(const string &msg);
    };
 
 } // namespace colorertake5
@@ -39,7 +39,7 @@ namespace colorertake5
  * The Initial Developer of the Original Code is
  * Cail Lomecb <cail@nm.ru>.
  * Portions created by the Initial Developer are Copyright (C) 1999-2005
- * the Initial Developer. 
+ * the Initial Developer.
  *
  * Contributor(s):
  *

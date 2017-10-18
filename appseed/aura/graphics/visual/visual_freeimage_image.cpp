@@ -849,13 +849,18 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 
    }
 
+   bool bOk = false;
+
    if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), fi, lpcszFile, 0))
    {
 
+      bOk = true;
 
    }
 
    FreeImage_Unload(fi);
+
+   return bOk;
 
 }
 

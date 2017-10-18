@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-libcharguess	-	Guess the encoding/charset of a string
+libcharguess   -  Guess the encoding/charset of a string
 Copyright (C) 2003  Stephane Corbe <noubi@users.sourceforge.net>
 Based on Mozilla sources
 
@@ -27,9 +27,9 @@ typedef void * charguess_det;
 BEGIN_EXTERN_C
 
 
-CLASS_DECL_AURA charguess_det CharGuessInit(void);
-CLASS_DECL_AURA const char * GuessChardet(charguess_det p, const char *str);
-CLASS_DECL_AURA void CharGuessDestroy(charguess_det p);
+CLASS_DECL_SPHERE charguess_det CharGuessInit(void);
+CLASS_DECL_SPHERE const char * GuessChardet(charguess_det p, const char *str);
+CLASS_DECL_SPHERE void CharGuessDestroy(charguess_det p);
 
 
 END_EXTERN_C

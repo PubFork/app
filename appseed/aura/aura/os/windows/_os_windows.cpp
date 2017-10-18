@@ -43,9 +43,12 @@
 #include "windows_simple_app.cpp"
 #include "windows_simple_shell_launcher.cpp"
 #include "windows_small_ipc_channel.cpp"
+#include "windows_system_interaction_impl.cpp"
 #include "windows_time.cpp"
+#include "windows_user.cpp"
 #include "windows_util.cpp"
 #include "windows_utils.cpp"
+#include "windows_window_buffer.cpp"
 
 
 

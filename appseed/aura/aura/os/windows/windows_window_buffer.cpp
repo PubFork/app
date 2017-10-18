@@ -1,10 +1,10 @@
 #include "framework.h"
-#include "axis/user/user.h"
+#include "aura/user/user/user.h"
 #include "windows_window_buffer.h"
 #include <stdio.h>
 
 
-CLASS_DECL_BASE bool g_bCreateWindowScreen = true;
+CLASS_DECL_AURA bool g_bCreateWindowScreen = true;
 
 
 namespace windows
@@ -160,12 +160,12 @@ namespace windows
                sprintf(szName2, szName, (INT_PTR)hwnd);
 
                m_hMapFile = CreateFileMapping(
-                  INVALID_HANDLE_VALUE,    // use paging file
-                  NULL,                    // default security
-                  PAGE_READWRITE,          // read/write access
-                  0,                       // maximum object size (high-order DWORD)
-                  8192 * 4096 * 4,                // maximum object size (low-order DWORD)
-                  szName2);                 // name of mapping object
+                               INVALID_HANDLE_VALUE,    // use paging file
+                               NULL,                    // default security
+                               PAGE_READWRITE,          // read/write access
+                               0,                       // maximum object size (high-order DWORD)
+                               8192 * 4096 * 4,                // maximum object size (low-order DWORD)
+                               szName2);                 // name of mapping object
 
                if (m_hMapFile == NULL)
                {
@@ -179,10 +179,10 @@ namespace windows
                {
 
                   m_pBuf = (LPTSTR)MapViewOfFile(m_hMapFile,   // handle to map object
-                     FILE_MAP_ALL_ACCESS, // read/write permission
-                     0,
-                     0,
-                     8192 * 4096 * 4);
+                                                 FILE_MAP_ALL_ACCESS, // read/write permission
+                                                 0,
+                                                 0,
+                                                 8192 * 4096 * 4);
 
                   if (m_pBuf == NULL)
                   {
@@ -419,10 +419,10 @@ namespace windows
          {
 
             uiFlags = SWP_NOREDRAW
-               | SWP_NOCOPYBITS
-               | SWP_NOACTIVATE
-               | SWP_NOOWNERZORDER
-               | SWP_DEFERERASE;
+                      | SWP_NOCOPYBITS
+                      | SWP_NOACTIVATE
+                      | SWP_NOOWNERZORDER
+                      | SWP_DEFERERASE;
 
          }
          else
@@ -431,22 +431,22 @@ namespace windows
             //         uiFlags = SWP_FRAMECHANGED | SWP_NOREDRAW;
 
             uiFlags = SWP_NOREDRAW
-               | SWP_NOCOPYBITS
-               | SWP_NOACTIVATE
-               | SWP_NOOWNERZORDER
-               | SWP_DEFERERASE;
+                      | SWP_NOCOPYBITS
+                      | SWP_NOACTIVATE
+                      | SWP_NOOWNERZORDER
+                      | SWP_DEFERERASE;
 
 
          }
 
          ::SetWindowPos(m_pimpl->m_oswindow, (m_pimpl->m_bZ ? (HWND)m_pimpl->m_iZ : 0),
-            rectWindow.left,
-            rectWindow.top,
-            rectWindow.width(),
-            rectWindow.height(),
-            (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
-            | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
-            | uiFlags);
+                        rectWindow.left,
+                        rectWindow.top,
+                        rectWindow.width(),
+                        rectWindow.height(),
+                        (m_pimpl->m_bZ ? 0 : SWP_NOZORDER)
+                        | (m_pimpl->m_bShowFlags ? m_pimpl->m_iShowFlags : 0)
+                        | uiFlags);
 
 
          if (bLayered && !m_pimpl->m_bShowWindow)

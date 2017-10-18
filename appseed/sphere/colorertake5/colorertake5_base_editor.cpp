@@ -1,5 +1,5 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
+
 
 namespace colorertake5
 {
@@ -12,7 +12,7 @@ namespace colorertake5
 
 
    base_editor::base_editor(::aura::application * papp) :
-   object(papp)
+      object(papp)
    {
       textParser = NULL;
       lrSupport = NULL;
@@ -46,13 +46,21 @@ namespace colorertake5
       }
    }
 
+
    void base_editor::initialize(line_source *lineSource)
    {
-      ParserFactory *parserFactory = &System.parser_factory();
-      if (parserFactory == NULL || lineSource == NULL){
+
+      ParserFactory *parserFactory = &Application.parser_factory();
+
+      if (parserFactory == NULL || lineSource == NULL)
+      {
+
          throw exception(get_app(), string("Bad base_editor constructor parameters"));
+
       }
+
       this->parserFactory = parserFactory;
+
       this->lineSource = lineSource;
 
       hrcParser = parserFactory->getHRCParser();
@@ -91,21 +99,25 @@ namespace colorertake5
    }
 
 
-   void base_editor::setRegionCompact(bool compact){
-      if (!lrSupport || regionCompact != compact){
+   void base_editor::setRegionCompact(bool compact)
+   {
+      if (!lrSupport || regionCompact != compact)
+      {
          regionCompact = compact;
          remapLRS(true);
       }
    }
 
-   void base_editor::setRegionMapper(RegionMapper *rs){
+   void base_editor::setRegionMapper(RegionMapper *rs)
+   {
       if (internalRM) delete regionMapper;
       regionMapper = rs;
       internalRM = false;
       remapLRS(false);
    }
 
-   void base_editor::setRegionMapper(string hrdClass, string hrdName){
+   void base_editor::setRegionMapper(string hrdClass, string hrdName)
+   {
       if (internalRM) delete regionMapper;
       regionMapper = parserFactory->createStyledMapper(hrdClass, hrdName);
       internalRM = true;
@@ -132,33 +144,41 @@ namespace colorertake5
       lrSupport->setSpecialRegion(def_Special);
       invalidLine = 0;
       rd_def_Text = rd_def_HorzCross = rd_def_VertCross = NULL;
-      if (regionMapper != NULL){
+      if (regionMapper != NULL)
+      {
          rd_def_Text = regionMapper->getRegionDefine(string("def:Text"));
          rd_def_HorzCross = regionMapper->getRegionDefine(string("def:HorzCross"));
          rd_def_VertCross = regionMapper->getRegionDefine(string("def:VertCross"));
       };
    }
 
-   void base_editor::setFileType(file_type *ftype){
+   void base_editor::setFileType(file_type *ftype)
+   {
       CLR_INFO("axis_editor", "setFileType:%s", ftype->getName().c_str());
       currentFileType = ftype;
       textParser->setFileType(currentFileType);
       invalidLine = 0;
    }
 
-   file_type *base_editor::setFileType(const string &fileType){
+   file_type *base_editor::setFileType(const string &fileType)
+   {
       currentFileType = hrcParser->getFileType(fileType);
       setFileType(currentFileType);
       return currentFileType;
    }
 
-   file_type *base_editor::chooseFileType(string fileName){
-      if (lineSource == NULL){
+   file_type *base_editor::chooseFileType(string fileName)
+   {
+      if (lineSource == NULL)
+      {
          currentFileType = hrcParser->chooseFileType(fileName, NULL);
-      }else{
+      }
+      else
+      {
          string textStart;
          strsize totalLength = 0;
-         for(int32_t i = 0; i < 4; i++){
+         for(int32_t i = 0; i < 4; i++)
+         {
             string iLine = lineSource->getLine(i);
             if(iLine.is_empty())
                break;
@@ -173,27 +193,33 @@ namespace colorertake5
       return currentFileType;
    }
 
-   file_type *base_editor::getFileType(){
+   file_type *base_editor::getFileType()
+   {
       return currentFileType;
    }
 
-   void base_editor::setBackParse(int32_t backParse){
+   void base_editor::setBackParse(int32_t backParse)
+   {
       this->backParse = backParse;
    }
 
-   void base_editor::addRegionHandler(RegionHandler *rh){
+   void base_editor::addRegionHandler(RegionHandler *rh)
+   {
       regionHandlers.add(rh);
    }
 
-   void base_editor::removeRegionHandler(RegionHandler *rh){
+   void base_editor::removeRegionHandler(RegionHandler *rh)
+   {
       regionHandlers.remove(rh);
    }
 
-   void base_editor::addEditorListener(EditorListener *el){
+   void base_editor::addEditorListener(EditorListener *el)
+   {
       editorListeners.add(el);
    }
 
-   void base_editor::removeEditorListener(EditorListener *el){
+   void base_editor::removeEditorListener(EditorListener *el)
+   {
       editorListeners.remove(el);
    }
 
@@ -210,8 +236,8 @@ namespace colorertake5
       for(LineRegion *l1 = lrStart; l1; l1 = l1->next)
       {
          if ((l1->region->hasParent(def_PairStart) ||
-            l1->region->hasParent(def_PairEnd)) &&
-            linePos >= l1->start && linePos <= l1->end)
+               l1->region->hasParent(def_PairEnd)) &&
+               linePos >= l1->start && linePos <= l1->end)
             pair = l1;
       }
 
@@ -243,7 +269,8 @@ namespace colorertake5
       index lno;
       index end_line = getLastVisibleLine();
       PairMatch *pm = getPairMatch(lineNo, pos);
-      if (pm == NULL){
+      if (pm == NULL)
+      {
          return NULL;
       }
 
@@ -251,17 +278,23 @@ namespace colorertake5
 
       LineRegion *pair = pm->getStartRef();
       LineRegion *slr = getLineRegions(lno);
-      while(true){
-         if (pm->pairBalance > 0){
+      while(true)
+      {
+         if (pm->pairBalance > 0)
+         {
             pair = pair->next;
-            while(pair == NULL){
+            while(pair == NULL)
+            {
                lno++;
                if (lno > end_line) break;
                pair = getLineRegions(lno);
             }
             if (lno > end_line) break;
-         }else{
-            if(pair->prev == slr->prev){ // first region
+         }
+         else
+         {
+            if(pair->prev == slr->prev)  // first region
+            {
                lno--;
                if (lno < wStart) break;
                slr = getLineRegions(lno);
@@ -270,17 +303,21 @@ namespace colorertake5
             if (lno < wStart) break;
             pair = pair->prev;
          }
-         if (pair->region->hasParent(def_PairStart)){
+         if (pair->region->hasParent(def_PairStart))
+         {
             pm->pairBalance++;
          }
-         if (pair->region->hasParent(def_PairEnd)){
+         if (pair->region->hasParent(def_PairEnd))
+         {
             pm->pairBalance--;
          }
-         if (pm->pairBalance == 0){
+         if (pm->pairBalance == 0)
+         {
             break;
          }
       }
-      if (pm->pairBalance == 0){
+      if (pm->pairBalance == 0)
+      {
          pm->eline = lno;
          pm->setEnd(pair);
       }
@@ -292,7 +329,8 @@ namespace colorertake5
       index lno;
       index end_line = lineCount;
       PairMatch *pm = getPairMatch(lineNo, pos);
-      if (pm == NULL){
+      if (pm == NULL)
+      {
          return NULL;
       }
 
@@ -300,17 +338,23 @@ namespace colorertake5
 
       LineRegion *pair = pm->getStartRef();
       LineRegion *slr = getLineRegions(lno);
-      while(true){
-         if (pm->pairBalance > 0){
+      while(true)
+      {
+         if (pm->pairBalance > 0)
+         {
             pair = pair->next;
-            while(pair == NULL){
+            while(pair == NULL)
+            {
                lno++;
                if (lno > end_line) break;
                pair = getLineRegions(lno);
             }
             if (lno > end_line) break;
-         }else{
-            if(pair->prev == slr->prev){ // first region
+         }
+         else
+         {
+            if(pair->prev == slr->prev)  // first region
+            {
                lno--;
                if (lno < 0) break;
                slr = getLineRegions(lno);
@@ -319,17 +363,21 @@ namespace colorertake5
             if (lno < 0) break;
             pair = pair->prev;
          }
-         if (pair->region->hasParent(def_PairStart)){
+         if (pair->region->hasParent(def_PairStart))
+         {
             pm->pairBalance++;
          }
-         if (pair->region->hasParent(def_PairEnd)){
+         if (pair->region->hasParent(def_PairEnd))
+         {
             pm->pairBalance--;
          }
-         if (pm->pairBalance == 0){
+         if (pm->pairBalance == 0)
+         {
             break;
          }
       }
-      if (pm->pairBalance == 0){
+      if (pm->pairBalance == 0)
+      {
          pm->eline = lno;
          pm->setEnd(pair);
       }
@@ -411,7 +459,8 @@ namespace colorertake5
       bool layoutChanged = false;
       TextParseMode tpmode = TPM_CACHE_READ;
 
-      if (lno == -1 || lno > lineCount){
+      if (lno == -1 || lno > lineCount)
+      {
          lno = lineCount-1;
       }
 
@@ -422,7 +471,8 @@ namespace colorertake5
       /*
       * Calculate changes, required by new screen position, if any
       */
-      if (lrSize != wSize*2){
+      if (lrSize != wSize*2)
+      {
          lrSize = wSize*2;
          lrSupport->resize(lrSize);
          lrSupport->clear();
@@ -432,13 +482,15 @@ namespace colorertake5
       }
 
       /* Fixes window position according to line number */
-      if (lno < wStart || lno > wStart+wSize){
+      if (lno < wStart || lno > wStart+wSize)
+      {
          wStart = lno;
          //if enable, introduces heavy delays on pair searching
          //layoutChanged = true;
       }
 
-      if (layoutChanged || wStart < firstLine || wStart+wSize > firstLine+lrSize){
+      if (layoutChanged || wStart < firstLine || wStart+wSize > firstLine+lrSize)
+      {
          /*
          * visible area is shifted and line regions
          * should be rearranged according to
@@ -450,11 +502,13 @@ namespace colorertake5
          * Change LineRegions parameters only in case
          * of validate-for-usage request.
          */
-         if (rebuildRegions){
+         if (rebuildRegions)
+         {
             lrSupport->setFirstLine(newFirstLine);
          }
          /* Save time - already has the info in line cache */
-         if (!layoutChanged && firstLine - newFirstLine == wSize){
+         if (!layoutChanged && firstLine - newFirstLine == wSize)
+         {
             parseTo -= wSize-1;
          }
          firstLine = newFirstLine;
@@ -462,9 +516,11 @@ namespace colorertake5
          CLR_TRACE("axis_editor", "newFirstLine=%d, parseFrom=%d, parseTo=%d", firstLine, parseFrom, parseTo);
       }
 
-      if (!layoutChanged){
+      if (!layoutChanged)
+      {
          /* Text modification only event */
-         if (invalidLine < parseTo){
+         if (invalidLine < parseTo)
+         {
             parseFrom = invalidLine;
             tpmode = TPM_CACHE_UPDATE;
          }
@@ -490,7 +546,8 @@ namespace colorertake5
 
          index stopLine = textParser->parse(parseFrom, parseTo-parseFrom, tpmode);
 
-         if (tpmode == TPM_CACHE_UPDATE){
+         if (tpmode == TPM_CACHE_UPDATE)
+         {
             invalidLine = stopLine+1;
          }
          CLR_TRACE("axis_editor", "validate:parsed: invalidLine=%d", invalidLine);

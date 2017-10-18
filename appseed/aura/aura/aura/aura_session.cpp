@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 ::aura::PFN_GET_NEW_LIBRARY g_pfnNewLibrary = NULL;
@@ -1412,82 +1412,123 @@ namespace aura
    }
 
 
+   //::user::elemental * session::get_keyboard_focus()
+   //{
+
+   //   if (m_pauraapp == NULL)
+   //   {
+
+   //      return NULL;
+
+   //   }
+
+   //   if (Application.is_session())
+   //   {
+
+   //      sp(::user::elemental) puieFocus;
+
+   //      try
+   //      {
+
+   //         puieFocus = Session.get_focus_ui();
+
+   //      }
+   //      catch (...)
+   //      {
+
+   //      }
+
+   //      if (m_pkeyboardfocus != NULL && puieFocus != NULL)
+   //      {
+
+
+   //         if ((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
+   //         {
+
+   //            return NULL;
+
+   //         }
+
+   //         return m_pkeyboardfocus;
+
+   //      }
+   //      else
+   //      {
+
+   //         return NULL;
+
+   //      }
+
+   //   }
+   //   else if (Application.is_system())
+   //   {
+
+   //      return m_pkeyboardfocus;
+
+   //   }
+   //   else if (Application.m_pbasesession != NULL)
+   //   {
+
+   //      return Sess(get_app()).get_keyboard_focus();
+
+   //   }
+   //   else if (Application.m_pbasesystem != NULL)
+   //   {
+
+   //      return Sess(get_app()).get_keyboard_focus();
+
+   //   }
+   //   else
+   //   {
+
+   //      return NULL;
+
+   //   }
+
+   //}
+
+
+
    ::user::elemental * session::get_keyboard_focus()
    {
 
       if (m_pauraapp == NULL)
-      {
-
          return NULL;
 
-      }
 
-      if (Application.is_session())
-      {
-
-         sp(::user::elemental) puieFocus;
-
-         try
-         {
-
-            puieFocus = Session.get_focus_ui();
-
-         }
-         catch (...)
-         {
-
-         }
-
-         if (m_pkeyboardfocus != NULL && puieFocus != NULL)
-         {
-
-
-            if ((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
-            {
-
-               return NULL;
-
-            }
-
-            return m_pkeyboardfocus;
-
-         }
-         else
-         {
-
-            return NULL;
-
-         }
-
-      }
-      else if (Application.is_system())
-      {
-
-         return m_pkeyboardfocus;
-
-      }
-      else if (Application.m_pbasesession != NULL)
-      {
-
-         return Sess(get_app()).get_keyboard_focus();
-
-      }
-      else if (Application.m_pbasesystem != NULL)
-      {
-
-         return Sess(get_app()).get_keyboard_focus();
-
-      }
-      else
-      {
-
+      if (m_pkeyboardfocus == NULL)
          return NULL;
 
-      }
+      //sp(::user::elemental) puieFocus;
+
+      //try
+      //{
+
+      //   puieFocus = System.ui_.get_focus_ui();
+
+      //}
+      //catch(...)
+      //{
+
+      //}
+
+      //if(puieFocus == NULL)
+      //   return NULL;
+
+      //sp(::user::interaction) puiFocus = m_pkeyboardfocus;
+
+      //if(puiFocus.is_null())
+      //   return NULL;
+
+      //if(!puiFocus->is_descendant_of(puieFocus.cast < ::user::interaction >()))
+      //   return NULL;
+
+
+      //if((bool)oprop("NativeWindowFocus") && puieFocus != m_pkeyboardfocus)
+      //   return NULL;
+      return m_pkeyboardfocus;
 
    }
-
-
    void session::set_keyboard_focus(::user::elemental * pkeyboardfocus)
    {
 

@@ -12,42 +12,42 @@ namespace colorertake5
     * could be implemented or not depending on system archtecture.
     * @ingroup colorer
     */
-   class CLASS_DECL_AURA line_source
+   class CLASS_DECL_SPHERE line_source
    {
-   protected:
+      protected:
 
 
-     line_source();
-     virtual ~line_source();
+         line_source();
+         virtual ~line_source();
 
 
-   public:
+      public:
 
-     /**
-      * Called by parser, when it starts text parsing.
-      * @param lno Line number, which will be used as
-      * initial position of all subsequend parsing.
-      */
-     virtual void startJob(index lno);
+         /**
+          * Called by parser, when it starts text parsing.
+          * @param lno Line number, which will be used as
+          * initial position of all subsequend parsing.
+          */
+         virtual void startJob(index lno);
 
-     /**
-      * Called by parser, when it has finished text parsing.
-      * Could be used to cleanup objects, allocated by last
-      * #getLine() call.
-      */
-     virtual void endJob(index lno);
+         /**
+          * Called by parser, when it has finished text parsing.
+          * Could be used to cleanup objects, allocated by last
+          * #getLine() call.
+          */
+         virtual void endJob(index lno);
 
-     /**
-      * Returns line of text with specified number.
-      * Returns string class pointer, which incapsulates information
-      * about line with number <code>lno</code>.
-      * @note Returned pointer must be valid until next getLine method call.
-      *       If requested line can't be returned, fe there is no line with the passed
-      *       index, method must return NULL.
-      * @param lno Requested line number
-      * @return Unicode string, enwrapped into string class.
-      */
-     virtual string getLine(index lno) = 0;
+         /**
+          * Returns line of text with specified number.
+          * Returns string class pointer, which incapsulates information
+          * about line with number <code>lno</code>.
+          * @note Returned pointer must be valid until next getLine method call.
+          *       If requested line can't be returned, fe there is no line with the passed
+          *       index, method must return NULL.
+          * @param lno Requested line number
+          * @return Unicode string, enwrapped into string class.
+          */
+         virtual string getLine(index lno) = 0;
 
 
    };
@@ -74,7 +74,7 @@ namespace colorertake5
  * The Initial Developer of the Original Code is
  * Cail Lomecb <cail@nm.ru>.
  * Portions created by the Initial Developer are Copyright (C) 1999-2005
- * the Initial Developer. 
+ * the Initial Developer.
  *
  * Contributor(s):
  *

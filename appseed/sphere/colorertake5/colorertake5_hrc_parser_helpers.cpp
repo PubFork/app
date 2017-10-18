@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -7,133 +6,143 @@ namespace colorertake5
 
    int32_t kwCompare(const void *e1, const void *e2);
    int32_t kwCompareI(const void *e1, const void *e2);
-/*
-KeywordInfo::KeywordInfo(){
-  keyword = NULL;
-  ssShorter = -1;
-  isSymbol = false;
-  region = NULL;
-};
-void KeywordInfo::swapWith(KeywordInfo *kwi){
-  string _keyword = keyword;
-  bool _isSymbol = isSymbol;
-  const class region *_region = region;
-  int32_t _ssShorter = ssShorter;
-  keyword   = kwi->keyword;
-  isSymbol  = kwi->isSymbol;
-  region    = kwi->region;
-  ssShorter = kwi->ssShorter;
+   /*
+   KeywordInfo::KeywordInfo(){
+     keyword = NULL;
+     ssShorter = -1;
+     isSymbol = false;
+     region = NULL;
+   };
+   void KeywordInfo::swapWith(KeywordInfo *kwi){
+     string _keyword = keyword;
+     bool _isSymbol = isSymbol;
+     const class region *_region = region;
+     int32_t _ssShorter = ssShorter;
+     keyword   = kwi->keyword;
+     isSymbol  = kwi->isSymbol;
+     region    = kwi->region;
+     ssShorter = kwi->ssShorter;
 
-  kwi->keyword   = _keyword;
-  kwi->isSymbol  = _isSymbol;
-  kwi->region    = _region;
-  kwi->ssShorter = _ssShorter;
-};
-KeywordInfo::KeywordInfo(KeywordInfo &ki){
-  keyword = (ki.keyword);
-  region = ki.region;
-  isSymbol = ki.isSymbol;
-  ssShorter = ki.ssShorter;
-};
-KeywordInfo &KeywordInfo::operator=(KeywordInfo &ki){
-  delete keyword;
-  keyword = (ki.keyword);
-  region = ki.region;
-  isSymbol = ki.isSymbol;
-  ssShorter = ki.ssShorter;
-  return *this;
-};
-KeywordInfo::~KeywordInfo(){
-  delete keyword;
-};
-*/
+     kwi->keyword   = _keyword;
+     kwi->isSymbol  = _isSymbol;
+     kwi->region    = _region;
+     kwi->ssShorter = _ssShorter;
+   };
+   KeywordInfo::KeywordInfo(KeywordInfo &ki){
+     keyword = (ki.keyword);
+     region = ki.region;
+     isSymbol = ki.isSymbol;
+     ssShorter = ki.ssShorter;
+   };
+   KeywordInfo &KeywordInfo::operator=(KeywordInfo &ki){
+     delete keyword;
+     keyword = (ki.keyword);
+     region = ki.region;
+     isSymbol = ki.isSymbol;
+     ssShorter = ki.ssShorter;
+     return *this;
+   };
+   KeywordInfo::~KeywordInfo(){
+     delete keyword;
+   };
+   */
 
-KeywordList::KeywordList(){
-  num = 0;
-  matchCase = false;
-  minKeywordLength = 0;
-  kwList = NULL;
-  firstChar = new ::str::ch_class();
-};
-KeywordList::~KeywordList(){
+   KeywordList::KeywordList()
+   {
+      num = 0;
+      matchCase = false;
+      minKeywordLength = 0;
+      kwList = NULL;
+      firstChar = new ::str::ch_class();
+   };
+   KeywordList::~KeywordList()
+   {
 //  for(int32_t idx = 0; idx < num; idx++) {
 //    delete kwList[idx].keyword;
 //  }
-  delete[] kwList;
-  delete   firstChar;
-};
+      delete[] kwList;
+      delete   firstChar;
+   };
 
-int32_t kwCompare(const void *e1, const void *e2)
-{
-  return ((KeywordInfo*)e1)->keyword.compare(((KeywordInfo*)e2)->keyword);
-};
-int32_t kwCompareI(const void *e1, const void *e2)
+   int32_t kwCompare(const void *e1, const void *e2)
    {
-  return ((KeywordInfo*)e1)->keyword.compare_ci(((KeywordInfo*)e2)->keyword);
-};
-void KeywordList::sortList(){
-  if (num < 2) return;
+      return ((KeywordInfo*)e1)->keyword.compare(((KeywordInfo*)e2)->keyword);
+   };
+   int32_t kwCompareI(const void *e1, const void *e2)
+   {
+      return ((KeywordInfo*)e1)->keyword.compare_ci(((KeywordInfo*)e2)->keyword);
+   };
+   void KeywordList::sortList()
+   {
+      if (num < 2) return;
 
-  if (matchCase) qsort((void *)kwList, num, sizeof(KeywordInfo), &kwCompare);
-  else qsort((void *)kwList, num, sizeof(KeywordInfo), &kwCompareI);
-};
+      if (matchCase) qsort((void *)kwList, num, sizeof(KeywordInfo), &kwCompare);
+      else qsort((void *)kwList, num, sizeof(KeywordInfo), &kwCompareI);
+   };
 
-/* Searches previous elements num with same partial name
-fe:
-3: getParameterName  0
-2: getParameter      0
-1: getParam          0
-0: getPar            -1
+   /* Searches previous elements num with same partial name
+   fe:
+   3: getParameterName  0
+   2: getParameter      0
+   1: getParam          0
+   0: getPar            -1
 
-*/
-void KeywordList::substrIndex(){
-  for(int32_t i = num-1; i > 0; i--)
-    for(int32_t ii = i-1; ii != 0; ii--){
-      if ((kwList[ii].keyword)[0] != (kwList[i].keyword)[0]) break;
-      if (kwList[ii].keyword.get_length() < kwList[i].keyword.get_length() &&
-          string(kwList[i].keyword, kwList[ii].keyword.get_length()) == kwList[ii].keyword){
-        kwList[i].ssShorter = ii;
-        break;
+   */
+   void KeywordList::substrIndex()
+   {
+      for(int32_t i = num-1; i > 0; i--)
+         for(int32_t ii = i-1; ii != 0; ii--)
+         {
+            if ((kwList[ii].keyword)[0] != (kwList[i].keyword)[0]) break;
+            if (kwList[ii].keyword.get_length() < kwList[i].keyword.get_length() &&
+                  string(kwList[i].keyword, kwList[ii].keyword.get_length()) == kwList[ii].keyword)
+            {
+               kwList[i].ssShorter = ii;
+               break;
+            };
+         };
+   };
+
+
+   const char * schemeNodeTypeNames[] =  { "EMPTY", "RE", "SCHEME", "KEYWORDS", "INHERIT" };
+
+
+   SchemeNode::SchemeNode()
+   {
+      virtualEntryVector.allocate(0, 5);
+      type = SNT_EMPTY;
+      scheme = NULL;
+      kwList = NULL;
+      worddiv = NULL;
+      start = end = NULL;
+      lowPriority = 0;
+
+      //!!regions cleanup
+      region = NULL;
+      memset(regions, 0, sizeof(regions));
+      memset(regionsn, 0, sizeof(regionsn));
+      memset(regione, 0, sizeof(regione));
+      memset(regionen, 0, sizeof(regionen));
+   };
+
+   SchemeNode::~SchemeNode()
+   {
+      if (type == SNT_RE || type == SNT_SCHEME)
+      {
+         delete start;
+         delete end;
       };
-    };
-};
-
-
-const char * schemeNodeTypeNames[] =  { "EMPTY", "RE", "SCHEME", "KEYWORDS", "INHERIT" };
-
-
-SchemeNode::SchemeNode()
-{
-   virtualEntryVector.allocate(0, 5);
-  type = SNT_EMPTY;
-  scheme = NULL;
-  kwList = NULL;
-  worddiv = NULL;
-  start = end = NULL;
-  lowPriority = 0;
-
-  //!!regions cleanup
-  region = NULL;
-  memset(regions, 0, sizeof(regions));
-  memset(regionsn, 0, sizeof(regionsn));
-  memset(regione, 0, sizeof(regione));
-  memset(regionen, 0, sizeof(regionen));
-};
-
-SchemeNode::~SchemeNode(){
-  if (type == SNT_RE || type == SNT_SCHEME){
-    delete start;
-    delete end;
-  };
-  if (type == SNT_KEYWORDS){
-    delete kwList;
-    delete worddiv;
-  };
-  if (type == SNT_INHERIT){
-    for(int32_t idx = 0; idx < virtualEntryVector.get_size(); idx++)
-      delete virtualEntryVector.element_at(idx);
-  };
-};
+      if (type == SNT_KEYWORDS)
+      {
+         delete kwList;
+         delete worddiv;
+      };
+      if (type == SNT_INHERIT)
+      {
+         for(int32_t idx = 0; idx < virtualEntryVector.get_size(); idx++)
+            delete virtualEntryVector.element_at(idx);
+      };
+   };
 
 } // namespace colorertake5
 

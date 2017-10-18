@@ -1,8 +1,8 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
+
 
 ErrorHandlerWriter::ErrorHandlerWriter(::aura::application * papp) :
-object(papp)
+   object(papp)
 {
 }
 
@@ -10,14 +10,17 @@ ErrorHandlerWriter::~ErrorHandlerWriter()
 {
 };
 
-void ErrorHandlerWriter::error(const string &msg){
-  TRACE("error: %s", msg);
+void ErrorHandlerWriter::error(const string &msg)
+{
+   TRACE("error: %s", msg);
 };
-void ErrorHandlerWriter::fatalError(const string &msg){
-  TRACE("fatal: %s", msg);
+void ErrorHandlerWriter::fatalError(const string &msg)
+{
+   TRACE("fatal: %s", msg);
 };
-void ErrorHandlerWriter::warning(const string &msg){
-  TRACE("warn : %s", msg);
+void ErrorHandlerWriter::warning(const string &msg)
+{
+   TRACE("warn : %s", msg);
 };
 
 /* ***** BEGIN LICENSE BLOCK *****

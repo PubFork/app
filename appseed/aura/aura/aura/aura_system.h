@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
@@ -596,6 +596,7 @@ namespace aura
          virtual ::count get_desk_wkspace_count();
          virtual bool  get_desk_wkspace_rect(index iWkspace, LPRECT lprect);
          virtual index get_ui_wkspace(::user::interaction * pui);
+
 
 
 

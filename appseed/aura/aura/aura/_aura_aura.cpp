@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "aura.cpp"
@@ -68,7 +68,7 @@
 #include "aura_profiler.cpp"
 #include "aura_progress.cpp"
 #include "aura_savings.cpp"
-#include "aura_session.cpp"
+//#include "aura_session.cpp"
 #include "aura_shell_launcher.cpp"
 #include "aura_simple_log.cpp"
 #include "aura_speaker.cpp"

@@ -3,129 +3,130 @@
 namespace colorertake5
 {
 
-/**
- * Maintains catalog of HRC and HRD references.
- * This class searches and loads <code>catalog.xml</code> file
- * and creates HRCParser, StyledHRDMapper, TextHRDMapper and text_parser instances
- * with information, loaded from specified sources.
- *
- * If no path were passed to it's constructor,
- * it uses the next search order to find 'catalog.xml' file:
- *
- * - win32 systems:
- *   - image_start_dir, image_start_dir/../, image_start_dir/../../
- *   - \%COLORER5CATALOG%
- *   - \%HOME%/.colorer5catalog
- *   - \%HOMEPATH%/.colorer5catalog
- *   - \%SYSTEMROOT%/.colorer5catalog (or \%WINDIR% in w9x)
- *
- * - unix/macos systems:
- *   - \$COLORER5CATALOG
- *   - \$HOME/.colorer5catalog
- *   - \$HOMEPATH/.colorer5catalog
- *   - /usr/share/colorer/catalog.xml
- *   - /usr/local/share/colorer/catalog.xml
- *
- * @note
- *   - \%NAME%, \$NAME - Environment var of the current process.
- *   - image_start_dir - Directory, where current image was started.
- *
- * @ingroup colorer
- */
-   class CLASS_DECL_AURA ParserFactory :
+   /**
+    * Maintains catalog of HRC and HRD references.
+    * This class searches and loads <code>catalog.xml</code> file
+    * and creates HRCParser, StyledHRDMapper, TextHRDMapper and text_parser instances
+    * with information, loaded from specified sources.
+    *
+    * If no path were passed to it's constructor,
+    * it uses the next search order to find 'catalog.xml' file:
+    *
+    * - win32 systems:
+    *   - image_start_dir, image_start_dir/../, image_start_dir/../../
+    *   - \%COLORER5CATALOG%
+    *   - \%HOME%/.colorer5catalog
+    *   - \%HOMEPATH%/.colorer5catalog
+    *   - \%SYSTEMROOT%/.colorer5catalog (or \%WINDIR% in w9x)
+    *
+    * - unix/macos systems:
+    *   - \$COLORER5CATALOG
+    *   - \$HOME/.colorer5catalog
+    *   - \$HOMEPATH/.colorer5catalog
+    *   - /usr/share/colorer/catalog.xml
+    *   - /usr/local/share/colorer/catalog.xml
+    *
+    * @note
+    *   - \%NAME%, \$NAME - Environment var of the current process.
+    *   - image_start_dir - Directory, where current image was started.
+    *
+    * @ingroup colorer
+    */
+   class CLASS_DECL_SPHERE ParserFactory :
       virtual public ::object
-{
-public:
+   {
+      public:
 
-  /**
-   * ParserFactory Constructor.
-   * Searches for catalog.xml in the set of predefined locations
-   * @throw ParserFactoryException If can't find catalog at any of standard locations.
-   */
-   ParserFactory(::aura::application * papp);
+         /**
+          * ParserFactory Constructor.
+          * Searches for catalog.xml in the set of predefined locations
+          * @throw ParserFactoryException If can't find catalog at any of standard locations.
+          */
+         ParserFactory(::aura::application * papp);
 
-  /**
-   * ParserFactory Constructor with explicit catalog path.
-   * @param catalogPath Path to catalog.xml spfile-> If NULL,
-   *        standard search method is used.
-   * @throw ParserFactoryException If can't load specified catalog.
-   */
-  ParserFactory(::aura::application * papp, string catalogPath);
-  virtual ~ParserFactory();
+         /**
+          * ParserFactory Constructor with explicit catalog path.
+          * @param catalogPath Path to catalog.xml spfile-> If NULL,
+          *        standard search method is used.
+          * @throw ParserFactoryException If can't load specified catalog.
+          */
+         ParserFactory(::aura::application * papp, string catalogPath);
+         virtual ~ParserFactory();
 
-  static const char *getVersion();
+         static const char *getVersion();
 
-  /**
-   * Enumerates all declared hrd classes
-   */
-  //string enumerateHRDClasses(int32_t idx);
+         /**
+          * Enumerates all declared hrd classes
+          */
+         //string enumerateHRDClasses(int32_t idx);
 
-  /**
-   * Enumerates all declared hrd instances of specified class
-   */
-  //string enumerateHRDInstances(const string &classID, int32_t idx);
+         /**
+          * Enumerates all declared hrd instances of specified class
+          */
+         //string enumerateHRDInstances(const string &classID, int32_t idx);
 
-  /**
-   * Returns description of HRD instance, pointed by classID and nameID parameters.
-   */
-  string getHRDescription(const string &classID, const string &nameID);
+         /**
+          * Returns description of HRD instance, pointed by classID and nameID parameters.
+          */
+         string getHRDescription(const string &classID, const string &nameID);
 
-  /**
-   * Creates and loads HRCParser instance from catalog.xml spfile->
-   * This method can detect directory entries, and sequentally load their
-   * contents into created HRCParser instance.
-   * In other cases it uses input_source#newInstance() method to
-   * create input data stream.
-   * Only one HRCParser instance is created for each ParserFactory instance.
-   */
-  HRCParser  *getHRCParser();
+         /**
+          * Creates and loads HRCParser instance from catalog.xml spfile->
+          * This method can detect directory entries, and sequentally load their
+          * contents into created HRCParser instance.
+          * In other cases it uses input_source#newInstance() method to
+          * create input data stream.
+          * Only one HRCParser instance is created for each ParserFactory instance.
+          */
+         HRCParser  *getHRCParser();
 
-  /**
-   * Creates text_parser instance
-   */
-  text_parser *createTextParser();
+         /**
+          * Creates text_parser instance
+          */
+         text_parser *createTextParser();
 
-  /**
-   * Creates RegionMapper instance and loads specified hrd files into it.
-   * @param classID Class identifier of loaded hrd instance.
-   * @param nameID  Name identifier of loaded hrd instances.
-   * @throw ParserFactoryException If method can't find specified pair of
-   *         class and name IDs in catalog.xml file
-   */
-  StyledHRDMapper *createStyledMapper(string classID, string nameID);
-  /**
-   * Creates RegionMapper instance and loads specified hrd files into it.
-   * It uses 'text' class by default.
-   * @param nameID  Name identifier of loaded hrd instances.
-   * @throw ParserFactoryException If method can't find specified pair of
-   *         class and name IDs in catalog.xml file
-   */
-  TextHRDMapper *createTextMapper(string nameID);
+         /**
+          * Creates RegionMapper instance and loads specified hrd files into it.
+          * @param classID Class identifier of loaded hrd instance.
+          * @param nameID  Name identifier of loaded hrd instances.
+          * @throw ParserFactoryException If method can't find specified pair of
+          *         class and name IDs in catalog.xml file
+          */
+         StyledHRDMapper *createStyledMapper(string classID, string nameID);
+         /**
+          * Creates RegionMapper instance and loads specified hrd files into it.
+          * It uses 'text' class by default.
+          * @param nameID  Name identifier of loaded hrd instances.
+          * @throw ParserFactoryException If method can't find specified pair of
+          *         class and name IDs in catalog.xml file
+          */
+         TextHRDMapper *createTextMapper(string nameID);
 
-  /**
-   * Returns currently used global error handler.
-   * If no error handler were installed, returns NULL.
-   */
-  ErrorHandler *getErrorHandler(){
-    return fileErrorHandler;
-  };
+         /**
+          * Returns currently used global error handler.
+          * If no error handler were installed, returns NULL.
+          */
+         ErrorHandler *getErrorHandler()
+         {
+            return fileErrorHandler;
+         };
 
-private:
-  void init();
-  string searchPath();
+      private:
+         void init();
+         string searchPath();
 
-  ::file::path catalogPath;
-  ::file::istream * catalogFIS;
-  ErrorHandler *fileErrorHandler;
-  stringa hrcLocations;
-  string_map < string_map < stringa >, const string_map < stringa > & > hrdLocations;
-  string_to_string hrdDescriptions;
-  HRCParser  *hrcParser;
-  sp(::xml::node)catalog;
+         ::file::path catalogPath;
+         ::file::istream * catalogFIS;
+         ErrorHandler *fileErrorHandler;
+         stringa hrcLocations;
+         string_map < string_map < stringa >, const string_map < stringa > & > hrdLocations;
+         string_to_string hrdDescriptions;
+         HRCParser  *hrcParser;
+         sp(::xml::node)catalog;
 
-  ParserFactory(const ParserFactory&);
-  void operator=(const ParserFactory&);
-};
+         ParserFactory(const ParserFactory&);
+         void operator=(const ParserFactory&);
+   };
 
 } // namespace colorertake5
 

@@ -1,5 +1,4 @@
 #include "framework.h" // previously aura/user/user.h
-#include "aura/user/colorertake5/colorertake5.h"
 
 
 namespace colorertake5
@@ -29,7 +28,7 @@ namespace colorertake5
 
    }
 
-   
+
    exception::exception(::aura::application * papp, const string &msg) :
       object(papp),
       ::call_stack(papp),
@@ -50,21 +49,21 @@ namespace colorertake5
    }
 
 
-/*   InputSourceException::InputSourceException(::aura::application * papp)
-         object(papp),
-      ::call_stack(papp),
-      ::exception::base(papp)
+   /*   InputSourceException::InputSourceException(::aura::application * papp)
+            object(papp),
+         ::call_stack(papp),
+         ::exception::base(papp)
 
-   {};
-   InputSourceException::InputSourceException(sp(::aura::application) pappconst string & msg){
-      message += "InputSourceException: " + msg;
-   };
+      {};
+      InputSourceException::InputSourceException(sp(::aura::application) pappconst string & msg){
+         message += "InputSourceException: " + msg;
+      };
 
-   OutOfBoundException::OutOfBoundException(){};
-   OutOfBoundException::OutOfBoundException(const string &msg){
-      message += "OutOfBoundException: " + msg;
-   };
-   */
+      OutOfBoundException::OutOfBoundException(){};
+      OutOfBoundException::OutOfBoundException(const string &msg){
+         message += "OutOfBoundException: " + msg;
+      };
+      */
 } // namespace colorertake5
 
 /* ***** BEGIN LICENSE BLOCK *****
@@ -85,7 +84,7 @@ namespace colorertake5
 * The Initial Developer of the Original Code is
 * Cail Lomecb <cail@nm.ru>.
 * Portions created by the Initial Developer are Copyright (C) 1999-2005
-* the Initial Developer. 
+* the Initial Developer.
 *
 * Contributor(s):
 *

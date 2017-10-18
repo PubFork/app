@@ -19,8 +19,8 @@ namespace user
             public:
 
 
-               ::user::interaction *      m_pupdowntarget;
-               e_updown                   m_eupdown;
+               ::user::interaction *                  m_pupdowntarget;
+               ::user::interaction::e_updown          m_eupdown;
 
 
                WorkSetUpDownInterface();

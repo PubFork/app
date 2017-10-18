@@ -14,81 +14,81 @@ namespace colorertake5
    or lower line's numbers. This makes sequential tokens processing.
    @ingroup colorer
    */
-   class CLASS_DECL_AURA RegionHandler
+   class CLASS_DECL_SPHERE RegionHandler
    {
-   protected:
+      protected:
 
 
-      RegionHandler();
+         RegionHandler();
 
 
-   public:
-      
-      virtual ~RegionHandler();
+      public:
 
-      /** Start of text parsing.
-      Called only once, when text_parser starts
-      parsing of the specified block of text.
-      All other event messages comes between this call and
-      endParsing call.
-      @param lno Start line number
-      */
-      virtual void startParsing(index lno);
+         virtual ~RegionHandler();
 
-      /** End of text parsing.
-      Called only once, when text_parser stops
-      parsing of the specified block of text.
-      @param lno End line number
-      */
-      virtual void endParsing(index lno);
+         /** Start of text parsing.
+         Called only once, when text_parser starts
+         parsing of the specified block of text.
+         All other event messages comes between this call and
+         endParsing call.
+         @param lno Start line number
+         */
+         virtual void startParsing(index lno);
 
-      /** clear line event.
-      Called once for each parsed text line, when text_parser starts to parse
-      specified line of text. This method is called before any of the region
-      information passed, and used often to clear internal handler
-      structure of this line before adding new one.
-      @param lno Line number
-      */
-      virtual void clearLine(index lno, const char *line);
+         /** End of text parsing.
+         Called only once, when text_parser stops
+         parsing of the specified block of text.
+         @param lno End line number
+         */
+         virtual void endParsing(index lno);
 
-      /** Informs handler about lexical region in line.
-      This is a basic method, wich transfer information from
-      parser to application. Positions of different passed regions
-      can be overlapped.
-      @param lno Current line number
-      @param sx Start X position of region in line
-      @param ex End X position of region in line
-      @param region region information
-      */
-      virtual void addRegion(index lno, const char *line, strsize sx, strsize ex, class region *region) = 0;
+         /** clear line event.
+         Called once for each parsed text line, when text_parser starts to parse
+         specified line of text. This method is called before any of the region
+         information passed, and used often to clear internal handler
+         structure of this line before adding new one.
+         @param lno Line number
+         */
+         virtual void clearLine(index lno, const char *line);
 
-      /** Informs handler about entering into specified scheme.
-      Parameter <code>region</code> is used to specify
-      scheme background region information.
-      If text is parsed not from the first line, this method is called
-      with fake parameters to compensate required scheme structure.
-      @param lno Current line number
-      @param sx Start X position of region in line
-      @param ex End X position of region in line
-      @param region scheme region information (background)
-      @param scheme Additional scheme information
-      */
-      virtual void enterScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme) = 0;
+         /** Informs handler about lexical region in line.
+         This is a basic method, wich transfer information from
+         parser to application. Positions of different passed regions
+         can be overlapped.
+         @param lno Current line number
+         @param sx Start X position of region in line
+         @param ex End X position of region in line
+         @param region region information
+         */
+         virtual void addRegion(index lno, const char *line, strsize sx, strsize ex, class region *region) = 0;
 
-      /** Informs handler about leaveing specified scheme.
-      Parameter <code>region</code> is used to specify
-      scheme background region information.
-      If text parse process ends, but current schemes stack is not balanced
-      (this can happends because of bad balanced structure of source text,
-      or partial text parse) this method is <b>not</b> called for unbalanced
-      levels.
-      @param lno Current line number
-      @param sx Start X position of region in line
-      @param ex End X position of region in line
-      @param region scheme region information (background)
-      @param scheme Additional scheme information
-      */
-      virtual void leaveScheme(index lno, const char  *line, strsize sx, strsize ex, class region *region, class scheme *scheme) = 0;
+         /** Informs handler about entering into specified scheme.
+         Parameter <code>region</code> is used to specify
+         scheme background region information.
+         If text is parsed not from the first line, this method is called
+         with fake parameters to compensate required scheme structure.
+         @param lno Current line number
+         @param sx Start X position of region in line
+         @param ex End X position of region in line
+         @param region scheme region information (background)
+         @param scheme Additional scheme information
+         */
+         virtual void enterScheme(index lno, const char *line, strsize sx, strsize ex, class region *region, class scheme *scheme) = 0;
+
+         /** Informs handler about leaveing specified scheme.
+         Parameter <code>region</code> is used to specify
+         scheme background region information.
+         If text parse process ends, but current schemes stack is not balanced
+         (this can happends because of bad balanced structure of source text,
+         or partial text parse) this method is <b>not</b> called for unbalanced
+         levels.
+         @param lno Current line number
+         @param sx Start X position of region in line
+         @param ex End X position of region in line
+         @param region scheme region information (background)
+         @param scheme Additional scheme information
+         */
+         virtual void leaveScheme(index lno, const char  *line, strsize sx, strsize ex, class region *region, class scheme *scheme) = 0;
 
    };
 
@@ -112,7 +112,7 @@ namespace colorertake5
 * The Initial Developer of the Original Code is
 * Cail Lomecb <cail@nm.ru>.
 * Portions created by the Initial Developer are Copyright (C) 1999-2005
-* the Initial Developer. 
+* the Initial Developer.
 *
 * Contributor(s):
 *

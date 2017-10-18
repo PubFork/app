@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <shlobj.h>
 #include <Security.h>
@@ -69,11 +69,11 @@ inline int32_t __invariant_stricmp(const char *pszLeft,const char *pszRight)
 {
 #ifdef WINDOWSEX
    return ::CompareStringA(MAKELCID(MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US),SORT_DEFAULT),
-      NORM_IGNORECASE,
-      pszLeft,
-      -1,
-      pszRight,
-      -1) - CSTR_EQUAL;
+                           NORM_IGNORECASE,
+                           pszLeft,
+                           -1,
+                           pszRight,
+                           -1) - CSTR_EQUAL;
 #else
    return stricmp_dup(pszLeft,pszRight);
 #endif
@@ -83,11 +83,11 @@ inline int32_t __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRi
 {
 #ifdef WINDOWSEX
    return ::CompareStringW(MAKELCID(MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US),SORT_DEFAULT),
-      NORM_IGNORECASE,
-      pwszLeft,
-      -1,
-      pwszRight,
-      -1) - CSTR_EQUAL;
+                           NORM_IGNORECASE,
+                           pwszLeft,
+                           -1,
+                           pwszRight,
+                           -1) - CSTR_EQUAL;
 #else
    return wcsicmp_dup(pwszLeft,pwszRight);
 #endif
@@ -111,6 +111,9 @@ inline int32_t __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRi
 
 
 
+
+
+
 #pragma once
 
 
@@ -122,7 +125,7 @@ namespace windows
 
    class windows
    {
-      int32_t function();
+         int32_t function();
    };
 
    CLASS_DECL_AURA HINSTANCE   load_library(const char * lpsz);
