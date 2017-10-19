@@ -4561,6 +4561,9 @@
     <ClCompile Include="user\user\user_key.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
+    <ClCompile Include="aura\aura\_aura_aura.cpp">
+      <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

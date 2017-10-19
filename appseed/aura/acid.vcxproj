@@ -411,7 +411,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='small|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SMALLCODE;CUBE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_OS_IMAGE_LOADER;SMALLCODE;CUBE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../nodeapp/$(PlatformName)/include/;$(SolutionDir)../../../nodeapp/include;$(SolutionDir)../../../app/include/;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/appseed/base/base;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/include;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);$(SolutionDir)../../../app/base3/openssl;$(SolutionDir)../../../app/base/openssl/crypto2;$(SolutionDir)../../../app/base/openssl/ssl2;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/asn1;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/evp;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/krb5;$(SolutionDir)../../../app/appseed/base/base/openssl/crypto/modes;$(SolutionDir)../../../app/appseed/base/base/openssl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>MinSpace</Optimization>
@@ -884,6 +884,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="aura\aura\_aura_aura.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="aura\compress\compress_bz.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
@@ -1386,7 +1389,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="aura\message\message_user.cpp" />
+    <ClCompile Include="aura\message\message_user.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="aura\node\windows\windows_crypto.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
@@ -2618,8 +2623,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="user\user\user_control_event.cpp" />
-    <ClCompile Include="user\user\user_copydesk.cpp" />
+    <ClCompile Include="user\user\user_control_event.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_copydesk.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\user_create.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2630,12 +2639,24 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="user\user\user_elemental.cpp" />
-    <ClCompile Include="user\user\user_interaction.cpp" />
-    <ClCompile Include="user\user\user_interaction_base.cpp" />
-    <ClCompile Include="user\user\user_interaction_child.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
+    <ClCompile Include="user\user\user_elemental.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_child.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_interaction_impl_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\user_interactive.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -2646,19 +2667,45 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="user\user\user_job.cpp" />
-    <ClCompile Include="user\user\user_key.cpp" />
-    <ClCompile Include="user\user\user_menu.cpp" />
-    <ClCompile Include="user\user\user_menu_command.cpp" />
-    <ClCompile Include="user\user\user_menu_item.cpp" />
-    <ClCompile Include="user\user\user_mouse.cpp" />
-    <ClCompile Include="user\user\user_print_job.cpp" />
-    <ClCompile Include="user\user\user_style.cpp" />
-    <ClCompile Include="user\user\user_style_base.cpp" />
-    <ClCompile Include="user\user\user_style_composite.cpp" />
-    <ClCompile Include="user\user\user_tooltip.cpp" />
-    <ClCompile Include="user\user\user_validate.cpp" />
-    <ClCompile Include="user\user\user_window_util.cpp" />
+    <ClCompile Include="user\user\user_job.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_key.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_command.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_menu_item.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_mouse.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_print_job.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_style_composite.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_tooltip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_validate.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="user\user\user_window_util.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="user\user\_user.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='small|x64'">true</ExcludedFromBuild>
