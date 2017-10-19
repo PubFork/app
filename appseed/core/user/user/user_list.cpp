@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -4718,25 +4718,21 @@ namespace user
       m_rangeHighlight = range;
    }
 
-   void list::DIOnSectionSet()
-   {
-      string str;
-      str = m_dataid.get_id();
-      str += ".headerctrl";
-      if (m_plistheader != NULL)
-      {
-         m_plistheader->m_dataid = str;
-      }
-   }
 
    bool list::DIDDXHeaderLayout(bool bSave)
    {
 
       if (m_plistheader == NULL)
+      {
+
          return false;
 
+      }
+
       return m_plistheader->DIDDXLayout(bSave);
+
    }
+
 
    void list::_001SetTopText(const unichar * lpcwsz)
    {
@@ -5934,7 +5930,7 @@ namespace user
    id list::data_get_current_list_layout_id()
    {
 
-      return "list." + m_dataid.m_id.str();
+      return "list";
 
    }
 
@@ -6312,7 +6308,7 @@ namespace user
          synch_lock sl(get_image_list()->m_pmutex);
 
          if ((m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
-             || (m_plist->m_dIconSaturation < 1.0))
+               || (m_plist->m_dIconSaturation < 1.0))
          {
 
             auto & dib = m_plist->m_mapIconBlur[m_iImage];

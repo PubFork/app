@@ -7,9 +7,8 @@ namespace database
 
    client::client()
    {
+
       m_pdataserver = NULL;
-
-
 
    }
 
@@ -390,20 +389,27 @@ namespace database
 
    }
 
+
    string client::calc_data_key(::database::id & id)
    {
+
       string str;
-      str = get_data_id().m_id;
+
+      str = get_data_id();
+
       str += ".";
-      str += ::str::from(id.m_id);
+
+      str += ::str::from(id);
+
       return str;
+
    }
 
 
    id client::get_data_id()
    {
 
-      if (!m_dataid2.m_id.is_empty())
+      if (m_dataid2.m_id.is_empty() || m_bDataKeyModified)
       {
 
          update_data_id();
@@ -418,7 +424,7 @@ namespace database
    string client::calc_data_id()
    {
 
-      return "";
+      return calc_default_data_id();
 
    }
 
@@ -426,14 +432,107 @@ namespace database
    void client::update_data_id()
    {
 
-      m_dataid2 = calc_data_id();
+      string strDataKey = calc_data_id();
 
-      if (m_dataid2.m_id.is_empty())
+      if (strDataKey.is_empty())
       {
 
-         m_dataid2 = "class://" + string(typeid(*this).name()) + "/";
+         strDataKey = calc_default_data_id();
 
       }
+
+      if (strDataKey.replace_ci_count("&data_source=local", "") > 0)
+      {
+
+         strDataKey += "&data_source=local";
+
+      }
+
+      m_dataid2 = strDataKey;
+
+      m_bDataKeyModified = false;
+
+   }
+
+
+   string client::calc_default_data_id()
+   {
+
+      string str;
+
+      str = Application.m_strAppName;
+
+      if (string(Application.get_data_id().m_id).find_ci("&data_source=local&") >= 0)
+      {
+
+         str += "&data_source=local&";
+
+      }
+      else
+      {
+
+         str += "://";
+
+      }
+
+      {
+
+         string strType = typeid(*this).name();
+
+         ::str::begins_eat_ci(strType, "class ");
+
+         str += strType;
+
+      }
+
+      if (m_strDataKeyModifier.has_char())
+      {
+
+         str += "/";
+
+         str += m_strDataKeyModifier;
+
+      }
+
+      return str;
+
+   }
+
+
+   void client::set_data_key_modifier(string strDataKeyModifier)
+   {
+
+      m_strDataKeyModifier = strDataKeyModifier;
+
+      m_bDataKeyModified = true;
+
+   }
+
+   string client::get_data_key_modifier()
+   {
+
+      return m_strDataKeyModifier;
+
+   }
+
+
+   void client::add_up_data_key_modifier(string strDataKeyModifier)
+   {
+
+      if (get_data_key_modifier().find_ci(strDataKeyModifier) < 0)
+      {
+
+         set_data_key_modifier(get_data_key_modifier() + strDataKeyModifier);
+
+      }
+
+   }
+
+
+   void client::set_local_data_key_modifier()
+   {
+
+      add_up_data_key_modifier("&data_source=local");
 
    }
 

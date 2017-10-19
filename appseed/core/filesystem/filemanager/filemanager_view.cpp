@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -16,16 +16,16 @@ namespace filemanager
    view::~view()
    {
    }
-   
-   
+
+
    void view::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::user::split_view::install_message_routing(psender);
-      
+
    }
-   
+
 
    void view::assert_valid() const
    {
@@ -41,24 +41,38 @@ namespace filemanager
 
    void view::on_update(::user::impact * pSender, LPARAM lHint, object* phint)
    {
+
       ::filemanager::impact::on_update(pSender, lHint, phint);
+
       ::user::split_view::on_update(pSender, lHint, phint);
+
       if (phint != NULL)
       {
+
          if (base_class < update_hint >::bases(phint))
          {
+
             update_hint * puh = (update_hint *)phint;
+
             if (get_filemanager_manager() == puh->m_pmanager)
             {
+
                if (puh->is_type_of(update_hint::TypeInitialize))
                {
+
                   string str;
-                  str.Format("::frame(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
-                  sp(frame) pframe = ((::window_sp) GetParentFrame());
+
+                  str.Format("(%d,%d)", get_filemanager_data()->m_iTemplate, get_filemanager_data()->m_iDocument);
+
+                  sp(::database::client) pframe = GetParentFrame();
+
                   if (pframe != NULL)
                   {
-                     pframe->m_dataid = str;
+
+                     pframe->set_data_key_modifier(str);
+
                   }
+
                   m_puserstyle = get_filemanager_data();
 
                }
@@ -89,14 +103,14 @@ namespace filemanager
                   //if(pframe != NULL)
                   {
 
-                    // pframe->create_bars();
+                     // pframe->create_bars();
 
                   }
 
                }
                else if(puh->is_type_of(update_hint::TypeTopicStart))
                {
-                  
+
                   if (get_filemanager_manager()->m_emode != manager::mode_import && get_pane_count() == 2)
                   {
 
@@ -110,14 +124,14 @@ namespace filemanager
                      }
 
                      ::filemanager::save_as_view * ptopview = create_view < ::filemanager::save_as_view >();
-                     
+
                      if (ptopview == NULL)
                      {
 
                         System.simple_message_box(NULL, "Could not create folder tree ::user::impact");
 
                      }
-                     
+
                      ptopview->m_pmanager = get_filemanager_manager();
 
                      InsertPaneAt(0, ptopview, true);
@@ -135,13 +149,13 @@ namespace filemanager
                      get_filemanager_data()->m_pmanager->m_strTopic = strName;
 
                      set_position(0, 28);
-                     
+
                      set_position(1, 56);
 
                      rect rectClient;
-                     
+
                      GetClientRect(rectClient);
-                     
+
                      set_need_layout();
 
                      pframe->set_need_layout();

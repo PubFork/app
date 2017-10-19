@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -65,7 +65,7 @@ namespace filemanager
                   sp(::user::frame_window) pframe = GetParentFrame();
                   if (pframe != NULL)
                   {
-                     pframe->m_dataid = str;
+                     pframe->set_data_key_modifier(str);
                   }
 
                }

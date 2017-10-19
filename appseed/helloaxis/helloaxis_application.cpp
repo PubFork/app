@@ -63,7 +63,7 @@ namespace helloaxis
 
       }
 
-      m_dataid.m_id = m_dataid.m_id + ".local://";
+      set_local_data_key_modifier();
 
 
 

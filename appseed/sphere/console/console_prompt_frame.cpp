@@ -227,7 +227,7 @@ namespace console
       if(pobj->m_bRet)
          return;
 
-      if(!data_get(".local://DockPosition", (int32_t &) m_eposition))
+      if(!data_get("&data_source=local&DockPosition", (int32_t &) m_eposition))
       {
 
          m_eposition = position_left;

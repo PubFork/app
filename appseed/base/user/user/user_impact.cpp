@@ -1264,12 +1264,26 @@ namespace user
 
       string str;
 
-      str += get_document()->get_data_id().m_id;
+      str = get_document()->get_data_id().m_id;
 
-      if(str.has_char())
       {
 
          str += "/";
+
+         string strType = typeid(*this).name();
+
+         ::str::begins_eat_ci(strType, "class ");
+
+         str += strType;
+
+      }
+
+      if (m_strDataKeyModifier.has_char())
+      {
+
+         str += "/";
+
+         str += m_strDataKeyModifier;
 
       }
 

@@ -1,7 +1,4 @@
-#include "framework.h"
-#include "framework.h"
-
-
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -21,12 +18,10 @@ namespace filemanager
             simple_list_view(papp),
             m_cache(papp)
          {
+
             m_bKickActive = false;
 
             SetCacheInterface(&m_cache);
-
-
-            m_dataid = "AlbumView";
 
             m_pil = canew(image_list(get_app()));
 
@@ -52,13 +47,13 @@ namespace filemanager
             IGUI_MSG_LINK(WM_SIZE, pinterface, this, &list_view::_001OnSize);
             IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &list_view::_001OnContextMenu);
             IGUI_MSG_LINK(WM_ERASEBKGND, pinterface, this, &list_view::_001OnEraseBkgnd);
-            IGUI_MSG_LINK(WM_USER + 1217    , pinterface, this, &list_view::_001OnFillTaskResponse);
+            IGUI_MSG_LINK(WM_USER + 1217, pinterface, this, &list_view::_001OnFillTaskResponse);
 
          }
 
 
 
-      #ifdef DEBUG
+#ifdef DEBUG
          void list_view::assert_valid() const
          {
             simple_list_view::assert_valid();
@@ -68,7 +63,7 @@ namespace filemanager
          {
             simple_list_view::dump(dumpcontext);
          }
-      #endif //DEBUG
+#endif //DEBUG
 
 
          void list_view::_001InsertColumns()
@@ -204,7 +199,7 @@ namespace filemanager
          void list_view::_001OnLButtonDblClk(::message::message * pobj)
          {
             SCAST_PTR(::message::mouse, pmouse, pobj);
-               index iItem;
+            index iItem;
 
             if(_001HitTest_(pmouse->m_pt, iItem))
             {
@@ -294,8 +289,8 @@ namespace filemanager
             strSql += ";";
 
 
-/*            cslock sl(get_document()->m_pcsAlbum1);
-            get_document()->m_pdsAlbum1->query(strSql);*/
+            /*            cslock sl(get_document()->m_pcsAlbum1);
+                        get_document()->m_pdsAlbum1->query(strSql);*/
 
             m_cache._001Invalidate(this);
 
@@ -305,7 +300,7 @@ namespace filemanager
 
          void list_view::PostFillTask(string & wstrFile, uint_ptr uiTimer)
          {
-            
+
             UNREFERENCED_PARAMETER(wstrFile);
             UNREFERENCED_PARAMETER(uiTimer);
             ASSERT(FALSE);
@@ -359,136 +354,136 @@ namespace filemanager
          void list_view::_001OnTimer(::timer * ptimer)
          {
             simple_list_view::_001OnTimer(ptimer);
-               if(ptimer->m_nIDEvent == 123654)
-               {
-                  KillTimer(123654);
-                  m_bKickActive = false;
+            if(ptimer->m_nIDEvent == 123654)
+            {
+               KillTimer(123654);
+               m_bKickActive = false;
 
-               }
-               /*   if(nIDEvent == 1123)
-               {
-               KillTimer(1123);
-               MediaLibraryDoc * pdoc = get_document();
-               if(pdoc->m_bBuilt == true)
-               {
-               KillTimer(nIDEvent);
-               }
-               else
-               {
-               KillTimer(1124);
-               int32_t iTopIndex = _001GetTopIndex();
-               if(m_buildhelper.m_iTopIndex != iTopIndex)
-               {
-               m_buildhelper.m_iTopIndex = iTopIndex;
-               m_buildhelper.m_iStep = 0;
-               }
-               int32_t iItem;
+            }
+            /*   if(nIDEvent == 1123)
+            {
+            KillTimer(1123);
+            MediaLibraryDoc * pdoc = get_document();
+            if(pdoc->m_bBuilt == true)
+            {
+            KillTimer(nIDEvent);
+            }
+            else
+            {
+            KillTimer(1124);
+            int32_t iTopIndex = _001GetTopIndex();
+            if(m_buildhelper.m_iTopIndex != iTopIndex)
+            {
+            m_buildhelper.m_iTopIndex = iTopIndex;
+            m_buildhelper.m_iStep = 0;
+            }
+            int32_t iItem;
 
 
-               sp(::sqlite::set) pds = pdoc->m_pdsAlbum;
+            sp(::sqlite::set) pds = pdoc->m_pdsAlbum;
 
-               int32_t iRemove = MAX(30, m_buildhelper.m_iDisplayItemCount);
+            int32_t iRemove = MAX(30, m_buildhelper.m_iDisplayItemCount);
 
-               int_array iaRemove;
-               while(true)
-               {
-               iItem = m_buildhelper.m_iStep + m_buildhelper.m_iTopIndex;
+            int_array iaRemove;
+            while(true)
+            {
+            iItem = m_buildhelper.m_iStep + m_buildhelper.m_iTopIndex;
 
-               if(m_buildhelper.m_iStep >= m_buildhelper.m_iDisplayItemCount)
-               {
-               KillTimer(1123);
-               SetTimer(1124, 50, NULL);
-               m_buildhelper.m_bActive = false;
-               break;
-               }
+            if(m_buildhelper.m_iStep >= m_buildhelper.m_iDisplayItemCount)
+            {
+            KillTimer(1123);
+            SetTimer(1124, 50, NULL);
+            m_buildhelper.m_bActive = false;
+            break;
+            }
 
-               m_buildhelper.m_iStep++;
+            m_buildhelper.m_iStep++;
 
-               pds->seek(iItem);
+            pds->seek(iItem);
 
-               string wstrPath;
-               wstrPath = pds->fv("filepath").get_asString();
+            string wstrPath;
+            wstrPath = pds->fv("filepath").get_asString();
 
-               int32_t iFind;
-               if((iFind = pdoc->m_fileinfo.m_wstraAdd.FindFirst(wstrPath)) >= 0)
-               {
-               PostFillTask(wstrPath, nIDEvent);
-               break;
-               }
-               else if((iFind = pdoc->m_fileinfo.m_wstraUpdate.FindFirst(wstrPath)) >= 0)
-               {
-               PostFillTask(wstrPath, nIDEvent);
-               break;
-               }
-               else if((iFind = pdoc->m_fileinfo.m_wstraRemove.FindFirst(wstrPath)) >= 0)
-               {
-               iaRemove.add(pdoc->m_fileinfo.m_iaRemove[iFind]);
-               pdoc->m_fileinfo.m_iaRemove.remove_at(iFind);
-               pdoc->m_fileinfo.m_wstraRemove.remove_at(iFind);
-               pds->remove_row();
-               iRemove--;
-               m_buildhelper.m_iStep--;
-               if(iRemove < 0)
-               break;
-               }
-               }
-               mediamanager::GetMediaManager()->album_build().remove(iaRemove);
-               }
+            int32_t iFind;
+            if((iFind = pdoc->m_fileinfo.m_wstraAdd.FindFirst(wstrPath)) >= 0)
+            {
+            PostFillTask(wstrPath, nIDEvent);
+            break;
+            }
+            else if((iFind = pdoc->m_fileinfo.m_wstraUpdate.FindFirst(wstrPath)) >= 0)
+            {
+            PostFillTask(wstrPath, nIDEvent);
+            break;
+            }
+            else if((iFind = pdoc->m_fileinfo.m_wstraRemove.FindFirst(wstrPath)) >= 0)
+            {
+            iaRemove.add(pdoc->m_fileinfo.m_iaRemove[iFind]);
+            pdoc->m_fileinfo.m_iaRemove.remove_at(iFind);
+            pdoc->m_fileinfo.m_wstraRemove.remove_at(iFind);
+            pds->remove_row();
+            iRemove--;
+            m_buildhelper.m_iStep--;
+            if(iRemove < 0)
+            break;
+            }
+            }
+            mediamanager::GetMediaManager()->album_build().remove(iaRemove);
+            }
 
-               }
-               else if(nIDEvent == 1124)
-               {
-               KillTimer(1124);
-               MediaLibraryDoc * pdoc = get_document();
-               sp(::sqlite::set) pds = pdoc->m_pdsAlbum;
+            }
+            else if(nIDEvent == 1124)
+            {
+            KillTimer(1124);
+            MediaLibraryDoc * pdoc = get_document();
+            sp(::sqlite::set) pds = pdoc->m_pdsAlbum;
 
-               int32_t iRemove = MAX(30, m_buildhelper.m_iDisplayItemCount);
+            int32_t iRemove = MAX(30, m_buildhelper.m_iDisplayItemCount);
 
-               int_array iaRemove;
-               int32_t iFind = 0;
-               sqlite::CFieldValue fv;
-               while(true)
-               {
-               if(iFind < pdoc->m_fileinfo.m_iaUpdate.get_size())
-               {
-               fv = pdoc->m_fileinfo.m_iaUpdate[iFind];
-               if(pds->find_first("id", fv))
-               {
-               PostFillTask(pds->fv("filepath").get_asString(), nIDEvent);
-               break;
-               }
-               else
-               {
-               ASSERT(FALSE);
-               }
+            int_array iaRemove;
+            int32_t iFind = 0;
+            sqlite::CFieldValue fv;
+            while(true)
+            {
+            if(iFind < pdoc->m_fileinfo.m_iaUpdate.get_size())
+            {
+            fv = pdoc->m_fileinfo.m_iaUpdate[iFind];
+            if(pds->find_first("id", fv))
+            {
+            PostFillTask(pds->fv("filepath").get_asString(), nIDEvent);
+            break;
+            }
+            else
+            {
+            ASSERT(FALSE);
+            }
 
-               }
-               else if(iFind < pdoc->m_fileinfo.m_iaRemove.get_size())
-               {
-               fv = pdoc->m_fileinfo.m_iaRemove[iFind];
-               if(pds->find_first("id", fv))
-               {
-               iaRemove.add(pdoc->m_fileinfo.m_iaRemove[iFind]);
-               pdoc->m_fileinfo.m_iaRemove.remove_at(iFind);
-               pdoc->m_fileinfo.m_wstraRemove.remove_at(iFind);
-               pds->remove_row();
-               iRemove--;
-               m_buildhelper.m_iStep--;
-               if(iRemove < 0)
-               break;
-               }
-               else
-               {
-               ASSERT(FALSE);
-               }
-               }
-               else
-               {
-               pdoc->m_bBuilt = true;
-               break;
-               }
-               }
-               }*/
+            }
+            else if(iFind < pdoc->m_fileinfo.m_iaRemove.get_size())
+            {
+            fv = pdoc->m_fileinfo.m_iaRemove[iFind];
+            if(pds->find_first("id", fv))
+            {
+            iaRemove.add(pdoc->m_fileinfo.m_iaRemove[iFind]);
+            pdoc->m_fileinfo.m_iaRemove.remove_at(iFind);
+            pdoc->m_fileinfo.m_wstraRemove.remove_at(iFind);
+            pds->remove_row();
+            iRemove--;
+            m_buildhelper.m_iStep--;
+            if(iRemove < 0)
+            break;
+            }
+            else
+            {
+            ASSERT(FALSE);
+            }
+            }
+            else
+            {
+            pdoc->m_bBuilt = true;
+            break;
+            }
+            }
+            }*/
          }
 
 
@@ -530,7 +525,7 @@ namespace filemanager
          void list_view::_001OnFillTaskResponse(::message::message * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
-               m_bKickActive = true;
+            m_bKickActive = true;
             if(pbase->m_wparam == 0)
             {
                m_cache._001Invalidate(this);
@@ -570,8 +565,8 @@ namespace filemanager
             ::count iDisplayItemCount = m_nDisplayCount;
 
             if(m_bKickActive &&
-               m_buildhelper.m_iTopIndex == iTopIndex &&
-               m_buildhelper.m_iDisplayItemCount == iDisplayItemCount)
+                  m_buildhelper.m_iTopIndex == iTopIndex &&
+                  m_buildhelper.m_iDisplayItemCount == iDisplayItemCount)
                return;
 
             m_buildhelper.m_iTopIndex = iTopIndex;
@@ -588,8 +583,8 @@ namespace filemanager
          {
 
             SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
-               //int32_t iItem;
-               point point = pcontextmenu->GetPoint();
+            //int32_t iItem;
+            point point = pcontextmenu->GetPoint();
             class point ptClient = point;
             ScreenToClient(&ptClient);
             /*    if(_001HitTest_(ptClient, iItem))
@@ -658,34 +653,34 @@ namespace filemanager
                   item.m_iFolder = pnodeItem->attr("id");
                   item.m_strTitle = pnodeItem->attr("name");
 
-      /*            if(wstrType == "normal")
-                  {
-                     item.m_etype = ItemTypeFolder;
-                  }
-                  else if(wstrType == "artist")
-                  {
-                     item.m_etype = ItemTypeArtist;
-                  }
-                  else
-                  {
-                     // unknown item type
-                     ASSERT(FALSE);
-                  }
+                  /*            if(wstrType == "normal")
+                              {
+                                 item.m_etype = ItemTypeFolder;
+                              }
+                              else if(wstrType == "artist")
+                              {
+                                 item.m_etype = ItemTypeArtist;
+                              }
+                              else
+                              {
+                                 // unknown item type
+                                 ASSERT(FALSE);
+                              }
 
-                  switch(item.m_etype)
-                  {
-                  case ItemTypeFolder:
-                     item.m_iImage = m_iIconFolder;
-                     break;
-                  case ItemTypeArtist:
-                     item.m_iImage = m_iIconArtist;
-                     break;
-                  default:
-                     // unknown item type
-                     break;
-                  }
+                              switch(item.m_etype)
+                              {
+                              case ItemTypeFolder:
+                                 item.m_iImage = m_iIconFolder;
+                                 break;
+                              case ItemTypeArtist:
+                                 item.m_iImage = m_iIconArtist;
+                                 break;
+                              default:
+                                 // unknown item type
+                                 break;
+                              }
 
-                  */
+                              */
                   m_itema.add(canew(Item(item)));
                   iNode++;
                }
@@ -701,7 +696,7 @@ namespace filemanager
                   wstrType = pnodeItem->attr("type");
                   item.m_iParent = m_iParentFolder;
                   item.m_iFolder = -1;
-   //               item.m_iId = atoi(pnode->get_child_value("songfileid"));
+                  //               item.m_iId = atoi(pnode->get_child_value("songfileid"));
                   item.m_strTitle = pnodeItem->attr("name");
                   item.m_strFileName = pnodeItem->attr("name");
                   item.m_strExtension = pnodeItem->attr("extension");
@@ -736,13 +731,13 @@ namespace filemanager
          {
             return m_iFolder >= 0;
 //            return m_etype == ItemTypeFolder ||
-  //             m_etype == ItemTypeArtist;
+            //             m_etype == ItemTypeArtist;
          }
 
          void list_view::_001OnEraseBkgnd(::message::message * pobj)
          {
             SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
-               perasebkgnd->m_bRet = true;
+            perasebkgnd->m_bRet = true;
             perasebkgnd->set_result(TRUE);
          }
 

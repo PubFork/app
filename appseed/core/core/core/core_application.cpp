@@ -253,7 +253,7 @@ namespace core
          string str;
          // if system locale has changed (compared to last recorded one by core)
          // use the system locale
-         if (data_get(".local://system_locale", str))
+         if (data_get("&data_source=local&system_locale", str))
          {
             if (str.has_char())
             {
@@ -261,8 +261,8 @@ namespace core
                {
                   try
                   {
-                     data_set(".local://system_locale", Session.get_locale());
-                     data_set(".local://locale", Session.get_locale());
+                     data_set("&data_source=local&system_locale", Session.get_locale());
+                     data_set("&data_source=local&locale", Session.get_locale());
                   }
                   catch (...)
                   {
@@ -272,24 +272,24 @@ namespace core
          }
          else
          {
-            data_set(".local://system_locale", Session.get_locale());
+            data_set("&data_source=local&system_locale", Session.get_locale());
          }
 
          if (handler()->m_varTopicQuery["locale"].get_count() > 0)
          {
             str = handler()->m_varTopicQuery["locale"].stra()[0];
-            data_set(".local://system_locale", str);
-            data_set(".local://locale", str);
+            data_set("&data_source=local&system_locale", str);
+            data_set("&data_source=local&locale", str);
             Session.set_locale(str, ::action::source::database());
          }
          else if (handler()->m_varTopicQuery["lang"].get_count() > 0)
          {
             str = handler()->m_varTopicQuery["lang"].stra()[0];
-            data_set(".local://system_locale", str);
-            data_set(".local://locale", str);
+            data_set("&data_source=local&system_locale", str);
+            data_set("&data_source=local&locale", str);
             Session.set_locale(str, ::action::source::database());
          }
-         else if (data_get(".local://locale", str))
+         else if (data_get("&data_source=local&locale", str))
          {
             if (str.has_char())
             {
@@ -298,7 +298,7 @@ namespace core
          }
          // if system schema has changed (compared to last recorded one by core)
          // use the system schema
-         if (data_get(".local://system_schema", str))
+         if (data_get("&data_source=local&system_schema", str))
          {
             if (str.has_char())
             {
@@ -306,8 +306,8 @@ namespace core
                {
                   try
                   {
-                     data_set(".local://system_schema", Session.get_schema());
-                     data_set(".local://schema", Session.get_schema());
+                     data_set("&data_source=local&system_schema", Session.get_schema());
+                     data_set("&data_source=local&schema", Session.get_schema());
                   }
                   catch (...)
                   {
@@ -317,17 +317,17 @@ namespace core
          }
          else
          {
-            data_set(".local://system_schema", Session.get_schema());
+            data_set("&data_source=local&system_schema", Session.get_schema());
          }
 
          if (handler()->m_varTopicQuery["schema"].get_count() > 0)
          {
             str = handler()->m_varTopicQuery["schema"].stra()[0];
-            data_set(".local://system_schema", str);
-            data_set(".local://schema", str);
+            data_set("&data_source=local&system_schema", str);
+            data_set("&data_source=local&schema", str);
             Session.set_schema(str, ::action::source::database());
          }
-         else if (data_get(".local://schema", str))
+         else if (data_get("&data_source=local&schema", str))
          {
             if (str.has_char())
             {
@@ -336,7 +336,7 @@ namespace core
          }
 
 
-         data_pulse_change("ca2.local://savings", NULL);
+         data_pulse_change("ca2&data_source=local&savings", NULL);
 
          Sys(this).appa_load_string_table();
 

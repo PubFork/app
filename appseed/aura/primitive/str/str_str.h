@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class var;
@@ -115,6 +115,7 @@ namespace str
    void CLASS_DECL_AURA copy(string & str, const char * lpcsz, int32_t iCount);
    string CLASS_DECL_AURA replace(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart = 0);
    string CLASS_DECL_AURA replace_ci(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart = 0);
+   ::count CLASS_DECL_AURA replace_ci_count(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart = 0);
    ::count CLASS_DECL_AURA utf8_replace(string & str, const char * pszFind, const char * pszReplace, strsize iStart = 0);
    string CLASS_DECL_AURA utf8_replace(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart = 0);
 
@@ -122,12 +123,12 @@ namespace str
 
    strsize CLASS_DECL_AURA find_first(const stringa & straSearch, index & iFound, const string & str, index iStart = 0);
 
-   strsize CLASS_DECL_AURA find_ci(const string & strFind   , const string & str, strsize iStart = 0);
-   strsize CLASS_DECL_AURA find_ci(const string & strFind   , const char   * psz, strsize iStart = 0);
-   strsize CLASS_DECL_AURA find_ci(const char   * pszFind   , const string & str, strsize iStart = 0);
-   strsize CLASS_DECL_AURA find_ci(const char   * pszFind   , const char   * psz, strsize iStart = 0);
+   strsize CLASS_DECL_AURA find_ci(const string & strFind, const string & str, strsize iStart = 0);
+   strsize CLASS_DECL_AURA find_ci(const string & strFind, const char   * psz, strsize iStart = 0);
+   strsize CLASS_DECL_AURA find_ci(const char   * pszFind, const string & str, strsize iStart = 0);
+   strsize CLASS_DECL_AURA find_ci(const char   * pszFind, const char   * psz, strsize iStart = 0);
 
-   strsize CLASS_DECL_AURA utf8_find(const char   * pszFind   , const char   * psz, strsize iStart = 0);
+   strsize CLASS_DECL_AURA utf8_find(const char   * pszFind, const char   * psz, strsize iStart = 0);
 
 
    strsize CLASS_DECL_AURA find_ci(const char   * pszFind,const string & str,strsize iStart, strsize iLast);
@@ -151,7 +152,7 @@ namespace str
    FORCEINLINE  const char * __utf8_inc(const char * psz) { return psz + 1 + trailingBytesForUTF8[(byte) *psz]; }
 
    static_inline e_err           err() { return g_eerr; }
-   static_inline void            set_err(e_err eerr){ g_eerr = eerr; }
+   static_inline void            set_err(e_err eerr) { g_eerr = eerr; }
    static_inline void            clear_err() { g_eerr = err_none; }
 
    CLASS_DECL_AURA  const char *   utf8_inc(const char * psz);
@@ -240,23 +241,23 @@ namespace str
    inline CLASS_DECL_AURA string  from(double d);
    inline CLASS_DECL_AURA string  from(float f);*/
 
-/*
-   CLASS_DECL_AURA  string &       from(string & str, int32_t i);
-   CLASS_DECL_AURA  string &       from(string & str, uint32_t ui);
-   CLASS_DECL_AURA  string &       from(string & str, int64_t i);
-   CLASS_DECL_AURA  string &       from(string & str, uint64_t ui);
-   CLASS_DECL_AURA  string &       from(string & str, float f);
-   CLASS_DECL_AURA  string &       from(string & str, double d);
-   inline CLASS_DECL_AURA string & from(string & str, const id & id);
-   inline CLASS_DECL_AURA string & from(string & str, const var & var);
+   /*
+      CLASS_DECL_AURA  string &       from(string & str, int32_t i);
+      CLASS_DECL_AURA  string &       from(string & str, uint32_t ui);
+      CLASS_DECL_AURA  string &       from(string & str, int64_t i);
+      CLASS_DECL_AURA  string &       from(string & str, uint64_t ui);
+      CLASS_DECL_AURA  string &       from(string & str, float f);
+      CLASS_DECL_AURA  string &       from(string & str, double d);
+      inline CLASS_DECL_AURA string & from(string & str, const id & id);
+      inline CLASS_DECL_AURA string & from(string & str, const var & var);
 
 
-#ifdef ANDROID
+   #ifdef ANDROID
 
-   CLASS_DECL_AURA  string &       from(string & str, long int i);
+      CLASS_DECL_AURA  string &       from(string & str, long int i);
 
-#endif
-*/
+   #endif
+   */
 
 
    //inline CLASS_DECL_AURA string   i64toa(int64_t i);
@@ -355,11 +356,11 @@ namespace str
    CLASS_DECL_AURA void format(string_format * pformat, const string & str);
 
    CLASS_DECL_AURA void format(string_format * pformat, const lparam & lparam);
-   
+
    CLASS_DECL_AURA void format(string_format * pformat, const var & var);
-   
+
    CLASS_DECL_AURA void format(string_format * pformat, const property & property);
-   
+
 //
 //#ifdef LINUX
 //
@@ -375,7 +376,7 @@ namespace str
    template < class TYPE >
    void format_type(string_format * pformat,const TYPE & t)
    {
-      
+
       ::str::format(pformat, t);
 
    }

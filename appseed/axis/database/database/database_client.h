@@ -65,6 +65,12 @@ namespace database
    class CLASS_DECL_AXIS client :
       virtual public ::object
    {
+      protected:
+
+         id          m_dataid2;
+         string      m_strDataKeyModifier;
+         bool        m_bDataKeyModified;
+
       public:
 
 
@@ -72,8 +78,10 @@ namespace database
          friend class server;
 
 
-         server *  m_pdataserver;
-         id        m_dataid2;
+         server *    m_pdataserver;
+
+
+
 
 
 
@@ -182,7 +190,12 @@ namespace database
 
          virtual id get_data_id();
          virtual string calc_data_id();
+         virtual string calc_default_data_id();
          virtual void update_data_id();
+         virtual void set_data_key_modifier(string strDataKeyModifier);
+         virtual void add_up_data_key_modifier(string strAddUpDataKeyModifier);
+         virtual void set_local_data_key_modifier();
+         virtual string get_data_key_modifier();
 
 
 

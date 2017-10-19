@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -12,7 +12,7 @@ namespace filemanager
       place_holder_container(papp)
    {
 
-         m_ppropform = NULL;
+      m_ppropform = NULL;
 
    }
 
@@ -21,14 +21,14 @@ namespace filemanager
    {
 
    }
-   
-   
+
+
    void main_view::install_message_routing(::message::sender * psender)
    {
-      
+
       ::filemanager::impact::install_message_routing(psender);
       ::user::split_view::install_message_routing(psender);
-      
+
    }
 
 
@@ -50,29 +50,44 @@ namespace filemanager
 
    void main_view::on_update(::user::impact * pSender,LPARAM lHint,object* phint)
    {
+
       ::filemanager:: impact::on_update(pSender,lHint,phint);
+
       ::user::split_view::on_update(pSender,lHint,phint);
+
       if(phint != NULL)
       {
+
          if(base_class < update_hint >::bases(phint))
          {
+
             update_hint * puh = (update_hint *)phint;
+
             if(get_filemanager_manager() == puh->m_pmanager)
             {
+
                if(puh->is_type_of(update_hint::TypeInitialize))
                {
+
                   string str;
+
                   str.Format("::frame(%d,%d)",get_filemanager_data()->m_iTemplate,get_filemanager_data()->m_iDocument);
-                  sp(frame) pframe = ((::window_sp) GetParentFrame());
-                  if(pframe != NULL)
+
+                  sp(::database::client) pclient = GetParentFrame();
+
+                  if(pclient != NULL)
                   {
-                     pframe->m_dataid = str;
+
+                     pclient->set_data_key_modifier(str);
+
                   }
 
                }
                else if(puh->is_type_of(update_hint::TypeOpenSelectionProperties))
                {
+
                   OpenSelectionProperties();
+
                }
                else if(puh->is_type_of(update_hint::TypePop))
                {
@@ -95,7 +110,7 @@ namespace filemanager
                   //if(pframe != NULL)
                   {
 
- //                    pframe->create_bars();
+//                    pframe->create_bars();
                   }
 
                }
@@ -177,7 +192,7 @@ namespace filemanager
       {
          m_ppropform = canew(file_properties_form(get_app()));
       }
-      
+
       sp(::user::interaction) puie = m_ppropform->open(this,itema);
 
       if(puie == NULL)
@@ -192,7 +207,7 @@ namespace filemanager
 
    void main_view::on_command(::user::command * pcommand)
    {
-      
+
       if(pcommand->m_id == "change_view")
       {
 
@@ -208,19 +223,19 @@ namespace filemanager
          }
          else
          {
-            
+
             SetPane(1,m_ppreview,false);
-            
+
             on_layout();
 
             m_pfilelist->ShowWindow(SW_HIDE);
 
          }
-         
+
          pcommand->m_bRet = true;
 
       }
-      
+
    }
 
 

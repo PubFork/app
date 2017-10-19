@@ -1306,20 +1306,22 @@ namespace user
 
       string str;
 
-      str = "userdocument://";
+      str = Application.m_strAppName;
 
-      str += Application.m_strAppName;
-
-      if (string(Application.get_data_id().m_id).find_ci(".local://") >= 0)
+      if (string(Application.get_data_id().m_id).find_ci("&data_source=local&") >= 0)
       {
 
-         str += ".local://";
+         str += "&data_source=local&";
+
+      }
+      else
+      {
+
+         str += "://";
 
       }
 
       {
-
-         str += "/";
 
          string strType;
 
@@ -1335,7 +1337,6 @@ namespace user
 
       str += m_pimpactsystem->m_strMatter;
 
-
       {
 
          str += "/";
@@ -1345,6 +1346,15 @@ namespace user
          ::str::begins_eat_ci(strType, "class ");
 
          str += strType;
+
+      }
+
+      if (m_strDataKeyModifier.has_char())
+      {
+
+         str += "/";
+
+         str += m_strDataKeyModifier;
 
       }
 

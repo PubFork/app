@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -9,8 +9,8 @@ namespace filemanager
       object(papp),
       m_listcache(papp)
    {
-         m_dwLast123Update = ::get_tick_count();
-         m_pcache = &m_listcache;
+      m_dwLast123Update = ::get_tick_count();
+      m_pcache = &m_listcache;
    }
 
    void operation_list_view::install_message_routing(::message::sender * pinterface)
@@ -21,10 +21,10 @@ namespace filemanager
       IGUI_MSG_LINK(WM_CREATE,pinterface,this,&operation_list_view::_001OnCreate);
    }
 
-  
+
    void operation_list_view::OnDraw(::draw2d::graphics * pgraphics)
    {
-      
+
       UNREFERENCED_PARAMETER(pgraphics);
 
    }
@@ -78,8 +78,6 @@ namespace filemanager
    void operation_list_view::_001OnInitialUpdate()
    {
 
-      m_dataid = "operation_list_view";
-
       _001UpdateColumns();
 
    }
@@ -112,11 +110,11 @@ namespace filemanager
       if(ptimer->m_nIDEvent == 123)
       {
          /*if(::get_tick_count() - m_dwLast123Update > 500)
-        {
-        m_dwLast123Update = ::get_tick_count();
-        _001OnUpdateItemCount();
-        m_cache._001Invalidate();
-        }*/
+         {
+         m_dwLast123Update = ::get_tick_count();
+         _001OnUpdateItemCount();
+         m_cache._001Invalidate();
+         }*/
       }
    }
 

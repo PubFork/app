@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -83,13 +83,13 @@ const int string::npos = -1;
 
 
 string::string(unichar ch,strsize nLength):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
    {
       //Convert ch to the char
-      unichar pszCh[2] ={ch,0};
+      unichar pszCh[2] = {ch,0};
       strsize ncharCharLen = 1;
 
       if(ch != L'\0')
@@ -111,9 +111,9 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
       else
       {
          char* p=pszBuffer;
-         for(strsize i=0 ; i < nLength ;++i)
+         for(strsize i=0 ; i < nLength ; ++i)
          {
-            for(strsize j=0 ; j < ncharCharLen ;++j)
+            for(strsize j=0 ; j < ncharCharLen ; ++j)
             {
                *p = ((char *)buffcharChar)[j];
                ++p;
@@ -125,7 +125,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 }
 
 string::string(const unichar* pch,strsize nLength):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -162,7 +162,7 @@ string::string(const unichar32* pch,strsize nLength):
 }
 
 string::string(const unichar* pch,strsize nLength,string_manager * pstringmanager):
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -234,7 +234,7 @@ int32_t __cdecl crt_char_traits::StringCollateIgnore(const char * pszA,const cha
 const char * __cdecl crt_char_traits::StringFindString(const char * pszBlock,const char * pszMatch) throw()
 {
    return reinterpret_cast<const char *>(strstr(reinterpret_cast<const  char*>(pszBlock),
-      reinterpret_cast<const  char*>(pszMatch)));
+                                         reinterpret_cast<const  char*>(pszMatch)));
 }
 
 char * __cdecl crt_char_traits::StringFindString(char * pszBlock,const char * pszMatch) throw()
@@ -531,7 +531,7 @@ void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,c
    if(nSrcLength == -1) { nSrcLength=1 + GetcharLength(pszSrc); }
    // nLen is in XCHARs
    ::aura::memcpy_s(pszDest,nDestLength*sizeof(char),
-      pszSrc,nSrcLength*sizeof(char));
+                    pszSrc,nSrcLength*sizeof(char));
 }
 
 void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar * pszSrc,strsize nSrcLength) throw()
@@ -764,7 +764,7 @@ void string::construct() throw()
 
 
 string::string(string_manager * pstringmanager) throw():
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
 }
 
@@ -777,17 +777,17 @@ void __cdecl string::Construct(class string * pstring)
 
 // copy constructor
 string::string(const string & strSrc):
-stdstring < simple_string >(strSrc,string_trait::GetDefaultManager())
+   stdstring < simple_string >(strSrc,string_trait::GetDefaultManager())
 {
 }
 
 string::string(const string & strSrc,strsize npos,strsize len) :
-stdstring < simple_string >(strSrc.Mid(npos,len),string_trait::GetDefaultManager())
+   stdstring < simple_string >(strSrc.Mid(npos,len),string_trait::GetDefaultManager())
 {
 }
 
 string::string(const char * pszSrc) :
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    //if(!CheckImplicitLoad(pszSrc))
    //{
@@ -808,7 +808,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 //}
 
 string::string(const char * pszSrc,string_manager * pstringmanager):
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -819,7 +819,7 @@ stdstring < simple_string >(pstringmanager)
 
 
 string::string(const unichar* pszSrc):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -828,7 +828,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 }
 
 string::string(const unichar32* pszSrc):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -866,7 +866,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 
 
 string::string(const unichar * pszSrc,string_manager * pstringmanager):
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -877,7 +877,7 @@ stdstring < simple_string >(pstringmanager)
 #ifdef METROWIN
 
 string::string(Array <byte > ^ a):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -886,7 +886,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 }
 
 string::string(Object ^ o) :
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -895,7 +895,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 }
 
 string::string(Object ^ o, string_manager * pstringmanager) :
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
    //      if( !CheckImplicitLoad( pszSrc ) )
    //      {
@@ -906,7 +906,7 @@ stdstring < simple_string >(pstringmanager)
 #endif
 
 string::string(const uchar* pszSrc):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    *this = reinterpret_cast<const char*>(pszSrc);
 }
@@ -948,13 +948,13 @@ const char *psz = reinterpret_cast< const char* >( pszSrc );
 //}
 
 string::string(const uchar* pszSrc,string_manager * pstringmanager):
-stdstring < simple_string >(pstringmanager)
+   stdstring < simple_string >(pstringmanager)
 {
    *this = reinterpret_cast<const char*>(pszSrc);
 }
 
 string::string(char ch,strsize nLength):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -966,7 +966,7 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 }
 
 string::string(strsize nLength,char ch):
-stdstring < simple_string >(string_trait::GetDefaultManager())
+   stdstring < simple_string >(string_trait::GetDefaultManager())
 {
    ASSERT(nLength >= 0);
    if(nLength > 0)
@@ -980,12 +980,12 @@ stdstring < simple_string >(string_trait::GetDefaultManager())
 
 
 string::string(const char* pch,strsize nLength):
-stdstring < simple_string >(pch,nLength,string_trait::GetDefaultManager())
+   stdstring < simple_string >(pch,nLength,string_trait::GetDefaultManager())
 {
 }
 
 string::string(const char* pch,strsize nLength,string_manager * pstringmanager) :
-stdstring < simple_string >(pch,nLength,pstringmanager)
+   stdstring < simple_string >(pch,nLength,pstringmanager)
 {
 }
 
@@ -1077,14 +1077,14 @@ string& string::operator=(const uchar* pszSrc)
 
 string& string::operator=(char ch)
 {
-   char ach[2] ={ch,0};
+   char ach[2] = {ch,0};
 
    return(operator=(ach));
 }
 
 string& string::operator=(unichar ch)
 {
-   unichar ach[2] ={ch,0};
+   unichar ach[2] = {ch,0};
 
    return(operator=(ach));
 }
@@ -1387,7 +1387,7 @@ strsize string::Delete(strsize iIndex,strsize nCount)
       strsize nXCHARsToCopy = nLength - (iIndex + nCount) + 1;
       char * pszBuffer = GetBuffer();
       ::aura::memmove_s(pszBuffer + iIndex,nXCHARsToCopy*sizeof(char),
-         pszBuffer + iIndex + nCount,nXCHARsToCopy*sizeof(char));
+                        pszBuffer + iIndex + nCount,nXCHARsToCopy*sizeof(char));
       ReleaseBufferSetLength(nNewLength);
    }
 
@@ -1409,7 +1409,7 @@ strsize string::Insert(strsize iIndex,char ch)
 
    // move existing bytes down
    ::aura::memmove_s(pszBuffer + iIndex + 1,(nNewLength - iIndex)*sizeof(char),
-      pszBuffer + iIndex,(nNewLength - iIndex)*sizeof(char));
+                     pszBuffer + iIndex,(nNewLength - iIndex)*sizeof(char));
    pszBuffer[iIndex] = ch;
 
    ReleaseBufferSetLength(nNewLength);
@@ -1437,9 +1437,9 @@ strsize string::Insert(strsize iIndex,const char * psz)
       char * pszBuffer = GetBuffer(nNewLength);
       // move existing bytes down
       ::aura::memmove_s(pszBuffer + iIndex + nInsertLength,(nNewLength - iIndex - nInsertLength + 1)*sizeof(char),
-         pszBuffer + iIndex,(nNewLength - iIndex - nInsertLength + 1)*sizeof(char));
+                        pszBuffer + iIndex,(nNewLength - iIndex - nInsertLength + 1)*sizeof(char));
       ::aura::memcpy_s(pszBuffer + iIndex,nInsertLength*sizeof(char),
-         psz,nInsertLength*sizeof(char));
+                       psz,nInsertLength*sizeof(char));
       ReleaseBufferSetLength(nNewLength);
    }
 
@@ -1528,9 +1528,9 @@ strsize string::replace(const char * pszOld,const char * pszNew,strsize iStart)
          {
             strsize nBalance = nOldLength - strsize(pszTarget - pszBuffer + nSourceLen);
             ::aura::memmove_s(pszTarget + nReplacementLen,nBalance*sizeof(char),
-               pszTarget + nSourceLen,nBalance*sizeof(char));
+                              pszTarget + nSourceLen,nBalance*sizeof(char));
             ::aura::memcpy_s(pszTarget,nReplacementLen*sizeof(char),
-               pszNew,nReplacementLen*sizeof(char));
+                             pszNew,nReplacementLen*sizeof(char));
             pszStart = pszTarget + nReplacementLen;
             pszTarget[nReplacementLen + nBalance] = 0;
             nOldLength += (nReplacementLen - nSourceLen);
@@ -1543,6 +1543,73 @@ strsize string::replace(const char * pszOld,const char * pszNew,strsize iStart)
 
    return(nCount);
 }
+
+
+::count string::replace_count(const char * pszOld, const char * pszNew, strsize iStart)
+{
+   // can't have is_empty or NULL lpszOld
+
+   ::count c = 0;
+
+   // nSourceLen is in XCHARs
+   strsize nSourceLen = string_trait::SafeStringLen(pszOld);
+   if (nSourceLen == 0)
+      return(0);
+   // nReplacementLen is in XCHARs
+   strsize nReplacementLen = string_trait::SafeStringLen(pszNew);
+
+   // loop once to figure out the size of the result string
+   strsize nCount = 0;
+   {
+      const char * pszStart = GetString() + iStart;
+      //      const char * pszEnd = pszStart+get_length();
+      const char * pszTarget;
+      while ((pszTarget = string_trait::StringFindString(pszStart, pszOld)) != NULL)
+      {
+         nCount++;
+         pszStart = pszTarget + nSourceLen;
+         c++;
+      }
+   }
+
+   // if any changes were made, make them
+   if (nCount > 0)
+   {
+      // if the buffer is too small, just
+      //   allocate a new buffer (slow but sure)
+      strsize nOldLength = get_length();
+      strsize nNewLength = nOldLength + (nReplacementLen - nSourceLen)*nCount;
+
+      char * pszBuffer = GetBuffer(MAX(nNewLength, nOldLength));
+
+      char * pszStart = pszBuffer + iStart;
+      char * pszEnd = pszBuffer + nOldLength;
+
+      // loop again to actually do the work
+      while (pszStart < pszEnd)
+      {
+         char * pszTarget;
+         while ((pszTarget = string_trait::StringFindString(pszStart, pszOld)) != NULL)
+         {
+            strsize nBalance = nOldLength - strsize(pszTarget - pszBuffer + nSourceLen);
+            ::aura::memmove_s(pszTarget + nReplacementLen, nBalance * sizeof(char),
+                              pszTarget + nSourceLen, nBalance * sizeof(char));
+            ::aura::memcpy_s(pszTarget, nReplacementLen * sizeof(char),
+                             pszNew, nReplacementLen * sizeof(char));
+            pszStart = pszTarget + nReplacementLen;
+            pszTarget[nReplacementLen + nBalance] = 0;
+            nOldLength += (nReplacementLen - nSourceLen);
+         }
+         pszStart += string_trait::SafeStringLen(pszStart) + 1;
+      }
+      ASSERT(pszBuffer[nNewLength] == 0);
+      ReleaseBufferSetLength(nNewLength);
+   }
+
+   return c;
+
+}
+
 
 string & string::replace(strsize iStart,strsize nCount,const char * psz)
 {
@@ -1624,7 +1691,7 @@ string string::Tokenize(const char * pszTokens,strsize& iStart) const
       if(pszPlace < pszEnd)
       {
          strsize nIncluding = string_trait::StringSpanIncluding(pszPlace,
-            pszTokens);
+                              pszTokens);
 
          if((pszPlace + nIncluding) < pszEnd)
          {
@@ -2331,7 +2398,7 @@ string& string::trim_left()
       psz = pszBuffer + iFirst;
       strsize nDataLength = get_length() - iFirst;
       ::aura::memmove_s(pszBuffer,(nDataLength + 1)*sizeof(char),
-         psz,(nDataLength + 1)*sizeof(char));
+                        psz,(nDataLength + 1)*sizeof(char));
       ReleaseBufferSetLength(nDataLength);
    }
 
@@ -2454,7 +2521,7 @@ string& string::trim_left(char chTarget)
       psz = pszBuffer + iFirst;
       strsize nDataLength = get_length() - iFirst;
       ::aura::memmove_s(pszBuffer,(nDataLength + 1)*sizeof(char),
-         psz,(nDataLength + 1)*sizeof(char));
+                        psz,(nDataLength + 1)*sizeof(char));
       ReleaseBufferSetLength(nDataLength);
    }
 
@@ -2484,7 +2551,7 @@ string& string::trim_left(const char * pszTargets)
       psz = pszBuffer + iFirst;
       strsize nDataLength = get_length() - iFirst;
       ::aura::memmove_s(pszBuffer,(nDataLength + 1)*sizeof(char),
-         psz,(nDataLength + 1)*sizeof(char));
+                        psz,(nDataLength + 1)*sizeof(char));
       ReleaseBufferSetLength(nDataLength);
    }
 
@@ -2757,7 +2824,7 @@ void string::AppendFormatV(const char * pszFormat,va_list args)
    char * pszBuffer = GetBuffer(nCurrentLength + nAppendLength);
 #if _SECURE_TEMPLATE
    string_trait::Format(pszBuffer + nCurrentLength,
-      nAppendLength + 1,pszFormat,args);
+                        nAppendLength + 1,pszFormat,args);
 #else
    string_trait::Format(pszBuffer + nCurrentLength,pszFormat,args);
 #endif
@@ -2837,7 +2904,7 @@ BSTR string::SetSysString(BSTR* pbstr) const
    ASSERT(__is_valid_address(pbstr,sizeof(BSTR)));
 
    if(!string_trait::ReAllocSysString(GetString(),pbstr,
-      get_length()))
+                                      get_length()))
    {
       throw_memory_exception();
    }
@@ -3125,7 +3192,7 @@ bool string::begins_ci(const char * s) const
 
 void string::push_back(char ch)
 {
-   
+
    operator += (ch);
 
 }

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace prompt
@@ -39,18 +39,18 @@ namespace prompt
       if(!::asphere::application::initialize_application())
          return false;
 
-      Session.filemanager().std().m_strLevelUp = "levelup";
+      Session.filemanager()->m_strLevelUp = "levelup";
 
       if(m_strId == "command")
       {
 
-	      ::user::single_document_template* pDocTemplate;
-	      pDocTemplate = new ::user::single_document_template(
+         ::user::single_document_template* pDocTemplate;
+         pDocTemplate = new ::user::single_document_template(
             this,
-		      "system/form",
-		      System.type_info < prompt::document > (),
-		      System.type_info < prompt::frame > (),
-		      System.type_info < prompt::pane_view > ());
+            "system/form",
+            System.type_info < prompt::document > (),
+            System.type_info < prompt::frame > (),
+            System.type_info < prompt::pane_view > ());
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
@@ -66,7 +66,7 @@ namespace prompt
       return 0;
    }
 
-   
+
    void application::_001OnCmdMsg(::user::command * pcommand)
    {
 

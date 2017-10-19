@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 CLASS_DECL_AURA index array_translate_a(index_biunique & ia, index aNew, index aOld);
@@ -131,18 +131,18 @@ namespace user
       IGUI_MSG_LINK(WM_KEYDOWN,pinterface,this,&mesh::_001OnKeyDown);
 
       IGUI_MSG_LINK(WM_CREATE,pinterface,this,&mesh::_001OnCreate);
-      
+
       connect_command("mesh_view_auto_arrange",&mesh::_001OnMeshViewAutoArrange);
-      
+
       connect_command_probe("mesh_view_auto_arrange",&mesh::_001OnUpdateMeshViewAutoArrange);
-      
+
    }
 
 
    void mesh::_001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
+
 
       //single_lock sl(&m_mutex,true);
 
@@ -190,7 +190,7 @@ namespace user
          {
 
             if((sizea[i].cx - x > right)
-               || i == sizea.get_upper_bound())
+                  || i == sizea.get_upper_bound())
             {
                rect rect;
                rect.top = LONG(y - ptScroll.y);
@@ -317,7 +317,7 @@ namespace user
       GetClientRect(rectClient);
 
       bool bHoverFont = false;
-      
+
       select_font(pdrawitem->m_pgraphics, font_list_item);
 
       m_pdrawmeshitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
@@ -446,7 +446,7 @@ namespace user
       }
 
       bool bHoverFont = false;
-      
+
       select_font(pdrawitem->m_pgraphics, font_list_item);
 
       pdrawitem->m_pfont = pdrawitem->m_pgraphics->m_spfont;
@@ -454,8 +454,8 @@ namespace user
       for(iItem = iItemFirst; iItem <= iItemLast; iItem++)
       {
          if(m_eview == view_icon
-            && (m_iconlayout.m_iaDisplayToStrict.get_b(iItem) == -1
-            && iItem != m_iItemDrop))
+               && (m_iconlayout.m_iaDisplayToStrict.get_b(iItem) == -1
+                   && iItem != m_iItemDrop))
             continue;
 
          m_pdrawmeshitem->m_iItem           = DisplayToStrict(iItem);
@@ -521,8 +521,8 @@ namespace user
          return;
 
       pdrawitem->m_bListItemHover = pdrawitem->m_iDisplayItem == m_iItemHover &&
-         (m_eview != view_icon ||
-         ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) < m_nItemCount)));
+                                    (m_eview != view_icon ||
+                                     ((m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) >= 0 && m_iconlayout.m_iaDisplayToStrict.get_a(m_iItemHover) < m_nItemCount)));
 
       if(pdrawitem->m_bListItemHover)
       {
@@ -681,7 +681,7 @@ namespace user
 
    void mesh::_001GetItemImage(::user::mesh_item * pitem)
    {
-      
+
       if(m_pmeshdata != NULL)
       {
 
@@ -759,7 +759,7 @@ namespace user
       //psize->m_bRet = false;
    }
 
-   
+
    void mesh::on_layout()
    {
 
@@ -767,9 +767,9 @@ namespace user
 
       if(m_bTopText)
       {
-         
+
          _001LayoutTopText();
-         
+
       }
 
       m_iTopIndex       = _001CalcDisplayTopIndex();
@@ -782,7 +782,7 @@ namespace user
       }
 
       index iLow = 0;
-      
+
       for(m_iTopGroup = 0; m_iTopGroup < m_nGroupCount; m_iTopGroup++)
       {
 
@@ -937,7 +937,7 @@ namespace user
       }
 
       CacheHint();
-      
+
       on_change_view_size();
 
       TRACE("mesh::_001OnUpdateItemCount ItemCount %d\n",m_nItemCount);
@@ -989,9 +989,9 @@ namespace user
                sizeTotal.cx = rectClient.right;
             else
                sizeTotal.cx  = (LONG)MIN(
-               m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
-               rectClient.height()
-               + itemFirst.m_rectItem.width(),MAXLONG);
+                                  m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
+                                  rectClient.height()
+                                  + itemFirst.m_rectItem.width(),MAXLONG);
          }
       }
       else if(m_eview == view_report)
@@ -1039,7 +1039,7 @@ namespace user
             _001GetItemRect(&itemLast);
 
 //            itemLast.m_rectItem.right     -= (m_scrolldata.m_rectMargin.left + m_scrolldata.m_rectMargin.right);
-  //          itemLast.m_rectItem.bottom    -= (m_scrolldata.m_rectMargin.top + m_scrolldata.m_rectMargin.bottom);
+            //          itemLast.m_rectItem.bottom    -= (m_scrolldata.m_rectMargin.top + m_scrolldata.m_rectMargin.bottom);
 
             rect.unite(itemFirst.m_rectItem,itemLast.m_rectItem);
 
@@ -1076,11 +1076,11 @@ namespace user
 
             itemTopRight.m_iItem = (index)MAX(1,rectClient.width() / get_item_size().cx) - 1;
          }
-  /*       else
-         {
-            itemTopRight.m_iItem = MAX(1,m_iconlayout.m_iWidth) - 1;
-         }
-  */       itemTopRight.m_iDisplayItem = itemTopRight.m_iDisplayItem;
+         /*       else
+                {
+                   itemTopRight.m_iItem = MAX(1,m_iconlayout.m_iWidth) - 1;
+                }
+         */       itemTopRight.m_iDisplayItem = itemTopRight.m_iDisplayItem;
          _001GetItemRect(&itemTopRight);
 
          rect.unite(itemFirst.m_rectItem,itemLast.m_rectItem);
@@ -1353,7 +1353,7 @@ namespace user
          GetClientRect(&rectView);
          class size sizeItem = get_item_size();
          return MAX((rectView.width() / sizeItem.cx) * (rectView.height() / sizeItem.cy),
-            m_iconlayout.m_iaDisplayToStrict.get_max_a() + 1);
+                    m_iconlayout.m_iaDisplayToStrict.get_max_a() + 1);
       }
       else if(m_eview == view_report || m_eview == view_grid)
       {
@@ -1536,9 +1536,9 @@ namespace user
          GetClientRect(&rectClient);
 
          if(pt.x < 0
-            || pt.x > rectClient.right
-            || pt.y < 0
-            || pt.x > rectClient.bottom)
+               || pt.x > rectClient.right
+               || pt.y < 0
+               || pt.x > rectClient.bottom)
          {
             return false;
          }
@@ -1562,10 +1562,10 @@ namespace user
 
          //if(m_bHeaderCtrl)
          //{
-            iItem--;
+         iItem--;
 
-            if(iItem < 0)
-               return false;
+         if(iItem < 0)
+            return false;
          //}
 
          if(m_bFilter1)
@@ -1661,7 +1661,7 @@ namespace user
          }
          //else
          {
-           // iItemParam = iy * (MAX(1,m_iconlayout.m_iWidth)) + ix;
+            // iItemParam = iy * (MAX(1,m_iconlayout.m_iWidth)) + ix;
          }
 
 
@@ -2039,11 +2039,11 @@ namespace user
 
       if(m_eview == view_icon)
       {
-         
+
          pdrawitem->m_rectSubItem     = pdrawitem->m_rectItem;
-         
+
          return_(pdrawitem->m_bOk,true);
-         
+
          //return;
          //throw "subitem rectangle on icon view? why are you asking for that now?";
       }
@@ -2115,8 +2115,8 @@ namespace user
    {
 
       if(m_bGroup && m_bLateralGroup &&
-         (eelement == ::user::mesh::element_group_image
-         || eelement == ::user::mesh::element_group_item_text))
+            (eelement == ::user::mesh::element_group_image
+             || eelement == ::user::mesh::element_group_item_text))
       {
          int32_t x = pdrawitem->m_rectGroup.left;
          int32_t iImageBottom = pdrawitem->m_rectGroup.top;
@@ -2431,7 +2431,7 @@ namespace user
       if(m_iLowerBound == -1 || m_iUpperBound == -1)
          return false;
       if(iItem >= m_iLowerBound
-         && iItem <= m_iUpperBound)
+            && iItem <= m_iUpperBound)
          return true;
       else
          return false;
@@ -2470,10 +2470,10 @@ namespace user
    void mesh::_001OnKeyDown(::message::message * pobj)
    {
       SCAST_PTR(::message::key,pkey,pobj);
-         if(pkey->previous()) // give chance to child
-            return;
+      if(pkey->previous()) // give chance to child
+         return;
       if(pkey->m_ekey == ::user::key_down || pkey->m_ekey == ::user::key_up ||
-         pkey->m_ekey == ::user::key_next || pkey->m_ekey == ::user::key_prior)
+            pkey->m_ekey == ::user::key_next || pkey->m_ekey == ::user::key_prior)
       {
          if(m_nItemCount > 0)
          {
@@ -2671,28 +2671,28 @@ namespace user
          index iItemEnter;
 
          index iSubItemEnter;
-         
+
          point point;
 
          if (_001DisplayHitTest(pt, iItemEnter, iSubItemEnter))
          {
-            
+
             if (m_bSelect && m_bHoverSelect &&
-               (m_iSubItemEnter != iSubItemEnter ||
-                  m_iItemEnter != iItemEnter)
-               && !m_rangeSelection.has_item(iItemEnter))
+                  (m_iSubItemEnter != iSubItemEnter ||
+                   m_iItemEnter != iItemEnter)
+                  && !m_rangeSelection.has_item(iItemEnter))
             {
-               
+
                m_iMouseFlagEnter = pmouse->m_nFlags;
-               
+
                m_iItemEnter = iItemEnter;
-               
+
                m_iSubItemEnter = iSubItemEnter;
-               
+
                SetTimer(12321, 800, NULL);
-               
+
             }
-            
+
          }
 
       }
@@ -2703,9 +2703,9 @@ namespace user
 
    void mesh::_001OnLButtonDown(::message::message * pobj)
    {
-      
+
       SCAST_PTR(::message::mouse,pmouse,pobj);
-      
+
       pmouse->previous(); // give chance to child control and to base views
 
       m_bLButtonDown = true;
@@ -2713,9 +2713,9 @@ namespace user
       SetCapture();
 
       int_ptr iItem;
-      
+
       point pt = pmouse->m_pt;
-      
+
       ScreenToClient(&pt);
 
       m_ptLButtonDown = pt;
@@ -2724,7 +2724,7 @@ namespace user
 
       if (!has_focus())
       {
-         
+
          SetFocus();
 
       }
@@ -2761,7 +2761,7 @@ namespace user
                // shouldn't be regarded, as it is not directly
                // related with further click other than the
                // current click, i.e., there is no interpretation
-               // for double-click in "Hover Select"/"Single Click to Open" 
+               // for double-click in "Hover Select"/"Single Click to Open"
                // mode, and every click must be regarded as single
                // independent click.
                // Action. Remove.
@@ -2812,9 +2812,9 @@ namespace user
             }
             else
             {
-               
+
                m_rangeSelection.clear();
-               
+
                index iItem;
 
                if(_001DisplayHitTest(pt,iItem))
@@ -2861,7 +2861,7 @@ namespace user
    {
 
       SCAST_PTR(::message::mouse,pmouse,pobj);
-      
+
       point pt = pmouse->m_pt;
 
       ScreenToClient(&pt);
@@ -2883,7 +2883,7 @@ namespace user
 
                if (m_iItemDrag != m_iItemDrop && m_iItemDrop != -1)
                {
-                  
+
                   m_meshlayout.m_iaDisplayToStrict.swap(m_iItemDrag, m_iItemDrop);
 
                   _001OnAfterSort();
@@ -2896,7 +2896,7 @@ namespace user
 
       }
       // if Hover Select or ***LONG Long Press PhRESSing***
-      else if (m_bHoverSelect || (get_tick_count() - m_dwLButtonDownStart > 800)) 
+      else if (m_bHoverSelect || (get_tick_count() - m_dwLButtonDownStart > 800))
       {
 
          if (m_bLButtonDown)
@@ -2990,7 +2990,7 @@ namespace user
       pobj->m_bRet = true;
    }
 
-   
+
    void mesh::_001OnRButtonUp(::message::message * pobj)
    {
 
@@ -3119,7 +3119,7 @@ namespace user
       if(m_iLowerBound == -1 || m_iUpperBound == -1)
          return false;
       if(iSubItem >= m_iLowerBound
-         && iSubItem <= m_iUpperBound)
+            && iSubItem <= m_iUpperBound)
          return true;
       else
          return false;
@@ -3240,7 +3240,7 @@ namespace user
    void mesh::_001OnLButtonDblClk(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse,pmouse,pobj);
-         m_iClick = 2;
+      m_iClick = 2;
       point pt = pmouse->m_pt;
       ScreenToClient(&pt);
 
@@ -4125,28 +4125,28 @@ namespace user
    {
 
       ::user::control::_001OnTimer(ptimer);
-      
+
       if(ptimer->m_nIDEvent == 12345679) // left click
       {
-         
+
          KillTimer(12345679);
-         
+
          if(m_bSelect)
          {
-            
+
             if(m_bHoverSelect)
             {
-               
+
             }
 
          }
-         
+
       }
       else if(ptimer->m_nIDEvent == 8477) // right click
       {
-         
+
          KillTimer(8477);
-         
+
          //if(!_001IsEditing())
          {
             uint_ptr nFlags = m_uiRButtonUpFlags;
@@ -4185,7 +4185,7 @@ namespace user
       {
 
          KillTimer(ptimer->m_nIDEvent);
-         
+
          m_iItemDrop = -1;
 
          if (m_eview == view_icon)
@@ -4226,7 +4226,7 @@ namespace user
          }
          else
          {
-            
+
             m_iStrictItemDrag = m_meshlayout.m_iaDisplayToStrict.find_first(m_iItemDrag);
 
             if (m_iStrictItemDrag >= 0)
@@ -4241,7 +4241,7 @@ namespace user
                m_bDrag = true;
 
             }
-            
+
          }
 
       }
@@ -4262,28 +4262,28 @@ namespace user
          KillTimer(ptimer->m_nIDEvent);
 
          index iItemSel;
-         
+
          index iSubItemSel;
-         
+
          point point;
-         
+
          Session.get_cursor_pos(&point);
-         
+
          ScreenToClient(&point);
-         
+
          try
          {
-            
+
             if(_001DisplayHitTest(point, iItemSel,iSubItemSel))
             {
-               
+
                if(m_iSubItemEnter == iSubItemSel && m_iItemEnter == iItemSel)
                {
-                  
+
                   m_iSubItemEnter = -1;
-                  
+
                   m_iItemEnter = -1;
-                  
+
                   bool bLShiftKeyDown     = Session.is_key_pressed(::user::key_lshift);
                   bool bRShiftKeyDown     = Session.is_key_pressed(::user::key_rshift);
                   bool bLControlKeyDown   = Session.is_key_pressed(::user::key_lcontrol);
@@ -4293,12 +4293,12 @@ namespace user
 
                   if(m_bMultiSelect && bShiftKeyDown)
                   {
-                     
+
                      if(bControlKeyDown)
                      {
-                        
+
                         item_range itemrange;
-                        
+
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4306,15 +4306,15 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
-                        
+
                         _001AddSelection(itemrange);
-                        
+
                      }
                      else
                      {
-                        
+
                         item_range itemrange;
-                        
+
                         itemrange.set(
                            MIN(iItemSel,m_iItemSel),
                            MAX(iItemSel,m_iItemSel),
@@ -4322,29 +4322,29 @@ namespace user
                            MAX(iSubItemSel,m_iSubItemSel),
                            -1,
                            -1);
-                        
+
                         range range;
-                        
+
                         range.add_item(itemrange);
-                        
+
                         _001SetSelection(range);
-                        
+
                      }
-                     
+
                   }
                   else if(m_bMultiSelect && bControlKeyDown)
                   {
-                     
+
                      m_iLastItemSel = m_iItemSel;
-                     
+
                      m_iLastSubItemSel = m_iSubItemSel;
-                     
+
                      m_iItemSel = iItemSel;
-                     
+
                      m_iSubItemSel = iSubItemSel;
-                     
+
                      item_range itemrange;
-                     
+
                      itemrange.set(
                         m_iItemSel,
                         m_iItemSel,
@@ -4352,23 +4352,23 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
-                     
+
                      _001AddSelection(itemrange);
-                     
+
                   }
                   else
                   {
-                     
+
                      m_iLastItemSel = m_iItemSel;
-                     
+
                      m_iLastSubItemSel = m_iSubItemSel;
-                     
+
                      m_iItemSel = iItemSel;
-                     
+
                      m_iSubItemSel = iSubItemSel;
-                     
+
                      item_range itemrange;
-                     
+
                      itemrange.set(
                         DisplayToStrict(m_iItemSel),
                         DisplayToStrict(m_iItemSel),
@@ -4376,27 +4376,27 @@ namespace user
                         m_iSubItemSel,
                         -1,
                         -1);
-                     
+
                      range range;
-                     
+
                      range.add_item(itemrange);
-                     
+
                      _001SetSelection(range);
-                     
+
                   }
-                  
+
                }
-               
+
             }
-            
+
          }
          catch(...)
          {
-            
+
          }
-         
+
          m_iSubItemEnter = -1;
-         
+
          m_iItemEnter = -1;
 
       }
@@ -4443,16 +4443,6 @@ namespace user
       m_rangeHighlight = range;
    }
 
-   void mesh::DIOnSectionSet()
-   {
-      string str;
-      str = m_dataid.get_id();
-      str += ".headerctrl";
-      //if(m_pmeshheader != NULL)
-      //{
-      //   m_pmeshheader->m_dataid = str;
-      //}
-   }
 
    bool mesh::DIDDXHeaderLayout(bool bSave)
    {
@@ -4485,7 +4475,7 @@ namespace user
       for(index i = 0; i < sizea.get_size(); i++)
       {
          if((sizea[i].cx - x > right)
-            || i == sizea.get_upper_bound())
+               || i == sizea.get_upper_bound())
          {
             if(i == 0)
             {
@@ -4579,7 +4569,7 @@ namespace user
 
    int32_t mesh::_001CalcItemWidth(index iItem,index iSubItem)
    {
-      
+
       ::draw2d::memory_graphics pgraphics(allocer());
 
       select_font(pgraphics, font_list_item);
@@ -5008,7 +4998,7 @@ namespace user
       KillTimer(0xfffffffe);
 
       ASSERT(m_efilterstate == FilterStateSetup
-         || m_efilterstate == FilterStateFilter);
+             || m_efilterstate == FilterStateFilter);
 
       index iItemCount = m_nItemCount;
 
@@ -5094,7 +5084,7 @@ namespace user
       for(
          iFilter1Step =  m_iFilter1Step;
          iFilter1Step < iItemCount;
-      iFilter1Step++)
+         iFilter1Step++)
       {
          //for(index j = 0; j < m_nColumnCount; j++)
          /*{
@@ -5472,7 +5462,7 @@ namespace user
       if(_001DisplayHitTest(point,iItemHover,iSubItemHover))
       {
          if(m_iSubItemHover != iSubItemHover ||
-            m_iItemHover != iItemHover)
+               m_iItemHover != iItemHover)
          {
             m_iItemHover = iItemHover;
             m_iSubItemHover = iSubItemHover;
@@ -5719,7 +5709,7 @@ namespace user
    id mesh::data_get_current_mesh_layout_id()
    {
 
-      return "mesh." + m_dataid.m_id.str();
+      return "mesh";
 
    }
 
@@ -5844,23 +5834,23 @@ namespace user
 
    class size mesh::get_item_size()
    {
-      if(m_eview == view_icon)
-      {
-         if(m_nColumnCount == 0)
+         if(m_eview == view_icon)
          {
-            return size(32,32);
-         }
+            if(m_nColumnCount == 0)
+            {
+               return size(32,32);
+            }
 //         index iIconSize = MAX(32,m_columna[0]->m_sizeIcon.cy);
-         index iIconSize = 32;
-         index iItemSize = iIconSize * 2;
-         return size(iItemSize,iItemSize);
-      }
-      else
-      {
-         // not implemented
-         ASSERT(FALSE);
-         return size(0,0);
-      }
+            index iIconSize = 32;
+            index iItemSize = iIconSize * 2;
+            return size(iItemSize,iItemSize);
+         }
+         else
+         {
+            // not implemented
+            ASSERT(FALSE);
+            return size(0,0);
+         }
    }
 
    void mesh::auto_arrange(bool bAutoArrange)
@@ -5898,7 +5888,7 @@ namespace user
    void mesh::_001OnUpdateMeshViewAutoArrange(::message::message * pobj)
    {
       SCAST_PTR(::user::command,pcommand,pobj);
-         pcommand->_001SetCheck(get_auto_arrange());
+      pcommand->_001SetCheck(get_auto_arrange());
       pcommand->Enable();
    }
 

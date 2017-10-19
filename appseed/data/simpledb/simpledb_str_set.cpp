@@ -269,7 +269,7 @@ bool db_str_set::load(const char * lpKey, string & strValue)
    if(m_pcore->m_pdataserver == NULL)
       return false;
 
-   if(m_pcore->m_pdataserver->m_bRemote && string(lpKey).find(".local://") < 0)
+   if(m_pcore->m_pdataserver->m_bRemote && string(lpKey).find("&data_source=local&") < 0)
    {
 
       Application.assert_user_logged_in();
@@ -383,7 +383,7 @@ bool db_str_set::save(const char * lpKey, const char * lpcsz)
    if(m_pcore->m_pdataserver == NULL)
       return false;
 
-   if(!m_pcore->m_pdataserver->m_bRemote || string(lpKey).find(".local://") >= 0)
+   if(!m_pcore->m_pdataserver->m_bRemote || string(lpKey).find("&data_source=local&") >= 0)
    {
       if(m_pcore->db() == NULL)
          return false;

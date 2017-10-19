@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "db_str_set.h"
 
 
@@ -7,8 +7,8 @@ int32_t g_idbchange;
 #define new AURA_NEW
 
 db_server::db_server(::aura::application * papp) :
-      ::object(papp),
-      server(papp)
+   ::object(papp),
+   server(papp)
 {
 
    m_pdb                = NULL;
@@ -79,13 +79,13 @@ bool db_server::initialize()
 {
 
    if(System.handler()->m_varTopicQuery["app"] == "app-core/netnodelite"
-   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
-   || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
-   || System.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg"
-   || System.handler()->m_varTopicQuery["app"] == "app-core/mydns"
-   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
-   || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
-   || System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
+         || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server"
+         || System.handler()->m_varTopicQuery["app"] == "app-core/netnode_dynamic_web_server_cfg"
+         || System.handler()->m_varTopicQuery["app"] == "app-core/netnodecfg"
+         || System.handler()->m_varTopicQuery["app"] == "app-core/mydns"
+         || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_netnode"
+         || System.handler()->m_varTopicQuery["app"] == "app-gtech/sensible_service"
+         || System.handler()->m_varTopicQuery.has_property("no_remote_simpledb"))
    {
 
       m_bRemote = false;
@@ -121,9 +121,9 @@ bool db_server::initialize()
 
    if(!Application.dir().mk(str.folder()))
    {
-    
+
       return false;
-      
+
    }
 
    m_pdb->setDatabase(str);
@@ -254,12 +254,14 @@ void db_server::close()
 bool db_server::data_server_load(::database::client * pclient, ::database::id id, ::file::ostream & writable, ::database::update_hint * phint)
 {
 
-   //synch_lock sl(m_pmutex);
-
    UNREFERENCED_PARAMETER(phint);
 
-   if(!load(calc_data_key(pclient,id),writable))
+   if (!load(calc_data_key(pclient, id), writable))
+   {
+
       return false;
+
+   }
 
    return true;
 
@@ -273,8 +275,12 @@ bool db_server::data_server_save(::database::client * pclient, ::database::id id
 
    UNREFERENCED_PARAMETER(phint);
 
-   if(!save(calc_data_key(pclient,id),readable))
+   if (!save(calc_data_key(pclient, id), readable))
+   {
+
       return false;
+
+   }
 
    return true;
 

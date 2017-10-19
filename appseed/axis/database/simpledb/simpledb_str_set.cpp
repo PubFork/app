@@ -344,7 +344,7 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
    }
 
-   if (m_pcore->m_pdataserver->m_bRemote && (strKey.find(".local://") < 0 || strKey.find(".override-local.") >= 0))
+   if (m_pcore->m_pdataserver->m_bRemote && (strKey.find("&data_source=local&") < 0 || strKey.find(".override-local.") >= 0))
    {
 
       // Remote
@@ -551,7 +551,7 @@ bool db_str_set::save(const string & strKey, const string & strValue)
 
    }
 
-   if (!m_pcore->m_pdataserver->m_bRemote || !(strKey.find(".local://") < 0 || strKey.find(".override-local.") >= 0))
+   if (!m_pcore->m_pdataserver->m_bRemote || !(strKey.find("&data_source=local&") < 0 || strKey.find(".override-local.") >= 0))
    {
 
       if (m_pcore->db() == NULL)

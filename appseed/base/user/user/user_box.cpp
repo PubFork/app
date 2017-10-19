@@ -9,7 +9,7 @@ namespace user
       ::object(get_app())
    {
 
-      m_strWindowRectDataAddUp = ".local://";
+      m_strWindowRectDataAddUp = "&data_source=local&";
 
    }
 

@@ -129,7 +129,7 @@ bool html_document::on_open_document(var varFile)
    uh.m_strUrl = varFile;
    update_all_views(NULL, 0, &uh);
 
-   data_set(".local://LastOpenedFile", get_file_path());
+   data_set("&data_source=local&LastOpenedFile", get_file_path());
 
    
 

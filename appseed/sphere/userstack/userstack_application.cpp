@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userstack
@@ -12,7 +12,7 @@ namespace userstack
       m_bDrawCursor              = true;
       m_bShowPlatform            = false;
       m_pappCurrent              = NULL;
-      m_bLicense				      = false;
+      m_bLicense                 = false;
 
       m_ppaneview = NULL;
 
@@ -38,28 +38,25 @@ namespace userstack
 
    }
 
+
    bool application::initialize_application()
    {
 
       if(!::asphere::application::initialize_application())
          return false;
 
-
-      m_dataid += ".local://";
+      set_data_key_modifier("&data_source=local&");
 
       initialize_bergedge_application_interface();
 
-
-      Session.filemanager().std().m_strLevelUp = "levelup";
-
+      Session.filemanager()->m_strLevelUp = "levelup";
 
       SetRegistryKey("ca2core");
 
-
       return true;
 
-
    }
+
 
    int32_t application::exit_application()
    {
@@ -113,8 +110,8 @@ namespace userstack
    }
 
    bool application::file_manager_open_file(
-            ::filemanager::data * pdata,
-            ::fs::item_array & itema)
+      ::filemanager::data * pdata,
+      ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
       if(itema.get_size() > 0)
@@ -195,60 +192,60 @@ namespace userstack
    }
 
 
-/*   void application::request(::create * pcreate)
-   {
-
-      if(m_pappCurrent != NULL && m_pappCurrent != this
-         && (pcreate->m_spCommandLine->m_strApp.is_empty()
-         ||App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
+   /*   void application::request(::create * pcreate)
       {
-         if(get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL)
-         {
-            get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
-         }
-         App(m_pappCurrent).request(pcreate);
-         if(pcreate->m_spCommandLine->m_varQuery["document"].cast < ::user::document > () == NULL)
-         {
-            goto alt1;
-         }
 
-      }
-      else
-      {
-         alt1:
-         if(pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
+         if(m_pappCurrent != NULL && m_pappCurrent != this
+            && (pcreate->m_spCommandLine->m_strApp.is_empty()
+            ||App(m_pappCurrent).m_strAppName == pcreate->m_spCommandLine->m_strApp))
          {
-            if(::str::ends_ci(pcreate->m_spCommandLine->m_varFile, ".ca2"))
+            if(get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL)
             {
-               string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
-               if(::str::begins_eat(strCommand, "ca2prompt\r")
-               || ::str::begins_eat(strCommand, "ca2prompt\n"))
-               {
-                  strCommand.trim();
-                  handler()->add_fork_uri(strCommand);
-               }
-               return;
+               get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + App(m_pappCurrent).m_strAppName);
             }
-            else
-            {
-               on_request(pcreate);
-            }
-         }
-         else if(pcreate->m_spCommandLine->m_strApp.has_char() &&
-            get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL
-            && (!pcreate->m_spApplicationBias.is_set() || pcreate->m_spApplicationBias->m_puiParent == NULL))
-         {
-            //simple_message_box(NULL, "request3", "request3", MB_ICONEXCLAMATION);
-            get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + pcreate->m_spCommandLine->m_strApp);
             App(m_pappCurrent).request(pcreate);
+            if(pcreate->m_spCommandLine->m_varQuery["document"].cast < ::user::document > () == NULL)
+            {
+               goto alt1;
+            }
+
          }
          else
          {
-            //simple_message_box(NULL, "request4", "request4", MB_ICONEXCLAMATION);
-            on_request(pcreate);
+            alt1:
+            if(pcreate->m_spCommandLine->m_varFile.get_type() == var::type_string)
+            {
+               if(::str::ends_ci(pcreate->m_spCommandLine->m_varFile, ".ca2"))
+               {
+                  string strCommand = Application.file().as_string(pcreate->m_spCommandLine->m_varFile);
+                  if(::str::begins_eat(strCommand, "ca2prompt\r")
+                  || ::str::begins_eat(strCommand, "ca2prompt\n"))
+                  {
+                     strCommand.trim();
+                     handler()->add_fork_uri(strCommand);
+                  }
+                  return;
+               }
+               else
+               {
+                  on_request(pcreate);
+               }
+            }
+            else if(pcreate->m_spCommandLine->m_strApp.has_char() &&
+               get_document() != NULL && get_document()->get_typed_view < pane_view >() != NULL
+               && (!pcreate->m_spApplicationBias.is_set() || pcreate->m_spApplicationBias->m_puiParent == NULL))
+            {
+               //simple_message_box(NULL, "request3", "request3", MB_ICONEXCLAMATION);
+               get_document()->get_typed_view < pane_view >()->set_cur_tab_by_id("app:" + pcreate->m_spCommandLine->m_strApp);
+               App(m_pappCurrent).request(pcreate);
+            }
+            else
+            {
+               //simple_message_box(NULL, "request4", "request4", MB_ICONEXCLAMATION);
+               on_request(pcreate);
+            }
          }
-      }
-   }*/
+      }*/
 
    void application::request_topic_file(var & varQuery)
    {
@@ -279,7 +276,7 @@ namespace userstack
          return NULL;
 
       }
-       
+
       papp = NULL;
 
       try
@@ -301,18 +298,18 @@ namespace userstack
          return NULL;
 
       }
-       
+
       if(is_null(App(papp)))
       {
-      
+
          return NULL;
 
       }
-      
+
       m_mapApplication.set_at(strAppId, papp);
 
       Session.m_mapApplication.set_at(strAppId, papp);
-      
+
       return papp;
 
    }

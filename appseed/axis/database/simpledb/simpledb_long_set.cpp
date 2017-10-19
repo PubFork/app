@@ -295,7 +295,7 @@ bool db_long_set::load(const char * lpKey, int64_t * plValue)
 
    db_long_set_core * pcore = (db_long_set_core *)m_pcore->m_ptopthis;
 
-   if (m_pcore->m_pdataserver->m_bRemote && (string(lpKey).find(".local://") < 0 || string(lpKey).find(".override-local.") >= 0))
+   if (m_pcore->m_pdataserver->m_bRemote && (string(lpKey).find("&data_source=local&") < 0 || string(lpKey).find(".override-local.") >= 0))
    {
 
       // Remote

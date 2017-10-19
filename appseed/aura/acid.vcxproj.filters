@@ -4564,6 +4564,9 @@
     <ClCompile Include="aura\aura\_aura_aura.cpp">
       <Filter>Source Files\aura\aura</Filter>
     </ClCompile>
+    <ClCompile Include="aura\message\_message.cpp">
+      <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

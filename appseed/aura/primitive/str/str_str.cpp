@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
@@ -40,12 +40,12 @@ namespace hex
 }
 
 #ifdef LINUX
-   ////#include <ctype.h>
+////#include <ctype.h>
 #endif
 //bool is_high_surrogate(uint16_t ui)
 //{
 //   return ui >= 0xD800 && ui <= 0xDBFF;
-//      
+//
 //}
 //bool is_low_surrogate(uint16_t ui)
 //{
@@ -82,7 +82,8 @@ namespace str
    CLASS_DECL_AURA e_err g_eerr = err_none;
 
 
-   const char trailingBytesForUTF8[256] = {
+   const char trailingBytesForUTF8[256] =
+   {
       (const char)  -1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -558,41 +559,41 @@ namespace str
 
    ::count utf8_replace(string & str, const char * pszFind, const char * pszReplace, strsize iStart)
    {
-      
+
       ::count c = 0;
-      
+
       index iPos = iStart;
-      
+
       ::count iReplaceLen = -1;
-      
+
       ::count iFindLen = -1;
-      
+
       while(true)
       {
-         
+
          iPos = utf8_find(pszFind, str, iPos);
-         
+
          if(iPos < 0)
             break;
-         
+
          if(iReplaceLen < 0)
             iReplaceLen = strlen(pszReplace);
-         
+
          if(iFindLen < 0)
             iFindLen = strlen(pszFind);
-         
+
          str = str.Left(iPos) + pszReplace + str.Mid(iPos + iFindLen);
-         
+
          iPos += iReplaceLen;
-         
+
          c++;
-         
+
       }
-      
+
       return c;
-      
+
    }
-   
+
 
    string utf8_replace(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart)
    {
@@ -630,37 +631,77 @@ namespace str
 
    string replace_ci(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart)
    {
-      
+
       index iPos = iStart;
-      
+
       string str(psz);
-      
+
       ::count iReplaceLen = -1;
-      
+
       ::count iFindLen = -1;
-      
+
       while(true)
       {
-         
+
          iPos = find_ci(pszFind, str, iPos);
-         
+
          if(iPos < 0)
             break;
-         
+
          if(iReplaceLen < 0)
             iReplaceLen = strlen(pszReplace);
-         
+
          if(iFindLen < 0)
             iFindLen = strlen(pszFind);
-         
+
          str = str.Left(iPos) + pszReplace + str.Mid(iPos + iFindLen);
-         
+
          iPos += iReplaceLen;
-         
+
       }
-      
+
       return str;
    }
+
+   ::count replace_ci_count(const char * pszFind, const char * pszReplace, const char * psz, strsize iStart)
+   {
+
+      index iPos = iStart;
+
+      string str(psz);
+
+      ::count iReplaceLen = -1;
+
+      ::count iFindLen = -1;
+
+      ::count c = 0;
+
+      while (true)
+      {
+
+         iPos = find_ci(pszFind, str, iPos);
+
+         if (iPos < 0)
+            break;
+
+         if (iReplaceLen < 0)
+            iReplaceLen = strlen(pszReplace);
+
+         if (iFindLen < 0)
+            iFindLen = strlen(pszFind);
+
+         str = str.Left(iPos) + pszReplace + str.Mid(iPos + iFindLen);
+
+         iPos += iReplaceLen;
+
+         c++;
+
+      }
+
+      return c;
+
+   }
+
 
    index find_ci(const string & strFind, const string & str, index iStart)
    {
@@ -1016,7 +1057,7 @@ namespace str
    {
       if(pszFind == NULL)
          return -1;
-      
+
       if(*pszFind == '\0')
          return 0;
 
@@ -1048,13 +1089,13 @@ namespace str
             }
             else if(*pFin == '\0')
             {
-               
+
                break;
-               
+
             }
 
          }
-         
+
          psz+=lenSrc;
       }
 
@@ -1062,81 +1103,81 @@ namespace str
 
    }
 
-   
+
    index find_ci(const char * pszFind, const char * psz, index iStart)
    {
-      
+
       index iFindLen = strlen(pszFind);
-      
+
       index iLen = strlen(&psz[iStart]);
-      
+
       if(iFindLen > iLen)
          return -1;
-      
+
       if(iFindLen < 256)
       {
-         
+
          char szFind[256];
-         
+
          memcpy(szFind, pszFind, iFindLen + 1);
-         
+
          make_lower(szFind);
-         
+
          if(iLen < 256)
          {
-            
+
             char sz[256];
-            
+
             memcpy(sz, &psz[iStart], iLen + 1);
-            
+
             make_lower(sz);
-            
+
             pszFind = strstr(sz, szFind);
-            
+
             if(pszFind == NULL)
                return -1;
-            
+
             return iStart + (pszFind - sz);
-            
+
          }
          else
          {
-            
+
             string strLow(&psz[iStart], iLen); // avoid optimized read only string copy
             strLow.make_lower();
-            
+
             psz = strLow;
-            
+
             pszFind = strstr(psz, szFind);
-            
+
             if(pszFind == NULL)
                return -1;
-            
+
             return iStart + (pszFind - psz);
-            
+
          }
-         
+
       }
       else
       {
-         
+
          string strFindLow(pszFind, iFindLen); // avoid optimized read only string copy
          strFindLow.make_lower();
-         
+
          string strLow(&psz[iStart], iLen); // avoid optimized read only string copy
          strLow.make_lower();
-         
+
          index iFind = strLow.find(strFindLow);
-         
+
          if(iFind < 0)
             return -1;
-         
+
          return iStart + iFind;
-         
+
       }
-      
+
    }
-  
+
    index find_wwci(const char * pszFind, const char * psz, index iStart)
    {
 
@@ -1815,37 +1856,44 @@ namespace str
    const char * utf8_inc_slide(strsize * pslide, const char * psz)
    {
       char len =  1 + ::str::trailingBytesForUTF8[(uchar) *psz];
-      if(len == 0)   {
+      if(len == 0)
+      {
          *pslide += 0;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 1)   {
+      if(len == 1)
+      {
          *pslide += 1;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 2)   {
+      if(len == 2)
+      {
          *pslide += 2;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 3)   {
+      if(len == 3)
+      {
          *pslide += 3;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 4)   {
+      if(len == 4)
+      {
          *pslide += 4;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 5)   {
+      if(len == 5)
+      {
          *pslide += 5;
          return psz;
       }
       if(*psz++ == 0)   throw invalid_character(get_thread_app(), "invalid utf8 character");
-      if(len == 6)   {
+      if(len == 6)
+      {
          *pslide += 6;
          return psz;
       }
@@ -2050,7 +2098,7 @@ namespace str
       return string(ch.m_sz);
    }
 
-   
+
    string get_utf8_char(const char * psz, const char * pszEnd)
    {
       const char * pszNext = __utf8_inc(psz);
@@ -2224,10 +2272,10 @@ namespace str
 
    bool eats(const char * & pszXml, const char * psz)
    {
-      
+
       for (; *psz != '\0'; pszXml++, psz++)
       {
-         
+
          if (*pszXml != *psz)
          {
             return false;
@@ -2457,7 +2505,7 @@ end:
 
    string consume_quoted_value(const char * & pszXml, const char * pszEnd)
    {
-      
+
       const char * psz = pszXml;
 
       if(*psz != '\"' && *psz != '\\')
@@ -2470,16 +2518,16 @@ end:
       }
 
       char qc = *psz;
-      
+
       psz++;
 
       const char * pszValueStart = psz;
 
       while(*psz != qc)
       {
-         
+
          psz = __utf8_inc(psz);
-         
+
          if(psz > pszEnd)
          {
 
@@ -2619,113 +2667,113 @@ end:
    template < const strsize m_iSize = 1024 >
    class mini_str_buffer
    {
-   public:
-
-      
-      strsize     m_iPos;
-      char        m_sz[m_iSize];
-      string      m_str;
+      public:
 
 
-      mini_str_buffer()
-      {
-         
-         m_iPos = 0;
+         strsize     m_iPos;
+         char        m_sz[m_iSize];
+         string      m_str;
 
-      }
 
-      void append(char ch)
-      {
-         
-         if (m_iPos + 1 > m_iSize)
+         mini_str_buffer()
          {
-
-            m_str.append(m_sz, m_iPos);
 
             m_iPos = 0;
 
          }
 
-         m_sz[m_iPos] = ch;
-
-         m_iPos ++;
-
-
-      }
-
-      void append_uni(int64_t w)
-      {
-
-         if (m_iPos + 3 > m_iSize)
+         void append(char ch)
          {
 
-            m_str.append(m_sz, m_iPos);
-
-            m_iPos = 0;
-
-         }
-
-         if (w < 0x0080)
-         {
-
-            m_sz[m_iPos] = char(w);
-            m_iPos++;
-
-         }
-         else if (w < 0x0800)
-         {
-            m_sz[m_iPos] = (char)(0xc0 | ((w) >> 6));
-            m_iPos++;
-            m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
-            m_iPos++;
-         }
-         else
-         {
-            m_sz[m_iPos] = (char)(0xe0 | ((w) >> 12));
-            m_iPos++;
-            m_sz[m_iPos] = (char)(0xc0 | (((w) >> 6) & 0x3f));
-            m_iPos++;
-            m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
-            m_iPos++;
-         }
-      }
-      
-      void append(const char * psz, strsize iSize)
-      {
-
-         if (m_iPos + iSize > m_iSize)
-         {
-
-            m_str.append(m_sz, m_iPos);
-
-            m_iPos = 0;
-
-            if (iSize > m_iSize)
+            if (m_iPos + 1 > m_iSize)
             {
 
-               m_str.append(m_sz, iSize);
+               m_str.append(m_sz, m_iPos);
 
-               return;
+               m_iPos = 0;
 
             }
 
+            m_sz[m_iPos] = ch;
+
+            m_iPos ++;
+
+
          }
 
-         strncpy(&m_sz[m_iPos], psz, iSize);
+         void append_uni(int64_t w)
+         {
 
-         m_iPos += iSize;
+            if (m_iPos + 3 > m_iSize)
+            {
 
-      }
+               m_str.append(m_sz, m_iPos);
+
+               m_iPos = 0;
+
+            }
+
+            if (w < 0x0080)
+            {
+
+               m_sz[m_iPos] = char(w);
+               m_iPos++;
+
+            }
+            else if (w < 0x0800)
+            {
+               m_sz[m_iPos] = (char)(0xc0 | ((w) >> 6));
+               m_iPos++;
+               m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
+               m_iPos++;
+            }
+            else
+            {
+               m_sz[m_iPos] = (char)(0xe0 | ((w) >> 12));
+               m_iPos++;
+               m_sz[m_iPos] = (char)(0xc0 | (((w) >> 6) & 0x3f));
+               m_iPos++;
+               m_sz[m_iPos] = (char)(0x80 | ((w) & 0x3f));
+               m_iPos++;
+            }
+         }
+
+         void append(const char * psz, strsize iSize)
+         {
+
+            if (m_iPos + iSize > m_iSize)
+            {
+
+               m_str.append(m_sz, m_iPos);
+
+               m_iPos = 0;
+
+               if (iSize > m_iSize)
+               {
+
+                  m_str.append(m_sz, iSize);
+
+                  return;
+
+               }
+
+            }
+
+            strncpy(&m_sz[m_iPos], psz, iSize);
+
+            m_iPos += iSize;
+
+         }
 
 
-      void update()
-      {
+         void update()
+         {
 
-         m_str.append(m_sz, m_iPos);
+            m_str.append(m_sz, m_iPos);
 
-         m_iPos = 0;
+            m_iPos = 0;
 
-      }
+         }
 
    };
 
@@ -2800,7 +2848,7 @@ end:
                   }
                   psz++;
                   ui[1] = ::hex::parse_uint16_exc(psz, pszEnd);
-                  
+
                   if (!is_low_surrogate(ui[1]))
                   {
 
@@ -2840,15 +2888,15 @@ end:
          {
             str.append(psz, pszNext - psz);
          }
-         
+
          psz = pszNext;
-         
+
          //pszValueEnd = psz;
 
       }
-      
+
       pszXml = psz;
-      
+
       return str;
 
    }
@@ -3801,10 +3849,11 @@ end:
          else if (c == 0xed && i < (ix - 1) && ((unsigned char)string[i + 1] & 0xa0) == 0xa0) return false; //U+d800 to U+dfff
          else if ((c & 0xF0) == 0xE0) n = 2; // 1110bbbb
          else if ((c & 0xF8) == 0xF0) n = 3; // 11110bbb
-                                             //else if (($c & 0xFC) == 0xF8) n=4; // 111110bb //byte 5, unnecessary in 4 byte UTF-8
-                                             //else if (($c & 0xFE) == 0xFC) n=5; // 1111110b //byte 6, unnecessary in 4 byte UTF-8
+         //else if (($c & 0xFC) == 0xF8) n=4; // 111110bb //byte 5, unnecessary in 4 byte UTF-8
+         //else if (($c & 0xFE) == 0xFC) n=5; // 1111110b //byte 6, unnecessary in 4 byte UTF-8
          else return false;
-         for (j = 0; j < n && i < ix; j++) { // n bytes matching 10bbbbbb follow ?
+         for (j = 0; j < n && i < ix; j++)   // n bytes matching 10bbbbbb follow ?
+         {
             if ((++i == ix) || (((unsigned char)string[i] & 0xC0) != 0x80))
                return false;
          }
@@ -4069,7 +4118,7 @@ end:
 
    CLASS_DECL_AURA void fill(string & str, char ch)
    {
-      
+
       str = block(ch, (int32_t)str.get_length());
 
    }

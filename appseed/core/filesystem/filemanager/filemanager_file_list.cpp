@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h"
 
 #include "base/database/simpledb/simpledb.h"
@@ -150,27 +150,40 @@ namespace filemanager
       {
          _001SetView(view_icon);
       }
+
       if (phint != NULL)
       {
+
          if (base_class < update_hint >::bases(phint))
          {
+
             update_hint * puh = (update_hint *)phint;
+
             if (puh->is_type_of(update_hint::TypeInitialize))
             {
 
-
                m_pauraapp = get_app()->m_pcoreapp;
+
                db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+
                if (pcentral == NULL)
+               {
+
                   return;
-               string str;
-               str.Format(".local://file_list(%s)", get_filemanager_data()->m_strDISection);
+
+               }
+
                if (get_filemanager_data()->m_bPassBk)
                {
+
                   ::user::list::m_bBackgroundBypass = true;
+
                }
-               m_dataid = str;
+
+               set_data_key_modifier(get_filemanager_data()->m_strDataKeyModifier);
+
                _001UpdateColumns();
+
                _001OnUpdateItemCount();
 
             }

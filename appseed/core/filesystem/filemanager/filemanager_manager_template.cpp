@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace filemanager
@@ -48,9 +48,18 @@ namespace filemanager
       pfilemanagerdata->m_iTemplate = m_iTemplate;
       pfilemanagerdata->m_iDocument = m_iNextDocument++;
       pfilemanagerdata->m_bTransparentBackground = pcreate == NULL ? true : pcreate->m_bTransparentBackground;
-      string strId;
-      strId.Format("filemanager(%d)", pfilemanagerdata->m_iDocument);
-      pfilemanagerdata->m_strDISection = m_strDISection + "." + strId;
+
+
+      {
+
+         string strDataKeyModifier;
+
+         strDataKeyModifier.Format("filemanager(%d)", pfilemanagerdata->m_iDocument);
+
+         pfilemanagerdata->m_strDataKeyModifier = m_strDataKeyModifier + "." + strDataKeyModifier;
+
+      }
+
       pfilemanagerdata->m_bFileSize = true;
       pfilemanagerdata->m_pmanagertemplate = this;
 
@@ -66,8 +75,8 @@ namespace filemanager
 
          keep < bool > keepRestoring(&m_bRestoring, true, false, true);
 
-         if (pathFilemanagerProject.is_empty() || Application.dir().is(pathFilemanagerProject) 
-            || pathFilemanagerProject.extension().compare_ci("filemanager") != 0)
+         if (pathFilemanagerProject.is_empty() || Application.dir().is(pathFilemanagerProject)
+               || pathFilemanagerProject.extension().compare_ci("filemanager") != 0)
          {
 
             m_pathFilemanagerProject = ::dir::local() / "localconfig/user.filemanager";
@@ -109,64 +118,64 @@ namespace filemanager
          string strManagerId;
 
          ::file::path path;
-         
+
          for(index i = 0; i < stra.get_size();)
          {
-            
+
             string str = stra[i];
-            
+
             strsize iFind = str.find(':');
-            
+
             if(iFind > 0)
             {
-               
+
                string strPath = str.Mid(iFind + 1);
-               
+
                for(index j = i + 1; j < stra.get_size();)
                {
-                  
+
                   string strOther = stra[j];
-                  
+
                   iFind = strOther.find(':');
-                  
+
                   if(iFind > 0)
                   {
-                     
+
                      string strOtherPath = strOther.Mid(iFind + 1);
-                     
+
                      if(strOtherPath.compare_ci(strPath) == 0)
                      {
-                        
+
                         stra.remove_at(j);
-                        
+
                      }
                      else
                      {
-                        
+
                         j++;
-                        
+
                      }
-                     
+
                   }
                   else
                   {
-                  
+
                      j++;
-                     
+
                   }
-                  
+
                }
-               
+
                i++;
-               
+
             }
             else
             {
-               
+
                stra.remove_at(i);
-               
+
             }
-            
+
          }
 
          if (stra.is_empty())
@@ -230,16 +239,16 @@ namespace filemanager
             continue;
 
          }
-         
+
          if(pdoc->get_filemanager_item() == NULL)
          {
-            
+
             continue;
-            
+
          }
 
          stra.add(pdoc->m_strManagerId + ":" + pdoc->get_filemanager_item()->m_filepath);
-            
+
       }
 
       {
@@ -274,22 +283,22 @@ namespace filemanager
 
          pdoc = pdoc->get_main_manager();
 
-		   if (pdoc->m_strManagerId == varFile.get_string().Left(get_manager_id_len()))
-		   {
+         if (pdoc->m_strManagerId == varFile.get_string().Left(get_manager_id_len()))
+         {
 
-			   return pdoc;
+            return pdoc;
 
-		   }
+         }
 
-		   if (pdoc->get_filemanager_item()->m_filepath.is_equal(varFile))
-		   {
+         if (pdoc->get_filemanager_item()->m_filepath.is_equal(varFile))
+         {
 
-			   return pdoc;
+            return pdoc;
 
-		   }
+         }
 
 
-		}
+      }
 
       return NULL;
 
@@ -353,7 +362,7 @@ namespace filemanager
    {
 
       sp(manager) pdoc;
-      
+
       pdoc = open_manager(varFile, pcreate, pdata, pfilemanagerdata, pcallback);
 
       return pdoc;
@@ -365,7 +374,7 @@ namespace filemanager
    {
 
       sp(manager) pdoc;
-      
+
       pdoc = open_manager(pathFolder, pcreate, pdata, pfilemanagerdata, pcallback);
 
       if (pdoc == NULL)
@@ -443,7 +452,7 @@ namespace filemanager
       }
 
 
-      
+
       sp(manager) pdoc;
 
       if (id.int64() < -1 || id.int64() == m_pdoctemplateMain->get_document_count())
@@ -642,7 +651,7 @@ namespace filemanager
       }
 
       sp(::create) createcontext(pfilemanagerdata->allocer());
-      
+
       createcontext->m_bMakeVisible = false;
       createcontext->m_puiParent = pwndParent;
       createcontext->oprop("filemanager::data") = pfilemanagerdata;
@@ -664,25 +673,27 @@ namespace filemanager
       if(pdoc == NULL)
          return NULL;
 
-      if(pdoc->get_filemanager_data()->m_strDISection.is_empty())
+      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
       {
 
-         string strId;
-         strId.Format("%s::(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
-         pdoc->get_filemanager_data()->m_strDISection = strId;
+         string strDataKeyModifier;
+
+         strDataKeyModifier.Format("%s(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
+
+         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
 
       }
 
       pdoc->Initialize(bMakeVisible);
 
       return pdoc;
-      
+
    }
 
 
    sp(manager) manager_template::open_child_list(bool bMakeVisible,bool bTransparentBackground,sp(::user::interaction) pwndParent,::filemanager::data * pfilemanagerdata,callback * pcallback)
    {
-      
+
       UNREFERENCED_PARAMETER(bMakeVisible);
 
       sp(::create) createcontext(allocer());
@@ -724,12 +735,14 @@ namespace filemanager
 
       pdoc->get_filemanager_data()->m_pmanagerMain = pdoc;
 
-      if(pdoc->get_filemanager_data()->m_strDISection.is_empty())
+      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
       {
 
-         string strId;
-         strId.Format("%s::(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
-         pdoc->get_filemanager_data()->m_strDISection = strId;
+         string strDataKeyModifier;
+
+         strDataKeyModifier.Format("%s::(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
+
+         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
 
       }
 
@@ -779,14 +792,14 @@ namespace filemanager
 
       pdoc->get_filemanager_data()->m_pmanagerMain = pdoc;
 
-      if(pdoc->get_filemanager_data()->m_strDISection.is_empty())
+      if(pdoc->get_filemanager_data()->m_strDataKeyModifier.is_empty())
       {
 
-         string strId;
+         string strDataKeyModifier;
 
-         strId.Format("%s::(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
+         strDataKeyModifier.Format("%s(%d)",Session.filemanager().m_idFileManager.str(),pdoc->get_filemanager_data()->m_iDocument);
 
-         pdoc->get_filemanager_data()->m_strDISection = strId;
+         pdoc->get_filemanager_data()->m_strDataKeyModifier = strDataKeyModifier;
 
       }
 
@@ -802,51 +815,51 @@ namespace filemanager
 
       if (m_pdoctemplateMain.is_set())
          return;
-      
+
       m_iTemplate = iTemplate;
 
       m_pdoctemplateMain = canew(::user::multiple_document_template(
-         get_app(),
-         pszMatter,
-         System.type_info < manager >(),
-         System.type_info < main_frame >(),       // main SDI frame window
-         System.type_info < tab_view >()));
+                                    get_app(),
+                                    pszMatter,
+                                    System.type_info < manager >(),
+                                    System.type_info < main_frame >(),       // main SDI frame window
+                                    System.type_info < tab_view >()));
 
       Application.add_document_template(m_pdoctemplateMain);
 
       m_pdoctemplate = canew(::user::multiple_document_template(
-         get_app(),
-         pszMatter,
-         System.type_info < manager >(),
-         System.type_info < main_frame >(),
-         System.type_info < view >()));
+                                get_app(),
+                                pszMatter,
+                                System.type_info < manager >(),
+                                System.type_info < main_frame >(),
+                                System.type_info < view >()));
 
       Application.add_document_template(m_pdoctemplate);
 
       m_pdoctemplateChild = canew(::user::multiple_document_template(
-         get_app(),
-         pszMatter,
-         System.type_info < manager >(),
-         System.type_info < child_frame >(),
-         System.type_info < view >()));
+                                     get_app(),
+                                     pszMatter,
+                                     System.type_info < manager >(),
+                                     System.type_info < child_frame >(),
+                                     System.type_info < view >()));
 
       Application.add_document_template(m_pdoctemplateChild);
 
       m_pdoctemplateChildList = canew(::user::multiple_document_template(
-         get_app(),
-         pszMatter,
-         System.type_info < manager >(),
-         System.type_info < child_frame >(),
-         System.type_info < file_list >()));
+                                         get_app(),
+                                         pszMatter,
+                                         System.type_info < manager >(),
+                                         System.type_info < child_frame >(),
+                                         System.type_info < file_list >()));
 
       Application.add_document_template(m_pdoctemplateChildList);
 
       m_pdoctemplateFolderSelectionList = canew(::user::multiple_document_template(
-         get_app(),
-         pszMatter,
-         System.type_info < manager >(),
-         System.type_info < child_frame >(),
-         System.type_info < folder_selection_list_view >()));
+                                             get_app(),
+                                             pszMatter,
+                                             System.type_info < manager >(),
+                                             System.type_info < child_frame >(),
+                                             System.type_info < folder_selection_list_view >()));
 
       Application.add_document_template(m_pdoctemplateFolderSelectionList);
 

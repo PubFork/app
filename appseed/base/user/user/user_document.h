@@ -200,12 +200,6 @@ namespace user
 
          friend class impact_system;
 
-         /*
-
-         virtual void write(::file::ostream & ostream) const;
-         virtual void read(::file::istream & istream);
-
-         */
 
          void on_file_close();
          void on_file_save();
@@ -213,20 +207,7 @@ namespace user
          void on_file_send_mail();
          void on_update_file_send_mail(::user::command* pCmdUI);
 
-
-
          virtual void on_request(::create * pcreate);
-
-
-
-
-
-//      virtual void on_alloc(::aura::application * papp);
-
-//      virtual void dump(dump_context &) const;
-         //    virtual void assert_valid() const;
-
-//      virtual bool _001OnCmdMsg(::user::command * pcommand);
 
          template < class DOCUMENT >
          DOCUMENT * get_typed_document()
