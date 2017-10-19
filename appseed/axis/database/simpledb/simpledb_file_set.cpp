@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace simpledb
@@ -27,7 +27,7 @@ namespace simpledb
 
       SCAST_PTR(::database::change_event, pchange, pobj);
 
-      if(pchange->m_key.m_id == m_dataid)
+      if(pchange->m_key.m_id == m_dataid2)
       {
 
          refresh();

@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -59,32 +59,18 @@ namespace user
       return false;
    }
 
+
    void impact_system::add_document(::user::document * pdocument)
    {
+
       ASSERT(pdocument->m_pimpactsystem == NULL);   // no template attached yet
-//      Application.defer_add_document_template(this);
+
       pdocument->m_pimpactsystem = this;
-      string strId;
-      if (string(Application.m_dataid.m_id).find_ci(".local://") >= 0)
-      {
-         strId += ".local://";
-      }
-      strId += Application.m_strAppName;
-      strId += "/";
-      strId += m_strMatter;
-      strId += "/";
-      string string;
-      string=typeid(*this).name();
-      ::str::begins_eat_ci(string, "class ");
-      ::str::begins_eat_ci(string, "user::");
-      strId += string;
-      strId += "/";
-      ::string strDoc = typeid(*pdocument).name();
-      ::str::begins_eat_ci(strDoc, "class ");
-      strId += strDoc;
-      pdocument->m_dataid = strId;
+
       pdocument->install_message_routing(pdocument);
+
    }
+
 
    void impact_system::remove_document(::user::document * pdocument)
    {

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace database
@@ -26,7 +26,7 @@ namespace database
       return var_load(pclient, id, ostream, puh);
    }
 
-   bool server::data_server_load(client * pclient, class id id, var & var   , update_hint * puh)
+   bool server::data_server_load(client * pclient, class id id, var & var, update_hint * puh)
    {
 
       memory_file file(get_app());
@@ -68,7 +68,7 @@ namespace database
 
    bool server::data_server_load(client * pclient, class id id, ::file::ostream & ostream, update_hint * puh)
    {
-      
+
       return var_load(pclient, id, ostream, puh);
 
    }
@@ -113,9 +113,9 @@ namespace database
       return var_save(pclient, id, istream, puh);
    }
 
-   bool server::data_server_save(client * pclient, class id id, var & var   , update_hint * puh)
+   bool server::data_server_save(client * pclient, class id id, var & var, update_hint * puh)
    {
-      
+
       memory_file file(get_app());
 
       ::file::byte_stream stream(&file);
@@ -149,7 +149,7 @@ namespace database
 
    bool server::data_server_save(client * pclient, class id id, ::file::serializable & obj, update_hint * puh)
    {
-      
+
       memory_file file(get_app());
 
       ::file::byte_stream stream(&file);
@@ -243,6 +243,7 @@ namespace database
          return false;
       return true;
    }
+
 
 
 } // namespace database

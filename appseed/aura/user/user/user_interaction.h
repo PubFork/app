@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "user_interaction_base.h"
@@ -934,9 +934,6 @@ namespace user
 
          virtual void user_interaction_on_destroy();
          virtual void user_interaction_on_hide();
-
-
-         //virtual string calc_data_id();
 
 
          virtual void _001GetXScrollInfo(scroll_info & info);

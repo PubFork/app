@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -8102,36 +8102,6 @@ restart:
       return false;
 
    }
-
-
-   //string interaction::calc_data_id()
-   //{
-
-   //   string str;
-
-   //   if (Application.m_dataid.m_id.is_empty())
-   //   {
-
-   //      str = Application.m_strAppId;
-
-   //   }
-   //   else
-   //   {
-
-   //      str = Application.m_dataid.m_id;
-
-   //   }
-
-   //   if (str.has_char())
-   //   {
-
-   //      str += ".";
-
-   //   }
-
-   //   return str + m_id;
-
-   //}
 
 
    void interaction::on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint)

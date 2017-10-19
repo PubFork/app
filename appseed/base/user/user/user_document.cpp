@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -13,16 +13,14 @@ namespace user
    {
 
       m_pimpactsystem = NULL;
-      m_bModified = FALSE;
-      m_bAutoDelete = TRUE;       // default to auto delete document
-      m_bEmbedded = FALSE;        // default to file-based document
-      //ASSERT(m.is_empty());
 
-      m_dataid = typeid(*this).name();
+      m_bModified = FALSE;
+
+      m_bAutoDelete = TRUE;       // default to auto delete document
+
+      m_bEmbedded = FALSE;        // default to file-based document
 
       defer_create_mutex();
-
-
 
    }
 
@@ -109,10 +107,7 @@ namespace user
    void document::on_create(::create * pcreate)
    {
 
-      //::user::document::on_alloc(papp);
       ::database::client::initialize_data_client(&System.dataserver());
-
-      m_dataid = Application.m_dataid +"." +m_dataid;
 
    }
 
@@ -1302,6 +1297,58 @@ namespace user
       }
 
       return false;
+
+   }
+
+
+   string document::calc_data_id()
+   {
+
+      string str;
+
+      str = "userdocument://";
+
+      str += Application.m_strAppName;
+
+      if (string(Application.get_data_id().m_id).find_ci(".local://") >= 0)
+      {
+
+         str += ".local://";
+
+      }
+
+      {
+
+         str += "/";
+
+         string strType;
+
+         strType = typeid(*m_pimpactsystem).name();
+
+         ::str::begins_eat_ci(strType, "class ");
+
+         str += strType;
+
+      }
+
+      str += "/";
+
+      str += m_pimpactsystem->m_strMatter;
+
+
+      {
+
+         str += "/";
+
+         string strType = typeid(*this).name();
+
+         ::str::begins_eat_ci(strType, "class ");
+
+         str += strType;
+
+      }
+
+      return str;
 
    }
 

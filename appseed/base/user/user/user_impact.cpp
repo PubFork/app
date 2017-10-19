@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -112,7 +112,7 @@ namespace user
       {
 
          sp(::user::document) pdoc = pcreate->m_pusercreate->m_pdocumentCurrent;
-         
+
          pdoc->add_view(this);
 
          ASSERT(::user::impact::get_document() != NULL);
@@ -171,13 +171,13 @@ namespace user
    void impact::PostNcDestroy()
    {
       ::user::interaction::PostNcDestroy();
-/*      if (is_set_ca_flag(object::flag_auto_delete))
-      {
-         // default for views is to allocate them on the heap
-         //  the default post-cleanup is to 'delete this'.
-         //  never explicitly call 'delete' on a ::user::impact
-         delete_this();
-      }*/
+      /*      if (is_set_ca_flag(object::flag_auto_delete))
+            {
+               // default for views is to allocate them on the heap
+               //  the default post-cleanup is to 'delete this'.
+               //  never explicitly call 'delete' on a ::user::impact
+               delete_this();
+            }*/
 
       //release();
 
@@ -229,12 +229,12 @@ namespace user
          return;
 
       }
-      
+
       sp(::user::interaction) puiParent = GetParent();
-      
+
       if (puiParent.cast < ::user::impact > () != NULL)
       {
-         
+
          puiParent->_001OnCmdMsg(pcommand);
 
          if (pcommand->m_bRet)
@@ -249,7 +249,7 @@ namespace user
       // then pump through document
       if (::user::impact::get_document() != NULL)
       {
-         
+
          ::user::impact::get_document()->_001OnCmdMsg(pcommand);
 
          if(pcommand->m_bRet)
@@ -305,12 +305,12 @@ namespace user
       //   trans OnDraw(&spgraphics);
    }
 
-   
+
    ::user::document * impact::get_document(::user::interaction * pui)
    {
-      
+
       sp(::user::impact) pview = pui;
-      
+
       if (pview != NULL)
          return NULL;
 
@@ -358,9 +358,9 @@ namespace user
       {
       case hint_set_edit_file:
       {
-                                post_simple_command(simple_command_set_edit_file, (LPARAM)phint);
+         post_simple_command(simple_command_set_edit_file, (LPARAM)phint);
       }
-         break;
+      break;
       default:
          break;
       };
@@ -493,19 +493,19 @@ namespace user
    // ::user::impact splitting commands
 
 
-/*   CScrollBar* impact::GetScrollBarCtrl(int32_t nBar) const
-   {
+   /*   CScrollBar* impact::GetScrollBarCtrl(int32_t nBar) const
+      {
 
-      ///ASSERT(nBar == SB_HORZ || nBar == SB_VERT);
-      // trans   if (GetStyle() & ((nBar == SB_HORZ) ? WS_HSCROLL : WS_VSCROLL))
-      //   {
-      // it has a regular windows style scrollbar (no control)
-      //      return NULL;
-      //   }
+         ///ASSERT(nBar == SB_HORZ || nBar == SB_VERT);
+         // trans   if (GetStyle() & ((nBar == SB_HORZ) ? WS_HSCROLL : WS_VSCROLL))
+         //   {
+         // it has a regular windows style scrollbar (no control)
+         //      return NULL;
+         //   }
 
 
-      return NULL;
-   }*/
+         return NULL;
+      }*/
 
 
    void impact::OnUpdateSplitCmd(::user::command* pCmdUI)
@@ -716,7 +716,7 @@ namespace user
 
       ASSERT_KINDOF(::user::interaction, pui);
 
-      
+
       // views are always created with a border!
       if (!pui->create_window(NULL, NULL, WS_VISIBLE | WS_CHILD, rect, pwndParent, id, pcreate))
       {
@@ -939,7 +939,7 @@ namespace user
       //int32_t nResult = pmouseactivate->get_lresult();
 
       if (pmouseactivate->get_message() == MA_NOACTIVATE
-         || pmouseactivate->get_message() == MA_NOACTIVATEANDEAT)
+            || pmouseactivate->get_message() == MA_NOACTIVATEANDEAT)
       {
          pmouseactivate->set_lresult(pmouseactivate->get_message()); // frame does not want to activate
          pmouseactivate->m_bRet = true;
@@ -950,13 +950,13 @@ namespace user
       {
          // eat it if this will cause activation
          ASSERT(pParentFrame == pmouseactivate->GetDesktopWindow()
-            || pmouseactivate->GetDesktopWindow()->IsChild(pParentFrame));
+                || pmouseactivate->GetDesktopWindow()->IsChild(pParentFrame));
 
          // either re-activate the current ::user::impact, or set this ::user::impact to be active
          sp(::user::impact) pview = pParentFrame->GetActiveView();
          sp(::user::interaction) oswindow_Focus = Session.get_focus_ui();
          if (pview == this &&
-            this != oswindow_Focus && !IsChild(oswindow_Focus))
+               this != oswindow_Focus && !IsChild(oswindow_Focus))
          {
             // re-activate this ::user::impact
             OnActivateView(TRUE, this, this);
@@ -1008,7 +1008,7 @@ namespace user
          sp(::user::impact) pview = pParentFrame->GetActiveView();
          sp(::user::interaction) oswindow_Focus = Session.get_focus_ui();
          if (pview == this &&
-            this != oswindow_Focus && !IsChild(oswindow_Focus))
+               this != oswindow_Focus && !IsChild(oswindow_Focus))
          {
             // re-activate this ::user::impact
             OnActivateView(TRUE, this, this);
@@ -1264,28 +1264,7 @@ namespace user
 
       string str;
 
-      //sp(::user::interaction) puiParent = GetParent();
-
-      //if(puiParent.is_set())
-      //{
-
-      //   str = puiParent->calc_data_id();
-
-      //}
-
-      //if(str.has_char())
-      //{
-
-      //   str += ".";
-
-      //}
-
-      if(get_document() != NULL && !get_document()->m_dataid.m_id.is_empty())
-      {
-
-         str += get_document()->m_dataid.m_id;
-
-      }
+      str += get_document()->get_data_id().m_id;
 
       if(str.has_char())
       {

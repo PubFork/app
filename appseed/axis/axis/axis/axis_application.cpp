@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "fiasco_finder.h"
 #include "aura/compress/zip/zip.h"
 
@@ -1543,13 +1543,19 @@ InitFailure:
 
       thisok << 1;
 
-      m_dataid += m_strDataIdAddUp;
-
       m_bAxisInitializeInstanceResult = true;
 
       thisend;
 
       return true;
+
+   }
+
+
+   string application::calc_data_id()
+   {
+
+      return "app://" + m_strAppName + "/" + m_strDataIdAddUp;
 
    }
 

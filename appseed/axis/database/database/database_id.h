@@ -1,40 +1,49 @@
-#pragma once
+﻿#pragma once
 
 
 namespace database
 {
 
-   
+
    class CLASS_DECL_AXIS id
    {
-   public:
-      id(const id & id);
-      id(::id id);
-      id(const char * psz);
-      id(int32_t i);
-      id(int32_t i1, int32_t i2, int32_t i3);
-      id(const string & str);
-      id();
-      ~id();
+      public:
+         id(const id & id);
+         id(::id id);
+         id(const char * psz);
+         id(int32_t i);
+         id(int32_t i1, int32_t i2, int32_t i3);
+         id(const string & str);
+         id();
+         ~id();
 
-      virtual ::id get_id();
-      virtual void set_id(::id id);
+         virtual ::id get_id();
+         virtual void set_id(::id id);
 
-      virtual bool is_null();
+         virtual bool is_null();
 
-      ::id m_id;
+         ::id m_id;
 
-      bool operator == (const id & id) const;
-      bool operator == (const char * psz) const;
-      bool operator == (int32_t i) const;
+         bool operator == (const id & id) const;
+         bool operator == (const char * psz) const;
+         bool operator == (int32_t i) const;
 
-      const id & operator = (::id id);
-      const id & operator = (const char * psz);
-      const id & operator = (int32_t i);
-      const id & operator = (const string & str);
+         const id & operator = (::id id);
+         const id & operator = (const char * psz);
+         const id & operator = (int32_t i);
+         const id & operator = (const string & str);
 
-      id & operator += (const char * psz);
-      id operator + (const id & id) const;
+         id & operator += (const char * psz);
+         id operator + (const id & id) const;
+
+
+         void to_string(string & str) const
+         {
+
+            str = ::str::from(m_id);
+
+         }
+
 
    };
 
@@ -115,7 +124,7 @@ namespace database
       return *this;
    }
 
-   
+
 } // namespace dabase
 
 

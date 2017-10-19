@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace database
@@ -123,7 +123,7 @@ namespace database
       }
       return false;
    }
-   
+
 #ifdef APPLEOS
 
    bool client::data_set(class id id, long l, update_hint * puh)
@@ -135,7 +135,7 @@ namespace database
       }
       return false;
    }
-   
+
 #endif
 
 
@@ -385,7 +385,7 @@ namespace database
 
    void client_array::remove_client(client *pclient)
    {
-      
+
       remove(pclient);
 
    }
@@ -403,9 +403,17 @@ namespace database
    id client::get_data_id()
    {
 
-      return m_dataid;
+      if (!m_dataid2.m_id.is_empty())
+      {
+
+         update_data_id();
+
+      }
+
+      return m_dataid2;
 
    }
+
 
    string client::calc_data_id()
    {
@@ -415,13 +423,15 @@ namespace database
    }
 
 
-   void client::defer_update_data_id()
+   void client::update_data_id()
    {
 
-      //if(m_dataid.m_id.is_empty())
+      m_dataid2 = calc_data_id();
+
+      if (m_dataid2.m_id.is_empty())
       {
 
-         m_dataid = calc_data_id();
+         m_dataid2 = "class://" + string(typeid(*this).name()) + "/";
 
       }
 
@@ -435,13 +445,13 @@ namespace database
 namespace file
 {
 
-   
+
    data_trigger_ostream::data_trigger_ostream(data_trigger_ostream && d):
       byte_stream(::move(d)),
       m_file(::move(d.m_file)),
       m_id(::move(d.m_id))
    {
-      
+
       m_spfile = &m_file;
       m_pclient = d.m_pclient;
       d.m_pclient = NULL;

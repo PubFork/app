@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace axis
@@ -75,7 +75,7 @@ namespace axis
          virtual void set_cred(string strToken, const char * pszUsername, const char * pszPassword);
          virtual void set_cred_ok(string strToken, bool bOk);
 
-
+         virtual string calc_data_id() override;
 
          virtual string load_string(id id) override;
          virtual bool load_string(string & str, id id) override;
@@ -256,8 +256,8 @@ namespace axis
          virtual void on_update_view(::user::impact * pview, ::user::impact * pviewSender, LPARAM lHint, object* pHint);
 
          virtual bool BaseOnControlEvent(::user::control_event * pevent);
-         
-               
+
+
 
          virtual bool on_open_document(::user::document * pdocument, var varFile);
          virtual bool on_save_document(::user::document * pdocument, var varFile);
