@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <Shlobj.h>
 #if defined(APPLEOS)
 #include <sys/stat.h>
@@ -801,7 +801,18 @@ bool dir::mk(const ::file::path & path)
 
       }
 
-      pathDir /= strName;
+      if (pathDir.is_empty())
+      {
+
+         pathDir = strName;
+
+      }
+      else
+      {
+
+         pathDir /= strName;
+
+      }
 
       if(!::dir::is(pathDir))
       {
@@ -951,19 +962,45 @@ bool dir::is(const ::file::path & path1)
 
 
 #elif defined(WINDOWSEX)
-   string str;
 
-   str = "\\\\?\\";
-   str += path1;
+   WCHAR szVolumeName[128];
 
-   while(str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
+   string strVolume = path1;
+
+   if (!str::ends(strVolume, "\\"))
    {
-      str = str.substr(0, str.length() - 1);
+
+      strVolume += "\\";
+
    }
 
-   uint32_t dwFileAttributes = ::GetFileAttributesW(wstring(str));
-   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
-         dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+   wstring wstr = wstring(strVolume);
+
+   if (GetVolumeNameForVolumeMountPointW(wstr, szVolumeName, sizeof(szVolumeName)))
+   {
+
+      wstr = szVolumeName;
+
+   }
+   else
+   {
+
+      string str;
+
+      str = "\\\\?\\";
+      str += path1;
+
+      while (str_ends_dup(str, "\\") || str_ends_dup(str, "/"))
+      {
+         str = str.substr(0, str.length() - 1);
+      }
+
+   }
+
+
+   uint32_t dwFileAttributes = ::GetFileAttributesW(wstr);
+
+   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES && dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
       return true;
    else
       return false;
