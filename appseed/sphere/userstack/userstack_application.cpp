@@ -16,7 +16,7 @@ namespace userstack
 
       m_ppaneview = NULL;
 
-      m_strAppName               = "userstack";
+      m_strAppName               = "app/userstack";
 
    }
 
@@ -168,28 +168,34 @@ namespace userstack
    bool application::on_exclusive_instance_conflict(::EExclusiveInstance eexclusive)
    {
 
-      if(eexclusive == ::ExclusiveInstanceLocalId)
+      if (m_strAppName == "app/userstack")
       {
+
+         if (eexclusive == ::ExclusiveInstanceLocalId)
+         {
 #ifdef WINDOWSEX
-         ::memory_file file(get_app());
-         file.from_string(handler()->m_varTopicFile);
-         COPYDATASTRUCT data;
-         data.dwData = 2000;
-         data.cbData = (uint32_t) file.get_length();
-         data.lpData = file.get_data();
-         ::oswindow oswindow = ::FindWindowA(NULL, "::ca2::fontopus::message_wnd::application::");
+            ::memory_file file(get_app());
+            file.from_string(handler()->m_varTopicFile);
+            COPYDATASTRUCT data;
+            data.dwData = 2000;
+            data.cbData = (uint32_t)file.get_length();
+            data.lpData = file.get_data();
+            ::oswindow oswindow = ::FindWindowA(NULL, "::ca2::fontopus::message_wnd::application::");
 
-         ::SendMessage(oswindow, WM_COPYDATA, (WPARAM) 0, (LPARAM) &data);
+            ::SendMessage(oswindow, WM_COPYDATA, (WPARAM)0, (LPARAM)&data);
 
-         return true;
+            return true;
 #else
-         throw todo(get_app());
+            throw todo(get_app());
 #endif
+         }
+
       }
 
-      return false;
+      return ::prompt::application::on_exclusive_instance_conflict(eexclusive);
 
    }
+
 
 
    /*   void application::request(::create * pcreate)
