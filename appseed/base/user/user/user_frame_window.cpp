@@ -170,7 +170,7 @@ namespace user
    void frame_window::install_message_routing(::message::sender *pinterface)
    {
 
-      ::user::interaction::install_message_routing(pinterface);
+      ::user::box::install_message_routing(pinterface);
       IGUI_MSG_LINK(::message::message_frame_initial_update, pinterface, this, &frame_window::_guserbaseOnInitialUpdate);
       IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &frame_window::_001OnDestroy);
       IGUI_MSG_LINK(WM_SYSCOMMAND, pinterface, this, &frame_window::_001OnSysCommand);
