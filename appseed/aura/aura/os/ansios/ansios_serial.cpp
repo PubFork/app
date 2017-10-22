@@ -3,11 +3,13 @@
  * Additional Contributors: Christopher Baker @bakercp
  */
 
+#include "framework.h"
+
 #if !defined(_WIN32)
 
 #include <stdio.h>
 #include <string.h>
-#include <sstream>
+//#include <sstream>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -32,7 +34,7 @@
 #include <mach/mach.h>
 #endif
 
-#include "serial/impl/unix.h"
+#include "ansios_serial.h"
 
 #ifndef TIOCINQ
 #ifdef FIONREAD
@@ -46,9 +48,9 @@
 #include <IOKit/serial/ioss.h>
 #endif
 
-using std::string;
-using std::stringstream;
-using std::invalid_argument;
+//using std::string;
+//using std::stringstream;
+//using std::invalid_argument;
 using serial::MillisecondTimer;
 using serial::Serial;
 using serial::SerialException;
@@ -105,11 +107,11 @@ timespec_from_ms (const uint32_t millis)
   return time;
 }
 
-Serial::SerialImpl::SerialImpl (const string &port, unsigned long baudrate,
+Serial::SerialImpl::SerialImpl (::aura::application * papp, const string &port, unsigned long baudrate,
                                 bytesize_t bytesize,
                                 parity_t parity, stopbits_t stopbits,
                                 flowcontrol_t flowcontrol)
-  : port_ (port), fd_ (-1), is_open_ (false), xonxoff_ (false), rtscts_ (false),
+  : object(papp), port_ (port), fd_ (-1), is_open_ (false), xonxoff_ (false), rtscts_ (false),
     baudrate_ (baudrate), parity_ (parity),
     bytesize_ (bytesize), stopbits_ (stopbits), flowcontrol_ (flowcontrol)
 {
@@ -130,7 +132,7 @@ void
 Serial::SerialImpl::open ()
 {
   if (port_.empty ()) {
-    throw invalid_argument ("Empty port is invalid.");
+    throw invalid_argument_exception(get_app(), "Empty port is invalid.");
   }
   if (is_open_ == true) {
     throw SerialException ("Serial port already open.");
@@ -352,7 +354,7 @@ Serial::SerialImpl::reconfigurePort ()
   else if (bytesize_ == fivebits)
     options.c_cflag |= CS5;
   else
-    throw invalid_argument ("invalid char len");
+    throw invalid_argument_exception(get_app(), "invalid char len");
   // setup stopbits
   if (stopbits_ == stopbits_one)
     options.c_cflag &= (tcflag_t) ~(CSTOPB);
@@ -362,7 +364,7 @@ Serial::SerialImpl::reconfigurePort ()
   else if (stopbits_ == stopbits_two)
     options.c_cflag |=  (CSTOPB);
   else
-    throw invalid_argument ("invalid stop bit");
+    throw invalid_argument_exception(get_app(), "invalid stop bit");
   // setup parity
   options.c_iflag &= (tcflag_t) ~(INPCK | ISTRIP);
   if (parity_ == parity_none) {
@@ -384,11 +386,11 @@ Serial::SerialImpl::reconfigurePort ()
 #else
   // CMSPAR is not defined on OSX. So do not support mark or space parity.
   else if (parity_ == parity_mark || parity_ == parity_space) {
-    throw invalid_argument ("OS does not support mark or space parity");
+    throw invalid_argument_exception(get_app(), "OS does not support mark or space parity");
   }
 #endif  // ifdef CMSPAR
   else {
-    throw invalid_argument ("invalid parity");
+    throw invalid_argument_exception(get_app(), "invalid parity");
   }
   // setup flow control
   if (flowcontrol_ == flowcontrol_none) {
@@ -831,16 +833,16 @@ Serial::SerialImpl::setBreak (bool level)
   if (level) {
     if (-1 == ioctl (fd_, TIOCSBRK))
     {
-        stringstream ss;
-        ss << "setBreak failed on a call to ioctl(TIOCSBRK): " << errno << " " << strerror(errno);
-        throw(SerialException(ss.str().c_str()));
+       string str;
+        str.Format("setBreak failed on a call to ioctl(TIOCSBRK): %d %s",errno ,strerror(errno));
+        throw(SerialException(str));
     }
   } else {
     if (-1 == ioctl (fd_, TIOCCBRK))
     {
-        stringstream ss;
-        ss << "setBreak failed on a call to ioctl(TIOCCBRK): " << errno << " " << strerror(errno);
-        throw(SerialException(ss.str().c_str()));
+        string ss;
+        ss.Format("setBreak failed on a call to ioctl(TIOCCBRK): %d %s",errno ,strerror(errno));
+        throw(SerialException(ss));
     }
   }
 }
@@ -857,14 +859,14 @@ Serial::SerialImpl::setRTS (bool level)
   if (level) {
     if (-1 == ioctl (fd_, TIOCMBIS, &command))
     {
-      stringstream ss;
+       std::stringstream ss;
       ss << "setRTS failed on a call to ioctl(TIOCMBIS): " << errno << " " << strerror(errno);
       throw(SerialException(ss.str().c_str()));
     }
   } else {
     if (-1 == ioctl (fd_, TIOCMBIC, &command))
     {
-      stringstream ss;
+      std::stringstream ss;
       ss << "setRTS failed on a call to ioctl(TIOCMBIC): " << errno << " " << strerror(errno);
       throw(SerialException(ss.str().c_str()));
     }
@@ -883,14 +885,14 @@ Serial::SerialImpl::setDTR (bool level)
   if (level) {
     if (-1 == ioctl (fd_, TIOCMBIS, &command))
     {
-      stringstream ss;
+      std::stringstream ss;
       ss << "setDTR failed on a call to ioctl(TIOCMBIS): " << errno << " " << strerror(errno);
       throw(SerialException(ss.str().c_str()));
     }
   } else {
     if (-1 == ioctl (fd_, TIOCMBIC, &command))
     {
-      stringstream ss;
+      std::stringstream ss;
       ss << "setDTR failed on a call to ioctl(TIOCMBIC): " << errno << " " << strerror(errno);
       throw(SerialException(ss.str().c_str()));
     }
@@ -908,7 +910,7 @@ while (is_open_ == true) {
 
     if (-1 == ioctl (fd_, TIOCMGET, &status))
     {
-        stringstream ss;
+        std::stringstream ss;
         ss << "waitForChange failed on a call to ioctl(TIOCMGET): " << errno << " " << strerror(errno);
         throw(SerialException(ss.str().c_str()));
     }
@@ -951,7 +953,7 @@ Serial::SerialImpl::getCTS ()
 
   if (-1 == ioctl (fd_, TIOCMGET, &status))
   {
-    stringstream ss;
+    std::stringstream ss;
     ss << "getCTS failed on a call to ioctl(TIOCMGET): " << errno << " " << strerror(errno);
     throw(SerialException(ss.str().c_str()));
   }
@@ -972,7 +974,7 @@ Serial::SerialImpl::getDSR ()
 
   if (-1 == ioctl (fd_, TIOCMGET, &status))
   {
-      stringstream ss;
+      std::stringstream ss;
       ss << "getDSR failed on a call to ioctl(TIOCMGET): " << errno << " " << strerror(errno);
       throw(SerialException(ss.str().c_str()));
   }
@@ -993,7 +995,7 @@ Serial::SerialImpl::getRI ()
 
   if (-1 == ioctl (fd_, TIOCMGET, &status))
   {
-    stringstream ss;
+    std::stringstream ss;
     ss << "getRI failed on a call to ioctl(TIOCMGET): " << errno << " " << strerror(errno);
     throw(SerialException(ss.str().c_str()));
   }
@@ -1014,7 +1016,7 @@ Serial::SerialImpl::getCD ()
 
   if (-1 == ioctl (fd_, TIOCMGET, &status))
   {
-    stringstream ss;
+    std::stringstream ss;
     ss << "getCD failed on a call to ioctl(TIOCMGET): " << errno << " " << strerror(errno);
     throw(SerialException(ss.str().c_str()));
   }

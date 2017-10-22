@@ -23,4 +23,4 @@ bool nsapp_activation_policy_is_regular();
 
 
 int32_t run_system();
-int32_t base_main_command_line(const char * pszParams, int argc, char *argv[]);
+int32_t aura_main_command_line(const char * pszParams, int argc, char *argv[]);

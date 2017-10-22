@@ -19,5 +19,6 @@
 
 @property (strong, nonatomic) UIWindow * window;
 
+@property(strong) UIWindowController *windowcontroller;
 
 @end

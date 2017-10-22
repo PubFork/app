@@ -27,7 +27,7 @@ struct tm *gmtime_r(const time_t *timep,struct tm *result)
 
 }
 
-#ifndef LINUX
+#if !defined(LINUX) && !defined(APPLEOS)
 
 #include <time.h>
 #include <sys/timeb.h>

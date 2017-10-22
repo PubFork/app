@@ -10,7 +10,7 @@
 		071B6B291B5AE07B002C55E2 /* libaxisfreeimage.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 076333EB1B5902FC0079C405 /* libaxisfreeimage.dylib */; };
 		076335191B5903BD0079C405 /* PluginJPEG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076334B11B5903BC0079C405 /* PluginJPEG.cpp */; };
 		0763351A1B5903BD0079C405 /* PluginJPEG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076334B11B5903BC0079C405 /* PluginJPEG.cpp */; };
-		07B6577B190F3CA2002DAADE /* libimage_decode_jpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libimage_decode_jpeg.a */; };
+		07B6577B190F3CA2002DAADE /* libios_image_decode_jpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libios_image_decode_jpeg.a */; };
 		9A9F0A7C1D7F356C00ED6D8A /* libaxisjpeg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9F0A501D7F345500ED6D8A /* libaxisjpeg.dylib */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +102,7 @@
 /* Begin PBXFileReference section */
 		076333E51B5902FB0079C405 /* axisfreeimage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisfreeimage.xcodeproj; path = ../freeimage/axisfreeimage.xcodeproj; sourceTree = "<group>"; };
 		076334B11B5903BC0079C405 /* PluginJPEG.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PluginJPEG.cpp; sourceTree = "<group>"; };
-		07B65764190F3CA2002DAADE /* libimage_decode_jpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libimage_decode_jpeg.a; path = libios_image_decode_jpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		07B65764190F3CA2002DAADE /* libios_image_decode_jpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libios_image_decode_jpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07B65773190F3CA2002DAADE /* axisjpeg_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = axisjpeg_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A574B9816AAB906000CC4EF /* libimage_decode_jpeg.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libimage_decode_jpeg.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9F0A491D7F345500ED6D8A /* axisjpeg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisjpeg.xcodeproj; path = ../../../third/appseed/jpeg/axisjpeg.xcodeproj; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07B6577B190F3CA2002DAADE /* libimage_decode_jpeg.a in Frameworks */,
+				07B6577B190F3CA2002DAADE /* libios_image_decode_jpeg.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				9A574B9816AAB906000CC4EF /* libimage_decode_jpeg.dylib */,
-				07B65764190F3CA2002DAADE /* libimage_decode_jpeg.a */,
+				07B65764190F3CA2002DAADE /* libios_image_decode_jpeg.a */,
 				07B65773190F3CA2002DAADE /* axisjpeg_iosTests.xctest */,
 			);
 			name = Products;
@@ -236,7 +236,7 @@
 			);
 			name = ios_image_decode_jpeg;
 			productName = math_ios;
-			productReference = 07B65764190F3CA2002DAADE /* libimage_decode_jpeg.a */;
+			productReference = 07B65764190F3CA2002DAADE /* libios_image_decode_jpeg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		07B65772190F3CA2002DAADE /* axisjpeg_iosTests */ = {

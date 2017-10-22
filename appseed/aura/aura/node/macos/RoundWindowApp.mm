@@ -20,6 +20,8 @@ void macos_on_app_activate();
 @implementation RoundWindowApp
 
 
+@synthesize windowcontroller;
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
    

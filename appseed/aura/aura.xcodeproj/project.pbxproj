@@ -846,6 +846,14 @@
 		9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A33A74D1EA901F5000EC109 /* CoreServices.framework */; };
 		9A34F5D21E15763000AE2607 /* mmos.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A34F5D01E15763000AE2607 /* mmos.h */; };
 		9A34F5D31E15763000AE2607 /* mmos.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A34F5D11E15763000AE2607 /* mmos.mm */; };
+		9A3630931F9CE6D90020D70B /* ansios_serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36308E1F9CE6D90020D70B /* ansios_serial.cpp */; };
+		9A3630951F9CE7760020D70B /* ansios_serial.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3630941F9CE7760020D70B /* ansios_serial.h */; };
+		9A3630971F9CE9A00020D70B /* os_serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3630961F9CE9A00020D70B /* os_serial.cpp */; };
+		9A3630A01F9CEA0D0020D70B /* _os_cross_ansios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3630991F9CEA0D0020D70B /* _os_cross_ansios.cpp */; };
+		9A3630A11F9CEA0D0020D70B /* ansios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36309A1F9CEA0D0020D70B /* ansios.h */; };
+		9A3630A31F9CEA0D0020D70B /* ansios_datetime_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36309C1F9CEA0D0020D70B /* ansios_datetime_c.h */; };
+		9A3630A41F9CEA0D0020D70B /* ansios_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36309D1F9CEA0D0020D70B /* ansios_file.h */; };
+		9A3630A61F9CEA0D0020D70B /* ansios_file_raw.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36309F1F9CEA0D0020D70B /* ansios_file_raw.h */; };
 		9A4B9C2F1E148E1A000D0E92 /* macos_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B9C2E1E148E1A000D0E92 /* macos_mm.mm */; };
 		9A4B9C311E149015000D0E92 /* os_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B9C301E149015000D0E92 /* os_debug.cpp */; };
 		9A640E181EA6BABB00866C2C /* fontopus.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E011EA6BABB00866C2C /* fontopus.h */; };
@@ -3097,6 +3105,16 @@
 		9A33A74D1EA901F5000EC109 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		9A34F5D01E15763000AE2607 /* mmos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmos.h; sourceTree = "<group>"; };
 		9A34F5D11E15763000AE2607 /* mmos.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = mmos.mm; sourceTree = "<group>"; };
+		9A36308E1F9CE6D90020D70B /* ansios_serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_serial.cpp; sourceTree = "<group>"; };
+		9A3630941F9CE7760020D70B /* ansios_serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ansios_serial.h; sourceTree = "<group>"; };
+		9A3630961F9CE9A00020D70B /* os_serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = os_serial.cpp; sourceTree = "<group>"; };
+		9A3630991F9CEA0D0020D70B /* _os_cross_ansios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _os_cross_ansios.cpp; sourceTree = "<group>"; };
+		9A36309A1F9CEA0D0020D70B /* ansios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ansios.h; sourceTree = "<group>"; };
+		9A36309B1F9CEA0D0020D70B /* ansios_datetime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_datetime.cpp; sourceTree = "<group>"; };
+		9A36309C1F9CEA0D0020D70B /* ansios_datetime_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ansios_datetime_c.h; sourceTree = "<group>"; };
+		9A36309D1F9CEA0D0020D70B /* ansios_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ansios_file.h; sourceTree = "<group>"; };
+		9A36309E1F9CEA0D0020D70B /* ansios_file_raw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_file_raw.cpp; sourceTree = "<group>"; };
+		9A36309F1F9CEA0D0020D70B /* ansios_file_raw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ansios_file_raw.h; sourceTree = "<group>"; };
 		9A4B9C2E1E148E1A000D0E92 /* macos_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macos_mm.mm; sourceTree = "<group>"; };
 		9A4B9C301E149015000D0E92 /* os_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = os_debug.cpp; sourceTree = "<group>"; };
 		9A51A7111F9BE2FC004D02D4 /* user_scroll_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_scroll_info.h; sourceTree = "<group>"; };
@@ -5610,6 +5628,7 @@
 				9A6FACD91F5C71D600AF31B2 /* os_file.cpp */,
 				9A6FACDA1F5C71D600AF31B2 /* os_os.cpp */,
 				9A6FACDB1F5C71D600AF31B2 /* os_process.cpp */,
+				9A3630961F9CE9A00020D70B /* os_serial.cpp */,
 				9A6FACDC1F5C71D600AF31B2 /* os_windowing.cpp */,
 				9A4B9C301E149015000D0E92 /* os_debug.cpp */,
 				9A6FB0F91F5C81EF00AF31B2 /* os_cpp.h */,
@@ -5629,6 +5648,8 @@
 		9A163F8919C4A4CD00966C5E /* ansios */ = {
 			isa = PBXGroup;
 			children = (
+				9A3630941F9CE7760020D70B /* ansios_serial.h */,
+				9A36308E1F9CE6D90020D70B /* ansios_serial.cpp */,
 				9A6FAC861F5C717B00AF31B2 /* ansios_base_file.cpp */,
 				9A6FAC871F5C717B00AF31B2 /* ansios_cross_win_file.cpp */,
 				9A6FAC881F5C717B00AF31B2 /* ansios_cross_win.cpp */,
@@ -5649,6 +5670,7 @@
 		9A163F9419C4A4CD00966C5E /* cross */ = {
 			isa = PBXGroup;
 			children = (
+				9A3630981F9CEA0D0020D70B /* ansios */,
 				9A163F9A19C4A4CD00966C5E /* metrowin */,
 				9A163F9D19C4A4CD00966C5E /* windows */,
 				9A163F9919C4A4CD00966C5E /* cross.h */,
@@ -6062,6 +6084,20 @@
 				9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */,
 			);
 			path = apple;
+			sourceTree = "<group>";
+		};
+		9A3630981F9CEA0D0020D70B /* ansios */ = {
+			isa = PBXGroup;
+			children = (
+				9A3630991F9CEA0D0020D70B /* _os_cross_ansios.cpp */,
+				9A36309A1F9CEA0D0020D70B /* ansios.h */,
+				9A36309B1F9CEA0D0020D70B /* ansios_datetime.cpp */,
+				9A36309C1F9CEA0D0020D70B /* ansios_datetime_c.h */,
+				9A36309D1F9CEA0D0020D70B /* ansios_file.h */,
+				9A36309E1F9CEA0D0020D70B /* ansios_file_raw.cpp */,
+				9A36309F1F9CEA0D0020D70B /* ansios_file_raw.h */,
+			);
+			path = ansios;
 			sourceTree = "<group>";
 		};
 		9A4E846F1D1FD3A7008A419B /* Products */ = {
@@ -7326,6 +7362,7 @@
 				9A16446C19C4A4CF00966C5E /* macos_process.h in Headers */,
 				9A16422F19C4A4CE00966C5E /* exception_resource.h in Headers */,
 				9A16450519C4A4CF00966C5E /* process_process.h in Headers */,
+				9A3630A41F9CEA0D0020D70B /* ansios_file.h in Headers */,
 				07502C9A1B24911C008D207C /* filesystem_dir_system.h in Headers */,
 				9AF4C3391F836F8300197385 /* aura_conv.h in Headers */,
 				9A0256FC1EA593AC003C82CF /* sockets_link_in_socket.h in Headers */,
@@ -7393,6 +7430,7 @@
 				9A16421919C4A4CE00966C5E /* exception_memory_state.h in Headers */,
 				9AF4C3AF1F836F8400197385 /* aura_simple_log.h in Headers */,
 				9A16452319C4A4CF00966C5E /* xml_output_tree.h in Headers */,
+				9A3630A31F9CEA0D0020D70B /* ansios_datetime_c.h in Headers */,
 				9A16446619C4A4CF00966C5E /* macos_multithreading.h in Headers */,
 				07B0952C18495C2B007A0560 /* primitive_color.h in Headers */,
 				07B094C718495C2A007A0560 /* collection_lemon_array_decl.h in Headers */,
@@ -7400,6 +7438,7 @@
 				07B0952918495C2B007A0560 /* math_static_numeric_info.h in Headers */,
 				07B094E518495C2B007A0560 /* collection_sort.h in Headers */,
 				9A1643AC19C4A4CF00966C5E /* windows_internals.h in Headers */,
+				9A3630951F9CE7760020D70B /* ansios_serial.h in Headers */,
 				9A09747A1F223D2E00CFA833 /* UncaughtExceptionHandler.h in Headers */,
 				9A0254CE1EA59238003C82CF /* compress_department.h in Headers */,
 				9AF4C3A61F836F8400197385 /* aura_serial.h in Headers */,
@@ -7603,6 +7642,7 @@
 				9A16452919C4A4CF00966C5E /* xml_tree_base.h in Headers */,
 				07B0953818495C2B007A0560 /* str_composite.h in Headers */,
 				9A16485619C4ADA100966C5E /* macos_factory_exchange.h in Headers */,
+				9A3630A11F9CEA0D0020D70B /* ansios.h in Headers */,
 				9AF4C3A31F836F8400197385 /* aura_restore.h in Headers */,
 				9A2A53421F1FEDFD001AB0F8 /* draw2d_object.h in Headers */,
 				9A1643A819C4A4CF00966C5E /* windows_error.h in Headers */,
@@ -7935,6 +7975,7 @@
 				9A6FAE911F5C777800AF31B2 /* comparison_compare.h in Headers */,
 				9A2A53CF1F1FEE49001AB0F8 /* install_trace.h in Headers */,
 				9A0256381EA593AC003C82CF /* ftp_data_types.h in Headers */,
+				9A3630A61F9CEA0D0020D70B /* ansios_file_raw.h in Headers */,
 				9AF4C36A1F836F8400197385 /* aura_id_pool.h in Headers */,
 				9A6FB0561F5C79CF00AF31B2 /* file_ostream_flush.h in Headers */,
 				07F5B1B8184A3B430092C3E1 /* file_composite.h in Headers */,
@@ -9255,6 +9296,7 @@
 				9A6FAB3D1F5C707800AF31B2 /* fontopus_licensing.cpp in Sources */,
 				9A6FB1071F5C9C5000AF31B2 /* primitive_handler.cpp in Sources */,
 				9A6FAC531F5C713E00AF31B2 /* macos_trace.cpp in Sources */,
+				9A3630A01F9CEA0D0020D70B /* _os_cross_ansios.cpp in Sources */,
 				9A8ED4831F20052E007DB75C /* draw2d_nanosvg.cpp in Sources */,
 				9A6FAE921F5C777800AF31B2 /* comparison_var_strict.cpp in Sources */,
 				9A6FB0351F5C79CF00AF31B2 /* file_byte_ostream.cpp in Sources */,
@@ -9301,6 +9343,7 @@
 				9A6FACC81F5C71AF00AF31B2 /* macos_graphics.cpp in Sources */,
 				9AF4C35E1F836F8300197385 /* aura_heap.cpp in Sources */,
 				9A6FAB421F5C707800AF31B2 /* fontopus_validate.cpp in Sources */,
+				9A3630931F9CE6D90020D70B /* ansios_serial.cpp in Sources */,
 				9A6FB0461F5C79CF00AF31B2 /* file_file_ostream.cpp in Sources */,
 				9A6FACD31F5C71AF00AF31B2 /* macos_simple_shell_launcher.cpp in Sources */,
 				9A6FAD9D1F5C768E00AF31B2 /* math.cpp in Sources */,
@@ -9361,6 +9404,7 @@
 				9A6FAEE01F5C778800AF31B2 /* collection_numeric_array.cpp in Sources */,
 				9A6FABC31F5C70BE00AF31B2 /* exception_archive.cpp in Sources */,
 				9A6FACD21F5C71AF00AF31B2 /* macos_simple_app.cpp in Sources */,
+				9A3630971F9CE9A00020D70B /* os_serial.cpp in Sources */,
 				9A6FADAC1F5C768E00AF31B2 /* primitive_job.cpp in Sources */,
 				9A6FACA51F5C719700AF31B2 /* cross_windows_datetime.cpp in Sources */,
 				9AA315591E462D4E009CF281 /* macos_file_watcher.cpp in Sources */,

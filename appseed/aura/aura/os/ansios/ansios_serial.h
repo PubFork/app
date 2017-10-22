@@ -40,15 +40,15 @@
 #ifndef SERIAL_IMPL_UNIX_H
 #define SERIAL_IMPL_UNIX_H
 
-#include "serial/serial.h"
+//#include "serial/serial.h"
 
 #include <pthread.h>
 
 namespace serial {
 
-using std::size_t;
-using std::string;
-using std::invalid_argument;
+//using std::size_t;
+//using std::string;
+//using std::invalid_argument;
 
 using serial::SerialException;
 using serial::IOException;
@@ -63,9 +63,10 @@ private:
   timespec expiry;
 };
 
-class serial::Serial::SerialImpl {
+   class serial::Serial::SerialImpl :
+   virtual public object{
 public:
-  SerialImpl (const string &port,
+      SerialImpl (::aura::application * papp, const string &port,
               unsigned long baudrate,
               bytesize_t bytesize,
               parity_t parity,
