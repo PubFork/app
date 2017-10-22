@@ -993,7 +993,7 @@ error:
    bool system::initialize_native_window1()
    {
 
-#if !defined(LINUX) && !defined(WINDOWSEX)
+#if !defined(LINUX) && !defined(WINDOWSEX) && !defined(MACOS)
 
       m_possystemwindow->m_pui = new ::user::interaction(this);
 

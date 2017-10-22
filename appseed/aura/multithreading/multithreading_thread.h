@@ -171,8 +171,8 @@ class CLASS_DECL_AURA thread :
 //   virtual int32_t exit();
 
 
-      virtual void on_keep_alive();
-      virtual bool is_alive();
+      virtual void on_keep_alive() override;
+      virtual bool is_alive() override;
 
 
       virtual bool has_message();
@@ -221,7 +221,7 @@ class CLASS_DECL_AURA thread :
 
       virtual bool on_run_exception(::exception::exception &);
 
-      virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode) override;
 
       // running and idle processing
       virtual void pre_translate_message(::message::message * pobj);
@@ -316,7 +316,7 @@ class CLASS_DECL_AURA thread :
       virtual bool is_session();
       virtual bool is_system();
 
-      virtual void delete_this();
+      virtual void delete_this() override;
 
       /// thread implementation
       virtual int32_t thread_startup(::thread_startup * pstartup);
@@ -342,7 +342,7 @@ class CLASS_DECL_AURA thread :
 
       virtual void on_create(::create * pcreate);
 
-      virtual void request_create(::create * pcreate);
+      virtual void request_create(::create * pcreate) override;
 
 };
 

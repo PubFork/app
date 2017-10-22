@@ -27,41 +27,41 @@ namespace file
 
 
 
-         virtual file_position_t get_position() const;
-         virtual bool GetStatus(file_status& rStatus) const;
-         virtual string GetFileName() const;
-         virtual string GetFileTitle() const;
-         virtual string GetFilePath() const;
+         virtual file_position_t get_position() const override;
+         virtual bool GetStatus(file_status& rStatus) const override;
+         virtual string GetFileName() const override;
+         virtual string GetFileTitle() const override;
+         virtual string GetFilePath() const override;
          //virtual void SetFilePath(const char * lpszNewName);
 
 
-         virtual cres open(const ::file::path & lpszFileName,UINT nOpenFlags);
+         virtual cres open(const ::file::path & lpszFileName,UINT nOpenFlags) override;
 
          //virtual bool GetStatus(const char * lpszFileName,file_status& rStatus);
          //virtual void SetStatus(const char * lpszFileName,const file_status& status);
 
 
-         virtual ::file::file_sp  Duplicate() const;
+         virtual ::file::file_sp  Duplicate() const override;
 
-         virtual file_position_t seek(file_offset_t lOff,::file::e_seek  nFrom);
-         virtual void set_length(file_size_t dwNewLen);
-         virtual file_size_t get_length() const;
+         virtual file_position_t seek(file_offset_t lOff,::file::e_seek  nFrom) override;
+         virtual void set_length(file_size_t dwNewLen) override;
+         virtual file_size_t get_length() const override;
 
-         virtual void LockRange(file_position_t dwPos,file_size_t dwCount);
-         virtual void UnlockRange(file_position_t dwPos,file_size_t dwCount);
+         virtual void LockRange(file_position_t dwPos,file_size_t dwCount) override;
+         virtual void UnlockRange(file_position_t dwPos,file_size_t dwCount) override;
 
-         virtual void Abort();
-         virtual void flush();
-         virtual void close();
+         virtual void Abort() override;
+         virtual void flush() override;
+         virtual void close() override;
 
 
-         virtual memory_size_t read(void *lpBuf,memory_size_t nCount);
-         virtual void write(const void * lpBuf,memory_size_t nCount);
-         virtual string get_location() const;
+         virtual memory_size_t read(void *lpBuf,memory_size_t nCount) override;
+         virtual void write(const void * lpBuf,memory_size_t nCount) override;
+         virtual string get_location() const override;
 
-         virtual bool IsOpened();
-         virtual bool is_open();
-         virtual uint64_t GetBufferPtr(UINT nCommand,uint64_t nCount = 0,void ** ppBufStart = NULL,void ** ppBufMax = NULL);
+         virtual bool IsOpened() override;
+         virtual bool is_open() override;
+         virtual uint64_t GetBufferPtr(UINT nCommand,uint64_t nCount = 0,void ** ppBufStart = NULL,void ** ppBufMax = NULL) override;
 
 
          /*using ::file::writer::write;

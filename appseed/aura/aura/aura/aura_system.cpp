@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 #if defined(LINUX) || defined(ANDROID)
@@ -3370,7 +3370,7 @@ success:
       if (iMonitor < 0 || iMonitor >= get_monitor_count())
          return false;
 
-      GetScreenRect(lprect, iMonitor);
+      GetScreenRect(lprect, (int) iMonitor);
 
 #else
 
@@ -3481,7 +3481,7 @@ success:
       if (iWkspace < 0 || iWkspace >= get_wkspace_count())
          return false;
 
-      GetWkspaceRect(lprect, iWkspace);
+      GetWkspaceRect(lprect, (int) iWkspace);
 
       //      lprect->top += ::mac::get_system_main_menu_bar_height();
       //    lprect->bottom -= ::mac::get_system_dock_height();

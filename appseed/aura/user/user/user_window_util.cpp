@@ -1023,14 +1023,23 @@ namespace user
 
    ::user::interaction * interaction_ptra::find_first_typed(sp(type) info)
    {
+      
       for (int32_t i = 0; i < this->get_size(); i++)
       {
-         if (typeid(*this->element_at(i)).name() == info->name())
+         
+         ::user::interaction * pui = this->element_at(i);
+         
+         if (typeid(*pui).name() == info->name())
          {
-            return this->element_at(i);
+            
+            return pui;
+            
          }
+         
       }
+      
       return NULL;
+      
    }
 
 
@@ -1138,16 +1147,26 @@ namespace user
 
    }
 
+   
    sp(::user::interaction) interaction_spa::find_first_typed(sp(type) info)
    {
+      
       for (int32_t i = 0; i < this->get_size(); i++)
       {
-         if (typeid(*this->element_at(i)).name() == info->name())
+         
+         ::user::interaction * pui = this->element_at(i);
+         
+         if (typeid(*pui).name() == info->name())
          {
+            
             return this->element_at(i);
+            
          }
+         
       }
+      
       return NULL;
+      
    }
 
    sp(::user::interaction) interaction_spa::find_first(oswindow oswindow)

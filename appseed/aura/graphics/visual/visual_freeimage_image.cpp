@@ -745,7 +745,7 @@ namespace visual
    const char * lpszId)
    {
    ::exception::throw_not_implemented(get_app());
-   /*
+   
    ::memory_file file(get_app());
 
    ::core::Resource resource;
@@ -909,7 +909,7 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 
 #else
 
-   throw todo(get_app());
+   throw todo(pgraphics->get_app());
 
 #endif
 

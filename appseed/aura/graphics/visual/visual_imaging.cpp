@@ -1703,7 +1703,7 @@ UINT32 * lpuiA = (UINT32 *) dibA->get_data();
 //      int32_t i;
 
 //   int64_t b = a - 4;
-/*      for (i = 0; i < b; i +=4)
+      for (i = 0; i < b; i +=4)
 {
 lpuiA[0] = ((lpuiA[0] << 8) & 0xff000000);
 lpuiA[1] = ((lpuiA[1] << 8) & 0xff000000);
@@ -2343,7 +2343,7 @@ return false;
 //   }
 return true;
 
-/*   if(pgraphics == NULL)
+  if(pgraphics == NULL)
 return false;
 
 if(pbitmap == NULL)
@@ -2472,7 +2472,7 @@ return bOk;
 }
 return true;
 
-/*   if(pgraphics == NULL)
+   if(pgraphics == NULL)
 return false;
 
 if(pbitmap == NULL)

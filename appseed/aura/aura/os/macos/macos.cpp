@@ -293,3 +293,10 @@ int32_t raw_main_command_line(const char * pszCommandLine, int argc, char *argv[
 
 
 
+
+void macos_on_app_activate()
+{
+ 
+   //::aura::system::g_p->
+   
+}

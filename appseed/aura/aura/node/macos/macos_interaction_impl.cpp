@@ -1,8 +1,8 @@
 #include "framework.h"
-#include "macos.h"
-#include "base/user/user.h"
-#include "base/user/user/user.h"
-#include "base/user/user/user_user.h"
+//#include "macos.h"
+//#include "base/user/user.h"
+//#include "base/user/user/user.h"
+//#include "base/user/user/user_user.h"
 
 
 void DeactivateWindow(oswindow window);
@@ -69,10 +69,10 @@ namespace macos
    }
 
 
-   CLASS_DECL_BASE void hook_window_create(::user::interaction * pWnd);
-   CLASS_DECL_BASE bool unhook_window_create();
-   void CLASS_DECL_BASE __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-   void CLASS_DECL_BASE __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+   CLASS_DECL_AURA void hook_window_create(::user::interaction * pWnd);
+   CLASS_DECL_AURA bool unhook_window_create();
+   void CLASS_DECL_AURA __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
+   void CLASS_DECL_AURA __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
    LRESULT CALLBACK __activation_window_procedure(oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam);
 
 
@@ -122,7 +122,7 @@ namespace macos
       if (!::IsWindow(hWnd))
          return false;
 
-      DWORD dw = hWnd->get_window_long(GWL_STYLE);
+      DWORD_PTR dw = hWnd->get_window_long(GWL_STYLE);
 
       dw &= ~dwRemove;
 
@@ -145,7 +145,7 @@ namespace macos
       if (!::IsWindow(hWnd))
          return false;
 
-      DWORD dw = hWnd->get_window_long(GWL_EXSTYLE);
+      DWORD_PTR dw = hWnd->get_window_long(GWL_EXSTYLE);
 
       dw &= ~dwRemove;
 
@@ -1121,7 +1121,7 @@ namespace macos
 
          SCAST_PTR(::message::key, pkey, pbase);
 
-         Session.keyboard().translate_os_key_message(pkey);
+         Session.translate_os_key_message(pkey);
 
          if (pbase->m_id == WM_KEYDOWN)
          {
@@ -1318,7 +1318,7 @@ namespace macos
             
          }
          
-         pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam));
          
          return;
          
@@ -1355,7 +1355,7 @@ namespace macos
          
       }
       
-      pbase->set_lresult(DefWindowProc(pbase->m_id, pbase->m_wparam, pbase->m_lparam));
+      pbase->set_lresult(DefWindowProc((UINT) pbase->m_id.int64(), pbase->m_wparam, pbase->m_lparam));
       
    }
 
@@ -2007,7 +2007,7 @@ namespace macos
        // check if in permanent ::collection::map, if it is reflect it (could be OLE control)
        ::user::interaction * pWnd = dynamic_cast < ::user::interaction * > (pMap->lookup_permanent(hWndChild)); */
       ::user::interaction * pWnd = dynamic_cast <::user::interaction *> (FromHandlePermanent(hWndChild));
-      ASSERT(pWnd == NULL || MAC_WINDOW(pWnd)->get_handle() == hWndChild);
+      ASSERT(pWnd == NULL || pWnd->get_handle() == hWndChild);
       if (pWnd == NULL)
       {
          return FALSE;
@@ -2015,7 +2015,10 @@ namespace macos
 
       // only OLE controls and permanent windows will get reflected msgs
       ASSERT(pWnd != NULL);
-      return MAC_WINDOW(pWnd)->SendChildNotifyLastMsg(pResult);
+      throw todo(pWnd->get_app());
+      //return pWnd->SendChildNotifyLastMsg(pResult);
+      
+      return FALSE;
    }
 
    bool interaction_impl::OnChildNotify(UINT uMsg, WPARAM wparam, LPARAM lparam, LRESULT* pResult)
@@ -2797,11 +2800,13 @@ namespace macos
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::user::interaction * pWnd, UINT)
    {
-      ASSERT(pWnd != NULL && MAC_WINDOW(pWnd)->get_handle() != NULL);
-      LRESULT lResult;
-      if (MAC_WINDOW(pWnd)->SendChildNotifyLastMsg(&lResult))
-         return (HBRUSH)lResult;     // eat it
-      return (HBRUSH)Default();
+//      ASSERT(pWnd != NULL && pWnd->get_handle() != NULL);
+//      LRESULT lResult;
+//      if (pWnd->SendChildNotifyLastMsg(&lResult))
+//         return (HBRUSH)lResult;     // eat it
+//      return (HBRUSH)Default();
+      throw todo(get_app());
+      return NULL;
    }
 
    // implementation of OnCtlColor for default gray backgrounds
@@ -3108,7 +3113,7 @@ namespace macos
    bool interaction_impl::IsChild(::user::interaction *  pWnd)
    {
       ASSERT(::IsWindow(get_handle()));
-      if (MAC_WINDOW(pWnd)->get_handle() == NULL)
+      if (pWnd->get_handle() == NULL)
       {
          return ::user::interaction_impl::IsChild(pWnd);
       }
@@ -3698,7 +3703,7 @@ namespace macos
       if (m_pauraapp != NULL)
       {
          
-         return m_pauraapp->post_message(m_pui, message, wparam, lparam);
+         return m_pauraapp->post_message((::user::primitive *) m_pui, message, wparam, lparam);
          
       }
       else
@@ -3885,10 +3890,11 @@ namespace macos
 
    ::draw2d::graphics * interaction_impl::GetWindowDC()
    {
-      ASSERT(::IsWindow(get_handle()));
-      ::draw2d::graphics_sp g(allocer());
-      g->attach(::GetWindowDC(get_handle()));
-      return g.detach();
+//      ASSERT(::IsWindow(get_handle()));
+//      ::draw2d::graphics_sp g(allocer());
+//      g->attach(::GetWindowDC(get_handle()));
+//      return g.detach();
+      return NULL;
    }
 
    bool interaction_impl::ReleaseDC(::draw2d::graphics * pgraphics)
@@ -4213,10 +4219,10 @@ namespace macos
          {
             
             ::SetWindowPos(m_oswindow, NULL,
-                           m_rectParentClientRequest.left,
-                           m_rectParentClientRequest.top,
-                           m_rectParentClientRequest.width(),
-                           m_rectParentClientRequest.height(),
+                           (int) m_rectParentClientRequest.left,
+                           (int) m_rectParentClientRequest.top,
+                           (int) m_rectParentClientRequest.width(),
+                           (int) m_rectParentClientRequest.height(),
                            SWP_NOZORDER
                            | SWP_NOREDRAW
                            | SWP_NOCOPYBITS
@@ -5438,7 +5444,7 @@ namespace macos
    void interaction_impl::_001BaseWndInterfaceMap()
    {
       
-      Session.user()->window_map().set((int_ptr)get_handle(), this);
+      Session.window_map().set((int_ptr)get_handle(), this);
       
    }
 
@@ -6001,48 +6007,48 @@ namespace macos
 
 
 
-   __STATIC void CLASS_DECL_BASE __pre_init_dialog(
+   __STATIC void CLASS_DECL_AURA __pre_init_dialog(
       ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
    {
       ASSERT(lpRectOld != NULL);
       ASSERT(pdwStyleOld != NULL);
 
-      MAC_WINDOW(pWnd)->GetWindowRect(lpRectOld);
-      *pdwStyleOld = MAC_WINDOW(pWnd)->GetStyle();
+      pWnd->GetWindowRect(lpRectOld);
+      *pdwStyleOld = pWnd->GetStyle();
    }
 
-   __STATIC void CLASS_DECL_BASE __post_init_dialog(
-      ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
-   {
-      // must be hidden to start with
-      if (dwStyleOld & WS_VISIBLE)
-         return;
+//   __STATIC void CLASS_DECL_AURA __post_init_dialog(
+//      ::user::interaction * p, const RECT& rectOld, DWORD dwStyleOld)
+//   {
+//      // must be hidden to start with
+//      if (dwStyleOld & WS_VISIBLE)
+//         return;
+//
+//      // must not be visible after WM_INITDIALOG
+//      if (pWnd->GetStyle() & (WS_VISIBLE | WS_CHILD))
+//         return;
+//
+//      // must not move during WM_INITDIALOG
+//      rect rect;
+//      pWnd->GetWindowRect(rect);
+//      if (rectOld.left != rect.left || rectOld.top != rect.top)
+//         return;
+//
+//      // must be unowned or owner disabled
+//      ::user::interaction * pParent = pWnd->GetWindow(GW_OWNER);
+//      if (pParent != NULL && pParent->is_window_enabled())
+//         return;
+//
+//      if (!pWnd->CheckAutoCenter())
+//         return;
+//
+//      // center modal dialog boxes/message boxes
+//      //MAC_WINDOW(pWnd)->CenterWindow();
+//   }
 
-      // must not be visible after WM_INITDIALOG
-      if (MAC_WINDOW(pWnd)->GetStyle() & (WS_VISIBLE | WS_CHILD))
-         return;
-
-      // must not move during WM_INITDIALOG
-      rect rect;
-      MAC_WINDOW(pWnd)->GetWindowRect(rect);
-      if (rectOld.left != rect.left || rectOld.top != rect.top)
-         return;
-
-      // must be unowned or owner disabled
-      ::user::interaction * pParent = MAC_WINDOW(pWnd)->GetWindow(GW_OWNER);
-      if (pParent != NULL && pParent->is_window_enabled())
-         return;
-
-      if (!MAC_WINDOW(pWnd)->CheckAutoCenter())
-         return;
-
-      // center modal dialog boxes/message boxes
-      //MAC_WINDOW(pWnd)->CenterWindow();
-   }
 
 
-
-   CLASS_DECL_BASE void hook_window_create(::user::interaction * pui)
+   CLASS_DECL_AURA void hook_window_create(::user::interaction * pui)
    {
 
       UNREFERENCED_PARAMETER(pui);
@@ -6050,7 +6056,7 @@ namespace macos
    }
 
 
-   CLASS_DECL_BASE bool unhook_window_create()
+   CLASS_DECL_AURA bool unhook_window_create()
    {
 
       return true;
@@ -6058,7 +6064,7 @@ namespace macos
    }
 
 
-   __STATIC void CLASS_DECL_BASE
+   __STATIC void CLASS_DECL_AURA
       __handle_activate(::user::interaction * pWnd, WPARAM nState, ::user::interaction * pWndOther)
    {
 
@@ -6089,7 +6095,7 @@ namespace macos
       //   }
    }
 
-   __STATIC bool CLASS_DECL_BASE
+   __STATIC bool CLASS_DECL_AURA
       __handle_set_cursor(::user::interaction * pWnd, UINT nHitTest, UINT nMsg)
    {
 

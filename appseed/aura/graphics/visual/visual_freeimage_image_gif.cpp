@@ -118,7 +118,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                         if (FreeImage_GetTagType(ptag) == FIDT_LONG)
                         {
 
-                           pdiba->m_uiLoopCount = *((long *)FreeImage_GetTagValue(ptag));
+                           pdiba->m_uiLoopCount = (unsigned int) *((long *)FreeImage_GetTagValue(ptag));
 
                         }
 
@@ -204,7 +204,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                      if (FreeImage_GetTagType(ptag) == FIDT_LONG)
                      {
 
-                        p->m_dwTime = *((long *)FreeImage_GetTagValue(ptag));
+                        p->m_dwTime = (uint32_t) *((long *)FreeImage_GetTagValue(ptag));
 
                      }
 

@@ -27,15 +27,15 @@ namespace file
 
 
 
-         virtual file_position_t get_position() const;
-         virtual bool GetStatus(file_status& rStatus) const;
-         virtual ::string GetFileName() const;
-         virtual ::string GetFileTitle() const;
-         virtual ::string GetFilePath() const;
-         virtual void SetFilePath(const char * lpszNewName);
+         virtual file_position_t get_position() const override;
+         virtual bool GetStatus(file_status& rStatus) const override;
+         virtual ::string GetFileName() const override;
+         virtual ::string GetFileTitle() const override;
+         virtual ::string GetFilePath() const override;
+         virtual void SetFilePath(const char * lpszNewName) override;
 
 
-         virtual cres open(const ::file::path & lpszFileName,UINT nOpenFlags);
+         virtual cres open(const ::file::path & lpszFileName,UINT nOpenFlags) override;
 
          //virtual void Rename(const char * lpszOldName, const char * lpszNewName);
          //virtual void remove(const char * lpszFileName);
@@ -43,28 +43,28 @@ namespace file
          //virtual void SetStatus(const char * lpszFileName, const file_status& status);
 
 
-         virtual ::file::file_sp  Duplicate() const;
+         virtual ::file::file_sp  Duplicate() const override;
 
-         virtual file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom);
-         virtual void set_length(file_size_t dwNewLen);
-         virtual file_size_t get_length() const;
+         virtual file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom) override;
+         virtual void set_length(file_size_t dwNewLen) override;
+         virtual file_size_t get_length() const override;
 
-         virtual void LockRange(file_position_t dwPos, file_size_t dwCount);
-         virtual void UnlockRange(file_position_t dwPos, file_size_t dwCount);
+         virtual void LockRange(file_position_t dwPos, file_size_t dwCount) override;
+         virtual void UnlockRange(file_position_t dwPos, file_size_t dwCount) override;
 
-         virtual void Abort();
-         virtual void flush();
-         virtual void close();
-
-
-         virtual memory_size_t read(void *lpBuf, memory_size_t nCount);
-         virtual void write(const void * lpBuf, memory_size_t nCount);
-         virtual ::string get_location() const;
+         virtual void Abort() override;
+         virtual void flush() override;
+         virtual void close() override;
 
 
-         virtual bool IsOpened();
+         virtual memory_size_t read(void *lpBuf, memory_size_t nCount) override;
+         virtual void write(const void * lpBuf, memory_size_t nCount) override;
+         virtual ::string get_location() const override;
 
-         virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL);
+
+         virtual bool IsOpened() override;
+
+         virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL) override;
 
 
          using ::file::file::write;

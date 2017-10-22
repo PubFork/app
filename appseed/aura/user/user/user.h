@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "user_const.h"
@@ -76,6 +76,11 @@ class simple_scroll_bar;
 #ifdef WINDOWSEX
 
 #include "aura/aura/node/windows/windows_user.h"
+
+#elif defined(MACOS)
+
+#include "aura/aura/os/macos/macos_user.h"
+#include "aura/aura/node/macos/macos_user.h"
 
 #endif
 

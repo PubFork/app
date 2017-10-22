@@ -286,6 +286,8 @@ namespace base
 
       }
 
+      return true;
+      
    }
 
    void session::frame_pre_translate_message(::message::message * pobj)

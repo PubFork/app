@@ -1028,7 +1028,7 @@ unsigned int event_num_pad_key_code(NSEvent * event)
 unsigned int event_key_code(NSEvent * event)
 {
 
-   unsigned int uiModifierFlags = [event modifierFlags];
+   unsigned int uiModifierFlags = (unsigned int) [event modifierFlags];
 
    if(uiModifierFlags & NSNumericPadKeyMask)
    {

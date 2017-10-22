@@ -199,6 +199,6 @@ inline int32_t IsWindowVisible(::oswindow window)
 //#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 
 
-
+WINBOOL DestroyWindow(oswindow w);
 
 

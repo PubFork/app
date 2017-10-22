@@ -283,16 +283,16 @@ namespace visual
    }
 
 
-#ifndef  WINDOWS
-
-   bool dib_sp::from(class draw2d::graphics * pgraphics, struct FIBITMAP * pfi, bool bUnload)
-   {
-
-      return Sys(m_p->m_pauraapp).visual().imaging().from(m_p, pgraphics, pfi, bUnload);
-
-   }
-
-#endif
+//#ifndef  WINDOWS
+//
+//   bool dib_sp::from(class draw2d::graphics * pgraphics, struct FIBITMAP * pfi, bool bUnload)
+//   {
+//
+//      return Sys(m_p->m_pauraapp).visual().imaging().from(m_p, pgraphics, pfi, bUnload);
+//
+//   }
+//
+//#endif
 
    /*::size dib_sp::size()
    {

@@ -1,3 +1,5 @@
+#include "framework.h"
+
 #if defined(__APPLE__)
 
 #include <sys/param.h>
@@ -8,11 +10,11 @@
 #include <IOKit/serial/IOSerialKeys.h>
 #include <IOKit/IOBSD.h>
 
-#include <iostream>
-#include <string>
-#include <vector>
+//#include <iostream>
+//#include <string>
+//#include <vector>
 
-#include "serial/serial.h"
+//#include "serial/serial.h"
 
 using serial::PortInfo;
 using std::string;

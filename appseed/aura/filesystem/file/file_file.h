@@ -73,7 +73,7 @@ namespace file
 
 
 
-         virtual file_position_t get_position() const;
+         virtual file_position_t get_position() const override;
          virtual file_position_t tell() const;
          virtual bool GetStatus(file_status& rStatus) const;
          virtual string GetFileName() const;
@@ -90,8 +90,8 @@ namespace file
 
          virtual ::file::file_sp  Duplicate() const;
 
-         virtual file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom);
-         virtual file_position_t seek_from_begin(file_position_t lPos = 0);
+         virtual file_position_t seek(file_offset_t lOff, ::file::e_seek  nFrom) override;
+         virtual file_position_t seek_from_begin(file_position_t lPos = 0) override;
          virtual file_position_t seek_to_begin(file_position_t lPos = 0);
          virtual file_position_t seek_begin(file_position_t lPos = 0);
          virtual void set_length(file_size_t dwNewLen);
@@ -101,14 +101,14 @@ namespace file
          virtual void UnlockRange(file_position_t dwPos, file_size_t dwCount);
 
          virtual void Abort();
-         virtual void flush();
-         virtual void close();
+         virtual void flush() override;
+         virtual void close() override;
 
 
-         virtual memory_size_t read(void *lpBuf, memory_size_t nCount);
+         virtual memory_size_t read(void *lpBuf, memory_size_t nCount) override;
          virtual bool full_read(void *lpBuf, memory_size_t nCount);
          virtual void write_from_hex(const void * lpBuf,memory_size_t nCount);
-         virtual void write(const void * lpBuf, memory_size_t nCount);
+         virtual void write(const void * lpBuf, memory_size_t nCount) override;
          virtual string get_location() const;
 
 
