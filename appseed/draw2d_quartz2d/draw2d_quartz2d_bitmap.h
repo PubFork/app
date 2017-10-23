@@ -45,7 +45,10 @@ namespace draw2d_quartz2d
       class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
       class size GetBitmapDimension() const;
       
+#ifdef DEBUG
+
       virtual void dump(dump_context & dumpcontext) const;
+#endif
       
       virtual bool Attach(void * posdata);
       

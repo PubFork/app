@@ -53,6 +53,9 @@ namespace draw2d_quartz2d
 
    }
    */
+   
+#ifdef DEBUG
+
 
    void graphics::assert_valid() const
    {
@@ -70,6 +73,8 @@ namespace draw2d_quartz2d
       dumpcontext << "\n";
    }
 
+#endif
+   
 
    graphics::~graphics()
    {

@@ -682,7 +682,7 @@ namespace macos
       else
          PostNcDestroy();
    }
-
+#ifdef DEBUG
    void interaction_impl::assert_valid() const
    {
       if (get_handle() == NULL)
@@ -786,7 +786,7 @@ namespace macos
       dumpcontext << "\n";
    }
 
-
+#endif
    bool interaction_impl::DestroyWindow()
    {
 

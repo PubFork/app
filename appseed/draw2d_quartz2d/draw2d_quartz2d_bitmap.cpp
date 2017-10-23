@@ -225,6 +225,8 @@ namespace draw2d_quartz2d
       
    }
    
+#ifdef DEBUG
+
    
    void bitmap::dump(dump_context & dumpcontext) const
    {
@@ -244,6 +246,7 @@ namespace draw2d_quartz2d
       
    }
    
+#endif
    
    void * bitmap::get_os_data() const
    {

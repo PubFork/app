@@ -227,7 +227,9 @@ namespace sockets
       {
          if (fcntl(s, F_SETFL, O_NONBLOCK) == -1)
          {
+#ifdef DEBUG
             log("fcntl(F_SETFL, O_NONBLOCK)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }
@@ -235,7 +237,9 @@ namespace sockets
       {
          if (fcntl(s, F_SETFL, 0) == -1)
          {
+#ifdef DEBUG
             log("fcntl(F_SETFL, 0)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }

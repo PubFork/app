@@ -630,8 +630,10 @@ namespace macos
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
 
       virtual bool CheckAutoCenter() override;
+#ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
+#endif
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                       HBRUSH hbrGray, COLORREF clrText);
 

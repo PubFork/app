@@ -351,7 +351,9 @@ namespace sockets
       {
          if (fcntl(m_socket, F_SETFL, O_NONBLOCK) == -1)
          {
+#ifdef DEBUG
             log("fcntl(F_SETFL, O_NONBLOCK)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }
@@ -359,7 +361,10 @@ namespace sockets
       {
          if (fcntl(m_socket, F_SETFL, 0) == -1)
          {
+#ifdef DEBUG
+
             log("fcntl(F_SETFL, 0)", Errno, bsd_socket_error(Errno), ::aura::log::level_error);
+#endif
             return false;
          }
       }
@@ -1065,7 +1070,10 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), IPPROTO_IP, IP_RECVOPTS, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
+
          log("setsockopt(IPPROTO_IP, IP_RECVOPTS)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
@@ -1079,7 +1087,10 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), IPPROTO_IP, IP_RETOPTS, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
+
          log("setsockopt(IPPROTO_IP, IP_RETOPTS)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
@@ -1415,7 +1426,10 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), SOL_SOCKET, SO_NOSIGPIPE, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
+
          log("setsockopt(SOL_SOCKET, SO_NOSIGPIPE)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
@@ -1448,7 +1462,10 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), SOL_SOCKET, SO_BSDCOMPAT, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
+
          log("setsockopt(SOL_SOCKET, SO_BSDCOMPAT)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;
@@ -1803,7 +1820,10 @@ namespace sockets
       int optval = x ? 1 : 0;
       if (setsockopt(GetSocket(), SOL_SOCKET, SO_TIMESTAMP, (char *)&optval, sizeof(optval)) == -1)
       {
+#ifdef DEBUG
+
          log("setsockopt(SOL_SOCKET, SO_TIMESTAMP)", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
+#endif
          return false;
       }
       return true;

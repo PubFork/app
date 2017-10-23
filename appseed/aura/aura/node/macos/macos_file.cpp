@@ -473,7 +473,7 @@ namespace macos
    /////////////////////////////////////////////////////////////////////////////
    // file diagnostics
 
-
+#ifdef DEBUG
    void file::assert_valid() const
    {
       ::object::assert_valid();
@@ -488,7 +488,7 @@ namespace macos
       dumpcontext << " and name \"" << m_strFileName << "\"";
       dumpcontext << "\n";
    }
-
+#endif
 
 
 

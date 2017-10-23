@@ -64,7 +64,7 @@ namespace draw2d_quartz2d
    /////////////////////////////////////////////////////////////////////////////
    
    
-//#ifdef DEBUG
+#ifdef DEBUG
    
    void pen::dump(dump_context & dumpcontext) const
    {
@@ -90,6 +90,8 @@ namespace draw2d_quartz2d
        dumpcontext << "\n";
        */
    }
+   
+#endif
    
 //#endif
    
