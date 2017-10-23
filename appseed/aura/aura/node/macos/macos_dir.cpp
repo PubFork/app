@@ -181,19 +181,19 @@ namespace macos
 
       DWORD dwLastError;
 
-      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
-      {
-
-         if(!bIsDir)
-         {
-
-            SetLastError(dwLastError);
-
-         }
-
-         return bIsDir;
-
-      }
+//      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+//      {
+//
+//         if(!bIsDir)
+//         {
+//
+//            SetLastError(dwLastError);
+//
+//         }
+//
+//         return bIsDir;
+//
+//      }
 
 
       if(::file::dir::system::is(lpcszPath, papp))
@@ -363,7 +363,7 @@ namespace macos
          if(!is(stra[i], papp))
          {
 
-            if(!::dir::mk(stra[i]))
+            if(!::dir::mkdir(stra[i]))
             {
                
                DWORD dwError = ::GetLastError();
@@ -1201,7 +1201,7 @@ namespace macos
        }
           
        if(m_strTimeFolder.is_empty())
-          m_strTimeFolder = appdata() / "time";
+          m_strTimeFolder = ::file::path(getenv("HOME")) /"Library" / "ca2"/"time";
           
        if(m_strNetSeedFolder.is_empty())
           m_strNetSeedFolder = element() / "net";
@@ -1211,7 +1211,11 @@ namespace macos
        if(!is(m_strTimeFolder, get_app()))
           return false;
           
-       string strTime = m_strTimeFolder / "time";
+      ::file::path strTime;
+      
+      strTime = m_strTimeFolder;
+      
+      strTime /= "time";
           
        mk(strTime, get_app());
           
