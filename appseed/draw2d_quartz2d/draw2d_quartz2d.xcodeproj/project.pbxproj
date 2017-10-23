@@ -108,7 +108,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		07E25F501B4FFC2100752DE1 /* libdraw2d_quartz2d.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libdraw2d_quartz2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		07E25F501B4FFC2100752DE1 /* libdraw2d_quartz2d.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libdraw2d_quartz2d.a; path = libios_draw2d_quartz2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1B496316A494A600875A94 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A1B496616A4A10100875A94 /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
 		9A6B40CC17BBE291008391AD /* draw2d_quartz2d_bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = draw2d_quartz2d_bitmap.cpp; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				9A8ED56A1F204554007DB75C /* libaura.dylib */,
-				9A8ED56C1F204554007DB75C /* libios_aura.dylib */,
+				9A8ED56C1F204554007DB75C /* libios_aura.a */,
 				9A8ED56E1F204554007DB75C /* aura_iosTests.xctest */,
 			);
 			name = Products;
@@ -444,7 +444,7 @@
 			remoteRef = 9A8ED5691F204554007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A8ED56C1F204554007DB75C /* libios_aura.dylib */ = {
+		9A8ED56C1F204554007DB75C /* libios_aura.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
 			path = libios_aura.a;
