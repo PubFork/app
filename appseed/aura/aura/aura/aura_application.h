@@ -107,7 +107,8 @@ namespace aura
          bool                                            m_bAuraInitialize;
          bool                                            m_bAuraInitializeResult;
 
-
+         string                                          m_strHttpUserAgentToken;
+         string                                          m_strHttpUserAgentVersion;
          mutex                                           m_mutexFrame;
          ::user::interaction_spa *                       m_puiptraFrame;
 

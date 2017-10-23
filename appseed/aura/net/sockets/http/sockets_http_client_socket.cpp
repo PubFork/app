@@ -552,7 +552,29 @@ namespace sockets
 
    string http_client_socket::MyUseragent()
    {
+      
+      string strAddUp;
 
+      if (Application.m_strHttpUserAgentToken.has_char() && Application.m_strHttpUserAgentVersion.has_char())
+      {
+
+         strAddUp = Application.m_strHttpUserAgentToken + "/" + Application.m_strHttpUserAgentVersion;
+
+      }
+      else
+      {
+
+         strAddUp = "ca2/1.0";
+
+      }
+
+#ifdef WINDOWS
+      return "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#elif defined(MACOS)
+      return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#else
+      throw todo(get_app());
+#endif
       string str;
 
       string strSockets = "ca2-sockets/0.1";

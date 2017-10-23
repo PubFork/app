@@ -22,6 +22,9 @@ namespace http
    property_set & application::process_set(property_set & set, const char * pszUrl)
    {
 
+      set["app"] = get_app();
+
+
       if(Application.is_serviceable())
          return set;
 
@@ -63,7 +66,6 @@ namespace http
       {
          set["user"] = get_app()->m_paurasession->fontopus()->get_user(true,pszUrl);
       }
-      set["app"] = get_app();
 
       return set;
 

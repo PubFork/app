@@ -1326,7 +1326,8 @@ retry:
       string strServer = System.url().get_root(pszUrl);
       string strProtocol = System.url().get_protocol(pszUrl);
       string strObject = System.url().get_object(pszUrl);
-      sp(::aura::application) papp = set["app"].cast < application >();
+      sp(::aura::application) papp = set["app"].cast < ::aura::application >();
+      sp(::aura::application) pappAgent = papp;
       int32_t iPort;
       if(strProtocol == "https")
       {
@@ -1522,6 +1523,14 @@ retry_session:
       }
 
       //psocket->m_output_length = 1; // at least one to trigger write and in case it is not set (in case of reuse currently);
+
+      if (pappAgent.is_set())
+      {
+         
+         psocket->set_app(pappAgent);
+
+      }
+
 
       psocket->m_bEnablePool = handler.PoolEnabled();
 

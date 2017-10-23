@@ -92,6 +92,10 @@ namespace aura
       m_mutexStr(this)
    {
 
+
+      m_strHttpUserAgentToken = "ca2";
+      m_strHttpUserAgentVersion = "1.0";
+
       m_http.set_app(this);
 
       m_eexclusiveinstance = ExclusiveInstanceNone;
