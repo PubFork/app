@@ -17,8 +17,6 @@
 //#include "serial/serial.h"
 
 using serial::PortInfo;
-using std::string;
-using std::vector;
 
 #define HARDWARE_ID_STRING_LENGTH 128
 
@@ -209,10 +207,10 @@ string rtrim(const string& str)
     return result;
 }
 
-vector<PortInfo>
+array<PortInfo>
 serial::list_ports(void)
 {
-    vector<PortInfo> devices_found;
+    array<PortInfo> devices_found;
     CFMutableDictionaryRef classes_to_match;
     io_iterator_t serial_port_iterator;
     io_object_t serial_port;

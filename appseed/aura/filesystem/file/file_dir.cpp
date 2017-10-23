@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include <Shlobj.h>
 #if defined(APPLEOS)
 #include <sys/stat.h>
@@ -787,6 +787,13 @@ bool dir::mk(const ::file::path & path)
    {
 
       strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
+      
+      if(iPos == 0)
+      {
+       
+         iPos = path.find(::file::path_sep(::file::path_file), 1);
+         
+      }
 
       if(iPos < 0)
       {
