@@ -1,4 +1,4 @@
-#if defined(_WIN32)
+#include "framework.h"
 
 /*
  * Copyright (c) 2014 Craig Lilley <cralilley@gmail.com>
@@ -7,35 +7,28 @@
  * http://opensource.org/licenses/MIT
  */
 
-#include "serial/serial.h"
 #include <tchar.h>
-#include <windows.h>
 #include <setupapi.h>
 #include <initguid.h>
 #include <devguid.h>
 #include <cstring>
 
 using serial::PortInfo;
-using std::vector;
-using std::string;
 
 static const DWORD port_name_max_length = 256;
 static const DWORD friendly_name_max_length = 256;
 static const DWORD hardware_id_max_length = 256;
 
 // Convert a wide Unicode string to an UTF8 string
-std::string utf8_encode(const std::wstring &wstr)
+string utf8_encode(const wstring &wstr)
 {
-	int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
-	std::string strTo( size_needed, 0 );
-	WideCharToMultiByte                  (CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
-	return strTo;
+	return wstr;
 }
 
-vector<PortInfo>
+array <PortInfo>
 serial::list_ports()
 {
-	vector<PortInfo> devices_found;
+	array<PortInfo> devices_found;
 
 	HDEVINFO device_info_set = SetupDiGetClassDevs(
 		(const GUID *) &GUID_DEVCLASS_PORTS,
@@ -127,13 +120,13 @@ serial::list_ports()
 			hardware_id[0] = '\0';
 
 		#ifdef UNICODE
-			std::string portName = utf8_encode(port_name);
-			std::string friendlyName = utf8_encode(friendly_name);
-			std::string hardwareId = utf8_encode(hardware_id);
+			string portName = utf8_encode(port_name);
+			string friendlyName = utf8_encode(friendly_name);
+			string hardwareId = utf8_encode(hardware_id);
 		#else
-			std::string portName = port_name;
-			std::string friendlyName = friendly_name;
-			std::string hardwareId = hardware_id;
+			string portName = port_name;
+			string friendlyName = friendly_name;
+			string hardwareId = hardware_id;
 		#endif
 
 		PortInfo port_entry;
@@ -149,4 +142,3 @@ serial::list_ports()
 	return devices_found;
 }
 
-#endif // #if defined(_WIN32)

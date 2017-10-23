@@ -793,8 +793,7 @@ namespace serial
     *
     * \return vector of serial::PortInfo.
     */
-   array<PortInfo>
-   list_ports();
+   CLASS_DECL_AURA array<PortInfo>  list_ports();
 
 } // namespace serial
 
