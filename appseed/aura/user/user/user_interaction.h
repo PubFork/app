@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "user_interaction_base.h"
@@ -725,8 +725,6 @@ namespace user
          template < class T >
          T * GetTypedParent() const
          {
-
-            ::user::interaction * pthis = (::user::interaction *)this;
 
             ASSERT_VALID(pthis);
 

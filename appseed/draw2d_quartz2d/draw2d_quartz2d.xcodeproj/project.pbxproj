@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -64,9 +64,10 @@
 		9AA1007F19971AF5004F84BD /* cgcontextcreate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA1007E19971AF5004F84BD /* cgcontextcreate.h */; };
 		9AA1B44A176361950019E812 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA1B449176361950019E812 /* Cocoa.framework */; };
 		9AA2192B1DC6B04B00C06987 /* draw2d_mm_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AA2192A1DC6B04B00C06987 /* draw2d_mm_ios.mm */; };
-		9ACE46D71D1FE41100A1E0AD /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE46D61D1FE41100A1E0AD /* libaura.dylib */; };
 		9AE24E231904CF99001AEFFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AE24E211904CF99001AEFFB /* InfoPlist.strings */; };
 		9AEAFBD21DC1B4B00035AD42 /* draw2d_mm_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AEAFBD11DC1B4B00035AD42 /* draw2d_mm_mac.mm */; };
+		9AF8E7721F9FE13D003CBDB4 /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8ED56A1F204554007DB75C /* libaura.dylib */; };
+		9AF8E79B1F9FE721003CBDB4 /* libaura.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7991F9FE721003CBDB4 /* libaura.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,19 +138,10 @@
 		9A6B40E317BBE291008391AD /* draw2d_quartz2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = draw2d_quartz2d.h; sourceTree = "<group>"; };
 		9A8997BC177D0E7D00C7761E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		9A8ED5631F204554007DB75C /* aura.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = aura.xcodeproj; path = ../aura/aura.xcodeproj; sourceTree = "<group>"; };
-		9A986CEC1D226640001F4C04 /* libios_axis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_axis.dylib; path = "../axis/build/Debug-iphoneos/libios_axis.dylib"; sourceTree = "<group>"; };
-		9A986CEE1D226650001F4C04 /* libios_aura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libios_aura.dylib; path = "../aura/build/Debug-iphoneos/libios_aura.dylib"; sourceTree = "<group>"; };
 		9AA1007E19971AF5004F84BD /* cgcontextcreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgcontextcreate.h; sourceTree = "<group>"; };
 		9AA1B449176361950019E812 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9AA2192A1DC6B04B00C06987 /* draw2d_mm_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = draw2d_mm_ios.mm; sourceTree = "<group>"; };
 		9AA2192D1DC6B1A300C06987 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		9AC62E6B1D20BF4B00A4AC0A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		9AC62E6E1D20BF5E00A4AC0A /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/basic-ios-bmuegusfgbffmoeixicbxhlnbzop/Build/Products/Debug-iphonesimulator/libaura.dylib"; sourceTree = "<group>"; };
-		9AC62E701D20BF7300A4AC0A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
-		9AC62E721D20BF8600A4AC0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		9AC62E741D20BF9B00A4AC0A /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = ../axis/build/Debug/libaxis.dylib; sourceTree = "<group>"; };
-		9ACE46D31D1FE40A00A1E0AD /* libaxis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxis.dylib; path = ../axis/build/Debug/libaxis.dylib; sourceTree = "<group>"; };
-		9ACE46D61D1FE41100A1E0AD /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-mac-ekqwiewkpeyhdudtxguywfqohhby/Build/Products/Debug/libaura.dylib"; sourceTree = "<group>"; };
 		9AE24E151904CF99001AEFFB /* draw2d_quartz2d_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = draw2d_quartz2d_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE24E201904CF99001AEFFB /* draw2d_quartz2d_iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "draw2d_quartz2d_iosTests-Info.plist"; sourceTree = "<group>"; };
 		9AE24E221904CF99001AEFFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -158,6 +150,7 @@
 		9AF4C4311F83D76600197385 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		9AF4C4331F83D79200197385 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		9AF4C4351F83D7B400197385 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		9AF8E7991F9FE721003CBDB4 /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaura.dylib; sourceTree = "<group>"; };
 		A1CFD778154F5EAA007447E2 /* libdraw2d_quartz2d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libdraw2d_quartz2d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -180,9 +173,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ACE46D71D1FE41100A1E0AD /* libaura.dylib in Frameworks */,
+				9AF8E7721F9FE13D003CBDB4 /* libaura.dylib in Frameworks */,
 				9AA1B44A176361950019E812 /* Cocoa.framework in Frameworks */,
 				9A8997BD177D0E7F00C7761E /* Carbon.framework in Frameworks */,
+				9AF8E79B1F9FE721003CBDB4 /* libaura.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +196,7 @@
 		9AA2192C1DC6B1A300C06987 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AF8E7991F9FE721003CBDB4 /* libaura.dylib */,
 				9AF4C4351F83D7B400197385 /* UIKit.framework */,
 				9AF4C4331F83D79200197385 /* CoreFoundation.framework */,
 				9AF4C4311F83D76600197385 /* CoreText.framework */,
@@ -232,17 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				9A8ED5631F204554007DB75C /* aura.xcodeproj */,
-				9AC62E721D20BF8600A4AC0A /* CoreGraphics.framework */,
-				9AC62E701D20BF7300A4AC0A /* CoreText.framework */,
-				9AC62E6B1D20BF4B00A4AC0A /* CoreFoundation.framework */,
 				9A8997BC177D0E7D00C7761E /* Carbon.framework */,
 				9AA1B449176361950019E812 /* Cocoa.framework */,
-				9A986CEE1D226650001F4C04 /* libios_aura.dylib */,
-				9A986CEC1D226640001F4C04 /* libios_axis.dylib */,
-				9AC62E741D20BF9B00A4AC0A /* libaxis.dylib */,
-				9AC62E6E1D20BF5E00A4AC0A /* libaura.dylib */,
-				9ACE46D61D1FE41100A1E0AD /* libaura.dylib */,
-				9ACE46D31D1FE40A00A1E0AD /* libaxis.dylib */,
 				A1CFD896154FB715007447E2 /* draw2d_quartz2d */,
 				9AE24E1E1904CF99001AEFFB /* draw2d_quartz2d_iosTests */,
 				A1CFD779154F5EAA007447E2 /* Products */,
@@ -412,7 +398,7 @@
 				};
 			};
 			buildConfigurationList = A1CFD772154F5EA7007447E2 /* Build configuration list for PBXProject "draw2d_quartz2d" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -685,10 +671,6 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(TARGET_BUILD_DIR)",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -749,10 +731,6 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(TARGET_BUILD_DIR)",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

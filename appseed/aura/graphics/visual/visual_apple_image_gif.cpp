@@ -1088,13 +1088,15 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 //   if (!defer_co_initialize_ex(false))
   //    return false;
    
-   file_size_t iSize = pfile->get_length();
    
-   memory mem(papp);
    
-   mem.allocate((memory_size_t)iSize);
-   
-   pfile->read(mem.get_data(), (memory_size_t)iSize);
+//   file_size_t iSize = pfile->get_length();
+//   
+//   memory mem(papp);
+//   
+//   mem.allocate((memory_size_t)iSize);
+//   
+//   pfile->read(mem.get_data(), (memory_size_t)iSize);
    
 //   try
 //   {

@@ -200,20 +200,7 @@ namespace macos
          return true;
 
 
-      string strPath(lpcszPath);
-      if(strPath.get_length() >= MAX_PATH)
-      {
-         if(::str::begins(strPath, "\\\\"))
-         {
-            strPath = "\\\\?\\UNC" + strPath.Mid(1);
-         }
-         else
-         {
-            strPath = "\\\\?\\" + strPath;
-         }
-      }
-
-      bIsDir = ::dir::is(strPath);
+      bIsDir = ::dir::is(lpcszPath);
 
       m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
@@ -372,7 +359,7 @@ namespace macos
                {
                   
                   string str;
-                  str = "\\\\?\\" + stra[i];
+                  str = stra[i];
                   str.trim_right("\\/");
                   try
                   {
@@ -391,7 +378,7 @@ namespace macos
                   {
                   }
                   //if(::CreateDirectory(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                  if(::dir::mk("\\\\?\\" + stra[i]))
+                  if(::dir::mkdir(stra[i]))
                   {
                      m_isdirmap.set(stra[i], true, 0);
                      goto try1;

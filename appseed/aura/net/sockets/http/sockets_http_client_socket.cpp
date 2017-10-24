@@ -575,54 +575,54 @@ namespace sockets
 #else
       throw todo(get_app());
 #endif
-      string str;
-
-      string strSockets = "ca2-sockets/0.1";
-
-      string strOpSys = op_sys();
-
-      if (Application.m_strAppName.has_char())
-      {
-
-         str += Application.m_strAppName;
-
-         str += " (";
-
-         if (strOpSys.has_char())
-         {
-
-            str += strOpSys;
-
-            str += ";";
-
-         }
-
-         str += strSockets;
-
-         str += ";)";
-
-      }
-      else
-      {
-
-         str += strSockets;
-
-         str += " (";
-
-         if (strOpSys.has_char())
-         {
-
-            str += strOpSys;
-
-            str += ";";
-
-         }
-
-         str += ")";
-
-      }
-
-      return str;
+//      string str;
+//
+//      string strSockets = "ca2-sockets/0.1";
+//
+//      string strOpSys = op_sys();
+//
+//      if (Application.m_strAppName.has_char())
+//      {
+//
+//         str += Application.m_strAppName;
+//
+//         str += " (";
+//
+//         if (strOpSys.has_char())
+//         {
+//
+//            str += strOpSys;
+//
+//            str += ";";
+//
+//         }
+//
+//         str += strSockets;
+//
+//         str += ";)";
+//
+//      }
+//      else
+//      {
+//
+//         str += strSockets;
+//
+//         str += " (";
+//
+//         if (strOpSys.has_char())
+//         {
+//
+//            str += strOpSys;
+//
+//            str += ";";
+//
+//         }
+//
+//         str += ")";
+//
+//      }
+//
+//      return str;
 
    }
 

@@ -2393,9 +2393,35 @@
 		9AF4C42B1F83702B00197385 /* aura_timer_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C3011F836F8200197385 /* aura_timer_item.cpp */; };
 		9AF4C42C1F83702B00197385 /* aura_trace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C3031F836F8200197385 /* aura_trace.cpp */; };
 		9AF885B519D42E2400A3117D /* exception_throw.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF885B319D42E2400A3117D /* exception_throw.h */; };
+		9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E78E1F9FE6EC003CBDB4 /* libace.dylib */; };
+		9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7901F9FE70B003CBDB4 /* libaxiswinpr.dylib */; };
+		9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */; };
+		9AF8E7971F9FE70D003CBDB4 /* libaxisopenssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7931F9FE70C003CBDB4 /* libaxisopenssl.dylib */; };
+		9AF8E7981F9FE70D003CBDB4 /* libaxiscrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF8E7941F9FE70C003CBDB4 /* libaxiscrypto.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9A1232311F9E933500BBECF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9AA5E6D616F7C61B005C45CE;
+			remoteInfo = axisidn;
+		};
+		9A1232331F9E933500BBECF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 077A00AB1B4D4F9E001C85FF;
+			remoteInfo = ios_axisidn;
+		};
+		9A1232371F9E934800BBECF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
+			remoteInfo = axisidn;
+		};
 		9A2116D31D8329D2000C4336 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A26A6F31D7F0166001F47A8 /* aurapcre.xcodeproj */;
@@ -2888,6 +2914,7 @@
 		9A0974831F223E5000CFA833 /* apple_ns_exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_ns_exception.cpp; sourceTree = "<group>"; };
 		9A0974841F223E5000CFA833 /* apple_ns_exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple_ns_exception.h; sourceTree = "<group>"; };
 		9A0974891F22403B00CFA833 /* apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple.h; sourceTree = "<group>"; };
+		9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisidn.xcodeproj; path = ../../../third/appseed/idn/axisidn.xcodeproj; sourceTree = "<group>"; };
 		9A163DD119C4A4CD00966C5E /* aura_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_c.h; sourceTree = "<group>"; };
 		9A163DD219C4A4CD00966C5E /* aura_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_cpp.h; sourceTree = "<group>"; };
 		9A163DD319C4A4CD00966C5E /* aura_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_policy.h; sourceTree = "<group>"; };
@@ -3197,7 +3224,7 @@
 		9A640E661EA6BC5800866C2C /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
 		9A640E681EA6BC5800866C2C /* crypto_crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto_crypto.h; sourceTree = "<group>"; };
 		9A640E791EA6C2B900866C2C /* user_interactive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_interactive.cpp; sourceTree = "<group>"; };
-		9A640E7B1EA6C3D800866C2C /* libaxisidn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxisidn.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/mac-core-ahzhhtvfpdnspleyodjmxkejrnxq/Build/Products/Debug/libaxisidn.dylib"; sourceTree = "<group>"; };
+		9A640E7B1EA6C3D800866C2C /* libaxisidn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libaxisidn.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A67166C1D1553BF0069A961 /* ace.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ace.xcodeproj; path = ../ace/ace.xcodeproj; sourceTree = "<group>"; };
 		9A6FAB1A1F5C6F1300AF31B2 /* compress_department.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress_department.cpp; sourceTree = "<group>"; };
 		9A6FAB1C1F5C704C00AF31B2 /* zip_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zip_api.cpp; sourceTree = "<group>"; };
@@ -4057,7 +4084,6 @@
 		9AD1863F1F9C30F0001CEA8E /* visual_apple_image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = visual_apple_image.cpp; sourceTree = "<group>"; };
 		9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = visual_apple_image_gif.cpp; sourceTree = "<group>"; };
 		9AD186851F9C3F30001CEA8E /* _user.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _user.cpp; sourceTree = "<group>"; };
-		9AD480B81D5A78B200354801 /* lib_ace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib_ace.a; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-osx-dyhrstllhpqabhamryoxyuxzxxbr/Build/Products/Debug/lib_ace.a"; sourceTree = "<group>"; };
 		9ADD53DF1F20E1B70008AA41 /* zip_algorithm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zip_algorithm.txt; sourceTree = "<group>"; };
 		9ADD53E01F20E1B70008AA41 /* zip_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip_api.h; sourceTree = "<group>"; };
 		9ADD53E11F20E1B70008AA41 /* zip_crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip_crypt.h; sourceTree = "<group>"; };
@@ -4378,6 +4404,12 @@
 		9AF4C30C1F836F8200197385 /* os_alloc_no_bounds_check.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = os_alloc_no_bounds_check.cpp; sourceTree = "<group>"; };
 		9AF4C30D1F836F8200197385 /* os_alloc_WindowsHeapAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = os_alloc_WindowsHeapAlloc.cpp; sourceTree = "<group>"; };
 		9AF885B319D42E2400A3117D /* exception_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exception_throw.h; sourceTree = "<group>"; };
+		9AF8E78E1F9FE6EC003CBDB4 /* libace.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libace.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libace.dylib; sourceTree = "<group>"; };
+		9AF8E7901F9FE70B003CBDB4 /* libaxiswinpr.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxiswinpr.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaxiswinpr.dylib; sourceTree = "<group>"; };
+		9AF8E7911F9FE70C003CBDB4 /* libaxisidn.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libaxisidn.dylib.dSYM; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaxisidn.dylib.dSYM; sourceTree = "<group>"; };
+		9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaurapcre.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaurapcre.dylib; sourceTree = "<group>"; };
+		9AF8E7931F9FE70C003CBDB4 /* libaxisopenssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxisopenssl.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaxisopenssl.dylib; sourceTree = "<group>"; };
+		9AF8E7941F9FE70C003CBDB4 /* libaxiscrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaxiscrypto.dylib; path = ../../../../Volumes/apple/archive/Xcode/DerivedData/Build/Products/Release/libaxiscrypto.dylib; sourceTree = "<group>"; };
 		9AFDDE3C1F9C08BD00D2F2F4 /* macos_oswindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macos_oswindow.h; sourceTree = "<group>"; };
 		9AFDDE401F9C090800D2F2F4 /* macos_user.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macos_user.h; sourceTree = "<group>"; };
 		CE931714155F1599005F90F6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = ../../../../System/Library/Frameworks/Carbon.framework; sourceTree = "<group>"; };
@@ -4404,11 +4436,16 @@
 				9A0254F41EA59363003C82CF /* libbz2.tbd in Frameworks */,
 				9A0254F21EA5934D003C82CF /* libz.tbd in Frameworks */,
 				9A9799151DAC3C2B001CD6D9 /* libiconv.tbd in Frameworks */,
+				9AF8E7961F9FE70D003CBDB4 /* libaurapcre.dylib in Frameworks */,
 				9A26A6FC1D7F01A5001F47A8 /* libaurapcre.dylib in Frameworks */,
 				9ACE46FF1D1FE56000A1E0AD /* libace.dylib in Frameworks */,
 				9A98A6081771D67E000AE16E /* AppKit.framework in Frameworks */,
+				9AF8E7971F9FE70D003CBDB4 /* libaxisopenssl.dylib in Frameworks */,
 				9A98A6091771D67E000AE16E /* Foundation.framework in Frameworks */,
 				9A98A60A1771D67E000AE16E /* Carbon.framework in Frameworks */,
+				9AF8E7951F9FE70D003CBDB4 /* libaxiswinpr.dylib in Frameworks */,
+				9AF8E78F1F9FE6ED003CBDB4 /* libace.dylib in Frameworks */,
+				9AF8E7981F9FE70D003CBDB4 /* libaxiscrypto.dylib in Frameworks */,
 				9A98A60B1771D67E000AE16E /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5371,6 +5408,15 @@
 				9A0255CF1EA593AB003C82CF /* sockets_http_tunnel.h */,
 			);
 			path = http;
+			sourceTree = "<group>";
+		};
+		9A12322B1F9E933400BBECF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A1232321F9E933500BBECF8 /* libaxisidn.dylib */,
+				9A1232341F9E933500BBECF8 /* libios_axisidn.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		9A163D3019C4A4CC00966C5E /* aura */ = {
@@ -6426,6 +6472,12 @@
 		9A9799131DAC3C2B001CD6D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AF8E7921F9FE70C003CBDB4 /* libaurapcre.dylib */,
+				9AF8E7941F9FE70C003CBDB4 /* libaxiscrypto.dylib */,
+				9AF8E7911F9FE70C003CBDB4 /* libaxisidn.dylib.dSYM */,
+				9AF8E7931F9FE70C003CBDB4 /* libaxisopenssl.dylib */,
+				9AF8E7901F9FE70B003CBDB4 /* libaxiswinpr.dylib */,
+				9AF8E78E1F9FE6EC003CBDB4 /* libace.dylib */,
 				9AD185BF1F9C2001001CEA8E /* Carbon.framework */,
 				9AD185BB1F9C1F5C001CEA8E /* IOKit.framework */,
 				9AF4BEBD1F832C8900197385 /* libdraw2d_quartz2d.a */,
@@ -6919,9 +6971,9 @@
 				9A640E3E1EA6BBC400866C2C /* axiscrypto.xcodeproj */,
 				9A640E321EA6BBB900866C2C /* axisopenssl.xcodeproj */,
 				9AD185C01F9C214C001CEA8E /* axiswinpr.xcodeproj */,
-				9AD480B81D5A78B200354801 /* lib_ace.a */,
 				9A67166C1D1553BF0069A961 /* ace.xcodeproj */,
 				9A26A6F31D7F0166001F47A8 /* aurapcre.xcodeproj */,
+				9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */,
 				07BD556C16210BD4008E31F0 /* AppKit.framework */,
 				077A02701B4D60B7001C85FF /* Foundation.framework */,
 				CE931714155F1599005F90F6 /* Carbon.framework */,
@@ -8186,11 +8238,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A6716CA1D159C9B0069A961 /* PBXTargetDependency */,
+				9A26A6FE1D7F01B6001F47A8 /* PBXTargetDependency */,
+				9A1232381F9E934800BBECF8 /* PBXTargetDependency */,
 				9AD185CA1F9C215D001CEA8E /* PBXTargetDependency */,
 				9A640E4B1EA6BBEC00866C2C /* PBXTargetDependency */,
 				9A640E4D1EA6BBEC00866C2C /* PBXTargetDependency */,
-				9A26A6FE1D7F01B6001F47A8 /* PBXTargetDependency */,
-				9A6716CA1D159C9B0069A961 /* PBXTargetDependency */,
 			);
 			name = aura;
 			productName = c;
@@ -8252,6 +8305,10 @@
 					ProjectRef = 9A640E3E1EA6BBC400866C2C /* axiscrypto.xcodeproj */;
 				},
 				{
+					ProductGroup = 9A12322B1F9E933400BBECF8 /* Products */;
+					ProjectRef = 9A12322A1F9E933400BBECF8 /* axisidn.xcodeproj */;
+				},
+				{
 					ProductGroup = 9A640E331EA6BBB900866C2C /* Products */;
 					ProjectRef = 9A640E321EA6BBB900866C2C /* axisopenssl.xcodeproj */;
 				},
@@ -8270,6 +8327,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		9A1232321F9E933500BBECF8 /* libaxisidn.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libaxisidn.dylib;
+			remoteRef = 9A1232311F9E933500BBECF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9A1232341F9E933500BBECF8 /* libios_axisidn.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libios_axisidn.a;
+			remoteRef = 9A1232331F9E933500BBECF8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		9A26A6F91D7F0166001F47A8 /* libaurapcre.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -8286,7 +8357,7 @@
 		};
 		9A640E391EA6BBB900866C2C /* libaxisopenssl.dylib */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
+			fileType = "compiled.mach-o.dylib";
 			path = libaxisopenssl.dylib;
 			remoteRef = 9A640E381EA6BBB900866C2C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -8307,7 +8378,7 @@
 		};
 		9A640E451EA6BBC400866C2C /* libaxiscrypto.dylib */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
+			fileType = "compiled.mach-o.dylib";
 			path = libaxiscrypto.dylib;
 			remoteRef = 9A640E441EA6BBC400866C2C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -9579,6 +9650,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9A1232381F9E934800BBECF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = axisidn;
+			targetProxy = 9A1232371F9E934800BBECF8 /* PBXContainerItemProxy */;
+		};
 		9A2116D41D8329D2000C4336 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ios_aurapcre;
@@ -9659,7 +9735,9 @@
 		9A98A6131771D67E000AE16E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_OS_IMAGE_LOADER,
 					_DEBUG,
@@ -9670,7 +9748,9 @@
 		9A98A6141771D67E000AE16E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
 			};
 			name = Release;
 		};
@@ -9783,7 +9863,6 @@
 				ENABLE_TESTABILITY = YES;
 				EXECUTABLE_EXTENSION = dylib;
 				EXECUTABLE_PREFIX = lib;
-				FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -9805,11 +9884,7 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(TARGET_BUILD_DIR)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -9859,7 +9934,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_EXTENSION = dylib;
 				EXECUTABLE_PREFIX = lib;
-				FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/Frameworks";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -9879,11 +9953,7 @@
 				INSTALL_PATH = "@executable_path";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(TARGET_BUILD_DIR)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
