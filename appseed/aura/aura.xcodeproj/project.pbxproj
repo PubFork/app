@@ -842,6 +842,7 @@
 		9A2A53D21F1FEE49001AB0F8 /* install_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53951F1FEE49001AB0F8 /* install_window.h */; };
 		9A2A53D31F1FEE49001AB0F8 /* install_windows_boot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */; };
 		9A2A53D51F1FEE49001AB0F8 /* install_windows_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */; };
+		9A2F5F701FA0F6DE006CA37F /* visual_apple_image_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F6F1FA0F6DE006CA37F /* visual_apple_image_mm.mm */; };
 		9A33276B1D4C50EB00255105 /* file_path.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A33276A1D4C50EB00255105 /* file_path.h */; };
 		9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A33A74D1EA901F5000EC109 /* CoreServices.framework */; };
 		9A34F5D21E15763000AE2607 /* mmos.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A34F5D01E15763000AE2607 /* mmos.h */; };
@@ -3128,6 +3129,7 @@
 		9A2A539E1F1FEE49001AB0F8 /* install_windows_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_service.cpp; sourceTree = "<group>"; };
 		9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_win.cpp; sourceTree = "<group>"; };
 		9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_timer.cpp; sourceTree = "<group>"; };
+		9A2F5F6F1FA0F6DE006CA37F /* visual_apple_image_mm.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = visual_apple_image_mm.mm; sourceTree = "<group>"; };
 		9A33276A1D4C50EB00255105 /* file_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_path.h; sourceTree = "<group>"; };
 		9A33A74D1EA901F5000EC109 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		9A34F5D01E15763000AE2607 /* mmos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmos.h; sourceTree = "<group>"; };
@@ -5998,6 +6000,7 @@
 		9A2A53211F1FEDFD001AB0F8 /* visual */ = {
 			isa = PBXGroup;
 			children = (
+				9A2F5F6F1FA0F6DE006CA37F /* visual_apple_image_mm.mm */,
 				9AD186411F9C3127001CEA8E /* visual_apple_image_gif.cpp */,
 				9AD1863F1F9C30F0001CEA8E /* visual_apple_image.cpp */,
 				9AD186391F9C3077001CEA8E /* visual_gdiplus_image_gif.cpp */,
@@ -9617,6 +9620,7 @@
 				9A6FB1CC1F5CA6D800AF31B2 /* str_tokenizer.cpp in Sources */,
 				9A6FABC51F5C70BE00AF31B2 /* exception_call_stack.cpp in Sources */,
 				9A6FAFCB1F5C796800AF31B2 /* multithreading_semaphore.cpp in Sources */,
+				9A2F5F701FA0F6DE006CA37F /* visual_apple_image_mm.mm in Sources */,
 				9A6FAF1A1F5C783900AF31B2 /* net_url_department.cpp in Sources */,
 				9A6FB0A41F5C7A9B00AF31B2 /* xml_base_array.cpp in Sources */,
 				9A6FAE1A1F5C771400AF31B2 /* str_base64.cpp in Sources */,

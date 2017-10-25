@@ -128,8 +128,8 @@ namespace user
       virtual void on_layout() override;
 
 
-      virtual void set_stock_icon(e_stock_icon eicon);
-      virtual e_stock_icon get_stock_icon();
+      virtual void set_stock_icon(e_stock_icon eicon) override;
+      virtual e_stock_icon get_stock_icon() override;
 
    };
 

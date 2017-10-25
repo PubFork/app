@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -162,8 +162,8 @@ namespace user
          virtual ::user::document * GetActiveDocument();
 
          // Active child ::user::impact maintenance
-         virtual ::user::impact * GetActiveView() const;           // active ::user::impact or NULL
-         virtual void SetActiveView(::user::impact * pViewNew, bool bNotify = TRUE);
+         virtual ::user::impact * GetActiveView() const override;           // active ::user::impact or NULL
+         virtual void SetActiveView(::user::impact * pViewNew, bool bNotify = TRUE) override;
          // active ::user::impact or NULL, bNotify == FALSE if focus should not be set
 
          // Active frame (for frames within frames -- MDI)
@@ -179,7 +179,7 @@ namespace user
 
          // Operations
          virtual void on_layout() override;
-         virtual void ActivateFrame(int32_t nCmdShow = -1);
+         virtual void ActivateFrame(int32_t nCmdShow = -1) override;
          virtual void InitialUpdateFrame(::user::document * pDoc, bool bMakeVisible);
          virtual void InitialFramePosition(bool bForceRestore = false);
          void set_title(const char * lpszTitle);
@@ -208,7 +208,7 @@ namespace user
          void OnUpdateControlBarMenu(::user::command* pCmdUI);
          bool OnBarCheck(UINT nID);
 
-         virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP);
+         virtual bool LoadToolBar(id idToolBar, const char * pszToolBar, uint32_t dwCtrlStyle = TBSTYLE_FLAT, uint32_t dwStyle = WS_CHILD | WS_VISIBLE | CBRS_ALIGN_TOP) override;
 
          virtual void _001OnCmdMsg(::user::command * pcommand) override;
          virtual void on_update_frame_title(bool bAddToTitle);

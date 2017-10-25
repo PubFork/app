@@ -428,7 +428,7 @@ namespace core
       //////////////////////////////////////////////////////////////////////////////////////////////////
       // System/System
       //
-      ::user::document * place_hold(::user::interaction * pui);
+      ::user::document * place_hold(::user::interaction * pui)  override;
 
       /*
       virtual ::count get_monitor_count();

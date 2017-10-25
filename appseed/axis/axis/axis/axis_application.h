@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace axis
@@ -230,9 +230,9 @@ namespace axis
          virtual sp(::aura::printer) get_printer(const char * pszDeviceName);
 
 
-         virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
+         virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon) override;
 
-         virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
+         virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const override;
 
          virtual void on_service_request(::create * pcreate) override;
 

@@ -51,7 +51,7 @@ bool font_department::Initialize()
       return false;
 
    ::draw2d::graphics_sp spgraphics(allocer());
-
+   
    spgraphics->CreateCompatibleDC(NULL);
 
    m_fontMenu->create_point_font(FONTFACENAME_MENU, 9);

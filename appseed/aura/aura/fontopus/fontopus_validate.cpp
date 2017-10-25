@@ -246,7 +246,7 @@ namespace fontopus
       {
 
          ::aura::del(m_puser);
-
+         
          if(strResult == "cancel")
          {
 

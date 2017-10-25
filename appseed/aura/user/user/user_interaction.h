@@ -726,7 +726,7 @@ namespace user
          T * GetTypedParent() const
          {
 
-            ASSERT_VALID(pthis);
+            ASSERT_VALID(this);
 
             ::user::interaction * pParentWnd = GetParent();  // start with one parent up
             while(pParentWnd != NULL)

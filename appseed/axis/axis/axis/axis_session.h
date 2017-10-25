@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace userpresence
@@ -169,7 +169,7 @@ namespace axis
          virtual string fontopus_get_user_sessid(const string & str) override;
 
 
-         virtual void translate_os_key_message(::user::key * pkey);
+         virtual void translate_os_key_message(::user::key * pkey) override;
 
          //virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText);
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 //include "aura/user/colorertake5/colorertake5.h"
 
@@ -4738,8 +4738,8 @@ finished_update:
          sp(::user::document) pdoc = pview->get_document();
          if (type == NULL)
          {
-            string textStart;
-            strsize totalLength = 0;
+            //string textStart;
+            //strsize totalLength = 0;
             //for (int32_t i = 0; i < 4 && i < m_plines->getLineCount(); i++)
             //{
             //   string iLine = m_plines->getLine(i);

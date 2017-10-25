@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 namespace filemanager
 {
@@ -178,8 +178,8 @@ namespace user
          virtual void pre_close_frame(::user::frame_window * pframe);
 
 
-         virtual void dump(dump_context &) const;
-         virtual void assert_valid() const;
+         virtual void dump(dump_context &) const override;
+         virtual void assert_valid() const override;
 
          // implementation helpers
          virtual bool on_filemanager_open(::filemanager::manager * pmanager, var varFile);
@@ -196,7 +196,7 @@ namespace user
          virtual void on_idle();
          virtual void on_final_release();
 
-         virtual void _001OnCmdMsg(::user::command * pcommand);
+         virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
          friend class impact_system;
 
@@ -207,7 +207,7 @@ namespace user
          void on_file_send_mail();
          void on_update_file_send_mail(::user::command* pCmdUI);
 
-         virtual void on_request(::create * pcreate);
+         virtual void on_request(::create * pcreate) override;
 
          template < class DOCUMENT >
          DOCUMENT * get_typed_document()
@@ -258,7 +258,7 @@ namespace user
          }
 
 
-         virtual void OnBeforeNavigate2(::html::data * pdata,var & varFile,uint32_t nFlags,const char * lpszTargetFrameName,byte_array& baPostedData,const char * lpszHeaders,bool* pbCancel);
+         virtual void OnBeforeNavigate2(::html::data * pdata,var & varFile,uint32_t nFlags,const char * lpszTargetFrameName,byte_array& baPostedData,const char * lpszHeaders,bool* pbCancel) override;
 
          virtual void form_document_set_property_set(const property_set & set);
          virtual property_set * form_document_get_property_set();

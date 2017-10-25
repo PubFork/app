@@ -7,6 +7,11 @@
 
 #include "framework.h"
 
+
+void * get_png_image_data(unsigned long & size, CGImageRef image);
+void * get_jpeg_image_data(unsigned long & size, CGImageRef image);
+
+
 namespace visual
 {
    
@@ -14,7 +19,76 @@ namespace visual
    bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
    {
       
-      throw todo(m_p->get_app());
+      if(m_p == NULL)
+      {
+       
+         return NULL;
+         
+      }
+      
+      unsigned long size;
+      
+      void * p = NULL;
+      
+      CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+      
+      CGContextRef context = CGBitmapContextCreate(
+                                                   NULL,
+                                                   m_p->m_size.cx,
+                                                   m_p->m_size.cy, 8,
+                                                   m_p->m_iScan, colorspace, kCGImageAlphaPremultipliedLast);
+      
+      CGColorSpaceRelease(colorspace);
+      
+      if(context == NULL)
+      {
+       
+         return false;
+         
+         
+      }
+      
+      CGImageRef cgimage = CGBitmapContextCreateImage(context);
+      
+      if(psaveimage == NULL)
+      {
+         p = get_png_image_data(size, cgimage);
+      }
+      else
+      {
+         
+      switch (psaveimage->m_eformat)
+      {
+      case ::visual::image::format_png:
+         {
+            p = get_png_image_data(size, cgimage);
+         }
+            break;
+         case ::visual::image::format_jpeg:
+         {
+            p = get_jpeg_image_data(size, cgimage);
+         }
+            break;
+         default:
+         {
+            CGImageRelease(cgimage);
+            CGContextRelease(context);
+            return false;
+         }
+            
+      }
+      }
+      
+      CGImageRelease(cgimage);
+            CGContextRelease(context);
+      
+            pfile->write(p, size);
+            
+            free(p);
+         
+            return true;
+            
+            
 //      if (pfile.is_null())
 //      {
 //         
@@ -1076,10 +1150,48 @@ bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
 //
 //}
 
+
+void * get_dib(int & w, int & h, int & iScan, const void * pdata, unsigned long size);
+
 bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 {
    
-   throw todo(get_app());
+   memory m;
+   
+   Application.file().as_memory(pfile, m);
+   
+   int w = 0;
+   
+   int h = 0;
+   
+   int iScan = 0;
+   
+   COLORREF * pcolorref = (COLORREF *) get_dib(w, h, iScan, m.get_data(), m.get_size());
+   
+   if(pcolorref == NULL)
+   {
+    
+      return false;
+      
+   }
+   
+   try
+   {
+      
+      if(dib.create(w, h))
+      {
+      
+         ::draw2d::copy_colorref(w, h, dib.m_pcolorref, dib.m_iScan, pcolorref, iScan);
+         
+      }
+      
+   }
+   catch(...)
+   {
+      
+   }
+   
+   free(pcolorref);
    
    return false;
    
