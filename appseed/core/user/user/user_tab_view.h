@@ -73,7 +73,6 @@ namespace user
 
       DECL_GEN_SIGNAL(_001OnMenuMessage);
 
-      
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 

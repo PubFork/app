@@ -14,13 +14,10 @@ public:
 
    virtual void _001OnDraw(::draw2d::graphics * pgraphics);
 
-#ifdef DEBUG
    virtual void assert_valid() const;
-#ifndef _WIN32_WCE
    virtual void dump(dump_context & dumpcontext) const;
-#endif
-#endif
 
+   
    DECL_GEN_SIGNAL(_001OnSize);
    void on_layout();
 

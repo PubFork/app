@@ -33,10 +33,10 @@ namespace prompt
       DECL_GEN_SIGNAL(_001OnMenuMessage);
 
 
-   #ifdef DEBUG
+   
 	   virtual void assert_valid() const;
 	   virtual void dump(dump_context & dumpcontext) const;
-   #endif
+   
 
 	   DECL_GEN_SIGNAL(_001OnCreate);
 	   DECL_GEN_SIGNAL(_001OnSize);

@@ -51,7 +51,6 @@ namespace calculator
       return TRUE;
    }
 
-#ifdef DEBUG
    void frame::assert_valid() const
    {
       simple_frame_window::assert_valid();
@@ -63,8 +62,7 @@ namespace calculator
    }
 
 
-   #endif //DEBUG
-
+   
    void frame::OnTimer(UINT nIDEvent)
    {
       static float theta;

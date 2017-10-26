@@ -433,8 +433,11 @@ namespace axis
 
       }
 
+#ifdef DEBUG
 
       m_plog.release();
+      
+#endif
 
 //#ifdef METROWIN
 //

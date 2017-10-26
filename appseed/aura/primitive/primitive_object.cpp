@@ -131,11 +131,6 @@ int64_t object::release()
 
 }
 
-#ifdef DEBUG
-
-
-
-
 void object::assert_valid() const
 {
 
@@ -189,9 +184,6 @@ void __assert_valid_object(const object * pOb, const char * lpszFileName, int32_
    }*/
    pOb->assert_valid();
 }
-
-#endif
-
 
 
 void object::keep_alive()

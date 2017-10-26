@@ -11,6 +11,10 @@ public:
    virtual ~html_document();
 
    
+   virtual void assert_valid() const override;
+   virtual void dump(dump_context & dumpcontext) const override;
+
+
    virtual void OnBeforeNavigate2(::html::data * pdata, var & varFile, uint32_t nFlags, const char * lpszTargetFrameName, byte_array& baPostedData, const char * lpszHeaders, bool* pbCancel) override;
    
    virtual ::html::data * get_html_data();
@@ -28,10 +32,6 @@ public:
    virtual void form_document_set_view(::user::form * pview);
    virtual void form_document_set_callback(form_callback * pcallback);
 
-#ifdef DEBUG
-   virtual void assert_valid() const override;
-   virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
    bool on_open_document(var varFile) override;
 

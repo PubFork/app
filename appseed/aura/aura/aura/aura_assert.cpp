@@ -1,8 +1,6 @@
 #include "framework.h"
 #include <stdio.h>
 
-#ifdef DEBUG
-
 
 CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLineNumber);
 
@@ -76,5 +74,3 @@ CLASS_DECL_AURA int __cpp_assert_failed_line(const char * lpszFileName, int iLin
 }
 
 
-
-#endif

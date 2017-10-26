@@ -25,10 +25,10 @@ namespace calculator
       void ShowControlBars(bool bShow);
       
       
-   #ifdef DEBUG
+   
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
+   
 
       DECL_GEN_SIGNAL(_001OnCreate);
       void OnTimer(UINT nIDEvent);

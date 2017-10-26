@@ -1,15 +1,21 @@
 #pragma once
 
 
-#ifdef DEBUG
-
+//#include "aura/net/sockets/sockets_logger.h"
+namespace sockets
+{
+   class base_socket_handler;
+   class base_socket;
+   
+}
 
 namespace aura
 {
 
 
    class CLASS_DECL_AURA log :
-      virtual public object
+   //virtual public ::sockets::logger
+   virtual public ::object
    {
       public:
 
@@ -80,7 +86,8 @@ namespace aura
 
          //virtual void set_trace_category(uint32_t dwCategory, const char * pszName, uint32_t uiLevel);
 
-
+      virtual void sockets_log(::sockets::base_socket_handler * phandler, ::sockets::base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel = ::aura::log::level_warning);
+      //virtual void sockets_log(base_socket_handler *, base_socket *, const string & strUser, int32_t err, const string & strSystem, ::aura::log::e_level elevel = ::aura::log::level_warning);
 
    };
 
@@ -92,7 +99,4 @@ namespace aura
 
 
 inline ::aura::log::e_level ca_get_level_warning() { return ::aura::log::level_warning; }
-
-
-#endif
 

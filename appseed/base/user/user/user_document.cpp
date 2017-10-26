@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -102,6 +102,7 @@ namespace user
          ASSERT_VALID(pview);
       }
    }
+
 
 
    void document::on_create(::create * pcreate)
@@ -818,7 +819,7 @@ namespace user
 
       ASSERT_VALID(pframeParam);
 
-      UNUSED(pframeParam);   // unused in release builds
+      //UNUSED(pframeParam);   // unused in release builds
 
       ::count count = get_view_count();
 

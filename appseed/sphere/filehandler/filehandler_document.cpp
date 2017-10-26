@@ -42,7 +42,7 @@ namespace filehandler
 
 
 
-   #ifdef DEBUG
+
    void document::assert_valid() const
    {
       ::user::document::assert_valid();
@@ -52,7 +52,7 @@ namespace filehandler
    {
       ::user::document::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
 
 } // namespace filehandler

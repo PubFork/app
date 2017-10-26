@@ -1,9 +1,6 @@
 #pragma once
 
 
-#ifdef DEBUG
-
-
 class CLASS_DECL_AURA simple_log :
    virtual public object
 {
@@ -24,8 +21,5 @@ class CLASS_DECL_AURA simple_log :
 
 
 };
-
-
-#endif
 
 

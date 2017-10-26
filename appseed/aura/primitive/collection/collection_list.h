@@ -574,10 +574,8 @@ class list :
       virtual ~list();
 
 
-#ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
 
 
@@ -2065,28 +2063,39 @@ void list<TYPE, ARG_TYPE>::Serialize(CArchive& ar)
    }
 }*/
 
-#ifdef DEBUG
 
 template<class TYPE, class ARG_TYPE>
 void list<TYPE, ARG_TYPE>::dump(dump_context & dumpcontext) const
 {
+   
    object::dump(dumpcontext);
 
    dumpcontext << "with " << this->m_count << " elements";
+   
    if (dumpcontext.GetDepth() > 0)
    {
+      
       POSITION pos = this->get_head_position();
+      
       while (pos != NULL)
       {
+         
          TYPE temp[1];
+         
          temp[0] = ((list*)this)->get_next(pos);
+         
          dumpcontext << "\n";
-         dump_elements<TYPE>(dumpcontext, temp, 1);
+         
+         dump_elements < TYPE >(dumpcontext, temp, 1);
+         
       }
+      
    }
 
    dumpcontext << "\n";
+   
 }
+
 
 template<class TYPE, class ARG_TYPE>
 void list<TYPE, ARG_TYPE>::assert_valid() const
@@ -2107,7 +2116,6 @@ void list<TYPE, ARG_TYPE>::assert_valid() const
    }
 }
 
-#endif
 
 template<class TYPE, class ARG_TYPE>
 list < TYPE, ARG_TYPE > &

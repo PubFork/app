@@ -90,7 +90,7 @@ namespace filemanager
    }
 
 
-#ifdef DEBUG
+
    void file_list::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -100,7 +100,7 @@ namespace filemanager
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
 
    void file_list::on_update(::user::impact * pSender, LPARAM lHint, object* phint)

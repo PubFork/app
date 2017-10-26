@@ -32,9 +32,17 @@ namespace linux
 
 
       interaction_impl();
-      interaction_impl(sp(::aura::application) papp);
+      interaction_impl(::aura::application * papp);
+      virtual ~interaction_impl();
+
+
       virtual void construct(oswindow hwnd);
 
+
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+
+      
       virtual void on_delete(::object * poc);
 
       static_function const MESSAGE* PASCAL GetCurrentMessage();
@@ -612,11 +620,7 @@ namespace linux
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
 
-      // Implementation
-      virtual ~interaction_impl();
       virtual bool CheckAutoCenter();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 

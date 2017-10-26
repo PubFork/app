@@ -37,6 +37,10 @@ namespace macos
 
       virtual void construct(oswindow hwnd);
       
+
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+
       
       virtual void release_graphics_resources();
 
@@ -630,10 +634,6 @@ namespace macos
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
 
       virtual bool CheckAutoCenter() override;
-#ifdef DEBUG
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
-#endif
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                       HBRUSH hbrGray, COLORREF clrText);
 

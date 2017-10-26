@@ -409,8 +409,6 @@ inline void array < TYPE, ARG_TYPE, ALLOCATOR > ::copy(const array& src)
 
 
 
-#ifdef DEBUG
-
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 void array < TYPE, ARG_TYPE, ALLOCATOR > ::dump(dump_context & dumpcontext) const
 {
@@ -445,8 +443,6 @@ void array < TYPE, ARG_TYPE, ALLOCATOR > ::assert_valid() const
    }
 }
 
-
-#endif
 
 template < class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline typename array < TYPE, ARG_TYPE, ALLOCATOR > ::iterator array < TYPE, ARG_TYPE, ALLOCATOR > ::erase(iterator pos)

@@ -1,7 +1,5 @@
 #include "framework.h"
 
-#ifdef DEBUG
-
 
 #include <stdio.h>
 // #include <stdarg.h>
@@ -22,17 +20,29 @@ namespace aura
       object(papp),
       m_mutexTrace(papp)
    {
+      
+#if !ENABLE_TRACE
+      
+      m_bTrace = false;
+      
+#else
 
       ::file::path pathTrace = ::dir::appdata("system") / "trace.txt";
+      
+#ifdef DEBUG
 
       if (!file_exists_dup(pathTrace))
       {
 
-         ::file_put_contents_dup(pathTrace, "no");
+         ::file_put_contents_dup(pathTrace, "yes");
 
       }
+      
+#endif
 
       m_bTrace = ::is_debugger_attached() || ::file_is_true_dup(pathTrace);
+      
+#endif
 
       m_pmutex          = new mutex(papp);
       m_ptrace          = new ::aura::trace::trace(papp);
@@ -437,8 +447,24 @@ skip_further_possible_recursive_impossible_logging_in_file:
       va_start(ptr, pszFormat);
       trace_v(NULL, -1, dwCategory, nLevel, pszFormat, ptr);
       va_end(ptr);
-   }
+   
+      }
+      
+   void log::sockets_log(::sockets::base_socket_handler * phandler, ::sockets::base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel)
+   {
 
+      string strLevel = ::log_level_name(elevel);
+
+      if (sock)
+      {
+         trace("fd %d :: %s: %d %s (%s)\n", sock->GetSocket(), strUser.c_str(), iError, strSystem.c_str(), strLevel.c_str());
+      }
+      else
+      {
+         trace("%s: %d %s (%s)\n", strUser.c_str(), iError, strSystem.c_str(), strLevel.c_str());
+      }
+
+   }
 
 
    void log::print(const char * pszFormat, ...)
@@ -540,7 +566,5 @@ skip_further_possible_recursive_impossible_logging_in_file:
 
 } // namespace core
 
-
-#endif
 
 

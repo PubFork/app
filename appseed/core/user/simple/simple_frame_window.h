@@ -222,8 +222,11 @@ class CLASS_DECL_CORE simple_frame_window :
 
       virtual string get_window_default_matter() override;
 
+
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
+
+      
       void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
       void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
       virtual void on_simple_command(::message::simple_command * psimplecommand) override;

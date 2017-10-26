@@ -146,11 +146,11 @@ namespace user
       void CalcInsideRect(rect& rect, bool bHorz);
       virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle) override;
 
-   #ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
       void EnableDocking(uint32_t dwDockStyle);
-   #endif
+
+
       virtual void on_command_probe(::user::frame_window * ptarget, bool bDisableIfNoHndler) override;
 
 

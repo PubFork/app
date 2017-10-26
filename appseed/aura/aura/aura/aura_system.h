@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -100,11 +100,9 @@ namespace aura
          stridsp(type)                                m_typemap;
          spa(service_base)                            m_serviceptra;
          sp(base_factory)                             m_pfactory;
-         sp(class ::xml::department)                 m_pxml;
+         sp(class ::xml::department)                  m_pxml;
          const id_pool                                m_cidpool;
-#ifdef DEBUG
          sp(class ::aura::log)                        m_plog;
-#endif
          sp(math::math)                               m_pmath;
          sp(geometry::geometry)                       m_pgeometry;
 
@@ -246,11 +244,7 @@ namespace aura
 
          ::xml::department                            &  xml();
          class ::str::base64                          &  base64();
-#ifdef DEBUG
-
          class ::aura::log                            &  log();
-#endif
-
          class ::machine_event_central                &  machine_event_central();
 
          geometry::geometry                           &  geometry()
@@ -373,14 +367,13 @@ namespace aura
          inline class id id(const var & var);
          inline class id id(const property & prop);
 
-#ifdef DEBUG
 
          virtual int32_t _001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args);
          virtual int32_t _debug_logging_report(int32_t iReportType, const char * pszFilename, int32_t iLinenumber, const char * iModuleName, const char * pszFormat, va_list list);
          virtual bool assert_failed_line(const char * lpszFileName,int32_t iLine);
          virtual bool on_assert_failed_line(const char * pszFileName,int32_t iLine);
-#endif
 
+      
          void set_enum_name(sp(type) etype,int32_t i,const char * psz)
          {
             m_mapEnumToName[etype->name()][i] = psz;
@@ -456,11 +449,9 @@ namespace aura
 
          virtual ::aura::session * query_session(index iEdge);
 
-#ifdef DEBUG
-
          virtual bool initialize_log(const char * pszId);
-#endif
 
+      
          virtual void appa_load_string_table();
          virtual void appa_set_locale(const char * pszLocale,::action::context actioncontext);
          virtual void appa_set_schema(const char * pszStyle,::action::context actioncontext);

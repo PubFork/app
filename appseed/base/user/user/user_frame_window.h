@@ -109,9 +109,10 @@ namespace user
 
          void common_construct();
 
-
+         
          virtual void assert_valid() const override;
          virtual void dump(dump_context & dc) const override;
+
 
          virtual void OnInitialFrameUpdate(bool bMakeVisible);
 

@@ -25,6 +25,9 @@ namespace userfs
       tree(::aura::application * papp);
       virtual ~tree();
 
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+
 
       void update_list();
 
@@ -73,10 +76,6 @@ namespace userfs
       DECL_GEN_SIGNAL(_001OnCreate);
       DECL_GEN_SIGNAL(_001OnShellCommand);
 
-#ifdef DEBUG
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
-#endif
 
 
    };

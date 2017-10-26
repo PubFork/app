@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include "db_str_set.h"
 
 
@@ -384,7 +384,6 @@ void db_server::dump(dump_context &) const
    // return void HAHAHAHAHAHA
 
 }
-
 
 
 db_str_set * db_server::get_db_str_set()

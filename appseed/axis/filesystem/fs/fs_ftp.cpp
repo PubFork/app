@@ -72,10 +72,12 @@ bool ftpfs::has_subdir(const ::file::path & path)
 ::file::listing & ftpfs::root_ones(::file::listing & listing)
 {
 
-   ::file::path & path = listing[listing.add("ftp://")];
-
-   UNUSED(path);
-
+   ::file::path path;
+   
+   path = "ftp://";
+   
+   listing.add(path);
+   
    listing.m_straTitle.add("FTP sites");
 
    return listing;

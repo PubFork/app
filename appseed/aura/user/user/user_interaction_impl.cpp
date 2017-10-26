@@ -741,7 +741,7 @@ namespace user
    }
 
 
-#ifdef DEBUG
+
    void interaction_impl::assert_valid() const
    {
 
@@ -756,7 +756,7 @@ namespace user
       ::user::interaction_impl_base::dump(dumpcontext);
 
    }
-#endif
+
 
    bool interaction_impl::DestroyWindow()
    {

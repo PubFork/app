@@ -141,10 +141,8 @@ class fifo_map :
       void construct(::count nBlockSize = 10);
 
 
-#ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
 
 
@@ -731,7 +729,6 @@ get(ARG_KEY argkey, ARG_VALUE valueDefault)
       return ppair->m_element2;
 }
 
-#ifdef DEBUG
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE >
 void fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::dump(dump_context & dumpcontext) const
 {
@@ -764,7 +761,6 @@ void fifo_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE >::assert_valid() const
 
 }
 
-#endif
 
 template < class type_map >
 class fifo_attrib_map :

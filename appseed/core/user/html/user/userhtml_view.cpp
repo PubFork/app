@@ -61,7 +61,7 @@ void html_view::install_message_routing(::message::sender * pinterface)
 /////////////////////////////////////////////////////////////////////////////
 // html_view diagnostics
 
-#ifdef DEBUG
+
 void html_view::assert_valid() const
 {
    ::user::impact::assert_valid();
@@ -71,7 +71,7 @@ void html_view::dump(dump_context & dumpcontext) const
 {
    ::user::impact::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 
 bool html_view::pre_create_window(::user::create_struct& cs)

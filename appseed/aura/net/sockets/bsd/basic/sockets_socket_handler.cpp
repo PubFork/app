@@ -28,17 +28,9 @@ namespace sockets
    //#endif
 
 
-#ifdef DEBUG
-   socket_handler::socket_handler(::aura::application * papp, logger *plogger) :
-#else
-   socket_handler::socket_handler(::aura::application * papp) :
-#endif
+   socket_handler::socket_handler(::aura::application * papp, ::aura::log *plogger) :
       ::object(papp),
-#ifdef DEBUG
       base_socket_handler(papp, plogger),
-#else
-      base_socket_handler(papp),
-#endif
       m_b_use_mutex(false)
       , m_maxsock(0)
       , m_iPreviousError(-1)

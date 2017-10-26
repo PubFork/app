@@ -36,28 +36,30 @@ namespace sockets
    }
 
 
-#ifdef DEBUG
-   base_socket_handler::base_socket_handler(::aura::application * papp, logger * plogger) :
-      ::object(papp),
-      m_splogger(plogger)
-   {
-
-   }
-#else
-   base_socket_handler::base_socket_handler(::aura::application * papp) :
+   base_socket_handler::base_socket_handler(::aura::application * papp, ::aura::log * plogger) :
       ::object(papp)
    {
 
+      if(plogger == NULL)
+      {
+
+            if(papp != NULL && papp->m_paurasystem != NULL)
+            {
+
+                  m_splogger = &papp->m_paurasystem->log();
+            
+            }
+            
+      }
+
    }
-#endif
 
    base_socket_handler::~base_socket_handler()
    {
 
    }
 
-#ifdef DEBUG
-   void base_socket_handler::set_logger(logger * plogger)
+   void base_socket_handler::set_logger(::aura::log * plogger)
    {
 
       m_splogger = plogger;
@@ -83,10 +85,9 @@ namespace sockets
          return;
       }
 
-      m_splogger->log(this, psocket, strUser, iError, strSystem, elevel);
+      m_splogger->sockets_log(this, psocket, strUser, iError, strSystem, elevel);
 
    }
-#endif
 
 
 } // namespace sockets

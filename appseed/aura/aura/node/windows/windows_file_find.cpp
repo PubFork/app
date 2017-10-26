@@ -417,7 +417,6 @@ namespace windows
 
 
 
-#ifdef DEBUG
 
    void file_find::dump(dump_context & dumpcontext) const
    {
@@ -442,8 +441,6 @@ namespace windows
          ASSERT(m_pFoundInfo != NULL && m_pNextInfo != NULL);
 
    }
-
-#endif
 
 } // namespace windows
 

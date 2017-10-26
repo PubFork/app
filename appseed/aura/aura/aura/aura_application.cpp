@@ -234,8 +234,6 @@ namespace aura
 
    }
 
-#ifdef DEBUG
-
    void application::assert_valid() const
    {
 
@@ -262,8 +260,6 @@ namespace aura
       dumpcontext << "\n";
 
    }
-
-#endif
 
    void application::install_message_routing(::message::sender * psender)
    {

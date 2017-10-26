@@ -174,11 +174,8 @@ namespace aura
          virtual ~application();
 
 
-#ifdef DEBUG
          virtual void assert_valid() const override;
          virtual void dump(dump_context & dumpcontext) const override;
-#endif
-
 
 
          virtual bool app_data_set(class id id, ::file::ostream & os);

@@ -52,7 +52,7 @@ namespace filemanager
    /////////////////////////////////////////////////////////////////////////////
    // folder_list diagnostics
 
-#ifdef DEBUG
+
    void folder_list::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -62,7 +62,7 @@ namespace filemanager
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
 
    void folder_list::on_update(::user::impact * pSender, LPARAM lHint, object * phint)

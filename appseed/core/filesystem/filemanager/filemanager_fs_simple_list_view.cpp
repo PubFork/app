@@ -53,7 +53,7 @@ namespace filemanager
 
 
 
-#ifdef DEBUG
+
          void list_view::assert_valid() const
          {
             simple_list_view::assert_valid();
@@ -63,7 +63,7 @@ namespace filemanager
          {
             simple_list_view::dump(dumpcontext);
          }
-#endif //DEBUG
+
 
 
          void list_view::_001InsertColumns()

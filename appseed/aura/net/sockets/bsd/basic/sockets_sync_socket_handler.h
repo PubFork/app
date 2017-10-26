@@ -17,11 +17,7 @@ namespace sockets
          socket_handler          m_handler;
          int32_t                 m_iDefaultTimeout;
 
-#ifdef DEBUG
-         sync_socket_handler(::aura::application * papp, logger *log = NULL);
-#else
-         sync_socket_handler(::aura::application * papp);
-#endif
+         sync_socket_handler(::aura::application * papp, ::aura::log *log = NULL);
          virtual ~sync_socket_handler();
 
 

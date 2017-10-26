@@ -72,27 +72,18 @@ namespace sockets
          };
 
          int               m_iSelectErrno;
+      sp(::aura::log)        m_splogger; ///< Registered log class, or NULL
 
-#ifdef DEBUG
-         sp(logger)        m_splogger; ///< Registered log class, or NULL
-#endif
-
-#ifdef DEBUG
-         base_socket_handler(::aura::application * papp, logger * plogger = NULL);
-#else
-         base_socket_handler(::aura::application * papp);
-#endif
+      base_socket_handler(::aura::application * papp, ::aura::log * plogger = NULL);
          virtual ~base_socket_handler();
 
          /** get mutex reference for threadsafe operations. */
          virtual mutex & GetMutex() const = 0;
 
-#ifdef DEBUG
-         virtual void set_logger(logger * plog);
+         virtual void set_logger(::aura::log * plog);
 
          /** Log error to log class for print out / storage. */
          virtual void log(base_socket *p,const string & user_text,int err,const string & sys_err, ::aura::log::e_level elevel = ::ca_get_level_warning());
-#endif
 
          // -------------------------------------------------------------------------
          // socket stuff

@@ -2,13 +2,11 @@
 #include "aura/net/net_sockets.h"
 
 
-#ifdef DEBUG
-
 namespace sockets
 {
 
 
-   void trace_logger::log(base_socket_handler * phandler, base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel)
+   void trace_logger::sockets_log(base_socket_handler * phandler, base_socket * sock, const string & strUser, int32_t iError, const string & strSystem, ::aura::log::e_level elevel)
    {
 
       string strLevel = ::log_level_name(elevel);
@@ -29,4 +27,3 @@ namespace sockets
 
 
 
-#endif

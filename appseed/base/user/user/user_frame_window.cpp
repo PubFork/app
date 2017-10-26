@@ -218,6 +218,7 @@ namespace user
       ::user::interaction::on_set_parent(puiParent);
 
    }
+   
 
    void frame_window::assert_valid() const
    {
@@ -255,7 +256,6 @@ namespace user
 
       dumpcontext << "\n";
    }
-
 
 
 
@@ -1077,8 +1077,8 @@ namespace user
 
 
       // deactivate current active ::user::impact
-      thread *pThread = get_thread();
-      ASSERT(pThread);
+      //thread *pThread = get_thread();
+      //ASSERT(pThread);
       sp(::user::impact) pActiveView = GetActiveView();
       if (pActiveView == NULL)
          pActiveView = GetActiveFrame()->GetActiveView();

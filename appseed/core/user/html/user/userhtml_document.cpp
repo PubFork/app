@@ -32,7 +32,7 @@ html_document::~html_document()
 
 
 
-#ifdef DEBUG
+
 void html_document::assert_valid() const
 {
    ::user::document::assert_valid();
@@ -42,7 +42,7 @@ void html_document::dump(dump_context & dumpcontext) const
 {
    ::user::document::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 /////////////////////////////////////////////////////////////////////////////
 // html_document serialization

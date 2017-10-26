@@ -145,15 +145,13 @@ namespace aura
 
       xxdebug_box("Going to start Log","Just before (initialize) log",0);
 
-#ifdef DEBUG
-
-      // log starts here
+      // log starts here - ENABLE_TRACE macro should be non-zero during
+      // compilation to enable log tracing
       if(!initialize_log(strId))
       {
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
          throw "failed to initialize log";
       }
-#endif
 
       /*
       if(psystemParent == NULL)
@@ -982,11 +980,6 @@ namespace aura
    }
 
 
-
-
-#ifdef DEBUG
-
-
    int32_t system::_001OnDebugReport(int32_t i1,const char * psz1,int32_t i2,const char * psz2,const char * psz3,va_list args)
    {
 
@@ -1091,7 +1084,6 @@ namespace aura
       return true;
    }
 
-#endif
 
    mutex * system::get_openweather_city_mutex()
    {
@@ -1232,14 +1224,13 @@ namespace aura
 
    }
 
-#ifdef DEBUG
-
+   
    ::aura::log & system::log()
    {
+      
       return *m_plog;
+      
    }
-
-#endif
 
 
 
@@ -1280,8 +1271,7 @@ namespace aura
 
    }
 
-#ifdef DEBUG
-
+   
    bool system::initialize_log(const char * pszId)
    {
       if(m_plog != NULL)
@@ -1299,7 +1289,6 @@ namespace aura
    }
 
 
-#endif
 
 
 

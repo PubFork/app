@@ -65,7 +65,7 @@ namespace userstack
    /////////////////////////////////////////////////////////////////////////////
    // ::view diagnostics
 
-   #ifdef DEBUG
+
    void view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -75,7 +75,7 @@ namespace userstack
    {
       ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // ::view message handlers

@@ -228,8 +228,6 @@ namespace file
          UNREFERENCED_PARAMETER(lpszFileName);
       }*/
 
-#ifdef DEBUG
-
 
    void file::assert_valid() const
    {
@@ -247,7 +245,7 @@ namespace file
       //   dumpcontext << "\n";
    }
 
-#endif
+
 
    /////////////////////////////////////////////////////////////////////////////
    // file_exception helpers

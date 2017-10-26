@@ -5,8 +5,6 @@
 namespace draw2d
 {
 
-#ifdef DEBUG
-
    void object::dump(dump_context & dumpcontext) const
    {
 
@@ -20,8 +18,6 @@ namespace draw2d
    {
       ::exception::throw_interface_only(get_app());
    }
-
-#endif
 
    object::~object()
    {

@@ -35,7 +35,7 @@ namespace console
 
 
  
-   #ifdef DEBUG
+
    void prompt_document::assert_valid() const
    {
       ::user::document::assert_valid();
@@ -45,7 +45,7 @@ namespace console
    {
       ::user::document::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // prompt_document serialization

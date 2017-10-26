@@ -594,7 +594,7 @@ namespace zip
    return CO_E_ERRORINDLL;
    }*/
 
-#ifdef DEBUG
+
    /////////////////////////////////////////////////////////////////////////////
    // in_file diagnostics
 
@@ -612,9 +612,6 @@ namespace zip
       dumpcontext << " and name \"" << m_strFileName << "\"";
       dumpcontext << "\n";
    }
-
-#endif
-
    /////////////////////////////////////////////////////////////////////////////
    // FileException helpers
 

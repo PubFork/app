@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace user
@@ -93,7 +93,13 @@ namespace user
          // windowTitle\ndocName\n ... (see DocStringIndex enum)
 
          impact_system(::aura::application * papp, const char * pszMatter, sp(type) pDocClass, sp(type) pFrameClass, sp(type) pViewClass);
-
+         virtual ~impact_system() = 0;
+         
+         
+         virtual void dump(dump_context &) const;
+         virtual void assert_valid() const;
+         
+         
          virtual void load_template();
 
          virtual ::count get_document_count() const = 0;
@@ -121,11 +127,7 @@ namespace user
          // if lpszPathName == NULL => create new file with this type
          virtual void set_default_title(::user::document * pdocument) = 0;
 
-         virtual ~impact_system() = 0;
-
-
-         virtual void dump(dump_context &) const;
-         virtual void assert_valid() const;
+      
 
          virtual void on_idle();             // for all documents
          virtual void _001OnCmdMsg(::user::command * pcommand);

@@ -42,7 +42,6 @@ namespace user
       document_manager(::aura::application * papp);
       virtual ~document_manager();
 
-
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
 

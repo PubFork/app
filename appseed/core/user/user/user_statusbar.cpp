@@ -744,12 +744,12 @@ namespace user
 
    void status_command::SetCheck(check::e_check echeck) // "checking" will pop out the text
    {
+
+#ifdef WINDOWSEX
       status_bar* pStatusBar = dynamic_cast < status_bar * > (m_puiOther);
       ASSERT(pStatusBar != NULL);
       ASSERT_KINDOF(status_bar, pStatusBar);
       ASSERT(m_iIndex < m_iCount);
-
-#ifdef WINDOWSEX
       UINT nNewStyle = pStatusBar->GetPaneStyle((int32_t) m_iIndex) & ~SBPS_POPOUT;
       if (echeck != check::unchecked)
          nNewStyle |= SBPS_POPOUT;
@@ -804,7 +804,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // status_bar diagnostics
 
-#ifdef DEBUG
+
    void status_bar::assert_valid() const
    {
       ::user::control_bar::assert_valid();
@@ -829,7 +829,7 @@ namespace user
       }
       dumpcontext << "\n";
    }
-#endif //DEBUG
+
 
 #ifdef __INIT_SEG
 #pragma code_seg(__INIT_SEG)

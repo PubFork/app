@@ -26,8 +26,7 @@ namespace user
 
       virtual void dump(dump_context &) const;
       virtual void assert_valid() const;
-
-
+      
 
    };
 

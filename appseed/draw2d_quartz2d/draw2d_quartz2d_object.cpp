@@ -122,9 +122,6 @@ namespace draw2d_quartz2d
    /////////////////////////////////////////////////////////////////////////////
    // ::draw2d::object
    
-#ifdef DEBUG
-
-   
    void object::dump(dump_context & dumpcontext) const
    {
       ::object::dump(dumpcontext);
@@ -139,8 +136,6 @@ namespace draw2d_quartz2d
       //ASSERT(get_handle() == NULL ||
       // (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));
    }
-   
-#endif
    
    /*void * object::detach_os_data()
     {

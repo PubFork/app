@@ -193,9 +193,9 @@ namespace core
          virtual bool process_command(::command::command * pcommand) override;
 
 
-
          void assert_valid() const override;
          void dump(dump_context & context) const override;
+      
 
          virtual int32_t main() override;
          virtual void hist_hist(const char * psz) override;

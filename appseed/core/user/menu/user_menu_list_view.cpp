@@ -29,20 +29,20 @@ namespace user
 
    }
 
-#ifdef DEBUG
+
    void menu_list_view::assert_valid() const
    {
       impact::assert_valid();
    }
 
-#ifndef _WIN32_WCE
+
    void menu_list_view::dump(dump_context & dumpcontext) const
    {
       impact::dump(dumpcontext);
    }
-#endif
 
-#endif //DEBUG
+
+
 
 
    bool menu_list_view::pre_create_window(::user::create_struct & cs)

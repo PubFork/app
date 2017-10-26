@@ -67,7 +67,13 @@ namespace filemanager
 
 
       file_list(::aura::application * papp);
+      virtual ~file_list();
+      
+      
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
 
+      
       void schedule_file_size(const char * psz);
 
       virtual void _017OpenContextMenuFolder(sp(::fs::item) item, ::action::context actioncontext) override;
@@ -101,11 +107,7 @@ namespace filemanager
 
       virtual id data_get_current_list_layout_id() override;
 
-      virtual ~file_list();
-#ifdef DEBUG
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
-#endif
+
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
       DECL_GEN_SIGNAL(_001OnContextMenu);

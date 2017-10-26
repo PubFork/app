@@ -123,10 +123,8 @@ class CLASS_DECL_AURA object
       virtual ~object();  // virtual destructors are necessary
 
 
-#ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-#endif
 
 
 

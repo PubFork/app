@@ -32,7 +32,7 @@ namespace userstack
    {
    }
 
-#ifdef DEBUG
+
    void pane_view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -42,7 +42,7 @@ namespace userstack
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
    void pane_view::_001OnCreate(::message::message * pobj)
    {

@@ -28,7 +28,7 @@ namespace console
    }
 
 
-   #ifdef DEBUG
+
    void prompt_frame::assert_valid() const
    {
 	   simple_frame_window::assert_valid();
@@ -39,8 +39,6 @@ namespace console
 	   simple_frame_window::dump(dumpcontext);
    }
 
-
-   #endif //DEBUG
 
 
    void prompt_frame::_001OnTimer(::timer * ptimer)

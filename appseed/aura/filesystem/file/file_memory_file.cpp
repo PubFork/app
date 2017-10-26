@@ -376,7 +376,6 @@ void memory_file::set_length(file_size_t dwNewLen)
 }
 
 
-#ifdef DEBUG
 
 
 void memory_file::assert_valid() const
@@ -388,8 +387,6 @@ void memory_file::dump(dump_context & dumpcontext) const
 {
    file::dump(dumpcontext);
 }
-
-#endif
 
 
 

@@ -1061,7 +1061,7 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // control_bar diagnostics
 
-#ifdef DEBUG
+
    void control_bar::assert_valid() const
    {
       ::user::interaction::assert_valid();
@@ -1083,7 +1083,7 @@ namespace user
       dumpcontext << "\n";
    }
 
-#endif
+
 
    sp(::user::frame_window) control_bar::GetDockingFrame()
    {

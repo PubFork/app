@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "fiasco_finder.h"
 #include "aura/compress/zip/zip.h"
 
@@ -123,8 +123,6 @@ namespace axis
       dumpcontext << "\n";
 
    }
-
-
 
    string application::load_string(id id)
    {

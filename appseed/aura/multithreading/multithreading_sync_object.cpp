@@ -77,7 +77,14 @@ wait_result sync_object::wait(const duration & durationTimeout)
 
 }
 
-#ifdef DEBUG
+
+void sync_object::assert_valid() const
+{
+
+   object::assert_valid();
+
+}
+
 
 void sync_object::dump(dump_context & dumpcontext) const
 {
@@ -94,14 +101,6 @@ void sync_object::dump(dump_context & dumpcontext) const
 }
 
 
-void sync_object::assert_valid() const
-{
-
-   object::assert_valid();
-
-}
-
-#endif
 
 #ifdef WINDOWS
 

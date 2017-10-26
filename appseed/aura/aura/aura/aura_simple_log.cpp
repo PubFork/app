@@ -1,6 +1,5 @@
 #include "framework.h"
 
-#ifdef DEBUG
 
 simple_log::simple_log()
 {
@@ -53,9 +52,6 @@ void simple_log::log_line(string str)
    }
 
 }
-
-
-#endif
 
 
 

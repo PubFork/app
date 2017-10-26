@@ -34,7 +34,6 @@ namespace userstack
    }
 
 
-#ifdef DEBUG
 
    void document::assert_valid() const
    {
@@ -49,8 +48,6 @@ namespace userstack
       ::user::document::dump(dumpcontext);
 
    }
-
-#endif //DEBUG
 
 
 } // namespace userstack

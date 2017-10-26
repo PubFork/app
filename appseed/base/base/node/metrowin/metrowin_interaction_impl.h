@@ -30,7 +30,15 @@ namespace metrowin
 
       interaction_impl();
       interaction_impl(::aura::application * papp);
+      virtual ~interaction_impl();
+
+
       virtual void construct(oswindow hwnd);
+
+
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+      
 
       virtual bool has_pending_graphical_update();
       virtual void on_after_graphical_update();
@@ -626,11 +634,7 @@ namespace metrowin
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
       static_function bool ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
 
-      // Implementation
-      virtual ~interaction_impl();
       virtual bool CheckAutoCenter();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
       static_function bool GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                         HBRUSH hbrGray, COLORREF clrText);
 

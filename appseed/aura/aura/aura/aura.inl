@@ -8,10 +8,8 @@ inline lparam::lparam(::object * p)
 }
 
 
-#ifdef DEBUG
-
 template<class TYPE>
-void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount)
+inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount)
 {
    ENSURE((nCount == 0) || (pElements != NULL));
    ASSERT((nCount == 0) ||
@@ -23,8 +21,6 @@ void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nC
 #endif
    // default does nothing
 }
-
-#endif
 
 
 
@@ -39,6 +35,7 @@ inline void CopyElements(TYPE* pDest, const TYPE* pSrc, ::count nCount)
    while (nCount--)
       *pDest++ = *pSrc++;
 }
+
 
 #undef new
 

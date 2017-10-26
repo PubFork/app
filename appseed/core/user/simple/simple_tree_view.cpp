@@ -32,7 +32,7 @@ void simple_tree_view::on_update(::user::impact * pSender,LPARAM lHint,::object*
 }
 
 
-#ifdef DEBUG
+
 void simple_tree_view::assert_valid() const
 {
    ::user::impact::assert_valid();
@@ -42,7 +42,7 @@ void simple_tree_view::dump(dump_context & dumpcontext) const
 {
    ::user::impact::dump(dumpcontext);
 }
-#endif //DEBUG
+
 
 
 void simple_tree_view::_001OnCreate(::message::message * pobj)

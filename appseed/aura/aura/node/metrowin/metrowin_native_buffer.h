@@ -39,6 +39,8 @@ namespace metrowin
       native_buffer(::aura::application * papp,const char * lpszfileName,UINT nOpenFlags);
       virtual ~native_buffer();
 
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
 
       operator StorageFile ^ () const;
 
@@ -73,8 +75,6 @@ namespace metrowin
       virtual void close();
 
       virtual bool IsOpened();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
       enum BufferCommand { bufferRead,bufferWrite,bufferCommit,bufferCheck };
       virtual uint64_t GetBufferPtr(UINT nCommand,uint64_t nCount = 0,
          void ** ppBufStart = NULL,void ** ppBufMax = NULL);

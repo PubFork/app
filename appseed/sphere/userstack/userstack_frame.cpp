@@ -83,7 +83,7 @@ namespace userstack
    }
 
 
-#ifdef DEBUG
+
    void frame::assert_valid() const
    {
       simple_frame_window::assert_valid();
@@ -93,7 +93,7 @@ namespace userstack
    {
       simple_frame_window::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
 
    void frame::_001OnTimer(::timer * ptimer)

@@ -18,9 +18,9 @@ public:
 
    virtual void on_update(::user::impact * pSender,LPARAM lHint,::object* pHint) override;
    
-#ifdef DEBUG
+
    virtual void assert_valid() const override;
    virtual void dump(dump_context & dumpcontext) const override;
-#endif
+
 
 };

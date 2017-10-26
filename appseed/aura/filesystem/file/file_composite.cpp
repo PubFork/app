@@ -179,9 +179,6 @@ namespace file
    }
 
 
-#ifdef DEBUG
-
-
    void composite::assert_valid() const
    {
 
@@ -195,8 +192,6 @@ namespace file
       return m_spfile->dump(dumpcontext);
 
    }
-
-#endif
 
    uint64_t composite::GetBufferPtr(UINT nCommand, uint64_t nCount, void ** ppBufStart, void ** ppBufMax)
    {

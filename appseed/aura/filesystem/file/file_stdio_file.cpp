@@ -191,8 +191,6 @@ namespace file
    UNREFERENCED_PARAMETER(lpszFileName);
    }*/
 
-#ifdef DEBUG
-
    void stdio_file::assert_valid() const
    {
       //   object::assert_valid();
@@ -208,8 +206,6 @@ namespace file
       //   dumpcontext << " and name \"" << m_wstrFileName << "\"";
       //   dumpcontext << "\n";
    }
-
-#endif
 
 
    string stdio_file::GetFileName() const

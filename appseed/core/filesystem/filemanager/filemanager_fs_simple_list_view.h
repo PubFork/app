@@ -44,8 +44,6 @@ namespace filemanager
          };
 
 
-         class view;
-
          class CLASS_DECL_CORE list_view :
             public simple_list_view
          {
@@ -70,23 +68,15 @@ namespace filemanager
                SubItemFilePath,
             };
 
-            list_view(::aura::application * papp);
-            sp(::filemanager::fs::simple::view) m_pserver;
 
-            void install_message_routing(::message::sender * pinterface);
-       
-            ::user::list_cache         m_cache;
-            bool                 m_bKickActive;
+            class FillTask
+            {
+            public:
 
-            ItemArray         m_itema; 
+                  string             m_strFile;
+               UINT              m_uiTimer;
 
-            sp(image_list)          m_pil;
-            int64_t m_iParentFolder;
-
-
-            int32_t m_iIconFolder;
-            int32_t m_iIconArtist;
-            int32_t m_iIconSong;
+            };
 
             class BuildHelper
             {
@@ -98,19 +88,34 @@ namespace filemanager
                bool     m_bActive;
             };
 
+            ::user::list_cache         m_cache;
+            bool                 m_bKickActive;
+
+            sp(image_list)          m_pil;
+            int64_t m_iParentFolder;
+            sp(::filemanager::fs::simple::view) m_pserver;
+            
+
+            int32_t m_iIconFolder;
+            int32_t m_iIconArtist;
+            int32_t m_iIconSong;
+            ItemArray         m_itema; 
+            
             BuildHelper          m_buildhelper;
 
+
+            list_view(::aura::application * papp);
+            virtual ~list_view();
+
+
+            virtual void assert_valid() const;
+            virtual void dump(dump_context & dumpcontext) const;
+
+
+            void install_message_routing(::message::sender * pinterface);
+       
+
             static UINT c_cdecl ThreadProcFillTask(LPVOID lpParameter);
-
-            class FillTask
-            {
-            public:
-               //FillTask(MAlbumView * pview, const unichar * lpcsz);
-         //      sp(list_view)      m_pview;
-               string             m_strFile;
-               UINT              m_uiTimer;
-
-            };
 
 
             void parse(const char * lpszSource);
@@ -130,12 +135,6 @@ namespace filemanager
             virtual void on_update(::user::impact * pSender, LPARAM lHint, object* pHint);
 
             virtual bool _001OnClick(uint_ptr nFlags, point point);
-
-            virtual ~list_view();
-         #ifdef DEBUG
-            virtual void assert_valid() const;
-            virtual void dump(dump_context & dumpcontext) const;
-         #endif
 
             DECL_GEN_SIGNAL(_001OnLButtonDblClk);
             void _001OnTimer(::timer * ptimer);

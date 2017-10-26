@@ -32,19 +32,19 @@ namespace android
          virtual ~interaction_impl();
 
 
-         virtual bool initialize_native_window(::user::native_window_initialize * pinitialize) override;
-
          virtual void construct(oswindow oswindow);
 
 
          virtual void assert_valid() const;
          virtual void dump(dump_context & dumpcontext) const;
 
-
          bool create_message_queue(::user::interaction * pui, const char * pszName);
 
          //static_function const MSG* GetCurrentMessage();
 
+         virtual bool initialize_native_window(::user::native_window_initialize * pinitialize) override;
+         
+         
          virtual void install_message_routing(::message::sender * pinterface);
 
          bool operator==(const ::user::interaction_impl& wnd) const;

@@ -26,12 +26,8 @@ class array :
       virtual ~array();
 
 
-#ifdef DEBUG
-
       void dump(dump_context &) const;
       void assert_valid() const;
-
-#endif
 
 
       inline const TYPE& get_at(index nIndex) const;

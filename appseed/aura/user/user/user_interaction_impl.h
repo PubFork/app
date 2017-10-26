@@ -92,10 +92,9 @@ namespace user
          interaction_impl();
          virtual ~interaction_impl();
 
-#ifdef DEBUG
+
          virtual void assert_valid() const override;
          virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
          //virtual e_queue_thread message_queue_thread(UINT uiMessage);
 

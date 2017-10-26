@@ -29,12 +29,9 @@ class string_array :
       string_array(const string_array & array);
       virtual ~string_array();
 
-#ifdef DEBUG
 
       void dump(dump_context &) const;
       void assert_valid() const;
-
-#endif
 
 
       ::count get_size() const;
@@ -1006,8 +1003,6 @@ ar >> this->m_pData[i];
 }
 */
 
-#ifdef DEBUG
-
 template < typename Type, typename RawType >
 void string_array < Type, RawType >::dump(dump_context & dumpcontext) const
 {
@@ -1042,9 +1037,6 @@ void string_array < Type, RawType >::assert_valid() const
       ASSERT(__is_valid_address(this->m_pData,this->m_nMaxSize * sizeof(Type)));
    }
 }
-
-
-#endif
 
 
 template < typename Type, typename RawType >

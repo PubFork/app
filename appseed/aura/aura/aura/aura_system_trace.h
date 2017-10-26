@@ -1,6 +1,5 @@
 #pragma once
 
-#ifdef DEBUG
 
 CLASS_DECL_AURA void simple_log_line(const char *pszFileName, int32_t nLine, uint32_t dwCategory, uint32_t nLevel, const char * psz);
 
@@ -175,7 +174,6 @@ namespace aura
 
 } // namespace aura
 
-#endif
 
 
 

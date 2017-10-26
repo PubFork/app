@@ -6,17 +6,9 @@ namespace sockets
 {
 
 
-#ifdef DEBUG
-   sync_socket_handler::sync_socket_handler(::aura::application * papp, logger * plog) :
-#else
-   sync_socket_handler::sync_socket_handler(::aura::application * papp) :
-#endif
+   sync_socket_handler::sync_socket_handler(::aura::application * papp, ::aura::log * plog) :
       ::object(papp),
-#ifdef DEBUG
       m_handler(papp, plog),
-#else
-      m_handler(papp),
-#endif
       m_file(papp)
    {
 

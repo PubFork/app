@@ -1280,7 +1280,7 @@ throw todo(get_app());
    /////////////////////////////////////////////////////////////////////////////
    // toolbar diagnostics
 
-   #ifdef DEBUG
+  
    void toolbar::assert_valid() const
    {
       // Note: ::user::control_bar::assert_valid is not called because it checks for
@@ -1329,7 +1329,7 @@ throw todo(get_app());
 
       dumpcontext << "\n";
    }
-   #endif
+
 
    // IMPLEMENT_DYNAMIC(toolbar, ::user::control_bar)
 

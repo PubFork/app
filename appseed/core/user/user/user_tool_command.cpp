@@ -25,13 +25,13 @@ namespace user
       
       m_bEnableChanged = TRUE;
       
-      toolbar* pToolBar = dynamic_cast < toolbar * > (m_puiOther);
 
+#ifdef WINDOWSEX
+      toolbar* pToolBar = dynamic_cast < toolbar * > (m_puiOther);
+      
       ASSERT(pToolBar != NULL);
       ASSERT_KINDOF(toolbar, pToolBar);
       ASSERT(m_iIndex < m_iCount);
-
-#ifdef WINDOWSEX
       UINT nNewStyle = pToolBar->GetButtonStyle((int32_t) m_iIndex) & ~TBBS_DISABLED;
       if (!bOn)
       {
@@ -52,12 +52,12 @@ namespace user
    void tool_command::SetCheck(int32_t nCheck)
    {
       ASSERT(nCheck >= 0 && nCheck <= 2); // 0=>off, 1=>on, 2=>indeterminate
+
+#ifdef WINDOWSEX
       toolbar* pToolBar = dynamic_cast < toolbar * > (m_puiOther);
       ASSERT(pToolBar != NULL);
       ASSERT_KINDOF(toolbar, pToolBar);
       ASSERT(m_iIndex < m_iCount);
-
-#ifdef WINDOWSEX
       UINT nNewStyle = pToolBar->GetButtonStyle((int32_t) m_iIndex) & ~(TBBS_CHECKED | TBBS_INDETERMINATE);
       if (nCheck == 1)
          nNewStyle |= TBBS_CHECKED;

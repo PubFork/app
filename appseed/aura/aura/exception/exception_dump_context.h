@@ -1,9 +1,6 @@
 #pragma once
 
 
-#ifdef DEBUG
-
-
 class CLASS_DECL_AURA dump_context :
    virtual public object
 {
@@ -65,7 +62,5 @@ class CLASS_DECL_AURA dump_context :
       ::file::file_sp  m_pfile;
 };
 
-
-#endif
 
 

@@ -69,10 +69,10 @@ namespace filemanager
       DECL_GEN_SIGNAL(_001OnLButtonDblClk);
       DECL_GEN_SIGNAL(_001OnCancelMode);
 
-#ifdef DEBUG
+
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-#endif
+
 
 
       ::fs::item * get_filemanager_item();

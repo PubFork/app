@@ -561,8 +561,6 @@ index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex, ARG_TYPE 
 //}
 
 
-#ifdef DEBUG
-
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::dump(dump_context & dumpcontext) const
 {
@@ -597,7 +595,6 @@ void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::assert_valid() const
    }
 }
 
-#endif
 
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 typename raw_array < TYPE, ARG_TYPE, ALLOCATOR >::iterator raw_array < TYPE, ARG_TYPE, ALLOCATOR >::erase(iterator pos)

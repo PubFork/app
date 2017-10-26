@@ -35,22 +35,6 @@ POSITION string_list::find(string searchValue, POSITION startAfter) const
 }
 
 
-#ifdef DEBUG
-
-void string_list::dump(dump_context & dumpcontext) const
-{
-   object::dump(dumpcontext);
-
-   dumpcontext << "with " << m_count << " elements";
-   if (dumpcontext.GetDepth() > 0)
-   {
-      POSITION pos = get_head_position();
-      while (pos != NULL)
-         dumpcontext << "\n\t" << get_next(pos);
-   }
-
-   dumpcontext << "\n";
-}
 
 void string_list::assert_valid() const
 {
@@ -71,5 +55,18 @@ void string_list::assert_valid() const
 }
 
 
-#endif
+void string_list::dump(dump_context & dumpcontext) const
+{
+   object::dump(dumpcontext);
+
+   dumpcontext << "with " << m_count << " elements";
+   if (dumpcontext.GetDepth() > 0)
+   {
+      POSITION pos = get_head_position();
+      while (pos != NULL)
+         dumpcontext << "\n\t" << get_next(pos);
+   }
+
+   dumpcontext << "\n";
+}
 

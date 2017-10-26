@@ -14,10 +14,7 @@ namespace sockets
    {
       public:
 
-#ifdef DEBUG
-         sp(logger)           m_splogger; ///< Registered log class, or NULL
-#endif
-
+         sp(::aura::log)           m_splogger; ///< Registered log class, or NULL
 
          socket_map           m_sockets; ///< Active sockets map
          socket_map           m_add; ///< Sockets to be added to sockets map
@@ -56,12 +53,7 @@ namespace sockets
          bool                 m_slave; ///< Indicates that this is a base_socket_handler run in socket_thread
 
 
-#ifdef DEBUG
-         socket_handler(::aura::application * papp, logger * plogger = NULL);
-#else
-         socket_handler(::aura::application * papp);
-#endif
-         //socket_handler(::aura::application * papp, mutex & mutex, logger * plogger = NULL);
+         socket_handler(::aura::application * papp, ::aura::log * plogger = NULL);
          virtual ~socket_handler();
 
 

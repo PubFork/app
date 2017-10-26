@@ -90,17 +90,11 @@ namespace datetime
 } // namespace datetime
 
 
-#ifdef DEBUG
-
-
 class dump_context;
 
 // ::datetime::time_span diagnostics and serialization
 CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const ::datetime::time_span & dateSpanSrc);
 CLASS_DECL_AURA dump_context & operator<<(dump_context & dumpcontext, const ::datetime::time & dateSrc);
-
-
-#endif
 
 
 
@@ -355,18 +349,18 @@ CLASS_DECL_AURA void __dump(const object* pOb);
 
 #define THIS_FILE          __FILE__
 
-#ifdef DEBUG
+//#ifdef DEBUG
 #define TRACE ::aura::trace_add_file_and_line(m_pauraapp, __FILE__, __LINE__)
 #define APPTRACE ::aura::trace_add_file_and_line(papp, __FILE__, __LINE__)
-#else
-#ifdef WINDOWS
-#define TRACE(...) __noop
-#define APPTRACE(...) __noop
-#else
-#define TRACE(...)
-#define APPTRACE(...) 
-#endif
-#endif
+//#else
+//#ifdef WINDOWS
+//#define TRACE(...) __noop
+//#define APPTRACE(...) __noop
+//#else
+//#define TRACE(...)
+//#define APPTRACE(...)
+//#endif
+//#endif
 
 
 

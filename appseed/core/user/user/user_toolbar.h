@@ -113,10 +113,8 @@ namespace user
       bool AddReplaceBitmap(HBITMAP hbmImageWell);
       virtual void OnBarStyleChange(uint32_t dwOldStyle, uint32_t dwNewStyle);
 
-   #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
 
       virtual bool LoadXmlToolBar(const char * lpszFileName);

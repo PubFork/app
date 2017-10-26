@@ -323,10 +323,8 @@ class sort_map :
       void construct(::count nBlockSize = 10);
 
 
-#ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
 
 
@@ -1391,8 +1389,6 @@ get(ARG_KEY argkey, ARG_VALUE valueDefault)
 }
 
 
-#ifdef DEBUG
-
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE, class COMPARE, bool m_bMultiKey >
 void sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::dump(dump_context & dumpcontext) const
 {
@@ -1424,8 +1420,6 @@ void sort_map < KEY, ARG_KEY, VALUE, ARG_VALUE, COMPARE, m_bMultiKey >::assert_v
    object::assert_valid();
 
 }
-
-#endif
 
 
 template < class type_map >

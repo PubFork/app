@@ -149,6 +149,11 @@ namespace user
          control_bar(::aura::application * papp);
          virtual ~control_bar();
 
+
+         virtual void assert_valid() const;
+         virtual void dump(dump_context & dumpcontext) const;
+
+
          // for styles specific to ::user::control_bar
          uint32_t GetBarStyle();
          void SetBarStyle(uint32_t dwStyle);
@@ -177,10 +182,6 @@ namespace user
          virtual void message_handler(::message::base * pbase);
 
 
-#ifdef DEBUG
-         virtual void assert_valid() const;
-         virtual void dump(dump_context & dumpcontext) const;
-#endif
          virtual void DelayShow(bool bShow);
          virtual bool IsVisible();
          virtual uint32_t RecalcDelayShow(SIZEPARENTPARAMS * lpLayout);

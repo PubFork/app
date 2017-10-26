@@ -21,8 +21,6 @@ namespace user
    }
 
 
-#ifdef DEBUG
-
 
    void tooltip::assert_valid() const
    {
@@ -35,7 +33,6 @@ namespace user
    }
 
 
-#endif //DEBUG
    void tooltip::install_message_routing(::message::sender * pinterface)
    {
       ::user::interaction::install_message_routing(pinterface);

@@ -77,12 +77,8 @@ namespace windows
 
          virtual void construct(oswindow oswindow);
 
-#ifdef DEBUG
-
          virtual void assert_valid() const;
          virtual void dump(dump_context & dumpcontext) const;
-
-#endif
 
 
          bool create_message_queue(::user::interaction * pui, const char * pszName);

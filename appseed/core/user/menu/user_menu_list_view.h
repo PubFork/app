@@ -28,13 +28,9 @@ namespace user
 
       bool load_menu(::xml::node * pnode, ::user::interaction * puiNotify, UINT uiCallbackMessage);
          
-   #ifdef DEBUG
       virtual void assert_valid() const override;
-   #ifndef _WIN32_WCE
       virtual void dump(dump_context & dumpcontext) const override;
-   #endif
-   #endif
-
+   
       virtual void PostNcDestroy() override;
 
    };

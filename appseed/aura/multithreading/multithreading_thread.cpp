@@ -2298,7 +2298,6 @@ run:
 
 }
 
-#ifdef DEBUG
 
 void thread::assert_valid() const
 {
@@ -2315,7 +2314,6 @@ void thread::dump(dump_context & dumpcontext) const
 
 }
 
-#endif
 
 int32_t thread::thread_term()
 {

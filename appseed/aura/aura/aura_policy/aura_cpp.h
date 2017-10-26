@@ -266,9 +266,8 @@ class compress_department; // only usable from axis.dll and dependants
 
 class command_target;
 
-#ifdef DEBUG
 class dump_context;
-#endif
+
 //class string_interface;
 class id_space;
 class type;
@@ -957,6 +956,11 @@ namespace file
 
 
 #include "aura/aura/exception/exception.h"
+
+
+template<class TYPE>
+inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::count nCount);
+
 #include "aura/aura/aura/aura_common.h"
 #include "aura/filesystem/filesystem/filesystem_path.h"
 

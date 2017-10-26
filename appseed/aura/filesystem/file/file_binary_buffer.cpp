@@ -124,8 +124,6 @@ namespace file
          UNREFERENCED_PARAMETER(lpszFileName);
       }*/
 
-#ifdef DEBUG
-
 
    void binary_file::assert_valid() const
    {
@@ -143,7 +141,6 @@ namespace file
       //   dumpcontext << "\n";
    }
 
-#endif
 
 
 

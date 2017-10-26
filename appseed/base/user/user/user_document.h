@@ -32,6 +32,9 @@ namespace user
          virtual ~document();
 
 
+         virtual void dump(dump_context &) const override;
+         virtual void assert_valid() const override;
+
 
 
          virtual void update_title();
@@ -178,8 +181,7 @@ namespace user
          virtual void pre_close_frame(::user::frame_window * pframe);
 
 
-         virtual void dump(dump_context &) const override;
-         virtual void assert_valid() const override;
+      
 
          // implementation helpers
          virtual bool on_filemanager_open(::filemanager::manager * pmanager, var varFile);

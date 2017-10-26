@@ -25,10 +25,8 @@ class CLASS_DECL_AURA sync_object :
       virtual ~sync_object();
 
 
-#ifdef DEBUG
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
-#endif
 
 
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -342,7 +342,7 @@ namespace user
          on_simple_view_update_hint(pSender, (e_hint)lHint, pHint);
       }
       ASSERT(pSender != this);
-      UNUSED(pSender);     // unused in release builds
+      //UNUSED(pSender);     // unused in release builds
 
       // invalidate the entire pane, erase background too
       //Invalidate(TRUE);
@@ -381,14 +381,14 @@ namespace user
    bool impact::IsSelected(const object* pDocItem) const
    {
       ASSERT_VALID(pDocItem);
-      UNUSED(pDocItem);    // unused in release builds
+    //  UNUSED(pDocItem);    // unused in release builds
 
       return FALSE;   // not implemented, so not selected
    }
 
    void impact::OnActivateView(bool bActivate, sp(::user::impact) pActivateView, sp(::user::impact))
    {
-      UNUSED(pActivateView);   // unused in release builds
+  //    UNUSED(pActivateView);   // unused in release builds
 
       if (bActivate)
       {
@@ -567,7 +567,6 @@ namespace user
    /////////////////////////////////////////////////////////////////////////////
    // ::user::impact diagnostics
 
-
    void impact::dump(dump_context & dumpcontext) const
    {
       ::user::interaction::dump(dumpcontext);
@@ -582,8 +581,6 @@ namespace user
    {
       ::user::interaction::assert_valid();
    }
-
-
 
 
    void impact::_001OnView(::message::message * pobj)

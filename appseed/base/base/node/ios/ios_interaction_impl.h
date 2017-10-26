@@ -36,6 +36,9 @@ namespace ios
       
       virtual void construct(oswindow hwnd);
       
+      virtual void assert_valid() const override;
+      virtual void dump(dump_context & dumpcontext) const override;
+      
       
       virtual bool create_message_queue(::user::interaction * pui,const char * pszName) override;
       
@@ -620,8 +623,6 @@ namespace ios
       static_function bool PASCAL ReflectLastMsg(oswindow hWndChild, LRESULT* pResult = NULL);
       
       virtual bool CheckAutoCenter() override;
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
       static_function bool PASCAL GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
                                                HBRUSH hbrGray, COLORREF clrText);
       

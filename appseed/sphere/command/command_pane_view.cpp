@@ -24,7 +24,7 @@ namespace prompt
    }
 
 
-#ifdef DEBUG
+
    void pane_view::assert_valid() const
    {
       ::user::impact::assert_valid();
@@ -34,7 +34,7 @@ namespace prompt
    {
       ::user::impact::dump(dumpcontext);
    }
-#endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers

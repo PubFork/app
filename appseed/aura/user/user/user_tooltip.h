@@ -20,10 +20,10 @@ namespace user
          tooltip(::aura::application * papp);
          virtual ~tooltip();
 
-#ifdef DEBUG
+
          virtual void assert_valid() const override;
          virtual void dump(dump_context & dumpcontext) const override;
-#endif
+
 
          void install_message_routing(::message::sender * pinterface) override;
 

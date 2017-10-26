@@ -525,11 +525,8 @@ namespace draw2d_quartz2d
       void Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
                       COLORREF clrTopLeft, COLORREF clrBottomRight) override;
       
-#ifdef DEBUG
-
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
-#endif
       
       virtual void set_alpha_mode(::draw2d::e_alpha_mode ealphamode) override;
       

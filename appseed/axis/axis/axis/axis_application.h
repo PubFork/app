@@ -61,8 +61,6 @@ namespace axis
          virtual void dump(dump_context & dumpcontext) const override;
 
 
-
-
          virtual bool app_data_get(class id id, ::file::ostream & os);
          virtual bool app_data_set(class id id, ::file::istream & is);
 

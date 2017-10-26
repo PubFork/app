@@ -13,11 +13,14 @@ public:
    simple_main_frame(::aura::application * papp);
    virtual ~simple_main_frame();
 
-   virtual void install_message_routing(::message::sender * pinterface);
-#ifdef DEBUG
+
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
-#endif
+
+
+   virtual void install_message_routing(::message::sender * pinterface);
+
+
 
    DECL_GEN_SIGNAL(_001OnCreate);
 

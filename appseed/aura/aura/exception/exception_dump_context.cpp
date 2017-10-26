@@ -25,7 +25,6 @@ inline size_t lstrlen(const char * psz)
 
 #endif
 
-#ifdef DEBUG
 
 dump_context::dump_context(const dump_context &)
 {
@@ -467,4 +466,4 @@ dump_context & dump_context::operator << (string str)
 }
 
 
-#endif
+

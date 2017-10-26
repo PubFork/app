@@ -123,8 +123,10 @@ namespace user
 
       static_function::user::document * get_document(::user::interaction * pui);
 
+      
       virtual void dump(dump_context &) const override;
       virtual void assert_valid() const override;
+      
 
       // Advanced: for implementing custom print preview
       /*   bool DoPrintPreview(UINT nIDResource, sp(view) pPrintView,

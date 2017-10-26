@@ -546,8 +546,6 @@ namespace file
    /////////////////////////////////////////////////////////////////////////////
    // file diagnostics
 
-#ifdef DEBUG
-
    void simple_binary_file::assert_valid() const
    {
       object::assert_valid();
@@ -562,8 +560,6 @@ namespace file
       dumpcontext << " and name \"" << m_strFileName << "\"";
       dumpcontext << "\n";
    }
-
-#endif
 
    void simple_binary_file::set_length(file_size_t dwNewLen)
    {

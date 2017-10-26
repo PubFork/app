@@ -66,10 +66,8 @@ namespace filemanager
             index _001GetItemImage(sp(::data::tree_item) pitem, bool bSelected);
 
 
-         #ifdef DEBUG
             virtual void assert_valid() const;
             virtual void dump(dump_context & dumpcontext) const;
-         #endif
 
          };
 

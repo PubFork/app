@@ -30,7 +30,7 @@ namespace prompt
 
 
  
-   #ifdef DEBUG
+
    void document::assert_valid() const
    {
 	   ::user::document::assert_valid();
@@ -40,7 +40,7 @@ namespace prompt
    {
 	   ::user::document::dump(dumpcontext);
    }
-   #endif //DEBUG
+
 
    /////////////////////////////////////////////////////////////////////////////
    // document serialization
