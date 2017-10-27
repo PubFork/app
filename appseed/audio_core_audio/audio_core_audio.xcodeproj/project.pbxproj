@@ -115,7 +115,7 @@
 		9AC9451E18290B7700AA7325 /* audio_core_aligned.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_core_aligned.cpp; sourceTree = "<group>"; };
 		9AC9451F18290B7700AA7325 /* audio_core_aligned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_core_aligned.h; sourceTree = "<group>"; };
 		9ACE473B1D1FE5E000A1E0AD /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-mac-ekqwiewkpeyhdudtxguywfqohhby/Build/Products/Debug/libaura.dylib"; sourceTree = "<group>"; };
-		9AF4C48F1F83DD7500197385 /* libaudio_core_audio.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaudio_core_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AF4C48F1F83DD7500197385 /* libaudio_core_audio.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libaudio_core_audio.a; path = libios_audio_core_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1CFD778154F5EAA007447E2 /* libaudio_core_audio.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaudio_core_audio.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
