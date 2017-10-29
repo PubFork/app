@@ -1,7 +1,4 @@
 #include "framework.h"
-//#include "fiasco_finder.h"
-
-
 #include <math.h>
 
 #include "freeimage/Source/FreeImage.h"

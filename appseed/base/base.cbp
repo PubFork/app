@@ -83,7 +83,6 @@
 			<Add option="`pkg-config --libs gio-2.0`" />
 			<Add option="-lgthread-2.0" />
 			<Add option="-laxis" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
@@ -109,7 +108,6 @@
 		<Unit filename="base/base_policy/base_policy_winrt.h" />
 		<Unit filename="base/install/install_canvas.cpp" />
 		<Unit filename="base/install/install_canvas.h" />
-		<Unit filename="base/message/message_user.cpp" />
 		<Unit filename="base/message/message_user.h" />
 		<Unit filename="base/node/ansios/ansios.h" />
 		<Unit filename="base/node/linux/linux.h" />
@@ -119,8 +117,6 @@
 		<Unit filename="base/node/linux/linux_exception.cpp" />
 		<Unit filename="base/node/linux/linux_factory_exchange.cpp" />
 		<Unit filename="base/node/linux/linux_factory_exchange.h" />
-		<Unit filename="base/node/linux/linux_interaction_impl.cpp" />
-		<Unit filename="base/node/linux/linux_interaction_impl.h" />
 		<Unit filename="base/node/linux/linux_internal.h" />
 		<Unit filename="base/node/linux/linux_main.cpp" />
 		<Unit filename="base/node/linux/linux_root_tools.cpp" />
@@ -143,23 +139,19 @@
 		<Unit filename="base/os/linux/linux.cpp" />
 		<Unit filename="base/os/linux/linux.h" />
 		<Unit filename="base/os/linux/linux_c.h" />
-		<Unit filename="base/os/linux/linux_cross_win_gdi.cpp" />
-		<Unit filename="base/os/linux/linux_display.cpp" />
+		<Unit filename="base/os/linux/linux_clipboard.cpp" />
 		<Unit filename="base/os/linux/linux_graphics.h" />
 		<Unit filename="base/os/linux/linux_internal.h" />
 		<Unit filename="base/os/linux/linux_linux.h" />
 		<Unit filename="base/os/linux/linux_lock.cpp" />
-		<Unit filename="base/os/linux/linux_message_loop.cpp" />
-		<Unit filename="base/os/linux/linux_multithreading.cpp" />
+		<Unit filename="base/os/linux/linux_multiple_display.cpp" />
 		<Unit filename="base/os/linux/linux_os.cpp" />
 		<Unit filename="base/os/linux/linux_osdisplay.h" />
 		<Unit filename="base/os/linux/linux_oswindow.h" />
 		<Unit filename="base/os/linux/linux_simple_app.cpp" />
 		<Unit filename="base/os/linux/linux_user_impl.h" />
 		<Unit filename="base/os/linux/linux_window_cairo.h" />
-		<Unit filename="base/os/linux/linux_window_xlib.cpp" />
 		<Unit filename="base/os/linux/linux_window_xlib.h" />
-		<Unit filename="base/os/linux/linux_windowing.cpp" />
 		<Unit filename="base/os/linux/linux_windowing.h" />
 		<Unit filename="base/os/os.h" />
 		<Unit filename="database/database.h" />
@@ -175,11 +167,8 @@
 		</Unit>
 		<Unit filename="graphics/graphics.h" />
 		<Unit filename="graphics/graphics_window.h" />
-		<Unit filename="graphics/graphics_window_buffer.cpp" />
 		<Unit filename="graphics/graphics_window_buffer.h" />
-		<Unit filename="graphics/graphics_window_dc.cpp" />
 		<Unit filename="graphics/graphics_window_dc.h" />
-		<Unit filename="graphics/graphics_window_graphics.cpp" />
 		<Unit filename="graphics/graphics_window_graphics.h" />
 		<Unit filename="user/fontopus/fontopus.cpp" />
 		<Unit filename="user/fontopus/fontopus.h" />
@@ -246,7 +235,6 @@
 		<Unit filename="user/user/user_control_descriptor.h" />
 		<Unit filename="user/user/user_control_descriptor_set.cpp" />
 		<Unit filename="user/user/user_control_descriptor_set.h" />
-		<Unit filename="user/user/user_control_event.cpp" />
 		<Unit filename="user/user/user_control_event.h" />
 		<Unit filename="user/user/user_document.cpp" />
 		<Unit filename="user/user/user_document.h" />
@@ -266,32 +254,21 @@
 		<Unit filename="user/user/user_impact_update_hint.cpp" />
 		<Unit filename="user/user/user_impact_update_hint.h" />
 		<Unit filename="user/user/user_inline.h" />
-		<Unit filename="user/user/user_interaction.cpp" />
 		<Unit filename="user/user/user_interaction.h" />
-		<Unit filename="user/user/user_interaction_base.cpp" />
 		<Unit filename="user/user/user_interaction_base.h" />
-		<Unit filename="user/user/user_interaction_child.cpp" />
 		<Unit filename="user/user/user_interaction_child.h" />
-		<Unit filename="user/user/user_interaction_impl.cpp" />
 		<Unit filename="user/user/user_interaction_impl.h" />
-		<Unit filename="user/user/user_interaction_impl_base.cpp" />
 		<Unit filename="user/user/user_interaction_impl_base.h" />
-		<Unit filename="user/user/user_menu.cpp" />
 		<Unit filename="user/user/user_menu.h" />
-		<Unit filename="user/user/user_menu_command.cpp" />
 		<Unit filename="user/user/user_menu_command.h" />
-		<Unit filename="user/user/user_menu_item.cpp" />
 		<Unit filename="user/user/user_menu_item.h" />
 		<Unit filename="user/user/user_message.cpp" />
 		<Unit filename="user/user/user_message.h" />
 		<Unit filename="user/user/user_message_queue.cpp" />
 		<Unit filename="user/user/user_message_queue.h" />
 		<Unit filename="user/user/user_message_queue_listener.h" />
-		<Unit filename="user/user/user_mouse.cpp" />
 		<Unit filename="user/user/user_mouse.h" />
-		<Unit filename="user/user/user_place_holder.cpp" />
 		<Unit filename="user/user/user_place_holder.h" />
-		<Unit filename="user/user/user_place_holder_container.cpp" />
 		<Unit filename="user/user/user_place_holder_container.h" />
 		<Unit filename="user/user/user_plain_edit.cpp" />
 		<Unit filename="user/user/user_plain_edit.h" />
@@ -306,13 +283,9 @@
 		<Unit filename="user/user/user_scroll_bar.h" />
 		<Unit filename="user/user/user_server.cpp" />
 		<Unit filename="user/user/user_server.h" />
-		<Unit filename="user/user/user_style.cpp" />
 		<Unit filename="user/user/user_style.h" />
-		<Unit filename="user/user/user_style_base.cpp" />
 		<Unit filename="user/user/user_style_base.h" />
-		<Unit filename="user/user/user_style_composite.cpp" />
 		<Unit filename="user/user/user_style_composite.h" />
-		<Unit filename="user/user/user_tooltip.cpp" />
 		<Unit filename="user/user/user_tooltip.h" />
 		<Unit filename="user/user/user_user.cpp" />
 		<Unit filename="user/user/user_user.h" />
@@ -323,14 +296,10 @@
 		<Unit filename="user/user/user_view_creator_data.h" />
 		<Unit filename="user/user/user_wait_cursor.cpp" />
 		<Unit filename="user/user/user_wait_cursor.h" />
-		<Unit filename="user/user/user_window_map.cpp" />
 		<Unit filename="user/user/user_window_map.h" />
-		<Unit filename="user/user/user_window_util.cpp" />
 		<Unit filename="user/user/user_window_util.h" />
-		<Unit filename="user/user/user_windowing.cpp" />
 		<Unit filename="user/user/user_windowing.h" />
 		<Unit filename="user/user_prelude.h" />
-		<Unit filename="user/wndfrm/frame/wndfrm_frame_updowninterface.cpp" />
 		<Unit filename="user/wndfrm/frame/wndfrm_frame_updowninterface.h" />
 		<Extensions>
 			<code_completion />

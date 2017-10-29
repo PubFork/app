@@ -4,11 +4,11 @@
 #include "openssl/err.h"
 #endif
 
-#ifndef SMALLCODE
-
-#include "freeimage/Source/FreeImage.h"
-
-#endif
+//#ifndef SMALLCODE
+//
+//#include "Freeimage/FreeImage.h"
+//
+//#endif
 
 
 

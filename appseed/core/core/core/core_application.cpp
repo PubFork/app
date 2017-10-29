@@ -13,7 +13,7 @@
 
 #ifdef LINUX
 
-Display * x11_get_display();
+//Display * x11_get_display();
 
 //#include <dlfcn.h>
 //#include <link.h>
@@ -657,9 +657,9 @@ namespace core
 
 #elif defined(LINUX)
 
-   bool application::OnMessageWindowMessage(XEvent * pevent)
+   bool application::OnX11WindowMessage(void  * pXevent) // XEvent *
    {
-      UNREFERENCED_PARAMETER(pevent);
+      UNREFERENCED_PARAMETER(pXevent);
       return false;
    }
 

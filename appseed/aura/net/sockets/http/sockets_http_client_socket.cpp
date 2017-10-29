@@ -552,7 +552,7 @@ namespace sockets
 
    string http_client_socket::MyUseragent()
    {
-      
+
       string strAddUp;
 
       if (Application.m_strHttpUserAgentToken.has_char() && Application.m_strHttpUserAgentVersion.has_char())
@@ -572,6 +572,8 @@ namespace sockets
       return "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
 #elif defined(MACOS)
       return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
+#elif defined(LINUX)
+      return "Mozilla/5.0 (Linux; x86_64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
 #else
       throw todo(get_app());
 #endif

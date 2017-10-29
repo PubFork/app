@@ -444,7 +444,7 @@ namespace database
       if (strDataKey.replace_ci_count("&data_source=local", "") > 0)
       {
 
-         strDataKey += "&data_source=local";
+         strDataKey += "&data_source=local&";
 
       }
 
@@ -462,7 +462,7 @@ namespace database
 
       str = Application.m_strAppName;
 
-      if (string(Application.get_data_id().m_id).find_ci("&data_source=local&") >= 0)
+      if (string(Application.get_data_id().m_id).find_ci("&data_source=local") >= 0)
       {
 
          str += "&data_source=local&";
@@ -532,7 +532,7 @@ namespace database
    void client::set_local_data_key_modifier()
    {
 
-      add_up_data_key_modifier("&data_source=local");
+      add_up_data_key_modifier("&data_source=local&");
 
    }
 

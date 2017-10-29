@@ -132,6 +132,7 @@ DWORD _AfxGetComCtlVersion();
 
 #include "linux_dir.h"
 #include "linux_file_system.h"
+#include "linux_interaction_impl.h"
 
 
 

@@ -7,6 +7,9 @@
 
 #include "framework.h"
 
+void os_init_imaging();
+
+void os_term_imaging();
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
@@ -26,6 +29,9 @@ double g_machtime_conversion_factor;
 #endif
 
 mutex * g_pmutexCred = NULL;
+
+void os_init_windowing();
+void os_term_windowing();
 
 
 //extern mutex * g_pmutexSignal;
@@ -378,6 +384,15 @@ namespace aura
 
 #endif
 
+#ifdef LINUX
+
+          os_init_windowing();
+
+         os_init_imaging();
+
+#endif
+
+
       }
 
 
@@ -427,6 +442,14 @@ namespace aura
 
       CLASS_DECL_AURA void term()
       {
+
+#ifdef LINUX
+
+      os_term_imaging();
+
+        os_term_windowing();
+
+#endif
 
          delete g_pmapLibCall;
 

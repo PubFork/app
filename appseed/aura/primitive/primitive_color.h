@@ -13,7 +13,7 @@
 
 enum e_color
 {
-   
+
    color_black,
    color_red,
    color_green,
@@ -50,14 +50,14 @@ public:
    color(const color & color);
    color(e_color ecolor);
    color(COLORREF cr);
-   color(RGBQUAD quad);
+//   color(RGBQUAD quad);
    virtual ~color();
 
    void hls_mult(double dRateH, double dRateL, double dRateS);
    void hls_rate(double dRateH, double dRateL, double dRateS);
    void set_rgb(COLORREF cr);
    void set_bgr(uint32_t dw);
-   void set_rgbquad(RGBQUAD quad);
+//   void set_rgbquad(RGBQUAD quad);
    void get_hls(
       double & dH,
       double & dL,
@@ -78,15 +78,15 @@ public:
    uint32_t get_bgr() const;
    uint32_t get_rgba() const;
    uint32_t get_bgra() const;
-   RGBQUAD get_rgbquad() const;
+//   RGBQUAD get_rgbquad() const;
 
 
    operator COLORREF() const;
-   operator RGBQUAD() const;
+//   operator RGBQUAD() const;
 
    color & operator = (const color & color);
    color & operator = (COLORREF cr);
-   color & operator = (RGBQUAD rgbquad);
+//   color & operator = (RGBQUAD rgbquad);
 
    bool parse_color(const char * psz);
 
@@ -107,26 +107,26 @@ public:
 
 namespace visual
 {
-   
-   
+
+
    namespace rgba
    {
-      
-      
+
+
       enum echannel
       {
-         
+
          channel_red = 0,
          channel_green = 1,
          channel_blue = 2,
          channel_alpha = 3
-            
+
       };
-      
-      
+
+
    } // namespace rgba
-   
-   
+
+
 } // namespace visual
 
 

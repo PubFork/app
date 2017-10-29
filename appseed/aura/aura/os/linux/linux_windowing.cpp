@@ -11,6 +11,10 @@ void wm_state_hidden_raw(oswindow w, bool bSet);
 CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow);
 
 
+#ifdef LINUX
+int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent);
+#endif
+
 
 struct MWMHints
 {
@@ -1352,6 +1356,12 @@ Display * x11_get_display();
 bool c_xstart()
 {
 
+
+   if(!XInitThreads())
+      return -1;
+
+
+
    Display * dpy = x11_get_display();
 
    g_oswindowDesktop = oswindow_get(dpy, DefaultRootWindow(dpy));
@@ -2610,16 +2620,16 @@ void process_message(osdisplay_data * pdata, Display * display)
       if(msg.hwnd != NULL)
       {
 
-         ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
+         ::user::interaction_impl_base * pimpl = msg.hwnd->m_pimpl;
 
-         if(pui != NULL)
+         if(pimpl != NULL)
          {
 
-            ::user::interaction_impl_base * pimpl = pui->m_pimpl;
+            ::user::interaction * pui = pimpl->m_pui;
 
             bool bHandled = false;
 
-            if(pimpl != NULL)
+            if(pui != NULL)
             {
 
                g_xxx++;
@@ -3056,4 +3066,71 @@ namespace aura
 } // namespace aura
 
 
+
+
+
+void os_init_windowing()
+{
+
+
+      set_TranslateMessage(&axis_TranslateMessage);
+
+      set_DispatchMessage(&axis_DispatchMessage);
+
+      oswindow_data::s_pdataptra = new oswindow_dataptra;
+
+      oswindow_data::s_pmutex = new mutex;
+
+      osdisplay_data::s_pdataptra = new osdisplay_dataptra;
+
+      osdisplay_data::s_pmutex = new mutex;
+
+      XSetErrorHandler(_c_XErrorHandler);
+
+}
+
+
+void os_term_windowing()
+{
+
+      delete osdisplay_data::s_pmutex;
+
+      osdisplay_data::s_pmutex = NULL;
+
+      delete osdisplay_data::s_pdataptra;
+
+      osdisplay_data::s_pdataptra = NULL;
+
+      delete oswindow_data::s_pmutex;
+
+      oswindow_data::s_pmutex = NULL;
+
+      delete oswindow_data::s_pdataptra;
+
+      oswindow_data::s_pdataptra = NULL;
+
+}
+
+
+
+
+
+int xlib_error_handler(Display * d, XErrorEvent * e)
+{
+
+   if(e->request_code == 12) //
+   {
+
+      if(e->error_code == BadValue)
+      {
+      }
+
+   }
+   char sz[1024];
+   XGetErrorText(d, e->error_code, sz, sizeof(sz));
+   fputs(sz, stderr);
+
+   abort();
+
+}
 

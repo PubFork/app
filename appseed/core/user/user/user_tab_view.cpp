@@ -493,6 +493,15 @@ namespace user
 
       }
 
+      if (m_pviewdata->m_pwnd != NULL)
+      {
+
+         m_pviewdata->m_pwnd->set_need_layout();
+
+         m_pviewdata->m_pwnd->set_need_redraw();
+
+      }
+
       ::user::impact * pview = NULL;
 
       if (m_pviewdata->m_pwnd != NULL)

@@ -4,17 +4,17 @@
 namespace userex
 {
 
-   
+
    class pane_tab_view;
-   
-   
+
+
 } // namespace userex
 
 
 namespace core
 {
 
-   
+
    enum e_end
    {
 
@@ -25,7 +25,7 @@ namespace core
 
    };
 
-   
+
    class CLASS_DECL_CORE application:
       virtual public ::base::application,
       virtual public ::filemanager::callback
@@ -184,7 +184,7 @@ namespace core
 #ifdef WINDOWS
       virtual bool OnMessageWindowMessage(LPMESSAGE lpmsg);
 #elif defined(LINUX)
-      virtual bool OnMessageWindowMessage(XEvent * pev);
+      virtual bool OnX11WindowMessage(void * pev);
 #endif
 
       bool CreateFileFromRawResource(UINT nID,const char * lcszType,const char * lpcszFilePath);
@@ -406,7 +406,7 @@ namespace core
 
       virtual sp(::aura::printer) get_printer(const char * pszDeviceName) override;
 
-      
+
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;
 

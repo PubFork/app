@@ -123,7 +123,7 @@ FI_STRUCT (FIMULTIBITMAP) { void *data; };
 #define _WINDOWS_	// prevent a bug in MinGW32
 #endif // __MINGW32__
 
-#if !defined(_WINDOWS_) && !defined(LINUX) && !defined(APPLEOS) && !defined(ANDROID)
+#if !defined(_WINDOWS_) // && !defined(LINUX) && !defined(APPLEOS) && !defined(ANDROID)
 #define _WINDOWS_
 
 #ifndef FALSE
@@ -145,7 +145,7 @@ FI_STRUCT (FIMULTIBITMAP) { void *data; };
 #ifndef _MSC_VER
 // define portable types for 32-bit / 64-bit OS
 #include "_inttypes.h"
-typedef int32_t WINBOOL;
+//typedef int32_t WINBOOL;
 typedef uint8_t BYTE;
 typedef uint16_t WORD;
 typedef uint32_t DWORD;
@@ -154,7 +154,7 @@ typedef int64_t INT64;
 typedef uint64_t UINT64;
 #else
 // MS is not C99 ISO compliant
-typedef long WINBOOL;
+//typedef long WINBOOL;
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef unsigned long DWORD;

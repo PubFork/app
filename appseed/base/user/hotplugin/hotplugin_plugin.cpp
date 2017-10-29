@@ -242,7 +242,7 @@ namespace hotplugin
 
 #elif defined(LINUX) || defined(SOLARIS)
 
-   int32_t plugin::message_handler(XEvent * pevent)
+   int32_t plugin::x11_message_handler(void  * pevent)
    {
       return 0;
    }

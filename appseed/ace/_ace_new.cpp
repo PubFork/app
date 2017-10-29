@@ -21,6 +21,7 @@ extern "C"
 
 }
 
+
 #ifdef WINDOWS
 
 void * operator new(size_t nSize)
@@ -31,6 +32,8 @@ void * operator new(size_t nSize)
 }
 
 #else
+
+
 
 void * operator new(size_t nSize) new_throw_spec
 {
@@ -84,8 +87,6 @@ void operator delete(void * p, size_t n) del_throw_spec
    ::operator delete(p);
 
 }
-
-
 
 
 

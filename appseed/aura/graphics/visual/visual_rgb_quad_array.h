@@ -1,12 +1,12 @@
 #pragma once
 
 
-class CLASS_DECL_AURA rgb_quad_array : 
-   public array < RGBQUAD, RGBQUAD >
+class CLASS_DECL_AURA colorref_array :
+   virtual public numeric_array < COLORREF >
 {
 public:
-   rgb_quad_array();
-   virtual ~rgb_quad_array();
+   colorref_array();
+   virtual ~colorref_array();
 
    void create_web_palette();
 };

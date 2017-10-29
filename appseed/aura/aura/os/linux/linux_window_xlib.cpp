@@ -74,6 +74,8 @@ void window_xlib::create_window_graphics_(int64_t cxParam, int64_t cyParam, int 
 
    XGCValues gcvalues;
 
+   m_pdc = new device_context();
+
    m_pdc->m_gc = XCreateGC(m_pimpl->m_oswindow->display(), m_pimpl->m_oswindow->window(), 0, &gcvalues);
 
    m_pdc->m_pdisplay = m_pimpl->m_oswindow->display();
