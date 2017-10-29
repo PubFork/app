@@ -955,7 +955,7 @@ namespace crypto
    }
 
 
-#elif defined(OPENSSL_CRYPTO)
+#elif defined(HAVE_OPENSSL)
 
 
    sp(::crypto::rsa) crypto::generate_rsa_key()
