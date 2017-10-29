@@ -5,6 +5,8 @@
 
 #ifdef WINDOWS
 #include <intrin.h>
+#elif defined(RASPBIAN)
+
 #elif defined(LINUX)
 #include <cpuid.h>
 #endif

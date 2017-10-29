@@ -338,7 +338,6 @@
 		<Unit filename="aura/compress/zip/zip_util.cpp" />
 		<Unit filename="aura/compress/zip/zip_util.h" />
 		<Unit filename="aura/compress/zip/zip_zip.cpp" />
-		<Unit filename="aura/crypto/aaa_want_to_remove_crypto.cpp" />
 		<Unit filename="aura/crypto/crypto.h" />
 		<Unit filename="aura/crypto/crypto_crypto.cpp" />
 		<Unit filename="aura/crypto/crypto_crypto.h" />

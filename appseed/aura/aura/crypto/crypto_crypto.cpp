@@ -1,6 +1,6 @@
 #include "framework.h"
 
-#if defined(OPENSSL_CRYPTO) || defined(METROWIN)
+#if defined(HAVE_OPENSSL)
 
 #include <openssl/rsa.h>
 #include <openssl/md5.h>
@@ -14,9 +14,7 @@
 #include <openssl/whrlpool.h>
 
 
-#endif
 
-#if defined(HAVE_OPENSSL) || defined(METROWIN)
 
 #include <openssl/ssl.h>
 

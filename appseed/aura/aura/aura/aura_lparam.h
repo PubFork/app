@@ -2,7 +2,7 @@
 
 //class cnull
 //{
-//public: 
+//public:
 //};
 
 
@@ -18,7 +18,7 @@ public:
 
    lparam(LPARAM lparam = 0) { m_lparam = lparam; }
 
-#ifndef VSNORD
+#if !defined(VSNORD) && !defined(RASPBIAN)
 
    lparam(int i) { m_lparam = (LPARAM) i; }
 

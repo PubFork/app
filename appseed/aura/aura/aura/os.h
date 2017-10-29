@@ -22,11 +22,6 @@
 #include "aura/os/linux/linux_linux.h"
 
 
-#define BSD_STYLE_SOCKETS
-#define HAVE_MYSQL
-#define HAVE_OPENSSL
-
-
 #elif defined(METROWIN)
 
 
