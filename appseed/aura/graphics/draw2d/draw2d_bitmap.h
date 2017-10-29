@@ -34,9 +34,11 @@ namespace draw2d
          virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
          virtual bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
          virtual bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-         virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
-         virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
-         virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+//         virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
+  //       virtual bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void * pcolorref, int iScan, HANDLE hSection, uint32_t offset);
+    //     virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+         virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppcolorref, int * piScan, HANDLE hSection, uint32_t offset);
+         virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage);
 
          virtual bool attach(void * posdata);
          virtual void * detach();

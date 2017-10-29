@@ -95,15 +95,17 @@ namespace draw2d_cairo
       if(width <= 0 || height <= 0)
          return FALSE;
 
-      memset(&m_info, 0, sizeof (BITMAPINFO));
+//      memset(&m_info, 0, sizeof (BITMAPINFO));
+//
+//      m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
+//      m_info.bmiHeader.biWidth         = width;
+//      m_info.bmiHeader.biHeight        = -height;
+//      m_info.bmiHeader.biPlanes        = 1;
+//      m_info.bmiHeader.biBitCount      = 32;
+//      m_info.bmiHeader.biCompression   = BI_RGB;
+//      m_info.bmiHeader.biSizeImage     = width * height * 4;
 
-      m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-      m_info.bmiHeader.biWidth         = width;
-      m_info.bmiHeader.biHeight        = -height;
-      m_info.bmiHeader.biPlanes        = 1;
-      m_info.bmiHeader.biBitCount      = 32;
-      m_info.bmiHeader.biCompression   = BI_RGB;
-      m_info.bmiHeader.biSizeImage     = width * height * 4;
+
 
       m_spbitmap.alloc(allocer());
       m_spgraphics.alloc(allocer());
@@ -116,7 +118,7 @@ namespace draw2d_cairo
          return FALSE;
       }
 
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL, 0))
+      if(!m_spbitmap->CreateDIBSection(NULL, width, height, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL, 0))
       {
          m_size.cx = 0;
          m_size.cy = 0;

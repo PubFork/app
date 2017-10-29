@@ -69,7 +69,7 @@ void window_buffer::update_window(::draw2d::dib * pdib)
 
    }
 
-   if (m_spdibBuffer->host(m_pcolorref, m_iScan, abs(m_bitmapinfo.bmiHeader.biWidth), abs(m_bitmapinfo.bmiHeader.biHeight)))
+   if (m_spdibBuffer->host(m_pcolorref, m_iScan, abs(m_cx), abs(m_cy)))
    {
 
       m_bDibIsHostingBuffer = true;

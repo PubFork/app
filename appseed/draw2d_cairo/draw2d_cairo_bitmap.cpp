@@ -13,7 +13,7 @@ namespace draw2d_cairo
 
    }
 
-   
+
    bitmap::~bitmap()
    {
 
@@ -111,21 +111,10 @@ namespace draw2d_cairo
    }
 
 
-   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppdata, int * pstride, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppdata, int * pstride, HANDLE hSection, uint32_t offset)
    {
 
       synch_lock ml(cairo_mutex());
-
-      int cy = abs(lpbmi->bmiHeader.biHeight);
-
-      int cx = abs(lpbmi->bmiHeader.biWidth);
-
-      if(lpbmi->bmiHeader.biPlanes != 1 || lpbmi->bmiHeader.biBitCount != 32)
-      {
-
-         ::exception::throw_not_implemented(get_app());
-
-      }
 
       if(m_psurface != NULL)
       {
@@ -202,9 +191,11 @@ namespace draw2d_cairo
    }
 
 
-   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, DWORD flInit, const void *pjBits, UINT iUsage)
    {
+
       return FALSE;
+
    }
 
 
@@ -379,7 +370,7 @@ synch_lock ml(cairo_mutex());
    {
 
       synch_lock ml(cairo_mutex());
-      
+
       if (m_psurface == NULL)
       {
 

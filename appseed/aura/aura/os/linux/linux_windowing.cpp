@@ -2620,16 +2620,16 @@ void process_message(osdisplay_data * pdata, Display * display)
       if(msg.hwnd != NULL)
       {
 
-         ::user::interaction * pui = msg.hwnd->m_pimpl->m_pui;
+         ::user::interaction_impl_base * pimpl = msg.hwnd->m_pimpl;
 
-         if(pui != NULL)
+         if(pimpl != NULL)
          {
 
-            ::user::interaction_impl_base * pimpl = pui->m_pimpl;
+            ::user::interaction * pui = pimpl->m_pui;
 
             bool bHandled = false;
 
-            if(pimpl != NULL)
+            if(pui != NULL)
             {
 
                g_xxx++;
@@ -3086,7 +3086,7 @@ void os_init_windowing()
       osdisplay_data::s_pmutex = new mutex;
 
       XSetErrorHandler(_c_XErrorHandler);
-      
+
 }
 
 
@@ -3108,7 +3108,7 @@ void os_term_windowing()
       delete oswindow_data::s_pdataptra;
 
       oswindow_data::s_pdataptra = NULL;
-      
+
 }
 
 

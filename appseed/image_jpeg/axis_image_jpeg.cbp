@@ -48,16 +48,16 @@
 			<Add option="-DVARIADIC_TEMPLATE_FORMAT2" />
 			<Add directory="../../../include" />
 			<Add directory="../../appseed" />
-			<Add directory="../freeimage/Source/FreeImage" />
+			<Add directory="../aura/graphics/freeimage/Source/FreeImage" />
 			<Add directory="../../appseed/aura" />
-			<Add directory="../freeimage/Source" />
+			<Add directory="../aura/graphics/freeimage/Source" />
 			<Add directory="../../include" />
 			<Add directory="../../.." />
+			<Add directory="../aura/graphics" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
 			<Add option="-laura" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-ljpeg" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />

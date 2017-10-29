@@ -7,6 +7,9 @@
 
 #include "framework.h"
 
+void os_init_imaging();
+
+void os_term_imaging();
 
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
@@ -385,7 +388,10 @@ namespace aura
 
           os_init_windowing();
 
+         os_init_imaging();
+
 #endif
+
 
       }
 
@@ -438,6 +444,8 @@ namespace aura
       {
 
 #ifdef LINUX
+
+      os_term_imaging();
 
         os_term_windowing();
 

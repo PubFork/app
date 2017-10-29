@@ -1,5 +1,4 @@
 #include "framework.h"
-#define _WINDOWS_
 
 #include <stdio.h>
 
@@ -192,10 +191,6 @@ bool dib_from_freeimage(::draw2d::dib * pdib, FIBITMAP *pfibitmap)
 
    }
 
-   BITMAPINFO * pbi = NULL;
-
-   void * pdata = NULL;
-
    FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
 
    if (pimage32 == NULL)
@@ -205,29 +200,33 @@ bool dib_from_freeimage(::draw2d::dib * pdib, FIBITMAP *pfibitmap)
 
    }
 
-   pbi = FreeImage_GetInfo(pimage32);
+   int w = FreeImage_GetWidth(pimage32);
 
-   pdata = FreeImage_GetBits(pimage32);
+   int h = FreeImage_GetHeight(pimage32);
 
-   if (!pdib->create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
+   if (!pdib->create(w, h))
    {
 
       return false;
 
    }
 
+   void * pdata = FreeImage_GetBits(pimage32);
+
+   int iSrcScan = FreeImage_GetPitch(pimage32);
+
+   int iLineSize = w * sizeof(COLORREF);
+
    pdib->map();
 
 #if defined(ANDROID)
-
-   int stride = pbi->bmiHeader.biWidth * sizeof(COLORREF);
 
    for (index y = 0; y < pdib->m_size.cy; y++)
    {
 
       byte * pbDst = ((byte *)pdib->m_pcolorref) + ((pdib->m_size.cy - y - 1) * pdib->m_iScan);
 
-      byte * pbSrc = (byte *)pdata + (y * stride);
+      byte * pbSrc = (byte *)pdata + (y * iSrcScan);
 
       for (index x = 0; x < pdib->m_size.cx; x++)
       {
@@ -280,9 +279,9 @@ bool dib_from_freeimage(::draw2d::dib * pdib, FIBITMAP *pfibitmap)
    {
 
       memcpy(
-         &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (pdib->m_size.cy - i - 1)],
-         &((byte *)pdata)[pbi->bmiHeader.biWidth * sizeof(COLORREF) * i],
-         pdib->m_iScan);
+         &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (h - i - 1)],
+         &((byte *)pdata)[iSrcScan * i],
+         iLineSize);
 
    }
 
@@ -392,14 +391,18 @@ long __TellProc (fi_handle handle)
 //#endif
 
 
-uint32_t DLL_CALLCONV  __ReadProc2 (void *buffer, uint32_t size, uint32_t count, fi_handle handle)
+unsigned DLL_CALLCONV  __ReadProc2 (void *buffer, unsigned size, unsigned count, fi_handle handle)
 {
 
    memory_size_t dwRead;
 
    ::file::file *  pfile = (::file::file * ) handle;
 
-   if((dwRead = pfile->read(buffer, count * size)) > 0)
+   DWORD dwTotal = count * size;
+
+   dwRead = pfile->read(buffer, dwTotal);
+
+   if(dwRead == dwTotal)
    {
 
       return count;
@@ -408,14 +411,14 @@ uint32_t DLL_CALLCONV  __ReadProc2 (void *buffer, uint32_t size, uint32_t count,
    else
    {
 
-      return --count;
+      return dwRead / size;
 
    }
 
 }
 
 
-uint32_t DLL_CALLCONV __WriteProc2(void *buffer, uint32_t size, uint32_t count, fi_handle handle)
+unsigned DLL_CALLCONV __WriteProc2(void *buffer, unsigned size, unsigned count, fi_handle handle)
 {
 
    ::file::file *  pfile = (::file::file * ) handle;
@@ -429,7 +432,7 @@ uint32_t DLL_CALLCONV __WriteProc2(void *buffer, uint32_t size, uint32_t count, 
    catch(...)
    {
 
-      return --count;
+      return 0;
 
    }
 
@@ -438,7 +441,7 @@ uint32_t DLL_CALLCONV __WriteProc2(void *buffer, uint32_t size, uint32_t count, 
 }
 
 
-int32_t DLL_CALLCONV __SeekProc2(fi_handle handle, long offset, int32_t origin)
+int DLL_CALLCONV __SeekProc2(fi_handle handle, long offset, int origin)
 {
 
    ::file::file *  pfile = (::file::file * ) handle;
@@ -488,6 +491,7 @@ long DLL_CALLCONV __TellProc2(fi_handle handle)
    return (long) pfile->get_position();
 
 }
+
 
 
 //static uint32_t _stdcall  __ReadProc3 (void *buffer, uint32_t size, uint32_t count, fi_handle handle);
@@ -745,7 +749,7 @@ namespace visual
    const char * lpszId)
    {
    ::exception::throw_not_implemented(get_app());
-   
+
    ::memory_file file(get_app());
 
    ::core::Resource resource;
@@ -999,17 +1003,17 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
       do
       {
 
-         auto type = FreeImage_GetTagType(tag);
-
-         auto value = FreeImage_GetTagValue(tag);
-
          if (!_stricmp(FreeImage_GetTagKey(tag), "orientation"))
          {
 
             bOrientation = true;
 
+            auto type = FreeImage_GetTagType(tag);
+
             if (type == FIDT_SHORT)
             {
+
+               auto value = FreeImage_GetTagValue(tag);
 
                iExifOrientation = *((unsigned short*)value);
 
@@ -1041,7 +1045,9 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    }
 
-   if (bOrientation)
+   FreeImage_Unload(pfibitmap);
+
+   if (iExifOrientation >= 0)
    {
 
       ::draw2d::dib_sp dib2(allocer());
@@ -1098,13 +1104,29 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    }
 
-   FreeImage_Unload(pfibitmap);
-
-
 
    return true;
 
 
 }
 
+
+
+
+
+void os_init_imaging()
+{
+
+   FreeImage_Initialise(FALSE);
+
+}
+
+
+void os_term_imaging()
+{
+
+   FreeImage_DeInitialise();
+
+
+}
 

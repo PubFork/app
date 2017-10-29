@@ -1,19 +1,19 @@
 #include "framework.h"
 
 
-rgb_quad_array::rgb_quad_array()
+colorref_array::colorref_array()
 {
 
 }
 
 
-rgb_quad_array::~rgb_quad_array()
+colorref_array::~colorref_array()
 {
 
 }
 
 
-void rgb_quad_array::create_web_palette()
+void colorref_array::create_web_palette()
 {
 
    // Do nothing
@@ -29,10 +29,9 @@ void rgb_quad_array::create_web_palette()
       {
          for(int32_t nRedIdx = 0; nRedIdx < STANDARD_COLOR_SIZE; ++nRedIdx)
          {
-            this->element_at(nColorMapIdx).rgbRed      = (BYTE) STANDARD_PALETTE[nRedIdx];
-            this->element_at(nColorMapIdx).rgbGreen    = (BYTE) STANDARD_PALETTE[nGreenIdx];
-            this->element_at(nColorMapIdx).rgbBlue     = (BYTE) STANDARD_PALETTE[nBlueIdx];
-            this->element_at(nColorMapIdx).rgbReserved = 0;
+            this->element_at(nColorMapIdx) = ARGB(255, (BYTE) STANDARD_PALETTE[nRedIdx],
+             (BYTE) STANDARD_PALETTE[nGreenIdx],
+               (BYTE) STANDARD_PALETTE[nBlueIdx]);
             ++nColorMapIdx;
          }
       }

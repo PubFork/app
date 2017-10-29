@@ -100,7 +100,7 @@ public:
    ::count                 m_cSpan;
    ::thread::e_op          m_eop;
    sp(::thread_toolset)    m_ptoolset;
-   
+
 
 
    thread_tools(::aura::application * papp);
@@ -143,10 +143,10 @@ public:
       return pset;
 
    }
-   
+
    bool select_toolset(thread_toolset * pset);
    //bool select_predset(pred_set * pset);
-   
+
 
 };
 
@@ -169,7 +169,7 @@ template < typename PRED >
 
    auto  ptools = ::get_thread_tools();
 
-   if (ptools == NULL)
+   if (ptools == NULL || ptools->get_count() <= 0)
    {
 
       pred(0, iStart, iCount, 1);
@@ -216,7 +216,7 @@ template < typename PRED >
 
 ::count thread_toolset::get_span() const
 {
-   return m_pthreadtools->get_span(); 
+   return m_pthreadtools->get_span();
 }
 
 bool thread_toolset::operator()()

@@ -117,7 +117,7 @@ void html_form::_001OnImageLoaded(::message::message * pobj)
 
 void html_form::install_message_routing(::message::sender * pinterface)
 {
-   
+
    ::user::form_view::install_message_routing(pinterface);
 
    IGUI_MSG_LINK(WM_CREATE, pinterface, this, &html_form::_001OnCreate);
@@ -179,7 +179,7 @@ void html_form::on_layout()
    if(get_html_data() == NULL)
       return;
 
-   get_html_data()->implement_and_layout(this);
+   get_html_data()->layout(this);
 
 }
 
@@ -195,7 +195,7 @@ void html_form::_001OnCreate(::message::message * pobj)
    {
       pcreate->set_lresult(0);
       pcreate->m_bRet = true;
-      
+
    }
 
 }
@@ -208,11 +208,11 @@ void html_form::on_update(::user::impact * pSender, LPARAM lHint, object* pHint)
 
    if (lHint == 123)
    {
-    
+
 
       if (m_strOpenOnCreate.has_char())
       {
-         
+
          get_document()->on_open_document(m_strOpenOnCreate);
 
          m_strOpenOnCreate.Empty();
@@ -237,7 +237,7 @@ void html_form::_001OnLButtonDown(::message::message * pobj)
       ::html::message htmlmessage(get_app());
 
       htmlmessage.m_pdata = get_html_data();
-      
+
       htmlmessage.m_psignal = pmouse;
 
       htmlmessage.m_psender = pmouse->m_psender;
@@ -259,7 +259,7 @@ void html_form::_001OnMouseMove(::message::message * pobj)
    point pt(pmouse->m_pt);
 
    ScreenToClient(&pt);
-   
+
    synch_lock sl(m_pmutex);
 
    html::elemental * pelemental = get_html_data()->m_elemental.hit_test(get_html_data(), pt);
@@ -353,7 +353,7 @@ void html_form::_001OnLButtonUp(::message::message * pobj)
    if(m_phtmlform->m_pelementalLButtonDown != NULL
       && pelemental == m_phtmlform->m_pelementalLButtonDown)
    {
-      
+
       ::html::message htmlmessage(get_app());
 
       htmlmessage.m_pdata = get_html_data();
@@ -370,12 +370,12 @@ void html_form::_001OnLButtonUp(::message::message * pobj)
 
 void html_form::_001OnDestroy(::message::message * pobj)
 {
- 
+
    if (get_document() != NULL)
    {
 
       ::html::data * pdata = get_document()->m_spadata.get < ::html::data >();
-      
+
       if (pdata != NULL)
       {
 
