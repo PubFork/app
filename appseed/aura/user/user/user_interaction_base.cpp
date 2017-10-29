@@ -777,7 +777,7 @@ Restart:
 #ifdef LINUX
 
 
-   LRESULT interaction_base::send_message(XEvent * pevent)
+   LRESULT interaction_base::send_x11_event(void * pevent)
    {
 
       ::exception::throw_interface_only(get_app());

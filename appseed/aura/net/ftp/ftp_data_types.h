@@ -22,7 +22,7 @@ namespace ftp
 
    enum e_connection_type
    {
-      
+
       connection_type_plain,
       connection_type_tls_implicit,
       connection_type_tls_explicit,

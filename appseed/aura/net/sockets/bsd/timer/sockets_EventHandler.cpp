@@ -34,17 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace sockets
 {
 
-#ifdef DEBUG
-   EventHandler::EventHandler(::aura::application * papp, logger *p) :
-#else
-   EventHandler::EventHandler(::aura::application * papp) :
-#endif
+
+   EventHandler::EventHandler(::aura::application * papp, ::aura::log *p) :
       ::object(papp),
-#ifdef DEBUG
       socket_handler(papp, p),
-#else
-      socket_handler(papp),
-#endif
       m_quit(false), m_socket(NULL)
    {
 

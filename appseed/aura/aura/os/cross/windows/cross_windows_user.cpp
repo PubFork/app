@@ -1,4 +1,7 @@
 #include "framework.h"
+#if defined(LINUX)
+#include "aura/aura/os/linux/linux_user_impl.h""
+#endif
 #if defined(APPLEOS) || defined(LINUX) || defined(ANDROID)
 #include <iconv.h>
 #else
@@ -458,4 +461,76 @@ CLASS_DECL_AURA int_bool IsRectEmpty(LPCRECT lpcrect)
 
 }
 
+
+
+
+
+
+WINBOOL IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDescendant)
+{
+   return oswindowParent->is_child(oswindowcandidateChildOrDescendant);
+}
+
+oswindow GetParent(::oswindow oswindow)
+{
+   return oswindow->get_parent();
+}
+
+oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
+{
+   return oswindow->set_parent(oswindowNewParent);
+}
+
+WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
+{
+   return oswindow->show_window(nCmdShow);
+}
+
+LONG GetWindowLongA(::oswindow oswindow, int nIndex)
+{
+   return (LONG) oswindow->get_window_long_ptr(nIndex);
+}
+
+LONG SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
+{
+   return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
+}
+
+LONG_PTR GetWindowLongPtrA(::oswindow oswindow, int nIndex)
+{
+   return oswindow->get_window_long_ptr(nIndex);
+}
+
+LONG_PTR SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
+{
+   return oswindow->set_window_long_ptr(nIndex, l);
+}
+
+WINBOOL ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
+{
+   return oswindow->client_to_screen(lppoint);
+}
+
+WINBOOL ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
+{
+   return oswindow->screen_to_client(lppoint);
+}
+
+WINBOOL IsIconic(::oswindow oswindow)
+{
+   return oswindow->is_iconic();
+}
+
+WINBOOL IsWindowVisible(::oswindow oswindow)
+{
+   return oswindow->is_window_visible();
+}
+
+
+#define GetWindowLong GetWindowLongA
+#define SetWindowLong SetWindowLongA
+
+
+
+CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
 

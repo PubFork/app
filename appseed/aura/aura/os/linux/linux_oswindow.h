@@ -80,24 +80,6 @@ CLASS_DECL_AURA bool oswindow_remove_message_only_window(::user::interaction_imp
 
 
 
-inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDescendant);
-inline oswindow GetParent(::oswindow oswindow);
-inline oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent);
-inline bool ShowWindow(::oswindow oswindow, int32_t nCmdShow);
-inline LONG GetWindowLongA(::oswindow oswindow, int32_t nIndex);
-inline LONG SetWindowLongA(::oswindow oswindow, int32_t nIndex, LONG l);
-inline bool ClientToScreen(::oswindow oswindow, LPPOINT lppoint);
-inline bool ScreenToClient(::oswindow oswindow, LPPOINT lppoint);
-inline int32_t IsIconic(::oswindow oswindow);
-inline int32_t IsWindowVisible(::oswindow oswindow);
-
-
-#define GetWindowLong GetWindowLongA
-#define SetWindowLong SetWindowLongA
-
-
-
-CLASS_DECL_AURA bool IsWindow(oswindow oswindow);
 
 
 #endif

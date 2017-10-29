@@ -54,12 +54,7 @@ namespace sockets
 
 
 
-#ifdef DEBUG
-         EventHandler(::aura::application * papp, logger * = NULL);
-#else
-         EventHandler(::aura::application * papp);
-#endif
-         //EventHandler(::aura::application * papp, mutex &,logger * = NULL);
+         EventHandler(::aura::application * papp, ::aura::log * plogger = NULL);
          ~EventHandler();
 
          bool GetTimeUntilNextEvent(struct timeval *tv);

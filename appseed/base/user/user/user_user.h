@@ -54,11 +54,6 @@ namespace user
          virtual bool finalize();
 
 
-#ifdef LINUX
-
-         virtual sp(::message::base) get_base(XEvent * pevent,::user::interaction * pwnd = NULL);
-
-#endif
 
 
          virtual sp(type) controltype_to_typeinfo(::user::e_control_type type);

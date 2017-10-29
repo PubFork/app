@@ -209,18 +209,7 @@ namespace user
    }
 
 
-#ifdef LINUX
 
-   sp(::message::base) user::get_base(XEvent * pevent,::user::interaction * pwnd)
-   {
-
-      throw todo(get_app());
-
-      return NULL;
-
-   }
-
-#endif
 
 //   ::user::front_end_schema * GetUfeSchema(::aura::application * papp)
 //   {

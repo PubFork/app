@@ -1,7 +1,7 @@
 #pragma once
 //#include <X11/extensions/Xrender.h>
 
-#include "app/appseed/base/graphics/graphics_window_buffer.h"
+//#include "app/appseed/base/graphics/graphics_window_buffer.h"
 
 
 class CLASS_DECL_AURA window_xlib :
@@ -12,7 +12,8 @@ public:
 
    //oswindow                      m_window;
    device_context *              m_pdc;
-   memory           m_mem;
+   //GC                            m_gc;
+   memory                        m_mem;
    int                           m_iScan;
    XImage *                      m_pimage;
    bool                          m_bMapped;

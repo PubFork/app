@@ -82,5 +82,10 @@ class simple_scroll_bar;
 #include "aura/aura/os/macos/macos_user.h"
 #include "aura/aura/node/macos/macos_user.h"
 
+#elif defined(LINUX)
+
+#include "aura/aura/os/linux/linux_user.h"
+
+
 #endif
 

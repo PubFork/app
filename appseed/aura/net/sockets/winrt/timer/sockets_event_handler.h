@@ -60,8 +60,8 @@ namespace sockets
    public:
 
 
-      EventHandler(::axis::application * papp, logger * = NULL);
-      EventHandler(::axis::application * papp, mutex &,logger * = NULL);
+      EventHandler(::axis::application * papp, ::aura::log * p = NULL);
+      //EventHandler(::axis::application * papp, mutex &,logger * = NULL);
       ~EventHandler();
 
       bool GetTimeUntilNextEvent(struct timeval *tv);

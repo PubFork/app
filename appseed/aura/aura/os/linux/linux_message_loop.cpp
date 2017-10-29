@@ -1,5 +1,5 @@
-#include "framework.h" // from ""axis/user/user.h"
-#include "linux.h"
+#include "framework.h"
+#include "linux_user_impl.h"
 
 /*
 class sys_message_queue
@@ -17,26 +17,6 @@ public:
 
 };
 
-
-
-
-void _c_simple_message_loop()
-{
-
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
 
 
 
@@ -160,22 +140,5 @@ LRESULT axis_DispatchMessage(const MESSAGE * lpmessage)
 }
 
 
-
-void _c_simple_message_loop()
-{
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg, NULL, 0, 0))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
 
 

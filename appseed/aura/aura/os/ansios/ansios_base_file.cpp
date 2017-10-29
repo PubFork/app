@@ -638,3 +638,47 @@ END_EXTERN_C
 
 
 
+
+
+
+#ifdef __cplusplus
+
+string file_first_line_dup(const string & strPath)
+{
+
+   string line;
+
+   FILE * file = fopen_dup(strPath, "r");
+
+   try
+   {
+
+   int c;
+
+   do
+   {
+
+      c = fgetc (file);
+
+      if (c == '\n') break;
+
+      if (c == '\r') break;
+
+      line += (char) c;
+
+   } while (c != EOF);
+
+   }
+   catch(...)
+   {
+
+   }
+
+   fclose(file);
+
+   return line;
+
+}
+
+
+#endif

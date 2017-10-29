@@ -19,23 +19,6 @@ public:
 
 
 
-void _c_simple_message_loop()
-{
-
-
-   MESSAGE msg;
-
-	while(GetMessage(&msg))
-	{
-
-		TranslateMessage(&msg);
-
-		DispatchMessage(&msg);
-
-	}
-
-
-}
 
 
 

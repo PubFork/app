@@ -1,10 +1,11 @@
 #include "framework.h"
+#include "linux_user_impl.h"
 
 Display * x11_get_display();
 
-//#define CA2_X11_WINDOW_LONG "ca2_ccvotagus_window_long"
-//#define CA2_X11_WINDOW_LONG_STYLE "ca2_ccvotagus_window_long_style"
-//#define CA2_X11_WINDOW_LONG_STYLE_EX "ca2_ccvotagus_window_long_style_ex"
+#define CA2_X11_WINDOW_LONG "ca2_ccvotagus_window_long"
+#define CA2_X11_WINDOW_LONG_STYLE "ca2_ccvotagus_window_long_style"
+#define CA2_X11_WINDOW_LONG_STYLE_EX "ca2_ccvotagus_window_long_style_ex"
 
 osdisplay_dataptra * osdisplay_data::s_pdataptra = NULL;
 mutex * osdisplay_data::s_pmutex = NULL;
@@ -71,9 +72,9 @@ osdisplay_data * osdisplay_get(Display * pdisplay)
    osdisplay_data * pdata     = new osdisplay_data;
 
    pdata->m_pdisplay          = pdisplay;
-   pdata->m_atomLongType      = XInternAtom(pdisplay     , CA2_X11_WINDOW_LONG            , False);
-   pdata->m_atomLongStyle     = XInternAtom(pdisplay     , CA2_X11_WINDOW_LONG_STYLE      , False);
-   pdata->m_atomLongStyleEx   = XInternAtom(pdisplay     , CA2_X11_WINDOW_LONG_STYLE_EX   , False);
+   pdata->m_atomLongType      = XInternAtom(pdisplay, CA2_X11_WINDOW_LONG            , False);
+   pdata->m_atomLongStyle     = XInternAtom(pdisplay, CA2_X11_WINDOW_LONG_STYLE      , False);
+   pdata->m_atomLongStyleEx   = XInternAtom(pdisplay, CA2_X11_WINDOW_LONG_STYLE_EX   , False);
 
    ::osdisplay_data::s_pdataptra->add(pdata);
 

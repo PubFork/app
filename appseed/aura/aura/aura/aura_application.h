@@ -521,6 +521,13 @@ namespace aura
 
          virtual sp(::message::base) get_message_base(LPMESSAGE lpmsg);
 
+#ifdef LINUX
+
+         virtual sp(::message::base) get_message_base(void * pevent,::user::interaction * pwnd = NULL);
+
+#endif
+
+
          virtual void process_message(::message::base * base);
 
          virtual void message_handler(::message::base * pbase) override;

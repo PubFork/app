@@ -6,15 +6,15 @@
 // platform independent. For the communication i used the classes blocking_socket,
 // address, ... from David J. Kruglinski (Inside Visual C++). These classes are
 // only small wrappers for the sockets-API.
-// Further I used a smart pointer-implementation from Scott Meyers (Effective C++, 
+// Further I used a smart pointer-implementation from Scott Meyers (Effective C++,
 // More Effective C++, Effective STL).
-// The implementation of the logon-sequence (with firewall support) was published 
-// in an article on Codeguru by Phil Anderson. 
-// The code for the parsing of the different FTP LIST responses is taken from 
+// The implementation of the logon-sequence (with firewall support) was published
+// in an article on Codeguru by Phil Anderson.
+// The code for the parsing of the different FTP LIST responses is taken from
 // D. J. Bernstein (http://cr.yp.to/ftpparse.html). I only wrapped the c-code in
 // a class.
 // I have tested the code on Windows and Linux (Kubuntu).
-// 
+//
 // Copyright (c) 2004-2012 Thomas Oswald
 //
 // Permission to copy, use, sell and distribute this software is granted
@@ -89,8 +89,8 @@ namespace ftp
 
       e_state                    m_estate;
 
-      
-      
+
+
 
       client_socket(::sockets::base_socket_handler & handler,
          unsigned int uiTimeout = 10, unsigned int uiBufferSize = 2048,
@@ -202,7 +202,7 @@ namespace ftp
    ///
    /// Derive your class from this base-class and register this class on client.
    /// For example you can use this for logging the sended and received commands.
-   class client_socket::notification : 
+   class client_socket::notification :
       virtual public ::observer < client_socket::observer_array, client_socket::notification>
    {
    public:

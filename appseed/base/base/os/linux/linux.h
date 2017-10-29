@@ -1,9 +1,6 @@
 #pragma once
 
 
-#define CA2_X11_WINDOW_LONG "ca2_x11_window_long"
-#define CA2_X11_WINDOW_LONG_STYLE "ca2_x11_window_long_style"
-#define CA2_X11_WINDOW_LONG_STYLE_EX "ca2_x11_window_long_style_ex"
 
 
 
@@ -23,4 +20,3 @@
 
 
 
-WINBOOL IsWindowVisibleRaw(oswindow w);

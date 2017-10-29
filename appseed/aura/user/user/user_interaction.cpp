@@ -1,5 +1,5 @@
 ﻿#include "framework.h" // from "base/user/user.h"
-//#include "base/user/user.h"
+
 
 
 namespace user
@@ -2690,12 +2690,12 @@ restart:
 
 #ifdef LINUX
 
-   LRESULT interaction::send_message(XEvent * pevent)
+   LRESULT interaction::send_x11_event(void * pevent)
    {
       if (m_pimpl == NULL)
          return FALSE;
       else
-         return m_pimpl->send_message(pevent);
+         return m_pimpl->send_x11_event(pevent);
    }
 
 #endif

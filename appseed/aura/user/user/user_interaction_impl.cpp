@@ -1673,7 +1673,7 @@ namespace user
 
 #ifdef LINUX
 
-   LRESULT interaction_impl::send_message(XEvent * pevent)
+   LRESULT interaction_impl::send_x11_event(void * pevent)
    {
       UNREFERENCED_PARAMETER(pevent);
       ::exception::throw_interface_only(get_app());

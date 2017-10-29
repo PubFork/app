@@ -37,38 +37,6 @@ namespace user
 } // namespace user
 
 
-CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
-{
-
-   if (oswindow == NULL)
-   {
-
-      return NULL;
-
-   }
-
-#ifdef WINDOWSEX
-
-   cslock slOsWindow(::user::g_pcsImpl);
-
-   return ::user::g_pmapImpl->operator[](oswindow);
-
-#else
-
-   if (oswindow == NULL)
-   {
-
-      return NULL;
-
-   }
-
-
-   return oswindow->m_pimpl;
-
-#endif
-
-}
-
 
 CLASS_DECL_AURA bool oswindow_assign(oswindow oswindow,::user::interaction_impl * pimpl)
 {

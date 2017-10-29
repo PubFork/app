@@ -1,41 +1,42 @@
 #include "framework.h"
+#include "linux_user_impl.h"
 
 
-device_context::device_context()
-{
-
-
-   m_pdisplay     = NULL;
-   m_drawable     = None;
-   m_gc           = None;
-   m_pixmap       = None;
-   m_window       = None;
-   m_pt.x         = 0;
-   m_pt.y         = 0;
-   m_ptOffset.x   = 0;
-   m_ptOffset.y   = 0;
-   m_iScreen      = 0;
-   m_iDepth       = 0;
-   m_fontset      = None;
-
-
-
-}
-
-
-
-// HDC GetDC(oswindow hwnd)
-// {
-
-
-//    HDC hdc = new device_context;
-
-//    hdc->m_pdisplay      = hwnd->display();
-//    hdc->m_window        = hwnd->window();
-//    hdc->m_drawable      = (Drawable) (hwnd == NULL || hwnd->window() == NULL ? DefaultRootWindow(hdc->m_pdisplay) : hwnd->window());
-//    hdc->m_gc            = XCreateGC(hdc->m_pdisplay, hdc->m_drawable, 0, 0);
-
-//    return hdc;
+//device_context::device_context()
+//{
+//
+//
+//   m_pdisplay     = NULL;
+//   m_drawable     = None;
+//   m_gc           = None;
+//   m_pixmap       = None;
+//   m_window       = None;
+//   m_pt.x         = 0;
+//   m_pt.y         = 0;
+//   m_ptOffset.x   = 0;
+//   m_ptOffset.y   = 0;
+//   m_iScreen      = 0;
+//   m_iDepth       = 0;
+//   m_fontset      = None;
+//
+//
+//
+//}
+//
+//
+//
+//// HDC GetDC(oswindow hwnd)
+//// {
+//
+//
+////    HDC hdc = new device_context;
+//
+////    hdc->m_pdisplay      = hwnd->display();
+////    hdc->m_window        = hwnd->window();
+////    hdc->m_drawable      = (Drawable) (hwnd == NULL || hwnd->window() == NULL ? DefaultRootWindow(hdc->m_pdisplay) : hwnd->window());
+////    hdc->m_gc            = XCreateGC(hdc->m_pdisplay, hdc->m_drawable, 0, 0);
+//
+////    return hdc;
 
 // }
 
@@ -305,7 +306,7 @@ int32_t _c_XErrorHandler(Display * display, XErrorEvent * perrorevent)
 
 
 
-CLASS_DECL_BASE void defer_dock_application(bool bDock)
+CLASS_DECL_AURA void defer_dock_application(bool bDock)
 {
 
    UNREFERENCED_PARAMETER(bDock);

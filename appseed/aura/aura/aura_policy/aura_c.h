@@ -136,6 +136,7 @@ inline int type_is_null(const T * p)
 #include "aura/aura/os/macos/macos.h"
 #elif defined(LINUX)
 #include "aura/aura/os/linux/linux.h"
+#include "aura/aura/os/linux/linux_c.h"
 #elif defined(METROWIN)
 #include "aura/aura/os/metrowin/metrowin.h"
 #elif defined(WINDOWS)

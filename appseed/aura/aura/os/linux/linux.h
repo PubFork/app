@@ -6,6 +6,9 @@
 
 #include "linux_debug.h"
 
+#include "linux_graphics.h"
+
+
 
 
 BEGIN_EXTERN_C

@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "base/os/linux/linux_window_xlib.h"
+#include "linux_user_impl.h"
 
 
 window_xlib::window_xlib(::aura::application * papp) :
@@ -23,7 +23,9 @@ window_xlib::window_xlib(::aura::application * papp) :
 
 window_xlib::~window_xlib()
 {
+
    ::aura::del(m_pdc);
+
 }
 
 
@@ -66,15 +68,15 @@ void window_xlib::create_window_graphics_(int64_t cxParam, int64_t cyParam, int 
 
    m_mem.allocate(cyParam * m_iScan);
 
-   m_pimage = XCreateImage(m_pimpl->m_oswindow->display(), m_pimpl->m_oswindow->visual(), m_pimpl->m_oswindow->m_iDepth, ZPixmap, 0, (char *) m_mem.get_data(), cxParam, cyParam, sizeof(COLORREF) * 8, m_iScan);
-
    ::aura::del(m_pdc);
 
-   m_pdc = new device_context();
+   m_pimage = XCreateImage(m_pimpl->m_oswindow->display(), m_pimpl->m_oswindow->visual(), m_pimpl->m_oswindow->m_iDepth, ZPixmap, 0, (char *) m_mem.get_data(), cxParam, cyParam, sizeof(COLORREF) * 8, m_iScan);
 
    XGCValues gcvalues;
 
    m_pdc->m_gc = XCreateGC(m_pimpl->m_oswindow->display(), m_pimpl->m_oswindow->window(), 0, &gcvalues);
+
+   m_pdc->m_pdisplay = m_pimpl->m_oswindow->display();
 
    window_graphics::create_window_graphics_(cxParam, cyParam, m_iScan);
 

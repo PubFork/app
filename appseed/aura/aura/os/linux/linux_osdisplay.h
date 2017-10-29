@@ -1,6 +1,4 @@
-#pragma once
-
-
+#include "linux_user_impl.h"
 
 
 #include "aura/os/linux/linux_cross_win_gdi.h"

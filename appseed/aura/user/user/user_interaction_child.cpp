@@ -373,52 +373,6 @@ namespace user
 
 
 
-#ifdef LINUX
-
-
-   LRESULT interaction_child::send_message(XEvent * pevent)
-   {
-
-      smart_pointer < ::message::base > spbase;
-
-      spbase = Session.user()->get_base(pevent, m_pui);
-
-      try
-      {
-         sp(::user::interaction) pui = m_pui;
-         while(pui != NULL && pui->GetParent() != NULL)
-         {
-            try
-            {
-               pui->pre_translate_message(spbase);
-            }
-            catch(...)
-            {
-               break;
-            }
-            if(spbase->m_bRet)
-               return spbase->get_lresult();
-            try
-            {
-               pui = pui->GetParent();
-            }
-            catch(...)
-            {
-               break;
-            }
-         }
-      }
-      catch(...)
-      {
-      }
-
-      message_handler(spbase);
-
-      return spbase->get_lresult();
-
-   }
-
-#endif
 
 
    bool interaction_child::SetFocus()

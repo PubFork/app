@@ -8,13 +8,38 @@
 
 #ifndef METROWIN
 
+
+#define MESSAGE_WINDOW_PARENT (::oswindow((void *) (int_ptr) 1))
+
+
+
+
+WINBOOL IsWindow(oswindow oswindow);
+WINBOOL IsChild(oswindow oswindowParent, oswindow oswindowcandidateChildOrDescendant);
+oswindow GetParent(oswindow oswindow);
+oswindow SetParent(oswindow oswindowChild, oswindow oswindowNewParent);
+WINBOOL ShowWindow(oswindow oswindow, int nCmdShow);
+LONG GetWindowLongA(oswindow oswindow, int nIndex);
+LONG SetWindowLongA(oswindow oswindow, int nIndex, LONG l);
+WINBOOL ClientToScreen(oswindow oswindow, LPPOINT lppoint);
+WINBOOL ScreenToClient(oswindow oswindow, LPPOINT lppoint);
+WINBOOL IsIconic(oswindow oswindow);
+WINBOOL IsWindowVisible(oswindow oswindow);
+#define GetWindowLong GetWindowLongA
+#define SetWindowLong SetWindowLongA
+
+
+
+CLASS_DECL_AURA WINBOOL IsWindow(oswindow oswindow);
+
+
 //CLASS_DECL_AXIS WINBOOL GetCursorPos(LPPOINT lpptCursor);
 
-#ifndef HWND_MESSAGE
-
-#define HWND_MESSAGE     ((oswindow)-3)
-
-#endif
+//#ifndef HWND_MESSAGE
+//
+//#define HWND_MESSAGE     ((oswindow)-3)
+//
+//#endif
 
 #define PostMessage  PostMessageW
 
@@ -1121,7 +1146,7 @@ WINBOOL IsIconic(oswindow hWnd);
 #define ZORDER_TOP -1
 #define ZORDER_BOTTOM -2
 #define ZORDER_TOPMOST -3
-#define ZORDER_NOTOPMOST -4
+#define ZORDER_NOTOPMOST -4sss
 
 #endif
 

@@ -218,7 +218,7 @@ namespace user
 
 #ifdef LINUX
 
-         virtual LRESULT send_message(XEvent * pevent);
+         virtual LRESULT send_x11_event(void * pevent); // XEvent *
 
 #endif
 

@@ -933,10 +933,9 @@ while (is_open_ == true) {
   int command = (TIOCM_CD|TIOCM_DSR|TIOCM_RI|TIOCM_CTS);
 
   if (-1 == ioctl (fd_, TIOCMIWAIT, &command)) {
-    stringstream ss;
-    ss << "waitForDSR failed on a call to ioctl(TIOCMIWAIT): "
-       << errno << " " << strerror(errno);
-    throw(SerialException(ss.str().c_str()));
+    string ss;
+    ss.Format("waitForDSR failed on a call to ioctl(TIOCMIWAIT): %d %s", errno, strerror(errno));
+    throw(SerialException(ss));
   }
   return true;
 #endif

@@ -2,6 +2,31 @@
 
 
 
+// Ubuntu apt-get install libx11-dev
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+
+
+#include "linux_osdisplay.h"
+
+#include "linux_oswindow.h"
+
+#include "linux_window_cairo.h"
+
+#include "linux_window_xlib.h"
+
+#include "linux_windowing.h"
+
+#ifdef __cplusplus
+
+void set_xcolor(XColor & color, COLORREF cr);
+
+#endif
+
+
+
 struct hthread;
 
 namespace ca2
@@ -197,74 +222,6 @@ CLASS_DECL_AURA bool oswindow_remove_message_only_window(::user::interaction_imp
 //#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 //#
 
-inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDescendant)
-{
-   return oswindowParent->is_child(oswindowcandidateChildOrDescendant);
-}
-
-inline oswindow GetParent(::oswindow oswindow)
-{
-   return oswindow->get_parent();
-}
-
-inline oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
-{
-   return oswindow->set_parent(oswindowNewParent);
-}
-
-inline bool ShowWindow(::oswindow oswindow, int32_t nCmdShow)
-{
-   return oswindow->show_window(nCmdShow);
-}
-
-inline LONG GetWindowLongA(::oswindow oswindow, int32_t nIndex)
-{
-   return (LONG) oswindow->get_window_long_ptr(nIndex);
-}
-
-inline LONG SetWindowLongA(::oswindow oswindow, int32_t nIndex, LONG l)
-{
-   return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
-}
-
-inline LONG_PTR GetWindowLongPtrA(::oswindow oswindow, int32_t nIndex)
-{
-   return oswindow->get_window_long_ptr(nIndex);
-}
-
-inline LONG_PTR SetWindowLongPtrA(::oswindow oswindow, int32_t nIndex, LONG_PTR l)
-{
-   return oswindow->set_window_long_ptr(nIndex, l);
-}
-
-inline bool ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
-{
-   return oswindow->client_to_screen(lppoint);
-}
-
-inline bool ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
-{
-   return oswindow->screen_to_client(lppoint);
-}
-
-inline int32_t IsIconic(::oswindow oswindow)
-{
-   return oswindow->is_iconic();
-}
-
-inline int32_t IsWindowVisible(::oswindow oswindow)
-{
-   return oswindow->is_window_visible();
-}
-
-
-#define GetWindowLong GetWindowLongA
-#define SetWindowLong SetWindowLongA
-
-
-
-CLASS_DECL_AURA bool IsWindow(oswindow oswindow);
-
 
 
 
@@ -326,5 +283,70 @@ public:
    }
 
 };
+
+
+#pragma once
+
+// // Ubuntu apt-get install libx11-dev
+// // CentOS yum install libX11-devel
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+// // Ubuntu apt-get install libcairo2-dev
+
+
+class CLASS_DECL_AURA device_context
+{
+public:
+
+
+   ::Display *             m_pdisplay;
+   ::Drawable              m_drawable;
+   ::GC                    m_gc;
+   ::Pixmap                m_pixmap;
+   ::Window                m_window;
+   int                     m_iDepth;
+   int                     m_iScreen;
+
+   point                   m_pt;
+   point                   m_ptOffset;
+
+   XFontSet                m_fontset;
+
+   device_context();
+
+
+};
+
+
+/*HDC GetDC(oswindow hwnd);
+HFONT CreateFontIndirect(const LOGFONT * lf);
+HPEN CreatePen(int32_t iPenStyle, int32_t iWidth, COLORREF crColor);
+HGDIOBJ GetStockObject(int32_t iStockObject);
+HGDIOBJ SelectObject(HDC hdc, HGDIOBJ hgdiobj);
+WINBOOL Rectangle(HDC hdc, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+WINBOOL DeleteObject(HGDIOBJ hgdiobj);
+HDC CreateCompatibleDC(HDC hdc);
+//HBITMAP WINAPI CreateDIBSection(HDC hdc, const BITMAPINFO *lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset);
+WINBOOL SetTextColor(HDC hdc, COLORREF cr);
+WINBOOL SetBkMode(HDC hdc, int32_t iMode);
+WINBOOL DeleteDC(HDC hdc);
+WINBOOL AlphaBlend(HDC hdcDest, int32_t xoriginDest, int32_t yoriginDest, int32_t wDest, int32_t hDest, HDC hdcSrc, int32_t xoriginSrc, int32_t yoriginSrc, int32_t wSrc, int32_t hSrc, BLENDFUNCTION ftn);
+WINBOOL GetObject(HGDIOBJ hgdiobj, int32_t iSize, void * object);
+WINBOOL GetTextExtentPoint(HDC hdc, const char * pszText, int32_t iSize, SIZE * psize);
+/*WINBOOL WINAPI TransparentBlt(HDC hdcDest,
+    __in int32_t xoriginDest,
+    __in int32_t yoriginDest,
+    __in int32_t wDest,
+    __in int32_t hDest,
+    __in HDC hdcSrc,
+    __in int32_t xoriginSrc,
+    __in int32_t yoriginSrc,
+    __in int32_t wSrc,
+    __in int32_t hSrc,
+    __in UINT crTransparent);
+
+*/
+
+
 
 
