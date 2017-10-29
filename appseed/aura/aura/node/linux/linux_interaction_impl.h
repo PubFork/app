@@ -5,13 +5,14 @@ namespace linux
 {
 
 
-   CLASS_DECL_BASE LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-   //CLASS_DECL_BASE void _::ca2::StandardSubclass(oswindow);
-   CLASS_DECL_BASE LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-   CLASS_DECL_BASE LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+    LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+   // void _::ca2::StandardSubclass(oswindow);
+    LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+    LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_BASE interaction_impl :
+class x11data;
+   class  interaction_impl :
       virtual public ::user::interaction_impl
    {
    public:
@@ -20,10 +21,9 @@ namespace linux
       string                        m_strWindowText;
       ::user::interaction_base *    m_pbasewnd;
       bool                          m_bExposing;
-      XWindowAttributes             m_attr;
+      sp(x11data)                     m_px11data;
       int32_t                       m_iDepth;
       int32_t                       m_iScreen;
-      XVisualInfo                   m_visualinfo;
       bool                          m_bEnabled;
 
       ::thread *                    m_pthreadDraw;
@@ -42,7 +42,7 @@ namespace linux
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
 
-      
+
       virtual void on_delete(::object * poc);
 
       static_function const MESSAGE* PASCAL GetCurrentMessage();
@@ -651,10 +651,10 @@ namespace linux
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_BASE friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-      //CLASS_DECL_BASE friend void _::ca2::StandardSubclass(oswindow);
-      CLASS_DECL_BASE friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-      CLASS_DECL_BASE friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+       friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+      // friend void _::ca2::StandardSubclass(oswindow);
+       friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+       friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

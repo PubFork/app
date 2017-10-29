@@ -85,7 +85,6 @@
 			<Add option="-lfontconfig" />
 			<Add option="-laura" />
 			<Add option="-laxis" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-lfreetype" />
 			<Add option="-lcairo" />
 			<Add option="-lbase" />

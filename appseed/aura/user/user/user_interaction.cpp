@@ -3158,7 +3158,7 @@ restart:
 
 #if defined(WINDOWSEX) || defined(LINUX)
 
-         if (pParentWnd == NULL || pParentWnd->get_safe_handle() == (oswindow)HWND_MESSAGE)
+         if (pParentWnd == NULL || pParentWnd->get_safe_handle() == (oswindow)MESSAGE_WINDOW_PARENT)
 
 #else
 

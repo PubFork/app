@@ -1,8 +1,7 @@
 #include "framework.h" // from ""axis/user/user.h"
 #include "linux.h"
+#include "aura/aura/os/linux/linux_user_impl.h"
 #include <X11/Xatom.h>
-#include "base/os/linux/linux_window_xlib.h"
-#include "base/os/linux/linux_windowing.h"
 
 #define TEST 0
 
@@ -14,18 +13,18 @@ void wm_toolwindow(oswindow w, bool bSet);
 void wm_state_hidden(oswindow w, bool bSet);
 //#include <X11/extensions/Xcomposite.h>
 
-CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
+CLASS_DECL_AURA thread_int_ptr < DWORD_PTR > t_time1;
 
 //#define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
 
 //#include "sal.h"
 
-CLASS_DECL_BASE void hook_window_create(::user::interaction * pWnd);
-CLASS_DECL_BASE bool unhook_window_create();
-void CLASS_DECL_BASE __pre_init_dialog(
+CLASS_DECL_AURA void hook_window_create(::user::interaction * pWnd);
+CLASS_DECL_AURA bool unhook_window_create();
+void CLASS_DECL_AURA __pre_init_dialog(
    ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-void CLASS_DECL_BASE __post_init_dialog(
+void CLASS_DECL_AURA __post_init_dialog(
    ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 LRESULT CALLBACK
    __activation_window_procedure(oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam);
@@ -68,8 +67,20 @@ const char gen_Wnd[] = __WND;
 namespace linux
 {
 
+
+
+class x11data :
+virtual public object
+{
+public:
+      XWindowAttributes             m_attr;
+      XVisualInfo                   m_visualinfo;
+
+};
+
    interaction_impl::interaction_impl() :
    ::aura::timer_array(get_app())
+
    {
 
       set_handle(NULL);
@@ -89,7 +100,7 @@ namespace linux
 
    }
 
-   interaction_impl::interaction_impl(sp(::aura::application) papp) :
+   interaction_impl::interaction_impl(::aura::application * papp) :
       ::object(papp),
       ::aura::timer_array(papp)
    {
@@ -123,7 +134,7 @@ namespace linux
 
    // Change a interaction_impl's style
 
-   /*__STATIC bool CLASS_DECL_BASE __modify_style(oswindow hWnd, int32_t nStyleOffset,
+   /*__STATIC bool CLASS_DECL_AURA __modify_style(oswindow hWnd, int32_t nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(hWnd != NULL);
@@ -328,7 +339,7 @@ namespace linux
 
       //hook_window_create(this);
 
-      if(cs.hwndParent == (oswindow) HWND_MESSAGE)
+      if(cs.hwndParent == (oswindow) MESSAGE_WINDOW_PARENT)
       {
 
          m_oswindow = oswindow_get_message_only_window(this);
@@ -389,20 +400,27 @@ namespace linux
 
          m_iDepth = 0;
 
-         if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &m_visualinfo))
+         if(m_px11data.is_null())
          {
 
-            vis = m_visualinfo.visual;
+            m_px11data = canew(x11data);
+
+         }
+
+         if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &m_px11data->m_visualinfo))
+         {
+
+            vis = m_px11data->m_visualinfo.visual;
 
          }
          else
          {
 
-            ZERO(m_visualinfo);
+            ZERO(m_px11data->m_visualinfo);
 
          }
 
-         m_iDepth = m_visualinfo.depth;
+         m_iDepth = m_px11data->m_visualinfo.depth;
 
          XSetWindowAttributes attr;
 
@@ -488,7 +506,7 @@ namespace linux
 
          m_oswindow->m_hthread = hthread;
 
-         XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
+         XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_px11data->m_attr);
 
          int event_base, error_base, major_version, minor_version;
 
@@ -533,7 +551,7 @@ namespace linux
             {
 
             point pt;
-            m_pauraapp->m_pbasesession->get_cursor_pos(pt);
+            m_pauraapp->m_paurasession->get_cursor_pos(pt);
 
             m_rectParentClient.left = pt.x;
             m_rectParentClient.top = pt.y;
@@ -603,7 +621,7 @@ namespace linux
       else
       {
 
-         if(!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD,null_rect(),HWND_MESSAGE))
+         if(!native_create_window_ex(pui, 0, NULL, pszName, WS_CHILD,null_rect(),MESSAGE_WINDOW_PARENT))
          {
 
             return false;
@@ -1223,7 +1241,7 @@ DWORD dwLastPaint;
 
          ::message::key * pkey = (::message::key *) pbase;
 
-         Session.keyboard().translate_os_key_message(pkey);
+         Session.translate_os_key_message(pkey);
 
          if(pbase->m_id == WM_KEYDOWN)
          {
@@ -1292,7 +1310,7 @@ DWORD dwLastPaint;
          if(m_pui != NULL && m_pui->m_pauraapp->m_paxissession != NULL && m_pui->m_pauraapp->m_paxissession != m_pauraapp->m_paxissession)
          {
 
-            Sess(m_pui->m_pauraapp->m_paxissession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pui->m_pauraapp->m_paurasession).m_ptCursor = pmouse->m_pt;
 
          }
 
@@ -1995,12 +2013,12 @@ DWORD dwLastPaint;
 
    }
 */
-   /* trans oswindow CLASS_DECL_BASE __get_parent_owner(sp(::user::interaction) hWnd)
+   /* trans oswindow CLASS_DECL_AURA __get_parent_owner(sp(::user::interaction) hWnd)
    {
    // check for permanent-owned interaction_impl first
    sp(::interaction_impl) pWnd = ::linux::interaction_impl::FromHandlePermanent(hWnd);
    if (pWnd != NULL)
-   return LNX_WINDOW(pWnd)->GetOwner();
+   return pWnd->GetOwner();
 
    // otherwise, return parent in the oswindows sense
    return (::GetWindowLong(hWnd, GWL_STYLE) & WS_CHILD) ?
@@ -2181,7 +2199,7 @@ DWORD dwLastPaint;
             if (pWnd != NULL)
             {
                // call interaction_impl proc directly since it is a C++ interaction_impl
-               __call_window_procedure( (pWnd), LNX_WINDOW(pWnd)->get_handle(), message, wparam, lparam);
+               __call_window_procedure( (pWnd), pWnd->get_handle(), message, wparam, lparam);
             }
          }
          else
@@ -2663,16 +2681,18 @@ return 0;
 
       // check if in permanent ::collection::map, if it is reflect it (could be OLE control)
       sp(::interaction_impl) pWnd =  (pMap->lookup_permanent(hWndChild)); */
-      sp(::user::interaction) pWnd =  (FromHandlePermanent(hWndChild));
-      ASSERT(pWnd == NULL || LNX_WINDOW(pWnd)->get_handle() == hWndChild);
-      if (pWnd == NULL)
-      {
-         return FALSE;
-      }
 
-      // only OLE controls and permanent windows will get reflected msgs
-      ASSERT(pWnd != NULL);
-      return LNX_WINDOW(pWnd)->SendChildNotifyLastMsg(pResult);
+      throw todo(get_thread_app());
+//      sp(::user::interaction) pWnd =  (FromHandlePermanent(hWndChild));
+//      ASSERT(pWnd == NULL || pWnd->get_handle() == hWndChild);
+//      if (pWnd == NULL)
+//      {
+//         return FALSE;
+//      }
+//
+//      // only OLE controls and permanent windows will get reflected msgs
+//      ASSERT(pWnd != NULL);
+//      return pWnd->SendChildNotifyLastMsg(pResult);
    }
 
    bool interaction_impl::OnChildNotify(UINT uMsg, WPARAM wparam, LPARAM lparam, LRESULT* pResult)
@@ -3185,11 +3205,12 @@ throw not_implemented(get_app());
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::user::interaction * pWnd, UINT)
    {
-      ASSERT(pWnd != NULL && LNX_WINDOW(pWnd)->get_handle() != NULL);
-      LRESULT lResult;
-      if (LNX_WINDOW(pWnd)->SendChildNotifyLastMsg(&lResult))
-         return (HBRUSH)lResult;     // eat it
-      return (HBRUSH)Default();
+   throw todo(get_app());
+//      ASSERT(pWnd != NULL && pWnd->get_handle() != NULL);
+//      LRESULT lResult;
+//      if (pWnd->SendChildNotifyLastMsg(&lResult))
+//         return (HBRUSH)lResult;     // eat it
+//      return (HBRUSH)Default();
    }
 
    // implementation of OnCtlColor for default gray backgrounds
@@ -3505,7 +3526,7 @@ throw not_implemented(get_app());
       if (pWnd != NULL)
       {
       // call it directly to disable any routing
-      if (LNX_WINDOW(pWnd)->interaction_impl::_001OnCommand(0, MAKELONG(0xffff,
+      if (pWnd->interaction_impl::_001OnCommand(0, MAKELONG(0xffff,
       WM_COMMAND+WM_REFLECT_BASE), &state, NULL))
       continue;
       }
@@ -3629,13 +3650,13 @@ throw not_implemented(get_app());
    bool interaction_impl::IsChild(::user::interaction * pWnd)
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
-      if(LNX_WINDOW(pWnd)->get_handle() == NULL)
+      if(pWnd->get_handle() == NULL)
       {
          return ::user::interaction_impl::IsChild(pWnd);
       }
       else
       {
-         return ::IsChild((oswindow) get_handle(), LNX_WINDOW(pWnd)->get_handle()) != FALSE;
+         return ::IsChild((oswindow) get_handle(), pWnd->get_handle()) != FALSE;
       }
    }
 
@@ -4170,12 +4191,12 @@ throw not_implemented(get_app());
    { return this == NULL ? NULL : get_handle(); }*/
    bool interaction_impl::operator==(const ::user::interaction_impl& wnd) const
    {
-      return LNX_WINDOW(const_cast < ::user::interaction_impl * >  (&wnd))->get_handle() ==((interaction_impl *)this)->get_handle();
+      return wnd.get_handle() ==((interaction_impl *)this)->get_handle();
    }
 
    bool interaction_impl::operator!=(const ::user::interaction_impl& wnd) const
    {
-      return LNX_WINDOW(const_cast < ::user::interaction_impl * >  (&wnd))->get_handle() != ((interaction_impl *)this)->get_handle();
+      return wnd.get_handle() != ((interaction_impl *)this)->get_handle();
    }
 
 
@@ -4503,7 +4524,7 @@ if(psurface == g_cairosurface)
 
    void interaction_impl::UpdateWindow()
    {
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       //::UpdateWindow(get_handle());
    }
 
@@ -5685,7 +5706,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::_001BaseWndInterfaceMap()
    {
 
-      Session.user()->window_map().set((int_ptr)get_handle(), this);
+      ::user::interaction_impl::_001BaseWndInterfaceMap();
 
    }
 
@@ -5707,44 +5728,44 @@ if(psurface == g_cairosurface)
 // The WndProc for all interaction_impl's and derived classes
 
 
-__STATIC void CLASS_DECL_BASE __pre_init_dialog(
+__STATIC void CLASS_DECL_AURA __pre_init_dialog(
    ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
 {
    ASSERT(lpRectOld != NULL);
    ASSERT(pdwStyleOld != NULL);
 
-   LNX_WINDOW(pWnd)->GetWindowRect(lpRectOld);
-   *pdwStyleOld = LNX_WINDOW(pWnd)->GetStyle();
+   pWnd->GetWindowRect(lpRectOld);
+   *pdwStyleOld = pWnd->GetStyle();
 }
 
-__STATIC void CLASS_DECL_BASE __post_init_dialog(
-   ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
-{
-   // must be hidden to start with
-   if (dwStyleOld & WS_VISIBLE)
-      return;
-
-   // must not be visible after WM_INITDIALOG
-   if (LNX_WINDOW(pWnd)->GetStyle() & (WS_VISIBLE|WS_CHILD))
-      return;
-
-   // must not move during WM_INITDIALOG
-   rect rect;
-   LNX_WINDOW(pWnd)->GetWindowRect(rect);
-   if (rectOld.left != rect.left || rectOld.top != rect.top)
-      return;
-
-   // must be unowned or owner disabled
-   sp(::user::interaction) pParent = LNX_WINDOW(pWnd)->GetWindow(GW_OWNER);
-   if (pParent != NULL && pParent->is_window_enabled())
-      return;
-
-   if (!LNX_WINDOW(pWnd)->CheckAutoCenter())
-      return;
-
-   // center modal dialog boxes/message boxes
-   //LNX_WINDOW(pWnd)->CenterWindow();
-}
+//__STATIC void CLASS_DECL_AURA __post_init_dialog(
+//   ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
+//{
+//   // must be hidden to start with
+//   if (dwStyleOld & WS_VISIBLE)
+//      return;
+//
+//   // must not be visible after WM_INITDIALOG
+//   if (pWnd->GetStyle() & (WS_VISIBLE|WS_CHILD))
+//      return;
+//
+//   // must not move during WM_INITDIALOG
+//   rect rect;
+//   pWnd->GetWindowRect(rect);
+//   if (rectOld.left != rect.left || rectOld.top != rect.top)
+//      return;
+//
+//   // must be unowned or owner disabled
+//   sp(::user::interaction) pParent = pWnd->GetWindow(GW_OWNER);
+//   if (pParent != NULL && pParent->is_window_enabled())
+//      return;
+//
+//   if (!pWnd->CheckAutoCenter())
+//      return;
+//
+//   // center modal dialog boxes/message boxes
+//   //pWnd->CenterWindow();
+//}
 
 
 

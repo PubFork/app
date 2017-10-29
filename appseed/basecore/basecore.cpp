@@ -2,6 +2,8 @@
 #include "basecore_shared.h"
 #include "basecore_internal_glue.h"
 
+// apt-get install libgtk2.0-dev
+// and restart codeblocks/IDE
 #include <gtk/gtk.h>
 
 #include <libappindicator-0.1/libappindicator/app-indicator.h>

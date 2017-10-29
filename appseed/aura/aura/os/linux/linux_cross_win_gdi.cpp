@@ -2,26 +2,26 @@
 #include "linux_user_impl.h"
 
 
-//device_context::device_context()
-//{
-//
-//
-//   m_pdisplay     = NULL;
-//   m_drawable     = None;
-//   m_gc           = None;
-//   m_pixmap       = None;
-//   m_window       = None;
-//   m_pt.x         = 0;
-//   m_pt.y         = 0;
-//   m_ptOffset.x   = 0;
-//   m_ptOffset.y   = 0;
-//   m_iScreen      = 0;
-//   m_iDepth       = 0;
-//   m_fontset      = None;
-//
-//
-//
-//}
+device_context::device_context()
+{
+
+
+  m_pdisplay     = NULL;
+  m_drawable     = None;
+  m_gc           = None;
+  m_pixmap       = None;
+  m_window       = None;
+  m_pt.x         = 0;
+  m_pt.y         = 0;
+  m_ptOffset.x   = 0;
+  m_ptOffset.y   = 0;
+  m_iScreen      = 0;
+  m_iDepth       = 0;
+  m_fontset      = None;
+
+
+
+}
 //
 //
 //

@@ -1553,7 +1553,7 @@ InitFailure:
    string application::calc_data_id()
    {
 
-      return "app://" + m_strAppName + "/" + m_strDataIdAddUp;
+      return "app://" + m_strAppName + "/" + m_strDataIdAddUp + ::str::has_char(m_strDataKeyModifier, "/");
 
    }
 

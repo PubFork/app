@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "aura/node/ansios/ansios.h"
 #include "linux.h"
+#include "aura/aura/os/linux/linux_user_impl.h"
 
 
 
@@ -24,6 +25,8 @@ namespace linux
          System.factory().creatable < ::ansios::process           >  (System. type_info < ::process::process         > (), 1);
          System.factory().creatable < ::ansios::pipe              >  (System. type_info < ::process::pipe            > (), 1);
          System.factory().creatable < console                     >  (System. type_info < ::console::window          > (), 1);
+         System.factory().cloneable_large < window_xlib                 >  (System.type_info <window_graphics                > ());
+         System.factory().creatable_large < interaction_impl      >  (System. type_info < ::user::interaction_impl > ());
 
       }
 

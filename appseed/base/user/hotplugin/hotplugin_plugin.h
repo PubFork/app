@@ -133,7 +133,7 @@ namespace hotplugin
 
 #if !defined(WINDOWS) && !defined(APPLEOS) && !defined(ANDROID)
       using ::user::interaction::message_handler;
-      virtual int32_t message_handler(XEvent * pevent);
+      virtual int32_t x11_message_handler(void * pevent);
 #endif
       virtual void message_handler(::message::base * pbase);
       virtual void plugin_message_handler(UINT message, WPARAM wparam, LPARAM lparam, bool bEnsureTx);

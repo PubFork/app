@@ -522,6 +522,7 @@
 		<Unit filename="aura/message/message_simple_command.cpp" />
 		<Unit filename="aura/message/message_simple_command.h" />
 		<Unit filename="aura/message/message_timer.h" />
+		<Unit filename="aura/message/message_user.cpp" />
 		<Unit filename="aura/node/ansios/ansios.h" />
 		<Unit filename="aura/node/ansios/ansios_pipe.cpp" />
 		<Unit filename="aura/node/ansios/ansios_pipe.h" />
@@ -547,6 +548,8 @@
 		<Unit filename="aura/node/linux/linux_file.h" />
 		<Unit filename="aura/node/linux/linux_file_system.cpp" />
 		<Unit filename="aura/node/linux/linux_file_system.h" />
+		<Unit filename="aura/node/linux/linux_interaction_impl.cpp" />
+		<Unit filename="aura/node/linux/linux_interaction_impl.h" />
 		<Unit filename="aura/node/linux/linux_internal.h" />
 		<Unit filename="aura/node/linux/linux_main.cpp" />
 		<Unit filename="aura/node/linux/linux_os.cpp" />
@@ -574,7 +577,10 @@
 		<Unit filename="aura/os/ansios/ansios_message_loop.cpp" />
 		<Unit filename="aura/os/ansios/ansios_multithreading.cpp" />
 		<Unit filename="aura/os/ansios/ansios_multithreading.h" />
+		<Unit filename="aura/os/ansios/ansios_process.cpp" />
+		<Unit filename="aura/os/ansios/ansios_serial.cpp" />
 		<Unit filename="aura/os/ansios/ansios_thread.h" />
+		<Unit filename="aura/os/ansios/ansios_time.cpp" />
 		<Unit filename="aura/os/cross.h" />
 		<Unit filename="aura/os/cross/ansios/ansios.h" />
 		<Unit filename="aura/os/cross/ansios/ansios_datetime.cpp" />
@@ -1710,6 +1716,7 @@
 		<Unit filename="user/user/user_window_util.h" />
 		<Unit filename="user/user/user_windowing.cpp" />
 		<Unit filename="user/user/user_windowing.h" />
+		<Unit filename="user/wndfrm/frame/wndfrm_frame_updowninterface.cpp" />
 		<Unit filename="version.config.h" />
 		<Unit filename="version.cpp" />
 		<Unit filename="version.h" />
