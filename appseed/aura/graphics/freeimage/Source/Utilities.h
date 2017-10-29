@@ -145,17 +145,19 @@ typedef struct tagFILE_BGR {
 // ==========================================================
 //   Template utility functions
 // ==========================================================
-#undef MIN
-#undef MAX
-/// Max function
-template <class T> T MAX(const T &a, const T &b) {
-	return (a > b) ? a: b;
-}
+//#undef MIN
+//#undef MAX
+///// Max function
+//template <class T> T MAX(const T &a, const T &b) {
+//	return (a > b) ? a: b;
+//}
+//
+///// Min function
+//template <class T> T MIN(const T &a, const T &b) {
+//	return (a < b) ? a: b;
+//}
 
-/// Min function
-template <class T> T MIN(const T &a, const T &b) {
-	return (a < b) ? a: b;
-}
+#ifdef __cplusplus
 
 /// INPLACESWAP adopted from codeguru.com
 template <class T> void INPLACESWAP(T& a, T& b) {
@@ -197,6 +199,8 @@ MAXMIN(const T* L, long n, T& MAX, T& MIN) {
 		}
 	}
 }
+
+#endif
 
 // ==========================================================
 //   Utility functions
@@ -281,7 +285,7 @@ CalculateScanLine(unsigned char *bits, unsigned pitch, int scanline) {
 }
 
 // ----------------------------------------------------------
-
+#ifdef __cplusplus
 /**
 Fast generic assign (faster than for loop)
 @param dst Destination pixel
@@ -337,6 +341,7 @@ AssignPixel(BYTE* dst, const BYTE* src, unsigned bytesperpixel) {
 			assert(FALSE);
 	}
 }
+#endif // __cplusplus
 
 /**
 Swap red and blue channels in a 24- or 32-bit dib.
