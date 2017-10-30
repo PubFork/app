@@ -4267,9 +4267,6 @@
     <ClCompile Include="aura\os\windows\windows_application.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\windows\windows.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="multithreading\multithreading_tools.cpp">
       <Filter>Source Files\multithreading</Filter>
     </ClCompile>
@@ -4707,6 +4704,9 @@
     </ClCompile>
     <ClCompile Include="aura\aura\_aura_aura.cpp">
       <Filter>Source Files\aura\aura</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_aura.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

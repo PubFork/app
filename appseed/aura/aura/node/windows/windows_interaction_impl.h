@@ -77,11 +77,11 @@ namespace windows
 
       virtual void construct(oswindow oswindow);
 
-         virtual void assert_valid() const;
-         virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
 
 
-         bool create_message_queue(::user::interaction * pui, const char * pszName);
+      bool create_message_queue(::user::interaction * pui, const char * pszName);
 
       //virtual const MSG* GetCurrentMessage();
 
@@ -688,8 +688,6 @@ namespace windows
 
       virtual void show_task(bool bShow);
 
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dc) const override;
 
 
    };

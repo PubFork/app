@@ -152,9 +152,9 @@ FIBITMAP * freeimage_from_dib(::draw2d::dib * pdib)
    {
 
       memcpy(
-         &((byte *)pdst)[iStrideDst * (pdib->m_size.cy - i - 1)],
-         &((byte *)psrc)[iStrideSrc * i],
-         iStrideDst);
+      &((byte *)pdst)[iStrideDst * (pdib->m_size.cy - i - 1)],
+      &((byte *)psrc)[iStrideSrc * i],
+      iStrideDst);
 
    }
 #endif
@@ -279,9 +279,9 @@ bool dib_from_freeimage(::draw2d::dib * pdib, FIBITMAP *pfibitmap)
    {
 
       memcpy(
-         &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (h - i - 1)],
-         &((byte *)pdata)[iSrcScan * i],
-         iLineSize);
+      &((byte *)pdib->m_pcolorref)[pdib->m_iScan * (h - i - 1)],
+      &((byte *)pdata)[iSrcScan * i],
+      iLineSize);
 
    }
 
@@ -893,33 +893,33 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 }
 
 
-::draw2d::bitmap_sp di_bitmap_from_freeimage(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
-{
-
-#ifdef WINDOWSEX
-
-   ::draw2d::bitmap_sp bitmap(pgraphics->get_app());
-
-   if (!bitmap->CreateDIBitmap(pgraphics, FreeImage_GetInfoHeader(pFreeImage), CBM_INIT, FreeImage_GetBits(pFreeImage), FreeImage_GetInfo(pFreeImage), DIB_RGB_COLORS))
-   {
-
-      TRACELASTERROR();
-
-      return NULL;
-
-   }
-
-   return bitmap;
-
-#else
-
-   throw todo(pgraphics->get_app());
-
-#endif
-
-   return NULL;
-
-}
+//::draw2d::bitmap_sp di_bitmap_from_freeimage(::draw2d::graphics * pgraphics, FIBITMAP * pFreeImage)
+//{
+//
+//#ifdef WINDOWSEX
+//
+//   ::draw2d::bitmap_sp bitmap(pgraphics->get_app());
+//
+//   if (!bitmap->CreateDIBitmap(pgraphics, FreeImage_GetInfoHeader(pFreeImage), CBM_INIT, FreeImage_GetBits(pFreeImage), FreeImage_GetInfo(pFreeImage), DIB_RGB_COLORS))
+//   {
+//
+//      TRACELASTERROR();
+//
+//      return NULL;
+//
+//   }
+//
+//   return bitmap;
+//
+//#else
+//
+//   throw todo(pgraphics->get_app());
+//
+//#endif
+//
+//   return NULL;
+//
+//}
 
 
 ::draw2d::bitmap_sp bitmap_from_freeimage(::draw2d::graphics * pgraphics, FIBITMAP * pfibitmap)

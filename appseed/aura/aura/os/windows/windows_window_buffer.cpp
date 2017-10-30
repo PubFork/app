@@ -102,7 +102,7 @@ namespace windows
 
       }
 
-      ZERO(m_bitmapinfo);
+//      ZERO(m_bitmapinfo);
 
       int iStride = (int)(cxParam * 4);
 
@@ -160,12 +160,12 @@ namespace windows
                sprintf(szName2, szName, (INT_PTR)hwnd);
 
                m_hMapFile = CreateFileMapping(
-                               INVALID_HANDLE_VALUE,    // use paging file
-                               NULL,                    // default security
-                               PAGE_READWRITE,          // read/write access
-                               0,                       // maximum object size (high-order DWORD)
-                               8192 * 4096 * 4,                // maximum object size (low-order DWORD)
-                               szName2);                 // name of mapping object
+                            INVALID_HANDLE_VALUE,    // use paging file
+                            NULL,                    // default security
+                            PAGE_READWRITE,          // read/write access
+                            0,                       // maximum object size (high-order DWORD)
+                            8192 * 4096 * 4,                // maximum object size (low-order DWORD)
+                            szName2);                 // name of mapping object
 
                if (m_hMapFile == NULL)
                {
@@ -270,21 +270,27 @@ namespace windows
       }
 
 
-      ZERO(m_bitmapinfo);
+      BITMAPINFO bitmapinfo;
+
+      ZERO(bitmapinfo);
 
       int iStride = (int)(cxParam * 4);
 
       m_iScan = iStride;
 
-      m_bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      m_bitmapinfo.bmiHeader.biWidth = (LONG)cxParam;
-      m_bitmapinfo.bmiHeader.biHeight = (LONG)-cyParam;
-      m_bitmapinfo.bmiHeader.biPlanes = 1;
-      m_bitmapinfo.bmiHeader.biBitCount = 32;
-      m_bitmapinfo.bmiHeader.biCompression = BI_RGB;
-      m_bitmapinfo.bmiHeader.biSizeImage = (LONG)(cxParam * cyParam * 4);
+      bitmapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      bitmapinfo.bmiHeader.biWidth = (LONG)cxParam;
+      bitmapinfo.bmiHeader.biHeight = (LONG)-cyParam;
+      bitmapinfo.bmiHeader.biPlanes = 1;
+      bitmapinfo.bmiHeader.biBitCount = 32;
+      bitmapinfo.bmiHeader.biCompression = BI_RGB;
+      bitmapinfo.bmiHeader.biSizeImage = (LONG)(cxParam * cyParam * 4);
 
-      m_hbitmap = CreateDIBSection(NULL, &m_bitmapinfo, DIB_RGB_COLORS, (void **)&m_pcolorref, NULL, 0);
+      m_cx = cxParam;
+
+      m_cy = cyParam;
+
+      m_hbitmap = CreateDIBSection(NULL, &bitmapinfo, DIB_RGB_COLORS, (void **)&m_pcolorref, NULL, 0);
 
       m_hdc = ::CreateCompatibleDC(NULL);
 

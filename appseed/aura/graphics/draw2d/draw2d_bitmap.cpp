@@ -113,7 +113,20 @@ namespace draw2d
       ::exception::throw_not_implemented(get_app());
       return false;
    }
-
+   bool bitmap::HostDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void * ppvBits, int stride, HANDLE hSection, uint32_t offset)
+   {
+      UNREFERENCED_PARAMETER(pgraphics);
+      UNREFERENCED_PARAMETER(cx);
+      UNREFERENCED_PARAMETER(cy);
+      UNREFERENCED_PARAMETER(usage);
+      UNREFERENCED_PARAMETER(ppvBits);
+      UNREFERENCED_PARAMETER(stride);
+      UNREFERENCED_PARAMETER(hSection);
+      UNREFERENCED_PARAMETER(offset);
+      // callers must be prepared to cases when the
+      // backend doesn't support "hosting" a portion of RAM as bitmap data
+      return false;
+   }
 
    bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy,uint32_t flInit,const void *pjBits, UINT iUsage)
    {
@@ -171,10 +184,10 @@ namespace draw2d
 #endif
    class size bitmap::SetBitmapDimension(int32_t nWidth,int32_t nHeight)
    {
-         UNREFERENCED_PARAMETER(nWidth);
-         UNREFERENCED_PARAMETER(nHeight);
-         ::exception::throw_not_implemented(get_app());
-         return ::size(0,0);
+      UNREFERENCED_PARAMETER(nWidth);
+      UNREFERENCED_PARAMETER(nHeight);
+      ::exception::throw_not_implemented(get_app());
+      return ::size(0,0);
    }
 
 
@@ -195,7 +208,7 @@ namespace draw2d
    {
 
 
-         return SetBitmapDimension(size.cx,size.cy);
+      return SetBitmapDimension(size.cx,size.cy);
 
 
    }
@@ -204,9 +217,9 @@ namespace draw2d
    {
 
 
-         ::exception::throw_not_implemented(get_app());
-         class size sizeRet(0,0);
-         return sizeRet;
+      ::exception::throw_not_implemented(get_app());
+      class size sizeRet(0,0);
+      return sizeRet;
 
 
    }
@@ -215,7 +228,7 @@ namespace draw2d
    {
 
 
-         return GetBitmapDimension();
+      return GetBitmapDimension();
 
 
    }
@@ -224,7 +237,7 @@ namespace draw2d
    {
 
 
-         return GetBitmapDimension();
+      return GetBitmapDimension();
 
 
    }

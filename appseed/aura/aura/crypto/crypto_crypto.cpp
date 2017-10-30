@@ -113,7 +113,7 @@ namespace crypto
 
       iv.set(0);
 
-#ifdef OPENSSL_CRYPTO
+#ifdef HAVE_OPENSSL
 
 
       int32_t plainlen = (int32_t)storageDecrypt.get_size();
@@ -192,7 +192,7 @@ namespace crypto
 #elif defined(METROWIN)
 
       ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider ^ cipher =
-         ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames::AesEcb);
+      ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames::AesEcb);
 
       ::Windows::Security::Cryptography::Core::CryptographicKey ^ cipherkey = cipher->CreateSymmetricKey(memSha1.get_os_crypt_buffer());
 
@@ -373,10 +373,10 @@ namespace crypto
 
       iv.set(0);
 
-#if defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#if defined(METROWIN) && !defined(HAVE_OPENSSL)
 
       ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider ^ cipher =
-         ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames::AesEcb);
+      ::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames::AesEcb);
 
       ::Windows::Security::Cryptography::Core::CryptographicKey ^ cipherkey = cipher->CreateSymmetricKey(memSha1.get_os_crypt_buffer());
 
@@ -1078,8 +1078,8 @@ namespace crypto
    {
 
       ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider ^ provider =
-         ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider::OpenAlgorithm(
-            ::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
+      ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider::OpenAlgorithm(
+      ::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
 
 
       return canew(::crypto::rsa(get_app(), provider->CreateKeyPair(1024)));
@@ -1097,7 +1097,7 @@ namespace crypto
 
    void crypto::err_load_rsa_strings()
    {
-#if defined(OPENSSL_CRYPTO)
+#if defined(HAVE_OPENSSL)
       ERR_load_RSA_strings();
 
 #endif
@@ -1108,7 +1108,7 @@ namespace crypto
    void crypto::err_load_crypto_strings()
    {
 
-#if defined(OPENSSL_CRYPTO)
+#if defined(HAVE_OPENSSL)
 
 #if OPENSSL_API_COMPAT < 0x10100000L
 
@@ -1129,7 +1129,7 @@ namespace crypto
       ::object(papp),
       m_mutex(papp)
    {
-#if defined(METROWIN)  && !defined(OPENSSL_CRYPTO)
+#if defined(METROWIN)  && !defined(HAVE_OPENSSL)
 
       m_prsa = nullptr;
 #else
@@ -1179,7 +1179,7 @@ namespace crypto
       CFRelease(keyData);
 
 
-#elif defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#elif defined(METROWIN) && !defined(HAVE_OPENSSL)
 
 
       typedef struct _BCRYPT_RSAKEY_BLOB
@@ -1237,7 +1237,7 @@ namespace crypto
       //memExp.prefix_der_uint();
 
       ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider ^ cipher =
-         ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
+      ::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider::OpenAlgorithm(::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames::RsaPkcs1);
 
 
       //memory memKey(get_app());
@@ -1286,7 +1286,7 @@ namespace crypto
 
    }
 
-#ifdef OPENSSL_CRYPTO
+#ifdef HAVE_OPENSSL
 
    rsa::rsa(::aura::application * papp,
             const string & strN,
@@ -1350,7 +1350,7 @@ namespace crypto
          CFRelease(m_prsa);
          m_prsa = NULL;
       }
-#elif defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#elif defined(METROWIN) && !defined(HAVE_OPENSSL)
 
       m_prsa = nullptr;
 
@@ -1448,7 +1448,7 @@ namespace crypto
 
       CFRelease(transform);
 
-#elif defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#elif defined(METROWIN) && !defined(HAVE_OPENSSL)
 
 
 
@@ -1478,7 +1478,7 @@ namespace crypto
    {
 
 
-#if defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#if defined(METROWIN) && !defined(HAVE_OPENSSL)
 
 
 
@@ -1598,7 +1598,7 @@ namespace crypto
 
       CFRelease(transform);
 
-#elif defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#elif defined(METROWIN) && !defined(HAVE_OPENSSL)
 
 
 
@@ -1628,7 +1628,7 @@ namespace crypto
    {
 
 
-#if defined(METROWIN) && !defined(OPENSSL_CRYPTO)
+#if defined(METROWIN) && !defined(HAVE_OPENSSL)
 
 
 
@@ -1818,7 +1818,7 @@ namespace crypto
    void crypto::np_make_zigbert_rsa(const string & strDir, const string & strSignerPath, const string & strKeyPath, const string & strOthersPath, const string & strSignature)
    {
 
-#if !defined(METROWIN) && defined(OPENSSL_CRYPTO)
+#if !defined(METROWIN) && defined(HAVE_OPENSSL)
 
       X509 * signer = NULL;
       {
@@ -1968,7 +1968,7 @@ stunCalculateIntegrity_longterm(char* hmac, const char* input, int32_t length,
                                 const char *username, const char *realm, const char *password)
 {
 
-#if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
+#if !defined(METROWIN) || defined(HAVE_OPENSSL)
    uint32_t resultSize = 0;
    uchar HA1[16];
    char HA1_text[1024];
@@ -1986,7 +1986,7 @@ stunCalculateIntegrity_longterm(char* hmac, const char* input, int32_t length,
 void
 stunCalculateIntegrity_shortterm(char* hmac, const char* input, int32_t length, const char* key)
 {
-#if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
+#if !defined(METROWIN) || defined(HAVE_OPENSSL)
    uint32_t resultSize = 0;
    HMAC(EVP_sha1(),
         key, (int)strlen(key),
@@ -1997,7 +1997,7 @@ stunCalculateIntegrity_shortterm(char* hmac, const char* input, int32_t length, 
 
 void hmac_evp_sha1_1234(unsigned char * hmac, unsigned int * hmacSize, const unsigned char * buf, size_t bufLen)
 {
-#if !defined(METROWIN) || defined(OPENSSL_CRYPTO)
+#if !defined(METROWIN) || defined(HAVE_OPENSSL)
 
    HMAC(EVP_sha1(),
         "1234", 4,

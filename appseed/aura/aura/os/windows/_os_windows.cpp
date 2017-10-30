@@ -17,9 +17,10 @@
 #include <process.h>
 #include <Winsvc.h>
 
-#include "windows.cpp"
+
 #include "windows_ansi_file.cpp"
 #include "windows_application.cpp"
+#include "windows_aura.cpp"
 #include "windows_debug.cpp"
 #include "windows_dll.cpp"
 #include "windows_error.cpp"

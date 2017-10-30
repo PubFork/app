@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
@@ -63,10 +63,10 @@ namespace windows
 
 
    HRESULT STDMETHODCALLTYPE interaction_impl::DragEnter(
-      /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
-      /* [in] */ DWORD grfKeyState,
-      /* [in] */ POINTL pt,
-      /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+   /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
+   /* [in] */ DWORD grfKeyState,
+   /* [in] */ POINTL pt,
+   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
    {
 
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGENTER);
@@ -107,9 +107,9 @@ namespace windows
    }
 
    HRESULT STDMETHODCALLTYPE interaction_impl::DragOver(
-      /* [in] */ DWORD grfKeyState,
-      /* [in] */ POINTL pt,
-      /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+   /* [in] */ DWORD grfKeyState,
+   /* [in] */ POINTL pt,
+   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
    {
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGOVER);
 
@@ -180,10 +180,10 @@ namespace windows
    }
 
    HRESULT STDMETHODCALLTYPE interaction_impl::Drop(
-      /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
-      /* [in] */ DWORD grfKeyState,
-      /* [in] */ POINTL pt,
-      /* [out][in] */ __RPC__inout DWORD *pdwEffect)
+   /* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
+   /* [in] */ DWORD grfKeyState,
+   /* [in] */ POINTL pt,
+   /* [out][in] */ __RPC__inout DWORD *pdwEffect)
    {
 
       ::message::drag_and_drop m(this, MESSAGE_OLE_DRAGDROP);
@@ -2732,52 +2732,52 @@ namespace windows
    class print_window :
       virtual ::object
    {
-      public:
+   public:
 
 
 
-         manual_reset_event m_event;
-         oswindow m_oswindow;
-         HDC m_hdc;
+      manual_reset_event m_event;
+      oswindow m_oswindow;
+      HDC m_hdc;
 
-         print_window(::aura::application * papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
-            ::object(papp),
-            m_event(papp)
+      print_window(::aura::application * papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
+         ::object(papp),
+         m_event(papp)
+      {
+         m_event.ResetEvent();
+         m_oswindow = oswindow;
+         m_hdc = hdc;
+         __begin_thread(papp, &print_window::s_print_window, (LPVOID)this, ::multithreading::priority_above_normal);
+         if (m_event.wait(millis(dwTimeout)).timeout())
          {
-            m_event.ResetEvent();
-            m_oswindow = oswindow;
-            m_hdc = hdc;
-            __begin_thread(papp, &print_window::s_print_window, (LPVOID)this, ::multithreading::priority_above_normal);
-            if (m_event.wait(millis(dwTimeout)).timeout())
-            {
-               TRACE("print_window::time_out");
-            }
+            TRACE("print_window::time_out");
          }
+      }
 
 
-         static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+      static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+      {
+
+         print_window * pprintwindow = (print_window *)pvoid;
+
+         try
          {
 
-            print_window * pprintwindow = (print_window *)pvoid;
+            HANDLE hevent = (HANDLE)pprintwindow->m_event.get_os_data();
 
-            try
-            {
+            ::PrintWindow(pprintwindow->m_oswindow, pprintwindow->m_hdc, 0);
 
-               HANDLE hevent = (HANDLE)pprintwindow->m_event.get_os_data();
-
-               ::PrintWindow(pprintwindow->m_oswindow, pprintwindow->m_hdc, 0);
-
-               ::SetEvent(hevent);
-
-            }
-            catch (...)
-            {
-
-            }
-
-            return 0;
+            ::SetEvent(hevent);
 
          }
+         catch (...)
+         {
+
+         }
+
+         return 0;
+
+      }
 
    };
 
@@ -2950,15 +2950,15 @@ namespace windows
                      ::PrintWindow(oswindow, hDCMem, 0);
 
                      ::BitBlt(
-                        hdc,
-                        //rect5.left,
-                        //rect5.top,
-                        0, 0,
-                        rect5.width(), rect5.height(),
-                        hDCMem,
-                        rectUpdate.left - rect5.left,
-                        rectUpdate.top - rect5.top,
-                        SRCCOPY);
+                     hdc,
+                     //rect5.left,
+                     //rect5.top,
+                     0, 0,
+                     rect5.width(), rect5.height(),
+                     hDCMem,
+                     rectUpdate.left - rect5.left,
+                     rectUpdate.top - rect5.top,
+                     SRCCOPY);
 
                      ::SelectObject(hDCMem, hOld);
 
@@ -2981,14 +2981,14 @@ namespace windows
                      {
 
                         ::BitBlt(
-                           hdc,
-                           rect5.left - rectUpdate.left,
-                           rect5.top - rectUpdate.top,
-                           rect5.width(), rect5.height(),
-                           hdcWindow,
-                           rect5.left - rect5.left,
-                           rect5.top - rect5.top,
-                           SRCCOPY);
+                        hdc,
+                        rect5.left - rectUpdate.left,
+                        rect5.top - rectUpdate.top,
+                        rect5.width(), rect5.height(),
+                        hdcWindow,
+                        rect5.left - rect5.left,
+                        rect5.top - rect5.top,
+                        SRCCOPY);
 
                         ::ReleaseDC(wndaApp[j], hdcWindow);
 
@@ -4447,11 +4447,11 @@ namespace windows
          // place the interaction_impl on top except for certain nCmdShow
 
          if (
-            nCmdShow != SW_HIDE
-            && nCmdShow != SW_MINIMIZE
-            && nCmdShow != SW_SHOWMINNOACTIVE
-            && nCmdShow != SW_SHOWNA
-            && nCmdShow != SW_SHOWNOACTIVATE
+         nCmdShow != SW_HIDE
+         && nCmdShow != SW_MINIMIZE
+         && nCmdShow != SW_SHOWMINNOACTIVE
+         && nCmdShow != SW_SHOWNA
+         && nCmdShow != SW_SHOWNOACTIVATE
          )
          {
 
@@ -6651,4 +6651,11 @@ void __term_windowing()
       t_hHookOldCbtFilter = NULL;
    }
 
+}
+
+
+
+::user::interaction_impl * oswindow_get(HWND hwnd)
+{
+   return dynamic_cast <::user::interaction_impl *>(::aura::system::g_p->m_paurasession->window_map().get((int_ptr) hwnd));
 }

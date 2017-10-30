@@ -2973,6 +2973,9 @@ namespace user
       }
 
       m_oswindow = oswindow;
+      _001BaseWndInterfaceMap();
+
+
 
    }
 

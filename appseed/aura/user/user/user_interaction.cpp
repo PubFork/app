@@ -1,6 +1,6 @@
-﻿#include "framework.h" // from "base/user/user.h"
+#include "framework.h" // from "base/user/user.h"
 
-
+#define MESSAGE_WINDOW_PARENT HWND_MESSAGE
 
 namespace user
 {
@@ -1789,13 +1789,13 @@ restart:
    {
 
       return
-         ::user::interaction_base::is_this_visible() ||
-         (
-            m_pimpl.is_set() &&
-            m_pimpl->m_bShowFlags &&
-            (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW) &&
-            !(m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
-         );
+      ::user::interaction_base::is_this_visible() ||
+      (
+      m_pimpl.is_set() &&
+      m_pimpl->m_bShowFlags &&
+      (m_pimpl->m_iShowFlags & SWP_SHOWWINDOW) &&
+      !(m_pimpl->m_iShowFlags & SWP_HIDEWINDOW)
+      );
 
    }
 
@@ -3082,12 +3082,12 @@ restart:
    {
 
       if (!create_window(
-               NULL,
-               NULL,
-               WS_VISIBLE | WS_CHILD,
-               rect,
-               puiParent,
-               id))
+            NULL,
+            NULL,
+            WS_VISIBLE | WS_CHILD,
+            rect,
+            puiParent,
+            id))
       {
 
          TRACE("Failed to create control");
