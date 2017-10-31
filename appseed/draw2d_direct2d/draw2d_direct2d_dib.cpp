@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
@@ -114,7 +114,8 @@ namespace draw2d_direct2d
 
       m_spgraphicsMap->CreateCompatibleDC(NULL);
 
-      if (!m_spbitmapMap->CreateDIBSection(m_spgraphicsMap, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, NULL))
+      //if (!m_spbitmapMap->CreateDIBSection(m_spgraphicsMap, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, NULL))
+      if (!m_spbitmapMap->CreateDIBSection(m_spgraphicsMap, width, height, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, NULL))
       {
 
          m_size.cx = 0;
@@ -1773,12 +1774,12 @@ namespace draw2d_direct2d
 #ifdef WINDOWSEX
 
       dib1.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
 #else
 
@@ -1793,20 +1794,20 @@ namespace draw2d_direct2d
 
 #ifdef WINDOWSEX
       spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 #else
       spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         0);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      0);
 #endif
 
       // Mask dib
@@ -1814,12 +1815,12 @@ namespace draw2d_direct2d
       dibM.create(cx, cy);
 
       dibM.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         0);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      0);
       //         DI_MASK);
 
       BYTE * r1 = (BYTE*)dib1.m_pcolorref;
@@ -3184,11 +3185,11 @@ namespace draw2d_direct2d
       ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
       pgraphicsDib1->m_pdevicecontext->DrawImage(
-         (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
-         D2D1::Point2F(0.f, 0.f),
-         d2d1::rectf(rectDib1),
-         D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-         D2D1_COMPOSITE_MODE_DESTINATION_IN);
+      (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+      D2D1::Point2F(0.f, 0.f),
+      d2d1::rectf(rectDib1),
+      D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+      D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
       set_alpha_mode(::draw2d::alpha_mode_blend);
 

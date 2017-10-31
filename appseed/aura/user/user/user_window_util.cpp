@@ -1,6 +1,8 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
+
+#define MESSAGE_WINDOW_PARENT HWND_MESSAGE
 
 namespace user
 {

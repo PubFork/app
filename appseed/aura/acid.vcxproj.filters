@@ -2252,13 +2252,7 @@
     <ClInclude Include="aura\compress\compress_bz.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
-    <ClInclude Include="aura\compress\compress_bzip.h">
-      <Filter>Header Files\aura\compress</Filter>
-    </ClInclude>
     <ClInclude Include="aura\compress\compress_gz.h">
-      <Filter>Header Files\aura\compress</Filter>
-    </ClInclude>
-    <ClInclude Include="aura\compress\compress_gzip.h">
       <Filter>Header Files\aura\compress</Filter>
     </ClInclude>
     <ClInclude Include="aura\compress\bsdiff\libbsdiff.h">
@@ -2633,9 +2627,6 @@
     <ClInclude Include="aura\os\windows\windows_system_interaction_impl.h">
       <Filter>Header Files\aura\os\windows</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_frame_window.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_menu_item.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -2667,12 +2658,6 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_tooltip.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_control_descriptor_set.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_control_descriptor.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="aura\aura\aura_serial.h">
@@ -4255,9 +4240,6 @@
     <ClCompile Include="aura\os\windows\windows_application.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
-    <ClCompile Include="aura\os\windows\windows.cpp">
-      <Filter>Source Files\aura\os\windows</Filter>
-    </ClCompile>
     <ClCompile Include="multithreading\multithreading_tools.cpp">
       <Filter>Source Files\multithreading</Filter>
     </ClCompile>
@@ -4568,6 +4550,12 @@
       <Filter>Source Files\aura\message</Filter>
     </ClCompile>
     <ClCompile Include="aura\os\windows\windows_list_serial_ports.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\node\windows\windows_interaction_impl.cpp">
+      <Filter>Source Files\aura\node\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_aura.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
   </ItemGroup>
