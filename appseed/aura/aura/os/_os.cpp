@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "os_alloc.cpp"
@@ -16,7 +16,7 @@
 #include "os_http.cpp"
 #include "os_os.cpp"
 #include "os_thread.cpp"
-#include "os_serial.cpp"
+//#include "os_serial.cpp"
 #endif
 
 

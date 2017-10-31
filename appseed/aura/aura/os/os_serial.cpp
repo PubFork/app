@@ -1,4 +1,4 @@
-/* Copyright 2012 William Woodall and John Harrison */
+﻿/* Copyright 2012 William Woodall and John Harrison */
 #include "framework.h"
 
 #if !defined(_WIN32) && !defined(__OpenBSD__) && !defined(__FreeBSD__)
@@ -34,39 +34,39 @@ using serial::flowcontrol_t;
 
 class Serial::ScopedReadLock
 {
-   public:
-      ScopedReadLock(SerialImpl *pimpl) : pimpl_(pimpl)
-      {
-         this->pimpl_->readLock();
-      }
-      ~ScopedReadLock()
-      {
-         this->pimpl_->readUnlock();
-      }
-   private:
-      // Disable copy constructors
-      ScopedReadLock(const ScopedReadLock&);
-      const ScopedReadLock& operator=(ScopedReadLock);
+public:
+   ScopedReadLock(SerialImpl *pimpl) : pimpl_(pimpl)
+   {
+      this->pimpl_->readLock();
+   }
+   ~ScopedReadLock()
+   {
+      this->pimpl_->readUnlock();
+   }
+private:
+   // Disable copy constructors
+   ScopedReadLock(const ScopedReadLock&);
+   const ScopedReadLock& operator=(ScopedReadLock);
 
-      SerialImpl *pimpl_;
+   SerialImpl *pimpl_;
 };
 
 class Serial::ScopedWriteLock
 {
-   public:
-      ScopedWriteLock(SerialImpl *pimpl) : pimpl_(pimpl)
-      {
-         this->pimpl_->writeLock();
-      }
-      ~ScopedWriteLock()
-      {
-         this->pimpl_->writeUnlock();
-      }
-   private:
-      // Disable copy constructors
-      ScopedWriteLock(const ScopedWriteLock&);
-      const ScopedWriteLock& operator=(ScopedWriteLock);
-      SerialImpl *pimpl_;
+public:
+   ScopedWriteLock(SerialImpl *pimpl) : pimpl_(pimpl)
+   {
+      this->pimpl_->writeLock();
+   }
+   ~ScopedWriteLock()
+   {
+      this->pimpl_->writeUnlock();
+   }
+private:
+   // Disable copy constructors
+   ScopedWriteLock(const ScopedWriteLock&);
+   const ScopedWriteLock& operator=(ScopedWriteLock);
+   SerialImpl *pimpl_;
 };
 
 Serial::Serial (::aura::application * papp, const string &port, uint32_t baudrate, serial::Timeout timeout,
@@ -80,7 +80,6 @@ Serial::Serial (::aura::application * papp, const string &port, uint32_t baudrat
 
 Serial::~Serial ()
 {
-   delete pimpl_;
 }
 
 void
@@ -220,8 +219,8 @@ Serial::readlines (size_t size, string eol)
          if (start_of_line != read_so_far)
          {
             lines.push_back (
-               string (reinterpret_cast<const char*> (buffer_ + start_of_line),
-                       read_so_far - start_of_line));
+            string (reinterpret_cast<const char*> (buffer_ + start_of_line),
+                    read_so_far - start_of_line));
          }
          break; // Timeout occured on reading 1 byte
       }
@@ -230,8 +229,8 @@ Serial::readlines (size_t size, string eol)
       {
          // EOL found
          lines.push_back(
-            string(reinterpret_cast<const char*> (buffer_ + start_of_line),
-                   read_so_far - start_of_line));
+         string(reinterpret_cast<const char*> (buffer_ + start_of_line),
+                read_so_far - start_of_line));
          start_of_line = read_so_far;
       }
       if (read_so_far == size)
@@ -239,8 +238,8 @@ Serial::readlines (size_t size, string eol)
          if (start_of_line != read_so_far)
          {
             lines.push_back(
-               string(reinterpret_cast<const char*> (buffer_ + start_of_line),
-                      read_so_far - start_of_line));
+            string(reinterpret_cast<const char*> (buffer_ + start_of_line),
+                   read_so_far - start_of_line));
          }
          break; // Reached the maximum read length
       }

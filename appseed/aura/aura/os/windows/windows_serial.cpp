@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 /* Copyright 2012 William Woodall and John Harrison */
 
@@ -80,7 +80,7 @@ Serial::SerialImpl::open ()
          str.Format("Specified port, %d, does not exist.", this->getPort());
          THROW (IOException, str);
       default:
-         str.Format("Unknown error opening the serial port: %d",  errno);
+         str.Format("Unknown error opening the serial port: %d",  errno_);
          THROW (IOException, str);
       }
    }
@@ -370,20 +370,25 @@ Serial::SerialImpl::reconfigurePort ()
 void
 Serial::SerialImpl::close ()
 {
+   output_debug_string("\nSerial::serialimpl::close");
    if (is_open_ == true)
    {
+      output_debug_string("\nSerial::serialimpl::close open");
       if (fd_ != INVALID_HANDLE_VALUE)
       {
+         output_debug_string("\nSerial::serialimpl::close valid");
          int ret;
          ret = CloseHandle(fd_);
          if (ret == 0)
          {
+            output_debug_string("\nSerial::serialimpl::close failed");
             string str;
             str.Format("Error while closing serial port: %d", GetLastError());
             THROW (IOException, str);
          }
          else
          {
+            output_debug_string("\nSerial::serialimpl::close succesfully closed");
             fd_ = INVALID_HANDLE_VALUE;
          }
       }
