@@ -1,11 +1,14 @@
-#pragma once
+﻿#pragma once
+
+
+#include "aura/net/ftp/ftp_client_socket.h"
 
 
 namespace ftp
 {
 
 
-   class CLASS_DECL_AURA output : 
+   class CLASS_DECL_AURA output :
       virtual public client_socket::notification
    {
    public:
@@ -13,7 +16,7 @@ namespace ftp
 
       output(::aura::application * papp);
       virtual ~output();
-      
+
       virtual void OnInternalError(const string& strErrorMsg, const string& strFileName, DWORD dwLineNr);
       virtual void OnSendCommand(const command& strComamnd, const stringa& straArguments);
       virtual void OnResponse(const reply & Reply);

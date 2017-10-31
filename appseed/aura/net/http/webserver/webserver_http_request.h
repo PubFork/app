@@ -1,5 +1,7 @@
-#pragma once
+﻿#pragma once
 
+#include "webserver_http_form.h"
+#include "webserver_http_transaction.h"
 
 namespace http
 {
@@ -11,7 +13,7 @@ namespace http
    public:
 
 
-      
+
       string                           m_strRequestUri;
       string                           m_strQueryString;
       string                           m_strHttpHost;
@@ -50,7 +52,7 @@ namespace http
 
       virtual void clear();
 
-      
+
 
    }; // end of class
 

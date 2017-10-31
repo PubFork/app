@@ -2865,6 +2865,7 @@
     <ClInclude Include="aura\install\install_install_item.h" />
     <ClInclude Include="aura\install\install_launcher.h" />
     <ClInclude Include="aura\install\install_module_list.h" />
+    <ClInclude Include="aura\install\install_net.h" />
     <ClInclude Include="aura\install\install_resource.h" />
     <ClInclude Include="aura\install\install_small_bell.h" />
     <ClInclude Include="aura\install\install_socket.h" />
@@ -3694,6 +3695,7 @@
     <ClInclude Include="net\http\webserver\webserver_http_response.h" />
     <ClInclude Include="net\http\webserver\webserver_http_transaction.h" />
     <ClInclude Include="net\net.h" />
+    <ClInclude Include="net\netserver\netserver.h" />
     <ClInclude Include="net\netserver\netserver_socket.h" />
     <ClInclude Include="net\netserver\netserver_socket_handler.h" />
     <ClInclude Include="net\netserver\netserver_socket_thread.h" />
@@ -3727,6 +3729,7 @@
     <ClInclude Include="net\sockets\bsd\basic\sockets_tls_socket.h" />
     <ClInclude Include="net\sockets\bsd\basic\sockets_udp_socket.h" />
     <ClInclude Include="net\sockets\bsd\internal\SSLInitializer.h" />
+    <ClInclude Include="net\sockets\bsd\internal\ssl_ticket_key.h" />
     <ClInclude Include="net\sockets\bsd\smtp\smtpd_socket.h" />
     <ClInclude Include="net\sockets\bsd\smtp\smtp_socket.h" />
     <ClInclude Include="net\sockets\bsd\sockets.h" />
@@ -4388,6 +4391,7 @@
     <ClInclude Include="primitive\primitive_shared_memory.h" />
     <ClInclude Include="primitive\primitive_var.h" />
     <ClInclude Include="primitive\primitive_virtual_memory.h" />
+    <ClInclude Include="primitive\util.h" />
     <ClInclude Include="user\simple\simple_message_box.h" />
     <ClCompile Include="multithreading\multithreading_go_thread.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>

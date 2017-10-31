@@ -1,4 +1,4 @@
-/** \file tcp_socket.h
+﻿/** \file tcp_socket.h
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #pragma once
 
+#include "aura/net/sockets/bsd/internal/ssl_ticket_key.h"
+#include "sockets_stream_socket.h"
+
+
 #define TCP_BUFSIZE_READ (16400)
 #define TCP_OUTPUT_CAPACITY 1024000
 
@@ -53,28 +57,35 @@ namespace sockets
       /** Output buffer struct.
       \ingroup internal */
       string m_strTlsHostName;
-      struct OUTPUT {
+      struct OUTPUT
+      {
          OUTPUT() : _b(0), _t(0), _q(0) {}
-         OUTPUT(const char *buf, int32_t len) : _b(0), _t(len), _q(len) {
+         OUTPUT(const char *buf, int32_t len) : _b(0), _t(len), _q(len)
+         {
             memcpy(_buf, buf, len);
          }
-         int32_t Space() {
+         int32_t Space()
+         {
             return TCP_OUTPUT_CAPACITY - _t;
          }
-         void add(const char *buf, int32_t len) {
+         void add(const char *buf, int32_t len)
+         {
             memcpy(_buf + _t, buf, len);
             _t += len;
             _q += len;
          }
-         int32_t remove(int32_t len) {
+         int32_t remove(int32_t len)
+         {
             _b += len;
             _q -= len;
             return _q;
          }
-         const char *Buf() {
+         const char *Buf()
+         {
             return _buf + _b;
          }
-         int32_t Len() {
+         int32_t Len()
+         {
             return _q;
          }
          int32_t _b;
@@ -128,7 +139,7 @@ namespace sockets
       tcp_socket(base_socket_handler& h,size_t isize,size_t osize);
       virtual ~tcp_socket();
 
-      
+
       using ::sockets::stream_socket::open;
       bool open(const ::net::address & address, bool skip_socks = false);
       bool open(const ::net::address & address, const ::net::address & addressBind,bool skip_socks = false);
@@ -275,13 +286,13 @@ namespace sockets
       void buffer(const void * buf, int len);
 
 
- 
+
    };
 
    extern "C"
    int32_t tcp_socket_SSL_password_cb(char *buf,int32_t num,int32_t rwflag,void *userdata);
 
-   
+
 } // namespace sockets
 
 

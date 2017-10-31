@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #if defined(INSTALL_SUBSYSTEM)
@@ -6,6 +6,9 @@
 
 namespace install
 {
+
+
+   class socket_thread;
 
 
    class CLASS_DECL_AURA application :
@@ -95,10 +98,10 @@ namespace install
 
       virtual void defer_show_debug_box();
 
-      
+
       bool are_ca2_framework_shared_libraries_busy();
 
-      
+
 
 
 

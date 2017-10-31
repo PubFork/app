@@ -1,4 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
+#include "netserver.h"
 
 
 namespace netserver
@@ -91,7 +92,7 @@ namespace netserver
 
    void socket::OnExecute()
    {
-      
+
       string strUrl = m_request.attr("http_protocol").get_string() + "://" + m_request.header("host").get_string() + m_request.attr("request_uri").get_string();
 
       TRACE("netserver::socket::OnExecute Url ----**START**====> %s", strUrl);
@@ -116,7 +117,7 @@ namespace netserver
 
    }
 
-   
+
    void socket::on_send_response()
    {
 
@@ -192,7 +193,7 @@ namespace netserver
    //   }
    //   else
    //   {
-   //      
+   //
    //      ::visual::dib_sp spdib(allocer());
 
    //      spdib.load_from_file(pszPath);

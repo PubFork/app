@@ -2684,6 +2684,18 @@
     <ClInclude Include="aura\node\windows\windows_user.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
+    <ClInclude Include="net\netserver\netserver.h">
+      <Filter>Header Files\net\netserver</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\install\install_net.h">
+      <Filter>Header Files\aura\install</Filter>
+    </ClInclude>
+    <ClInclude Include="primitive\util.h">
+      <Filter>Header Files\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="net\sockets\bsd\internal\ssl_ticket_key.h">
+      <Filter>Header Files\net\sockets\bsd\internal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="multithreading\multithreading_condition.cpp">

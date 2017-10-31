@@ -1,4 +1,6 @@
 ﻿#include "framework.h"
+#include "aura/net/sockets/bsd/sockets_sockets.h"
+
 
 
 ::aura::PFN_GET_NEW_LIBRARY g_pfnNewLibrary = NULL;
@@ -3088,7 +3090,7 @@ ret:
    class ::user::window_map & session::window_map()
    {
 
-         return *m_pwindowmap;
+      return *m_pwindowmap;
 
    }
 

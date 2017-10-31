@@ -702,12 +702,14 @@
     <ClInclude Include="filesystem\fs\fs_fs.h" />
     <ClInclude Include="filesystem\fs\fs_ftp.h" />
     <ClInclude Include="filesystem\fs\fs_ftp_file.h" />
+    <ClInclude Include="filesystem\fs\fs_ftp_net.h" />
     <ClInclude Include="filesystem\fs\fs_ifs.h" />
     <ClInclude Include="filesystem\fs\fs_ifs_file.h" />
     <ClInclude Include="filesystem\fs\fs_item.h" />
     <ClInclude Include="filesystem\fs\fs_item_array.h" />
     <ClInclude Include="filesystem\fs\fs_link.h" />
     <ClInclude Include="filesystem\fs\fs_native_fs.h" />
+    <ClInclude Include="filesystem\fs\fs_net.h" />
     <ClInclude Include="filesystem\fs\fs_remote_native_file.h" />
     <ClInclude Include="filesystem\fs\fs_remote_native_fs.h" />
     <ClInclude Include="filesystem\fs\fs_set.h" />

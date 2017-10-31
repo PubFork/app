@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 //#ifdef BSD_STYLE_SOCKETS
 //#include <openssl/ssl.h>
 //#endif
 
+#include "aura/net/sockets/base/sockets_base_socket.h"
 
 namespace sockets
 {

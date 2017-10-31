@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "net_url.h"
@@ -72,21 +72,26 @@ namespace sockets
 #include "aura/net/http/http_http.h"
 
 
-#include "sockets/sockets.h"
+//#include "sockets/sockets.h"
 
 
-#include "ftp/ftp.h"
+//#include "ftp/ftp.h"
 
 
-#include "net_sockets.h"
+//#include "net_sockets.h"
+
+#include "net_net.h"
+
+
+#include "net_address.h"
+
+
+#include "net_port_forward.h"
 
 CLASS_DECL_AURA void thread_touch_sockets();
 CLASS_DECL_AURA int thread_has_sockets();
 
 
-#include "netserver/netserver_socket.h"
-#include "netserver/netserver_socket_handler.h"
-#include "netserver/netserver_socket_thread.h"
 
 
 

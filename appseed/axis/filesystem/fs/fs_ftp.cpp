@@ -1,19 +1,24 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
-//#include "axis/net/net_sockets.h"
+﻿#include "framework.h" // from "axis/net/net_sockets.h"
+#include "fs_ftp_net.h"
 
 
 ftpfs::ftpfs(::aura::application * papp, const char * pszRoot) :
    ::object(papp),
    ::data::data(papp),
-   ::fs::data(papp),
-   m_sockethandler(papp)
-{
+   ::fs::data(papp)
 
+{
+   m_pftpnet = new ftpnet(papp);
    m_strRoot = pszRoot;
    m_bInitialized = false;
 
    m_straFtpServer.add("localhost");
 
+}
+
+ftpfs::~ftpfs()
+{
+   ::aura::del(m_pftpnet);
 }
 
 
@@ -73,11 +78,11 @@ bool ftpfs::has_subdir(const ::file::path & path)
 {
 
    ::file::path path;
-   
+
    path = "ftp://";
-   
+
    listing.add(path);
-   
+
    listing.m_straTitle.add("FTP sites");
 
    return listing;

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // The official specification of the File Transfer Protocol (FTP) is the RFC 959.
 // Most of the documentation are taken from this RFC.
@@ -49,6 +49,10 @@
 
 
 #include "framework.h"
+#include "ftp.h"
+#include "aura/net/sockets/base/sockets_base_socket_handler.h"
+#include "aura/net/sockets/sockets_transfer_socket.h"
+#include "aura/net/sockets/bsd/basic/sockets_listen_socket.h"
 
 #include <openssl/x509.h>
 
@@ -81,9 +85,9 @@ namespace ftp
    ///                           the response. Sometimes the socket hangs if no wait time
    ///                           is set. Normally not wait time is necessary.
    client_socket::client_socket(::sockets::base_socket_handler & handler,
-      unsigned int uiTimeout/*=10*/,
-      unsigned int uiBufferSize/*=2048*/, unsigned int uiResponseWait/*=0*/,
-      const string& strRemoteDirectorySeparator/*=_T("/")*/) :
+                                unsigned int uiTimeout/*=10*/,
+                                unsigned int uiBufferSize/*=2048*/, unsigned int uiResponseWait/*=0*/,
+                                const string& strRemoteDirectorySeparator/*=_T("/")*/) :
       ::object(handler.get_app()),
       ::sockets::base_socket(handler),
       ::sockets::socket(handler),
@@ -268,13 +272,15 @@ namespace ftp
       logonInfo.m_bFailedBecauseOfSecurityLevelCanUpgrade = false;
       m_LastLogonInfo = logonInfo;
 
-      enum {
+      enum
+      {
          LO = -2,      ///< Logged On
          ER = -1,      ///< Error
          NUMLOGIN = 9, ///< currently supports 9 different login sequences
       };
 
-      int iLogonSeq[NUMLOGIN][18] = {
+      int iLogonSeq[NUMLOGIN][18] =
+      {
          // this array stores all of the logon sequences for the various firewalls
          // in blocks of 3 nums.
          // 1st num is command to send,
@@ -356,7 +362,7 @@ namespace ftp
          reply Reply;
          switch (iLogonSeq[logonInfo.FwType().AsEnum()][iLogonPoint])
          {
-            // state                 command           command argument                                                                              success     fail
+         // state                 command           command argument                                                                              success     fail
          case 0:  if (SendCommand(command::USER(), { logonInfo.Username() }, Reply)) break; else return false;
          case 1:  if (SendCommand(command::PASS(), {logonInfo.Password() }, Reply)) break; else return false;
          case 2:  if (SendCommand(command::ACCT(), {logonInfo.Account() }, Reply)) break; else return false;
@@ -576,7 +582,7 @@ namespace ftp
    {
       ::ftp::file file(get_app());
       if (!file.Open(strLocalFile, (m_fResumeIfPossible ? ::file::mode_no_truncate : ::file::mode_create) | ::file::mode_write
-      | ::file::type_binary | ::file::defer_create_directory))
+                     | ::file::type_binary | ::file::defer_create_directory))
       {
          ReportError(sys_error::GetErrorDescription(), __FILE__, __LINE__);
          return false;
@@ -601,7 +607,7 @@ namespace ftp
          p->OnPreReceiveFile(strRemoteFile, Observer.GetLocalStreamName(), lRemoteFileSize);
 
       const bool fRet = ExecuteDatachannelCommand(command::RETR(), strRemoteFile, repType, fPasv,
-         m_fResumeIfPossible ? Observer.GetLocalStreamSize() : 0, Observer);
+                        m_fResumeIfPossible ? Observer.GetLocalStreamSize() : 0, Observer);
 
       for (auto * p : (observer_array &)m_setObserver)
          p->OnPostReceiveFile(strRemoteFile, Observer.GetLocalStreamName(), lRemoteFileSize);
@@ -618,8 +624,8 @@ namespace ftp
    /// @param[in] repType Representation Type (see documentation of representation)
    /// @param[in] fPasv see documentation of client_socket::Passive
    bool client_socket::DownloadFile(const string& strSourceFile, client_socket& TargetFtpServer,
-      const string& strTargetFile, const representation& repType/*=representation(type::Image())*/,
-      bool fPasv/*=true*/)
+                                    const string& strTargetFile, const representation& repType/*=representation(type::Image())*/,
+                                    bool fPasv/*=true*/)
    {
       return TransferFile(*this, strSourceFile, TargetFtpServer, strTargetFile, repType, fPasv);
    }
@@ -687,8 +693,8 @@ namespace ftp
    /// @param[in] repType Representation Type (see documentation of representation)
    /// @param[in] fPasv see documentation of client_socket::Passive
    bool client_socket::UploadFile(client_socket& SourceFtpServer, const string& strSourceFile,
-      const string& strTargetFile, const representation& repType/*=representation(type::Image())*/,
-      bool fPasv/*=true*/)
+                                  const string& strTargetFile, const representation& repType/*=representation(type::Image())*/,
+                                  bool fPasv/*=true*/)
    {
       return TransferFile(SourceFtpServer, strSourceFile, *this, strTargetFile, repType, !fPasv);
    }
@@ -703,9 +709,9 @@ namespace ftp
    /// @param[in] repType Representation Type (see documentation of representation)
    /// @param[in] fPasv see documentation of client_socket::Passive
    /*static*/ bool client_socket::TransferFile(client_socket& SourceFtpServer, const string& strSourceFile,
-      client_socket& TargetFtpServer, const string& strTargetFile,
-      const representation& repType/*=representation(type::Image())*/,
-      bool fSourcePasv/*=false*/)
+         client_socket& TargetFtpServer, const string& strTargetFile,
+         const representation& repType/*=representation(type::Image())*/,
+         bool fSourcePasv/*=false*/)
    {
       // transmit representation to server
       if (SourceFtpServer.RepresentationType(repType) != FTP_OK)
@@ -738,7 +744,7 @@ namespace ftp
 
       reply ReplyTarget;
       if (!TargetFtpServer.SendCommand(command::STOR(), strTargetFile, ReplyTarget) ||
-         !ReplyTarget.Code().IsPositivePreliminaryReply())
+            !ReplyTarget.Code().IsPositivePreliminaryReply())
          return false;
 
       reply ReplySource;
@@ -747,7 +753,7 @@ namespace ftp
 
       // get response from FTP servers
       if (!SourceFtpServer.GetResponse(ReplySource) || !ReplySource.Code().IsPositiveCompletionReply() ||
-         !TargetFtpServer.GetResponse(ReplyTarget) || !ReplyTarget.Code().IsPositiveCompletionReply())
+            !TargetFtpServer.GetResponse(ReplyTarget) || !ReplyTarget.Code().IsPositiveCompletionReply())
          return false;
 
       return true;
@@ -761,7 +767,7 @@ namespace ftp
    /// @param[in] dwByteOffset Server marker at which file transfer is to be restarted.
    /// @param[in] Observer Object for observing the execution of the command.
    bool client_socket::ExecuteDatachannelCommand(const command& crDatachannelCmd, const string& strPath, const representation& representation,
-      bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer)
+         bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer)
    {
       if (!crDatachannelCmd.IsDatachannelCommand())
       {
@@ -1020,14 +1026,14 @@ namespace ftp
 
       // if resuming is activated then set offset
       if (m_fResumeIfPossible &&
-         (crDatachannelCmd == command::STOR() || crDatachannelCmd == command::RETR() || crDatachannelCmd == command::APPE()) &&
-         (dwByteOffset != 0 && Restart(dwByteOffset) != FTP_OK))
+            (crDatachannelCmd == command::STOR() || crDatachannelCmd == command::RETR() || crDatachannelCmd == command::APPE()) &&
+            (dwByteOffset != 0 && Restart(dwByteOffset) != FTP_OK))
          return false;
 
       // send FTP command RETR/STOR/NLST/LIST to the server
       reply Reply;
       if (!SendCommand(crDatachannelCmd, strPath, Reply) ||
-         !Reply.Code().IsPositivePreliminaryReply())
+            !Reply.Code().IsPositivePreliminaryReply())
          return false;
 
       while (sckDataConnection.m_pbasesocket == NULL)
@@ -1106,15 +1112,15 @@ namespace ftp
 
       // if resuming is activated then set offset
       if (m_fResumeIfPossible &&
-         (crDatachannelCmd == command::STOR() || crDatachannelCmd == command::RETR() || crDatachannelCmd == command::APPE()) &&
-         (dwByteOffset != 0 && Restart(dwByteOffset) != FTP_OK))
+            (crDatachannelCmd == command::STOR() || crDatachannelCmd == command::RETR() || crDatachannelCmd == command::APPE()) &&
+            (dwByteOffset != 0 && Restart(dwByteOffset) != FTP_OK))
          return false;
 
 
       // send FTP command RETR/STOR/NLST/LIST to the server
       reply Reply;
       if (!SendCommand(crDatachannelCmd, strPath, Reply) ||
-         !Reply.Code().IsPositivePreliminaryReply())
+            !Reply.Code().IsPositivePreliminaryReply())
          return false;
 
       return true;
@@ -1386,8 +1392,8 @@ namespace ftp
          const int iRetCode = atoi(strResponse);
          // handle multi-line server responses
          while (!(strSingleLine.length() > 3 &&
-            strSingleLine[3] == _T(' ') &&
-            atoi_dup(strSingleLine) == iRetCode))
+                  strSingleLine[3] == _T(' ') &&
+                  atoi_dup(strSingleLine) == iRetCode))
          {
             if (!GetSingleResponseLine(strSingleLine))
                return false;

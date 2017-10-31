@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // The official specification of the File Transfer Protocol (FTP) is the RFC 959.
 // Most of the documentation are taken from this RFC.
@@ -30,6 +30,17 @@
 
 #pragma once
 
+
+#include "aura/net/sockets/bsd/basic/sockets_tcp_socket.h"
+
+#include "aura/primitive/util.h"
+
+namespace sockets
+{
+
+   class transfer_socket;
+
+} // namespace sockets
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Namespace for all FTP-related classes.
@@ -93,8 +104,8 @@ namespace ftp
 
 
       client_socket(::sockets::base_socket_handler & handler,
-         unsigned int uiTimeout = 10, unsigned int uiBufferSize = 2048,
-         unsigned int uiResponseWait = 0, const string& strRemoteDirectorySeparator = _T("/"));
+                    unsigned int uiTimeout = 10, unsigned int uiBufferSize = 2048,
+                    unsigned int uiResponseWait = 0, const string& strRemoteDirectorySeparator = _T("/"));
       virtual ~client_socket();
 
       virtual long cert_common_name_check(const char * common_name) override;
@@ -123,24 +134,24 @@ namespace ftp
       int  Move(const string& strFullSourceFilePath, const string& strFullTargetFilePath);
 
       bool DownloadFile(const string& strRemoteFile, itransfer_notification& Observer,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                        const representation& repType = representation(type::Image()), bool fPasv = false);
       bool DownloadFile(const string& strRemoteFile, const string& strLocalFile,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                        const representation& repType = representation(type::Image()), bool fPasv = false);
       bool DownloadFile(const string& strSourceFile, client_socket& TargetFtpServer,
-         const string& strTargetFile, const representation& repType = representation(type::Image()),
-         bool fPasv = true);
+                        const string& strTargetFile, const representation& repType = representation(type::Image()),
+                        bool fPasv = true);
 
       bool UploadFile(itransfer_notification& Observer, const string& strRemoteFile, bool fStoreUnique = false,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                      const representation& repType = representation(type::Image()), bool fPasv = false);
       bool UploadFile(const string& strLocalFile, const string& strRemoteFile, bool fStoreUnique = false,
-         const representation& repType = representation(type::Image()), bool fPasv = false);
+                      const representation& repType = representation(type::Image()), bool fPasv = false);
       bool UploadFile(client_socket& SourceFtpServer, const string& strSourceFile,
-         const string& strTargetFile, const representation& repType = representation(type::Image()),
-         bool fPasv = true);
+                      const string& strTargetFile, const representation& repType = representation(type::Image()),
+                      bool fPasv = true);
 
       static bool TransferFile(client_socket& SourceFtpServer, const string& strSourceFile,
-         client_socket& TargetFtpServer, const string& strTargetFile,
-         const representation& repType = representation(type::Image()), bool fSourcePasv = false);
+                               client_socket& TargetFtpServer, const string& strTargetFile,
+                               const representation& repType = representation(type::Image()), bool fSourcePasv = false);
 
       int RemoveDirectory(const string& strDirectory);
       int MakeDirectory(const string& strDirectory);
@@ -171,7 +182,7 @@ namespace ftp
       int FileModificationTime(const string& strPath, string& strModificationTime);
 
       bool ExecuteDatachannelCommand(const command& crDatachannelCmd, const string& strPath, const representation& representation,
-         bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer);
+                                     bool fPasv, DWORD dwByteOffset, itransfer_notification& Observer);
 
       observer_array& GetObservers();
 

@@ -563,6 +563,12 @@
     <ClInclude Include="graphics\visual\visual_freeimage_image.h">
       <Filter>Header Files\graphics\visual</Filter>
     </ClInclude>
+    <ClInclude Include="filesystem\fs\fs_ftp_net.h">
+      <Filter>Header Files\filesystem\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\fs\fs_net.h">
+      <Filter>Header Files\filesystem\fs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="filesystem\fs\fs_data.cpp">

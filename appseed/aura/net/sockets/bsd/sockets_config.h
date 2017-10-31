@@ -1,5 +1,7 @@
 ﻿//#include "config.h"
 
+#pragma once
+
 #ifndef _RUN_DP
 /* First undefine symbols if already defined. */
 #undef ENABLE_IPV6

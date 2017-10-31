@@ -1,30 +1,30 @@
-#pragma once
+﻿#pragma once
 
 
 namespace fs
 {
 
-   
+
    enum e_arrange
    {
-      
+
       arrange_by_name
-         
+
    };
-   
+
 
    enum e_flag
    {
-      
+
       FlagInZip = 1 << 0,
       FlagFolder = 1 << 1,
       FlagFolderEx001 = 1 << 2,
       FlagFolderEx001Calc = 1 << 3,
       FlagHasSubFolder = 1 << 4,
       FlagHasSubFolderUnknown = 1 << 5
-         
+
    };
-   
+
 
 } // namespace fs
 
@@ -48,7 +48,3 @@ namespace fs
 
 
 
-#include "fs_ifs_file.h"
-
-
-#include "fs_remote_native_file.h"

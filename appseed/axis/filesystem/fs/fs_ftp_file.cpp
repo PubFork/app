@@ -1,9 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "axis/net/net_sockets.h"
-
-
-
 #include "openssl/md5.h"
+#include "aura/net/ftp/ftp.h"
 
 
 ftpfs_file::ftpfs_file(::ftpfs * pftp, ::ftp::client_socket * pclient) :
@@ -88,7 +86,7 @@ retry:
    }
 
 
-} 
+}
 
 ftpfs_file::~ftpfs_file()
 {

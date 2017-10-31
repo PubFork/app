@@ -1,9 +1,10 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #define ID_ONE 1
 
 #if defined(INSTALL_SUBSYSTEM)
 
+#include "install_net.h"
 
 namespace install
 {
@@ -14,23 +15,23 @@ namespace install
    {
 
       m_bRunMainLoop = true;
-      
+
       m_pwindow = NULL;
 
       m_bAdmin = false;
 
       m_dProgress = -1.0;
-      
+
       m_dProgress1 = -1.0;
-      
+
       m_dProgress2 = -1.0;
 
       m_pthreadSsl = NULL;
-      
+
 #ifdef WINDOWS
 
       m_hinstance = ::GetModuleHandleA(NULL);
-      
+
 #endif
 
       m_hmutexSpabootInstall = NULL;
@@ -144,7 +145,7 @@ namespace install
 
 #ifdef WINDOWS
       ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-      
+
 #endif
 
       // this is currently hard-coded:
@@ -175,7 +176,7 @@ namespace install
 
 #ifdef WINDOWS
                ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-               
+
 #endif
 
                m_bootstrap["admin:x86"] = new bootstrap(this);
@@ -269,7 +270,7 @@ namespace install
          ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
 
          stringa stra;
-         
+
          if(file_load_stra(path, stra, false))
          {
 
@@ -329,7 +330,7 @@ namespace install
          m_pwindow = new window(this);
 
       }
-      
+
 #ifdef WINDOWS
 
       if (!::IsWindow(m_pwindow->m_hwnd))
@@ -350,7 +351,7 @@ namespace install
          return false;
 
       }
-      
+
 #endif
 
       return true;
@@ -367,7 +368,7 @@ namespace install
          return true;
 
       }
-      
+
 #ifdef WINDOWS
 
       if (!::IsWindow(m_pwindow->m_hwnd))
@@ -383,7 +384,7 @@ namespace install
          return false;
 
       }
-      
+
 #endif
 
       return true;
@@ -443,7 +444,7 @@ namespace install
 
    }
 
-   
+
 
 
    int application::start_app_app(string strPlatform)
@@ -455,11 +456,11 @@ namespace install
 
       m_bootstrap[strPlatform]->m_pthreadInstall = ::fork(this, [=]()
       {
-         
+
 #ifdef WINDOWS
-         
+
          ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-         
+
 #endif
 
          m_bootstrap[strPlatform]->m_strPlatform = strPlatform;
@@ -491,7 +492,7 @@ namespace install
 
 
 
-   
+
    void application::start_web_server()
    {
 
@@ -503,7 +504,7 @@ namespace install
          m_pthreadSsl->m_iSsl = 1;
 
          m_pthreadSsl->m_strIp = "127.0.0.1";
-         
+
 #ifdef WINDOWS
 
          m_pthreadSsl->m_strCat = "cat://" + read_resource_as_string_dup(NULL, ID_ONE, "CAT");
@@ -552,7 +553,7 @@ namespace install
             }
 #endif
          }
-         
+
 #endif
 
          m_pthreadSsl->begin();
@@ -564,7 +565,7 @@ namespace install
 
    bool application::install_get_admin()
    {
-      
+
       return m_bAdmin;
 
    }
@@ -629,7 +630,7 @@ namespace install
 
 
 
-   
+
    void application::install_set_id(const char * psz)
    {
 
@@ -726,7 +727,7 @@ namespace install
 
    //}
 
-   
+
 
 
 

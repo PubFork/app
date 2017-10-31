@@ -1,5 +1,8 @@
-#pragma once
+﻿#pragma once
 
+
+#include "aura/net/http/webserver/webserver_http_request.h"
+#include "aura/net/http/webserver/webserver_http_response.h"
 
 namespace sockets
 {
@@ -41,7 +44,7 @@ namespace sockets
       http::listener *     m_plistener;
 
 
-      
+
 
 
 
