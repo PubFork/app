@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // From David J. Kruglinski (Inside Visual C++).
 // Modifications by Thomas Oswald (make compatible to BSD sockets) //+#
@@ -15,24 +15,28 @@
 
 #endif
 
+#include "aura/net/sockets/base/sockets_base_socket_handler.h"
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
+#include "sockets_transfer_socket.h"
+
 namespace sockets
 {
 
 
-    int get_error()
-    {
+   int get_error()
+   {
 
 #ifdef WINDOWS
 
-        return WSAGetLastError();
+      return WSAGetLastError();
 
 #else
 
-        return errno;
+      return errno;
 
 #endif
 
-    }
+   }
 
 
    ///////////////////////////////////////////////////////////////////////////////////////
