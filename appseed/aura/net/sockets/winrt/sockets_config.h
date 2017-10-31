@@ -9,7 +9,6 @@
 #undef ENABLE_IPV6
 #undef USE_SCTP
 #undef NO_GETADDRINFO
-#undef ENABLE_POOL
 #undef ENABLE_SOCKS4
 #undef ENABLE_RESOLVER
 #undef ENABLE_RECONNECT
@@ -34,9 +33,6 @@
 the "getaddrinfo" and "getnameinfo" function calls. */
 //#define NO_GETADDRINFO
 
-
-/* Connection pool support. */
-#define ENABLE_POOL
 
 
 /* Socks4 client support. */
