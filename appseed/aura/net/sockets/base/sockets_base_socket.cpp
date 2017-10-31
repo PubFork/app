@@ -1,4 +1,4 @@
-/** \file base_socket.cpp
+﻿/** \file base_socket.cpp
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -94,9 +94,7 @@ namespace sockets
       m_iBindPort    = -1;
       m_dwStart      = ::get_tick_count();
       m_pcallback    = NULL;
-#ifdef ENABLE_POOL
       m_bEnablePool  = true;
-#endif
 
       m_timeTimeoutLimit = 30;
 

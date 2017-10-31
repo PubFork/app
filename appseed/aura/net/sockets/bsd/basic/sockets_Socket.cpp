@@ -1,4 +1,4 @@
-#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 
 #ifdef _WIN32
@@ -51,11 +51,7 @@ namespace sockets
       //   Handler().remove(this);
       //}
 
-      if (m_socket != INVALID_SOCKET
-#ifdef ENABLE_POOL
-            && !m_bRetain
-#endif
-         )
+      if (m_socket != INVALID_SOCKET            && !m_bRetain         )
       {
          close();
       }

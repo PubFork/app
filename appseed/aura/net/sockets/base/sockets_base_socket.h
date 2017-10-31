@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 //#ifdef BSD_STYLE_SOCKETS
 //#include <openssl/ssl.h>
@@ -145,13 +145,11 @@ namespace sockets
 
          bool                    m_bIpv6; ///< This is an ipv6 base_socket if this one is true
 
-#ifdef ENABLE_POOL
          int                     m_iSocketType; ///< Type of base_socket, from base_socket() call
          string                  m_strSocketProtocol; ///< Protocol, from base_socket() call
          bool                    m_bClient; ///< only client connections are pooled
          bool                    m_bRetain; ///< keep connection on close
          bool                    m_bEnablePool; ///< true if this socket may enter in a pool
-#endif
 
          bool                    m_bSocks4; ///< socks4 negotiation mode (tcp_socket)
          in_addr                 m_socks4_host; ///< socks4 server ::net::address
