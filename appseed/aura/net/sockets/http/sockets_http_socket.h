@@ -3,6 +3,7 @@
 
 #include "aura/net/http/webserver/webserver_http_request.h"
 #include "aura/net/http/webserver/webserver_http_response.h"
+#include "aura/net/sockets/bsd/basic/sockets_tcp_socket.h"
 
 namespace sockets
 {

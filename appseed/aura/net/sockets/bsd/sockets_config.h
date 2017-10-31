@@ -8,9 +8,7 @@
 #undef USE_SCTP
 #undef NO_GETADDRINFO
 #undef ENABLE_SOCKS4
-#undef ENABLE_RESOLVER
 #undef ENABLE_RECONNECT
-#undef ENABLE_DETACH
 #undef ENABLE_TRIGGERS
 #undef ENABLE_EXCEPTIONS
 #endif // _RUN_DP
@@ -37,8 +35,6 @@ the "getaddrinfo" and "getnameinfo" function calls. */
 //#define ENABLE_SOCKS4
 
 
-/* Asynchronous resolver. */
-#define ENABLE_RESOLVER
 
 
 /* Enable TCP reconnect on lost connection.
@@ -48,8 +44,6 @@ socket::OnDisconnect
 #define ENABLE_RECONNECT
 
 
-/* Enable socket thread detach functionality. */
-#define ENABLE_DETACH
 
 
 /* Enable socket to socket triggers. Not yet in use. */
@@ -60,10 +54,6 @@ socket::OnDisconnect
 #define ENABLE_EXCEPTIONS
 
 
-/* Resolver uses the detach function so either enable both or disable both. */
-#ifndef ENABLE_DETACH
-#undef ENABLE_RESOLVER
-#endif
 
 
 

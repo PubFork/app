@@ -35,6 +35,15 @@
 
 #include "aura/primitive/util.h"
 
+#include "ftp_data_types.h"
+
+#include "ftp_file_list_parser.h"
+
+#include "ftp_file_status.h"
+
+#include "ftp_transfer_notification.h"
+
+
 namespace sockets
 {
 

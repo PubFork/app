@@ -1,4 +1,4 @@
-/** \file http_post_socket.h
+﻿/** \file http_post_socket.h
 **   \date  2004-10-30
 **   \author grymse@alhem.net
 **/
@@ -29,80 +29,81 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #pragma once
 
+#include "sockets_http_client_socket.h"
 
-   namespace sockets
+namespace sockets
+{
+
+   class CLASS_DECL_AURA multipart :
+      virtual public object
    {
+   public:
 
-      class CLASS_DECL_AURA multipart :
-         virtual public object
+      class CLASS_DECL_AURA item
       {
       public:
 
-         class CLASS_DECL_AURA item
-         {
-         public:
-
-            ::file::file_sp      m_spfile;
-            uint64_t             m_uiContentLength;
-            string               m_strContentType;
-
-         };
-
-         string                  m_strOverrideBoundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends;
-         string_map < item >     m_map;
-
-         multipart(::aura::application * papp):object(papp) {}
-         virtual ~multipart() {}
+         ::file::file_sp      m_spfile;
+         uint64_t             m_uiContentLength;
+         string               m_strContentType;
 
       };
 
-      class base_socket_handler;
+      string                  m_strOverrideBoundary_is_the_bounday_the_issue_i_e_should_it_be_the_same_across_appends;
+      string_map < item >     m_map;
 
-      /** Generate a http post request, get response.
-      \ingroup http */
-      class CLASS_DECL_AURA http_post_socket :
-         virtual public http_client_socket
-      {
-      public:
+      multipart(::aura::application * papp):object(papp) {}
+      virtual ~multipart() {}
 
+   };
 
-         string                           m_boundary;
-         //string_to_string                 m_mapFiles;
-         //::string_map < uint64_t >        m_mapContentLength;
-         //string_to_string                 m_mapContentType;
-         sp(multipart)                    m_pmultipart;
-         //bool                             m_bMultipart;
-         //static int                     m_boundary_count;
-         //static mutex                   m_boundary_mutex;
+   class base_socket_handler;
+
+   /** Generate a http post request, get response.
+   \ingroup http */
+   class CLASS_DECL_AURA http_post_socket :
+      virtual public http_client_socket
+   {
+   public:
 
 
-         http_post_socket(base_socket_handler&);
-         /* client constructor,
-         \param url_in = 'http://host:port/resource' */
-         http_post_socket(base_socket_handler&,const string & url_in);
-         virtual ~http_post_socket();
-
-         // these must be specified before connecting / adding to handler
-         /** add field to post. */
-         void AddField(const string & name,const string & value);
-         /** add multiline field to post. */
-         void AddMultilineField(const string & name, stringa & values);
-         /** add file to post. */
-         void AddFile(const string & name,const string & filename,const string & type);
-
-         /** use this to post with content-type multipart/form-data.
-         // when adding a file to the post, this is the default and only content-type */
-         //void SetMultipart();
-
-         /** http put client implemented in OnConnect */
-         void step();
-
-         property_set m_fields;
-         void DoMultipartPost();
-         
-
-      };
+      string                           m_boundary;
+      //string_to_string                 m_mapFiles;
+      //::string_map < uint64_t >        m_mapContentLength;
+      //string_to_string                 m_mapContentType;
+      sp(multipart)                    m_pmultipart;
+      //bool                             m_bMultipart;
+      //static int                     m_boundary_count;
+      //static mutex                   m_boundary_mutex;
 
 
-   } // namespace sockets
+      http_post_socket(base_socket_handler&);
+      /* client constructor,
+      \param url_in = 'http://host:port/resource' */
+      http_post_socket(base_socket_handler&,const string & url_in);
+      virtual ~http_post_socket();
+
+      // these must be specified before connecting / adding to handler
+      /** add field to post. */
+      void AddField(const string & name,const string & value);
+      /** add multiline field to post. */
+      void AddMultilineField(const string & name, stringa & values);
+      /** add file to post. */
+      void AddFile(const string & name,const string & filename,const string & type);
+
+      /** use this to post with content-type multipart/form-data.
+      // when adding a file to the post, this is the default and only content-type */
+      //void SetMultipart();
+
+      /** http put client implemented in OnConnect */
+      void step();
+
+      property_set m_fields;
+      void DoMultipartPost();
+
+
+   };
+
+
+} // namespace sockets
 

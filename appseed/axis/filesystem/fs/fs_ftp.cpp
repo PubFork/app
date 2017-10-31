@@ -473,16 +473,16 @@ void ftpfs::defer_initialize(::ftp::client_socket ** ppclient, string strPath)
    strToken.replace(":", "-");
    strToken.replace("/", "_");
 
-   sp(::ftp::client_socket) & client = m_mapClient[strToken];
+   sp(::ftp::client_socket) & client = m_pftpnet->m_mapClient[strToken];
 
    int iTry = 0;
 
    if (client.is_null())
    {
 
-      client = canew(::ftp::client_socket(m_sockethandler));
+      client = canew(::ftp::client_socket(m_pftpnet->m_sockethandler));
 
-      sp(::ftp::output) & output = m_mapOutput[strToken];
+      sp(::ftp::output) & output = m_pftpnet->m_mapOutput[strToken];
 
       output = canew(::ftp::output(get_app()));
 

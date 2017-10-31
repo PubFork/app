@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 #include "aura/net/net_sockets.h"
 //#include "fiasco_finder.h"
-
+#include "aura/net/ftp/ftp_data_types.h"
 
 namespace axis
 {

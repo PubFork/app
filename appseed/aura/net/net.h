@@ -72,6 +72,8 @@ namespace sockets
 #include "aura/net/http/http_http.h"
 
 
+#include "aura/net/sockets/bsd/sockets_config.h"
+
 //#include "sockets/sockets.h"
 
 
@@ -93,6 +95,7 @@ CLASS_DECL_AURA int thread_has_sockets();
 
 
 
+CLASS_DECL_AURA string ip_reverse(string str);
 
 
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  **   \file http_base_socket.h
  **   \date  2007-10-05
  **   \author grymse@alhem.net
@@ -23,12 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma once
 
 
+#include "aura/net/sockets/http/sockets_http_socket.h"
+
+
 namespace sockets
 {
 
    class response;
 
-   class CLASS_DECL_AURA http_base_socket : 
+   class CLASS_DECL_AURA http_base_socket :
       virtual public http_socket
    {
    public:
@@ -53,12 +56,12 @@ namespace sockets
       virtual void OnResponseComplete();
 
       string set_cookie(
-         const char * name,
-         var var,
-         int32_t iExpire,
-         const char * path,
-         const char * domain,
-         bool bSecure);
+      const char * name,
+      var var,
+      int32_t iExpire,
+      const char * path,
+      const char * domain,
+      bool bSecure);
 
       virtual void on_compress();
 

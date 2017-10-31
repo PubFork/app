@@ -1,15 +1,17 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "axis/net/net_sockets.h"
 //#include "db_str_set.h"
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 #include "sqlite3.h"
 
 class CLASS_DECL_AXIS db_str_set_item
 {
-   public:
+public:
 
 
-      uint32_t          m_dwTimeout;
-      string            m_str;
+   uint32_t          m_dwTimeout;
+   string            m_str;
 
 
 };
@@ -18,31 +20,31 @@ class CLASS_DECL_AXIS db_str_set_item
 class CLASS_DECL_AXIS db_str_set_queue_item :
    virtual public object
 {
-   public:
+public:
 
-      string            m_strKey;
-      uint32_t          m_dwTimeout;
-      string            m_str;
+   string            m_strKey;
+   uint32_t          m_dwTimeout;
+   string            m_str;
 
 
-      db_str_set_queue_item() {}
-      db_str_set_queue_item(const db_str_set_queue_item & item)
+   db_str_set_queue_item() {}
+   db_str_set_queue_item(const db_str_set_queue_item & item)
+   {
+      operator =(item);
+   }
+   virtual ~db_str_set_queue_item() {  }
+
+
+   db_str_set_queue_item & operator = (const db_str_set_queue_item & item)
+   {
+      if (this != &item)
       {
-         operator =(item);
+         m_strKey = item.m_strKey;
+         m_dwTimeout = item.m_dwTimeout;
+         m_str = item.m_str;
       }
-      virtual ~db_str_set_queue_item() {  }
-
-
-      db_str_set_queue_item & operator = (const db_str_set_queue_item & item)
-      {
-         if (this != &item)
-         {
-            m_strKey = item.m_strKey;
-            m_dwTimeout = item.m_dwTimeout;
-            m_str = item.m_str;
-         }
-         return *this;
-      }
+      return *this;
+   }
 
 
 
@@ -52,55 +54,55 @@ class CLASS_DECL_AXIS db_str_set_queue_item :
 class CLASS_DECL_AXIS db_str_set_core :
    virtual public ::db_set
 {
-   public:
+public:
 
 
-      sockets::socket_handler                      m_handler;
-      sp(sockets::http_session)                    m_phttpsession;
-      string_map < db_str_set_item >               m_map;
-      bool                                         m_bIndexed;
-      ::simpledb::database *                          m_psimpledbUser;
-      string                                       m_strUser;
+   sockets::socket_handler                      m_handler;
+   sp(sockets::http_session)                    m_phttpsession;
+   string_map < db_str_set_item >               m_map;
+   bool                                         m_bIndexed;
+   ::simpledb::database *                          m_psimpledbUser;
+   string                                       m_strUser;
 
-      sp(class db_str_sync_queue)                    m_pqueue;
-      sqlite3_stmt *                               m_pstmtSelect;
-      sqlite3_stmt *                               m_pstmtUpdate;
-
-
+   sp(class db_str_sync_queue)                    m_pqueue;
+   sqlite3_stmt *                               m_pstmtSelect;
+   sqlite3_stmt *                               m_pstmtUpdate;
 
 
 
-      db_str_set_core(db_server * pserver) :
-         ::object(pserver->get_app()),
-         db_set(pserver, "stringtable"),
-         m_handler(get_app()),
-         m_phttpsession(NULL),
-         m_pqueue(NULL),
-         m_psimpledbUser(pserver->m_psimpledbUser),
-         m_strUser(pserver->m_strUser)
+
+
+   db_str_set_core(db_server * pserver) :
+      ::object(pserver->get_app()),
+      db_set(pserver, "stringtable"),
+      m_handler(get_app()),
+      m_phttpsession(NULL),
+      m_pqueue(NULL),
+      m_psimpledbUser(pserver->m_psimpledbUser),
+      m_strUser(pserver->m_strUser)
+   {
+      m_pstmtSelect = NULL;
+      m_pstmtUpdate = NULL;
+      m_ptopthis = this;
+      defer_create_mutex();
+
+   }
+
+   ~db_str_set_core()
+   {
+      if (m_pstmtSelect != NULL)
       {
+
+         sqlite3_finalize(m_pstmtSelect);
          m_pstmtSelect = NULL;
-         m_pstmtUpdate = NULL;
-         m_ptopthis = this;
-         defer_create_mutex();
-
       }
-
-      ~db_str_set_core()
+      if (m_pstmtUpdate != NULL)
       {
-         if (m_pstmtSelect != NULL)
-         {
 
-            sqlite3_finalize(m_pstmtSelect);
-            m_pstmtSelect = NULL;
-         }
-         if (m_pstmtUpdate != NULL)
-         {
-
-            sqlite3_finalize(m_pstmtUpdate);
-            m_pstmtUpdate = NULL;
-         }
+         sqlite3_finalize(m_pstmtUpdate);
+         m_pstmtUpdate = NULL;
       }
+   }
 
 
 };
@@ -109,31 +111,31 @@ class CLASS_DECL_AXIS db_str_set_core :
 class CLASS_DECL_AXIS db_str_sync_queue :
    public simple_thread
 {
-   public:
+public:
 
-      mutex                                              m_mutex;
-      db_str_set *                                       m_pset;
-      sockets::socket_handler                            m_handler;
-      sp(sockets::http_session)                          m_phttpsession;
+   mutex                                              m_mutex;
+   db_str_set *                                       m_pset;
+   sockets::socket_handler                            m_handler;
+   sp(sockets::http_session)                          m_phttpsession;
 
-      smart_pointer_array < db_str_set_queue_item >      m_itema;
-
-
-      db_str_sync_queue(::aura::application * papp) :
-         ::object(papp),
-         thread(papp),
-         simple_thread(papp),
-         m_handler(papp),
-         m_mutex(papp),
-         m_phttpsession(NULL)
-      { }
-
-      virtual ~db_str_sync_queue() {}
+   smart_pointer_array < db_str_set_queue_item >      m_itema;
 
 
-      virtual int32_t run();
+   db_str_sync_queue(::aura::application * papp) :
+      ::object(papp),
+      thread(papp),
+      simple_thread(papp),
+      m_handler(papp),
+      m_mutex(papp),
+      m_phttpsession(NULL)
+   { }
 
-      void queue(const char * pszKey, const char * psz);
+   virtual ~db_str_sync_queue() {}
+
+
+   virtual int32_t run();
+
+   void queue(const char * pszKey, const char * psz);
 
 };
 
@@ -475,10 +477,10 @@ bool db_str_set::load(const string & strKey, string & strValue)
 
 
          if (pdb->setErr(sqlite3_prepare_v2(
-                            (sqlite3 *)pdb->getHandle(),
-                            "select value FROM stringtable WHERE id = :id;",
-                            -1,
-                            &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
+                         (sqlite3 *)pdb->getHandle(),
+                         "select value FROM stringtable WHERE id = :id;",
+                         -1,
+                         &pcore->m_pstmtSelect, NULL)) != SQLITE_OK)
          {
 
             return false;
@@ -615,12 +617,12 @@ bool db_str_set::save(const string & strKey, const string & strValue)
             {
 
                if (pdb->setErr(
-                        sqlite3_prepare_v2(
-                           (sqlite3 *)pdb->getHandle(),
-                           "UPDATE stringtable SET value = :val WHERE id = :id;",
-                           -1,
-                           &pcore->m_pstmtUpdate,
-                           NULL)) != SQLITE_OK)
+                     sqlite3_prepare_v2(
+                     (sqlite3 *)pdb->getHandle(),
+                     "UPDATE stringtable SET value = :val WHERE id = :id;",
+                     -1,
+                     &pcore->m_pstmtUpdate,
+                     NULL)) != SQLITE_OK)
                {
 
                   return false;
@@ -693,9 +695,9 @@ bool db_str_set::save(const string & strKey, const string & strValue)
          single_lock slDatabase(m_pcore->db()->get_database()->m_pmutex);
 
          strSql.Format(
-            "INSERT INTO stringtable (id, value) values ('%s', '%s');",
-            strKey,
-            strValue);
+         "INSERT INTO stringtable (id, value) values ('%s', '%s');",
+         strKey,
+         strValue);
 
          if (!m_pcore->m_pdataset->exec(strSql))
          {

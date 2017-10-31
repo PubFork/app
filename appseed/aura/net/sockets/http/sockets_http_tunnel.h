@@ -1,4 +1,7 @@
-#pragma once
+﻿#pragma once
+
+
+#include "sockets_http_socket.h"
 
 
 namespace sockets
@@ -7,9 +10,9 @@ namespace sockets
    class CLASS_DECL_AURA http_tunnel :
       virtual public http_socket
    {
-      public:
-         
-         
+   public:
+
+
       enum estate
       {
          state_initial,
@@ -58,10 +61,10 @@ namespace sockets
       virtual void OnHeaderComplete();
       virtual void OnData(const char * psz, size_t size);
 
-      
+
    };
 
-   
+
 } // namespace sockets
 
 

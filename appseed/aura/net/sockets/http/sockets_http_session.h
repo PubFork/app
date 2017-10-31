@@ -1,63 +1,68 @@
-#pragma once
+﻿#pragma once
 
 
-   namespace sockets
+#include "sockets_http_get_socket.h"
+#include "sockets_http_post_socket.h"
+#include "sockets_http_put_socket.h"
+
+
+namespace sockets
+{
+
+
+
+   class CLASS_DECL_AURA http_session :
+      virtual public http_get_socket,
+      virtual public http_post_socket,
+      virtual public http_put_socket
    {
+   public:
+
+
+      string                              m_strProtocol;
+      bool                                m_bRequestComplete;
 
 
 
-      class CLASS_DECL_AURA http_session :
-         virtual public http_get_socket,
-         virtual public http_post_socket,
-         virtual public http_put_socket
+
+      http_session(::sockets::base_socket_handler & phandler, const string & protocol, const string & host);
+      ~http_session();
+
+
+
+      virtual int64_t add_ref()
       {
-      public:
+
+         return ::object::add_ref();
+
+      }
 
 
-         string                              m_strProtocol;
-         bool                                m_bRequestComplete;
-         
-         
+      virtual int64_t dec_ref()
+      {
 
+         return ::object::dec_ref();
 
-         http_session(::sockets::base_socket_handler & phandler, const string & protocol, const string & host);
-         ~http_session();
-
-
-
-         virtual int64_t add_ref()
-         {
-
-            return ::object::add_ref();
-
-         }
-
-
-         virtual int64_t dec_ref()
-         {
-
-            return ::object::dec_ref();
-
-         }
+      }
 
 
 
-         using http_client_socket::request;
-         
-         virtual void request(const string & strMethod, const string & pszRequest);
-         virtual void request(e_http_method emethod, const string & pszRequest);
+      using http_client_socket::request;
 
-         virtual void step();
+      virtual void request(const string & strMethod, const string & pszRequest);
+      virtual void request(e_http_method emethod, const string & pszRequest);
 
-         virtual void OnHeaderComplete();
-         virtual void OnDataComplete();
+      virtual void step();
+
+      virtual void OnHeaderComplete();
+      virtual void OnDataComplete();
 
 
-      };
+   };
 
 
 
 
-   } // namespace sockets
+} // namespace sockets
 
 

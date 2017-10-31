@@ -49,7 +49,7 @@
 
 
 
-CLASS_DECL_AURA string ip_reverse(string str);
+
 
 
 

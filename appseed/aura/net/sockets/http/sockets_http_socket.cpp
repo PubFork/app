@@ -314,12 +314,10 @@ namespace sockets
       /* If remote end tells us to keep connection alive, and we're operating
       in http/1.1 mode (not http/1.0 mode), then we mark the socket to be
       retained. */
-   #ifdef ENABLE_POOL
       if(m_b_keepalive)
       {
          SetRetain();
       }
-   #endif
    }
 
    bool http_socket::http_filter_response_header(string & strKey, stringa & straValue)

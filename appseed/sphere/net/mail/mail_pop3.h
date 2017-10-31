@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 
 namespace mail
 {
@@ -11,56 +12,56 @@ namespace mail
    class CLASS_DECL_SPHERE pop3 :
       virtual public ::object
    {
-      public:
+   public:
 
 
-         ::sockets::socket_handler     m_handler;
-         pop3_socket *                 m_psocket;
-         event                         m_evFinish;
-         bool                          m_bRun;
-         bool                          m_bSynch;
+      ::sockets::socket_handler     m_handler;
+      pop3_socket *                 m_psocket;
+      event                         m_evFinish;
+      bool                          m_bRun;
+      bool                          m_bSynch;
 
-         stringa                     m_straIndex;
-         stringa                     m_straId;
+      stringa                     m_straIndex;
+      stringa                     m_straId;
 
-         string                        m_id;
-         string                        m_strHeaders;
-         string                        m_strBody;
-         property_set             m_setHeaders;
+      string                        m_id;
+      string                        m_strHeaders;
+      string                        m_strBody;
+      property_set             m_setHeaders;
 
-         int32_t                           m_iHeaderLine;
+      int32_t                           m_iHeaderLine;
 
-         critical_section              m_csDataset;
-
-
-         pop3(::aura::application * papp);
+      critical_section              m_csDataset;
 
 
-         virtual string get_user();
-         virtual string get_pass();
-         virtual string get_host();
-         virtual string get_transaction();
-
-         virtual void set_stat_count(int32_t iCount);
-         virtual void set_stat_size(int32_t iSize);
-
-         virtual void set_list_size(int32_t iSize);
+      pop3(::aura::application * papp);
 
 
+      virtual string get_user();
+      virtual string get_pass();
+      virtual string get_host();
+      virtual string get_transaction();
+
+      virtual void set_stat_count(int32_t iCount);
+      virtual void set_stat_size(int32_t iSize);
+
+      virtual void set_list_size(int32_t iSize);
 
 
-         virtual void update_lists();
 
-         virtual void start();
-         virtual void store();
 
-         virtual void filter_id();
+      virtual void update_lists();
 
-         static UINT pop3_thread_proc(LPVOID lpvoid);
+      virtual void start();
+      virtual void store();
 
-         virtual UINT run();
+      virtual void filter_id();
 
-         virtual void on_finished_transaction();
+      static UINT pop3_thread_proc(LPVOID lpvoid);
+
+      virtual UINT run();
+
+      virtual void on_finished_transaction();
 
    };
 

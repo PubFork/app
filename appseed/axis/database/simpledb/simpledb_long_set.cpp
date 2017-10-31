@@ -1,13 +1,14 @@
-#include "framework.h"
-//#include "axis/net/net_sockets.h"
+﻿#include "framework.h"
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 
 
 class CLASS_DECL_AXIS db_long_set_item
 {
-   public:
+public:
 
-      uint32_t       m_dwTimeout;
-      int64_t        m_l;
+   uint32_t       m_dwTimeout;
+   int64_t        m_l;
 
 };
 
@@ -15,30 +16,30 @@ class CLASS_DECL_AXIS db_long_set_item
 class CLASS_DECL_AXIS db_long_set_queue_item :
    virtual public object
 {
-   public:
+public:
 
-      string         m_strKey;
-      uint32_t       m_dwTimeout;
-      int64_t        m_l;
+   string         m_strKey;
+   uint32_t       m_dwTimeout;
+   int64_t        m_l;
 
-      db_long_set_queue_item() {}
-      db_long_set_queue_item(const db_long_set_queue_item & item)
+   db_long_set_queue_item() {}
+   db_long_set_queue_item(const db_long_set_queue_item & item)
+   {
+      operator =(item);
+   }
+   virtual ~db_long_set_queue_item() {}
+
+
+   db_long_set_queue_item & operator = (const db_long_set_queue_item & item)
+   {
+      if (this != &item)
       {
-         operator =(item);
+         m_strKey = item.m_strKey;
+         m_dwTimeout = item.m_dwTimeout;
+         m_l = item.m_l;
       }
-      virtual ~db_long_set_queue_item() {}
-
-
-      db_long_set_queue_item & operator = (const db_long_set_queue_item & item)
-      {
-         if (this != &item)
-         {
-            m_strKey = item.m_strKey;
-            m_dwTimeout = item.m_dwTimeout;
-            m_l = item.m_l;
-         }
-         return *this;
-      }
+      return *this;
+   }
 
 };
 
@@ -47,37 +48,37 @@ class CLASS_DECL_AXIS db_long_set_queue_item :
 class CLASS_DECL_AXIS db_long_set_core :
    virtual public db_set
 {
-   public:
+public:
 
 
-      sockets::socket_handler                   m_handler;
-      sp(sockets::http_session)                 m_phttpsession;
+   sockets::socket_handler                   m_handler;
+   sp(sockets::http_session)                 m_phttpsession;
 
 
-      string_map < db_long_set_item >           m_map;
-      bool                                      m_bIndexed;
+   string_map < db_long_set_item >           m_map;
+   bool                                      m_bIndexed;
 
-      ::simpledb::database *                       m_psimpledbUser;
-      string                                    m_strUser;
+   ::simpledb::database *                       m_psimpledbUser;
+   string                                    m_strUser;
 
-      sp(class db_long_sync_queue)                m_pqueue;
+   sp(class db_long_sync_queue)                m_pqueue;
 
-      db_long_set_core(db_server * pserver) :
-         ::object(pserver->get_app()),
-         db_set(pserver, "integertable"),
-         m_handler(get_app()),
-         m_phttpsession(NULL),
-         m_pqueue(NULL),
-         m_psimpledbUser(pserver->m_psimpledbUser),
-         m_strUser(pserver->m_strUser)
-      {
+   db_long_set_core(db_server * pserver) :
+      ::object(pserver->get_app()),
+      db_set(pserver, "integertable"),
+      m_handler(get_app()),
+      m_phttpsession(NULL),
+      m_pqueue(NULL),
+      m_psimpledbUser(pserver->m_psimpledbUser),
+      m_strUser(pserver->m_strUser)
+   {
 
-         m_ptopthis = this;
-         defer_create_mutex();
+      m_ptopthis = this;
+      defer_create_mutex();
 
-      }
+   }
 
-      virtual ~db_long_set_core() {}
+   virtual ~db_long_set_core() {}
 
 };
 
@@ -85,33 +86,33 @@ class CLASS_DECL_AXIS db_long_set_core :
 class CLASS_DECL_AXIS db_long_sync_queue :
    public simple_thread
 {
-   public:
+public:
 
 
-      mutex                                                    m_mutex;
-      db_long_set *                                            m_pset;
-      sockets::socket_handler                                  m_handler;
-      sp(sockets::http_session)                                m_phttpsession;
+   mutex                                                    m_mutex;
+   db_long_set *                                            m_pset;
+   sockets::socket_handler                                  m_handler;
+   sp(sockets::http_session)                                m_phttpsession;
 
-      smart_pointer_array < db_long_set_queue_item >           m_itema;
+   smart_pointer_array < db_long_set_queue_item >           m_itema;
 
-      db_long_sync_queue(::aura::application * papp) :
-         ::object(papp),
-         thread(papp),
-         simple_thread(papp),
-         m_handler(papp),
-         m_mutex(papp),
-         m_phttpsession(NULL)
-      {}
+   db_long_sync_queue(::aura::application * papp) :
+      ::object(papp),
+      thread(papp),
+      simple_thread(papp),
+      m_handler(papp),
+      m_mutex(papp),
+      m_phttpsession(NULL)
+   {}
 
-      virtual ~db_long_sync_queue() {}
-
-
-
-      virtual int32_t run();
+   virtual ~db_long_sync_queue() {}
 
 
-      void queue(const char * pszKey, int64_t l);
+
+   virtual int32_t run();
+
+
+   void queue(const char * pszKey, int64_t l);
 
 };
 
@@ -374,8 +375,8 @@ bool db_long_set::load(const char * lpKey, int64_t * plValue)
 
       string strSql;
       strSql.Format(
-         "select value FROM integertable WHERE id = '%s';",
-         strKey);
+      "select value FROM integertable WHERE id = '%s';",
+      strKey);
 
 
       slDatabase.lock();
@@ -456,9 +457,9 @@ bool db_long_set::save(const char * lpKey, int64_t lValue)
       if (load(lpKey, &l))
       {
          strSql.Format(
-            "UPDATE integertable SET value = '%d' WHERE id = '%s';",
-            lValue,
-            strKey);
+         "UPDATE integertable SET value = '%d' WHERE id = '%s';",
+         lValue,
+         strKey);
 
          try
          {
@@ -476,9 +477,9 @@ bool db_long_set::save(const char * lpKey, int64_t lValue)
       {
 
          strSql.Format(
-            "INSERT INTO integertable (id, value) values ('%s', '%d');",
-            strKey,
-            lValue);
+         "INSERT INTO integertable (id, value) values ('%s', '%d');",
+         strKey,
+         lValue);
 
 
 

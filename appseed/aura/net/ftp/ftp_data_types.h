@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2004-2012 Thomas Oswald
 //
@@ -15,7 +15,7 @@
 
 #pragma once
 
-
+#include "ftp_interface.h"
 
 namespace ftp
 {
@@ -33,11 +33,13 @@ namespace ftp
 
    // constants
    const TCHAR ANONYMOUS_USER[] = _T("anonymous");
-   enum T_enConstants {
+   enum T_enConstants
+   {
       DEFAULT_FTP_PORT = 21, ///< The default port that an FTP service listens to on a remote host
       FTP_ERROR  = -1,
       FTP_OK     =  0,
-      FTP_NOTOK  =  1, };
+      FTP_NOTOK  =  1,
+   };
 
    /// Data Structure
    class CLASS_DECL_AURA structure
@@ -102,10 +104,12 @@ namespace ftp
    {
    public:
       // don't change order of enumeration
-      enum e_type {
+      enum e_type
+      {
          type_none, type_host_name, type_user_after_logon, type_proxy_open, type_transparent,
          type_user_with_no_logon, type_user_fire_id_at_remote_host, type_user_remote_id_at_remote_host_fire_id,
-         type_user_remote_id_at_fire_id_at_remote_host };
+         type_user_remote_id_at_fire_id_at_remote_host
+      };
 
 
       e_type m_etype;
@@ -325,7 +329,7 @@ namespace ftp
       typedef command::e_type e_type;
    public:
       extended_info(const string& strServerString, const string& strCompleteServerStringSyntax, UINT uiNumberOfParameters,
-         UINT uiNumberOfOptionalParameters, TSpecificationEnum enSpecification, e_type enType) :
+                    UINT uiNumberOfOptionalParameters, TSpecificationEnum enSpecification, e_type enType) :
          m_strServerString(strServerString),
          m_strCompleteServerStringSyntax(strCompleteServerStringSyntax),
          m_uiNumberOfParameters(uiNumberOfParameters),
@@ -370,7 +374,7 @@ namespace ftp
       info2();
 
       void insert(e_command enCommand, const string& strServerString, const string& strCompleteServerStringSyntax, UINT uiNumberOfParameters,
-         UINT uiNumberOfOptionalParameters, TSpecificationEnum enSpecification, e_type enType);
+                  UINT uiNumberOfOptionalParameters, TSpecificationEnum enSpecification, e_type enType);
 
       static info2& GetInstance() { if (g_pTheOneAndOnly == NULL) g_pTheOneAndOnly = new info2(); return *g_pTheOneAndOnly; }
 
@@ -388,10 +392,10 @@ namespace ftp
    public:
       logon();
       logon(const string& strHostname, WINUSHORT ushHostport=DEFAULT_FTP_PORT, const string& strUsername=ANONYMOUS_USER,
-                 const string& strPassword=_T("anonymous@user.com"), const string& strAccount=_T(""));
+            const string& strPassword=_T("anonymous@user.com"), const string& strAccount=_T(""));
       logon(const string& strHostname, WINUSHORT ushHostport, const string& strUsername, const string& strPassword,
-                 const string& strAccount, const string& strFwHostname, const string& strFwUsername, const string& strFwPassword,
-                 WINUSHORT ushFwPort, const firewall_type& crFwType);
+            const string& strAccount, const string& strFwHostname, const string& strFwUsername, const string& strFwPassword,
+            WINUSHORT ushFwPort, const firewall_type& crFwType);
 
       void SetHost(const string& strHostname, WINUSHORT ushHostport=DEFAULT_FTP_PORT, const string& strUsername=ANONYMOUS_USER,
                    const string& strPassword=_T("anonymous@user.com"), const string& strAccount=_T(""));
@@ -443,8 +447,8 @@ namespace ftp
          bool Set(const string& strCode)
          {
             if( strCode.length()!=3 ||
-                strCode[0]<_T('1') || strCode[0]>_T('5') ||
-                strCode[1]<_T('0') || strCode[1]>_T('5') )
+                  strCode[0]<_T('1') || strCode[0]>_T('5') ||
+                  strCode[1]<_T('0') || strCode[1]>_T('5') )
             {
                ZERO(m_szCode);
                return false;

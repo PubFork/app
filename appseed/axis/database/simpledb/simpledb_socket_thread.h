@@ -1,4 +1,7 @@
-#pragma once
+﻿#pragma once
+
+
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 
 
 namespace simpledb
@@ -9,7 +12,7 @@ namespace simpledb
    class service;
 
 
-   class CLASS_DECL_AXIS socket_thread : 
+   class CLASS_DECL_AXIS socket_thread :
       public thread,
       public ::sockets::socket_handler
    {

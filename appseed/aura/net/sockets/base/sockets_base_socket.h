@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+
+
 #ifdef BSD_STYLE_SOCKETS
 #include <openssl/ssl.h>
 #endif
@@ -148,11 +150,11 @@ namespace sockets
 
       bool                    m_bIpv6; ///< This is an ipv6 base_socket if this one is true
 
-         int                     m_iSocketType; ///< Type of base_socket, from base_socket() call
-         string                  m_strSocketProtocol; ///< Protocol, from base_socket() call
-         bool                    m_bClient; ///< only client connections are pooled
-         bool                    m_bRetain; ///< keep connection on close
-         bool                    m_bEnablePool; ///< true if this socket may enter in a pool
+      int                     m_iSocketType; ///< Type of base_socket, from base_socket() call
+      string                  m_strSocketProtocol; ///< Protocol, from base_socket() call
+      bool                    m_bClient; ///< only client connections are pooled
+      bool                    m_bRetain; ///< keep connection on close
+      bool                    m_bEnablePool; ///< true if this socket may enter in a pool
 
       bool                    m_bSocks4; ///< socks4 negotiation mode (tcp_socket)
       in_addr                 m_socks4_host; ///< socks4 server ::net::address
@@ -198,14 +200,12 @@ namespace sockets
 
       // ENABLE_IPV6
       SOCK_IPV6 =          0x0100, ///< This is an ipv6 base_socket if this one is true
-      // ENABLE_POOL
       SOCK_CLIENT =          0x0200, ///< only client connections are pooled
       SOCK_RETAIN =          0x0400, ///< keep connection on close
       SOCK_LOST =          0x0800, ///< connection lost
 
       // ENABLE_SOCKS4
       SOCK_SOCKS4 =          0x1000, ///< socks4 negotiation mode (tcp_socket)
-      // ENABLE_DETACH
       SOCK_DETACH =          0x2000, ///< base_socket ordered to detach flag
       SOCK_DETACHED =       0x4000, ///< base_socket has been detached
       // stream_socket
