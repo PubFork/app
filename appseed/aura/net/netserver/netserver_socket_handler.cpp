@@ -1,6 +1,6 @@
 #include "framework.h"
 
-
+#include "netserver_socket_handler.h"
 
 namespace netserver
 {

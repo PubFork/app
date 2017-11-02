@@ -1,5 +1,6 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
-//#include "axis/net/net_sockets.h"
+#include "framework.h""
+#include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
 
 
 
@@ -117,7 +118,7 @@ namespace fontopus
             return false;
 
          }
-         
+
          if (!initialize_user(puser))
          {
 
@@ -207,13 +208,13 @@ namespace fontopus
 
    void fontopus::logout()
    {
-      
+
       if(m_puser != NULL)
       {
 
          try
          {
-            
+
             Application.file().del(::dir::userappdata()/"license_auth/00001.data");
 
          }
@@ -244,7 +245,7 @@ namespace fontopus
 
    sp(user) fontopus::allocate_user()
    {
-      
+
       return canew(class user(m_pauraapp));
 
    }
@@ -265,11 +266,11 @@ namespace fontopus
       Application.dir().mk(puser->m_strPath);
 
       puser->m_strDataPath = Application.dir().default_userdata(puser->m_strPathPrefix, puser->m_strLogin);
-      
+
       Application.dir().mk(puser->m_strDataPath);
 
       puser->m_strAppDataPath = Application.dir().default_userappdata(puser->m_strPathPrefix, puser->m_strLogin);
-      
+
       Application.dir().mk(puser->m_strAppDataPath);
 
       puser->create_ifs();
@@ -340,7 +341,7 @@ namespace fontopus
             m_pthreadCreatingUser->m_strRequestUrl = pszRequestUrl;
 
          }
-         
+
          m_pthreadCreatingUser->m_evReady.ResetEvent();
 
          m_pthreadCreatingUser->begin();
@@ -671,7 +672,7 @@ namespace fontopus
       }
 
 //      m_mapFontopusSession.set_at(strFontopusServer,psession);
-      
+
 
       if(m_mapFontopusSessId[strFontopusServer].is_empty())
       {

@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "ftp_transfer_notification.h"
+
+
 namespace ftp
 {
 
@@ -9,8 +12,8 @@ namespace ftp
       virtual public itransfer_notification
    {
    public:
-      
-      
+
+
       class implementation;
 
 

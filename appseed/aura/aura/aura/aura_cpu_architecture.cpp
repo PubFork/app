@@ -3,9 +3,11 @@
 // from 7-zip on 2010-12-26 Sunday, just after Christmas evening at Music Room
 #include "framework.h"
 
+
+#if !defined(RASPBIAN)
+
 #ifdef WINDOWS
 #include <intrin.h>
-#elif defined(RASPBIAN)
 
 #elif defined(LINUX)
 #include <cpuid.h>
@@ -229,3 +231,8 @@ CLASS_DECL_AURA int cpu_has_avx()
 END_EXTERN_C
 
 #endif
+
+
+#endif
+
+

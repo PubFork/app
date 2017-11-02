@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "netserver_socket_thread.h"
 
 
 namespace netserver
@@ -62,14 +63,14 @@ namespace netserver
    int32_t socket_thread::run()
    {
 
-       
+
 
       while (thread_get_run())
       {
-         
+
          try
          {
-            
+
             m_psockethandler = create_socket_handler();
 
             m_psockethandler->EnablePool();

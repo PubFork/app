@@ -232,7 +232,7 @@ namespace visual
    public:
 
 
-#ifdef ANDROID
+#if defined(ANDROID) || defined(RASPBIAN)
 
       ::draw2d::dib_sp  m_dib;
 

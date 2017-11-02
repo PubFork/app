@@ -998,7 +998,7 @@ namespace crypto
       const BIGNUM * dmq1 = NULL;
       const BIGNUM * iqmp = NULL;
 
-#if defined(METROWIN) || defined(LINUX)
+#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
 
       char * hexN       = BN_bn2hex(prsa->n);
       char * hexE       = BN_bn2hex(prsa->e);
@@ -1271,7 +1271,7 @@ namespace crypto
       BN_hex2bn(&n, nParam);
       BN_hex2bn(&e, "10001");
 
-#if defined(METROWIN) || defined(LINUX)
+#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
       m_prsa->n = n;
       m_prsa->e = e;
 #else
@@ -1321,7 +1321,7 @@ namespace crypto
       BN_hex2bn(&dmq1, strDmq1);
       BN_hex2bn(&iqmp, strIqmp);
 
-#if defined(METROWIN) || defined(LINUX)
+#if defined(METROWIN) || (defined(LINUX) && !defined(RASPBIAN))
       m_prsa->n = n;
       m_prsa->e = e;
       m_prsa->d = d;

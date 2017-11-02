@@ -175,7 +175,7 @@ namespace file
       else
       {
 
-         varRet = stat.st_size;
+         varRet = (int_ptr)stat.st_size;
 
       }
 

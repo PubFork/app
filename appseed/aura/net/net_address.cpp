@@ -3,7 +3,12 @@
 
 #if defined(__arm__)
 
+#if !defined(RASPBIAN)
+
 #include <sys/endian.h>
+
+#endif
+
 #include <arpa/inet.h>
 
 #endif
@@ -525,12 +530,12 @@ namespace net
       a.u.m_addr6.sin6_family = AF_INET6;
       a.u.m_addr6.sin6_port = port;
       memcpy(&a.u.m_addr6.sin6_addr, p128bits, sizeof(a.u.m_addr6.sin6_addr));
-      
+
       a.sync_os_address();
       a.sync_os_service();
-   
+
       return a;
-   
+
    }
 
 

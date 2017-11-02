@@ -87,7 +87,7 @@ inline void kernelPosition(int boxBlur,unsigned& std,int& dLeft,int& dRight)
 
 
 
-#if defined(__arm__) && !defined(VSNORD)
+#if defined(__arm__) && !defined(VSNORD) && !defined(RASPBIAN)
 
 #include <arm_neon.h>
 
@@ -215,8 +215,8 @@ namespace visual
          return true;
 
       }
-      
-      
+
+
       if(cx != m_p->m_size.cx || cy != m_p->m_size.cy)
       {
 
@@ -248,7 +248,7 @@ namespace visual
       }
 
 #if VECTOR3_SSE
-      
+
       int div2 = (radius * 2) + 1;
 
       if(m_stack != NULL)
@@ -705,7 +705,7 @@ namespace visual
 
    }
 
-#if defined(__arm__) && !defined(VSNORD)
+#if defined(__arm__) && !defined(VSNORD) && !defined(RASPBIAN)
 
 
    inline void boxBlurNEON(uint32_t* sourcePixel,uint32_t* destinationPixel,

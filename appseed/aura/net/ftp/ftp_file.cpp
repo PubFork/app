@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "ftp_file.h"
 
 
 namespace ftp
@@ -17,7 +18,7 @@ namespace ftp
 
    bool file::Open(const string& strFileName, UINT uiMode)
    {
-      
+
       m_strFileName = strFileName;
 
       m_file = Application.file().get_file(strFileName, uiMode);
@@ -31,7 +32,7 @@ namespace ftp
 
       m_file->close();
       m_file.release();
-      
+
       return true;
 
    }
@@ -41,7 +42,7 @@ namespace ftp
       return m_file.is_set() && m_file->seek(lOffset, enOrigin) == 0;
    }
 
-   
+
    long file::Tell()
    {
 
@@ -57,19 +58,19 @@ namespace ftp
    }
 
 
-   
+
    size_t file::write(const void* pBuffer, size_t itemSize, size_t itemCount)
    {
-      
+
       if (m_file.is_null())
       {
 
          return 0;
 
       }
-      
+
       m_file->write(pBuffer, itemSize * itemCount);
-      
+
       return itemCount;
 
    }

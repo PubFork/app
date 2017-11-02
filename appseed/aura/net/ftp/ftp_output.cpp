@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "ftp_output.h"
+
 
 
 namespace ftp
@@ -18,7 +20,7 @@ namespace ftp
 
    void output::OnSendCommand(const command& command, const stringa& straArguments)
    {
-      
+
       if (command.AsString().length() == 0)
          return;
 
@@ -63,9 +65,9 @@ namespace ftp
    {
 
       string strMessage;
-      
+
       strMessage.Format(("%s ==> File \"%s\" (%d)"), strErrorMsg.c_str(), strFileName.c_str(), dwLineNr);
-      
+
       WriteLine(strMessage, "E");
 
    }
