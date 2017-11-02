@@ -69,6 +69,9 @@ bool get_os_bit(bool & b64)
 #if defined(INSTALL_SUBSYSTEM)
 
 
+#include "install_bootstrap.h"
+
+
 namespace install
 {
 

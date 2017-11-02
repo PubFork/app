@@ -4,6 +4,9 @@
 #if defined(INSTALL_SUBSYSTEM)
 
 
+#include "install_bootstrap.h"
+
+
 namespace install
 {
 

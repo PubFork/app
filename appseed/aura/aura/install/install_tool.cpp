@@ -4,6 +4,9 @@
 #if defined(INSTALL_SUBSYSTEM)
 
 
+#include "install_tool.h"
+
+
 namespace install
 {
 

@@ -4,7 +4,7 @@
 
 
 #if defined(BSD_STYLE_SOCKETS)
-#include "bsd/sockets_config.h"
+//#include "bsd/sockets_config.h"
 
 
 

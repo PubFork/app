@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef BSD_STYLE_SOCKETS
 
 
-#include "aura/net/sockets/bsd/sockets_config.h"
+//#include "aura/net/sockets/bsd/sockets_config.h"
 
 //#include "openssl/ssl.h"
 

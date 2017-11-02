@@ -1,6 +1,14 @@
 #include "framework.h" // from "base/user/user.h"
 
+
+#ifdef WINDOWSEX
+
+
 #define MESSAGE_WINDOW_PARENT HWND_MESSAGE
+
+
+#endif // WINDOWSEX
+
 
 namespace user
 {

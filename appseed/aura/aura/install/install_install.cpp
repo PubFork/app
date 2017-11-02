@@ -3,7 +3,10 @@
 
 #if defined(INSTALL_SUBSYSTEM)
 
+
 #include "install_net.h"
+#include "aura/net/sockets/http/sockets_http_session.h"
+
 
 namespace install
 {

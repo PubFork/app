@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include "aura/net/sockets/bsd/sockets_config.h"
-
 #include "aura/net/sockets/base/sockets_base_socket_handler.h"
 
 namespace sockets

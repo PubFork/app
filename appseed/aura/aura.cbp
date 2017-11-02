@@ -474,9 +474,6 @@
 		<Unit filename="aura/fontopus/fontopus_validate.cpp" />
 		<Unit filename="aura/fontopus/fontopus_validate.h" />
 		<Unit filename="aura/fontopus/fontopus_validate1.h" />
-		<Unit filename="aura/install/aaa_want_to_remove_app_app_install.h" />
-		<Unit filename="aura/install/aaa_want_to_remove_http1.h" />
-		<Unit filename="aura/install/aaaa_focus.h" />
 		<Unit filename="aura/install/install.cpp" />
 		<Unit filename="aura/install/install.h" />
 		<Unit filename="aura/install/install2.h" />
@@ -1292,6 +1289,7 @@
 		<Unit filename="net/sockets/bsd/sockets_bsd.h" />
 		<Unit filename="net/sockets/bsd/sockets_config.h" />
 		<Unit filename="net/sockets/bsd/sockets_include.cpp" />
+		<Unit filename="net/sockets/bsd/sockets_socket_id_list.h" />
 		<Unit filename="net/sockets/bsd/sockets_sockets.cpp" />
 		<Unit filename="net/sockets/bsd/sockets_sockets.h" />
 		<Unit filename="net/sockets/bsd/timer/Event.h" />

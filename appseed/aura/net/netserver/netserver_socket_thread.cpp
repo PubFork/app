@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "netserver_socket_thread.h"
+#include "netserver_socket.h"
 
 
 namespace netserver

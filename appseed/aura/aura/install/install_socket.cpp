@@ -4,6 +4,10 @@
 #if defined(INSTALL_SUBSYSTEM)
 
 
+#include "install_socket.h"
+#include "install_bootstrap.h"
+
+
 namespace install
 {
 
