@@ -17,7 +17,7 @@ namespace datetime
    {
       public:
 
-#if defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS)
+#if defined(ANDROID) || defined(APPLEOS) || defined(SOLARIS) || defined(RASPBIAN)
          time_t         m_time;
 #else
          __time64_t m_time;
