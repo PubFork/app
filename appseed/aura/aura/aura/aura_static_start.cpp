@@ -619,7 +619,7 @@ namespace aura
 
          //::aura::del(g_pplexheapallocarray);
 
-#if !defined(__MCRTDBG) && !MEMDLEAK
+#if !defined(__MCRTDBG) && !MEMDLEAK && !defined(RASPBIAN)
          ::aura::del(g_pheap);
 #endif
 #if MEMDLEAK

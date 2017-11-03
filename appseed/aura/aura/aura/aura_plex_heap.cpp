@@ -320,12 +320,24 @@ extern plex_heap_alloc_array * g_pheap;
 plex_heap_alloc_array::plex_heap_alloc_array()
 {
 
+#ifndef RASPBIAN
+
    if(g_pheap == NULL)
    {
 
       g_pheap = this;
 
    }
+
+#endif
+
+
+#ifdef RASPBIAN
+
+    return;
+
+#endif
+
 
 //   ::zero(m_aa,sizeof(m_aa));
   // ::zero(m_bb,sizeof(m_bb));
@@ -418,12 +430,14 @@ plex_heap_alloc_array::~plex_heap_alloc_array()
 
    remove_all();
 
+   #ifndef RASPBIAN
    if(g_pheap == this)
    {
 
       g_pheap = NULL;
 
    }
+   #endif
 
 }
 
@@ -725,7 +739,7 @@ void Free_check_pointer_in_cpp(void * p)
 
    }
 
-   
+
 
 }
 

@@ -160,7 +160,7 @@ namespace aura
 
    }
 
-   
+
    str::~str()
    {
 
@@ -182,6 +182,8 @@ namespace aura
 
    bool str::load(const char * pszBaseDir)
    {
+
+   return true;
 
       synch_lock sl(m_pmutex);
 
