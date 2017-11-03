@@ -307,8 +307,9 @@ namespace aura
 
          m_bRun = true;
 
-         m_pthread = ::fork(get_app(), [&]()
+         m_pthread = get_app()->fork([&]()
          {
+
 
 
             receive();
@@ -435,7 +436,7 @@ namespace aura
 
             memory m;
             m.allocate(10000000);
-         while(m_bRun)
+         while(get_thread_run())
          {
 
             m_bRunning = true;
@@ -449,11 +450,13 @@ namespace aura
             /* The length is essentially the size of the structure minus sizeof(mtype) */
             length = m.get_size() - sizeof(long);
 
-           if((result = msgrcv(m_iQueue,pdata,length,15111984,0)) == -1)
+           if((result = msgrcv(m_iQueue,pdata,length,15111984,IPC_NOWAIT)) == -1)
            {
 
               if(errno == ENOMSG)
               {
+              Sleep(100);
+              continue;
               }
               else
               {

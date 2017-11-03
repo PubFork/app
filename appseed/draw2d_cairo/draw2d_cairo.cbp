@@ -84,10 +84,8 @@
 			<Add option="-lXmu" />
 			<Add option="-lfontconfig" />
 			<Add option="-laura" />
-			<Add option="-laxis" />
 			<Add option="-lfreetype" />
 			<Add option="-lcairo" />
-			<Add option="-lbase" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>

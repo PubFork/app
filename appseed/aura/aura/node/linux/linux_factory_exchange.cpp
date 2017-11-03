@@ -16,6 +16,11 @@ namespace linux
          ::object(papp)
       {
 
+               // axis will put things in the axis, (at least in this case... :-)
+         System.factory().creatable_small    < ::linux::file_system   >(System.type_info < ::file::system              >(),1);
+         System.factory().creatable_small    < ::linux::dir           >(System.type_info < ::file::dir::system         >(),1);
+
+
          System.factory().cloneable_large <stdio_file             >  (System. type_info < ::file::text_file        > ());
          System.factory().cloneable_large < file                  >  (System. type_info < ::file::binary_file      > (), true);
          System.factory().cloneable_large < file                  >  (System. type_info < ::file::file      > (), true);
