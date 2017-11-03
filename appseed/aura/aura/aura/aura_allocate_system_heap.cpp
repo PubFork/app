@@ -142,6 +142,13 @@ void * system_heap_realloc_normal(void * p, size_t size)
 
 }
 
+size_t system_heap_alloc_size(void * p)
+{
+
+   return ::os_size(p);
+
+}
+
 #ifdef MEMDLEAK
 
 void * system_heap_realloc_dbg(void * p,  size_t size, int32_t nBlockUse, const char * pszFileName, int32_t iLine)

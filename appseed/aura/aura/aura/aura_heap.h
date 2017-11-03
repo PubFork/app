@@ -59,6 +59,7 @@ CLASS_DECL_AURA void * system_heap_realloc_normal(void * pvoidOld, size_t size);
 #define system_heap_alloc(s) system_heap_alloc_normal(s)
 #endif
 CLASS_DECL_AURA void   system_heap_free(void * pvoid);
+CLASS_DECL_AURA size_t   system_heap_alloc_size(void * pvoid);
 
 
 struct memdleak_block

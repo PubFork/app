@@ -1,4 +1,6 @@
-
+#ifdef LINUX
+#include <malloc.h>
+#endif
 
 BEGIN_EXTERN_C
 
@@ -51,6 +53,16 @@ void os_impl_free(void * p)
 
 }
 
+
+size_t os_impl_size(void * p)
+{
+
+#ifdef __APPLE__
+	return malloc_size(p);
+#else
+	return malloc_usable_size(p);
+#endif
+}
 
 END_EXTERN_C
 

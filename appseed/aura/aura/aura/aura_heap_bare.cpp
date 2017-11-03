@@ -44,6 +44,13 @@ void * memory_alloc(size_t size)
 }
 
 
+void * memory_alloc_no_track(size_t size)
+{
+
+   return system_heap_alloc(size);
+
+}
+
 void * memory_calloc(size_t size, size_t bytes)
 {
 
