@@ -1,7 +1,14 @@
 #include "framework.h"
 
+#ifdef RASPBIAN
+
+#define AXIS_MEMORY_MANAGEMENT FALSE
+
+#else
 
 #define AXIS_MEMORY_MANAGEMENT TRUE
+
+#endif
 
 
 #if !AXIS_MEMORY_MANAGEMENT

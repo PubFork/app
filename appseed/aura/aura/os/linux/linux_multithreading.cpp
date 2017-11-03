@@ -126,3 +126,17 @@ int get_current_process_affinity_order()
 
 
 
+
+
+#if defined(RASPBIAN)
+
+::thread_object < _TEB > t_pteb;
+
+struct _TEB * WINAPI NtCurrentTeb(void)
+{
+
+   return t_pteb;
+
+}
+
+#endif

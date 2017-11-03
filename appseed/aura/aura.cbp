@@ -29,6 +29,21 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
+					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
+					<Add option="-lz" />
+					<Add option="-lbz2" />
+					<Add option="-ldl" />
+					<Add option="-lrt" />
+					<Add option="-lbfd" />
+					<Add option="-lX11" />
+					<Add option="-lidn" />
+					<Add option="-lpthread" />
+					<Add option="-lncurses" />
+					<Add option="-latomiconv" />
+					<Add option="-lssl" />
+					<Add option="-lcrypto" />
+					<Add option="-lace" />
+					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
 			</Target>
@@ -48,6 +63,21 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
+					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
+					<Add option="-lz" />
+					<Add option="-lbz2" />
+					<Add option="-ldl" />
+					<Add option="-lrt" />
+					<Add option="-lbfd" />
+					<Add option="-lX11" />
+					<Add option="-lidn" />
+					<Add option="-lpthread" />
+					<Add option="-lncurses" />
+					<Add option="-latomiconv" />
+					<Add option="-lssl" />
+					<Add option="-lcrypto" />
+					<Add option="-lace" />
+					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
 			</Target>
@@ -83,6 +113,21 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
+					<Add option="-Wl,-rpath=\\$$$ORIGIN" />
+					<Add option="-lc" />
+					<Add option="-lz" />
+					<Add option="-lbz2" />
+					<Add option="-ldl" />
+					<Add option="-lrt" />
+					<Add option="-lbfd" />
+					<Add option="-lX11" />
+					<Add option="-lidn" />
+					<Add option="-lpthread" />
+					<Add option="-lncurses" />
+					<Add option="-lssl" />
+					<Add option="-lcrypto" />
+					<Add option="-lace" />
+					<Add option="-Wl,-z,defs" />
 					<Add directory="../../../time/x64/basis" />
 				</Linker>
 			</Target>
@@ -107,21 +152,6 @@
 			<Add directory="graphics/freeimage/Source" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
-			<Add option="-lz" />
-			<Add option="-lbz2" />
-			<Add option="-ldl" />
-			<Add option="-lrt" />
-			<Add option="-lbfd" />
-			<Add option="-lX11" />
-			<Add option="-lidn" />
-			<Add option="-lpthread" />
-			<Add option="-lncurses" />
-			<Add option="-latomiconv" />
-			<Add option="-lssl" />
-			<Add option="-lcrypto" />
-			<Add option="-lace" />
-			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 		</Linker>
 		<ExtraCommands>
