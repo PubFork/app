@@ -1687,6 +1687,7 @@
 		<Unit filename="primitive/str.h" />
 		<Unit filename="primitive/str/_str_pool.cpp" />
 		<Unit filename="primitive/str/str.h" />
+		<Unit filename="primitive/str/str.inl" />
 		<Unit filename="primitive/str/str2.h" />
 		<Unit filename="primitive/str/str_base64.cpp" />
 		<Unit filename="primitive/str/str_base64.h" />

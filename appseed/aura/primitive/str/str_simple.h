@@ -10,7 +10,7 @@ struct CLASS_DECL_AURA string_data
    string_manager * pstringmanager;  // string manager for this string_data
    strsize nDataLength;  // Length of currently used data in XCHARs (not including terminating NULL)
    strsize nAllocLength;  // Length of allocated data in XCHARs (not including terminating NULL)
-   long nRefs;     // Reference count: negative == locked
+   int64_t nRefs;     // Reference count: negative == locked
    // char data[nAllocLength+1]  // A string_data is always followed in memory by the actual array of character data
 
    inline char * data() NOTHROW;
@@ -276,8 +276,10 @@ namespace str
    #define _gen_InterlockedDecrement(ptr) atomic_dec_32((volatile uint32_t *) ptr)
 #endif
 #elif defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-   #define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch(ptr, 1)
-   #define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch(ptr, 1)
+#define _gen_InterlockedIncrement64(ptr) __sync_add_and_fetch_8(ptr, 1)
+#define _gen_InterlockedDecrement64(ptr) __sync_sub_and_fetch_8(ptr, 1)
+#define _gen_InterlockedIncrement32(ptr) __sync_add_and_fetch_4(ptr, 1)
+#define _gen_InterlockedDecrement32(ptr) __sync_sub_and_fetch_4(ptr, 1)
 #else
    #ifdef _M_IX86
       #ifndef _M_CEE
@@ -835,7 +837,7 @@ public:
    }
 #endif
 
-   inline static strsize __cdecl StringLength(const char * psz ) 
+   inline static strsize __cdecl StringLength(const char * psz )
    {
       return psz == NULL || *psz == '\0' ? 0 : strlen(psz);
       //strsize nLength = 0;

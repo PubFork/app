@@ -216,7 +216,7 @@ found:
 
 #else
 
-   char lpszModuleFolder[MAX_PATH * 8];
+   hstring lpszModuleFolder(MAX_PATH * 8);
 
    void * handle = dlopen("libaura.so", RTLD_NOW);
 
@@ -413,13 +413,13 @@ found:
 
 #else
 
-   unichar lpszModuleFolder[MAX_PATH * 8];
+   hwstring lpszModuleFolder(MAX_PATH * 8);
 
    throw todo(::get_thread_app());
 
 //   wcscpy_dup(lpszModuleFolder, unitext("/core/"));
 
-   return lpszModuleFolder;
+   return (unichar *) lpszModuleFolder;
 
 #endif
 
@@ -507,10 +507,10 @@ string calc_ca2_module_folder_dup()
 
 #ifdef WINDOWSEX
 
-   unichar lpszModuleFilePath[MAX_PATH + 1];
+   hwstring lpszModuleFilePath(MAX_PATH * 8);
    GetModuleFileNameW(::GetModuleHandleA("ca.dll"), lpszModuleFilePath, MAX_PATH + 1);
-   unichar lpszModuleFolder[MAX_PATH + 1];
-   LPWSTR lpszModuleFileName;
+   hwstring lpszModuleFolder(MAX_PATH * 8);
+   hwstring lpszModuleFileName(MAX_PATH * 8);
    GetFullPathNameW(lpszModuleFilePath, MAX_PATH + 1, lpszModuleFolder, &lpszModuleFileName);
    str = string(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
 
@@ -590,7 +590,7 @@ string ca2_module_dup()
 
 #ifdef WINDOWSEX
 
-   unichar lpszModuleFilePath[MAX_PATH + 1];
+   hwstring lpszModuleFilePath(MAX_PATH * 8);
 
    GetModuleFileNameW(::GetModuleHandleA("aura.dll"), lpszModuleFilePath, MAX_PATH + 1);
 
@@ -787,12 +787,12 @@ bool dir::mk(const ::file::path & path)
    {
 
       strsize iPos = path.find(::file::path_sep(::file::path_file), iLastPos + 1);
-      
+
       if(iPos == 0)
       {
-       
+
          iPos = path.find(::file::path_sep(::file::path_file), 1);
-         
+
       }
 
       if(iPos < 0)
@@ -854,7 +854,7 @@ bool dir::mk(const ::file::path & path)
 
 #ifdef WINDOWS
 
-   unichar path[MAX_PATH * 4];
+   hwstring path(MAX_PATH * 8);
 
    if(!GetModuleFileNameW(NULL,path,sizeof(path) / sizeof(unichar)))
    {
@@ -1509,8 +1509,8 @@ void dir::ls_dir(::file::patha & stra,const ::file::path & psz)
 ::file::path dir::default_os_user_path_prefix()
 {
 #if defined(WINDOWSEX)
-   unichar buf[MAX_PATH];
-   ULONG ulSize = sizeof(buf) / sizeof(unichar);
+   hwstring buf(MAX_PATH * 8);
+   ULONG ulSize = buf.GetSize();
    if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
    {
       if(!::GetUserNameW(buf, &ulSize))

@@ -2,7 +2,7 @@
 
 #ifdef RASPBIAN
 
-#define AXIS_MEMORY_MANAGEMENT FALSE
+#define AXIS_MEMORY_MANAGEMENT TRUE
 
 #else
 

@@ -1,6 +1,16 @@
 #include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
+
+void os_init_imaging();
+
+void os_term_imaging();
+
+void os_init_windowing();
+
+void os_term_windowing();
+
+
 #if defined(LINUX) || defined(ANDROID)
 
 //#include <fcntl.h>
@@ -426,6 +436,15 @@ namespace aura
 
    bool system::process_initialize()
    {
+
+
+#ifdef LINUX
+
+      os_init_windowing();
+
+      os_init_imaging();
+
+#endif
 
 
       //m_peengine = new ::exception::engine(this);
@@ -914,6 +933,13 @@ namespace aura
 
       }
 
+#ifdef LINUX
+
+      os_term_windowing();
+
+      os_term_imaging();
+
+#endif
 
 
       ::aura::application::exit_application();
@@ -1224,12 +1250,12 @@ namespace aura
 
    }
 
-   
+
    ::aura::log & system::log()
    {
-      
+
       return *m_plog;
-      
+
    }
 
 
@@ -1271,7 +1297,7 @@ namespace aura
 
    }
 
-   
+
    bool system::initialize_log(const char * pszId)
    {
       if(m_plog != NULL)

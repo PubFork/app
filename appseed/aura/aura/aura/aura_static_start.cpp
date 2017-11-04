@@ -7,10 +7,6 @@
 
 #include "framework.h"
 
-void os_init_imaging();
-
-void os_term_imaging();
-
 extern string_map < ::aura::PFN_GET_NEW_LIBRARY, ::aura::PFN_GET_NEW_LIBRARY  > * g_pmapLibrary;
 
 #ifdef __APPLE__
@@ -384,13 +380,6 @@ namespace aura
 
 #endif
 
-#ifdef LINUX
-
-          os_init_windowing();
-
-         os_init_imaging();
-
-#endif
 
 
       }
@@ -443,13 +432,6 @@ namespace aura
       CLASS_DECL_AURA void term()
       {
 
-#ifdef LINUX
-
-      os_term_imaging();
-
-        os_term_windowing();
-
-#endif
 
          delete g_pmapLibCall;
 
@@ -619,7 +601,7 @@ namespace aura
 
          //::aura::del(g_pplexheapallocarray);
 
-#if !defined(__MCRTDBG) && !MEMDLEAK && !defined(RASPBIAN)
+#if !defined(__MCRTDBG) && !MEMDLEAK
          ::aura::del(g_pheap);
 #endif
 #if MEMDLEAK
