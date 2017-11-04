@@ -43,7 +43,7 @@ namespace install
       catch (...)
       {
 
-         _gen_InterlockedDecrement64(&pitem->m_pstatus->m_lProcessing);
+         _gen_InterlockedDecrement(&pitem->m_pstatus->m_lProcessing);
 
       }
 
@@ -103,13 +103,13 @@ namespace install
          {
 
             output_debug_string("op_spa install Success\r\n");
-            _gen_InterlockedIncrement64(&m_pstatus->m_lOk);
+            _gen_InterlockedIncrement(&m_pstatus->m_lOk);
 
          }
          else
          {
             output_debug_string("op_spa install Failed\r\n");
-            _gen_InterlockedIncrement64(&m_pstatus->m_lBad);
+            _gen_InterlockedIncrement(&m_pstatus->m_lBad);
 
          }
 
@@ -222,7 +222,7 @@ namespace install
 
       }
 
-      _gen_InterlockedDecrement64(&m_pstatus->m_lProcessing);
+      _gen_InterlockedDecrement(&m_pstatus->m_lProcessing);
 
       progress();
 
