@@ -650,6 +650,13 @@ string file_first_line_dup(const string & strPath)
 
    FILE * file = fopen_dup(strPath, "r");
 
+   if(file == NULL)
+   {
+
+      return "";
+
+   }
+
    try
    {
 
