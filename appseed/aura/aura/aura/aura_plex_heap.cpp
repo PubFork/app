@@ -1,5 +1,7 @@
 #include "framework.h"
 
+#include "align_byte_count.h"
+#include "aura_heap_memory.h"
 
 #undef new
 
@@ -358,13 +360,13 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(768, 48));
    add(new plex_heap_alloc(1024, 48));
    add(new plex_heap_alloc(1024 * 2, 2 * 1024));
-   
+
    #ifdef RASPBIAN
-   
+
    return;
-   
+
    #endif
-   
+
 //   m_bbSize[2] = last()->GetAllocSize();
 //
 //
@@ -597,39 +599,12 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
       if (align > 0)
       {
 
-         int_ptr oldSize = (((int_ptr) p & ((int_ptr) align - 1)));
+         int_ptr oldSize = sizeOld - heap_memory::aligned_provision_get_size(0);
 
-         if(oldSize > 0)
-         {
+         int_ptr newSize = size - heap_memory::aligned_provision_get_size(0);
 
-            oldSize = sizeOld - (align - oldSize);
-
-         }
-         else
-         {
-
-            oldSize = sizeOld;
-
-         }
-
-         int_ptr newSize = (((int_ptr) pNew & ((int_ptr) align - 1)));
-
-         if(newSize > 0)
-         {
-
-            newSize = size - (align - newSize);
-
-         }
-         else
-         {
-
-            newSize = size;
-
-         }
-
-         memcpy(
-                (void *)(((int_ptr)pNew + align - 1) & ~((int_ptr)align - 1)),
-                (void *)(((int_ptr)p + align - 1) & ~((int_ptr)align - 1)),
+         memcpy(heap_memory::aligned(pNew,newSize,0),
+                heap_memory::aligned(p,oldSize,0),
                 MIN(oldSize, newSize));
 
       }

@@ -90,7 +90,7 @@ namespace aura
       {
       public:
 
-         sp(::aura::application) m_pauraapp;
+         ::aura::application * m_pauraapp;
 
          trace(::aura::application * papp)
          {
@@ -125,7 +125,7 @@ namespace aura
       CLASS_DECL_AURA void __cdecl __trace(const unichar * pszFormat,...);
       CLASS_DECL_AURA void __cdecl __trace(uint_ptr dwCategory,UINT nLevel,const char * pszFormat,...);
       CLASS_DECL_AURA void __cdecl __trace(uint_ptr dwCategory,UINT nLevel,const unichar * pszFormat,...);
-      
+
    } // namespace trace
 
 

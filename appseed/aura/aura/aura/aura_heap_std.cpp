@@ -146,7 +146,7 @@ void * unaligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * s
 
    void * p;
 
-#ifdef APPLEOS
+#ifdef APPLEOS || defined(RASPBIAN)
 
    p = aligned_memory_alloc(size);
 
@@ -183,7 +183,7 @@ void * unaligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * s
 void * memory_alloc(size_t size)
 {
 
-#if defined(APPLEOS)
+#if defined(APPLEOS) || defined(RASPBIAN)
 
    return aligned_memory_alloc(size);
 
@@ -199,7 +199,7 @@ void * memory_alloc(size_t size)
 void * memory_alloc_no_track(size_t size)
 {
 
-#if defined(APPLEOS)
+#if defined(APPLEOS) || defined(RASPBIAN)
 
    return aligned_memory_alloc(size);
 
