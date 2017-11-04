@@ -84,14 +84,14 @@ namespace install
          {
 
             output_debug_string("op_spa spaadmin Success\r\n");
-            _gen_InterlockedIncrement64(&m_pstatus->m_lOk);
+            _gen_InterlockedIncrement(&m_pstatus->m_lOk);
 
          }
          else
          {
 
             output_debug_string("op_spa spaadmin Failed\r\n");
-            _gen_InterlockedIncrement64(&m_pstatus->m_lBad);
+            _gen_InterlockedIncrement(&m_pstatus->m_lBad);
 
          }
 

@@ -63,7 +63,7 @@ public:
    Atom                    m_atomLongType;
    Atom                    m_atomLongStyle;
    Atom                    m_atomLongStyleEx;
-   int64_t                 m_countReference;
+   int_ptr                 m_countReference;
    array < MESSAGE >       m_messsageaMouse;
    mutex *                 m_pmutexMouse;
 

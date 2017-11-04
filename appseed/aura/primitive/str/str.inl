@@ -270,7 +270,7 @@ inline string_data * string_data::Reallocate(strsize nLength) // current data wi
 inline void string_data::AddRef() RELEASENOTHROW
 {
    ASSERT(nRefs > 0);
-   _gen_InterlockedIncrement64(&nRefs);
+   _gen_InterlockedIncrement(&nRefs);
 }
 inline bool string_data::IsLocked() const NOTHROW
 {
@@ -293,7 +293,7 @@ inline void string_data::Release() RELEASENOTHROW
 {
    ASSERT( nRefs != 0 );
 
-   _gen_InterlockedDecrement64( &nRefs );
+   _gen_InterlockedDecrement( &nRefs );
    if(nRefs <= 0 )
    {
       pstringmanager->Free( this );
