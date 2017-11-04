@@ -276,8 +276,13 @@ namespace str
    #define _gen_InterlockedDecrement(ptr) atomic_dec_32((volatile uint32_t *) ptr)
 #endif
 #elif defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
+#if defined(RASPBIAN) && defined(OS32BIT)
+#define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch_4(ptr, 1)
+#define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch_4(ptr, 1)
+#else
 #define _gen_InterlockedIncrement(ptr) __sync_add_and_fetch(ptr, 1)
 #define _gen_InterlockedDecrement(ptr) __sync_sub_and_fetch(ptr, 1)
+#endif
 #else
    #ifdef _M_IX86
       #ifndef _M_CEE

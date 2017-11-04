@@ -29,6 +29,10 @@ class CLASS_DECL_AURA mini_object
 
          return InterlockedIncrement64(&m_countReference);
 
+#elif defined(RASPBIAN) && defined(OS32BIT)
+         
+         return __sync_add_and_fetch_4(&m_countReference,1);
+         
 #else
 
          return __sync_add_and_fetch(&m_countReference, 1);
@@ -45,9 +49,13 @@ class CLASS_DECL_AURA mini_object
 
          return InterlockedDecrement64(&m_countReference);
 
+#elif defined(RASPBIAN) && defined(OS32BIT)
+         
+         return __sync_sub_and_fetch_4(&m_countReference,1);
+         
 #else
 
-         return  __sync_sub_and_fetch(&m_countReference, 1);
+         return __sync_sub_and_fetch(&m_countReference, 1);
 
 #endif
 
