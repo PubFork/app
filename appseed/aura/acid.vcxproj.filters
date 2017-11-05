@@ -4558,6 +4558,12 @@
     <ClCompile Include="aura\os\windows\windows_aura.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_serial.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\os_serial.cpp">
+      <Filter>Source Files\aura\os</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

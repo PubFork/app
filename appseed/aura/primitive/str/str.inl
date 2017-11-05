@@ -266,12 +266,29 @@ inline string_data * string_data::Reallocate(strsize nLength) // current data wi
 
 }
 
+#ifdef WINDOWSEX
+#if OSBIT == 64
+typedef unsigned __int64 * int_ptr_atomic;
+#elif OSBIT == 32
+typedef unsigned int * int_ptr_atomic;
+#else
+#error "What is OSBIT?"
+#endif
+#else
+typedef int_ptr int_ptr_atomic;
+#endif
+
 
 inline void string_data::AddRef() RELEASENOTHROW
 {
+
    ASSERT(nRefs > 0);
-   _gen_InterlockedIncrement(&nRefs);
+
+   _gen_InterlockedIncrement((int_ptr_atomic) &nRefs);
+
 }
+
+
 inline bool string_data::IsLocked() const NOTHROW
 {
    return nRefs < 0;
@@ -293,7 +310,7 @@ inline void string_data::Release() RELEASENOTHROW
 {
    ASSERT( nRefs != 0 );
 
-   _gen_InterlockedDecrement( &nRefs );
+   _gen_InterlockedDecrement((int_ptr_atomic) &nRefs );
    if(nRefs <= 0 )
    {
       pstringmanager->Free( this );
@@ -735,31 +752,31 @@ namespace str
 
 class CLASS_DECL_AURA aura_str_pool
 {
-   public:
+public:
 
-      const string strUifsProtocol = "uifs://";
-      const string strIfsProtocol = "ifs://";
-      const string strHttpProtocol = "http://";
-      const string strHttpsProtocol = "https://";
-      const string strFsProtocol = "fs://";
-      const string strSlash = "/";
-      const string strDoubleBackSlash = "\\\\";
-      const string strSystem = "system";
-      const string strAppCoreDeepfish = "app-core/deepfish_";
-      const string stringSysCommand = "syscommand::";
-      const string strPassthroughUri = "/passthrough/";
-      const string strMatterUri = "/matter/";
-      const string str200Space = "200 ";
-      const string strWwwDot = "www.";
+   const string strUifsProtocol = "uifs://";
+   const string strIfsProtocol = "ifs://";
+   const string strHttpProtocol = "http://";
+   const string strHttpsProtocol = "https://";
+   const string strFsProtocol = "fs://";
+   const string strSlash = "/";
+   const string strDoubleBackSlash = "\\\\";
+   const string strSystem = "system";
+   const string strAppCoreDeepfish = "app-core/deepfish_";
+   const string stringSysCommand = "syscommand::";
+   const string strPassthroughUri = "/passthrough/";
+   const string strMatterUri = "/matter/";
+   const string str200Space = "200 ";
+   const string strWwwDot = "www.";
 
-      const string szXMLPIOpen = "<?";
-      const string szXMLPIClose = "?>";
-      const string szXMLDOCTYPEOpen = "<!DOCTYPE";
-      const string szXMLDOCTYPEClose = ">";
-      const string szXMLCommentOpen = "<!--";
-      const string szXMLCommentClose = "-->";
-      const string szXMLCDATAOpen = "<![CDATA[";
-      const string szXMLCDATAClose = "]]>";
+   const string szXMLPIOpen = "<?";
+   const string szXMLPIClose = "?>";
+   const string szXMLDOCTYPEOpen = "<!DOCTYPE";
+   const string szXMLDOCTYPEClose = ">";
+   const string szXMLCommentOpen = "<!--";
+   const string szXMLCommentClose = "-->";
+   const string szXMLCDATAOpen = "<![CDATA[";
+   const string szXMLCDATAClose = "]]>";
 
 
 

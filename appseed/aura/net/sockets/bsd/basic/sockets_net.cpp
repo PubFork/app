@@ -1,4 +1,4 @@
-#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 #include <stdio.h>
 
@@ -219,7 +219,7 @@ namespace sockets
 
       single_lock sl(&m_mutexCache, true);
       dns_cache_item item;
-      if(m_mapCache.Lookup(str, item) && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (5 * 60 * 1000))))
+      if(m_mapCache.Lookup(str, item) && (item.r && (!item.m_bTimeout || ((::get_tick_count() - item.m_dwLastChecked) < (5 * 60 * 1000)))))
       {
          if (item.r)
          {

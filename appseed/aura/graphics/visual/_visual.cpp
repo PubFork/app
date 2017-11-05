@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #include "visual_cursor.cpp"
@@ -9,8 +9,11 @@
 
 #ifdef SMALLCODE
 
+#ifndef USE_OS_IMAGE_LOADER
 // With TBS<3 in
 #define USE_OS_IMAGE_LOADER
+
+#endif
 
 #endif
 

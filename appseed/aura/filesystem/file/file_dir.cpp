@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <Shlobj.h>
 #if defined(APPLEOS)
 #include <sys/stat.h>
@@ -122,10 +122,10 @@ CLASS_DECL_AURA::Windows::Storage::StorageFolder ^ winrt_folder(string & strPath
       PWSTR pwstr = NULL;
 
       HRESULT hr = SHGetKnownFolderPath(
-                      FOLDERID_ProgramFilesX86,
-                      KF_FLAG_DEFAULT,
-                      NULL,
-                      &pwstr);
+                   FOLDERID_ProgramFilesX86,
+                   KF_FLAG_DEFAULT,
+                   NULL,
+                   &pwstr);
 
       wcscpy(lpszModuleFilePath, pwstr);
 
@@ -360,10 +360,10 @@ found:
       {
 
          SHGetSpecialFolderPathW(
-            NULL,
-            lpszModuleFilePath,
-            CSIDL_PROGRAM_FILES,
-            FALSE);
+         NULL,
+         lpszModuleFilePath,
+         CSIDL_PROGRAM_FILES,
+         FALSE);
 
       }
 
@@ -510,9 +510,9 @@ string calc_ca2_module_folder_dup()
    hwstring lpszModuleFilePath(MAX_PATH * 8);
    GetModuleFileNameW(::GetModuleHandleA("ca.dll"), lpszModuleFilePath, MAX_PATH + 1);
    hwstring lpszModuleFolder(MAX_PATH * 8);
-   hwstring lpszModuleFileName(MAX_PATH * 8);
+   unichar * lpszModuleFileName = NULL;
    GetFullPathNameW(lpszModuleFilePath, MAX_PATH + 1, lpszModuleFolder, &lpszModuleFileName);
-   str = string(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
+   str = wstring(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
 
 #elif defined(LINUX)
 
@@ -594,7 +594,7 @@ string ca2_module_dup()
 
    GetModuleFileNameW(::GetModuleHandleA("aura.dll"), lpszModuleFilePath, MAX_PATH + 1);
 
-   str = lpszModuleFilePath;
+   str = (const unichar *) lpszModuleFilePath;
 
 #elif defined(LINUX)
 
@@ -1510,7 +1510,7 @@ void dir::ls_dir(::file::patha & stra,const ::file::path & psz)
 {
 #if defined(WINDOWSEX)
    hwstring buf(MAX_PATH * 8);
-   ULONG ulSize = buf.GetSize();
+   ULONG ulSize = buf.count();
    if(!::GetUserNameExW(NameCanonical, buf, &ulSize))
    {
       if(!::GetUserNameW(buf, &ulSize))
@@ -1729,10 +1729,10 @@ retry:
    {
 
       SHGetSpecialFolderPathW(
-         NULL,
-         lpszModuleFilePath,
-         CSIDL_PROGRAM_FILES,
-         FALSE);
+      NULL,
+      lpszModuleFilePath,
+      CSIDL_PROGRAM_FILES,
+      FALSE);
 
    }
 

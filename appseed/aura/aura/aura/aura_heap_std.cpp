@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #if !defined(MCHECK) && !defined(_VLD) && !defined(__MCRTDBG) && !MEMDLEAK
@@ -19,14 +19,14 @@ void * aligned_memory_alloc(size_t size)
    if(g_pheap == NULL)
    {
 
-       void * pbase = system_heap_alloc(heap_memory::aligned_provision_get_size(size));
+      void * pbase = system_heap_alloc(heap_memory::aligned_provision_get_size(size));
 
-       if (pbase == NULL)
-       {
+      if (pbase == NULL)
+      {
 
-          return NULL;
+         return NULL;
 
-       }
+      }
 
       p = heap_memory::aligned(pbase, size, 128);
 
@@ -35,21 +35,21 @@ void * aligned_memory_alloc(size_t size)
    {
 
       if (heap_memory::aligned_provision_get_size(size) == 831
-         && heap_memory::aligned_provision_get_size(size) < 1024)
+            && heap_memory::aligned_provision_get_size(size) < 1024)
       {
          //output_debug_string("*");
       }
 
-       void * pbase = g_pheap->_alloc(heap_memory::aligned_provision_get_size(size));
+      void * pbase = g_pheap->_alloc(heap_memory::aligned_provision_get_size(size));
 
-       if (pbase == NULL)
-       {
+      if (pbase == NULL)
+      {
 
-          return NULL;
+         return NULL;
 
-       }
+      }
 
-       p = heap_memory::aligned(pbase, size, 0);
+      p = heap_memory::aligned(pbase, size, 0);
 
    }
 
@@ -74,7 +74,7 @@ void * unaligned_memory_alloc(size_t size)
    if (pbase == NULL)
    {
 
-       return NULL;
+      return NULL;
 
    }
    else
@@ -103,40 +103,40 @@ void * aligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * szF
 
    //TODO: to do the dbg version
    //byte * p = (byte *) _system_heap_alloc_dbg(nSize + ALIGN_BYTE_COUNT + 32, nBlockUse, szFileName, nLine);
-    if(g_pheap == NULL)
-    {
+   if(g_pheap == NULL)
+   {
 
-        void * pbase = system_heap_alloc(heap_memory::aligned_provision_get_size(size));
+      void * pbase = system_heap_alloc(heap_memory::aligned_provision_get_size(size));
 
-        if (pbase == NULL)
-        {
+      if (pbase == NULL)
+      {
 
-            return NULL;
+         return NULL;
 
-        }
+      }
 
-        p = heap_memory::aligned(pbase, size, 129);
+      p = heap_memory::aligned(pbase, size, 129);
 
-    }
-    else
-    {
+   }
+   else
+   {
 
-        void * pbase = g_pheap->alloc_dbg(heap_memory::aligned_provision_get_size(size), nBlockUse, szFileName, nLine);
+      void * pbase = g_pheap->alloc_dbg(heap_memory::aligned_provision_get_size(size), nBlockUse, szFileName, nLine);
 
-        if (pbase == NULL)
-        {
+      if (pbase == NULL)
+      {
 
-           return NULL;
+         return NULL;
 
-        }
+      }
 
-        p = heap_memory::aligned(pbase, size, 1);
+      p = heap_memory::aligned(pbase, size, 1);
 
-    }
+   }
 
-    //zero(p, size);
+   //zero(p, size);
 
-    return p;
+   return p;
 
 }
 
@@ -146,7 +146,7 @@ void * unaligned_memory_alloc_dbg(size_t size, int32_t nBlockUse, const char * s
 
    void * p;
 
-#ifdef APPLEOS || defined(RASPBIAN)
+#if defined(APPLEOS) || defined(RASPBIAN)
 
    p = aligned_memory_alloc(size);
 
