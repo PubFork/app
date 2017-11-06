@@ -275,7 +275,11 @@ typedef unsigned int * int_ptr_atomic;
 #error "What is OSBIT?"
 #endif
 #else
+#ifdef LINUX
+typedef unsigned __int64 * int_ptr_atomic;
+#else
 typedef int_ptr int_ptr_atomic;
+#endif
 #endif
 
 
