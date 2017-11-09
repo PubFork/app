@@ -5,9 +5,6 @@
 #include "http/_http.cpp"
 //#include "mail/_mail.cpp"
 #include "netserver/_netserver.cpp"
-#ifndef LINUX
-#include "sockets/_sockets.cpp"
-#endif
 
 
 #include "net_address.cpp"
