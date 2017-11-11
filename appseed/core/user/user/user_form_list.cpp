@@ -476,12 +476,12 @@ namespace user
          }
 
          pcontrol->SetWindowPos(
-            ZORDER_TOP,
-            rectControl.left,
-            rectControl.top,
-            rectControl.width(),
-            rectControl.height(),
-            SWP_SHOWWINDOW | (bOnlySizeAndPosition ? SWP_CHANGEVIEWPORTOFFSET : 0));
+         ZORDER_TOP,
+         rectControl.left,
+         rectControl.top,
+         rectControl.width(),
+         rectControl.height(),
+         SWP_SHOWWINDOW | (bOnlySizeAndPosition ? SWP_CHANGEVIEWPORTOFFSET : 0));
 
          if (bOnlySizeAndPosition)
          {

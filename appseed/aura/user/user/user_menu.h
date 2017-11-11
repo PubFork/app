@@ -21,7 +21,6 @@ namespace user
          HMENU                                  m_hmenu;
          bool                                   m_bOwnItem;
          size                                   m_size;
-         int32_t                                m_iItemHeight;
          int32_t                                m_iCheckBoxSize;
          bool                                   m_bAutoDelete;
          int32_t                                m_iHeaderHeight;

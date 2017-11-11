@@ -68,7 +68,6 @@ namespace user
       sp(image_list)                m_pimagelist;
       index                         m_iImageCollapse;
       index                         m_iImageExpand;
-      //int32_t                       m_iItemHeight;
 
 
 

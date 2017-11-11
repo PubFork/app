@@ -23,7 +23,6 @@ namespace user
 
       bool                                m_bComboList;
       combo_box *                         m_pcombo;
-      int32_t                             m_iItemHeight;
       index                               m_iHover;
       int                                 m_iBorder;
       //::draw2d::font_sp                   m_spfont;

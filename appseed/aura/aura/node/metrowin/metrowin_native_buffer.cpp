@@ -200,9 +200,9 @@ namespace metrowin
 
    native_buffer::~native_buffer()
    {
-      
+
       close();
-      
+
 
    }
 
@@ -354,24 +354,25 @@ namespace metrowin
       sa.lpSecurityDescriptor = NULL;
       sa.bInheritHandle = (nOpenFlags & ::file::mode_no_inherit) == 0;
 
+      folder = m_folder;
+
       // ::map creation flags
       DWORD dwCreateFlag;
       if(nOpenFlags & ::file::mode_create)
       {
          if(nOpenFlags & ::file::mode_no_truncate)
-            dwCreateFlag = OPEN_ALWAYS;
+            m_file = ::wait(folder->CreateFileAsync(strName, Windows::Storage::CreationCollisionOption::OpenIfExists));
          else
-            dwCreateFlag = CREATE_ALWAYS;
+            m_file = ::wait(folder->CreateFileAsync(strName, Windows::Storage::CreationCollisionOption::ReplaceExisting));
       }
       else
-         dwCreateFlag = OPEN_EXISTING;
+         m_file = ::wait(folder->GetFileAsync(strName));
 
       // attempt native_buffer creation
       //HANDLE hnative_buffer = shell::Createnative_buffer(::str::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, native_buffer_ATTRIBUTE_NORMAL, NULL);
 
-      folder = m_folder;
 
-      m_file = ::wait(folder->GetFileAsync(strName));
+
 
 
       if(m_file == nullptr)
@@ -404,7 +405,7 @@ namespace metrowin
          break;
       }
 
-      
+
       if(m_stream == nullptr)
       {
          m_file = nullptr;
@@ -484,7 +485,7 @@ namespace metrowin
 
    void native_buffer::Flush()
    {
-      
+
       ::wait(m_stream->FlushAsync());
 
    }
@@ -499,7 +500,7 @@ namespace metrowin
          Flush();
 
       }
-      
+
       m_stream    = nullptr;
 
       m_file      = nullptr;

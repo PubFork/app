@@ -90,7 +90,8 @@ namespace visual
 
       if (SUCCEEDED(hr))
       {
-         switch (psaveimage->m_eformat)
+
+         switch (psaveimage == NULL ? ::visual::image::format_png : psaveimage->m_eformat)
          {
          case ::visual::image::format_bmp:
             hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder.get());
@@ -172,7 +173,7 @@ namespace visual
          //      hr = pPropertybag->Write(1,&option,&varValue);
          //   }
          //}
-         if (psaveimage->m_eformat == ::visual::image::format_jpeg)
+         if (psaveimage != NULL && psaveimage->m_eformat == ::visual::image::format_jpeg)
          {
             PROPBAG2 option = { 0 };
             option.pstrName = L"ImageQuality";

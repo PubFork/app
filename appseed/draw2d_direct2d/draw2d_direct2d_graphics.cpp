@@ -135,9 +135,9 @@ namespace draw2d_direct2d
       Microsoft::WRL::ComPtr<ID2D1DeviceContext> pdevicecontextTemplate;
 
       if (FAILED(hr = global_draw_get_d2d1_device()->CreateDeviceContext(
-                         D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-                         //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
-                         &pdevicecontextTemplate)))
+                      D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+                      //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+                      &pdevicecontextTemplate)))
       {
 
          trace_hr("graphics::CreateCompatibleDC, CreateDeviceContext (1) ", hr);
@@ -201,11 +201,11 @@ namespace draw2d_direct2d
       pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
       if (FAILED(hr = prendertargetTemplate->CreateCompatibleRenderTarget(
-                         NULL,
-                         &sizeu,
-                         &pixelformat,
-                         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
-                         &m_pbitmaprendertarget)))
+                      NULL,
+                      &sizeu,
+                      &pixelformat,
+                      D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+                      &m_pbitmaprendertarget)))
       {
 
          trace_hr("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
@@ -380,11 +380,11 @@ namespace draw2d_direct2d
             ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
-               (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
-               D2D1::Point2F(0.f, 0.f),
-               d2d1::rectf(rectDib1),
-               D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-               D2D1_COMPOSITE_MODE_DESTINATION_IN);
+            (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+            D2D1::Point2F(0.f, 0.f),
+            d2d1::rectf(rectDib1),
+            D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+            D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -472,11 +472,11 @@ namespace draw2d_direct2d
             ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
             pgraphicsDib1->m_pdevicecontext->DrawImage(
-               (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
-               D2D1::Point2F(0.f, 0.f),
-               d2d1::rectf(rectDib1),
-               D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-               D2D1_COMPOSITE_MODE_DESTINATION_IN);
+            (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->get_os_data(),
+            D2D1::Point2F(0.f, 0.f),
+            d2d1::rectf(rectDib1),
+            D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+            D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
             set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -4212,33 +4212,33 @@ namespace draw2d_direct2d
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetWindowExt(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetWindowOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetViewportExt(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetViewportOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->ScaleWindowExt(
-            (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->ScaleViewportExt(
-            (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+         (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SaveDC();
@@ -4447,7 +4447,7 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F mOriginal(m);
 
-      D2D1_RECT_F rectf = D2D1::RectF((FLOAT) 0, (FLOAT) 0, (FLOAT) lpRect.right, (FLOAT) lpRect.bottom);
+      D2D1_RECT_F rectf = D2D1::RectF((FLOAT) 0, (FLOAT) 0, (FLOAT) width(lpRect), (FLOAT) height(lpRect));
 
       wstring wstr(str);
 
@@ -4628,12 +4628,12 @@ namespace draw2d_direct2d
       Microsoft::WRL::ComPtr<IDWriteTextLayout> playout;
 
       hr = global_draw_get_write_factory()->CreateTextLayout(
-              wstr,                // The string to be laid out and formatted.
-              (UINT32) wstr.get_length(),   // The length of the string.
-              get_os_font(m_spfont),    // The text format to apply to the string (contains font information, etc).
-              1024.f * 1024.f,               // The width of the on_layout box.
-              1024.f * 1024.f,        // The height of the on_layout box.
-              &playout  // The IDWriteTextLayout interface pointer.
+           wstr,                // The string to be laid out and formatted.
+           (UINT32) wstr.get_length(),   // The length of the string.
+           get_os_font(m_spfont),    // The text format to apply to the string (contains font information, etc).
+           1024.f * 1024.f,               // The width of the on_layout box.
+           1024.f * 1024.f,        // The height of the on_layout box.
+           &playout  // The IDWriteTextLayout interface pointer.
            );
 
       if(playout == NULL || FAILED(hr))
@@ -5073,14 +5073,14 @@ namespace draw2d_direct2d
 
       // Create a DC render target.
       D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
-            D2D1_RENDER_TARGET_TYPE_DEFAULT,
-            D2D1::PixelFormat(
-               DXGI_FORMAT_B8G8R8A8_UNORM,
-               D2D1_ALPHA_MODE_IGNORE),
-            0,
-            0,
-            D2D1_RENDER_TARGET_USAGE_NONE,
-            D2D1_FEATURE_LEVEL_DEFAULT
+                                            D2D1_RENDER_TARGET_TYPE_DEFAULT,
+                                            D2D1::PixelFormat(
+                                            DXGI_FORMAT_B8G8R8A8_UNORM,
+                                            D2D1_ALPHA_MODE_IGNORE),
+                                            0,
+                                            0,
+                                            D2D1_RENDER_TARGET_USAGE_NONE,
+                                            D2D1_FEATURE_LEVEL_DEFAULT
                                             );
 
       HRESULT hr = get_d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
@@ -5448,12 +5448,12 @@ namespace draw2d_direct2d
       IDWriteTextLayout * playout = NULL;
 
       HRESULT hr = pfactory->CreateTextLayout(
-                      szOutline,      // The string to be laid out and formatted.
-                      (UINT32) szOutline.length(),  // The length of the string.
-                      pformat,  // The text format to apply to the string (contains font information, etc).
-                      4096,         // The width of the on_layout box.
-                      4096,        // The height of the on_layout box.
-                      &playout  // The IDWriteTextLayout interface pointer.
+                   szOutline,      // The string to be laid out and formatted.
+                   (UINT32) szOutline.length(),  // The length of the string.
+                   pformat,  // The text format to apply to the string (contains font information, etc).
+                   4096,         // The width of the on_layout box.
+                   4096,        // The height of the on_layout box.
+                   &playout  // The IDWriteTextLayout interface pointer.
                    );
 
       if(playout == NULL)
@@ -5484,12 +5484,12 @@ namespace draw2d_direct2d
       IDWriteTextLayout * playout = NULL;
 
       HRESULT hr = pfactory->CreateTextLayout(
-                      szOutline,      // The string to be laid out and formatted.
-                      (UINT32) szOutline.length(),  // The length of the string.
-                      pformat,  // The text format to apply to the string (contains font information, etc).
-                      4096,         // The width of the on_layout box.
-                      4096,        // The height of the on_layout box.
-                      &playout  // The IDWriteTextLayout interface pointer.
+                   szOutline,      // The string to be laid out and formatted.
+                   (UINT32) szOutline.length(),  // The length of the string.
+                   pformat,  // The text format to apply to the string (contains font information, etc).
+                   4096,         // The width of the on_layout box.
+                   4096,        // The height of the on_layout box.
+                   &playout  // The IDWriteTextLayout interface pointer.
                    );
 
       if (playout == NULL)
