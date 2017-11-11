@@ -2582,7 +2582,7 @@
     <ClInclude Include="aura\aura\aura_chronometer.h" />
     <ClInclude Include="aura\aura\aura_cmp2.h" />
     <ClInclude Include="aura\aura\aura_os_alloc.h" />
-    <ClInclude Include="aura\aura\aura_pointer.h" />
+    <ClInclude Include="aura\aura\aura_auto_pointer.h" />
     <ClInclude Include="aura\aura\aura_cmp.h" />
     <ClInclude Include="aura\aura\aura_command_target.h" />
     <ClInclude Include="aura\aura\aura_common.h" />

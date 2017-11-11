@@ -286,9 +286,9 @@ namespace windows
       bitmapinfo.bmiHeader.biCompression = BI_RGB;
       bitmapinfo.bmiHeader.biSizeImage = (LONG)(cxParam * cyParam * 4);
 
-      m_cx = cxParam;
+      m_cx = (int) cxParam;
 
-      m_cy = cyParam;
+      m_cy = (int) cyParam;
 
       m_hbitmap = CreateDIBSection(NULL, &bitmapinfo, DIB_RGB_COLORS, (void **)&m_pcolorref, NULL, 0);
 

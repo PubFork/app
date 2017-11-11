@@ -1,10 +1,6 @@
 #include "framework.h"
 
 
-#ifdef unequal
-#undef unequal
-#endif
-#define unequal(a, b, n) ((a) > (b) - (n))
 
 #define pixel(x, y) (ba[(pointer->m_rect.height() - (y) - 1) * iScan + (x)])
 

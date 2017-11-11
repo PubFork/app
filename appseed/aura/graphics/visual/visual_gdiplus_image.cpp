@@ -763,7 +763,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    memory m;
 
-   m.allocate(pfile->get_length());
+   m.allocate((memory_size_t) pfile->get_length());
 
    pfile->read(m.get_data(), m.get_size());
 

@@ -1,4 +1,4 @@
-#include "framework.h""
+#include "framework.h"
 #include "aura/net/sockets/bsd/basic/sockets_socket_handler.h"
 #include "aura/net/sockets/http/sockets_http_session.h"
 
@@ -131,10 +131,10 @@ namespace fontopus
          System.userset().add(m_puser);
 
          if(m_puser.is_set()
-            && !::str::begins(m_puser->m_strLogin, astr.strSystem)
-            && m_pauraapp->m_strAppId != "app-core/deepfish"
-            && !::str::begins(m_pauraapp->m_strAppName, astr.strAppCoreDeepfish)
-            && !m_pauraapp->is_serviceable())
+               && !::str::begins(m_puser->m_strLogin, astr.strSystem)
+               && m_pauraapp->m_strAppId != "app-core/deepfish"
+               && !::str::begins(m_pauraapp->m_strAppName, astr.strAppCoreDeepfish)
+               && !m_pauraapp->is_serviceable())
          {
 
             on_user_login(m_puser);
@@ -178,7 +178,7 @@ namespace fontopus
 
    bool fontopus::get_auth(const char * psz, string & strUsername, string & strPassword)
    {
-          /*::draw2d::fontopus * papp;
+      /*::draw2d::fontopus * papp;
       if(m_puiInitialPlaceHolderContainer != NULL)
       {
       papp = m_puiInitialPlaceHolderContainer->m_pauraapp;
@@ -451,7 +451,7 @@ namespace fontopus
    {
 
       if(pcreate->m_spCommandLine.is_set()
-         && pcreate->m_spCommandLine->m_varFile == "ca2login")
+            && pcreate->m_spCommandLine->m_varFile == "ca2login")
       {
          //Sleep(15 * 1000);
          property_set setLogin(get_app());
@@ -513,7 +513,7 @@ namespace fontopus
 
       ::sockets::socket_handler h(get_app());
 
-   retry:
+retry:
 
       if(iRetry < 0)
          return ""; // should not retry or lookup is valid and strFontopusServer is really empty

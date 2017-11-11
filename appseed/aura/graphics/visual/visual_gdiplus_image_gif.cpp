@@ -113,7 +113,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    memory m;
 
-   m.allocate(pfile->get_length());
+   m.allocate((memory_size_t) pfile->get_length());
 
    pfile->read(m.get_data(), m.get_size());
 
@@ -315,7 +315,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
    ::draw2d::dib_sp dibCompose(papp->allocer());
 
 
-   for (index uFrameIndex = 0; uFrameIndex < cFrames; uFrameIndex++)
+   for (index uFrameIndex = 0; ::comparison::lt(uFrameIndex, cFrames); uFrameIndex++)
    {
 
       ::visual::dib_sp::pointer * p = canew(::visual::dib_sp::pointer);
@@ -374,7 +374,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
                if (SUCCEEDED(hr))
                {
-                  p->m_rect.left = static_cast<float>(propValue.uiVal);
+                  p->m_rect.left = static_cast<LONG>(propValue.uiVal);
                }
                PropVariantClear(&propValue);
             }
@@ -388,7 +388,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
                if (SUCCEEDED(hr))
                {
-                  p->m_rect.top = static_cast<float>(propValue.uiVal);
+                  p->m_rect.top = static_cast<LONG>(propValue.uiVal);
                }
                PropVariantClear(&propValue);
             }
@@ -402,7 +402,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
                if (SUCCEEDED(hr))
                {
-                  p->m_rect.right = static_cast<float>(propValue.uiVal) + p->m_rect.left;
+                  p->m_rect.right = static_cast<LONG>(propValue.uiVal) + p->m_rect.left;
                }
                PropVariantClear(&propValue);
             }
@@ -416,7 +416,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
                hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
                if (SUCCEEDED(hr))
                {
-                  p->m_rect.bottom = static_cast<float>(propValue.uiVal) + p->m_rect.top;
+                  p->m_rect.bottom = static_cast<LONG>(propValue.uiVal) + p->m_rect.top;
                }
                PropVariantClear(&propValue);
             }
@@ -989,7 +989,6 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
 }
 
 
-#define unequal(a, b, n) ((a - n < b && b < a + n) || (b - n < a && a < b + n))
 
 
 HRESULT windows_GetRawFrame(
