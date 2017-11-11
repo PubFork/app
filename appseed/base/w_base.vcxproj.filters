@@ -118,9 +118,6 @@
     <Filter Include="Header Files\user\simple_ui">
       <UniqueIdentifier>{b9fbd78a-be3d-406e-abb6-82f3403f6802}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\graphics">
-      <UniqueIdentifier>{71468b37-4273-4440-a035-97cd2de51a31}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -157,9 +154,6 @@
       <Filter>Header Files\base\os\metrowin</Filter>
     </ClInclude>
     <ClInclude Include="base\os\metrowin\metrowin_sockets.h">
-      <Filter>Header Files\base\os\metrowin</Filter>
-    </ClInclude>
-    <ClInclude Include="base\os\metrowin\metrowin_window_impl.h">
       <Filter>Header Files\base\os\metrowin</Filter>
     </ClInclude>
     <ClInclude Include="base\node\node.h">
@@ -282,21 +276,6 @@
     <ClInclude Include="user\simple_ui\simple_ui_tap.h">
       <Filter>Header Files\user\simple_ui</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\graphics.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_buffer.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_dc.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\graphics_window_graphics.h">
-      <Filter>Header Files\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_box.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -304,9 +283,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_control_bar.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_control_event.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_document.h">
@@ -339,21 +315,6 @@
     <ClInclude Include="user\user\user_inline.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_interaction.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_interaction_base.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_interaction_child.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_interaction_impl.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_interaction_impl_base.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_message.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -363,12 +324,6 @@
     <ClInclude Include="user\user\user_message_queue_listener.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_place_holder.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_place_holder_container.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_scroll.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -376,9 +331,6 @@
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_server.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_tooltip.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_view_container.h">
@@ -393,20 +345,11 @@
     <ClInclude Include="user\user\user_wait_cursor.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="user\user\user_window_util.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_windowing.h">
-      <Filter>Header Files\user\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user_prelude.h">
       <Filter>Header Files\user</Filter>
-    </ClInclude>
-    <ClInclude Include="user\user\user_window_map.h">
-      <Filter>Header Files\user\user</Filter>
     </ClInclude>
     <ClInclude Include="user\user.h">
       <Filter>Header Files\user</Filter>

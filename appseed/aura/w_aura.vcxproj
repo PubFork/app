@@ -850,6 +850,7 @@
     <ClCompile Include="aura\os\os_process.cpp" />
     <ClCompile Include="aura\os\os_thread.cpp" />
     <ClCompile Include="aura\os\os_windowing.cpp" />
+    <ClCompile Include="aura\os\windows_common\draw2d_direct2d_global.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_base.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp" />
     <ClCompile Include="aura\process\process_bidi_pipe.cpp" />
@@ -1384,7 +1385,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <FixedBaseAddress>false</FixedBaseAddress>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
@@ -1406,7 +1407,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|arm'">
@@ -1429,7 +1430,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -1452,7 +1453,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
@@ -1476,7 +1477,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -1499,7 +1500,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;dxgi.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

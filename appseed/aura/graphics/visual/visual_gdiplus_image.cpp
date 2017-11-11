@@ -726,6 +726,8 @@ bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverte
 
    dib.create(uiWidth, uiHeight);
 
+   dib.map();
+
    ::draw2d::copy_colorref(uiWidth, uiHeight, dib.m_pcolorref, dib.m_iScan, (COLORREF *)pData, cbStride);
 
    return true;

@@ -73,18 +73,12 @@
     <ClInclude Include="base\os\metrowin\metrowin_process.h" />
     <ClInclude Include="base\os\metrowin\metrowin_simple_hold_handle.h" />
     <ClInclude Include="base\os\metrowin\metrowin_sockets.h" />
-    <ClInclude Include="base\os\metrowin\metrowin_window_impl.h" />
     <ClInclude Include="base\os\os.h" />
     <ClInclude Include="database\database.h" />
     <ClInclude Include="database\database\database.h" />
     <ClInclude Include="database\simpledb\simpledb.h" />
     <ClInclude Include="database\simpledb\simpledb_file_system_size.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="graphics\graphics.h" />
-    <ClInclude Include="graphics\graphics_window.h" />
-    <ClInclude Include="graphics\graphics_window_buffer.h" />
-    <ClInclude Include="graphics\graphics_window_dc.h" />
-    <ClInclude Include="graphics\graphics_window_graphics.h" />
     <ClInclude Include="user\fontopus\fontopus.h" />
     <ClInclude Include="user\fontopus\fontopus_login.h" />
     <ClInclude Include="user\fontopus\fontopus_simple_ui.h" />
@@ -102,7 +96,6 @@
     <ClInclude Include="user\user\user_box.h" />
     <ClInclude Include="user\user\user_control.h" />
     <ClInclude Include="user\user\user_control_bar.h" />
-    <ClInclude Include="user\user\user_control_event.h" />
     <ClInclude Include="user\user\user_document.h" />
     <ClInclude Include="user\user\user_document_data_map.h" />
     <ClInclude Include="user\user\user_form_callback.h" />
@@ -113,30 +106,19 @@
     <ClInclude Include="user\user\user_impact_system.h" />
     <ClInclude Include="user\user\user_impact_update_hint.h" />
     <ClInclude Include="user\user\user_inline.h" />
-    <ClInclude Include="user\user\user_interaction.h" />
-    <ClInclude Include="user\user\user_interaction_base.h" />
-    <ClInclude Include="user\user\user_interaction_child.h" />
-    <ClInclude Include="user\user\user_interaction_impl.h" />
-    <ClInclude Include="user\user\user_interaction_impl_base.h" />
     <ClInclude Include="user\user\user_message.h" />
     <ClInclude Include="user\user\user_message_queue.h" />
     <ClInclude Include="user\user\user_message_queue_listener.h" />
-    <ClInclude Include="user\user\user_place_holder.h" />
-    <ClInclude Include="user\user\user_place_holder_container.h" />
     <ClInclude Include="user\user\user_plain_edit.h" />
     <ClInclude Include="user\user\user_plain_text_data.h" />
     <ClInclude Include="user\user\user_scroll.h" />
     <ClInclude Include="user\user\user_scroll_bar.h" />
     <ClInclude Include="user\user\user_server.h" />
-    <ClInclude Include="user\user\user_tooltip.h" />
     <ClInclude Include="user\user\user_user.h" />
     <ClInclude Include="user\user\user_view_container.h" />
     <ClInclude Include="user\user\user_view_creator.h" />
     <ClInclude Include="user\user\user_view_creator_data.h" />
     <ClInclude Include="user\user\user_wait_cursor.h" />
-    <ClInclude Include="user\user\user_windowing.h" />
-    <ClInclude Include="user\user\user_window_map.h" />
-    <ClInclude Include="user\user\user_window_util.h" />
     <ClInclude Include="user\user_prelude.h" />
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +204,6 @@
     </ProjectReference>
     <ProjectReference Include="..\axis\w_axis.vcxproj">
       <Project>{b3a245f9-c92f-4487-aef7-cb0531f665bd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\draw2d_direct2d\w_draw2d_direct2d.vcxproj">
-      <Project>{ba9bff50-1888-4722-8dee-73a3b5b32bcb}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -386,6 +365,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|arm'">
@@ -409,6 +389,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|arm'">
@@ -431,6 +412,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
@@ -455,6 +437,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
@@ -477,6 +460,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -49,6 +49,21 @@
     <Filter Include="Source Files\console">
       <UniqueIdentifier>{c0e573dd-c95d-4415-945f-33c45c213f0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\charguess">
+      <UniqueIdentifier>{49c24f44-156a-4789-a8f5-96fca75295aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pcre">
+      <UniqueIdentifier>{1401a084-939a-4e36-a792-443956da1b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\colorertake5">
+      <UniqueIdentifier>{5d1a67d3-92ce-481f-833d-92a622e04877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net">
+      <UniqueIdentifier>{8a8fdfcf-daea-4f66-9c4a-432f62229784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\net\mail">
+      <UniqueIdentifier>{23c3ae7d-e795-4bf1-b46c-b078a8b51289}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -280,6 +295,150 @@
     </ClCompile>
     <ClCompile Include="sphere\sphere_main_frame.cpp">
       <Filter>Source Files\sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\big5Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\charDistribution.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\charguess.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EscCharsetProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EscSM.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCJPProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCKRProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\EUCTWProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\GB2312Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\jpCntx.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangBulgarianModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangCyrillicModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangGreekModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangHungarianModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\LangThaiModel.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\Latin1Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\MBCSGroupProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\MBCSSM.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SBCharsetProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SBCSGroupProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\SJISProber.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\universal.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="charguess\UTF8Prober.cpp">
+      <Filter>Source Files\charguess</Filter>
+    </ClCompile>
+    <ClCompile Include="pcre\pcre.cpp">
+      <Filter>Source Files\pcre</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_base_editor.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_colorertake5.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_default_error_handler.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_error_handler_writer.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_exception.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_helpers.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_regions_compact_support.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_regions_support.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_line_source.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_logging.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_outliner.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_parsed_line_writer.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_parser_factory.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_region_handler.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_region_mapper_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_styled_hrd_mapper.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_hrd_mapper.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_lines.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_parser_helpers.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="colorertake5\colorertake5_text_parser_impl.cpp">
+      <Filter>Source Files\colorertake5</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\mail_pop3.cpp">
+      <Filter>Source Files\net\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\mail_pop3_socket.cpp">
+      <Filter>Source Files\net\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="net\mail\mail_simple_pop3.cpp">
+      <Filter>Source Files\net\mail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

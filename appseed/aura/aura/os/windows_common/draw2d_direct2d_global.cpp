@@ -1,6 +1,7 @@
 #include "framework.h"
 
 
+
 #include <winapifamily.h>
 #include <windows.h>
 #include <shlwapi.h>
@@ -12,9 +13,11 @@
 #include <Dwrite.h>
 #include <D3D11.h>
 #include <D3D11_1.h>
-#include <Dxgi1_3.h>     
+#include <Dxgi1_3.h>
 #include <Initguid.h>
 #include <DXGIDebug.h>
+
+#include "draw2d_direct2d_global.h"
 
 typedef HRESULT WINAPI FN_DXGIGetDebugInterface(REFIID riid, void **ppDebug);
 
@@ -89,7 +92,7 @@ namespace draw2d_direct2d
    } *g_pplugin;
 
 
-   void finalize()
+   CLASS_DECL_AURA void finalize()
    {
 
       delete g_pplugin;
@@ -98,7 +101,7 @@ namespace draw2d_direct2d
 
    }
 
-   void initialize()
+   CLASS_DECL_AURA void initialize()
    {
 
       g_pdxgidebug = new dxgidebug;
@@ -112,13 +115,13 @@ namespace draw2d_direct2d
 
    void plugin::initialize()
    {
-   
+
       // This flag adds support for surfaces with a different color channel ordering
       // than the API default. It is required for compatibility with Direct2D.
       UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 #if defined(_DEBUG)
-      
+
       // If the project is in a debug build, enable debugging via SDK Layers with this flag.
       creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 
@@ -144,46 +147,46 @@ namespace draw2d_direct2d
 
       Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
-      ::draw2d_direct2d::throw_if_failed(
-         D3D11CreateDevice(
-            nullptr,                    // Specify nullptr to use the default adapter.
-            D3D_DRIVER_TYPE_HARDWARE,
-            0,
-            creationFlags,              // Set debug and Direct2D compatibility flags.
-            featureLevels,              // List of feature levels this app can support.
-            ARRAYSIZE(featureLevels),
-            D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
-            &device,                    // Returns the Direct3D device created.
-            &g_featurelevel,            // Returns feature level of device created.
-            &context                    // Returns the device immediate context.
-         )
+      ::dx::throw_if_failed(
+      D3D11CreateDevice(
+      nullptr,                    // Specify nullptr to use the default adapter.
+      D3D_DRIVER_TYPE_HARDWARE,
+      0,
+      creationFlags,              // Set debug and Direct2D compatibility flags.
+      featureLevels,              // List of feature levels this app can support.
+      ARRAYSIZE(featureLevels),
+      D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
+      &device,                    // Returns the Direct3D device created.
+      &g_featurelevel,            // Returns feature level of device created.
+      &context                    // Returns the device immediate context.
+      )
       );
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::draw2d_direct2d::throw_if_failed(
-         device.As(&g_pd3device)
+      ::dx::throw_if_failed(
+      device.As(&g_pd3device)
       );
 
-      ::draw2d_direct2d::throw_if_failed(
-         device.As(&g_pd3device1)
+      ::dx::throw_if_failed(
+      device.As(&g_pd3device1)
       );
 
-      ::draw2d_direct2d::throw_if_failed(
-         context.As(&g_pd3devicecontext)
+      ::dx::throw_if_failed(
+      context.As(&g_pd3devicecontext)
       );
 
-      ::draw2d_direct2d::throw_if_failed(
-         context.As(&g_pd3devicecontext1)
+      ::dx::throw_if_failed(
+      context.As(&g_pd3devicecontext1)
       );
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::draw2d_direct2d::throw_if_failed(
-         device.As(&g_pdxgidevice)
+      ::dx::throw_if_failed(
+      device.As(&g_pdxgidevice)
       );
 
       // Create the Direct2D device object and a corresponding context.
-      ::draw2d_direct2d::throw_if_failed(
-         get_d2d1_factory1()->CreateDevice(g_pdxgidevice.Get(), &g_pd2device)
+      ::dx::throw_if_failed(
+      get_d2d1_factory1()->CreateDevice(g_pdxgidevice.Get(), &g_pd2device)
       );
 
    }
@@ -195,7 +198,7 @@ namespace draw2d_direct2d
 #define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde
 #define d2d1_thread_model D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
-CLASS_DECL_DRAW2D_DIRECT2D IDWriteFactory * global_draw_get_write_factory(bool bCreate)
+CLASS_DECL_AURA IDWriteFactory * global_draw_get_write_factory(bool bCreate)
 {
 
    if (::draw2d_direct2d::g_pplugin->g_pwritefactory != NULL || !bCreate)
@@ -287,7 +290,7 @@ ID2D1Device * global_draw_get_d2d1_device()
 
 }
 
-CLASS_DECL_DRAW2D_DIRECT2D float point_dpi(float points)
+CLASS_DECL_AURA float point_dpi(float points)
 {
 
    FLOAT dpiX, dpiY;
@@ -298,7 +301,7 @@ CLASS_DECL_DRAW2D_DIRECT2D float point_dpi(float points)
 
 }
 
-CLASS_DECL_DRAW2D_DIRECT2D float dpiy(float y)
+CLASS_DECL_AURA float dpiy(float y)
 {
 
    FLOAT dpiX, dpiY;
@@ -309,7 +312,7 @@ CLASS_DECL_DRAW2D_DIRECT2D float dpiy(float y)
 
 }
 
-CLASS_DECL_DRAW2D_DIRECT2D float dpix(float x)
+CLASS_DECL_AURA float dpix(float x)
 {
 
    FLOAT dpiX, dpiY;
@@ -321,7 +324,7 @@ CLASS_DECL_DRAW2D_DIRECT2D float dpix(float x)
 }
 
 
-CLASS_DECL_DRAW2D_DIRECT2D float y_dpi(float y)
+CLASS_DECL_AURA float y_dpi(float y)
 {
 
    FLOAT dpiX, dpiY;
@@ -332,7 +335,7 @@ CLASS_DECL_DRAW2D_DIRECT2D float y_dpi(float y)
 
 }
 
-CLASS_DECL_DRAW2D_DIRECT2D float x_dpi(float x)
+CLASS_DECL_AURA float x_dpi(float x)
 {
 
    FLOAT dpiX, dpiY;

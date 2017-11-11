@@ -3829,6 +3829,9 @@
     <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\windows_common\draw2d_direct2d_global.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc">

@@ -36,10 +36,10 @@ namespace d2d1
    {
 
       return D2D1::Rect<FLOAT>(
-                (FLOAT)(lpcrect->left),
-                (FLOAT)(lpcrect->top),
-                (FLOAT)(lpcrect->right),
-                (FLOAT)(lpcrect->bottom)
+             (FLOAT)(lpcrect->left),
+             (FLOAT)(lpcrect->top),
+             (FLOAT)(lpcrect->right),
+             (FLOAT)(lpcrect->bottom)
              );
 
    }
@@ -49,8 +49,8 @@ namespace d2d1
    {
 
       return Point2F(
-                (FLOAT)(x),
-                (FLOAT)(y)
+             (FLOAT)(x),
+             (FLOAT)(y)
              );
 
    }
@@ -85,7 +85,7 @@ namespace draw2d_direct2d
 
 
 
-#include "draw2d_direct2d_global.h"
+#include "aura/aura/os/windows_common/draw2d_direct2d_global.h"
 
 
 #include "draw2d_direct2d_factory_exchange.h"

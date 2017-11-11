@@ -162,6 +162,7 @@
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <FixedBaseAddress>false</FixedBaseAddress>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
@@ -184,6 +185,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -218,6 +220,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|arm'">
@@ -240,6 +243,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
@@ -264,6 +268,7 @@
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
@@ -286,6 +291,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
+      <AdditionalDependencies>pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -338,6 +344,50 @@
     <ClCompile Include="calculator\calculator_document.cpp" />
     <ClCompile Include="calculator\calculator_frame.cpp" />
     <ClCompile Include="calculator\calculator_view.cpp" />
+    <ClCompile Include="charguess\big5Prober.cpp" />
+    <ClCompile Include="charguess\charDistribution.cpp" />
+    <ClCompile Include="charguess\charguess.cpp" />
+    <ClCompile Include="charguess\EscCharsetProber.cpp" />
+    <ClCompile Include="charguess\EscSM.cpp" />
+    <ClCompile Include="charguess\EUCJPProber.cpp" />
+    <ClCompile Include="charguess\EUCKRProber.cpp" />
+    <ClCompile Include="charguess\EUCTWProber.cpp" />
+    <ClCompile Include="charguess\GB2312Prober.cpp" />
+    <ClCompile Include="charguess\jpCntx.cpp" />
+    <ClCompile Include="charguess\LangBulgarianModel.cpp" />
+    <ClCompile Include="charguess\LangCyrillicModel.cpp" />
+    <ClCompile Include="charguess\LangGreekModel.cpp" />
+    <ClCompile Include="charguess\LangHungarianModel.cpp" />
+    <ClCompile Include="charguess\LangThaiModel.cpp" />
+    <ClCompile Include="charguess\Latin1Prober.cpp" />
+    <ClCompile Include="charguess\MBCSGroupProber.cpp" />
+    <ClCompile Include="charguess\MBCSSM.cpp" />
+    <ClCompile Include="charguess\SBCharsetProber.cpp" />
+    <ClCompile Include="charguess\SBCSGroupProber.cpp" />
+    <ClCompile Include="charguess\SJISProber.cpp" />
+    <ClCompile Include="charguess\universal.cpp" />
+    <ClCompile Include="charguess\UTF8Prober.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_base_editor.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_colorertake5.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_default_error_handler.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_error_handler_writer.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_exception.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_helpers.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_hrc_parser_impl.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_line_regions_compact_support.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_line_regions_support.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_line_source.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_logging.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_outliner.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_parsed_line_writer.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_parser_factory.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_region_handler.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_region_mapper_impl.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_styled_hrd_mapper.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_text_hrd_mapper.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_text_lines.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_text_parser_helpers.cpp" />
+    <ClCompile Include="colorertake5\colorertake5_text_parser_impl.cpp" />
     <ClCompile Include="command\command_application.cpp" />
     <ClCompile Include="command\command_document.cpp" />
     <ClCompile Include="command\command_form_callback.cpp" />
@@ -357,6 +407,10 @@
     <ClCompile Include="filehandler\filehandler_pane_view.cpp" />
     <ClCompile Include="filehandler\filehandler_pane_view_update_hint.cpp" />
     <ClCompile Include="filehandler\filehandler_view.cpp" />
+    <ClCompile Include="net\mail\mail_pop3.cpp" />
+    <ClCompile Include="net\mail\mail_pop3_socket.cpp" />
+    <ClCompile Include="net\mail\mail_simple_pop3.cpp" />
+    <ClCompile Include="pcre\pcre.cpp" />
     <ClCompile Include="sphere\sphere_application.cpp" />
     <ClCompile Include="sphere\sphere_library.cpp" />
     <ClCompile Include="sphere\sphere_main_frame.cpp" />
