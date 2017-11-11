@@ -349,6 +349,8 @@ namespace message
 
 #endif
 
+#ifdef WINDOWSEX
+
    LPNMHDR notify::get_lpnmhdr()
    {
 
@@ -356,6 +358,7 @@ namespace message
 
    }
 
+#endif
 
    int32_t notify::get_ctrl_id()
    {

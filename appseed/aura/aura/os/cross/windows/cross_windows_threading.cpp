@@ -68,7 +68,7 @@ CLASS_DECL_AURA int_bool WINAPI GetMessageW(LPMESSAGE lpMsg,oswindow oswindow,UI
 
    bool bFirst = true;
 
-   mq * pmq = __get_mq(GetCurrentThread(), true);
+   mq * pmq = __get_mq(GetCurrentThreadId(), true);
 
    if(pmq == NULL)
       return FALSE;
@@ -163,7 +163,7 @@ restart:
 CLASS_DECL_AURA int_bool WINAPI PeekMessageW(LPMESSAGE lpMsg,oswindow oswindow,UINT wMsgFilterMin,UINT wMsgFilterMax,UINT wRemoveMsg)
 {
 
-   mq * pmq = __get_mq(GetCurrentThread(), true);
+   mq * pmq = __get_mq(GetCurrentThreadId(), true);
 
    if(pmq == NULL)
       return FALSE;
@@ -740,7 +740,7 @@ void * __thread_get_data(IDTHREAD hthread,uint32_t dwIndex)
 
 
 
-mq * __get_mq(HTHREAD  h, bool bCreate);
+mq * __get_mq(IDTHREAD  h, bool bCreate);
 
 
 mq * __get_mq()
@@ -765,7 +765,7 @@ mq * __get_mq()
 
 
 
-mq * __get_mq(HTHREAD idthread, bool bCreate)
+mq * __get_mq(IDTHREAD idthread, bool bCreate)
 {
 
    synch_lock sl(g_pmutexMq);
@@ -896,12 +896,9 @@ CLASS_DECL_AURA int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
    if(!pui->m_bUserElementalOk)
       return FALSE;
 
-   IDTHREAD h = pui->m_pauraapp->get_os_int();
+   IDTHREAD idthread = pui->m_pauraapp->get_os_int();
 
-   if(h == 0)
-      return FALSE;
-
-   mq * pmq = __get_mq((HTHREAD) h, oswindow != NULL || Msg != WM_QUIT);
+   mq * pmq = __get_mq(idthread, oswindow != NULL || Msg != WM_QUIT);
 
    if(pmq == NULL)
       return FALSE;
@@ -954,13 +951,9 @@ CLASS_DECL_AURA int_bool mq_remove_window_from_all_queues(oswindow oswindow)
    if(pui->m_pauraapp == NULL)
       return false;
 
-   IDTHREAD h = pui->m_pauraapp->get_os_int();
+   IDTHREAD idthread = pui->m_pauraapp->get_os_int();
 
-   if(h == 0)
-      return FALSE;
-
-
-   mq * pmq = __get_mq((HTHREAD) h, false);
+   mq * pmq = __get_mq(idthread, false);
 
    if(pmq == NULL)
       return FALSE;

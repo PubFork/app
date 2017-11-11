@@ -1,10 +1,12 @@
 #include "framework.h"
 //#include "fiasco_finder.h"
-
+#include <Wincodec.h>
 
 #include <math.h>
 
-
+#ifdef METROWIN
+#include <ShCore.h>
+#endif
 
 void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount);
 
@@ -66,9 +68,9 @@ COLORREF metadata_GetBackgroundColor(IWICMetadataQueryReader *pMetadataQueryRead
    if (SUCCEEDED(hr))
    {
       hr = pWicPalette->GetColors(
-              ARRAYSIZE(rgColors),
-              rgColors,
-              &cColorsCopied);
+           ARRAYSIZE(rgColors),
+           rgColors,
+           &cColorsCopied);
    }
 
    if (SUCCEEDED(hr))
@@ -163,8 +165,8 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
    // Get global frame size
    // Get width
    hr = piMetadataQueryReader->GetMetadataByName(
-           L"/logscrdesc/Width",
-           &propValue);
+        L"/logscrdesc/Width",
+        &propValue);
 
    if (hr != S_OK)
    {
@@ -187,8 +189,8 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
    // Get height
    hr = piMetadataQueryReader->GetMetadataByName(
-           L"/logscrdesc/Height",
-           &propValue);
+        L"/logscrdesc/Height",
+        &propValue);
    if (hr != S_OK)
    {
 
@@ -342,12 +344,12 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          if (SUCCEEDED(hr))
          {
             hr = pConverter->Initialize(
-                    pWicFrame,
-                    GUID_WICPixelFormat32bppPBGRA,
-                    WICBitmapDitherTypeNone,
-                    nullptr,
-                    0.f,
-                    WICBitmapPaletteTypeCustom);
+                 pWicFrame,
+                 GUID_WICPixelFormat32bppPBGRA,
+                 WICBitmapDitherTypeNone,
+                 nullptr,
+                 0.f,
+                 WICBitmapPaletteTypeCustom);
          }
 
          if (SUCCEEDED(hr))
@@ -424,8 +426,8 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          {
             // Get delay from the optional Graphic Control Extension
             if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-                             L"/grctlext/Delay",
-                             &propValue)))
+                          L"/grctlext/Delay",
+                          &propValue)))
             {
                hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
                if (SUCCEEDED(hr))
@@ -464,8 +466,8 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          {
             int iDisposal = -1;
             if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-                             L"/grctlext/Disposal",
-                             &propValue)))
+                          L"/grctlext/Disposal",
+                          &propValue)))
             {
                hr = (propValue.vt == VT_UI1) ? S_OK : E_FAIL;
                if (SUCCEEDED(hr))
@@ -804,11 +806,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp, ::aura::a
 
 
 bool windows_load_dib_from_frame(
-   comptr< IWICBitmapFrameDecode> & pframe,
-   ::draw2d::dib * pdib,
-   IWICImagingFactory * piFactory,
-   IWICBitmapDecoder * piDecoder,
-   int iFrame)
+comptr< IWICBitmapFrameDecode> & pframe,
+::draw2d::dib * pdib,
+IWICImagingFactory * piFactory,
+IWICBitmapDecoder * piDecoder,
+int iFrame)
 {
 
    try
@@ -915,8 +917,8 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
 
    // If we have a global palette, get the palette and background color
    HRESULT hr = pMetadataQueryReader->GetMetadataByName(
-                   L"/logscrdesc/GlobalColorTableFlag",
-                   &propVariant);
+                L"/logscrdesc/GlobalColorTableFlag",
+                &propVariant);
    if (SUCCEEDED(hr))
    {
       hr = (propVariant.vt != VT_BOOL || !propVariant.boolVal) ? E_FAIL : S_OK;
@@ -927,8 +929,8 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
    {
       // Background color index
       hr = pMetadataQueryReader->GetMetadataByName(
-              L"/logscrdesc/BackgroundColorIndex",
-              &propVariant);
+           L"/logscrdesc/BackgroundColorIndex",
+           &propVariant);
       if (SUCCEEDED(hr))
       {
          hr = (propVariant.vt != VT_UI1) ? E_FAIL : S_OK;
@@ -956,9 +958,9 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
    if (SUCCEEDED(hr))
    {
       hr = pWicPalette->GetColors(
-              *piSize,
-              rgColors,
-              &cColorsCopied);
+           *piSize,
+           rgColors,
+           &cColorsCopied);
       *piSize = cColorsCopied;
    }
 
@@ -991,12 +993,12 @@ HRESULT windows_GetBackgroundColor(WICColor *rgColors, int *piSize, ::visual::di
 
 
 HRESULT windows_GetRawFrame(
-   WICColor *rgColors, int iUsed,
-   ::draw2d::dib * pdibCompose,
-   ::visual::dib_sp::array * pdiba,
-   IWICImagingFactory * piFactory,
-   IWICBitmapDecoder * piDecoder,
-   UINT uFrameIndex)
+WICColor *rgColors, int iUsed,
+::draw2d::dib * pdibCompose,
+::visual::dib_sp::array * pdiba,
+IWICImagingFactory * piFactory,
+IWICBitmapDecoder * piDecoder,
+UINT uFrameIndex)
 {
 
    sp(::visual::dib_sp::pointer) pointer = pdiba->element_at(uFrameIndex);
@@ -1025,12 +1027,12 @@ HRESULT windows_GetRawFrame(
    {
 
       hr = pbitmap->Initialize(
-              pframe,
-              GUID_WICPixelFormat8bppIndexed,
-              WICBitmapDitherTypeNone,
-              nullptr,
-              0.f,
-              WICBitmapPaletteTypeCustom);
+           pframe,
+           GUID_WICPixelFormat8bppIndexed,
+           WICBitmapDitherTypeNone,
+           nullptr,
+           0.f,
+           WICBitmapPaletteTypeCustom);
 
    }
 
@@ -1161,8 +1163,8 @@ HRESULT windows_GetRawFrame(
 
       // Get delay from the optional Graphic Control Extension
       if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-                       L"/grctlext/Delay",
-                       &propValue)))
+                    L"/grctlext/Delay",
+                    &propValue)))
       {
 
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -1220,8 +1222,8 @@ HRESULT windows_GetRawFrame(
    {
 
       if (SUCCEEDED(pFrameMetadataQueryReader->GetMetadataByName(
-                       L"/grctlext/Disposal",
-                       &propValue)))
+                    L"/grctlext/Disposal",
+                    &propValue)))
       {
 
          hr = (propValue.vt == VT_UI1) ? S_OK : E_FAIL;
@@ -1253,8 +1255,8 @@ HRESULT windows_GetRawFrame(
    {
 
       hr = pFrameMetadataQueryReader->GetMetadataByName(
-              L"/grctlext/TransparencyFlag",
-              &propValue);
+           L"/grctlext/TransparencyFlag",
+           &propValue);
 
       if (SUCCEEDED(hr))
       {
@@ -1281,8 +1283,8 @@ HRESULT windows_GetRawFrame(
       {
 
          hr = pFrameMetadataQueryReader->GetMetadataByName(
-                 L"/grctlext/TransparentColorIndex",
-                 &propValue);
+              L"/grctlext/TransparentColorIndex",
+              &propValue);
 
          if (SUCCEEDED(hr))
          {
@@ -2572,8 +2574,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
       // Get global frame size
       // Get width
       hr = pMetadataQueryReader->GetMetadataByName(
-              L"/logscrdesc/Width",
-              &propValue);
+           L"/logscrdesc/Width",
+           &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -2586,8 +2588,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 
       // Get height
       hr = pMetadataQueryReader->GetMetadataByName(
-              L"/logscrdesc/Height",
-              &propValue);
+           L"/logscrdesc/Height",
+           &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI2 ? S_OK : E_FAIL);
@@ -2600,8 +2602,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
 
       // Get pixel aspect ratio
       hr = pMetadataQueryReader->GetMetadataByName(
-              L"/logscrdesc/PixelAspectRatio",
-              &propValue);
+           L"/logscrdesc/PixelAspectRatio",
+           &propValue);
       if (SUCCEEDED(hr))
       {
          hr = (propValue.vt == VT_UI1 ? S_OK : E_FAIL);
@@ -2646,8 +2648,8 @@ bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_s
             //
             // If we fail to get the looping information, loop the animation infinitely.
             if (SUCCEEDED(pMetadataQueryReader->GetMetadataByName(
-                             L"/appext/application",
-                             &propValue)) &&
+                          L"/appext/application",
+                          &propValue)) &&
                   propValue.vt == (VT_UI1 | VT_VECTOR) &&
                   propValue.caub.cElems == 11 &&  // Length of the application block
                   (!memcmp(propValue.caub.pElems, "NETSCAPE2.0", propValue.caub.cElems) ||
@@ -2747,11 +2749,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
 
       comptr< IWICBitmapDecoder > decoder;
       HRESULT hr = CoCreateInstance(
-                      CLSID_WICImagingFactory,
-                      NULL,
-                      CLSCTX_INPROC_SERVER,
-                      IID_IWICImagingFactory,
-                      (LPVOID*)&piFactory);
+                   CLSID_WICImagingFactory,
+                   NULL,
+                   CLSCTX_INPROC_SERVER,
+                   IID_IWICImagingFactory,
+                   (LPVOID*)&piFactory);
 
       if (SUCCEEDED(hr))
       {
@@ -2810,11 +2812,11 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams:
 
       comptr< IWICBitmapDecoder > decoder;
       HRESULT hr = CoCreateInstance(
-                      CLSID_WICImagingFactory,
-                      NULL,
-                      CLSCTX_INPROC_SERVER,
-                      IID_IWICImagingFactory,
-                      (LPVOID*)&piFactory);
+                   CLSID_WICImagingFactory,
+                   NULL,
+                   CLSCTX_INPROC_SERVER,
+                   IID_IWICImagingFactory,
+                   (LPVOID*)&piFactory);
 
       if (SUCCEEDED(hr))
       {

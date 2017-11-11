@@ -36,9 +36,6 @@
     <ProjectReference Include="..\ace\_w_ace.vcxproj">
       <Project>{f9116331-25d4-4634-8eea-078aedb82161}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\freeimage\w_axisfreeimage.vcxproj">
-      <Project>{8785c06d-f7a7-485a-a258-027761e4a291}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\FreeImage\PluginJPEG.cpp" />

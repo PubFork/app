@@ -1,6 +1,9 @@
 #include "framework.h"
 
 #include <wincodec.h>
+#ifdef METROWIN
+#include <ShCore.h>
+#endif
 
 namespace visual
 {
@@ -69,11 +72,11 @@ namespace visual
       UINT uiHeight = pdib->size().cy;
 
       HRESULT hr = CoCreateInstance(
-                      CLSID_WICImagingFactory,
-                      NULL,
-                      CLSCTX_INPROC_SERVER,
-                      IID_IWICImagingFactory,
-                      (LPVOID*)&piFactory);
+                   CLSID_WICImagingFactory,
+                   NULL,
+                   CLSCTX_INPROC_SERVER,
+                   IID_IWICImagingFactory,
+                   (LPVOID*)&piFactory);
 
       if (SUCCEEDED(hr))
       {
@@ -216,13 +219,13 @@ namespace visual
             if (SUCCEEDED(hr))
             {
                hr = piFactory->CreateBitmapFromMemory(
-                       pdib->size().cx,
-                       pdib->size().cy,
-                       GUID_WICPixelFormat32bppBGRA,
-                       pdib->m_iScan,
-                       pdib->m_iScan * pdib->size().cy,
-                       (BYTE *)pdib->m_pcolorref,
-                       &pbitmap.get()
+                    pdib->size().cx,
+                    pdib->size().cy,
+                    GUID_WICPixelFormat32bppBGRA,
+                    pdib->m_iScan,
+                    pdib->m_iScan * pdib->size().cy,
+                    (BYTE *)pdib->m_pcolorref,
+                    &pbitmap.get()
                     );
             }
 

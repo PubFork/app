@@ -53,11 +53,6 @@ namespace user
 
    class interaction_spa;
 
-#if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
-
-   class native_window_initialize;
-
-#endif
 
 
 

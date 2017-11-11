@@ -1,5 +1,5 @@
 ﻿#include "framework.h"
-#include "aura/net/sockets/base/sockets_base_socket.h"
+#include "aura/net/net_sockets.h"
 
 
 #include <stdio.h>

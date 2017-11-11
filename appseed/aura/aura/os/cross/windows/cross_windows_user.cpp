@@ -189,12 +189,12 @@ string iconv_charset_from_windows_code_page(UINT CodePage)
 int32_t
 WINAPI
 MultiByteToWideChar(
-   UINT     CodePage,
-   DWORD    dwFlags,
-   LPCSTR   lpMultiByteStr,
-   int32_t      cbMultiByte,
-   LPWSTR  lpWideCharStr,
-   int32_t      cchWideChar)
+UINT     CodePage,
+DWORD    dwFlags,
+LPCSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPWSTR  lpWideCharStr,
+int32_t      cchWideChar)
 {
    string str(lpMultiByteStr, cbMultiByte);
 
@@ -311,14 +311,14 @@ MultiByteToWideChar(
 int32_t
 WINAPI
 WideCharToMultiByte(
-   UINT     CodePage,
-   DWORD    dwFlags,
-   LPCWSTR  lpWideCharStr,
-   int32_t      cchWideChar,
-   LPSTR   lpMultiByteStr,
-   int32_t      cbMultiByte,
-   LPCSTR   lpDefaultChar,
-   LPBOOL  lpUsedDefaultChar)
+UINT     CodePage,
+DWORD    dwFlags,
+LPCWSTR  lpWideCharStr,
+int32_t      cchWideChar,
+LPSTR   lpMultiByteStr,
+int32_t      cbMultiByte,
+LPCSTR   lpDefaultChar,
+LPBOOL  lpUsedDefaultChar)
 {
 
    wstring wstr(lpWideCharStr, cchWideChar);
@@ -471,12 +471,12 @@ WINBOOL IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDesc
    return oswindowParent->is_child(oswindowcandidateChildOrDescendant);
 }
 
-oswindow GetParent(::oswindow oswindow)
+oswindow WINAPI GetParent(::oswindow oswindow)
 {
    return oswindow->get_parent();
 }
 
-oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
+oswindow WINAPI SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
 {
    return oswindow->set_parent(oswindowNewParent);
 }
@@ -486,42 +486,46 @@ WINBOOL ShowWindow(::oswindow oswindow, int nCmdShow)
    return oswindow->show_window(nCmdShow);
 }
 
-LONG GetWindowLongA(::oswindow oswindow, int nIndex)
+LONG WINAPI GetWindowLongA(::oswindow oswindow, int nIndex)
 {
    return (LONG) oswindow->get_window_long_ptr(nIndex);
 }
 
-LONG SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
+LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
 {
    return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
 }
 
-LONG_PTR GetWindowLongPtrA(::oswindow oswindow, int nIndex)
+#if OSBIT == 64
+
+LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)
 {
    return oswindow->get_window_long_ptr(nIndex);
 }
 
-LONG_PTR SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
+LONG_PTR WINAPI SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
 {
    return oswindow->set_window_long_ptr(nIndex, l);
 }
 
-WINBOOL ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
+#endif
+
+WINBOOL WINAPI ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
 {
    return oswindow->client_to_screen(lppoint);
 }
 
-WINBOOL ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
+WINBOOL WINAPI ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
 {
    return oswindow->screen_to_client(lppoint);
 }
 
-WINBOOL IsIconic(::oswindow oswindow)
+WINBOOL WINAPI IsIconic(::oswindow oswindow)
 {
    return oswindow->is_iconic();
 }
 
-WINBOOL IsWindowVisible(::oswindow oswindow)
+WINBOOL WINAPI IsWindowVisible(::oswindow oswindow)
 {
    return oswindow->is_window_visible();
 }

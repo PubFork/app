@@ -5,6 +5,7 @@
 
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
+CLASS_DECL_AURA WINBOOL DestroyWindow(oswindow window);
 
 #ifndef METROWIN
 
@@ -47,7 +48,6 @@ CLASS_DECL_AURA int_bool PostMessageW(oswindow oswindow,UINT Msg,WPARAM wParam,L
 
 CLASS_DECL_AURA WINBOOL GetCursorPos(LPPOINT lpptCursor);
 
-CLASS_DECL_AURA WINBOOL DestroyWindow(oswindow window);
 
 
 typedef VOID(CALLBACK* TIMERPROC)(oswindow,UINT,uint_ptr,DWORD);
@@ -202,7 +202,8 @@ typedef int32_t(CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch,int32_t ichCurrent,int
 #if (_WIN32_WINNT >= 0x0502)
 #ifndef PBT_POWERSETTINGCHANGE
 #define PBT_POWERSETTINGCHANGE          0x8013
-typedef struct {
+typedef struct
+{
    GUID PowerSetting;
    DWORD DataLength;
    WINUCHAR Data[1];
@@ -1031,7 +1032,8 @@ typedef void * HDROP;
 
 
 
-typedef struct tagACCEL {
+typedef struct tagACCEL
+{
 #ifndef _MAC
    BYTE   fVirt;               /* Also called the flags field */
    WORD   key;
@@ -1045,7 +1047,8 @@ typedef struct tagACCEL {
 
 typedef LPACCEL HACCEL;
 
-typedef struct tagPAINTSTRUCT {
+typedef struct tagPAINTSTRUCT
+{
    HDC         hdc;
    WINBOOL        fErase;
    RECT        rcPaint;
@@ -1055,7 +1058,8 @@ typedef struct tagPAINTSTRUCT {
 } PAINTSTRUCT,*PPAINTSTRUCT,*NPPAINTSTRUCT,*LPPAINTSTRUCT;
 
 
-typedef struct tagCREATESTRUCTA {
+typedef struct tagCREATESTRUCTA
+{
    LPVOID      lpCreateParams;
    HINSTANCE   hInstance;
    HMENU       hMenu;
@@ -1069,7 +1073,8 @@ typedef struct tagCREATESTRUCTA {
    LPCSTR      lpszClass;
    DWORD       dwExStyle;
 } CREATESTRUCTA,*LPCREATESTRUCTA;
-typedef struct tagCREATESTRUCTW {
+typedef struct tagCREATESTRUCTW
+{
    LPVOID      lpCreateParams;
    HINSTANCE   hInstance;
    HMENU       hMenu;
@@ -1092,7 +1097,8 @@ typedef LPCREATESTRUCTA LPCREATESTRUCT;
 #endif // UNICODE
 
 
-typedef struct tagWINDOWPLACEMENT {
+typedef struct tagWINDOWPLACEMENT
+{
    UINT  length;
    UINT  flags;
    UINT  showCmd;
@@ -1135,11 +1141,11 @@ WINBOOL EndPaint(oswindow hwnd,PAINTSTRUCT * ps);
 
 //WINBOOL GetCursorPos(LPPOINT lpptCursor);
 
-WINBOOL SetWindowPos(oswindow hWnd,oswindow hWndInsertAfter,int32_t X,int32_t Y,int32_t cx,int32_t cy,UINT uFlags);
+WINBOOL WINAPI SetWindowPos(oswindow hWnd,oswindow hWndInsertAfter,int32_t X,int32_t Y,int32_t cx,int32_t cy,UINT uFlags);
 
-WINBOOL IsWindowVisible(oswindow hWnd);
+WINBOOL WINAPI IsWindowVisible(oswindow hWnd);
 
-WINBOOL IsIconic(oswindow hWnd);
+WINBOOL WINAPI IsIconic(oswindow hWnd);
 
 #ifndef METROWIN
 
@@ -1655,12 +1661,13 @@ typedef struct tagSTYLESTRUCT
 /*
  * Struct pointed to by WM_GETMINMAXINFO lParam
  */
-typedef struct tagMINMAXINFO {
-    POINT ptReserved;
-    POINT ptMaxSize;
-    POINT ptMaxPosition;
-    POINT ptMinTrackSize;
-    POINT ptMaxTrackSize;
+typedef struct tagMINMAXINFO
+{
+   POINT ptReserved;
+   POINT ptMaxSize;
+   POINT ptMaxPosition;
+   POINT ptMinTrackSize;
+   POINT ptMaxTrackSize;
 } MINMAXINFO, *PMINMAXINFO, *LPMINMAXINFO;
 
 #define WM_PAINTICON                    0x0026
@@ -1705,18 +1712,19 @@ typedef struct tagMINMAXINFO {
 /*
  * lParam of WM_COPYDATA message points to...
  */
-typedef struct tagCOPYDATASTRUCT {
-    uint_ptr dwData;
-    DWORD cbData;
-    PVOID lpData;
+typedef struct tagCOPYDATASTRUCT
+{
+   uint_ptr dwData;
+   DWORD cbData;
+   PVOID lpData;
 } COPYDATASTRUCT, *PCOPYDATASTRUCT;
 
 #if(WINVER >= 0x0400)
 typedef struct tagMDINEXTMENU
 {
-    HMENU   hmenuIn;
-    HMENU   hmenuNext;
-    oswindow    hwndNext;
+   HMENU   hmenuIn;
+   HMENU   hmenuNext;
+   oswindow    hwndNext;
 } MDINEXTMENU, * PMDINEXTMENU, FAR * LPMDINEXTMENU;
 #endif /* WINVER >= 0x0400 */
 
@@ -1968,10 +1976,11 @@ typedef struct tagMDINEXTMENU
 //#pragma region Desktop Family
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
-typedef struct {
-    GUID PowerSetting;
-    DWORD DataLength;
-    WINUCHAR Data[1];
+typedef struct
+{
+   GUID PowerSetting;
+   DWORD DataLength;
+   WINUCHAR Data[1];
 } POWERBROADCAST_SETTING, *PPOWERBROADCAST_SETTING;
 
 
@@ -2239,12 +2248,12 @@ typedef struct {
 UINT
 WINAPI
 RegisterWindowMessageA(
-     LPCSTR lpString);
+LPCSTR lpString);
 
 UINT
 WINAPI
 RegisterWindowMessageW(
-     LPCWSTR lpString);
+LPCWSTR lpString);
 //#ifdef UNICODE
 #define RegisterWindowMessage  RegisterWindowMessageW
 //#else
@@ -2280,22 +2289,24 @@ RegisterWindowMessageW(
 /*
  * WM_WINDOWPOSCHANGING/CHANGED struct pointed to by lParam
  */
-typedef struct tagWINDOWPOS {
-    oswindow    hwnd;
-    oswindow    hwndInsertAfter;
-    int32_t     x;
-    int32_t     y;
-    int32_t     cx;
-    int32_t     cy;
-    UINT    flags;
+typedef struct tagWINDOWPOS
+{
+   oswindow    hwnd;
+   oswindow    hwndInsertAfter;
+   int32_t     x;
+   int32_t     y;
+   int32_t     cx;
+   int32_t     cy;
+   UINT    flags;
 } WINDOWPOS, *LPWINDOWPOS, *PWINDOWPOS;
 
 /*
  * WM_NCCALCSIZE parameter structure
  */
-typedef struct tagNCCALCSIZE_PARAMS {
-    RECT       rgrc[3];
-    PWINDOWPOS lppos;
+typedef struct tagNCCALCSIZE_PARAMS
+{
+   RECT       rgrc[3];
+   PWINDOWPOS lppos;
 } NCCALCSIZE_PARAMS, *LPNCCALCSIZE_PARAMS;
 
 //#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
@@ -2353,18 +2364,19 @@ typedef struct tagNCCALCSIZE_PARAMS {
 //#pragma region Desktop Family
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
-typedef struct tagTRACKMOUSEEVENT {
-    DWORD cbSize;
-    DWORD dwFlags;
-    oswindow  hwndTrack;
-    DWORD dwHoverTime;
+typedef struct tagTRACKMOUSEEVENT
+{
+   DWORD cbSize;
+   DWORD dwFlags;
+   oswindow  hwndTrack;
+   DWORD dwHoverTime;
 } TRACKMOUSEEVENT, *LPTRACKMOUSEEVENT;
 
 
 int_bool
 WINAPI
 TrackMouseEvent(
-     LPTRACKMOUSEEVENT lpEventTrack);
+LPTRACKMOUSEEVENT lpEventTrack);
 
 //#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
 //#pragma endregion
@@ -2777,15 +2789,16 @@ CLASS_DECL_AURA int_bool SubtractRect(LPRECT prect, LPCRECT prect1, LPCRECT prec
 /*
 * Message structure
 */
-typedef struct tagMESSAGE {
-oswindow    hwnd;
-UINT        message;
-WPARAM      wParam;
-LPARAM      lParam;
-DWORD       time;
-POINT       pt;
+typedef struct tagMESSAGE
+{
+   oswindow    hwnd;
+   UINT        message;
+   WPARAM      wParam;
+   LPARAM      lParam;
+   DWORD       time;
+   POINT       pt;
 #ifdef _MAC
-DWORD       lPrivate;
+   DWORD       lPrivate;
 #endif
 } MESSAGE, *PMESSAGE, NEAR *NPMESSAGE, FAR *LPMESSAGE;
 

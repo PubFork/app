@@ -266,7 +266,7 @@ inline string_data * string_data::Reallocate(strsize nLength) // current data wi
 
 }
 
-#ifdef WINDOWSEX
+#ifdef WINDOWS
 #if OSBIT == 64
 typedef unsigned __int64 * int_ptr_atomic;
 #elif OSBIT == 32

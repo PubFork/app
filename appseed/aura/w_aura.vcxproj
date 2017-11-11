@@ -388,6 +388,20 @@
     <ClInclude Include="multithreading\service\service_thread_pool.h" />
     <ClInclude Include="net\net.h" />
     <ClInclude Include="net\net_url.h" />
+    <ClInclude Include="net\sockets\base\sockets_base_socket.h" />
+    <ClInclude Include="net\sockets\base\sockets_base_socket_handler.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_listen_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_net.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_sctp_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_socket_handler.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_ssl_client_context.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_ssl_client_context_map.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_stream_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_sync_socket_handler.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_tcp_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_tls_socket.h" />
+    <ClInclude Include="net\sockets\bsd\basic\sockets_udp_socket.h" />
     <ClInclude Include="primitive\api\api.h" />
     <ClInclude Include="primitive\api\api_rotate.h" />
     <ClInclude Include="primitive\collection\collection.h" />
@@ -651,7 +665,6 @@
     <ClCompile Include="aura\aura\aura_file_watcher_thread.cpp" />
     <ClCompile Include="aura\aura\aura_fixed_alloc.cpp" />
     <ClCompile Include="aura\aura\aura_flags.cpp" />
-    <ClCompile Include="aura\aura\aura_gudo.cpp" />
     <ClCompile Include="aura\aura\aura_heap.cpp" />
     <ClCompile Include="aura\aura\aura_id_pool.cpp" />
     <ClCompile Include="aura\aura\aura_international.cpp" />
@@ -667,7 +680,6 @@
     <ClCompile Include="aura\aura\aura_machine_event_data.cpp" />
     <ClCompile Include="aura\aura\aura_math.cpp" />
     <ClCompile Include="aura\aura\aura_chronometer.cpp" />
-    <ClCompile Include="aura\aura\aura_md5.cpp" />
     <ClCompile Include="aura\aura\aura_mktime.cpp" />
     <ClCompile Include="aura\aura\aura_muldiv64.cpp" />
     <ClCompile Include="aura\aura\aura_net.cpp" />
@@ -726,29 +738,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="aura\aura\aura_simple_log.cpp" />
-    <ClCompile Include="aura\charguess\big5Prober.cpp" />
-    <ClCompile Include="aura\charguess\charDistribution.cpp" />
-    <ClCompile Include="aura\charguess\charguess.cpp" />
-    <ClCompile Include="aura\charguess\EscCharsetProber.cpp" />
-    <ClCompile Include="aura\charguess\EscSM.cpp" />
-    <ClCompile Include="aura\charguess\EUCJPProber.cpp" />
-    <ClCompile Include="aura\charguess\EUCKRProber.cpp" />
-    <ClCompile Include="aura\charguess\EUCTWProber.cpp" />
-    <ClCompile Include="aura\charguess\GB2312Prober.cpp" />
-    <ClCompile Include="aura\charguess\jpCntx.cpp" />
-    <ClCompile Include="aura\charguess\LangBulgarianModel.cpp" />
-    <ClCompile Include="aura\charguess\LangCyrillicModel.cpp" />
-    <ClCompile Include="aura\charguess\LangGreekModel.cpp" />
-    <ClCompile Include="aura\charguess\LangHungarianModel.cpp" />
-    <ClCompile Include="aura\charguess\LangThaiModel.cpp" />
-    <ClCompile Include="aura\charguess\Latin1Prober.cpp" />
-    <ClCompile Include="aura\charguess\MBCSGroupProber.cpp" />
-    <ClCompile Include="aura\charguess\MBCSSM.cpp" />
-    <ClCompile Include="aura\charguess\SBCharsetProber.cpp" />
-    <ClCompile Include="aura\charguess\SBCSGroupProber.cpp" />
-    <ClCompile Include="aura\charguess\SJISProber.cpp" />
-    <ClCompile Include="aura\charguess\universal.cpp" />
-    <ClCompile Include="aura\charguess\UTF8Prober.cpp" />
     <ClCompile Include="aura\compress\compress_department.cpp" />
     <ClCompile Include="aura\compress\compress_bz.cpp" />
     <ClCompile Include="aura\compress\compress_gz.cpp" />
@@ -822,6 +811,7 @@
     <ClCompile Include="aura\message\message_receiver.cpp" />
     <ClCompile Include="aura\message\message_sender.cpp" />
     <ClCompile Include="aura\message\message_simple_command.cpp" />
+    <ClCompile Include="aura\message\message_user.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_application.cpp" />
     <ClCompile Include="aura\node\metrowin\metrowin_command.cpp" />
@@ -858,7 +848,7 @@
     <ClCompile Include="aura\os\cross\windows\cross_windows_threading.cpp" />
     <ClCompile Include="aura\os\cross\windows\cross_windows_user.cpp" />
     <ClCompile Include="aura\os\cross\windows\cross_windows_windows.cpp" />
-    <ClCompile Include="aura\os\metrowin\metrowin_base.cpp" />
+    <ClCompile Include="aura\os\metrowin\metrowin_aura.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_base_file.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_debug.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_direct2d_tls.cpp" />
@@ -878,6 +868,7 @@
     <ClCompile Include="aura\os\metrowin\metrowin_sockets.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_time.cpp" />
     <ClCompile Include="aura\os\metrowin\metrowin_user.cpp" />
+    <ClCompile Include="aura\os\metrowin\metrowin_windowing.cpp" />
     <ClCompile Include="aura\os\os_alloc.cpp" />
     <ClCompile Include="aura\os\os_binreloc.cpp" />
     <ClCompile Include="aura\os\os_debug.cpp" />
@@ -889,7 +880,6 @@
     <ClCompile Include="aura\os\os_windowing.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_base.cpp" />
     <ClCompile Include="aura\os\windows_common\windows_common_multithreading.cpp" />
-    <ClCompile Include="aura\pcre\pcre.cpp" />
     <ClCompile Include="aura\process\process_bidi_pipe.cpp" />
     <ClCompile Include="aura\process\process_department.cpp" />
     <ClCompile Include="aura\process\process_pipe.cpp" />
@@ -980,6 +970,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='stage|x64'">$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="graphics\dib_console.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_bitmap.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_brush.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_debug.cpp" />
@@ -995,8 +986,33 @@
     <ClCompile Include="graphics\draw2d\draw2d_pen.cpp" />
     <ClCompile Include="graphics\draw2d\draw2d_region.cpp" />
     <ClCompile Include="graphics\draw3d\draw3d_ortho.cpp" />
+    <ClCompile Include="graphics\graphics_window_buffer.cpp" />
+    <ClCompile Include="graphics\graphics_window_dc.cpp" />
+    <ClCompile Include="graphics\graphics_window_graphics.cpp" />
+    <ClCompile Include="graphics\visual\antialias_8bit.cpp" />
+    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp" />
+    <ClCompile Include="graphics\visual\load_gif_frame.cpp" />
+    <ClCompile Include="graphics\visual\visual_api.cpp" />
+    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp" />
     <ClCompile Include="graphics\visual\visual_cursor.cpp" />
+    <ClCompile Include="graphics\visual\visual_dib.cpp" />
+    <ClCompile Include="graphics\visual\visual_fastblur.cpp" />
+    <ClCompile Include="graphics\visual\visual_font.cpp" />
+    <ClCompile Include="graphics\visual\visual_font_department.cpp" />
+    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp" />
+    <ClCompile Include="graphics\visual\visual_font_list_data.cpp" />
+    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp" />
+    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp" />
+    <ClCompile Include="graphics\visual\visual_glyph.cpp" />
+    <ClCompile Include="graphics\visual\visual_glyph_set.cpp" />
+    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp" />
     <ClCompile Include="graphics\visual\visual_icon.cpp" />
+    <ClCompile Include="graphics\visual\visual_image_list.cpp" />
+    <ClCompile Include="graphics\visual\visual_imaging.cpp" />
+    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp" />
+    <ClCompile Include="graphics\visual\visual_visual.cpp" />
+    <ClCompile Include="graphics\visual\visual_water_routine.cpp" />
+    <ClCompile Include="graphics\visual\visual_windows_image.cpp" />
     <ClCompile Include="multimedia\audio\audio_wave_out.cpp" />
     <ClCompile Include="multithreading\multithreading.cpp" />
     <ClCompile Include="multithreading\multithreading_condition.cpp" />
@@ -1046,9 +1062,6 @@
     <ClCompile Include="net\http\webserver\webserver_http_request.cpp" />
     <ClCompile Include="net\http\webserver\webserver_http_response.cpp" />
     <ClCompile Include="net\http\webserver\webserver_http_transaction.cpp" />
-    <ClCompile Include="net\mail\mail_pop3.cpp" />
-    <ClCompile Include="net\mail\mail_pop3_socket.cpp" />
-    <ClCompile Include="net\mail\mail_simple_pop3.cpp" />
     <ClCompile Include="net\netserver\netserver_socket.cpp" />
     <ClCompile Include="net\netserver\netserver_socket_handler.cpp" />
     <ClCompile Include="net\netserver\netserver_socket_thread.cpp" />
@@ -1080,16 +1093,6 @@
     <ClCompile Include="net\sockets\bsd\basic\sockets_tls_socket.cpp" />
     <ClCompile Include="net\sockets\bsd\basic\sockets_udp_socket.cpp" />
     <ClCompile Include="net\sockets\bsd\internal\sockets_SSLInitializer.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_base.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_base_client_socket.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_callback.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_client.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_request.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_response.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_server.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_tcp_client_socket.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_transaction.cpp" />
-    <ClCompile Include="net\sockets\bsd\sip\sockets_sip_udp_client_socket.cpp" />
     <ClCompile Include="net\sockets\bsd\smtp\sockets_smtpd_socket.cpp" />
     <ClCompile Include="net\sockets\bsd\smtp\sockets_smtp_socket.cpp" />
     <ClCompile Include="net\sockets\bsd\sockets_include.cpp" />
@@ -1126,11 +1129,8 @@
     <ClCompile Include="primitive\collection\collection_key_sort_array.cpp" />
     <ClCompile Include="primitive\collection\collection_map_misc.cpp" />
     <ClCompile Include="primitive\collection\collection_numeric_array.cpp" />
-    <ClCompile Include="primitive\collection\collection_object_list.cpp" />
-    <ClCompile Include="primitive\collection\collection_pointer_list.cpp" />
     <ClCompile Include="primitive\collection\collection_point_array.cpp" />
     <ClCompile Include="primitive\collection\collection_rect_array.cpp" />
-    <ClCompile Include="primitive\collection\collection_ref_array.cpp" />
     <ClCompile Include="primitive\collection\collection_sort.cpp" />
     <ClCompile Include="primitive\collection\collection_stringa.cpp" />
     <ClCompile Include="primitive\collection\collection_stringl.cpp" />
@@ -1231,34 +1231,39 @@
     <ClCompile Include="primitive\str\str_verisimple_wstring.cpp" />
     <ClCompile Include="primitive\str\str_wtostring.cpp" />
     <ClCompile Include="primitive\str\_str_pool.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_base_editor.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_colorertake5.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_default_error_handler.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_error_handler_writer.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_exception.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_helpers.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_hrc_parser_impl.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_line_regions_compact_support.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_line_regions_support.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_line_source.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_logging.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_outliner.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_parsed_line_writer.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_parser_factory.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_region_handler.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_region_mapper_impl.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_styled_hrd_mapper.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_text_hrd_mapper.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_text_lines.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_text_parser_helpers.cpp" />
-    <ClCompile Include="user\colorertake5\colorertake5_text_parser_impl.cpp" />
     <ClCompile Include="user\simple\simple_message_box.cpp" />
     <ClCompile Include="user\user\user_command.cpp" />
     <ClCompile Include="user\user\user_controller.cpp" />
+    <ClCompile Include="user\user\user_control_event.cpp" />
+    <ClCompile Include="user\user\user_copydesk.cpp" />
     <ClCompile Include="user\user\user_create.cpp" />
+    <ClCompile Include="user\user\user_elemental.cpp" />
     <ClCompile Include="user\user\user_frame.cpp" />
+    <ClCompile Include="user\user\user_interaction.cpp" />
+    <ClCompile Include="user\user\user_interaction_base.cpp" />
+    <ClCompile Include="user\user\user_interaction_child.cpp" />
+    <ClCompile Include="user\user\user_interaction_impl.cpp" />
+    <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
     <ClCompile Include="user\user\user_interactive.cpp" />
+    <ClCompile Include="user\user\user_job.cpp" />
+    <ClCompile Include="user\user\user_key.cpp" />
+    <ClCompile Include="user\user\user_menu.cpp" />
+    <ClCompile Include="user\user\user_menu_command.cpp" />
+    <ClCompile Include="user\user\user_menu_item.cpp" />
+    <ClCompile Include="user\user\user_mouse.cpp" />
+    <ClCompile Include="user\user\user_place_holder.cpp" />
+    <ClCompile Include="user\user\user_place_holder_container.cpp" />
     <ClCompile Include="user\user\user_primitive.cpp" />
+    <ClCompile Include="user\user\user_print_job.cpp" />
+    <ClCompile Include="user\user\user_style.cpp" />
+    <ClCompile Include="user\user\user_style_base.cpp" />
+    <ClCompile Include="user\user\user_style_composite.cpp" />
+    <ClCompile Include="user\user\user_tooltip.cpp" />
+    <ClCompile Include="user\user\user_validate.cpp" />
+    <ClCompile Include="user\user\user_windowing.cpp" />
+    <ClCompile Include="user\user\user_window_map.cpp" />
+    <ClCompile Include="user\user\user_window_util.cpp" />
+    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc" />
@@ -1407,7 +1412,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <FixedBaseAddress>false</FixedBaseAddress>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
@@ -1429,7 +1434,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|arm'">
@@ -1452,7 +1457,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -1475,7 +1480,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
@@ -1499,7 +1504,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -1522,7 +1527,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>w_$(TargetName).def</ModuleDefinitionFile>
-      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ssleay32.lib;libeay32.lib;zlib.lib;bzip2.lib;pcre.lib;Windowscodecs.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

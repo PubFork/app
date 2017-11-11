@@ -247,8 +247,13 @@ namespace message
 
 
          notify(::aura::application * papp): ::message::base(papp) {}
+
+#ifdef WINDOWSEX
          LPNMHDR get_lpnmhdr();
+#endif
+
          int32_t get_ctrl_id();
+
    };
 
 

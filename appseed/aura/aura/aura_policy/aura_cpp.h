@@ -179,7 +179,17 @@ namespace user
 
    class interactive;
 
+#if defined(METROWIN) || defined(APPLE_IOS) || defined(ANDROID)
+
+   class native_window_initialize;
+
+#endif
+
+
 } // namespace user
+
+
+
 
 
 namespace aura
@@ -668,7 +678,7 @@ namespace draw2d
 
 class random_access_iterator
 {
-   public:
+public:
 };
 
 
@@ -1028,6 +1038,30 @@ inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::c
 
 #include "aura/aura/aura/aura_gudo.h"
 
+namespace aura
+{
+
+#if defined METROWIN && defined(__cplusplus_winrt)
+
+   interface class system_window
+      {
+
+         virtual Windows::Foundation::Rect get_window_rect() = 0;
+         virtual Windows::Foundation::Point get_cursor_pos() = 0;
+
+
+
+      };
+
+   CLASS_DECL_AURA bool get_window_rect(system_window ^ pwindow, RECTD * lprect);
+   CLASS_DECL_AURA bool get_window_rect(system_window ^ pwindow, LPRECT lprect);
+
+#endif
+
+
+   class session;
+
+} // namespace aura
 
 
 
@@ -1081,14 +1115,14 @@ inline void dump_elements(dump_context & dumpcontext, const TYPE* pElements, ::c
 
 class CLASS_DECL_AURA openweather_city
 {
-   public:
+public:
 
-      index    m_iIndex;
-      string   m_strCnt;
-      string   m_strCit;
-      int64_t  m_iId;
-      double   m_dLat;
-      double   m_dLon;
+   index    m_iIndex;
+   string   m_strCnt;
+   string   m_strCit;
+   int64_t  m_iId;
+   double   m_dLat;
+   double   m_dLon;
 
 };
 
@@ -1338,7 +1372,7 @@ CLASS_DECL_AURA string get_exe_path();
 class CLASS_DECL_AURA ptra :
    virtual public spa(object)
 {
-   public:
+public:
 
 
 };
@@ -1951,8 +1985,11 @@ CLASS_DECL_AURA ::aura::application * get_aura(void * p);
 
 #include "aura/user/user/user_controller.h"
 
+#if !defined(METROWIN)
 
 #include "aura/aura/aura/aura_serial.h"
+
+#endif
 
 
 

@@ -50,9 +50,7 @@
 
 #include "framework.h"
 #include "ftp.h"
-#include "aura/net/sockets/base/sockets_base_socket_handler.h"
-#include "aura/net/sockets/sockets_transfer_socket.h"
-#include "aura/net/sockets/bsd/basic/sockets_listen_socket.h"
+#include "aura/net/net_sockets.h"
 
 #include <openssl/x509.h>
 
