@@ -4537,7 +4537,6 @@
     <ClInclude Include="primitive\primitive_var.h" />
     <ClInclude Include="primitive\primitive_virtual_memory.h" />
     <ClInclude Include="user\simple\simple_message_box.h" />
-    <ClInclude Include="user\user.h" />
     <ClCompile Include="multithreading\multithreading_go_thread.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>

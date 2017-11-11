@@ -1508,9 +1508,6 @@
     <ClInclude Include="primitive\datetime\datetime.h">
       <Filter>Header Files\primitive\datetime</Filter>
     </ClInclude>
-    <ClInclude Include="user\user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
     <ClInclude Include="aura\node\windows\windows.h">
       <Filter>Header Files\aura\node\windows</Filter>
     </ClInclude>
