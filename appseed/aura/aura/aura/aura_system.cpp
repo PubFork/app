@@ -45,6 +45,7 @@ namespace aura
 
 
 #ifdef METROWIN
+
    system::os_system_window::os_system_window()
    {
 

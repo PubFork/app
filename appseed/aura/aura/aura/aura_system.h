@@ -15,7 +15,7 @@ namespace aura
 
 #if defined METROWIN && defined(__cplusplus_winrt)
 
-      class os_system_window
+      class CLASS_DECL_AURA os_system_window
       {
       public:
 

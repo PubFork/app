@@ -149,17 +149,14 @@
     <ClCompile Include="base\base\base_session.cpp" />
     <ClCompile Include="base\base\base_static_start.cpp" />
     <ClCompile Include="base\base\base_system.cpp" />
-    <ClCompile Include="base\message\message_user.cpp" />
     <ClCompile Include="base\node\metrowin\metrowin_directx.cpp" />
     <ClCompile Include="base\node\metrowin\metrowin_directx_application.cpp" />
     <ClCompile Include="base\node\metrowin\metrowin_factory_exchange.cpp" />
     <ClCompile Include="base\node\metrowin\metrowin_interaction_impl.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin.cpp" />
-    <ClCompile Include="base\os\metrowin\metrowin_message_loop.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin_multithreading.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin_simple_app.cpp" />
     <ClCompile Include="base\os\metrowin\metrowin_user.cpp" />
-    <ClCompile Include="base\os\metrowin\metrowin_windowing.cpp" />
     <ClCompile Include="database\database\database_user_interaction.cpp" />
     <ClCompile Include="database\simpledb\simpledb_file_system_size.cpp" />
     <ClCompile Include="framework.cpp">
@@ -170,9 +167,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="graphics\graphics_window_buffer.cpp" />
-    <ClCompile Include="graphics\graphics_window_dc.cpp" />
-    <ClCompile Include="graphics\graphics_window_graphics.cpp" />
     <ClCompile Include="user\fontopus\fontopus.cpp" />
     <ClCompile Include="user\fontopus\fontopus_dialog.cpp" />
     <ClCompile Include="user\fontopus\fontopus_login.cpp" />
@@ -193,7 +187,6 @@
     <ClCompile Include="user\user\user_control_bar.cpp" />
     <ClCompile Include="user\user\user_control_descriptor.cpp" />
     <ClCompile Include="user\user\user_control_descriptor_set.cpp" />
-    <ClCompile Include="user\user\user_control_event.cpp" />
     <ClCompile Include="user\user\user_document.cpp" />
     <ClCompile Include="user\user\user_form_callback.cpp" />
     <ClCompile Include="user\user\user_form_update_hint.cpp" />
@@ -202,36 +195,17 @@
     <ClCompile Include="user\user\user_impact.cpp" />
     <ClCompile Include="user\user\user_impact_system.cpp" />
     <ClCompile Include="user\user\user_impact_update_hint.cpp" />
-    <ClCompile Include="user\user\user_interaction.cpp" />
-    <ClCompile Include="user\user\user_interaction_base.cpp" />
-    <ClCompile Include="user\user\user_interaction_child.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl.cpp" />
-    <ClCompile Include="user\user\user_interaction_impl_base.cpp" />
-    <ClCompile Include="user\user\user_menu.cpp" />
-    <ClCompile Include="user\user\user_menu_command.cpp" />
-    <ClCompile Include="user\user\user_menu_item.cpp" />
     <ClCompile Include="user\user\user_message.cpp" />
     <ClCompile Include="user\user\user_message_queue.cpp" />
-    <ClCompile Include="user\user\user_mouse.cpp" />
-    <ClCompile Include="user\user\user_place_holder.cpp" />
-    <ClCompile Include="user\user\user_place_holder_container.cpp" />
     <ClCompile Include="user\user\user_plain_edit.cpp" />
     <ClCompile Include="user\user\user_plain_text_data.cpp" />
     <ClCompile Include="user\user\user_scroll.cpp" />
     <ClCompile Include="user\user\user_scroll_bar.cpp" />
     <ClCompile Include="user\user\user_server.cpp" />
-    <ClCompile Include="user\user\user_style.cpp" />
-    <ClCompile Include="user\user\user_style_base.cpp" />
-    <ClCompile Include="user\user\user_style_composite.cpp" />
-    <ClCompile Include="user\user\user_tooltip.cpp" />
     <ClCompile Include="user\user\user_user.cpp" />
     <ClCompile Include="user\user\user_view_container.cpp" />
     <ClCompile Include="user\user\user_view_creator.cpp" />
     <ClCompile Include="user\user\user_wait_cursor.cpp" />
-    <ClCompile Include="user\user\user_windowing.cpp" />
-    <ClCompile Include="user\user\user_window_map.cpp" />
-    <ClCompile Include="user\user\user_window_util.cpp" />
-    <ClCompile Include="user\wndfrm\frame\wndfrm_frame_updowninterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="base.rc" />
@@ -252,12 +226,6 @@
     <ProjectReference Include="..\draw2d_direct2d\w_draw2d_direct2d.vcxproj">
       <Project>{ba9bff50-1888-4722-8dee-73a3b5b32bcb}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="base\os\cross\windows\base_cross_windows_threading.cpp">
-      <SubType>Designer</SubType>
-      <FileType>Document</FileType>
-    </ClCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BD7D3626-ADA6-4CA2-9566-ED7B131E3D51}</ProjectGuid>

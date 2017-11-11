@@ -397,8 +397,8 @@ namespace metrowin
                   evDraw.ResetEvent();
 
                   m_window->Dispatcher->RunAsync(
-                     CoreDispatcherPriority::Normal,
-                     ref new Windows::UI::Core::DispatchedHandler([this, &evDraw, & bDrawing]()
+                  CoreDispatcherPriority::Normal,
+                  ref new Windows::UI::Core::DispatchedHandler([this, &evDraw, & bDrawing]()
                   {
 
                      keep < bool > keepDrawing(&bDrawing, true, false, true);
@@ -511,10 +511,10 @@ namespace metrowin
    interaction_impl::~interaction_impl()
    {
 
-      if(m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession->user() != NULL && m_pauraapp->m_pbasesession->user()->m_pwindowmap != NULL)
+      if(m_pauraapp != NULL && m_pauraapp->m_pbasesession != NULL && m_pauraapp->m_pbasesession->user() != NULL && m_pauraapp->m_paurasession->m_pwindowmap != NULL)
       {
 
-         m_pauraapp->m_pbasesession->user()->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
+         m_pauraapp->m_paurasession->m_pwindowmap->m_map.remove_key((int_ptr)(void *)get_handle());
 
       }
 
@@ -903,8 +903,8 @@ namespace metrowin
 
 
       ::wait(m_window->Dispatcher->RunAsync(
-                CoreDispatcherPriority::Normal,
-                ref new Windows::UI::Core::DispatchedHandler([this]()
+             CoreDispatcherPriority::Normal,
+             ref new Windows::UI::Core::DispatchedHandler([this]()
       {
 
          Windows::UI::ViewManagement::ApplicationView ^ applicationview = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
@@ -3048,45 +3048,45 @@ return TRUE;
    class print_window:
       virtual ::object
    {
-      public:
+   public:
 
 
 
-         manual_reset_event m_event;
-         oswindow m_hwnd;
-         HDC m_hdc;
+      manual_reset_event m_event;
+      oswindow m_hwnd;
+      HDC m_hdc;
 
-         print_window(::aura::application * papp,oswindow hwnd,HDC hdc,uint32_t dwTimeout):
-            ::object(papp),
-            m_event(papp)
+      print_window(::aura::application * papp,oswindow hwnd,HDC hdc,uint32_t dwTimeout):
+         ::object(papp),
+         m_event(papp)
+      {
+         m_event.ResetEvent();
+         m_hwnd = hwnd;
+         m_hdc = hdc;
+         __begin_thread(papp,&print_window::s_print_window,(LPVOID) this,::multithreading::priority_above_normal);
+         if(m_event.wait(millis(dwTimeout)).timeout())
          {
-            m_event.ResetEvent();
-            m_hwnd = hwnd;
-            m_hdc = hdc;
-            __begin_thread(papp,&print_window::s_print_window,(LPVOID) this,::multithreading::priority_above_normal);
-            if(m_event.wait(millis(dwTimeout)).timeout())
-            {
-               TRACE("print_window::time_out");
-            }
+            TRACE("print_window::time_out");
          }
+      }
 
 
-         static_function UINT c_cdecl s_print_window(LPVOID pvoid)
-         {
-            throw todo(::get_thread_app());
+      static_function UINT c_cdecl s_print_window(LPVOID pvoid)
+      {
+         throw todo(::get_thread_app());
 
-            //print_window * pprintwindow = (print_window *) pvoid;
-            //try
-            //{
-            //   HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
-            //   ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
-            //   ::SetEvent(hevent);
-            //}
-            //catch(...)
-            //{
-            //}
-            //return 0;
-         }
+         //print_window * pprintwindow = (print_window *) pvoid;
+         //try
+         //{
+         //   HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
+         //   ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
+         //   ::SetEvent(hevent);
+         //}
+         //catch(...)
+         //{
+         //}
+         //return 0;
+      }
    };
 
    void interaction_impl::_001DeferPaintLayeredWindowBackground(HDC hdc)
@@ -4555,8 +4555,8 @@ ExitModal:
       m_strWindowText = lpszString;
 
       m_window->Dispatcher->RunAsync(
-         CoreDispatcherPriority::Normal,
-         ref new Windows::UI::Core::DispatchedHandler([this]()
+      CoreDispatcherPriority::Normal,
+      ref new Windows::UI::Core::DispatchedHandler([this]()
       {
 
          Windows::UI::ViewManagement::ApplicationView ^ applicationview = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
@@ -6465,9 +6465,11 @@ lCallNextHook:
       perasebkgnd->set_result(TRUE);
    }
 
+
    void interaction_impl::_001BaseWndInterfaceMap()
    {
-      Session.user()->window_map().set((int_ptr)(void *)get_handle(),this);
+
+      m_pauraapp->m_paurasession->m_pwindowmap->set((int_ptr)(void *)get_handle(),this);
 
    }
 
@@ -6559,7 +6561,7 @@ WNDPROC CLASS_DECL_BASE __get_window_procedure()
 // Special helpers for certain windows messages
 
 __STATIC void CLASS_DECL_BASE __pre_init_dialog(
-   ::user::interaction * pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld)
+::user::interaction * pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld)
 {
    ASSERT(lpRectOld != NULL);
    ASSERT(pdwStyleOld != NULL);
@@ -6569,7 +6571,7 @@ __STATIC void CLASS_DECL_BASE __pre_init_dialog(
 }
 
 __STATIC void CLASS_DECL_BASE __post_init_dialog(
-   ::user::interaction * pWnd, const RECT& rectOld, uint32_t dwStyleOld)
+::user::interaction * pWnd, const RECT& rectOld, uint32_t dwStyleOld)
 {
    // must be hidden to start with
    if (dwStyleOld & WS_VISIBLE)
