@@ -423,47 +423,47 @@ uint_ptr lite_html_reader::read_html_file(HANDLE hFile)
    strsize dwBufLen = ::GetFileSize(hFile, NULL);
    if (dwBufLen == INVALID_FILE_SIZE)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-             " GetFileSize() failed;"
-             " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE("(Error) lite_html_reader::read:"
+            " GetFileSize() failed;"
+            " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
    // create a file-mapping object for the file
 #ifdef METROWIN
    hFileMap = CreateFileMappingFromApp(
-                 hFile,
-                 NULL,
-                 PAGE_READWRITE,
-                 dwBufLen,
-                 NULL);
+              hFile,
+              NULL,
+              PAGE_READWRITE,
+              dwBufLen,
+              NULL);
 
 #else
    hFileMap = ::CreateFileMapping(hFile, NULL, PAGE_READONLY, 0L, 0L, NULL);
 #endif
    if (hFileMap == NULL)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-             " CreateFileMapping() failed;"
-             " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE("(Error) lite_html_reader::read:"
+            " CreateFileMapping() failed;"
+            " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 
 #ifdef METROWIN
    lpsz = (const char *) MapViewOfFileFromApp(
-             hFileMap,
-             FILE_MAP_READ | FILE_MAP_WRITE,
-             0,
-             0);
+          hFileMap,
+          FILE_MAP_READ | FILE_MAP_WRITE,
+          0,
+          0);
 #else
    // map the entire file into the address-space of the application
    lpsz = (const char *)::MapViewOfFile(hFileMap, FILE_MAP_READ, 0L, 0L, 0L);
 #endif
    if (lpsz == NULL)
    {
-      TRACE1("(Error) lite_html_reader::read:"
-             " MapViewOfFile() failed;"
-             " GetLastError() returns 0x%08x.\n", ::GetLastError());
+      TRACE("(Error) lite_html_reader::read:"
+            " MapViewOfFile() failed;"
+            " GetLastError() returns 0x%08x.\n", ::GetLastError());
       goto LError;
    }
 

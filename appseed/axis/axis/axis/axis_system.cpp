@@ -436,7 +436,7 @@ namespace axis
 #ifdef DEBUG
 
       m_plog.release();
-      
+
 #endif
 
 //#ifdef METROWIN
@@ -611,42 +611,6 @@ namespace axis
 
 
 
-
-#ifdef METROWIN
-
-
-
-   CLASS_DECL_AXIS bool get_window_rect(::axis::system_window ^ pwindow,RECTD * lprect)
-   {
-
-      Windows::Foundation::Rect rect =  pwindow->get_window_rect();
-
-      lprect->left = rect.X;
-      lprect->top = rect.Y;
-      lprect->right = lprect->left + rect.Width;
-      lprect->bottom = lprect->top + rect.Height;
-
-      return true;
-   }
-
-
-   CLASS_DECL_AXIS bool get_window_rect(::axis::system_window ^ pwindow,LPRECT lprect)
-   {
-
-      rectd r;
-
-      if(!get_window_rect(pwindow,&r))
-         return false;
-
-      if(!::copy(lprect,r))
-         return false;
-
-      return true;
-
-   }
-
-
-#endif
 
 
 

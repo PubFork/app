@@ -1246,7 +1246,7 @@ namespace aura
    class ::str::base64 & system::base64()
    {
 
-         return m_base64;
+      return m_base64;
 
    }
 
@@ -2613,11 +2613,11 @@ RetryBuildNumber:
          city_auto_pointer = new openweather_city;
 
          city_auto_pointer->m_iIndex = openweather_find_city2(
-                                          strQuery,
-                                          city_auto_pointer->m_strCit,
-                                          city_auto_pointer->m_iId,
-                                          city_auto_pointer->m_dLat,
-                                          city_auto_pointer->m_dLon);
+                                       strQuery,
+                                       city_auto_pointer->m_strCit,
+                                       city_auto_pointer->m_iId,
+                                       city_auto_pointer->m_dLat,
+                                       city_auto_pointer->m_dLon);
 
       }
 
@@ -2967,7 +2967,7 @@ success:
    class ::crypto::crypto & system::crypto()
    {
 
-         return *m_spcrypto;
+      return *m_spcrypto;
 
    }
 
@@ -3054,16 +3054,16 @@ success:
                      {
 
                         on_open_file(
-                           straAccumul,
-                           straExtra.slice(1).implode(" "));
+                        straAccumul,
+                        straExtra.slice(1).implode(" "));
 
                      }
                      else
                      {
 
                         on_open_file(
-                           straAccumul,
-                           "");
+                        straAccumul,
+                        "");
 
                      }
 
@@ -3158,6 +3158,46 @@ success:
 
 
    }
+
+
+
+#ifdef METROWIN
+
+
+
+   CLASS_DECL_AURA bool get_window_rect(::aura::system_window ^ pwindow, RECTD * lprect)
+   {
+
+      Windows::Foundation::Rect rect = pwindow->get_window_rect();
+
+      lprect->left = rect.X;
+      lprect->top = rect.Y;
+      lprect->right = lprect->left + rect.Width;
+      lprect->bottom = lprect->top + rect.Height;
+
+      return true;
+   }
+
+
+   CLASS_DECL_AURA bool get_window_rect(::aura::system_window ^ pwindow, LPRECT lprect)
+   {
+
+      rectd r;
+
+      if (!get_window_rect(pwindow, (RECTD *)&r))
+         return false;
+
+      if (!::copy(lprect, r))
+         return false;
+
+      return true;
+
+   }
+
+
+#endif
+
+
 
    ::user::interaction_impl * system::impl_from_handle(void * pdata)
    {

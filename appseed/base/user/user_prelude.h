@@ -105,11 +105,11 @@ namespace user
 
    class CLASS_DECL_BASE native_window_initialize
    {
-      public:
+   public:
 
 
-         Agile<Windows::UI::Core::CoreWindow> window;
-         ::axis::system_window ^ pwindow;
+      Agile<Windows::UI::Core::CoreWindow> window;
+      ::aura::system_window ^ pwindow;
 
 
    };
@@ -118,9 +118,9 @@ namespace user
 
    class CLASS_DECL_BASE native_window_initialize
    {
-      public:
+   public:
 
-         RECT   m_rect;
+      RECT   m_rect;
 
    };
 

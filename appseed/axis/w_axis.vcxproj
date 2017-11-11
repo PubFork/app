@@ -119,22 +119,6 @@
     <ClInclude Include="filesystem\fs\fs_remote_native_fs.h" />
     <ClInclude Include="filesystem\fs\fs_set.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="graphics\visual\visual.h" />
-    <ClInclude Include="graphics\visual\visual_api.h" />
-    <ClInclude Include="graphics\visual\visual_buffered_graphics.h" />
-    <ClInclude Include="graphics\visual\visual_dib.h" />
-    <ClInclude Include="graphics\visual\visual_dib_pal.h" />
-    <ClInclude Include="graphics\visual\visual_fastblur.h" />
-    <ClInclude Include="graphics\visual\visual_font.h" />
-    <ClInclude Include="graphics\visual\visual_FreeImageFileProc.h" />
-    <ClInclude Include="graphics\visual\visual_glyph.h" />
-    <ClInclude Include="graphics\visual\visual_glyph_set.h" />
-    <ClInclude Include="graphics\visual\visual_graphics_extension.h" />
-    <ClInclude Include="graphics\visual\visual_image_list.h" />
-    <ClInclude Include="graphics\visual\visual_imaging.h" />
-    <ClInclude Include="graphics\visual\visual_rgb_quad_array.h" />
-    <ClInclude Include="graphics\visual\visual_visual.h" />
-    <ClInclude Include="graphics\visual\visual_water_routine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="axis.def" />
@@ -231,27 +215,6 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='stage|ARM'">$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='stage|x64'">$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="graphics\dib_console.cpp" />
-    <ClCompile Include="graphics\visual\detect_8bit_borders.cpp" />
-    <ClCompile Include="graphics\visual\freeimage.cpp" />
-    <ClCompile Include="graphics\visual\load_gif_frame.cpp" />
-    <ClCompile Include="graphics\visual\visual_api.cpp" />
-    <ClCompile Include="graphics\visual\visual_buffered_graphics.cpp" />
-    <ClCompile Include="graphics\visual\visual_dib.cpp" />
-    <ClCompile Include="graphics\visual\visual_fastblur.cpp" />
-    <ClCompile Include="graphics\visual\visual_font.cpp" />
-    <ClCompile Include="graphics\visual\visual_font_department.cpp" />
-    <ClCompile Include="graphics\visual\visual_font_enumeration.cpp" />
-    <ClCompile Include="graphics\visual\visual_font_list_data.cpp" />
-    <ClCompile Include="graphics\visual\visual_FreeImageFileProc.cpp" />
-    <ClCompile Include="graphics\visual\visual_glyph.cpp" />
-    <ClCompile Include="graphics\visual\visual_glyph_set.cpp" />
-    <ClCompile Include="graphics\visual\visual_graphics_extension.cpp" />
-    <ClCompile Include="graphics\visual\visual_image_list.cpp" />
-    <ClCompile Include="graphics\visual\visual_imaging.cpp" />
-    <ClCompile Include="graphics\visual\visual_rgb_quad_array.cpp" />
-    <ClCompile Include="graphics\visual\visual_visual.cpp" />
-    <ClCompile Include="graphics\visual\visual_water_routine.cpp" />
     <ClCompile Include="html_lite\html\html_html.cpp" />
     <ClCompile Include="html_lite\html_lite\html_lite_html_attributes.cpp" />
     <ClCompile Include="html_lite\html_lite\html_lite_html_entity_resolver.cpp" />
@@ -259,13 +222,8 @@
     <ClCompile Include="html_lite\html_lite\html_lite_html_tag.cpp" />
     <ClCompile Include="user\userpresence\userpresence_userpresence.cpp" />
     <ClCompile Include="user\userpresence\userpresence_user_presence.cpp" />
-    <ClCompile Include="user\user\user_copydesk.cpp" />
-    <ClCompile Include="user\user\user_elemental.cpp" />
-    <ClCompile Include="user\user\user_job.cpp" />
     <ClCompile Include="user\user\user_keyboard.cpp" />
     <ClCompile Include="user\user\user_keyboard_layout.cpp" />
-    <ClCompile Include="user\user\user_print_job.cpp" />
-    <ClCompile Include="user\user\user_validate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ace\w_ace.vcxproj">

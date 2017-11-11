@@ -28,15 +28,15 @@
 //#endif
 
 
-#include  "freeimage/Source/FreeImageIO.h"
-#include  "freeimage/Source/Utilities.h"
+#include  "aura/graphics/freeimage/Source/FreeImageIO.h"
+#include  "aura/graphics/freeimage/Source/Utilities.h"
 
-#include  "freeimage/Source/Metadata/FreeImageTag.h"
-#include  "freeimage/Source/Quantizers.h"
+#include  "aura/graphics/freeimage/Source/Metadata/FreeImageTag.h"
+#include  "aura/graphics/freeimage/Source/Quantizers.h"
 
-#include  "freeimage/Source/CacheFile.h"
+#include  "aura/graphics/freeimage/Source/CacheFile.h"
 
-#include  "freeimage/Source/Plugin.h"
+#include  "aura/graphics/freeimage/Source/Plugin.h"
 
-#include  "freeimage/Source/FreeImageToolkit/Resize.h"
+#include  "aura/graphics/freeimage/Source/FreeImageToolkit/Resize.h"
 

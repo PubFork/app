@@ -43,9 +43,6 @@
     <Filter Include="Header Files\user\simple">
       <UniqueIdentifier>{ee342bd7-0d49-4a7b-9ccc-f39dcc9c1893}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\user\colorertake5">
-      <UniqueIdentifier>{3f3c71ac-f00c-4e2e-8cce-674303a4d0ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\user\user">
       <UniqueIdentifier>{ac973107-be06-4de4-9d3d-0f12f27a266c}</UniqueIdentifier>
     </Filter>
@@ -735,158 +732,8 @@
     <ClInclude Include="multithreading\service\service_thread_pool.h">
       <Filter>Header Files\multithreading\service</Filter>
     </ClInclude>
-    <ClInclude Include="user\user.h">
-      <Filter>Header Files\user</Filter>
-    </ClInclude>
     <ClInclude Include="user\simple\simple_message_box.h">
       <Filter>Header Files\user\simple</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_base_editor.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_colorertake5.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_cregexp.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_default_error_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_editor_listener.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_error_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_error_handler_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_exception.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_features.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_input_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_type.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_type_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_file_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser_helpers.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_hrc_parser_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_regions_compact_support.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_regions_support.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_line_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_logging.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_memory_chunks.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_memory_file.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_outliner.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_outline_item.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_pair_match.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parsed_line_writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parser_factory.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_parser_factory_exception.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_define.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_handler.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_region_mapper_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_scheme.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_shared_input_source.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_string_buffer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_styled_hrd_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_styled_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_console_viewer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_hrd_mapper.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_lines.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser_helpers.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_parser_impl.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_text_region.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_Writer.h">
-      <Filter>Header Files\user\colorertake5</Filter>
-    </ClInclude>
-    <ClInclude Include="user\colorertake5\colorertake5_xmldom.h">
-      <Filter>Header Files\user\colorertake5</Filter>
     </ClInclude>
     <ClInclude Include="user\user\user_frame.h">
       <Filter>Header Files\user\user</Filter>
@@ -1821,9 +1668,6 @@
     <ClInclude Include="aura\aura\aura_heap_memory.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_md5.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_os_alloc.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -1935,9 +1779,6 @@
     <ClInclude Include="primitive\collection\collection_numeric_array.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
-    <ClInclude Include="primitive\collection\collection_object_list.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
     <ClInclude Include="primitive\collection\collection_packset.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
@@ -1945,9 +1786,6 @@
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_point_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_pointer_list.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_primitive_array.h">
@@ -1966,21 +1804,6 @@
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_set.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_simple_eq_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_simple_object_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_simple_pointer_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_simple_template.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_simple_typed_pointer_array.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_smart_pointer_array.h">
@@ -2023,21 +1846,6 @@
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_template.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_typed_pointer_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_typed_pointer_list.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_typed_pointer_map.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_typed_ptr_array.h">
-      <Filter>Header Files\primitive\collection</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive\collection\collection_typed_ptr_list.h">
       <Filter>Header Files\primitive\collection</Filter>
     </ClInclude>
     <ClInclude Include="primitive\collection\collection_unique_array.h">
@@ -2111,6 +1919,111 @@
     </ClInclude>
     <ClInclude Include="net\sockets\base\sockets_base_socket_handler.h">
       <Filter>Header Files\net\sockets\base</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_command.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_const.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_control_event.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_controller.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_copydesk.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_create.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_create_struct.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_elemental.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_enum.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction_base.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction_child.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction_impl.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interaction_impl_base.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_interactive.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_job.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_key.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_key_enum.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_menu.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_menu_command.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_menu_item.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_mouse.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_place_holder.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_place_holder_container.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_print_job.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_scroll_info.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style_base.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_style_composite.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_tooltip.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_validate.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_window_map.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_window_util.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_windowing.h">
+      <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3868,12 +3781,6 @@
     <ClCompile Include="graphics\visual\visual_font_list_data.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
-      <Filter>Source Files\graphics\visual</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\visual\visual_glyph.cpp">
       <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
@@ -3915,6 +3822,12 @@
     </ClCompile>
     <ClCompile Include="aura\message\message_user.cpp">
       <Filter>Source Files\aura\message</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\visual\visual_gdiplus_image_gif.cpp">
+      <Filter>Source Files\graphics\visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

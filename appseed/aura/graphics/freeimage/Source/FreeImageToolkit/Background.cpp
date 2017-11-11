@@ -19,8 +19,8 @@
 // Use at your own risk!
 // ==========================================================
 
-#include  "FreeImageFramework.h"
-//#include "Utilities.h"
+#include "framework.h"
+#include "FreeImage/Utilities.h"
 
 /** @brief Determines, whether a palletized image is visually greyscale or not.
 
@@ -33,25 +33,31 @@
  greyscales, FALSE otherwise.
  */
 static WINBOOL
-IsVisualGreyscaleImage(FIBITMAP *dib) {
+IsVisualGreyscaleImage(FIBITMAP *dib)
+{
 
-	switch (FreeImage_GetBPP(dib)) {
-		case 1:
-		case 4:
-		case 8: {
-			unsigned ncolors = FreeImage_GetColorsUsed(dib);
-			RGBQUAD *rgb = FreeImage_GetPalette(dib);
-			for (unsigned i = 0; i< ncolors; i++) {
-				if ((rgb->rgbRed != rgb->rgbGreen) || (rgb->rgbRed != rgb->rgbBlue)) {
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		default: {
-			return (FreeImage_GetColorType(dib) == FIC_MINISBLACK);
-		}
-	}
+   switch (FreeImage_GetBPP(dib))
+   {
+   case 1:
+   case 4:
+   case 8:
+   {
+      unsigned ncolors = FreeImage_GetColorsUsed(dib);
+      RGBQUAD *rgb = FreeImage_GetPalette(dib);
+      for (unsigned i = 0; i< ncolors; i++)
+      {
+         if ((rgb->rgbRed != rgb->rgbGreen) || (rgb->rgbRed != rgb->rgbBlue))
+         {
+            return FALSE;
+         }
+      }
+      return TRUE;
+   }
+   default:
+   {
+      return (FreeImage_GetColorType(dib) == FIC_MINISBLACK);
+   }
+   }
 }
 
 /** @brief Looks up a specified color in a FIBITMAP's palette and returns the color's
@@ -72,96 +78,124 @@ IsVisualGreyscaleImage(FIBITMAP *dib) {
  in the image's palette or if the specified image is non-palletized.
  */
 static int
-GetPaletteIndex(FIBITMAP *dib, const RGBQUAD *color, int options, FREE_IMAGE_COLOR_TYPE *color_type) {
+GetPaletteIndex(FIBITMAP *dib, const RGBQUAD *color, int options, FREE_IMAGE_COLOR_TYPE *color_type)
+{
 
-	int result = -1;
+   int result = -1;
 
-	if ((!dib) || (!color)) {
-		return result;
-	}
+   if ((!dib) || (!color))
+   {
+      return result;
+   }
 
-	int bpp = FreeImage_GetBPP(dib);
+   int bpp = FreeImage_GetBPP(dib);
 
-	// First check trivial case: return color->rgbReserved if only
-	// FI_COLOR_ALPHA_IS_INDEX is set.
-	if ((options & FI_COLOR_ALPHA_IS_INDEX) == FI_COLOR_ALPHA_IS_INDEX) {
-		if (bpp == 1) {
-			return color->rgbReserved & 0x01;
-		} else if (bpp == 4) {
-			return color->rgbReserved & 0x0F;
-		}
-		return color->rgbReserved;
-	}
+   // First check trivial case: return color->rgbReserved if only
+   // FI_COLOR_ALPHA_IS_INDEX is set.
+   if ((options & FI_COLOR_ALPHA_IS_INDEX) == FI_COLOR_ALPHA_IS_INDEX)
+   {
+      if (bpp == 1)
+      {
+         return color->rgbReserved & 0x01;
+      }
+      else if (bpp == 4)
+      {
+         return color->rgbReserved & 0x0F;
+      }
+      return color->rgbReserved;
+   }
 
-	if (bpp == 8) {
-		FREE_IMAGE_COLOR_TYPE ct =
-			(color_type == NULL || *color_type < 0) ?
-				FreeImage_GetColorType(dib) : *color_type;
-		if (ct == FIC_MINISBLACK) {
-			return GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
-		}
-		if (ct == FIC_MINISWHITE) {
-			return 255 - GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
-		}
-	} else if (bpp > 8) {
-		// for palettized images only
-		return result;
-	}
+   if (bpp == 8)
+   {
+      FREE_IMAGE_COLOR_TYPE ct =
+      (color_type == NULL || *color_type < 0) ?
+      FreeImage_GetColorType(dib) : *color_type;
+      if (ct == FIC_MINISBLACK)
+      {
+         return GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
+      }
+      if (ct == FIC_MINISWHITE)
+      {
+         return 255 - GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
+      }
+   }
+   else if (bpp > 8)
+   {
+      // for palettized images only
+      return result;
+   }
 
-	if (options & FI_COLOR_FIND_EQUAL_COLOR) {
+   if (options & FI_COLOR_FIND_EQUAL_COLOR)
+   {
 
-		// Option FI_COLOR_ALPHA_IS_INDEX is implicit here so, set
-		// index to color->rgbReserved
-		result = color->rgbReserved;
-		if (bpp == 1) {
-			result &= 0x01;
-		} else if (bpp == 4) {
-			result &= 0x0F;
-		}
+      // Option FI_COLOR_ALPHA_IS_INDEX is implicit here so, set
+      // index to color->rgbReserved
+      result = color->rgbReserved;
+      if (bpp == 1)
+      {
+         result &= 0x01;
+      }
+      else if (bpp == 4)
+      {
+         result &= 0x0F;
+      }
 
-		unsigned ucolor;
-		if (!IsVisualGreyscaleImage(dib)) {
-			ucolor = (*((unsigned *)color)) & 0xFFFFFF;
-		} else {
-			ucolor = GREY(color->rgbRed, color->rgbGreen, color->rgbBlue) * 0x010101;
-			//ucolor = (ucolor | (ucolor << 8) | (ucolor << 16));
-		}
-		unsigned ncolors = FreeImage_GetColorsUsed(dib);
-		unsigned *palette = (unsigned *)FreeImage_GetPalette(dib);
-		for (unsigned i = 0; i < ncolors; i++) {
-			if ((palette[i] & 0xFFFFFF) == ucolor) {
-				result = i;
-				break;
-			}
-		}
-	} else {
-		unsigned minimum = UINT_MAX;
-		unsigned ncolors = FreeImage_GetColorsUsed(dib);
-		BYTE *palette = (BYTE *)FreeImage_GetPalette(dib);
-		BYTE red, green, blue;
-		if (!IsVisualGreyscaleImage(dib)) {
-			red = color->rgbRed;
-			green = color->rgbGreen;
-			blue = color->rgbBlue;
-		} else {
-			red = GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
-			green = blue = red;
-		}
-		for (unsigned i = 0; i < ncolors; i++) {
-			unsigned m = abs(palette[FI_RGBA_BLUE] - blue)
-					+ abs(palette[FI_RGBA_GREEN] - green)
-					+ abs(palette[FI_RGBA_RED] - red);
-			if (m < minimum) {
-				minimum = m;
-				result = i;
-				if (m == 0) {
-					break;
-				}
-			}
-			palette += sizeof(RGBQUAD);
-		}
-	}
-	return result;
+      unsigned ucolor;
+      if (!IsVisualGreyscaleImage(dib))
+      {
+         ucolor = (*((unsigned *)color)) & 0xFFFFFF;
+      }
+      else
+      {
+         ucolor = GREY(color->rgbRed, color->rgbGreen, color->rgbBlue) * 0x010101;
+         //ucolor = (ucolor | (ucolor << 8) | (ucolor << 16));
+      }
+      unsigned ncolors = FreeImage_GetColorsUsed(dib);
+      unsigned *palette = (unsigned *)FreeImage_GetPalette(dib);
+      for (unsigned i = 0; i < ncolors; i++)
+      {
+         if ((palette[i] & 0xFFFFFF) == ucolor)
+         {
+            result = i;
+            break;
+         }
+      }
+   }
+   else
+   {
+      unsigned minimum = UINT_MAX;
+      unsigned ncolors = FreeImage_GetColorsUsed(dib);
+      BYTE *palette = (BYTE *)FreeImage_GetPalette(dib);
+      BYTE red, green, blue;
+      if (!IsVisualGreyscaleImage(dib))
+      {
+         red = color->rgbRed;
+         green = color->rgbGreen;
+         blue = color->rgbBlue;
+      }
+      else
+      {
+         red = GREY(color->rgbRed, color->rgbGreen, color->rgbBlue);
+         green = blue = red;
+      }
+      for (unsigned i = 0; i < ncolors; i++)
+      {
+         unsigned m = abs(palette[FI_RGBA_BLUE] - blue)
+                      + abs(palette[FI_RGBA_GREEN] - green)
+                      + abs(palette[FI_RGBA_RED] - red);
+         if (m < minimum)
+         {
+            minimum = m;
+            result = i;
+            if (m == 0)
+            {
+               break;
+            }
+         }
+         palette += sizeof(RGBQUAD);
+      }
+   }
+   return result;
 }
 
 /** @brief Blends an alpha-transparent foreground color over an opaque background
@@ -184,21 +218,23 @@ GetPaletteIndex(FIBITMAP *dib, const RGBQUAD *color, int options, FREE_IMAGE_COL
  the color arguments is a null pointer.
  */
 static WINBOOL
-GetAlphaBlendedColor(const RGBQUAD *bgcolor, const RGBQUAD *fgcolor, RGBQUAD *blended) {
+GetAlphaBlendedColor(const RGBQUAD *bgcolor, const RGBQUAD *fgcolor, RGBQUAD *blended)
+{
 
-	if ((!bgcolor) || (!fgcolor) || (!blended)) {
-		return FALSE;
-	}
+   if ((!bgcolor) || (!fgcolor) || (!blended))
+   {
+      return FALSE;
+   }
 
-	BYTE alpha = fgcolor->rgbReserved;
-	BYTE not_alpha = ~alpha;
+   BYTE alpha = fgcolor->rgbReserved;
+   BYTE not_alpha = ~alpha;
 
-	blended->rgbRed   = (BYTE)( ((WORD)fgcolor->rgbRed   * alpha + not_alpha * (WORD)bgcolor->rgbRed)   >> 8 );
-	blended->rgbGreen = (BYTE)( ((WORD)fgcolor->rgbGreen * alpha + not_alpha * (WORD)bgcolor->rgbGreen) >> 8) ;
-	blended->rgbBlue  = (BYTE)( ((WORD)fgcolor->rgbRed   * alpha + not_alpha * (WORD)bgcolor->rgbBlue)  >> 8 );
-	blended->rgbReserved = 0xFF;
+   blended->rgbRed   = (BYTE)( ((WORD)fgcolor->rgbRed   * alpha + not_alpha * (WORD)bgcolor->rgbRed)   >> 8 );
+   blended->rgbGreen = (BYTE)( ((WORD)fgcolor->rgbGreen * alpha + not_alpha * (WORD)bgcolor->rgbGreen) >> 8) ;
+   blended->rgbBlue  = (BYTE)( ((WORD)fgcolor->rgbRed   * alpha + not_alpha * (WORD)bgcolor->rgbBlue)  >> 8 );
+   blended->rgbReserved = 0xFF;
 
-	return TRUE;
+   return TRUE;
 }
 
 /** @brief Fills a FIT_BITMAP image with the specified color.
@@ -212,145 +248,172 @@ GetAlphaBlendedColor(const RGBQUAD *bgcolor, const RGBQUAD *fgcolor, RGBQUAD *bl
  the dib and color is NULL or the provided image is not a FIT_BITMAP image.
  */
 static WINBOOL
-FillBackgroundBitmap(FIBITMAP *dib, const RGBQUAD *color, int options) {
+FillBackgroundBitmap(FIBITMAP *dib, const RGBQUAD *color, int options)
+{
 
-	if ((!dib) || (FreeImage_GetImageType(dib) != FIT_BITMAP)) {
-		return FALSE;;
-	}
+   if ((!dib) || (FreeImage_GetImageType(dib) != FIT_BITMAP))
+   {
+      return FALSE;;
+   }
 
-	if (!color) {
-		return FALSE;
-	}
+   if (!color)
+   {
+      return FALSE;
+   }
 
-	const RGBQUAD *color_intl = color;
-	unsigned bpp = FreeImage_GetBPP(dib);
-	unsigned width = FreeImage_GetWidth(dib);
-	unsigned height = FreeImage_GetHeight(dib);
+   const RGBQUAD *color_intl = color;
+   unsigned bpp = FreeImage_GetBPP(dib);
+   unsigned width = FreeImage_GetWidth(dib);
+   unsigned height = FreeImage_GetHeight(dib);
 
-	FREE_IMAGE_COLOR_TYPE color_type = FreeImage_GetColorType(dib);
+   FREE_IMAGE_COLOR_TYPE color_type = FreeImage_GetColorType(dib);
 
-	// get a pointer to the first scanline (bottom line)
-	BYTE *src_bits = FreeImage_GetScanLine(dib, 0);
-	BYTE *dst_bits = src_bits;
+   // get a pointer to the first scanline (bottom line)
+   BYTE *src_bits = FreeImage_GetScanLine(dib, 0);
+   BYTE *dst_bits = src_bits;
 
-	WINBOOL supports_alpha = ((bpp >= 24) || ((bpp == 8) && (color_type != FIC_PALETTE)));
+   WINBOOL supports_alpha = ((bpp >= 24) || ((bpp == 8) && (color_type != FIC_PALETTE)));
 
-	// Check for RGBA case if bitmap supports alpha
-	// blending (8-bit greyscale, 24- or 32-bit images)
-	if (supports_alpha && (options & FI_COLOR_IS_RGBA_COLOR)) {
+   // Check for RGBA case if bitmap supports alpha
+   // blending (8-bit greyscale, 24- or 32-bit images)
+   if (supports_alpha && (options & FI_COLOR_IS_RGBA_COLOR))
+   {
 
-		if (color->rgbReserved == 0) {
-			// the fill color is fully transparent; we are done
-			return TRUE;
-		}
+      if (color->rgbReserved == 0)
+      {
+         // the fill color is fully transparent; we are done
+         return TRUE;
+      }
 
-		// Only if the fill color is NOT fully opaque, draw it with
-		// the (much) slower FreeImage_DrawLine function and return.
-		// Since we do not have the FreeImage_DrawLine function in this
-		// release, just assume to have an unicolor background and fill
-		// all with an 'alpha-blended' color.
-		if (color->rgbReserved < 255) {
+      // Only if the fill color is NOT fully opaque, draw it with
+      // the (much) slower FreeImage_DrawLine function and return.
+      // Since we do not have the FreeImage_DrawLine function in this
+      // release, just assume to have an unicolor background and fill
+      // all with an 'alpha-blended' color.
+      if (color->rgbReserved < 255)
+      {
 
-			// If we will draw on an unicolor background, it's
-			// faster to draw opaque with an alpha blended color.
-			// So, first get the color from the first pixel in the
-			// image (bottom-left pixel).
-			RGBQUAD bgcolor;
-			if (bpp == 8) {
-				bgcolor = FreeImage_GetPalette(dib)[*src_bits];
-			} else {
-				bgcolor.rgbBlue = src_bits[FI_RGBA_BLUE];
-				bgcolor.rgbGreen = src_bits[FI_RGBA_GREEN];
-				bgcolor.rgbRed = src_bits[FI_RGBA_RED];
-				bgcolor.rgbReserved = 0xFF;
-			}
-			RGBQUAD blend;
-			GetAlphaBlendedColor(&bgcolor, color_intl, &blend);
-			color_intl = &blend;
-		}
-	}
+         // If we will draw on an unicolor background, it's
+         // faster to draw opaque with an alpha blended color.
+         // So, first get the color from the first pixel in the
+         // image (bottom-left pixel).
+         RGBQUAD bgcolor;
+         if (bpp == 8)
+         {
+            bgcolor = FreeImage_GetPalette(dib)[*src_bits];
+         }
+         else
+         {
+            bgcolor.rgbBlue = src_bits[FI_RGBA_BLUE];
+            bgcolor.rgbGreen = src_bits[FI_RGBA_GREEN];
+            bgcolor.rgbRed = src_bits[FI_RGBA_RED];
+            bgcolor.rgbReserved = 0xFF;
+         }
+         RGBQUAD blend;
+         GetAlphaBlendedColor(&bgcolor, color_intl, &blend);
+         color_intl = &blend;
+      }
+   }
 
-	int index = (bpp <= 8) ? GetPaletteIndex(dib, color_intl, options, &color_type) : 0;
-	if (index == -1) {
-		// No palette index found for a palletized
-		// image. This should never happen...
-		return FALSE;
-	}
+   int index = (bpp <= 8) ? GetPaletteIndex(dib, color_intl, options, &color_type) : 0;
+   if (index == -1)
+   {
+      // No palette index found for a palletized
+      // image. This should never happen...
+      return FALSE;
+   }
 
-	// first, build the first scanline (line 0)
-	switch (bpp) {
-		case 1: {
-			unsigned bytes = (width / 8);
-			memset(dst_bits, ((index == 1) ? 0xFF : 0x00), bytes);
-			//int n = width % 8;
-			int n = width & 7;
-			if (n) {
-				if (index == 1) {
-					// set n leftmost bits
-					dst_bits[bytes] |= (0xFF << (8 - n));
-				} else {
-					// clear n leftmost bits
-					dst_bits[bytes] &= (0xFF >> n);
-				}
-			}
-			break;
-		}
-		case 4: {
-			unsigned bytes = (width / 2);
-			memset(dst_bits, (index | (index << 4)), bytes);
-			//if (bytes % 2) {
-			if (bytes & 1) {
-				dst_bits[bytes] &= 0x0F;
-				dst_bits[bytes] |= (index << 4);
-			}
-			break;
-		}
-		case 8: {
-			memset(dst_bits, index, FreeImage_GetLine(dib));
-			break;
-		}
-		case 16: {
-			WORD wcolor = RGBQUAD_TO_WORD(dib, color_intl);
-			for (unsigned x = 0; x < width; x++) {
-				((WORD *)dst_bits)[x] = wcolor;
-			}
-			break;
-		}
-		case 24: {
-			RGBTRIPLE rgbt = *((RGBTRIPLE *)color_intl);
-			for (unsigned x = 0; x < width; x++) {
-				((RGBTRIPLE *)dst_bits)[x] = rgbt;
-			}
-			break;
-		}
-		case 32: {
-			RGBQUAD rgbq;
-			rgbq.rgbBlue = ((RGBTRIPLE *)color_intl)->rgbtBlue;
-			rgbq.rgbGreen = ((RGBTRIPLE *)color_intl)->rgbtGreen;
-			rgbq.rgbRed = ((RGBTRIPLE *)color_intl)->rgbtRed;
-			rgbq.rgbReserved = 0xFF;
-			for (unsigned x = 0; x < width; x++) {
-				((RGBQUAD *)dst_bits)[x] = rgbq;
-			}
-			break;
-		}
-		default:
-			return FALSE;
-	}
+   // first, build the first scanline (line 0)
+   switch (bpp)
+   {
+   case 1:
+   {
+      unsigned bytes = (width / 8);
+      memset(dst_bits, ((index == 1) ? 0xFF : 0x00), bytes);
+      //int n = width % 8;
+      int n = width & 7;
+      if (n)
+      {
+         if (index == 1)
+         {
+            // set n leftmost bits
+            dst_bits[bytes] |= (0xFF << (8 - n));
+         }
+         else
+         {
+            // clear n leftmost bits
+            dst_bits[bytes] &= (0xFF >> n);
+         }
+      }
+      break;
+   }
+   case 4:
+   {
+      unsigned bytes = (width / 2);
+      memset(dst_bits, (index | (index << 4)), bytes);
+      //if (bytes % 2) {
+      if (bytes & 1)
+      {
+         dst_bits[bytes] &= 0x0F;
+         dst_bits[bytes] |= (index << 4);
+      }
+      break;
+   }
+   case 8:
+   {
+      memset(dst_bits, index, FreeImage_GetLine(dib));
+      break;
+   }
+   case 16:
+   {
+      WORD wcolor = RGBQUAD_TO_WORD(dib, color_intl);
+      for (unsigned x = 0; x < width; x++)
+      {
+         ((WORD *)dst_bits)[x] = wcolor;
+      }
+      break;
+   }
+   case 24:
+   {
+      RGBTRIPLE rgbt = *((RGBTRIPLE *)color_intl);
+      for (unsigned x = 0; x < width; x++)
+      {
+         ((RGBTRIPLE *)dst_bits)[x] = rgbt;
+      }
+      break;
+   }
+   case 32:
+   {
+      RGBQUAD rgbq;
+      rgbq.rgbBlue = ((RGBTRIPLE *)color_intl)->rgbtBlue;
+      rgbq.rgbGreen = ((RGBTRIPLE *)color_intl)->rgbtGreen;
+      rgbq.rgbRed = ((RGBTRIPLE *)color_intl)->rgbtRed;
+      rgbq.rgbReserved = 0xFF;
+      for (unsigned x = 0; x < width; x++)
+      {
+         ((RGBQUAD *)dst_bits)[x] = rgbq;
+      }
+      break;
+   }
+   default:
+      return FALSE;
+   }
 
-	// Then, copy the first scanline into all following scanlines.
-	// 'src_bits' is a pointer to the first scanline and is already
-	// set up correctly.
-	if (src_bits) {
-		unsigned pitch = FreeImage_GetPitch(dib);
-		unsigned bytes = FreeImage_GetLine(dib);
-		dst_bits = src_bits + pitch;
-		for (unsigned y = 1; y < height; y++) {
-			memcpy(dst_bits, src_bits, bytes);
-			dst_bits += pitch;
-		}
-	}
-	return TRUE;
+   // Then, copy the first scanline into all following scanlines.
+   // 'src_bits' is a pointer to the first scanline and is already
+   // set up correctly.
+   if (src_bits)
+   {
+      unsigned pitch = FreeImage_GetPitch(dib);
+      unsigned bytes = FreeImage_GetLine(dib);
+      dst_bits = src_bits + pitch;
+      for (unsigned y = 1; y < height; y++)
+      {
+         memcpy(dst_bits, src_bits, bytes);
+         dst_bits += pitch;
+      }
+   }
+   return TRUE;
 }
 
 /** @brief Fills an image with the specified color.
@@ -418,40 +481,46 @@ FillBackgroundBitmap(FIBITMAP *dib, const RGBQUAD *color, int options) {
  dib and color is NULL.
  */
 WINBOOL DLL_CALLCONV
-FreeImage_FillBackground(FIBITMAP *dib, const void *color, int options) {
+FreeImage_FillBackground(FIBITMAP *dib, const void *color, int options)
+{
 
-	if (!FreeImage_HasPixels(dib)) {
-		return FALSE;
-	}
+   if (!FreeImage_HasPixels(dib))
+   {
+      return FALSE;
+   }
 
-	if (!color) {
-		return FALSE;
-	}
+   if (!color)
+   {
+      return FALSE;
+   }
 
-	// handle FIT_BITMAP images with FreeImage_FillBackground()
-	if (FreeImage_GetImageType(dib) == FIT_BITMAP) {
-		return FillBackgroundBitmap(dib, (RGBQUAD *)color, options);
-	}
+   // handle FIT_BITMAP images with FreeImage_FillBackground()
+   if (FreeImage_GetImageType(dib) == FIT_BITMAP)
+   {
+      return FillBackgroundBitmap(dib, (RGBQUAD *)color, options);
+   }
 
-	// first, construct the first scanline (bottom line)
-	unsigned bytespp = (FreeImage_GetBPP(dib) / 8);
-	BYTE *src_bits = FreeImage_GetScanLine(dib, 0);
-	BYTE *dst_bits = src_bits;
-	for (unsigned x = 0; x < FreeImage_GetWidth(dib); x++) {
-		memcpy(dst_bits, color, bytespp);
-		dst_bits += bytespp;
-	}
+   // first, construct the first scanline (bottom line)
+   unsigned bytespp = (FreeImage_GetBPP(dib) / 8);
+   BYTE *src_bits = FreeImage_GetScanLine(dib, 0);
+   BYTE *dst_bits = src_bits;
+   for (unsigned x = 0; x < FreeImage_GetWidth(dib); x++)
+   {
+      memcpy(dst_bits, color, bytespp);
+      dst_bits += bytespp;
+   }
 
-	// then, copy the first scanline into all following scanlines
-	unsigned height = FreeImage_GetHeight(dib);
-	unsigned pitch = FreeImage_GetPitch(dib);
-	unsigned bytes = FreeImage_GetLine(dib);
-	dst_bits = src_bits + pitch;
-	for (unsigned y = 1; y < height; y++) {
-		memcpy(dst_bits, src_bits, bytes);
-		dst_bits += pitch;
-	}
-	return TRUE;
+   // then, copy the first scanline into all following scanlines
+   unsigned height = FreeImage_GetHeight(dib);
+   unsigned pitch = FreeImage_GetPitch(dib);
+   unsigned bytes = FreeImage_GetLine(dib);
+   dst_bits = src_bits + pitch;
+   for (unsigned y = 1; y < height; y++)
+   {
+      memcpy(dst_bits, src_bits, bytes);
+      dst_bits += pitch;
+   }
+   return TRUE;
 }
 
 /** @brief Allocates a new image of the specified type, width, height and bit depth and
@@ -511,142 +580,181 @@ FreeImage_FillBackground(FIBITMAP *dib, const void *color, int options) {
  @return Returns a pointer to a newly allocated image on success, NULL otherwise.
  */
 FIBITMAP * DLL_CALLCONV
-FreeImage_AllocateExT(FREE_IMAGE_TYPE type, int width, int height, int bpp, const void *color, int options, const RGBQUAD *palette, unsigned red_mask, unsigned green_mask, unsigned blue_mask) {
+FreeImage_AllocateExT(FREE_IMAGE_TYPE type, int width, int height, int bpp, const void *color, int options, const RGBQUAD *palette, unsigned red_mask, unsigned green_mask, unsigned blue_mask)
+{
 
-	FIBITMAP *bitmap = FreeImage_AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask);
+   FIBITMAP *bitmap = FreeImage_AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask);
 
-	if (!color) {
-		if ((palette) && (type == FIT_BITMAP) && (bpp <= 8)) {
-			memcpy(FreeImage_GetPalette(bitmap), palette, FreeImage_GetColorsUsed(bitmap) * sizeof(RGBQUAD));
-		}
-		return bitmap;
-	}
+   if (!color)
+   {
+      if ((palette) && (type == FIT_BITMAP) && (bpp <= 8))
+      {
+         memcpy(FreeImage_GetPalette(bitmap), palette, FreeImage_GetColorsUsed(bitmap) * sizeof(RGBQUAD));
+      }
+      return bitmap;
+   }
 
-	if (bitmap != NULL) {
+   if (bitmap != NULL)
+   {
 
-		// Only fill the new bitmap if the specified color
-		// differs from "black", that is not all bytes of the
-		// color are equal to zero.
-		switch (bpp) {
-			case 1: {
-				// although 1-bit implies FIT_BITMAP, better get an unsigned
-				// color and palette
-				unsigned *urgb = (unsigned *)color;
-				unsigned *upal = (unsigned *)FreeImage_GetPalette(bitmap);
-				RGBQUAD rgbq = RGBQUAD();
+      // Only fill the new bitmap if the specified color
+      // differs from "black", that is not all bytes of the
+      // color are equal to zero.
+      switch (bpp)
+      {
+      case 1:
+      {
+         // although 1-bit implies FIT_BITMAP, better get an unsigned
+         // color and palette
+         unsigned *urgb = (unsigned *)color;
+         unsigned *upal = (unsigned *)FreeImage_GetPalette(bitmap);
+         RGBQUAD rgbq = RGBQUAD();
 
-				if (palette != NULL) {
-					// clone the specified palette
-					memcpy(FreeImage_GetPalette(bitmap), palette, 2 * sizeof(RGBQUAD));
-				} else if (options & FI_COLOR_ALPHA_IS_INDEX) {
-					CREATE_GREYSCALE_PALETTE(upal, 2);
-				} else {
-					// check, whether the specified color is either black or white
-					if ((*urgb & 0xFFFFFF) == 0x000000) {
-						// in any case build a FIC_MINISBLACK palette
-						CREATE_GREYSCALE_PALETTE(upal, 2);
-						color = &rgbq;
-					} else if ((*urgb & 0xFFFFFF) == 0xFFFFFF) {
-						// in any case build a FIC_MINISBLACK palette
-						CREATE_GREYSCALE_PALETTE(upal, 2);
-						rgbq.rgbReserved = 1;
-						color = &rgbq;
-					} else {
-						// Otherwise inject the specified color into the so far
-						// black-only palette. We use color->rgbReserved as the
-						// desired palette index.
-						BYTE index = ((RGBQUAD *)color)->rgbReserved & 0x01;
-						upal[index] = *urgb & 0x00FFFFFF;
-					}
-					options |= FI_COLOR_ALPHA_IS_INDEX;
-				}
-				// and defer to FreeImage_FillBackground
-				FreeImage_FillBackground(bitmap, color, options);
-				break;
-			}
-			case 4: {
-				// 4-bit implies FIT_BITMAP so, get a RGBQUAD color
-				RGBQUAD *rgb = (RGBQUAD *)color;
-				RGBQUAD *pal = FreeImage_GetPalette(bitmap);
-				RGBQUAD rgbq = RGBQUAD();
+         if (palette != NULL)
+         {
+            // clone the specified palette
+            memcpy(FreeImage_GetPalette(bitmap), palette, 2 * sizeof(RGBQUAD));
+         }
+         else if (options & FI_COLOR_ALPHA_IS_INDEX)
+         {
+            CREATE_GREYSCALE_PALETTE(upal, 2);
+         }
+         else
+         {
+            // check, whether the specified color is either black or white
+            if ((*urgb & 0xFFFFFF) == 0x000000)
+            {
+               // in any case build a FIC_MINISBLACK palette
+               CREATE_GREYSCALE_PALETTE(upal, 2);
+               color = &rgbq;
+            }
+            else if ((*urgb & 0xFFFFFF) == 0xFFFFFF)
+            {
+               // in any case build a FIC_MINISBLACK palette
+               CREATE_GREYSCALE_PALETTE(upal, 2);
+               rgbq.rgbReserved = 1;
+               color = &rgbq;
+            }
+            else
+            {
+               // Otherwise inject the specified color into the so far
+               // black-only palette. We use color->rgbReserved as the
+               // desired palette index.
+               BYTE index = ((RGBQUAD *)color)->rgbReserved & 0x01;
+               upal[index] = *urgb & 0x00FFFFFF;
+            }
+            options |= FI_COLOR_ALPHA_IS_INDEX;
+         }
+         // and defer to FreeImage_FillBackground
+         FreeImage_FillBackground(bitmap, color, options);
+         break;
+      }
+      case 4:
+      {
+         // 4-bit implies FIT_BITMAP so, get a RGBQUAD color
+         RGBQUAD *rgb = (RGBQUAD *)color;
+         RGBQUAD *pal = FreeImage_GetPalette(bitmap);
+         RGBQUAD rgbq = RGBQUAD();
 
-				if (palette != NULL) {
-					// clone the specified palette
-					memcpy(pal, palette, 16 * sizeof(RGBQUAD));
-				} else if (options & FI_COLOR_ALPHA_IS_INDEX) {
-					CREATE_GREYSCALE_PALETTE(pal, 16);
-				} else {
-					// check, whether the specified color is a grey one
-					if ((rgb->rgbRed == rgb->rgbGreen) && (rgb->rgbRed == rgb->rgbBlue)) {
-						// if so, build a greyscale palette
-						CREATE_GREYSCALE_PALETTE(pal, 16);
-						rgbq.rgbReserved = rgb->rgbRed >> 4;
-						color = &rgbq;
-					} else {
-						// Otherwise inject the specified color into the so far
-						// black-only palette. We use color->rgbReserved as the
-						// desired palette index.
-						BYTE index = (rgb->rgbReserved & 0x0F);
-						((unsigned *)pal)[index] = *((unsigned *)rgb) & 0x00FFFFFF;
-					}
-					options |= FI_COLOR_ALPHA_IS_INDEX;
-				}
-				// and defer to FreeImage_FillBackground
-				FreeImage_FillBackground(bitmap, color, options);
-				break;
-			}
-			case 8: {
-				// 8-bit implies FIT_BITMAP so, get a RGBQUAD color
-				RGBQUAD *rgb = (RGBQUAD *)color;
-				RGBQUAD *pal = FreeImage_GetPalette(bitmap);
-				RGBQUAD rgbq;
+         if (palette != NULL)
+         {
+            // clone the specified palette
+            memcpy(pal, palette, 16 * sizeof(RGBQUAD));
+         }
+         else if (options & FI_COLOR_ALPHA_IS_INDEX)
+         {
+            CREATE_GREYSCALE_PALETTE(pal, 16);
+         }
+         else
+         {
+            // check, whether the specified color is a grey one
+            if ((rgb->rgbRed == rgb->rgbGreen) && (rgb->rgbRed == rgb->rgbBlue))
+            {
+               // if so, build a greyscale palette
+               CREATE_GREYSCALE_PALETTE(pal, 16);
+               rgbq.rgbReserved = rgb->rgbRed >> 4;
+               color = &rgbq;
+            }
+            else
+            {
+               // Otherwise inject the specified color into the so far
+               // black-only palette. We use color->rgbReserved as the
+               // desired palette index.
+               BYTE index = (rgb->rgbReserved & 0x0F);
+               ((unsigned *)pal)[index] = *((unsigned *)rgb) & 0x00FFFFFF;
+            }
+            options |= FI_COLOR_ALPHA_IS_INDEX;
+         }
+         // and defer to FreeImage_FillBackground
+         FreeImage_FillBackground(bitmap, color, options);
+         break;
+      }
+      case 8:
+      {
+         // 8-bit implies FIT_BITMAP so, get a RGBQUAD color
+         RGBQUAD *rgb = (RGBQUAD *)color;
+         RGBQUAD *pal = FreeImage_GetPalette(bitmap);
+         RGBQUAD rgbq;
 
-				if (palette != NULL) {
-					// clone the specified palette
-					memcpy(pal, palette, 256 * sizeof(RGBQUAD));
-				} else if (options & FI_COLOR_ALPHA_IS_INDEX) {
-					CREATE_GREYSCALE_PALETTE(pal, 256);
-				} else {
-					// check, whether the specified color is a grey one
-					if ((rgb->rgbRed == rgb->rgbGreen) && (rgb->rgbRed == rgb->rgbBlue)) {
-						// if so, build a greyscale palette
-						CREATE_GREYSCALE_PALETTE(pal, 256);
-						rgbq.rgbReserved = rgb->rgbRed;
-						color = &rgbq;
-					} else {
-						// Otherwise inject the specified color into the so far
-						// black-only palette. We use color->rgbReserved as the
-						// desired palette index.
-						BYTE index = rgb->rgbReserved;
-						((unsigned *)pal)[index] = *((unsigned *)rgb) & 0x00FFFFFF;
-					}
-					options |= FI_COLOR_ALPHA_IS_INDEX;
-				}
-				// and defer to FreeImage_FillBackground
-				FreeImage_FillBackground(bitmap, color, options);
-				break;
-			}
-			case 16: {
-				WORD wcolor = (type == FIT_BITMAP) ?
-					RGBQUAD_TO_WORD(bitmap, ((RGBQUAD *)color)) : *((WORD *)color);
-				if (wcolor != 0) {
-					FreeImage_FillBackground(bitmap, color, options);
-				}
-				break;
-			}
-			default: {
-				int bytespp = bpp / 8;
-				for (int i = 0; i < bytespp; i++) {
-					if (((BYTE *)color)[i] != 0) {
-						FreeImage_FillBackground(bitmap, color, options);
-						break;
-					}
-				}
-				break;
-			}
-		}
-	}
-	return bitmap;
+         if (palette != NULL)
+         {
+            // clone the specified palette
+            memcpy(pal, palette, 256 * sizeof(RGBQUAD));
+         }
+         else if (options & FI_COLOR_ALPHA_IS_INDEX)
+         {
+            CREATE_GREYSCALE_PALETTE(pal, 256);
+         }
+         else
+         {
+            // check, whether the specified color is a grey one
+            if ((rgb->rgbRed == rgb->rgbGreen) && (rgb->rgbRed == rgb->rgbBlue))
+            {
+               // if so, build a greyscale palette
+               CREATE_GREYSCALE_PALETTE(pal, 256);
+               rgbq.rgbReserved = rgb->rgbRed;
+               color = &rgbq;
+            }
+            else
+            {
+               // Otherwise inject the specified color into the so far
+               // black-only palette. We use color->rgbReserved as the
+               // desired palette index.
+               BYTE index = rgb->rgbReserved;
+               ((unsigned *)pal)[index] = *((unsigned *)rgb) & 0x00FFFFFF;
+            }
+            options |= FI_COLOR_ALPHA_IS_INDEX;
+         }
+         // and defer to FreeImage_FillBackground
+         FreeImage_FillBackground(bitmap, color, options);
+         break;
+      }
+      case 16:
+      {
+         WORD wcolor = (type == FIT_BITMAP) ?
+                       RGBQUAD_TO_WORD(bitmap, ((RGBQUAD *)color)) : *((WORD *)color);
+         if (wcolor != 0)
+         {
+            FreeImage_FillBackground(bitmap, color, options);
+         }
+         break;
+      }
+      default:
+      {
+         int bytespp = bpp / 8;
+         for (int i = 0; i < bytespp; i++)
+         {
+            if (((BYTE *)color)[i] != 0)
+            {
+               FreeImage_FillBackground(bitmap, color, options);
+               break;
+            }
+         }
+         break;
+      }
+      }
+   }
+   return bitmap;
 }
 
 /** @brief Allocates a new image of the specified width, height and bit depth and optionally
@@ -703,8 +811,9 @@ FreeImage_AllocateExT(FREE_IMAGE_TYPE type, int width, int height, int bpp, cons
  @return Returns a pointer to a newly allocated image on success, NULL otherwise.
  */
 FIBITMAP * DLL_CALLCONV
-FreeImage_AllocateEx(int width, int height, int bpp, const RGBQUAD *color, int options, const RGBQUAD *palette, unsigned red_mask, unsigned green_mask, unsigned blue_mask) {
-	return FreeImage_AllocateExT(FIT_BITMAP, width, height, bpp, ((void *)color), options, palette, red_mask, green_mask, blue_mask);
+FreeImage_AllocateEx(int width, int height, int bpp, const RGBQUAD *color, int options, const RGBQUAD *palette, unsigned red_mask, unsigned green_mask, unsigned blue_mask)
+{
+   return FreeImage_AllocateExT(FIT_BITMAP, width, height, bpp, ((void *)color), options, palette, red_mask, green_mask, blue_mask);
 }
 
 /** @brief Enlarges or shrinks an image selectively per side and fills newly added areas
@@ -774,122 +883,138 @@ FreeImage_AllocateEx(int width, int height, int bpp, const RGBQUAD *color, int o
  y-direction.
  */
 FIBITMAP * DLL_CALLCONV
-FreeImage_EnlargeCanvas(FIBITMAP *src, int left, int top, int right, int bottom, const void *color, int options) {
+FreeImage_EnlargeCanvas(FIBITMAP *src, int left, int top, int right, int bottom, const void *color, int options)
+{
 
-	if(!FreeImage_HasPixels(src)) return NULL;
+   if(!FreeImage_HasPixels(src)) return NULL;
 
-	// Just return a clone of the image, if left, top, right and bottom are
-	// all zero.
-	if ((left == 0) && (right == 0) && (top == 0) && (bottom == 0)) {
-		return FreeImage_Clone(src);
-	}
+   // Just return a clone of the image, if left, top, right and bottom are
+   // all zero.
+   if ((left == 0) && (right == 0) && (top == 0) && (bottom == 0))
+   {
+      return FreeImage_Clone(src);
+   }
 
-	int width = FreeImage_GetWidth(src);
-	int height = FreeImage_GetHeight(src);
+   int width = FreeImage_GetWidth(src);
+   int height = FreeImage_GetHeight(src);
 
-	// Relay on FreeImage_Copy, if all parameters left, top, right and
-	// bottom are smaller than or equal zero. The color pointer may be
-	// NULL in this case.
-	if ((left <= 0) && (right <= 0) && (top <= 0) && (bottom <= 0)) {
-		return FreeImage_Copy(src, -left, -top,	width + right, height + bottom);
-	}
+   // Relay on FreeImage_Copy, if all parameters left, top, right and
+   // bottom are smaller than or equal zero. The color pointer may be
+   // NULL in this case.
+   if ((left <= 0) && (right <= 0) && (top <= 0) && (bottom <= 0))
+   {
+      return FreeImage_Copy(src, -left, -top,	width + right, height + bottom);
+   }
 
-	// From here, we need a valid color, since the image will be enlarged on
-	// at least one side. So, fail if we don't have a valid color pointer.
-	if (!color) {
-		return NULL;
-	}
+   // From here, we need a valid color, since the image will be enlarged on
+   // at least one side. So, fail if we don't have a valid color pointer.
+   if (!color)
+   {
+      return NULL;
+   }
 
-	if (((left < 0) && (-left >= width)) || ((right < 0) && (-right >= width)) ||
-		((top < 0) && (-top >= height)) || ((bottom < 0) && (-bottom >= height))) {
-		return NULL;
-	}
+   if (((left < 0) && (-left >= width)) || ((right < 0) && (-right >= width)) ||
+         ((top < 0) && (-top >= height)) || ((bottom < 0) && (-bottom >= height)))
+   {
+      return NULL;
+   }
 
-	unsigned newWidth = width + left + right;
-	unsigned newHeight = height + top + bottom;
+   unsigned newWidth = width + left + right;
+   unsigned newHeight = height + top + bottom;
 
-	FREE_IMAGE_TYPE type = FreeImage_GetImageType(src);
-	unsigned bpp = FreeImage_GetBPP(src);
+   FREE_IMAGE_TYPE type = FreeImage_GetImageType(src);
+   unsigned bpp = FreeImage_GetBPP(src);
 
-	FIBITMAP *dst = FreeImage_AllocateExT(
-		type, newWidth, newHeight, bpp, color, options,
-		FreeImage_GetPalette(src),
-		FreeImage_GetRedMask(src),
-		FreeImage_GetGreenMask(src),
-		FreeImage_GetBlueMask(src));
+   FIBITMAP *dst = FreeImage_AllocateExT(
+                   type, newWidth, newHeight, bpp, color, options,
+                   FreeImage_GetPalette(src),
+                   FreeImage_GetRedMask(src),
+                   FreeImage_GetGreenMask(src),
+                   FreeImage_GetBlueMask(src));
 
-	if (!dst) {
-		return NULL;
-	}
+   if (!dst)
+   {
+      return NULL;
+   }
 
-	if ((type == FIT_BITMAP) && (bpp <= 4)) {
-		FIBITMAP *copy = FreeImage_Copy(src,
-			((left >= 0) ? 0 : -left),
-			((top >= 0) ? 0 : -top),
-			((width+right)>width)?width:(width+right),
-			((height+bottom)>height)?height:(height+bottom));
+   if ((type == FIT_BITMAP) && (bpp <= 4))
+   {
+      FIBITMAP *copy = FreeImage_Copy(src,
+                                      ((left >= 0) ? 0 : -left),
+                                      ((top >= 0) ? 0 : -top),
+                                      ((width+right)>width)?width:(width+right),
+                                      ((height+bottom)>height)?height:(height+bottom));
 
-		if (!copy) {
-			FreeImage_Unload(dst);
-			return NULL;
-		}
+      if (!copy)
+      {
+         FreeImage_Unload(dst);
+         return NULL;
+      }
 
-		if (!FreeImage_Paste(dst, copy,
-				((left <= 0) ? 0 : left),
-				((top <= 0) ? 0 : top), 256)) {
-			FreeImage_Unload(copy);
-			FreeImage_Unload(dst);
-			return NULL;
-		}
+      if (!FreeImage_Paste(dst, copy,
+                           ((left <= 0) ? 0 : left),
+                           ((top <= 0) ? 0 : top), 256))
+      {
+         FreeImage_Unload(copy);
+         FreeImage_Unload(dst);
+         return NULL;
+      }
 
-		FreeImage_Unload(copy);
+      FreeImage_Unload(copy);
 
-	} else {
+   }
+   else
+   {
 
-		int bytespp = bpp / 8;
-		BYTE *srcPtr = FreeImage_GetScanLine(src, height - 1 - ((top >= 0) ? 0 : -top));
-		BYTE *dstPtr = FreeImage_GetScanLine(dst, newHeight - 1 - ((top <= 0) ? 0 : top));
+      int bytespp = bpp / 8;
+      BYTE *srcPtr = FreeImage_GetScanLine(src, height - 1 - ((top >= 0) ? 0 : -top));
+      BYTE *dstPtr = FreeImage_GetScanLine(dst, newHeight - 1 - ((top <= 0) ? 0 : top));
 
-		unsigned srcPitch = FreeImage_GetPitch(src);
-		unsigned dstPitch = FreeImage_GetPitch(dst);
+      unsigned srcPitch = FreeImage_GetPitch(src);
+      unsigned dstPitch = FreeImage_GetPitch(dst);
 
-		int lineWidth = bytespp * (width + MIN(0, left) + MIN(0, right));
-		int lines = height + MIN(0, top) + MIN(0, bottom);
+      int lineWidth = bytespp * (width + MIN(0, left) + MIN(0, right));
+      int lines = height + MIN(0, top) + MIN(0, bottom);
 
-		if (left <= 0) {
-			srcPtr += (-left * bytespp);
-		} else {
-			dstPtr += (left * bytespp);
-		}
+      if (left <= 0)
+      {
+         srcPtr += (-left * bytespp);
+      }
+      else
+      {
+         dstPtr += (left * bytespp);
+      }
 
-		for (int i = 0; i < lines; i++) {
-			memcpy(dstPtr, srcPtr, lineWidth);
-			srcPtr -= srcPitch;
-			dstPtr -= dstPitch;
-		}
-	}
+      for (int i = 0; i < lines; i++)
+      {
+         memcpy(dstPtr, srcPtr, lineWidth);
+         srcPtr -= srcPitch;
+         dstPtr -= dstPitch;
+      }
+   }
 
-	// copy metadata from src to dst
-	FreeImage_CloneMetadata(dst, src);
+   // copy metadata from src to dst
+   FreeImage_CloneMetadata(dst, src);
 
-	// copy transparency table
-	FreeImage_SetTransparencyTable(dst, FreeImage_GetTransparencyTable(src), FreeImage_GetTransparencyCount(src));
+   // copy transparency table
+   FreeImage_SetTransparencyTable(dst, FreeImage_GetTransparencyTable(src), FreeImage_GetTransparencyCount(src));
 
-	// copy background color
-	RGBQUAD bkcolor;
-	if( FreeImage_GetBackgroundColor(src, &bkcolor) ) {
-		FreeImage_SetBackgroundColor(dst, &bkcolor);
-	}
+   // copy background color
+   RGBQUAD bkcolor;
+   if( FreeImage_GetBackgroundColor(src, &bkcolor) )
+   {
+      FreeImage_SetBackgroundColor(dst, &bkcolor);
+   }
 
-	// clone resolution
-	FreeImage_SetDotsPerMeterX(dst, FreeImage_GetDotsPerMeterX(src));
-	FreeImage_SetDotsPerMeterY(dst, FreeImage_GetDotsPerMeterY(src));
+   // clone resolution
+   FreeImage_SetDotsPerMeterX(dst, FreeImage_GetDotsPerMeterX(src));
+   FreeImage_SetDotsPerMeterY(dst, FreeImage_GetDotsPerMeterY(src));
 
-	// clone ICC profile
-	FIICCPROFILE *src_profile = FreeImage_GetICCProfile(src);
-	FIICCPROFILE *dst_profile = FreeImage_CreateICCProfile(dst, src_profile->data, src_profile->size);
-	dst_profile->flags = src_profile->flags;
+   // clone ICC profile
+   FIICCPROFILE *src_profile = FreeImage_GetICCProfile(src);
+   FIICCPROFILE *dst_profile = FreeImage_CreateICCProfile(dst, src_profile->data, src_profile->size);
+   dst_profile->flags = src_profile->flags;
 
-	return dst;
+   return dst;
 }
 

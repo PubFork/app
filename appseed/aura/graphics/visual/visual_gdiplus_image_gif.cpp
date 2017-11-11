@@ -2795,7 +2795,7 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp pfile, ::a
 
 #ifdef METROWIN
 
-bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp)
+CLASS_DECL_AURA bool windows_load_dib_from_file(::draw2d::dib * pdib, Windows::Storage::Streams::IRandomAccessStream ^stream, ::aura::application * papp)
 {
 
    if (!defer_co_initialize_ex(true))
