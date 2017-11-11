@@ -94,15 +94,6 @@ MC_COLOR_TEMPERATURE kelvin_mc_color(DWORD kelvin)
 namespace base
 {
 
-#ifdef METROWIN
-   system::os_system_window::os_system_window()
-   {
-
-      m_bWindowSizeChange = false;
-
-   }
-
-#endif
 
 
    system::system(::aura::application * papp) :
@@ -508,8 +499,8 @@ namespace base
 
       // Get the number of physical monitors.
       BOOL bSuccess = GetNumberOfPhysicalMonitorsFromHMONITOR(
-                         m_hmonitora[iMonitor],
-                         &cPhysicalMonitors
+                      m_hmonitora[iMonitor],
+                      &cPhysicalMonitors
                       );
 
       if (!bSuccess || cPhysicalMonitors <= 0)
