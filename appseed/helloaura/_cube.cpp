@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 
+
 ::aura::application * get_acid_app(::aura::application * papp)
 {
 

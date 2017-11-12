@@ -215,7 +215,7 @@ namespace helloaura
 
 
 extern "C"
-::aura::library * app_helloaxis_get_new_library(::aura::application * papp)
+::aura::library * app_helloaura_get_new_library(::aura::application * papp)
 {
 
    return new ::aura::single_application_library < ::helloaura::application >(papp, "app/helloaura");
