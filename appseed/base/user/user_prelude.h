@@ -227,6 +227,9 @@ namespace user
 #include "base/user/user/user_server.h"
 #include "base/user/user/user_impact_system.h"
 
+#include "base/user/user/user_single_document_template.h"
+#include "base/user/user/user_multiple_document_template.h"
+
 
 //#include "base/user/user/user_tooltip.h"
 

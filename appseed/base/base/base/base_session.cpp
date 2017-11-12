@@ -68,8 +68,8 @@ namespace base
       //m_puserstyle           = NULL;
 
       m_pcopydesk = NULL;
-
    }
+
 
 
    //void session::construct(::aura::application * papp, int iPhase)
@@ -287,7 +287,7 @@ namespace base
       }
 
       return true;
-      
+
    }
 
    void session::frame_pre_translate_message(::message::message * pobj)

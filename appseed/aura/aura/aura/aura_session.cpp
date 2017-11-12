@@ -26,14 +26,8 @@ namespace aura
 
       m_ecursor = ::visual::cursor_default;
 
-      m_bDrawCursor = false;
+      m_bDrawCursor = true;
 
-
-      m_bDrawCursor = false;
-
-      m_ecursorDefault = ::visual::cursor_arrow;
-
-      m_ecursor = ::visual::cursor_default;
       m_pappCurrent = NULL;
       m_psockets = NULL;
       m_paurasession = this;
@@ -1690,14 +1684,12 @@ namespace aura
    ::visual::cursor * session::get_cursor()
    {
 
-      if (m_ecursor == ::visual::cursor_visual)
-      {
-
-         return m_pcursor;
-
-      }
-
-      return NULL;
+      if (m_ecursor == ::visual::cursor_none)
+         return NULL;
+      else if (m_ecursor == ::visual::cursor_default)
+         return System.visual().get_cursor(m_ecursorDefault);
+      else
+         return System.visual().get_cursor(m_ecursor);
 
    }
 

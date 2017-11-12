@@ -1,39 +1,24 @@
 #include "framework.h"
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
-   application::application() :
-      m_mutexAiFont(this)
+   application::application()
    {
 
       m_ptemplateHelloMultiverseMain = NULL;
-      m_ptemplateHelloMultiverseView = NULL;
-      m_ptemplateHelloMultiverseSwitcher = NULL;
 
-      m_strAppName = "app/helloworld";
-      m_strLibraryName = "app/helloworld";
+      m_strAppName = "app/hellobase";
+      m_strLibraryName = "app/hellobase";
       m_strBaseSupportId = "ca2_flag";
       m_bLicense = false;
 
       m_etype = type_normal;
 
-      m_strHelloMultiverseDefault = "Hello Multiverse!!";
-      m_strAlternateHelloMultiverseDefault = "Hello!!";
-
-      m_strHelloMultiverse = m_strHelloMultiverseDefault;
-      m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
-
-      m_iErrorAiFont = -1;
-
-      m_bLoadAiFont = false;
-
-      m_faceAi = NULL; // FT_Face m_faceAi;
-
-      m_bMultiverseChat = true;
-
+      m_strHelloMultiverseDefault = "Hello Base!!";
+      m_strAlternateHelloMultiverseDefault = "Hi Base!!";
 
 
    }
@@ -47,27 +32,26 @@ namespace helloworld
    bool application::initialize_application()
    {
 
-      ::core::session * pcoression = m_pauraapp->m_pcoresession;
-
-      pcoression->use_font_sel();
-
-      System.factory().creatable_small < ::helloworld::document >();
-      System.factory().creatable_small < ::helloworld::frame >();
-      System.factory().creatable_small < ::helloworld::main_frame >();
+      System.factory().creatable_small < ::hellobase::document >();
+      System.factory().creatable_small < ::hellobase::main_frame >();
       System.factory().creatable_small < ::user::button_view >();
-      System.factory().creatable_small < ::helloworld::view >();
-      System.factory().creatable_small < ::helloworld::main_view >();
-      System.factory().creatable_small < ::helloworld::switcher_view >();
-      System.factory().creatable_small < ::helloworld::pane_view >();
+      System.factory().creatable_small < ::hellobase::view >();
 
-      if (!::core::application::initialize_application())
+      if (!::base::application::initialize_application())
       {
 
          return false;
 
       }
 
-      string str = handler()->m_varTopicQuery["helloworld"];
+      if (!::helloaxis::application::initialize_application())
+      {
+
+         return false;
+
+      }
+
+      string str = handler()->m_varTopicQuery["hellobase"];
 
       if (str.has_char())
       {
@@ -82,33 +66,12 @@ namespace helloworld
 
 
       pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "main",
-                              System.type_info < document >(),
-                              System.type_info < main_frame >(),
-                              System.type_info < pane_view >()));
+                           this,
+                           "main",
+                           System.type_info < document >(),
+                           System.type_info < main_frame >(),
+                           System.type_info < view >()));
       m_ptemplateHelloMultiverseMain = pDocTemplate;
-      add_document_template(pDocTemplate);
-
-
-      pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "main",
-                              System.type_info < document >(),
-                              System.type_info < frame >(),
-                              System.type_info < main_view >()));
-      m_ptemplateHelloMultiverseView = pDocTemplate;
-      add_document_template(pDocTemplate);
-
-
-      pDocTemplate = canew(::user::single_document_template(
-                              this,
-                              "switcher",
-                              System.type_info < document >(),
-                              System.type_info < frame >(),
-                              System.type_info < switcher_view >()));
-      m_ptemplateHelloMultiverseSwitcher = pDocTemplate;
-      add_document_template(pDocTemplate);
 
 
       return true;
@@ -119,7 +82,9 @@ namespace helloworld
    int32_t application::exit_application()
    {
 
-      return ::core::application::exit_application();
+      ::helloaxis::application::exit_application();
+
+      return ::base::application::exit_application();
 
    }
 
@@ -145,8 +110,6 @@ namespace helloworld
 
 #endif
 
-      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
-
       if (m_ptemplateHelloMultiverseMain->get_document_count() == 0)
       {
 
@@ -154,21 +117,8 @@ namespace helloworld
 
       }
 
-      if (pcreate->m_spCommandLine->m_varFile.has_char())
-      {
 
-         m_ptemplateHelloMultiverseView->request_create(pcreate);
-
-      }
-
-      if (handler()->m_varTopicQuery["wfi_maximize"].is_set())
-      {
-
-         pcreate->m_spCommandLine->m_varQuery["document"].cast < document >()->get_typed_view < ::userex::pane_tab_view >()->GetTopLevelFrame()->_001WindowMaximize();
-
-      }
-
-      output_debug_string("\nfinished helloworld::on_request");
+      output_debug_string("\nfinished hellobase::on_request");
 
    }
 
@@ -181,31 +131,24 @@ namespace helloworld
    }
 
 
-   int64_t application::add_ref()
+   string application::get_helloaura()
    {
 
-      return ::object::add_ref();
-
-   }
-
-   int64_t application::dec_ref()
-   {
-
-      return ::object::dec_ref();
+      return "Hello Base!!";
 
    }
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 
 
 extern "C"
-::aura::library * app_helloworld_get_new_library(::aura::application * papp)
+::aura::library * app_hellobase_get_new_library(::aura::application * papp)
 {
 
-   return new ::aura::single_application_library < ::helloworld::application >(papp, "app/helloworld");
+   return new ::aura::single_application_library < ::hellobase::application >(papp, "app/hellobase");
 
 }
 

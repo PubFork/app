@@ -5,7 +5,7 @@
 //extern CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
@@ -28,8 +28,6 @@ namespace helloworld
       m_eeffect                  = effect_none;
 
       m_dFps                     = 0.0;
-
-      m_ppcreutil = pcre_util::compile(get_app(), "\\:\\-\\)");
 
    }
 
@@ -400,7 +398,7 @@ namespace helloworld
 
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 

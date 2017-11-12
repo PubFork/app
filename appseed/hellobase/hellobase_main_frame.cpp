@@ -1,16 +1,13 @@
 #include "framework.h"
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
    main_frame::main_frame(::aura::application * papp) :
-      object(papp),
-      simple_frame_window(papp)
+      object(papp)
    {
-
-      m_bDefaultCreateToolbar = false;
 
       WfiEnableFullScreen();
 
@@ -22,8 +19,6 @@ namespace helloworld
       {
 
          m_bExplicitTranslucency = true;
-
-         m_etranslucency = ::user::translucency_none;
 
       }
       else
@@ -47,7 +42,7 @@ namespace helloworld
    void main_frame::assert_valid() const
    {
 
-      simple_frame_window::assert_valid();
+      ::user::frame_window::assert_valid();
 
    }
 
@@ -55,27 +50,11 @@ namespace helloworld
    void main_frame::dump(dump_context & dumpcontext) const
    {
 
-      simple_frame_window::dump(dumpcontext);
+      ::user::frame_window::dump(dumpcontext);
 
    }
 
 
-   sp(::user::wndfrm::frame::frame) main_frame::create_frame_schema()
-   {
-
-
-
-      //sp(::user::wndfrm::main_frame::main_frame) pschema = Application.wndfrm()->get_frame_schema("wndfrm_core", "001");
-
-      sp(::user::wndfrm::frame::frame) pschema = Application.wndfrm()->get_frame_schema(NULL, "013");
-
-      pschema->set_style("LightBlue");
-
-      //       // pschema->m_typeinfoControlBoxButton = System.type_info < MetaButton > ();
-
-      return pschema;
-
-   }
 
    bool main_frame::has_pending_graphical_update()
    {
@@ -90,8 +69,6 @@ namespace helloworld
 
       if (m_bExplicitTranslucency)
       {
-
-         etranslucency = m_etranslucency;
 
          return true;
 
@@ -115,7 +92,7 @@ namespace helloworld
    }
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 

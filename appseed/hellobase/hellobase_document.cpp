@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
@@ -93,12 +93,6 @@ namespace helloworld
          get_typed_view < ::user::plain_edit_view >()->_001SetText(str.Left(84),::action::source_user);
 
       }
-      else if(get_typed_view < ::userex::pane_tab_view >() != NULL)
-      {
-
-         get_typed_view < ::userex::pane_tab_view >()->set_cur_tab_by_id(::helloworld::PaneViewHelloMultiverse);
-
-      }
 
       return true;
 
@@ -121,7 +115,7 @@ namespace helloworld
 
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 

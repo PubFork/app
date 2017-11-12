@@ -3,9 +3,9 @@
 ::aura::application * get_acid_app(::aura::application * papp)
 {
 
-   return new ::helloworld::application();
+   return new ::hellobase::application();
 
 }
 
 
-#include "aura/aura/os/windows/windows_core.inl"
+#include "aura/aura/os/windows/windows_base.inl"

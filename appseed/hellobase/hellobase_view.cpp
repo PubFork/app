@@ -5,7 +5,7 @@
 //extern CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
@@ -52,8 +52,6 @@ namespace helloworld
       m_bHelloLayoutOn001Layout = true;
 
       m_b001LayoutIgnoreEmpty = false;
-
-      m_ppcreutil = pcre_util::compile(get_app(), "\\:\\-\\)");
 
    }
 
@@ -102,24 +100,6 @@ namespace helloworld
       data_get("cur_font",m_strNewFont);
 
       data_get("cur_text",strText);
-
-      if(GetTypedParent<::user::split_view>() != NULL)
-      {
-
-         if(GetTypedParent<::user::split_view>()->get_child_by_id("top_edit_view") != NULL)
-         {
-
-            GetTypedParent<::user::split_view>()->get_child_by_id("top_edit_view")->_001SetText(strText,::action::source_initialize);
-
-
-//            file_put_contents_dup("C:\\dennisheazle\\ft.txt", ::str::from((int_ptr)GetTopLevel()->get_handle()));
-
-            //GetTypedParent<::user::split_view>()->get_child_by_id("top_edit_view")->_001SetText(::str::from((int_ptr)GetTopLevel()->get_handle()), ::action::source_initialize);
-
-
-         }
-
-      }
 
 
 
@@ -193,30 +173,6 @@ namespace helloworld
 
       ::user::view_update_hint * puh = dynamic_cast < ::user::view_update_hint *> (phint);
 
-      if (puh != NULL)
-      {
-
-         auto * peditview = _001TypedWindow < ::userex::top_edit_view >();
-
-         if (peditview != NULL)
-         {
-
-            if (puh->m_ehint == ::user::view_update_hint::hint_after_change_text && puh->m_pui == peditview)
-            {
-
-               string strText;
-
-               peditview->_001GetText(strText);
-
-               m_strNewHelloMultiverse = strText;
-
-               data_set("cur_text", strText);
-
-            }
-
-         }
-
-      }
 
    }
 
@@ -257,21 +213,10 @@ namespace helloworld
       if(rectClient.area() <= 0)
          return;
 
-      bool bHover = GetTypedParent < pane_view >()->m_pviewLast == this && GetTypedParent < pane_view >()->get_cur_tab_id() == "font_sel";
-
-      if(m_prender->m_cx == rectClient.width()
-            && m_prender->m_cy == rectClient.height()
-            && !bHover
-            && m_strNewFont == m_strFont)
+      if(m_prender->m_rectClient == rectClient && m_strNewFont == m_strFont)
          return;
 
-      if (bHover)
-      {
-
-         m_strFont = m_strHoverFont;
-
-      }
-      else if(m_strNewFont != m_strFont)
+      if(m_strNewFont != m_strFont)
       {
 
          m_strFont = m_strNewFont;
@@ -279,10 +224,6 @@ namespace helloworld
          data_set("cur_font",m_strFont);
 
       }
-
-      m_prender->m_cx = rectClient.width();
-
-      m_prender->m_cy = rectClient.height();
 
       m_prender->m_rectClient = rectClient;
 
@@ -295,22 +236,12 @@ namespace helloworld
    }
 
 
-   string view::get_processed_helloworld()
+   string view::get_processed_hellobase()
    {
 
       synch_lock slText(&m_mutexText);
 
-      string str = get_helloworld();
-
-      int c = m_ppcreutil->matches(str);
-
-//      int c = pcre2_get_ovector_count(m_pmd);
-
-      if(c > 0)
-      {
-         str += "Smile for you too (pcremade |-) !!";
-      }
-
+      string str = get_hellobase();
 
       if(::str::begins_eat_ci(str,"image:"))
       {
@@ -406,7 +337,7 @@ namespace helloworld
    }
 
 
-   string view::get_helloworld()
+   string view::get_hellobase()
    {
 
       synch_lock sl(&m_mutexText);
@@ -469,10 +400,10 @@ namespace helloworld
 
          synch_lock sl(&m_mutexText);
 
-         if (get_processed_helloworld() != m_prender->m_strHelloMultiverse)
+         if (get_processed_hellobase() != m_prender->m_strHelloMultiverse)
          {
 
-            m_prender->m_strHelloMultiverse = get_processed_helloworld().c_str(); // rationale : string allocation fork *for multithreading*
+            m_prender->m_strHelloMultiverse = get_processed_hellobase().c_str(); // rationale : string allocation fork *for multithreading*
 
             sl.unlock();
 
@@ -512,7 +443,7 @@ namespace helloworld
    }
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 

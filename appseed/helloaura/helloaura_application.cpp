@@ -6,9 +6,6 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #pragma comment(lib,"comctl32.lib")
 
 
-int main_window(::helloaura::render * papp);
-
-
 INT_PTR CALLBACK DialogProc(HWND h, UINT u, WPARAM, LPARAM)
 {
 
@@ -27,12 +24,14 @@ INT_PTR CALLBACK DialogProc(HWND h, UINT u, WPARAM, LPARAM)
 
    return 0;
 }
+
+
 namespace helloaura
 {
 
 
-   application::application() :
-      m_mutexAiFont(this)
+   application::application() //:
+//      m_mutexAiFont(this)
    {
 
       m_strAppName = "app/helloaura";
@@ -48,13 +47,13 @@ namespace helloaura
       m_strHelloMultiverse = m_strHelloMultiverseDefault;
       m_strAlternateHelloMultiverse = m_strAlternateHelloMultiverseDefault;
 
-      m_iErrorAiFont = -1;
+//      m_iErrorAiFont = -1;
 
-      m_bLoadAiFont = false;
+      //    m_bLoadAiFont = false;
 
-      m_faceAi = NULL; // FT_Face m_faceAi;
+      //  m_faceAi = NULL; // FT_Face m_faceAi;
 
-      m_bMultiverseChat = true;
+//      m_bMultiverseChat = true;
 
 
 
@@ -77,6 +76,10 @@ namespace helloaura
          return false;
 
       }
+
+      m_dFps = 60;
+
+
 
       string str = handler()->m_varTopicQuery["helloaura"];
 
@@ -126,7 +129,7 @@ namespace helloaura
 #endif
 
 
-      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
+//      m_bMultiverseChat = !handler()->m_varTopicQuery["no_hello_edit"].is_set();
 
       output_debug_string("\nfinished helloaura::on_request");
 
@@ -172,11 +175,9 @@ namespace helloaura
       //   }
       //});
 
-      m_dFps = 60;
-
       m_prender = new render(this);
 
-      ::main_window(m_prender);
+      ::helloaura::main_window(m_prender);
 
       System.post_quit();
 
@@ -205,7 +206,7 @@ namespace helloaura
    string application::get_helloaura()
    {
 
-      return "Hello Axis!!";
+      return "Hello Aura!!";
 
    }
 

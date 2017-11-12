@@ -1,35 +1,35 @@
 #pragma once
 
 
-namespace helloworld
+namespace hellobase
 {
 
 
-   class CLASS_DECL_APP_CORE_HELLOMULTIVERSE document :
+   class CLASS_DECL_APP_HELLO_BASE document :
       public ::user::document
    {
-      public:
+   public:
 
 
-         document(::aura::application * papp);
-         virtual ~document();
+      document(::aura::application * papp);
+      virtual ~document();
 
 
-         virtual void assert_valid() const;
-         virtual void dump(dump_context & dumpcontext) const;
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
 
-         virtual bool on_new_document();
-         virtual bool on_open_document(var varFile);
+      virtual bool on_new_document();
+      virtual bool on_open_document(var varFile);
 
-         virtual int64_t add_ref();
+      virtual int64_t add_ref();
 
-         virtual int64_t dec_ref();
+      virtual int64_t dec_ref();
 
 
    };
 
 
-} // namespace helloworld
+} // namespace hellobase
 
 
 

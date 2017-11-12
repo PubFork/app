@@ -66,10 +66,7 @@ namespace axis
 
 #endif
 
-      m_bDrawCursor                 = false;
 
-
-      m_bDrawCursor                 = false;
 
       m_puiMouseMoveCapture         = NULL;
 

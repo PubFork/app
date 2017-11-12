@@ -14,41 +14,45 @@ BOOL                InitInstance(::helloaura::render * prender, HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int main_window(::helloaura::render * prender)
+
+namespace helloaura
 {
 
-   HINSTANCE hInstance = Sys(prender->get_app()).m_hinstance;
-   // TODO: Place code here.
-
-   // Initialize global strings
-   LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-   LoadStringW(hInstance, IDC_WINDOWSPROJECT2, szWindowClass, MAX_LOADSTRING);
-   MyRegisterClass(hInstance);
-
-   // Perform application initialization:
-   if (!InitInstance(prender, hInstance, SW_SHOW))
+   int main_window(::helloaura::render * prender)
    {
-      return FALSE;
-   }
 
-   HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
+      HINSTANCE hInstance = Sys(prender->get_app()).m_hinstance;
+      // TODO: Place code here.
 
-   MSG msg;
+      // Initialize global strings
+      LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+      LoadStringW(hInstance, IDC_WINDOWSPROJECT2, szWindowClass, MAX_LOADSTRING);
+      MyRegisterClass(hInstance);
 
-   // Main message loop:
-   while (GetMessage(&msg, nullptr, 0, 0))
-   {
-      if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+      // Perform application initialization:
+      if (!InitInstance(prender, hInstance, SW_SHOW))
       {
-         TranslateMessage(&msg);
-         DispatchMessage(&msg);
+         return FALSE;
       }
+
+      HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
+
+      MSG msg;
+
+      // Main message loop:
+      while (GetMessage(&msg, nullptr, 0, 0))
+      {
+         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+         {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+         }
+      }
+
+      return (int)msg.wParam;
    }
 
-   return (int)msg.wParam;
-}
-
-
+} // namespace helloaura
 
 //
 //  FUNCTION: MyRegisterClass()

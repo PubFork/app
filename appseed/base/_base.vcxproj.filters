@@ -368,9 +368,6 @@
     <ClInclude Include="user\user\user_windowing.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="base\node\windows\windows_interaction_impl.h">
-      <Filter>Header Files\base\node\windows</Filter>
-    </ClInclude>
     <ClInclude Include="user\user\user_message_queue.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
@@ -440,9 +437,6 @@
     <ClInclude Include="user\user\user_const.h">
       <Filter>Header Files\user\user</Filter>
     </ClInclude>
-    <ClInclude Include="base\os\windows\windows_window_buffer.h">
-      <Filter>Header Files\base\os\windows</Filter>
-    </ClInclude>
     <ClInclude Include="user\user.h">
       <Filter>Header Files\user</Filter>
     </ClInclude>
@@ -481,6 +475,12 @@
     </ClInclude>
     <ClInclude Include="base\os\windows\aaa_want_to_remove_windows_system_interaction_impl.h">
       <Filter>Header Files\base\os\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_single_document_template.h">
+      <Filter>Header Files\user\user</Filter>
+    </ClInclude>
+    <ClInclude Include="user\user\user_multiple_document_template.h">
+      <Filter>Header Files\user\user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -625,9 +625,6 @@
     <ClCompile Include="user\user\user_wait_cursor.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="base\node\windows\windows_interaction_impl.cpp">
-      <Filter>Source Files\base\node\windows</Filter>
-    </ClCompile>
     <ClCompile Include="database\database\database_user_interaction.cpp">
       <Filter>Source Files\database\database</Filter>
     </ClCompile>
@@ -653,9 +650,6 @@
       <Filter>Source Files\base\install</Filter>
     </ClCompile>
     <ClCompile Include="base\os\windows\windows_extract_icon.cpp">
-      <Filter>Source Files\base\os\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="base\os\windows\windows_window_buffer.cpp">
       <Filter>Source Files\base\os\windows</Filter>
     </ClCompile>
     <ClCompile Include="user\hotplugin\hotplugin.cpp">
@@ -685,11 +679,14 @@
     <ClCompile Include="user\user\user_control_descriptor.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
+    <ClCompile Include="user\user\user_multiple_document_template.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
+    <ClCompile Include="user\user\user_single_document_template.cpp">
+      <Filter>Source Files\user\user</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="base.def">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="base.def">
       <Filter>Source Files</Filter>
     </None>

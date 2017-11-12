@@ -66,6 +66,11 @@ namespace user
       return true;
    }
 
+   bool frame_window::IsFullScreen()
+   {
+      return false;
+   }
+
    void frame_window::GetBorderRect(LPRECT lprect)
    {
       UNREFERENCED_PARAMETER(lprect);
@@ -218,7 +223,7 @@ namespace user
       ::user::interaction::on_set_parent(puiParent);
 
    }
-   
+
 
    void frame_window::assert_valid() const
    {
@@ -771,6 +776,8 @@ namespace user
 
       pcreatemessage->m_bRet = pcreatemessage->get_lresult() == -1;
 
+      defer_synch_layered();
+
    }
 
 
@@ -819,10 +826,67 @@ namespace user
    bool frame_window::LoadFrame(const char * pszMatter, uint32_t dwDefaultStyle, ::user::interaction * puiParent, ::create * pcreate)
    {
 
-      UNREFERENCED_PARAMETER(pszMatter);
-      UNREFERENCED_PARAMETER(dwDefaultStyle);
       UNREFERENCED_PARAMETER(puiParent);
-      UNREFERENCED_PARAMETER(pcreate);
+
+      // only do this once
+      //   ASSERT_VALID_IDR(nIDResource);
+      //   ASSERT(m_nIDHelp == 0 || m_nIDHelp == nIDResource);
+
+      m_strMatterHelp = pszMatter;    // ID for help context (+HID_BASE_RESOURCE)
+
+      //   string strFullString;
+      //   if (strFullString.load_string(nIDResource))
+      //      __extract_sub_string(m_strTitle, strFullString, 0);    // first sub-string
+
+      const char * lpszTitle = m_strTitle;
+
+      dwDefaultStyle &= ~WS_VISIBLE;
+
+      ::rect rectFrame;
+
+      sp(::user::place_holder) pholder;
+
+      if (puiParent != NULL && (pholder = puiParent).is_set())
+      {
+
+         pholder->GetClientRect(rectFrame);
+
+      }
+      else
+      {
+
+         rectFrame = null_rect();
+
+      }
+
+      if (puiParent == NULL)
+      {
+
+         m_bLayoutEnable = false;
+
+      }
+
+      output_debug_string("\nm_bLayoutEnable FALSE");
+
+      if (!create_window_ex(0L, NULL, lpszTitle, dwDefaultStyle, rectFrame, puiParent, /*nIDResource*/ 0, pcreate))
+      {
+
+         return false;   // will self destruct on failure normally
+
+      }
+
+
+      /* trans   // save the default menu handle
+      ASSERT(get_handle() != NULL);
+      m_hMenuDefault = ::GetMenu(get_handle()); */
+
+      // load accelerator resource
+      //   LoadAccelTable(MAKEINTRESOURCE(nIDResource));
+
+      if (pcreate == NULL)   // send initial update
+         send_message_to_descendants(WM_INITIALUPDATE, 0, (LPARAM)0, TRUE, TRUE);
+
+      return TRUE;
 
       return false;
 
@@ -945,7 +1009,7 @@ namespace user
       if (m_bFrameMoveEnable)
       {
 
-         //         good_restore(NULL, true);
+         _001WindowRestore();
 
       }
       ActivateTopParent();
@@ -1107,10 +1171,10 @@ namespace user
 
 
       bool bStayActive =
-         (pTopLevel == pActive ||
-          (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
-           (pActive == pTopLevel ||
-            (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
+      (pTopLevel == pActive ||
+       (pActive && pTopLevel == pActive->GetTopLevelFrame() &&
+        (pActive == pTopLevel ||
+         (pActive && pActive->send_message(WM_FLOATSTATUS, FS_SYNCACTIVE) != 0))));
       //pTopLevel->m_nFlags &= ~WF_STAYACTIVE;
       //if (bStayActive)
       //   pTopLevel->m_nFlags |= WF_STAYACTIVE;
@@ -2106,6 +2170,16 @@ namespace user
 //    }
 
 
+   void frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
+   {
+
+      if (m_bWindowFrame && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth))
+      {
+
+      }
+
+
+   }
 
    void frame_window::_001OnSize(::message::message * pobj)
    {
@@ -2164,7 +2238,91 @@ namespace user
    void frame_window::_000OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      defer_check_layout();
+
+      defer_check_zorder();
+
+      if (!IsWindowVisible() || WfiIsIconic())
+         return;
+
+      rect rectClient;
+
+      GetWindowRect(rectClient);
+
+      rectClient -= rectClient.top_left();
+
+      bool bDib = false;
+
+      double dAlpha = get_alpha();
+
+      if (m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics, this))
+      {
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+      }
+      else if (m_bblur_Background)
+      {
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+      }
+      else if (!Session.savings().is_trying_to_save(::aura::resource_processing)
+               && !Session.savings().is_trying_to_save(::aura::resource_display_bandwidth)
+               && !Session.savings().is_trying_to_save(::aura::resource_memory))
+         //&& (GetParent() != NULL || (this->GetExStyle() & WS_EX_LAYERED) != 0))
+      {
+
+#if TEST
+
+         pgraphics->FillSolidRect(0, 0, 100, 100, ARGB(128, 255, 0, 0));
+
+#endif
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+#if TEST
+
+         pgraphics->FillSolidRect(0, 100, 100, 100, ARGB(128, 0, 0, 255));
+
+#endif
+
+      }
+      else
+      {
+
+#if TEST
+
+         pgraphics->FillSolidRect(60, 10, 50, 50, ARGB(128, 184, 180, 90));
+
+#endif
+
+         _001DrawThis(pgraphics);
+
+         _001DrawChildren(pgraphics);
+
+         _008CallOnDraw(pgraphics);
+
+#if TEST
+
+         pgraphics->FillSolidRect(10, 60, 50, 50, ARGB(128, 184, 180, 90));
+
+#endif
+
+      }
+
 
    }
 
