@@ -28,7 +28,6 @@
 #include "user_mesh_cache.cpp"
 #include "user_mesh_cache_interface.cpp"
 #include "user_mesh_data.cpp"
-#include "user_multiple_document_template.cpp"
 #include "user_network_configuration.cpp"
 #include "user_notification_area.cpp"
 #include "user_notify_icon.cpp"
@@ -48,7 +47,6 @@
 #elif defined (WINDOWSEX)
 #include "user_shell_windows.cpp"
 #endif
-#include "user_single_document_template.cpp"
 #include "user_slider.cpp"
 #include "user_split_bar.cpp"
 #include "user_split_layout.cpp"

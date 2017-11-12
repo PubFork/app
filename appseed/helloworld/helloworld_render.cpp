@@ -171,32 +171,9 @@ namespace helloworld
    bool render::initialize_render(string strId)
    {
 
-      //      ::database::client::initialize_data_client(&Application.dataserver());
-
-      if (Application.m_strAppId == "app-core/flag")
+      if (!::hellobase::render::initialize_render(strId))
       {
 
-         m_bilboa.add(bilbo("matter://cat.gif"));
-         m_bilboa.add(bilbo("matter://nanosvg/23.svg"));
-         m_bilboa.add(bilbo("matter://main/rock_with_a_mask.png"));
-         m_bilboa.add(bilbo("matter://picachu_by_rondex.png"));
-         m_bilboa.add(bilbo("matter://totoro_plus_plus.png"));
-
-      }
-      else if (strId == "switcher")
-      {
-
-         m_bilboa.add(bilbo("matter://cat.gif"));
-         m_bilboa.add(bilbo("matter://picachu_by_rondex.png"));
-         m_bilboa.add(bilbo("matter://totoro_plus_plus.png"));
-
-      }
-      else
-      {
-
-         m_bilboa.add(bilbo("matter://cat.gif"));
-         m_bilboa.add(bilbo("matter://nanosvg/23.svg"));
-         m_bilboa.add(bilbo("matter://main/rock_with_a_mask.png"));
 
       }
 
@@ -222,102 +199,104 @@ namespace helloworld
    int32_t render::run()
    {
 
-      ::multithreading::set_priority(::multithreading::priority_time_critical);
+      return ::hellobase::render::run();
 
-      double dFps = m_pview->get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->m_dFps;
+      //::multithreading::set_priority(::multithreading::priority_time_critical);
 
-      double dPeriod = 1000.0 / dFps;
+      //double dFps = m_pview->get_wnd()->m_pimpl.cast < ::user::interaction_impl >()->m_dFps;
 
-      dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
+      //double dPeriod = 1000.0 / dFps;
 
-      //#ifdef WINDOWSEX
-      //
-      //      HANDLE timer;
-      //
-      //      LARGE_INTEGER li = {};
-      //
-      //      timer = CreateWaitableTimer(NULL, TRUE, NULL);
-      //
-      //#endif
+      //dPeriod = MIN(MAX(1.0, dPeriod), 1000.0);
 
-      double_array daFrame;
+      ////#ifdef WINDOWSEX
+      ////
+      ////      HANDLE timer;
+      ////
+      ////      LARGE_INTEGER li = {};
+      ////
+      ////      timer = CreateWaitableTimer(NULL, TRUE, NULL);
+      ////
+      ////#endif
 
-      index iLastFrameId;
+      //double_array daFrame;
 
-      iLastFrameId = (index) (millis_now() / dPeriod);
+      //index iLastFrameId;
 
-      index iFrameId;
+      //iLastFrameId = (index) (millis_now() / dPeriod);
 
-      while (thread_get_run())
-      {
+      //index iFrameId;
 
-         try
-         {
+      //while (thread_get_run())
+      //{
 
-            if (m_bHelloRender)
-            {
+      //   try
+      //   {
 
-               full_render();
+      //      if (m_bHelloRender)
+      //      {
 
-            }
+      //         full_render();
 
-            double dNow = millis_now();
+      //      }
 
-            double dWait = dPeriod - fmod(dNow + dPeriod / 3.0, dPeriod);
+      //      double dNow = millis_now();
 
-            iFrameId = (index)(dNow / dPeriod);
+      //      double dWait = dPeriod - fmod(dNow + dPeriod / 3.0, dPeriod);
 
-            ::count cLost = iFrameId - iLastFrameId - 1;
+      //      iFrameId = (index)(dNow / dPeriod);
 
-            if (cLost < 0)
-            {
+      //      ::count cLost = iFrameId - iLastFrameId - 1;
 
-               dWait = dPeriod;
+      //      if (cLost < 0)
+      //      {
 
-            }
+      //         dWait = dPeriod;
 
-            sleep(millis(dWait));
+      //      }
 
-            iLastFrameId = iFrameId;
+      //      sleep(millis(dWait));
 
-            if (m_bHelloRender)
-            {
+      //      iLastFrameId = iFrameId;
 
-               for (index i = 0; i < daFrame.get_size(); i++)
-               {
+      //      if (m_bHelloRender)
+      //      {
 
-                  if (dNow - daFrame[i] >= 1000.0)
-                  {
+      //         for (index i = 0; i < daFrame.get_size(); i++)
+      //         {
 
-                     daFrame.remove_at(i);
+      //            if (dNow - daFrame[i] >= 1000.0)
+      //            {
 
-                  }
-                  else
-                  {
+      //               daFrame.remove_at(i);
 
-                     break;
+      //            }
+      //            else
+      //            {
 
-                  }
+      //               break;
 
-               }
+      //            }
 
-            }
+      //         }
 
-            m_dRenderFps = double(daFrame.get_size());
+      //      }
 
-            daFrame.add(dNow);
+      //      m_dRenderFps = double(daFrame.get_size());
 
-         }
-         catch (...)
-         {
+      //      daFrame.add(dNow);
 
-            break;
+      //   }
+      //   catch (...)
+      //   {
 
-         }
+      //      break;
 
-      }
+      //   }
 
-      return 0;
+      //}
+
+      //return 0;
 
    }
 
@@ -995,295 +974,295 @@ namespace helloworld
    }
 
 
-   void render::_001OnHelloDraw(::draw2d::graphics * pgraphics)
-   {
+   //void render::_001OnHelloDraw(::draw2d::graphics * pgraphics)
+   //{
 
-      rect rectClient;
+   //   rect rectClient;
 
-      rectClient.left = 0;
-      rectClient.top = 0;
-      rectClient.right = m_cx;
-      rectClient.bottom = m_cy;
+   //   rectClient.left = 0;
+   //   rectClient.top = 0;
+   //   rectClient.right = m_cx;
+   //   rectClient.bottom = m_cy;
 
-      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-      int period = 5000;
-      int border = 2500;
-      int t;
+   //   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+   //   int period = 5000;
+   //   int border = 2500;
+   //   int t;
 
-      try
-      {
+   //   try
+   //   {
 
-         if (m_stra23.get_size() > 0 || m_strLast23.has_char() || m_strCurrent23.has_char())
-         {
+   //      if (m_stra23.get_size() > 0 || m_strLast23.has_char() || m_strCurrent23.has_char())
+   //      {
 
-            if (!m_bFirst23)
-            {
-               m_dw23 = get_tick_count();
-               m_uiCurrent23 = 0;
-               m_strLast23.Empty();
-               m_strCurrent23.Empty();
-               m_bFirst23 = true;
-               t = 0;
-            }
-            else
-            {
+   //         if (!m_bFirst23)
+   //         {
+   //            m_dw23 = get_tick_count();
+   //            m_uiCurrent23 = 0;
+   //            m_strLast23.Empty();
+   //            m_strCurrent23.Empty();
+   //            m_bFirst23 = true;
+   //            t = 0;
+   //         }
+   //         else
+   //         {
 
-               t = (get_tick_count() - m_dw23);
+   //            t = (get_tick_count() - m_dw23);
 
-               uint32_t uiCurrent23 = (t) / period;
+   //            uint32_t uiCurrent23 = (t) / period;
 
-               t %= period;
+   //            t %= period;
 
-               if (m_uiCurrent23 != uiCurrent23)
-               {
+   //            if (m_uiCurrent23 != uiCurrent23)
+   //            {
 
-                  m_strLast23 = m_strCurrent23;
+   //               m_strLast23 = m_strCurrent23;
 
-                  // pulse!!
-                  if (m_stra23.get_size() <= 0)
-                  {
+   //               // pulse!!
+   //               if (m_stra23.get_size() <= 0)
+   //               {
 
-                     m_strCurrent23.Empty();
+   //                  m_strCurrent23.Empty();
 
-                  }
-                  else
-                  {
+   //               }
+   //               else
+   //               {
 
-                     m_strCurrent23 = m_stra23[uiCurrent23 % m_stra23.get_size()];
+   //                  m_strCurrent23 = m_stra23[uiCurrent23 % m_stra23.get_size()];
 
-                  }
+   //               }
 
-                  m_uiCurrent23 = uiCurrent23;
+   //               m_uiCurrent23 = uiCurrent23;
 
-               }
+   //            }
 
-            }
+   //         }
 
-            if (t < border && m_strLast23 != m_strCurrent23)
-            {
+   //         if (t < border && m_strLast23 != m_strCurrent23)
+   //         {
 
-               byte uchAlpha = 255 * t / border;
+   //            byte uchAlpha = 255 * t / border;
 
-               if (m_strLast23.has_char())
-               {
+   //            if (m_strLast23.has_char())
+   //            {
 
-                  synch_lock sl(&m_mutexDib23);
+   //               synch_lock sl(&m_mutexDib23);
 
-                  auto & dib = dib23(m_strLast23);
+   //               auto & dib = dib23(m_strLast23);
 
-                  if (dib.m_eload == ::visual::dib_sp::load_ok)
-                  {
+   //               if (dib.m_eload == ::visual::dib_sp::load_ok)
+   //               {
 
-                     dib.defer_update();
+   //                  dib.defer_update();
 
-                     System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), 255 - uchAlpha);
+   //                  System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), 255 - uchAlpha);
 
-                  }
+   //               }
 
-               }
+   //            }
 
-               if (m_strCurrent23.has_char())
-               {
+   //            if (m_strCurrent23.has_char())
+   //            {
 
-                  synch_lock sl(&m_mutexDib23);
+   //               synch_lock sl(&m_mutexDib23);
 
-                  auto & dib = dib23(m_strCurrent23);
+   //               auto & dib = dib23(m_strCurrent23);
 
-                  if (dib.m_eload == ::visual::dib_sp::load_ok)
-                  {
+   //               if (dib.m_eload == ::visual::dib_sp::load_ok)
+   //               {
 
-                     dib.defer_update();
+   //                  dib.defer_update();
 
-                     System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), uchAlpha);
+   //                  System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), uchAlpha);
 
-                  }
+   //               }
 
-               }
+   //            }
 
-            }
-            else if (m_strCurrent23.has_char())
-            {
+   //         }
+   //         else if (m_strCurrent23.has_char())
+   //         {
 
-               synch_lock sl(&m_mutexDib23);
+   //            synch_lock sl(&m_mutexDib23);
 
-               auto & dib = dib23(m_strCurrent23);
+   //            auto & dib = dib23(m_strCurrent23);
 
-               if (dib.m_eload == ::visual::dib_sp::load_ok)
-               {
+   //            if (dib.m_eload == ::visual::dib_sp::load_ok)
+   //            {
 
-                  dib.defer_update();
+   //               dib.defer_update();
 
-                  pgraphics->BitBlt(0, 0, dib->m_size.cx, dib->m_size.cy, dib->get_graphics(), 0, 0, SRCCOPY);
+   //               pgraphics->BitBlt(0, 0, dib->m_size.cx, dib->m_size.cy, dib->get_graphics(), 0, 0, SRCCOPY);
 
-               }
+   //            }
 
-            }
+   //         }
 
-         }
+   //      }
 
-      }
-      catch (...)
-      {
+   //   }
+   //   catch (...)
+   //   {
 
-      }
+   //   }
 
-      if (Application.m_etype == application::type_mili)
-      {
+   //   if (Application.m_etype == application::type_mili)
+   //   {
 
-         {
+   //      {
 
-            string strHelloMultiverse;
+   //         string strHelloMultiverse;
 
-            {
+   //         {
 
-               synch_lock slText(&m_pview->m_mutexText);
+   //            synch_lock slText(&m_pview->m_mutexText);
 
-               strHelloMultiverse = m_pview->get_processed_helloworld().c_str();
+   //            strHelloMultiverse = m_pview->get_processed_helloworld().c_str();
 
-            }
+   //         }
 
-            if (m_bNewLayout)
-            {
+   //         if (m_bNewLayout)
+   //         {
 
-               float fHeight = 100.0;
+   //            float fHeight = 100.0;
 
-               ::draw2d::font_sp font(allocer());
+   //            ::draw2d::font_sp font(allocer());
 
-               font->create_pixel_font(FONT_SANS, fHeight, FW_BOLD);
+   //            font->create_pixel_font(FONT_SANS, fHeight, FW_BOLD);
 
-               pgraphics->set_font(font);
+   //            pgraphics->set_font(font);
 
-               pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+   //            pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-               class size size = pgraphics->GetTextExtent(strHelloMultiverse);
+   //            class size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
-               double ratey = fHeight * 0.84 / size.cy;
+   //            double ratey = fHeight * 0.84 / size.cy;
 
-               font->create_pixel_font(FONT_SANS, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
+   //            font->create_pixel_font(FONT_SANS, MIN(m_cy * ratey, m_cx * size.cy * ratey / size.cx), FW_BOLD);
 
-               m_font = font;
+   //            m_font = font;
 
-               m_bNewLayout = false;
+   //            m_bNewLayout = false;
 
-            }
+   //         }
 
-            ::color ca;
+   //         ::color ca;
 
-            double dPeriod = (500) * 11;
+   //         double dPeriod = (500) * 11;
 
-            ca.set_hls(fmod(::get_tick_count(), dPeriod) / dPeriod, 0.49, 0.84);
+   //         ca.set_hls(fmod(::get_tick_count(), dPeriod) / dPeriod, 0.49, 0.84);
 
-            ::draw2d::brush_sp brush(allocer());
+   //         ::draw2d::brush_sp brush(allocer());
 
-            brush->create_solid(ARGB(255, ca.m_uchR, ca.m_uchG, ca.m_uchB));
+   //         brush->create_solid(ARGB(255, ca.m_uchR, ca.m_uchG, ca.m_uchB));
 
-            pgraphics->SelectObject(brush);
+   //         pgraphics->SelectObject(brush);
 
-            pgraphics->set_font(m_font);
+   //         pgraphics->set_font(m_font);
 
-            pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+   //         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-            pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
+   //         pgraphics->set_text_rendering(::draw2d::text_rendering_anti_alias);
 
-            ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
+   //         ::size size = pgraphics->GetTextExtent(strHelloMultiverse);
 
-            pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
+   //         pgraphics->text_out((m_cx - size.cx) / 2, (m_cy - size.cy) / 2, strHelloMultiverse);
 
-            return;
+   //         return;
 
-         }
+   //      }
 
-      }
+   //   }
 
-      //DWORD dw = get_tick_count();
+   //   //DWORD dw = get_tick_count();
 
-      if (m_bFast || !m_bFirstDone || ::get_tick_count() - m_dwLastFast < m_dwFastAnime)
-      {
+   //   if (m_bFast || !m_bFirstDone || ::get_tick_count() - m_dwLastFast < m_dwFastAnime)
+   //   {
 
-         synch_lock sl1(m_pview->get_wnd()->m_pmutex);
+   //      synch_lock sl1(m_pview->get_wnd()->m_pmutex);
 
-         synch_lock slDraw(&m_mutexDraw);
+   //      synch_lock slDraw(&m_mutexDraw);
 
-         if (m_bFast || m_dibFast.is_null())
-         {
+   //      if (m_bFast || m_dibFast.is_null())
+   //      {
 
-            m_bFast = false;
+   //         m_bFast = false;
 
-            {
+   //         {
 
-               synch_lock slText(&m_pview->m_mutexText);
+   //            synch_lock slText(&m_pview->m_mutexText);
 
-               helloworld_fast_render(m_pview->get_processed_helloworld());
+   //            helloworld_fast_render(m_pview->get_processed_helloworld());
 
-            }
+   //         }
 
-            m_bFirstDone = false;
+   //         m_bFirstDone = false;
 
-         }
+   //      }
 
-         if (m_bFast || !m_bFirstDone)
-         {
+   //      if (m_bFast || !m_bFirstDone)
+   //      {
 
-            m_dwLastFast = ::get_tick_count();
+   //         m_dwLastFast = ::get_tick_count();
 
-         }
+   //      }
 
-         pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+   //      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-         pgraphics->BitBlt(null_point(), size(m_cx, m_cy), m_dibFast->get_graphics());
+   //      pgraphics->BitBlt(null_point(), size(m_cx, m_cy), m_dibFast->get_graphics());
 
-         //pgraphics->FillSolidRect(400,400,100,100,ARGB(128,0,0,128));
+   //      //pgraphics->FillSolidRect(400,400,100,100,ARGB(128,0,0,128));
 
-         m_pview->m_bOkPending = true;
+   //      m_pview->m_bOkPending = true;
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      if (m_pview->m_bOkPending)
-      {
+   //   if (m_pview->m_bOkPending)
+   //   {
 
-         m_pview->m_bOkPending = false;
+   //      m_pview->m_bOkPending = false;
 
-         m_dwLastOk = ::get_tick_count();
+   //      m_dwLastOk = ::get_tick_count();
 
-      }
+   //   }
 
-      ::draw2d::dib * pdib = NULL;
+   //   ::draw2d::dib * pdib = NULL;
 
-      ::draw2d::dib * pdibFast = m_dibFast;
+   //   ::draw2d::dib * pdibFast = m_dibFast;
 
-      synch_lock sl(&m_mutexDraw);
+   //   synch_lock sl(&m_mutexDraw);
 
-      synch_lock slSwap(&m_mutexSwap);
+   //   synch_lock slSwap(&m_mutexSwap);
 
-      pdib = m_dibOut;
+   //   pdib = m_dibOut;
 
-      if (pdib->area() <= 0)
-         return;
+   //   if (pdib->area() <= 0)
+   //      return;
 
-      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+   //   pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      if (::get_tick_count() - m_dwLastOk < m_dwAnime)
-      {
+   //   if (::get_tick_count() - m_dwLastOk < m_dwAnime)
+   //   {
 
-         byte uchAlpha;
+   //      byte uchAlpha;
 
-         uchAlpha = byte(MAX(0, MIN(255, (::get_tick_count() - m_dwLastOk) * 255 / m_dwAnime)));
+   //      uchAlpha = byte(MAX(0, MIN(255, (::get_tick_count() - m_dwLastOk) * 255 / m_dwAnime)));
 
-         System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), uchAlpha);
+   //      System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), uchAlpha);
 
-         System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdibFast->get_size(), pdibFast->get_graphics(), null_point(), 255 - uchAlpha);
+   //      System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdibFast->get_size(), pdibFast->get_graphics(), null_point(), 255 - uchAlpha);
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         pgraphics->from(null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), SRCCOPY);
+   //      pgraphics->from(null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), SRCCOPY);
 
-      }
+   //   }
 
-   }
+   //}
 
 
    ::visual::dib_sp & render::dib23(string strImage)
@@ -1445,6 +1424,16 @@ namespace helloworld
       pgraphics->draw_path(path, penW);
       pgraphics->draw_path(path, pen);
       //pgraphics->FillSolidRect(00,00,100,100,ARGB(128,128,0,0));
+
+   }
+
+
+   string render::get_helloaura()
+   {
+
+      synch_lock slText(&m_pview->m_mutexText);
+
+      return strHelloMultiverse = m_pview->get_processed_helloworld();
 
    }
 

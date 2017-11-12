@@ -53,8 +53,6 @@ namespace helloworld
 
       m_b001LayoutIgnoreEmpty = false;
 
-      m_ppcreutil = pcre_util::compile(get_app(), "\\:\\-\\)");
-
    }
 
    view::~view()
@@ -301,15 +299,6 @@ namespace helloworld
       synch_lock slText(&m_mutexText);
 
       string str = get_helloworld();
-
-      int c = m_ppcreutil->matches(str);
-
-//      int c = pcre2_get_ovector_count(m_pmd);
-
-      if(c > 0)
-      {
-         str += "Smile for you too (pcremade |-) !!";
-      }
 
 
       if(::str::begins_eat_ci(str,"image:"))

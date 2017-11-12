@@ -15,34 +15,34 @@ namespace helloworld
    };
 
 
-   class CLASS_DECL_APP_CORE_HELLOMULTIVERSE pane_view_update_hint :
+   class CLASS_DECL_APP_HELLOWORLD pane_view_update_hint :
       public object
    {
-      public:
+   public:
 
 
-         enum e_type
-         {
+      enum e_type
+      {
 
-            TypeNone,
-            TypeGetView,
-            TypeSetView,
-            TypeOnShowKaraoke,
-            TypeOnShowView,
+         TypeNone,
+         TypeGetView,
+         TypeSetView,
+         TypeOnShowKaraoke,
+         TypeOnShowView,
 
-         };
+      };
 
-         EPaneView m_eview;
-         e_type m_etype;
-
-
-         pane_view_update_hint();
-         virtual ~pane_view_update_hint();
+      EPaneView m_eview;
+      e_type m_etype;
 
 
-         void set_type(e_type e_type);
+      pane_view_update_hint();
+      virtual ~pane_view_update_hint();
 
-         bool is_type_of(e_type e_type);
+
+      void set_type(e_type e_type);
+
+      bool is_type_of(e_type e_type);
 
 
    };

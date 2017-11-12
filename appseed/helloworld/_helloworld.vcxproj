@@ -35,15 +35,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C7AFCEFA-3079-4B23-8F97-4543BB980265}</ProjectGuid>
+    <ProjectGuid>{9D114124-667B-4C7B-B8C4-94BC4DD1098D}</ProjectGuid>
     <RootNamespace>_app_helloworld</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>_app_helloworld</ProjectName>
+    <ProjectName>_helloworld</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <UseOfAtl>false</UseOfAtl>
     <PlatformToolset>v141</PlatformToolset>
@@ -981,7 +981,6 @@
     <ClCompile Include=".\helloworld_application.cpp" />
     <ClCompile Include=".\helloworld_document.cpp" />
     <ClCompile Include=".\helloworld_frame.cpp" />
-    <ClCompile Include="_cube.cpp" />
     <ClCompile Include="helloworld.cpp" />
     <ClCompile Include=".\helloworld_pane_view.cpp" />
     <ClCompile Include=".\helloworld_pane_view_update_hint.cpp" />

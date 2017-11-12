@@ -29,8 +29,6 @@ namespace helloworld
 
       m_dFps                     = 0.0;
 
-      m_ppcreutil = pcre_util::compile(get_app(), "\\:\\-\\)");
-
    }
 
    view_base::~view_base()

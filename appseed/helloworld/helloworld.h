@@ -1,16 +1,17 @@
 #pragma once
 
 
+#include "hellobase/hellobase.h"
 #include "core/core/core.h"
 #include "core/filesystem/filemanager/filemanager.h"
 #include "core/user/userex/userex.h"
 #include "core/user/html/html/html.h"
 
 
-#ifdef _APP_CORE_HELLOMULTIVERSE_LIBRARY
-#define CLASS_DECL_APP_CORE_HELLOMULTIVERSE  CLASS_DECL_EXPORT
+#ifdef _APP_HELLOWORLD_LIBRARY
+#define CLASS_DECL_APP_HELLOWORLD  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_APP_CORE_HELLOMULTIVERSE  CLASS_DECL_IMPORT
+#define CLASS_DECL_APP_HELLOWORLD  CLASS_DECL_IMPORT
 #endif
 
 
