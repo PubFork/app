@@ -40,3 +40,23 @@ namespace draw2d
 
 
 } // namespace draw2d
+
+namespace dx
+{
+
+   inline void throw_if_failed(HRESULT hr)
+   {
+
+      if (FAILED(hr))
+         throw hresult_exception(::get_thread_app(), hr);
+      //if(FAILED(hr))
+      // throw hr;
+
+   }
+
+
+} // namespace dx
+
+
+CLASS_DECL_AURA void directx_debug();
+

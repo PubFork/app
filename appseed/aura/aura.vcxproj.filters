@@ -390,6 +390,9 @@
     <Filter Include="Source Files\multimedia\audio">
       <UniqueIdentifier>{07ae2b17-76e4-4bb6-9530-28e2d7e3da0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\os\windows_common">
+      <UniqueIdentifier>{fb4ef3dc-3ea1-441c-8a45-a6f09bc6611d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -1823,9 +1826,6 @@
     <ClInclude Include="aura\aura\aura_heap.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
-    <ClInclude Include="aura\aura\aura_pointer.h">
-      <Filter>Header Files\aura\aura</Filter>
-    </ClInclude>
     <ClInclude Include="aura\aura\aura_os.h">
       <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
@@ -2695,6 +2695,12 @@
     </ClInclude>
     <ClInclude Include="net\sockets\bsd\internal\ssl_ticket_key.h">
       <Filter>Header Files\net\sockets\bsd\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\os\windows_common\draw2d_direct2d_global.h">
+      <Filter>Header Files\aura\os\windows_common</Filter>
+    </ClInclude>
+    <ClInclude Include="aura\aura\aura_auto_pointer.h">
+      <Filter>Header Files\aura\aura</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -4719,6 +4725,9 @@
     </ClCompile>
     <ClCompile Include="aura\os\windows\windows_aura.cpp">
       <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="aura\os\windows_common\draw2d_direct2d_global.cpp">
+      <Filter>Source Files\aura\os\windows_common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

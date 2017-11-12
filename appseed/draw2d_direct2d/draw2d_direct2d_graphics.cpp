@@ -22,7 +22,7 @@ void copy(D2D1_RECT_F & rectSrc, LPCRECT lpcrect)
 
 #ifdef WINDOWSEX
 
-void my_debug();
+void directx_debug();
 
 #endif
 
@@ -5521,7 +5521,7 @@ namespace draw2d_direct2d
    {
 
 #ifdef WINDOWSEX
-      my_debug();
+      directx_debug();
 #endif
 
    }

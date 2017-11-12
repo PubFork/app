@@ -59,7 +59,7 @@ public:
 } *g_pdxgidebug;
 
 
-void my_debug()
+CLASS_DECL_AURA void directx_debug()
 {
 
    g_pdxgidebug->debug();
