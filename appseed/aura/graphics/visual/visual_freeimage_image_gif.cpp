@@ -1,7 +1,7 @@
 #include "framework.h"
 #include <math.h>
 
-#include "freeimage/Source/FreeImage.h"
+#include "FreeImage.h"
 #include "graphics/visual/visual_freeimage_image.h"
 
 

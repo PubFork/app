@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "freeimage/Source/FreeImage.h"
+#include "FreeImage.h"
 
 
 FIBITMAP * freeimage_from_dib(::draw2d::dib * pdib)
