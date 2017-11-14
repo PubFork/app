@@ -496,8 +496,6 @@ LONG WINAPI SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
    return (LONG) oswindow->set_window_long_ptr(nIndex, (LONG) l);
 }
 
-#if OSBIT == 64
-
 LONG_PTR WINAPI GetWindowLongPtrA(::oswindow oswindow, int nIndex)
 {
    return oswindow->get_window_long_ptr(nIndex);
@@ -507,8 +505,6 @@ LONG_PTR WINAPI SetWindowLongPtrA(::oswindow oswindow, int nIndex, LONG_PTR l)
 {
    return oswindow->set_window_long_ptr(nIndex, l);
 }
-
-#endif
 
 WINBOOL WINAPI ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
 {
