@@ -3604,7 +3604,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.compare_ci(b) < 0;
    });
@@ -3616,7 +3616,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.collate(b) < 0;
    });
@@ -3628,7 +3628,7 @@ template < class Type, class RawType >
 void string_array < Type, RawType > ::collate_sort_ci()
 {
 
-   pred_sort([](Type & a, Type & b)
+   this->pred_sort([](Type & a, Type & b)
    {
       return a.collate_ci(b) < 0;
    });

@@ -1505,6 +1505,89 @@ void dir::ls_dir(::file::patha & stra,const ::file::path & psz)
 
 }
 
+void dir::ls_file(::file::patha & stra,const ::file::path & psz)
+{
+
+#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
+
+   DIR * dirp = opendir(psz);
+
+   if(dirp == NULL)
+      return;
+
+   dirent * dp;
+
+   while ((dp = readdir(dirp)) != NULL)
+   {
+      if(dp->d_name[0] == '.')
+      {
+         if(dp->d_name[1] == '\0')
+            continue;
+         if(dp->d_name[1] == '.')
+         {
+            if(dp->d_name[2] == '\0')
+               continue;
+         }
+      }
+      ::file::path strPath = psz /  dp->d_name;
+      if(!is(strPath))
+      {
+         stra.add(strPath);
+      }
+
+   }
+
+   closedir(dirp);
+
+#elif defined(METROWIN)
+
+   ::Windows::Storage::StorageFolder ^ folder = wait(::Windows::Storage::StorageFolder::GetFolderFromPathAsync(string(psz)));
+
+   ::Windows::Foundation::Collections::IVectorView < ::Windows::Storage::StorageFolder ^ > ^ a = wait(folder->GetFoldersAsync());
+
+   for(uint32_t ui = 0; ui < a->Size; ui++)
+   {
+      stra.add(begin(a->GetAt(ui)->Path));
+   }
+
+
+#else
+
+   WIN32_FIND_DATA FindFileData;
+
+   HANDLE hFind;
+
+   hFind = FindFirstFile(psz, &FindFileData);
+
+   if (hFind == INVALID_HANDLE_VALUE)
+      return;
+
+   while(true)
+   {
+
+      if(!__win_file_find_is_dots(FindFileData) && (FindFileData.dwFileAttributes != INVALID_FILE_ATTRIBUTES) && (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
+      {
+      }
+      else
+      {
+         stra.add(FindFileData.cFileName);
+         }
+
+
+      stra.add(FindFileData.cFileName);
+
+      if(!FindNextFile(hFind, &FindFileData))
+         break;
+
+   }
+
+   FindClose(hFind);
+
+#endif
+
+
+}
+
 
 ::file::path dir::default_os_user_path_prefix()
 {
