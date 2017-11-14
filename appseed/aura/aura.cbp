@@ -927,9 +927,6 @@
 		<Unit filename="framework.h">
 			<Option compile="1" />
 			<Option weight="0" />
-			<Option target="basis" />
-			<Option target="stage" />
-			<Option target="memdleak" />
 		</Unit>
 		<Unit filename="framework_c.h" />
 		<Unit filename="geometry_quaternions.h" />
