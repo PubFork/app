@@ -982,6 +982,7 @@ namespace windows
    {
       if (pui != NULL)
       {
+
          detach();
       }
    }

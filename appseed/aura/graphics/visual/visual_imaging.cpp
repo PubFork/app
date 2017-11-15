@@ -214,15 +214,15 @@ bool imaging::LoadImageFromFile(::draw2d::dib * pdib, ::file::file * pfile)
 
 
 void EmbossedTextOut(
-   ::draw2d::graphics *        pgraphics,
-   int32_t                 x,
-   int32_t                 y,
-   const char *            lpcsz,
-   size_t                  cb,
-   COLORREF                crText,
-   COLORREF                crShadow,
-   int32_t                 cx,
-   int32_t                 cy)
+::draw2d::graphics *        pgraphics,
+int32_t                 x,
+int32_t                 y,
+const char *            lpcsz,
+size_t                  cb,
+COLORREF                crText,
+COLORREF                crShadow,
+int32_t                 cx,
+int32_t                 cy)
 {
 
 
@@ -1243,20 +1243,20 @@ return true;
 }*/
 
 void imaging::BitmapBlend24CC(
-   LPBYTE lpbAParam,
-   int32_t x1,
-   int32_t y1,
-   int32_t w1,
-   int32_t cx,
-   int32_t cy,
-   LPBYTE lpbBParam,
-   int32_t x2,
-   int32_t y2,
-   int32_t w2,
-   LPBYTE lpbCParam,
-   int32_t x3,
-   int32_t y3,
-   int32_t w3)
+LPBYTE lpbAParam,
+int32_t x1,
+int32_t y1,
+int32_t w1,
+int32_t cx,
+int32_t cy,
+LPBYTE lpbBParam,
+int32_t x2,
+int32_t y2,
+int32_t w2,
+LPBYTE lpbCParam,
+int32_t x3,
+int32_t y3,
+int32_t w3)
 {
    int32_t i,j;
    x1 *= 3;
@@ -1292,17 +1292,17 @@ void imaging::BitmapBlend24CC(
 
 
 void imaging::BitmapBlend24CC(
-   LPBYTE lpbDestParam,
-   int32_t xDest,
-   int32_t yDest,
-   int32_t wDest,
-   int32_t cx,
-   int32_t cy,
-   LPBYTE lpbSrcParam,
-   int32_t xSrc,
-   int32_t ySrc,
-   int32_t wSrc,
-   BYTE bAlpha)
+LPBYTE lpbDestParam,
+int32_t xDest,
+int32_t yDest,
+int32_t wDest,
+int32_t cx,
+int32_t cy,
+LPBYTE lpbSrcParam,
+int32_t xSrc,
+int32_t ySrc,
+int32_t wSrc,
+BYTE bAlpha)
 {
    int32_t i,j;
    xDest *= 3;
@@ -1785,12 +1785,12 @@ return true;
    }*/
 
 bool imaging::BitmapDivBlend(
-   ::draw2d::graphics * pdcDst, // destination device
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc, // source device
-   point ptSrc,
-   BYTE bAlpha)
+::draw2d::graphics * pdcDst, // destination device
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc, // source device
+point ptSrc,
+BYTE bAlpha)
 {
 
    visual::dib_sp spdib(allocer());
@@ -1807,12 +1807,12 @@ bool imaging::BitmapDivBlend(
 
 
 bool imaging::bitmap_blend(
-   ::draw2d::graphics * pdcDst, // destination device
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc, // source device
-   point ptSrc,
-   BYTE bAlpha)
+::draw2d::graphics * pdcDst, // destination device
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc, // source device
+point ptSrc,
+BYTE bAlpha)
 {
 
    return pdcDst->alpha_blend(ptDst,size,pdcSrc,ptSrc,bAlpha / 255.0);
@@ -2150,18 +2150,18 @@ bool imaging::color_blend_3dRect(::draw2d::graphics *pgraphics,const RECT & rect
 }
 
 bool imaging::clip_color_blend(
-   ::draw2d::graphics * pgraphics,
-   const RECT & rectParam,
-   COLORREF cr,
-   BYTE alpha)
+::draw2d::graphics * pgraphics,
+const RECT & rectParam,
+COLORREF cr,
+BYTE alpha)
 {
    class ::rect rect(rectParam);
    return clip_color_blend(
-             pgraphics,
-             rect.top_left(),
-             rect.size(),
-             cr,
-             alpha);
+          pgraphics,
+          rect.top_left(),
+          rect.size(),
+          cr,
+          alpha);
 }
 
 
@@ -2224,10 +2224,10 @@ return bOk;
 */
 
 bool imaging::color_blend(
-   ::draw2d::graphics * pgraphics,
-   const RECT64 * lpcrect,
-   COLORREF cr,
-   BYTE alpha)
+::draw2d::graphics * pgraphics,
+const RECT64 * lpcrect,
+COLORREF cr,
+BYTE alpha)
 {
    rect rect32;
    ::copy(rect32,lpcrect);
@@ -2236,18 +2236,18 @@ bool imaging::color_blend(
 
 
 bool imaging::color_blend(
-   ::draw2d::graphics * pgraphics,
-   const RECT & rectParam,
-   COLORREF cr,
-   BYTE alpha)
+::draw2d::graphics * pgraphics,
+const RECT & rectParam,
+COLORREF cr,
+BYTE alpha)
 {
    class rect rect(rectParam);
    return color_blend(
-             pgraphics,
-             rect.top_left(),
-             rect.size(),
-             cr,
-             alpha);
+          pgraphics,
+          rect.top_left(),
+          rect.size(),
+          cr,
+          alpha);
 }
 
 
@@ -2607,13 +2607,13 @@ throw todo(get_app());
 */
 
 bool imaging::CreateBitmap(
-   ::draw2d::graphics * pgraphics,
-   ::draw2d::graphics * pdcScreen,
-   ::draw2d::bitmap * pbitmap,
-   ::draw2d::bitmap * pbitmapOld,
-   BITMAP * pbmp,
-   int32_t cx,
-   int32_t cy)
+::draw2d::graphics * pgraphics,
+::draw2d::graphics * pdcScreen,
+::draw2d::bitmap * pbitmap,
+::draw2d::bitmap * pbitmapOld,
+BITMAP * pbmp,
+int32_t cx,
+int32_t cy)
 {
    int32_t cxout = cx;
    int32_t cyout = cy;
@@ -3020,39 +3020,39 @@ void imaging::blur_32CC_r2(::draw2d::dib * pdibDst,::draw2d::dib * pdibSrc)
 
          // red
          lpwDestination[0] =
-            (lpbSource_2[0][0] + lpbSource_2[0][4] + lpbSource_2[0][8] + lpbSource_2[0][12] + lpbSource_2[0][16]
-             + lpbSource_2[1][0] + lpbSource_2[1][4] + lpbSource_2[1][8] + lpbSource_2[1][12] + lpbSource_2[1][16]
-             + lpbSource_2[2][0] + lpbSource_2[2][4] + lpbSource_2[2][8] + lpbSource_2[2][12] + lpbSource_2[2][16]
-             + lpbSource_2[3][0] + lpbSource_2[3][4] + lpbSource_2[3][8] + lpbSource_2[3][12] + lpbSource_2[3][16]
-             + lpbSource_2[4][0] + lpbSource_2[4][4] + lpbSource_2[4][8] + lpbSource_2[4][12] + lpbSource_2[4][16]
-            ) / 25;
+         (lpbSource_2[0][0] + lpbSource_2[0][4] + lpbSource_2[0][8] + lpbSource_2[0][12] + lpbSource_2[0][16]
+          + lpbSource_2[1][0] + lpbSource_2[1][4] + lpbSource_2[1][8] + lpbSource_2[1][12] + lpbSource_2[1][16]
+          + lpbSource_2[2][0] + lpbSource_2[2][4] + lpbSource_2[2][8] + lpbSource_2[2][12] + lpbSource_2[2][16]
+          + lpbSource_2[3][0] + lpbSource_2[3][4] + lpbSource_2[3][8] + lpbSource_2[3][12] + lpbSource_2[3][16]
+          + lpbSource_2[4][0] + lpbSource_2[4][4] + lpbSource_2[4][8] + lpbSource_2[4][12] + lpbSource_2[4][16]
+         ) / 25;
 
          // green
          lpwDestination[1] =
-            (lpbSource_2[0][1] + lpbSource_2[0][5] + lpbSource_2[0][9] + lpbSource_2[0][13] + lpbSource_2[0][17]
-             + lpbSource_2[1][1] + lpbSource_2[1][5] + lpbSource_2[1][9] + lpbSource_2[1][13] + lpbSource_2[1][17]
-             + lpbSource_2[2][1] + lpbSource_2[2][5] + lpbSource_2[2][9] + lpbSource_2[2][13] + lpbSource_2[2][17]
-             + lpbSource_2[3][1] + lpbSource_2[3][5] + lpbSource_2[3][9] + lpbSource_2[3][13] + lpbSource_2[3][17]
-             + lpbSource_2[4][1] + lpbSource_2[4][5] + lpbSource_2[4][9] + lpbSource_2[4][13] + lpbSource_2[4][17]
-            ) / 25;
+         (lpbSource_2[0][1] + lpbSource_2[0][5] + lpbSource_2[0][9] + lpbSource_2[0][13] + lpbSource_2[0][17]
+          + lpbSource_2[1][1] + lpbSource_2[1][5] + lpbSource_2[1][9] + lpbSource_2[1][13] + lpbSource_2[1][17]
+          + lpbSource_2[2][1] + lpbSource_2[2][5] + lpbSource_2[2][9] + lpbSource_2[2][13] + lpbSource_2[2][17]
+          + lpbSource_2[3][1] + lpbSource_2[3][5] + lpbSource_2[3][9] + lpbSource_2[3][13] + lpbSource_2[3][17]
+          + lpbSource_2[4][1] + lpbSource_2[4][5] + lpbSource_2[4][9] + lpbSource_2[4][13] + lpbSource_2[4][17]
+         ) / 25;
 
          // blue
          lpwDestination[2] =
-            (lpbSource_2[0][2] + lpbSource_2[0][6] + lpbSource_2[0][10] + lpbSource_2[0][14] + lpbSource_2[0][18]
-             + lpbSource_2[1][2] + lpbSource_2[1][6] + lpbSource_2[1][10] + lpbSource_2[1][14] + lpbSource_2[1][18]
-             + lpbSource_2[2][2] + lpbSource_2[2][6] + lpbSource_2[2][10] + lpbSource_2[2][14] + lpbSource_2[2][18]
-             + lpbSource_2[3][2] + lpbSource_2[3][6] + lpbSource_2[3][10] + lpbSource_2[3][14] + lpbSource_2[3][18]
-             + lpbSource_2[4][2] + lpbSource_2[4][6] + lpbSource_2[4][10] + lpbSource_2[4][14] + lpbSource_2[4][18]
-            ) / 25;
+         (lpbSource_2[0][2] + lpbSource_2[0][6] + lpbSource_2[0][10] + lpbSource_2[0][14] + lpbSource_2[0][18]
+          + lpbSource_2[1][2] + lpbSource_2[1][6] + lpbSource_2[1][10] + lpbSource_2[1][14] + lpbSource_2[1][18]
+          + lpbSource_2[2][2] + lpbSource_2[2][6] + lpbSource_2[2][10] + lpbSource_2[2][14] + lpbSource_2[2][18]
+          + lpbSource_2[3][2] + lpbSource_2[3][6] + lpbSource_2[3][10] + lpbSource_2[3][14] + lpbSource_2[3][18]
+          + lpbSource_2[4][2] + lpbSource_2[4][6] + lpbSource_2[4][10] + lpbSource_2[4][14] + lpbSource_2[4][18]
+         ) / 25;
 
          // alpha
          lpwDestination[3] =
-            (lpbSource_2[0][3] + lpbSource_2[0][7] + lpbSource_2[0][11] + lpbSource_2[0][15] + lpbSource_2[0][19]
-             + lpbSource_2[1][3] + lpbSource_2[1][7] + lpbSource_2[1][11] + lpbSource_2[1][15] + lpbSource_2[1][19]
-             + lpbSource_2[2][3] + lpbSource_2[2][7] + lpbSource_2[2][11] + lpbSource_2[2][15] + lpbSource_2[2][19]
-             + lpbSource_2[3][3] + lpbSource_2[3][7] + lpbSource_2[3][11] + lpbSource_2[3][15] + lpbSource_2[3][19]
-             + lpbSource_2[4][3] + lpbSource_2[4][7] + lpbSource_2[4][11] + lpbSource_2[4][15] + lpbSource_2[4][19]
-            ) / 25;
+         (lpbSource_2[0][3] + lpbSource_2[0][7] + lpbSource_2[0][11] + lpbSource_2[0][15] + lpbSource_2[0][19]
+          + lpbSource_2[1][3] + lpbSource_2[1][7] + lpbSource_2[1][11] + lpbSource_2[1][15] + lpbSource_2[1][19]
+          + lpbSource_2[2][3] + lpbSource_2[2][7] + lpbSource_2[2][11] + lpbSource_2[2][15] + lpbSource_2[2][19]
+          + lpbSource_2[3][3] + lpbSource_2[3][7] + lpbSource_2[3][11] + lpbSource_2[3][15] + lpbSource_2[3][19]
+          + lpbSource_2[4][3] + lpbSource_2[4][7] + lpbSource_2[4][11] + lpbSource_2[4][15] + lpbSource_2[4][19]
+         ) / 25;
 
          lpwDestination += 4;
          x1 += 4;
@@ -3091,10 +3091,10 @@ bool imaging::channel_gray_blur(::draw2d::graphics *pdcDst,point ptDst,size size
       return false;
 
    if(!channel_gray_blur_32CC(
-            dibDst,
-            dibSrc,
-            iChannel,
-            iRadius))
+         dibDst,
+         dibSrc,
+         iChannel,
+         iRadius))
       return false;
 
    if(!dibDst->to(pdcDst,ptDst,size))
@@ -3131,10 +3131,10 @@ bool imaging::channel_alpha_gray_blur(::draw2d::graphics *pdcDst,point ptDst,siz
       return false;
 
    if(!channel_alpha_gray_blur_32CC(
-            dibDst,
-            dibSrc,
-            iChannel,
-            iRadius))
+         dibDst,
+         dibSrc,
+         iChannel,
+         iRadius))
       return false;
 
    if(!dibDst->to(pdcDst,ptDst,size))
@@ -3554,14 +3554,14 @@ bool imaging::channel_alpha_gray_blur_32CC(::draw2d::dib * pdibDst,::draw2d::dib
 }
 
 bool imaging::channel_gray_blur(
-   ::draw2d::graphics * pdcDst,
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc,
-   point ptSrc,
-   int32_t iChannel,
-   class size sizeFilter,
-   LPBYTE lpbFilter)
+::draw2d::graphics * pdcDst,
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc,
+point ptSrc,
+int32_t iChannel,
+class size sizeFilter,
+LPBYTE lpbFilter)
 {
    if(size.cx <= 0 || size.cy <= 0)
       return true;
@@ -3586,12 +3586,12 @@ bool imaging::channel_gray_blur(
       return false;
 
    if(!channel_gray_blur_32CC(
-            dibDst,
-            dibSrc,
-            iChannel,
-            sizeFilter.cx,
-            sizeFilter.cy,
-            lpbFilter))
+         dibDst,
+         dibSrc,
+         iChannel,
+         sizeFilter.cx,
+         sizeFilter.cy,
+         lpbFilter))
       return false;
 
    if(!dibDst->to(pdcDst,ptDst,size))
@@ -3938,17 +3938,17 @@ bool imaging::color_blend(::draw2d::graphics * pgraphics,const RECT & rectParam,
 
 
 void imaging::color_blend_24CC(
-   LPBYTE lpbAParam,
-   int32_t x1,
-   int32_t y1,
-   int32_t w1,
-   int32_t cx,
-   int32_t cy,
-   COLORREF cr,
-   LPBYTE lpbCParam,
-   int32_t x3,
-   int32_t y3,
-   int32_t w3)
+LPBYTE lpbAParam,
+int32_t x1,
+int32_t y1,
+int32_t w1,
+int32_t cx,
+int32_t cy,
+COLORREF cr,
+LPBYTE lpbCParam,
+int32_t x3,
+int32_t y3,
+int32_t w3)
 {
    int32_t i,j;
    x1 *= 3;
@@ -4448,9 +4448,9 @@ void imaging::alpha_spread_R2_24CC(LPBYTE lpbDst,int32_t xDest,int32_t yDest,int
 
 
 void imaging::alpha_spread__24CC(
-   LPBYTE lpbDst,int32_t xDest,int32_t yDest,int32_t wDest,int32_t cx,int32_t cy,
-   LPBYTE lpbSrc,int32_t xSrc,int32_t ySrc,int32_t wSrc,
-   BYTE bMin,int32_t iRadius)
+LPBYTE lpbDst,int32_t xDest,int32_t yDest,int32_t wDest,int32_t cx,int32_t cy,
+LPBYTE lpbSrc,int32_t xSrc,int32_t ySrc,int32_t wSrc,
+BYTE bMin,int32_t iRadius)
 {
    UNREFERENCED_PARAMETER(xDest);
    UNREFERENCED_PARAMETER(yDest);
@@ -4739,35 +4739,35 @@ breakFilter:
 }
 
 bool imaging::channel_spread(
-   ::draw2d::graphics *pdcDst,
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc,
-   point ptSrc,
-   int32_t iChannel,int32_t iRadius)
+::draw2d::graphics *pdcDst,
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc,
+point ptSrc,
+int32_t iChannel,int32_t iRadius)
 {
 
    return channel_spread_set_color(
-             pdcDst,
-             ptDst,
-             size,
-             pdcSrc,
-             ptSrc,
-             iChannel,
-             iRadius,
-             0xffffffff);
+          pdcDst,
+          ptDst,
+          size,
+          pdcSrc,
+          ptSrc,
+          iChannel,
+          iRadius,
+          0xffffffff);
 
 }
 
 
 bool imaging::channel_spread_set_color(
-   ::draw2d::graphics *pdcDst,
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc,
-   point ptSrc,
-   int32_t iChannel,int32_t iRadius,
-   COLORREF cr)
+::draw2d::graphics *pdcDst,
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc,
+point ptSrc,
+int32_t iChannel,int32_t iRadius,
+COLORREF cr)
 {
    if(size.is_empty())
       return true;
@@ -4795,10 +4795,10 @@ bool imaging::channel_spread_set_color(
       return false;
 
    if(!channel_spread__32CC(
-            dibDst,
-            dibSrc,
-            iChannel,
-            iRadius,cr))
+         dibDst,
+         dibSrc,
+         iChannel,
+         iRadius,cr))
       return false;
 
 
@@ -4811,34 +4811,34 @@ bool imaging::channel_spread_set_color(
 
 
 bool imaging::spread(
-   ::draw2d::graphics *pdcDst,
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc,
-   point ptSrc,
-   int32_t iRadius)
+::draw2d::graphics *pdcDst,
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc,
+point ptSrc,
+int32_t iRadius)
 {
 
    return spread_set_color(
-             pdcDst,
-             ptDst,
-             size,
-             pdcSrc,
-             ptSrc,
-             iRadius,
-             0xffffffff);
+          pdcDst,
+          ptDst,
+          size,
+          pdcSrc,
+          ptSrc,
+          iRadius,
+          0xffffffff);
 
 }
 
 
 bool imaging::spread_set_color(
-   ::draw2d::graphics *pdcDst,
-   point ptDst,
-   size size,
-   ::draw2d::graphics * pdcSrc,
-   point ptSrc,
-   int32_t iRadius,
-   COLORREF cr)
+::draw2d::graphics *pdcDst,
+point ptDst,
+size size,
+::draw2d::graphics * pdcSrc,
+point ptSrc,
+int32_t iRadius,
+COLORREF cr)
 {
    if(size.is_empty())
       return true;
@@ -4865,9 +4865,9 @@ bool imaging::spread_set_color(
       return false;
 
    if(!spread__32CC(
-            dibDst,
-            dibSrc,
-            iRadius,cr))
+         dibDst,
+         dibSrc,
+         iRadius,cr))
       return false;
 
    if(!dibDst->to(pdcDst,ptDst,size))
@@ -5776,17 +5776,17 @@ breakFilter2:
 
 
 void imaging::pixelate_24CC(
-   LPBYTE   lpbDst,
-   int32_t      xDest,
-   int32_t      yDest,
-   int32_t      wDest,
-   int32_t      cx,
-   int32_t      cy,
-   LPBYTE   lpbSrc,
-   int32_t      xSrc,
-   int32_t      ySrc,
-   int32_t      wSrc,
-   int32_t      iSize)
+LPBYTE   lpbDst,
+int32_t      xDest,
+int32_t      yDest,
+int32_t      wDest,
+int32_t      cx,
+int32_t      cy,
+LPBYTE   lpbSrc,
+int32_t      xSrc,
+int32_t      ySrc,
+int32_t      wSrc,
+int32_t      iSize)
 {
    UNREFERENCED_PARAMETER(xDest);
    UNREFERENCED_PARAMETER(yDest);
@@ -6242,22 +6242,22 @@ void imaging::pixelate_24CC(
 
 
 void imaging::alpha_pixelate_24CC(
-   LPBYTE lpbDst,
-   int32_t xDest,
-   int32_t yDest,
-   int32_t wDest,
-   int32_t cx,
-   int32_t cy,
-   LPBYTE lpbSrc1,
-   int32_t xSrc1,
-   int32_t ySrc1,
-   int32_t wSrc1,
-   LPBYTE lpbSrc2,
-   int32_t xSrc2,
-   int32_t ySrc2,
-   int32_t wSrc2,
-   int32_t iSize,
-   int32_t iAlpha)
+LPBYTE lpbDst,
+int32_t xDest,
+int32_t yDest,
+int32_t wDest,
+int32_t cx,
+int32_t cy,
+LPBYTE lpbSrc1,
+int32_t xSrc1,
+int32_t ySrc1,
+int32_t wSrc1,
+LPBYTE lpbSrc2,
+int32_t xSrc2,
+int32_t ySrc2,
+int32_t wSrc2,
+int32_t iSize,
+int32_t iAlpha)
 {
    UNREFERENCED_PARAMETER(xDest);
    UNREFERENCED_PARAMETER(yDest);
@@ -6830,3 +6830,131 @@ bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application *
    return load_image(dib, file);
 
 }
+
+
+
+//
+//FIBITMAP * freeimage_from_hbitmap(HBITMAP hbitmap)
+//{
+//
+//   //if (pbitmap == NULL)
+//   //   return NULL;
+//
+//
+//
+//   //HBITMAP hbitmap = pbitmap->GetHBITMAP();
+//
+//   if (hbitmap == NULL)
+//      return NULL;
+//
+//   // ...
+//   // the following code assumes that you have a valid HBITMAP loaded into the memory
+//   BITMAP bm;
+//   ::GetObject(hbitmap, sizeof(BITMAP), (char *)&bm);
+//   if (bm.bmWidth <= 0 || bm.bmHeight <= 0)
+//      return NULL;
+//   FIBITMAP * fi;
+//   //if(bm.bmBitsPixel == 32)
+//   {
+//      // fi = FreeImage_AllocateT(bm.bmWidth,bm.bmHeight,bm.bmBitsPixel);
+//   }
+//   //else
+//   {
+//      fi = FreeImage_Allocate(bm.bmWidth, bm.bmHeight, bm.bmBitsPixel);
+//   }
+//   // The GetDIBits function clears the biClrUsed and biClrImportant BITMAPINFO members (dont't know why)
+//   // So we save these infos below. This is needed for palettized images only.
+//   int32_t nColors = FreeImage_GetColorsUsed(fi);
+//   HDC hdc = ::CreateCompatibleDC(NULL);
+//
+//   GetDIBits(hdc, (HBITMAP)hbitmap, 0, FreeImage_GetHeight(fi), FreeImage_GetBits(fi), FreeImage_GetInfo(fi), DIB_RGB_COLORS);
+//
+//   ::DeleteDC(hdc);
+//
+//   ///   pbitmap->ReleaseHBITMAP(hbitmap);
+//
+//   // restore BITMAPINFO members
+//   FreeImage_GetInfoHeader(fi)->biClrUsed = nColors;
+//   FreeImage_GetInfoHeader(fi)->biClrImportant = nColors;
+//   return fi;
+//
+//
+//}
+//
+//
+//
+//HBITMAP dib32_from_freeimage(FIBITMAP *pfibitmap)
+//{
+//
+//   if (pfibitmap == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
+//
+//   if (pimage32 == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   BITMAPINFO * pbi = FreeImage_GetInfo(pimage32);
+//
+//   void * pdata = FreeImage_GetBits(pimage32);
+//
+//   COLORREF * pcolorref = NULL;
+//
+//   BITMAPINFO info;
+//
+//   memset(&info, 0, sizeof(info));
+//
+//   info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+//   info.bmiHeader.biWidth = pbi->bmiHeader.biWidth;
+//   info.bmiHeader.biHeight = pbi->bmiHeader.biHeight;
+//   info.bmiHeader.biPlanes = 1;
+//   info.bmiHeader.biBitCount = 32;
+//   info.bmiHeader.biCompression = BI_RGB;
+//   info.bmiHeader.biSizeImage = pbi->bmiHeader.biWidth * pbi->bmiHeader.biHeight * 4;
+//
+//
+//   HBITMAP hDib = ::CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **)&pcolorref, NULL, 0);
+//
+//   if (hDib != NULL)
+//   {
+//      HDC hdc = ::GetDC(NULL);
+//
+//      if (pbi->bmiHeader.biHeight != SetDIBits(
+//         hdc,
+//         hDib,
+//         0,
+//         pbi->bmiHeader.biHeight,
+//         pdata,
+//         pbi,
+//         DIB_RGB_COLORS))
+//      {
+//
+//         ASSERT(FALSE);
+//      }
+//
+//      ::ReleaseDC(NULL, hdc);
+//
+//   }
+//
+//   FreeImage_Unload(pimage32);
+//
+//   FreeImage_Unload(pfibitmap);
+//
+//   return hDib;
+//
+//}
+//
+//HBITMAP dib32_from_hbitmap(HBITMAP hbitmap)
+//{
+//
+//   return dib32_from_freeimage(freeimage_from_hbitmap(hbitmap));
+//
+//}

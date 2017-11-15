@@ -150,189 +150,187 @@ namespace draw2d
 
    class wingdi_font_enum
    {
-      public:
+   public:
 
-         HDC                                 m_hdc;
-         ::draw2d::font::enum_item_array &   m_itema;
-         bool                                m_bRaster;
-         bool                                m_bTrueType;
-         bool                                m_bOther;
-         wstring                             m_wstrTopicFaceName;
-         int_array                           m_iaCs;
+      HDC                                 m_hdc;
+      ::draw2d::font::enum_item_array &   m_itema;
+      bool                                m_bRaster;
+      bool                                m_bTrueType;
+      bool                                m_bOther;
+      wstring                             m_wstrTopicFaceName;
+      int_array                           m_iaCs;
 
 
 
-         wingdi_font_enum(::draw2d::font::enum_item_array & itema, bool bRaster, bool bTrueType, bool bOther) :
-            m_itema(itema),
-            m_bRaster(bRaster),
-            m_bTrueType(bTrueType),
-            m_bOther(bOther)
+      wingdi_font_enum(::draw2d::font::enum_item_array & itema, bool bRaster, bool bTrueType, bool bOther) :
+         m_itema(itema),
+         m_bRaster(bRaster),
+         m_bTrueType(bTrueType),
+         m_bOther(bOther)
+      {
+
+         m_iaCs.add(CHINESEBIG5_CHARSET);
+         m_iaCs.add(GB2312_CHARSET);
+         m_iaCs.add(SHIFTJIS_CHARSET);
+         //m_iaCs.add(ANSI_CHARSET);
+         m_iaCs.add(SYMBOL_CHARSET);
+         //m_iaCs.add(OEM_CHARSET);
+         //m_iaCs.add(DEFAULT_CHARSET);
+         m_iaCs.add(HEBREW_CHARSET);
+         m_iaCs.add(ARABIC_CHARSET);
+         m_iaCs.add(GREEK_CHARSET);
+         m_iaCs.add(TURKISH_CHARSET);
+         m_iaCs.add(VIETNAMESE_CHARSET);
+         m_iaCs.add(THAI_CHARSET);
+         m_iaCs.add(EASTEUROPE_CHARSET);
+         m_iaCs.add(RUSSIAN_CHARSET);
+         m_iaCs.add(JOHAB_CHARSET);
+         m_iaCs.add(HANGUL_CHARSET);
+         m_iaCs.add(BALTIC_CHARSET);
+         //m_iaCs.add(MAC_CHARSET);
+
+
+         m_hdc = NULL;
+
+         enumerate();
+
+      }
+
+      ~wingdi_font_enum()
+      {
+
+         ::DeleteDC(m_hdc);
+
+      }
+
+      void enumerate()
+      {
+
+         if (m_hdc == NULL)
          {
 
-            m_iaCs.add(CHINESEBIG5_CHARSET);
-            m_iaCs.add(GB2312_CHARSET);
-            m_iaCs.add(SHIFTJIS_CHARSET);
-            //m_iaCs.add(ANSI_CHARSET);
-            m_iaCs.add(SYMBOL_CHARSET);
-            //m_iaCs.add(OEM_CHARSET);
-            //m_iaCs.add(DEFAULT_CHARSET);
-            m_iaCs.add(HEBREW_CHARSET);
-            m_iaCs.add(ARABIC_CHARSET);
-            m_iaCs.add(GREEK_CHARSET);
-            m_iaCs.add(TURKISH_CHARSET);
-            m_iaCs.add(VIETNAMESE_CHARSET);
-            m_iaCs.add(THAI_CHARSET);
-            m_iaCs.add(EASTEUROPE_CHARSET);
-            m_iaCs.add(RUSSIAN_CHARSET);
-            m_iaCs.add(JOHAB_CHARSET);
-            m_iaCs.add(HANGUL_CHARSET);
-            m_iaCs.add(BALTIC_CHARSET);
-            //m_iaCs.add(MAC_CHARSET);
-
-
-            m_hdc = NULL;
-
-            enumerate();
+            m_hdc = ::CreateCompatibleDC(NULL);
 
          }
 
-         ~wingdi_font_enum()
+         ::EnumFontFamiliesW(m_hdc, (LPCWSTR)NULL, (FONTENUMPROCW)&wingdi_font_enum::callback, (LPARAM)this);
+
+         wstring wstrSample;
+
+         LOGFONTW lf;
+
+         HFONT hfont = NULL;
+
+         HFONT hfontOld = NULL;
+
+         size s;
+
+         int iMultiScript;
+
+         size sSample;
+
+         int64_t maxarea;
+
+         ::draw2d::font::e_cs ecs;
+
+         ::draw2d::font::e_cs ecsFound;
+
+         for (index i = 0; i < m_itema.get_size(); i++)
          {
 
-            ::DeleteDC(m_hdc);
+            if (m_itema[i].m_ecs == ::draw2d::font::cs_ansi
+                  || m_itema[i].m_ecs == ::draw2d::font::cs_default)
 
-         }
-
-         void enumerate()
-         {
-
-            if (m_hdc == NULL)
             {
 
-               m_hdc = ::CreateCompatibleDC(NULL);
+               maxarea = 0;
 
-            }
+               s.cx = 0;
 
-            ::EnumFontFamiliesW(m_hdc, (LPCWSTR)NULL, (FONTENUMPROCW)&wingdi_font_enum::callback, (LPARAM)this);
+               s.cy = 0;
 
-            wstring wstrSample;
+               ecsFound = m_itema[i].m_ecs;
 
-            LOGFONTW lf;
+               iMultiScript = 0;
 
-            HFONT hfont = NULL;
-
-            HFONT hfontOld = NULL;
-
-            size s;
-
-            int iMultiScript;
-
-            size sSample;
-
-            int64_t maxarea;
-
-            ::draw2d::font::e_cs ecs;
-
-            ::draw2d::font::e_cs ecsFound;
-
-            for (index i = 0; i < m_itema.get_size(); i++)
-            {
-
-               if (m_itema[i].m_ecs == ::draw2d::font::cs_ansi
-                     || m_itema[i].m_ecs == ::draw2d::font::cs_default)
-
+               for (index j = 0; j < m_iaCs.get_size(); j++)
                {
 
-                  maxarea = 0;
+                  ZERO(lf);
 
-                  s.cx = 0;
+                  lf.lfCharSet = m_iaCs[j];
 
-                  s.cy = 0;
+                  ecs = ::draw2d::wingdi_get_cs(lf.lfCharSet);
 
-                  ecsFound = m_itema[i].m_ecs;
+                  wstring wstrSample = ::draw2d::font::get_sample_text(ecs);
 
-                  iMultiScript = 0;
-
-                  for (index j = 0; j < m_iaCs.get_size(); j++)
+                  if (wstrSample.get_length() > 0)
                   {
 
-                     ZERO(lf);
+                     string strFont = m_itema[i].m_strName;
 
-                     lf.lfCharSet = m_iaCs[j];
+                     hfont = wingdi_CreatePointFont(180, strFont, m_hdc, &lf);
 
-                     ecs = ::draw2d::wingdi_get_cs(lf.lfCharSet);
-
-                     wstring wstrSample = ::draw2d::font::get_sample_text(ecs);
-
-                     if (wstrSample.get_length() > 0)
+                     if (hfont != NULL)
                      {
 
-                        string strFont = m_itema[i].m_strName;
-
-                        hfont = wingdi_CreatePointFont(180, strFont, m_hdc, &lf);
-
-                        if (hfont != NULL)
+                        try
                         {
 
-                           try
+                           hfontOld = (HFONT) ::SelectObject(m_hdc, hfont);
+
+                           if (::GetTextExtentPointW(m_hdc, wstrSample, (int) (wstrSample.get_length()), &sSample))
                            {
 
-                              hfontOld = (HFONT) ::SelectObject(m_hdc, hfont);
-
-                              if (::GetTextExtentPointW(m_hdc, wstrSample, (int) (wstrSample.get_length()), &sSample))
+                              if (sSample.area() > maxarea)
                               {
 
-                                 if (sSample.area() > maxarea)
-                                 {
+                                 ecsFound = ecs;
 
-                                    ecsFound = ecs;
+                                 maxarea = sSample.area();
 
-                                    maxarea = sSample.area();
+                                 s = sSample;
 
-                                    s = sSample;
-
-                                    iMultiScript++;
-
-                                 }
+                                 iMultiScript++;
 
                               }
 
                            }
-                           catch (...)
-                           {
 
-                           }
+                        }
+                        catch (...)
+                        {
 
                         }
 
                      }
 
-                     ::SelectObject(m_hdc, hfontOld);
-
-                     ::DeleteObject(hfont);
-
                   }
 
-                  if (iMultiScript == 1)
+                  ::SelectObject(m_hdc, hfontOld);
+
+                  ::DeleteObject(hfont);
+
+               }
+
+               if (iMultiScript == 1)
+               {
+
+                  m_itema[i].m_ecs = ecsFound;
+
+               }
+               else if (iMultiScript > 1)
+               {
+
+                  string str = m_itema[i].m_strName;
+
+
+                  m_itema.pred_remove([&](auto & item)
                   {
 
-                     m_itema[i].m_ecs = ecsFound;
+                     return item.m_strName == str;
 
-                  }
-                  else if (iMultiScript > 1)
-                  {
-
-                     string str = m_itema[i].m_strName;
-
-
-                     m_itema.pred_remove([&](auto & item)
-                     {
-
-                        return item.m_strName == str;
-
-                     });
-
-                  }
+                  });
 
                }
 
@@ -340,17 +338,19 @@ namespace draw2d
 
          }
 
-         void enum_cs(const WCHAR * pwsz)
-         {
+      }
 
-            m_wstrTopicFaceName = pwsz;
+      void enum_cs(const WCHAR * pwsz)
+      {
 
-            ::EnumFontFamiliesW(m_hdc, pwsz, (FONTENUMPROCW)&wingdi_font_enum::callback_cs, (LPARAM)this);
+         m_wstrTopicFaceName = pwsz;
 
-         }
+         ::EnumFontFamiliesW(m_hdc, pwsz, (FONTENUMPROCW)&wingdi_font_enum::callback_cs, (LPARAM)this);
 
-         static BOOL CALLBACK callback(LPLOGFONTW lplf, LPNEWTEXTMETRICW lpntm, DWORD FontType, LPVOID p);
-         static BOOL CALLBACK callback_cs(LPLOGFONTW lplf, LPNEWTEXTMETRICW lpntm, DWORD FontType, LPVOID p);
+      }
+
+      static BOOL CALLBACK callback(LPLOGFONTW lplf, LPNEWTEXTMETRICW lpntm, DWORD FontType, LPVOID p);
+      static BOOL CALLBACK callback_cs(LPLOGFONTW lplf, LPNEWTEXTMETRICW lpntm, DWORD FontType, LPVOID p);
 
    };
 
@@ -460,7 +460,7 @@ namespace draw2d
             index iFindTopic = -1;
 
             if(iFindTopic = penum->m_itema.pred_find_first(
-                               [&](auto & item)
+                            [&](auto & item)
          {
 
             return item.m_strName == strTopic && item.m_ecs == ecs;
@@ -476,7 +476,7 @@ namespace draw2d
 
 
          index iFind = penum->m_itema.pred_find_first(
-                          [&](auto & item)
+                       [&](auto & item)
          {
 
             return item.m_strName == str;
@@ -505,7 +505,7 @@ namespace draw2d
             {
 
                iFind = penum->m_itema.pred_find_first(
-                          [&](auto & item)
+                       [&](auto & item)
                {
 
                   return item.m_strName == str && item.m_ecs == ecs;
@@ -891,5 +891,109 @@ CLASS_DECL_AURA HBITMAP CreateHBITMAP2(COLORREF * & pdata, int & stride, int cx,
 }
 
 
+//
+//Gdiplus::Status HBitmapToBitmap(HBITMAP source, Gdiplus::PixelFormat pixel_format, Gdiplus::Bitmap** result_out)
+//{
+//   BITMAP source_info = { 0 };
+//   if (!::GetObject(source, sizeof(source_info), &source_info))
+//      return Gdiplus::GenericError;
+//
+//   Gdiplus::Status s;
+//
+//   std::auto_ptr< Gdiplus::Bitmap > target(new Gdiplus::Bitmap(source_info.bmWidth, source_info.bmHeight, pixel_format));
+//   if (!target.get())
+//      return Gdiplus::OutOfMemory;
+//   if ((s = target->GetLastStatus()) != Gdiplus::Ok)
+//      return s;
+//
+//   Gdiplus::BitmapData target_info;
+//   Gdiplus::Rect rect(0, 0, source_info.bmWidth, source_info.bmHeight);
+//
+//   s = target->LockBits(&rect, Gdiplus::ImageLockModeWrite, pixel_format, &target_info);
+//   if (s != Gdiplus::Ok)
+//      return s;
+//
+//   if (target_info.Stride != source_info.bmWidthBytes)
+//      return Gdiplus::InvalidParameter; // pixel_format is wrong!
+//
+//   CopyMemory(target_info.Scan0, source_info.bmBits, source_info.bmWidthBytes * source_info.bmHeight);
+//
+//   s = target->UnlockBits(&target_info);
+//   if (s != Gdiplus::Ok)
+//      return s;
+//
+//   *result_out = target.release();
+//
+//   return Gdiplus::Ok;
+//}
 
 
+
+//HBITMAP dib32_from_freeimage(FIBITMAP *pfibitmap)
+//{
+//
+//   if (pfibitmap == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   FIBITMAP * pimage32 = FreeImage_ConvertTo32Bits(pfibitmap);
+//
+//   if (pimage32 == NULL)
+//   {
+//
+//      return NULL;
+//
+//   }
+//
+//   BITMAPINFO * pbi = FreeImage_GetInfo(pimage32);
+//
+//   void * pdata = FreeImage_GetBits(pimage32);
+//
+//   COLORREF * pcolorref = NULL;
+//
+//   BITMAPINFO info;
+//
+//   memset(&info, 0, sizeof(info));
+//
+//   info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+//   info.bmiHeader.biWidth = pbi->bmiHeader.biWidth;
+//   info.bmiHeader.biHeight = pbi->bmiHeader.biHeight;
+//   info.bmiHeader.biPlanes = 1;
+//   info.bmiHeader.biBitCount = 32;
+//   info.bmiHeader.biCompression = BI_RGB;
+//   info.bmiHeader.biSizeImage = pbi->bmiHeader.biWidth * pbi->bmiHeader.biHeight * 4;
+//
+//
+//   HBITMAP hDib = ::CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **)&pcolorref, NULL, 0);
+//
+//   if (hDib != NULL)
+//   {
+//      HDC hdc = ::GetDC(NULL);
+//
+//      if (pbi->bmiHeader.biHeight != SetDIBits(
+//         hdc,
+//         hDib,
+//         0,
+//         pbi->bmiHeader.biHeight,
+//         pdata,
+//         pbi,
+//         DIB_RGB_COLORS))
+//      {
+//
+//         ASSERT(FALSE);
+//      }
+//
+//      ::ReleaseDC(NULL, hdc);
+//
+//   }
+//
+//   FreeImage_Unload(pimage32);
+//
+//   FreeImage_Unload(pimage);
+//
+//   return hDib;
+//
+//}
