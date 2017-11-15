@@ -930,17 +930,7 @@ namespace core
    }
 
 
-   ::visual::cursor * session::get_cursor()
-   {
 
-      if(m_pbasesession->m_ecursor == ::visual::cursor_none)
-         return NULL;
-      else if(m_pbasesession->m_ecursor == ::visual::cursor_default)
-         return System.visual().get_cursor(m_pbasesession->m_ecursorDefault);
-      else
-         return System.visual().get_cursor(m_pbasesession->m_ecursor);
-
-   }
 
 
    ::visual::cursor * session::get_default_cursor()
