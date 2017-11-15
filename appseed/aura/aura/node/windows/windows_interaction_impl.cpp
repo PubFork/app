@@ -978,14 +978,21 @@ namespace windows
       dumpcontext << "\n";
    }
 
+
    void interaction_impl::on_set_parent(::user::interaction * pui)
    {
+
       if (pui != NULL)
       {
 
+         ::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(10));
+
          detach();
+
       }
+
    }
+
 
    bool interaction_impl::DestroyWindow()
    {
