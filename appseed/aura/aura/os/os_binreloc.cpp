@@ -186,10 +186,10 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error)
 		*error = BR_INIT_ERROR_DISABLED;
 	return (char *) NULL;
 #else
-	#define SIZE PATH_MAX + 100
+	#define SIZE_FOR_LINE PATH_MAX + 100
 	FILE *f;
 	size_t address_string_len;
-	char *address_string, line[SIZE], *found;
+	char *address_string, line[SIZE_FOR_LINE], *found;
 
 	if (symbol == NULL)
 		return (char *) NULL;
@@ -207,7 +207,7 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error)
 		void *start_addr_p, *end_addr_p;
 		size_t len;
 
-		if (fgets (line, SIZE, f) == NULL)
+		if (fgets (line, SIZE_FOR_LINE, f) == NULL)
 			break;
 
 		/* Sanity check. */

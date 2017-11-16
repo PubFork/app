@@ -2958,6 +2958,7 @@ return 0;
          m_hwnd = hwnd;
          m_hdc = hdc;
          __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::multithreading::priority_normal);
+         #undef timeout
          if(m_event.wait(millis(dwTimeout)).timeout())
          {
             TRACE("print_window::time_out");
