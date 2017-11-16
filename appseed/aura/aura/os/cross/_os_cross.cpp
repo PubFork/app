@@ -8,8 +8,4 @@
 #endif
 
 
-#if !defined(ANDROID) && !defined(APPLE) && !defined(LINUX)
-
 #include "ansios/_os_cross_ansios.cpp"
-
-#endif

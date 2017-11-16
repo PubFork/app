@@ -361,11 +361,11 @@ plex_heap_alloc_array::plex_heap_alloc_array()
    add(new plex_heap_alloc(1024, 48));
    add(new plex_heap_alloc(1024 * 2, 2 * 1024));
 
-   #ifdef RASPBIAN
-
-   return;
-
-   #endif
+//   #ifdef RASPBIAN
+//
+//   return;
+//
+//   #endif
 
 //   m_bbSize[2] = last()->GetAllocSize();
 //

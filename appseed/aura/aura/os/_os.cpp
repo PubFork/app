@@ -16,7 +16,11 @@
 #include "os_http.cpp"
 #include "os_os.cpp"
 #include "os_thread.cpp"
-//#include "os_serial.cpp"
+#endif
+
+
+#if !defined(ANDROID) && !defined(METROWIN)
+#include "os_serial.cpp"
 #endif
 
 

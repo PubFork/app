@@ -42,6 +42,7 @@
 #include "linux_gnu_source.cpp"
 #include "linux_launcher.cpp"
 #include "linux_library.cpp"
+#include "linux_list_serial_ports.cpp"
 #include "linux_lock.cpp"
 #include "linux_message_loop.cpp"
 #include "linux_multithreading.cpp"
