@@ -27,6 +27,10 @@
 #include "ansios/_os_ansios.cpp"
 #include "windows/_os_windows.cpp"
 #include "windows_common/_os_windows_common.cpp"
+#elif defined(LINUX)
+#include "ansios/_os_ansios.cpp"
+#include "linux/_os_linux.cpp"
+#include "x11/_os_x11.cpp"
 #endif
 
 
