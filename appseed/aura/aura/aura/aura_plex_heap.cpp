@@ -573,6 +573,13 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
 
       pNew = (size_t *) ::system_heap_realloc(p, size);
 
+      if(size > sizeOld)
+      {
+
+         memset(&((byte *)pNew)[sizeOld], 0, size - sizeOld);
+
+      }
+
    }
    else if (pallocOld == pallocNew)
    {
@@ -593,6 +600,13 @@ void * plex_heap_alloc_array::_realloc(void * p, size_t size, size_t sizeOld, in
       {
 
          pNew = (size_t *) ::system_heap_alloc(size);
+
+         if(size > sizeOld)
+         {
+
+            memset(&((byte *)pNew)[sizeOld], 0, size - sizeOld);
+
+         }
 
       }
 
