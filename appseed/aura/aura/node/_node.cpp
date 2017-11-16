@@ -11,11 +11,15 @@
 #include "ansios/_node_ansios.cpp"
 #include "windows/_node_windows.cpp"
 
+#elif defined(LINUX)
+
+#include "ansios/_node_ansios.cpp"
+#include "linux/_node_linux.cpp"
+
 #else
 
 #include "apple/_node_apple.cpp"
 #include "ios/_node_ios.cpp"
-#include "linux/_node_linux.cpp"
 #include "macos/_node_macos.cpp"
 #include "metrowin/_node_metrowin.cpp"
 
