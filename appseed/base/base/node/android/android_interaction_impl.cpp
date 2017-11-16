@@ -5,11 +5,11 @@
 
 CLASS_DECL_BASE int g_iMouseDown = 0;
 
-CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
-CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time2;
+CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
+CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time2;
 
 
-extern CLASS_DECL_BASE thread_int_ptr < DWORD_PTR > t_time1;
+extern CLASS_DECL_AXIS thread_int_ptr < DWORD_PTR > t_time1;
 
 
 
