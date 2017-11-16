@@ -1,9 +1,8 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
 #include <winapifamily.h>
-#include <windows.h>
 #include <shlwapi.h>
 #include <wrl/client.h>
 #include <D2d1_1.h>

@@ -40,7 +40,7 @@
 #include "windows_multithreading.cpp"
 #include "windows_process.cpp"
 #include "windows_process_env_reader.cpp"
-//#include "windows_serial.cpp"
+#include "windows_serial.cpp"
 #include "windows_simple_app.cpp"
 #include "windows_simple_shell_launcher.cpp"
 #include "windows_small_ipc_channel.cpp"

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <VersionHelpers.h>
 
 #ifndef USE_OS_IMAGE_LOADER
@@ -38,8 +38,8 @@ DWORD_PTR                        g_gdiplusHookToken         = NULL;
 
 typedef int
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
-   UINT message,
-   DWORD dwFlag);
+UINT message,
+DWORD dwFlag);
 
 
 LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
@@ -47,13 +47,13 @@ LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
 typedef
 LSTATUS
 ( APIENTRY * LPFN_RegGetValueW) (
-   HKEY hkey,
-   LPCWSTR lpSubKey,
-   LPCWSTR lpValue,
-   uint32_t dwFlags,
-   LPDWORD pdwType,
-   PVOID pvData,
-   LPDWORD pcbData
+HKEY hkey,
+LPCWSTR lpSubKey,
+LPCWSTR lpValue,
+uint32_t dwFlags,
+LPDWORD pdwType,
+PVOID pvData,
+LPDWORD pcbData
 );
 
 LPFN_RegGetValueW g_pfnRegGetValueW = NULL;
@@ -341,28 +341,28 @@ string get_system_error_message(uint32_t dwError)
    HMODULE Hand = NULL;
 
    if(!FormatMessageW(
-            FORMAT_MESSAGE_ALLOCATE_BUFFER |
-            FORMAT_MESSAGE_FROM_SYSTEM,
-            NULL,
-            dwError,
-            0,
-            (LPWSTR) &lpBuffer,
-            1,
-            NULL))
+         FORMAT_MESSAGE_ALLOCATE_BUFFER |
+         FORMAT_MESSAGE_FROM_SYSTEM,
+         NULL,
+         dwError,
+         0,
+         (LPWSTR) &lpBuffer,
+         1,
+         NULL))
    {
 
       HMODULE Hand = ::LoadLibrary("NTDLL.DLL");
 
       if(!FormatMessageW(
-               FORMAT_MESSAGE_ALLOCATE_BUFFER |
-               FORMAT_MESSAGE_FROM_SYSTEM |
-               FORMAT_MESSAGE_FROM_HMODULE,
-               Hand,
-               dwError,
-               0,
-               (LPWSTR) &lpBuffer,
-               1,
-               NULL))
+            FORMAT_MESSAGE_ALLOCATE_BUFFER |
+            FORMAT_MESSAGE_FROM_SYSTEM |
+            FORMAT_MESSAGE_FROM_HMODULE,
+            Hand,
+            dwError,
+            0,
+            (LPWSTR) &lpBuffer,
+            1,
+            NULL))
       {
          FreeLibrary(Hand);
          return "";
@@ -431,8 +431,8 @@ int_bool is_windows_98_or_lesser()
       return 0;
 
    return
-      osversioninfo.dwPlatformId == VER_PLATFORM_WIN32s
-      || (osversioninfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS && ((osversioninfo.dwMajorVersion == 4 && osversioninfo.dwMinorVersion <= 10) || osversioninfo.dwMajorVersion < 4));
+   osversioninfo.dwPlatformId == VER_PLATFORM_WIN32s
+   || (osversioninfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS && ((osversioninfo.dwMajorVersion == 4 && osversioninfo.dwMinorVersion <= 10) || osversioninfo.dwMajorVersion < 4));
 
 #endif
 
@@ -649,12 +649,12 @@ END_EXTERN_C
 
 #ifdef DEBUG
 
-#if !defined(__MCRTDBG) && !defined(__VLD)
-CLASS_DECL_AURA int32_t __cdecl _CrtDumpMemoryLeaks()
-{
-   return TRUE;
-}
-#endif
+//#if !defined(__MCRTDBG) && !defined(__VLD)
+//CLASS_DECL_AURA int32_t __cdecl _CrtDumpMemoryLeaks()
+//{
+//   return TRUE;
+//}
+//#endif
 
 CLASS_DECL_AURA int32_t DECL_C _check_memory()
 {
