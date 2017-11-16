@@ -280,6 +280,7 @@
 		<Unit filename="aura/aura_policy/aura_policy_objc.h" />
 		<Unit filename="aura/aura_policy/aura_policy_objcpp.h" />
 		<Unit filename="aura/aura_policy/aura_policy_winrt.h" />
+		<Unit filename="aura/compress/_compress_internal.cpp" />
 		<Unit filename="aura/compress/bsdiff/libbsdiff.h" />
 		<Unit filename="aura/compress/compress.h" />
 		<Unit filename="aura/compress/compress_bz.h" />

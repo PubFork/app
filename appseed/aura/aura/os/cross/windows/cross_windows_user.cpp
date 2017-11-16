@@ -410,45 +410,46 @@ CLASS_DECL_AURA string get_system_error_message(uint32_t dwError)
 #endif
 
 
-
-CLASS_DECL_AURA int_bool TranslateMessage(const MESSAGE * pmsg)
-{
-
-   if(pmsg == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd == NULL)
-      return FALSE;
-
-   if(pmsg->hwnd->m_pimpl == NULL)
-      return FALSE;
-
-   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
-      return FALSE;
-
-   return FALSE;
-
-}
-
-CLASS_DECL_AURA LRESULT DispatchMessage(const MESSAGE * pmsg)
-{
-
-   if(pmsg == NULL)
-      return 0;
-
-   if(pmsg->hwnd == NULL)
-      return 0;
-
-   if(pmsg->hwnd->m_pimpl == NULL)
-      return 0;
-
-   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
-      return 0;
-
-   return pmsg->hwnd->m_pimpl->m_pui->send_message(pmsg->message,pmsg->wParam,pmsg->lParam);
-
-}
-
+// please include ansios_message_loop.
+//CLASS_DECL_AURA int_bool TranslateMessage(const MESSAGE * pmsg)
+//{
+//
+//   if(pmsg == NULL)
+//      return FALSE;
+//
+//   if(pmsg->hwnd == NULL)
+//      return FALSE;
+//
+//   if(pmsg->hwnd->m_pimpl == NULL)
+//      return FALSE;
+//
+//   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
+//      return FALSE;
+//
+//   return FALSE;
+//
+//}
+//
+// please include ansios_message_loop.
+//CLASS_DECL_AURA LRESULT DispatchMessage(const MESSAGE * pmsg)
+//{
+//
+//   if(pmsg == NULL)
+//      return 0;
+//
+//   if(pmsg->hwnd == NULL)
+//      return 0;
+//
+//   if(pmsg->hwnd->m_pimpl == NULL)
+//      return 0;
+//
+//   if (pmsg->hwnd->m_pimpl->m_pui == NULL)
+//      return 0;
+//
+//   return pmsg->hwnd->m_pimpl->m_pui->send_message(pmsg->message,pmsg->wParam,pmsg->lParam);
+//
+//}
+//
 
 
 
