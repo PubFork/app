@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #if !defined(ANDROID) && !defined(WINDOWSEX)
@@ -8,7 +8,8 @@
 
 #include "ansios_file_std.cpp"
 
-#if !defined(WINDOWSEX)
+#if !defined(WINDOWS)
+
 #include "ansios_base_file.cpp"
 #include "ansios_cross_win.cpp"
 #include "ansios_cross_windows_user.cpp"

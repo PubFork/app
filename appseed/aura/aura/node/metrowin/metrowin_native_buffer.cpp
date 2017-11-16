@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "metrowin.h"
 
 
@@ -357,7 +357,7 @@ namespace metrowin
       folder = m_folder;
 
       // ::map creation flags
-      DWORD dwCreateFlag;
+      //DWORD dwCreateFlag;
       if(nOpenFlags & ::file::mode_create)
       {
          if(nOpenFlags & ::file::mode_no_truncate)

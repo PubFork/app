@@ -1201,8 +1201,8 @@ restart:
 #ifdef WINDOWSEX
 
       if (!::MoveFileW(
-               ::str::international::utf8_to_unicode(psz),
-               ::str::international::utf8_to_unicode(pszNew)))
+            ::str::international::utf8_to_unicode(psz),
+            ::str::international::utf8_to_unicode(pszNew)))
       {
 
          uint32_t dwError = ::GetLastError();
@@ -1211,9 +1211,9 @@ restart:
          {
 
             if (::CopyFileW(
-                     ::str::international::utf8_to_unicode(psz),
-                     ::str::international::utf8_to_unicode(pszNew),
-                     FALSE))
+                  ::str::international::utf8_to_unicode(psz),
+                  ::str::international::utf8_to_unicode(pszNew),
+                  FALSE))
             {
 
                if (!::DeleteFileW(::str::international::utf8_to_unicode(psz)))

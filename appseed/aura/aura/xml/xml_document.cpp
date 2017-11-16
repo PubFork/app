@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <stdarg.h>
 
 namespace xml
@@ -12,7 +12,7 @@ namespace xml
    {
 
       m_pdoc         = this;
-      m_pparseinfo   = pparseinfo != NULL ? pparseinfo : System.xml().m_pparseinfoDefault;
+      m_pparseinfo   = pparseinfo != NULL ? pparseinfo : Sys(get_app()).xml().m_pparseinfoDefault;
       m_pedit        = NULL;
 
       entitiesHash.set_at("lt", "<");
@@ -152,7 +152,7 @@ namespace xml
       }
       if(ent.is_empty() && extEnt.is_empty())
       {
-          throw "Undefined Entity Reference";
+         throw "Undefined Entity Reference";
       }
       if(ent.has_char())
       {
@@ -231,40 +231,40 @@ namespace xml
             {
 
             case ::xml::set_name:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_name(pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_name(pitem->m_strValue);
+            }
+            break;
 
             case ::xml::set_value:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_value(pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_value(pitem->m_strValue);
+            }
+            break;
 
             case ::xml::set_attr:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->set_attr(pitem->m_strName,pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->set_attr(pitem->m_strName,pitem->m_strValue);
+            }
+            break;
 
             case ::xml::add_attr:
-               {
-                  pnode = get_node_from_indexed_path(pitem->m_iaPath);
-                  if(pnode == NULL)
-                     return;
-                  pnode->add_attr(pitem->m_strName, pitem->m_strValue);
-               }
-               break;
+            {
+               pnode = get_node_from_indexed_path(pitem->m_iaPath);
+               if(pnode == NULL)
+                  return;
+               pnode->add_attr(pitem->m_strName, pitem->m_strValue);
+            }
+            break;
 
             }
 

@@ -254,21 +254,28 @@ namespace asphere
 
       strContext += "." + strEtime;
 
-      string strMain1 = Application.file().as_string(::dir::system() / "config/weather_main1.txt");
+      ::file::path path = ::dir::system() / "config/weather_main1.txt";
 
-      if (strMain1.has_char())
+      if (Application.file().exists(path))
       {
 
-         if (strMain1.find_ci("cloud") >= 0 && strMain1.find_ci("partly") < 0)
+         string strMain1 = Application.file().as_string(path);
+
+         if (strMain1.has_char())
          {
 
-            strContext += ".dampened";
+            if (strMain1.find_ci("cloud") >= 0 && strMain1.find_ci("partly") < 0)
+            {
 
-         }
-         else if (strMain1.find_ci("rain") >= 0)
-         {
+               strContext += ".dampened";
 
-            strContext += ".dampened";
+            }
+            else if (strMain1.find_ci("rain") >= 0)
+            {
+
+               strContext += ".dampened";
+
+            }
 
          }
 

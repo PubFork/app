@@ -27,7 +27,8 @@
 #if defined(ANDROID)
 #include "ansios/_os_ansios.cpp"
 #include "android/_os_android.cpp"
-#elif defined(WINDOWS)
+#elif defined(WINDOWSEX)
+
 #include "ansios/_os_ansios.cpp"
 #include "windows/_os_windows.cpp"
 #include "windows_common/_os_windows_common.cpp"
@@ -35,6 +36,26 @@
 #include "ansios/_os_ansios.cpp"
 #include "linux/_os_linux.cpp"
 #include "x11/_os_x11.cpp"
+#elif defined(METROWIN)
+
+#include "ansios/_os_ansios.cpp"
+#include "metrowin/_os_metrowin.cpp"
+#include "windows_common/_os_windows_common.cpp"
+
+#else
+#include "ansios/_os_ansios.cpp"
+#include "android/_os_android.cpp"
+#include "ansios/_os_ansios.cpp"
+#include "metrowin/_os_metrowin.cpp"
+#include "windows_common/_os_windows_common.cpp"
+#include "ansios/_os_ansios.cpp"
+#include "linux/_os_linux.cpp"
+#include "x11/_os_x11.cpp"
+#include "ansios/_os_ansios.cpp"
+#include "windows/_os_windows.cpp"
+#include "windows_common/_os_windows_common.cpp"
+
+
 #endif
 
 

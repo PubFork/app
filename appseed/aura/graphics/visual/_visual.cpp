@@ -21,7 +21,7 @@
 #include "antialias_8bit.cpp"
 #include "detect_8bit_borders.cpp"
 #ifdef USE_OS_IMAGE_LOADER
-#if defined(WINDOWSEX)
+#if defined(WINDOWS)
 #include "visual_gdiplus_image.cpp"
 #include "visual_gdiplus_image_gif.cpp"
 #include "visual_windows_image.cpp"

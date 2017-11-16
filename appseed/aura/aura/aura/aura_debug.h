@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #ifndef __AXIS_AXIS_DEBUG_H__
@@ -12,12 +12,22 @@
 
 
 CLASS_DECL_AURA int32_t DECL_C debug_report(
-   int32_t _ReportType,
-   const char * _Filename,
-   int32_t _LineNumber,
-   const char * _ModuleName,
-   const char * _Format,
-   ...);
+int32_t _ReportType,
+const char * _Filename,
+int32_t _LineNumber,
+const char * _ModuleName,
+const char * _Format,
+...);
+
+
+CLASS_DECL_AURA int32_t DECL_C debug_report(
+int32_t _ReportType,
+const wchar_t * _Filename,
+int32_t _LineNumber,
+const wchar_t * _ModuleName,
+const wchar_t * _Format,
+...);
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //
@@ -176,7 +186,7 @@ typedef struct _MEMORY_STATE
 #undef _ASSERT_EXPR
 #define _ASSERT_EXPR(expr, msg) \
         (void) ((!!(expr)) || \
-                (1 != debug_report(_CRT_ASSERT, __FILE__, __LINE__, NULL, msg)) || \
+                (1 != debug_report(_CRT_ASSERT, _T(__FILE__), __LINE__, NULL, msg)) || \
                 (debug_break(), 0))
 
 
@@ -185,7 +195,7 @@ typedef struct _MEMORY_STATE
 #endif
 
 #ifndef _ASSERTE
-#define _ASSERTE(expr)  _ASSERT_EXPR((expr), "##expr##")
+#define _ASSERTE(expr)  _ASSERT_EXPR((expr), _T("##expr##"))
 #endif
 
 
@@ -214,13 +224,14 @@ typedef struct _MEMORY_STATE
 
 CLASS_DECL_AURA int32_t FUNCTION_DEBUGBOX(const char * pszMessage, const char * pszTitle, int32_t iFlags);
 
-inline int32_t FUNCTION_XXDEBUGBOX(const char * pszMessage, const char * pszTitle, int32_t iFlags) {
+inline int32_t FUNCTION_XXDEBUGBOX(const char * pszMessage, const char * pszTitle, int32_t iFlags)
+{
 
-    UNREFERENCED_PARAMETER(pszMessage);
-    UNREFERENCED_PARAMETER(pszTitle);
-    UNREFERENCED_PARAMETER(iFlags);
+   UNREFERENCED_PARAMETER(pszMessage);
+   UNREFERENCED_PARAMETER(pszTitle);
+   UNREFERENCED_PARAMETER(iFlags);
 
-    return 0;
+   return 0;
 
 }
 

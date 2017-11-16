@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 template < typename T >
@@ -29,6 +29,7 @@ private:
    ::Windows::Foundation::IAsyncOperation < T > ^     m_operation;
    ::Windows::Foundation::AsyncStatus                 m_status;
    T                                                  m_result;
+   HRESULT                                            m_hresult;
 
 
 public:
@@ -42,7 +43,7 @@ public:
 
       m_operation->Completed  = ref new ::Windows::Foundation::AsyncOperationCompletedHandler < T > ([this](::Windows::Foundation::IAsyncOperation < T > ^ operation, ::Windows::Foundation::AsyncStatus status)
       {
-      
+
          m_status = status;
 
          m_event.set_event();
@@ -56,15 +57,21 @@ public:
    {
 
    }
-   
-   
+
+
    T wait(unsigned int dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL)
    {
 
       m_event.wait(millis(dwMillis));
 
-      if(pstatus != NULL)
+      if (pstatus != NULL)
+      {
+
          *pstatus = m_status;
+
+      }
+
+      m_hresult = m_operation->ErrorCode.Value;
 
       if(m_status == ::Windows::Foundation::AsyncStatus::Completed)
       {
@@ -84,13 +91,13 @@ public:
       }
 
    }
-   
+
 internal:
 
    template < typename PRED >
    void wait(PRED pred,unsigned int dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL)
    {
-      
+
       pred(wait(dwMillis, pstatus));
 
    }
@@ -258,9 +265,9 @@ inline void wait_then(::Windows::Foundation::IAsyncOperation < T > ^ operation, 
 template < typename T >
 inline T wait(::Windows::Foundation::IAsyncOperation < T > ^ operation, DWORD dwMillis = INFINITE, ::Windows::Foundation::AsyncStatus * pstatus = NULL, CallbackContext callbackcontext = CallbackContext::Any)
 {
-   
+
    waiter_for_Windows_Foundation_IAsyncOperation < T > waiter(operation, callbackcontext);
-      
+
    return waiter.wait(dwMillis, pstatus);
 
 }
@@ -279,11 +286,11 @@ inline T wait(::Windows::Foundation::IAsyncOperationWithProgress < T, T2 > ^ ope
 
 inline ::Windows::Foundation::AsyncStatus wait(::Windows::Foundation::IAsyncAction ^ action,  DWORD dwMillis = INFINITE, CallbackContext callbackcontext = CallbackContext::Any)
 {
-   
+
    ::Windows::Foundation::AsyncStatus status;
-   
+
    waiter_for_Windows_Foundation_IAsyncAction waiter(action, callbackcontext);
-   
+
    waiter.wait(dwMillis, &status);
 
    return status;

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
@@ -323,13 +323,21 @@ CLASS_DECL_AURA int g_iDerivedApplication = 0;
 }
 
 
-
-int __cdecl debug_report(int,char const *,int,char const *,char const *,...)
+int __cdecl debug_report(int, char const *, int, char const *, char const *,...)
 {
 
    return 1;
 
 }
+
+
+int __cdecl debug_report(int, wchar_t const *, int, wchar_t const *, wchar_t const *, ...)
+{
+
+   return 1;
+
+}
+
 
 CLASS_DECL_AURA void writeln(const char * psz)
 {

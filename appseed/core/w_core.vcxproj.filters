@@ -330,9 +330,6 @@
     <ClCompile Include="user\user\user_mesh_cache_interface.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
-    <ClCompile Include="user\user\user_multiple_document_template.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
     <ClCompile Include="user\user\user_network_configuration.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
@@ -349,9 +346,6 @@
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_shell.cpp">
-      <Filter>Source Files\user\user</Filter>
-    </ClCompile>
-    <ClCompile Include="user\user\user_single_document_template.cpp">
       <Filter>Source Files\user\user</Filter>
     </ClCompile>
     <ClCompile Include="user\user\user_split_bar.cpp">
@@ -956,6 +950,9 @@
     </ClCompile>
     <ClCompile Include="user\simple\simple_mesh_data.cpp">
       <Filter>Source Files\user\simple</Filter>
+    </ClCompile>
+    <ClCompile Include="user\_user.cpp">
+      <Filter>Source Files\user</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1626,6 +1623,9 @@
     </ClInclude>
     <ClInclude Include="filesystem\filemanager\filemanager.h">
       <Filter>Header Files\filesystem\filemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="core\core\core_session.h">
+      <Filter>Header Files\core\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

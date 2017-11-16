@@ -34,12 +34,12 @@ namespace exception
    {
       //debug_print("log:exception");
       //::MessageBox(NULL,"abc123","abc123",MB_OK);
-      m_bLog = efail != failure_no_log;
+      //m_bLog = efail != failure_no_log;
 
-      if(m_bLog)
-      {
-         debug_print("log:exception");
-      }
+      //if(m_bLog)
+      //{
+      //   debug_print("log:exception");
+      //}
 
       m_bHandled = false;
 
@@ -55,32 +55,32 @@ namespace exception
 
    exception::~exception()
    {
-      if(m_bLog)
-      {
+      //if(m_bLog)
+      //{
 
-         if(m_bContinue)
-         {
-            cat_exception("-continue");
-         }
-         else
-         {
-            cat_exception("-should_not_continue(fatal_exception_instance_candidate)");
-         }
+      //if(m_bContinue)
+      //{
+      //   cat_exception("-continue");
+      //}
+      //else
+      //{
+      //   cat_exception("-should_not_continue(fatal_exception_instance_candidate)");
+      //}
 
-         if(m_bHandled)
-         {
-            cat_exception("-explicitly_handled");
-         }
-         else
-         {
-            cat_exception("-not_handled_explicitly");
-         }
+      //if(m_bHandled)
+      //{
+      //   cat_exception("-explicitly_handled");
+      //}
+      //else
+      //{
+      //   cat_exception("-not_handled_explicitly");
+      //}
 
-         debug_print(m_pszException);
+      //debug_print(m_pszException);
 
-         debug_print("\n");
+      //debug_print("\n");
 
-      }
+      ///}
 
 
       if (m_pszException != NULL)
@@ -279,7 +279,7 @@ namespace exception
 
          this->pred_each(
 
-            [&](auto & pe)
+         [&](auto & pe)
          {
 
             str += ::str::from(++i);

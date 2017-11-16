@@ -16,194 +16,194 @@ namespace core
       virtual public ::base::session,
       virtual public ::filemanager::item_action
    {
+   public:
+
+
+      class run_application
+      {
       public:
+         run_application();
+         index                   m_iEdge;
+         string                  m_strApp;
+         string                  m_strQuery;
+         sp(::core::session)      m_pbergedgeParent;
+         sp(::aura::application)   m_pauraapp;
+         bool                    m_bMakeVisible;
+         sp(::user::interaction) m_puiParent;
+         property_set      m_setParameters;
+      };
 
 
-         class run_application
-         {
-            public:
-               run_application();
-               index                   m_iEdge;
-               string                  m_strApp;
-               string                  m_strQuery;
-               sp(::core::session)      m_pbergedgeParent;
-               sp(::aura::application)   m_pauraapp;
-               bool                    m_bMakeVisible;
-               sp(::user::interaction) m_puiParent;
-               property_set      m_setParameters;
-         };
 
+      class CLASS_DECL_CORE map :
+         virtual public ::map < index, index, ::core::session *, ::core::session * >
+      {
+      };
 
 
-         class CLASS_DECL_CORE map :
-            virtual public ::map < index, index, ::core::session *, ::core::session * >
-         {
-         };
+      index                                              m_iEdge;
 
+      ::filemanager::filemanager *                       m_pfilemanager;
 
-         index                                              m_iEdge;
+      session_docs *                                     m_pdocs;
+      //nature::database *                                 m_pdatabase;
 
-         ::filemanager::filemanager *                       m_pfilemanager;
 
-         session_docs *                                     m_pdocs;
-         //nature::database *                                 m_pdatabase;
+      string_map < sp(::object) >                          m_mapUinteraction; // ::user::wndfrm::wndfrm
 
+      sp(::object)                                       m_pobjectUserex;
+      ::userex::userex *                                 m_puserex;
 
-         string_map < sp(::object) >                          m_mapUinteraction; // ::user::wndfrm::wndfrm
+      ::visual::font_list_data *                         m_pfontlistdata;
 
-         sp(::object)                                       m_pobjectUserex;
-         ::userex::userex *                                 m_puserex;
 
-         ::visual::font_list_data *                         m_pfontlistdata;
 
 
 
+      session(::aura::application * papp);
+      virtual ~platform_parent;
 
 
-         session(::aura::application * papp);
-         virtual ~platform_parent;
+      virtual int64_t add_ref() override
+      {
+         return ::object::add_ref();
+      }
+      virtual int64_t dec_ref() override
+      {
+         return ::object::dec_ref();
+      }
 
 
-         virtual int64_t add_ref() override
-         {
-            return ::object::add_ref();
-         }
-         virtual int64_t dec_ref() override
-         {
-            return ::object::dec_ref();
-         }
+      virtual void install_message_routing(::message::sender * psender) override;
 
+      virtual bool process_initialize_userex();
+      virtual bool initialize1_userex();
+      virtual bool initialize2() override;
+      bool initialize_application() override;
+      bool on_initial_update();
+      virtual int32_t exit_application() override;
 
-         virtual void install_message_routing(::message::sender * psender) override;
+      bool InitializeLocalDataCentral();
 
-         virtual bool process_initialize_userex();
-         virtual bool initialize1_userex();
-         virtual bool initialize2() override;
-         bool initialize_application() override;
-         bool on_initial_update();
-         virtual int32_t exit_application() override;
+      virtual bool bergedge_start() override;
 
-         bool InitializeLocalDataCentral();
+      void _001OnFileNew();
 
-         virtual bool bergedge_start() override;
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
-         void _001OnFileNew();
+      virtual ::user::document * userex_on_request(::create * pcreate);
 
-         virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
 
-         virtual ::user::document * userex_on_request(::create * pcreate);
+      void load_string_table() override;
 
-         void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);
+      virtual bool open_file(::filemanager::data * pdata, ::fs::item_array & itema) override;
 
-         void load_string_table() override;
+      void initialize_bergedge_application_interface();
 
-         virtual bool open_file(::filemanager::data * pdata, ::fs::item_array & itema) override;
+      //virtual bool create_bergedge(::create * pcreate);
 
-         void initialize_bergedge_application_interface();
+      virtual void use_font_sel();
 
-         //virtual bool create_bergedge(::create * pcreate);
+      virtual void on_app_request_bergedge_callback(::aura::application * papp);
 
-         virtual void use_font_sel();
 
-         virtual void on_app_request_bergedge_callback(::aura::application * papp);
+      virtual void on_frame_window_drop_files(::user::interaction * pui, ::file::patha & patha);
 
 
-         virtual void on_frame_window_drop_files(::user::interaction * pui, ::file::patha & patha);
+      // semantics defined by application
+      virtual void request_create(::create * pcreate) override;
+      // main loosely coupled semantics
+      // varFile   : empty, one file path, many file paths, one file object, one or more file objects to be opened
+      // varQuery  : more ellaborated requests for the application - syntax and semantic defined by requested application
 
+      virtual sp(::user::interaction) get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate) override;
 
-         // semantics defined by application
-         virtual void request_create(::create * pcreate) override;
-         // main loosely coupled semantics
-         // varFile   : empty, one file path, many file paths, one file object, one or more file objects to be opened
-         // varQuery  : more ellaborated requests for the application - syntax and semantic defined by requested application
+      virtual bool place(::user::main_frame * pmainframe, ::create * pcreate);
 
-         virtual sp(::user::interaction) get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate) override;
+      virtual void request_topic_file(var & varQuery);
 
-         virtual bool place(::user::main_frame * pmainframe, ::create * pcreate);
+      virtual void request_topic_file();
 
-         virtual void request_topic_file(var & varQuery);
+      virtual void check_topic_file_change();
 
-         virtual void request_topic_file();
+      inline ::filemanager::filemanager            & filemanager() { return *m_pfilemanager; }
 
-         virtual void check_topic_file_change();
+      string filemanager_get_initial_browse_path();
+      bool on_exclusive_instance_conflict(EExclusiveInstance eexclusive) override;
 
-         inline ::filemanager::filemanager            & filemanager() { return *m_pfilemanager; }
+      void launch_app(const char * psz);
+      void install_app(const char * psz);
 
-         string filemanager_get_initial_browse_path();
-         bool on_exclusive_instance_conflict(EExclusiveInstance eexclusive) override;
 
-         void launch_app(const char * psz);
-         void install_app(const char * psz);
 
+      sp(::user::document)                  get_document();
+      sp(::user::impact)                      get_view() override;
+      sp(::user::document)                  get_platform();
+      sp(::user::document)                    get_nature();
 
 
-         sp(::user::document)                  get_document();
-         sp(::user::impact)                      get_view() override;
-         sp(::user::document)                  get_platform();
-         sp(::user::document)                    get_nature();
+      inline ::userex::userex *               userex() { return m_puserex;  }
 
 
-         inline ::userex::userex *               userex() { return m_puserex;  }
+      virtual bool process_initialize() override;
 
+      virtual bool initialize1() override;
 
-         virtual bool process_initialize() override;
+      virtual bool initialize() override;
 
-         virtual bool initialize1() override;
+      virtual bool os_native_bergedge_start() override;
 
-         virtual bool initialize() override;
+      virtual int32_t main() override;
 
-         virtual bool os_native_bergedge_start() override;
+      virtual bool on_uninstall() override;
 
-         virtual int32_t main() override;
+      virtual bool is_serviceable() override;
 
-         virtual bool on_uninstall() override;
+      virtual service_base * allocate_new_service() override;
 
-         virtual bool is_serviceable() override;
+      void on_request(::create * pcreate) override;
 
-         virtual service_base * allocate_new_service() override;
+      sp(::aura::application) get_current_application();
 
-         void on_request(::create * pcreate) override;
+      virtual bool on_install() override;
 
-         sp(::aura::application) get_current_application();
+      virtual void set_app_title(const char * pszAppId, const char * pszTitle);
 
-         virtual bool on_install() override;
+      virtual sp(::core::session) get_session();
 
-         virtual void set_app_title(const char * pszAppId, const char * pszTitle);
+      virtual bool finalize() override;
 
-         virtual sp(::core::session) get_session();
+      virtual bool open_by_file_extension(const char * pszPathName, application_bias * pbiasCreate = NULL) override;
+      virtual bool open_by_file_extension(::create * pcc) override;
 
-         virtual bool finalize() override;
+      virtual bool is_session() override;
 
-         virtual bool open_by_file_extension(const char * pszPathName, application_bias * pbiasCreate = NULL) override;
-         virtual bool open_by_file_extension(::create * pcc) override;
+      virtual bool is_mouse_button_pressed(::user::e_mouse emouse);
 
-         virtual bool is_session() override;
+      virtual bool is_remote_session();
 
-         virtual bool is_mouse_button_pressed(::user::e_mouse emouse);
+      //virtual ::visual::cursor * get_cursor() override;
+      virtual ::visual::cursor * get_default_cursor() override;
 
-         virtual bool is_remote_session();
+      virtual ::count   get_monitor_count() override;
+      virtual bool      get_monitor_rect(index iMonitor,LPRECT lprect) override;
 
-         virtual ::visual::cursor * get_cursor() override;
-         virtual ::visual::cursor * get_default_cursor() override;
 
-         virtual ::count   get_monitor_count() override;
-         virtual bool      get_monitor_rect(index iMonitor,LPRECT lprect) override;
+      virtual void register_bergedge_application(::aura::application * papp);
+      virtual void unregister_bergedge_application(::aura::application * papp);
 
+      virtual ::aura::application * application_get(const char * pszAppId, bool bCreate = true, bool bSynch = true, application_bias * pbiasCreate = NULL);
 
-         virtual void register_bergedge_application(::aura::application * papp);
-         virtual void unregister_bergedge_application(::aura::application * papp);
+      virtual ::core::session *             query_bergedge();
 
-         virtual ::aura::application * application_get(const char * pszAppId, bool bCreate = true, bool bSynch = true, application_bias * pbiasCreate = NULL);
+      virtual void on_user_login(::fontopus::user * puser) override;
 
-         virtual ::core::session *             query_bergedge();
+      virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText) override;
 
-         virtual void on_user_login(::fontopus::user * puser) override;
+      virtual stringa get_user_wallpaper();
 
-         virtual void _001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText) override;
-
-         virtual stringa get_user_wallpaper();
-
-         virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
+      virtual ::user::interaction * create_menu_button(::aura::application * papp) override;
 
    };
 
