@@ -4561,6 +4561,9 @@
     <ClCompile Include="aura\os\os_serial.cpp">
       <Filter>Source Files\aura\os</Filter>
     </ClCompile>
+    <ClCompile Include="net\sockets\_sockets.cpp">
+      <Filter>Source Files\net\sockets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">
