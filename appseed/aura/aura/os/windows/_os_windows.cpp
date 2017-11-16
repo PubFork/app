@@ -1,8 +1,6 @@
 ﻿#include "framework.h"
-#include "aura/node/windows/windows.h"
 
 #include <fcntl.h>
-#include "windows.h"
 #include <VersionHelpers.h>
 #undef new
 #define min MIN

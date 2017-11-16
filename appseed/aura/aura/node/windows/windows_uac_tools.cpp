@@ -1,4 +1,4 @@
-///////////////////////////////
+﻿///////////////////////////////
 /* VistaTools.cxx - version 2.1
 
 THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
@@ -96,7 +96,6 @@ The first release.
 */
 
 #include "framework.h"
-//#include "windows.h"
 
 #include <VersionHelpers.h>
 

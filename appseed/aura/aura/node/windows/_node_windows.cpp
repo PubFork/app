@@ -1,5 +1,4 @@
 ﻿#include "framework.h"
-#include "windows.h"
 #include <Wtsapi32.h>
 #include <Psapi.h>
 #include <WinCred.h>

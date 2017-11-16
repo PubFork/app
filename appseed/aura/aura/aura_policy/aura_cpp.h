@@ -1087,7 +1087,7 @@ namespace aura
 #include "aura/os/ansios/ansios.h"
 #include "aura/os/android/android.h"
 
-#elif defined(WINDOWS)
+#elif defined(WINDOWSEX)
 
 #include "aura/aura/os/windows/windows.h"
 
