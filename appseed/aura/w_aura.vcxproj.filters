@@ -3976,6 +3976,9 @@
     <ClCompile Include="aura\os\ansios\_os_ansios.cpp">
       <Filter>Source Files\aura\os\ansios</Filter>
     </ClCompile>
+    <ClCompile Include="aura\compress\_compress_internal.cpp">
+      <Filter>Source Files\aura\compress</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="aura.rc">

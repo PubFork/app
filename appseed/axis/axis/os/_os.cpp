@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #ifdef ANDROID
@@ -8,7 +8,11 @@
 
 #elif defined(WINDOWSEX)
 
-#include "windows/_windows_os.cpp"
+#include "windows/_os_windows.cpp"
+
+#elif defined(METROWIN)
+
+#include "metrowin/_os_metrowin.cpp"
 
 #endif
 

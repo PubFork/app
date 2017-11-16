@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "metrowin.h"
 
 //O volume na unidade Y ‚ bergedge
@@ -33,6 +33,6 @@
 //              23 arquivo(s)        163.576 bytes
 //               0 pasta(s)   36.035.457.024 bytes dispon¡veis
 
-
+#include "metrowin_windowing.cpp"
 
 #include "metrowin_dummy_ipc.cpp"

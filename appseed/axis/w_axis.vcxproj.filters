@@ -712,5 +712,11 @@
     <ClCompile Include="axis\axis\_axis_axis.cpp">
       <Filter>Source Files\axis\axis</Filter>
     </ClCompile>
+    <ClCompile Include="axis\os\metrowin\_os_metrowin.cpp">
+      <Filter>Source Files\axis\os\metrowin</Filter>
+    </ClCompile>
+    <ClCompile Include="axis\node\metrowin\_node_metrowin.cpp">
+      <Filter>Source Files\axis\node\metrowin</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

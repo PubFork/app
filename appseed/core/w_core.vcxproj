@@ -1652,7 +1652,6 @@
     <ClInclude Include="user\user\user_mesh.h" />
     <ClInclude Include="user\user\user_mesh_cache.h" />
     <ClInclude Include="user\user\user_mesh_cache_interface.h" />
-    <ClInclude Include="user\user\user_multiple_document_template.h" />
     <ClInclude Include="user\user\user_network_configuration.h" />
     <ClInclude Include="user\user\user_notification_area.h" />
     <ClInclude Include="user\user\user_notify_icon.h" />
@@ -1661,7 +1660,6 @@
     <ClInclude Include="user\user\user_shell.h" />
     <ClInclude Include="user\user\user_shell_metrowin.h" />
     <ClInclude Include="user\user\user_simple_list_data.h" />
-    <ClInclude Include="user\user\user_single_document_template.h" />
     <ClInclude Include="user\user\user_split_bar.h" />
     <ClInclude Include="user\user\user_split_layout.h" />
     <ClInclude Include="user\user\user_split_view.h" />

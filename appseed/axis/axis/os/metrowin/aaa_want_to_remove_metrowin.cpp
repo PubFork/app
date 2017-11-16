@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <winternl.h>
 
 
@@ -19,15 +19,15 @@ String ^ rtstr(const char * psz)
 
 //int MessageBoxW(oswindow window,const unichar * pszMessage,const unichar * pszTitle,int iFlags)
 //{
-//  
+//
 //
 //   ::wait(Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler ([=]()
 //   {
-//   
+//
 //      Windows::UI::Popups::MessageDialog ^ msg = ref new Windows::UI::Popups::MessageDialog(wstring(pszMessage), wstring(pszTitle));
 //
 ////UICommand^ continueCommand = ref new UICommand(
-//  //      "Try again", 
+//  //      "Try again",
 //    //    ref new UICommandInvokedHandler(this, &CancelCommand::CommandInvokedHandler));
 //   Windows::UI::Popups::UICommand ^ upgradeCommand = ref new Windows::UI::Popups::UICommand(
 //        "OK");
@@ -41,11 +41,11 @@ String ^ rtstr(const char * psz)
 //
 //    // Set the command to be invoked when escape is pressed
 //    msg->CancelCommandIndex = 0;
-//  
+//
 //   Windows::UI::Popups::IUICommand ^ command = wait(msg->ShowAsync());
 //
 //      })));
-//   
+//
 //   return 0;
 //
 //}
@@ -63,15 +63,15 @@ VOID WINAPI Sleep(DWORD dwMilliseconds)
       sleepEvent = CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, EVENT_ALL_ACCESS);
 
       if (!sleepEvent)
-            return;
+         return;
 
       HANDLE previousEvent = InterlockedCompareExchangePointerRelease(&singletonEvent, sleepEvent, nullptr);
-            
+
       if (previousEvent)
       {
-            // Back out if multiple threads try to demand create at the same time.
-            CloseHandle(sleepEvent);
-            sleepEvent = previousEvent;
+         // Back out if multiple threads try to demand create at the same time.
+         CloseHandle(sleepEvent);
+         sleepEvent = previousEvent;
       }
    }
 
@@ -82,14 +82,14 @@ VOID WINAPI Sleep(DWORD dwMilliseconds)
 
 typedef bool
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
-    _In_ UINT message,
-    _In_ DWORD dwFlag);
+_In_ UINT message,
+_In_ DWORD dwFlag);
 
 
 LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
 
 /*
-typedef  
+typedef
 LSTATUS
 ( APIENTRY * LPFN_RegGetValueW) (
     HKEY hkey,
@@ -135,7 +135,7 @@ bool os_initialize()
 
    return TRUE;
 
-} 
+}
 
 
 bool os_finalize()
@@ -206,21 +206,21 @@ ulong_ptr                        g_gdiplusHookToken         = NULL;
 //
 //   if(statusStartup != Gdiplus::Ok)
 //   {
-//      
+//
 //      MessageBox(NULL, "Gdiplus Failed to Startup. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
-//      
+//
 //      return FALSE;
 //
 //   }
 //
 //   statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
-//   
+//
 //
 //   if(statusStartup != Gdiplus::Ok)
 //   {
-//      
+//
 //      MessageBox(NULL, "Gdiplus Failed to Hook. ca2 cannot continue.", "Gdiplus Failure", MB_ICONERROR);
-//      
+//
 //      return FALSE;
 //
 //   }
@@ -235,7 +235,7 @@ ulong_ptr                        g_gdiplusHookToken         = NULL;
 //
 //   return TRUE;
 //
-//} 
+//}
 
 
 
@@ -245,7 +245,7 @@ ulong_ptr                        g_gdiplusHookToken         = NULL;
 //
 //WINBOOL GetCursorPos(LPPOINT lppoint)
 //{
-//   
+//
 //   lppoint->x = 0;
 //
 //   lppoint->y = 0;
@@ -269,7 +269,7 @@ ulong_ptr                        g_gdiplusHookToken         = NULL;
 //
 //          lppoint->y = (LONG) pointerPoint->RawPosition.Y;
 //
-//          return TRUE; 
+//          return TRUE;
 //
 //      }
 //
@@ -367,13 +367,13 @@ string get_system_error_message(uint32_t dwError)
    wstring wstr;
    wstr.alloc(64 * 1024 / sizeof(unichar));
    FormatMessageW(
-      FORMAT_MESSAGE_FROM_SYSTEM,
-      NULL,
-      dwError,
-      0,
-      (LPWSTR) (LPCWSTR) wstr,
-      wstr.get_storage_size(),
-      NULL);
+   FORMAT_MESSAGE_FROM_SYSTEM,
+   NULL,
+   dwError,
+   0,
+   (LPWSTR) (LPCWSTR) wstr,
+   wstr.get_storage_size(),
+   NULL);
    string str(wstr);
    return str;
 }
@@ -394,7 +394,7 @@ WINBOOL IsWindow(oswindow oswindow)
 
 // void output_debug_string(const char * psz)
 // {
-   
+
 //    ::output_debug_string(wstring(psz));
 
 // }
@@ -413,10 +413,10 @@ CLASS_DECL_AXIS
 HANDLE
 WINAPI
 CreateMutex(
-    _In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
-    _In_ BOOL bInitialOwner,
-    _In_opt_ LPCSTR lpName
-    )
+_In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
+_In_ BOOL bInitialOwner,
+_In_opt_ LPCSTR lpName
+)
 {
    return CreateMutexW(lpMutexAttributes, bInitialOwner, wstring(lpName));
 }
@@ -431,10 +431,10 @@ CLASS_DECL_AXIS
 HANDLE
 WINAPI
 CreateMutexW(
-    _In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
-    _In_ BOOL bInitialOwner,
-    _In_opt_ LPCWSTR lpName
-    )
+_In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
+_In_ BOOL bInitialOwner,
+_In_opt_ LPCWSTR lpName
+)
 {
    return ::CreateMutexEx(lpMutexAttributes, lpName, bInitialOwner ?  CREATE_MUTEX_INITIAL_OWNER : 0, DELETE | SYNCHRONIZE);
 }
