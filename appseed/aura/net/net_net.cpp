@@ -7,6 +7,10 @@
 #include <arpa/inet.h>
 #endif
 
+#ifdef APPLEOS
+#include <netdb.h>
+#endif
+
 uint32_t c_inet_to_ui(const char * src)
 {
 

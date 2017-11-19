@@ -453,20 +453,21 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
 bool oswindow_data::is_child(::oswindow oswindow)
 {
 
-   //single_lock sl(&user_mutex(), true);
-
-   single_lock slOsWindow(s_pmutex, true);
-   //xdisplay d(x11_get_display());
-
-   oswindow = oswindow->get_parent();
-
-   while(!oswindow->is_null())
+   if (oswindow == NULL || oswindow->m_pimpl == NULL || oswindow->m_pimpl->m_pui == NULL)
    {
-      if(oswindow == this)
-         return true;
+
+      return false;
+
    }
 
-   return false;
+   if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
+   {
+
+      return false;
+
+   }
+
+   return m_pimpl->m_pui->IsChild(oswindow->m_pimpl->m_pui);
 
 }
 

@@ -1,4 +1,4 @@
-﻿
+
 namespace str
 {
 
@@ -278,6 +278,8 @@ typedef unsigned int * int_ptr_atomic;
 #ifdef RASPBIAN
 typedef unsigned __int64 * int_ptr_atomic;
 #elif defined(LINUX)
+typedef unsigned __int64 * int_ptr_atomic;
+#elif defined(MACOS)
 typedef unsigned __int64 * int_ptr_atomic;
 #else
 typedef int_ptr int_ptr_atomic;

@@ -1,4 +1,4 @@
-﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 #include <stdio.h>
 
@@ -8,6 +8,9 @@
 #if defined(APPLEOS)
 #define  NI_MAXHOST  1025
 #define  NI_MAXSERV  32
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 #endif
 //#define __USE_MISC
 //#include <ctype.h>

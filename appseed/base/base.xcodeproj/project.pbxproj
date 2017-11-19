@@ -99,6 +99,10 @@
 		07EDC59F1B4F435600AF8928 /* ios_interaction_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */; };
 		07EDC5A11B4F611B00AF8928 /* ios_window_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */; };
 		07EDC5B61B4FE64F00AF8928 /* main_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07EDC5B51B4FE64F00AF8928 /* main_mm.mm */; };
+		9A2BBCBE1FC1F98900E44B85 /* user_multiple_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */; };
+		9A2BBCBF1FC1F98900E44B85 /* user_multiple_document_template.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2BBCBB1FC1F98800E44B85 /* user_multiple_document_template.h */; };
+		9A2BBCC01FC1F98900E44B85 /* user_single_document_template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCBC1FC1F98900E44B85 /* user_single_document_template.cpp */; };
+		9A2BBCC11FC1F98900E44B85 /* user_single_document_template.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2BBCBD1FC1F98900E44B85 /* user_single_document_template.h */; };
 		9A7F2E911F41CCA8006F97CD /* user_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E8E1F41CCA8006F97CD /* user_button.h */; };
 		9A7F2E981F423654006F97CD /* user_schema_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E951F423654006F97CD /* user_schema_button.h */; };
 		9A7F2E9D1F4238E7006F97CD /* user_schema_menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A7F2E9A1F4238E7006F97CD /* user_schema_menu.h */; };
@@ -246,7 +250,6 @@
 		9AEB69D91F81C77800F40B32 /* user_control_descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7C201F5D690D009EC103 /* user_control_descriptor.cpp */; };
 		9AEB69F81F81CC3700F40B32 /* database_user_interaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B761F5D672D009EC103 /* database_user_interaction.cpp */; };
 		9AEB69F91F81CC3D00F40B32 /* simpledb_file_system_size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D7B781F5D6738009EC103 /* simpledb_file_system_size.cpp */; };
-		9AF67C991EB6C0A000919B4D /* libaxisfreeimage.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF67C941EB6C08600919B4D /* libaxisfreeimage.dylib */; };
 		9AF67CA51EB6C0EF00919B4D /* libaxisfreetype.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF67CA01EB6C0D900919B4D /* libaxisfreetype.dylib */; };
 		9AF67CA91EB6C11300919B4D /* install_canvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF67CA71EB6C11300919B4D /* install_canvas.cpp */; };
 		9AF67CAA1EB6C11300919B4D /* install_canvas.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF67CA81EB6C11300919B4D /* install_canvas.h */; };
@@ -303,13 +306,6 @@
 			remoteGlobalIDString = 9AE24D331904CEFE001AEFFB;
 			remoteInfo = base_ios;
 		};
-		9AF4BEEE1F8350C800197385 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07108B6F1B4C97D500A28F80;
-			remoteInfo = ios_axisfreeimage;
-		};
 		9AF4BEF01F8350C800197385 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AF67C9A1EB6C0D900919B4D /* axisfreetype.xcodeproj */;
@@ -323,27 +319,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 07DD5D521B5F0A1E003A1CE1;
 			remoteInfo = ios_axiswinpr;
-		};
-		9AF67C931EB6C08600919B4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AEEB48E19C5084900866C9E;
-			remoteInfo = axisfreeimage;
-		};
-		9AF67C951EB6C08600919B4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07108BD71B4C97D500A28F80;
-			remoteInfo = ios_axisfreeimage;
-		};
-		9AF67C971EB6C09700919B4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
-			remoteInfo = axisfreeimage;
 		};
 		9AF67C9F1EB6C0D900919B4D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -519,6 +494,10 @@
 		07EDC59E1B4F435600AF8928 /* ios_interaction_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_interaction_impl.h; sourceTree = "<group>"; };
 		07EDC5A01B4F611B00AF8928 /* ios_window_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_window_impl.h; sourceTree = "<group>"; };
 		07EDC5B51B4FE64F00AF8928 /* main_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main_mm.mm; sourceTree = "<group>"; };
+		9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_multiple_document_template.cpp; sourceTree = "<group>"; };
+		9A2BBCBB1FC1F98800E44B85 /* user_multiple_document_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_multiple_document_template.h; sourceTree = "<group>"; };
+		9A2BBCBC1FC1F98900E44B85 /* user_single_document_template.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_single_document_template.cpp; sourceTree = "<group>"; };
+		9A2BBCBD1FC1F98900E44B85 /* user_single_document_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_single_document_template.h; sourceTree = "<group>"; };
 		9A6716461D15495F0069A961 /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../macos/app/appseed/aura/build/Debug-iphoneos/libaura.dylib"; sourceTree = "<group>"; };
 		9A7F2E8D1F41CCA8006F97CD /* user_button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_button.cpp; sourceTree = "<group>"; };
 		9A7F2E8E1F41CCA8006F97CD /* user_button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_button.h; sourceTree = "<group>"; };
@@ -625,7 +604,6 @@
 		9AF4BEE91F83507400197385 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9AF4BEF41F83510500197385 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		9AF4BEF61F83512300197385 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisfreeimage.xcodeproj; path = ../freeimage/axisfreeimage.xcodeproj; sourceTree = "<group>"; };
 		9AF67C9A1EB6C0D900919B4D /* axisfreetype.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisfreetype.xcodeproj; path = ../../../third/appseed/freetype/axisfreetype.xcodeproj; sourceTree = "<group>"; };
 		9AF67CA71EB6C11300919B4D /* install_canvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_canvas.cpp; sourceTree = "<group>"; };
 		9AF67CA81EB6C11300919B4D /* install_canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = install_canvas.h; sourceTree = "<group>"; };
@@ -640,7 +618,6 @@
 			files = (
 				9A8C492F1F606906004A5BA4 /* libace.dylib in Frameworks */,
 				9AF67CA51EB6C0EF00919B4D /* libaxisfreetype.dylib in Frameworks */,
-				9AF67C991EB6C0A000919B4D /* libaxisfreeimage.dylib in Frameworks */,
 				0793EA131CA40555001374D8 /* libaxiswinpr.dylib in Frameworks */,
 				0793EA111CA4052D001374D8 /* libaura.dylib in Frameworks */,
 				070FC1031B856DBE00D12AD0 /* IOKit.framework in Frameworks */,
@@ -930,6 +907,10 @@
 		07D9672E1B4C63E3004A3D2A /* user */ = {
 			isa = PBXGroup;
 			children = (
+				9A2BBCBA1FC1F98800E44B85 /* user_multiple_document_template.cpp */,
+				9A2BBCBB1FC1F98800E44B85 /* user_multiple_document_template.h */,
+				9A2BBCBC1FC1F98900E44B85 /* user_single_document_template.cpp */,
+				9A2BBCBD1FC1F98900E44B85 /* user_single_document_template.h */,
 				9A9D7C1E1F5D690D009EC103 /* user_control_descriptor_set.cpp */,
 				9A9D7C201F5D690D009EC103 /* user_control_descriptor.cpp */,
 				9A8384711F416F57005ED52C /* user.cpp */,
@@ -1126,15 +1107,6 @@
 			path = axis_iosTests;
 			sourceTree = "<group>";
 		};
-		9AF67C8F1EB6C08600919B4D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9AF67C941EB6C08600919B4D /* libaxisfreeimage.dylib */,
-				9AF67C961EB6C08600919B4D /* libios_axisfreeimage.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9AF67C9B1EB6C0D900919B4D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1162,7 +1134,6 @@
 				073EDDE1164E968100818801 /* Security.framework */,
 				073EDDE4164E96DA00818801 /* SecurityFoundation.framework */,
 				07A3711C1B25D49F00E4F888 /* axis.xcodeproj */,
-				9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */,
 				9AF67C9A1EB6C0D900919B4D /* axisfreetype.xcodeproj */,
 				9A9F0A621D7F347C00ED6D8A /* axiswinpr.xcodeproj */,
 				07A36D231B25D18E00E4F888 /* base */,
@@ -1219,6 +1190,7 @@
 				07D967CA1B4C63E3004A3D2A /* install.h in Headers */,
 				07703C6F1B6FE4C7009026EA /* database.h in Headers */,
 				9A7F2E911F41CCA8006F97CD /* user_button.h in Headers */,
+				9A2BBCBF1FC1F98900E44B85 /* user_multiple_document_template.h in Headers */,
 				07D967BF1B4C63E3004A3D2A /* hotplugin_host.h in Headers */,
 				07A36FAB1B25D18F00E4F888 /* windows_dir.h in Headers */,
 				9A9D7C251F5D690D009EC103 /* user_control_ddx_dbflags.h in Headers */,
@@ -1231,6 +1203,7 @@
 				07D967C31B4C63E3004A3D2A /* hotplugin_plugin.h in Headers */,
 				07D968A51B4C63E4004A3D2A /* user_wait_cursor.h in Headers */,
 				07D967BB1B4C63E3004A3D2A /* hotplugin_container_launcher.h in Headers */,
+				9A2BBCC11FC1F98900E44B85 /* user_single_document_template.h in Headers */,
 				07D9689C1B4C63E4004A3D2A /* user_view_container.h in Headers */,
 				07D967B31B4C63E3004A3D2A /* hotplugin.h in Headers */,
 				07D968901B4C63E4004A3D2A /* user_scroll_bar.h in Headers */,
@@ -1296,7 +1269,6 @@
 			);
 			dependencies = (
 				9AF67CA41EB6C0E600919B4D /* PBXTargetDependency */,
-				9AF67C981EB6C09700919B4D /* PBXTargetDependency */,
 				07A3712C1B25D96A00E4F888 /* PBXTargetDependency */,
 			);
 			name = base;
@@ -1315,7 +1287,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AF4BEEF1F8350C800197385 /* PBXTargetDependency */,
 				9AF4BEF11F8350C800197385 /* PBXTargetDependency */,
 				9AF4BEF31F8350C800197385 /* PBXTargetDependency */,
 				07108A2E1B4C84B900A28F80 /* PBXTargetDependency */,
@@ -1373,10 +1344,6 @@
 					ProjectRef = 07A3711C1B25D49F00E4F888 /* axis.xcodeproj */;
 				},
 				{
-					ProductGroup = 9AF67C8F1EB6C08600919B4D /* Products */;
-					ProjectRef = 9AF67C8E1EB6C08600919B4D /* axisfreeimage.xcodeproj */;
-				},
-				{
 					ProductGroup = 9AF67C9B1EB6C0D900919B4D /* Products */;
 					ProjectRef = 9AF67C9A1EB6C0D900919B4D /* axisfreetype.xcodeproj */;
 				},
@@ -1421,20 +1388,6 @@
 			fileType = "compiled.mach-o.dylib";
 			path = libios_axiswinpr.a;
 			remoteRef = 9A9F0A691D7F347C00ED6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AF67C941EB6C08600919B4D /* libaxisfreeimage.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libaxisfreeimage.dylib;
-			remoteRef = 9AF67C931EB6C08600919B4D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9AF67C961EB6C08600919B4D /* libios_axisfreeimage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libios_axisfreeimage.a;
-			remoteRef = 9AF67C951EB6C08600919B4D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9AF67CA01EB6C0D900919B4D /* libaxisfreetype.dylib */ = {
@@ -1491,6 +1444,7 @@
 				9A9D7BED1F5D68FF009EC103 /* user_view_container.cpp in Sources */,
 				9A9D7BD31F5D68FF009EC103 /* user_form_update_hint.cpp in Sources */,
 				9A9D7B4D1F5D662B009EC103 /* macos_main.cpp in Sources */,
+				9A2BBCBE1FC1F98900E44B85 /* user_multiple_document_template.cpp in Sources */,
 				9A9D7B771F5D672D009EC103 /* database_user_interaction.cpp in Sources */,
 				9A9D7B951F5D682B009EC103 /* hotplugin_plugin.cpp in Sources */,
 				9A9D7BEC1F5D68FF009EC103 /* user_user.cpp in Sources */,
@@ -1533,6 +1487,7 @@
 				9A9D7BBB1F5D6887009EC103 /* simple_ui_interaction.cpp in Sources */,
 				9A9D7C261F5D690D009EC103 /* user_control_descriptor_set.cpp in Sources */,
 				9A9D7BD41F5D68FF009EC103 /* user_form_window.cpp in Sources */,
+				9A2BBCC01FC1F98900E44B85 /* user_single_document_template.cpp in Sources */,
 				9A9D7BBD1F5D6887009EC103 /* simple_ui_message_box.cpp in Sources */,
 				9A9D7BAF1F5D6872009EC103 /* simple_scroll_bar.cpp in Sources */,
 				9A9D7B751F5D66FB009EC103 /* macos.cpp in Sources */,
@@ -1643,11 +1598,6 @@
 			target = 9AE24D331904CEFE001AEFFB /* ios_base */;
 			targetProxy = 9AE24D491904CEFF001AEFFB /* PBXContainerItemProxy */;
 		};
-		9AF4BEEF1F8350C800197385 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ios_axisfreeimage;
-			targetProxy = 9AF4BEEE1F8350C800197385 /* PBXContainerItemProxy */;
-		};
 		9AF4BEF11F8350C800197385 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ios_axisfreetype;
@@ -1657,11 +1607,6 @@
 			isa = PBXTargetDependency;
 			name = ios_axiswinpr;
 			targetProxy = 9AF4BEF21F8350C800197385 /* PBXContainerItemProxy */;
-		};
-		9AF67C981EB6C09700919B4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = axisfreeimage;
-			targetProxy = 9AF67C971EB6C09700919B4D /* PBXContainerItemProxy */;
 		};
 		9AF67CA41EB6C0E600919B4D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

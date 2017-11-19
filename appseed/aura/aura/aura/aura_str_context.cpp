@@ -185,40 +185,40 @@ namespace aura
 
    return true;
 
-      synch_lock sl(m_pmutex);
-
-      string strMain = pszBaseDir;
-
-      ::file::listing locales(get_app());
-
-      locales.ignore(".svn").ls_dir(strMain);
-
-      for(auto & locale : locales)
-      {
-
-         ::file::listing schemas(get_app());
-
-         schemas.ignore(".svn").ls_dir(locale);
-
-         for(auto & schema : schemas)
-         {
-
-            ::file::listing listing(get_app());
-
-            listing.ignore(".svn").rls_file(schema / "uistr");
-
-            for(auto & path : listing)
-            {
-
-               load_uistr_file(locale.name(), schema.name(), path);
-
-            }
-
-         }
-
-      }
-
-      return true;
+//      synch_lock sl(m_pmutex);
+//
+//      string strMain = pszBaseDir;
+//
+//      ::file::listing locales(get_app());
+//
+//      locales.ignore(".svn").ls_dir(strMain);
+//
+//      for(auto & locale : locales)
+//      {
+//
+//         ::file::listing schemas(get_app());
+//
+//         schemas.ignore(".svn").ls_dir(locale);
+//
+//         for(auto & schema : schemas)
+//         {
+//
+//            ::file::listing listing(get_app());
+//
+//            listing.ignore(".svn").rls_file(schema / "uistr");
+//
+//            for(auto & path : listing)
+//            {
+//
+//               load_uistr_file(locale.name(), schema.name(), path);
+//
+//            }
+//
+//         }
+//
+//      }
+//
+//      return true;
 
    }
 

@@ -9,7 +9,11 @@
 
 #endif
 
+#ifdef MACOS
 
+#include <netdb.h>
+
+#endif
 
 static geoipv6_t IPV6_NULL;
 

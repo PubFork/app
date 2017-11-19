@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -821,9 +821,6 @@ namespace aura
 #ifdef CUBE
 
       // Criar novo meio de instalação
-
-#elif !defined(METROWIN)
-
 
 #elif !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 

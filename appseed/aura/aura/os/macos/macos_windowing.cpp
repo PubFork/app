@@ -255,7 +255,30 @@ oswindow oswindow_data::set_parent(oswindow oswindow)
 }
 
 
-int_ptr oswindow_data::get_window_long(int_ptr iIndex)
+
+bool oswindow_data::is_child(::oswindow oswindow)
+{
+    
+    if (oswindow == NULL || oswindow->m_pimpl == NULL || oswindow->m_pimpl->m_pui == NULL)
+    {
+        
+        return false;
+        
+    }
+    
+    if (m_pimpl == NULL || m_pimpl->m_pui == NULL)
+    {
+        
+        return false;
+        
+    }
+    
+    return m_pimpl->m_pui->IsChild(oswindow->m_pimpl->m_pui);
+    
+}
+
+
+int_ptr oswindow_data::get_window_long_ptr(int_ptr iIndex)
 {
 
    if(is_null())
@@ -269,7 +292,7 @@ int_ptr oswindow_data::get_window_long(int_ptr iIndex)
 }
 
 
-int_ptr oswindow_data::set_window_long(int_ptr iIndex, int_ptr iNewLong)
+int_ptr oswindow_data::set_window_long_ptr(int_ptr iIndex, int_ptr iNewLong)
 {
 
    if(is_null())
@@ -859,6 +882,22 @@ string keyboard_input_source()
    string str =psz;
    free((void *) psz);
    return str;
+}
+
+
+
+CLASS_DECL_AURA ::user::interaction_impl * oswindow_get(oswindow oswindow)
+{
+    
+    if(oswindow == NULL)
+    {
+        
+        return NULL;
+        
+    }
+    
+    return oswindow->m_pimpl;
+    
 }
 
 

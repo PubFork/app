@@ -7,6 +7,78 @@
 
 #include "framework.h"
 
+namespace aura
+{
+    
+//    template < typename P >
+//    void free(P * & p)
+//    {
+//
+//        if(p != NULL)
+//        {
+//
+//            ::free((void *) p);
+//
+//            p = NULL;
+//
+//        }
+//
+//    }
+
+class malloc
+{
+public:
+    
+
+    void * m_p;
+    
+    malloc(void * p = NULL)
+    {
+        
+        m_p = p;
+        
+    }
+    
+    ~malloc()
+    {
+
+        free();
+        
+    }
+    
+    operator byte *() { return (byte *) m_p; }
+    
+    
+    void free()
+    {
+        
+        ::aura::free(m_p);
+        
+    }
+    
+    template < typename P >
+    malloc & operator = ( P * p)
+    {
+        
+        if((void *)p == m_p)
+        {
+            
+            return *this;
+            
+        }
+        
+        free();
+        
+        m_p = p;
+        
+        return *this;
+        
+    }
+    
+};
+
+} // namespace aura
+
 
 void * get_png_image_data(unsigned long & size, CGImageRef image);
 void * get_jpeg_image_data(unsigned long & size, CGImageRef image);
@@ -28,7 +100,7 @@ namespace visual
       
       unsigned long size;
       
-      void * p = NULL;
+       ::aura::malloc p;
       
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
       
@@ -84,8 +156,6 @@ namespace visual
       
             pfile->write(p, size);
             
-            free(p);
-         
             return true;
             
             
@@ -1181,8 +1251,8 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
       if(dib.create(w, h))
       {
       
-         ::draw2d::copy_colorref(w, h, dib.m_pcolorref, dib.m_iScan, pcolorref, iScan);
-         
+         ::draw2d::_001ProperCopyColorref(w, h, dib.m_pcolorref, dib.m_iScan, pcolorref, iScan);
+          
       }
       
    }

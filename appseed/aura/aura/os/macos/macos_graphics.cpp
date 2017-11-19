@@ -112,7 +112,7 @@ HDC CreateCompatibleDC(HDC hdc)
 {
     return NULL;
 }
-HBITMAP WINAPI CreateDIBSection(HDC hdc, const BITMAPINFO *lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
+HBITMAP WINAPI CreateDIBSection(HDC hdc, int cx, int cy, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
 {
     return NULL;
 }

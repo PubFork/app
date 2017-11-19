@@ -113,8 +113,8 @@ public:
    bool iconify();
    bool is_window_visible();
    bool show_window(int32_t nCmdShow);
-   int_ptr get_window_long(int_ptr nIndex);
-   int_ptr set_window_long(int_ptr nIndex, int_ptr l);
+   int_ptr get_window_long_ptr(int_ptr nIndex);
+   int_ptr set_window_long_ptr(int_ptr nIndex, int_ptr l);
    bool client_to_screen(POINT * lppoint);
    bool screen_to_client(POINT * lppoint);
    
@@ -138,58 +138,58 @@ inline int IsWindow(oswindow window)
    return window->get_user_interaction() != NULL;
 }
 
-inline int IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
-{
-   return oswindowParent->is_child(oswindowCandidateChildOrDescendant);
-}
+//inline int IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
+//{
+//   return oswindowParent->is_child(oswindowCandidateChildOrDescendant);
+//}
 
-inline oswindow GetParent(::oswindow window)
-{
-   return window->get_parent();
-}
+//inline oswindow GetParent(::oswindow window)
+//{
+//   return window->get_parent();
+//}
 
 
 oswindow GetWindow(oswindow window, int iParentHood);
 
-inline oswindow SetParent(::oswindow window, ::oswindow oswindowNewParent)
-{
-   return window->set_parent(oswindowNewParent);
-}
+//inline oswindow SetParent(::oswindow window, ::oswindow oswindowNewParent)
+//{
+//   return window->set_parent(oswindowNewParent);
+//}
 
-inline int ShowWindow(::oswindow window, int32_t nCmdShow)
-{
-   return window->show_window(nCmdShow);
-}
+//inline int ShowWindow(::oswindow window, int32_t nCmdShow)
+//{
+//   return window->show_window(nCmdShow);
+//}
 
-inline int32_t GetWindowLongA(::oswindow window, int32_t nIndex)
-{
-   return (int32_t) window->get_window_long(nIndex);
-}
-
-inline int32_t SetWindowLongA(::oswindow window, int32_t nIndex, int32_t l)
-{
-   return (int32_t) window->set_window_long(nIndex, l);
-}
-
-inline int ClientToScreen(::oswindow window, POINT * lppoint)
-{
-   return window->client_to_screen(lppoint);
-}
-
-inline int ScreenToClient(::oswindow window, POINT * lppoint)
-{
-   return window->screen_to_client(lppoint);
-}
-
-inline int32_t IsIconic(::oswindow window)
-{
-   return window->is_iconic();
-}
-
-inline int32_t IsWindowVisible(::oswindow window)
-{
-   return window->is_window_visible();
-}
+//inline int32_t GetWindowLongA(::oswindow window, int32_t nIndex)
+//{
+//   return (int32_t) window->get_window_long(nIndex);
+//}
+//
+//inline int32_t SetWindowLongA(::oswindow window, int32_t nIndex, int32_t l)
+//{
+//   return (int32_t) window->set_window_long(nIndex, l);
+//}
+//
+//inline int ClientToScreen(::oswindow window, POINT * lppoint)
+//{
+//   return window->client_to_screen(lppoint);
+//}
+//
+//inline int ScreenToClient(::oswindow window, POINT * lppoint)
+//{
+//   return window->screen_to_client(lppoint);
+//}
+//
+//inline int32_t IsIconic(::oswindow window)
+//{
+//   return window->is_iconic();
+//}
+//
+//inline int32_t IsWindowVisible(::oswindow window)
+//{
+//   return window->is_window_visible();
+//}
 
 
 #define GetWindowLong GetWindowLongA

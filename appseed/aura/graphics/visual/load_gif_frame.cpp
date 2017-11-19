@@ -1,6 +1,6 @@
 #include "framework.h"
 
-#define unequal(a, b, n) ((a) > (b) - (n))
+//#define unequal(a, b, n) ((a) > (b) - (n))
 
 #ifdef __APPLE__
 

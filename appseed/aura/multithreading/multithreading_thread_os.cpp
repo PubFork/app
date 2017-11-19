@@ -530,7 +530,7 @@ CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa,uint_ptr cbStac
 
    }
 
-   return (long) thread;
+   return thread;
 
 #endif
 

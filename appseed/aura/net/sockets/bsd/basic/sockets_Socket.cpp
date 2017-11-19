@@ -1,4 +1,4 @@
-﻿#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
+#include "framework.h" // #include "axis/net/sockets/bsd/sockets.h"
 #include "aura/net/net_sockets.h"
 
 #ifdef _WIN32
@@ -12,6 +12,9 @@
 #include <unistd.h>
 #endif
 
+#ifdef APPLEOS
+#include <netdb.h>
+#endif
 
 namespace sockets
 {

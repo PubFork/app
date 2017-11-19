@@ -842,6 +842,7 @@
 		9A2A53D21F1FEE49001AB0F8 /* install_window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A2A53951F1FEE49001AB0F8 /* install_window.h */; };
 		9A2A53D31F1FEE49001AB0F8 /* install_windows_boot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */; };
 		9A2A53D51F1FEE49001AB0F8 /* install_windows_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */; };
+		9A2BBCB41FC1F13A00E44B85 /* macos_aura.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */; };
 		9A2F5F701FA0F6DE006CA37F /* visual_apple_image_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F6F1FA0F6DE006CA37F /* visual_apple_image_mm.mm */; };
 		9A33276B1D4C50EB00255105 /* file_path.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A33276A1D4C50EB00255105 /* file_path.h */; };
 		9A33A7551EA902C3000EC109 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A33A74D1EA901F5000EC109 /* CoreServices.framework */; };
@@ -1592,7 +1593,6 @@
 		9A6FB1B11F5CA08600AF31B2 /* macos_stdio_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FB1B01F5CA08600AF31B2 /* macos_stdio_file.cpp */; };
 		9A6FB1B21F5CA2A500AF31B2 /* apple_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */; };
 		9A6FB1B31F5CA2A600AF31B2 /* apple_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */; };
-		9A6FB1CA1F5CA30E00AF31B2 /* macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A81D9581F4489980030C6E8 /* macos.cpp */; };
 		9A6FB1CB1F5CA64500AF31B2 /* ansios_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A81D95A1F4489C30030C6E8 /* ansios_base.cpp */; };
 		9A6FB1CC1F5CA6D800AF31B2 /* str_tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83827B1F4122FA005ED52C /* str_tokenizer.cpp */; };
 		9A6FB1CD1F5CA6D900AF31B2 /* str_tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A83827B1F4122FA005ED52C /* str_tokenizer.cpp */; };
@@ -3128,6 +3128,7 @@
 		9A2A539D1F1FEE49001AB0F8 /* install_windows_boot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_boot.cpp; sourceTree = "<group>"; };
 		9A2A539E1F1FEE49001AB0F8 /* install_windows_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_service.cpp; sourceTree = "<group>"; };
 		9A2A539F1F1FEE49001AB0F8 /* install_windows_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = install_windows_win.cpp; sourceTree = "<group>"; };
+		9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_aura.cpp; sourceTree = "<group>"; };
 		9A2C3A971F4007A300B2DA15 /* apple_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apple_timer.cpp; sourceTree = "<group>"; };
 		9A2F5F6F1FA0F6DE006CA37F /* visual_apple_image_mm.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = visual_apple_image_mm.mm; sourceTree = "<group>"; };
 		9A33276A1D4C50EB00255105 /* file_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_path.h; sourceTree = "<group>"; };
@@ -3865,7 +3866,6 @@
 		9A81D9471F4449630030C6E8 /* user_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_command.cpp; sourceTree = "<group>"; };
 		9A81D9481F4449630030C6E8 /* user_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_command.h; sourceTree = "<group>"; };
 		9A81D94B1F4449770030C6E8 /* user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = user.h; path = user/user.h; sourceTree = "<group>"; };
-		9A81D9581F4489980030C6E8 /* macos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos.cpp; sourceTree = "<group>"; };
 		9A81D95A1F4489C30030C6E8 /* ansios_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_base.cpp; sourceTree = "<group>"; };
 		9A81D95C1F448A9D0030C6E8 /* macos_os.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_os.cpp; sourceTree = "<group>"; };
 		9A81D95E1F448AD20030C6E8 /* ios_os.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ios_os.cpp; path = ios/ios_os.cpp; sourceTree = "<group>"; };
@@ -5784,6 +5784,7 @@
 		9A16405619C4A4CD00966C5E /* macos */ = {
 			isa = PBXGroup;
 			children = (
+				9A2BBCB31FC1F13A00E44B85 /* macos_aura.cpp */,
 				9AD185D01F9C25E4001CEA8E /* macos_base_user_mm.mm */,
 				9AD185CD1F9C25E3001CEA8E /* macos_c.h */,
 				9AD185CF1F9C25E4001CEA8E /* macos_list_serial_ports.cpp */,
@@ -5810,7 +5811,6 @@
 				9A6FACBF1F5C71AF00AF31B2 /* macos_small_ipca_channel.cpp */,
 				9A6FACC01F5C71AF00AF31B2 /* macos_time.cpp */,
 				9A6FACC11F5C71AF00AF31B2 /* macos_win_base.cpp */,
-				9A81D9581F4489980030C6E8 /* macos.cpp */,
 				9A8ED57F1F204BDD007DB75C /* macos_user_mm.mm */,
 				9AA315581E462D4E009CF281 /* macos_file_watcher.cpp */,
 				9A34F5D01E15763000AE2607 /* mmos.h */,
@@ -9102,7 +9102,6 @@
 				9A6FB06A1F5C79CF00AF31B2 /* file_stream.cpp in Sources */,
 				9AD1861F1F9C2983001CEA8E /* visual_font_list_data.cpp in Sources */,
 				9A6FACEA1F5C71EC00AF31B2 /* process_bidi_pipe.cpp in Sources */,
-				9A6FB1CA1F5CA30E00AF31B2 /* macos.cpp in Sources */,
 				9A6FAEE21F5C778800AF31B2 /* collection_point_array.cpp in Sources */,
 				9ADF8EAA1F9BFE63003BEC4D /* RoundWindow.mm in Sources */,
 				9A6FAE831F5C775100AF31B2 /* data_item.cpp in Sources */,
@@ -9405,6 +9404,7 @@
 				9AD1861A1F9C2983001CEA8E /* visual_font_department.cpp in Sources */,
 				9A6FACD41F5C71AF00AF31B2 /* macos_small_ipca_channel.cpp in Sources */,
 				9A6FB05C1F5C79CF00AF31B2 /* file_plain_text_ostream.cpp in Sources */,
+				9A2BBCB41FC1F13A00E44B85 /* macos_aura.cpp in Sources */,
 				9AF4C3C61F836F8400197385 /* aura_timer_array.cpp in Sources */,
 				9A6FAF711F5C78FA00AF31B2 /* sockets_base_socket.cpp in Sources */,
 				9A16421B19C4A4CE00966C5E /* exception_mm.mm in Sources */,

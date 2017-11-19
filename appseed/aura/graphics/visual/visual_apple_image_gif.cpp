@@ -15,7 +15,7 @@
 
 
 
-void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount);
+//void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount);
 
 bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba, ::visual::dib_sp::pointer * pointer, int uFrameIndex, byte * ba, int iScan, array < COLORREF > & cra, int transparentIndex);
 
@@ -479,30 +479,30 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 
 
 
-void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount)
-{
-   
-   cra.set_size(iCount);
-   
-   for (index i = 0; i < iCount; i++)
-   {
-      
-#if defined(ANDROID) && defined(__arm__)
-      cra[i] = ARGB(255, pquad[i].rgbRed, pquad[i].rgbGreen, pquad[i].rgbBlue);
-#else
-      cra[i] = ARGB(255, pquad[i].rgbBlue, pquad[i].rgbGreen, pquad[i].rgbRed);
-#endif
-      
-      if (cra[i] == ARGB(255, 255, 255, 255))
-      {
-         
-         output_debug_string("completely white");
-         
-      }
-      
-   }
-   
-}
+//void cra_from_quada(array < COLORREF > & cra, RGBQUAD * pquad, int iCount)
+//{
+//   
+//   cra.set_size(iCount);
+//   
+//   for (index i = 0; i < iCount; i++)
+//   {
+//      
+//#if defined(ANDROID) && defined(__arm__)
+//      cra[i] = ARGB(255, pquad[i].rgbRed, pquad[i].rgbGreen, pquad[i].rgbBlue);
+//#else
+//      cra[i] = ARGB(255, pquad[i].rgbBlue, pquad[i].rgbGreen, pquad[i].rgbRed);
+//#endif
+//      
+//      if (cra[i] == ARGB(255, 255, 255, 255))
+//      {
+//         
+//         output_debug_string("completely white");
+//         
+//      }
+//      
+//   }
+//   
+//}
 
 
 

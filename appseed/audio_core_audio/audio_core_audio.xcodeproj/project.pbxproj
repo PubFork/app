@@ -115,7 +115,7 @@
 		9AC9451E18290B7700AA7325 /* audio_core_aligned.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_core_aligned.cpp; sourceTree = "<group>"; };
 		9AC9451F18290B7700AA7325 /* audio_core_aligned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_core_aligned.h; sourceTree = "<group>"; };
 		9ACE473B1D1FE5E000A1E0AD /* libaura.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaura.dylib; path = "../../../../Users/camilo/Library/Developer/Xcode/DerivedData/core-mac-ekqwiewkpeyhdudtxguywfqohhby/Build/Products/Debug/libaura.dylib"; sourceTree = "<group>"; };
-		9AF4C48F1F83DD7500197385 /* libaudio_core_audio.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libaudio_core_audio.a; path = libios_audio_core_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AF4C48F1F83DD7500197385 /* libios_audio_core_audio.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libios_audio_core_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1CFD778154F5EAA007447E2 /* libaudio_core_audio.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaudio_core_audio.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				A1CFD778154F5EAA007447E2 /* libaudio_core_audio.dylib */,
-				9AF4C48F1F83DD7500197385 /* libaudio_core_audio.a */,
+				9AF4C48F1F83DD7500197385 /* libios_audio_core_audio.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,7 +265,7 @@
 			);
 			name = ios_audio_core_audio;
 			productName = os;
-			productReference = 9AF4C48F1F83DD7500197385 /* libaudio_core_audio.a */;
+			productReference = 9AF4C48F1F83DD7500197385 /* libios_audio_core_audio.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		A1CFD777154F5EAA007447E2 /* audio_core_audio */ = {
@@ -292,7 +292,7 @@
 		A1CFD76F154F5EA7007447E2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "ca2 Desenvolvimento de Sofware Ltda.";
 			};
 			buildConfigurationList = A1CFD772154F5EA7007447E2 /* Build configuration list for PBXProject "audio_core_audio" */;
@@ -396,7 +396,7 @@
 				EXECUTABLE_EXTENSION = a;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
-				SDKROOT = iphoneos11.0;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -406,7 +406,7 @@
 				EXECUTABLE_EXTENSION = a;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
-				SDKROOT = iphoneos11.0;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

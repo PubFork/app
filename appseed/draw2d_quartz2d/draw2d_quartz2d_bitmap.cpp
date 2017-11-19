@@ -93,12 +93,12 @@ namespace draw2d_quartz2d
    }
    
    
-   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void ** ppdata, int * piStride, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppdata, int * piStride, HANDLE hSection, uint32_t offset)
    {
       
-      int32_t cx = abs(lpbmi->bmiHeader.biWidth);
+      //int32_t cx = abs(lpbmi->bmiHeader.biWidth);
       
-      int32_t cy = abs(lpbmi->bmiHeader.biHeight);
+      //int32_t cy = abs(lpbmi->bmiHeader.biHeight);
       
       if(!CreateBitmap(pgraphics, cx, cy, 1, 32, NULL))
       {
@@ -126,7 +126,7 @@ namespace draw2d_quartz2d
    }
    
    
-   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, DWORD flInit, const void *pjBits, UINT iUsage)
    {
       
       return false;

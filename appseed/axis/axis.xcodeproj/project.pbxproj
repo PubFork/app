@@ -147,7 +147,6 @@
 		9A331C871D4BD0DB00255105 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A331C861D4BD0DB00255105 /* libsqlite3.tbd */; };
 		9A3322B71D4BF72C00255105 /* libace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3322B61D4BF72C00255105 /* libace.a */; };
 		9A80879D1DE13B4400F70A07 /* ios_file_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A80879C1DE13B4400F70A07 /* ios_file_set.h */; };
-		9A8ED4921F200A4E007DB75C /* libaxisfreeimage.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A8ED48F1F2009C9007DB75C /* libaxisfreeimage.dylib */; };
 		9A9367AD1D26C7F400ED7535 /* fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367AC1D26C7F400ED7535 /* fs.h */; };
 		9A9367B61D26C84200ED7535 /* fs_ifs_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B41D26C84200ED7535 /* fs_ifs_file.h */; };
 		9A9367B71D26C84200ED7535 /* fs_remote_native_fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9367B51D26C84200ED7535 /* fs_remote_native_fs.h */; };
@@ -192,7 +191,6 @@
 		9A9874AA1F5CBCAD00CB62EB /* macos_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9874981F5CBCAD00CB62EB /* macos_debug.cpp */; };
 		9A9874AB1F5CBCAD00CB62EB /* macos_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9874991F5CBCAD00CB62EB /* macos_file.cpp */; };
 		9A9874AC1F5CBCAD00CB62EB /* macos_lock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98749A1F5CBCAD00CB62EB /* macos_lock.cpp */; };
-		9A9874AD1F5CBCAD00CB62EB /* macos_message_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98749B1F5CBCAD00CB62EB /* macos_message_loop.cpp */; };
 		9A9874AE1F5CBCAD00CB62EB /* macos_os.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98749C1F5CBCAD00CB62EB /* macos_os.cpp */; };
 		9A9874AF1F5CBCAD00CB62EB /* macos_process_pid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98749D1F5CBCAD00CB62EB /* macos_process_pid.cpp */; };
 		9A9874B01F5CBCAD00CB62EB /* macos_simple_app 2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A98749E1F5CBCAD00CB62EB /* macos_simple_app 2.cpp */; };
@@ -418,27 +416,6 @@
 			remoteGlobalIDString = 07D6A8271B4CBB45004FEBC2;
 			remoteInfo = ios_aurapcre;
 		};
-		9A8ED48E1F2009C9007DB75C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9AEEB48E19C5084900866C9E;
-			remoteInfo = axisfreeimage;
-		};
-		9A8ED4901F2009C9007DB75C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 07108BD71B4C97D500A28F80;
-			remoteInfo = ios_axisfreeimage;
-		};
-		9A920F861F3BF28900CD9D94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9AA5E4C216F7C61B005C45CE;
-			remoteInfo = axisfreeimage;
-		};
 		9A9808291DDF955B00BB294E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A9808241DDF955B00BB294E /* aurapcre.xcodeproj */;
@@ -487,13 +464,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9AE24D331904CEFE001AEFFB;
 			remoteInfo = base_ios;
-		};
-		9AF4BED41F834D9D00197385 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 07108B6F1B4C97D500A28F80;
-			remoteInfo = ios_axisfreeimage;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -676,7 +646,6 @@
 		9A8087621DE1101F00F70A07 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../../nodeapp/iPhoneSimulator10.1-x86_64.sdk/lib/libssl.a"; sourceTree = "<group>"; };
 		9A80879C1DE13B4400F70A07 /* ios_file_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios_file_set.h; path = ios/ios_file_set.h; sourceTree = "<group>"; };
 		9A8897A514C24736006B4023 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = axisfreeimage.xcodeproj; path = ../freeimage/axisfreeimage.xcodeproj; sourceTree = "<group>"; };
 		9A9367AC1D26C7F400ED7535 /* fs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs.h; sourceTree = "<group>"; };
 		9A9367B41D26C84200ED7535 /* fs_ifs_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_ifs_file.h; sourceTree = "<group>"; };
 		9A9367B51D26C84200ED7535 /* fs_remote_native_fs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_remote_native_fs.h; sourceTree = "<group>"; };
@@ -733,7 +702,6 @@
 		9A9874981F5CBCAD00CB62EB /* macos_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_debug.cpp; sourceTree = "<group>"; };
 		9A9874991F5CBCAD00CB62EB /* macos_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_file.cpp; sourceTree = "<group>"; };
 		9A98749A1F5CBCAD00CB62EB /* macos_lock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_lock.cpp; sourceTree = "<group>"; };
-		9A98749B1F5CBCAD00CB62EB /* macos_message_loop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_message_loop.cpp; sourceTree = "<group>"; };
 		9A98749C1F5CBCAD00CB62EB /* macos_os.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_os.cpp; sourceTree = "<group>"; };
 		9A98749D1F5CBCAD00CB62EB /* macos_process_pid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macos_process_pid.cpp; sourceTree = "<group>"; };
 		9A98749E1F5CBCAD00CB62EB /* macos_simple_app 2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "macos_simple_app 2.cpp"; sourceTree = "<group>"; };
@@ -832,7 +800,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A8ED4921F200A4E007DB75C /* libaxisfreeimage.dylib in Frameworks */,
 				9A9809961DDF9B5300BB294E /* libaurapcre.dylib in Frameworks */,
 				9A9F0A8A1D7F35D600ED6D8A /* libaxisidn.dylib in Frameworks */,
 				9A3322B71D4BF72C00255105 /* libace.a in Frameworks */,
@@ -1211,7 +1178,6 @@
 				9A9874981F5CBCAD00CB62EB /* macos_debug.cpp */,
 				9A9874991F5CBCAD00CB62EB /* macos_file.cpp */,
 				9A98749A1F5CBCAD00CB62EB /* macos_lock.cpp */,
-				9A98749B1F5CBCAD00CB62EB /* macos_message_loop.cpp */,
 				9A98749C1F5CBCAD00CB62EB /* macos_os.cpp */,
 				9A98749D1F5CBCAD00CB62EB /* macos_process_pid.cpp */,
 				9A98749E1F5CBCAD00CB62EB /* macos_simple_app 2.cpp */,
@@ -1349,15 +1315,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9A8ED48A1F2009C9007DB75C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9A8ED48F1F2009C9007DB75C /* libaxisfreeimage.dylib */,
-				9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9A9577A11F6212AD00623508 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -1454,7 +1411,6 @@
 			children = (
 				9A19A0CE19C68DDA0018DF7D /* aura.xcodeproj */,
 				9A9808241DDF955B00BB294E /* aurapcre.xcodeproj */,
-				9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */,
 				9A9F0A2B1D7F341700ED6D8A /* axisidn.xcodeproj */,
 				07A371F51B26054000E4F888 /* axis */,
 				0747A6491B2637BB00E85AC7 /* database */,
@@ -1632,7 +1588,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9A920F871F3BF28900CD9D94 /* PBXTargetDependency */,
 				9A9809931DDF9AFC00BB294E /* PBXTargetDependency */,
 				9A9F0A841D7F35B000ED6D8A /* PBXTargetDependency */,
 				9A19A0DB19C68DE00018DF7D /* PBXTargetDependency */,
@@ -1653,7 +1608,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AF4BED51F834D9D00197385 /* PBXTargetDependency */,
 				9A80875A1DE10FDF00F70A07 /* PBXTargetDependency */,
 				9A2116E21D832A41000C4336 /* PBXTargetDependency */,
 				07108A9F1B4C958000A28F80 /* PBXTargetDependency */,
@@ -1715,10 +1669,6 @@
 					ProjectRef = 9A9808241DDF955B00BB294E /* aurapcre.xcodeproj */;
 				},
 				{
-					ProductGroup = 9A8ED48A1F2009C9007DB75C /* Products */;
-					ProjectRef = 9A8ED4891F2009C9007DB75C /* axisfreeimage.xcodeproj */;
-				},
-				{
 					ProductGroup = 9A9F0A2C1D7F341700ED6D8A /* Products */;
 					ProjectRef = 9A9F0A2B1D7F341700ED6D8A /* axisidn.xcodeproj */;
 				},
@@ -1752,20 +1702,6 @@
 			fileType = wrapper.cfbundle;
 			path = aura_iosTests.xctest;
 			remoteRef = 9A19A0D819C68DDA0018DF7D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A8ED48F1F2009C9007DB75C /* libaxisfreeimage.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libaxisfreeimage.dylib;
-			remoteRef = 9A8ED48E1F2009C9007DB75C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9A8ED4911F2009C9007DB75C /* libios_axisfreeimage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libios_axisfreeimage.a;
-			remoteRef = 9A8ED4901F2009C9007DB75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9A98082A1DDF955B00BB294E /* libaurapcre.dylib */ = {
@@ -1838,7 +1774,6 @@
 				9A9D7ADD1F5D63BD009EC103 /* fs_ftp_file.cpp in Sources */,
 				9A9D79E11F5D6305009EC103 /* database_update_hint.cpp in Sources */,
 				9A9874631F5CBB9900CB62EB /* axis_application.cpp in Sources */,
-				9A9874AD1F5CBCAD00CB62EB /* macos_message_loop.cpp in Sources */,
 				9A9874AA1F5CBCAD00CB62EB /* macos_debug.cpp in Sources */,
 				9A9D7ADB1F5D63BD009EC103 /* fs_fs.cpp in Sources */,
 				9A9D7A1B1F5D6321009EC103 /* simpledb_stra_set.cpp in Sources */,
@@ -2055,11 +1990,6 @@
 			name = ios_aurapcre;
 			targetProxy = 9A8087591DE10FDF00F70A07 /* PBXContainerItemProxy */;
 		};
-		9A920F871F3BF28900CD9D94 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = axisfreeimage;
-			targetProxy = 9A920F861F3BF28900CD9D94 /* PBXContainerItemProxy */;
-		};
 		9A9809931DDF9AFC00BB294E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = aurapcre;
@@ -2074,11 +2004,6 @@
 			isa = PBXTargetDependency;
 			target = 9AE24D331904CEFE001AEFFB /* ios_axis */;
 			targetProxy = 9AE24D491904CEFF001AEFFB /* PBXContainerItemProxy */;
-		};
-		9AF4BED51F834D9D00197385 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ios_axisfreeimage;
-			targetProxy = 9AF4BED41F834D9D00197385 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

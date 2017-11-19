@@ -2251,9 +2251,9 @@ namespace user
 
       rectClient -= rectClient.top_left();
 
-      bool bDib = false;
+      //bool bDib = false;
 
-      double dAlpha = get_alpha();
+      //double dAlpha = get_alpha();
 
       if (m_puserstyle != NULL && m_puserstyle->_001OnDrawMainFrameBackground(pgraphics, this))
       {
