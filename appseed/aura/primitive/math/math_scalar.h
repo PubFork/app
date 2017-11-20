@@ -58,7 +58,8 @@ public:
    };
 
 
-   listener *        m_plistener;
+   listener *           m_plistener;
+   id                   m_id;
 
    scalar_source();
 

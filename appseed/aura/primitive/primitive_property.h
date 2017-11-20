@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -122,7 +122,7 @@ public:
       memcpy(&m_element2, &prop.m_element2, sizeof(var));
       prop.m_element2.m_sp.m_p           = NULL;
       prop.m_element2.m_str.m_pszData    = NULL;
-      prop.m_element2.m_id.m_all        ={};
+      prop.m_element2.m_id.m_all        = {};
    }
 #endif
    ~property()
@@ -143,7 +143,7 @@ public:
       return m_element1;
    }
 
-   
+
    //inline void set_name(id id)
    //{
    //   m_element1 = id;
@@ -374,6 +374,18 @@ public:
    property & operator =(uint64_t ui)
    {
       m_element2 = ui;
+      return *this;
+   }
+
+   property & operator =(uint64_t * pui)
+   {
+      m_element2 = pui;
+      return *this;
+   }
+
+   property & operator =(size_t * pui)
+   {
+      m_element2 = (uint_ptr *) pui;
       return *this;
    }
 
@@ -716,7 +728,7 @@ public:
 //   DECLARE_AXIS_FIXED_ALLOC(property)
 
 
-    void null() { m_element2.null(); }
+   void null() { m_element2.null(); }
 
 
 };

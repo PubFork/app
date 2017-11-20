@@ -34,6 +34,9 @@ namespace sockets
       bool                 m_bRequest;
       bool                 m_bResponse;
       size_t               m_body_size_left;
+      size_t               m_body_size_downloaded;
+      double_scalar_source m_scalarsourceDownloadedRate;
+      int_scalar_source    m_scalarsourceDownloaded;
       size_t               m_chunk_size;
       int                  m_chunk_state;
       string               m_chunk_line;

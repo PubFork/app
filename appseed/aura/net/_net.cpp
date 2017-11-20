@@ -2,7 +2,7 @@
 
 
 #include "ftp/_ftp.cpp"
-#include "http/_http.cpp"
+//#include "http/_http.cpp"
 //#include "mail/_mail.cpp"
 #include "netserver/_netserver.cpp"
 

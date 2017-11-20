@@ -4564,6 +4564,9 @@
     <ClCompile Include="net\sockets\_sockets.cpp">
       <Filter>Source Files\net\sockets</Filter>
     </ClCompile>
+    <ClCompile Include="net\http\_http.cpp">
+      <Filter>Source Files\net\http</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">

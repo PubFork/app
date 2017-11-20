@@ -350,9 +350,13 @@ namespace sockets
       // check body size left to read, if non-zero packet is body data
       if (m_body_size_left) // must be a body packet
       {
+            
          ReceiveBody(buf, sz);
+
          return;
+
       }
+
       switch (*buf)
       {
       case 0x2: // Forward Request

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace sockets
@@ -8,9 +8,10 @@ namespace sockets
    {
    public:
 
-      memory_size_t m_body_size_left;
-      http::request m_request;
-      http::response m_response;
+
+      memory_size_t     m_body_size_left;
+      http::request     m_request;
+      http::response    m_response;
 
 
       Ajp13Socket(base_socket_handler& h);
