@@ -383,11 +383,15 @@ public:
       return *this;
    }
 
+#if !defined(WINDOWS) && !defined(OS64BIT)
+
    property & operator =(size_t * pui)
    {
       m_element2 = (uint_ptr *) pui;
       return *this;
    }
+
+#endif
 
    property & operator =(bool b)
    {

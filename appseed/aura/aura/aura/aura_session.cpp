@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/net/sockets/bsd/sockets_sockets.h"
 
 
@@ -825,9 +825,20 @@ namespace aura
 #elif !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 
 
+#ifdef WINDOWS
+
+      if (g_pfnNewApp == NULL && strAppId == "acid")
+      {
+
+         g_pfnNewApp = (PFN_GET_NEW_APP) ::GetProcAddress(System.m_hinstance, "get_acid_app");
+
+      }
+
+#endif
+
       if (g_pfnNewApp == NULL && ((!System.handler()->m_varTopicQuery.has_property("install")
-            && !System.handler()->m_varTopicQuery.has_property("uninstall"))
-          ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
+                                   && !System.handler()->m_varTopicQuery.has_property("uninstall"))
+                                 ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
             && strAppId.has_char()
             && !System.is_application_installed(strAppId, "installed"))
       {
