@@ -230,12 +230,11 @@ namespace user
          // dialog support
          virtual void update_dialog_controls(command_target * ptarget);
          virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL);
-         virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL);
-         virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL);
-         virtual id   _001RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL);
-         virtual bool ContinueModal(int32_t iLevel);
+         virtual id   run_modal_loop(::user::interaction * pui, uint32_t dwFlags = 0);
+         virtual id   RunModalLoop(uint32_t dwFlags = 0);
+         virtual id   _001RunModalLoop(uint32_t dwFlags = 0);
+         virtual bool ContinueModal();
          virtual void EndModalLoop(id nResult);
-         virtual void EndAllModalLoops(id nResult);
 
          virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 

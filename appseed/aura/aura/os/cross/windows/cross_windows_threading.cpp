@@ -101,7 +101,15 @@ restart:
 
          return FALSE;
       }
-
+      
+      if(oswindow != NULL && oswindow_get(oswindow) == NULL)
+      {
+         
+         pmq->ma.remove_at(i);
+         
+         continue;
+         
+      }
 
       if((oswindow == NULL || msg.hwnd == oswindow) && msg.message >= wMsgFilterMin && msg.message <= wMsgFilterMax)
       {

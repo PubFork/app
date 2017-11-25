@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace userex
@@ -171,7 +171,7 @@ namespace userex
       if(m_pviewdataOld != NULL && ::str::begins_ci(m_pviewdataOld->m_id, "file_manager"))
       {
 
-         if(GetParentFrame()->ContinueModal(0))
+         if(GetParentFrame()->ContinueModal())
          {
 
             GetParentFrame()->EndModalLoop("yes");
@@ -602,7 +602,7 @@ namespace userex
 
       ::user::tab::_001OnTabClose(iTab);
 
-      if(GetParentFrame()->ContinueModal(0) && is_set(filemanager_manager())
+      if(GetParentFrame()->ContinueModal() && is_set(filemanager_manager())
             && filemanager_manager().get_filemanager_data()->m_pdocumentTopic!= NULL)
       {
          GetParentFrame()->EndModalLoop("yes");

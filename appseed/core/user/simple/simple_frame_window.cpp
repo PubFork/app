@@ -1257,29 +1257,13 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    }
 
-
-
-   if (m_iModalCount > 0)
+   if (m_bModal)
    {
       EndModalLoop(IDOK);
       pobj->m_bRet = true;
       return;
    }
-   else if (GetTopLevelFrame() != NULL
-            && (GetTopLevelFrame()->m_iModalCount > 0))
-   {
-      GetTopLevelFrame()->EndModalLoop(IDOK);
-      pobj->m_bRet = true;
-      return;
-   }
-   else if (m_iModalCount > 0)
-   {
-      m_pimpl->EndModalLoop(IDOK);
-      pobj->m_bRet = true;
-      ShowWindow(SW_HIDE);
-      return;
-   }
-   else if (GetTopLevelFrame() != NULL && GetTopLevelFrame()->m_iModalCount > 0)
+   else if (GetTopLevelFrame() != NULL && GetTopLevelFrame()->m_bModal)
    {
       GetTopLevelFrame()->EndModalLoop(IDOK);
       pobj->m_bRet = true;
@@ -1288,7 +1272,9 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    if (pobj)
    {
+      
       pobj->m_bRet = true;
+      
    }
 
    bool bDestroyWindow = false;

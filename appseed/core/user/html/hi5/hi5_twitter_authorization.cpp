@@ -199,9 +199,12 @@ namespace hi5
 
       }
 
+      
       void authorization::pageMessage(const char * pszMatter, property_set & set)
       {
+         
          ensure_main_document();
+         
          m_pdocAuth->get_html_data()->m_propertyset = set;
          m_pdocAuth->on_open_document(Application.dir().matter(pszMatter));
          display_main_frame();
@@ -209,8 +212,10 @@ namespace hi5
          
          m_ptabview->get_wnd()->RunModalLoop();
 
-         m_ptabview->get_wnd()->EndAllModalLoops(IDOK);
+         m_ptabview->get_wnd()->EndModalLoop(IDOK);
+         
       }
+      
 
       void authorization::on_create_view(::user::view_creator_data * pcreatordata)
       {

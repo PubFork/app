@@ -1,4 +1,4 @@
-﻿#include "framework.h" // from "aura/net/net_sockets.h"
+#include "framework.h" // from "aura/net/net_sockets.h"
 #include "aura/net/net_sockets.h"
 #include <time.h>
 #include <stdio.h>
@@ -930,11 +930,11 @@ retry:
 
          psession->m_scalarsourceDownloadedRate.m_plistener = set["http_downloaded_rate_listener"].cast < ::double_scalar_source::listener >();
 
-         psession->m_scalarsourceDownloadedRate.m_id = (id)set["http_downloaded_rate_id"];
+         psession->m_scalarsourceDownloadedRate.m_id = set["http_downloaded_rate_id"].get_id();
 
          psession->m_scalarsourceDownloaded.m_plistener = set["http_downloaded_listener"].cast < ::int_scalar_source::listener >();
 
-         psession->m_scalarsourceDownloaded.m_id = (id)set["http_downloaded_id"];
+         psession->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
 
          bool bPost;
@@ -1665,11 +1665,11 @@ retry_session:
 
       psocket->m_scalarsourceDownloadedRate.m_plistener = set["http_downloaded_rate_listener"].cast < ::double_scalar_source::listener >();
 
-      psocket->m_scalarsourceDownloadedRate.m_id = (id) set["http_downloaded_rate_id"];
+      psocket->m_scalarsourceDownloadedRate.m_id = set["http_downloaded_rate_id"].get_id();
 
       psocket->m_scalarsourceDownloaded.m_plistener = set["http_downloaded_listener"].cast < ::int_scalar_source::listener >();
 
-      psocket->m_scalarsourceDownloaded.m_id = (id)set["http_downloaded_id"];
+      psocket->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
       if (iTimeout == 0)
       {

@@ -142,8 +142,6 @@ namespace user
          UINT                                m_nFlags;      // see WF_ flags above
          bool                                m_bCursorInside;
          ::visual::e_cursor                  m_ecursor;
-         int32_t                             m_iModal;
-         int32_t                             m_iModalCount;
          bool                                m_bRectOk;
          sp(::aura::session)                 m_psession;
          bool                                m_bMessageWindow;
@@ -152,7 +150,8 @@ namespace user
 
          string                              m_strWindowText;
 
-         ref_array < ::thread >              m_threadptraModal;
+         bool                                m_bModal;
+         ::thread *                          m_pthreadModal;
 
          id                                  m_idModalResult; // for return values from interaction_impl::RunModalLoop
 
@@ -374,12 +373,11 @@ namespace user
          // dialog support
          virtual void update_dialog_controls(command_target * ptarget) override;
          virtual void CenterWindow(::user::interaction * pAlternateOwner = NULL) override;
-         virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
-         virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
-         virtual id   _001RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL) override;
-         virtual bool ContinueModal(int32_t iLevel) override;
+         virtual id   run_modal_loop(::user::interaction * pui,uint32_t dwFlags = 0) override;
+         virtual id   RunModalLoop(uint32_t dwFlags = 0) override;
+         virtual id   _001RunModalLoop(uint32_t dwFlags = 0) override;
+         virtual bool ContinueModal() override;
          virtual void EndModalLoop(id nResult) override;
-         virtual void EndAllModalLoops(id nResult) override;
 
          virtual bool BaseOnControlEvent(::user::control_event * pevent) override;
 

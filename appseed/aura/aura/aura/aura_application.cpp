@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -6311,7 +6311,7 @@ retry_license:
             else if (dwExitCode == 0)
             {
 
-               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+               ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
 
                notinstalled.m_bContinue = false;
 

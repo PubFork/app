@@ -80,8 +80,7 @@ namespace user
       m_puiOwner = NULL;
       //m_pimpl                    = NULL;
       m_ecursor = ::visual::cursor_default;
-      m_iModal = 0;
-      m_iModalCount = 0;
+      m_bModal = false;
       m_bRectOk = false;
       m_bLayoutEnable = true;
       //m_psession                 = NULL;
@@ -4577,274 +4576,83 @@ restart:
    }
 
 
-   id interaction::run_modal_loop(::user::interaction * pui, uint32_t dwFlags, ::object * pliveobject)
+   id interaction::run_modal_loop(::user::interaction * pui, uint32_t dwFlags)
    {
 
-      return pui->_001RunModalLoop(dwFlags, pliveobject);
+      return pui->_001RunModalLoop(dwFlags);
 
    }
 
 
-   id interaction::RunModalLoop(uint32_t dwFlags, ::object * pliveobject)
+   id interaction::RunModalLoop(uint32_t dwFlags)
    {
 
-      return _001RunModalLoop(dwFlags, pliveobject);
+      return _001RunModalLoop(dwFlags);
 
    }
 
 
-   id interaction::_001RunModalLoop(uint32_t dwFlags, ::object * pliveobject)
+   id interaction::_001RunModalLoop(uint32_t dwFlags)
    {
-
-      // for tracking the idle time state
-      bool bIdle = TRUE;
-      //LONG lIdleCount = 0;
-      //      bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
-      bool bShowIdle = !(GetStyle() & WS_VISIBLE);
-      //      oswindow oswindow_Parent = ::GetParent(get_handle());
-      m_iModal = m_iModalCount;
-      int32_t iLevel = m_iModal;
-      sp(::user::interaction) puieParent = GetParent();
-      oprop(string("RunModalLoop.thread(") + ::str::from(iLevel) + ")") = ::get_thread();
-      m_iModalCount++;
-
-      //bool bAttach = AttachThreadInput(get_wnd()->get_os_int(), ::GetCurrentThreadId(), TRUE);
-
-      m_threadptraModal.add(::get_thread());
-      sp(::aura::application) pappThis1 = (m_pimpl);
-      sp(::aura::application) pappThis2 = (::get_thread());
-      // acquire and dispatch messages until the modal state is done
-      MESSAGE msg;
-
-      ::thread * pthread = ::get_thread();
-
-      //if(pthread == NULL)
-      //{
-
-      //   pthread = m_threadptra.is_empty() ? NULL : m_threadptra[0];
-
-      //}
-
-      for (;;)
+      
+      ASSERT(!m_bModal);
+      
+      if(m_bModal)
       {
-         if (!ContinueModal(iLevel))
-            goto ExitModal;
-
-         // phase1: check to see if we can do idle work
-         while (bIdle && !::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-         {
-            if (!ContinueModal(iLevel))
-               goto ExitModal;
-
-            // show the dialog when the message queue goes idle
-            if (bShowIdle)
-            {
-               ShowWindow(SW_SHOWNORMAL);
-               UpdateWindow();
-               bShowIdle = FALSE;
-            }
-
-            //            pthread->step_timer();
-
-            // call on_idle while in bIdle state
-            //if(!(dwFlags & MLF_NOIDLEMSG) && puieParent != NULL && lIdleCount == 0)
-            //{
-            //   // send WM_ENTERIDLE to the parent
-            //   //puieParent->send_message(WM_ENTERIDLE,MSGF_DIALOGBOX,(LPARAM)(DWORD_PTR)NULL);
-            //}
-            /*if ((dwFlags & MLF_NOKICKIDLE) ||
-            !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MESSAGEF_DIALOGBOX, lIdleCount++))
-            {
-            // stop idle processing next time
-            bIdle = FALSE;
-            }*/
-
-            pthread->m_dwAlive = ::get_tick_count();
-            if (pappThis1 != NULL)
-            {
-               pappThis1->m_dwAlive = pthread->m_dwAlive;
-            }
-            if (pappThis2 != NULL)
-            {
-               pappThis2->m_dwAlive = pthread->m_dwAlive;
-            }
-            if (pliveobject != NULL)
-            {
-               pliveobject->keep_alive();
-            }
-         }
-
-
-         // phase2: pump messages while available
-         do
-         {
-
-            pthread->pump_message();
-
-            if (!ContinueModal(iLevel))
-               goto ExitModal;
-
-
-            if (::get_thread() != NULL && !::get_thread()->pump_message())
-            {
-               __post_quit_message(0);
-               return -1;
-            }
-
-            // show the interaction_impl when certain special messages rec'd
-            //if(bShowIdle &&
-            // (msg.message == 0x118 || msg.message == WM_SYSKEYDOWN))
-            //{
-            // ShowWindow(SW_SHOWNORMAL);
-            //UpdateWindow();
-            //bShowIdle = FALSE;
-            //}
-
-            if (!ContinueModal(iLevel))
-               goto ExitModal;
-
-
-            keep_alive(pliveobject);
-
-         }
-         while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
-
-
-         //         pthread->step_timer();
-
-         if (!ContinueModal(iLevel))
-            goto ExitModal;
-
-
+         
+         return ::id();
+         
       }
 
+      keep < bool > keepModal(&m_bModal, true, false, true);
+      
+      keep < thread * > keepThreadModal(&m_pthreadModal, ::get_thread(), NULL, true);
+      
+      while(true)
+      {
+         
+         if (!ContinueModal())
+         {
+            
+            break;
+            
+         }
+         
+         if(!::get_thread()->defer_pump_message())
+         {
+          
+            break;
+            
+         }
 
-
-ExitModal:
-
-      //#ifdef WINDOWS
-
-      m_threadptraModal.remove_first(::get_thread());
-
-      //#else
-
-      //    m_iaModalThread.remove_first(::pthread_self());
-
-      //#endif
-
-      m_iModal = m_iModalCount;
+      }
 
       return m_idModalResult;
 
    }
 
-   bool interaction::ContinueModal(int32_t iLevel)
+   
+   bool interaction::ContinueModal()
    {
-      return iLevel < m_iModalCount && (::get_thread() == NULL || ::get_thread_run()) && m_pauraapp->thread_get_run();
+      
+      return m_bModal && ::get_thread_run();
+      
    }
+   
 
    void interaction::EndModalLoop(id nResult)
    {
+      
       ASSERT(IsWindow());
 
       // this result will be returned from interaction_impl::RunModalLoop
       m_idModalResult = nResult;
 
       // make sure a message goes through to exit the modal loop
-      if (m_iModalCount > 0)
-      {
-         m_iModalCount--;
-         for (index i = 0; i < m_threadptraModal.get_count(); i++)
-         {
-
-            m_threadptraModal[i]->kick_thread();
-
-         }
-
-
-         kick_queue();
-
-         try
-         {
-
-            sp(::thread) pthread = ::get_thread();
-
-            if (pthread.is_set())
-            {
-
-               pthread->kick_thread();
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-         try
-         {
-
-            sp(::thread) pthread = ::get_thread();
-
-            if (pthread.is_set())
-            {
-
-               pthread->kick_thread();
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-
-   }
-
-
-   void interaction::EndAllModalLoops(id nResult)
-   {
-
-      ASSERT(IsWindow());
-
-      // this result will be returned from interaction_impl::RunModalLoop
-      m_idModalResult = nResult;
-
-      // make sure a message goes through to exit the modal loop
-      if (m_iModalCount > 0)
-      {
-
-         int32_t iLevel = m_iModalCount - 1;
-
-         m_iModalCount = 0;
-
-         kick_queue();
-
-         ::get_thread()->kick_thread();
-
-         for (int32_t i = iLevel; i >= 0; i--)
-         {
-
-            thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < thread >();
-
-            try
-            {
-
-               pthread->kick_thread();
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
-
+      m_bModal = false;
+      
+      m_pthreadModal->kick_thread();
+      
    }
 
 

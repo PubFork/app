@@ -15,19 +15,16 @@
       //      LPCWSTR lpcaption,
         //    UINT uType);
 
-
-
-
 int MessageBoxW(oswindow window, const unichar * pszMessageParam, const unichar * pszHeaderParam, UINT uType )
 {
    
-   string pszMessage(pszMessageParam);
+   string strMessage(pszMessageParam);
    
-   string pszHeader(pszHeaderParam);
+   string strHeader(pszHeaderParam);
    
    //convert the strings from char* to CFStringRef
-   CFStringRef header_ref      = CFStringCreateWithCString( NULL, pszHeader,     (unsigned int) strlen(pszHeader)    );
-   CFStringRef message_ref  = CFStringCreateWithCString( NULL, pszMessage,  (unsigned int) strlen(pszMessage) );
+   CFStringRef header_ref   = CFStringCreateWithCString(kCFAllocatorDefault, strHeader, kCFStringEncodingUTF8);
+   CFStringRef message_ref  = CFStringCreateWithCString(kCFAllocatorDefault, strMessage, kCFStringEncodingUTF8);
    
    CFOptionFlags result;  //result code from the message box
    
@@ -76,11 +73,11 @@ int MessageBoxW(oswindow window, const unichar * pszMessageParam, const unichar 
    CFStringRef button3_ref = NULL;
    
    if(strButton1.has_char() || strButton1.compare_ci("ok") != 0)
-      button1_ref = CFStringCreateWithCString(NULL, strButton1, (unsigned int) strButton1.length());
+      button1_ref = CFStringCreateWithCString(kCFAllocatorDefault, strButton1, kCFStringEncodingUTF8);
    if(strButton2.has_char())
-      button2_ref = CFStringCreateWithCString(NULL, strButton2, (unsigned int) strButton2.length());
+      button2_ref = CFStringCreateWithCString(kCFAllocatorDefault, strButton2, kCFStringEncodingUTF8);
    if(strButton3.has_char())
-      button3_ref = CFStringCreateWithCString(NULL, strButton3, (unsigned int) strButton3.length());
+      button3_ref = CFStringCreateWithCString(kCFAllocatorDefault, strButton3, kCFStringEncodingUTF8);
    
    
    //launch the message box
@@ -106,8 +103,19 @@ int MessageBoxW(oswindow window, const unichar * pszMessageParam, const unichar 
       CFRelease(button1_ref);
    
    //Clean up the strings
-   CFRelease( header_ref );
-   CFRelease( message_ref );
+   if(header_ref)
+   {
+      
+      CFRelease( header_ref );
+      
+   }
+   
+   if(message_ref != NULL)
+   {
+   
+      CFRelease( message_ref );
+      
+   }
    
    
    switch(uiType)

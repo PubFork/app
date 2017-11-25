@@ -1819,7 +1819,7 @@ Restart:
    }
 
 
-   id interaction_base::run_modal_loop(::user::interaction * pui,uint32_t dwFlags,::object * pliveobject)
+   id interaction_base::run_modal_loop(::user::interaction * pui,uint32_t dwFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1829,7 +1829,7 @@ Restart:
    }
 
 
-   id interaction_base::RunModalLoop(uint32_t dwFlags,::object * pliveobject)
+   id interaction_base::RunModalLoop(uint32_t dwFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1839,7 +1839,7 @@ Restart:
    }
 
 
-   id interaction_base::_001RunModalLoop(uint32_t dwFlags,::object * pliveobject)
+   id interaction_base::_001RunModalLoop(uint32_t dwFlags)
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1849,7 +1849,7 @@ Restart:
    }
 
 
-   bool interaction_base::ContinueModal(int32_t iLevel)
+   bool interaction_base::ContinueModal()
    {
 
       ::exception::throw_interface_only(get_app());
@@ -1860,14 +1860,6 @@ Restart:
 
 
    void interaction_base::EndModalLoop(id nResult)
-   {
-
-      ::exception::throw_interface_only(get_app());
-
-   }
-
-
-   void interaction_base::EndAllModalLoops(id nResult)
    {
 
       ::exception::throw_interface_only(get_app());
