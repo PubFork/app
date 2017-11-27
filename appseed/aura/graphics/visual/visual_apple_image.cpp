@@ -2,607 +2,103 @@
 //  visual_apple_image.cpp
 //  aura
 //
-//  Created by Camilo Sasuke Tsumanuma on 21/10/17.
+//  Created by Camilo Sasuke Tsumanuma on 21/10/17. Thomas Boregaard Soerensen <3
 //
 
 #include "framework.h"
 
-CFDataRef CopyImagePixels(CGImageRef inImage);
 
+CFDataRef CopyImagePixels(CGImageRef inImage);
 
 
 void * get_png_image_data(unsigned long & size, CGImageRef image);
 void * get_jpeg_image_data(unsigned long & size, CGImageRef image);
 
 
-namespace visual
+bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
 {
    
-   
-   bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
+   if(pdib == NULL)
    {
       
-      if(m_p == NULL)
-      {
-       
-         return NULL;
-         
-      }
-      
-      unsigned long size;
-      
-      ::aura::malloc < COLORREF * > pdst;
-      
-      pdst.alloc(m_p->m_iScan * m_p->m_size.cy);
-      
-      if(pdst == NULL)
-      {
-         
-         return NULL;
-         
-      }
-      
-      ::draw2d::_001ProperCopyColorref(
-                                       m_p->m_size.cx,
-                                       m_p->m_size.cy, pdst, m_p->m_iScan, m_p->m_pcolorref, m_p->m_iScan);
-
-      CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-      
-      
-      
-      CGContextRef context = CGBitmapContextCreate(
-                                                   pdst,
-                                                   m_p->m_size.cx,
-                                                   m_p->m_size.cy, 8,
-                                                   m_p->m_iScan, colorspace, kCGImageAlphaPremultipliedLast);
-      
-      CGColorSpaceRelease(colorspace);
-      
-      if(context == NULL)
-      {
-       
-         return false;
-         
-         
-      }
-      
-      CGImageRef cgimage = CGBitmapContextCreateImage(context);
-      
-      ::aura::malloc < COLORREF * > p;
-      
-      if(psaveimage == NULL)
-      {
-         p = get_png_image_data(size, cgimage);
-      }
-      else
-      {
-         
-      switch (psaveimage->m_eformat)
-      {
-      case ::visual::image::format_png:
-         {
-            p = get_png_image_data(size, cgimage);
-         }
-            break;
-         case ::visual::image::format_jpeg:
-         {
-            p = get_jpeg_image_data(size, cgimage);
-         }
-            break;
-         default:
-         {
-            CGImageRelease(cgimage);
-            CGContextRelease(context);
-            return false;
-         }
-            
-      }
-      }
-      
-     
-            pfile->write(p, size);
-      CGImageRelease(cgimage);
-      CGContextRelease(context);
-      
-            return true;
-            
-            
-//      if (pfile.is_null())
-//      {
-//         
-//         return false;
-//         
-//      }
-//      
-//      if (is_null())
-//      {
-//         
-//         alloc(pfile->allocer());
-//         
-//      }
-//      
-//      if (is_null())
-//      {
-//         
-//         return false;
-//         
-//      }
-//      
-//      ::draw2d::dib * pdib = m_p;
-//      
-//      if (pdib == NULL)
-//      {
-//         
-//         return NULL;
-//         
-//      }
-//      
-//#ifdef METROWIN
-//      
-//      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
-//      
-//      //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
-//      
-//      comptr < IStream > pstream;
-//      
-//      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream.get()));
-//      
-//#else
-//      
-//      comptr < IStream > pstream = LIBCALL(shlwapi, SHCreateMemStream)(NULL, NULL);
-//      
-//#endif
-//      
-//      //m_spmemfile->Truncate(0);
-//      
-//      //m_spmemfile->seek_to_begin();
-//      
-//      comptr < IWICImagingFactory > piFactory = NULL;
-//      comptr < IWICBitmapEncoder > piEncoder = NULL;
-//      comptr < IWICBitmapFrameEncode > piBitmapFrame = NULL;
-//      comptr < IPropertyBag2 > pPropertybag = NULL;
-//      
-//      comptr < IWICStream > piStream = NULL;
-//      UINT uiWidth = pdib->size().cx;
-//      UINT uiHeight = pdib->size().cy;
-//      
-//      HRESULT hr = CoCreateInstance(
-//                                    CLSID_WICImagingFactory,
-//                                    NULL,
-//                                    CLSCTX_INPROC_SERVER,
-//                                    IID_IWICImagingFactory,
-//                                    (LPVOID*)&piFactory);
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piFactory->CreateStream(&piStream.get());
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piStream->InitializeFromIStream(pstream);
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         switch (psaveimage->m_eformat)
-//         {
-//            case ::visual::image::format_bmp:
-//               hr = piFactory->CreateEncoder(GUID_ContainerFormatBmp, NULL, &piEncoder.get());
-//               break;
-//            case ::visual::image::format_gif:
-//               hr = piFactory->CreateEncoder(GUID_ContainerFormatGif, NULL, &piEncoder.get());
-//               break;
-//            case ::visual::image::format_jpeg:
-//               hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder.get());
-//               break;
-//            case ::visual::image::format_png:
-//               hr = piFactory->CreateEncoder(GUID_ContainerFormatPng, NULL, &piEncoder.get());
-//               break;
-//            default:
-//               break;
-//         }
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piEncoder->Initialize(piStream, WICBitmapEncoderNoCache);
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piEncoder->CreateNewFrame(&piBitmapFrame.get(), &pPropertybag.get());
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         //if(m_bJxr)
-//         //{
-//         //   //PROPBAG2 option ={0};
-//         //   //option.pstrName = L"ImageQuality";
-//         //   //VARIANT varValue;
-//         //   //VariantInit(&varValue);
-//         //   //varValue.vt = VT_R4;
-//         //   //varValue.fltVal = 0.49f;
-//         //   PROPBAG2 option ={0};
-//         //   option.pstrName = L"UseCodecOptions";
-//         //   VARIANT varValue;
-//         //   VariantInit(&varValue);
-//         //   varValue.vt = VT_BOOL;
-//         //   varValue.boolVal = -1;
-//         //   if(SUCCEEDED(hr))
-//         //   {
-//         //      hr = pPropertybag->Write(1,&option,&varValue);
-//         //   }
-//         //   option.pstrName = L"Quality";
-//         //   VariantInit(&varValue);
-//         //   varValue.vt = VT_UI1;
-//         //   varValue.bVal = 184;
-//         //   if(SUCCEEDED(hr))
-//         //   {
-//         //      hr = pPropertybag->Write(1,&option,&varValue);
-//         //   }
-//         //   option.pstrName = L"Subsampling";
-//         //   VariantInit(&varValue);
-//         //   varValue.vt = VT_UI1;
-//         //   varValue.bVal = 1;
-//         //   if(SUCCEEDED(hr))
-//         //   {
-//         //      hr = pPropertybag->Write(1,&option,&varValue);
-//         //   }
-//         //   option.pstrName = L"Overlap";
-//         //   VariantInit(&varValue);
-//         //   varValue.vt = VT_UI1;
-//         //   varValue.bVal = 2;
-//         //   if(SUCCEEDED(hr))
-//         //   {
-//         //      hr = pPropertybag->Write(1,&option,&varValue);
-//         //   }
-//         //   option.pstrName = L"StreamOnly";
-//         //   VariantInit(&varValue);
-//         //   varValue.vt = VT_BOOL;
-//         //   varValue.boolVal = -1;
-//         //   if(SUCCEEDED(hr))
-//         //   {
-//         //      hr = pPropertybag->Write(1,&option,&varValue);
-//         //   }
-//         //}
-//         if (psaveimage->m_eformat == ::visual::image::format_jpeg)
-//         {
-//            PROPBAG2 option = { 0 };
-//            option.pstrName = L"ImageQuality";
-//            VARIANT varValue;
-//            VariantInit(&varValue);
-//            varValue.vt = VT_R4;
-//            varValue.fltVal = MAX(0.f, MIN(1.f, psaveimage->m_iQuality / 100.0f));
-//            if (SUCCEEDED(hr))
-//            {
-//               hr = pPropertybag->Write(1, &option, &varValue);
-//            }
-//         }
-//         if (SUCCEEDED(hr))
-//         {
-//            hr = piBitmapFrame->Initialize(pPropertybag);
-//         }
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piBitmapFrame->SetSize(uiWidth, uiHeight);
-//      }
-//      
-//      WICPixelFormatGUID formatGUID = GUID_WICPixelFormat32bppBGRA;
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piBitmapFrame->SetPixelFormat(&formatGUID);
-//      }
-//      pdib->map();
-//      if (SUCCEEDED(hr))
-//      {
-//         if (IsEqualGUID(formatGUID, GUID_WICPixelFormat32bppBGRA))
-//         {
-//            if (SUCCEEDED(hr))
-//            {
-//               hr = piBitmapFrame->WritePixels(uiHeight, pdib->m_iScan, uiHeight*pdib->m_iScan, (BYTE *)pdib->m_pcolorref);
-//            }
-//         }
-//         else
-//         {
-//            
-//            comptr <IWICBitmap> pbitmap;
-//            
-//            if (SUCCEEDED(hr))
-//            {
-//               hr = piFactory->CreateBitmapFromMemory(
-//                                                      pdib->size().cx,
-//                                                      pdib->size().cy,
-//                                                      GUID_WICPixelFormat32bppBGRA,
-//                                                      pdib->m_iScan,
-//                                                      pdib->m_iScan * pdib->size().cy,
-//                                                      (BYTE *)pdib->m_pcolorref,
-//                                                      &pbitmap.get()
-//                                                      );
-//            }
-//            
-//            comptr<IWICFormatConverter> pconverter;
-//            
-//            if (SUCCEEDED(hr))
-//            {
-//               
-//               hr = piFactory->CreateFormatConverter(&pconverter.get());
-//               
-//            }
-//            
-//            
-//            
-//            if (SUCCEEDED(hr))
-//            {
-//               
-//               hr = pconverter->Initialize(pbitmap, formatGUID, WICBitmapDitherTypeNone, NULL, 0.f, WICBitmapPaletteTypeCustom);
-//            }
-//            
-//            //Step 4: Create render target and D2D bitmap from IWICBitmapSource
-//            //UINT width=0;
-//            //UINT height=0;
-//            //if(SUCCEEDED(hr))
-//            //{
-//            //   hr = pbitmap->GetSize(&width,&height);
-//            //}
-//            
-//            //pdib->create(width,height);
-//            
-//            if (SUCCEEDED(hr))
-//            {
-//               hr = piBitmapFrame->WriteSource(pconverter, NULL);
-//            }
-//            
-//            
-//            //for(int k = 0; k < height; k++)
-//            //{
-//            //   memcpy(&pb[k * iStride],&mem.get_data()[(height - 1 - k) * iStride],iStride);
-//            //}
-//            
-//         }
-//      }
-//      
-//      
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piBitmapFrame->Commit();
-//      }
-//      
-//      if (SUCCEEDED(hr))
-//      {
-//         hr = piEncoder->Commit();
-//      }
-//      
-//      //if(piFactory)
-//      //   piFactory->Release();
-//      
-//      //if(piBitmapFrame)
-//      //   piBitmapFrame->Release();
-//      
-//      //if(piEncoder)
-//      //   piEncoder->Release();
-//      
-//      //if(piStream)
-//      //   piStream->Release();
-//      
-//      
-//      
-//      STATSTG stg;
-//      ZERO(stg);
-//      pstream->Stat(&stg, STATFLAG_NONAME);
-//      LARGE_INTEGER l;
-//      l.QuadPart = 0;
-//      pstream->Seek(l, STREAM_SEEK_SET, NULL);
-//      
-//      
-//      memory mem(pdib->get_app());
-//      
-//      mem.allocate(1024 * 1024);
-//      
-//      ULONG ulPos = 0;
-//      ULONG ulRead;
-//      ULONGLONG ul;
-//      do
-//      {
-//         
-//         ulRead = 0;
-//         
-//         ul = stg.cbSize.QuadPart - ulPos;
-//         
-//         pstream->Read(mem.get_data(), (ULONG)MIN(ul, mem.get_size()), &ulRead);
-//         
-//         if (ulRead > 0)
-//         {
-//            
-//            pfile->write(mem.get_data(), ulRead);
-//            
-//            ulPos += ulRead;
-//            
-//         }
-//         
-//      }
-//      while (ulRead > 0 && stg.cbSize.QuadPart - ulPos > 0);
-//      
-//      //pstream->Release();
-      
-      return true;
+      return NULL;
       
    }
    
+   unsigned long size;
    
-} // namespace visual
+   ::aura::malloc < COLORREF * > pdst;
+   
+   pdst.alloc(pdib->m_iScan * pdib->m_size.cy);
+   
+   if(pdst == NULL)
+   {
+      
+      return NULL;
+      
+   }
+   
+   ::draw2d::_001ProperCopyColorref(
+                                    pdib->m_size.cx,
+                                    pdib->m_size.cy, pdst, pdib->m_iScan, pdib->m_pcolorref, pdib->m_iScan);
+   
+   CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+   
+   CGContextRef context = CGBitmapContextCreate(
+                                                pdst,
+                                                pdib->m_size.cx,
+                                                pdib->m_size.cy, 8,
+                                                pdib->m_iScan, colorspace, kCGImageAlphaPremultipliedLast);
+   
+   CGColorSpaceRelease(colorspace);
+   
+   if(context == NULL)
+   {
+      
+      return false;
+      
+      
+   }
+   
+   CGImageRef cgimage = CGBitmapContextCreateImage(context);
+   
+   ::aura::malloc < COLORREF * > p;
+   
+   switch (psaveimage == NULL ? ::visual::image::format_png : psaveimage->m_eformat)
+   {
+      case ::visual::image::format_jpeg:
+      {
+         
+         p = get_jpeg_image_data(size, cgimage);
+         
+      }
+         break;
+      default:
+      {
+         
+         p = get_png_image_data(size, cgimage);
+         
+      }
+         
+   }
+   
+   CGImageRelease(cgimage);
+   
+   CGContextRelease(context);
+   
+   pfile->write(p, size);
+   
+   return true;
+   
+}
 
-
-#include "framework.h"
-//#include <wincodec.h>
 
 namespace visual
 {
    
-   
-   //bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
-   //{
-   //
-   //   save_image saveimageDefault;
-   //
-   //   if (psaveimage == NULL)
-   //      psaveimage = &saveimageDefault;
-   //   //#ifdef WINDOWS
-   
-   //   //    return windows_write_dib_to_file(pfile, m_p, psaveimage, m_p->get_app());
-   
-   //   //#else
-   
-   
-   //   bool bOk = false;
-   
-   //   bool b8 = false;
-   //   bool b24 = false;
-   //   int iFreeImageSave = 0;
-   //   FREE_IMAGE_FORMAT eformat = (FREE_IMAGE_FORMAT)0;
-   //   string strFile;
-   //   switch (psaveimage->m_eformat)
-   //   {
-   //   case ::visual::image::format_png:
-   //      eformat = FreeImage_GetFIFFromFormat("PNG");
-   //      strFile = "foo.png";
-   //      break;
-   //   case ::visual::image::format_bmp:
-   //      eformat = FIF_BMP;
-   //      strFile = "foo.bmp";
-   //      break;
-   //   case ::visual::image::format_gif:
-   //      b8 = true;
-   //      eformat = FIF_GIF;
-   //      strFile = "foo.gif";
-   //      break;
-   //   case ::visual::image::format_jpeg:
-   //      b24 = true;
-   //      eformat = FreeImage_GetFIFFromFormat("JPEG");
-   //      strFile = "foo.jpg";
-   //      if (psaveimage->m_iQuality > 80)
-   //      {
-   //         iFreeImageSave |= JPEG_QUALITYSUPERB;
-   //      }
-   //      else if (psaveimage->m_iQuality > 67)
-   //      {
-   //         iFreeImageSave |= JPEG_QUALITYGOOD;
-   //      }
-   //      else if (psaveimage->m_iQuality > 33)
-   //      {
-   //         iFreeImageSave |= JPEG_QUALITYNORMAL;
-   //      }
-   //      else if (psaveimage->m_iQuality > 15)
-   //      {
-   //         iFreeImageSave |= JPEG_QUALITYAVERAGE;
-   //      }
-   //      else
-   //      {
-   //         iFreeImageSave |= JPEG_QUALITYBAD;
-   //      }
-   //      break;
-   //   default:
-   //      return false;
-   //   }
-   
-   //   eformat = FreeImage_GetFIFFromFilename(strFile);
-   
-   
-   //   FIMEMORY * pfm1 = FreeImage_OpenMemory();
-   //   FIBITMAP * pfi7 = Sys(m_p->m_pauraapp).visual().imaging().dib_to_FI(m_p);
-   //   FIBITMAP * pfi8 = NULL;
-   //   bool bConv;
-   //   if (b8)
-   //   {
-   //      pfi8 = FreeImage_ConvertTo8Bits(pfi7);
-   //      bConv = true;
-   //   }
-   //   else if (b24)
-   //   {
-   //      pfi8 = FreeImage_ConvertTo24Bits(pfi7);
-   //      bConv = true;
-   //   }
-   //   else
-   //   {
-   //      //FreeImage_SetTransparent(pfi8,true);
-   //      pfi8 = pfi7;
-   //      bConv = false;
-   //   }
-   
-   //   bOk = FreeImage_SaveToMemory(eformat, pfi8, pfm1, iFreeImageSave) != FALSE;
-   
-   //   BYTE * pbData = NULL;
-   //   DWORD dwSize = 0;
-   //   if (bOk)
-   //      bOk = FreeImage_AcquireMemory(pfm1, &pbData, &dwSize) != FALSE;
-   //   if (bOk)
-   //   {
-   //      try
-   //      {
-   //         pfile->write(pbData, dwSize);
-   //      }
-   //      catch (...)
-   //      {
-   //         bOk = false;
-   //      }
-   //   }
-   
-   //   FreeImage_CloseMemory(pfm1);
-   //   if (bConv)
-   //   {
-   //      FreeImage_Unload(pfi8);
-   //   }
-   //   FreeImage_Unload(pfi7);
-   
-   
-   
-   //   return bOk != FALSE;
-   
-   //   //#endif
-   
-   //}
-   
-}
 
+   
 
-bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
-{
-   
-   ::visual::dib_sp d;
-   
-   d.::draw2d::dib_sp::operator=(&dib);
-   
-   ::visual::save_image saveimage;
-   
-   saveimage.m_eformat = ::visual::image::format_png;
-   
-   saveimage.m_iQuality = 100;
-   
-   return d.save_to_file(lpcszFile, &saveimage);
-   
-   //
-   //
-   //#ifdef METROWIN
-   //
-   //      throw todo(get_app());
-   //
-   //#else
-   //
-   //      if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), dib, lpcszFile, 0))
-   //      {
-   //         //
-   //      }
-   //      if (bUnload)
-   //      {
-   //         FreeImage_Unload(dib);
-   //      }
-   //#endif
-   //
-}
 
 
 //FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)

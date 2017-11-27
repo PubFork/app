@@ -260,20 +260,19 @@ namespace visual
 
    bool dib_sp::save_to_file(var varFile, save_image * psaveimage)
    {
-      ::file::file_sp spfile;
-      spfile = Sess(m_p->m_pauraapp).file().get_file(varFile, ::file::mode_create | ::file::share_deny_write | ::file::mode_write | ::file::type_binary | ::file::defer_create_directory);
-      if (spfile.is_null())
-         return false;
-      return write_to_file(spfile, psaveimage);
+
+      return write_to_file(varFile, psaveimage);
+      
    }
 
-
-
-
+   
    save_image::save_image()
    {
+      
       m_eformat = ::visual::image::format_png;
+      
       m_iQuality = 100;
+      
    }
 
 
@@ -495,6 +494,20 @@ namespace visual
 
    }
 
+   
+   bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
+   {
+      
+      if(m_p == NULL)
+      {
+         
+         return false;
+         
+      }
+      
+      return Sys(m_p->get_app()).visual().imaging().save_image(varFile, m_p, psaveimage);
+      
+   }
 
 } // namespace visual
 

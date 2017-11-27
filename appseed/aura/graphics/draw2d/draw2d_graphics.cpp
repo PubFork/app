@@ -1348,6 +1348,50 @@ namespace draw2d
       return false;
 
    }
+   
+   
+   bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc)
+   {
+      
+      if(pgraphicsSrc == NULL)
+      {
+         
+         return false;
+         
+      }
+      
+      ::draw2d::dib * pdib = pgraphicsSrc->m_pdibDraw2dGraphics;
+      
+      if(pdib == NULL)
+      {
+       
+         return false;
+         
+      }
+      
+      rect rectSrc(::null_point(), pdib->m_size);
+      
+      return StretchBlt(rectDst, pgraphicsSrc, rectSrc);
+      
+   }
+   
+   
+   bool graphics::StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, uint32_t dwRop)
+   {
+      
+      return StretchBlt(
+                        rectDst.left,
+                        rectDst.top,
+                        rectDst.width(),
+                        rectDst.height(),
+                        pgraphicsSrc,
+                        rectSrc.left,
+                        rectSrc.top,
+                        rectSrc.width(),
+                        rectSrc.height(),
+                        dwRop);
+
+   }
 
 
    bool graphics::StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)

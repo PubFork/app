@@ -13,29 +13,10 @@ class CLASS_DECL_AURA imaging :
    virtual public ::object
 {
    public:
-
-      mutex       m_mutex;
-
-
-      class CSysColorMap
-      {
-         public:
-            // use uint32_t instead of RGBQUAD so we can compare two RGBQUADs easily
-            uint32_t rgbqFrom;
-            uint32_t iSysColorTo;
-      };
-
-   protected:
-      map < int32_t, int32_t, sp(memory) > m_alpha_spread__24CC_filterMap;
-      map < int32_t, int32_t, sp(memory) > m_alpha_spread__32CC_filterMap;
-
-
-   public:
+   
+   
       imaging(::aura::application * papp);
       ~imaging();
-
-
-      static const CSysColorMap s_psyscolormap[];
 
 
       virtual void pixelate_24CC(LPBYTE lpbDest, int32_t xDest, int32_t yDest, int32_t wDest, int32_t cx, int32_t cy, LPBYTE lpbSrc, int32_t xSrc, int32_t ySrc, int32_t wSrc, int32_t iSize);
@@ -296,37 +277,19 @@ class CLASS_DECL_AURA imaging :
       virtual bool ColorInvert(::draw2d::graphics * pgraphics, int32_t x, int32_t y, int32_t cx, int32_t cy);
 
 
-      /*   virtual ::draw2d::bitmap * LoadSysColorBitmap(
-            ::draw2d::graphics * pdcCompatible,
-            HINSTANCE hInst,
-            HRSRC hRsrc,
-            bool bMono = false);*/
 
       virtual bool LoadImage(::visual::dib_sp::array * pdiba, var varFile);
       virtual bool LoadImage(::draw2d::dib * pdib, var varFile);
       virtual bool LoadImageFromFile(::visual::dib_sp::array * pdiba, ::file::file * buffer);
       virtual bool LoadImageFromFile(::draw2d::dib * pdib, ::file::file * buffer);
 
-//#ifdef WINDOWS
+      virtual bool load_image(::draw2d::dib * pdib, var varFile, ::aura::application * papp = NULL);
+      virtual bool _load_image(::draw2d::dib * pdib, ::file::file * pfile);
+   
+      virtual bool save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);
+      virtual bool _save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage = NULL);
 
-//   virtual FIBITMAP * HBITMAPtoFI(HBITMAP hbitmap);
-//
-//#elif defined(METROWIN)
-//
-//#else
-
-//#ifndef WINDOWS
-
-      //virtual ::draw2d::bitmap_sp CreateDIBitmap(::draw2d::graphics * pgraphics, ::draw2d::dib & dib);
-      //virtual ::draw2d::bitmap_sp CreateBitmap(::draw2d::graphics * pgraphics, ::draw2d::dib & dib);
-      //virtual bool from(::draw2d::dib * pdib,::draw2d::graphics * pgraphics,::draw2d::dib & dib,::aura::application * papp = NULL);
-      virtual bool load_image(::draw2d::dib & dib, var varFile,::aura::application * papp);
-      virtual bool load_image(::draw2d::dib & dib, ::file::file_sp  pfile);
-      //virtual ::draw2d::bitmap_sp FItoHBITMAP(FIBITMAP * pfibitmap, bool bDestroyFI);
-      //virtual FIBITMAP * dib_to_FI(::draw2d::dib * pdib);
-      virtual bool save_png(const char * lpcszFile, ::draw2d::dib & dib);
-      //virtual void free(FIBITMAP * pfibitmap);
-
+   
       bool load_from_file(::visual::dib_sp::array * pdiba, var varFile, bool bCache = true);
       bool load_from_file(::draw2d::dib * pdib, var varFile, bool bCache = true);
       bool load_from_file(::visual::cursor * pcursor, var varFile, bool bCache = true);

@@ -9,9 +9,12 @@ namespace visual
       virtual public ::aura::department
    {
    public:
+      
+      
+      map < int32_t, int32_t, sp(memory) > m_alpha_spread__24CC_filterMap;
+      map < int32_t, int32_t, sp(memory) > m_alpha_spread__32CC_filterMap;
 
 
-      class imaging *                                    m_pimaging;
       map < e_cursor, e_cursor, cursor *, cursor * >     m_cursormap;
       class ::visual::api *                              m_pvisualapi;
       class font_department *                            m_pfontdepartment;

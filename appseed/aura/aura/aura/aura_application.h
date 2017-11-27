@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #ifdef 
 
@@ -57,6 +57,7 @@ namespace aura
       public:
 
          // former ::aura::application_interface // moved on 2015-05-23 Sammstag while listening to RocketBeansTV (a German channel?) at TwitchTV
+         class imaging *                                 m_pimaging;
          ::aura::system *                                m_paurasystem;
          ::aura::session *                               m_paurasession;
          :: axis :: application *                        m_paxisapp; // can be used only from axis and upper

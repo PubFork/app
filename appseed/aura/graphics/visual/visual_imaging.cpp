@@ -6817,7 +6817,7 @@ bool imaging::load_from_file(::visual::cursor * pcursor,var varFile, bool bFromC
 bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application * papp)
 {
 
-   ::file::file_sp file = App(papp).file().get_file(varFile, ::file::type_binary | ::file::mode_read);
+   ::file::file_sp file = App(papp ).file().get_file(varFile, ::file::type_binary | ::file::mode_read);
 
    if (file.is_null())
    {
@@ -6829,6 +6829,24 @@ bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application *
 
    return load_image(dib, file);
 
+}
+
+
+bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application * papp)
+{
+   
+   ::file::file_sp file = App(papp).file().get_file(varFile, ::file::type_binary | ::file::mode_read);
+   
+   if (file.is_null())
+   {
+      
+      return false;
+      
+   }
+   
+   
+   return load_image(dib, file);
+   
 }
 
 

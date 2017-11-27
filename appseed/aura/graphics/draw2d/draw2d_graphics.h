@@ -405,6 +405,10 @@ namespace draw2d
 
          virtual bool BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc = 0, int32_t ySrc = 0, uint32_t dwRop = SRCCOPY);
          virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc = 0, int32_t ySrc = 0, uint32_t dwRop = SRCCOPY);
+      
+         virtual bool StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc);
+
+         virtual bool StretchBlt(rect rectDst, ::draw2d::graphics * pgraphicsSrc, rect rectSrc, uint32_t dwRop = SRCCOPY);
 
          virtual bool StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop = SRCCOPY);
 

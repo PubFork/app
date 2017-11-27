@@ -1990,7 +1990,6 @@
 		9AD185DB1F9C2964001CEA8E /* graphics_window_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD185D71F9C2963001CEA8E /* graphics_window_graphics.cpp */; };
 		9AD185DD1F9C2964001CEA8E /* graphics_window_dc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD185D91F9C2964001CEA8E /* graphics_window_dc.cpp */; };
 		9AD1860C1F9C2983001CEA8E /* visual_font_enumeration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185DE1F9C2974001CEA8E /* visual_font_enumeration.h */; };
-		9AD1860D1F9C2983001CEA8E /* visual (2).h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185DF1F9C2974001CEA8E /* visual (2).h */; };
 		9AD1860E1F9C2983001CEA8E /* visual_font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD185E01F9C2975001CEA8E /* visual_font.cpp */; };
 		9AD1860F1F9C2983001CEA8E /* visual_imaging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD185E11F9C2975001CEA8E /* visual_imaging.cpp */; };
 		9AD186101F9C2983001CEA8E /* visual_graphics_extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD185E21F9C2975001CEA8E /* visual_graphics_extension.h */; };
@@ -4040,7 +4039,6 @@
 		9AD185D81F9C2964001CEA8E /* graphics_window_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics_window_buffer.cpp; sourceTree = "<group>"; };
 		9AD185D91F9C2964001CEA8E /* graphics_window_dc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics_window_dc.cpp; sourceTree = "<group>"; };
 		9AD185DE1F9C2974001CEA8E /* visual_font_enumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_font_enumeration.h; sourceTree = "<group>"; };
-		9AD185DF1F9C2974001CEA8E /* visual (2).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "visual (2).h"; sourceTree = "<group>"; };
 		9AD185E01F9C2975001CEA8E /* visual_font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visual_font.cpp; sourceTree = "<group>"; };
 		9AD185E11F9C2975001CEA8E /* visual_imaging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visual_imaging.cpp; sourceTree = "<group>"; };
 		9AD185E21F9C2975001CEA8E /* visual_graphics_extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visual_graphics_extension.h; sourceTree = "<group>"; };
@@ -6010,7 +6008,6 @@
 				9AD185E41F9C2975001CEA8E /* antialias_8bit.cpp */,
 				9AD186061F9C2982001CEA8E /* detect_8bit_borders.cpp */,
 				9AD185FE1F9C297C001CEA8E /* load_gif_frame.cpp */,
-				9AD185DF1F9C2974001CEA8E /* visual (2).h */,
 				9AD186071F9C2982001CEA8E /* visual_api.cpp */,
 				9AD185EC1F9C2976001CEA8E /* visual_api.h */,
 				9AD185E71F9C2976001CEA8E /* visual_buffered_graphics.cpp */,
@@ -8149,7 +8146,6 @@
 				9A6FAC081F5C70D200AF31B2 /* message_route.h in Headers */,
 				9AF4C3C71F836F8400197385 /* aura_timer_array.h in Headers */,
 				9A16484619C4ADA100966C5E /* macos_os.h in Headers */,
-				9AD1860D1F9C2983001CEA8E /* visual (2).h in Headers */,
 				9A6FAE6A1F5C773700AF31B2 /* datetime_mktime.h in Headers */,
 				9A6FB06D1F5C79CF00AF31B2 /* file_string_file.h in Headers */,
 				9A2A53C21F1FEE49001AB0F8 /* install_module_list.h in Headers */,
