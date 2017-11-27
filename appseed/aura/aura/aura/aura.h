@@ -13,7 +13,7 @@
 
 #if !defined(METROWIN) && !defined(APPLE_IOS) && !defined(VSNORD) && !defined(SMALLCODE) && !defined(RASPBIAN)
 
-#define INSTALL_SUBSYSTEM
+#define 
 #define HOTPLUGIN_SUBSYSTEM
 
 #endif

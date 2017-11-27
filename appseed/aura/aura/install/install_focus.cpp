@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 focus * g_pfocus = NULL;
 

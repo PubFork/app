@@ -1580,7 +1580,7 @@ null_dacl_security_attributes::null_dacl_security_attributes()
 #endif
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 namespace install
 {

@@ -5,7 +5,7 @@
 #endif
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 #include "install_net.h"

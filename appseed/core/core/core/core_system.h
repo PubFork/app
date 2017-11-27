@@ -35,7 +35,7 @@ namespace core
 
          class ::core::patch   *                      m_ppatch;
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          sp(::core::run_start_installer)              m_prunstartinstaller;
 

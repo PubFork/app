@@ -936,7 +936,6 @@ retry:
 
          psession->m_scalarsourceDownloaded.m_id = set["http_downloaded_id"].get_id();
 
-
          bool bPost;
          bool bPut;
          if (set["put"].cast < ::file::binary_file >() != NULL || set.lookup(__id(http_method)) == "PUT")

@@ -2,7 +2,7 @@
 
 #define ID_ONE 1
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 #include "install_net.h"

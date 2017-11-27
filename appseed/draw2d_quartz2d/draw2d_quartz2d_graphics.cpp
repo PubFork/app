@@ -78,40 +78,28 @@ namespace draw2d_quartz2d
       //return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData));
    }
 
+
    CGContextRef MyCreateBitmapContext(int cx, int cy)
    {
 
       CGContextRef    context = NULL;
-//      CGColorSpaceRef colorSpace;
-      void *          data;
+
       int             size;
+
       int             scan;
 
       scan                 = (cx * 4);
 
       size                 = (scan * cy);
 
-      //      CGColorSpaceRef colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-      data                 = malloc(size);
 
-      if(data == NULL)
-      {
-
-         return NULL;
-
-      }
-
-      context              = CGBitmapContextCreate(data, cx, cy, 8, scan, colorspace, kCGImageAlphaPremultipliedLast);
+      context              = CGBitmapContextCreate(NULL, cx, cy, 8, scan, colorspace, kCGImageAlphaPremultipliedLast);
 
       CGColorSpaceRelease(colorspace);
 
       if(context== NULL)
-
       {
-
-         free (data);
 
          return NULL;
 
@@ -5970,11 +5958,15 @@ namespace draw2d_quartz2d
 
 CGContextRef CGContextCreate(CGSize size)
 {
-	CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
-	CGContextRef ctx = CGBitmapContextCreate(nil, size.width, size.height, 8, size.width * (CGColorSpaceGetNumberOfComponents(space) + 1), space, kCGImageAlphaPremultipliedLast);
+	
+    CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+	
+    CGContextRef ctx = CGBitmapContextCreate(nil, size.width, size.height, 8, size.width * (CGColorSpaceGetNumberOfComponents(space) + 1), space, kCGImageAlphaPremultipliedLast);
+
 	CGColorSpaceRelease(space);
 
 	return ctx;
+    
 }
 
 

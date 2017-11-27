@@ -358,7 +358,7 @@ namespace aura
             if (!is_system() && !is_session())
             {
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
                check_install();
 
@@ -3271,7 +3271,7 @@ InitFailure:
 
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
    bool application::check_install()
    {
@@ -3354,7 +3354,7 @@ InitFailure:
 
          }
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          System.install().remove_spa_start(m_strAppId);
 
@@ -3493,7 +3493,7 @@ retry_license:
       stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
       stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
       System.install().remove_spa_start(strId);
       System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);
@@ -5887,7 +5887,7 @@ retry_license:
 
       }
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
       if ((papp == NULL || papp->m_strAppId != strAppId)
             &&
@@ -6809,7 +6809,7 @@ finalize:
    }
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
    bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
    {
@@ -7191,7 +7191,7 @@ finalize:
    }
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
 
    int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)

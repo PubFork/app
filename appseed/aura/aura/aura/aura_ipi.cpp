@@ -205,7 +205,7 @@ namespace aura
       }
 
 
-#if !defined(INSTALL_SUBSYSTEM)
+#if !defined()
 
       //throw todo(get_app());
 

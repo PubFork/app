@@ -382,7 +382,7 @@ namespace axis
 
       ::aura::application::SetCurrentHandles();
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
       if (is_installing() || is_uninstalling())
       {
@@ -471,7 +471,7 @@ namespace axis
 
          strRet = ::file::path(str) / (strRelative + "-" + hex::lower_from(i + 1)) / (string(pszName) + string(".") + pszExtension);
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          if (pszTemplate != NULL)
          {
@@ -1087,7 +1087,7 @@ InitFailure:
    }
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
    bool application::check_install()
    {
@@ -1179,7 +1179,7 @@ InitFailure:
 
                }
 
-      #ifdef INSTALL_SUBSYSTEM
+      #ifdef 
 
                System.install().remove_spa_start(m_strAppId);
 

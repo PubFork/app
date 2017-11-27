@@ -262,7 +262,7 @@ namespace axis
 
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          virtual bool check_install() override;
 

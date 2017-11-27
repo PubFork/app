@@ -40,7 +40,7 @@ namespace aura
       {
       }
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
       bool tx::open(const char * pszChannel, launcher * plauncher)
       {
@@ -290,7 +290,7 @@ namespace aura
       }
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
 
       bool ipc::open_ab(const char * pszChannel, const char * pszModule, launcher * plauncher)

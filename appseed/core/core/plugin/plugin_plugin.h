@@ -1,7 +1,7 @@
 #pragma once
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
 int32_t spaboot_start(const char * pszVersion, const char * pszId);
 

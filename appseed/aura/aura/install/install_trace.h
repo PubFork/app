@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 namespace install
@@ -79,7 +79,7 @@ namespace install
 } // namespace install
 
 
-#endif // INSTALL_SUBSYSTEM
+#endif // 
 
 
 

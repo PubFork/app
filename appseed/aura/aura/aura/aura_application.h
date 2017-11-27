@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
 struct install_status
 {
@@ -80,7 +80,7 @@ namespace aura
 
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          string_map < install_status >                   m_mapUpdated;
          string_map < install_status >                   m_mapInstalled;
@@ -586,7 +586,7 @@ namespace aura
          void on_create(::create * pcreate) override;
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
 
@@ -641,7 +641,7 @@ namespace aura
          virtual string get_app_id(string wstr);
 
 
-#ifdef INSTALL_SUBSYSTEM
+#ifdef 
 
          virtual void install_trace(const string & str);
          virtual void install_trace(double dRate);

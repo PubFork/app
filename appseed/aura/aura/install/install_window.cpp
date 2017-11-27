@@ -3,7 +3,7 @@
 
 #define ID_ONE 1
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 namespace install

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 #include "aura/net/netserver/netserver_socket_thread.h"

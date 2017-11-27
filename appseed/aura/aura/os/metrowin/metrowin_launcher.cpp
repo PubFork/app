@@ -1,7 +1,7 @@
 #include "framework.h"
 //#include "metrowin.h"
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 bool launcher::start()
 {

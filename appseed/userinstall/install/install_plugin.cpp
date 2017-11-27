@@ -2,7 +2,7 @@
 //#include "base/user/user.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 #undef new

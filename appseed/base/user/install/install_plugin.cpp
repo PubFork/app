@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 

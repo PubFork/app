@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-#if defined(INSTALL_SUBSYSTEM)
+#if defined()
 
 
 CLASS_DECL_AURA bool send_short_message_to_installer(const char * psz, bool bLaunch);
