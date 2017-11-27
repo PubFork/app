@@ -198,7 +198,7 @@ namespace aura
 
          xxdebug_box("aura.dll base_static_start (0)", "box", MB_OK);
 
-         g_pexceptionengine = (class ::exception::engine *) malloc(sizeof(class exception::engine));
+         g_pexceptionengine = (class ::exception::engine *) ::malloc(sizeof(class exception::engine));
 
          new(g_pexceptionengine) class ::exception::engine(NULL);
 

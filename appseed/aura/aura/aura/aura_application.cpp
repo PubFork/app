@@ -3906,7 +3906,7 @@ retry_license:
          if (!check_exclusive(bHandled))
          {
 
-            if (!bHandled && (is_debugger_attached() && !System.handler()->m_varTopicQuery.has_property("install")
+            if (!bHandled && (!System.handler()->m_varTopicQuery.has_property("install")
                               && !System.handler()->m_varTopicQuery.has_property("uninstall")))
             {
 
@@ -3928,7 +3928,7 @@ retry_license:
 
             thisfail << 0.2;
 
-            return false;
+            throw exit_exception(m_paurasession);
 
          }
 

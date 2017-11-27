@@ -7,77 +7,8 @@
 
 #include "framework.h"
 
-namespace aura
-{
-    
-//    template < typename P >
-//    void free(P * & p)
-//    {
-//
-//        if(p != NULL)
-//        {
-//
-//            ::free((void *) p);
-//
-//            p = NULL;
-//
-//        }
-//
-//    }
+CFDataRef CopyImagePixels(CGImageRef inImage);
 
-class malloc
-{
-public:
-    
-
-    void * m_p;
-    
-    malloc(void * p = NULL)
-    {
-        
-        m_p = p;
-        
-    }
-    
-    ~malloc()
-    {
-
-        free();
-        
-    }
-    
-    operator byte *() { return (byte *) m_p; }
-    
-    
-    void free()
-    {
-        
-        ::aura::free(m_p);
-        
-    }
-    
-    template < typename P >
-    malloc & operator = ( P * p)
-    {
-        
-        if((void *)p == m_p)
-        {
-            
-            return *this;
-            
-        }
-        
-        free();
-        
-        m_p = p;
-        
-        return *this;
-        
-    }
-    
-};
-
-} // namespace aura
 
 
 void * get_png_image_data(unsigned long & size, CGImageRef image);
@@ -100,12 +31,27 @@ namespace visual
       
       unsigned long size;
       
-       ::aura::malloc p;
+      ::aura::malloc < COLORREF * > pdst;
       
+      pdst.alloc(m_p->m_iScan * m_p->m_size.cy);
+      
+      if(pdst == NULL)
+      {
+         
+         return NULL;
+         
+      }
+      
+      ::draw2d::_001ProperCopyColorref(
+                                       m_p->m_size.cx,
+                                       m_p->m_size.cy, pdst, m_p->m_iScan, m_p->m_pcolorref, m_p->m_iScan);
+
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
       
+      
+      
       CGContextRef context = CGBitmapContextCreate(
-                                                   NULL,
+                                                   pdst,
                                                    m_p->m_size.cx,
                                                    m_p->m_size.cy, 8,
                                                    m_p->m_iScan, colorspace, kCGImageAlphaPremultipliedLast);
@@ -121,6 +67,8 @@ namespace visual
       }
       
       CGImageRef cgimage = CGBitmapContextCreateImage(context);
+      
+      ::aura::malloc < COLORREF * > p;
       
       if(psaveimage == NULL)
       {
@@ -151,11 +99,11 @@ namespace visual
       }
       }
       
-      CGImageRelease(cgimage);
-            CGContextRelease(context);
-      
+     
             pfile->write(p, size);
-            
+      CGImageRelease(cgimage);
+      CGContextRelease(context);
+      
             return true;
             
             
@@ -1236,7 +1184,9 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
    
    int iScan = 0;
    
-   COLORREF * pcolorref = (COLORREF *) get_dib(w, h, iScan, m.get_data(), m.get_size());
+   ::aura::malloc < COLORREF * > pcolorref;
+   
+   pcolorref = get_dib(w, h, iScan, m.get_data(), m.get_size());
    
    if(pcolorref == NULL)
    {
@@ -1248,12 +1198,14 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
    try
    {
       
-      if(dib.create(w, h))
+      if(!dib.create(w, h))
       {
-      
-         ::draw2d::_001ProperCopyColorref(w, h, dib.m_pcolorref, dib.m_iScan, pcolorref, iScan);
-          
+         
+         return false;
+         
       }
+
+      ::draw2d::_001ProperCopyColorref(w, h, dib.m_pcolorref, dib.m_iScan, pcolorref, iScan);
       
    }
    catch(...)
@@ -1261,9 +1213,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
       
    }
    
-   free(pcolorref);
-   
-   return false;
+   return true;
    
    
 //   ::draw2d::dib * pdib = &dib;

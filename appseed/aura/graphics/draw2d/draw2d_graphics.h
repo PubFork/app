@@ -20,7 +20,7 @@ namespace draw2d
          ::job *                       m_pjob;
 
 
-         ::draw2d::dib *               m_pdib;
+         ::draw2d::dib *               m_pdibDraw2dGraphics;
          ::draw2d::bitmap_sp           m_spbitmap;
          ::draw2d::pen_sp              m_sppen;
          ::draw2d::brush_sp            m_spbrush;

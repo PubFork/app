@@ -20,39 +20,26 @@ namespace draw2d_quartz2d
    public:
 
       
-      int m_iSaveDC;
-//#ifdef __MM
-  //    NSGraphicsContext *     m_nsgc;
-//#else
-  //    void *                  m_pnsgc;
-//#endif
+      int                           m_iSaveDC;
+      bool                          m_bOwnDC;
+      CGContextRef                  m_pdc;
+      CGLayerRef                    m_layer;
+      CGAffineTransform             m_affine;
       
-      CGContextRef               m_pdc;
-      CGLayerRef                 m_layer;
-      CGAffineTransform          m_affine;
-      
-      
-      
-      int32_t                     m_iType;
+      int32_t                       m_iType;
 #ifdef __MM
-      NSColor *               m_nscolorFore;
-      NSColor *               m_nscolorBack;
+      NSColor *                     m_nscolorFore;
+      NSColor *                     m_nscolorBack;
 #else
-      void *                  m_pnscolorFore;
-      void *                  m_pnscolorBack;
+      void *                        m_pnscolorFore;
+      void *                        m_pnscolorBack;
 #endif
       
-      bool                    m_bForeColor;
-      bool                    m_bBackColor;
-      uint64_t                m_uiForeColor;
-      uint64_t                m_uiBackColor;
-      //xxx ::Gdiplus::GraphicsPath *     m_ppath;
-      //xxx ::Gdiplus::GraphicsPath *     m_ppathPaint;
-      //xxx HDC                           m_hdc;
-      
-      // advanced use and implementation
+      bool                          m_bForeColor;
+      bool                          m_bBackColor;
+      uint64_t                      m_uiForeColor;
+      uint64_t                      m_uiBackColor;
       bool                          m_bPrinting;
-      
       
       
       graphics(::aura::application * papp);

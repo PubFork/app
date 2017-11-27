@@ -519,7 +519,7 @@ namespace aura
 
 } // namespace aura
 
-
+#include "aura/aura/aura/aura_malloc.h"
 
 class image_list;
 

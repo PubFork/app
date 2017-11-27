@@ -9,7 +9,11 @@ namespace draw2d_quartz2d
       ::object(papp)
    {
       
-      m_context = NULL;
+      m_pdata = NULL;
+      m_size.cx = 0;
+      m_size.cy = 0;
+      m_pdc = NULL;
+      m_iScan = 0;
       
    }
    
@@ -34,33 +38,28 @@ namespace draw2d_quartz2d
       
       destroy();
       
-      scan = cx * 4;
-      
-//      CGColorSpaceRef colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+      int iScan = cx * 4;
       
       CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
       
-      m_context = CGBitmapContextCreate(NULL, cx, cy, 8, scan, colorspace, kCGImageAlphaPremultipliedLast);
+      m_pdc = CGBitmapContextCreate(NULL, cx, cy, 8, iScan, colorspace, kCGImageAlphaPremultipliedLast);
       
       CGColorSpaceRelease(colorspace);
       
-      if(m_context == NULL)
+      if(m_pdc == NULL)
       {
          
-         m_size.cx = 0;
-         
-         m_size.cy = 0;
-         
-         scan = 0;
+         destroy();
          
          return false;
          
       }
       
-      m_pdata = (COLORREF *) CGBitmapContextGetData(m_context);
+      m_iScan = (int) CGBitmapContextGetBytesPerRow(m_pdc);
       
+      m_pdata = (COLORREF *) CGBitmapContextGetData(m_pdc);
       
-      if(m_pdata == NULL)
+      if(m_pdata == NULL || m_iScan <= 0)
       {
          
          destroy();
@@ -72,7 +71,7 @@ namespace draw2d_quartz2d
       if(pdata != NULL)
       {
       
-         memcpy(m_pdata, pdata, cy * scan);
+         memcpy(m_pdata, pdata, cy * iScan);
          
       }
       
@@ -88,17 +87,13 @@ namespace draw2d_quartz2d
    bool bitmap::CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap)
    {
       
-      return FALSE;
+      return false;
       
    }
    
    
    bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void ** ppdata, int * piStride, HANDLE hSection, uint32_t offset)
    {
-      
-      //int32_t cx = abs(lpbmi->bmiHeader.biWidth);
-      
-      //int32_t cy = abs(lpbmi->bmiHeader.biHeight);
       
       if(!CreateBitmap(pgraphics, cx, cy, 1, 32, NULL))
       {
@@ -117,7 +112,7 @@ namespace draw2d_quartz2d
       if(piStride)
       {
          
-         *piStride = scan;
+         *piStride = m_iScan;
          
       }
       
@@ -153,7 +148,7 @@ namespace draw2d_quartz2d
    bool bitmap::LoadBitmap(const char * lpszResourceName)
    {
 
-      return FALSE;
+      return false;
       
    }
    
@@ -170,7 +165,11 @@ namespace draw2d_quartz2d
    {
       
       if(get_os_data() == NULL)
+      {
+
          return ::size(0, 0);
+
+      }
       
       return m_size;
       
@@ -180,8 +179,7 @@ namespace draw2d_quartz2d
    bool bitmap::LoadBitmap(UINT nIDResource)
    {
       
-      //return Attach(::LoadBitmap(::ca2::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource)));
-      return FALSE;
+      return false;
       
    }
    
@@ -189,8 +187,7 @@ namespace draw2d_quartz2d
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
    {
 
-      //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap)));
-      return FALSE;
+      return false;
       
    }
    
@@ -239,7 +236,7 @@ namespace draw2d_quartz2d
       //dumpcontext << "bm.bmType = " << bm.bmType;
       dumpcontext << "\nbm.bmHeight = " << m_size.cy;
       dumpcontext << "\nbm.bmWidth = " << m_size.cx;
-      dumpcontext << "\nbm.bmWidthBytes = " << scan;
+      dumpcontext << "\nbm.bmWidthBytes = " << m_iScan;
       dumpcontext << "\nbm.bmPlanes = " << 1;
       dumpcontext << "\nbm.bmBitsPixel = " << 32;
       dumpcontext << "\n";
@@ -251,7 +248,7 @@ namespace draw2d_quartz2d
    void * bitmap::get_os_data() const
    {
       
-      return m_context;
+      return m_pdc;
       
    }
    
@@ -259,24 +256,17 @@ namespace draw2d_quartz2d
    bool bitmap::Attach(void * pbitmapcontext)
    {
       
-      if(m_context != NULL)
-      {
-         
-         destroy();
-         
-         m_context = NULL;
-         
-      }
+      destroy();
       
-      m_context   = (CGContextRef) pbitmapcontext;
+      m_pdc       = (CGContextRef) pbitmapcontext;
       
-      m_size.cx   = (int) CGBitmapContextGetWidth(m_context);
+      m_size.cx   = (int) CGBitmapContextGetWidth(m_pdc);
       
-      m_size.cy   = (int) CGBitmapContextGetHeight(m_context);
+      m_size.cy   = (int) CGBitmapContextGetHeight(m_pdc);
       
-      scan        = (int) CGBitmapContextGetBytesPerRow(m_context);
+      m_iScan     = (int) CGBitmapContextGetBytesPerRow(m_pdc);
       
-      m_pdata     = (COLORREF *) CGBitmapContextGetData(m_context);
+      m_pdata     = (COLORREF *) CGBitmapContextGetData(m_pdc);
       
       return true;
       
@@ -286,12 +276,14 @@ namespace draw2d_quartz2d
    bool bitmap::destroy()
    {
       
-      if(m_context == NULL)
-         return true;
-      
-      CGContextRelease(m_context);
-      
-      m_context = NULL;
+      if(m_pdc != NULL)
+      {
+         
+         CGContextRelease(m_pdc);
+         
+         m_pdc = NULL;
+         
+      }
       
       m_pdata = NULL;
       
@@ -299,7 +291,7 @@ namespace draw2d_quartz2d
       
       m_size.cy = 0;
       
-      scan = 0;
+      m_iScan = 0;
       
       return true;
       

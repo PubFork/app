@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace user
@@ -6305,7 +6305,16 @@ namespace user
       }
       else
       {
+         
          synch_lock sl(get_image_list()->m_pmutex);
+         
+         if(get_image_list()->m_spdib.is_null()
+            || get_image_list()->m_spdib->area() <= 0)
+         {
+          
+            return false;
+            
+         }
 
          if ((m_plist->m_iIconBlur > 0 && m_plist->m_iIconBlurRadius > 0)
                || (m_plist->m_dIconSaturation < 1.0))

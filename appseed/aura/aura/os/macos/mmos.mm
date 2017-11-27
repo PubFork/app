@@ -22,13 +22,13 @@ bool mm2_get_file_image(unsigned int * pcr, int cx, int cy, int iScan, const cha
       
       s_mmos->m_llWallpaper = 0;
       
-      
       s_mmos->m_iIcon = 0;
-      
       
       [s_mmos monitorWallpaper];
       
       [s_mmos monitorIconForFile];
+      
+      [[s_mmos dd_invokeOnMainThreadAndWaitUntilDone: TRUE] deferWallpaper:NULL];
       
    }
    

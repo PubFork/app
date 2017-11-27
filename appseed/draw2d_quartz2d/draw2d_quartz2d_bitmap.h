@@ -12,10 +12,10 @@ namespace draw2d_quartz2d
    public:
       
       
-      COLORREF *              m_pdata;
-      ::size                  m_size;
-      CGContextRef            m_context;
-      int32_t                 scan;
+      COLORREF *                    m_pdata;
+      ::size                        m_size;
+      CGContextRef                  m_pdc;
+      int32_t                       m_iScan;
       
       
       bitmap(sp(::aura::application) papp);

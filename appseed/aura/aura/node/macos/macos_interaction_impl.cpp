@@ -5791,7 +5791,7 @@ namespace macos
    }
    
 
-   void interaction_impl::round_window_mouse_moved(double x, double y)
+   void interaction_impl::round_window_mouse_moved(double x, double y, unsigned long ulAppleMouseButton)
    {
 
       sp(::message::base) spbase;
@@ -5802,6 +5802,22 @@ namespace macos
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
+      
+      if(ulAppleMouseButton & 1)
+      {
+       
+         pmouse->m_wparam |= MK_LBUTTON;
+         
+      }
+
+      if(ulAppleMouseButton & 2)
+      {
+         
+         pmouse->m_wparam |= MK_RBUTTON;
+         
+      }
+      
+      pmouse->m_nFlags = pmouse->m_wparam;
 
       spbase = pmouse;
       
@@ -5817,7 +5833,7 @@ namespace macos
    }
 
 
-   void interaction_impl::round_window_mouse_dragged(double x, double y)
+   void interaction_impl::round_window_mouse_dragged(double x, double y, unsigned long ulAppleMouseButton)
    {
 
       sp(::message::base) spbase;
@@ -5828,6 +5844,22 @@ namespace macos
       pmouse->m_pt.x = (LONG)x;
       pmouse->m_pt.y = (LONG)y;
       pmouse->m_bTranslated = true;
+      
+      if(ulAppleMouseButton & 1)
+      {
+         
+         pmouse->m_wparam |= MK_LBUTTON;
+         
+      }
+      
+      if(ulAppleMouseButton & 2)
+      {
+         
+         pmouse->m_wparam |= MK_RBUTTON;
+         
+      }
+      
+      pmouse->m_nFlags = pmouse->m_wparam;
 
       spbase = pmouse;
       

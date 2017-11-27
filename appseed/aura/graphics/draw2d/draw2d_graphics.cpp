@@ -31,16 +31,12 @@ namespace draw2d
       object(papp)
    {
 
-      //if (g_pdiba == NULL)
-      //{
-      //   g_pdiba = new spa(::draw2d::dib);
-      //}
       m_puistrcontext         = NULL;
       m_pdrawcontext          = NULL;
       m_pdibAlphaBlend        = NULL;
       m_pjob                  = NULL;
       m_dFontFactor           = 1.0;
-      m_pdib                  = NULL;
+      m_pdibDraw2dGraphics    = NULL;
 
    }
 

@@ -224,8 +224,8 @@ namespace macos
         virtual void round_window_draw(CGContextRef cgc) override;
         virtual void round_window_mouse_down(int iButton, double x, double y) override;
         virtual void round_window_mouse_up(int iButton, double x, double y) override;
-        virtual void round_window_mouse_moved(double x, double y) override;
-        virtual void round_window_mouse_dragged(double x, double y) override;
+        virtual void round_window_mouse_moved(double x, double y, unsigned long ulAppleMouseButton) override;
+        virtual void round_window_mouse_dragged(double x, double y, unsigned long iAppleMouseButton) override;
         virtual void round_window_double_click(int iButton, double x, double y) override;
         virtual bool round_window_key_down(unsigned int vk, unsigned int scan) override;
         virtual bool round_window_key_up(unsigned int vk, unsigned int scan) override;

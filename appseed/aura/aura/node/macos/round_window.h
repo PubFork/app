@@ -40,8 +40,8 @@ public:
    virtual void round_window_draw(CGContextRef cgc) = 0;
    virtual void round_window_mouse_down(int iButton, double x, double y) = 0;
    virtual void round_window_mouse_up(int iButton, double x, double y) = 0;
-   virtual void round_window_mouse_moved(double x, double y) = 0;
-   virtual void round_window_mouse_dragged(double x, double y) = 0;
+   virtual void round_window_mouse_moved(double x, double y, unsigned long ulAppleMouseButton) = 0;
+   virtual void round_window_mouse_dragged(double x, double y, unsigned long ulAppleMouseButton) = 0;
    virtual void round_window_double_click(int iButton, double x, double y) = 0;
    virtual bool round_window_key_down(unsigned int vk, unsigned int scan) = 0;
    virtual bool round_window_key_up(unsigned int vk, unsigned int scan) = 0;

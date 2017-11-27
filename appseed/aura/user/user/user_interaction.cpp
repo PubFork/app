@@ -1735,9 +1735,9 @@ restart:
 
          ::draw2d::keep k(pgraphics);
 
-         //int iGet = (get_tick_count() / 10) % 256;
+         int iGet = (get_tick_count() / 10) % 256;
 
-         //pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, iGet, iGet));
+         pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, 255 - iGet, iGet));
 
          try
          {

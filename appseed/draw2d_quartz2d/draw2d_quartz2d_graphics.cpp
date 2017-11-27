@@ -18,62 +18,42 @@ namespace draw2d_quartz2d
       ::object(papp),
       ::draw2d::graphics(papp)
    {
-      
-      m_iSaveDC = 0;
-
+      m_iType = -1;
       defer_create_mutex();
 
+      m_iSaveDC         = 0;
       m_bPrinting       = FALSE;
       m_pdibAlphaBlend  = NULL;
-//      m_pdc             = NULL;
-      /*      m_hdc             = NULL;
-       m_ppath           = NULL;
-       m_ppathPaint      = NULL;
-       */
       m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
-
+      m_bOwnDC          = true;
       m_pdc             = NULL;
       m_layer           = NULL;
 
    }
 
-   /*
-   graphics::graphics()
-   {
-
-      m_bPrinting       = FALSE;
-//      m_pdc             = NULL;
-            m_pgraphics       = NULL;
-       m_hdc             = NULL;
-       m_ppath           = NULL;
-       m_ppathPaint      = NULL;*/
-/*      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
-      m_pdc             = NULL;
-      m_layer           = NULL;
-
-   }
-   */
-   
+ 
    void graphics::assert_valid() const
    {
+
       ::draw2d::graphics::assert_valid();
+
    }
+
 
    void graphics::dump(dump_context & dumpcontext) const
    {
+      
       ::draw2d::graphics::dump(dumpcontext);
 
-      //      dumpcontext << "get_handle1() = " << get_handle1();
-      //    dumpcontext << "\nm_hAttribDC = " << get_handle2();
-      //  dumpcontext << "\nm_bPrinting = " << m_bPrinting;
-
       dumpcontext << "\n";
+
    }
    
 
    graphics::~graphics()
    {
 
+      DeleteDC();
 
    }
 
@@ -145,9 +125,11 @@ namespace draw2d_quartz2d
    bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    {
 
-      m_pdc = NULL;
+      DeleteDC();
 
-      CGContextRef cg = NULL;
+      m_pdc             = NULL;
+
+      CGContextRef cg   = NULL;
 
       if(pgraphics == NULL || pgraphics->get_os_data() == NULL)
       {
@@ -207,82 +189,12 @@ namespace draw2d_quartz2d
 
       }
 
+      m_bOwnDC = true;
+
       return true;
 
-//      if(m_pdc != NULL)
-//      {
-//
-//         cairo_destroy(m_pdc);
-//
-//         m_pdc = NULL;
-//
-//      }
-//
-//      if(pgraphics == NULL)
-//      {
-//
-//         cairo_surface_t * psurface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
-//
-//         if(psurface == NULL)
-//            return false;
-//
-//         m_pdc = cairo_create(psurface);
-//
-//         cairo_surface_destroy(psurface);
-//
-//         return m_pdc != NULL;
-//
-//      }
-//      else
-//      {
-//
-//         cairo_surface_t * psurface = cairo_get_target(LNX_DC(pgraphics)->m_pdc);
-//
-//         if(cairo_surface_status(psurface) != CAIRO_STATUS_SUCCESS)
-//            return false;
-//
-//         cairo_surface_t * psurfaceNew = cairo_surface_create_similar(psurface, cairo_surface_get_content(psurface), 1, 1);
-//
-//         if(psurfaceNew == NULL)
-//            return false;
-//
-//         m_pdc = cairo_create(psurfaceNew);
-//
-//         cairo_surface_destroy(psurfaceNew);
-//
-//         return m_pdc != NULL;
-//
-//      }
-//      /*
-//       HDC hdc = NULL;
-//
-//       if(pgraphics == NULL)
-//       {
-//       hdc = ::CreateCompatibleDC(NULL);
-//       }
-//       else
-//       {
-//       hdc = ::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1());
-//       }
-//
-//       if(!Attach(hdc))
-//       {
-//       ::DeleteDC(hdc);
-//       return FALSE;
-//       }
-//       */
-//
-//      return true;
-//
    }
 
-//   int32_t graphics::ExcludeUpdateRgn(::user::interaction * pWnd)
-//   {
-//      //    ASSERT(get_handle1() != NULL);
-//      //      return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle());
-//      throw not_implemented(get_app());
-//      return 0;
-//   }
 
    int32_t graphics::GetDeviceCaps(int32_t nIndex) const
    {
@@ -290,7 +202,9 @@ namespace draw2d_quartz2d
        return ::GetDeviceCaps(get_handle2(), nIndex);*/
       throw not_implemented(get_app());
       return 0;
+
    }
+
 
    point graphics::GetBrushOrg() const
    {
@@ -333,40 +247,88 @@ namespace draw2d_quartz2d
 
    }
 
-   ::draw2d::bitmap* graphics::SelectObject(::draw2d::bitmap* pbitmap)
-   {
 
-//
-//      if(pbitmap == NULL)
-//         return NULL;
-//
-//      /*      if(get_handle1() == NULL)
-//       return NULL;
-//       if(pbitmap == NULL)
-//       return NULL;
-//       return dynamic_cast < ::draw2d::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pbitmap->get_os_data()));*/
-//      if(m_pdc != NULL)
-//      {
-//         cairo_destroy(m_pdc);
-//      }
-//
-//      m_pdc = cairo_create((cairo_surface_t *) pbitmap->get_os_data());
-//
-//      set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
-//
-//      m_spbitmap = pbitmap;
+   ::draw2d::bitmap* graphics::SelectObject(::draw2d::bitmap * pbitmap)
+   {
+      
+      
+      if(m_iType != -1)
+      {
+         
+         TRACE("occluding device context?!!?");
+         
+      }
+
+      sp(::draw2d_quartz2d::bitmap) pbitmapQuartz = pbitmap;
+
+      if(pbitmapQuartz.is_set())
+      {
+
+         DeleteDC();
+
+         attach(pbitmapQuartz->m_pdc);
+
+         m_bOwnDC = false;
+           
+         m_spbitmap = pbitmap;
+
+      }
 
       return m_spbitmap;
+      
    }
 
 
-   ::draw2d::object* graphics::SelectObject(::draw2d::object* pObject)
+   ::draw2d::object* graphics::SelectObject(::draw2d::object * pobject)
    {
-      /*      ASSERT(get_handle1() != NULL);
-       if(pObject == NULL)
+
+       sp(::draw2d::bitmap) pbitmap = pobject;
+
+        if(pbitmap.is_set())
+        {
+
+            return SelectObject(pbitmap);
+
+        }
+      sp(::draw2d::pen) ppen = pobject;
+      
+      if(ppen.is_set())
+      {
+         
+         return SelectObject(ppen);
+         
+      }
+
+      sp(::draw2d::brush) pbrush = pobject;
+      
+      if(pbrush.is_set())
+      {
+         
+         return SelectObject(pbrush);
+         
+      }
+      sp(::draw2d::font) pfont = pobject;
+      
+      if(pfont.is_set())
+      {
+         
+         return SelectObject(pfont);
+         
+      }
+      
+      sp(::draw2d::region) pregion = pobject;
+      
+      if(pregion.is_set())
+      {
+         
+         SelectObject(pregion);
+         
+         return pregion;
+         
+      }
+
        return NULL;
-       return SelectGdiObject(get_app(), get_handle1(), pObject->get_os_data()); */
-      return NULL;
+
    }
 
    /*   HGDIOBJ graphics::SelectObject(HGDIOBJ hObject) // Safe for NULL handles
@@ -1487,6 +1449,24 @@ namespace draw2d_quartz2d
 
             return false;
 
+         }
+         
+         sp(::draw2d_quartz2d::dib) pdibSrc = pgraphicsSrc->m_pdibDraw2dGraphics;
+         
+         sp(::draw2d::graphics) pdibGraphics;
+         
+         if(pdibSrc.is_set())
+         {
+            
+            pdibGraphics = pdibSrc->get_graphics();
+            
+         }
+         else
+         {
+            
+            TRACE("pdibSrc NULL");
+            
+            
          }
 
          CGContextRef pdcSrc = (CGContextRef) pgraphicsSrc->get_os_data();
@@ -3320,7 +3300,12 @@ namespace draw2d_quartz2d
 
          m_layer = NULL;
 
-         CGContextRelease(m_pdc);
+         if(m_bOwnDC)
+         {
+
+            CGContextRelease(m_pdc);
+
+         }
 
          m_pdc = NULL;
 
@@ -3333,6 +3318,10 @@ namespace draw2d_quartz2d
          m_layer = NULL;
 
       }
+      
+      m_pdibDraw2dGraphics = NULL;
+      
+      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
 
       return true;
 
@@ -4652,7 +4641,11 @@ namespace draw2d_quartz2d
       {
 
          if(m_pdc == NULL)
+         {
+
             return;
+
+         }
 
          ::draw2d::graphics::set_alpha_mode(ealphamode);
 
@@ -4697,14 +4690,23 @@ namespace draw2d_quartz2d
    bool graphics::attach(void * pdata)
    {
 
+      m_iType = 10;
+      
       m_pdc = (CGContextRef) pdata;
 
       if(m_pdc != NULL)
+      {
+
          m_affine = CGContextGetCTM(m_pdc);
+
+      }
+      
+      m_bOwnDC = false;
 
       return true;
 
    }
+
 
    void * graphics::detach()
    {
@@ -4716,7 +4718,6 @@ namespace draw2d_quartz2d
       return pgraphics;
 
    }
-
 
 
    bool graphics::blur(bool bExpand, double dRadius, const RECT & lpcrect)

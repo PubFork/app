@@ -78,18 +78,25 @@ namespace draw2d_quartz2d
       }
    }*/
    
+   
    void    dib::construct (int32_t cx,  int32_t cy)
    {
+      
       m_pcolorref    = NULL;
-      m_size.cx = 0;
-      m_size.cy = 0;
-      m_iScan = 0;
+      m_size.cx      = 0;
+      m_size.cy      = 0;
+      m_iScan        = 0;
+      
       create(cx, cy);
+      
    }
+   
    
    dib::~dib ()
    {
-      //      Destroy ();
+      
+      Destroy ();
+      
    }
    
    
@@ -106,59 +113,39 @@ namespace draw2d_quartz2d
       
       if(m_spbitmap.is_set()
          && m_spbitmap->get_os_data() != NULL
+         && m_spgraphics.is_set()
+         && m_spgraphics->get_os_data() != NULL
          && width == m_size.cx
          && height == m_size.cy)
+      {
+         
          return true;
+         
+      }
       
       Destroy();
       
       if(width <= 0 || height <= 0)
+      {
+         
          return false;
-      
-//      memset(&m_info, 0, sizeof (BITMAPINFO));
-//
-//      m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-//      m_info.bmiHeader.biWidth         = width;
-//      m_info.bmiHeader.biHeight        = -height;
-//      m_info.bmiHeader.biPlanes        = 1;
-//      m_info.bmiHeader.biBitCount      = 32;
-//      m_info.bmiHeader.biCompression   = BI_RGB;
-//      m_info.bmiHeader.biSizeImage     = width * height * 4;
+         
+      }
       
       m_spbitmap.alloc(allocer());
+      
       m_spgraphics.alloc(allocer());
       
-      if(m_spbitmap.m_p == NULL)
-      {
-         m_size.cx = 0;
-         m_size.cy = 0;
-         m_iScan = 0;
-         return false;
-      }
-      
-      if(!m_spbitmap->CreateDIBSection(NULL, width, height, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL,  0))
-      {
-         m_size.cx = 0;
-         m_size.cy = 0;
-         m_iScan = 0;
-         return false;
-      }
-      
-      if(m_spbitmap->get_os_data() != NULL)
+      if(m_spbitmap.is_null() || m_spgraphics.is_null())
       {
 
-         m_spgraphics->attach(m_spbitmap->get_os_data());
+         Destroy();
          
-         m_spgraphics->m_pdib = this;
-
-         m_size.cx = width;
-         
-         m_size.cy = height;
-         
-         return true;
+         return false;
          
       }
-      else
+      
+      if(!m_spbitmap->CreateDIBSection(NULL, width, height, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL,  0) || m_spbitmap->get_os_data() == NULL)
       {
          
          Destroy();
@@ -167,7 +154,27 @@ namespace draw2d_quartz2d
          
       }
       
+      m_spgraphics->SelectObject(m_spbitmap);
+      
+      if(m_spgraphics->get_os_data() == NULL)
+      {
+
+         Destroy();
+         
+         return false;
+         
+      }
+
+      m_spgraphics->m_pdibDraw2dGraphics = this;
+
+      m_size.cx = width;
+         
+      m_size.cy = height;
+      
+      return true;
+         
    }
+   
    
    bool dib::dc_select(bool bSelect)
    {
@@ -189,7 +196,11 @@ namespace draw2d_quartz2d
       ::draw2d::bitmap_sp pbitmap = pgraphics->get_current_bitmap();
       
       if(pbitmap == NULL)
+      {
+         
          return false;
+         
+      }
       
       ::size size = pbitmap->get_size();
       
@@ -210,18 +221,17 @@ namespace draw2d_quartz2d
    bool dib::Destroy ()
    {
       
-      if(m_spgraphics.is_set())
-         m_spgraphics->detach();
-         
       m_spbitmap.release();
       
       m_spgraphics.release();
       
-      m_size.cx             = 0;
+      m_size.cx            = 0;
       
-      m_size.cy             = 0;
+      m_size.cy            = 0;
       
-      m_pcolorref    = NULL;
+      m_pcolorref          = NULL;
+      
+      m_iScan              = 0;
       
       return true;
       
@@ -349,66 +359,42 @@ namespace draw2d_quartz2d
       
    }
    
+   
    ::draw2d::graphics * dib::get_graphics() const
    {
+      
       unmap();
+      
       return m_spgraphics;
+      
    }
-   
    
    
    void dib::map(bool bApplyTransform) const
    {
       
-      if(m_bMapped)
-         return;
-      
-      
-//      byte * pdata = (byte *) m_pcolorref;
-      
-//      if(bApplyTransform)
-//      {
-//      
-//      int size = m_iScan * m_size.cy / sizeof(COLORREF);
-//      while(size > 0)
-//      {
-//         if(pdata[3] != 0)
-//         {
-//            pdata[0] = pdata[0] * 255 / pdata[3];
-//            pdata[1] = pdata[1] * 255 / pdata[3];
-//            pdata[2] = pdata[2] * 255 / pdata[3];
-//         }
-//         pdata += 4;
-//         size--;
-//      }
-//      
-//      }
+      //if(m_bMapped)
+      //   return;
       
       ((dib *) this)->m_bMapped = true;
       
-      
    }
+   
    
    void dib::unmap() const
    {
       
-      if(!m_bMapped)
-         return;
+      if(((dib *) this)->m_spgraphics.is_set())
+      {
       
-//      byte * pdata =  (byte *) m_pcolorref;
-//      int size = m_iScan * m_size.cy / sizeof(COLORREF);
-//      while(size > 0)
-//      {
-//         pdata[0] = pdata[0] * pdata[3] / 255;
-//         pdata[1] = pdata[1] * pdata[3] / 255;
-//         pdata[2] = pdata[2] * pdata[3] / 255;
-//         pdata += 4;
-//         size--;
-//      }
+         ((dib *) this)->m_spgraphics->SelectObject(((dib *) this)->m_spbitmap);
+         
+         ((dib *) this)->m_spgraphics->m_pdibDraw2dGraphics = (dib *) this;
+         
+      }
       
       ((dib *) this)->m_bMapped = false;
-
-         
+      
    }
    
    
