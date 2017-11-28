@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
 
 namespace base
 {
 
    class CLASS_DECL_BASE app:
-      virtual public ::base::system
+      virtual public ::base::application
    {
    public:
 

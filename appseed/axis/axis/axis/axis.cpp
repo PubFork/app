@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "fiasco_finder.h"
 #ifdef BSD_STYLE_SOCKETS
 #include "openssl/err.h"
@@ -25,10 +25,10 @@ CLASS_DECL_AXIS int get_axis_init()
 
 }
 
-::aura::system * axis_create_aura_system()
+::aura::system * axis_create_aura_system(app_core * pappcore)
 {
 
-   return new ::axis::system(NULL);
+   return new ::axis::system(NULL, pappcore);
 
 }
 

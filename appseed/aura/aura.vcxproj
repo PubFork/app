@@ -4268,6 +4268,8 @@
     <ClInclude Include="user\user\user_window_map.h" />
     <ClInclude Include="user\user\user_window_util.h" />
     <ClInclude Include="version.h" />
+    <None Include="aura\app\acid.inl" />
+    <None Include="aura\app\aura.inl" />
     <None Include="aura\os\windows\windows.inl" />
     <None Include="aura\os\windows\windows_app.inl" />
     <None Include="aura\os\windows\windows_app_console.inl" />

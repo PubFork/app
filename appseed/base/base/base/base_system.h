@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace base
@@ -9,56 +9,56 @@ namespace base
       virtual public ::axis::system,
       virtual public :: base ::application
    {
-      public:
+   public:
 
 
-         system(::aura::application * papp);
-         virtual ~system();
+      system(::aura::application * papp, app_core * pappcore);
+      virtual ~system();
 
-         //virtual bool defer_create_system_frame_window();
+      //virtual bool defer_create_system_frame_window();
 
-         virtual bool process_initialize() override;
-         virtual int32_t exit_application() override;
+      virtual bool process_initialize() override;
+      virtual int32_t exit_application() override;
 
-         virtual ::aura::session * on_create_session() override;
+      virtual ::aura::session * on_create_session() override;
 
-         virtual void set_active_guie(::user::interaction * pui);
-         virtual void set_focus_guie(::user::interaction * pui);
-
-
-
-         //virtual ::install::canvas * install_create_canvas() override;
-         //virtual void install_canvas_on_paint(::draw2d::graphics * pgraphics, const RECT & rect);
-         //virtual int install_canvas_increment_mode() override;
+      virtual void set_active_guie(::user::interaction * pui);
+      virtual void set_focus_guie(::user::interaction * pui);
 
 
 
-         virtual DWORD get_monitor_color_temperature(index iMonitor);
-         virtual bool adjust_monitor(index iMonitor, DWORD dwTemperature, double dBrightness, double dwGamma);
-         virtual bool get_monitor_rect(index iMonitor,LPRECT lprect) override;
-         virtual ::count get_monitor_count() override;
-
-         bool get_wkspace_rect(index iWkspace,LPRECT lprect) override;
-
-         //virtual ::user::interaction_impl * impl_from_handle(void * pdata) override;
-         //virtual ::user::interaction * ui_from_handle(void * pdata) override;
-
-         virtual void on_setting_changed(::aura::e_setting) override;
+      //virtual ::install::canvas * install_create_canvas() override;
+      //virtual void install_canvas_on_paint(::draw2d::graphics * pgraphics, const RECT & rect);
+      //virtual int install_canvas_increment_mode() override;
 
 
 
-         virtual bool initialize_native_window1() override;
+      virtual DWORD get_monitor_color_temperature(index iMonitor);
+      virtual bool adjust_monitor(index iMonitor, DWORD dwTemperature, double dBrightness, double dwGamma);
+      virtual bool get_monitor_rect(index iMonitor,LPRECT lprect) override;
+      virtual ::count get_monitor_count() override;
+
+      bool get_wkspace_rect(index iWkspace,LPRECT lprect) override;
+
+      //virtual ::user::interaction_impl * impl_from_handle(void * pdata) override;
+      //virtual ::user::interaction * ui_from_handle(void * pdata) override;
+
+      virtual void on_setting_changed(::aura::e_setting) override;
+
+
+
+      virtual bool initialize_native_window1() override;
 
 #ifdef APPLE_IOS
 
-         virtual void * initialize_native_window2(LPCRECT lpcrect) override;
+      virtual void * initialize_native_window2(LPCRECT lpcrect) override;
 
 #endif
 
 
 #ifdef ANDROID
 
-         virtual void on_os_text(e_os_text etext, string strText) override;
+      virtual void on_os_text(e_os_text etext, string strText) override;
 
 #endif
 

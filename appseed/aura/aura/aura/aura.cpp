@@ -2,8 +2,6 @@
 #include <stdio.h>
 
 
-
-
 namespace user
 {
 
@@ -134,10 +132,10 @@ CLASS_DECL_AURA int get_aura_init()
 }
 
 
-CLASS_DECL_AURA ::aura::system * aura_create_aura_system()
+CLASS_DECL_AURA ::aura::system * aura_create_aura_system(app_core * pappcore)
 {
 
-   return new ::aura::system(NULL, NULL);
+   return new ::aura::system(NULL, pappcore, NULL);
 
 }
 
@@ -315,10 +313,10 @@ CLASS_DECL_AURA const char * g_pszCooperativeLevel;
 
 CLASS_DECL_AURA int g_iDerivedApplication = 0;
 
-::aura::system * create_aura_system()
+::aura::system * create_aura_system(app_core * pappcore)
 {
 
-   return g_pfn_create_system();
+   return g_pfn_create_system(pappcore);
 
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
@@ -72,10 +72,7 @@ namespace aura
 
 #endif
 
-      bool                                      m_bAcid;
-
-
-
+      ::app_core *                                 m_pappcore;
 
 #ifdef DEBUG
 
@@ -93,6 +90,8 @@ namespace aura
       sp(class ::datetime::department)             m_pdatetime;
       ::crypto::crypto_sp                          m_spcrypto;
       class ::fontopus::user_set                   m_userset;
+
+
 
 
 //         sp(::aura::audio::wave_out)                  m_spwaveout;
@@ -219,7 +218,9 @@ namespace aura
       raw_array < MONITORINFO >                    m_monitorinfoaDesk;
 
 #endif
-      system(::aura::application * papp, void * pdata);
+
+
+      system(::aura::application * papp, app_core * pappcore, void * pdata);
       virtual ~system();
 
 

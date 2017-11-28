@@ -3,11 +3,6 @@
 
 
 
-::aura::PFN_GET_NEW_LIBRARY g_pfnNewLibrary = NULL;
-
-
-::aura::PFN_GET_NEW_APP g_pfnNewApp = NULL;
-
 
 namespace aura
 {
@@ -818,27 +813,12 @@ namespace aura
 
       string strAppId(pszAppId);
 
-#ifdef CUBE
-
-      // Criar novo meio de instalação
-
-#elif !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
+#if !defined(METROWIN) && !defined(VSNORD) && !defined(APPLE_IOS)
 
 
-#ifdef WINDOWS
-
-      if (g_pfnNewApp == NULL && strAppId == "acid")
-      {
-
-         g_pfnNewApp = (PFN_GET_NEW_APP) ::GetProcAddress(System.m_hinstance, "get_acid_app");
-
-      }
-
-#endif
-
-      if (g_pfnNewApp == NULL && ((!System.handler()->m_varTopicQuery.has_property("install")
-                                   && !System.handler()->m_varTopicQuery.has_property("uninstall"))
-                                 ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
+      if (System.m_pappcore->m_pfnNewApp == NULL && ((!System.handler()->m_varTopicQuery.has_property("install")
+            && !System.handler()->m_varTopicQuery.has_property("uninstall"))
+                                                    ) //         || (papp->is_serviceable() && !papp->is_user_service() && strUserName != "NetworkService"))
             && strAppId.has_char()
             && !System.is_application_installed(strAppId, "installed"))
       {
@@ -851,10 +831,10 @@ namespace aura
 
       sp(::aura::application) papp;
 
-      if (g_pfnNewApp != NULL)
+      if (System.m_pappcore->m_pfnNewApp != NULL)
       {
 
-         papp = g_pfnNewApp(pappParent);
+         papp = System.m_pappcore->m_pfnNewApp(pappParent);
 
          if (papp.is_null())
          {
@@ -867,34 +847,36 @@ namespace aura
 
 
       }
-      else if (strAppId == "acid")
-      {
-
-#ifdef WINDOWS
-
-         PFN_GET_NEW_APP lpfnNewApp = (PFN_GET_NEW_APP) ::GetProcAddress(System.m_hinstance, "get_acid_app");
-
-         if (lpfnNewApp == NULL)
-         {
-
-            return NULL;
-
-         }
-
-         papp = lpfnNewApp(pappParent);
-
-         if (papp.is_null())
-         {
-
-            return NULL;
-
-         }
-
-         papp->m_strLibraryName = "acid";
-
-#endif
-
-      }
+//    abandoned because needs the dirty trick of exporting function from executable file
+//    (Yes, it requires to export (generally through .def file) the function get_acid_app from the .exe file).
+//      else if (strAppId == "acid")
+//      {
+//
+//#ifdef WINDOWS
+//
+//         PFN_GET_NEW_APP lpfnNewApp = (PFN_GET_NEW_APP) ::GetProcAddress(System.m_hinstance, "get_acid_app");
+//
+//         if (lpfnNewApp == NULL)
+//         {
+//
+//            return NULL;
+//
+//         }
+//
+//         papp = lpfnNewApp(pappParent);
+//
+//         if (papp.is_null())
+//         {
+//
+//            return NULL;
+//
+//         }
+//
+//         papp->m_strLibraryName = "acid";
+//
+//#endif
+//
+//      }
       else
       {
 
@@ -903,10 +885,10 @@ namespace aura
          if (plibrary == NULL)
          {
 
-            if (g_pfnNewLibrary != NULL)
+            if (System.m_pappcore->m_pfnNewLibrary != NULL)
             {
 
-               plibrary = g_pfnNewLibrary(pappParent);
+               plibrary = System.m_pappcore->m_pfnNewLibrary(pappParent);
 
             }
             else

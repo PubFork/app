@@ -1,4 +1,4 @@
-//
+﻿//
 //  base_static_start.cpp
 //  aura
 //
@@ -620,9 +620,12 @@ namespace aura
 
       }
 
-      ::aura::system * aura_create_system()
+
+      ::aura::system * aura_create_system(app_core * pappcore)
       {
-         return new ::aura::system(NULL, NULL);
+
+         return new ::aura::system(NULL, pappcore, NULL);
+
       }
 
 

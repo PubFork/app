@@ -393,6 +393,9 @@
     <Filter Include="Header Files\aura\os\windows_common">
       <UniqueIdentifier>{fb4ef3dc-3ea1-441c-8a45-a6f09bc6611d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\aura\app">
+      <UniqueIdentifier>{6354b04d-ca10-4bcb-9606-987337ff0ee5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="primitive\primitive_id.h">
@@ -4805,6 +4808,12 @@
     </None>
     <None Include="aura\os\windows\windows_app_console.inl">
       <Filter>Header Files\aura\os\windows</Filter>
+    </None>
+    <None Include="aura\app\acid.inl">
+      <Filter>Header Files\aura\app</Filter>
+    </None>
+    <None Include="aura\app\aura.inl">
+      <Filter>Header Files\aura\app</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

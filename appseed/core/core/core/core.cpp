@@ -1,8 +1,8 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifdef WINDOWS
-   //#include <cderr.h>      // Commdlg Error definitions
-   //#include <winspool.h>
+//#include <cderr.h>      // Commdlg Error definitions
+//#include <winspool.h>
 #endif
 
 
@@ -190,10 +190,10 @@ void gen_CrtErrorCheck(int32_t i)
 int g_iCoreRefCount = 0;
 
 
-::aura::system * core_create_aura_system()
+::aura::system * core_create_aura_system(app_core * pappcore)
 {
 
-   return new ::core::system(NULL);
+   return new ::core::system(NULL, pappcore);
 
 }
 
@@ -206,8 +206,8 @@ bool defer_core_init()
 
    if(g_iCoreRefCount > 1)
       return true;
-   
-   
+
+
 
    if(!::core::init_core())
       return false;

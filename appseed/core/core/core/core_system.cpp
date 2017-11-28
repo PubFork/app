@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 ////#include "axis/net/net_sockets.h"
 //#include "charguess.h"
@@ -26,11 +26,11 @@ namespace core
 {
 
 
-   system::system(::aura::application * papp, void * pdata):
+   system::system(::aura::application * papp, app_core * pappcore, void * pdata):
       ::object(papp),
-      ::aura::system(papp, pdata),
-      ::axis::system(papp),
-      ::base::system(papp),
+      ::aura::system(papp, pappcore, pdata),
+      ::axis::system(papp, pappcore),
+      ::base::system(papp, pappcore),
       m_mutexDelete(this),
       m_mutex(this)
    {

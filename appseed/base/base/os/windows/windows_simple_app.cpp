@@ -1,17 +1,15 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace base
 {
 
 
-   app::app():
-      ::aura::system(this, NULL),
-      ::axis::system(this),
-      ::base::system(this)
+   app::app()
    {
 
    }
+
 
    app::~app()
    {

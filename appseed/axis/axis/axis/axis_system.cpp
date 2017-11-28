@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "framework.h" // from "axis/net/net_sockets.h"
 #include "fiasco_finder.h"
 
@@ -13,8 +13,8 @@ namespace axis
 
 
 
-   system::system(::aura::application * papp):
-      aura::system(this, NULL)//,
+   system::system(::aura::application * papp, app_core * pappcore):
+      aura::system(this, pappcore, NULL)//,
 //      m_httpsystem(this),
 //      m_visual(this),
 

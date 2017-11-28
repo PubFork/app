@@ -8,7 +8,6 @@
 #include <fcntl.h>
 #endif
 
-
 extern "C"
 {
 
@@ -86,11 +85,17 @@ namespace aura
 
    }
 
+
    application::application() :
       m_allocer(this),
       m_mutexMatterLocator(this),
       m_mutexStr(this)
    {
+
+      // default value for acid apps
+      // (but any acid app can have installer, just change this flag to true in the derived application class constructor).
+      m_bAppHasInstallerProtected = true;
+      m_bAppHasInstallerChangedProtected = false;
 
 
       m_strHttpUserAgentToken = "ca2";
@@ -218,6 +223,16 @@ namespace aura
       ::android::shell::theLinuxShell.Initialize();
 
 #endif // LINUX
+
+   }
+
+
+   void application::set_has_installer(bool bSet)
+   {
+
+      m_bAppHasInstallerProtected = bSet;
+
+      m_bAppHasInstallerChangedProtected = true;
 
    }
 
@@ -775,14 +790,14 @@ namespace aura
 
    class open_browser_enum
    {
-      public:
+   public:
 
-         string                           m_strWindowEnd;
-         string                           m_strTopic;
-         string                           m_strCounterTopic;
-         oswindow                         m_hwnd;
-         comparable_array < oswindow >    m_hwndaTopic;
-         comparable_array < oswindow >    m_hwndaCounterTopic;
+      string                           m_strWindowEnd;
+      string                           m_strTopic;
+      string                           m_strCounterTopic;
+      oswindow                         m_hwnd;
+      comparable_array < oswindow >    m_hwndaTopic;
+      comparable_array < oswindow >    m_hwndaCounterTopic;
 
    };
 
@@ -3792,6 +3807,13 @@ retry_license:
 
    bool application::process_initialize()
    {
+
+      if (!m_bAppHasInstallerChangedProtected)
+      {
+
+         set_has_installer(!m_paurasystem->m_pappcore->m_bAcidApp);
+
+      }
 
       if (m_bAuraProcessInitialize)
       {

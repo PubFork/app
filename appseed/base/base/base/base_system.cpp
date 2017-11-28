@@ -1,4 +1,4 @@
-#include "framework.h" // from "axis/user/user.h"
+﻿#include "framework.h" // from "axis/user/user.h"
 //#include "base/user/user/user_windowing.h"
 #include "base/user/user.h"
 #include "base/node/node.h"
@@ -96,9 +96,9 @@ namespace base
 
 
 
-   system::system(::aura::application * papp) :
-      ::aura::system(this, NULL),
-      ::axis::system(this)
+   system::system(::aura::application * papp, app_core * pappcore) :
+      ::aura::system(this, pappcore, NULL),
+      ::axis::system(this, pappcore)
    {
 
       factory().creatable_small < ::visual::icon >();

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
 //#include "hotplugin.h"
 
@@ -21,77 +21,79 @@ namespace hotplugin
 
    CLASS_DECL_BASE ::axis::system * get_axis_system()
    {
-      
+
       return g_paxissystem;
 
    }
 
 
-   CLASS_DECL_BASE bool defer_start_base_system()
-   {
+  CLASS_DECL_BASE bool defer_start_base_system()
+  {
 
-      if(g_paxissystem != NULL)
-         return true;
+     if(g_paxissystem != NULL)
+        return true;
 
-      g_iSystemCount++;
+     g_iSystemCount++;
 
-      try
-      {
+     throw new todo(NULL);
 
-         g_paxissystem = new ::axis::system(NULL);
+//      try
+//      {
 
-         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_debug_box.txt"))
-         {
+//         g_paxissystem = new ::axis::system(NULL, );
 
-            debug_box("hotplugin boxmain NP_Initialize","ZZZzzz hotplugin box",MB_OK);
+//         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_debug_box.txt"))
+//         {
 
-         }
-         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_sleep.txt"))
-         {
+//            debug_box("hotplugin boxmain NP_Initialize","ZZZzzz hotplugin box",MB_OK);
 
-            Sleep(10000);
+//         }
+//         if(file_exists_dup(::dir::system() / "config\\plugin\\npca2_beg_sleep.txt"))
+//         {
 
-         }
+//            Sleep(10000);
 
-         ::set_thread(g_paxissystem);
+//         }
 
-         g_paxissystem->m_bMatterFromHttpCache = true;
+//         ::set_thread(g_paxissystem);
 
-         g_paxissystem->m_bSystemSynchronizedCursor = false;
+//         g_paxissystem->m_bMatterFromHttpCache = true;
 
-#ifdef WINDOWS
+//         g_paxissystem->m_bSystemSynchronizedCursor = false;
 
-         g_paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
+// #ifdef WINDOWS
 
-#endif
+//         g_paxissystem->m_hinstance = (HINSTANCE)get_hinstance();
 
-         xxdebug_box("box1","box1",MB_ICONINFORMATION);
+// #endif
 
-#ifdef WINDOWS
+//         xxdebug_box("box1","box1",MB_ICONINFORMATION);
 
-         set_main_thread((HTHREAD) GetCurrentThread());
+// #ifdef WINDOWS
 
-         set_main_thread_id(GetCurrentThreadId());
+//         set_main_thread((HTHREAD) GetCurrentThread());
 
-#endif
+//         set_main_thread_id(GetCurrentThreadId());
 
-         g_paxissystem->m_bReady = false;
+// #endif
 
-         ::create_thread(NULL,0,&base_system_main,NULL,0,NULL);
-         
-      }
-      catch(...)
-      {
+//         g_paxissystem->m_bReady = false;
 
-         return false;
+//         ::create_thread(NULL,0,&base_system_main,NULL,0,NULL);
 
-         // debug_box("failed to create system", "npca2", 0);
-         //      return NULL;
-      }
+//      }
+//      catch(...)
+//      {
 
-      return true;
+//         return false;
 
-   }
+//         // debug_box("failed to create system", "npca2", 0);
+//         //      return NULL;
+//      }
+
+//      return true;
+
+  }
 
 
    uint32_t c_cdecl base_system_main(LPVOID lpVoid)

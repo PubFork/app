@@ -1,7 +1,8 @@
-LIBRARY  "aura"
+﻿LIBRARY  "aura"
 
 
 EXPORTS
+_WinMain@16
 o_debug_string
 defer_aura_init
 waveout_open

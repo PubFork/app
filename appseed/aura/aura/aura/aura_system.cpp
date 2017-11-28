@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -60,19 +60,18 @@ namespace aura
    system * system::g_p = NULL;
 
 
-   system::system(::aura::application * papp, void * pdata) :
+   system::system(::aura::application * papp, app_core * pappcore, void * pdata) :
       m_process(this),
       m_base64(this),
       m_httpsystem(this),
       m_emaildepartment(this)
    {
 
+      m_pappcore = pappcore;
+
       m_bThreadToolsForIncreasedFps = false;
 
       m_typemap.InitHashTable(2048);
-
-      m_bAcid = false;
-
 
 #ifdef DEBUG
 

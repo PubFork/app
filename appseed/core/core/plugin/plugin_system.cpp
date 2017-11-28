@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 
 
@@ -9,12 +9,12 @@ namespace plugin
 {
 
 
-   system::system(::aura::application * papp) :
+   system::system(::aura::application * papp, ::app_core * pappcore) :
       object(papp),
-      ::aura::system(papp, NULL),
-      ::axis::system(papp),
-      ::base::system(papp),
-      ::core::system(papp)
+      ::aura::system(papp, pappcore, NULL),
+      ::axis::system(papp, pappcore),
+      ::base::system(papp, pappcore),
+      ::core::system(papp, pappcore)
    {
 
 
@@ -53,7 +53,7 @@ namespace plugin
 
    string system::get_host_location_url()
    {
-      
+
       return (const string &) m_pplugin->get_host_location_url();
 
    }

@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -607,7 +607,11 @@ namespace core
 
 }
 
-typedef ::aura::system * CREATE_SYSTEM();
+
+class app_core;
+
+
+typedef ::aura::system * CREATE_SYSTEM(app_core * pappcore);
 typedef CREATE_SYSTEM * LPFN_CREATE_SYSTEM;
 
 CLASS_DECL_AURA extern LPFN_CREATE_SYSTEM g_pfn_create_system;

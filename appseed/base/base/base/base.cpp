@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "base/user/user.h"
 
 
@@ -45,10 +45,10 @@ CLASS_DECL_BASE int get_base_init()
 }
 
 
-::aura::system * base_create_aura_system()
+::aura::system * base_create_aura_system(app_core * pappcore)
 {
 
-   return new ::base::system(NULL);
+   return new ::base::system(NULL, pappcore);
 
 }
 
@@ -64,7 +64,7 @@ CLASS_DECL_BASE int_bool defer_base_init()
    if(!base_init())
       return FALSE;
 
-   g_pfn_create_system = base_create_aura_system;
+   g_pfn_create_system = &base_create_aura_system;
 
    return TRUE;
 

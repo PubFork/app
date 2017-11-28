@@ -1001,9 +1001,9 @@ retry:
 
             double dRateDownloaded = 0.0;
 
-            int64_t iContentLength = (double) set["http_content_length"].int64();
+            int64_t iContentLength = set["http_content_length"].int64();
 
-            int64_t iBodySizeDownloaded = (double) set["http_body_size_downloaded"].int64();
+            int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
 
             if (iContentLength > 0)
             {
@@ -1770,9 +1770,9 @@ retry_session:
 
          double dRateDownloaded = 0.0;
 
-         int64_t iContentLength = (double)set["http_content_length"].int64();
+         int64_t iContentLength = set["http_content_length"].int64();
 
-         int64_t iBodySizeDownloaded = (double)set["http_body_size_downloaded"].int64();
+         int64_t iBodySizeDownloaded = set["http_body_size_downloaded"].int64();
 
          if (iContentLength > 0)
          {
