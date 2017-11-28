@@ -1,9 +1,6 @@
 ﻿#include "framework.h"
 
 
-#if defined()
-
-
 #include "install_net.h"
 #include "aura/net/sockets/http/sockets_http_session.h"
 
@@ -835,10 +832,6 @@ md5retry:
 
 
 } // namespace install
-
-
-
-#endif
 
 
 

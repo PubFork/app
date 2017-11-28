@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace visual
@@ -9,8 +9,8 @@ namespace visual
       virtual public ::aura::department
    {
    public:
-      
-      
+
+
       map < int32_t, int32_t, sp(memory) > m_alpha_spread__24CC_filterMap;
       map < int32_t, int32_t, sp(memory) > m_alpha_spread__32CC_filterMap;
 
@@ -28,7 +28,7 @@ namespace visual
       virtual void construct(::aura::application * papp);
 
       virtual bool process_initialize();
-      
+
       virtual bool initialize();
       virtual bool initialize1();
 
@@ -37,7 +37,7 @@ namespace visual
 
       virtual class api & api();
       virtual class imaging & imaging();
-            
+
 
 
       class font_department & fonts();
@@ -59,35 +59,36 @@ namespace visual
 
 
       virtual bool embossed_text_out(
-         ::draw2d::graphics * pgraphics, 
-         LPCRECT lpcrect, 
-         string strText, 
-         ::visual::fastblur & dib2,
-         ::draw2d::font * pfont, 
-         int iDrawTextFlags,
-         COLORREF crText,
-         COLORREF crGlow, 
-         int iSpreadRadius,
-         int iBlurRadius,
-         int iBlur, 
-         bool bUpdate,
-         double dAlpha = 1.0);
+      ::draw2d::graphics * pgraphics,
+      LPCRECT lpcrect,
+      string strText,
+      ::visual::fastblur & dib2,
+      ::draw2d::font * pfont,
+      int iDrawTextFlags,
+      COLORREF crText,
+      COLORREF crGlow,
+      int iSpreadRadius,
+      int iBlurRadius,
+      int iBlur,
+      bool bUpdate,
+      double dAlpha = 1.0);
 
 
       template < typename PRED >
       bool emboss_pred(
-         ::draw2d::graphics * pgraphics,
-         LPCRECT lpcrect,
-         PRED pred,
-         ::visual::fastblur & dib2,
-         COLORREF crGlow,
-         int iSpreadRadius,
-         int iBlurRadius,
-         int iBlur,
-         bool bUpdate,
-         double dAlpha = 1.0);
-      
+      ::draw2d::graphics * pgraphics,
+      LPCRECT lpcrect,
+      PRED pred,
+      ::visual::fastblur & dib2,
+      COLORREF crGlow,
+      int iSpreadRadius,
+      int iBlurRadius,
+      int iBlur,
+      bool bUpdate,
+      double dAlpha = 1.0);
 
+      virtual void alpha_spread__24CC(LPBYTE lpbDest, int32_t xDest, int32_t yDest, int32_t wDest, int32_t cx, int32_t cy, LPBYTE lpbSrc, int32_t ySrc, int32_t xSrc, int32_t wSrc, BYTE bMin, int32_t iRadius);
+      virtual bool channel_spread__32CC(::draw2d::dib * pdibDst, ::draw2d::dib * pdibSrc, int32_t iChannel, int32_t iRadius, COLORREF crSpreadSetColor);
 
    };
 

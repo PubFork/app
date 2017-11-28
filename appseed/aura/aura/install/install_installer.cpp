@@ -5,9 +5,6 @@
 #endif
 
 
-#if defined()
-
-
 #include "install_net.h"
 #include "aura/net/sockets/http/sockets_http_session.h"
 
@@ -3166,15 +3163,6 @@ retry_host:
 
 
 } // namespace app_app_admin
-
-
-
-
-#endif
-
-
-
-
 
 
 

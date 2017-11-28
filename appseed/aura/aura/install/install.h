@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 namespace install
@@ -21,9 +18,9 @@ namespace install
 #define SPA_FILE_FLAG_VOID_COPY 1
 
 
-  //#include "install_canvas.h"
-  //#include "install_plugin.h"
-  //#include "install_starter_start.h"
+//#include "install_canvas.h"
+//#include "install_plugin.h"
+//#include "install_starter_start.h"
 #include "install_focus.h"
 #include "install_installer_launcher.h"
 #include "install_trace.h"
@@ -46,11 +43,5 @@ namespace install
 
 
 #include "install_module_list.h"
-
-
-#endif
-
-
-
 
 

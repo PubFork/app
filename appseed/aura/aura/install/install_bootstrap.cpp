@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWS
 #include <shellapi.h>
 #include <shlobj.h>
@@ -64,9 +64,6 @@ bool get_os_bit(bool & b64)
 }
 
 #endif
-
-
-#if defined()
 
 
 #include "install_bootstrap.h"
@@ -1628,15 +1625,7 @@ command_retry:
    }
 
 
-
-
-
 } // namespace install
-
-
-
-#endif
-
 
 
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <wincodec.h>
 #ifdef METROWIN
 #include <ShCore.h>
@@ -134,40 +134,40 @@ namespace visual
 }
 
 
-bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
-{
-
-   ::visual::dib_sp d;
-
-   d.::draw2d::dib_sp::operator=(&dib);
-
-   ::visual::save_image saveimage;
-
-   saveimage.m_eformat = ::visual::image::format_png;
-
-   saveimage.m_iQuality = 100;
-
-   return d.save_to_file(lpcszFile, &saveimage);
-
+//bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
+//{
 //
+//   ::visual::dib_sp d;
 //
-//#ifdef METROWIN
+//   d.::draw2d::dib_sp::operator=(&dib);
 //
-//      throw todo(get_app());
+//   ::visual::save_image saveimage;
 //
-//#else
+//   saveimage.m_eformat = ::visual::image::format_png;
 //
-//      if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), dib, lpcszFile, 0))
-//      {
-//         //
-//      }
-//      if (bUnload)
-//      {
-//         FreeImage_Unload(dib);
-//      }
-//#endif
+//   saveimage.m_iQuality = 100;
 //
-}
+//   return d.save_to_file(lpcszFile, &saveimage);
+//
+////
+////
+////#ifdef METROWIN
+////
+////      throw todo(get_app());
+////
+////#else
+////
+////      if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), dib, lpcszFile, 0))
+////      {
+////         //
+////      }
+////      if (bUnload)
+////      {
+////         FreeImage_Unload(dib);
+////      }
+////#endif
+////
+//}
 
 
 //FIBITMAP * imaging::dib_to_FI(::draw2d::dib * pdib)
@@ -680,14 +680,19 @@ bool imaging::save_png(const  char * lpcszFile, ::draw2d::dib & dib)
 //}
 
 
-bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory)
+bool dib_from_wicbitmapsource(::draw2d::dib * pdib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory)
 {
 
    windows::comptr < IWICBitmap > piBmp;
 
    HRESULT hr = piFactory->CreateBitmapFromSource(piConverter, WICBitmapCacheOnLoad, &piBmp);
 
-   if (hr != S_OK) return false;
+   if (hr != S_OK)
+   {
+
+      return false;
+
+   }
 
    UINT uiWidth;
 
@@ -695,7 +700,12 @@ bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverte
 
    hr = piBmp->GetSize(&uiWidth, &uiHeight);
 
-   if (hr != S_OK) return false;
+   if (hr != S_OK)
+   {
+
+      return false;
+
+   }
 
    WICRect rc;
 
@@ -708,13 +718,23 @@ bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverte
 
    hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
 
-   if (hr != S_OK) return false;
+   if (hr != S_OK)
+   {
+
+      return false;
+
+   }
 
    UINT cbStride;
 
    piLock->GetStride(&cbStride);
 
-   if (hr != S_OK) return false;
+   if (hr != S_OK)
+   {
+
+      return false;
+
+   }
 
    UINT uiArea;
 
@@ -722,23 +742,32 @@ bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverte
 
    hr = piLock->GetDataPointer(&uiArea, &pData);
 
-   if (hr != S_OK) return false;
+   if (hr != S_OK)
+   {
 
-   dib.create(uiWidth, uiHeight);
+      return false;
 
-   dib.map();
+   }
 
-   ::draw2d::copy_colorref(uiWidth, uiHeight, dib.m_pcolorref, dib.m_iScan, (COLORREF *)pData, cbStride);
+   if (!pdib->create(uiWidth, uiHeight))
+   {
+
+      return false;
+
+   }
+
+   pdib->map();
+
+   ::draw2d::copy_colorref(uiWidth, uiHeight, pdib->m_pcolorref, pdib->m_iScan, (COLORREF *)pData, cbStride);
 
    return true;
 
 
 }
 
-bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
-{
 
-   ::draw2d::dib * pdib = &dib;
+bool imaging::_load_image(::draw2d::dib * pdib, ::file::file * pfile)
+{
 
    if (pdib == NULL)
    {
@@ -808,7 +837,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    if (hr != S_OK) return false;
 
-   return dib_from_wicbitmapsource(dib, piConverter, piFactory);
+   return dib_from_wicbitmapsource(pdib, piConverter, piFactory);
 
 }
 

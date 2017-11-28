@@ -1,6 +1,5 @@
-#pragma once
+﻿#pragma once
 
-#ifdef 
 
 struct install_status
 {
@@ -23,9 +22,6 @@ struct install_status
    DWORD calc_when_is_good_to_check_again();
 
 };
-
-#endif
-
 
 namespace multimedia
 {
@@ -56,19 +52,19 @@ namespace aura
    {
    public:
 
-         // former ::aura::application_interface // moved on 2015-05-23 Sammstag while listening to RocketBeansTV (a German channel?) at TwitchTV
-         class imaging *                                 m_pimaging;
-         ::aura::system *                                m_paurasystem;
-         ::aura::session *                               m_paurasession;
-         :: axis :: application *                        m_paxisapp; // can be used only from axis and upper
-         :: axis ::system *                              m_paxissystem; // can be used only from axis and upper
-         :: axis ::session *                             m_paxissession; // can be used only from axis and upper
-         :: base :: application *                        m_pbaseapp; // can be used only from base and upper
-         ::base::system *                                m_pbasesystem; // can be used only from base and upper
-         ::base::session *                               m_pbasesession; // can be used only from base and upper
-         ::core::application *                           m_pcoreapp; // can be used only from core and upper
-         ::core::system *                                m_pcoresystem; // can be used only from core and upper
-         ::core::session *                               m_pcoresession; // can be used only from core and upper
+      // former ::aura::application_interface // moved on 2015-05-23 Sammstag while listening to RocketBeansTV (a German channel?) at TwitchTV
+      class imaging *                                 m_pimaging;
+      ::aura::system *                                m_paurasystem;
+      ::aura::session *                               m_paurasession;
+      :: axis :: application *                        m_paxisapp; // can be used only from axis and upper
+      :: axis ::system *                              m_paxissystem; // can be used only from axis and upper
+      :: axis ::session *                             m_paxissession; // can be used only from axis and upper
+      :: base :: application *                        m_pbaseapp; // can be used only from base and upper
+      ::base::system *                                m_pbasesystem; // can be used only from base and upper
+      ::base::session *                               m_pbasesession; // can be used only from base and upper
+      ::core::application *                           m_pcoreapp; // can be used only from core and upper
+      ::core::system *                                m_pcoresystem; // can be used only from core and upper
+      ::core::session *                               m_pcoresession; // can be used only from core and upper
 
 
       DWORD                                           m_dwInstallGoodToCheckAgain;
@@ -587,8 +583,6 @@ namespace aura
       void on_create(::create * pcreate) override;
 
 
-#ifdef 
-
       virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
 
       virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
@@ -599,8 +593,6 @@ namespace aura
       }
 
       virtual bool check_install();
-
-#endif
 
       virtual void dispatch_user_message_object(::object * pobject);
 
@@ -642,7 +634,6 @@ namespace aura
       virtual string get_app_id(string wstr);
 
 
-#ifdef 
 
       virtual void install_trace(const string & str);
       virtual void install_trace(double dRate);
@@ -670,7 +661,6 @@ namespace aura
       virtual bool install_get_admin();
       virtual string install_get_id();
 
-#endif
 
       virtual bool keyboard_focus_is_focusable(::user::elemental * pue);
       virtual bool keyboard_focus_OnSetFocus(::user::elemental * pue);
@@ -702,6 +692,8 @@ namespace aura
       virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
       virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
 
+
+      imaging & imaging();
 
 
    };

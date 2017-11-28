@@ -1,8 +1,6 @@
 ﻿#pragma once
 
 
-#if defined()
-
 #include "aura/net/netserver/netserver.h"
 
 namespace install
@@ -32,8 +30,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
 
 

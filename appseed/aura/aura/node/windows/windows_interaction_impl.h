@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include <Shobjidl.h>
@@ -447,9 +447,9 @@ namespace windows
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
       void CenterWindow(::user::interaction * pAlternateOwner = NULL);
       //virtual id   RunModalLoop(uint32_t dwFlags = 0,::object * pliveobject = NULL);
-      virtual bool ContinueModal(int32_t iLevel);
-      virtual void EndModalLoop(id nResult);
-      virtual void EndAllModalLoops(id nResult);
+      virtual bool ContinueModal() override;
+      virtual void EndModalLoop(id nResult) override;
+      //virtual void EndAllModalLoops(id nResult);
 
       // Window-Management message handler member functions
       virtual bool OnCommand(::message::base * pbase);

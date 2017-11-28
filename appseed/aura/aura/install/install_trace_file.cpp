@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 namespace install
@@ -86,8 +83,5 @@ namespace install
 
 } // namespace install
 
-
-
-#endif
 
 

@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 CLASS_DECL_AURA bool send_short_message_to_installer(const char * psz, bool bLaunch);
@@ -29,7 +26,7 @@ void installer_call_sync(const char * path, const char * param)
    bool bLaunch;
 
    if(stricmp_dup(param, "exit") == 0
-   || stricmp_dup(param, "quit") == 0)
+         || stricmp_dup(param, "quit") == 0)
    {
       bLaunch = false;
    }
@@ -49,14 +46,14 @@ void installer_call_sync(const char * path, const char * param)
 CLASS_DECL_AURA bool send_short_message_to_installer(const char * psz, bool bLaunch)
 {
 
-   
+
 
 #ifdef METROWIN
 
    throw "todo";
 
 #else
-   
+
 
 #endif
 
@@ -74,22 +71,17 @@ void send_spaboot_install_response(const char * param)
 
 #else
 
-/*   ::aura::ipc::tx txchannel;
-   
-   install::installer::launcher launcher;
+   /*   ::aura::ipc::tx txchannel;
 
-   if(!txchannel.open("core/spaboot_install_callback")) 
-      return;
+      install::installer::launcher launcher;
 
-   txchannel.send(param, false);*/
+      if(!txchannel.open("core/spaboot_install_callback"))
+         return;
+
+      txchannel.send(param, false);*/
 
 #endif
 
 }
-
-
-#endif
-
-
 
 

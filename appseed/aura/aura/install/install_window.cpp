@@ -1,10 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 #define ID_ONE 1
-
-#if defined()
-
 
 namespace install
 {
@@ -474,8 +471,8 @@ namespace install
 
          pgraphics->SelectObject(m_brushBarBk);
          pgraphics->FillRectangle(
-            ::rect(point(10, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
-                   ::size((int) (lpcrect->right - 10 - 10), (int) (cyBar))));
+         ::rect(point(10, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
+                ::size((int) (lpcrect->right - 10 - 10), (int) (cyBar))));
 
          if (bProgress)
          {
@@ -483,9 +480,9 @@ namespace install
             pgraphics->SelectObject(m_brushBar);
 
             pgraphics->FillRectangle(
-               ::rect(
-                  ::point(11, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
-                  ::size((int) iRight, (int) (cyBar - 2.0))));
+            ::rect(
+            ::point(11, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+            ::size((int) iRight, (int) (cyBar - 2.0))));
 
          }
          else
@@ -498,17 +495,17 @@ namespace install
             pgraphics->SelectObject(m_brushBar);
 
             pgraphics->FillRectangle(
-               ::rect(
-                  ::point((int) (11.0 + i), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
-                  ::size((int) (MIN(lpcrect->right - 10.0, iRight) - 11 - i), (int) (cyBar - 2.0))));
+            ::rect(
+            ::point((int) (11.0 + i), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+            ::size((int) (MIN(lpcrect->right - 10.0, iRight) - 11 - i), (int) (cyBar - 2.0))));
 
             if (iRight >= lpcrect->right - 10)
             {
 
                pgraphics->FillRectangle(
-                  ::rect(
-                     ::point((int) (11.0), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
-                     ::size((int) (iRight - lpcrect->right - 10.0 - 11.0), (int) (cyBar - 2.0))));
+               ::rect(
+               ::point((int) (11.0), (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0)),
+               ::size((int) (iRight - lpcrect->right - 10.0 - 11.0), (int) (cyBar - 2.0))));
 
             }
          }
@@ -516,9 +513,9 @@ namespace install
          pgraphics->SelectObject(m_penBarBorder);
 
          pgraphics->DrawRectangle(
-            ::rect(
-               ::point((int) 10.0, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
-               ::size((int) (lpcrect->right - 10.0 - 10.0), (int) cyBar)));
+         ::rect(
+         ::point((int) 10.0, (int) ((lpcrect->top + lpcrect->bottom - cyBar) / 2.0)),
+         ::size((int) (lpcrect->right - 10.0 - 10.0), (int) cyBar)));
 
       }
 
@@ -780,18 +777,18 @@ namespace install
       int iHeight = 600;
 
       HWND hwnd = CreateWindowExW(
-                     WS_EX_LAYERED,
-                     m_wstrWindowClass.c_str(),
-                     m_wstrWindowTitle.c_str(),
-                     WS_OVERLAPPED,
-                     CW_USEDEFAULT,
-                     0,
-                     CW_USEDEFAULT,
-                     0,
-                     NULL,
-                     NULL,
-                     System.m_hinstance,
-                     NULL);
+                  WS_EX_LAYERED,
+                  m_wstrWindowClass.c_str(),
+                  m_wstrWindowTitle.c_str(),
+                  WS_OVERLAPPED,
+                  CW_USEDEFAULT,
+                  0,
+                  CW_USEDEFAULT,
+                  0,
+                  NULL,
+                  NULL,
+                  System.m_hinstance,
+                  NULL);
 
       if (hwnd == NULL)
       {
@@ -903,9 +900,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
 
 

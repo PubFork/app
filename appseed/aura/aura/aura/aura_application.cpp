@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -125,6 +125,8 @@ namespace aura
       m_pcoresystem = NULL;
       m_pcoresession = NULL;
       m_peventReady = NULL;
+      m_pimaging = NULL;
+
 
 #ifdef WINDOWS
 
@@ -373,11 +375,7 @@ namespace aura
             if (!is_system() && !is_session())
             {
 
-#ifdef 
-
                check_install();
-
-#endif
 
                ::multithreading::post_quit(&System);
 
@@ -2424,6 +2422,14 @@ namespace aura
 
 
 
+   imaging & application::imaging()
+   {
+
+      return *m_pimaging;
+
+   }
+
+
 
 
 
@@ -3286,8 +3292,6 @@ InitFailure:
 
 
 
-#ifdef 
-
    bool application::check_install()
    {
 
@@ -3369,11 +3373,7 @@ InitFailure:
 
          }
 
-#ifdef 
-
          System.install().remove_spa_start(m_strAppId);
-
-#endif
 
       }
 
@@ -3381,8 +3381,6 @@ InitFailure:
 
    }
 
-
-#endif
 
 
    bool application::initial_check_directrix()
@@ -3508,8 +3506,6 @@ retry_license:
       stringa straLocale = m_phandler->m_varTopicQuery["locale"].stra();
       stringa straSchema = m_phandler->m_varTopicQuery["schema"].stra();
 
-#if defined()
-
       System.install().remove_spa_start(strId);
       System.install().add_app_install(strId, strBuild, strSystemLocale, m_strSchema);
       System.install().add_app_install(strId, strBuild, strSystemLocale, strSystemSchema);
@@ -3562,8 +3558,6 @@ retry_license:
       }
 
       System.install().add_app_install(strId, strBuild, "", "");
-
-#endif
 
       return true;
 
@@ -5909,8 +5903,6 @@ retry_license:
 
       }
 
-#if defined()
-
       if ((papp == NULL || papp->m_strAppId != strAppId)
             &&
             (!Application.handler()->m_varTopicQuery.has_property("install")
@@ -5936,8 +5928,6 @@ retry_license:
          return NULL;
 
       }
-
-#endif
 
       return papp;
 
@@ -6831,8 +6821,6 @@ finalize:
    }
 
 
-#ifdef 
-
    bool application::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
    {
 
@@ -7151,9 +7139,6 @@ finalize:
    }
 
 
-#endif
-
-
    string application::get_app_id(string wstr)
    {
 
@@ -7211,9 +7196,6 @@ finalize:
       return psz;
 
    }
-
-
-#ifdef 
 
 
    int application::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
@@ -7453,8 +7435,6 @@ finalize:
 
    }
 
-
-#endif
 
    LPWAVEOUT application::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
    {

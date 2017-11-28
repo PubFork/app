@@ -2,9 +2,6 @@
 
 #define ID_ONE 1
 
-#if defined()
-
-
 #include "install_net.h"
 #include "aura/net/sockets/http/sockets_http_session.h"
 
@@ -984,13 +981,6 @@ DWORD install_status::calc_when_is_good_to_check_again()
    return dwGoodToCheckAgain;
 
 }
-
-
-
-
-
-
-#endif
 
 
 

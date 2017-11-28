@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 #include "install_socket.h"
@@ -235,10 +232,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
-
 
 

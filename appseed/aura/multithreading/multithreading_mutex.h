@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -12,19 +12,19 @@ public:
 
 
    pthread_mutex_t         m_mutex;
-   
+
 #ifdef MUTEX_COND_TIMED
-   
+
    pthread_t               m_thread;
    pthread_cond_t          m_cond;
    int                     m_count;
-   
+
 #endif
 
 #if defined(MUTEX_NAMED_POSIX)
 
    sem_t *                 m_psem; // as of 2016-11-26
-                                   // not implemented (err=38) on android-19
+   // not implemented (err=38) on android-19
 #elif defined(MUTEX_NAMED_FD)
 
    int                     m_iFd;
@@ -111,9 +111,6 @@ public:
 #endif
 
 
-#if defined()
-
-
 namespace install
 {
 
@@ -148,10 +145,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
-
 
 

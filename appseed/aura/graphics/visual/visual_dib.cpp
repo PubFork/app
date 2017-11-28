@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #ifdef WINDOWS
 #include <wincodec.h>
@@ -262,17 +262,17 @@ namespace visual
    {
 
       return write_to_file(varFile, psaveimage);
-      
+
    }
 
-   
+
    save_image::save_image()
    {
-      
+
       m_eformat = ::visual::image::format_png;
-      
+
       m_iQuality = 100;
-      
+
    }
 
 
@@ -494,19 +494,19 @@ namespace visual
 
    }
 
-   
-   bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
+
+   bool dib_sp::write_to_file(var varFile, save_image * psaveimage)
    {
-      
+
       if(m_p == NULL)
       {
-         
+
          return false;
-         
+
       }
-      
-      return Sys(m_p->get_app()).visual().imaging().save_image(varFile, m_p, psaveimage);
-      
+
+      return App(m_p->get_app()).imaging().save_image(varFile, m_p, psaveimage);
+
    }
 
 } // namespace visual

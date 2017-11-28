@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef 
+﻿#pragma once
 
 
 namespace aura
@@ -33,12 +30,6 @@ namespace aura
 
 
 } // namespace aura
-
-
-
-#endif
-
-
 
 
 

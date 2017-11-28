@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 #include "install_tool.h"
@@ -447,12 +444,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
-
-
-
-
 
 

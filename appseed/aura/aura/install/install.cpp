@@ -1,7 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 
-
-#if defined()
 
 #ifdef LINUX
 
@@ -116,8 +114,5 @@ string url_query_param(int32_t & iParam, const char * pszParam)
 
 
 
-
-
-#endif
 
 

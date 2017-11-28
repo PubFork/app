@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 namespace install
@@ -46,8 +43,8 @@ namespace install
 
       if (!ensure_executable())
          return;
-      
-      
+
+
       call_async(m_strPath, NULL, ::file::path(m_strPath).folder(), SW_HIDE, false);
 
 //      string strDir = dir::name(m_strPath.c_str());
@@ -78,14 +75,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-#endif
-
-
-
-
 
 
 

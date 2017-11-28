@@ -1,7 +1,4 @@
-#include "framework.h"
-
-
-#if defined()
+﻿#include "framework.h"
 
 
 namespace aura
@@ -22,14 +19,14 @@ namespace aura
    {
 
 #ifdef MACOS
-      
+
       ::file::path pathBase = ::dir::ca2_user();
-      
+
       if(pathBase.is_empty())
       {
-         
+
          pathBase = "~/Library/ca2";
-         
+
       }
 
       if(file_exists_dup(pathBase / "mypath" / m_strApp + ".txt"))
@@ -88,7 +85,7 @@ namespace aura
       return path::app_app(m_strPlatform);
 
 #endif
-      #endif
+#endif
 
    }
 
@@ -120,13 +117,13 @@ namespace aura
 
 #elif defined(WINDOWS)
 
-	   wstring wstrApp(get_executable_path());
+      wstring wstrApp(get_executable_path());
 
-	   wstring wstrDir(dir::name(string(wstrApp)));
+      wstring wstrDir(dir::name(string(wstrApp)));
 
-	   wstring wstrParams = get_params();
+      wstring wstrParams = get_params();
 
-	   STARTUPINFOW si;
+      STARTUPINFOW si;
       memset(&si,0,sizeof(si));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
@@ -137,21 +134,21 @@ namespace aura
       wstring wstrCmdLine = (L"\"" + wstrApp + L"\"" + wstrParams).c_str();
 
       if(::CreateProcessW((unichar *)wstrApp.c_str(),(unichar *)wstrCmdLine.c_str(),
-         NULL,NULL,FALSE,0,NULL,wstrDir,
-         &si,&pi))
+                          NULL,NULL,FALSE,0,NULL,wstrDir,
+                          &si,&pi))
          return true;
 
 #else
 
-	   string strPath = get_executable_path();
+      string strPath = get_executable_path();
 
-	   string strDir = dir::name(strPath);
+      string strDir = dir::name(strPath);
 
-	   string strParams = get_params();
+      string strParams = get_params();
 
 
-	  if (call_async(strPath, strParams, strDir , 0, false) == 0)
-		  return true;
+      if (call_async(strPath, strParams, strDir, 0, false) == 0)
+         return true;
 
 #endif
 
@@ -161,9 +158,5 @@ namespace aura
 
 
 } // namespace aura
-
-
-#endif
-
 
 

@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 #include "aura/net/netserver/netserver_socket_thread.h"
@@ -38,8 +35,5 @@ namespace install
 
 } // namespace install
 
-
-
-#endif
 
 

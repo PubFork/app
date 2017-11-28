@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 namespace install
@@ -56,8 +53,5 @@ namespace install
 
 
 } // namespace install
-
-
-#endif
 
 

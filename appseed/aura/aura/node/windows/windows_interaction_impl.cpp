@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
@@ -3436,10 +3436,19 @@ namespace windows
    }
 
 
-   bool interaction_impl::ContinueModal(int32_t iLevel)
+   bool interaction_impl::ContinueModal()
    {
 
-      return iLevel < m_pui->m_iModalCount;
+      if (m_pui == NULL)
+      {
+
+         return false;
+
+      }
+
+      return m_pui->ContinueModal();
+
+      //return iLevel < m_pui->m_iModalCount;
 
    }
 
@@ -3449,72 +3458,73 @@ namespace windows
 
       ASSERT(::IsWindow(get_handle()));
 
-      // this result will be returned from interaction_impl::RunModalLoop
-      m_pui->m_nModalResult = (int32_t)nResult;
+      m_pui->EndModalLoop(nResult);
+      //// this result will be returned from interaction_impl::RunModalLoop
+      //m_pui->m_nModalResult = (int32_t)nResult;
 
-      // make sure a message goes through to exit the modal loop
-      if (m_pui->m_iModalCount > 0)
-      {
+      //// make sure a message goes through to exit the modal loop
+      //if (m_pui->m_iModalCount > 0)
+      //{
 
-         m_pui->m_iModalCount--;
+      //   m_pui->m_iModalCount--;
 
-         for (index i = 0; i < m_pui->m_threadptraModal.get_count(); i++)
-         {
+      //   for (index i = 0; i < m_pui->m_threadptraModal.get_count(); i++)
+      //   {
 
-            m_pui->m_threadptraModal[i]->kick_thread();
+      //      m_pui->m_threadptraModal[i]->kick_thread();
 
-         }
+      //   }
 
-         m_pui->kick_queue();
+      //   m_pui->kick_queue();
 
-         get_thread()->kick_thread();
+      //   get_thread()->kick_thread();
 
-      }
-
-   }
-
-
-   void interaction_impl::EndAllModalLoops(id nResult)
-   {
-
-      ASSERT(::IsWindow(get_handle()));
-
-      // this result will be returned from interaction_impl::RunModalLoop
-      m_pui->m_idModalResult = nResult;
-
-      // make sure a message goes through to exit the modal loop
-      if (m_pui->m_iModalCount > 0)
-      {
-
-         int32_t iLevel = m_pui->m_iModalCount - 1;
-
-         m_pui->m_iModalCount = 0;
-
-         m_pui->kick_queue();
-
-         get_thread()->kick_thread();
-
-         for (int32_t i = iLevel; i >= 0; i--)
-         {
-
-            ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
-
-            try
-            {
-
-               pthread->kick_thread();
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-      }
+      //}
 
    }
+
+
+   //void interaction_impl::EndAllModalLoops(id nResult)
+   //{
+
+   //   ASSERT(::IsWindow(get_handle()));
+
+   //   // this result will be returned from interaction_impl::RunModalLoop
+   //   m_pui->m_idModalResult = nResult;
+
+   //   // make sure a message goes through to exit the modal loop
+   //   if (m_pui->m_iModalCount > 0)
+   //   {
+
+   //      int32_t iLevel = m_pui->m_iModalCount - 1;
+
+   //      m_pui->m_iModalCount = 0;
+
+   //      m_pui->kick_queue();
+
+   //      get_thread()->kick_thread();
+
+   //      for (int32_t i = iLevel; i >= 0; i--)
+   //      {
+
+   //         ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread >();
+
+   //         try
+   //         {
+
+   //            pthread->kick_thread();
+
+   //         }
+   //         catch (...)
+   //         {
+
+   //         }
+
+   //      }
+
+   //   }
+
+   //}
 
 
    bool interaction_impl::subclass_window(oswindow oswindow)

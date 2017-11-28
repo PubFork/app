@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "setup/debug.h"
@@ -13,7 +13,6 @@
 
 #if !defined(METROWIN) && !defined(APPLE_IOS) && !defined(VSNORD) && !defined(SMALLCODE) && !defined(RASPBIAN)
 
-#define 
 #define HOTPLUGIN_SUBSYSTEM
 
 #endif

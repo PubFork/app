@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 namespace install
@@ -78,9 +75,9 @@ namespace install
       LRESULT message_handler(UINT message, WPARAM wParam, LPARAM lParam);
 
 #ifdef WINDOWS
-      
+
       static LRESULT CALLBACK window_procedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-      
+
 #endif
 
       virtual ATOM register_class();
@@ -91,12 +88,6 @@ namespace install
 
 
 } // namespace install
-
-
-
-#endif
-
-
 
 
 

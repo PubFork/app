@@ -227,8 +227,6 @@ namespace user
 } // namespace aura
 
 
-#if defined()
-
 namespace install
 {
 
@@ -239,7 +237,7 @@ namespace install
 
 } // namespace install
 
-#endif
+
 
 
 namespace data

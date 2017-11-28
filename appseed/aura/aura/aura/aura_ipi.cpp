@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace aura
@@ -205,13 +205,9 @@ namespace aura
       }
 
 
-#if !defined()
-
       //throw todo(get_app());
 
       return true;
-
-#else
 
       ::aura::app_launcher launcher(process_platform_dir_name2(), strApp);
 
@@ -273,8 +269,6 @@ started:
       }
 
       return m_txmap[strKey]->open(key(strApp,iPid));
-
-#endif
 
    }
 

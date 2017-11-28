@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef 
+﻿#pragma once
 
 
 #include "aura/net/netserver/netserver_socket_handler.h"
@@ -27,4 +24,3 @@ namespace install
 
 
 
-#endif

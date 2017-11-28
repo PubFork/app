@@ -253,11 +253,7 @@ namespace aura
 
       ::draw2d::dib::static_initialize();
 
-#if defined()
-
       m_spinstall = canew(::install::install(this));
-
-#endif
 
 
    }
@@ -1941,16 +1937,12 @@ RetryBuildNumber:
    }
 
 
-#if defined()
-
    int32_t system::start_installation(const char * pszCommand)
    {
 
       return install().start(pszCommand);
 
    }
-
-#endif
 
 
    //int32_t system::install_start(const char * pszCommandLine, const char * pszBuild)
