@@ -37,7 +37,7 @@ void serialize_read(::file::istream & istream, map < t1, t2, t3, t4 > & m)
    catch (const char * psz)
    {
       m.remove_all();
-      throw new psz;
+      _throw(psz);
    }
 }
 
@@ -99,7 +99,7 @@ template < class T, class T_to_T = map < T, T, T, T > >
       m_iEmptyB = -1;
       m_iMaxA = -1;
       m_iMaxB = -1;
-      throw new psz;
+      _throw(psz);
    }
 return istream;
 }

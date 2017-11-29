@@ -126,7 +126,7 @@
 //
 //   if(!lock(duration::infinite()))
 //      if(!lock(duration::infinite()))
-//         throw new "failure to lock object";
+//         _throw("failure to lock object");
 //
 //}
 //

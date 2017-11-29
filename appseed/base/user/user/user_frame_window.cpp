@@ -665,7 +665,7 @@ namespace user
       //         ::SetFocus(NULL);
       //#else
       //
-      //         throw new todo(get_app());
+      //         _throw(todo(get_app()));
       //
       //#endif
       //

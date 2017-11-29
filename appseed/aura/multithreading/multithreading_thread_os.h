@@ -65,22 +65,22 @@
 //};
 
 
-#ifdef WINDOWS
-
-typedef uint32_t IDTHREAD;
-
-inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
-
-#else
-
-
-typedef pthread_t IDTHREAD;
-
-
-inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
-
-
-#endif
+//#ifdef WINDOWS
+//
+//typedef uint32_t IDTHREAD;
+//
+//inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
+//
+//#else
+//
+//
+//typedef pthread_t IDTHREAD;
+//
+//
+//inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
+//
+//
+//#endif
 
 CLASS_DECL_AURA HTHREAD start_thread(uint32_t (*)(void *), void * pv, int32_t iPriority = 0);
 

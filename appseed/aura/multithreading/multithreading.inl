@@ -53,7 +53,7 @@ _AFXMT_INLINE critical_section::critical_section() : sync_object < HANDLE > (NUL
 
       bSuccess = Init();
       if (!bSuccess)
-         throw new memory_exception(get_app());
+         _throw(memory_exception(get_app()));
    }
 
 _AFXMT_INLINE critical_section::operator CRITICAL_SECTION*()
@@ -68,7 +68,7 @@ _AFXMT_INLINE int_bool critical_section::Lock()
       }
       __except(STATUS_NO_MEMORY == GetExceptionCode())
       {
-         throw new memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       }
       return TRUE; 
    }
@@ -91,7 +91,7 @@ _AFXMT_INLINE int_bool critical_section::Unlock()
 	inline size_t wait_result::abandoned_index() const
 	{
 		if ( !abandoned() )
-         throw new range_error(get_app(), "abandoned index out of range");
+         _throw(range_error(get_app(), "abandoned index out of range"));
 		return -(m_iWaitResult + Abandon0);
 	}
 
@@ -115,7 +115,7 @@ _AFXMT_INLINE int_bool critical_section::Unlock()
 	inline size_t wait_result::signaled_index() const
 	{
 		if ( !signaled() )
-			throw new range_error(get_app(), "signaled index out of range");
+			_throw(range_error(get_app(), "signaled index out of range"));
 		return m_iWaitResult - Event0;
 	}
 
@@ -172,7 +172,7 @@ public:
          
       }
       
-      throw new ::simple_exception(get_app(), m_strErrorMessage);
+      _throw(::simple_exception(get_app(), m_strErrorMessage));
       
    }
    

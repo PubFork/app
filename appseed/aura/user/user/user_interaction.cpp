@@ -1544,7 +1544,7 @@ restart:
       catch (...)
       {
 
-         throw new simple_exception(get_app(), "no more a window");
+         _throw(simple_exception(get_app(), "no more a window"));
 
       }
 
@@ -1557,7 +1557,7 @@ restart:
       if (pgraphics == NULL)
       {
 
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       }
 
@@ -1584,7 +1584,7 @@ restart:
          //catch(...)
          //{
 
-         //   throw new simple_exception(get_app(), "no more a window");
+         //   _throw(simple_exception(get_app(), "no more a window"));
 
          //}
 
@@ -1987,7 +1987,7 @@ restart:
       m_bUserElementalOk = true;
 
       if (m_pauraapp == NULL)
-         throw new simple_exception(get_app(), "m_pauraapp cannot be null");
+         _throw(simple_exception(get_app(), "m_pauraapp cannot be null"));
 
       on_set_may_pro_devian();
 
@@ -3509,7 +3509,7 @@ restart:
       index iFind = GetParent()->m_uiptraChild.find_first(this);
 
       if (iFind < 0)
-         throw new "not expected situation";
+         _throw("not expected situation");
 
       if (iFind < GetParent()->m_uiptraChild.get_upper_bound())
       {
@@ -7703,7 +7703,7 @@ restart:
       break;
       case ::message::PrototypeTimer:
       {
-         throw new simple_exception(get_app(), "do not use WM_TIMER or Windows SetTimer/KillTimer");
+         _throw(simple_exception(get_app(), "do not use WM_TIMER or Windows SetTimer/KillTimer"));
          //           pbase = canew(::message::timer(get_app()));
       }
       break;
@@ -8915,7 +8915,7 @@ restart:
    void interaction::set_stock_icon(e_stock_icon eicon)
    {
 
-      throw new interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
    }
 

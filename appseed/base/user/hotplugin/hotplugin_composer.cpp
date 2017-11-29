@@ -445,7 +445,7 @@ namespace hotplugin
       if(m_pcomposersystem != NULL)
          return true;
 
-      throw new todo(NULL);
+      _throw(todo(NULL));
 
 //      try
 //      {

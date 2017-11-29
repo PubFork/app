@@ -52,7 +52,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw new "todo";
+      _throw("todo");
 
 #else
 

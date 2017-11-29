@@ -18,12 +18,12 @@ BaseMenuCentral::BaseMenuCentral(::aura::application * papp) :
 #ifdef WINDOWSEX
    if(!MenuV033GetImageList()->create(16, 16, ILC_COLOR24 | ILC_MASK, 0, 10))
    {
-      throw new simple_exception(papp, "resource exception BaseMenuCentral constructor");
+      _throw(simple_exception(papp, "resource exception BaseMenuCentral constructor"));
    }
 #else
    if(!MenuV033GetImageList()->create(16, 16, 0, 0, 10))
    {
-      throw new simple_exception(papp, "resource exception BaseMenuCentral constructor");
+      _throw(simple_exception(papp, "resource exception BaseMenuCentral constructor"));
    }
 #endif
 
@@ -239,7 +239,7 @@ bool BaseMenuCentralContainer::initialize_central_container(::aura::application 
 {
    m_pmenucentral = new BaseMenuCentral(papp);
    if(!m_pmenucentral)
-      throw new memory_exception(papp);
+      _throw(memory_exception(papp));
    return true;
 }
 

@@ -448,7 +448,7 @@ bool CLASS_DECL_AURA TextOutU(HDC hdc, int32_t x, int32_t y, const char * lpStri
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
    /*
 
@@ -485,7 +485,7 @@ CLASS_DECL_AURA bool GetTextExtentPoint32U(HDC hdc, const char * lpString, int32
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -512,7 +512,7 @@ CLASS_DECL_AURA int32_t  DrawTextU(HDC hdc, const char * lpchText, int32_t cchTe
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 

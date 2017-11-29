@@ -13,7 +13,7 @@ namespace file
          if(_virtPos == _size)
             return 0;
          else
-            throw new system_exception(get_app(), E_FAIL);
+            _throw(system_exception(get_app(), E_FAIL));
       }
       uint64_t rem = _size - _virtPos;
       if (rem < size)
@@ -39,7 +39,7 @@ namespace file
       case seek_current: _virtPos += offset; break;
       case seek_end: _virtPos = _size + offset; break;
       default: 
-         throw new system_exception(get_app(), STG_E_INVALIDFUNCTION);
+         _throw(system_exception(get_app(), STG_E_INVALIDFUNCTION));
       }
       return _virtPos;
    }

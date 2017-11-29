@@ -67,7 +67,7 @@ namespace draw2d_quartz2d
    void * font::get_os_data() const
    {
       
-      throw new interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
       
       return NULL;
       

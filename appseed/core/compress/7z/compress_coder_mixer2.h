@@ -103,7 +103,7 @@ namespace libcompress
                }
                streamIndex -= curSize;
             }
-            throw new 1;
+            _throw(1);
          }
          void FindOutStream(uint32 streamIndex, uint32 &coderIndex,
             uint32 &coderStreamIndex) const
@@ -118,7 +118,7 @@ namespace libcompress
                }
                streamIndex -= curSize;
             }
-            throw new 1;
+            _throw(1);
          }
       };
 

@@ -1,4 +1,4 @@
-﻿#include "framework.h" // previously aura/user/user.h
+#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -170,8 +170,11 @@ namespace aura
       // compilation to enable log tracing
       if(!initialize_log(strId))
       {
+         
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
-         throw new "failed to initialize log";
+         
+         _throw(simple_exception(get_app(), "failed to initialize log"));
+         
       }
 
       /*
@@ -223,10 +226,10 @@ namespace aura
       m_pxml->construct(this);
 
       if(!m_pxml->init1())
-         throw new simple_exception(this,"failed to construct system m_pxml->init1()");
+         _throw(simple_exception(this,"failed to construct system m_pxml->init1()"));
 
       if(!m_pxml->initialize())
-         throw new simple_exception(this,"failed to construct system m_pxml->initialize()");
+         _throw(simple_exception(this,"failed to construct system m_pxml->initialize()"));
 
 
 //      m_spmutexFactory = canew(mutex(get_app()));
@@ -817,10 +820,9 @@ namespace aura
       catch(...)
       {
 
-         m_error.m_iaErrorCode.add(-86);
+         m_error.set(-86);
 
       }
-
 
       for(int i = 0; i < m_serviceptra.get_size(); i++)
       {
@@ -1403,7 +1405,7 @@ namespace aura
 
 #else
 
-            throw new todo(get_app());
+            _throw(todo(get_app()));
 
 #endif
 
@@ -1426,7 +1428,7 @@ namespace aura
 
 #if defined(METROWIN)
 
-            throw new todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1464,7 +1466,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw new todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1496,7 +1498,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw new todo(get_app());
+            _throw(todo(get_app()));
 
 #else
 
@@ -1608,11 +1610,11 @@ namespace aura
 //
 //#elif defined(METROWIN)
 //
-//      throw new todo(this);
+//      _throw(todo(this));
 //
 //#elif defined(ANDROID)
 //
-//      throw new todo(this);
+//      _throw(todo(this));
 //
 //#else
 //
@@ -2904,7 +2906,7 @@ found:
    string system::url_encode(const string & str)
    {
 
-      //throw new interface_only_exception(this);
+      //_throw(interface_only_exception(this));
 
       return url_encode_dup(str);
 
@@ -3246,7 +3248,7 @@ success:
       catch (...)
       {
 
-         throw new resource_exception(this, "not good window anymore");
+         _throw(resource_exception(this, "not good window anymore"));
 
       }
 
@@ -3562,7 +3564,7 @@ success:
 
 #else
 
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
 
       //::GetWindowRect(::GetDesktopWindow(),lprect);
 

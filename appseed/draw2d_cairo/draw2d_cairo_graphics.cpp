@@ -188,7 +188,7 @@ namespace draw2d_cairo
    bool graphics::CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
 
    }
 
@@ -196,7 +196,7 @@ namespace draw2d_cairo
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
 
    }
 
@@ -4281,7 +4281,7 @@ namespace draw2d_cairo
                   if (hObjOld == hStockFont)
                   {
                      // got the stock object back, so must be selecting a font
-                     throw new not_implemented(get_app());
+                     _throw(not_implemented(get_app()));
    //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                      break;  // don't play the default record
                   }
@@ -4297,7 +4297,7 @@ namespace draw2d_cairo
                {
                   // play back as graphics::SelectObject(::draw2d::font*)
    //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
-                  throw new not_implemented(get_app());
+                  _throw(not_implemented(get_app()));
                   break;  // don't play the default record
                }
             }
@@ -5585,7 +5585,7 @@ namespace draw2d_cairo
       }
       break;
       default:
-         throw new "unexpected simple os graphics element type";
+         _throw("unexpected simple os graphics element type");
       }
 
       return false;
@@ -5996,7 +5996,7 @@ namespace draw2d_cairo
 
 #else
 
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
 #endif
 

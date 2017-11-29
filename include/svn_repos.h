@@ -537,7 +537,7 @@ svn_repos_delete(const char *path,
  * capabilities beginning with @c "SVN_REPOS_CAPABILITY_"), else set
  * @a *has to FALSE.
  *
- * If @a capability isn't recognized, throw new #SVN_ERR_UNKNOWN_CAPABILITY,
+ * If @a capability isn't recognized, _throw( #SVN_ERR_UNKNOWN_CAPABILITY,
  * with the effect on @a *has undefined.
  *
  * Use @a pool for all allocation.
@@ -1355,7 +1355,7 @@ svn_repos_abort_report(void *report_baton,
  * @a *allowed parameter comes back TRUE, then proceed with the planned
  * editor call; else if FALSE, then invoke @a editor->absent_file or
  * @a editor->absent_directory as appropriate, except if the planned
- * editor call was open_root, throw new SVN_ERR_AUTHZ_ROOT_UNREADABLE.
+ * editor call was open_root, _throw( SVN_ERR_AUTHZ_ROOT_UNREADABLE.
  *
  * If @a text_deltas is @c FALSE, send a single @c NULL txdelta window to
  * the window handler returned by @a editor->apply_textdelta().
@@ -2157,7 +2157,7 @@ svn_repos_get_file_revs(svn_repos_t *repos,
  * allocations.
  *
  * If the pre-commit hook fails, do not attempt to commit the
- * transaction and throw new the original error to the caller.
+ * transaction and _throw( the original error to the caller.
  *
  * A successful commit is indicated by a valid revision value in @a
  * *new_rev, not if svn_fs_commit_txn() returns an error, which can

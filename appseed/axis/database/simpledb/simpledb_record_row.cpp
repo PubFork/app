@@ -16,7 +16,7 @@ namespace simpledb
             var_array vara = m_var.vara();
             if(vara.get_count() != m_ptable->m_fielddefinition.get_count())
             {
-               throw new "no fields specified and values ::count is different from table '" + m_ptable->m_strName + "' field count";
+               _throw("no fields specified and values ::count is different from table '" + m_ptable->m_strName + "' field count");
             }
             else
             {

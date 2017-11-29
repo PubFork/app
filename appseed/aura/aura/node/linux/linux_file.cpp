@@ -54,7 +54,7 @@ namespace linux
       m_iFile = INVALID_FILE;
 
       if(!open(lpszFileName, nOpenFlags))
-         throw new ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
+         _throw(::file::exception(papp, ::file::exception::none, -1, lpszFileName));
 
    }
 
@@ -753,7 +753,7 @@ namespace linux
 
 
          //if (m_strFileName.is_empty())
-         // throw new todo(get_app());
+         // _throw(todo(get_app()));
             rStatus.m_attribute = 0;
 /*         else
          {
@@ -1644,7 +1644,7 @@ void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::e
       lpsz = ::linux::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %d.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw new ::file::exception(papp, ecause, lOsError, lpszFileName);
+   _throw(::file::exception(papp, ecause, lOsError, lpszFileName));
 }
 
 namespace linux

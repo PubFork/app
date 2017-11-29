@@ -291,7 +291,7 @@ namespace file
       ASSERT_VALID(this);
       ASSERT(m_pfile != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
       return NULL;
    }
 
@@ -300,7 +300,7 @@ namespace file
       ASSERT_VALID(this);
       ASSERT(m_pfile != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
    void simple_binary_file::UnlockRange(file_position_t /* dwPos */, file_size_t /* dwCount */)
@@ -308,7 +308,7 @@ namespace file
       ASSERT_VALID(this);
       ASSERT(m_pfile != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
 
@@ -380,7 +380,7 @@ namespace file
       //      lpsz = szUnknown;
       //   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
       //#endif
-      throw new ::file::exception(papp, cause, lOsError, lpszFileName);
+      _throw(::file::exception(papp, cause, lOsError, lpszFileName));
    }
 
    string simple_binary_file::GetFileName() const
@@ -439,7 +439,7 @@ namespace file
 
 
          //if (m_strFileName.is_empty())
-         // throw new todo(get_app());
+         // _throw(todo(get_app()));
          rStatus.m_attribute = 0;
          /*         else
                   {

@@ -18,7 +18,7 @@ namespace data
       m_proot = canew(tree_item);
 
       if(m_proot == NULL)
-         throw new memory_exception(get_app());
+         _throw(memory_exception(get_app()));
 
       m_proot->m_dwState |= ::data::tree_item_state_expandable;
 
@@ -337,7 +337,7 @@ namespace data
       }
          break;
       default:
-         throw new not_supported_exception(get_app());
+         _throw(not_supported_exception(get_app()));
       }
 
       pitemNew->m_ptree = this;

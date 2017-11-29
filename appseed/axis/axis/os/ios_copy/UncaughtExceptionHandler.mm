@@ -35,7 +35,7 @@ void HandleException(NSException *exception)
 {
 
 
-   throw new ns_exception();
+   _throw(ns_exception());
 
 }
 

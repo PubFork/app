@@ -17,7 +17,7 @@ void prepare_small_bell(bool bExistsOk)
    g_dwPrepareSmallBell = ::get_tick_count();
 #ifdef METROWIN
 
-   throw new "todo";
+   _throw("todo");
 
 #else
    if((bExistsOk && file_exists_dup(dir::element() /"stage\\start.wav"))
@@ -42,7 +42,7 @@ void play_small_bell()
 {
 #ifdef METROWIN
 
-   throw new "todo";
+   _throw("todo");
 
 #else
 

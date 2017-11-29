@@ -342,7 +342,7 @@ inline CComCritSecLock< TLock >::CComCritSecLock( TLock& cs, bool bInitialLock )
       hr = lock();
       if( FAILED( hr ) )
       {
-         throw new hresult_exception( hr );
+         _throw(hresult_exception( hr ));
       }
    }
 }
@@ -588,7 +588,7 @@ const char * gen_DebugGetClassName(T*)
    {
       if(i1 > 0 && i2 > 0 && (i1 + i2) < 0)
       {
-         throw new 0;
+         _throw(0);
       }
       return i1 + i2;
    }

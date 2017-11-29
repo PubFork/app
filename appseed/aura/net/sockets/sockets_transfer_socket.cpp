@@ -111,7 +111,7 @@ namespace sockets
 
    //void transfer_socket::cleanup()
    //{
-   //   // doesn't throw new an exception because it's called in a catch block
+   //   // doesn't _throw( an exception because it's called in a catch block
    //   if (m_hSocket == INVALID_SOCKET)
    //      return;
 
@@ -125,7 +125,7 @@ namespace sockets
    //   ASSERT(m_hSocket == INVALID_SOCKET);
    //   if ((m_hSocket = socket(AF_INET, nType, 0)) == INVALID_SOCKET)
    //   {
-   //      throw new transfer_socket_exception(get_app(), _T("Create"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Create")));
    //   }
    //}
 
@@ -135,7 +135,7 @@ namespace sockets
    //   ASSERT(m_hSocket != INVALID_SOCKET);
    //   if (::bind(m_hSocket, psa, sizeof(SOCKADDR)) == SOCKET_ERROR)
    //   {
-   //      throw new transfer_socket_exception(get_app(), _T("Bind"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Bind")));
    //   }
    //}
 
@@ -144,7 +144,7 @@ namespace sockets
    //   ASSERT(m_hSocket != INVALID_SOCKET);
    //   if (::listen(m_hSocket, 5) == SOCKET_ERROR)
    //   {
-   //      throw new transfer_socket_exception(get_app(), _T("Listen"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Listen")));
    //   }
    //}
 
@@ -166,7 +166,7 @@ namespace sockets
    //      // no exception if the listen was canceled
    //      if (WSAGetLastError() != WSAEINTR)
    //      {
-   //         throw new transfer_socket_exception(get_app(), _T("Accept"));
+   //         _throw(transfer_socket_exception(get_app(), _T("Accept")));
    //      }
    //      return false;
    //   }
@@ -178,7 +178,7 @@ namespace sockets
    //   if (m_hSocket != INVALID_SOCKET && closesocket(m_hSocket) == SOCKET_ERROR)
    //   {
    //      // should be OK to close if closed already
-   //      throw new transfer_socket_exception(get_app(), _T("Close"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Close")));
    //   }
    //   m_hSocket = INVALID_SOCKET;
    //}
@@ -190,7 +190,7 @@ namespace sockets
    //   // should timeout by itself
    //   if (::connect(m_hSocket, psa, sizeof(SOCKADDR)) == SOCKET_ERROR)
    //   {
-   //      throw new transfer_socket_exception(get_app(), _T("Connect"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Connect")));
    //   }
    //}
 
@@ -217,13 +217,13 @@ namespace sockets
    //   m_handler.select();
    //   //if (_select(m_hSocket + 1, NULL, &fd, NULL, &tv) == 0)
    //   //{
-   //   //   throw new transfer_socket_exception(get_app(), _T("Send timeout"));
+   //   //   _throw(transfer_socket_exception(get_app(), _T("Send timeout")));
    //   //}
 
    //   const int nBytesSent = send(pch, nSize);
    //   if (nBytesSent == SOCKET_ERROR)
    //   {
-   //      throw new transfer_socket_exception(get_app(), _T("Send"));
+   //      _throw(transfer_socket_exception(get_app(), _T("Send")));
    //   }
 
    //   return nBytesSent;
@@ -244,7 +244,7 @@ namespace sockets
 
       if (iRet == SOCKET_ERROR)
       {
-         throw new transfer_socket_exception(get_app(), _T("Socket Error"));
+         _throw(transfer_socket_exception(get_app(), _T("Socket Error")));
       }
 
       return iRet == 1;
@@ -265,7 +265,7 @@ namespace sockets
 
       if (iRet == SOCKET_ERROR)
       {
-         throw new transfer_socket_exception(get_app(), _T("Socket Error"));
+         _throw(transfer_socket_exception(get_app(), _T("Socket Error")));
       }
 
       return iRet == 1;
@@ -456,7 +456,7 @@ namespace sockets
       if (!check_readability(nSecs))
       {
 
-         throw new transfer_socket_exception(get_app(), _T("Receive timeout"));
+         _throw(transfer_socket_exception(get_app(), _T("Receive timeout")));
 
       }
 
@@ -466,7 +466,7 @@ namespace sockets
 
       if (nBytesReceived == SOCKET_ERROR)
       {
-         throw new transfer_socket_exception(get_app(), _T("ReceiveDatagram"));
+         _throw(transfer_socket_exception(get_app(), _T("ReceiveDatagram")));
       }
 
       return nBytesReceived;
@@ -478,13 +478,13 @@ namespace sockets
       if (!check_writability(nSecs))
       {
 
-         throw new transfer_socket_exception(get_app(), _T("Send timeout"));
+         _throw(transfer_socket_exception(get_app(), _T("Send timeout")));
       }
 
       const int nBytesSent = (int) (::sendto(GetSocket(), pch, nSize, 0, psa, sizeof(SOCKADDR)));
       if (nBytesSent == SOCKET_ERROR)
       {
-         throw new transfer_socket_exception(get_app(), _T("SendDatagram"));
+         _throw(transfer_socket_exception(get_app(), _T("SendDatagram")));
       }
 
       return nBytesSent;
@@ -541,7 +541,7 @@ namespace sockets
    //      nBytesThisTime = receive(m_pReadBuf + m_nReadBuf, nSizeRecv - m_nReadBuf, nSecs);
    //      if (nBytesThisTime <= 0)
    //      { // sender closed socket or line longer than buffer
-   //         throw new transfer_socket_exception(get_app(), _T("ReadHeaderLine"));
+   //         _throw(transfer_socket_exception(get_app(), _T("ReadHeaderLine")));
    //      }
    //      m_nReadBuf += nBytesThisTime;
    //   } while (true);

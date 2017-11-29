@@ -1181,7 +1181,7 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
 				// If we get here, the JPEG code has signaled an error.
 				// We need to clean up the JPEG object, close the input file, and return.
 				jpeg_destroy_decompress(&cinfo);
-				throw new (const char*)NULL;
+				_throw((const char*)NULL);
 			}
 
 			jpeg_create_decompress(&cinfo);
@@ -1241,17 +1241,17 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
 				if((flags & JPEG_CMYK) == JPEG_CMYK) {
 					// load as CMYK
 					dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-					if(!dib) throw new FI_MSG_ERROR_DIB_MEMORY;
+					if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 					FreeImage_GetICCProfile(dib)->flags |= FIICC_COLOR_IS_CMYK;
 				} else {
 					// load as CMYK and convert to RGB
 					dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 24, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-					if(!dib) throw new FI_MSG_ERROR_DIB_MEMORY;
+					if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 				}
 			} else {
 				// RGB or greyscale image
 				dib = FreeImage_AllocateHeader(header_only, cinfo.output_width, cinfo.output_height, 8 * cinfo.output_components, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK);
-				if(!dib) throw new FI_MSG_ERROR_DIB_MEMORY;
+				if(!dib) _throw(FI_MSG_ERROR_DIB_MEMORY);
 
 				if (cinfo.output_components == 1) {
 					// build a greyscale palette
@@ -1413,13 +1413,13 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 			WORD bpp = (WORD)FreeImage_GetBPP(dib);
 
 			if ((bpp != 24) && (bpp != 8)) {
-				throw new sError;
+				_throw(sError);
 			}
 
 			if(bpp == 8) {
 				// allow grey, reverse grey and palette
 				if ((color_type != FIC_MINISBLACK) && (color_type != FIC_MINISWHITE) && (color_type != FIC_PALETTE)) {
-					throw new sError;
+					_throw(sError);
 				}
 			}
 
@@ -1439,7 +1439,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				// If we get here, the JPEG code has signaled an error.
 				// We need to clean up the JPEG object, close the input file, and return.
 				jpeg_destroy_compress(&cinfo);
-				throw new (const char*)NULL;
+				_throw((const char*)NULL);
 			}
 
 			// Now we can initialize the JPEG compression object
@@ -1586,7 +1586,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				unsigned pitch = FreeImage_GetPitch(dib);
 				BYTE *target = (BYTE*)malloc(pitch * sizeof(BYTE));
 				if (target == NULL) {
-					throw new FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				while (cinfo.next_scanline < cinfo.image_height) {
@@ -1618,7 +1618,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				RGBQUAD *palette = FreeImage_GetPalette(dib);
 				BYTE *target = (BYTE*)malloc(cinfo.image_width * 3);
 				if (target == NULL) {
-					throw new FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				while (cinfo.next_scanline < cinfo.image_height) {
@@ -1646,7 +1646,7 @@ Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int page, int flags, void
 				BYTE reverse[256];
 				BYTE *target = (BYTE *)malloc(cinfo.image_width);
 				if (target == NULL) {
-					throw new FI_MSG_ERROR_MEMORY;
+					_throw(FI_MSG_ERROR_MEMORY);
 				}
 
 				for(i = 0; i < 256; i++) {

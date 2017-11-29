@@ -33,7 +33,7 @@
 
 void simple_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers)
 {
-   //throw new 0;
+   //_throw(0);
 }
 
 #endif // defined WINDOWS
@@ -96,7 +96,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw new "todo"; // aura::ipc::ipc
+      _throw("todo"); // aura::ipc::ipc
 
 #else
 
@@ -247,7 +247,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw new "todo";
+      _throw("todo");
 
 #else
 
@@ -834,7 +834,7 @@ run_install:
 
 #ifdef METROWIN
 
-      throw new "todo";
+      _throw("todo");
 
 #else
 
@@ -1296,7 +1296,7 @@ run_install:
       // this enables spaadmin to install ca files to ca folder, because npca2 would not use any ca shared libraries.
       if(m_phost->m_bRunningSpaAdmin)
       {
-         throw new todo(get_app());
+         _throw(todo(get_app()));
          /*if(!_c_lock_is_active("Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"))
          {
             m_phost->m_bRunningSpaAdmin = false;
@@ -1647,7 +1647,7 @@ restart:
 
 #ifdef METROWIN
 
-         throw new "todo";
+         _throw("todo");
 
 #else
 

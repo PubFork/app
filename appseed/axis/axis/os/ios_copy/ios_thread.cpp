@@ -65,7 +65,7 @@ thread_layer::~thread_layer()
 void thread_layer::wait_thread(DWORD dwMillis)
 {
    
-   throw new "not implemented";
+   _throw("not implemented");
 
    
 }
@@ -251,14 +251,14 @@ int32_t thread_get_scheduling_priority(int32_t iOsPolicy, const sched_param * pp
 void process_get_os_priority(int32_t * piPolicy, sched_param * pparam, int32_t nCa2Priority)
 {
    
-   throw new "not applicable in Mac OS";
+   _throw("not applicable in Mac OS");
    
 }
 
 int32_t process_get_scheduling_priority(int32_t iOsPolicy, const sched_param * pparam)
 {
    
-   throw new "not applicable in Mac OS";
+   _throw("not applicable in Mac OS");
    
 }
 

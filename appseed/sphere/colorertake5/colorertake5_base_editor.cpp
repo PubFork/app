@@ -55,7 +55,7 @@ namespace colorertake5
       if (parserFactory == NULL || lineSource == NULL)
       {
 
-         throw new exception(get_app(), string("Bad base_editor constructor parameters"));
+         _throw(exception(get_app(), string("Bad base_editor constructor parameters")));
 
       }
 

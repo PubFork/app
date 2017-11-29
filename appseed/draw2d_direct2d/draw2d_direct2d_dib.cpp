@@ -257,7 +257,7 @@ namespace draw2d_direct2d
          pgraphics->SelectObject(pbitmap);
          return false;
       }
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       //bool bOk = GetDIBits(WIN_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       pgraphics->SelectObject(pbitmap);
       return bOk;
@@ -1783,7 +1783,7 @@ namespace draw2d_direct2d
 
 #else
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -2600,7 +2600,7 @@ namespace draw2d_direct2d
       hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Map(D2D1_MAP_OPTIONS_READ, &pb->m_map);
 
       if (FAILED(hr) || pb->m_map.bits == NULL)
-         throw new "";
+         _throw("");
 
       ((dib *) this)->m_pcolorref = (COLORREF *)pb->m_map.bits;
 
@@ -2711,7 +2711,7 @@ namespace draw2d_direct2d
 
             ((dib *) this)->m_bMapped = false;
 
-            throw new "";
+            _throw("");
 
          }
 

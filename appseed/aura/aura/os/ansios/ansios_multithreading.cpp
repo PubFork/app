@@ -841,12 +841,10 @@ int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 //
 
 
+static HTHREAD g_hMainThread = NULL;
 
+static IDTHREAD g_uiMainThread = (IDTHREAD) -1;
 
-
-
-static HANDLE g_hMainThread = NULL;
-static UINT g_uiMainThread = -1;
 
 CLASS_DECL_AURA void set_main_thread(HANDLE hThread)
 {
@@ -860,7 +858,7 @@ CLASS_DECL_AURA void set_main_thread(HANDLE hThread)
 
 }
 
-CLASS_DECL_AURA void set_main_thread_id(UINT uiThread)
+CLASS_DECL_AURA void set_main_thread_id(IDTHREAD uiThread)
 {
 
    //   MESSAGE msg;
@@ -873,14 +871,19 @@ CLASS_DECL_AURA void set_main_thread_id(UINT uiThread)
 }
 
 
-CLASS_DECL_AURA HANDLE get_main_thread()
+CLASS_DECL_AURA HTHREAD get_main_thread()
 {
+   
    return g_hMainThread;
 
 }
-CLASS_DECL_AURA UINT   get_main_thread_id()
+
+
+CLASS_DECL_AURA IDTHREAD get_main_thread_id()
 {
+   
    return g_uiMainThread;
+   
 }
 
 

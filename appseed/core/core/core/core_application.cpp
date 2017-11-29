@@ -1976,7 +1976,7 @@ namespace core
    int32_t application::ShowAppMessageBox(sp(application)pApp, const char * lpszPrompt, UINT nType, UINT nIDPrompt)
    {
 
-      throw new not_implemented(pApp);
+      _throw(not_implemented(pApp));
 
    }
 
@@ -2547,7 +2547,7 @@ namespace core
    ::window_sp application::get_desktop_window()
    {
 #if defined(METROWIN) || defined(APPLEOS)
-      throw new todo(this);
+      _throw(todo(this));
       /*#elif defined(LINUX)
 
       //      synch_lock sl(&user_mutex());
@@ -3154,7 +3154,7 @@ namespace core
       cds.lpData = (PVOID)psz;
       return (int32_t)SendMessage(oswindow, WM_COPYDATA, (WPARAM)osdataSender, (LPARAM)&cds);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -3174,7 +3174,7 @@ namespace core
 
 #else
 
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
 
 #endif
 
@@ -3272,14 +3272,14 @@ namespace core
    catch(const ::exit_exception & e)
    {
 
-   throw new e;
+   _throw(e);
 
    }
    catch(const ::exception::exception & e)
    {
 
    if(!Application.on_run_exception((::exception::exception &) e))
-   throw new exit_exception(get_app());
+   _throw(exit_exception(get_app()));
 
    }
    catch(...)

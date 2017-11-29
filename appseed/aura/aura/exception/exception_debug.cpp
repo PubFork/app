@@ -25,7 +25,7 @@ END_EXTERN_C
 CLASS_DECL_AURA int throw_assert_exception(const char * lpszFileName,int iLineNumber)
 {
 
-   throw new assert_exception(get_app(),lpszFileName,iLineNumber);
+   _throw(assert_exception(get_app(),lpszFileName,iLineNumber));
 
 }
 

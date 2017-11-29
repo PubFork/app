@@ -92,14 +92,14 @@ inline TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::get_at(index nIndex)
 {
    //   if(nIndex >= 0 && nIndex < m_nSize)
    return get_data()[nIndex];
-   //   throw new invalid_argument_exception(get_app());
+   //   _throw(invalid_argument_exception(get_app()));
 }
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline const TYPE& raw_array < TYPE, ARG_TYPE, ALLOCATOR >::get_at(index nIndex) const
 {
    //   if(nIndex >= 0 && nIndex < m_nSize)
    return get_data()[nIndex];
-   // throw new invalid_argument_exception(get_app());
+   // _throw(invalid_argument_exception(get_app()));
 }
 template<class TYPE, class ARG_TYPE, class ALLOCATOR >
 inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at(index nIndex, ARG_TYPE newElement)
@@ -107,7 +107,7 @@ inline void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at(index nIndex, ARG_TY
    //   if(nIndex >= 0 && nIndex < m_nSize)
    get_data()[nIndex] = newElement;
    // else
-   //  throw new invalid_argument_exception(get_app());
+   //  _throw(invalid_argument_exception(get_app()));
 }
 
 
@@ -365,7 +365,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //   ASSERT(nNewSize >= 0);
 //
 //   if(nNewSize < 0 )
-//      throw new invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   if (nGrowBy >= 0)
 //      m_nGrowBy = nGrowBy;  // set new size
@@ -388,7 +388,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //      // m_nGrowBy elements, whichever is larger.
 //#ifdef SIZE_T_MAX
 //      if(nNewSize > SIZE_T_MAX/sizeof(TYPE))
-//         throw new memory_exception(get_app());
+//         _throw(memory_exception(get_app()));
 //      ASSERT(nNewSize <= SIZE_T_MAX/sizeof(TYPE));    // no overflow
 //#endif
 //      ::count nAllocSize = MAX(nNewSize, m_nGrowBy);
@@ -441,7 +441,7 @@ raw_array < TYPE, ARG_TYPE, ALLOCATOR >::~raw_array()
 //      ASSERT(nNewMax >= m_nMaxSize);  // no wrap around
 //
 //      if(nNewMax  < m_nMaxSize)
-//         throw new invalid_argument_exception(get_app());
+//         _throw(invalid_argument_exception(get_app()));
 //
 //#ifdef SIZE_T_MAX
 //      ASSERT(nNewMax <= SIZE_T_MAX/sizeof(TYPE)); // no overflow
@@ -506,7 +506,7 @@ void raw_array < TYPE, ARG_TYPE, ALLOCATOR >::set_at_grow(index nIndex, ARG_TYPE
    //ASSERT(nIndex >= 0);
 
    if(nIndex < 0)
-      throw new invalid_argument_exception(this->get_app());
+      _throw(invalid_argument_exception(this->get_app()));
 
    if (nIndex >= this->m_nSize)
       this->allocate(nIndex+1, -1);
@@ -547,7 +547,7 @@ index raw_array < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex, ARG_TYPE 
 //   ASSERT(nStartIndex >= 0);
 //
 //   if(pNewArray == NULL || nStartIndex < 0)
-//      throw new invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   if (pNewArray->get_size() > 0)
 //   {

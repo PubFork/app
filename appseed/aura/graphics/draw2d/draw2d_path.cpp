@@ -124,7 +124,7 @@ namespace draw2d
    {
 
       if(!m_bHasPoint)
-         throw new ::simple_exception(get_app(), "there is no point");
+         _throw(::simple_exception(get_app(), "there is no point"));
 
       return m_pt;
 
@@ -597,7 +597,7 @@ namespace draw2d
          }
          break;
       default:
-         throw new ::simple_exception(get_app(), "unexpected simple os graphics element type");
+         _throw(::simple_exception(get_app(), "unexpected simple os graphics element type"));
       }
 
 

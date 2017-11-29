@@ -651,7 +651,7 @@ namespace user
    //
    //      }
    //
-   //      throw new invalid_argument_exception(get_app());
+   //      _throw(invalid_argument_exception(get_app()));
    //
    //   }
    //

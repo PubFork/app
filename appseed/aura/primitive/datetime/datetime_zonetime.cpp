@@ -89,7 +89,7 @@ namespace datetime
       ASSUME(m_time != -1);   */    // indicates an illegal input zonetime
       if (m_time == -1)
       {
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
       }
    }
 
@@ -138,7 +138,7 @@ namespace datetime
          if (ptmTemp == NULL)
             return NULL;
 
-         // but don't throw new exception or generate error...
+         // but don't _throw( exception or generate error...
          // (reason for commenting out below, fat to be removed...)
          //         if(errno != 0)
          //          return NULL;

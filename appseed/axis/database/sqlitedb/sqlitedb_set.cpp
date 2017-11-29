@@ -78,7 +78,7 @@ namespace sqlite
             db->start_transaction();
 
          if(db == NULL)
-            throw new database::DbErrors("No base Connection");
+            _throw(database::DbErrors("No base Connection"));
 
          //close();
 
@@ -92,7 +92,7 @@ namespace sqlite
             {
                fprintf(stderr,"Error: %s",err);
                sqlite3_free(err);
-               throw new database::DbErrors(db->getErrorMsg());
+               _throw(database::DbErrors(db->getErrorMsg()));
             }
          } // end of for
 
@@ -454,7 +454,7 @@ namespace sqlite
          }
          if (!found)
          {
-            throw new database::DbErrors("Field not found: %s",f_name);
+            _throw(database::DbErrors("Field not found: %s",f_name));
          }
          return true;
       }
@@ -462,7 +462,7 @@ namespace sqlite
       {
          return set::SetFieldValue(f_name, value);
       }
-//      throw new database::DbErrors("Not in Insert or Edit or Select state");
+//      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
 //      //  return false;
    }
 
@@ -477,7 +477,7 @@ namespace sqlite
          }
          else
          {
-            throw new database::DbErrors("Field not found: %d",iFieldIndex);
+            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
          }
       }
       else
@@ -485,7 +485,7 @@ namespace sqlite
          ASSERT(FALSE);
          //      return set::SetFieldValue(f_name, value);
       }
-      throw new database::DbErrors("Not in Insert or Edit or Select state");
+      _throw(database::DbErrors("Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -499,7 +499,7 @@ namespace sqlite
          }
          else
          {
-            throw new database::DbErrors("Field not found: %d",iFieldIndex);
+            _throw(database::DbErrors("Field not found: %d",iFieldIndex));
          }
       }
       //   else
@@ -508,7 +508,7 @@ namespace sqlite
          //return set::SetFieldValue(f_name, value);
 
       }
-      //throw new database::DbErrors("Not in Insert or Edit or Select state");
+      //_throw(database::DbErrors("Not in Insert or Edit or Select state"));
       //  return false;
    }
 
@@ -545,7 +545,7 @@ namespace sqlite
                iFound = i;
                break;
             }
-            if (iFound < 0) throw new database::DbErrors("Field not found: %s",fieldname);
+            if (iFound < 0) _throw(database::DbErrors("Field not found: %s",fieldname));
             ::count iNumRows = num_rows();
             for(i=0; i < iNumRows; i++)
                if(result.records[i][iFound] == value)
@@ -556,7 +556,7 @@ namespace sqlite
 
                return false;
       }
-      throw new database::DbErrors("not in Select state");
+      _throw(database::DbErrors("not in Select state"));
    }
 
    void set::query_items(stringa & stra, const char * pszSql)

@@ -58,7 +58,7 @@ namespace file
       //   UNREFERENCED_PARAMETER(psz2);
       //   UNREFERENCED_PARAMETER(iLen2);
       //   UNREFERENCED_PARAMETER(bUrl);
-      //   throw new interface_only_exception(get_app(), "this is an interface");
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
       //}
 
       //::file::path system::path(const string & pszFolder, strsize iLenFolder, const string & pszRelative, strsize iLenRelative, bool bUrl)
@@ -395,7 +395,7 @@ namespace file
       //{
       //   UNREFERENCED_PARAMETER(lpcszSource);
       //   UNREFERENCED_PARAMETER(lpcszRelative);
-      //   throw new interface_only_exception(get_app(),"this is an interface");
+      //   _throw(interface_only_exception(get_app(),"this is an interface"));
       //}
 
 
@@ -404,7 +404,7 @@ namespace file
       //   UNREFERENCED_PARAMETER(lpcszSource);
       //   UNREFERENCED_PARAMETER(lpcszRelative);
       //   UNREFERENCED_PARAMETER(psz2);
-      //   throw new interface_only_exception(get_app(), "this is an interface");
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
       //}
 
 
@@ -413,7 +413,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(listing);
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -427,7 +427,7 @@ namespace file
             if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
-               //throw new "should implement recursive zip";
+               //_throw("should implement recursive zip");
 
                //m_pziputil->ls(papp,l);
 
@@ -486,7 +486,7 @@ namespace file
             if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
-               //throw new "should implement recursive zip";
+               //_throw("should implement recursive zip");
 
                //m_pziputil->ls(papp,l);
 
@@ -809,27 +809,27 @@ namespace file
 
       ::file::path system::time()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::stage()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::stageapp()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::netseed()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::element()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::profile()
@@ -897,7 +897,7 @@ namespace file
       {
 
          UNREFERENCED_PARAMETER(pszId);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -906,7 +906,7 @@ namespace file
       {
 
          UNREFERENCED_PARAMETER(psz);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -916,7 +916,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(psz);
          UNREFERENCED_PARAMETER(bRecursive);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -924,7 +924,7 @@ namespace file
       //::file::path system::name(const ::file::path & path1)
       //{
       //   UNREFERENCED_PARAMETER(path1);
-      //   throw new interface_only_exception(get_app(), "this is an interface");
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
       //}
 
       ::file::path system::locale_schema(::aura::application * papp, const string & strLocale, const string & strSchema)
@@ -2568,7 +2568,7 @@ namespace file
 
       //class ::file::file_path & system::path()
       //{
-      //   throw new interface_only_exception(get_app(), "this is an interface");
+      //   _throw(interface_only_exception(get_app(), "this is an interface"));
       //}
 
       bool system::initialize()
@@ -2651,7 +2651,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(psz);
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -2659,7 +2659,7 @@ namespace file
       ::file::path system::appdata()
       {
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -2709,7 +2709,7 @@ namespace file
       {
          UNREFERENCED_PARAMETER(papp);
          UNREFERENCED_PARAMETER(lpcszPrefix);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
 
@@ -2718,7 +2718,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(papp);
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -2728,7 +2728,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(papp);
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -2738,7 +2738,7 @@ namespace file
 
          UNREFERENCED_PARAMETER(papp);
 
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
 
       }
 
@@ -2748,7 +2748,7 @@ namespace file
          UNREFERENCED_PARAMETER(papp);
          UNREFERENCED_PARAMETER(lpcszPrefix);
          UNREFERENCED_PARAMETER(lpcszLogin);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::default_userdata(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
@@ -2756,7 +2756,7 @@ namespace file
          UNREFERENCED_PARAMETER(papp);
          UNREFERENCED_PARAMETER(lpcszPrefix);
          UNREFERENCED_PARAMETER(lpcszLogin);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::default_userfolder(::aura::application * papp, const string & lpcszPrefix, const string & lpcszLogin)
@@ -2764,37 +2764,37 @@ namespace file
          UNREFERENCED_PARAMETER(papp);
          UNREFERENCED_PARAMETER(lpcszPrefix);
          UNREFERENCED_PARAMETER(lpcszLogin);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::userquicklaunch(::aura::application * papp)
       {
          UNREFERENCED_PARAMETER(papp);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::userprograms(::aura::application * papp)
       {
          UNREFERENCED_PARAMETER(papp);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::commonprograms()
       {
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       bool system::is_inside_time(const ::file::path & pszPath,::aura::application * papp)
       {
          UNREFERENCED_PARAMETER(pszPath);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       bool system::is_inside(const ::file::path & pszDir,const ::file::path & pszPath,::aura::application * papp)
       {
          UNREFERENCED_PARAMETER(pszDir);
          UNREFERENCED_PARAMETER(pszPath);
-         throw new interface_only_exception(get_app(), "this is an interface");
+         _throw(interface_only_exception(get_app(), "this is an interface"));
       }
 
       ::file::path system::pathfind(const string & pszEnv, const string & pszTopic, const string & pszMode, ::aura::application * papp)

@@ -420,7 +420,7 @@ void script_manager::LoadEnv()
    delete lpsz;
 #elif defined(METROWIN)
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #else
    strNew = getenv("PATH");
@@ -430,7 +430,7 @@ void script_manager::LoadEnv()
    SetEnvironmentVariable("PATH", strNew);
 #elif defined(METROWIN)
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #else
    setenv("PATH", strNew, 1);
@@ -447,7 +447,7 @@ void script_manager::LoadEnv()
    delete lpsz;
 #elif defined(METROWIN)
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #else
    //      LPCTSTR lpcsz = getenv("PATH");

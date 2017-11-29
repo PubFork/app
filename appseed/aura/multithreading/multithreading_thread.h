@@ -27,6 +27,8 @@ public:
    
    int get_exit_code();
    
+   ::exception::exception * get_exception();
+   
 };
 
 
@@ -236,7 +238,7 @@ private:
          return post_object(message_system, system_message_pred, dynamic_cast < pred_holder_base *>(canew(pred_holder < PRED >(get_app(), pred))));
       }
 
-      virtual bool on_run_exception(::exception::exception &);
+      virtual bool on_run_exception(::exception::exception * pexception);
 
       virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode) override;
 

@@ -111,7 +111,7 @@ namespace exception
 //         if(pexception == NULL)
 //         {
 //            
-//            throw new simple_exception(get_app(), "smart pointer is not exception");
+//            _throw(simple_exception(get_app(), "smart pointer is not exception"));
 //            
 //         }
 //         m_p = canew(result({pexception}));
@@ -164,3 +164,10 @@ namespace exception
 
 
 typedef ::exception::result_sp cres;
+
+typedef sp(::exception::exception) exception_sp;
+
+typedef ::exception_sp esp;
+
+#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw ::esp((canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)))
+

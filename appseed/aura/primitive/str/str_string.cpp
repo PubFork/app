@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -132,7 +132,7 @@ string::string(const unichar* pch,strsize nLength):
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar),FALSE));
       if(pch == NULL)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       //strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       strsize nDestLength = nLength * 4;
@@ -152,7 +152,7 @@ string::string(const unichar32* pch,strsize nLength):
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar32),FALSE));
       if(pch == NULL)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       char * pszBuffer = GetBuffer(nDestLength);
@@ -169,7 +169,7 @@ string::string(const unichar* pch,strsize nLength,string_manager * pstringmanage
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar),FALSE));
       if(pch == NULL)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       char * pszBuffer = GetBuffer(nDestLength);
@@ -546,7 +546,7 @@ void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,c
 
    //if(nDestLength >= 0)
    //{
-   //   throw new simple_exception(get_app(),"I am wasting this branching (if(nDestLength >= 0) to tell you that nDestLength should be negative so the buffer is already correct size... or you like incorrect size? Go to Facebook and click in Like for Community \"I Like incorrect size!!\", there should exist such community... there are so many things in the multi bramas... The hardware will check again if you didn't dirtied any other process... (only another process, though)... and you're probably be fired or even not be hired if incorrect size");
+   //   _throw(simple_exception(get_app(),"I am wasting this branching (if(nDestLength >= 0) to tell you that nDestLength should be negative so the buffer is already correct size... or you like incorrect size? Go to Facebook and click in Like for Community \"I Like incorrect size!!\", there should exist such community... there are so many things in the multi bramas... The hardware will check again if you didn't dirtied any other process... (only another process, though)... and you're probably be fired or even not be hired if incorrect size"));
    //}
 
    utf32_to_utf8(pszDest,pszSrc,nSrcLength);
@@ -679,7 +679,7 @@ uint32_t __cdecl crt_char_traits::GetEnvironmentVariable(const char * pszVar, ch
 
 #ifdef METROWIN
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #elif defined(WINDOWSEX)
 
@@ -702,13 +702,13 @@ void crt_char_traits::ConvertToAnsi(char* pstrString,size_t size)
    if(size > UINT_MAX)
    {
       // API only allows uint32_t size
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
    }
    uint32_t dwSize=static_cast<uint32_t>(size);
    bool fSuccess=::OemToCharBuffA(pstrString,pstrString,dwSize) != 0;
    if(!fSuccess)
    {
-      throw new last_error_exception(get_app());
+      _throw(last_error_exception(get_app()));
    }
 
 #endif
@@ -724,13 +724,13 @@ void crt_char_traits::ConvertToOem(char* pstrString,size_t size)
    if(size > UINT_MAX)
    {
       // API only allows uint32_t size
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
    }
    uint32_t dwSize=static_cast<uint32_t>(size);
    bool fSuccess=::CharToOemBuffA(pstrString,pstrString,dwSize) != 0;
    if(!fSuccess)
    {
-      throw new last_error_exception(get_app());
+      _throw(last_error_exception(get_app()));
    }
 
 #endif
@@ -1377,10 +1377,13 @@ strsize string::Delete(strsize iIndex,strsize nCount)
    if(nCount < 0)
       return get_length();
 
-   if((::core::add_throw(nCount,iIndex)) > nLength)
+   if(nCount + iIndex > nLength)
    {
+      
       nCount = nLength - iIndex;
+      
    }
+   
    if(nCount > 0)
    {
       strsize nNewLength = nLength - nCount;
@@ -1675,7 +1678,7 @@ string string::Tokenize(const char * pszTokens,strsize& iStart) const
    ASSERT(iStart >= 0);
 
    if(iStart < 0)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if((pszTokens == NULL) || (*pszTokens == (char)0))
    {
@@ -2730,10 +2733,13 @@ string string::Mid(strsize iFirst,strsize nCount) const
    if(nCount < 0)
       return "";
 
-   if((::core::add_throw(iFirst,nCount)) > get_length())
+   if(iFirst + nCount > get_length())
    {
+      
       nCount = get_length() - iFirst;
+      
    }
+   
    if(iFirst > get_length())
    {
       nCount = 0;
@@ -2797,7 +2803,7 @@ string string::SpanIncluding(const char * pszCharSet) const
 {
    ASSERT(__is_valid_string(pszCharSet));
    if(pszCharSet == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    return(Left(string_trait::StringSpanIncluding(GetString(),pszCharSet)));
 }
@@ -2807,7 +2813,7 @@ string string::SpanExcluding(const char * pszCharSet) const
 {
    ASSERT(__is_valid_string(pszCharSet));
    if(pszCharSet == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    return(Left(string_trait::StringSpanExcluding(GetString(),pszCharSet)));
 }
@@ -2839,7 +2845,7 @@ void string::FormatV(const char * pszFormat,va_list args)
    ASSERT(__is_valid_string(pszFormat));
 
    if(pszFormat == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    strsize nLength = string_trait::GetFormattedLength(pszFormat,args);
    char * pszBuffer = GetBuffer(nLength);
@@ -3045,7 +3051,7 @@ void __cdecl string::AppendFormat(const char * pszFormat,...)
 void __cdecl string::format_message(const char * pszFormat,...)
 {
    if(pszFormat == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    va_list argList;
    va_start(argList,pszFormat);

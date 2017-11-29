@@ -12,7 +12,7 @@ namespace aura
    NOINLINE DECLSPEC_NO_RETURN inline void WINAPI gen_ThrowLastWin32(::aura::application * papp)
    {
       DWORD dwError = ::GetLastError();
-      throw new hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) );
+      _throw(hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) ));
    }
 
    #else  // no exception handling
@@ -21,7 +21,7 @@ namespace aura
    NOINLINE inline void WINAPI gen_ThrowLastWin32(::aura::application * papp)
    {
       DWORD dwError = ::GetLastError();
-      throw new hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) );
+      _throw(hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) ));
    }
 
    #endif  // no exception handling

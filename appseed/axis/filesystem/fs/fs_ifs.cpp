@@ -126,7 +126,7 @@ bool ifs::has_subdir(const ::file::path & path)
       if(str == "You have not logged in! Exiting!")
       {
 
-         throw new string("uifs:// You have not logged in!");
+         _throw(string("uifs:// You have not logged in!"));
 
       }
 

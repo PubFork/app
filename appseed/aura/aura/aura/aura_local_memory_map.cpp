@@ -21,7 +21,7 @@ local_memory_map::local_memory_map(const char * psz,bool bRead,bool bWrite, bool
 
       strFormat.Format("failed to open local_memory_map : \"%s\" bRead %d bWrite %d bCreate %d size %lld ",psz,int(bRead),int(bWrite),int(bCreate),size);
 
-      throw new simple_exception(get_app(),strFormat);
+      _throw(simple_exception(get_app(),strFormat));
 
    }
 

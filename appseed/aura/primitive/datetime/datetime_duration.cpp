@@ -81,7 +81,7 @@ void duration::set(int64_t i, e_unit eunit)
       raw_set(i * 60 * 60, 0);
       break;
    default:
-      throw new invalid_argument_exception(get_app(), "Unknown time duration unit");
+      _throw(invalid_argument_exception(get_app(), "Unknown time duration unit"));
 
    };
 
@@ -111,7 +111,7 @@ void duration::set(double d, e_unit eunit)
       fset(d * 60.0 * 60.0, 0.0);
       break;
    default:
-      throw new invalid_argument_exception(get_app(), "Unknown time duration unit");
+      _throw(invalid_argument_exception(get_app(), "Unknown time duration unit"));
 
    };
 }

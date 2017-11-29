@@ -414,7 +414,7 @@ namespace visual
 //   return bitmap;
 //#else
 //
-//   throw new todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#endif
 //   return NULL;
@@ -427,7 +427,7 @@ namespace visual
 //
 //#ifdef METROWIN
 //
-//   throw new todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#else
 //

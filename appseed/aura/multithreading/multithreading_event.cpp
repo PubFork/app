@@ -48,14 +48,14 @@ event::event(::aura::application * papp, bool bInitiallyOwn, bool bManualReset, 
 {
 
    //if(papp == NULL)
-      //throw new invalid_argument_exception(get_app());
+      //_throw(invalid_argument_exception(get_app()));
 
 #ifdef WINDOWSEX
 
    m_object = (int_ptr)::CreateEvent(lpsaAttribute, bManualReset, bInitiallyOwn, pstrName);
 
    if(m_object == NULL)
-      throw new resource_exception(papp);
+      _throw(resource_exception(papp));
 
 #elif defined(METROWIN)
 
@@ -78,7 +78,7 @@ event::event(::aura::application * papp, bool bInitiallyOwn, bool bManualReset, 
    m_object = (int_ptr) ::CreateEventEx(lpsaAttribute, ::str::international::utf8_to_unicode(pstrName), dwFlags, DELETE | EVENT_MODIFY_STATE | SYNCHRONIZE);
 
    if(m_object == NULL)
-      throw new resource_exception(papp);
+      _throw(resource_exception(papp));
 
 #elif defined(ANDROID)
 
@@ -99,7 +99,7 @@ event::event(::aura::application * papp, bool bInitiallyOwn, bool bManualReset, 
       m_pmutex = new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_pmutex,&attr)))
       {
-         throw new "RC_OBJECT_NOT_CREATED";
+         _throw("RC_OBJECT_NOT_CREATED");
       }
 
 
@@ -369,7 +369,7 @@ bool event::ResetEvent()
    else
    {
 
-      throw new simple_exception(get_app(), "It does not make sense to Reset a Event that is Automatic. It can be only Pulsed/Broadcasted.");
+      _throw(simple_exception(get_app(), "It does not make sense to Reset a Event that is Automatic. It can be only Pulsed/Broadcasted."));
 
    }
 
@@ -387,7 +387,7 @@ wait_result event::wait ()
 
 
    if(::WaitForSingleObjectEx((HANDLE)item(),INFINITE,FALSE) != WAIT_OBJECT_0)
-		throw new runtime_error(get_app(), "::core::pal::Event::wait: failure");
+		_throw(runtime_error(get_app(), "::core::pal::Event::wait: failure"));
 
 #elif defined(ANDROID)
 

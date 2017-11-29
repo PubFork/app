@@ -511,7 +511,7 @@ int16_t GeoIP_update_database (char * license_key, int32_t verbose, void (*f)( c
 //
 //#else
 //
-//   throw new todo(get_app());
+//   _throw(todo(get_app()));
 //
 //#endif
 //
@@ -1017,7 +1017,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //
 //#else
 //
-//   throw new todo(papp);
+//   _throw(todo(papp));
 //
 //#endif
 //

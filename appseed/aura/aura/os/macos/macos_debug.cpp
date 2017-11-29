@@ -115,3 +115,13 @@ output_debug_string(
     
     
 }
+
+
+void throw_ns_exception()
+{
+
+   _throw(ns_exception());
+   
+}
+
+

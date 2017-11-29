@@ -55,7 +55,7 @@ namespace draw2d_opengl
       else
       {
 
-         throw new simple_exception(get_app(), "path does not have last point");
+         _throw(simple_exception(get_app(), "path does not have last point"));
 
       }
 
@@ -291,7 +291,7 @@ namespace draw2d_opengl
    //      internal_end_figure(e.u.m_end.m_bClose);
    //      break;
    //   default:
-   //      throw new "unexpected simple os graphics element type";
+   //      _throw("unexpected simple os graphics element type");
    //   }
 
    //   return false;

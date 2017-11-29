@@ -2045,7 +2045,7 @@ namespace user
          return_(pdrawitem->m_bOk,true);
 
          //return;
-         //throw new "subitem rectangle on icon view? why are you asking for that now?";
+         //_throw("subitem rectangle on icon view? why are you asking for that now?");
       }
 
       pdrawitem->m_bOk = false;
@@ -4623,7 +4623,7 @@ namespace user
 
       return (int32_t)cx;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 

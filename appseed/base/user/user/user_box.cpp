@@ -255,7 +255,7 @@ namespace user
       }
       catch (exit_exception & e)
       {
-         throw new e;
+         _throw(e);
       }
       catch (...)
       {

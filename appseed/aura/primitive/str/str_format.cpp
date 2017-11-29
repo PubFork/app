@@ -104,7 +104,7 @@ void string_format::allocate_add_up(strsize iLenAddUp)
    }
 
    if(m_pszBuffer == NULL)
-      throw new memory_exception(get_app());
+      _throw(memory_exception(get_app()));
 
 
    memset(&m_pszBuffer[m_iLength], 0, m_iAllocation - m_iLength);
@@ -144,7 +144,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw new simple_exception(get_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       const char * start = s;
       while(*s != '\0')
@@ -166,7 +166,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw new simple_exception(get_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(s > start)
       {
@@ -200,7 +200,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw new simple_exception(get_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(s > start)
       {
@@ -217,7 +217,7 @@ bool string_format::parse(const char * & s)
       }
       if(*s == '\0')
       {
-         throw new simple_exception(get_app(), "unfineshed argument specifier");
+         _throw(simple_exception(get_app(), "unfineshed argument specifier"));
       }
       if(*s == 'c' || *s == 'd' || *s == 'i'
       || *s == 'e' || *s == 'E' || *s == 'f'
@@ -236,13 +236,13 @@ bool string_format::parse(const char * & s)
       }
       else
       {
-         throw new simple_exception(get_app(), "unfineshed format specifier");
+         _throw(simple_exception(get_app(), "unfineshed format specifier"));
       }
       return false;
    }
    else
    {
-      throw new simple_exception(get_app(), "invalid state");
+      _throw(simple_exception(get_app(), "invalid state"));
    }
 
 
@@ -255,7 +255,7 @@ void string_format::format(const char * & s)
    {
 
       if (*s == '%' && *(++s) != '%')
-         throw new simple_exception(get_app(), "invalid format string: missing arguments");
+         _throw(simple_exception(get_app(), "invalid format string: missing arguments"));
 
       append(*s++);
 

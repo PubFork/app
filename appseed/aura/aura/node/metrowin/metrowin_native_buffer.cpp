@@ -193,7 +193,7 @@ namespace metrowin
       ASSERT(__is_valid_string(lpszfileName));
 
       if(!open(lpszfileName,nOpenFlags))
-         throw new ::file::exception(papp,::file::exception::none,-1,lpszfileName);
+         _throw(::file::exception(papp,::file::exception::none,-1,lpszfileName));
       m_dwAccess = 0;
 
    }
@@ -218,7 +218,7 @@ namespace metrowin
       //{
       //   delete pnative_buffer;
       //   //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-      //   throw new 0;
+      //   _throw(0);
       //}
       //pnative_buffer->m_hnative_buffer = (UINT)hnative_buffer;
       //ASSERT(pnative_buffer->m_hnative_buffer != (UINT)hnative_bufferNull);
@@ -452,7 +452,7 @@ namespace metrowin
       if (ui != nCount)
       {
 
-         throw new io_exception(get_app());
+         _throw(io_exception(get_app()));
 
       }
 

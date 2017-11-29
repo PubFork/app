@@ -749,7 +749,7 @@ svn_io_file_lock(const char *lock_file,
  * obtain exclusive lock, otherwise obtain shared lock.
  *
  * If @a nonblocking is TRUE, do not wait for the lock if it
- * is not available: throw new an error instead.
+ * is not available: _throw( an error instead.
  *
  * Lock will be automatically released when @a pool is cleared or destroyed.
  * Use @a pool for memory allocations.
@@ -767,7 +767,7 @@ svn_io_file_lock2(const char *lock_file,
  * obtain exclusive lock, otherwise obtain shared lock.
  *
  * If @a nonblocking is TRUE, do not wait for the lock if it
- * is not available: throw new an error instead.
+ * is not available: _throw( an error instead.
  *
  * Lock will be automatically released when @a pool is cleared or destroyed.
  * You may also explicitly call svn_io_unlock_open_file().

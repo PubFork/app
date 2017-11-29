@@ -77,7 +77,7 @@ namespace datetime
          }
          else
          {
-            throw new "unknown function";
+            _throw("unknown function");
          }*/
       }
       return value();
@@ -109,17 +109,17 @@ namespace datetime
       }
       else if(m_ptoken->value == token::multiplication)
       {
-         throw new not_supported_exception(pbaseapp);
+         _throw(not_supported_exception(pbaseapp));
          //return "(" + m_pelement1->get_expression() + " * " + m_pelement2->get_expression() + ")";
       }
       else if(m_ptoken->value == token::division)
       {
-         throw new not_supported_exception(pbaseapp);
+         _throw(not_supported_exception(pbaseapp));
          //return "(" + m_pelement1->get_expression() + " / " + m_pelement2->get_expression() + ")";
       }
       else if(m_ptoken->value == token::function)
       {
-         throw new not_supported_exception(pbaseapp);
+         _throw(not_supported_exception(pbaseapp));
          /*if(m_ptoken->m_str == "sqr")
          {
             return "sqr(" + m_pelement1->get_expression() + ")";
@@ -147,7 +147,7 @@ namespace datetime
          }
          else
          {
-            throw new "unknown function";
+            _throw("unknown function");
          }*/
       }
       return "not supported operation";

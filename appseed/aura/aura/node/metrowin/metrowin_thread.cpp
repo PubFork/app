@@ -1031,7 +1031,7 @@ namespace core
 ////               catch( ::exception::aura * )
 ////               {
 ////                  //__enable_memory_tracking(bEnable);
-////                  throw new;
+////                  _throw(;
 ////               }
 ////               //__enable_memory_tracking(bEnable);
 ////            }
@@ -1132,7 +1132,7 @@ namespace core
 ////   void thread::set_priority(int priority)
 ////   {
 ////      if ( ::SetThreadPriority(m_hThread, priority) == 0)
-////         throw new runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
+////         _throw(runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority."));
 ////   }
 ////
 ////   ///  \brief		gets thread priority
@@ -1327,7 +1327,7 @@ namespace core
 //////
 //////thread* pThread = dynamic_cast < thread * > (Application.alloc(pThreadClass));
 //////if (pThread == NULL)
-//////throw new memory_exception();
+//////_throw(memory_exception());
 //////ASSERT_VALID(pThread);
 //////
 //////pThread->m_pThreadParams = NULL;

@@ -11,7 +11,7 @@ CLASS_DECL_AXIS int32_t ca2_main();
 
 void CLASS_DECL_AXIS __cdecl _ca2_purecall()
 {
-    throw new simple_exception(get_app());
+    _throw(simple_exception(get_app()));
 }
 
 

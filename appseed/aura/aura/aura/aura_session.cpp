@@ -381,7 +381,7 @@ namespace aura
    //::sockets::sockets & session::sockets()
    //{
 
-   //   throw new interface_only_exception(get_app());
+   //   _throw(interface_only_exception(get_app()));
    //
    //   return *((::sockets::sockets *) NULL); // only usable from base.dll and dependants
    //
@@ -392,7 +392,7 @@ namespace aura
    //string session::get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive)
    //{
 
-   //   throw new interface_only_exception(papp);
+   //   _throw(interface_only_exception(papp));
 
    //   return "";
 
@@ -755,7 +755,7 @@ namespace aura
          catch (::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch (::exception::exception & e)
@@ -769,7 +769,7 @@ namespace aura
                if (!App(this).on_run_exception(e))
                {
 
-                  throw new exit_exception(get_app());
+                  _throw(exit_exception(get_app()));
 
                }
 
@@ -823,7 +823,7 @@ namespace aura
             && !System.is_application_installed(strAppId, "installed"))
       {
 
-         throw new not_installed(get_app(), strAppId);
+         _throw(not_installed(get_app(), strAppId));
 
       }
 
@@ -1187,7 +1187,7 @@ namespace aura
    string session::fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive)
    {
 
-      throw new not_implemented(papp);
+      _throw(not_implemented(papp));
 
       return "";
 
@@ -3059,7 +3059,7 @@ ret:
 
             thisfail << 1;
 
-            throw new resource_exception(this);
+            _throw(resource_exception(this));
 
          }
 
@@ -3080,7 +3080,7 @@ ret:
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
    }
 

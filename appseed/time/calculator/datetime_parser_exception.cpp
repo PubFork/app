@@ -32,7 +32,7 @@ CLASS_DECL_CA2_TIME bool throw_datetime_parser_exception(const string & strMessa
    if(get_avoid_datetime_parser_exception())
       return false;
 
-   throw new datetime_parser_exception(get_app(),strMessage);
+   _throw(datetime_parser_exception(get_app(),strMessage));
 
    return true;
 

@@ -999,7 +999,7 @@ namespace html
             psz++;
          if (*psz != '/' && *psz != '>')
          {
-            throw new "run tag fixer tabjs";
+            _throw("run tag fixer tabjs");
          }
          if (*psz == '/')
          {
@@ -1008,7 +1008,7 @@ namespace html
                psz++;
             if (*psz != '>')
             {
-               throw new "run tag fixer tabjs";
+               _throw("run tag fixer tabjs");
             }
             return true;
          }
@@ -1053,7 +1053,7 @@ namespace html
          psz++;
       if (*psz != '<')
       {
-         throw new "run tag fixer tabjs";
+         _throw("run tag fixer tabjs");
       }
       psz++;
       // skip white space
@@ -1071,7 +1071,7 @@ namespace html
          return true;
       }
 
-      throw new "invalid xml file";
+      _throw("invalid xml file");
 
    }
 

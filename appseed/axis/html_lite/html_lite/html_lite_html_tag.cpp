@@ -164,7 +164,7 @@ UINT lite_html_tag::parseFromStr(::lite_html_reader * preader, const string & st
          if ((pcollAttr = new LiteHTMLAttributes) == NULL)
          {
 //            TRACE0("(Error) lite_html_tag::parseFromStr: Out of memory.\n");
-            throw new memory_exception(get_app());
+            _throw(memory_exception(get_app()));
             return (0U);
          }
 

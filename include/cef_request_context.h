@@ -182,7 +182,7 @@ class CefRequestContext : public virtual CefBase {
   virtual bool ClearSchemeHandlerFactories() =0;
 
   ///
-  // Tells all renderer processes associated with this context to throw new away
+  // Tells all renderer processes associated with this context to _throw( away
   // their plugin list cache. If |reload_pages| is true they will also reload
   // all pages with plugins. CefRequestContextHandler::OnBeforePluginLoad may
   // be called to rebuild the plugin list cache.

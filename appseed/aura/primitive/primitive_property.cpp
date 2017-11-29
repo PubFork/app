@@ -70,7 +70,7 @@ property::property()
 //         return pair_set_interface_get_value(iFind);
 //   }
 //
-//   throw new "cannot reference absent property";
+//   _throw("cannot reference absent property");
 //
 //}
 //
@@ -448,7 +448,7 @@ var property::element_at(index iIndex) const
    default:
       if(const_cast<property *>(this)->get_count() == 1)
          return const_cast<property *>(this)->get_value();
-      throw new simple_exception(get_app(), "unsuported!!");
+      _throw(simple_exception(get_app(), "unsuported!!"));
    }
 }
 

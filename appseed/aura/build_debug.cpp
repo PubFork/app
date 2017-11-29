@@ -19,7 +19,7 @@ void debug_puts(const char*psz) NOTHROW
 
 void foo()
 {
-   throw new simple_exception(get_app());
+   _throw(simple_exception(get_app()));
 }
 
 void aura_auto_debug_teste()
@@ -37,11 +37,11 @@ void aura_auto_debug_teste()
       if(true)
       {
          AUTO(debug_puts("two"));
-         debug_puts("one"); // compiler knows this doesn't throw new
+         debug_puts("one"); // compiler knows this doesn't _throw(
       }
       if(true) {
          AUTO(debug_puts("three"));
-         foo(); // might throw new an exception
+         foo(); // might _throw( an exception
       }
    }
    catch(...)

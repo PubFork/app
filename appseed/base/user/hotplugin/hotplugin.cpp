@@ -35,7 +35,7 @@ namespace hotplugin
 
      g_iSystemCount++;
 
-     throw new todo(NULL);
+     _throw(todo(NULL));
 
 //      try
 //      {

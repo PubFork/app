@@ -19,7 +19,7 @@ namespace sockets
    void sync_socket_handler::handle(socket * psocket)
    {
       if(m_psocket != NULL)
-         throw new simple_exception(get_app()); // busy
+         _throw(simple_exception(get_app())); // busy
       m_psocket = psocket;
       m_psocket->m_pcallback = this;
       m_handler.add(m_psocket);
@@ -97,12 +97,12 @@ namespace sockets
          iTimeout = m_iDefaultTimeout;
       memory_size_t uiLen = 0;
       if(read(&uiLen, 4) != 4)
-         throw new simple_exception(get_app());
+         _throw(simple_exception(get_app()));
       ntohl((u_long) uiLen);
       memory memory;
       memory.allocate(uiLen);
       if(read(memory, uiLen) != uiLen)
-         throw new simple_exception(get_app());
+         _throw(simple_exception(get_app()));
    }
 
    void sync_socket_handler::write_payload_v1(const char * xml_payload, int iTimeout)

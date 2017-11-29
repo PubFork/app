@@ -50,7 +50,7 @@ CLASS_DECL_AURA bool send_short_message_to_installer(const char * psz, bool bLau
 
 #ifdef METROWIN
 
-   throw new "todo";
+   _throw("todo");
 
 #else
 
@@ -67,7 +67,7 @@ void send_spaboot_install_response(const char * param)
 
 #ifdef METROWIN
 
-   throw new "todo";
+   _throw("todo");
 
 #else
 
@@ -80,11 +80,9 @@ void send_spaboot_install_response(const char * param)
 
       txchannel.send(param, false);*/
 
-<<<<<<< Updated upstream
 #endif
 
 }
 
 
-=======
->>>>>>> Stashed changes
+

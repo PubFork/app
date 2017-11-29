@@ -121,7 +121,7 @@ bool axis_init()
 //#ifndef WINDOWS
 
    // todo (casey tips) : do real/explicit dynamic linking
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
    //try
    //{
 
@@ -157,7 +157,7 @@ bool axis_term()
 //#endif
 
    // todo (casey tips) : do real/explicit dynamic linking
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
    //try
    //{
 

@@ -608,7 +608,7 @@ namespace axis
    void application::_001CloseApplication()
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
    }
 
@@ -938,7 +938,7 @@ run:
          catch(::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch(const ::exception::exception & e)
@@ -954,7 +954,7 @@ run:
             catch(::exit_exception & e)
             {
 
-               throw new e;
+               _throw(e);
 
             }
             catch(...)
@@ -967,7 +967,7 @@ run:
       catch(::exit_exception & e)
       {
 
-         throw new e;
+         _throw(e);
 
       }
       catch(...)
@@ -2300,7 +2300,7 @@ InitFailure:
       }
 
       if(m_paxissession->fontopus()->get_user(true,pszRequestUrl) == NULL)
-         //   throw new exit_exception(get_app(),"You have not logged in!! db_str_set::load");
+         //   _throw(exit_exception(get_app(),"You have not logged in!! db_str_set::load"));
          return false;
 
       return true;
@@ -2760,7 +2760,7 @@ namespace axis
    //bool application::get_temp_file_name_template(string & strRet,const char * pszName,const char * pszExtension,const char * pszTemplate)
    //{
 
-   //   throw new not_implemented(this);
+   //   _throw(not_implemented(this));
 
    //   return false;
 
@@ -3015,7 +3015,7 @@ namespace axis
    //      catch(::exit_exception & e)
    //      {
 
-   //         throw new e;
+   //         _throw(e);
 
    //      }
    //      catch(const ::exception::exception & e)
@@ -3031,7 +3031,7 @@ namespace axis
    //         catch(::exit_exception & e)
    //         {
 
-   //            throw new e;
+   //            _throw(e);
 
    //         }
    //         catch(...)
@@ -3044,7 +3044,7 @@ namespace axis
    //   catch(::exit_exception & e)
    //   {
 
-   //      throw new e;
+   //      _throw(e);
 
    //   }
    //   catch(...)

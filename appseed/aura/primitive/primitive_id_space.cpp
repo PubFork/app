@@ -75,7 +75,7 @@ id id_space::operator()(const char * psz)
    char * pszNew = (char *)memory_alloc(strlen(psz) + 1);
 
    if(pszNew == NULL)
-      throw new memory_exception(get_app());
+      _throw(memory_exception(get_app()));
 
    strcpy(pszNew,psz);
 

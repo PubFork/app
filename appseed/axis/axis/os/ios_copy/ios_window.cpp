@@ -121,7 +121,7 @@ void oswindow_data::set_user_interaction(::user::interaction * pui)
 {
 
    if(this == NULL)
-      throw new "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
+      _throw("error, m_pdata cannot be NULL to ::oswindow::set_user_interaction");
 
    m_pui = pui;
 

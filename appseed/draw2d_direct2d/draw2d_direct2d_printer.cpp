@@ -24,7 +24,7 @@ namespace draw2d_direct2d
 #ifndef METROWIN
       return OpenPrinter((LPSTR) (LPCSTR) pszDeviceName, &m_hPrinter, NULL) != FALSE && m_hPrinter != NULL;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       return false;
 #endif
    }
@@ -50,7 +50,7 @@ namespace draw2d_direct2d
 #ifndef METROWIN
          bOk = ::ClosePrinter(m_hPrinter) != FALSE;
 #else
-         throw new todo(get_app());
+         _throw(todo(get_app()));
          return false;
 #endif
          m_hPrinter = NULL;
@@ -83,11 +83,11 @@ namespace draw2d_direct2d
       m_pdevmode = (DEVMODE *) malloc(iSize);
       if(!DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR) (LPCSTR) pprinter->m_strName, m_pdevmode, NULL, DM_OUT_BUFFER))
       {
-         throw new "failed to get printer DocumentProperties";
+         _throw("failed to get printer DocumentProperties");
          return false;
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       return false;
 #endif
       return true;
@@ -95,7 +95,7 @@ namespace draw2d_direct2d
 
    bool printer::document_properties::close()
    {
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
       return false;
 #ifndef METROWIN
       if(m_hdc != NULL)
@@ -104,7 +104,7 @@ namespace draw2d_direct2d
          m_hdc = NULL;
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       return false;
 #endif
       if(m_pdevmode != NULL)
@@ -129,7 +129,7 @@ namespace draw2d_direct2d
       g->Attach(m_hdc);
       return g.detach();
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       return NULL;
 #endif
    }

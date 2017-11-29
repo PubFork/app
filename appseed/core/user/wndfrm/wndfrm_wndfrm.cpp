@@ -274,7 +274,7 @@ namespace user
          if (pinteraction.is_null())
          {
 
-            throw new exit_exception(get_app(), "wndfrm_core plugin or any other wndfrm_* plugin is installed");
+            _throw(exit_exception(get_app(), "wndfrm_core plugin or any other wndfrm_* plugin is installed"));
 
          }
 

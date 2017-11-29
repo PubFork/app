@@ -318,7 +318,7 @@ namespace base
             catch (exit_exception & e)
             {
 
-               throw new e;
+               _throw(e);
 
             }
             catch (...)
@@ -331,7 +331,7 @@ namespace base
       catch (exit_exception & e)
       {
 
-         throw new e;
+         _throw(e);
 
       }
       catch (...)
@@ -410,7 +410,7 @@ namespace base
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
    }
 

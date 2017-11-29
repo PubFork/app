@@ -18,7 +18,7 @@ namespace libcompress
    {
       _buffer = (byte *)::MidAlloc(kBufferSize);
       if (_buffer == 0)
-         throw new 1;
+         _throw(1);
    }
 
    filter_coder::~filter_coder()
@@ -119,7 +119,7 @@ namespace libcompress
          if (_bufferPos > endPos)
          {
             if (size != 0)
-               throw new "E_FAIL";
+               _throw("E_FAIL");
             break;
          }
          WriteWithLimit(_outStream, _bufferPos);
@@ -141,10 +141,10 @@ namespace libcompress
             for (; _bufferPos < endPos; _bufferPos++)
                _buffer[_bufferPos] = 0;
             if (Filter->Filter(_buffer, endPos) != endPos)
-               throw new "E_FAIL";
+               _throw("E_FAIL");
          }
          if(FAILED(WriteWithLimit(_outStream, _bufferPos)))
-            throw new "E_FAIL";
+            _throw("E_FAIL");
          _bufferPos = 0;
       }
       ::file::output_stream_flush * pflush = dynamic_cast < ::file::output_stream_flush * > (_outStream) ;

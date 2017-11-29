@@ -31,7 +31,7 @@ namespace android
    void copydesk::set_filea(const ::file::patha & patha)
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
    }
 
@@ -72,7 +72,7 @@ namespace android
    void copydesk::set_plain_text(const char * psz)
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 
    }
@@ -88,7 +88,7 @@ namespace android
    bool copydesk::desk_to_dib(::draw2d::dib * pdib)
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
    }
 

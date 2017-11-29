@@ -437,7 +437,7 @@ namespace metrowin
       m_strId = strId;
 
       if(!main_initialize())
-         throw new "";
+         _throw("");
 
 
       //_set_purecall_handler(_ca2_purecall);
@@ -501,7 +501,7 @@ namespace metrowin
       if (!m_psystem->begin_synch())
       {
 
-         throw new 0;
+         _throw(0);
 
       }
 
@@ -1224,7 +1224,7 @@ namespace metrowin
       if (pgraphics == NULL)
       {
 
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       }
 
@@ -1251,7 +1251,7 @@ namespace metrowin
          //catch(...)
          //{
 
-         //   throw new simple_exception(get_app(), "no more a window");
+         //   _throw(simple_exception(get_app(), "no more a window"));
 
          //}
 

@@ -59,7 +59,7 @@ namespace math
 //      binary_operation * pbinopNew;
       ref_array < number > stackptra;
 
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
       /*
 

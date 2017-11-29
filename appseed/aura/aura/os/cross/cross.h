@@ -15,9 +15,9 @@ class event;
 #endif
 
 //#include <pthread.h>
-#ifndef LINUX
-typedef void * HTHREAD;
-#endif // LINUX
+//#ifndef LINUX
+//typedef void * HTHREAD;
+//#endif // LINUX
 
 struct oswindow_data;
 
@@ -51,7 +51,11 @@ typedef struct oswindow_data * oswindow;
 #endif
 
 
-#if !defined(LINUX) && !defined(APPLEOS) && !defined(ANDROID) && !defined(SOLARIOS)
+#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID) || defined(SOLARIOS)
+
+#include "ansios/ansios_file_raw.h"
+
+#else
 
 #include "ansios/ansios.h"
 

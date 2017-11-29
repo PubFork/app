@@ -100,7 +100,7 @@ namespace macos
     ///     return;
       //}
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 /*
 
@@ -130,7 +130,7 @@ namespace macos
 
    string copydesk::get_plain_text()
    {
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
       return "https://www.liveedu.tv/static/img/logos/logo-white.png?h=fc4045ce";
 /* xxx
       if (IsClipboardFormatAvailable(CF_UNICODETEXT))
@@ -165,7 +165,7 @@ namespace macos
 //      if(!m_p->OpenClipboard())
   //       return false;
       bool bOk = false;
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 /* xxx
       HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
       try

@@ -192,7 +192,7 @@ namespace windows
          m_pchBuf = (char *)malloc(1025);
 
          if(m_pchBuf == NULL)
-            throw new memory_exception(get_app());
+            _throw(memory_exception(get_app()));
 
       }
 

@@ -207,7 +207,7 @@ size simple_toolbar::CalcSimpleLayout()
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -1161,7 +1161,7 @@ void simple_toolbar::SetSizes(SIZE sizeButton, SIZE sizeImage)
 //      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
 //      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
 //#else
-//      //throw new todo(get_app());
+//      //_throw(todo(get_app()));
 //#endif
 //
 //      Invalidate();   // just to be nice if called when toolbar is visible
@@ -1843,7 +1843,7 @@ void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 

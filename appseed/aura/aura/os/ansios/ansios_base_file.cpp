@@ -481,7 +481,7 @@ int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
    if(stricmp_dup(psz1, psz2) == 0)
       return true;
 
-   throw new " // TODO: it should follow links ";
+   _throw(" // TODO: it should follow links ");
 
    return false;
 
@@ -490,7 +490,7 @@ int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
 
 CLASS_DECL_AURA string file_get_mozilla_firefox_plugin_container_path()
 {
-   throw new " todo ";
+   _throw(" todo ");
 
    return "";
 

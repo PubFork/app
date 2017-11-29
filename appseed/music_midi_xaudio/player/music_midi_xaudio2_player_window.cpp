@@ -113,7 +113,7 @@ namespace music
 
             void window::_001OnApp3388Message(::message::message * pobj)
             {
-               throw new not_implemented(get_app());
+               _throw(not_implemented(get_app()));
                SCAST_PTR(::message::base, pbase, pobj);
                /*            MSG msg;
 

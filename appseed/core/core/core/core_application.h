@@ -338,7 +338,7 @@ namespace core
 
 
 
-      virtual bool final_handle_exception(::exception::exception &) override;
+      virtual bool final_handle_exception(::exception::exception * pe) override;
 
 
 

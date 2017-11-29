@@ -14,7 +14,7 @@ file_change_event::file_change_event(::aura::application * papp, const char * pa
 	event_base((int_ptr) ::FindFirstChangeNotificationW(::str::international::utf8_to_unicode(path), watchsubtree, filter) )
 {
 	if (item() == 0)
-		throw new runtime_error(papp, "file_change_event: failed to create event");
+		_throw(runtime_error(papp, "file_change_event: failed to create event"));
 }
 
 ///  \brief		destructor

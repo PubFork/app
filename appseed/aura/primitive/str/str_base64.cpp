@@ -195,7 +195,7 @@ namespace str
             {
                if( i > 0)
                {
-                  throw new io_exception(get_app(), "Input file incomplete.\n");
+                  _throw(io_exception(get_app(), "Input file incomplete.\n"));
                   //ASSERT(FALSE);
                }
                return;
@@ -207,7 +207,7 @@ namespace str
                
                str.Format("Illegal character '%ca' in input spfile->\n", uch);
                
-               throw new io_exception(get_app(), str);
+               _throw(io_exception(get_app(), str));
                
 //               i--;
 //               

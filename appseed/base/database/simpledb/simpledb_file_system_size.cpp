@@ -609,7 +609,7 @@ void file_size_table::get_fs_size::write(::file::ostream & ostream) const
 
 #else
 
-   throw new not_implemented(get_app());
+   _throw(not_implemented(get_app()));
 
 #endif
 
@@ -629,7 +629,7 @@ void file_size_table::get_fs_size::read(::file::istream & istream)
 
 #else
 
-   throw new not_implemented(get_app());
+   _throw(not_implemented(get_app()));
 
 #endif
 

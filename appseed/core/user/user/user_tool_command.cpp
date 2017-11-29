@@ -45,7 +45,7 @@ namespace user
       ASSERT(!(nNewStyle & TBBS_SEPARATOR));
       pToolBar->SetButtonStyle((int32_t) m_iIndex, nNewStyle);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -66,7 +66,7 @@ namespace user
       ASSERT(!(nNewStyle & TBBS_SEPARATOR));
       pToolBar->SetButtonStyle((int32_t) m_iIndex, nNewStyle | TBBS_CHECKBOX);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 

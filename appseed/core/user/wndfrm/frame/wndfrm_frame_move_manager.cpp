@@ -213,7 +213,7 @@ namespace user
 #ifdef WINDOWSEX
                      ::SetCursorPos(pmouse->m_pt.x,pmouse->m_pt.y);
 #else
-                     //throw new todo(get_app());
+                     //_throw(todo(get_app()));
 #endif
                   }
 
@@ -237,7 +237,7 @@ namespace user
 //#ifdef WINDOWSEX
 //                  ::SetCursorPos(pmouse->m_pt.x,pmouse->m_pt.y);
 //#else
-//                  throw new todo(get_app());
+//                  _throw(todo(get_app()));
 //#endif
 //               }
 

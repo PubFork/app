@@ -96,7 +96,7 @@ void service_base::serve(service_base& service)
    if (!::StartServiceCtrlDispatcherW(serviceTable))
    {
 
-      throw new last_error_exception(s_pservice->get_app());
+      _throw(last_error_exception(s_pservice->get_app()));
 
    }
 
@@ -179,7 +179,7 @@ void service_base::SetServiceStatus()
 
         if (!::SetServiceStatus(m_handle, &m_status))
         {
-           throw new last_error_exception(s_pservice->get_app());
+           _throw(last_error_exception(s_pservice->get_app()));
         }
 
 #endif
@@ -228,7 +228,7 @@ void WINAPI service_base::ServiceMain(DWORD argumentCount, PWSTR * arguments)
     if (1 != argumentCount || 0 == arguments || 0 == arguments[0])
     {
 
-      throw new invalid_argument_exception(s_pservice->get_app());
+      _throw(invalid_argument_exception(s_pservice->get_app()));
 
     }
 
@@ -238,7 +238,7 @@ void WINAPI service_base::ServiceMain(DWORD argumentCount, PWSTR * arguments)
 
     if(s_pservice->m_handle == NULL)
     {
-       throw new last_error_exception(s_pservice->get_app());
+       _throw(last_error_exception(s_pservice->get_app()));
     }
 
     s_pservice->SetServiceStatus();
@@ -254,7 +254,7 @@ void WINAPI service_base::ServiceMain(DWORD argumentCount, PWSTR * arguments)
     catch (const hresult_exception& e)
     {
         //
-        // If the service can't start it should throw new an exception from the
+        // If the service can't start it should _throw( an exception from the
         // Start method. If this happens, we catch it here and notify the
         // SCM so that it can log the error code.
         //

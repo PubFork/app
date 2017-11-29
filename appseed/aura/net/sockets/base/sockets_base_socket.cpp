@@ -186,7 +186,7 @@ namespace sockets
    {
    log("getprotobyname", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
    SetCloseAndDelete();
-   throw new simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno));
+   _throw(simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno)));
    return INVALID_SOCKET;
    }
    }
@@ -197,7 +197,7 @@ namespace sockets
    {
    log("base_socket", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
    SetCloseAndDelete();
-   throw new simple_exception(get_app(), string("base_socket() failed: ") + bsd_socket_error(Errno));
+   _throw(simple_exception(get_app(), string("base_socket() failed: ") + bsd_socket_error(Errno)));
    return INVALID_SOCKET;
    }
    attach(s);

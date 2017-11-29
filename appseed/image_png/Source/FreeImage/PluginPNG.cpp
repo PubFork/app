@@ -63,7 +63,7 @@ _ReadProc(png_structp png_ptr, unsigned char *data, png_size_t size)
    unsigned n = pfio->s_io->read_proc(data, (unsigned int)size, 1, pfio->s_handle);
    if(size && (n == 0))
    {
-      throw new "Read error: invalid or corrupted PNG file";
+      _throw("Read error: invalid or corrupted PNG file");
    }
 }
 
@@ -84,7 +84,7 @@ _FlushProc(png_structp )
 void
 error_handler(png_structp, const char *error)
 {
-   throw new error;
+   _throw(error);
 }
 
 // in FreeImage warnings disabled
@@ -494,7 +494,7 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data)
             break;
 
          default:
-            throw new FI_MSG_ERROR_UNSUPPORTED_FORMAT;
+            _throw(FI_MSG_ERROR_UNSUPPORTED_FORMAT);
          }
 
          // unlike the example in the libpng documentation, we have *no* idea where
@@ -585,7 +585,7 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data)
             break;
 
          default:
-            throw new FI_MSG_ERROR_UNSUPPORTED_FORMAT;
+            _throw(FI_MSG_ERROR_UNSUPPORTED_FORMAT);
          }
 
          // store the transparency table

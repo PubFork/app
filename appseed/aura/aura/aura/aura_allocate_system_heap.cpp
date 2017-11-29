@@ -322,7 +322,7 @@ void system_heap_free(void * p)
 
 #if MEMDLEAK
 
-   throw new simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined");
+   _throw(simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined"));
 
 
    synch_lock lock(g_pmutgen);
@@ -387,7 +387,7 @@ void system_heap_free(void * p)
 //
 //#ifndef MEMDLEAK
 //
-//   throw new simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined");
+//   _throw(simple_exception(get_app(), "plex_heap_alloc_array::get_mem_info member function is available only with \"memdleak\" builds - MEMDLEAK defined"));
 //
 //#endif
 //

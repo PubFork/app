@@ -1506,7 +1506,7 @@ void map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc(POSITION& rNex
    {
       passocRet = m_passocHead;
       if(passocRet == NULL)
-         throw new error_exception(get_app(), "map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc : must find something");
+         _throw(error_exception(get_app(), "map < KEY, ARG_KEY, VALUE, ARG_VALUE, PAIR >::get_next_assoc : must find something"));
    }
 
    rNextPosition = (POSITION) passocRet->m_pnext;

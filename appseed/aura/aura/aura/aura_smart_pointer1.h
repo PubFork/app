@@ -160,7 +160,12 @@ public:
       return dynamic_cast < T2 * > (m_p);
    }
 
-
+   template < class T2 >
+   inline bool is() const
+   {
+      return cast < T2 > () != NULL;
+   }
+   
 //      bool operator ==(const smart_pointer & p) const { return m_p == p.m_p; }
 //      bool operator !=(const smart_pointer & p) const { return m_p != p.m_p; }
 //      bool operator ==(const T * p) const { return m_p == p; }

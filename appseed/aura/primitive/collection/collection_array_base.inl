@@ -65,7 +65,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::remove_at(index nIndex,::count n
    index nUpperBound = nIndex + nCount;
 
    if(nIndex < 0 || nCount < 0 || (nUpperBound > m_nSize) || (nUpperBound < nIndex) || (nUpperBound < nCount))
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    // just remove a range
    ::count nMoveCount = m_nSize - (nUpperBound);
@@ -178,7 +178,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,const TYP
       return -1;
 
    if(nIndex < 0)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if(nIndex >= m_nSize)
    {
@@ -352,7 +352,7 @@ index array_base < TYPE, ARG_TYPE, ALLOCATOR >::insert_at(index nIndex,array_bas
       return -1;
 
    if (nIndex < 0)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if (nIndex >= m_nSize)
    {
@@ -406,7 +406,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
    ASSERT(nNewSize >= 0);
 
    if(nNewSize < 0)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    if(nGrowBy >= 0)
       m_nGrowBy = nGrowBy;  // set new size
@@ -427,7 +427,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       // m_nGrowBy elements, whichever is larger.
 #ifdef SIZE_T_MAX
       if (nNewSize > SIZE_T_MAX / sizeof(TYPE))
-         throw new memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       ASSERT(nNewSize <= SIZE_T_MAX / sizeof(TYPE));    // no overflow
 #endif
       ::count nAllocSize = MAX(nNewSize, m_nGrowBy);
@@ -488,7 +488,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       ASSERT(nNewMax >= m_nMaxSize);  // no wrap around
 
       if(nNewMax  < m_nMaxSize)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
 #ifdef SIZE_T_MAX
       ASSERT(nNewMax <= SIZE_T_MAX / sizeof(TYPE)); // no overflow
@@ -552,7 +552,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
    if(nNewSize < 0)
    {
 
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    }
 
@@ -595,7 +595,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       // m_nGrowBy elements, whichever is larger.
 #ifdef SIZE_T_MAX
       if(::comparison::gt(nNewSize, SIZE_T_MAX / sizeof(TYPE)))
-         throw new memory_exception(get_app());
+         _throw(memory_exception(get_app()));
       ASSERT(::comparison::lt(nNewSize, SIZE_T_MAX / sizeof(TYPE)));    // no overflow
 #endif
 
@@ -709,7 +709,7 @@ template < class TYPE, class ARG_TYPE, class ALLOCATOR >
       if(nNewMax  < m_nMaxSize)
       {
 
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       }
 

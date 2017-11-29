@@ -25,7 +25,7 @@ void CLASS_DECL_CORE __cdecl _ca2_purecall_();
 
 void CLASS_DECL_CORE __cdecl _ca2_purecall_()
 {
-    throw new simple_exception(get_app());
+    _throw(simple_exception(get_app()));
 }
 
 namespace plugin
@@ -100,7 +100,7 @@ namespace plugin
 
 #ifdef METROWIN
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
       return 0;
 

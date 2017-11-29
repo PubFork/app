@@ -298,11 +298,11 @@ namespace database
          }
          if (!found)
          {
-            throw new DbErrors("Field not found: %s",f_name);
+            _throw(DbErrors("Field not found: %s",f_name));
          }
          return true;
       }
-      throw new DbErrors("Not in Insert or Edit state");
+      _throw(DbErrors("Not in Insert or Edit state"));
       //  return false;
    }
 
@@ -320,7 +320,7 @@ namespace database
                   return edit_object[i].m_value;
                }
             }
-            throw new DbErrors("Field not found: %s",f_name);
+            _throw(DbErrors("Field not found: %s",f_name));
          }
          else
          {
@@ -331,10 +331,10 @@ namespace database
                   return fields_object[i].m_value;
                }
             }
-            throw new DbErrors("Field not found: %s",f_name);
+            _throw(DbErrors("Field not found: %s",f_name));
          }
       }
-      throw new DbErrors("set state is Inactive");
+      _throw(DbErrors("set state is Inactive"));
    }
 
    var set::GetSelectFieldValue(index iField)
@@ -343,14 +343,14 @@ namespace database
       {
          if(iField < 0 || iField >= fields_object.get_size())
          {
-            throw new DbErrors("Field not found: index = %d", iField);
+            _throw(DbErrors("Field not found: index = %d", iField));
          }
          else
          {
             return fields_object[iField].m_value;
          }
       }
-      throw new DbErrors("set state is Inactive");
+      _throw(DbErrors("set state is Inactive"));
    }
 
 

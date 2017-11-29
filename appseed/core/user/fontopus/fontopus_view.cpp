@@ -473,7 +473,7 @@ namespace fontopus
       catch (...)
       {
 
-         throw new simple_exception(get_app(), "no more a window");
+         _throw(simple_exception(get_app(), "no more a window"));
 
       }
 

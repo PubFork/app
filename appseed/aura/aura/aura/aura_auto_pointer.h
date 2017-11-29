@@ -195,6 +195,14 @@ public:
       return m_p;
 
    }
+   
+   template < typename TYPE >
+   bool is()
+   {
+      
+      return dynamic_cast < TYPE * > ((T *) this);
+      
+   }
 
 };
 

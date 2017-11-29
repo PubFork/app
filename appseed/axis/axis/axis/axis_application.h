@@ -158,7 +158,7 @@ namespace axis
 
 
 
-         virtual bool final_handle_exception(::exception::exception & e) override;
+         virtual bool final_handle_exception(::exception::exception * pe) override;
 
 
 

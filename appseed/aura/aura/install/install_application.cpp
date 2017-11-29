@@ -96,7 +96,7 @@ namespace install
       if (m_spmutexAppInstall->already_exists())
       {
 
-         m_error.m_iaErrorCode.add(-202);
+         m_error.set(-202);
 
          return false;
 
@@ -113,7 +113,7 @@ namespace install
       if (!m_rxchannel.create(strChannel))
       {
 
-         m_error.m_iaErrorCode.add(-1);
+         m_error.set(-1);
 
          return false;
 
@@ -404,7 +404,7 @@ namespace install
 
          add_command_line(System.os().get_command_line());
 
-         m_error.m_iaErrorCode.add(-34);
+         m_error.set(-34);
          
          return;
 
@@ -429,7 +429,7 @@ namespace install
       if (!show_window())
       {
          
-         m_error.m_iaErrorCode.add(-1);
+         m_error.set(-1);
 
          return;
 
@@ -440,7 +440,7 @@ namespace install
       if (!start_app_app(process_platform_dir_name2()))
       {
 
-         m_error.m_iaErrorCode.add(-2);
+         m_error.set(-2);
          
          return;
 
@@ -484,7 +484,7 @@ namespace install
             if(iErrorCode != 0)
             {
             
-               m_error.m_iaErrorCode.add(iErrorCode);
+               m_error.set(iErrorCode);
                
             }
 
@@ -492,7 +492,7 @@ namespace install
          catch (...)
          {
             
-            m_error.m_iaErrorCode.add(-1);
+            m_error.set(-1);
 
          }
 

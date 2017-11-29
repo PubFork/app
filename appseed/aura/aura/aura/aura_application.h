@@ -219,8 +219,8 @@ namespace aura
 
 
 
-      virtual bool on_run_exception(::exception::exception & e) override;
-      virtual bool handle_not_installed(::not_installed & notinstalled);
+      virtual bool on_run_exception(::exception::exception * pe) override;
+      virtual bool handle_not_installed(::not_installed  * pnotinstalled);
 
       virtual bool is_system() override;
       virtual bool is_session() override;
@@ -396,7 +396,7 @@ namespace aura
       virtual bool get_temp_file_name_template(string & str,const char * pszName,const char * pszExtension,const char * pszTemplate);
 
       virtual bool get_temp_file_name(string & str,const char * pszName,const char * pszExtension);
-      virtual bool final_handle_exception(::exception::exception & e);
+      virtual bool final_handle_exception(::exception::exception * pe);
 
       service_base * get_service();
       virtual service_base * allocate_new_service();

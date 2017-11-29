@@ -153,7 +153,7 @@ namespace music
                if(success != (mmrc = get_sequence()->CloseFile()) && mmrc != EFunctionNotSupported)
                {
 
-                  throw new exception(get_app(), EMidiPlayerClose);
+                  _throw(exception(get_app(), EMidiPlayerClose));
 
                }
 
@@ -274,7 +274,7 @@ namespace music
                if((mmrc = get_sequence()->SaveFile(lpszPathName)) != success)
                {
 
-                  throw new exception(get_app(), EMidiPlayerSave);
+                  _throw(exception(get_app(), EMidiPlayerSave));
 
                }
 

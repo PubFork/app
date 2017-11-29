@@ -1,6 +1,32 @@
 #pragma once
 
 
+#ifdef WINDOWS
+
+typedef HANDLE HTHREAD;
+
+#else
+
+#ifndef LINUX
+typedef void * HTHREAD;
+#endif
+
+#endif
+
+#ifdef WINDOWS
+
+typedef uint32_t IDTHREAD;
+
+inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
+
+#else
+
+typedef pthread_t IDTHREAD;
+
+inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
+
+#endif
+
 BEGIN_EXTERN_C
 
 CLASS_DECL_AURA uint32_t thread_alloc();
@@ -11,5 +37,8 @@ CLASS_DECL_AURA void thread_shutdown();
 
 END_EXTERN_C
 
-
+CLASS_DECL_AURA void set_main_thread(HTHREAD hThread);
+CLASS_DECL_AURA void set_main_thread_id(IDTHREAD uiThread);
+CLASS_DECL_AURA HTHREAD get_main_thread();
+CLASS_DECL_AURA IDTHREAD get_main_thread_id();
 

@@ -113,7 +113,7 @@ namespace fontopus
 
             //System.simple_message_box(NULL, "<h1>You have not logged in!</h1><h2>Exiting</h2>");
             TRACE("<error>You have not logged in! Exiting!</error>");
-            //throw new string("You have not logged in! Exiting!");
+            //_throw(string("You have not logged in! Exiting!"));
             //debug_box("You have not logged in!","Debug Message",MB_OK);
             return false;
 

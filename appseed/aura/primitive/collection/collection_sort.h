@@ -1267,7 +1267,7 @@ namespace sort
 
          // minimum check
          if(ia.get_size() != a.get_size())
-            throw new invalid_argument_exception(get_app());
+            _throw(invalid_argument_exception(get_app()));
 
          index_array stackLowerBound;
          index_array stackUpperBound;

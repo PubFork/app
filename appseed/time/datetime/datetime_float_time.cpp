@@ -373,7 +373,7 @@ CLASS_DECL_CA2_TIME HRESULT FloatTimeFromStr(const char * strIn, LCID lcid, ULON
 
 #ifdef METROWIN
 
-  throw new todo(get_app());
+  _throw(todo(get_app()));
 
 #else
   GetLocaleInfoW(lcid, LOCALE_IDATE|LOCALE_RETURN_NUMBER|(dwFlags & LOCALE_NOUSEROVERRIDE),

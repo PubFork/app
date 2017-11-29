@@ -476,7 +476,7 @@ int_bool is_windows_8_or_greater()
    if(!GetVersionEx(&osversioninfo))
       return 0;
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
    return osversioninfo.dwPlatformId == VER_PLATFORM_WIN32_NT && osversioninfo.dwMajorVersion >= 6 && osversioninfo.dwMinorVersion >= 2;
 
@@ -739,11 +739,11 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType,__in char *szMsg,int32_t* pRe
 
    ASSERT(pResult != NULL);
    if(pResult == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    ASSERT(szMsg != NULL);
    if(szMsg == NULL)
-      throw new invalid_argument_exception(get_app());
+      _throw(invalid_argument_exception(get_app()));
 
    // non-NULL m_pFile, so go through dumpcontext for the message
    *pResult = FALSE;
@@ -783,22 +783,22 @@ void CLASS_DECL_AURA __throw_last_cleanup()
 namespace core
 {
 
-#if defined( _CUSTOM_THROW )  // You can define your own throw new hresult_exception to throw new a custom exception.
+#if defined( _CUSTOM_THROW )  // You can define your own _throw( hresult_exception to _throw( a custom exception.
 
    CLASS_DECL_AURA void WINAPI atl_throw_impl(HRESULT hr)
    {
-      TRACE(atlTraceException,0,"throw new hresult_exception: hr = 0x%x\n",hr);
+      TRACE(atlTraceException,0,"_throw(hresult_exception: hr = 0x%x\n",hr));
 #ifdef _AFX
       if(hr == E_OUTOFMEMORY)
       {
-         throw new memory_exception();
+         _throw(memory_exception());
       }
       else
       {
          //      ::core::ThrowOleException( hr );
       }
 #else
-      throw new atl_exception(hr);
+      _throw(atl_exception(hr));
 #endif
    };
 
@@ -806,18 +806,18 @@ namespace core
 
 
    // Throw a atl_exception with th given HRESULT
-#if !defined( _CUSTOM_THROW )  // You can define your own throw new hresult_exception
+#if !defined( _CUSTOM_THROW )  // You can define your own _throw( hresult_exception
 
    //CLASS_DECL_AURA void WINAPI atl_throw_impl(HRESULT hr)
    //{
-   //   TRACE("throw new hresult_exception: hr = 0x%x\n", hr);
-   //  throw new hresult_exception(hr);
-   /*   ::output_debug_string("throw new hresult_exception");
+   //   TRACE("_throw(hresult_exception: hr = 0x%x\n", hr));
+   //  _throw(hresult_exception(hr));
+   /*   ::output_debug_string("_throw(hresult_exception"));
    char sz[200];
    sprintf(sz, "0x%s", hr);
    ::output_debug_string(sz);
    ::output_debug_string("\n");
-   //TRACE(trace::category_Exception, 0, "throw new hresult_exception: hr = 0x%x\n", hr );
+   //TRACE(trace::category_Exception, 0, "_throw(hresult_exception: hr = 0x%x\n", hr ));
    ASSERT( false );
    DWORD dwExceptionCode;
    switch(hr)

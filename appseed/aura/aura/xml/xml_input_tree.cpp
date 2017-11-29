@@ -37,7 +37,7 @@ namespace xml
          if(strName != lpcszName)
          {
             m_pnode = NULL;
-            throw new "Node not found";
+            _throw(simple_exception(get_app(), "Node not found"));
          }
          importable.xml_import(*this);
          return m_pdocument->get_root();
@@ -63,7 +63,7 @@ namespace xml
          {
             ASSERT(FALSE);
             m_pnode = NULL;
-            throw new "Node not found";
+            _throw(simple_exception(get_app(), "Node not found"));
          }
          if(!m_pnode->contains(attributea))
             return ((node *) NULL);

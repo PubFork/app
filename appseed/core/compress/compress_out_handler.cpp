@@ -145,7 +145,7 @@ namespace libcompress
          destProp = srcProp;
          return true;
       }
-      throw new "should implement below";
+      _throw("should implement below");
       /*if (varType == VT_UI1)
       {
          if (srcProp.vt == var::type_int32)
@@ -352,7 +352,7 @@ namespace libcompress
          atoi(prop.name()) == NCoderPropID::kDictionarySize ||
          atoi(prop.name()) == NCoderPropID::kUsedMemorySize)
       {
-         throw new "should implement below";
+         _throw("should implement below");
          /*
          uint32_t dicSize;
          RINOK(ParsePropDictionaryValue(value, dicSize));
@@ -381,7 +381,7 @@ namespace libcompress
                propValue = value;
          }
 
-         throw new not_implemented(get_app());
+         _throw(not_implemented(get_app()));
          //if (!ConvertProperty(propValue, nameToPropID.VarType, prop.get_value()))
            // return E_INVALIDARG;
       }
@@ -492,7 +492,7 @@ namespace libcompress
       WriteMTime = true;
 
 #ifndef _7ZIP_ST
-      throw new "should implement below";
+      _throw("should implement below");
       //_numThreads = NSystem::GetNumberOfProcessors();
 #endif
 
@@ -507,7 +507,7 @@ namespace libcompress
    {
       Init();
 #ifndef _7ZIP_ST
-      throw new "should implement below";
+      _throw("should implement below");
 //      numProcessors = NSystem::GetNumberOfProcessors();
 #endif
 
@@ -528,7 +528,7 @@ namespace libcompress
       {
          name.Delete(0);
          _level = 9;
-         throw new "should implement below";
+         _throw("should implement below");
          //return ParsePropValue(name, value, _level);
       }
 
@@ -546,7 +546,7 @@ namespace libcompress
       {
          _crcSize = 4;
          name.Delete(0, 3);
-         throw new "should implement below";
+         _throw("should implement below");
          //return ParsePropValue(name, value, _crcSize);
       }
 
@@ -558,12 +558,12 @@ namespace libcompress
          if(name.Left(2).compare_ci("MT") == 0)
          {
 #ifndef _7ZIP_ST
-            throw new "should implement below";
+            _throw("should implement below");
             //RINOK(ParseMtProp(name.Mid(2), value, numProcessors, _numThreads));
 #endif
             return S_OK;
          }
-         throw new "should implement below";
+         _throw("should implement below");
          /*if (name.compare_ci("RSFX") == 0)  return SetBoolProperty(_removeSfxBlock, value);
          if (name.compare_ci("F") == 0) return SetBoolProperty(_autoFilter, value);
          if (name.compare_ci("HC") == 0) return SetBoolProperty(_compressHeaders, value);
@@ -603,7 +603,7 @@ namespace libcompress
       {
          if (value.get_type() != var::type_string)
             return E_INVALIDARG;
-         throw new "should implement below";
+         _throw("should implement below");
          //RINOK(SetParams(oneMethodInfo, value.bstrVal));
       }
       else
@@ -620,7 +620,7 @@ namespace libcompress
             atoi(prop.name()) == NCoderPropID::kUsedMemorySize)
          {
             uint32_t dicSize;
-            throw new "should implement below";
+            _throw("should implement below");
             //RINOK(ParsePropDictionaryValue(realName.Mid(MyStringLen(nameToPropID.Name)), value, dicSize));
             //prop.Value = dicSize;
             if (number <= mainDicMethodIndex)
@@ -633,7 +633,7 @@ namespace libcompress
                return E_INVALIDARG;
             const CNameToPropID &nameToPropID = g_NameToPropID[index];
             prop.set_name(::str::from(nameToPropID.PropID));
-            throw new not_implemented(get_app());
+            _throw(not_implemented(get_app()));
             //if (!ConvertProperty(value, nameToPropID.VarType, prop.get_value()))
               // return E_INVALIDARG;
          }

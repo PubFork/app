@@ -481,7 +481,7 @@ namespace hotplugin
       try
       {
 
-         throw new todo(get_app());
+         _throw(todo(get_app()));
 
          //::draw2d::bitmap_sp b(allocer());
 
@@ -521,7 +521,7 @@ namespace hotplugin
       try
       {
 
-         throw new todo(get_app());
+         _throw(todo(get_app()));
 
          //simple_bitmap b;
 
@@ -562,7 +562,7 @@ namespace hotplugin
 
       synch_lock ml(m_pmutexBitmap);
 
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
       //pgraphics.blend_bitmap_data(lprect.left, lprect.top, m_sizeBitmap.cx, m_sizeBitmap.cy, m_pcolorref);
 
       if (m_dib.is_null())

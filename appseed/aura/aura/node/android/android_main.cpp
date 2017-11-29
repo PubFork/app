@@ -5,7 +5,7 @@ CLASS_DECL_AURA int32_t ca2_main();
 
 void CLASS_DECL_AURA __cdecl _ca2_purecall()
 {
-    throw new simple_exception(get_app());
+    _throw(simple_exception(get_app()));
 }
 
 

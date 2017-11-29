@@ -450,7 +450,7 @@ namespace core
    //
    //#else
    //
-   //          throw new todo(get_app());
+   //          _throw(todo(get_app()));
    //
    //#endif
    //
@@ -515,14 +515,14 @@ namespace core
    catch(::exit_exception & e)
    {
 
-   throw new e;
+   _throw(e);
 
    }
    catch(::exception::exception &)
    {
 
    if(!Application.on_run_exception(e))
-   throw new exit_exception(get_app());
+   _throw(exit_exception(get_app()));
 
    }
    catch(...)
@@ -602,7 +602,7 @@ namespace core
       }
       else
       {
-         throw new "not expected e_mouse value";
+         _throw("not expected e_mouse value");
       }
 
 
@@ -678,7 +678,7 @@ namespace core
 
 #else
 
-         throw new todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 
@@ -732,7 +732,7 @@ namespace core
          catch(::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch(::exception::exception & e)
@@ -741,7 +741,7 @@ namespace core
             if (!App(this).on_run_exception(e))
             {
 
-               throw new exit_exception(get_app());
+               _throw(exit_exception(get_app()));
 
             }
 

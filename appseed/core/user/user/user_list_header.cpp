@@ -105,7 +105,7 @@ namespace user
 
 //#else
 
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
 
 //#endif
 
@@ -653,7 +653,7 @@ namespace user
       catch (...)
       {
 
-         throw new simple_exception(get_app(), "no more a window");
+         _throw(simple_exception(get_app(), "no more a window"));
 
       }
 

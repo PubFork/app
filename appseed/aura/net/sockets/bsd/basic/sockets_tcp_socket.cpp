@@ -882,7 +882,7 @@ namespace sockets
 #ifdef DEBUG
                log("OnWrite/SSL_write",errnr,errbuf,::aura::log::level_fatal);
 #endif
-               //throw new io_exception(get_app(), errbuf);
+               //_throw(io_exception(get_app(), errbuf));
             }
             //return 0;
          }
@@ -895,7 +895,7 @@ namespace sockets
             int32_t errnr = SSL_get_error(m_ssl,(int32_t)n);
             const char *errbuf = ERR_error_string(errnr,NULL);
             TRACE("SSL_write() returns 0: %d : %s\n",errnr,errbuf);
-            //throw new io_exception(get_app(), errbuf);
+            //_throw(io_exception(get_app(), errbuf));
          }
       }
       else
@@ -929,7 +929,7 @@ namespace sockets
                SetCloseAndDelete(true);
                SetFlushBeforeClose(false);
                SetLost();
-               //throw new io_exception(get_app(), bsd_socket_error(Errno));
+               //_throw(io_exception(get_app(), bsd_socket_error(Errno)));
             }
             //else
             //{

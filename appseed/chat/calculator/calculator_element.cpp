@@ -29,7 +29,7 @@ namespace calculator
          }
          else
          {
-            throw new "unknown identifier";
+            _throw("unknown identifier");
          }
          return val;
       }
@@ -121,7 +121,7 @@ namespace calculator
          }
          else
          {
-            throw new "unknown function";
+            _throw("unknown function");
          }
       }
       return value();
@@ -188,7 +188,7 @@ namespace calculator
          }
          else
          {
-            throw new "unknown function";
+            _throw("unknown function");
          }
       }
       return "not supported operation";

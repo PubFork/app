@@ -1084,7 +1084,7 @@ bool windows_load_dib_from_file(::draw2d::dib * pdib, ::file::file_sp, ::aura::a
 bool windows_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file_sp pfile, ::aura::application * papp)
 {
    
-   throw new todo(papp);
+   _throw(todo(papp));
 //   if (!defer_co_initialize_ex(false))
   //    return false;
    

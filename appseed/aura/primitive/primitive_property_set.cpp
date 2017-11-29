@@ -633,7 +633,7 @@ void property_set::skip_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw new str;
+         _throw(simple_exception(::get_app(), str));
       }
    }
 }
@@ -697,7 +697,7 @@ void property_set::parse_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw new str;
+         _throw(simple_exception(::get_app(), str));
       }
    }
 }
@@ -1499,7 +1499,7 @@ property & stable_property_set::operator [](id id)
       if (iFind < 0 || iFind >= m_propertya.get_count())
       {
 
-         throw new index_out_of_bounds(get_app());
+         _throw(index_out_of_bounds(get_app()));
 
       }
 

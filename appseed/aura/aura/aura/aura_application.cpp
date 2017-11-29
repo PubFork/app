@@ -363,7 +363,7 @@ namespace aura
    void application::throw_not_installed()
    {
 
-      throw new not_installed(get_app(), m_strAppId, "application");
+      _throw(not_installed(get_app(), m_strAppId, "application"));
 
    }
 
@@ -406,33 +406,29 @@ namespace aura
          }
 
       }
-      catch (not_installed & e)
+      catch (esp esp)
       {
+         
+         if(esp.is < not_installed >())
+         {
 
-         System.on_run_exception(e);
+            System.on_run_exception(esp);
 
-         throw new exit_exception(e.get_app(), ::exit_application);
+            _throw(exit_exception(esp->get_app(), ::exit_application));
 
-      }
-      catch (::exit_exception * pe)
-      {
-
-         throw pe;
-
-      }
-      catch (::exception::exception * pe)
-      {
-
-         if (!Application.on_run_exception(*pe))
+         }
+         else if(esp.is < exit_exception > ())
          {
             
-            throw new exit_exception(get_app(), ::exit_application);
+            throw esp;
             
          }
-
-      }
-      catch (...)
-      {
+         else if (!Application.on_run_exception(esp))
+         {
+            
+            _throw(exit_exception(esp->get_app(), ::exit_application));
+            
+         }
 
       }
 
@@ -2459,7 +2455,7 @@ namespace aura
    void application::_001CloseApplication()
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
    }
 
@@ -2511,7 +2507,7 @@ namespace aura
 //   string CLASS_DECL_AURA application::get_cred(const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive)
    // {
 
-   //  throw new not_implemented(this);
+   //  _throw(not_implemented(this));
 
    //}
 
@@ -2521,7 +2517,7 @@ namespace aura
    bool application::get_temp_file_name_template(string & strRet, const char * pszName, const char * pszExtension, const char * pszTemplate)
    {
 
-      throw new not_implemented(this);
+      _throw(not_implemented(this));
 
       return false;
 
@@ -2545,16 +2541,18 @@ namespace aura
 
 
 
-   bool application::final_handle_exception(::exception::exception & e)
+   bool application::final_handle_exception(::exception::exception * pe)
    {
-      UNREFERENCED_PARAMETER(e);
+      
+      UNREFERENCED_PARAMETER(pe);
+      
       //linux      exit(-1);
 
       if (!is_system())
       {
 
          // get_app() may be it self, it is ok...
-         if (System.final_handle_exception((::exception::exception &) e))
+         if (System.final_handle_exception(pe))
             return true;
 
 
@@ -2827,36 +2825,35 @@ run:
             run();
 
          }
-         catch (::exit_exception * pe)
+         catch (esp esp)
          {
-
-            throw pe;
-
-         }
-         catch (const ::exception::exception * pe)
-         {
-
-            if (on_run_exception((::exception::exception &) *pe))
+            
+            if(esp.is < exit_exception > ())
             {
 
-               goto run;
+               throw esp;
+               
+            }
+            else
+            {
+               
+               if (on_run_exception(esp))
+               {
+                  
+                  goto run;
+                  
+               }
+               
+               if (final_handle_exception(esp))
+               {
+                  
+                  goto run;
+                  
+               }
 
             }
 
-            if (final_handle_exception((::exception::exception &) *pe))
-            {
-
-               goto run;
-
-            }
-
          }
-
-      }
-      catch (::exit_exception * pe)
-      {
-
-         throw pe;
 
       }
       catch (...)
@@ -4078,7 +4075,7 @@ retry_license:
 
             thisfail << 0.2;
 
-            throw new exit_exception(m_paurasession, ::exit_application);
+            _throw(exit_exception(m_paurasession, ::exit_application));
 
          }
 
@@ -4240,7 +4237,7 @@ bool application::init1()
          if (m_pimaging == NULL)
          {
             
-            throw new memory_exception(get_app());
+            _throw(memory_exception(get_app()));
             
          }
          
@@ -4817,7 +4814,7 @@ void application::term1()
             if(bHandled)
             {
 
-               throw new exit_exception(this, exit_application);
+               _throw(exit_exception(this, exit_application));
 
             }
 
@@ -5978,7 +5975,7 @@ void application::term1()
 
          System.start_installation(strCommand);
 
-         throw new installing_exception(get_app());
+         _throw(installing_exception(get_app()));
 
          return NULL;
 
@@ -6105,24 +6102,24 @@ void application::term1()
 
 
 
-   bool application::on_run_exception(::exception::exception & e)
+   bool application::on_run_exception(::exception::exception * pe)
    {
 
       ::output_debug_string("aura::application::on_run_exception An unexpected error has occurred and no special exception handling is available.");
 
-      if (e.m_bHandled)
+      if (pe->m_bHandled)
       {
 
-         return !e.m_bContinue;
+         return !pe->m_bContinue;
 
       }
 
-      if (typeid(e) == typeid(not_installed))
+      if (typeid(*pe) == typeid(not_installed))
       {
 
-         not_installed & notinstalled = dynamic_cast <not_installed &> (e);
+         not_installed * pnotinstalled = dynamic_cast <not_installed *> (pe);
 
-         return handle_not_installed(notinstalled);
+         return handle_not_installed(pnotinstalled);
 
       }
 
@@ -6133,12 +6130,12 @@ void application::term1()
    }
 
 
-   bool application::handle_not_installed(::not_installed & notinstalled)
+   bool application::handle_not_installed(::not_installed * pnotinstalled)
    {
 
-      notinstalled.m_bHandled = true;
+      pnotinstalled->m_bHandled = true;
 
-      notinstalled.m_bContinue = true;
+      pnotinstalled->m_bContinue = true;
 
       bool bDebuggerCheck = true;
 
@@ -6225,7 +6222,7 @@ void application::term1()
             //#if defined(APPLEOS)
             //                   strPath = "/usr/bin/open -n " + strPath + " --args : app=" + notinstalled.m_strId + " install build=" + strBuild + " locale=" + notinstalled.m_strLocale + " schema=" + //notinstalled.m_strSchema;
             //#else
-            strParam = " : install app=" + notinstalled.m_strAppId + " platform="+ notinstalled.m_strPlatform + " configuration=" + notinstalled.m_strConfiguration + " locale=" + notinstalled.m_strLocale + " schema=" + notinstalled.m_strSchema;
+            strParam = " : install app=" + pnotinstalled->m_strAppId + " platform="+ pnotinstalled->m_strPlatform + " configuration=" + pnotinstalled->m_strConfiguration + " locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema;
             //#endif
 
             //               if(App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
@@ -6316,8 +6313,8 @@ void application::term1()
                if (!(bool)System.oprop("not_installed_message_already_shown"))
                {
 
-                  if ((App(notinstalled.get_app()).is_serviceable() && !App(notinstalled.get_app()).is_user_service())
-                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + notinstalled.m_strAppId + "\n\tconfiguration = " + notinstalled.m_strConfiguration + "\n\tplatform = " + notinstalled.m_strPlatform + "\n\tlocale = " + notinstalled.m_strLocale + "\n\tschema = " + notinstalled.m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
+                  if ((App(pnotinstalled->get_app()).is_serviceable() && !App(pnotinstalled->get_app()).is_user_service())
+                        || (IDYES == (iRet = ::simple_message_box(NULL, "Debug only message, please install:\n\n\n\t" + pnotinstalled->m_strAppId + "\n\tconfiguration = " + pnotinstalled->m_strConfiguration + "\n\tplatform = " + pnotinstalled->m_strPlatform + "\n\tlocale = " + pnotinstalled->m_strLocale + "\n\tschema = " + pnotinstalled->m_strSchema + "\n\n\nThere are helper scripts under <solution directory>/nodeapp/stage/install/", "Debug only message, please install.", MB_ICONINFORMATION | MB_YESNO))))
                   {
 
                      ::duration durationWait = minutes(1);
@@ -6351,15 +6348,15 @@ void application::term1()
             if (iRet == IDNO)
             {
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else if (bTimedOut)
             {
 
-               ::simple_message_box(NULL, " - " + notinstalled.m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
+               ::simple_message_box(NULL, " - " + pnotinstalled->m_strAppId + "\nhas timed out while trying to install.\n\nFor developers it is recommended to\nfix this installation timeout problem.\n\nIt is recommended to kill manually :\n - \"" + string(path) + strParam + "\"\nif it has not been terminated yet.", "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else if (dwExitCode == 0)
@@ -6367,7 +6364,7 @@ void application::term1()
 
                ::simple_message_box(NULL, "Successfully run : " + string(path) + strParam, "Installation Succesful", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
             else
@@ -6375,7 +6372,7 @@ void application::term1()
 
                ::simple_message_box(NULL, string(path) + strParam + "\n\nFailed return code : " + ::str::from((uint32_t)dwExitCode), "Debug only message, please install.", MB_ICONINFORMATION | MB_OK);
 
-               notinstalled.m_bContinue = false;
+               pnotinstalled->m_bContinue = false;
 
             }
 
@@ -6410,7 +6407,7 @@ void application::term1()
 
          }
 
-         hotplugin_host_starter_start_sync(": app=" + notinstalled.m_strAppId + " install locale=" + notinstalled.m_strLocale + " schema=" + notinstalled.m_strSchema + " configuration=" + notinstalled.m_strConfiguration + " platform=" + notinstalled.m_strPlatform + strAddUp, get_app(), NULL);
+         hotplugin_host_starter_start_sync(": app=" + pnotinstalled->m_strAppId + " install locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema + " configuration=" + pnotinstalled->m_strConfiguration + " platform=" + pnotinstalled->m_strPlatform + strAddUp, get_app(), NULL);
 
       }
 
@@ -6466,7 +6463,7 @@ void application::term1()
    void application::dispatch_user_message_object(::object * pobject)
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
    }
 
@@ -7076,7 +7073,7 @@ finalize:
    string application::install_pick_command_line()
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return "";
 
@@ -7449,7 +7446,7 @@ finalize:
    bool application::install_get_admin()
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return false;
 
@@ -7459,7 +7456,7 @@ finalize:
    string application::install_get_id()
    {
 
-      throw new interface_only_exception(this);
+      _throw(interface_only_exception(this));
 
       return "";
 
@@ -7469,7 +7466,7 @@ finalize:
    LPWAVEOUT application::waveout_open(int iChannel, LPAUDIOFORMAT pformat, LPWAVEOUT_CALLBACK pcallback)
    {
 
-      throw new interface_only_exception(NULL);
+      _throw(interface_only_exception(NULL));
 
       return NULL;
 
@@ -7808,15 +7805,15 @@ finalize:
             message_handler(pbase);
 
          }
-         catch (const ::exception::exception & e)
+         catch (esp esp)
          {
 
             TRACE("application::process_message : error processing application thread message (const ::exception::exception & )");
 
-            if (App(this).on_run_exception((::exception::exception &) e))
+            if (App(this).on_run_exception(esp))
                goto run;
 
-            if (App(this).final_handle_exception((::exception::exception &) e))
+            if (App(this).final_handle_exception(esp))
                goto run;
 
             __post_quit_message(-1);
@@ -7852,17 +7849,16 @@ finalize:
 
          pbase->m_pwnd->m_puiThis->message_handler(pbase);
 
-
       }
-      catch (const ::exception::exception & e)
+      catch (esp esp)
       {
 
          TRACE("application::process_message : error processing window message (const ::exception::exception & )");
 
-         if (App(this).on_run_exception((::exception::exception &) e))
+         if (App(this).on_run_exception(esp))
             goto run;
 
-         if (App(this).final_handle_exception((::exception::exception &) e))
+         if (App(this).final_handle_exception(esp))
             goto run;
 
          __post_quit_message(-1);

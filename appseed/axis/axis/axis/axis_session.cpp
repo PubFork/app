@@ -782,10 +782,10 @@ namespace axis
          m_pkeyboard = new ::user::keyboard(m_pauraapp);
 
          if(m_pkeyboard == NULL)
-            throw new simple_exception(get_app(),"Could not create keyboard");
+            _throw(simple_exception(get_app(),"Could not create keyboard"));
 
          if(!m_pkeyboard->initialize())
-            throw new simple_exception(get_app(),"Could not initialize keyboard");
+            _throw(simple_exception(get_app(),"Could not initialize keyboard"));
 
          Application.on_create_keyboard();
 

@@ -18,13 +18,13 @@ public:
       gDoneEvent = CreateEvent(NULL,TRUE,FALSE,NULL);
       if(NULL == gDoneEvent)
       {
-         throw new - 1;
+         _throw(- 1);
       }
       // Create the timer queue.
       hTimerQueue = CreateTimerQueue();
       if(NULL == hTimerQueue)
       {
-         throw new - 1;
+         _throw(- 1);
       }
    }
 

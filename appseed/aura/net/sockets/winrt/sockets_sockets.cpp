@@ -78,7 +78,7 @@ namespace sockets
    {
       UNREFERENCED_PARAMETER(pszUrl);
       //UNREFERENCED_PARAMETER(psocket);
-      //throw new not_implemented(get_app());
+      //_throw(not_implemented(get_app()));
       psocket->m_bDirect = true;
    }
 

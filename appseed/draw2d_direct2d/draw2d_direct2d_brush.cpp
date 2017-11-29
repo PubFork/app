@@ -59,13 +59,13 @@ namespace draw2d_direct2d
    //   void brush::construct(COLORREF crColor)
    //   {
    ////      if (!Attach(::CreateSolidBrush(crColor)))
-   //  //       throw new resource_exception();
+   //  //       _throw(resource_exception());
    //   }
    //
    //   void brush::construct(int nIndex, COLORREF crColor)
    //   {
    //    //  if (!Attach(::CreateHatchBrush(nIndex, crColor)))
-   //      //   throw new resource_exception();
+   //      //   _throw(resource_exception());
    //   }
    //
    //   void brush::construct(::draw2d::bitmap* pBitmap)
@@ -73,7 +73,7 @@ namespace draw2d_direct2d
    //      //ASSERT_VALID(pBitmap);
    //
    //      //if (!Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data())))
-   //        // throw new resource_exception();
+   //        // _throw(resource_exception());
    //   }
    //
    //   bool brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)

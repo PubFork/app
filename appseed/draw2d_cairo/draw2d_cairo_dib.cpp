@@ -220,7 +220,7 @@ namespace draw2d_cairo
          pgraphics->SelectObject(pbitmap);
          return false;
       }
-      throw new todo(get_app());
+      _throw(todo(get_app()));
       // xxx bool bOk = GetDIBits(LNX_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       // xxx pgraphics->SelectObject(pbitmap);
       // xxx return bOk;
@@ -2480,7 +2480,7 @@ namespace draw2d_cairo
 
       get_graphics()->StretchBlt(0, 0, m_size.cx, m_size.cy, pdib->get_graphics(), 0, 0, pdib->m_size.cx, pdib->m_size.cy, SRCCOPY);
 
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 
       /* xxx
 

@@ -382,7 +382,7 @@ namespace file
    bool application::crypto_set(var varFile,const char * pszData,const char * pszSalt)
    {
 
-      throw new interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
       return false;
 
@@ -392,7 +392,7 @@ namespace file
    bool application::crypto_get(var varFile,string & str,const char * pszSalt)
    {
 
-      throw new interface_only_exception(get_app());
+      _throw(interface_only_exception(get_app()));
 
       return false;
 

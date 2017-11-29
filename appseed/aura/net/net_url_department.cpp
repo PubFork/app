@@ -1457,7 +1457,7 @@ namespace url
 
       if (rc != IDNA_SUCCESS)
       {
-         throw new idna_strerror(rc);
+         _throw(idna_strerror(rc));
       }
 
       string str(p);
@@ -1512,7 +1512,7 @@ namespace url
 
       if (rc != IDNA_SUCCESS)
       {
-         throw new idna_strerror(rc);
+         _throw(idna_strerror(rc));
       }
 
       string str(p);

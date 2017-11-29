@@ -279,7 +279,7 @@ namespace async
 
    inline void cancel_current_task()
    {
-      throw new ::simple_exception(get_app(), "cancel_current_task");
+      _throw(::simple_exception(get_app(), "cancel_current_task"));
    }
 
    template < typename T >

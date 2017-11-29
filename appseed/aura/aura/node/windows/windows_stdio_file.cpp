@@ -317,7 +317,7 @@ namespace windows
 
       ASSERT(m_pStream != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
       return NULL;
    }
 
@@ -326,7 +326,7 @@ namespace windows
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
    void stdio_file::UnlockRange(file_position_t /* dwPos */, file_size_t /* dwCount */)
@@ -334,7 +334,7 @@ namespace windows
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw new not_supported_exception(get_app());
+      _throw(not_supported_exception(get_app()));
    }
 
 

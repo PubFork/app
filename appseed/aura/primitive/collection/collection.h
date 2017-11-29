@@ -50,7 +50,7 @@ class const_range
          else
          {
 
-            throw new invalid_argument_exception(get_app());
+            _throw(invalid_argument_exception(get_app()));
 
          }
 
@@ -95,7 +95,7 @@ class range
          else
          {
 
-            throw new invalid_argument_exception(get_app());
+            _throw(invalid_argument_exception(get_app()));
 
          }
 

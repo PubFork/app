@@ -36,14 +36,14 @@ namespace colorertake5
 
       if(!hbasedoc.load(str))
       {
-         throw new exception(get_app(), "Error loading HRD file");
+         _throw(exception(get_app(), "Error loading HRD file"));
       }
 
       xml::node & hbase = *hbasedoc.get_root();
 
       if(hbase.get_name() != "hrd")
       {
-         throw new exception(get_app(), "Error loading HRD file");
+         _throw(exception(get_app(), "Error loading HRD file"));
       }
 
       for(sp(::xml::node)curel = hbase.first_child(); curel; curel = curel->get_next_sibling())

@@ -192,7 +192,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadCursor(NULL, lpszCursorName);
 //#else
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -201,7 +201,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadCursor(NULL, MAKEINTRESOURCE(nIDCursor));
 //#else
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -220,7 +220,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadIcon(NULL, lpszIconName);
 //#else
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 //
@@ -229,7 +229,7 @@ namespace aura
 //#ifdef WINDOWSEX
 //      return ::LoadIcon(NULL, MAKEINTRESOURCE(nIDIcon));
 //#else
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 //#endif
 //   }
 

@@ -443,7 +443,7 @@ namespace userstack
          }
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -556,7 +556,7 @@ namespace userstack
 //         launcher.execute();
 //#else
 //
-//         throw new todo(get_app());
+//         _throw(todo(get_app()));
 //
 //#endif
 //

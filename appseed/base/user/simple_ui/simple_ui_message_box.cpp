@@ -135,7 +135,7 @@ namespace simple_ui
       rectFontopus.bottom = rectFontopus.top + h;
 
       if(!create_window_ex(WS_EX_LAYERED,NULL,NULL,0,rectFontopus,puiParent,"fontopus"))
-         throw new simple_exception(get_app(),"not excepted! Failing Message box!!");
+         _throw(simple_exception(get_app(),"not excepted! Failing Message box!!"));
 
       TRACE("(1) Just after create_window_ex for simple_message_box (m_pimpl.m_p) : %d",m_pimpl.m_p);
       TRACE("(2) Just after create_window_ex for simple_message_box (m_pimpl->m_pui) : %d",m_pimpl->m_pui);

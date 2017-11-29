@@ -493,7 +493,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
          System.remove_frame(this);
 
-         throw new e;
+         _throw(e);
 
       }
       catch (...)
@@ -885,7 +885,7 @@ void simple_frame_window::_001OnGetMinMaxInfo(::message::message * pobj)
       lpMMI->ptMaxTrackSize.x = lpMMI->ptMaxSize.x;
    }
 #else
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 #endif
 }
 
@@ -2290,7 +2290,7 @@ void simple_frame_window::_001OnUser184(::message::message * pobj)
    else if(pbase->m_wparam == 2)
    {
 
-      throw new simple_exception(get_app());
+      _throw(simple_exception(get_app()));
 
    }
    else if(pbase->m_wparam == 123)
@@ -2718,7 +2718,7 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
    }
 
 #else
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 #endif
 }
 

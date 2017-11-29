@@ -234,13 +234,13 @@ CLASS_DECL_AURA void __set_thread_note(const char * pszNote);
 // Debug ASSERTs then throws. Retail throws if condition not met
 #define ENSURE_THROW(cond, exception)   \
    do { int32_t _gen__condVal=!!(cond); ASSERT(_gen__condVal); if (!(_gen__condVal)){exception;} } while (false)
-#define ENSURE(cond)      ENSURE_THROW(cond, throw new invalid_argument_exception(get_app()) )
-#define ENSURE_ARG(cond)   ENSURE_THROW(cond, throw new invalid_argument_exception(get_app()) )
+#define ENSURE(cond)      ENSURE_THROW(cond, _throw( invalid_argument_exception(get_app()) ))
+#define ENSURE_ARG(cond)   ENSURE_THROW(cond, _throw( invalid_argument_exception(get_app()) ))
 
 // Debug ASSERT_VALIDs then throws. Retail throws if pOb is NULL
 #define ENSURE_VALID_THROW(pOb, exception)   \
    do { ASSERT_VALID(pOb); if (!(pOb)){exception;} } while (false)
-#define ENSURE_VALID(pOb)   ENSURE_VALID_THROW(pOb, throw new invalid_argument_exception(get_app()) )
+#define ENSURE_VALID(pOb)   ENSURE_VALID_THROW(pOb, _throw( invalid_argument_exception(get_app()) ))
 
 #define ASSERT_POINTER(p, type) \
    ASSERT(((p) != NULL) && __is_valid_address((p), sizeof(type), FALSE))

@@ -86,7 +86,7 @@ namespace music
             if (NULL == m_lpbAlloc)
             return MCIERR_OUT_OF_MEMORY;
 
-            // Initialize all MIDIHDR's and throw new them into a free list
+            // Initialize all MIDIHDR's and _throw( them into a free list
             //
             m_lpmhFree = NULL;
 
@@ -507,7 +507,7 @@ Seq_Open_File_Cleanup:
                   if(bThrow)
                   {
                      SetState(status_opened);
-                     throw new exception(get_app(), EMidiPlayerPrerollStreamOpen);
+                     _throw(exception(get_app(), EMidiPlayerPrerollStreamOpen));
                   }
                   TRACE("midiStreamOpenError %d\n", mmrc);
                   //goto seq_Preroll_Cleanup;
@@ -543,7 +543,7 @@ Seq_Open_File_Cleanup:
 
                      SetState(status_opened);
 
-                     throw new exception(get_app(), EMidiPlayerPrerollStreamProperty);
+                     _throw(exception(get_app(), EMidiPlayerPrerollStreamProperty));
 
                   }
 
@@ -600,7 +600,7 @@ Seq_Open_File_Cleanup:
                   /*if(bThrow)
                   {
                   SetState(status_opened);
-                  throw new exception(mmrc, MIDIPLAYERPRERROLLREADEVENTSEXCEPTION);
+                  _throw(exception(mmrc, MIDIPLAYERPRERROLLREADEVENTSEXCEPTION));
                   }*/
                   goto seq_Preroll_Cleanup;
                }
@@ -622,7 +622,7 @@ Seq_Open_File_Cleanup:
                if(bThrow)
                {
                   SetState(status_opened);
-                  throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader);
+                  _throw(exception(get_app(), EMidiPlayerPrerollPrepareHeader));
                }
                else
                {
@@ -639,7 +639,7 @@ Seq_Open_File_Cleanup:
                if(bThrow)
                {
                   SetState(status_opened);
-                  throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader2);
+                  _throw(exception(get_app(), EMidiPlayerPrerollPrepareHeader2));
                }
                else
                {

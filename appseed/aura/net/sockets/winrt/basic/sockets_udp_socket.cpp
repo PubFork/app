@@ -485,7 +485,7 @@ namespace sockets
 
    void udp_socket::SetBroadcast(bool b)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*
       int one = 1;
       int zero = 0;
@@ -513,7 +513,7 @@ namespace sockets
 
    bool udp_socket::IsBroadcast()
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*int is_broadcast = 0;
       socklen_t size;
 
@@ -531,7 +531,7 @@ namespace sockets
 
    void udp_socket::SetMulticastTTL(int ttl)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*if (GetSocket() == INVALID_SOCKET)
       {
       CreateConnection();
@@ -545,7 +545,7 @@ namespace sockets
 
    int udp_socket::GetMulticastTTL()
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*int ttl = 0;
       socklen_t size = sizeof(int);
 
@@ -563,7 +563,7 @@ namespace sockets
 
    void udp_socket::SetMulticastLoop(bool x)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*if (GetSocket() == INVALID_SOCKET)
       {
       CreateConnection();
@@ -587,7 +587,7 @@ namespace sockets
 
    bool udp_socket::IsMulticastLoop()
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*if (GetSocket() == INVALID_SOCKET)
       {
       CreateConnection();
@@ -614,7 +614,7 @@ namespace sockets
 
    void udp_socket::AddMulticastMembership(const string & group, const string & local_if, int if_index)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*
       if (GetSocket() == INVALID_SOCKET)
       {
@@ -653,7 +653,7 @@ namespace sockets
 
    void udp_socket::DropMulticastMembership(const string & group, const string & local_if, int if_index)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*
       if (GetSocket() == INVALID_SOCKET)
       {
@@ -692,7 +692,7 @@ namespace sockets
 
    void udp_socket::SetMulticastHops(int hops)
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*if (GetSocket() == INVALID_SOCKET)
       {
       CreateConnection();
@@ -711,7 +711,7 @@ namespace sockets
 
    int udp_socket::GetMulticastHops()
    {
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
       /*
       if (GetSocket() == INVALID_SOCKET)
       {

@@ -74,9 +74,9 @@ public:
       Prepare (mFrames);
    }
    
-   // this version can throw new if this is an allocted ABL and inNumFrames is > AllocatedFrames()
+   // this version can _throw( if this is an allocted ABL and inNumFrames is > AllocatedFrames()
    // you can set the bool to true if you want a NULL buffer list even if allocated
-   // inNumFrames must be a valid number (will throw new if inNumFrames is 0)
+   // inNumFrames must be a valid number (will _throw( if inNumFrames is 0)
    void 								Prepare (UInt32 inNumFrames, bool inWantNullBufferIfAllocated = false);
    
    AudioBufferList*					ABL() { return mBufferList; }

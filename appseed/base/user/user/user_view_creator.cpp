@@ -120,7 +120,7 @@ namespace user
          catch (::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch (::exception::exception & e)
@@ -129,7 +129,7 @@ namespace user
             if (!Application.on_run_exception(e))
             {
 
-               throw new exit_exception(get_app());
+               _throw(exit_exception(get_app()));
 
             }
 
@@ -153,7 +153,7 @@ namespace user
          catch (::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch (::exception::exception & e)
@@ -162,7 +162,7 @@ namespace user
             if (!Application.on_run_exception(e))
             {
 
-               throw new exit_exception(get_app());
+               _throw(exit_exception(get_app()));
 
             }
 
@@ -202,13 +202,13 @@ namespace user
 
          }
 
-         throw new e;
+         _throw(e);
 
       }
       catch(::exit_exception & e)
       {
 
-         throw new e;
+         _throw(e);
 
       }
       catch(::exception::exception & e)
@@ -217,7 +217,7 @@ namespace user
          if (!Application.on_run_exception(e))
          {
          
-            throw new exit_exception(get_app());
+            _throw(exit_exception(get_app()));
 
          }
 
@@ -248,7 +248,7 @@ namespace user
          catch (::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch (::exception::exception & e)
@@ -257,7 +257,7 @@ namespace user
             if (!Application.on_run_exception(e))
             {
 
-               throw new exit_exception(get_app());
+               _throw(exit_exception(get_app()));
 
             }
 
@@ -281,7 +281,7 @@ namespace user
          catch (::exit_exception & e)
          {
 
-            throw new e;
+            _throw(e);
 
          }
          catch (::exception::exception & e)
@@ -290,7 +290,7 @@ namespace user
             if (!Application.on_run_exception(e))
             {
 
-               throw new exit_exception(get_app());
+               _throw(exit_exception(get_app()));
 
             }
 
@@ -337,13 +337,13 @@ namespace user
 
          }
 
-         throw new e;
+         _throw(e);
 
       }
       catch (::exit_exception & e)
       {
 
-         throw new e;
+         _throw(e);
 
       }
       catch (::exception::exception & e)
@@ -352,7 +352,7 @@ namespace user
          if (!Application.on_run_exception(e))
          {
 
-            throw new exit_exception(get_app());
+            _throw(exit_exception(get_app()));
 
          }
 

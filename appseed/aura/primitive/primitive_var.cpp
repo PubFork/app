@@ -954,7 +954,7 @@ void var::read(::file::istream & is)
       m_sp = Sys(is.m_spfile->get_app()).alloc(info);
       if(m_sp.is_null())
       {
-         throw new "object allocation is not implemented";
+         _throw("object allocation is not implemented");
       }
       ::file::serializable * pserializable = m_sp.cast < ::file::serializable >();
       if(pserializable != NULL)
@@ -963,7 +963,7 @@ void var::read(::file::istream & is)
       }
       else
       {
-         throw new io_exception(is.m_spfile->get_app(), "object serialization is not implemented");
+         _throw(io_exception(is.m_spfile->get_app(), "object serialization is not implemented"));
       }
    }
    break;
@@ -1046,12 +1046,12 @@ void var::write(::file::ostream & ostream) const
       }
       else
       {
-         throw new io_exception(ostream.m_spfile->get_app(), "object is not serializable");
+         _throw(io_exception(ostream.m_spfile->get_app(), "object is not serializable"));
       }
    }
    break;
    default:
-      throw new simple_exception(get_app(), "var::write var type not recognized");
+      _throw(simple_exception(get_app(), "var::write var type not recognized"));
    }
 }
 
@@ -1745,13 +1745,13 @@ int32_t var::int32(int32_t iDefault) const
    case type_id:
    {
       if(!is32integer((int64_t) m_id))
-         throw new overflow_error(get_app(), "var contains id that does not fit 32 bit integer");
+         _throw(overflow_error(get_app(), "var contains id that does not fit 32 bit integer"));
       return (int32_t) (int64_t) m_id;
    }
    case type_pid:
    {
       if(!is32integer((int64_t) *m_pid))
-         throw new overflow_error(get_app(), "var contains id that does not fit 32 bit integer");
+         _throw(overflow_error(get_app(), "var contains id that does not fit 32 bit integer"));
       return (int32_t) (int64_t) *m_pid;
    }
    default:
@@ -2038,7 +2038,7 @@ const class memory & var::memory() const
 {
    if(get_type() != type_memory)
    {
-      throw new 0;
+      _throw(0);
    }
    return *dynamic_cast < const class memory * > (m_sp.m_p);
 }
@@ -2233,7 +2233,7 @@ var var::key(index i) const
    case type_propset:
       return i;
    default:
-      throw new "not supported";
+      _throw("not supported");
    }
 }
 
@@ -2280,7 +2280,7 @@ var var::at(index i) const
       }
       else
       {
-         throw new "index out of bounds";
+         _throw("index out of bounds");
       }
    }
 }
@@ -2306,7 +2306,7 @@ var var::at(index i)
       }
       else
       {
-         throw new "index out of bounds";
+         _throw("index out of bounds");
       }
    }
 }
@@ -2733,9 +2733,9 @@ var operator / (uint64_t ul, const class var & var)
    switch(var.m_etype)
    {
    case ::var::type_null:
-      throw new simple_exception(get_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    case ::var::type_empty:
-      throw new simple_exception(get_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    case ::var::type_int32:
       return (int_ptr) ul / var.m_i32;
    case ::var::type_uint32:
@@ -2753,7 +2753,7 @@ var operator / (uint64_t ul, const class var & var)
    case ::var::type_pvar:
       return operator / (ul, *var.m_pvar);
    default:
-      throw new simple_exception(get_app(), "division by zero");
+      _throw(simple_exception(get_app(), "division by zero"));
    }
 
 }
@@ -4477,7 +4477,7 @@ bool var::is_numeric() const
       return false;
 
    default:
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
    };
 

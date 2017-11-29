@@ -382,7 +382,7 @@ inline index array < TYPE, ARG_TYPE, ALLOCATOR > ::append(const array& src)
    ASSERT(this != &src);   // cannot append to itself
 
    if(this == &src)
-      throw new invalid_argument_exception(this->get_app());
+      _throw(invalid_argument_exception(this->get_app()));
 
    ::count nOldSize = this->m_nSize;
    this->allocate(this->m_nSize + src.m_nSize);

@@ -23,14 +23,14 @@ namespace n7z
       void WriteBytes(const void *data, size_t size)
       {
          if (size > _size - _pos)
-            throw new 1;
+            _throw(1);
          memcpy(_data + _pos, data, size);
          _pos += size;
       }
       void WriteByte(byte b)
       {
          if (_size == _pos)
-            throw new 1;
+            _throw(1);
          _data[_pos++] = b;
       }
       size_t GetPos() const { return _pos; }

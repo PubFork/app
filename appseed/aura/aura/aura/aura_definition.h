@@ -184,7 +184,7 @@ So we've done a broad replace of all the member-related ASSERT to ASSUME.
 #define ENSURE_SUCCEEDED(hr) ENSURE_THROW(SUCCEEDED(hr), hr)
 #endif // ENSURE
 
-/* Used inside COM methods that do not want to throw new */
+/* Used inside COM methods that do not want to _throw( */
 #ifndef ENSURE_RETURN_HR
 #define ENSURE_RETURN_HR(expr, hr)          \
 do {                                           \
@@ -195,7 +195,7 @@ do {                                           \
 #endif
 
 
-/* Used inside COM methods that do not want to throw new */
+/* Used inside COM methods that do not want to _throw( */
 #ifndef ENSURE_RETURN
 #define ENSURE_RETURN(expr) ENSURE_RETURN_HR(expr, E_FAIL)
 #endif
@@ -347,7 +347,7 @@ do {                                           \
 
 /*
 This is called when something really bad happens -- so bad
-that we consider it dangerous to even throw new an exception
+that we consider it dangerous to even _throw( an exception
 */
 #ifndef _FATAL_SHUTDOWN
 #define _FATAL_SHUTDOWN do { ::TerminateProcess(::GetCurrentProcess(), 0); } while(0);

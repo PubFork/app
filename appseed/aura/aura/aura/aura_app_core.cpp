@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <time.h>
 
 
@@ -141,18 +141,37 @@ void app_core::run()
       return;
 
    }
+   
+   try
+   {
+      
+      m_psystem->main();
+      
+      for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
+      {
+      
+         on_result(m_psystem->m_error.m_iaErrorCode2[i]);
+         
+      }
 
-   on_result(m_psystem->main());
-
+   }
+   catch (...)
+   {
+      
+      on_result(-2004);
+      
+   }
+   
    try
    {
 
-      m_psystem->exit_thread();
+      m_psystem->term_thread();
 
    }
    catch (...)
    {
 
+      on_result(-2005);
 
    }
 
@@ -165,6 +184,8 @@ void app_core::run()
    catch (...)
    {
 
+      on_result(-2006);
+      
    }
 
    ::aura::del(m_psystem);
@@ -195,8 +216,18 @@ void app_core::end()
    ::time_t timet = ::time(NULL);
 
    tm t;
+   
+#ifdef WINDOWS
 
    errno_t err = _localtime64_s(&t, &timet);
+   
+#else
+   
+   localtime_r(&timet, &t);
+   
+   errno_t err = errno;
+   
+#endif
 
    char szTime[2048];
 
@@ -204,13 +235,13 @@ void app_core::end()
 
    sprintf(szTimeMessage, "\n\n\n---------------------------------------------------------------------------------------------\n|\n|\n|  Just After First Application Request Completion %d", (uint32_t)m_dwAfterApplicationFirstRequest - m_dwStartTime);
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    int iMillisecondsTotal = dwEnd - m_dwStartTime;
 
    sprintf(szTimeMessage, "\n|  Total Elapsed Time %d ms", (uint32_t)iMillisecondsTotal);
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    int iMilliseconds = iMillisecondsTotal % 1000;
    int iSecondsTotal = iMillisecondsTotal / 1000;
@@ -247,43 +278,43 @@ void app_core::end()
    }
 
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n|  %s", szTime);
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n|");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n-------------------------------------------------------------------------------------------- - ");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
    sprintf(szTimeMessage, "\n");
    ::output_debug_string(szTimeMessage);
-   printf(szTimeMessage);
+   printf("%s", szTimeMessage);
 
 
    if (file_exists_raw(szEllapsed))
@@ -325,7 +356,7 @@ void app_core::end()
 
 
 
-CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata);
+//CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem, ::windows::command * pmaininitdata);
 
 
 typedef bool DEFER_INIT();
@@ -341,7 +372,7 @@ CLASS_DECL_AURA int main(int argc, char * argv[])
 
    ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
 
-   return aura_aura(pmaindata);
+   return (int) aura_aura(pmaindata);
 
    //app_core appcore(&maindata);
 

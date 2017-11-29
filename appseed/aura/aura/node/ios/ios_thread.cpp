@@ -772,13 +772,13 @@ namespace ios
 //
 //   DWORD thread::ResumeThread()
 //   {
-//      //throw new not_implemented(get_app());
+//      //_throw(not_implemented(get_app()));
 //      ASSERT(m_hThread != NULL);
 //      return ::ResumeThread(m_hThread);
 //   }
 //   DWORD thread::SuspendThread()
 //   {
-//      throw new not_implemented(get_app());
+//      _throw(not_implemented(get_app()));
 //      //   ASSERT(m_hThread != NULL);
 //      // return ::SuspendThread(m_hThread);
 //
@@ -797,7 +797,7 @@ namespace ios
 //
 //   void thread::set_os_int(int_ptr iData)
 //   {
-//      throw new not_implemented(get_app());
+//      _throw(not_implemented(get_app()));
 //      //m_nThreadID = (dword_ptr) iData;
 //   }
 //
@@ -907,7 +907,7 @@ namespace ios
 //   ///*		FileDescWaiterThread::FileDescWaiterThread()
 //   //		{
 //   //			if ( pipe(fileDescs_) )
-//   //				;	// TO DO: throw new
+//   //				;	// TO DO: _throw(
 //   //			int32_t flags = fcntl( fileDescs_[1],F_GETFL );
 //   //			fcntl( fileDescs_[1], F_SETFL, flags|O_NONBLOCK );
 //   //			FD_ZERO(&fdRead);
@@ -1071,7 +1071,7 @@ namespace ios
 //   //			|| pthread_mutex_init(&startMutex_, 0)
 //   //			|| pthread_mutex_lock(&startMutex_)
 //   //			|| pthread_create(&thread_, &Attributes, reinterpret_cast<void * (*)(void *)>(thread::startExecution_), this))
-//   //			; // throw new ...
+//   //			; // _throw( ...
 //   //
 //   //		 Scheduling policy is set to round robin and priority to normal
 //   //		struct sched_param param = {0};
@@ -1087,7 +1087,7 @@ namespace ios
 //   //		: WaitableItem(false, false), isMainThread_(isMainThread), isExternalThread_(isExternalThread)
 //   //	{
 //   //		if (pthread_cond_init(&wakeUpCondition_, 0))
-//   //			; // throw new ...
+//   //			; // _throw( ...
 //   //
 //   //		thread_ = pthread_self();
 //   //		internal::g_globals.mutex_.lock();
@@ -1330,7 +1330,7 @@ namespace ios
 //   //	bool thread::has_message()
 //   //	{
 //
-//   //	   throw new "how to know?";
+//   //	   _throw("how to know?");
 //
 //   //	}
 //

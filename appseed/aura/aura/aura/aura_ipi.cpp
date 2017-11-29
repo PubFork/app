@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 namespace aura
@@ -34,7 +34,7 @@ namespace aura
       string strKey = key(strApp, iPid);
 
       if(!m_rx.create(strKey))
-         throw new ::resource_exception(papp);
+         _throw(::resource_exception(papp));
 
       //Application.simple_message_box(NULL, Application.m_strAppName + string(" : ") + strKey, MB_OK);
 
@@ -209,66 +209,66 @@ namespace aura
 
       return true;
 
-      ::aura::app_launcher launcher(process_platform_dir_name2(), strApp);
-
-      int iPid = -1;
-
-      {
-
-         int_array ia = get_pid(strApp);
-
-         if(ia.get_count() <= 0)
-         {
-
-            launcher.start();
-
-            int iStep = 0;
-
-            int iSubStep;
-
-            while(iStep < 8 && ::get_thread_run())
-            {
-
-               iStep++;
-
-               ia = get_pid(strApp);
-
-               if(ia.get_count() > 0)
-               {
-
-                  goto started;
-
-               }
-
-               for(iSubStep = 0; (iSubStep < (iStep + 1) * 10) && ::get_thread_run(); iSubStep++)
-               {
-
-                  Sleep(100);
-
-               }
-
-            }
-
-            return false;
-
-         }
-
-started:
-
-         iPid = ia[0];
-
-      }
-
-      string strKey = strApp + ":" + ::str::from(iPid);
-
-      if(m_txmap[strKey].is_null())
-      {
-
-         m_txmap[strKey] = canew(::aura::ipc::tx(get_app()));
-
-      }
-
-      return m_txmap[strKey]->open(key(strApp,iPid));
+//      ::aura::app_launcher launcher(process_platform_dir_name2(), strApp);
+//
+//      int iPid = -1;
+//
+//      {
+//
+//         int_array ia = get_pid(strApp);
+//
+//         if(ia.get_count() <= 0)
+//         {
+//
+//            launcher.start();
+//
+//            int iStep = 0;
+//
+//            int iSubStep;
+//
+//            while(iStep < 8 && ::get_thread_run())
+//            {
+//
+//               iStep++;
+//
+//               ia = get_pid(strApp);
+//
+//               if(ia.get_count() > 0)
+//               {
+//
+//                  goto started;
+//
+//               }
+//
+//               for(iSubStep = 0; (iSubStep < (iStep + 1) * 10) && ::get_thread_run(); iSubStep++)
+//               {
+//
+//                  Sleep(100);
+//
+//               }
+//
+//            }
+//
+//            return false;
+//
+//         }
+//
+//started:
+//
+//         iPid = ia[0];
+//
+//      }
+//
+//      string strKey = strApp + ":" + ::str::from(iPid);
+//
+//      if(m_txmap[strKey].is_null())
+//      {
+//
+//         m_txmap[strKey] = canew(::aura::ipc::tx(get_app()));
+//
+//      }
+//
+//      return m_txmap[strKey]->open(key(strApp,iPid));
 
    }
 

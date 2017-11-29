@@ -39,22 +39,22 @@ void CLASS_DECL_AURA __throw_last_cleanup()
 namespace gen
 {
 
-#if defined( _CUSTOM_THROW )  // You can define your own throw new hresult_exception to throw new a custom exception.
+#if defined( _CUSTOM_THROW )  // You can define your own _throw( hresult_exception to _throw( a custom exception.
 
 CLASS_DECL_AURA void WINAPI atl_throw_impl( HRESULT hr )
 {
-   TRACE(atlTraceException, 0, "throw new hresult_exception: hr = 0x%x\n", hr );
+   TRACE(atlTraceException, 0, "_throw(hresult_exception: hr = 0x%x\n", hr ));
 #ifdef _AFX
    if( hr == E_OUTOFMEMORY )
    {
-      throw new memory_exception();
+      _throw(memory_exception());
    }
    else
    {
 //      ::ca2::ThrowOleException( hr );
    }
 #else
-   throw new atl_exception( hr );
+   _throw(atl_exception( hr ));
 #endif
 };
 
@@ -62,18 +62,18 @@ CLASS_DECL_AURA void WINAPI atl_throw_impl( HRESULT hr )
 
 
 // Throw a atl_exception with th given HRESULT
-#if !defined( _CUSTOM_THROW )  // You can define your own throw new hresult_exception
+#if !defined( _CUSTOM_THROW )  // You can define your own _throw( hresult_exception
 
 //CLASS_DECL_AURA void WINAPI atl_throw_impl(HRESULT hr)
 //{
-//   TRACE("throw new hresult_exception: hr = 0x%x\n", hr);
- //  throw new hresult_exception(hr);
-/*   ::output_debug_string("throw new hresult_exception");
+//   TRACE("_throw(hresult_exception: hr = 0x%x\n", hr));
+ //  _throw(hresult_exception(hr));
+/*   ::output_debug_string("_throw(hresult_exception"));
    char sz[200];
    sprintf(sz, "0x%s", hr);
    ::output_debug_string(sz);
    ::output_debug_string("\n");
-   //TRACE(trace::category_Exception, 0, "throw new hresult_exception: hr = 0x%x\n", hr );
+   //TRACE(trace::category_Exception, 0, "_throw(hresult_exception: hr = 0x%x\n", hr ));
    ASSERT( false );
    DWORD dwExceptionCode;
    switch(hr)

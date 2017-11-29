@@ -249,9 +249,9 @@ public:
 //
 //         if(m_value) return *m_value;
 //
-//         if(m_pexception) throw new m_pexception;
+//         if(m_pexception) _throw(m_pexception);
 //
-//         throw new ::simple_exception(get_app(), "WTF");
+//         _throw(::simple_exception(get_app(), "WTF"));
 //
 //      }
 //

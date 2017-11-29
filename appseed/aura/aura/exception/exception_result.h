@@ -63,7 +63,7 @@ namespace exception
       {
          exception * pexception = t.template cast < exception >();
          if (pexception == NULL)
-            throw new "smart pointer is not exception";
+            _throw("smart pointer is not exception");
          m_p = canew(result({ pexception }));
          if (m_p != NULL)
          {

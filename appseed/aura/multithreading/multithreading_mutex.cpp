@@ -49,7 +49,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          DWORD dwError2 = ::GetLastError();
 
-         throw new resource_exception(papp);
+         _throw(resource_exception(papp));
 
       }
 
@@ -119,7 +119,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (err != EEXIST)
          {
 
-            throw new resource_exception(get_app());
+            _throw(resource_exception(get_app()));
 
          }
 
@@ -130,7 +130,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (m_psem == SEM_FAILED)
          {
 
-            throw new resource_exception(get_app());;
+            _throw(resource_exception(get_app()););
 
          }
 
@@ -200,7 +200,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          const char * pszError = strerror(iErr);
 
-         throw new resource_exception(get_app());
+         _throw(resource_exception(get_app()));
 
       }
 
@@ -304,7 +304,7 @@ get_existing:
       if(m_semid < 0)
       {
 
-         throw new resource_exception(get_app());
+         _throw(resource_exception(get_app()));
 
       }
 
@@ -1412,8 +1412,8 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
       if (psem == SEM_FAILED)
       {
 
-         //throw new resource_exception(papp,"failed to create named mutex");
-         throw new resource_exception(papp);
+         //_throw(resource_exception(papp,"failed to create named mutex"));
+         _throw(resource_exception(papp));
 
       }
 
@@ -1460,7 +1460,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    if (iFd < 0)
    {
 
-      throw new resource_exception(get_app());
+      _throw(resource_exception(get_app()));
 
    }
 

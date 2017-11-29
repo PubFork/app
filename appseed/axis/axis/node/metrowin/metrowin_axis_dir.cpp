@@ -662,7 +662,7 @@ namespace metrowin
    //
    //   string dir::userquicklaunch(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
    //   {
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
          //UNREFERENCED_PARAMETER(papp);
          //string str;
          //SHGetSpecialFolderPath(
@@ -676,7 +676,7 @@ namespace metrowin
    //
    //   string dir::userprograms(::aura::application *  papp, const char * lpcszRelativePath, const char * lpcsz2)
    //   {
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
    //      //UNREFERENCED_PARAMETER(papp);
    //      //string str;
    //      //SHGetSpecialFolderPath(
@@ -689,7 +689,7 @@ namespace metrowin
    //
    //   string dir::commonprograms(const char * lpcszRelativePath, const char * lpcsz2)
    //   {
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
    //      //string str;
    //      //SHGetSpecialFolderPath(
    //      //   NULL,
@@ -711,7 +711,7 @@ namespace metrowin
 
    //   bool dir::has_subdir(::aura::application *  papp, const char * pszDir)
    //   {
-   //      throw new todo(get_app());
+   //      _throw(todo(get_app()));
    //
    ///*      file_find filefind;
    //      bool bWorking;

@@ -69,7 +69,7 @@ namespace fs
    {
       /*if(m_nOpenFlags & ::file::mode_write)
       {
-      throw new "Cannot open remote_native_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse.";
+      _throw("Cannot open remote_native_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse.");
       return;
       }*/
 

@@ -67,7 +67,7 @@ void ifs_file::get_file_data()
 {
    /*if(m_nOpenFlags & ::file::mode_write)
    {
-      throw new "Cannot open ifs_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse.";
+      _throw("Cannot open ifs_file for reading and writing simultaneously due the characteristic of possibility of extreme delayed streaming. The way it is implemented would also not work.\n It is build with this premisse.");
       return;
    }*/
 

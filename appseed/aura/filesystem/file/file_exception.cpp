@@ -411,7 +411,7 @@ void throw_file_exception(::aura::application * papp,::file::exception::e_cause 
 #endif
 
 
-   throw new ::file::exception(papp, cause, lOsError, lpszFileName);
+   _throw(::file::exception(papp, cause, lOsError, lpszFileName));
 
 }
 

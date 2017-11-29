@@ -141,7 +141,7 @@ namespace file
          eva.add(_readStreamIsClosedEvent);
          if(!eva.wait(false, duration::infinite()).signaled())
          {
-            throw new S_FALSE;
+            _throw(S_FALSE);
          }
       }
       if (processedSize != NULL)

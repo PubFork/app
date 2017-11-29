@@ -215,7 +215,7 @@ file_size_t memory_file::get_length() const
 file_position_t memory_file::get_position() const
 {
    if (!IsValid())
-      throw new io_exception(get_app(), "memory_file::get_position");
+      _throw(io_exception(get_app(), "memory_file::get_position"));
    return (file_position_t)m_dwPosition;
 }
 

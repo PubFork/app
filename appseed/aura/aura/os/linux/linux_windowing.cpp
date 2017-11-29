@@ -437,7 +437,7 @@ void oswindow_data::set_user_interaction(::user::interaction_impl * pimpl)
 //   xdisplay d(x11_get_display());
 
    if(this == NULL)
-      throw new "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
+      _throw("error, m_pdata cannot be NULL to ::oswindow::set_user_interaction");
 
    m_pimpl = pimpl;
 
@@ -3057,7 +3057,7 @@ namespace aura
    sp(::message::base) application::get_message_base(void * pevent,::user::interaction * pwnd)
    {
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
       return NULL;
 

@@ -6458,7 +6458,7 @@ CLASS_DECL_AURA const unichar * __register_window_class(::aura::application * pa
    wndcls.lpszMenuName = NULL;
    wndcls.lpszClassName = lpszName;
    if (!__register_class(&wndcls))
-      throw new resource_exception(get_app());
+      _throw(resource_exception(get_app()));
 
    // return thread-local pointer
    return lpszName;

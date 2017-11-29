@@ -32,7 +32,7 @@ CLASS_DECL_CA2_MATH bool throw_numeric_parser_exception(const string & strMessag
    if(get_avoid_numeric_parser_exception())
       return false;
 
-   throw new numeric_parser_exception(get_app(),strMessage);
+   _throw(numeric_parser_exception(get_app(),strMessage));
 
    return true;
 

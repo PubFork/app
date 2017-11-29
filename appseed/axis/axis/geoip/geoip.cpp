@@ -932,7 +932,7 @@ _GeoIP_lookupaddress_v6(const char *host)
    return ipnum;
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 

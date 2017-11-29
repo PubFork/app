@@ -659,7 +659,7 @@ else if (this->m_pData == NULL)
 // create one with exact size
 #ifdef SIZE_T_MAX
 if(nNewSize > SIZE_T_MAX/sizeof(Type))
-throw new memory_exception(get_app());
+_throw(memory_exception(get_app()));
 ASSERT(nNewSize <= SIZE_T_MAX/sizeof(Type));    // no overflow
 #endif
 
@@ -3080,7 +3080,7 @@ template < class Type, class RawType >
 Type & string_array < Type, RawType > ::random_element()
 {
    if(this->get_size() <= 0)
-      throw new ::simple_exception(get_app(), "invalid call");
+      _throw(::simple_exception(get_app(), "invalid call"));
    return this->element_at(get_random_index());
 }
 
@@ -3089,7 +3089,7 @@ template < class Type, class RawType >
 const Type & string_array < Type, RawType > ::random_element() const
 {
    if(this->get_size() <= 0)
-      throw new ::simple_exception(get_app(), "invalid call");
+      _throw(::simple_exception(get_app(), "invalid call"));
    return this->element_at(get_random_index());
 }
 
@@ -3098,7 +3098,7 @@ template < class Type, class RawType >
 Type string_array < Type, RawType > ::pop_random_element()
 {
    if(this->get_size() <= 0)
-      throw new ::simple_exception(get_app(), "invalid call");
+      _throw(::simple_exception(get_app(), "invalid call"));
    index i = get_random_index();
    Type str = this->element_at(i);
    this->remove_at(i);

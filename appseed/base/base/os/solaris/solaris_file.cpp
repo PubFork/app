@@ -11,7 +11,7 @@ void fd_ensure_file_size(int32_t fd, int64_t iSize)
 {
 
    if(ftruncate(fd, iSize) == -1)
-      throw new "fd_ensure_file_size exception";
+      _throw("fd_ensure_file_size exception");
 
 }
 

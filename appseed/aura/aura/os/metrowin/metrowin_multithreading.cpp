@@ -607,7 +607,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //int thread_layer::run()
 //{
 //
-//   throw new "todo"; // message pumping
+//   _throw("todo"); // message pumping
 //
 //   /*
 //   MSG msg;
@@ -661,7 +661,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //
 //   //   MSG msg;
 //
-//   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
+//   _throw("todo"); // PeekMessage function used to create message queue Windows Desktop
 //
 //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 //
@@ -674,7 +674,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //
 //   //   MSG msg;
 //
-//   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
+//   _throw("todo"); // PeekMessage function used to create message queue Windows Desktop
 //
 //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 //
@@ -700,7 +700,7 @@ void attach_thread_input_to_main_thread(int_bool bAttach)
    //   MSG msg;
 
    // metrowin todo
-   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
+   _throw("todo"); // PeekMessage function used to create message queue Windows Desktop
 
    //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
@@ -1171,7 +1171,7 @@ void set_main_thread(HTHREAD hThread)
    //
    //   //   MSG msg;
    //
-   //   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
+   //   _throw("todo"); // PeekMessage function used to create message queue Windows Desktop
    //
    //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
    //
@@ -1184,7 +1184,7 @@ void set_main_thread_id(UINT uiThread)
 
    //   //   MSG msg;
    //
-   //   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
+   //   _throw("todo"); // PeekMessage function used to create message queue Windows Desktop
    //
    //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 

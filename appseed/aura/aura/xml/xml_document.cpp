@@ -152,7 +152,7 @@ namespace xml
       }
       if(ent.is_empty() && extEnt.is_empty())
       {
-         throw new simple_exception(get_app(), "Undefined Entity Reference");
+         _throw(simple_exception(get_app(), "Undefined Entity Reference"));
       }
       if(ent.has_char())
       {
@@ -197,7 +197,7 @@ namespace xml
          }
          else
          {
-            throw new simple_exception(get_app(), "pointer to be offset cannot lie inside the entity ref");
+            _throw(simple_exception(get_app(), "pointer to be offset cannot lie inside the entity ref"));
          }
       }
       va_end(ptr);
@@ -212,7 +212,7 @@ namespace xml
 
 
       if(pedit == NULL)
-         throw new simple_exception(get_app(), "edit exception");
+         _throw(simple_exception(get_app(), "edit exception"));
 
 
       sp(::xml::node) pnode;

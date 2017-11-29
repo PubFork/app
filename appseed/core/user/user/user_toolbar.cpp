@@ -74,7 +74,7 @@ namespace user
 //#ifdef WINDOWSEX
 //      ::DeleteObject((HGDIOBJ*)&m_hbmImageWell);
 //#else
-  //    throw new todo(get_app());
+  //    _throw(todo(get_app()));
 //#endif
       delete m_pStringMap;
 
@@ -146,7 +146,7 @@ namespace user
       ASSERT(IsWindow());
       DefWindowProc(TB_SETPARENT, (WPARAM)pOwnerWnd.m_p, 0);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
       return ::user::control_bar::SetOwner(pOwnerWnd);
@@ -173,7 +173,7 @@ namespace user
          //VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
          //VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
 #else
-         //throw new todo(get_app());
+         //_throw(todo(get_app()));
 #endif
         // Invalidate();   // just to be nice if called when toolbar is visible
       }
@@ -262,7 +262,7 @@ namespace user
          m_hbmImageWell = hbmImageWell;
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif*/
       return bResult;
    }
@@ -322,7 +322,7 @@ namespace user
    //   m_nCount = (int32_t)DefWindowProc(TB_BUTTONCOUNT, 0, 0);
       m_bDelayedButtonLayout = TRUE;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return TRUE;
    }
@@ -391,7 +391,7 @@ namespace user
       toolbar* pBar = (toolbar*)this;
       return (int32_t)pBar->DefWindowProc(TB_COMMANDTOINDEX, nIDFind, 0);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -405,7 +405,7 @@ namespace user
       _GetButton(nIndex, &button);
       return button.idCommand;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -424,7 +424,7 @@ namespace user
       if (!pBar->DefWindowProc(TB_GETITEMRECT, nIndex, (LPARAM)lpRect))
          ::SetRectEmpty(lpRect);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -455,7 +455,7 @@ namespace user
       _GetButton(nIndex, &button);
       return MAKELONG(button.fsStyle, button.fsState);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -475,7 +475,7 @@ namespace user
          m_bDelayedButtonLayout = TRUE;
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -884,7 +884,7 @@ namespace user
       }
       return sizeResult;
 #else
-throw new todo(get_app());
+_throw(todo(get_app()));
 #endif
    }
 
@@ -918,7 +918,7 @@ throw new todo(get_app());
       nStyle = MAKELONG(button.fsStyle, button.fsState);
       iImage = button.iBitmap;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -940,7 +940,7 @@ throw new todo(get_app());
          m_bDelayedButtonLayout = TRUE;
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
    }
@@ -997,7 +997,7 @@ throw new todo(get_app());
       string str;
       GetButtonText(nIndex, str);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
       return TRUE;
@@ -1034,7 +1034,7 @@ throw new todo(get_app());
       }
       rWString.Empty();
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1070,7 +1070,7 @@ throw new todo(get_app());
       pnccalcsize->m_pparams->rgrc[0].right += rect.right;
       pnccalcsize->m_pparams->rgrc[0].bottom += rect.bottom;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1126,7 +1126,7 @@ throw new todo(get_app());
          Invalidate();
       }
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
    }
 
@@ -1194,7 +1194,7 @@ throw new todo(get_app());
       if (bModify)
          set_window_long(GWL_STYLE, dwStyle);
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
       return lResult;
    }
@@ -1219,7 +1219,7 @@ throw new todo(get_app());
       if (bModify)
          SetWindowLong(GWL_STYLE, dwStyle);
 #else
-      //throw new todo(get_app());
+      //_throw(todo(get_app()));
 #endif
 
       pbase->set_lresult(lResult);
@@ -1322,7 +1322,7 @@ throw new todo(get_app());
             dumpcontext << "\n}";
          }
 #else
-         throw new todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
       }
@@ -1394,7 +1394,7 @@ throw new todo(get_app());
 
 #else
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 
@@ -1550,7 +1550,7 @@ throw new todo(get_app());
 
 //#else
 
-  //    throw new todo(get_app());
+  //    _throw(todo(get_app()));
 
 //#endif
 

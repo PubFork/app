@@ -77,16 +77,16 @@ public:
       }
 
       if(iStart < 0)
-         throw new invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app());
+         _throw(invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app()));
 
       if(iStart >= a.get_count())
-         throw new invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app());
+         _throw(invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app()));
 
       if(iEnd < 0)
-         throw new invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app());
+         _throw(invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app()));
 
       if(iEnd >= a.get_count())
-         throw new invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app());
+         _throw(invalid_argument_exception(a.get_app() == NULL ? get_app() : a.get_app()));
 
       m_iBeg = iStart;
 

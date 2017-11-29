@@ -464,7 +464,7 @@ namespace userex
       if (!box.show(strMatter, &propertyset))
       {
 
-         throw new resource_exception(get_app());
+         _throw(resource_exception(get_app()));
 
       }
 

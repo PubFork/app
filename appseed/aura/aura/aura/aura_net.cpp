@@ -373,7 +373,7 @@ void openURL(const string &url_str);
 int ui_open_url(const char * psz);
 
 void openURL(const string &url_str) {
-//   throw new todo(get_app());
+//   _throw(todo(get_app()));
 //   CFURLRef url = CFURLCreateWithBytes(
 //      NULL,                        // allocator
 //      (UInt8*)url_str.c_str(),     // URLBytes

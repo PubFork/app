@@ -233,7 +233,7 @@ namespace user
       if (Session.is_key_pressed(::user::key_lbutton))
          return;
 #else
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 #endif
 
    }
@@ -298,7 +298,7 @@ namespace user
       {
       }
 #else
-//      throw new todo(get_app());
+//      _throw(todo(get_app()));
 #endif
 
       // don't translate dialog messages when in Shift+F1 help mode
@@ -381,7 +381,7 @@ namespace user
 //               }
 //            }
 //#else
-//            throw new todo(get_app());
+//            _throw(todo(get_app()));
 //#endif
          return;
       }
@@ -941,7 +941,7 @@ namespace user
 
 #else
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
 

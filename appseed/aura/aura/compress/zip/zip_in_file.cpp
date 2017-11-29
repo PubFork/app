@@ -32,7 +32,7 @@ namespace zip
          {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError((LONG)::GetLastError());
-         throw new 0;
+         _throw(0);
          }
          pFile->m_hFile = (UINT)hFile;
          ASSERT(pFile->m_hFile != (UINT)hFileNull);
@@ -432,7 +432,7 @@ namespace zip
       }
       else
       {
-         throw new invalid_argument_exception(get_app(),"zip::in_file::seek invalid seek option");
+         _throw(invalid_argument_exception(get_app(),"zip::in_file::seek invalid seek option"));
       }
 
       if(iNewPos < m_iPosition)
@@ -495,7 +495,7 @@ namespace zip
       m_strFileName.Empty();
 
       if(bError)
-         throw new simple_exception(get_app(),0);
+         _throw(simple_exception(get_app(),0));
    }
 
    void in_file::Abort()
@@ -732,7 +732,7 @@ namespace zip
       file = Application.file().get_file(strPath,::file::mode_read | ::file::type_binary);
 
       if(file.is_null())
-         throw new simple_exception(get_app(), "failed to open file for compressing");
+         _throw(simple_exception(get_app(), "failed to open file for compressing"));
 
       ::file::file_status status;
 

@@ -692,17 +692,7 @@ public:
 };
 
 
-#ifdef WINDOWS
 
-typedef HANDLE HTHREAD;
-
-#else
-
-#ifndef LINUX
-typedef void * HTHREAD;
-#endif
-
-#endif
 
 
 class event;
@@ -761,9 +751,9 @@ namespace html
 #define RINOK(x) { int32_t __result__ = (x); if (__result__ != 0) return __result__; }
 #endif
 
-// throw new - exception - result exception - if not ok
+// _throw( - exception - result exception - if not ok
 #ifndef TINOK
-#define TINOK(e, x) { int32_t __result__ = (x); if (__result__ != 0) throw new e(get_app(), __result__); }
+#define TINOK(e, x) { int32_t __result__ = (x); if (__result__ != 0) _throw(e(get_app(), __result__)); }
 #endif
 
 
@@ -1508,13 +1498,13 @@ struct install_status
 template < typename T >
 inline T get_maximum_value()
 {
-throw new not_implemented(get_app());
+_throw(not_implemented(get_app()));
 }
 
 template < typename T >
 inline T get_minimum_value()
 {
-throw new not_implemented(get_app());
+_throw(not_implemented(get_app()));
 }
 template < typename T >
 inline T get_null_value()
@@ -1582,7 +1572,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
    }
 
-   throw new simple_exception(get_app(),"extra arguments provided to format");
+   _throw(simple_exception(get_app(),"extra arguments provided to format"));
 
 
 }

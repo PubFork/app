@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 // https://www.codeproject.com/Articles/3426/XMLite-simple-XML-parser
 
@@ -202,7 +202,7 @@ namespace xml
          return NULL;
       index i = m_pnodeParent->find(this);
       if(i < 0)
-         throw new "strange: this is not child of this->parent";
+         _throw(simple_exception(get_app(), "strange: this is not child of this->parent"));
       i++;
       if(i >= m_pnodeParent->get_children_count())
          return NULL;

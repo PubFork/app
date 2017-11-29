@@ -88,7 +88,7 @@ int message_box_w::do_modal(String ^ text,String ^ caption,unsigned int uiFlags)
 
    if (cmd == nullptr)
    {
-      throw new simple_exception(get_app(), string(text) + " - " + string(caption));
+      _throw(simple_exception(get_app(), string(text) + " - " + string(caption)));
    }
 
    int iResult = IDCANCEL;

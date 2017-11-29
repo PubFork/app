@@ -1288,7 +1288,7 @@ namespace helloworld
             if (!m_mapDib23[strImage].load_from_file(strImage, true, true))
             {
 
-               throw new simple_exception(get_app(), "Failed to load \"" + strImage + "\"");
+               _throw(simple_exception(get_app(), "Failed to load \"" + strImage + "\""));
 
             }
 

@@ -568,7 +568,7 @@ bool db_long_set::SaveWindowRect_(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -741,7 +741,7 @@ bool db_long_set::SetWindowPlacement(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 
@@ -778,7 +778,7 @@ bool db_long_set::SaveWindowPlacement(const char * lpKey, ::window_sp pwindow)
 
 #else
 
-   throw new todo(get_app());
+   _throw(todo(get_app()));
 
 #endif
 

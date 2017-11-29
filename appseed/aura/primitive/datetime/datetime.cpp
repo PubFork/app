@@ -130,11 +130,11 @@ namespace datetime
                else if(strText1 == "now"
                        || (pcontext != NULL && pcontext->matches(idCalendarNow,strText1)))
                {
-                  throw new simple_exception(get_app(), "now cannot be span");
+                  _throw(simple_exception(get_app(), "now cannot be span"));
                }
                else
                {
-                  throw new not_implemented(pbaseapp);
+                  _throw(not_implemented(pbaseapp));
                }
                strNumber.Empty();
                strText1.Empty();

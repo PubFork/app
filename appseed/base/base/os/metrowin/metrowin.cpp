@@ -344,7 +344,7 @@ ulong_ptr                        g_gdiplusHookToken         = NULL;
 
 string key_to_char(WPARAM wparam, LPARAM lparam)
 {
-   throw new "todo";
+   _throw("todo");
 }
 
 

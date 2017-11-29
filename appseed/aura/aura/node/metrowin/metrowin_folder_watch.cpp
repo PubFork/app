@@ -73,7 +73,7 @@ namespace metrowin
       return 0;
 #else
 
-      throw new todo(get_app());
+      _throw(todo(get_app()));
 
 #endif
    }

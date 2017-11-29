@@ -38,7 +38,7 @@ void simple_printer_list_view::_001OnCreate(::message::message * pobj)
    DWORD cbReturned = 0;
    ::EnumPrinters(PRINTER_ENUM_LOCAL | PRINTER_ENUM_CONNECTIONS, NULL, 1, NULL, 0, &cbNeeded, &cbReturned);
 #else
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
 #endif
 
    if(cbNeeded <= 0)
@@ -60,7 +60,7 @@ void simple_printer_list_view::_001OnCreate(::message::message * pobj)
 
    free(infoa);
 #else
-   //throw new todo(get_app());
+   //_throw(todo(get_app()));
 #endif
 
 

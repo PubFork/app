@@ -189,7 +189,7 @@ int c_cdecl __critical_new_handler(size_t nSize)
 //   }
 //
 ////   TRACE(::core::trace::category_Memory, 0, "ERROR: Critical memory allocation from safety pool failed!\n");
-   throw new memory_exception(NULL);      // oops
+   _throw(memory_exception(NULL));      // oops
 }
 #endif // !___PORTABLE
 

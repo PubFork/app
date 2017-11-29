@@ -15,7 +15,7 @@ namespace file
    bool edit_file::Item::read_byte(byte * pbyte, ::file::edit_file * pfile)
    {
 
-      throw new interface_only_exception(pfile->get_app());
+      _throw(interface_only_exception(pfile->get_app()));
 
    }
 
@@ -480,7 +480,7 @@ namespace file
       }
 
       if(pfile == NULL)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
       m_pfile = pfile;
 
@@ -832,7 +832,7 @@ namespace file
       if(spfile.is_null())
       {
 
-         throw new ::file::exception(get_app(),::file::exception::none,-1,strTimeFile);
+         _throw(::file::exception(get_app(),::file::exception::none,-1,strTimeFile));
 
          return;
 

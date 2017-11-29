@@ -250,7 +250,7 @@ namespace fontopus
          if(strResult == "cancel")
          {
 
-            throw new cancel_exception(get_app(),"User canceled login.");
+            _throw(cancel_exception(get_app(),"User canceled login."));
 
          }
 

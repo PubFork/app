@@ -502,7 +502,7 @@
 ////   }
 ////
 ////   if(!SetFilePointerEx(h,liMove,&liRes,dwMeth))
-////      throw new "SetFilePointer error";
+////      _throw("SetFilePointer error");
 ////
 ////   if(plHi != NULL)
 ////   {
@@ -522,7 +522,7 @@
 //   FILE_STANDARD_INFO info;
 //
 //   if(!GetFileInformationByHandleEx(h,FileStandardInfo,&info,sizeof(info)))
-//      throw new "GetFileSize Error";
+//      _throw("GetFileSize Error");
 //
 //   if(lpdwHi != NULL)
 //   {
@@ -1174,7 +1174,7 @@
 ////string file_get_mozilla_firefox_plugin_container_path()
 ////{
 ////
-////   throw new " todo ";
+////   _throw(" todo ");
 ////
 ////   return "";
 ////

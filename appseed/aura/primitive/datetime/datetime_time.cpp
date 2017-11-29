@@ -83,7 +83,7 @@ namespace datetime
       ASSUME(m_time != -1);   */    // indicates an illegal input time
       if(m_time == -1)
       {
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
       }
    }
 
@@ -113,7 +113,7 @@ namespace datetime
       ASSUME(m_time != -1);       // indicates an illegal input time
 
       if(m_time == -1)
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
 
    }
 
@@ -142,7 +142,7 @@ namespace datetime
       if (!FileTimeToLocalFileTime(&fileTime, &localTime))
       {
          m_time = 0;
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
          return;
       }
 
@@ -151,7 +151,7 @@ namespace datetime
       if (!FileTimeToSystemTime(&localTime, &sysTime))
       {
          m_time = 0;
-         throw new invalid_argument_exception(get_app());
+         _throw(invalid_argument_exception(get_app()));
          return;
       }
 
@@ -198,7 +198,7 @@ namespace datetime
    ::datetime::time & time::operator+=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
       return *this;
    }
@@ -206,7 +206,7 @@ namespace datetime
    ::datetime::time& time::operator-=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
 
       return *this;
    }
@@ -215,13 +215,13 @@ namespace datetime
    ::datetime::time time::operator-( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
    }
 
    ::datetime::time time::operator+( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw new not_implemented(get_app());
+      _throw(not_implemented(get_app()));
    }
 
 
@@ -257,7 +257,7 @@ namespace datetime
          if(ptmTemp == NULL)
             return NULL;
 
-         // but don't throw new exception or generate error...
+         // but don't _throw( exception or generate error...
          // (reason for commenting out below, fat to be removed...)
 //         if(errno != 0)
          //          return NULL;

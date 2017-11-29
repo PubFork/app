@@ -1540,7 +1540,7 @@ namespace str
 
 #else
 
-         throw new todo(get_app());
+         _throw(todo(get_app()));
 
 #endif
 
@@ -1861,43 +1861,43 @@ namespace str
          *pslide += 0;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 1)
       {
          *pslide += 1;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 2)
       {
          *pslide += 2;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 3)
       {
          *pslide += 3;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 4)
       {
          *pslide += 4;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 5)
       {
          *pslide += 5;
          return psz;
       }
-      if(*psz++ == 0)   throw new invalid_character(get_app(), "invalid utf8 character");
+      if(*psz++ == 0)   _throw(invalid_character(get_app(), "invalid utf8 character"));
       if(len == 6)
       {
          *pslide += 6;
          return psz;
       }
-      throw new invalid_character(get_app(), "invalid utf8 character");
+      _throw(invalid_character(get_app(), "invalid utf8 character"));
    }
 
 
@@ -2359,7 +2359,7 @@ namespace str
    {
       if(uiMax < uiMin)
       {
-         throw new invalid_argument_exception(get_app(), "MAX should be greater than MIN");
+         _throw(invalid_argument_exception(get_app(), "MAX should be greater than MIN"));
       }
       const char * psz = pszXml;
       int32_t i = 0;

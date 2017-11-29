@@ -54,12 +54,12 @@ public:
 
   /** Static method, used to cast RegionDefine class into
       StyledRegion class.
-      @throw new exception If casing is not available.
+      @_throw( exception If casing is not available.
   */
   static const StyledRegion *cast(const RegionDefine *rd){
     if (rd == NULL) return NULL;
     const StyledRegion *sr = (const StyledRegion *)(rd);
-    if (sr == NULL) throw new exception(get_app(), string("Bad type cast exception into StyledRegion"));
+    if (sr == NULL) _throw(exception(get_app(), string("Bad type cast exception into StyledRegion")));
     return sr;
   }
   /** Completes region define with it's parent values.

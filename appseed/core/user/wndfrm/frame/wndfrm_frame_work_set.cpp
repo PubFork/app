@@ -1519,14 +1519,14 @@ namespace user
          rect.bottom = rect.top + 5;
          if(rect.contains(ptCursor))
          {
-         throw new ModeNE;
+         _throw(ModeNE);
          }
          rect = rectEvent;
          rect.left = rect.right - 5;
          rect.bottom = rect.top + 16;
          if(rect.contains(ptCursor))
          {
-         throw new ModeNE;
+         _throw(ModeNE);
          }
          }
          if(egrip & GripSE)
@@ -1536,14 +1536,14 @@ namespace user
          rect.top = rect.bottom - 5;
          if(rect.contains(ptCursor))
          {
-         throw new ModeSE;
+         _throw(ModeSE);
          }
          rect = rectEvent;
          rect.left = rect.right - 5;
          rect.top = rect.bottom - 16;
          if(rect.contains(ptCursor))
          {
-         throw new ModeSE;
+         _throw(ModeSE);
          }
          }
          if(egrip & GripSW)
@@ -1553,14 +1553,14 @@ namespace user
          rect.top = rect.bottom - 5;
          if(rect.contains(ptCursor))
          {
-         throw new ModeSW;
+         _throw(ModeSW);
          }
          rect = rectEvent;
          rect.right = rect.left + 5;
          rect.top = rect.bottom - 16;
          if(rect.contains(ptCursor))
          {
-         throw new ModeSW;
+         _throw(ModeSW);
          }
          }
          if(egrip & GripN)
@@ -1571,7 +1571,7 @@ namespace user
          rect.bottom = rectEvent.top + 5;
          if(rect.contains(ptCursor))
          {
-         throw new ModeN;
+         _throw(ModeN);
          }
          }
          if(egrip & GripS)
@@ -1582,7 +1582,7 @@ namespace user
          rect.bottom = rectEvent.bottom;
          if(rect.contains(ptCursor))
          {
-         throw new ModeS;
+         _throw(ModeS);
          }
          }
          if(egrip & GripW)
@@ -1593,7 +1593,7 @@ namespace user
          rect.bottom = ptCenter.y + 8;
          if(rect.contains(ptCursor))
          {
-         throw new ModeW;
+         _throw(ModeW);
          }
          }
          if(egrip & GripE)
@@ -1604,7 +1604,7 @@ namespace user
          rect.bottom = ptCenter.y + 8;
          if(rect.contains(ptCursor))
          {
-         throw new ModeE;
+         _throw(ModeE);
          }
          }
 

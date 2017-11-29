@@ -339,7 +339,7 @@ void CScriptLex::match(int32_t expected_tk) {
     if (tk!=expected_tk) {
        string errorString ="Got " + getTokenStr(tk) + " expected " + getTokenStr(expected_tk)
          + " at " + getPosition(tokenStart);
-        throw new CScriptException(errorString);
+        _throw(CScriptException(errorString));
     }
     getNextToken();
 }
@@ -1067,7 +1067,7 @@ CScriptVar *CScriptVar::mathsOp(CScriptVar *b, int32_t op) {
                 case LEX_LEQUAL:    return new CScriptVar(da<=db);
                 case '>':     return new CScriptVar(da>db);
                 case LEX_GEQUAL:    return new CScriptVar(da>=db);
-                default: throw new CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Int datatype");
+                default: _throw(CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Int datatype"));
             }
         } else {
             // use doubles
@@ -1084,7 +1084,7 @@ CScriptVar *CScriptVar::mathsOp(CScriptVar *b, int32_t op) {
                 case LEX_LEQUAL:    return new CScriptVar(da<=db);
                 case '>':     return new CScriptVar(da>db);
                 case LEX_GEQUAL:    return new CScriptVar(da>=db);
-                default: throw new CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Double datatype");
+                default: _throw(CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Double datatype"));
             }
         }
     } else if (a->isArray()) {
@@ -1092,14 +1092,14 @@ CScriptVar *CScriptVar::mathsOp(CScriptVar *b, int32_t op) {
       switch (op) {
            case LEX_EQUAL: return new CScriptVar(a==b);
            case LEX_NEQUAL: return new CScriptVar(a!=b);
-           default: throw new CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Array datatype");
+           default: _throw(CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Array datatype"));
       }
     } else if (a->isObject()) {
           /* Just check pointers */
           switch (op) {
                case LEX_EQUAL: return new CScriptVar(a==b);
                case LEX_NEQUAL: return new CScriptVar(a!=b);
-               default: throw new CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Object datatype");
+               default: _throw(CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the Object datatype"));
           }
     } else {
        string da = a->getString();
@@ -1113,7 +1113,7 @@ CScriptVar *CScriptVar::mathsOp(CScriptVar *b, int32_t op) {
            case LEX_LEQUAL:    return new CScriptVar(da<=db);
            case '>':     return new CScriptVar(da>db);
            case LEX_GEQUAL:    return new CScriptVar(da>=db);
-           default: throw new CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the string datatype");
+           default: _throw(CScriptException("Operation "+CScriptLex::getTokenStr(op)+" not supported on the string datatype"));
        }
     }
     ASSERT(0);
@@ -1351,7 +1351,7 @@ void tinyjs::execute(const string &code) {
         delete l;
         l = oldLex;
 
-        throw new CScriptException(msg);
+        _throw(CScriptException(msg));
     }
     delete l;
     l = oldLex;
@@ -1387,7 +1387,7 @@ CScriptVarLink tinyjs::evaluateComplex(const string &code) {
       delete l;
       l = oldLex;
 
-        throw new CScriptException(msg);
+        _throw(CScriptException(msg));
     }
     delete l;
     l = oldLex;
@@ -1472,7 +1472,7 @@ CScriptVarLink *tinyjs::functionCall(bool &execute, CScriptVarLink *function, CS
     if (!function->var->isFunction()) {
         string errorMsg = "Expecting '";
         errorMsg = errorMsg + function->name + "' to be a function";
-        throw new CScriptException(errorMsg.c_str());
+        _throw(CScriptException(errorMsg.c_str()));
     }
     l->match('(');
     // create a new symbol table entry for execution of this function
@@ -1530,7 +1530,7 @@ CScriptVarLink *tinyjs::functionCall(bool &execute, CScriptVarLink *function, CS
         l = oldLex;
 
         if (exception)
-          throw new exception;
+          _throw(exception);
     }
 #ifdef TINYJS_CALL_STACK
     if (!call_stack.is_empty()) call_stack.pop();
@@ -2080,7 +2080,7 @@ void tinyjs::statement(bool &execute) {
         if (loopCount<=0) {
             root->trace();
             TRACE("WHILE Loop exceeded %d iterations at %s\n", TINYJS_LOOP_MAX_ITERATIONS, l->getPosition().c_str());
-            throw new CScriptException("LOOP_ERROR");
+            _throw(CScriptException("LOOP_ERROR"));
         }
     } else if (l->tk==LEX_R_FOR) {
         l->match(LEX_R_FOR);
@@ -2132,7 +2132,7 @@ void tinyjs::statement(bool &execute) {
         if (loopCount<=0) {
             root->trace();
             TRACE("FOR Loop exceeded %d iterations at %s\n", TINYJS_LOOP_MAX_ITERATIONS, l->getPosition().c_str());
-            throw new CScriptException("LOOP_ERROR");
+            _throw(CScriptException("LOOP_ERROR"));
         }
     } else if (l->tk==LEX_R_RETURN) {
         l->match(LEX_R_RETURN);

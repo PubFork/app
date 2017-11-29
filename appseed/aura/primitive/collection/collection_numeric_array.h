@@ -1249,7 +1249,7 @@ typedef CLASS_DECL_AURA unique_number_sort_array < index > unique_index_sort_arr
 //
 //   // minimum check
 //   if(ia.get_size() != get_size())
-//      throw new invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   index_array stackLowerBound;
 //   index_array stackUpperBound;
@@ -1586,7 +1586,7 @@ typedef CLASS_DECL_AURA unique_number_sort_array < index > unique_index_sort_arr
 //
 //   // minimum check
 //   if(ia.get_size() != get_size())
-//      throw new invalid_argument_exception(get_app());
+//      _throw(invalid_argument_exception(get_app()));
 //
 //   index_array stackLowerBound;
 //   index_array stackUpperBound;
