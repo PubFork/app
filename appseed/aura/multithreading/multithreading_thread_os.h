@@ -64,6 +64,7 @@
 //
 //};
 
+<<<<<<< Updated upstream
 
 //#ifdef WINDOWS
 //
@@ -82,6 +83,8 @@
 //
 //#endif
 
+=======
+>>>>>>> Stashed changes
 CLASS_DECL_AURA HTHREAD start_thread(uint32_t (*)(void *), void * pv, int32_t iPriority = 0);
 
 CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa, uint_ptr cbStack, uint32_t (*)(void *), void * pv, uint32_t uiFlags, IDTHREAD * puiId);
