@@ -1,4 +1,4 @@
-﻿/** \file base_socket.cpp
+/** \file base_socket.cpp
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -186,7 +186,7 @@ namespace sockets
    {
    log("getprotobyname", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
    SetCloseAndDelete();
-   throw simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno));
+   throw new simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno));
    return INVALID_SOCKET;
    }
    }
@@ -197,7 +197,7 @@ namespace sockets
    {
    log("base_socket", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
    SetCloseAndDelete();
-   throw simple_exception(get_app(), string("base_socket() failed: ") + bsd_socket_error(Errno));
+   throw new simple_exception(get_app(), string("base_socket() failed: ") + bsd_socket_error(Errno));
    return INVALID_SOCKET;
    }
    attach(s);
@@ -898,11 +898,15 @@ namespace sockets
    }
 
 
-   bool base_socket::socket_thread::initialize_thread()
+   bool base_socket::socket_thread::init_thread()
    {
 
-      if (!::thread::initialize_thread())
+      if (!::thread::init_thread())
+      {
+         
          return false;
+         
+      }
 
       socket_handler & h = *m_sphandler;
 
@@ -919,7 +923,7 @@ namespace sockets
    }
 
 
-   int base_socket::socket_thread::run()
+   void base_socket::socket_thread::run()
    {
 
       socket_handler & h = *m_sphandler;

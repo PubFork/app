@@ -92,10 +92,10 @@ namespace base
    }
 
 
-   bool application::process_initialize()
+   bool application::process_init()
    {
 
-      if(::axis::application::process_initialize())
+      if(::axis::application::process_init())
       {
 
          return true;
@@ -474,7 +474,7 @@ namespace base
    }
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
    int32_t application::hotplugin_host_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,::hotplugin::host * phost,::hotplugin::plugin * pplugin)
    {
@@ -614,7 +614,7 @@ namespace base
 
       }
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 

@@ -3,7 +3,7 @@
 //#include "hotplugin.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace hotplugin
@@ -107,10 +107,10 @@ namespace hotplugin
          if(!g_paxissystem->pre_run())
          {
 
-            if(g_paxissystem->m_iReturnCode == 0)
+            if(g_paxissystem->m_iErrorCode == 0)
             {
 
-               g_paxissystem->m_iReturnCode = -1;
+               g_paxissystem->m_iErrorCode = -1;
 
             }
 
@@ -124,10 +124,10 @@ namespace hotplugin
       catch(...)
       {
 
-         if(g_paxissystem->m_iReturnCode == 0)
+         if(g_paxissystem->m_iErrorCode == 0)
          {
 
-            g_paxissystem->m_iReturnCode = -1;
+            g_paxissystem->m_iErrorCode = -1;
 
          }
 

@@ -72,7 +72,7 @@ namespace libcompress
             catch(...)
             {
                delete []values;
-               throw;
+               throw new;
             }
             delete []values;
             RINOK(res);

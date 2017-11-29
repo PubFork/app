@@ -4,7 +4,7 @@
 void throw_memory_exception()
 {
 
-   throw memory_exception(get_thread_app());
+   throw new memory_exception(get_app());
 
 }
 
@@ -12,7 +12,7 @@ void throw_memory_exception()
 void throw_error_exception(const char * psz)
 {
 
-   throw error_exception(get_thread_app(),psz);
+   throw new error_exception(get_app(),psz);
 
 }
 

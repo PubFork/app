@@ -64,7 +64,7 @@ namespace hi5
             return;
          sp(::create) createcontext(allocer());
          createcontext->m_bMakeVisible = false;
-         createcontext->m_puiParent = Sys(get_app()).oprop("top_parent").cast < ::user::interaction > ();
+         createcontext->m_puiParent = System.oprop("top_parent").cast < ::user::interaction > ();
          createcontext->m_bOuterPopupAlertLike = true;
 
          m_ptemplatePane->request_create(createcontext);

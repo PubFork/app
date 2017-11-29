@@ -1290,7 +1290,7 @@ namespace user
       else
       {
 
-         throw invalid_argument_exception(::get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
          return false;
 

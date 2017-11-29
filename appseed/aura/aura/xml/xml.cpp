@@ -21,7 +21,7 @@ namespace xml
       if (opt == ((::xml::disp_option *) 1))
       {
 
-         opt = Sys(::get_thread_app()).xml().m_poptionDefault;
+         opt = System.xml().m_poptionDefault;
 
       }
 

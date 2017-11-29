@@ -259,7 +259,7 @@ namespace user
 
                   rect rect;
                   GetBorderRect(lpcrectClient, rect, eside);
-                  class imaging & imaging = System.visual().imaging();
+                  class imaging & imaging = Application.imaging();
                   imaging.color_blend(pgraphics,
                      rect,
                      crMoveableBorder,

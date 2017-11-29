@@ -84,7 +84,7 @@ namespace axis
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
 //#ifndef WINDOWS
@@ -108,10 +108,10 @@ namespace axis
       //}
 
 
-      if(!::axis::application::process_initialize())
+      if(!::axis::application::process_init())
          return false;
 
-      if(!::aura::system::process_initialize())
+      if(!::aura::system::process_init())
          return false;
 
 
@@ -126,13 +126,13 @@ namespace axis
    }
 
 
-   bool system::initialize1()
+   bool system::init1()
    {
 
-      if(!::aura::system::initialize1())
+      if(!::aura::system::init1())
          return false;
 
-      if(!::axis::application::initialize1())
+      if(!::axis::application::init1())
          return false;
 
 
@@ -146,13 +146,13 @@ namespace axis
    }
 
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if(!::aura::system::initialize2())
+      if(!::aura::system::init2())
          return false;
 
-      if(!::axis::application::initialize2())
+      if(!::axis::application::init2())
          return false;
 
 
@@ -167,17 +167,17 @@ namespace axis
 
    }
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if (!::aura::system::initialize_application())
+      if (!::aura::system::init_application())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_application())
       {
 
          return false;
@@ -317,7 +317,7 @@ namespace axis
       catch(...)
       {
 
-         m_iReturnCode = -86;
+         m_iErrorCode = -86;
 
       }
 
@@ -355,7 +355,7 @@ namespace axis
 
       m_serviceptra.remove_all();
 
-      int32_t iRet = m_iReturnCode;
+      int32_t iRet = m_iErrorCode;
 
       try
       {

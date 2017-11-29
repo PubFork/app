@@ -281,7 +281,7 @@ int16_t GeoIP_update_database (char * license_key, int32_t verbose, void (*f)( c
 //
 //      //MD5_Init(&ctx);
 //
-//      //::crypto::md5::context ctx(get_thread_app());
+//      //::crypto::md5::context ctx(get_app());
 //
 //
 //      MD5_Init(&context);
@@ -511,7 +511,7 @@ int16_t GeoIP_update_database (char * license_key, int32_t verbose, void (*f)( c
 //
 //#else
 //
-//   throw todo(::get_thread_app());
+//   throw new todo(get_app());
 //
 //#endif
 //
@@ -626,7 +626,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //   if ((cur_db_fh = fopen (geoipfilename, "rb")) == NULL) {
 //    GeoIP_printf(f, NoCurrentDB, geoipfilename);
 //   } else {
-////      ::crypto::md5::context ctx(get_thread_app());
+////      ::crypto::md5::context ctx(get_app());
 //      MD5_Init(&context);
 //      while ((len = fread (buffer, 1, 1024, cur_db_fh)) > 0)
 //        // ctx.update(buffer, len);
@@ -716,7 +716,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //   /* make a md5 sum of ip address and license_key and store it in hex_digest2 */
 //   request_uri_len = sizeof(char) * 2036;
 //   request_uri = (char *) malloc(request_uri_len);
-//   //::crypto::md5::context ctx2(get_thread_app());
+//   //::crypto::md5::context ctx2(get_app());
 //   MD5_Init(&context2);
 //   uchar bufMd5[16];
 ////   ctx2.update(license_key,12);
@@ -1017,7 +1017,7 @@ int16_t GeoIP_update_database_general (::aura::application * papp, char * user_i
 //
 //#else
 //
-//   throw todo(papp);
+//   throw new todo(papp);
 //
 //#endif
 //

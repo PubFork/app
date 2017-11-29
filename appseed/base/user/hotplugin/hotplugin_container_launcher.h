@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if defined(HOTPLUGIN_SUBSYSTEM)
+#if defined()
 
 
 namespace hotplugin

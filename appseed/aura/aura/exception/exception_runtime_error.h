@@ -9,7 +9,7 @@ class CLASS_DECL_AURA runtime_error :
 public:
    
 
-   runtime_error(const string & strError, ::aura::application * papp = ::get_thread_app());
+   runtime_error(const string & strError, ::aura::application * papp = ::get_app());
    runtime_error(::aura::application * papp, const char * pszError);
    virtual ~runtime_error();
 

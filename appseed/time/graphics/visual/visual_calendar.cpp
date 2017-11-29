@@ -171,7 +171,7 @@ namespace visual
             GetRectDay(6,7,lprect);
             return;
          default:
-            throw not_supported_exception(get_app());
+            throw new not_supported_exception(get_app());
          }
       }
    }

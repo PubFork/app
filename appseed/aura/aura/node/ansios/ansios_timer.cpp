@@ -25,7 +25,7 @@ void timer::impl_init()
    m_sev.sigev_notify_function = aura_timer_handler;
 
    if (timer_create(CLOCK_REALTIME, &m_sev, &m_timerid) == -1)
-      throw - 1;
+      throw new - 1;
 
 }
 

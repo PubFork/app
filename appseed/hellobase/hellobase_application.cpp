@@ -29,7 +29,7 @@ namespace hellobase
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       System.factory().creatable_small < ::hellobase::document >();
@@ -37,14 +37,14 @@ namespace hellobase
       System.factory().creatable_small < ::user::button_view >();
       System.factory().creatable_small < ::hellobase::view >();
 
-      if (!::base::application::initialize_application())
+      if (!::base::application::init_instance())
       {
 
          return false;
 
       }
 
-      if (!::helloaxis::application::initialize_application())
+      if (!::helloaxis::application::init_instance())
       {
 
          return false;

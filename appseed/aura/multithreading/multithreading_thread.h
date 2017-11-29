@@ -1,6 +1,33 @@
 #pragma once
 
 
+class CLASS_DECL_AURA error :
+   virtual public object
+{
+public:
+   
+   
+   int_array                                    m_iaErrorCode2;
+   index_map < sp(::exception::exception) >     m_mapError2;
+   
+
+   error();
+   virtual ~error();
+   
+   
+   error & operator =(const error & error);
+   
+   
+   void set(int iErrorCode, ::exception::exception * pexception);
+   
+   void set(int iErrorCode);
+   
+   void set(::exception::exception * pexception);
+   
+   
+   int get_exit_code();
+   
+};
 
 
 ///
@@ -12,7 +39,7 @@ class CLASS_DECL_AURA thread :
    ,virtual public ::exception::translator
 #endif
 {
-   private:
+private:
 
       bool                                   m_bRunThisThread;
 
@@ -69,8 +96,8 @@ class CLASS_DECL_AURA thread :
       //bool                                 m_bAutoDelete;       // enables 'delete this' after thread termination
       uint_ptr                               m_dwAlive;
       bool                                   m_bReady;
-      int32_t                                m_iReturnCode;
-      ::user::primitive *                    m_puiMain;           // main interaction_impl (usually same System.m_puiMain)
+      error                                  m_error;
+      ::user::primitive *                       m_puiMain;           // main interaction_impl (usually same System.m_puiMain)
       ::user::primitive *                    m_puiActive;         // active main interaction_impl (may not be m_puiMain)
       //property_set                           m_set;
       string                                 m_strWorkUrl;
@@ -133,8 +160,6 @@ class CLASS_DECL_AURA thread :
       virtual void dump(dump_context & dumpcontext) const override;
 
 
-
-
       thread_tools * tools();
       thread_toolset * toolset(e_tool etool);
 
@@ -163,12 +188,6 @@ class CLASS_DECL_AURA thread :
 
       void CommonConstruct();
 
-
-//   virtual bool finalize();
-
-//   virtual int32_t exit();
-
-
       virtual void on_keep_alive() override;
       virtual bool is_alive() override;
 
@@ -186,13 +205,13 @@ class CLASS_DECL_AURA thread :
       ::user::interactive * interactive();
       //virtual bool is_auto_delete();
 
-      virtual bool begin(int32_t epriority = ::multithreading::priority_normal, uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+      virtual bool begin(error * perror = NULL, int32_t epriority = ::multithreading::priority_normal, uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
 
-      virtual bool create_thread(int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+      virtual bool create_thread(error * perror = NULL, int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
 
-      virtual bool begin_synch(int32_t *piStartupError = NULL, int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+      virtual bool begin_synch(error * perror = NULL, int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
 
-      virtual bool create_thread_synch(int32_t *piStartupError,int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+      virtual bool create_thread_synch(error * perror = NULL, int32_t epriority = ::multithreading::priority_normal,uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
 
 
       virtual int32_t get_thread_priority();
@@ -231,11 +250,11 @@ class CLASS_DECL_AURA thread :
       virtual bool is_idle_message(::message::message * pobj);  // checks for special messages
       virtual bool is_idle_message(LPMESSAGE lpmessage);  // checks for special messages
 
-      virtual bool initialize_thread();
-      virtual bool on_before_run_thread();
-      virtual int32_t run();
-      virtual bool on_after_run_thread();
-      virtual int32_t exit_thread();
+      virtual bool init_thread();
+      virtual bool on_pre_run_thread();
+      virtual void run();
+      virtual void on_pos_run_thread();
+      virtual void term_thread();
 
       virtual void close_dependent_threads(const ::duration & dur);
 
@@ -261,7 +280,7 @@ class CLASS_DECL_AURA thread :
 
       virtual void dispatch_thread_message(::message::message * pobj);  // helper
 
-      virtual int32_t main();
+      virtual void main();
 
 
 
@@ -328,7 +347,7 @@ class CLASS_DECL_AURA thread :
 
       void construct(__THREADPROC pfnthread_implProc, LPVOID pParam);
 
-      virtual bool begin_thread(bool bSynch = false,int32_t * piStartupError = NULL,int32_t epriority= ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlagsParam = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+      virtual bool begin_thread(bool bSynch = false, error * perror = NULL,int32_t epriority= ::multithreading::priority_normal,uint_ptr nStackSize = 0,uint32_t dwCreateFlagsParam = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
 
       virtual bool initialize_message_queue();
 
@@ -341,6 +360,9 @@ class CLASS_DECL_AURA thread :
       virtual void on_create(::create * pcreate);
 
       virtual void request_create(::create * pcreate) override;
+   
+   
+   virtual int get_exit_code();
 
 };
 

@@ -30,9 +30,9 @@ namespace base
 
          virtual void frame_pre_translate_message(::message::message * pobj) override;
 
-         virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
-         virtual bool initialize1() override;
+         virtual bool init1() override;
 
          virtual bool initialize() override;
 

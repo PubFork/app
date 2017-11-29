@@ -575,7 +575,7 @@ namespace sockets
 #elif defined(LINUX)
       return "Mozilla/5.0 (Linux; x86_64) AppleWebKit/537.36 (ca2, like Gecko) " + strAddUp;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 //      string str;
 //

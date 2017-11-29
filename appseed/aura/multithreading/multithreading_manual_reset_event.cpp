@@ -34,7 +34,7 @@ manual_reset_event::manual_reset_event(::aura::application * papp, bool bInitial
 {
     if (!m_event.SetEvent())
     {
-       throw last_error_exception();
+       throw new last_error_exception();
     }
 }*/
 
@@ -48,7 +48,7 @@ manual_reset_event::manual_reset_event(::aura::application * papp, bool bInitial
 {
     if (!m_event.ResetEvent())
     {
-       throw last_error_exception();
+       throw new last_error_exception();
     }
 }*/
 

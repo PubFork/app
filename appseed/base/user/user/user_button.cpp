@@ -586,7 +586,7 @@ namespace user
 
       if(_001IsTranslucent())
       {
-         class imaging & imaging = System.visual().imaging();
+         class imaging & imaging = Application.imaging();
          imaging.color_blend(
             pgraphics,
             rectClient,
@@ -850,7 +850,7 @@ namespace user
          colorExt1BR.hls_rate(0.0,- 0.5,0.0);
       }
 
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
 
       rect rect = rectClient;
       imaging.color_blend_3dRect(pgraphics,rect,colorExt1TL,215,colorExt1BR,215);

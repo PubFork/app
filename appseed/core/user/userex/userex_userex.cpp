@@ -27,7 +27,7 @@ namespace userex
    }
 
 
-   bool userex::initialize1()
+   bool userex::init1()
    {
 
       System.factory().creatable_small < keyboard_layout >();
@@ -48,7 +48,7 @@ namespace userex
 
 
 
-      if (!::aura::department::initialize1())
+      if (!::aura::department::init1())
       {
 
          return false;
@@ -266,10 +266,10 @@ namespace userex
    }
 
 
-   bool userex::initialize2()
+   bool userex::init2()
    {
 
-      if (!::aura::department::initialize2())
+      if (!::aura::department::init2())
       {
 
          return false;
@@ -464,7 +464,7 @@ namespace userex
       if (!box.show(strMatter, &propertyset))
       {
 
-         throw resource_exception(get_app());
+         throw new resource_exception(get_app());
 
       }
 
@@ -1355,10 +1355,10 @@ namespace core
       if (!m_puserex->initialize())
          return false;
 
-      if (!m_puserex->initialize1())
+      if (!m_puserex->init1())
          return false;
 
-      if (!m_puserex->initialize2())
+      if (!m_puserex->init2())
          return false;
 
 
@@ -1558,7 +1558,7 @@ namespace core
          System.type_info < ::userex::font_view >());
 
 
-      if (!is_installing() && !is_uninstalling())
+      if (!is_installing() && !is_unstalling())
       {
 
          m_pfontlistdata = new ::visual::font_list_data(this);

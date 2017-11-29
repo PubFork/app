@@ -308,7 +308,7 @@ namespace userstack
       m_oswindowWinutil           =  ::FindWindow(NULL, "::ca2::fontopus::message_wnd::winutil");
       m_oswindowBergedge          =  ::FindWindow(NULL, "::ca2::fontopus::message_wnd::bergedge");
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 

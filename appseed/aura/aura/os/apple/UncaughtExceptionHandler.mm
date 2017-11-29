@@ -50,7 +50,7 @@ void HandleException(NSException *exception)
 {
 
 
-   throw ns_exception();
+   throw new ns_exception();
 
 }
 

@@ -20,7 +20,7 @@ namespace filehandler
 
       void construct();
 
-      virtual bool initialize_application() override;
+      virtual bool init_instance() override;
       virtual int32_t exit_application() override;
 
 

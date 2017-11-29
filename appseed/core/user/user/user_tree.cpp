@@ -263,7 +263,7 @@ namespace user
                data,
                tree_element_text);
             rectUnion.unite(rect, rectUnion);
-            class imaging & imaging = System.visual().imaging();
+            class imaging & imaging = Application.imaging();
             COLORREF crTranslucid = RGB(0, 0, 0);
             imaging.color_blend(
                data.m_pdc,

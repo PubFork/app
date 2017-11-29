@@ -42,7 +42,7 @@ namespace user
          user++;
       }
 
-      System.visual().imaging().CreateGrayVRCPImageList(
+      Application.imaging().CreateGrayVRCPImageList(
          NULL,
          &GetImageListDisable(),
          &GetImageList());*/

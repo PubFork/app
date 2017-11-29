@@ -29,11 +29,11 @@ namespace process
 
          process_thread(::aura::application * papp,const string & strCmdLine,const ::duration & dur,bool * pbPotentialTimeout = NULL,string * pstrRead = NULL,bool bElevated = false);
 
-         int32_t run();
+         void run();
 
-         int32_t run_normal();
+         void run_normal();
 
-         int32_t run_elevated();
+         void run_elevated();
 
          bool retry();
 

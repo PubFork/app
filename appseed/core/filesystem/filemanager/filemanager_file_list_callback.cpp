@@ -39,14 +39,14 @@ namespace filemanager
       m_pimagelistSubItemHover->add_matter("filemanager/check_off_16.png");
       m_pimagelistSubItemHover->add_matter("filemanager/check_on_16.png");
 
-      System.visual().imaging().CreateHueImageList(
+      Application.imaging().CreateHueImageList(
          spgraphics,
          m_pimagelistNormal,
          m_pimagelistSubItemHover,
          RGB(220, 220, 215),
          0.50);
 
-      System.visual().imaging().Createcolor_blend_ImageList(
+      Application.imaging().Createcolor_blend_ImageList(
          m_pimagelistItemHover,
          m_pimagelistSubItemHover,
          RGB(220, 220, 215),

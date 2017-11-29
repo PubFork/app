@@ -2,8 +2,8 @@
 
 
 verisimple_exception::verisimple_exception(const string & strMessage):
-object(::get_thread_app()),
-::call_stack(::get_thread_app())
+object(get_app()),
+::call_stack(get_app())
 {
    
    m_strMessage = strMessage;

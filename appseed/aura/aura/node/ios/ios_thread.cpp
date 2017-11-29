@@ -19,8 +19,8 @@
 //{
 //
 //   thread_startup::thread_startup() :
-//   hEvent(get_thread_app(), false, true),
-//   hEvent2(get_thread_app(), false, true)
+//   hEvent(get_app(), false, true),
+//   hEvent2(get_app(), false, true)
 //   {
 //   }
 //
@@ -772,13 +772,13 @@ namespace ios
 //
 //   DWORD thread::ResumeThread()
 //   {
-//      //throw not_implemented(get_app());
+//      //throw new not_implemented(get_app());
 //      ASSERT(m_hThread != NULL);
 //      return ::ResumeThread(m_hThread);
 //   }
 //   DWORD thread::SuspendThread()
 //   {
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      //   ASSERT(m_hThread != NULL);
 //      // return ::SuspendThread(m_hThread);
 //
@@ -797,7 +797,7 @@ namespace ios
 //
 //   void thread::set_os_int(int_ptr iData)
 //   {
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      //m_nThreadID = (dword_ptr) iData;
 //   }
 //
@@ -907,7 +907,7 @@ namespace ios
 //   ///*		FileDescWaiterThread::FileDescWaiterThread()
 //   //		{
 //   //			if ( pipe(fileDescs_) )
-//   //				;	// TO DO: throw
+//   //				;	// TO DO: throw new
 //   //			int32_t flags = fcntl( fileDescs_[1],F_GETFL );
 //   //			fcntl( fileDescs_[1], F_SETFL, flags|O_NONBLOCK );
 //   //			FD_ZERO(&fdRead);
@@ -1071,7 +1071,7 @@ namespace ios
 //   //			|| pthread_mutex_init(&startMutex_, 0)
 //   //			|| pthread_mutex_lock(&startMutex_)
 //   //			|| pthread_create(&thread_, &Attributes, reinterpret_cast<void * (*)(void *)>(thread::startExecution_), this))
-//   //			; // throw ...
+//   //			; // throw new ...
 //   //
 //   //		 Scheduling policy is set to round robin and priority to normal
 //   //		struct sched_param param = {0};
@@ -1087,7 +1087,7 @@ namespace ios
 //   //		: WaitableItem(false, false), isMainThread_(isMainThread), isExternalThread_(isExternalThread)
 //   //	{
 //   //		if (pthread_cond_init(&wakeUpCondition_, 0))
-//   //			; // throw ...
+//   //			; // throw new ...
 //   //
 //   //		thread_ = pthread_self();
 //   //		internal::g_globals.mutex_.lock();
@@ -1330,7 +1330,7 @@ namespace ios
 //   //	bool thread::has_message()
 //   //	{
 //
-//   //	   throw "how to know?";
+//   //	   throw new "how to know?";
 //
 //   //	}
 //

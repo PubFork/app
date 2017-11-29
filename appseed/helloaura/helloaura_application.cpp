@@ -65,12 +65,12 @@ namespace helloaura
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       ::core::session * pcoression = m_pauraapp->m_pcoresession;
 
-      if (!::aura::application::initialize_application())
+      if (!::aura::application::init_instance())
       {
 
          return false;

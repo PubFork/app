@@ -16,13 +16,13 @@ namespace estamira
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
-//      if (!::hellomultiverse::application::initialize_application())
+//      if (!::hellomultiverse::application::init_instance())
 //         return false;
 
-      if (!::multimedia::application::initialize_application())
+      if (!::multimedia::application::init_instance())
          return false;
 
       return true;

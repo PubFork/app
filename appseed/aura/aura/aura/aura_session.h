@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -108,27 +108,33 @@ namespace aura
 
          virtual int64_t add_ref() override
          {
+            
             return ::object::add_ref();
+            
          }
+      
          virtual int64_t dec_ref() override
          {
+            
             return ::object::dec_ref();
+            
          }
+      
          virtual void construct(::aura::application * papp, int iPhase);
 
-         virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
-         virtual bool initialize1() override;
+         virtual bool init1() override;
 
-         virtual bool initialize2() override;
+         virtual bool init2() override;
 
-         virtual bool initialize_application() override;
+         virtual bool init_application() override;
 
-         virtual bool initialize() override;
+         virtual bool init() override;
 
-         virtual bool finalize() override;
+         virtual void term() override;
 
-         virtual int32_t exit_application() override;
+         virtual void term_thread() override;
 
          //virtual ::visual::cursor * get_cursor();
 

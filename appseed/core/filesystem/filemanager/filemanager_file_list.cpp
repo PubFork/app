@@ -1407,7 +1407,7 @@ namespace filemanager
    //
    //      ::file::path path = m_plist->get_filemanager_path();
    //
-   //      Sess(get_app()).userex()->shell()->open_folder(m_plist->get_handle(), path);
+   //      Session.userex()->shell()->open_folder(m_plist->get_handle(), path);
    //
    //      try
    //      {
@@ -1438,7 +1438,7 @@ namespace filemanager
    //
    //      }
    //
-   //      Sess(get_app()).userex()->shell()->close_folder(path);
+   //      Session.userex()->shell()->close_folder(path);
    //
    //   }
 
@@ -1811,7 +1811,7 @@ namespace filemanager
          // Animation Drawing
          rect rectClipBox;
          pgraphics->GetClipBox(rectClipBox);
-         class imaging & imaging = System.visual().imaging();
+         class imaging & imaging = Application.imaging();
          imaging.color_blend(
             pgraphics,
             rectClipBox,

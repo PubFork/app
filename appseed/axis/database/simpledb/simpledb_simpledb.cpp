@@ -128,7 +128,7 @@ namespace simpledb
 
    }
 
-   bool simpledb::initialize2()
+   bool simpledb::init2()
    {
 
       if(m_pauraapp->handler()->m_varTopicQuery["locale"].get_count() > 0)

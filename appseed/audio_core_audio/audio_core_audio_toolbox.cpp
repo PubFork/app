@@ -113,7 +113,7 @@ namespace multimedia
          
       }
       
-       bool toolbox::initialize_instance()
+       bool toolbox::init_instance()
       {
          
          m_runloop = CFRunLoopGetCurrent();

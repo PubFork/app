@@ -123,7 +123,7 @@ namespace aura
       set_os_data(NULL);
       
       
-      //int32_t iRet = ::aura::application::exit_application();
+      //int32_t iRet = ::aura::application::term_instance();
       
       
       int iRet = 0;
@@ -244,13 +244,13 @@ namespace aura
 //      DWORD dwRet = ::GetModuleFileName(m_hInstance, szBuff, _MAX_PATH);
 //      ASSERT( dwRet != 0 && dwRet != _MAX_PATH );
 //      if( dwRet == 0 || dwRet == _MAX_PATH )
-//      throw user_exception();*/
+//      throw new user_exception();*/
 //
 //      /*
 //       LPTSTR lpszExt = ::PathFindExtension(szBuff);
 //       ASSERT(lpszExt != NULL);
 //       if( lpszExt == NULL )
-//       throw user_exception();
+//       throw new user_exception();
 //       
 //       ASSERT(*lpszExt == '.');
 //       *lpszExt = 0;       // no suffix

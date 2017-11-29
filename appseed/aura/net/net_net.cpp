@@ -429,7 +429,7 @@ CLASS_DECL_AURA void to_string(string & str, const sockaddr & addr)
    else
    {
 
-      throw "unexpected address family";
+      throw new "unexpected address family";
 
    }
 
@@ -603,7 +603,7 @@ CLASS_DECL_AURA uint32_t c_inet_addr(const char * src)
       else
       {
 
-         throw "not expected";
+         throw new "not expected";
 
       }
 

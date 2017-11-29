@@ -48,9 +48,9 @@ namespace dx
    {
 
       if (FAILED(hr))
-         throw hresult_exception(::get_thread_app(), hr);
+         throw new hresult_exception(get_app(), hr);
       //if(FAILED(hr))
-      // throw hr;
+      // throw new hr;
 
    }
 

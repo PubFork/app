@@ -359,7 +359,7 @@ namespace datetime
       case 12:
          return 30;
       }
-      throw invalid_argument_exception(get_app());
+      throw new invalid_argument_exception(get_app());
    }
 
    int32_t department::LEAP(int32_t y)

@@ -171,7 +171,7 @@ namespace aura
       if(!initialize_log(strId))
       {
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
-         throw "failed to initialize log";
+         throw new "failed to initialize log";
       }
 
       /*
@@ -222,11 +222,11 @@ namespace aura
 
       m_pxml->construct(this);
 
-      if(!m_pxml->initialize1())
-         throw simple_exception(this,"failed to construct system m_pxml->initialize1()");
+      if(!m_pxml->init1())
+         throw new simple_exception(this,"failed to construct system m_pxml->init1()");
 
       if(!m_pxml->initialize())
-         throw simple_exception(this,"failed to construct system m_pxml->initialize()");
+         throw new simple_exception(this,"failed to construct system m_pxml->initialize()");
 
 
 //      m_spmutexFactory = canew(mutex(get_app()));
@@ -288,7 +288,7 @@ namespace aura
       }
       catch (...)
       {
-         TRACE("system::exit_application: Potentially catastrophical error : error disabling simple factory request");
+         TRACE("system::~system: Potentially catastrophical error : error disabling simple factory request");
       }
 
       if (g_p == this)
@@ -441,7 +441,7 @@ namespace aura
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
 
@@ -463,7 +463,7 @@ namespace aura
       m_pfactory->cloneable_large < mutex >();
       m_pfactory->cloneable_large < event >();
 
-      if(!::aura::application::process_initialize())
+      if(!::aura::application::process_init())
          return false;
 
       m_spos.alloc(allocer());
@@ -475,7 +475,7 @@ namespace aura
 
       }
 
-      if(is_installing() || is_uninstalling())
+      if(is_installing() || is_unstalling())
       {
 
 #ifdef MACOS
@@ -485,7 +485,7 @@ namespace aura
 
                   uid_t uid = getuid();
 
-                  string str("installing or uninstalling as root : getuid() %d", uid);
+                  string str("installing or unstalling as root : getuid() %d", uid);
 
                   ::dir::mk("/ca2core");
 
@@ -494,8 +494,10 @@ namespace aura
 #endif
 
 #if 0
+         
          // Create authorization reference
          OSStatus status;
+         
          AuthorizationRef authorizationRef;
 
          // AuthorizationCreate and pass NULL as the initial
@@ -505,40 +507,66 @@ namespace aura
          // http://developer.apple.com/qa/qa2001/qa1172.html
          status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                       kAuthorizationFlagDefaults, &authorizationRef);
-         if (status != errAuthorizationSuccess)
+         
+         if(status != errAuthorizationSuccess)
          {
             TRACE("Error Creating Initial Authorization: %d", status);
+            
             return false;
+            
          }
 
          // kAuthorizationRightExecute == "system.privilege.admin"
          AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
+         
          AuthorizationRights rights = {1, &right};
+         
          AuthorizationFlags flags = kAuthorizationFlagDefaults |
                                     kAuthorizationFlagInteractionAllowed |
                                     kAuthorizationFlagPreAuthorize |
                                     kAuthorizationFlagExtendRights;
 
          // Call AuthorizationCopyRights to determine or extend the allowable rights.
+         
          status = AuthorizationCopyRights(authorizationRef, &rights, NULL, flags, NULL);
+         
          if (status != errAuthorizationSuccess)
          {
+            
             TRACE("Copy Rights Unsuccessful: %d", status);
+            
             return false;
+            
          }
+         
 #endif
+         
       }
 
 
       if(m_pmachineeventcentral == NULL)
       {
+         
 #ifndef APPLE_IOS
+         
          m_pmachineeventcentral = canew(::machine_event_central(this));
+         
          if(!m_pmachineeventcentral->initialize())
+         {
+            
             return false;
+            
+         }
+         
          if(m_pmachineeventcentral->is_close_application())
+         {
+            
             return false;
+            
+         }
+         
 #endif
+         
       }
 
       m_spfile.alloc(allocer());
@@ -563,14 +591,12 @@ namespace aura
 
       }
 
-
       output_debug_string("CommonAppData (matter) : " + System.dir().commonappdata()  + "\n");
       output_debug_string("commonappdata (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("Common App Data (matter) : " + System.dir().commonappdata() + "\n");
       output_debug_string("common app data (matter) : " + System.dir().commonappdata() + "\n");
 
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::session " + ::str::from(m_iReturnCode));
-
+      //dappy(string(typeid(*this).name()) + " : Going to ::axis::session " + ::str::from(m_iErrorCode));
 
       if(!alloc_session())
       {
@@ -581,14 +607,14 @@ namespace aura
 
       }
 
-
-      //m_spcrypto.alloc(allocer());
-
       m_spcrypto = canew(::crypto::crypto(this));
 
       if (!m_spcrypto.is_set())
+      {
+         
          return false;
-
+         
+      }
 
       bool bOk = true;
 
@@ -605,12 +631,11 @@ namespace aura
 
       }
 
-
       m_pvisual = canew(::visual::visual(this));
 
       m_pvisual->construct(this);
 
-      if (!m_pvisual->initialize1())
+      if (!m_pvisual->init1())
       {
 
          return false;
@@ -619,24 +644,22 @@ namespace aura
 
       enum_display_monitors();
 
-
-
       return true;
 
    }
 
 
-   bool system::initialize()
+   bool system::init()
    {
 
-      if (!::aura::application::initialize1())
+      if (!::aura::application::init1())
       {
 
          return false;
 
       }
 
-      if (!m_pvisual->initialize())
+      if (!m_pvisual->init())
       {
 
          return false;
@@ -648,12 +671,12 @@ namespace aura
    }
 
 
-   bool system::initialize1()
+   bool system::init1()
    {
 
       //m_spwaveout = canew(::aura::audio::wave_out(this));
 
-      if(!::aura::application::initialize1())
+      if(!::aura::application::init1())
          return false;
 
       m_puserstr = canew(::aura::str(this));
@@ -671,10 +694,10 @@ namespace aura
 
    }
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if (!::aura::application::initialize2())
+      if (!::aura::application::init2())
       {
 
          return false;
@@ -686,22 +709,22 @@ namespace aura
    }
 
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if(!m_paurasession->begin_synch(&m_iReturnCode))
+      //if(!m_paurasession->begin_synch(&m_iErrorCode))
+      if(!m_paurasession->begin_synch())
       {
 
          return false;
 
       }
 
-      dappy(string(typeid(*this).name()) + " : ::aura::session OK " + ::str::from(m_iReturnCode));
-
+      //dappy(string(typeid(*this).name()) + " : ::aura::session OK " + ::str::from(m_iErrorCode));
 
       m_pfactory->enable_simple_factory_request();
 
-      if (!::aura::application::initialize_application())
+      if (!::aura::application::init_application())
       {
 
          return false;
@@ -713,51 +736,27 @@ namespace aura
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       __wait_threading_count_except(this,::millis((5000) * 77));
 
-      bool bOk = false;
-
       try
       {
 
-         if (m_pvisual.is_set())
-         {
-
-            m_pvisual->finalize();
-
-         }
+         ::aura::application::term();
 
       }
       catch(...)
       {
 
-
       }
-
-      try
-      {
-
-         bOk = ::aura::application::finalize();
-
-      }
-      catch(...)
-      {
-
-         bOk = false;
-
-      }
-
-      return bOk;
 
    }
 
 
-   int32_t system::exit_application()
+   void system::term_application()
    {
-
 
       try
       {
@@ -818,7 +817,7 @@ namespace aura
       catch(...)
       {
 
-         m_iReturnCode = -86;
+         m_error.m_iaErrorCode.add(-86);
 
       }
 
@@ -857,6 +856,23 @@ namespace aura
 
 //      m_basesessionptra.remove_all();
 
+      try
+      {
+         
+         if (m_pvisual.is_set())
+         {
+            
+            m_pvisual->term();
+            
+         }
+         
+      }
+      catch(...)
+      {
+         
+         
+      }
+
       m_pvisual.release();
 
       m_spfile.release();
@@ -881,12 +897,10 @@ namespace aura
 
       m_pmath.release();
 
-      int32_t iRet = 0;
-
       try
       {
 
-         iRet = ::aura::application::exit_application();
+         ::aura::application::term_application();
 
       }
       catch(...)
@@ -949,7 +963,7 @@ namespace aura
 #endif
 
 
-      ::aura::application::exit_application();
+      ::aura::application::term_application();
 
 #ifdef METROWIN
 //      m_pdevicecontext = nullptr;
@@ -971,7 +985,7 @@ namespace aura
       //    ns_app_terminate();
 //#endif
 
-      return iRet;
+//      return iRet;
 
    }
 
@@ -1389,7 +1403,7 @@ namespace aura
 
 #else
 
-            throw todo(get_app());
+            throw new todo(get_app());
 
 #endif
 
@@ -1412,7 +1426,7 @@ namespace aura
 
 #if defined(METROWIN)
 
-            throw todo(get_app());
+            throw new todo(get_app());
 
 #else
 
@@ -1450,7 +1464,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw todo(get_app());
+            throw new todo(get_app());
 
 #else
 
@@ -1482,7 +1496,7 @@ namespace aura
 
 #ifdef METROWIN
 
-            throw todo(get_app());
+            throw new todo(get_app());
 
 #else
 
@@ -1594,11 +1608,11 @@ namespace aura
 //
 //#elif defined(METROWIN)
 //
-//      throw todo(this);
+//      throw new todo(this);
 //
 //#elif defined(ANDROID)
 //
-//      throw todo(this);
+//      throw new todo(this);
 //
 //#else
 //
@@ -1739,7 +1753,9 @@ namespace aura
 
       ::aura::system * psystem = (::aura::system *)p;
 
-      return psystem->main();
+      psystem->main();
+      
+      return psystem->get_exit_code();
 
    }
 
@@ -2888,7 +2904,7 @@ found:
    string system::url_encode(const string & str)
    {
 
-      //throw interface_only_exception(this);
+      //throw new interface_only_exception(this);
 
       return url_encode_dup(str);
 
@@ -3230,7 +3246,7 @@ success:
       catch (...)
       {
 
-         throw resource_exception(this, "not good window anymore");
+         throw new resource_exception(this, "not good window anymore");
 
       }
 
@@ -3258,12 +3274,12 @@ success:
 
 #ifdef WINDOWSEX
 
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iReturnCode));
+      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
 
       if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
       {
 
-         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iReturnCode));
+         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));
 
          return false;
 
@@ -3546,7 +3562,7 @@ success:
 
 #else
 
-      //throw todo(get_app());
+      //throw new todo(get_app());
 
       //::GetWindowRect(::GetDesktopWindow(),lprect);
 

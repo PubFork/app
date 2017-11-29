@@ -36,7 +36,7 @@ window_dc::~window_dc()
       if (!bOk)
       {
 
-         throw simple_exception(get_app(), "failed to composite");;
+         throw new simple_exception(get_app(), "failed to composite");;
 
       }
 

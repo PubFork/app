@@ -1252,7 +1252,7 @@ strsize utf16_to_utf32(unichar32 * output, const unichar *input, strsize input_s
          else
          {
 
-            throw simple_exception(get_thread_app(), "utf16_to_utf32_len");
+            throw new simple_exception(get_app(), "utf16_to_utf32_len");
 
          }
 
@@ -1295,7 +1295,7 @@ strsize utf16_to_utf32_len(const unichar *input, strsize input_size)
          else
          {
 
-            throw simple_exception(get_thread_app(), "utf16_to_utf32_len");
+            throw new simple_exception(get_app(), "utf16_to_utf32_len");
 
          }
 
@@ -1586,7 +1586,7 @@ strsize utf32_to_utf16_len(const unichar32 * codepoints, strsize input_size)
       {
 
          // invalid code_point, do something !
-         throw simple_exception(::get_thread_app(), "utf32_to_utf16_len :: invalid code_point, do something ! ");
+         throw new simple_exception(get_app(), "utf32_to_utf16_len :: invalid code_point, do something ! ");
 
          //++len;
 
@@ -1768,7 +1768,7 @@ extern "C"
          }
          else
          {
-            throw "not_expected, check wildcard_next_stop function";
+            throw new "not_expected, check wildcard_next_stop function";
          }
 
 
@@ -1850,7 +1850,7 @@ extern "C"
          }
          else
          {
-            throw "not_expected, check wildcard_next_stop function";
+            throw new "not_expected, check wildcard_next_stop function";
          }
 
 

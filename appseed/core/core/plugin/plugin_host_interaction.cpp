@@ -2,7 +2,7 @@
 //#include "core/user/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #ifdef Application

@@ -275,7 +275,7 @@ int_bool __stdcall My_ReadProcessMemory32(HANDLE hProcess, DWORD qwBaseAddress, 
 
    SIZE_T size = 0;
 #if defined(METROWIN) || defined(LINUX) || defined(APPLEOS) || defined(ANDROID) || defined(SOLARIS)
-   throw todo(get_thread_app());
+   throw new todo(get_app());
 #else
    if (!ReadProcessMemory(hProcess, (LPCVOID)qwBaseAddress, (LPVOID)lpBuffer, nSize, &size))
       return FALSE;

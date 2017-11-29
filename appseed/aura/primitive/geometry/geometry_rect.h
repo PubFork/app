@@ -12,140 +12,140 @@ class CLASS_DECL_AURA rect : public tagRECT
 // Constructors
 public:
    // uninitialized rectangle
-   rect() throw();
+   rect() NOTHROW;
    // from left, top, right, and bottom
-   rect(int64_t l, int64_t t, int64_t r, int64_t b) throw();
+   rect(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
    // copy constructor
-   rect(const RECT& srcRect) throw();
-   rect(const RECT64& srcRect) throw();
+   rect(const RECT& srcRect) NOTHROW;
+   rect(const RECT64& srcRect) NOTHROW;
    // from a pointer to another rect
-   rect(LPCRECT lpSrcRect) throw();
+   rect(LPCRECT lpSrcRect) NOTHROW;
    // from a point and size
-   rect(POINT point, SIZE size) throw();
+   rect(POINT point, SIZE size) NOTHROW;
    // from two points
-   rect(POINT topLeft, POINT bottomRight) throw();
+   rect(POINT topLeft, POINT bottomRight) NOTHROW;
 
 // Attributes (in addition to RECT members)
 
    // retrieves the width
-   int32_t width() const throw();
+   int32_t width() const NOTHROW;
    // returns the height
-   int32_t height() const throw();
+   int32_t height() const NOTHROW;
    // returns the size
-   class size size() const throw();
-   class size size(LONG cx, LONG cy) throw();
+   class size size() const NOTHROW;
+   class size size(LONG cx, LONG cy) NOTHROW;
    // reference to the top-left point
-   point& top_left() throw();
+   point& top_left() NOTHROW;
    // reference to the bottom-right point
-   point& bottom_right() throw();
+   point& bottom_right() NOTHROW;
    // const reference to the top-left point
-   const point& top_left() const throw();
+   const point& top_left() const NOTHROW;
    // const reference to the bottom-right point
-   const point& bottom_right() const throw();
+   const point& bottom_right() const NOTHROW;
    // the geometric center point of the rectangle
-   point center() const throw();
+   point center() const NOTHROW;
    // swap the left and right
-   void swap_left_right() throw();
-   static void WINAPI swap_left_right(LPRECT lpRect) throw();
+   void swap_left_right() NOTHROW;
+   static void WINAPI swap_left_right(LPRECT lpRect) NOTHROW;
 
    // convert between rect and LPRECT/LPCRECT (no need for &)
-   operator LPRECT() throw();
-   operator LPCRECT() const throw();
+   operator LPRECT() NOTHROW;
+   operator LPCRECT() const NOTHROW;
 
    // returns TRUE if rectangle has no area
-   bool is_empty() const throw();
+   bool is_empty() const NOTHROW;
    // returns TRUE if rectangle is at (0,0) and has no area
-   bool is_null() const throw();
+   bool is_null() const NOTHROW;
    // returns TRUE if point is within rectangle
-   bool contains(POINT point) const throw();
+   bool contains(POINT point) const NOTHROW;
 
 // Operations
 
    // set rectangle from left, top, right, and bottom
-   void set(int32_t i) throw();
-   void set(int32_t x, int32_t y) throw();
-   void set(int32_t x1, int32_t y1, int32_t x2, int32_t y2) throw();
-   void set(POINT topLeft, POINT bottomRight) throw();
+   void set(int32_t i) NOTHROW;
+   void set(int32_t x, int32_t y) NOTHROW;
+   void set(int32_t x1, int32_t y1, int32_t x2, int32_t y2) NOTHROW;
+   void set(POINT topLeft, POINT bottomRight) NOTHROW;
    // is_empty the rectangle
-   void null() throw();
+   void null() NOTHROW;
    // copy from another rectangle
-   void copy(LPCRECT lpSrcRect) throw();
+   void copy(LPCRECT lpSrcRect) NOTHROW;
    // TRUE if exactly the same as another rectangle
-   bool is_equal(LPCRECT lpRect) const throw();
+   bool is_equal(LPCRECT lpRect) const NOTHROW;
 
    // Inflate rectangle's width and height by
    // x units to the left and right ends of the rectangle
    // and y units to the top and bottom.
-   void inflate(int32_t x, int32_t y) throw();
+   void inflate(int32_t x, int32_t y) NOTHROW;
    // Inflate rectangle's width and height by
    // size.cx units to the left and right ends of the rectangle
    // and size.cy units to the top and bottom.
-   void inflate(SIZE size) throw();
+   void inflate(SIZE size) NOTHROW;
    // Inflate rectangle's width and height by moving individual sides.
    // Left side is moved to the left, right side is moved to the right,
    // top is moved up and bottom is moved down.
-   void inflate(LPCRECT lpRect) throw();
-   void inflate(int32_t l, int32_t t, int32_t r, int32_t b) throw();
+   void inflate(LPCRECT lpRect) NOTHROW;
+   void inflate(int32_t l, int32_t t, int32_t r, int32_t b) NOTHROW;
 
    // deflate the rectangle's width and height without
    // moving its top or left
-   void deflate(int32_t x, int32_t y) throw();
-   void deflate(SIZE size) throw();
-   void deflate(LPCRECT lpRect) throw();
-   void deflate(int32_t l, int32_t t, int32_t r, int32_t b) throw();
+   void deflate(int32_t x, int32_t y) NOTHROW;
+   void deflate(SIZE size) NOTHROW;
+   void deflate(LPCRECT lpRect) NOTHROW;
+   void deflate(int32_t l, int32_t t, int32_t r, int32_t b) NOTHROW;
 
    // translate the rectangle by moving its top and left
-   void offset(int32_t x, int32_t y) throw();
-   void offset(SIZE size) throw();
-   void offset(POINT point) throw();
-   void normalize() throw();
+   void offset(int32_t x, int32_t y) NOTHROW;
+   void offset(SIZE size) NOTHROW;
+   void offset(POINT point) NOTHROW;
+   void normalize() NOTHROW;
 
    // absolute position of rectangle
-   void move_to_y(int32_t y) throw();
-   void move_to_x(int32_t x) throw();
-   void move_to(int32_t x, int32_t y) throw();
-   void move_to(POINT point) throw();
+   void move_to_y(int32_t y) NOTHROW;
+   void move_to_x(int32_t x) NOTHROW;
+   void move_to(int32_t x, int32_t y) NOTHROW;
+   void move_to(POINT point) NOTHROW;
 
    // set this rectangle to intersection of two others
-   bool intersect_x(LPCRECT lpRect1,LPCRECT lpRect2) throw();
-   bool intersect_y(LPCRECT lpRect1,LPCRECT lpRect2) throw();
-   bool intersect(LPCRECT lpRect1, LPCRECT lpRect2) throw();
-   rect & intersect(LPCRECT lpRect2) throw();
-   rect intersect(LPCRECT lpRect2) const throw();
+   bool intersect_x(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
+   bool intersect_y(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
+   bool intersect(LPCRECT lpRect1, LPCRECT lpRect2) NOTHROW;
+   rect & intersect(LPCRECT lpRect2) NOTHROW;
+   rect intersect(LPCRECT lpRect2) const NOTHROW;
 
-   bool null_intersect(LPCRECT lpRect1,LPCRECT lpRect2) throw();
+   bool null_intersect(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
 
-   bool top_left_null_intersect(LPCRECT lpRect1,LPCRECT lpRect2) throw();
+   bool top_left_null_intersect(LPCRECT lpRect1,LPCRECT lpRect2) NOTHROW;
 
    // set this rectangle to bounding union of two others
-   bool unite(LPCRECT lpRect1, LPCRECT lpRect2) throw();
+   bool unite(LPCRECT lpRect1, LPCRECT lpRect2) NOTHROW;
 
    // set this rectangle to minimum of two others
-   bool subtract(LPCRECT lpRectSrc1, LPCRECT lpRectSrc2) throw();
+   bool subtract(LPCRECT lpRectSrc1, LPCRECT lpRectSrc2) NOTHROW;
 
 // Additional Operations
-   void operator=(const RECT& srcRect) throw();
-   bool operator==(const RECT& rect) const throw();
-   bool operator!=(const RECT& rect) const throw();
-   void operator+=(POINT point) throw();
-   void operator+=(SIZE size) throw();
-   void operator+=(LPCRECT lpRect) throw();
-   void operator-=(POINT point) throw();
-   void operator-=(SIZE size) throw();
-   void operator-=(LPCRECT lpRect) throw();
-   void operator&=(const RECT& rect) throw();
-   void operator|=(const RECT& rect) throw();
+   void operator=(const RECT& srcRect) NOTHROW;
+   bool operator==(const RECT& rect) const NOTHROW;
+   bool operator!=(const RECT& rect) const NOTHROW;
+   void operator+=(POINT point) NOTHROW;
+   void operator+=(SIZE size) NOTHROW;
+   void operator+=(LPCRECT lpRect) NOTHROW;
+   void operator-=(POINT point) NOTHROW;
+   void operator-=(SIZE size) NOTHROW;
+   void operator-=(LPCRECT lpRect) NOTHROW;
+   void operator&=(const RECT& rect) NOTHROW;
+   void operator|=(const RECT& rect) NOTHROW;
 
 // Operators returning rect values
-   rect operator+(POINT point) const throw();
-   rect operator-(POINT point) const throw();
-   rect operator+(LPCRECT lpRect) const throw();
-   rect operator+(SIZE size) const throw();
-   rect operator-(SIZE size) const throw();
-   rect operator-(LPCRECT lpRect) const throw();
-   rect operator&(const RECT& rect2) const throw();
-   rect operator|(const RECT& rect2) const throw();
-   rect MulDiv(int32_t nMultiplier, int32_t nDivisor) const throw();
+   rect operator+(POINT point) const NOTHROW;
+   rect operator-(POINT point) const NOTHROW;
+   rect operator+(LPCRECT lpRect) const NOTHROW;
+   rect operator+(SIZE size) const NOTHROW;
+   rect operator-(SIZE size) const NOTHROW;
+   rect operator-(LPCRECT lpRect) const NOTHROW;
+   rect operator&(const RECT& rect2) const NOTHROW;
+   rect operator|(const RECT& rect2) const NOTHROW;
+   rect MulDiv(int32_t nMultiplier, int32_t nDivisor) const NOTHROW;
 
    int64_t area();
 
@@ -173,24 +173,24 @@ public:
    void get_bounding_rect(const POINT * lppoint, ::count count);
    void get_bounding_rect(const point_array & pointa);
 
-   void assign(const RECT & rect,e_orientation eorientation) throw();
-   void assign_normal(const RECT & rect,e_orientation eorientation) throw();
+   void assign(const RECT & rect,e_orientation eorientation) NOTHROW;
+   void assign_normal(const RECT & rect,e_orientation eorientation) NOTHROW;
 
-   LONG minimum_dimension() const throw(){ return MIN(width(),height()); }
-   LONG maximum_dimension() const throw(){ return MAX(width(),height()); }
-   LONG min_dimension() const throw(){ return minimum_dimension(); }
-   LONG max_dimension() const throw(){ return maximum_dimension(); }
-   LONG min_dim() const throw(){ return min_dimension(); }
-   LONG max_dim() const throw(){ return max_dimension(); }
+   LONG minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
+   LONG maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
+   LONG min_dimension() const NOTHROW{ return minimum_dimension(); }
+   LONG max_dimension() const NOTHROW{ return maximum_dimension(); }
+   LONG min_dim() const NOTHROW{ return min_dimension(); }
+   LONG max_dim() const NOTHROW{ return max_dimension(); }
 
-   LONG minimum_natural_dimension() const throw(){ return MIN(MAX(0, width()),MAX(0,height())); }
-   LONG maximum_natural_dimension() const throw(){ return MAX(MAX(0, width()),MAX(0, height())); }
+   LONG minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0, width()),MAX(0,height())); }
+   LONG maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0, width()),MAX(0, height())); }
 
-   LONG minimum_absolute_dimension() const throw(){ return MIN(abs(width()),abs(height())); }
-   LONG maximum_absolute_dimension() const throw(){ return MIN(abs(width()),abs(height())); }
+   LONG minimum_absolute_dimension() const NOTHROW{ return MIN(abs(width()),abs(height())); }
+   LONG maximum_absolute_dimension() const NOTHROW{ return MIN(abs(width()),abs(height())); }
 
-   LONG minimum_signed_absolute_dimension(bool bNegativePreference = true) const throw();
-   LONG maximum_signed_absolute_dimension(bool bPositivePreference = true) const throw();
+   LONG minimum_signed_absolute_dimension(bool bNegativePreference = true) const NOTHROW;
+   LONG maximum_signed_absolute_dimension(bool bPositivePreference = true) const NOTHROW;
 
 };
 
@@ -202,138 +202,138 @@ class CLASS_DECL_AURA rect64 : public RECT64
 // Constructors
 public:
    // uninitialized rect64angle
-   rect64() throw();
+   rect64() NOTHROW;
    // from left, top, right, and bottom
-   rect64(int64_t l, int64_t t, int64_t r, int64_t b) throw();
+   rect64(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
    // copy constructor
-   rect64(const RECT& srcRect) throw();
+   rect64(const RECT& srcRect) NOTHROW;
    // copy constructor
-   rect64(const RECT64 & srcRect) throw();
+   rect64(const RECT64 & srcRect) NOTHROW;
    // from a point64_ter to another rect64
-   rect64(const RECT * lpSrcRect) throw();
+   rect64(const RECT * lpSrcRect) NOTHROW;
    // from a point64_ter to another rect64
-   rect64(const RECT64 * lpSrcRect) throw();
+   rect64(const RECT64 * lpSrcRect) NOTHROW;
    // from a POINT64 and size
-   rect64(POINT64 POINT64, SIZE64 size) throw();
+   rect64(POINT64 POINT64, SIZE64 size) NOTHROW;
    // from two point64_ts
-   rect64(POINT64 topLeft, POINT64 bottomRight) throw();
+   rect64(POINT64 topLeft, POINT64 bottomRight) NOTHROW;
 
 // Attributes (in addition to RECT members)
 
    // retrieves the width
-   int64_t width() const throw();
+   int64_t width() const NOTHROW;
    // returns the height
-   int64_t height() const throw();
+   int64_t height() const NOTHROW;
    // returns the size
-   size64 size() const throw();
+   size64 size() const NOTHROW;
    // reference to the top-left POINT64
-   point64& top_left() throw();
+   point64& top_left() NOTHROW;
    // reference to the bottom-right POINT64
-   point64& bottom_right() throw();
+   point64& bottom_right() NOTHROW;
    // const reference to the top-left POINT64
-   const point64& top_left() const throw();
+   const point64& top_left() const NOTHROW;
    // const reference to the bottom-right POINT64
-   const point64& bottom_right() const throw();
+   const point64& bottom_right() const NOTHROW;
    // the geometric center POINT64 of the rect64angle
-   point64 center() const throw();
+   point64 center() const NOTHROW;
    // swap the left and right
-   void swap_left_right() throw();
-   static void WINAPI swap_left_right(RECT64 * lpRect) throw();
+   void swap_left_right() NOTHROW;
+   static void WINAPI swap_left_right(RECT64 * lpRect) NOTHROW;
 
    // convert between rect64 and RECT64 */const RECT64 * (no need for &)
-   operator RECT64 *() throw();
-   operator const RECT64 *() const throw();
+   operator RECT64 *() NOTHROW;
+   operator const RECT64 *() const NOTHROW;
    operator rect() const;
 
    // returns TRUE if rect64angle has no area
-   bool is_empty() const throw();
+   bool is_empty() const NOTHROW;
    // returns TRUE if rect64angle is at (0,0) and has no area
-   bool is_null() const throw();
+   bool is_null() const NOTHROW;
    // returns TRUE if POINT64 is within rect64angle
-   bool contains(POINT64 pt) const throw();
+   bool contains(POINT64 pt) const NOTHROW;
 
 // Operations
 
    // set rect64angle from left, top, right, and bottom
-   void set(int64_t x1, int64_t y1, int64_t x2, int64_t y2) throw();
-   void set(POINT64 topLeft, POINT64 bottomRight) throw();
+   void set(int64_t x1, int64_t y1, int64_t x2, int64_t y2) NOTHROW;
+   void set(POINT64 topLeft, POINT64 bottomRight) NOTHROW;
    // is_empty the rect64angle
-   void null() throw();
+   void null() NOTHROW;
    // copy from another rect64angle
-   void copy(const RECT64 * lpSrcRect) throw();
+   void copy(const RECT64 * lpSrcRect) NOTHROW;
    // TRUE if exactly the same as another rect64angle
-   bool is_equal(const RECT64 * lpRect) const throw();
+   bool is_equal(const RECT64 * lpRect) const NOTHROW;
 
    // Inflate rect64angle's width and height by
    // x units to the left and right ends of the rect64angle
    // and y units to the top and bottom.
-   void inflate(int64_t x, int64_t y) throw();
+   void inflate(int64_t x, int64_t y) NOTHROW;
    // Inflate rect64angle's width and height by
    // size.cx units to the left and right ends of the rect64angle
    // and size.cy units to the top and bottom.
-   void inflate(SIZE64 size) throw();
+   void inflate(SIZE64 size) NOTHROW;
    // Inflate rect64angle's width and height by moving individual sides.
    // Left side is moved to the left, right side is moved to the right,
    // top is moved up and bottom is moved down.
-   void inflate(const RECT64 * lpRect) throw();
-   void inflate(int64_t l, int64_t t, int64_t r, int64_t b) throw();
+   void inflate(const RECT64 * lpRect) NOTHROW;
+   void inflate(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
 
    // deflate the rect64angle's width and height without
    // moving its top or left
-   void deflate(int64_t x, int64_t y) throw();
-   void deflate(SIZE64 size) throw();
-   void deflate(const RECT64 * lpRect) throw();
-   void deflate(int64_t l, int64_t t, int64_t r, int64_t b) throw();
+   void deflate(int64_t x, int64_t y) NOTHROW;
+   void deflate(SIZE64 size) NOTHROW;
+   void deflate(const RECT64 * lpRect) NOTHROW;
+   void deflate(int64_t l, int64_t t, int64_t r, int64_t b) NOTHROW;
 
    // translate the rect64angle by moving its top and left
-   void offset(int64_t x, int64_t y) throw();
-   void offset(SIZE64 size) throw();
-   void offset(POINT64 POINT64) throw();
-   void normalize() throw();
+   void offset(int64_t x, int64_t y) NOTHROW;
+   void offset(SIZE64 size) NOTHROW;
+   void offset(POINT64 POINT64) NOTHROW;
+   void normalize() NOTHROW;
 
-   void size(SIZE64 size) throw();
-   void rsize(SIZE64 size) throw();
-   void size(int64_t cx,int64_t cy) throw();
-   void rsize(int64_t cx,int64_t cy) throw();
+   void size(SIZE64 size) NOTHROW;
+   void rsize(SIZE64 size) NOTHROW;
+   void size(int64_t cx,int64_t cy) NOTHROW;
+   void rsize(int64_t cx,int64_t cy) NOTHROW;
 
    // absolute position of rect64angle
-   void move_to_y(int64_t y) throw();
-   void move_to_x(int64_t x) throw();
-   void move_to(int64_t x, int64_t y) throw();
-   void move_to(POINT64 pt) throw();
+   void move_to_y(int64_t y) NOTHROW;
+   void move_to_x(int64_t x) NOTHROW;
+   void move_to(int64_t x, int64_t y) NOTHROW;
+   void move_to(POINT64 pt) NOTHROW;
 
    // set this rect64angle to int64_tersection of two others
-   bool intersect(const RECT64 * lpRect1, const RECT64 * lpRect2) throw();
+   bool intersect(const RECT64 * lpRect1, const RECT64 * lpRect2) NOTHROW;
 
    // set this rect64angle to bounding union of two others
-   bool unite(const RECT64 * lpRect1, const RECT64 * lpRect2) throw();
+   bool unite(const RECT64 * lpRect1, const RECT64 * lpRect2) NOTHROW;
 
    // set this rect64angle to minimum of two others
-//   bool subtract(const RECT64 * lpRectSrc1, const RECT64 * lpRectSrc2) throw();
+//   bool subtract(const RECT64 * lpRectSrc1, const RECT64 * lpRectSrc2) NOTHROW;
 
 // Additional Operations
-   void operator=(const RECT64& srcRect) throw();
-   bool operator==(const RECT64& rect64) const throw();
-   bool operator!=(const RECT64& rect64) const throw();
-   void operator+=(POINT64 POINT64) throw();
-   void operator+=(SIZE64 size) throw();
-   void operator+=(const RECT64 * lpRect) throw();
-   void operator-=(POINT64 POINT64) throw();
-   void operator-=(SIZE64 size) throw();
-   void operator-=(const RECT64 * lpRect) throw();
-   void operator&=(const RECT64& rect64) throw();
-   void operator|=(const RECT64& rect64) throw();
+   void operator=(const RECT64& srcRect) NOTHROW;
+   bool operator==(const RECT64& rect64) const NOTHROW;
+   bool operator!=(const RECT64& rect64) const NOTHROW;
+   void operator+=(POINT64 POINT64) NOTHROW;
+   void operator+=(SIZE64 size) NOTHROW;
+   void operator+=(const RECT64 * lpRect) NOTHROW;
+   void operator-=(POINT64 POINT64) NOTHROW;
+   void operator-=(SIZE64 size) NOTHROW;
+   void operator-=(const RECT64 * lpRect) NOTHROW;
+   void operator&=(const RECT64& rect64) NOTHROW;
+   void operator|=(const RECT64& rect64) NOTHROW;
 
 // Operators returning rect64 values
-   rect64 operator+(POINT64 POINT64) const throw();
-   rect64 operator-(POINT64 POINT64) const throw();
-   rect64 operator+(const RECT64 * lpRect) const throw();
-   rect64 operator+(SIZE64 size) const throw();
-   rect64 operator-(SIZE64 size) const throw();
-   rect64 operator-(const RECT64 * lpRect) const throw();
-   rect64 operator&(const RECT64 & rect642) const throw();
-   rect64 operator|(const RECT64& rect642) const throw();
-   rect64 MulDiv(int64_t nMultiplier, int64_t nDivisor) const throw();
+   rect64 operator+(POINT64 POINT64) const NOTHROW;
+   rect64 operator-(POINT64 POINT64) const NOTHROW;
+   rect64 operator+(const RECT64 * lpRect) const NOTHROW;
+   rect64 operator+(SIZE64 size) const NOTHROW;
+   rect64 operator-(SIZE64 size) const NOTHROW;
+   rect64 operator-(const RECT64 * lpRect) const NOTHROW;
+   rect64 operator&(const RECT64 & rect642) const NOTHROW;
+   rect64 operator|(const RECT64& rect642) const NOTHROW;
+   rect64 MulDiv(int64_t nMultiplier, int64_t nDivisor) const NOTHROW;
 
    int64_t area();
    bool contains(const RECT64 * lpcrect) const;
@@ -347,32 +347,32 @@ public:
    void DeflateBottomRightSizeByRate(double dRate);
    void SetBottomRightSize(int64_t iWidth, int64_t iHeight);
 
-   inline point64 top_right() const throw();
-   inline point64 bottom_left() const throw();
+   inline point64 top_right() const NOTHROW;
+   inline point64 bottom_left() const NOTHROW;
 
    void SubtractRectMajor(const RECT64 * lpcrectMajor, const RECT64 * lpcrectMinor);
    void SubtractRectMinor(const RECT64 * lpcrectMajor, const RECT64 * lpcrectMinor);
 
 
-   void assign(const RECT64 * lpcrect,e_orientation eorientation) throw();
-   void assign_normal(const RECT64 * lpcrect,e_orientation eorientation) throw();
+   void assign(const RECT64 * lpcrect,e_orientation eorientation) NOTHROW;
+   void assign_normal(const RECT64 * lpcrect,e_orientation eorientation) NOTHROW;
 
 
-   int64_t minimum_dimension() const throw(){ return MIN(width(),height()); }
-   int64_t maximum_dimension() const throw(){ return MAX(width(),height()); }
-   int64_t min_dimension() const throw(){ return minimum_dimension(); }
-   int64_t max_dimension() const throw(){ return maximum_dimension(); }
-   int64_t min_dim() const throw(){ return min_dimension(); }
-   int64_t max_dim() const throw(){ return max_dimension(); }
+   int64_t minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
+   int64_t maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
+   int64_t min_dimension() const NOTHROW{ return minimum_dimension(); }
+   int64_t max_dimension() const NOTHROW{ return maximum_dimension(); }
+   int64_t min_dim() const NOTHROW{ return min_dimension(); }
+   int64_t max_dim() const NOTHROW{ return max_dimension(); }
 
-   int64_t minimum_natural_dimension() const throw(){ return MIN(MAX(0,width()),MAX(0,height())); }
-   int64_t maximum_natural_dimension() const throw(){ return MAX(MAX(0,width()),MAX(0,height())); }
+   int64_t minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0,width()),MAX(0,height())); }
+   int64_t maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0,width()),MAX(0,height())); }
 
-   int64_t minimum_absolute_dimension() const throw();
-   int64_t maximum_absolute_dimension() const throw();
+   int64_t minimum_absolute_dimension() const NOTHROW;
+   int64_t maximum_absolute_dimension() const NOTHROW;
 
-   int64_t minimum_signed_absolute_dimension(bool bNegativePreference = true) const throw();
-   int64_t maximum_signed_absolute_dimension(bool bPositivePreference = true) const throw();
+   int64_t minimum_signed_absolute_dimension(bool bNegativePreference = true) const NOTHROW;
+   int64_t maximum_signed_absolute_dimension(bool bPositivePreference = true) const NOTHROW;
 
 };
 
@@ -390,17 +390,17 @@ inline point rect::bottom_left()
    return point(left, bottom);
 }
 
-inline point rect::center() const throw()
+inline point rect::center() const NOTHROW
 {
    return point((left + right) / 2, (top + bottom) / 2);
 }
 
-inline bool rect::is_null() const throw()
+inline bool rect::is_null() const NOTHROW
 {
    return left == 0 && top == 0 && right == 0 && bottom == 0;
 }
 
-inline bool rect::is_empty() const throw()
+inline bool rect::is_empty() const NOTHROW
 {
    return width() == 0 && height() == 0;
 }
@@ -413,27 +413,27 @@ inline bool rect::is_empty() const throw()
 
 
 
-inline point64 rect64::top_right() const throw()
+inline point64 rect64::top_right() const NOTHROW
 {
    return point64(right, top);
 }
 
-inline point64 rect64::bottom_left() const throw()
+inline point64 rect64::bottom_left() const NOTHROW
 {
    return point64(left, bottom);
 }
 
-inline point64 rect64::center() const throw()
+inline point64 rect64::center() const NOTHROW
 {
    return point64((left + right) / 2, (top + bottom) / 2);
 }
 
-inline bool rect64::is_null() const throw()
+inline bool rect64::is_null() const NOTHROW
 {
    return left == 0 && top == 0 && right == 0 && bottom == 0;
 }
 
-inline bool rect64::is_empty() const throw()
+inline bool rect64::is_empty() const NOTHROW
 {
    return width() == 0 && height() == 0;
 }
@@ -465,129 +465,129 @@ class CLASS_DECL_AURA rectd : public RECTD
 // Constructors
 public:
    // uninitialized rectangle
-   rectd() throw();
+   rectd() NOTHROW;
    // from left, top, right, and bottom
-   rectd(double l, double t, double r, double b) throw();
+   rectd(double l, double t, double r, double b) NOTHROW;
    // copy constructor
-   rectd(const RECTD& srcRect) throw();
-   rectd(const RECT64& srcRect) throw();
+   rectd(const RECTD& srcRect) NOTHROW;
+   rectd(const RECT64& srcRect) NOTHROW;
    // from a pointer to another rectd
-   rectd(LPCRECTD lpSrcRect) throw();
+   rectd(LPCRECTD lpSrcRect) NOTHROW;
    // from a point and size
-   rectd(POINTD point, SIZED size) throw();
+   rectd(POINTD point, SIZED size) NOTHROW;
    // from two points
-   rectd(POINTD topLeft, POINTD bottomRight) throw();
+   rectd(POINTD topLeft, POINTD bottomRight) NOTHROW;
 
 // Attributes (in addition to RECTD members)
 
    // retrieves the width
-   double width() const throw();
+   double width() const NOTHROW;
    // returns the height
-   double height() const throw();
+   double height() const NOTHROW;
    // returns the size
-   class sized size() const throw();
+   class sized size() const NOTHROW;
    // reference to the top-left point
-   pointd& top_left() throw();
+   pointd& top_left() NOTHROW;
    // reference to the bottom-right point
-   pointd& bottom_right() throw();
+   pointd& bottom_right() NOTHROW;
    // const reference to the top-left point
-   const pointd& top_left() const throw();
+   const pointd& top_left() const NOTHROW;
    // const reference to the bottom-right point
-   const pointd& bottom_right() const throw();
+   const pointd& bottom_right() const NOTHROW;
    // the geometric center point of the rectangle
-   pointd center() const throw();
+   pointd center() const NOTHROW;
    // swap the left and right
-   void swap_left_right() throw();
-   static void WINAPI swap_left_right(LPRECTD lpRect) throw();
+   void swap_left_right() NOTHROW;
+   static void WINAPI swap_left_right(LPRECTD lpRect) NOTHROW;
 
    // convert between rectd and LPRECTD/LPCRECTD (no need for &)
-   operator LPRECTD() throw();
-   operator LPCRECTD() const throw();
+   operator LPRECTD() NOTHROW;
+   operator LPCRECTD() const NOTHROW;
 
    // returns TRUE if rectangle has no area
-   bool is_empty() const throw();
+   bool is_empty() const NOTHROW;
    // returns TRUE if rectangle is at (0,0) and has no area
-   bool is_null() const throw();
+   bool is_null() const NOTHROW;
    // returns TRUE if point is within rectangle
-   bool contains(POINTD point) const throw();
+   bool contains(POINTD point) const NOTHROW;
 
 // Operations
 
    // set rectangle from left, top, right, and bottom
-   void set(double x1, double y1, double x2, double y2) throw();
-   void set(POINTD topLeft, POINTD bottomRight) throw();
+   void set(double x1, double y1, double x2, double y2) NOTHROW;
+   void set(POINTD topLeft, POINTD bottomRight) NOTHROW;
    // is_empty the rectangle
-   void null() throw();
+   void null() NOTHROW;
    // copy from another rectangle
-   void copy(LPCRECTD lpSrcRect) throw();
+   void copy(LPCRECTD lpSrcRect) NOTHROW;
    // TRUE if exactly the same as another rectangle
-   bool is_equal(LPCRECTD lpRect) const throw();
+   bool is_equal(LPCRECTD lpRect) const NOTHROW;
 
    // Inflate rectangle's width and height by
    // x units to the left and right ends of the rectangle
    // and y units to the top and bottom.
-   void inflate(double x, double y) throw();
+   void inflate(double x, double y) NOTHROW;
    // Inflate rectangle's width and height by
    // size.cx units to the left and right ends of the rectangle
    // and size.cy units to the top and bottom.
-   void inflate(SIZED size) throw();
+   void inflate(SIZED size) NOTHROW;
    // Inflate rectangle's width and height by moving individual sides.
    // Left side is moved to the left, right side is moved to the right,
    // top is moved up and bottom is moved down.
-   void inflate(LPCRECTD lpRect) throw();
-   void inflate(double l, double t, double r, double b) throw();
+   void inflate(LPCRECTD lpRect) NOTHROW;
+   void inflate(double l, double t, double r, double b) NOTHROW;
 
    // deflate the rectangle's width and height without
    // moving its top or left
-   void deflate(double x, double y) throw();
-   void deflate(SIZED size) throw();
-   void deflate(LPCRECTD lpRect) throw();
-   void deflate(double l, double t, double r, double b) throw();
+   void deflate(double x, double y) NOTHROW;
+   void deflate(SIZED size) NOTHROW;
+   void deflate(LPCRECTD lpRect) NOTHROW;
+   void deflate(double l, double t, double r, double b) NOTHROW;
 
    // translate the rectangle by moving its top and left
-   void offset(double x, double y) throw();
-   void offset(SIZED size) throw();
-   void offset(POINTD point) throw();
-   void normalize() throw();
+   void offset(double x, double y) NOTHROW;
+   void offset(SIZED size) NOTHROW;
+   void offset(POINTD point) NOTHROW;
+   void normalize() NOTHROW;
 
    // absolute position of rectangle
-   void move_to_y(double y) throw();
-   void move_to_x(double x) throw();
-   void move_to(double x, double y) throw();
-   void move_to(POINTD point) throw();
+   void move_to_y(double y) NOTHROW;
+   void move_to_x(double x) NOTHROW;
+   void move_to(double x, double y) NOTHROW;
+   void move_to(POINTD point) NOTHROW;
 
    // set this rectangle to intersection of two others
-   bool intersect(LPCRECTD lpRect1, LPCRECTD lpRect2) throw();
+   bool intersect(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
 
    // set this rectangle to bounding union of two others
-   bool unite(LPCRECTD lpRect1, LPCRECTD lpRect2) throw();
+   bool unite(LPCRECTD lpRect1, LPCRECTD lpRect2) NOTHROW;
 
    // set this rectangle to minimum of two others
-   //bool subtract(LPCRECTD lpRectSrc1, LPCRECTD lpRectSrc2) throw();
+   //bool subtract(LPCRECTD lpRectSrc1, LPCRECTD lpRectSrc2) NOTHROW;
 
 // Additional Operations
-   void operator=(const RECTD& srcRect) throw();
-   bool operator==(const RECTD& rectd) const throw();
-   bool operator!=(const RECTD& rectd) const throw();
-   void operator+=(POINTD point) throw();
-   void operator+=(SIZED size) throw();
-   void operator+=(LPCRECTD lpRect) throw();
-   void operator-=(POINTD point) throw();
-   void operator-=(SIZED size) throw();
-   void operator-=(LPCRECTD lpRect) throw();
-   void operator&=(const RECTD& rectd) throw();
-   void operator|=(const RECTD& rectd) throw();
+   void operator=(const RECTD& srcRect) NOTHROW;
+   bool operator==(const RECTD& rectd) const NOTHROW;
+   bool operator!=(const RECTD& rectd) const NOTHROW;
+   void operator+=(POINTD point) NOTHROW;
+   void operator+=(SIZED size) NOTHROW;
+   void operator+=(LPCRECTD lpRect) NOTHROW;
+   void operator-=(POINTD point) NOTHROW;
+   void operator-=(SIZED size) NOTHROW;
+   void operator-=(LPCRECTD lpRect) NOTHROW;
+   void operator&=(const RECTD& rectd) NOTHROW;
+   void operator|=(const RECTD& rectd) NOTHROW;
 
 // Operators returning rectd values
-   rectd operator+(POINTD point) const throw();
-   rectd operator-(POINTD point) const throw();
-   rectd operator+(LPCRECTD lpRect) const throw();
-   rectd operator+(SIZED size) const throw();
-   rectd operator-(SIZED size) const throw();
-   rectd operator-(LPCRECTD lpRect) const throw();
-   rectd operator&(const RECTD& rect2) const throw();
-   rectd operator|(const RECTD& rect2) const throw();
-   rectd MulDiv(double nMultiplier, double nDivisor) const throw();
+   rectd operator+(POINTD point) const NOTHROW;
+   rectd operator-(POINTD point) const NOTHROW;
+   rectd operator+(LPCRECTD lpRect) const NOTHROW;
+   rectd operator+(SIZED size) const NOTHROW;
+   rectd operator-(SIZED size) const NOTHROW;
+   rectd operator-(LPCRECTD lpRect) const NOTHROW;
+   rectd operator&(const RECTD& rect2) const NOTHROW;
+   rectd operator|(const RECTD& rect2) const NOTHROW;
+   rectd MulDiv(double nMultiplier, double nDivisor) const NOTHROW;
 
    double area();
 
@@ -612,24 +612,24 @@ public:
    void get_bounding_rect(const POINTD * lppoint, ::count count);
    void get_bounding_rect(const pointd_array & pointa);
 
-   void assign(const RECTD * lpcrect,e_orientation eorientation) throw();
-   void assign_normal(const RECTD * lpcrect,e_orientation eorientation) throw();
+   void assign(const RECTD * lpcrect,e_orientation eorientation) NOTHROW;
+   void assign_normal(const RECTD * lpcrect,e_orientation eorientation) NOTHROW;
 
-   double minimum_dimension() const throw(){ return MIN(width(),height()); }
-   double maximum_dimension() const throw(){ return MAX(width(),height()); }
-   double min_dimension() const throw(){ return minimum_dimension(); }
-   double max_dimension() const throw(){ return maximum_dimension(); }
-   double min_dim() const throw(){ return min_dimension(); }
-   double max_dim() const throw(){ return max_dimension(); }
+   double minimum_dimension() const NOTHROW{ return MIN(width(),height()); }
+   double maximum_dimension() const NOTHROW{ return MAX(width(),height()); }
+   double min_dimension() const NOTHROW{ return minimum_dimension(); }
+   double max_dimension() const NOTHROW{ return maximum_dimension(); }
+   double min_dim() const NOTHROW{ return min_dimension(); }
+   double max_dim() const NOTHROW{ return max_dimension(); }
 
-   double minimum_natural_dimension() const throw(){ return MIN(MAX(0,width()),MAX(0,height())); }
-   double maximum_natural_dimension() const throw(){ return MAX(MAX(0,width()),MAX(0,height())); }
+   double minimum_natural_dimension() const NOTHROW{ return MIN(MAX(0,width()),MAX(0,height())); }
+   double maximum_natural_dimension() const NOTHROW{ return MAX(MAX(0,width()),MAX(0,height())); }
 
-   double minimum_absolute_dimension() const throw();
-   double maximum_absolute_dimension() const throw();
+   double minimum_absolute_dimension() const NOTHROW;
+   double maximum_absolute_dimension() const NOTHROW;
 
-   double minimum_signed_absolute_dimension(bool bNegativePreference = true) const throw();
-   double maximum_signed_absolute_dimension(bool bPositivePreference = true) const throw();
+   double minimum_signed_absolute_dimension(bool bNegativePreference = true) const NOTHROW;
+   double maximum_signed_absolute_dimension(bool bPositivePreference = true) const NOTHROW;
 
 
 };
@@ -642,7 +642,7 @@ inline CLASS_DECL_AURA ::rect null_rect() { return ::rect(0, 0, 0, 0); }
 inline CLASS_DECL_AURA ::rect64 null_rect64() { return ::rect64(0, 0, 0, 0); }
 
 
-inline void rect::assign(const RECT & rect,e_orientation eorientation) throw()
+inline void rect::assign(const RECT & rect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)
@@ -663,7 +663,7 @@ inline void rect::assign(const RECT & rect,e_orientation eorientation) throw()
 }
 
 
-inline void rect::assign_normal(const RECT & rect,e_orientation eorientation) throw()
+inline void rect::assign_normal(const RECT & rect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)
@@ -683,7 +683,7 @@ inline void rect::assign_normal(const RECT & rect,e_orientation eorientation) th
 
 }
 
-inline void rect64::assign(const RECT64 * lpcrect,e_orientation eorientation) throw()
+inline void rect64::assign(const RECT64 * lpcrect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)
@@ -704,7 +704,7 @@ inline void rect64::assign(const RECT64 * lpcrect,e_orientation eorientation) th
 }
 
 
-inline void rect64::assign_normal(const RECT64 * lpcrect,e_orientation eorientation) throw()
+inline void rect64::assign_normal(const RECT64 * lpcrect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)
@@ -724,7 +724,7 @@ inline void rect64::assign_normal(const RECT64 * lpcrect,e_orientation eorientat
 
 }
 
-inline void rectd::assign(const RECTD * lpcrect,e_orientation eorientation) throw()
+inline void rectd::assign(const RECTD * lpcrect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)
@@ -745,7 +745,7 @@ inline void rectd::assign(const RECTD * lpcrect,e_orientation eorientation) thro
 }
 
 
-inline void rectd::assign_normal(const RECTD * lpcrect,e_orientation eorientation) throw()
+inline void rectd::assign_normal(const RECTD * lpcrect,e_orientation eorientation) NOTHROW
 {
 
    if(eorientation == orientation_horizontal)

@@ -155,7 +155,7 @@ namespace install
    int32_t install::spalib_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int32_t nCmdShow)
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
       /*      install::installer installer(get_app());
 
@@ -218,7 +218,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      throw new "todo";
 
 #else
 
@@ -246,7 +246,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      throw new "todo";
 
 #else
 
@@ -333,7 +333,7 @@ namespace install
 
 #ifdef METROWIN
 
-      throw "todo";
+      throw new "todo";
 
 #else
 
@@ -660,7 +660,7 @@ namespace install
 
 #else
 
-      throw "TODO";
+      throw new "TODO";
 
 #endif
 
@@ -794,7 +794,7 @@ md5retry:
 
 #else
 
-      throw "TODO";
+      throw new "TODO";
 
 #endif
 

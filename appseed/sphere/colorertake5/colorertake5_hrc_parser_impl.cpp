@@ -39,7 +39,7 @@ namespace colorertake5
       }
       catch(exception &e)
       {
-         throw e;
+         throw new e;
       }
       m_strCurrentSourceLocation = strPreviousSourceLocation;
       m_strCurrentSource = strPreviousSource;
@@ -183,13 +183,13 @@ namespace colorertake5
       doc.load(psz);
       if(doc.get_root() == NULL)
       {
-         throw HRCParserException(get_app(), string("main '<hrc>' block not found"));
+         throw new HRCParserException(get_app(), string("main '<hrc>' block not found"));
       }
       xml::node & types = *doc.get_root();
 
       if(types.get_name() != "hrc")
       {
-         throw HRCParserException(get_app(), string("main '<hrc>' block not found"));
+         throw new HRCParserException(get_app(), string("main '<hrc>' block not found"));
       }
 
       if(versionName.is_empty())

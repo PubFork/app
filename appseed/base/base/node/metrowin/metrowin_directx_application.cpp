@@ -385,10 +385,10 @@ UINT system_main(LPVOID lp)
    try
    {
       //m_psystem->set_thread(m_psystem);
-      m_psystem->m_iReturnCode = 0;
+      m_psystem->m_iErrorCode = 0;
       m_psystem->m_bReady = true;
-      m_psystem->m_iReturnCode = m_psystem->on_run();
-      if(m_psystem->m_iReturnCode != 0)
+      m_psystem->m_iErrorCode = m_psystem->on_run();
+      if(m_psystem->m_iErrorCode != 0)
       {
          ::output_debug_string(L"application::main on_run termination failure");
       }
@@ -398,11 +398,11 @@ UINT system_main(LPVOID lp)
       }
       try
       {
-         m_psystem->m_iReturnCode = m_psystem->exit_thread();
+         m_psystem->m_iErrorCode = m_psystem->exit_thread();
       }
       catch(...)
       {
-         m_psystem->m_iReturnCode = -1;
+         m_psystem->m_iErrorCode = -1;
       }
 
    }
@@ -437,7 +437,7 @@ namespace metrowin
       m_strId = strId;
 
       if(!main_initialize())
-         throw "";
+         throw new "";
 
 
       //_set_purecall_handler(_ca2_purecall);
@@ -501,7 +501,7 @@ namespace metrowin
       if (!m_psystem->begin_synch())
       {
 
-         throw 0;
+         throw new 0;
 
       }
 
@@ -747,7 +747,7 @@ namespace metrowin
 
                         memory m;
 
-                        Sys(get_app()).base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
+                        System.base64().decode(m, m_psystem->url().url_decode(str.Mid(iFind + 1)));
 
                         papp->m_pipi->on_receive(&papp->m_pipi->m_rx, message, m.get_data(), m.get_size());
 
@@ -1224,7 +1224,7 @@ namespace metrowin
       if (pgraphics == NULL)
       {
 
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
 
       }
 
@@ -1251,7 +1251,7 @@ namespace metrowin
          //catch(...)
          //{
 
-         //   throw simple_exception(::get_thread_app(), "no more a window");
+         //   throw new simple_exception(get_app(), "no more a window");
 
          //}
 

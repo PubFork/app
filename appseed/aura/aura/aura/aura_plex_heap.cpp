@@ -14,7 +14,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
    ASSERT(nMax > 0 && cbElement > 0);
    if (nMax == 0 || cbElement == 0)
    {
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
    }
 
    plex_heap* p = (plex_heap*) system_heap_alloc(sizeof(plex_heap) + nMax * cbElement);
@@ -22,7 +22,7 @@ plex_heap * plex_heap::create(plex_heap*& pHead, uint_ptr nMax, uint_ptr cbEleme
 #ifdef DEBUG
    Alloc_check_pointer_in_cpp(p);
 #endif
-         // may throw exception
+         // may throw new exception
    p->pNext = pHead;
    pHead = p;  // change head (adds in reverse order for simplicity)
    return p;

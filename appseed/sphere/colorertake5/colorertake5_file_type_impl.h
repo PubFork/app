@@ -30,7 +30,7 @@ public:
   string enumerateParameters(int32_t idx)
   {
     if (idx >= paramVector.get_size() || idx < 0){
-      throw 0;
+      throw new 0;
     }
     return paramVector.element_at(idx);
   }

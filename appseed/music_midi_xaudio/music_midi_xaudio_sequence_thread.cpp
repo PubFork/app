@@ -237,7 +237,7 @@ namespace music
 
                /* super merge module      CVmsMusDll::load_string(str, IDS_PREROLLUSERERROR001);
                pme->SetUserText(str);*/
-               throw pme;
+               throw new pme;
             }
 
          }
@@ -261,11 +261,11 @@ namespace music
             }
             catch (exception * pme)
             {
-               throw not_implemented(get_app());
+               throw new not_implemented(get_app());
                /*string str;
                str.load_string(IDS_PREROLLUSERERROR001);
                pme->SetUserText(str);*/
-               throw pme;
+               throw new pme;
             }
 
             //    if(!get_sequence()->IsInSpecialModeV001())

@@ -36,7 +36,7 @@ public:
 
 
    waiter_for_Windows_Foundation_IAsyncOperation(::Windows::Foundation::IAsyncOperation < T > ^ operation, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_operation             = operation;
@@ -122,7 +122,7 @@ public:
 
 
    waiter_for_Windows_Foundation_IAsyncOperationWithProgress(::Windows::Foundation::IAsyncOperationWithProgress < T, T2 > ^ operation, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_operation = operation;
@@ -188,7 +188,7 @@ public:
 
 
    waiter_for_Windows_Foundation_IAsyncAction(::Windows::Foundation::IAsyncAction ^ action, CallbackContext callbackcontext = CallbackContext::Any) :
-      m_event(get_thread_app())
+      m_event(get_app())
    {
 
       m_action                = action;
@@ -307,7 +307,7 @@ inline ::Windows::Foundation::AsyncStatus wait(::Windows::Foundation::IAsyncActi
 //   message_array              ma;
 //   manual_reset_event         m_eventNewMessage;
 //
-//   mq() : m_eventNewMessage(get_thread_app()) {}
+//   mq() : m_eventNewMessage(get_app()) {}
 //
 //
 //

@@ -124,14 +124,16 @@ uint32_t __start_system_with_file(const char ** pszaFile, int iCount)
       if(!bOk)
       {
          
-         if(psystem->m_iReturnCode == 0)
-         {
+         //if(psystem->m_iaErrorCode == 0)
+         //{
             
-            return -1;
+           // return -1;
             
-         }
+         //}
          
-         return psystem->m_iReturnCode;
+         //return psystem->m_iErrorCode;
+         
+         return -1;
          
       }
       

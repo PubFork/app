@@ -881,6 +881,7 @@
 		9A640E6B1EA6BC5800866C2C /* crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E661EA6BC5800866C2C /* crypto.h */; };
 		9A640E6D1EA6BC5800866C2C /* crypto_crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A640E681EA6BC5800866C2C /* crypto_crypto.h */; };
 		9A640E7C1EA6C3D800866C2C /* libaxisidn.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A640E7B1EA6C3D800866C2C /* libaxisidn.dylib */; };
+		9A6795581FCC69DF008591FF /* ios_aura.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6795561FCC69D7008591FF /* ios_aura.cpp */; };
 		9A6FAB1B1F5C6F1300AF31B2 /* compress_department.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB1A1F5C6F1300AF31B2 /* compress_department.cpp */; };
 		9A6FAB241F5C704C00AF31B2 /* zip_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB1C1F5C704C00AF31B2 /* zip_api.cpp */; };
 		9A6FAB251F5C704C00AF31B2 /* zip_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAB1D1F5C704C00AF31B2 /* zip_file.cpp */; };
@@ -1463,7 +1464,6 @@
 		9A6FB0CC1F5C7D5400AF31B2 /* ios_small_ipca_channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC681F5C715B00AF31B2 /* ios_small_ipca_channel.cpp */; };
 		9A6FB0CD1F5C7D5400AF31B2 /* ios_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC691F5C715B00AF31B2 /* ios_time.cpp */; };
 		9A6FB0CE1F5C7D5400AF31B2 /* ios_win_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC6A1F5C715B00AF31B2 /* ios_win_base.cpp */; };
-		9A6FB0CF1F5C7D5400AF31B2 /* ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6FAC6B1F5C715B00AF31B2 /* ios.cpp */; };
 		9A6FB0D11F5C7D5400AF31B2 /* ca_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A05311B4D70B7001C85FF /* ca_os.h */; };
 		9A6FB0D21F5C7D5400AF31B2 /* ca_os_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A05321B4D70B7001C85FF /* ca_os_thread.h */; };
 		9A6FB0D31F5C7D5400AF31B2 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 077A05361B4D70B7001C85FF /* ios.h */; };
@@ -2257,7 +2257,6 @@
 		9AF4C3971F836F8400197385 /* aura_plex_heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */; };
 		9AF4C3981F836F8400197385 /* aura_plex_heap.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C71F836F8200197385 /* aura_plex_heap.h */; };
 		9AF4C3991F836F8400197385 /* aura_plex_heap_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */; };
-		9AF4C39A1F836F8400197385 /* aura_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2C91F836F8200197385 /* aura_pointer.h */; };
 		9AF4C39B1F836F8400197385 /* aura_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CA1F836F8200197385 /* aura_printer.cpp */; };
 		9AF4C39C1F836F8400197385 /* aura_printer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AF4C2CB1F836F8200197385 /* aura_printer.h */; };
 		9AF4C39D1F836F8400197385 /* aura_printf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4C2CC1F836F8200197385 /* aura_printf.cpp */; };
@@ -3228,6 +3227,7 @@
 		9A640E791EA6C2B900866C2C /* user_interactive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user_interactive.cpp; sourceTree = "<group>"; };
 		9A640E7B1EA6C3D800866C2C /* libaxisidn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libaxisidn.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A67166C1D1553BF0069A961 /* ace.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ace.xcodeproj; path = ../ace/ace.xcodeproj; sourceTree = "<group>"; };
+		9A6795561FCC69D7008591FF /* ios_aura.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_aura.cpp; sourceTree = "<group>"; };
 		9A6FAB1A1F5C6F1300AF31B2 /* compress_department.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress_department.cpp; sourceTree = "<group>"; };
 		9A6FAB1C1F5C704C00AF31B2 /* zip_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zip_api.cpp; sourceTree = "<group>"; };
 		9A6FAB1D1F5C704C00AF31B2 /* zip_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zip_file.cpp; sourceTree = "<group>"; };
@@ -3393,7 +3393,6 @@
 		9A6FAC681F5C715B00AF31B2 /* ios_small_ipca_channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_small_ipca_channel.cpp; sourceTree = "<group>"; };
 		9A6FAC691F5C715B00AF31B2 /* ios_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_time.cpp; sourceTree = "<group>"; };
 		9A6FAC6A1F5C715B00AF31B2 /* ios_win_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios_win_base.cpp; sourceTree = "<group>"; };
-		9A6FAC6B1F5C715B00AF31B2 /* ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ios.cpp; sourceTree = "<group>"; };
 		9A6FAC861F5C717B00AF31B2 /* ansios_base_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_base_file.cpp; sourceTree = "<group>"; };
 		9A6FAC871F5C717B00AF31B2 /* ansios_cross_win_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_cross_win_file.cpp; sourceTree = "<group>"; };
 		9A6FAC881F5C717B00AF31B2 /* ansios_cross_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ansios_cross_win.cpp; sourceTree = "<group>"; };
@@ -4336,7 +4335,6 @@
 		9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_plex_heap.cpp; sourceTree = "<group>"; };
 		9AF4C2C71F836F8200197385 /* aura_plex_heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap.h; sourceTree = "<group>"; };
 		9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_plex_heap_impl.h; sourceTree = "<group>"; };
-		9AF4C2C91F836F8200197385 /* aura_pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_pointer.h; sourceTree = "<group>"; };
 		9AF4C2CA1F836F8200197385 /* aura_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_printer.cpp; sourceTree = "<group>"; };
 		9AF4C2CB1F836F8200197385 /* aura_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aura_printer.h; sourceTree = "<group>"; };
 		9AF4C2CC1F836F8200197385 /* aura_printf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aura_printf.cpp; sourceTree = "<group>"; };
@@ -4529,9 +4527,9 @@
 		077A05301B4D70B7001C85FF /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				9A6795561FCC69D7008591FF /* ios_aura.cpp */,
 				077A05311B4D70B7001C85FF /* ca_os.h */,
 				077A05321B4D70B7001C85FF /* ca_os_thread.h */,
-				9A6FAC6B1F5C715B00AF31B2 /* ios.cpp */,
 				077A05361B4D70B7001C85FF /* ios.h */,
 				077A05371B4D70B7001C85FF /* ios_base_internal.h */,
 				9A6FAC561F5C715B00AF31B2 /* ios_base_user.cpp */,
@@ -6887,7 +6885,6 @@
 				9AF4C2C61F836F8200197385 /* aura_plex_heap.cpp */,
 				9AF4C2C71F836F8200197385 /* aura_plex_heap.h */,
 				9AF4C2C81F836F8200197385 /* aura_plex_heap_impl.h */,
-				9AF4C2C91F836F8200197385 /* aura_pointer.h */,
 				9AF4C2CA1F836F8200197385 /* aura_printer.cpp */,
 				9AF4C2CB1F836F8200197385 /* aura_printer.h */,
 				9AF4C2CC1F836F8200197385 /* aura_printf.cpp */,
@@ -7627,7 +7624,6 @@
 				9A02564B1EA593AC003C82CF /* http_listener.h in Headers */,
 				9AF4C33E1F836F8300197385 /* aura_cregexp.h in Headers */,
 				9A6FAC071F5C70D200AF31B2 /* message_receiver.h in Headers */,
-				9AF4C39A1F836F8400197385 /* aura_pointer.h in Headers */,
 				07B0955F18495C2B007A0560 /* str_wtostring.h in Headers */,
 				9A1643AE19C4A4CF00966C5E /* windows_mmsystem.h in Headers */,
 				9A1643B619C4A4CF00966C5E /* windows_pshpack8.h in Headers */,
@@ -8804,6 +8800,7 @@
 				9A9579181F6224AC00623508 /* math_rng.cpp in Sources */,
 				9A9578EB1F6223D300623508 /* file_stdio_file.cpp in Sources */,
 				9A9579431F62250800623508 /* collection_sort.cpp in Sources */,
+				9A6795581FCC69DF008591FF /* ios_aura.cpp in Sources */,
 				9A95794F1F62251C00623508 /* net_net.cpp in Sources */,
 				9A6FB14F1F5C9DF700AF31B2 /* draw2d_font.cpp in Sources */,
 				9A9579071F62249500623508 /* str_sz.cpp in Sources */,
@@ -8904,7 +8901,6 @@
 				9A9578D21F6223D300623508 /* file_dir2.cpp in Sources */,
 				9A9578D31F6223D300623508 /* file_edit_file.cpp in Sources */,
 				9A9578C41F62238B00623508 /* filesystem_dir_application.cpp in Sources */,
-				9A6FB0CF1F5C7D5400AF31B2 /* ios.cpp in Sources */,
 				9A6FB0BF1F5C7D5400AF31B2 /* ios_error.cpp in Sources */,
 				07703C341B6FDF2D009026EA /* ios_mm.mm in Sources */,
 				9A9578D71F6223D300623508 /* file_file_ostream.cpp in Sources */,

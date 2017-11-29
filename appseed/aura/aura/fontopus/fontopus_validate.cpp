@@ -250,7 +250,7 @@ namespace fontopus
          if(strResult == "cancel")
          {
 
-            throw cancel_exception(get_app(),"User canceled login.");
+            throw new cancel_exception(get_app(),"User canceled login.");
 
          }
 
@@ -598,7 +598,8 @@ namespace fontopus
       return true;
    }
 
-   int32_t login_thread::run()
+   
+   void login_thread::run()
    {
 
       int iRetryLogin = 0;

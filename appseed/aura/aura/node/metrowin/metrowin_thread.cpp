@@ -917,7 +917,7 @@ namespace core
 ////         if(on_run_exception((::exception::exception &) e))
 ////            return TRUE;
 ////         // get_app() may be it self, it is ok...
-////         if(App(get_app()).final_handle_exception((::exception::exception & ) e))
+////         if(Application.final_handle_exception((::exception::exception & ) e))
 ////            return TRUE;
 ////         return FALSE;
 ////      }
@@ -1031,7 +1031,7 @@ namespace core
 ////               catch( ::exception::aura * )
 ////               {
 ////                  //__enable_memory_tracking(bEnable);
-////                  throw;
+////                  throw new;
 ////               }
 ////               //__enable_memory_tracking(bEnable);
 ////            }
@@ -1132,7 +1132,7 @@ namespace core
 ////   void thread::set_priority(int priority)
 ////   {
 ////      if ( ::SetThreadPriority(m_hThread, priority) == 0)
-////         throw runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
+////         throw new runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
 ////   }
 ////
 ////   ///  \brief		gets thread priority
@@ -1325,9 +1325,9 @@ namespace core
 //////ASSERT(pThreadClass != NULL);
 //////ASSERT(pThreadClass->IsDerivedFrom(System.template type_info < thread > ()));
 //////
-//////thread* pThread = dynamic_cast < thread * > (App(get_app()).alloc(pThreadClass));
+//////thread* pThread = dynamic_cast < thread * > (Application.alloc(pThreadClass));
 //////if (pThread == NULL)
-//////throw memory_exception();
+//////throw new memory_exception();
 //////ASSERT_VALID(pThread);
 //////
 //////pThread->m_pThreadParams = NULL;
@@ -1510,7 +1510,7 @@ namespace core
 //////if(on_run_exception((::exception::exception &) e))
 //////return TRUE;
 //////// get_app() may be it self, it is ok...
-//////if(App(get_app()).final_handle_exception((::exception::exception & ) e))
+//////if(Application.final_handle_exception((::exception::exception & ) e))
 //////return TRUE;
 //////return FALSE;
 //////}

@@ -162,7 +162,7 @@ namespace user
       catch (...)
       {
 
-         throw simple_exception(::get_thread_app(), "no more a window");
+         throw new simple_exception(get_app(), "no more a window");
 
       }
 

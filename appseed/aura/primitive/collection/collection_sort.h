@@ -1267,7 +1267,7 @@ namespace sort
 
          // minimum check
          if(ia.get_size() != a.get_size())
-            throw invalid_argument_exception(::get_thread_app());
+            throw new invalid_argument_exception(get_app());
 
          index_array stackLowerBound;
          index_array stackUpperBound;

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace install
@@ -19,12 +19,12 @@ namespace install
       string               m_strLastGlsStatus;
       int32_t              m_iLastStatus;
       int32_t              m_iLastGlsStatus;
-
-
+      
+      
       trace(::aura::application * papp);
       virtual ~trace();
 
-
+      
       bool initialize();
 
       void finalize();
@@ -48,28 +48,28 @@ namespace install
 
 
 
-   class CLASS_DECL_AURA trace_file :
-      virtual public ::object
-   {
-   public:
+      class CLASS_DECL_AURA trace_file :
+         virtual public ::object
+      {
+      public:
 
 
-      string            m_strLabel;
-      ::mutex           m_mutex;
-      synch_lock        m_sl;
+         string            m_strLabel;
+         ::mutex           m_mutex;
+         synch_lock        m_sl;
 
-      ::file::file_sp   m_pfile;
-
-
-      trace_file(::aura::application * papp, const string & strLabel);
-      ~trace_file();
+         ::file::file_sp   m_pfile;
 
 
-      void print(const string & str);
-      void print(double dRate);
+         trace_file(::aura::application * papp, const string & strLabel);
+         ~trace_file();
 
 
-   };
+         void print(const string & str);
+         void print(double dRate);
+
+
+      };
 
 
 

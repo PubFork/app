@@ -136,10 +136,10 @@ namespace core
    }
 
 
-   bool application::is_uninstalling()
+   bool application::is_unstalling()
    {
 
-      return ::base::application::is_uninstalling();
+      return ::base::application::is_unstalling();
 
    }
 
@@ -169,12 +169,12 @@ namespace core
    }
 
 
-   bool application::process_initialize()
+   bool application::process_init()
    {
 
       thisinfo << "start";
 
-      if (!::base::application::process_initialize())
+      if (!::base::application::process_init())
       {
 
          thiserr << "end failure (1)";
@@ -202,12 +202,12 @@ namespace core
 
 
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
       thisstart;
 
-      if (!::base::application::initialize1())
+      if (!::base::application::init1())
       {
 
          thiserr << "end failure (1)";
@@ -247,7 +247,7 @@ namespace core
       }
 
 
-      if (!is_system() && !is_session() && !is_installing() && !is_uninstalling())
+      if (!is_system() && !is_session() && !is_installing() && !is_unstalling())
       {
 
          string str;
@@ -343,9 +343,9 @@ namespace core
       }
 
 
-      /*if(!m_spuser->initialize1())
+      /*if(!m_spuser->init1())
       return false;
-      if(!m_spuser->initialize2())
+      if(!m_spuser->init2())
       return false;*/
 
 
@@ -356,10 +356,10 @@ namespace core
    }
 
 
-   bool application::initialize2()
+   bool application::init2()
    {
 
-      if (!::base::application::initialize2())
+      if (!::base::application::init2())
          return false;
 
       return true;
@@ -367,10 +367,10 @@ namespace core
    }
 
 
-   bool application::initialize3()
+   bool application::init3()
    {
 
-      if (!::base::application::initialize3())
+      if (!::base::application::init3())
          return false;
 
       return true;
@@ -408,7 +408,7 @@ namespace core
    }
    */
 
-   bool application::initialize_application()
+   bool application::init_application()
    {
 
 #ifdef DEBUG
@@ -432,7 +432,7 @@ namespace core
 
       //}
 
-      if (!::base::application::initialize_application())
+      if (!::base::application::init_application())
       {
 
          thisfail << 1;
@@ -571,7 +571,7 @@ namespace core
       {
       }
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
 
    }
@@ -1241,9 +1241,9 @@ namespace core
    }
 
    // This function is not exception safe - will leak a registry key if exceptions are thrown from some places
-   // To reduce risk of leaks, I've declared the whole function throw(). This despite the fact that its callers have
+   // To reduce risk of leaks, I've declared the whole function NOTHROW. This despite the fact that its callers have
    // no dependency on non-throwing.
-   bool application::_LoadSysPolicies() throw()
+   bool application::_LoadSysPolicies() NOTHROW
    {
 
 #ifdef WINDOWSEX
@@ -1637,7 +1637,7 @@ namespace core
       {
 
          // get_app() may be it self, it is ok...
-         if (Sys(get_app()).final_handle_exception((::exception::exception &) e))
+         if (System.final_handle_exception((::exception::exception &) e))
             return true;
 
 
@@ -1976,7 +1976,7 @@ namespace core
    int32_t application::ShowAppMessageBox(sp(application)pApp, const char * lpszPrompt, UINT nType, UINT nIDPrompt)
    {
 
-      throw not_implemented(pApp);
+      throw new not_implemented(pApp);
 
    }
 
@@ -2547,7 +2547,7 @@ namespace core
    ::window_sp application::get_desktop_window()
    {
 #if defined(METROWIN) || defined(APPLEOS)
-      throw todo(this);
+      throw new todo(this);
       /*#elif defined(LINUX)
 
       //      synch_lock sl(&user_mutex());
@@ -2952,10 +2952,10 @@ namespace core
       return true;
    }
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
 
-      bool bOk = ::base::application::on_uninstall();
+      bool bOk = ::base::application::on_unstall();
 
       string strId = m_strId;
       char chFirst = '\0';
@@ -3154,7 +3154,7 @@ namespace core
       cds.lpData = (PVOID)psz;
       return (int32_t)SendMessage(oswindow, WM_COPYDATA, (WPARAM)osdataSender, (LPARAM)&cds);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -3174,7 +3174,7 @@ namespace core
 
 #else
 
-      //throw todo(get_app());
+      //throw new todo(get_app());
 
 #endif
 
@@ -3272,14 +3272,14 @@ namespace core
    catch(const ::exit_exception & e)
    {
 
-   throw e;
+   throw new e;
 
    }
    catch(const ::exception::exception & e)
    {
 
    if(!Application.on_run_exception((::exception::exception &) e))
-   throw exit_exception(get_app());
+   throw new exit_exception(get_app());
 
    }
    catch(...)
@@ -3613,7 +3613,7 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
          {
             DWORD dwLastError = GetLastError();
 
-            //            APPTRACE(::get_thread_app())("%d", dwLastError);
+            //            APPTRACE(get_app())("%d", dwLastError);
          }
       }
 

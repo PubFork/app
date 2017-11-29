@@ -19,7 +19,7 @@ namespace xml
       department(::aura::application * papp);
       virtual ~department();
 
-      virtual bool initialize1();
+      virtual bool init1();
 
       virtual bool initialize();
 

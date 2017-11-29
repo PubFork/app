@@ -249,7 +249,7 @@ restart:
          if (!System.dir().is(str, papp))
          {
 
-            throw "time square dir does not exist";
+            throw new "time square dir does not exist";
 
          }
 
@@ -752,7 +752,7 @@ restart:
          if (filesize > ::numeric_info < memory_size_t> ::max())
          {
 
-            throw memory_exception(papp);
+            throw new memory_exception(papp);
 
          }
 
@@ -1075,7 +1075,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open output file", psz, pszNew, bFailIfExists);
-            throw strError;
+            throw new strError;
          }
 
          ::file::file_sp ifile;
@@ -1084,7 +1084,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open input file", psz, pszNew, bFailIfExists);
-            throw strError;
+            throw new strError;
          }
 
          ::file::ostream ostream(ofile);
@@ -1163,20 +1163,20 @@ restart:
             {
                string strError;
                strError.Format("During copy, failed to close both input file \"%s\" and output file \"%s\" bFailIfExists=%d", psz, pszNew, bFailIfExists);
-               throw strError;
+               throw new strError;
             }
             else
             {
                string strError;
                strError.Format("During copy, failed to close input file \"%s\" bFailIfExists=%d", psz, bFailIfExists);
-               throw strError;
+               throw new strError;
             }
          }
          else if (bOutputFail)
          {
             string strError;
             strError.Format("During copy, failed to close output file \"%s\" bFailIfExists=%d", pszNew, bFailIfExists);
-            throw strError;
+            throw new strError;
          }
 
       }
@@ -1241,7 +1241,7 @@ restart:
 
          strError.Format("Failed to move file \"%s\" to \"%s\" error=%d", psz, pszNew, dwError);
 
-         throw strError;
+         throw new strError;
 
       }
 
@@ -1254,7 +1254,7 @@ restart:
 
          output_debug_string("test");
 
-         throw "file::system::move Could not move file, could not open source file";
+         throw new "file::system::move Could not move file, could not open source file";
 
       }
 
@@ -1294,7 +1294,7 @@ restart:
          int32_t err = errno;
          string strError;
          strError.Format("Failed to delete file error=%d", err);
-         throw strError;
+         throw new strError;
       }
 #endif
 
@@ -1341,7 +1341,7 @@ restart:
       return;
       string strError;
       strError.Format("Failed to delete file \"%s\" error=%d", psz, dwError);
-      throw io_exception(papp, strError);
+      throw new io_exception(papp, strError);
       }*/
 
 
@@ -1354,7 +1354,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to delete file error=%d", err);
-            throw strError;
+            throw new strError;
          }
       }
 #endif
@@ -1481,7 +1481,7 @@ restart:
 
       UNREFERENCED_PARAMETER(path);
       UNREFERENCED_PARAMETER(status);
-      throw interface_only_exception(papp);
+      throw new interface_only_exception(papp);
 
    }
 
@@ -1491,7 +1491,7 @@ restart:
 
       UNREFERENCED_PARAMETER(path);
       UNREFERENCED_PARAMETER(status);
-      throw interface_only_exception(papp);
+      throw new interface_only_exception(papp);
 
    }
 
@@ -1547,7 +1547,7 @@ restart:
 
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #else
 
@@ -1624,7 +1624,7 @@ restart:
       ::file::file_sp fileOut = App(papp).file().get_file(name, ::file::mode_create | ::file::type_binary | ::file::mode_write);
 
       if(fileOut.is_null())
-         throw ::file::exception(papp, ::file::exception::none,-1L, name);
+         throw new ::file::exception(papp, ::file::exception::none,-1L, name);
 
       return fileOut;
 
@@ -1732,7 +1732,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_create | ::file::mode_write | ::file::type_binary);
 
       if (spfile.is_null())
-         throw "failed";
+         throw new "failed";
 
       string strVersion;
 
@@ -1770,7 +1770,7 @@ restart:
          string strRelative = stra[i].relative();
          write_gen_string(spfile, &ctx, strRelative);
          if (file2->open(stra[i], ::file::mode_read | ::file::type_binary).failed())
-            throw "failed";
+            throw new "failed";
          write_n_number(spfile, &ctx, (int32_t)file2->get_length());
          while ((uiRead = file2->read(buf, iBufSize)) > 0)
          {
@@ -1797,7 +1797,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_read | ::file::type_binary);
 
       if (spfile.is_null())
-         throw "failed";
+         throw new "failed";
 
       read_gen_string(spfile, NULL, strVersion);
 
@@ -1826,7 +1826,7 @@ restart:
             ::file::path strPath = ::file::path(pszDir) / strRelative;
             App(papp).dir().mk(strPath.folder());
             if (file2->open(strPath, ::file::mode_create | ::file::type_binary | ::file::mode_write).failed())
-               throw "failed";
+               throw new "failed";
             read_n_number(spfile, &ctx, iLen);
             while (iLen > 0)
             {
@@ -1840,7 +1840,7 @@ restart:
             file2->close();
             strMd5New = ::str::from(ctx);
             if (strMd5 != strMd5New)
-               throw "failed";
+               throw new "failed";
          }
       }
 
@@ -1892,7 +1892,7 @@ restart:
       }
 
       if (ch != 'n')
-         throw "failed";
+         throw new "failed";
 
       if (pctx != NULL)
       {
@@ -2063,7 +2063,7 @@ restart:
    bool system::get_last_write_time(FILETIME * pfiletime,const string & strFilename)
    {
 
-      throw interface_only_exception(get_app());
+      throw new interface_only_exception(get_app());
 
    }
 

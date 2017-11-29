@@ -18,7 +18,7 @@ namespace file
 
 
       ostream();
-      ostream(const char * lpszFileName, uint32_t nOpenFlags, ::aura::application * papp = ::get_thread_app());
+      ostream(const char * lpszFileName, uint32_t nOpenFlags, ::aura::application * papp = ::get_app());
       ostream(file * pwriter);
       ostream(const ostream & pwriter);
       virtual ~ostream();

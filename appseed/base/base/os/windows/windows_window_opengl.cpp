@@ -66,7 +66,7 @@ void window_opengl::destroy_window_graphics()
       if (!bOk)
       {
 
-         throw simple_exception(get_app(), "failed to composite");;
+         throw new simple_exception(get_app(), "failed to composite");;
 
       }
 

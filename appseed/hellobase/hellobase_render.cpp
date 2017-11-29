@@ -495,7 +495,7 @@ namespace hellobase
 //
 //                  m_dib->map();
 //
-//                  System.visual().imaging().spread(m_dib->get_graphics(), ::null_point(), m_dib->get_size(), m_dib->get_graphics(), null_point(), int (m_dMaxRadius));
+//                  Application.imaging().spread(m_dib->get_graphics(), ::null_point(), m_dib->get_size(), m_dib->get_graphics(), null_point(), int (m_dMaxRadius));
 //
 //                  m_dib.blur();
 //
@@ -568,7 +568,7 @@ namespace hellobase
 //
 //      pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
 //
-//      System.visual().imaging().bitmap_blend(pgraphics,
+//      Application.imaging().bitmap_blend(pgraphics,
 //                                             point((m_cx - m_dibTemplate2->m_size.cx) / 2, (m_cy - m_dibTemplate2->m_size.cy) / 2)
 //                                             , m_dibTemplate2->m_size,
 //                                             m_dibTemplate2->get_graphics(), null_point(), byte (128 + (255 - 128) * r));
@@ -1055,7 +1055,7 @@ namespace hellobase
 
       //               dib.defer_update();
 
-      //               System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), 255 - uchAlpha);
+      //               Application.imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), 255 - uchAlpha);
 
       //            }
 
@@ -1073,7 +1073,7 @@ namespace hellobase
 
       //               dib.defer_update();
 
-      //               System.visual().imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), uchAlpha);
+      //               Application.imaging().bitmap_blend(pgraphics, null_point(), dib->get_size(), dib->get_graphics(), null_point(), uchAlpha);
 
       //            }
 
@@ -1250,9 +1250,9 @@ namespace hellobase
 
       //   uchAlpha = byte(MAX(0, MIN(255, (::get_tick_count() - m_dwLastOk) * 255 / m_dwAnime)));
 
-      //   System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), uchAlpha);
+      //   Application.imaging().bitmap_blend(pgraphics, null_point(), pdib->get_size(), pdib->get_graphics(), null_point(), uchAlpha);
 
-      //   System.visual().imaging().bitmap_blend(pgraphics, null_point(), pdibFast->get_size(), pdibFast->get_graphics(), null_point(), 255 - uchAlpha);
+      //   Application.imaging().bitmap_blend(pgraphics, null_point(), pdibFast->get_size(), pdibFast->get_graphics(), null_point(), 255 - uchAlpha);
 
       //}
       //else
@@ -1288,7 +1288,7 @@ namespace hellobase
    //         if (!m_mapDib23[strImage].load_from_file(strImage, true, true))
    //         {
 
-   //            throw simple_exception(get_app(), "Failed to load \"" + strImage + "\"");
+   //            throw new simple_exception(get_app(), "Failed to load \"" + strImage + "\"");
 
    //         }
 

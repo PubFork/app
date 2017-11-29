@@ -556,7 +556,7 @@ namespace user
             COLORREF crTranslucid = RGB(0,0,0);
             ::rect r = pdrawitem->m_rectItem;
             r.inflate(8,0,8,-1);
-            System.visual().imaging().color_blend(pdrawitem->m_pgraphics,r,crTranslucid,127);
+            Application.imaging().color_blend(pdrawitem->m_pgraphics,r,crTranslucid,127);
          }
       }
 
@@ -2045,7 +2045,7 @@ namespace user
          return_(pdrawitem->m_bOk,true);
 
          //return;
-         //throw "subitem rectangle on icon view? why are you asking for that now?";
+         //throw new "subitem rectangle on icon view? why are you asking for that now?";
       }
 
       pdrawitem->m_bOk = false;
@@ -4623,7 +4623,7 @@ namespace user
 
       return (int32_t)cx;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -6149,11 +6149,13 @@ namespace user
             dib->get_graphics()->SelectObject(m_pfont);
             dib->get_graphics()->_DrawText(m_strText,rectCache,m_iDrawTextFlags);
 
-            Sys(m_pmesh->get_app()).visual().imaging().channel_spread_set_color(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,2,ARGB(184,184,184,184));
+            ::aura::application * m_pauraapp = m_pmesh->get_app();
+
+            System.visual().imaging().channel_spread_set_color(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,2,ARGB(184,184,184,184));
             dib->Fill(0,0,0,0);
-            Sys(m_pmesh->get_app()).visual().imaging().channel_alpha_gray_blur(dib->get_graphics(),null_point(),size,dib2->get_graphics(),null_point(),0,1);
+            System.visual().imaging().channel_alpha_gray_blur(dib->get_graphics(),null_point(),size,dib2->get_graphics(),null_point(),0,1);
             dib2->Fill(0,0,0,0);
-            Sys(m_pmesh->get_app()).visual().imaging().channel_alpha_gray_blur(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,1);
+            System.visual().imaging().channel_alpha_gray_blur(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,1);
             dib2->set(0,0,0);
 
 

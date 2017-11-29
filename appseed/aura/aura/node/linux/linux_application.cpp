@@ -68,7 +68,7 @@ namespace aura
    {
    return "";
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 /*      char lpszModuleFilePath[MAX_PATH + 1];
       GetModuleFileName(NULL, lpszModuleFilePath, MAX_PATH + 1);
@@ -199,7 +199,7 @@ namespace aura
       //m_pimpl->m_bRun = false;
       //LNX_THREAD(m_pimpl->::thread_sp::m_p)->m_bRun = false;
 
-      //int32_t iRet = ::aura::application::exit_application();
+      //int32_t iRet = ::aura::application::term_instance();
 
       //::ca2::smart_pointer<::ca2::application>::destroy();
 
@@ -313,13 +313,13 @@ namespace aura
 //      DWORD dwRet = ::GetModuleFileName(m_hInstance, szBuff, _MAX_PATH);
 //      ASSERT( dwRet != 0 && dwRet != _MAX_PATH );
 //      if( dwRet == 0 || dwRet == _MAX_PATH )
-//         throw aura_exception();*/
+//         throw new aura_exception();*/
 //
 //      /*
 //      LPTSTR lpszExt = ::PathFindExtension(szBuff);
 //      ASSERT(lpszExt != NULL);
 //      if( lpszExt == NULL )
-//         throw aura_exception();
+//         throw new aura_exception();
 //
 //      ASSERT(*lpszExt == '.');
 //      *lpszExt = 0;       // no suffix

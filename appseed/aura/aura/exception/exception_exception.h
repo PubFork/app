@@ -37,8 +37,7 @@ namespace exception
       const char * cat_exception(const char * pszException);
       const char * set_file(const char * pszFile);
 
-      virtual const char * what () const throw ();
-
+      virtual const char * what () const NOTHROW;
 
    };
 
@@ -104,20 +103,24 @@ namespace exception
             m_p->add_ref();
          }
       }
-#if defined(__GNUC__) // weak
-      template < typename T >
-      result_sp(sp(T) t)
-      {
-         exception * pexception = t.template cast < exception >();
-         if(pexception == NULL)
-            throw "smart pointer is not exception";
-         m_p = canew(result({pexception}));
-         if(m_p != NULL)
-         {
-            m_p->add_ref();
-         }
-      }
-#endif
+//#if defined(__GNUC__) // weak
+//      template < typename T >
+//      result_sp(sp(T) t)
+//      {
+//         exception * pexception = t.template cast < exception >();
+//         if(pexception == NULL)
+//         {
+//            
+//            throw new simple_exception(get_app(), "smart pointer is not exception");
+//            
+//         }
+//         m_p = canew(result({pexception}));
+//         if(m_p != NULL)
+//         {
+//            m_p->add_ref();
+//         }
+//      }
+//#endif
       ~result_sp()
       {
          release();

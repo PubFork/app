@@ -82,11 +82,11 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResul
 
    ASSERT( pResult != NULL );
    if( pResult == NULL )
-      throw invalid_argument_exception(::get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    ASSERT( szMsg != NULL );
    if( szMsg == NULL )
-      throw invalid_argument_exception(::get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    // non-NULL m_pFile, so go through ::aura::system::g_p->m_pdumpcontext for the message
    *pResult = FALSE;

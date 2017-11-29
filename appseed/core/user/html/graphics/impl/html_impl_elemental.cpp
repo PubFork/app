@@ -668,7 +668,7 @@ namespace html
                if (m_pelemental->get_color(cr, ::user::color_background, pdata->m_pform))
                {
 
-                  Sys(pdata->get_app()).visual().imaging().color_blend(pgraphics, rect, cr, MAX(0, MIN(255, (BYTE)(d * 255))));
+                  App(pdata->get_app()).imaging().color_blend(pgraphics, rect, cr, MAX(0, MIN(255, (BYTE)(d * 255))));
 
                }
 

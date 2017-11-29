@@ -822,7 +822,7 @@ void __clear_mq()
 
 
 mq::mq():
-   m_eventNewMessage(get_thread_app())
+   m_eventNewMessage(get_app())
 {
 
    m_eventNewMessage.ResetEvent();

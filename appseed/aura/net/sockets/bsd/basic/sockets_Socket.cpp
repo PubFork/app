@@ -99,7 +99,7 @@ namespace sockets
       //   Handler().AddList(m_socket, LIST_CLOSE, false);
       //}
       m_socket = INVALID_SOCKET;
-      //throw n;
+      //throw new n;
    }
 
 
@@ -147,7 +147,7 @@ namespace sockets
 
                SetCloseAndDelete();
 
-               throw simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno));
+               throw new simple_exception(get_app(), string("getprotobyname() failed: ") + bsd_socket_error(Errno));
 
                return INVALID_SOCKET;
 
@@ -174,7 +174,7 @@ namespace sockets
          log("socket", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
 #endif
          SetCloseAndDelete();
-         throw simple_exception(get_app(), string("socket() failed: ") + bsd_socket_error(Errno));
+         throw new simple_exception(get_app(), string("socket() failed: ") + bsd_socket_error(Errno));
          return INVALID_SOCKET;
       }
       attach(s);
@@ -257,7 +257,7 @@ namespace sockets
       socklen_t nLengthAddr = sizeof(SOCKADDR);
       if (getpeername(GetSocket(), psa.sa(), &nLengthAddr) == SOCKET_ERROR)
       {
-         throw transfer_socket_exception(get_app(), _T("GetPeerName"));
+         throw new transfer_socket_exception(get_app(), _T("GetPeerName"));
       }
       return psa;
    }
@@ -272,7 +272,7 @@ namespace sockets
       socklen_t nLengthAddr = sizeof(SOCKADDR);
       if (getsockname(GetSocket(), psa.sa(), &nLengthAddr) == SOCKET_ERROR)
       {
-         throw transfer_socket_exception(get_app(), _T("GetSockName"));
+         throw new transfer_socket_exception(get_app(), _T("GetSockName"));
       }
       return psa;
    }

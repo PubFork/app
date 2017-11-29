@@ -22,7 +22,7 @@ namespace user
          virtual ~job();
 
 
-         virtual int32_t run() = 0;
+         virtual void run() = 0;
 
    };
 

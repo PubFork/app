@@ -40,7 +40,7 @@ call_stack::call_stack(::aura::application * papp, uint32_t uiSkip) :
    if (m_pauraapp == NULL)
    {
 
-      m_pauraapp = get_thread_app();
+      m_pauraapp = get_app();
 
    }
 

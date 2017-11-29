@@ -6,13 +6,13 @@ namespace xml
 
 
    document::document(::aura::application * papp, parse_info * pparseinfo) :
-      object(papp != NULL ? papp : get_thread_app()),
-      node(papp != NULL ? papp : get_thread_app()),
-      data(papp != NULL ? papp : get_thread_app())
+      object(papp != NULL ? papp : get_app()),
+      node(papp != NULL ? papp : get_app()),
+      data(papp != NULL ? papp : get_app())
    {
 
       m_pdoc         = this;
-      m_pparseinfo   = pparseinfo != NULL ? pparseinfo : Sys(get_app()).xml().m_pparseinfoDefault;
+      m_pparseinfo   = pparseinfo != NULL ? pparseinfo : System.xml().m_pparseinfoDefault;
       m_pedit        = NULL;
 
       entitiesHash.set_at("lt", "<");
@@ -152,7 +152,7 @@ namespace xml
       }
       if(ent.is_empty() && extEnt.is_empty())
       {
-         throw "Undefined Entity Reference";
+         throw new "Undefined Entity Reference";
       }
       if(ent.has_char())
       {
@@ -197,7 +197,7 @@ namespace xml
          }
          else
          {
-            throw "pointer to be offset cannot lie inside the entity ref";
+            throw new "pointer to be offset cannot lie inside the entity ref";
          }
       }
       va_end(ptr);
@@ -212,7 +212,7 @@ namespace xml
 
 
       if(pedit == NULL)
-         throw simple_exception(get_app(), "edit exception");
+         throw new simple_exception(get_app(), "edit exception");
 
 
       sp(::xml::node) pnode;

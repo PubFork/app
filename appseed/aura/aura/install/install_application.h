@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace install
@@ -55,9 +55,9 @@ namespace install
       virtual ~application();
 
 
-      virtual bool start_instance() override;
+      virtual bool init_instance() override;
 
-      virtual int32_t exit_application() override;
+      virtual void term_instance() override;
 
       virtual void on_request(::create * pcreate) override;
 
@@ -71,7 +71,7 @@ namespace install
       void install_set_id(const char * psz);
 
 
-      virtual int app_app_main();
+      virtual void app_app_main();
       virtual int start_app_app(string strPlatform);
 
       virtual bool install_get_admin() override;

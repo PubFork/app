@@ -32,7 +32,7 @@ namespace draw2d_quartz2d
       if(nPlanes != 1 || nBitcount != 32)
       {
          
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
          
       }
       

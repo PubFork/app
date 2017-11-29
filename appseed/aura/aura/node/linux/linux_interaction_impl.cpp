@@ -2682,7 +2682,7 @@ return 0;
       // check if in permanent ::collection::map, if it is reflect it (could be OLE control)
       sp(::interaction_impl) pWnd =  (pMap->lookup_permanent(hWndChild)); */
 
-      throw todo(get_thread_app());
+      throw new todo(get_app());
 //      sp(::user::interaction) pWnd =  (FromHandlePermanent(hWndChild));
 //      ASSERT(pWnd == NULL || pWnd->get_handle() == hWndChild);
 //      if (pWnd == NULL)
@@ -2844,7 +2844,7 @@ return 0;
    LRESULT interaction_impl::OnDragList(WPARAM, LPARAM lparam)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //
 //      LPDRAGLISTINFO lpInfo = (LPDRAGLISTINFO)lparam;
 //      ASSERT(lpInfo != NULL);
@@ -2928,7 +2928,7 @@ return 0;
 
    void interaction_impl::get_app_wnda(user::oswindow_array & wnda)
    {
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
 
@@ -2972,7 +2972,7 @@ return 0;
          try
          {
             HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
-            throw not_implemented(pprintwindow->get_app());
+            throw new not_implemented(pprintwindow->get_app());
 /*            ::PrintWindow(pprintwindow->m_hwnd, pprintwindow->m_hdc, 0);
             ::SetEvent(hevent);*/
          }
@@ -3007,14 +3007,14 @@ return 0;
       HRGN rgnIntersect;
       HRGN rgnUpdate = NULL;
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 /*
       rgnWindow = CreateRectRgn(0, 0, 0, 0);
       rgnIntersect = CreateRectRgn(0, 0, 0, 0);
 */
       //      int32_t iCount = wndaApp.get_count();
 
-throw not_implemented(get_app());
+throw new not_implemented(get_app());
 //      try
 //      {
 //
@@ -3195,7 +3195,7 @@ throw not_implemented(get_app());
       // that only one was really sent and dispatched.
       {
          MESSAGE msg;
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
          //while (PeekMessage(&msg, NULL, WM_ENTERIDLE, WM_ENTERIDLE, PM_REMOVE))
          //while (PeekMessage(&msg, NULL, WM_ENTERIDLE, WM_ENTERIDLE, TRUE))
            // DispatchMessage(&msg);
@@ -3206,7 +3206,7 @@ throw not_implemented(get_app());
 
    HBRUSH interaction_impl::OnCtlColor(::draw2d::graphics *, ::user::interaction * pWnd, UINT)
    {
-   throw todo(get_app());
+   throw new todo(get_app());
 //      ASSERT(pWnd != NULL && pWnd->get_handle() != NULL);
 //      LRESULT lResult;
 //      if (pWnd->SendChildNotifyLastMsg(&lResult))
@@ -3222,7 +3222,7 @@ throw not_implemented(get_app());
    bool PASCAL interaction_impl::GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
       HBRUSH hbrGray, COLORREF clrText)
    {
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      if (hDC == NULL)
 //      {
 //         // sometimes Win32 passes a NULL hDC in the WM_CTLCOLOR message.
@@ -3302,7 +3302,7 @@ throw not_implemented(get_app());
 
    void interaction_impl::CenterWindow(::user::interaction * pAlternateOwner)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //
 //      // determine owner interaction_impl to center against
@@ -3428,7 +3428,7 @@ throw not_implemented(get_app());
       // cleanup
       if (lpResource != NULL && hResource != NULL)
       {
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
 //         UnlockResource(hResource);
 //         FreeResource(hResource);
       }
@@ -3437,7 +3437,7 @@ throw not_implemented(get_app());
 
    bool interaction_impl::ExecuteDlgInit(LPVOID lpResource)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      bool bSuccess = TRUE;
 //      if (lpResource != NULL)
 //      {
@@ -3583,7 +3583,7 @@ throw not_implemented(get_app());
       // allow any other subclassing to occur
       pre_subclass_window();
 
-throw not_implemented(get_app());
+throw new not_implemented(get_app());
 //      m_pfnSuper = (WNDPROC)::GetWindowLongPtr(hWnd, GWLP_WNDPROC);
 
       // now hook into the AFX WndProc
@@ -3629,7 +3629,7 @@ throw not_implemented(get_app());
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      // set WNDPROC back to original value
 //      WNDPROC* lplpfn = GetSuperWndProcaddr();
 //      SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
@@ -4276,7 +4276,7 @@ m_pui->SetOwner((pOwnerWnd));
    bool interaction_impl::DragDetect(POINT pt) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
 
       //return ::DragDetect(get_handle(), pt) != FALSE;
@@ -4309,7 +4309,7 @@ m_pui->SetOwner((pOwnerWnd));
 //   strsize interaction_impl::GetWindowTextLength()
 //   {
 //
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      //ASSERT(::IsWindow((oswindow) get_handle()));
 //
 //      //return ::GetWindowTextLength(get_handle());
@@ -4341,7 +4341,7 @@ m_pui->SetOwner((pOwnerWnd));
    void interaction_impl::DragAcceptFiles(bool bAccept)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::DragAcceptFiles(get_handle(), bAccept);
@@ -4384,7 +4384,7 @@ m_pui->SetOwner((pOwnerWnd));
    UINT interaction_impl::ArrangeIconicWindows()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
 
@@ -4397,7 +4397,7 @@ m_pui->SetOwner((pOwnerWnd));
    UNREFERENCED_PARAMETER(hRgn);
    UNREFERENCED_PARAMETER(bRedraw);
 
-      //throw not_implemented(get_app());
+      //throw new not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
 
@@ -4407,7 +4407,7 @@ m_pui->SetOwner((pOwnerWnd));
    int32_t interaction_impl::GetWindowRgn(HRGN hRgn)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
 
@@ -4417,7 +4417,7 @@ m_pui->SetOwner((pOwnerWnd));
    bool interaction_impl::BringWindowToTop()
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      return ::BringWindowToTop(get_handle()) != FALSE;
 
    }
@@ -4426,7 +4426,7 @@ m_pui->SetOwner((pOwnerWnd));
    void interaction_impl::MapWindowPoints(::user::interaction * pwndTo, LPPOINT lpPoint, UINT nCount)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), lpPoint, nCount);
@@ -4437,7 +4437,7 @@ m_pui->SetOwner((pOwnerWnd));
    void interaction_impl::MapWindowPoints(::user::interaction * pwndTo, LPRECT lpRect)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
@@ -4525,62 +4525,62 @@ if(psurface == g_cairosurface)
 
    void interaction_impl::UpdateWindow()
    {
-      //throw not_implemented(get_app());
+      //throw new not_implemented(get_app());
       //::UpdateWindow(get_handle());
    }
 
    void interaction_impl::SetRedraw(bool bRedraw)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::SendMessage(get_handle(), WM_SETREDRAW, bRedraw, 0);
    }
 
    bool interaction_impl::GetUpdateRect(LPRECT lpRect, bool bErase)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE;
    }
 
    int32_t interaction_impl::GetUpdateRgn(draw2d::region * pRgn, bool bErase)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::Invalidate(bool bErase)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), NULL, bErase);
    }
 
    void interaction_impl::InvalidateRect(LPCRECT lpRect, bool bErase)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::InvalidateRect(get_handle(), lpRect, bErase);
    }
 
    void interaction_impl::InvalidateRgn(::draw2d::region* pRgn, bool bErase)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::InvalidateRgn(get_handle(), (HRGN)pRgn->get_handle(), bErase);
    }
 
    void interaction_impl::ValidateRect(LPCRECT lpRect)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::ValidateRect(get_handle(), lpRect);
    }
 
    void interaction_impl::ValidateRgn(::draw2d::region* pRgn)
    {
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::ValidateRgn(get_handle(), (HRGN)pRgn->get_handle());
    }
@@ -4616,7 +4616,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::ShowOwnedPopups(bool bShow)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::ShowOwnedPopups(get_handle(), bShow);
 
@@ -4671,7 +4671,7 @@ if(psurface == g_cairosurface)
    ::draw2d::graphics * interaction_impl::GetDCEx(::draw2d::region * prgnClip, DWORD flags)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::draw2d::graphics_sp g(get_app());
       //g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle(), flags));
@@ -4682,7 +4682,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::LockWindowUpdate()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::LockWindowUpdate(get_handle()) != FALSE;
 
@@ -4691,7 +4691,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::UnlockWindowUpdate()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //::LockWindowUpdate(NULL);
 
@@ -4731,7 +4731,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::DrawAnimatedRects(get_handle(), idAni, lprcFrom, lprcTo) != FALSE;
 
@@ -4741,7 +4741,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::DrawCaption(::draw2d::graphics * pgraphics, LPCRECT lprc, UINT uFlags)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
@@ -4760,7 +4760,7 @@ if(psurface == g_cairosurface)
 //
 //        return nIDEvent;
 
-      //throw not_implemented(get_app());
+      //throw new not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::SetTimer(get_handle(), nIDEvent, nElapse, lpfnTimer);
 
@@ -4882,7 +4882,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CheckDlgButton(int32_t nIDButton, UINT nCheck)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::CheckDlgButton(get_handle(), nIDButton, nCheck);
 
@@ -4891,7 +4891,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton, int32_t nIDCheckButton)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::CheckRadioButton(get_handle(), nIDFirstButton, nIDLastButton, nIDCheckButton);
 
@@ -4900,7 +4900,7 @@ if(psurface == g_cairosurface)
    int32_t interaction_impl::DlgDirList(LPTSTR lpPathSpec, int32_t nIDListBox, int32_t nIDStaticPath, UINT nFileType)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::DlgDirList(get_handle(), lpPathSpec, nIDListBox, nIDStaticPath, nFileType);
 
@@ -4909,7 +4909,7 @@ if(psurface == g_cairosurface)
    int32_t interaction_impl::DlgDirListComboBox(LPTSTR lpPathSpec, int32_t nIDComboBox, int32_t nIDStaticPath, UINT nFileType)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::DlgDirListComboBox(get_handle(), lpPathSpec, nIDComboBox, nIDStaticPath, nFileType);
 
@@ -4918,7 +4918,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::DlgDirSelectEx(get_handle(), lpString, nSize, nIDListBox) != FALSE;
 
@@ -4927,7 +4927,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::DlgDirSelectComboBoxEx(get_handle(), lpString, nSize, nIDComboBox) != FALSE;
 
@@ -4958,13 +4958,13 @@ if(psurface == g_cairosurface)
 //   int32_t interaction_impl::GetDlgItemText(int32_t nID, LPTSTR lpStr, int32_t nMaxCount) const
 //   {
 //
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::user::interaction * interaction_impl::GetNextDlgGroupItem(::user::interaction * pWndCtl, bool bPrevious) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetNextDlgGroupItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
@@ -4973,7 +4973,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * interaction_impl::GetNextDlgTabItem(::user::interaction * pWndCtl, bool bPrevious) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetNextDlgTabItem(get_handle(), (oswindow) pWndCtl->get_handle(), bPrevious));
 
@@ -4982,7 +4982,7 @@ if(psurface == g_cairosurface)
    UINT interaction_impl::IsDlgButtonChecked(int32_t nIDButton) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::IsDlgButtonChecked(get_handle(), nIDButton);
 
@@ -4991,7 +4991,7 @@ if(psurface == g_cairosurface)
    LPARAM interaction_impl::SendDlgItemMessage(int32_t nID, UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::SendDlgItemMessage(get_handle(), nID, message, wparam, lparam);
 
@@ -5000,7 +5000,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::SetDlgItemInt(get_handle(), nID, nValue, bSigned);
 
@@ -5009,7 +5009,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::SetDlgItemText(int32_t nID, const char * lpszString)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::SetDlgItemText(get_handle(), nID, lpszString);
 
@@ -5018,7 +5018,7 @@ if(psurface == g_cairosurface)
    int32_t interaction_impl::ScrollWindowEx(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::draw2d::region * prgnUpdate, LPRECT lpRectUpdate, UINT flags)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip, (HRGN)prgnUpdate->get_handle(), lpRectUpdate, flags);
 
@@ -5027,7 +5027,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::ShowScrollBar(UINT nBar, bool bShow)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::ShowScrollBar(get_handle(), nBar, bShow);
 
@@ -5037,7 +5037,7 @@ if(psurface == g_cairosurface)
    {
 
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::ChildWindowFromPoint(get_handle(), point));
 
@@ -5046,7 +5046,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * interaction_impl::ChildWindowFromPoint(POINT point, UINT nFlags)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags));
 
@@ -5055,7 +5055,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::FindWindow(lpszClassName, lpszWindowName));
       return NULL;
 
@@ -5064,7 +5064,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * interaction_impl::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow));
 
    }
@@ -5079,7 +5079,7 @@ if(psurface == g_cairosurface)
          return NULL;
 
       return m_pui->m_uiptraChild[0];
-    //  throw not_implemented(get_app());
+    //  throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetTopWindow(get_handle()));
 
@@ -5098,7 +5098,7 @@ if(psurface == g_cairosurface)
    {
 
 
-      throw todo(get_app());
+      throw new todo(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::linux::interaction_impl::from_handle(::GetLastActivePopup(get_handle()));
 
@@ -5119,7 +5119,7 @@ if(psurface == g_cairosurface)
    {
 
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::oswindowFromPoint(point));
 
    }
@@ -5128,7 +5128,7 @@ if(psurface == g_cairosurface)
    {
 
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::FlashWindow(get_handle(), bInvert) != FALSE;
 
@@ -5137,7 +5137,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::ChangeClipboardChain(oswindow hWndNext)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::ChangeClipboardChain(get_handle(), hWndNext) != FALSE;
 
@@ -5146,7 +5146,7 @@ if(psurface == g_cairosurface)
    oswindow interaction_impl::SetClipboardViewer()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::SetClipboardViewer(get_handle());
 
@@ -5155,7 +5155,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::OpenClipboard()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::OpenClipboard(get_handle()) != FALSE;
 
@@ -5164,7 +5164,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetOpenClipboardWindow()
    {
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::GetOpenClipboardWindow());
 
    }
@@ -5172,7 +5172,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetClipboardOwner()
    {
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::GetClipboardOwner());
 
    }
@@ -5180,7 +5180,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetClipboardViewer()
    {
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::GetClipboardViewer());
 
    }
@@ -5188,7 +5188,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CreateCaret(::draw2d::bitmap* pBitmap)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)pBitmap->get_handle(), 0, 0);
 
@@ -5197,7 +5197,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CreateSolidCaret(int32_t nWidth, int32_t nHeight)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
 
@@ -5206,7 +5206,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CreateGrayCaret(int32_t nWidth, int32_t nHeight)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::Createcaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
 
@@ -5215,7 +5215,7 @@ if(psurface == g_cairosurface)
    point PASCAL interaction_impl::GetCaretPos()
    {
 
-      throw not_implemented(::get_thread_app());
+      throw new not_implemented(get_app());
 //      point point;
 //      ::GetcaretPos((LPPOINT)&point); return point;
 
@@ -5224,7 +5224,7 @@ if(psurface == g_cairosurface)
    void PASCAL interaction_impl::SetCaretPos(POINT point)
    {
 
-    throw not_implemented(::get_thread_app());
+    throw new not_implemented(get_app());
 //      ::SetcaretPos(point.x, point.y);
 
    }
@@ -5232,7 +5232,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::HideCaret()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ::Hidecaret(get_handle());
 
    }
@@ -5240,7 +5240,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::ShowCaret()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //    ::Showcaret(get_handle());
 
    }
@@ -5248,7 +5248,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::SetForegroundWindow()
    {
 
-//    throw not_implemented(get_app());
+//    throw new not_implemented(get_app());
 //      return ::SetForegroundWindow(get_handle()) != FALSE;
 
    }
@@ -5258,7 +5258,7 @@ if(psurface == g_cairosurface)
 
       return NULL;
 
-         throw not_implemented(::get_thread_app());
+         throw new not_implemented(get_app());
 //      return ::linux::interaction_impl::from_handle(::GetForegroundWindow());
 
    }
@@ -5266,7 +5266,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::SendNotifyMessage(UINT message, WPARAM wparam, lparam lparam)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      return ::SendNotifyMessage(get_handle(), message, wparam, lparam) != FALSE;
 
    }
@@ -5274,7 +5274,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::Print(::draw2d::graphics * pgraphics, DWORD dwFlags) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      const_cast < interaction_impl * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), dwFlags);
 
@@ -5283,7 +5283,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::PrintClient(::draw2d::graphics * pgraphics, DWORD dwFlags) const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      const_cast < interaction_impl * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::linux::graphics * >(pgraphics))->get_handle(), dwFlags);
 
@@ -5292,7 +5292,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::SetWindowContextHelpId(DWORD dwContextHelpId)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
 
@@ -5301,7 +5301,7 @@ if(psurface == g_cairosurface)
    DWORD interaction_impl::GetWindowContextHelpId() const
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::GetWindowContextHelpId(get_handle());
 
@@ -5382,7 +5382,7 @@ if(psurface == g_cairosurface)
          && Session.get_cursor()->m_ecursor != ::visual::cursor_system)
       {
 
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
 //         ::SetCursor(NULL);
       }
       pbase->set_lresult(1);
@@ -5589,7 +5589,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::BeginModalState()
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
       //::EnableWindow(get_handle(), FALSE);
 
@@ -5598,7 +5598,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::EndModalState()
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
       //::EnableWindow(get_handle(), TRUE);
 
@@ -5622,7 +5622,7 @@ if(psurface == g_cairosurface)
    void interaction_impl::CloseWindow()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::CloseWindow(get_handle());
 
@@ -5631,7 +5631,7 @@ if(psurface == g_cairosurface)
    bool interaction_impl::OpenIcon()
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::OpenIcon(get_handle()) != FALSE;
 
@@ -5668,7 +5668,7 @@ if(psurface == g_cairosurface)
          hWndTemp = ::GetParent(hWndTop);
       }
 
-      throw todo(::get_thread_app());
+      throw new todo(get_app());
       // get last active popup of first non-child that was found
   //    if (hParent == NULL && hWnd != NULL)
   //       hWnd = ::GetLastActivePopup(hWnd);
@@ -5825,7 +5825,7 @@ namespace linux
       else
       {
 
-         throw interface_only_exception(get_app());
+         throw new interface_only_exception(get_app());
 
       }
 

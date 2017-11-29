@@ -48,10 +48,10 @@ namespace asphere
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_instance())
       {
 
          return false;
@@ -113,10 +113,10 @@ namespace asphere
    }
 
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
-      if(!::core::application::initialize1())
+      if(!::core::application::init1())
          return false;
 
       return true;

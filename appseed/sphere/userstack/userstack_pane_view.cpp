@@ -443,7 +443,7 @@ namespace userstack
          }
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -478,7 +478,7 @@ namespace userstack
 
          ::draw2d::memory_graphics pgraphics(this);
 
-         pfi = System.visual().imaging().LoadImageFile(strWallpaper);
+         pfi = Application.imaging().LoadImageFile(strWallpaper);
 
          m_dibBk.From((HDC)pgraphics->get_os_data(), pfi, true);
 
@@ -556,7 +556,7 @@ namespace userstack
 //         launcher.execute();
 //#else
 //
-//         throw todo(get_app());
+//         throw new todo(get_app());
 //
 //#endif
 //

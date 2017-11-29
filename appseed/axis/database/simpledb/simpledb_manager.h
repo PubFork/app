@@ -38,11 +38,10 @@ namespace simpledb
       manager(::aura::application * papp);
       ~manager();
 
-      bool initialize_thread() override;
-
+      
+      virtual bool init_thread() override;
 
       ::simpledb::session * & get_session(const char * pszId);
-
 
       using thread::handle;
       bool handle(socket * psocket);

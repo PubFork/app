@@ -746,7 +746,7 @@ try1:
    ::file::path dir::userquicklaunch(::aura::application *  papp)
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
    }
 
@@ -754,7 +754,7 @@ try1:
    ::file::path dir::userprograms(::aura::application *  papp)
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
    }
 
@@ -762,7 +762,7 @@ try1:
    ::file::path dir::commonprograms()
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
    }
 

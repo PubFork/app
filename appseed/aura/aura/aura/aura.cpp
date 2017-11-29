@@ -89,7 +89,7 @@ void __post_quit_message(int32_t nExitCode)
 
 #else
 
-   ::multithreading::post_quit(get_thread_app());
+   ::multithreading::post_quit(get_app());
 
 #endif
 

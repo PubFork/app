@@ -70,6 +70,15 @@ CLASS_DECL_AURA bool __node_aura_pre_term()
 CLASS_DECL_AURA bool __node_aura_pos_term()
 {
    
+//#ifdef MACOS
+//   
+   ns_app_terminate();
+//
+//#elif defined(APPLEIOS)
+//
+//   ui_app_terminate();
+//
+//#endif
 
 
    return true;

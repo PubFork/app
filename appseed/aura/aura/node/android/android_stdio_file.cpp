@@ -319,7 +319,7 @@ namespace android
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
       return NULL;
    }
 
@@ -328,7 +328,7 @@ namespace android
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
    }
 
    void stdio_file::UnlockRange(file_size_t /* dwPos */, file_size_t /* dwCount */)
@@ -336,7 +336,7 @@ namespace android
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
    }
 
 #ifdef _DEBUG

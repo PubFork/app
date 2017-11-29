@@ -20,7 +20,7 @@ namespace sphere
 
 
       
-      virtual bool initialize_application() override;
+      virtual bool init_instance() override;
       virtual int32_t  exit_application() override;
 
       virtual void _001OnFileNew();
@@ -32,9 +32,9 @@ namespace sphere
 
 
       virtual bool on_install() override;
-      virtual bool on_uninstall() override;
+      virtual bool on_unstall() override;
 
-      virtual int32_t run() override;
+      virtual void run() override;
 
       virtual void on_request(::create * pcreate) override;
 

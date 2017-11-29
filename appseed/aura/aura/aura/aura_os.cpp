@@ -18,7 +18,7 @@ namespace aura
    string os::get_command_line()
    {
 
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
       
       return "";
       
@@ -28,49 +28,49 @@ namespace aura
    bool os::shutdown(bool bIfPowerOff)
    {
       UNREFERENCED_PARAMETER(bIfPowerOff);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    bool os::reboot()
    {
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    void os::terminate_processes_by_title(const char * pszName)
    {
       UNREFERENCED_PARAMETER(pszName);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    bool os::get_pid_by_path(const char * pszName, uint32_t & dwPid)
    {
       UNREFERENCED_PARAMETER(pszName);
       UNREFERENCED_PARAMETER(dwPid);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    bool os::get_pid_by_title(const char * pszName, uint32_t & dwPid)
    {
       UNREFERENCED_PARAMETER(pszName);
       UNREFERENCED_PARAMETER(dwPid);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    int os::get_pid()
    {
-      throw interface_only_exception(get_app(),"this is an interface");
+      throw new interface_only_exception(get_app(),"this is an interface");
    }
 
    ::file::path os::get_process_path(uint32_t dwPid)
    {
       UNREFERENCED_PARAMETER(dwPid);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
    void os::get_all_processes(uint_array & dwa )
    {
       UNREFERENCED_PARAMETER(dwa);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
 #ifdef WINDOWS
@@ -78,7 +78,7 @@ namespace aura
    ::file::path os::get_module_path(HMODULE hmodule)
    {
       UNREFERENCED_PARAMETER(hmodule);
-      throw interface_only_exception(get_app(), "this is an interface");
+      throw new interface_only_exception(get_app(), "this is an interface");
    }
 
 #endif
@@ -210,7 +210,7 @@ namespace aura
    bool os::native_full_web_browser(const char * lpcsz)
    {
       
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
       return false;
       
@@ -544,7 +544,7 @@ namespace aura
    bool os::browse_file_open(oswindow oswindowOwner, property_set & set)
    {
 
-	   throw interface_only_exception(get_app());
+	   throw new interface_only_exception(get_app());
 
 	   return false;
 
@@ -554,7 +554,7 @@ namespace aura
    bool os::browse_file_save(oswindow oswindowOwner, property_set & set)
    {
 
-	   throw interface_only_exception(get_app());
+	   throw new interface_only_exception(get_app());
 
 	   return false;
 
@@ -564,7 +564,7 @@ namespace aura
    bool os::browse_folder(oswindow oswindowOwner, property_set & set)
    {
 
-	   throw interface_only_exception(get_app());
+	   throw new interface_only_exception(get_app());
 
 	   return false;
 

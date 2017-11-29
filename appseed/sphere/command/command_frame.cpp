@@ -75,7 +75,7 @@ namespace prompt
 
 #else
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
 #endif
 

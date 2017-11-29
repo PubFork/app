@@ -78,8 +78,8 @@ namespace core
 
       virtual bool process_initialize_userex();
       virtual bool initialize1_userex();
-      virtual bool initialize2() override;
-      bool initialize_application() override;
+      virtual bool init2() override;
+      bool init_application() override;
       bool on_initial_update();
       virtual int32_t exit_application() override;
 
@@ -146,9 +146,9 @@ namespace core
       inline ::userex::userex *               userex() { return m_puserex;  }
 
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
-      virtual bool initialize1() override;
+      virtual bool init1() override;
 
       virtual bool initialize() override;
 
@@ -156,7 +156,7 @@ namespace core
 
       virtual int32_t main() override;
 
-      virtual bool on_uninstall() override;
+      virtual bool on_unstall() override;
 
       virtual bool is_serviceable() override;
 

@@ -9,7 +9,7 @@ namespace axis
    app::app()
    {
 
-      m_iReturnCode = 0;
+      m_iErrorCode = 0;
 
    }
 
@@ -75,7 +75,7 @@ namespace axis
 
 #endif
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -90,8 +90,8 @@ namespace axis
          if(!initialize())
          {
 
-            if(m_iReturnCode > 0)
-               m_iReturnCode = -1;
+            if(m_iErrorCode > 0)
+               m_iErrorCode = -1;
 
             return;
 
@@ -101,8 +101,8 @@ namespace axis
       catch(...)
       {
 
-         if(m_iReturnCode > 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode > 0)
+            m_iErrorCode = -1;
 
          return;
 
@@ -111,14 +111,14 @@ namespace axis
       try
       {
 
-         m_iReturnCode = run();
+         m_iErrorCode = run();
 
       }
       catch(...)
       {
 
-         if(m_iReturnCode > 0)
-            m_iReturnCode = -1;
+         if(m_iErrorCode > 0)
+            m_iErrorCode = -1;
 
          return;
 

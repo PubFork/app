@@ -61,7 +61,7 @@ namespace metrowin
 
             //iCount = ::DragQueryFile(hglobal , 0xFFFFFFFF, NULL, 0);
 
-            throw todo(get_app());
+            throw new todo(get_app());
 
          }
          else if(view->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::StorageItems))
@@ -109,7 +109,7 @@ namespace metrowin
       ::CloseClipboard();
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -160,7 +160,7 @@ namespace metrowin
       SetClipboardData(CF_HDROP, hglbCopy);
       VERIFY(::CloseClipboard());
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -235,7 +235,7 @@ namespace metrowin
       SetClipboardData(CF_TEXT, hglbCopy2);
       VERIFY(::CloseClipboard());
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 
    }
@@ -346,7 +346,7 @@ namespace metrowin
       ::CloseClipboard();
       return bOk;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 

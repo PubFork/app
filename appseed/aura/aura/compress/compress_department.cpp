@@ -286,7 +286,7 @@ bool compress_department::zip(const ::file::path & pszZip, const ::file::path & 
 bool compress_department::zip(const ::file::path & psz, ::aura::application * papp)
 {
 
-   throw todo(get_app());
+   throw new todo(get_app());
 
    return false;
 

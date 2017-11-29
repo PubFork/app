@@ -1530,7 +1530,7 @@ CScriptVarLink *tinyjs::functionCall(bool &execute, CScriptVarLink *function, CS
         l = oldLex;
 
         if (exception)
-          throw exception;
+          throw new exception;
     }
 #ifdef TINYJS_CALL_STACK
     if (!call_stack.is_empty()) call_stack.pop();

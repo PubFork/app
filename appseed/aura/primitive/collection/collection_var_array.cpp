@@ -366,7 +366,7 @@ void var_array::parse_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw str;
+         throw new str;
       }
    }
 }
@@ -399,7 +399,7 @@ void var_array::skip_json(const char * & pszJson, const char * pszEnd)
       {
          string str = "not expected character : ";
          str += pszJson;
-         throw str;
+         throw new str;
       }
    }
 }

@@ -28,7 +28,7 @@
 
 
 //// __MAINTAIN_STATE functions
-// __MAINTAIN_STATE::__MAINTAIN_STATE(__MODULE_STATE* pNewState) throw()
+// __MAINTAIN_STATE::__MAINTAIN_STATE(__MODULE_STATE* pNewState) NOTHROW
 //   {  m_pPrevModuleState = __set_module_state(pNewState); }
 //
 //// __MAINTAIN_STATE2 functions

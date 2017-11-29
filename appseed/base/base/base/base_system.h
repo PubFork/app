@@ -17,8 +17,8 @@ namespace base
 
       //virtual bool defer_create_system_frame_window();
 
-      virtual bool process_initialize() override;
-      virtual int32_t exit_application() override;
+         virtual bool process_init() override;
+         virtual int32_t exit_application() override;
 
       virtual ::aura::session * on_create_session() override;
 

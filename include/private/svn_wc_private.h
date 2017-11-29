@@ -1140,7 +1140,7 @@ svn_wc__get_info(svn_wc_context_t *wc_ctx,
  *
  * ### Inconsistency: if DELETE_UNVERSIONED_TARGET is FALSE and a target is
  *     unversioned, svn_wc__delete_many() will continue whereas
- *     svn_wc_delete4() will throw an error.
+ *     svn_wc_delete4() will throw new an error.
  */
 svn_error_t *
 svn_wc__delete_many(svn_wc_context_t *wc_ctx,

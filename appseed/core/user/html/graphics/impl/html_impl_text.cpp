@@ -574,7 +574,7 @@ namespace html
             {
                if(m_bHover && m_pelemental->m_style.get_color("background-color", "hover", pdata, m_pelemental, cr))
                {
-                  Sys(pdata->get_app()).visual().imaging().color_blend(
+                  App(pdata->get_app()).imaging().color_blend(
                      pgraphics,
                      rect,
                      cr,
@@ -582,7 +582,7 @@ namespace html
                }
                else if(has_link() && m_pelemental->m_style.get_color("background-color", "link", pdata, m_pelemental, cr))
                {
-                  Sys(pdata->get_app()).visual().imaging().color_blend(
+                  App(pdata->get_app()).imaging().color_blend(
                      pgraphics,
                      rect,
                      cr,
@@ -590,7 +590,7 @@ namespace html
                }
                else if (m_pelemental->m_style.get_color("background-color", "", pdata, m_pelemental, cr))
                {
-                  Sys(pdata->get_app()).visual().imaging().color_blend(
+                  App(pdata->get_app()).imaging().color_blend(
                      pgraphics,
                      rect,
                      cr,

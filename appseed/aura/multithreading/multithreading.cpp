@@ -121,7 +121,7 @@ namespace multithreading
 
          ::aura::application * papp = pthread->get_app();
 
-         nExitCode = pthread->m_iReturnCode;
+         nExitCode = pthread->m_iErrorCode;
 
          try
          {
@@ -420,7 +420,7 @@ mutex & message_dispatch_mutex()
 
 
 
-::aura::application * get_thread_app()
+::aura::application * get_app()
 {
 
    thread * pthread = get_thread();

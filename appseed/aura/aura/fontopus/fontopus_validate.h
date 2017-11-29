@@ -96,7 +96,7 @@ namespace fontopus
       login_thread(::aura::application * papp);
       virtual ~login_thread();
 
-      virtual int32_t run();
+      virtual void run();
       virtual string Login(::http::e_status * pestatus);
       virtual string NetLogin(::http::e_status * pestatus);
       void execute();

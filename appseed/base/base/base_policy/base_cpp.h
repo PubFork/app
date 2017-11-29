@@ -241,7 +241,7 @@ typedef smart_pointer < thread_impl > thread_impl_sp;
 #undef Sys
 #define Sys(pauraapp) (*pauraapp->m_pbasesystem)
 //#define System (Sys(this->m_pauraapp))
-//#define threadSystem (Sys(get_thread_app()))
+//#define threadSystem (System)
 
 #undef Sess
 #define Sess(pauraapp) (*pauraapp->m_pbasesession)

@@ -187,9 +187,9 @@ namespace filemanager
       if(data_get("&data_source=local&InitialBrowsePath", strPath))
       {
 
-         Sess(get_app()).dir().mk(strPath);
+         Session.dir().mk(strPath);
 
-         if(Sess(get_app()).dir().is(strPath))
+         if(Session.dir().is(strPath))
          {
 
             return strPath;

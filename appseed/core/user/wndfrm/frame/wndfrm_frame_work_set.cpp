@@ -1519,14 +1519,14 @@ namespace user
          rect.bottom = rect.top + 5;
          if(rect.contains(ptCursor))
          {
-         throw ModeNE;
+         throw new ModeNE;
          }
          rect = rectEvent;
          rect.left = rect.right - 5;
          rect.bottom = rect.top + 16;
          if(rect.contains(ptCursor))
          {
-         throw ModeNE;
+         throw new ModeNE;
          }
          }
          if(egrip & GripSE)
@@ -1536,14 +1536,14 @@ namespace user
          rect.top = rect.bottom - 5;
          if(rect.contains(ptCursor))
          {
-         throw ModeSE;
+         throw new ModeSE;
          }
          rect = rectEvent;
          rect.left = rect.right - 5;
          rect.top = rect.bottom - 16;
          if(rect.contains(ptCursor))
          {
-         throw ModeSE;
+         throw new ModeSE;
          }
          }
          if(egrip & GripSW)
@@ -1553,14 +1553,14 @@ namespace user
          rect.top = rect.bottom - 5;
          if(rect.contains(ptCursor))
          {
-         throw ModeSW;
+         throw new ModeSW;
          }
          rect = rectEvent;
          rect.right = rect.left + 5;
          rect.top = rect.bottom - 16;
          if(rect.contains(ptCursor))
          {
-         throw ModeSW;
+         throw new ModeSW;
          }
          }
          if(egrip & GripN)
@@ -1571,7 +1571,7 @@ namespace user
          rect.bottom = rectEvent.top + 5;
          if(rect.contains(ptCursor))
          {
-         throw ModeN;
+         throw new ModeN;
          }
          }
          if(egrip & GripS)
@@ -1582,7 +1582,7 @@ namespace user
          rect.bottom = rectEvent.bottom;
          if(rect.contains(ptCursor))
          {
-         throw ModeS;
+         throw new ModeS;
          }
          }
          if(egrip & GripW)
@@ -1593,7 +1593,7 @@ namespace user
          rect.bottom = ptCenter.y + 8;
          if(rect.contains(ptCursor))
          {
-         throw ModeW;
+         throw new ModeW;
          }
          }
          if(egrip & GripE)
@@ -1604,7 +1604,7 @@ namespace user
          rect.bottom = ptCenter.y + 8;
          if(rect.contains(ptCursor))
          {
-         throw ModeE;
+         throw new ModeE;
          }
          }
 

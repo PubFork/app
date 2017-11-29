@@ -282,7 +282,7 @@ namespace introjection
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #elif defined(LINUX)
 
@@ -310,7 +310,7 @@ namespace introjection
       delete lpsz;
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #else
       str += getenv("PATH");
@@ -320,7 +320,7 @@ namespace introjection
       //bResult = SetEnvironmentVariable("PATH",str) != FALSE;
 #elif defined(METROWIN)
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #elif defined(LINUX)
 #else
@@ -457,7 +457,7 @@ namespace introjection
       if (m_strApp.is_empty())
       {
 
-         throw simple_exception(get_app(), "call compiler::initialize");
+         throw new simple_exception(get_app(), "call compiler::initialize");
 
       }
 

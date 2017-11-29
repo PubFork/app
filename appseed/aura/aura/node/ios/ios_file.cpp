@@ -51,7 +51,7 @@ namespace ios
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
+         throw new ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
 
    }
 
@@ -846,7 +846,7 @@ namespace ios
          
          
          //if (m_strFileName.is_empty())
-         // throw todo(get_app());
+         // throw new todo(get_app());
          rStatus.m_attribute = 0;
          /*         else
           {
@@ -1333,7 +1333,7 @@ bool CLASS_DECL_AURA vfxFullPath(wstring & wstrFullPath, const wstring & wstrPat
 
 CLASS_DECL_AURA void vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
 {
-   throw todo(::get_thread_app());
+   throw new todo(get_app());
    //link_map * plm;
 
    //dlinfo(hInst, RTLD_DI_LINKMAP, &plm);
@@ -1590,7 +1590,7 @@ void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::e
       lpsz = ::ios::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw ::file::exception(papp, cause, lOsError, lpszFileName);
+   throw new ::file::exception(papp, cause, lOsError, lpszFileName);
 }
 
 ::file::exception * CLASS_DECL_AURA get_FileException(::aura::application * papp, ::file::exception::e_cause cause, LONG lOsError, const char * lpszFileName /* == NULL */)

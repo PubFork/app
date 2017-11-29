@@ -2,7 +2,7 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace hotplugin
@@ -87,12 +87,12 @@ namespace hotplugin
                if(::hotplugin::get_axis_system()->m_bReady)
                {
 
-                  if(::hotplugin::get_axis_system()->m_iReturnCode != 0)
+                  if(::hotplugin::get_axis_system()->m_iErrorCode != 0)
                   {
 
                      string str;
-
-                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->m_iReturnCode);
+                     
+                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->m_iErrorCode);
 
                      ::output_debug_string(str);
 
@@ -138,12 +138,12 @@ namespace hotplugin
                if(get_composer_system()->m_bReady)
                {
 
-                  if(get_composer_system()->m_iReturnCode != 0)
+                  if(get_composer_system()->m_iErrorCode != 0)
                   {
 
                      string str;
 
-                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->m_iReturnCode);
+                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->m_iErrorCode);
 
                      ::output_debug_string(str);
 
@@ -192,12 +192,12 @@ namespace hotplugin
                if(m_paxishost->m_bReady)
                {
 
-                  if(m_paxishost->m_iReturnCode != 0)
+                  if(m_paxishost->m_iErrorCode != 0)
                   {
 
                      string str;
 
-                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->m_iReturnCode);
+                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->m_iErrorCode);
 
                      ::output_debug_string(str);
 
@@ -496,10 +496,10 @@ namespace hotplugin
          if(!paxissystem->pre_run())
          {
 
-            if(paxissystem->m_iReturnCode == 0)
+            if(paxissystem->m_iErrorCode == 0)
             {
 
-               paxissystem->m_iReturnCode = -1;
+               paxissystem->m_iErrorCode = -1;
 
             }
 
@@ -513,10 +513,10 @@ namespace hotplugin
       catch(...)
       {
 
-         if(paxissystem->m_iReturnCode == 0)
+         if(paxissystem->m_iErrorCode == 0)
          {
 
-            paxissystem->m_iReturnCode = -1;
+            paxissystem->m_iErrorCode = -1;
 
          }
 

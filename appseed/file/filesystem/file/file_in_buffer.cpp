@@ -69,7 +69,7 @@ namespace file
       }
       catch(...)
       {
-         throw in_buffer_exception(get_app(), E_FAIL);
+         throw new in_buffer_exception(get_app(), E_FAIL);
       }
       _buffer = _bufferBase;
       _bufferLimit = _buffer + numProcessedBytes;

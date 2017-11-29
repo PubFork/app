@@ -3114,7 +3114,7 @@ namespace user
 
       }
 
-      throw invalid_argument_exception(get_app(),"Focus of a window implementation should be set NULL, to itself or to a descendant window");
+      throw new invalid_argument_exception(get_app(),"Focus of a window implementation should be set NULL, to itself or to a descendant window");
 
    }
 

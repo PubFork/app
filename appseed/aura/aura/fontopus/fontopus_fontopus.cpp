@@ -113,7 +113,7 @@ namespace fontopus
 
             //System.simple_message_box(NULL, "<h1>You have not logged in!</h1><h2>Exiting</h2>");
             TRACE("<error>You have not logged in! Exiting!</error>");
-            //throw string("You have not logged in! Exiting!");
+            //throw new string("You have not logged in! Exiting!");
             //debug_box("You have not logged in!","Debug Message",MB_OK);
             return false;
 
@@ -753,7 +753,8 @@ retry:
 
    }
 
-   int32_t create_user_thread::run()
+   
+   void create_user_thread::run()
    {
 
 
@@ -778,8 +779,6 @@ retry:
       m_evReady.SetEvent();
 
       Session.fontopus()->m_pthreadCreatingUser = NULL;
-
-      return 0;
 
    }
 

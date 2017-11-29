@@ -179,7 +179,7 @@ output_debug_string(
 //
 //void CLASS_DECL_AURA __cdecl _ca2_purecall()
 //{
-//    throw simple_exception(::get_thread_app());
+//    throw new simple_exception(get_app());
 //}
 
 

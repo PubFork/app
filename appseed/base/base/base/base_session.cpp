@@ -86,12 +86,12 @@ namespace base
 
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
       thisstart;
 
-      if (!::axis::session::process_initialize())
+      if (!::axis::session::process_init())
       {
 
          thisfail << 2;
@@ -100,7 +100,7 @@ namespace base
 
       }
 
-      if (!::base::application::process_initialize())
+      if (!::base::application::process_init())
       {
 
          thisfail << 3;
@@ -130,14 +130,14 @@ namespace base
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
 
-      if (!::axis::session::initialize1())
+      if (!::axis::session::init1())
          return false;
 
-      if (!::base::application::initialize1())
+      if (!::base::application::init1())
          return false;
 
       //if (m_puserstyle.is_null())
@@ -147,10 +147,10 @@ namespace base
       //
       //}
 
-      if (!m_puser->initialize1())
+      if (!m_puser->init1())
          return false;
 
-      if (!m_puser->initialize2())
+      if (!m_puser->init2())
          return false;
 
 
@@ -229,7 +229,7 @@ namespace base
 
       ::release(m_puser);
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -318,7 +318,7 @@ namespace base
             catch (exit_exception & e)
             {
 
-               throw e;
+               throw new e;
 
             }
             catch (...)
@@ -331,7 +331,7 @@ namespace base
       catch (exit_exception & e)
       {
 
-         throw e;
+         throw new e;
 
       }
       catch (...)
@@ -410,7 +410,7 @@ namespace base
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      throw interface_only_exception(this);
+      throw new interface_only_exception(this);
 
    }
 

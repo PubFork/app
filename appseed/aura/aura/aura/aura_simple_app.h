@@ -19,7 +19,7 @@ namespace aura
       app();
       virtual ~app();
 
-      virtual int32_t main();
+      virtual void main() override;
 
       virtual void body();
 

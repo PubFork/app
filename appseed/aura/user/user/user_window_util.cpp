@@ -293,7 +293,7 @@ namespace user
 
 #else
 
-      throw not_implemented(get_thread_app());
+      throw new not_implemented(get_app());
 
 #endif
 
@@ -443,7 +443,7 @@ namespace user
 
 #else
 
-      throw todo(get_thread_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -540,7 +540,7 @@ namespace user
       //
       //#else
       //
-      //         throw todo(get_thread_app());
+      //         throw new todo(get_app());
       //
       //#endif
       //
@@ -570,7 +570,7 @@ namespace user
       //
       //#else
       //
-      //      throw todo(get_thread_app());
+      //      throw new todo(get_app());
       //
       //#endif
       //
@@ -613,7 +613,7 @@ namespace user
       //
       //#else
       //
-      //      throw todo(get_thread_app());
+      //      throw new todo(get_app());
       //
       //#endif
       //#endif
@@ -692,7 +692,7 @@ namespace user
 
 #else
 
-      throw todo(get_thread_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -867,7 +867,7 @@ namespace user
 
 #else
 
-      throw todo(get_thread_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -898,7 +898,7 @@ namespace user
 
 #else
 
-      throw todo(get_thread_app());
+      throw new todo(get_app());
 
 #endif
 

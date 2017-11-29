@@ -2,7 +2,7 @@
 
 
 memory_exception::memory_exception():
-object(::get_thread_app()),
+object(get_app()),
 ::call_stack(get_app()),
 ::exception::base(get_app()),
 simple_exception(get_app())

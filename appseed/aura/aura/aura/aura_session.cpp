@@ -184,12 +184,12 @@ namespace aura
 
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
       thisstart;
 
-      if (!::aura::application::process_initialize())
+      if (!::aura::application::process_init())
          return false;
 
 
@@ -207,7 +207,7 @@ namespace aura
 
          m_psockets->construct(this);
 
-         if (!m_psockets->initialize1())
+         if (!m_psockets->init1())
          {
 
             thisfail << 4;
@@ -243,10 +243,10 @@ namespace aura
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
-      if (!::aura::application::initialize1())
+      if (!::aura::application::init1())
          return false;
 
 
@@ -258,10 +258,10 @@ namespace aura
    }
 
 
-   bool session::initialize2()
+   bool session::init2()
    {
 
-      if (!::aura::application::initialize2())
+      if (!::aura::application::init2())
          return false;
 
       return true;
@@ -269,10 +269,10 @@ namespace aura
    }
 
 
-   bool session::initialize_application()
+   bool session::init_application()
    {
 
-      if (!::aura::application::initialize_application())
+      if (!::aura::application::init_application())
          return false;
 
       return true;
@@ -329,7 +329,7 @@ namespace aura
    }
 
 
-   int32_t session::exit_application()
+   int32_t session::term_application()
    {
 
       try
@@ -363,7 +363,7 @@ namespace aura
       }
 
 
-      ::aura::application::exit_application();
+      ::aura::application::term_application();
 
       return 0;
 
@@ -381,7 +381,7 @@ namespace aura
    //::sockets::sockets & session::sockets()
    //{
 
-   //   throw interface_only_exception(get_app());
+   //   throw new interface_only_exception(get_app());
    //
    //   return *((::sockets::sockets *) NULL); // only usable from base.dll and dependants
    //
@@ -392,7 +392,7 @@ namespace aura
    //string session::get_cred(::aura::application * papp,const string & strRequestUrlParam,const RECT & rect,string & strUsername,string & strPassword,string strToken,string strTitle,bool bInteractive)
    //{
 
-   //   throw interface_only_exception(papp);
+   //   throw new interface_only_exception(papp);
 
    //   return "";
 
@@ -755,7 +755,7 @@ namespace aura
          catch (::exit_exception & e)
          {
 
-            throw e;
+            throw new e;
 
          }
          catch (::exception::exception & e)
@@ -769,7 +769,7 @@ namespace aura
                if (!App(this).on_run_exception(e))
                {
 
-                  throw exit_exception(get_app());
+                  throw new exit_exception(get_app());
 
                }
 
@@ -823,7 +823,7 @@ namespace aura
             && !System.is_application_installed(strAppId, "installed"))
       {
 
-         throw not_installed(get_app(), strAppId);
+         throw new not_installed(get_app(), strAppId);
 
       }
 
@@ -1187,7 +1187,7 @@ namespace aura
    string session::fontopus_get_cred(::aura::application * papp, const string & strRequestUrl, const RECT & rect, string & strUsername, string & strPassword, string strToken, string strTitle, bool bInteractive, ::user::interactive * pinteractive)
    {
 
-      throw not_implemented(papp);
+      throw new not_implemented(papp);
 
       return "";
 
@@ -1455,13 +1455,13 @@ namespace aura
    //   else if (Application.m_pbasesession != NULL)
    //   {
 
-   //      return Sess(get_app()).get_keyboard_focus();
+   //      return Session.get_keyboard_focus();
 
    //   }
    //   else if (Application.m_pbasesystem != NULL)
    //   {
 
-   //      return Sess(get_app()).get_keyboard_focus();
+   //      return Session.get_keyboard_focus();
 
    //   }
    //   else
@@ -3059,7 +3059,7 @@ ret:
 
             thisfail << 1;
 
-            throw resource_exception(this);
+            throw new resource_exception(this);
 
          }
 
@@ -3080,7 +3080,7 @@ ret:
    void session::_001OnDefaultTabPaneDrawTitle(::user::tab_pane & pane, ::user::tab * ptab, ::draw2d::graphics * pgraphics, LPCRECT lpcrect, ::draw2d::brush_sp & brushText)
    {
 
-      throw interface_only_exception(this);
+      throw new interface_only_exception(this);
 
    }
 

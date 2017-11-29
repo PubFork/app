@@ -45,7 +45,7 @@ class thread_startup :
       manual_reset_event      m_event2;
       DWORD                   m_dwCreateFlags;
       bool                    m_bError;
-      int32_t                 m_iError;
+      error                   m_error;
       bool                    m_bSynch;
       int32_t                 m_iPriority;
 

@@ -21,19 +21,12 @@ namespace html
 } // namespace html
 
 
-
-#if defined()
-
-
 namespace install
 {
 
    class install;
 
 } // namespace install
-
-
-#endif
 
 
 namespace message
@@ -46,8 +39,6 @@ namespace message
 } // namespace message
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 namespace hotplugin
 {
 
@@ -55,8 +46,6 @@ namespace hotplugin
    class plugin;
 
 }
-
-#endif
 
 namespace user
 {
@@ -89,7 +78,7 @@ typedef sp(::user::interaction_impl) window_sp;
 #undef Sys
 #define CaSys(pca) (*pca->m_pauraapp->m_paxissystem)
 #define Sys(paxisapp) (*paxisapp->m_paxissystem)
-#define threadSystem (Sys(get_thread_app()))
+#define threadSystem (System)
 
 #undef Sess
 #define Sess(paxisapp) (*paxisapp->m_paxissession)

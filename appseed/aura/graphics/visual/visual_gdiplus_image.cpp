@@ -78,7 +78,7 @@ namespace visual
 
 
    //   FIMEMORY * pfm1 = FreeImage_OpenMemory();
-   //   FIBITMAP * pfi7 = Sys(m_p->m_pauraapp).visual().imaging().dib_to_FI(m_p);
+   //   FIBITMAP * pfi7 = App(m_p->m_pauraapp).imaging().dib_to_FI(m_p);
    //   FIBITMAP * pfi8 = NULL;
    //   bool bConv;
    //   if (b8)
@@ -414,7 +414,7 @@ namespace visual
 //   return bitmap;
 //#else
 //
-//   throw todo(get_app());
+//   throw new todo(get_app());
 //
 //#endif
 //   return NULL;
@@ -427,7 +427,7 @@ namespace visual
 //
 //#ifdef METROWIN
 //
-//   throw todo(get_app());
+//   throw new todo(get_app());
 //
 //#else
 //

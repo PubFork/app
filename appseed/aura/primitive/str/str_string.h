@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 CLASS_DECL_AURA string_manager * __get_string_manager();
@@ -96,57 +96,57 @@ class crt_char_traits :
 {
    public:
 
-      static char*         __cdecl  CharNext(const char* p ) throw();
-      static int32_t           __cdecl  IsDigit(const char * pch ) throw();
-      static int32_t           __cdecl  IsSpace(const char * pch ) throw();
-      static int32_t           __cdecl  StringCompare(const char * pszA,const char * pszB ) throw();
-      static int32_t           __cdecl  StringCompareIgnore(const char * pszA,const char * pszB ) throw();
-      static int32_t           __cdecl  StringCollate(const char * pszA,const char * pszB ) throw();
-      static int32_t           __cdecl  StringCollateIgnore(const char * pszA,const char * pszB ) throw();
-      static const char *  __cdecl  StringFindString(const char * pszBlock,const char * pszMatch ) throw();
-      static char *        __cdecl  StringFindString(char * pszBlock,const char * pszMatch ) throw();
-      static const char *  __cdecl  StringFindChar(const char * pszBlock,char chMatch ) throw();
-      static const char *  __cdecl  StringFindCharRev(const char * psz,char ch, strsize iStart ) throw();
-      static const char *  __cdecl  StringFindStrRev(const char * psz,const char * pszFind, strsize iStart ) throw();
-      static const char *  __cdecl  StringScanSet(const char * pszBlock,const char * pszMatch ) throw();
-      static strsize       __cdecl  StringSpanIncluding(const char * pszBlock,const char * pszSet ) throw();
-      static strsize       __cdecl  StringSpanExcluding(const char * pszBlock,const char * pszSet ) throw();
-      static char *        __cdecl  StringUppercase( char * psz ) throw();
-      static char *        __cdecl  StringLowercase( char * psz ) throw();
-      static char *        __cdecl  StringUppercase(char * psz,size_t size ) throw();
-      static char *        __cdecl  StringLowercase(char * psz,size_t size ) throw();
-      static char *        __cdecl  StringReverse( char * psz ) throw();
-      static strsize       __cdecl  GetFormattedLength(const char * pszFormat, va_list args ) throw();
-      static strsize       __cdecl  Format(char * pszBuffer,const char * pszFormat, va_list args ) throw();
-      static strsize       __cdecl  Format(char * pszBuffer,size_t nlength,const char * pszFormat, va_list args ) throw();
-      static strsize       __cdecl  GetcharLength(const char * pszSrc ) throw();
-      static strsize       __cdecl  GetcharLength(const char * pszSrc, strsize nLength ) throw();
-      static strsize       __cdecl  GetcharLength(const unichar * pszSource ) throw();
-      static strsize       __cdecl  GetcharLength(const unichar * pszSource, strsize nLength ) throw();
-      static strsize       __cdecl  GetcharLength(const unichar32 * pszSource) throw();
-      static strsize       __cdecl  GetcharLength(const unichar32 * pszSource,strsize nLength) throw();
-      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength, const char * pszSrc, strsize nSrcLength = -1 ) throw();
-      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength, const unichar * pszSrc,strsize nSrcLength = -1) throw();
-      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength,const unichar32 * pszSrc,strsize nSrcLength = -1) throw();
+      static char*         __cdecl  CharNext(const char* p ) NOTHROW;
+      static int32_t           __cdecl  IsDigit(const char * pch ) NOTHROW;
+      static int32_t           __cdecl  IsSpace(const char * pch ) NOTHROW;
+      static int32_t           __cdecl  StringCompare(const char * pszA,const char * pszB ) NOTHROW;
+      static int32_t           __cdecl  StringCompareIgnore(const char * pszA,const char * pszB ) NOTHROW;
+      static int32_t           __cdecl  StringCollate(const char * pszA,const char * pszB ) NOTHROW;
+      static int32_t           __cdecl  StringCollateIgnore(const char * pszA,const char * pszB ) NOTHROW;
+      static const char *  __cdecl  StringFindString(const char * pszBlock,const char * pszMatch ) NOTHROW;
+      static char *        __cdecl  StringFindString(char * pszBlock,const char * pszMatch ) NOTHROW;
+      static const char *  __cdecl  StringFindChar(const char * pszBlock,char chMatch ) NOTHROW;
+      static const char *  __cdecl  StringFindCharRev(const char * psz,char ch, strsize iStart ) NOTHROW;
+      static const char *  __cdecl  StringFindStrRev(const char * psz,const char * pszFind, strsize iStart ) NOTHROW;
+      static const char *  __cdecl  StringScanSet(const char * pszBlock,const char * pszMatch ) NOTHROW;
+      static strsize       __cdecl  StringSpanIncluding(const char * pszBlock,const char * pszSet ) NOTHROW;
+      static strsize       __cdecl  StringSpanExcluding(const char * pszBlock,const char * pszSet ) NOTHROW;
+      static char *        __cdecl  StringUppercase( char * psz ) NOTHROW;
+      static char *        __cdecl  StringLowercase( char * psz ) NOTHROW;
+      static char *        __cdecl  StringUppercase(char * psz,size_t size ) NOTHROW;
+      static char *        __cdecl  StringLowercase(char * psz,size_t size ) NOTHROW;
+      static char *        __cdecl  StringReverse( char * psz ) NOTHROW;
+      static strsize       __cdecl  GetFormattedLength(const char * pszFormat, va_list args ) NOTHROW;
+      static strsize       __cdecl  Format(char * pszBuffer,const char * pszFormat, va_list args ) NOTHROW;
+      static strsize       __cdecl  Format(char * pszBuffer,size_t nlength,const char * pszFormat, va_list args ) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const char * pszSrc ) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const char * pszSrc, strsize nLength ) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const unichar * pszSource ) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const unichar * pszSource, strsize nLength ) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const unichar32 * pszSource) NOTHROW;
+      static strsize       __cdecl  GetcharLength(const unichar32 * pszSource,strsize nLength) NOTHROW;
+      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength, const char * pszSrc, strsize nSrcLength = -1 ) NOTHROW;
+      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength, const unichar * pszSrc,strsize nSrcLength = -1) NOTHROW;
+      static void          __cdecl  ConvertTochar(char * pszDest,strsize nDestLength,const unichar32 * pszSrc,strsize nSrcLength = -1) NOTHROW;
       static void                   ConvertToOem(char* pstrString) RELEASENOTHROW;
       static void                   ConvertToAnsi(char* pstrString) RELEASENOTHROW;
       static void                   ConvertToOem(char* pstrString,size_t size);
       static void                   ConvertToAnsi(char* pstrString,size_t size);
-      static void          __cdecl  FloodCharacters(char ch,strsize nLength, char* pch ) throw();
+      static void          __cdecl  FloodCharacters(char ch,strsize nLength, char* pch ) NOTHROW;
 
 #ifdef WINDOWS
 
-      static BSTR          __cdecl  AllocSysString( const char* pchData, strsize nDataLength ) throw();
-      static bool          __cdecl  ReAllocSysString( const char* pchData,BSTR* pbstr,strsize nDataLength ) throw();
+      static BSTR          __cdecl  AllocSysString( const char* pchData, strsize nDataLength ) NOTHROW;
+      static bool          __cdecl  ReAllocSysString( const char* pchData,BSTR* pbstr,strsize nDataLength ) NOTHROW;
 
 #endif
 
-      static uint32_t         __cdecl  FormatMessage(uint32_t dwFlags, LPCVOID pSource, uint32_t dwMessageID,uint32_t dwLanguageID, char * pszBuffer, uint32_t nSize, va_list* pArguments ) throw();
-      static uint32_t         __cdecl  format_message(uint32_t dwFlags, LPCVOID pSource, uint32_t dwMessageID,uint32_t dwLanguageID, char * pszBuffer, uint32_t nSize, va_list* pArguments ) throw();
-      static strsize       __cdecl  SafeStringLen( const char * psz ) throw();
-      static strsize       __cdecl  SafeStringLen( const unichar * psz ) throw();
-      static strsize       __cdecl  GetCharLen(const unichar* pch ) throw();
-      static strsize       __cdecl  GetCharLen(const char* pch ) throw();
+      static uint32_t         __cdecl  FormatMessage(uint32_t dwFlags, LPCVOID pSource, uint32_t dwMessageID,uint32_t dwLanguageID, char * pszBuffer, uint32_t nSize, va_list* pArguments ) NOTHROW;
+      static uint32_t         __cdecl  format_message(uint32_t dwFlags, LPCVOID pSource, uint32_t dwMessageID,uint32_t dwLanguageID, char * pszBuffer, uint32_t nSize, va_list* pArguments ) NOTHROW;
+      static strsize       __cdecl  SafeStringLen( const char * psz ) NOTHROW;
+      static strsize       __cdecl  SafeStringLen( const unichar * psz ) NOTHROW;
+      static strsize       __cdecl  GetCharLen(const unichar* pch ) NOTHROW;
+      static strsize       __cdecl  GetCharLen(const char* pch ) NOTHROW;
       static uint32_t         __cdecl  GetEnvironmentVariable(const char * pszVar, char * pszBuffer, uint32_t dwSize);
 
 };
@@ -179,7 +179,7 @@ class string_trait :
 {
    public:
 
-      inline static string_manager * GetDefaultManager() throw()
+      inline static string_manager * GetDefaultManager() NOTHROW
       {
          return s_pstringmanager;
       }
@@ -204,11 +204,11 @@ class CLASS_DECL_AURA string :
 
       //operator class string_composite ();
       //operator class string_composite const () const;
-      operator const char *() const throw();
-      const char * c_str() const throw();
-      const char * data() const throw();
+      operator const char *() const NOTHROW;
+      const char * c_str() const NOTHROW;
+      const char * data() const NOTHROW;
 
-      inline string() throw();
+      inline string() NOTHROW;
       string(const string & strSrc);
 
       string(string && strSrc):
@@ -259,8 +259,8 @@ class CLASS_DECL_AURA string :
       {
       }
 
-      void construct() throw();
-      explicit string( string_manager * pstringmanager ) throw();
+      void construct() NOTHROW;
+      explicit string( string_manager * pstringmanager ) NOTHROW;
       static void __cdecl Construct( string* pstring );
 
       string(const char * pszSrc);
@@ -309,7 +309,7 @@ class CLASS_DECL_AURA string :
       string(Object ^ o, string_manager * pstringmanager);
 #endif
 
-      ~string() throw();
+      ~string() NOTHROW;
 
 
 
@@ -357,7 +357,7 @@ class CLASS_DECL_AURA string :
       string& operator+=(const id & id);
 
       // Override from aura class
-      string_manager * GetManager() const throw();
+      string_manager * GetManager() const NOTHROW;
 
 
       void push_back(char ch);
@@ -376,9 +376,9 @@ class CLASS_DECL_AURA string :
 
 
       int32_t compare(const char * psz ) const;
-      int32_t compare_ci(const char * psz ) const throw();
-      int32_t collate(const char * psz ) const throw();
-      int32_t collate_ci(const char * psz ) const throw();
+      int32_t compare_ci(const char * psz ) const NOTHROW;
+      int32_t collate(const char * psz ) const NOTHROW;
+      int32_t collate_ci(const char * psz ) const NOTHROW;
 
       int32_t compare(strsize iStart, strsize iCount, const char * psz ) const;
       int32_t compare_ci(strsize iStart, strsize iCount, const char * psz ) const;
@@ -1235,7 +1235,7 @@ inline strsize string::utf8_length() const
 //}
 
 
-inline   string::string() throw() :
+inline   string::string() NOTHROW :
    stdstring<simple_string>(string_trait::GetDefaultManager())
 {
 }
@@ -1244,7 +1244,7 @@ inline   string::string() throw() :
 
 
 
-inline int32_t __cdecl crt_char_traits::StringCompare(const char * pszA,const char * pszB ) throw()
+inline int32_t __cdecl crt_char_traits::StringCompare(const char * pszA,const char * pszB ) NOTHROW
 {
 
    return strcmp( reinterpret_cast< const  char* >( pszA ), reinterpret_cast< const  char* >( pszB ) );
@@ -1252,7 +1252,7 @@ inline int32_t __cdecl crt_char_traits::StringCompare(const char * pszA,const ch
 }
 
 
-inline int32_t __cdecl crt_char_traits::StringCompareIgnore(const char * pszA,const char * pszB ) throw()
+inline int32_t __cdecl crt_char_traits::StringCompareIgnore(const char * pszA,const char * pszB ) NOTHROW
 {
 
    return stricmp(reinterpret_cast< const  char* >( pszA ), reinterpret_cast< const  char* >( pszB ) );
@@ -1268,7 +1268,7 @@ inline int32_t string::compare(const char * psz ) const
 }
 
 
-inline int32_t string::compare_ci(const char * psz ) const throw()
+inline int32_t string::compare_ci(const char * psz ) const NOTHROW
 {
 
    return( string_trait::StringCompareIgnore( GetString(), psz ) );
@@ -1547,18 +1547,18 @@ inline bool string::operator>(int32_t i) const
 
 
 
-inline string::operator const char *() const throw()
+inline string::operator const char *() const NOTHROW
 {
    return simple_string::operator const char *();
 }
 
 
-inline const char * string::c_str() const throw()
+inline const char * string::c_str() const NOTHROW
 {
    return simple_string::operator const char *();
 }
 
-inline const char * string::data() const throw()
+inline const char * string::data() const NOTHROW
 {
    return simple_string::operator const char *();
 }

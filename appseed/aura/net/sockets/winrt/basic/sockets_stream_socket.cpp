@@ -160,7 +160,7 @@ namespace sockets
    int stream_socket::Protocol()
    {
 
-      throw interface_only_exception(get_app(),"stream_socket::Protocol");
+      throw new interface_only_exception(get_app(),"stream_socket::Protocol");
 
       return -1;
 

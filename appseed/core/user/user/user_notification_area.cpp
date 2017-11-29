@@ -28,7 +28,7 @@ namespace user
       ::DeleteObject(m_hfontHidden);
       ::DeleteObject(m_hfontRegular);
 #else
-//      throw todo(get_app());
+//      throw new todo(get_app());
 #endif
    }
 
@@ -154,7 +154,7 @@ namespace user
       //      LVIS_FOCUSED|LVIS_SELECTED,
       //      LVIS_FOCUSED|LVIS_SELECTED);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -210,7 +210,7 @@ namespace user
          ListTrayIcons(iItem - 1);
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -223,7 +223,7 @@ namespace user
          ListTrayIcons(iItem + 1);
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 

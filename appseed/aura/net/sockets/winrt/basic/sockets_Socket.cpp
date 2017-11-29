@@ -125,7 +125,7 @@ namespace sockets
       if (m_socket == INVALID_SOCKET) // this could happen
       {
          log("base_socket::close", 0, "file descriptor invalid", ::aura::log::level_warning);
-         throw io_exception(get_app());
+         throw new io_exception(get_app());
       }
       int n = 0;
       if(close_socket(m_socket) == -1)

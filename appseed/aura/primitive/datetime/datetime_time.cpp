@@ -9,7 +9,7 @@ namespace datetime
    const char * const szInvalidDateTime = "Invalid DateTime";
 
 
-   ::datetime::time WINAPI time::get_current_time() throw()
+   ::datetime::time WINAPI time::get_current_time() NOTHROW
    {
 
 #ifdef WINDOWS
@@ -24,7 +24,7 @@ namespace datetime
 
    }
 
-   bool WINAPI time::is_valid_FILETIME(const FILETIME& fileTime) throw()
+   bool WINAPI time::is_valid_FILETIME(const FILETIME& fileTime) NOTHROW
    {
       FILETIME localTime;
       if (!FileTimeToLocalFileTime(&fileTime, &localTime))
@@ -83,7 +83,7 @@ namespace datetime
       ASSUME(m_time != -1);   */    // indicates an illegal input time
       if(m_time == -1)
       {
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
       }
    }
 
@@ -113,7 +113,7 @@ namespace datetime
       ASSUME(m_time != -1);       // indicates an illegal input time
 
       if(m_time == -1)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
    }
 
@@ -142,7 +142,7 @@ namespace datetime
       if (!FileTimeToLocalFileTime(&fileTime, &localTime))
       {
          m_time = 0;
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
          return;
       }
 
@@ -151,7 +151,7 @@ namespace datetime
       if (!FileTimeToSystemTime(&localTime, &sysTime))
       {
          m_time = 0;
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
          return;
       }
 
@@ -160,35 +160,35 @@ namespace datetime
       *this = timeT;
    }
 
-   ::datetime::time & time::operator=( __time64_t time ) throw()
+   ::datetime::time & time::operator=( __time64_t time ) NOTHROW
    {
       m_time = time;
 
       return *this;
    }
 
-   ::datetime::time & time::operator+=( time_span span ) throw()
+   ::datetime::time & time::operator+=( time_span span ) NOTHROW
    {
       m_time += span.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator-=( time_span span ) throw()
+   ::datetime::time & time::operator-=( time_span span ) NOTHROW
    {
       m_time -= span.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator+=(const  duration & duration ) throw()
+   ::datetime::time & time::operator+=(const  duration & duration ) NOTHROW
    {
       m_time += duration.GetTimeSpan();
 
       return *this;
    }
 
-   ::datetime::time & time::operator-=(const  duration & duration ) throw()
+   ::datetime::time & time::operator-=(const  duration & duration ) NOTHROW
    {
       m_time -= duration.GetTimeSpan();
 
@@ -198,7 +198,7 @@ namespace datetime
    ::datetime::time & time::operator+=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      throw new not_implemented(get_app());
 
       return *this;
    }
@@ -206,7 +206,7 @@ namespace datetime
    ::datetime::time& time::operator-=( date_span span )
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      throw new not_implemented(get_app());
 
       return *this;
    }
@@ -215,13 +215,13 @@ namespace datetime
    ::datetime::time time::operator-( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      throw new not_implemented(get_app());
    }
 
    ::datetime::time time::operator+( date_span span ) const
    {
       UNREFERENCED_PARAMETER(span);
-      throw not_implemented(get_thread_app());
+      throw new not_implemented(get_app());
    }
 
 
@@ -257,7 +257,7 @@ namespace datetime
          if(ptmTemp == NULL)
             return NULL;
 
-         // but don't throw exception or generate error...
+         // but don't throw new exception or generate error...
          // (reason for commenting out below, fat to be removed...)
 //         if(errno != 0)
          //          return NULL;
@@ -331,7 +331,7 @@ namespace datetime
 
    }
 
-   bool time::get_as_system_time(SYSTEMTIME& timeDest) const throw()
+   bool time::get_as_system_time(SYSTEMTIME& timeDest) const NOTHROW
    {
       struct tm ttm;
       struct tm* ptm;

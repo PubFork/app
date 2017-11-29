@@ -49,7 +49,7 @@
 
 #elif defined(__APPLE__)
 
-#define inplace_new_throw_spec throw ()
+#define inplace_new_throw_spec throw()
 #define new_throw_spec
 #define del_throw_spec throw()
 #define MEMORY_DECL

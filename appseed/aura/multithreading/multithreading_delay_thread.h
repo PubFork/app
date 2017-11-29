@@ -17,7 +17,7 @@ public:
    }
 
 
-   int run()
+   void run()
    {
 
       while (true)
@@ -39,8 +39,6 @@ public:
       }
 
       do_delayed();
-
-      return 0;
 
    }
 

@@ -40,12 +40,10 @@ class forking_thread:
 
       }
 
-      int32_t run()
+      void run()
       {
 
          m_pred();
-
-         return 0;
 
       }
 
@@ -235,12 +233,10 @@ class forking_count_thread :
 
       }
 
-      int32_t run()
+      void run()
       {
 
          m_pred(m_iOrder, m_iIndex, m_iCount, m_iScan);
-
-         return 0;
 
       }
 

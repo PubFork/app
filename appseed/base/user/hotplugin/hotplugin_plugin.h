@@ -1,7 +1,7 @@
 #pragma once
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #include "base/user/simple_ui/simple_ui_style.h"

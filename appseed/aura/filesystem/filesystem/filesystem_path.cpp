@@ -150,7 +150,7 @@ namespace file
 
    }
 
-   path::~path() throw()
+   path::~path() NOTHROW
    {
 
 

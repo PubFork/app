@@ -48,7 +48,7 @@ namespace n7z
          for (index i = UnpackSizes.get_count() - 1; i >= 0; i--)
             if (FindBindPairForOutStream((::n7z::CNum) i) < 0)
                return UnpackSizes[i];
-         throw 1;
+         throw new 1;
       }
 
       CNum GetNumOutStreams() const

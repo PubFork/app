@@ -147,7 +147,7 @@ namespace visual
 
          m_sparray = canew(array(m_p->m_pauraapp));
 
-         if (!Sys(m_p->m_pauraapp).visual().imaging().load_from_file(m_sparray, varFile, bCache))
+         if (!App(m_p->m_pauraapp).imaging().load_from_file(m_sparray, varFile, bCache))
          {
 
             m_sparray.release();
@@ -188,7 +188,7 @@ namespace visual
 
       }
 
-      if (!Sys(m_p->m_pauraapp).visual().imaging().load_from_file(m_p, varFile, bCache))
+      if (!App(m_p->m_pauraapp).imaging().load_from_file(m_p, varFile, bCache))
       {
 
          m_eload = load_fail;
@@ -216,7 +216,7 @@ namespace visual
 
       ::file::path path = m_p->m_pauraapp->dir().matter(pszMatter);
 
-      if (!Sys(m_p->m_pauraapp).visual().imaging().load_from_file(m_p, path, bCache))
+      if (!App(m_p->m_pauraapp).imaging().load_from_file(m_p, path, bCache))
       {
 
          m_eload = load_fail;
@@ -242,7 +242,7 @@ namespace visual
    bool dib_sp::read_from_file(::file::file_sp spfile)
    {
 
-      if (!Sys(m_p->m_pauraapp).visual().imaging().LoadImageFromFile(m_p, spfile))
+      if (!App(m_p->m_pauraapp).imaging().LoadImageFromFile(m_p, spfile))
       {
 
          m_eload = load_fail;
@@ -281,7 +281,7 @@ namespace visual
 //   bool dib_sp::from(class draw2d::graphics * pgraphics, struct FIBITMAP * pfi, bool bUnload)
 //   {
 //
-//      return Sys(m_p->m_pauraapp).visual().imaging().from(m_p, pgraphics, pfi, bUnload);
+//      return App(m_p->m_pauraapp).imaging().from(m_p, pgraphics, pfi, bUnload);
 //
 //   }
 //
@@ -494,7 +494,7 @@ namespace visual
 
    }
 
-
+   
    bool dib_sp::write_to_file(var varFile, save_image * psaveimage)
    {
 

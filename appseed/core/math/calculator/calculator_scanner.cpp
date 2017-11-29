@@ -66,7 +66,7 @@ namespace calculator
       if (m_ptoken.is_null())
       {
 
-         throw memory_exception(get_app());
+         throw new memory_exception(get_app());
 
       }
 

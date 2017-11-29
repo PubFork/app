@@ -173,7 +173,7 @@ bool image_list::draw(::draw2d::graphics *pgraphics, int32_t iImage, point pt, i
    if(alpha == 255)
       return draw(pgraphics, iImage, pt, iFlag);
 
-   return System.visual().imaging().color_blend(pgraphics, pt, m_size, m_spdib->get_graphics(), point(iImage * m_size.cx, 0), alpha / 255.0);
+   return Application.imaging().color_blend(pgraphics, pt, m_size, m_spdib->get_graphics(), point(iImage * m_size.cx, 0), alpha / 255.0);
 
 }
 

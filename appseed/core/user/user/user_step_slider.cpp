@@ -104,7 +104,7 @@ namespace user
 
       rect rectClient;
       GetClientRect(rectClient);
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
 
       byte bAlpha = (byte) (128.0 * get_alpha());
 

@@ -113,7 +113,7 @@ inline simple_string::simple_string(const char* pchSrc,strsize nLength,string_ma
    ENSURE( pstringmanager != NULL );
 
    if(pchSrc == NULL && nLength != 0)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    if(nLength < 0)
       nLength = (strsize) strlen(pchSrc);
@@ -140,7 +140,7 @@ inline const char & simple_string::operator [](strsize iChar ) const
    //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
 
    //if( (iChar < 0) || (iChar > get_length()) )
-   // throw invalid_argument_exception(get_thread_app());
+   // throw new invalid_argument_exception(get_app());
 
    return m_pszData[iChar];
 
@@ -149,7 +149,7 @@ inline char simple_string::get_at(strsize iChar ) const
 {
    //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
    //if( (iChar < 0) || (iChar > get_length()) )
-   // throw invalid_argument_exception(get_thread_app());
+   // throw new invalid_argument_exception(get_app());
 
    return m_pszData[iChar];
 }
@@ -160,7 +160,7 @@ inline   void simple_string::set_at(strsize iChar,char ch )
    ASSERT( (iChar >= 0) && (iChar < get_length()) );
 
    if( (iChar < 0) || (iChar >= get_length()) )
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    strsize nLength = get_length();
    char * pszBuffer = GetBuffer();
@@ -185,7 +185,7 @@ inline void simple_string::SetString(const char * pszSrc,strsize nLength )
       // into the newly allocated buffer instead.
 
       if(pszSrc == NULL)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       uint_ptr nOldLength = (uint_ptr) get_length();
       uint_ptr nOffset = (uint_ptr) (pszSrc - GetString());
@@ -221,7 +221,7 @@ inline void string_file::set_length(strsize nLength )
    ASSERT( nLength <= m_nBufferLength );
 
    if( nLength < 0 )
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    m_nLength = nLength;
 }
@@ -1060,3 +1060,52 @@ inline string & string::operator = (String ^ & str)
 
 
 #endif
+
+
+
+inline bool string_format::defer_get_additional_argument(const char * & s)
+{
+   
+   throw new simple_exception(get_app(), "missing argument value");
+   
+}
+
+
+template < typename T, typename... Args>
+inline void string_format::defer_get_additional_argument(const char * & s, const T & value, Args... args)
+{
+   
+   if(m_estate == state_initial || m_estate == state_parse_precision || m_estate == state_parse_length)
+   {
+      
+      if(!parse(s))
+      {
+         
+         ::str::format_type(this, value);
+         
+         m_estate = state_initial;
+         
+         format(s, args...);
+         
+         return;
+         
+      }
+      
+   }
+   
+   if(m_estate == state_waiting_width)
+   {
+      
+      throw new simple_exception(get_app(), "width should plain int32_t");
+      
+   }
+   else if(m_estate == state_waiting_precision)
+   {
+      
+      throw new simple_exception(get_app(), "width should plain int32_t");
+      
+   }
+   
+   defer_get_additional_argument(s, args...);
+   
+}

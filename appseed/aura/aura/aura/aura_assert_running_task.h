@@ -19,7 +19,7 @@ namespace aura
       virtual ~assert_running_task();
 
 
-      virtual int32_t run();
+      virtual void run() override;
 
 
    };

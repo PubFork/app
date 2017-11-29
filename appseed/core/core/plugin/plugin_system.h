@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace plugin

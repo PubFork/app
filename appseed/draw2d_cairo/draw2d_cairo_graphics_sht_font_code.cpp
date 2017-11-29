@@ -2,12 +2,12 @@
       if(g_iFtLevel < 0)
       {
 
-         strPath = Sys(get_app()).dir().element() / "app/appmatter/main/_std/_std/font/truetype/arialuni.ttf";
+         strPath = System.dir().element() / "app/appmatter/main/_std/_std/font/truetype/arialuni.ttf";
 
          if(g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(),strPath,0,&g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(),strPath,0,&g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 
@@ -25,7 +25,7 @@
          if(g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(),strPath,0,&g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(),strPath,0,&g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 
@@ -44,7 +44,7 @@
          if(g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(),strPath,0,&g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(),strPath,0,&g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 
@@ -63,7 +63,7 @@
          if(g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(),strPath,0,&g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(),strPath,0,&g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 
@@ -81,7 +81,7 @@
          if(g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(),strPath,0,&g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(),strPath,0,&g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 
@@ -99,7 +99,7 @@
          if (g_ft == NULL)
          {
 
-            iError = FT_New_Face((FT_Library)Sys(get_app()).ftlibrary(), strPath, 0, &g_ft);
+            iError = FT_New_Face((FT_Library)System.ftlibrary(), strPath, 0, &g_ft);
 
             iError = FT_Select_Charmap(g_ft, /* target face object */ FT_ENCODING_UNICODE); /* encoding */
 

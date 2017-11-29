@@ -17,7 +17,7 @@ bool launcher::start()
 
 #ifdef METROWIN
 
-   throw "todo";
+   throw new "todo";
 
 #else
 

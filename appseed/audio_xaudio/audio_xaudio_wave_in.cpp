@@ -33,7 +33,7 @@ namespace multimedia
       bool wave_in::initialize_thread()
       {
          
-         TRACE("wave_in::initialize_instance %X\n", get_os_int());
+         TRACE("wave_in::init_instance %X\n", get_os_int());
          
          //SetMainWnd(NULL);
 

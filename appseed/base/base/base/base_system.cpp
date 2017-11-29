@@ -199,7 +199,7 @@ namespace base
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_iErrorCode = -2;
 
       }
 
@@ -209,7 +209,7 @@ namespace base
 
 
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -826,7 +826,7 @@ error:
 
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
 #ifndef WINDOWS
@@ -848,10 +848,10 @@ error:
       //}
 
 
-      if (!::base::application::process_initialize())
+      if (!::base::application::process_init())
          return false;
 
-      if (!::axis::system::process_initialize())
+      if (!::axis::system::process_init())
          return false;
 
 

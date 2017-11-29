@@ -220,10 +220,10 @@ namespace aura
       virtual ~system();
 
 
-      virtual bool initialize_application() override;
-      virtual int32_t exit_application() override;
+      virtual bool init_application() override;
+      virtual void term_application() override;
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
       application_ptra                                get_appptra();
 
@@ -337,13 +337,13 @@ namespace aura
 
       virtual UINT os_post_to_all_threads(UINT uiMessage,WPARAM wparam = 0,lparam lparam = 0);
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
-      virtual bool initialize() override;
+      virtual bool init() override;
 
-      virtual bool initialize1() override;
+      virtual bool init1() override;
 
-      virtual bool initialize2() override;
+      virtual bool init2() override;
 
 
       //virtual bool verb();

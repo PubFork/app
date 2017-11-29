@@ -83,7 +83,7 @@ namespace simple_ui
       {
 
       pgraphics->blur(true, 4, rectClient);
-      //class imaging & imaging = System.visual().imaging();
+      //class imaging & imaging = Application.imaging();
       //rect rectClient;
       //         GetWindowRect(rectClient);
       //       rectClient.offset(rectClient.top_left());
@@ -115,7 +115,7 @@ namespace simple_ui
       /*}
       else
       {
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
       //_001DrawBackground(pgraphics, rectClipBox);
       imaging.color_blend(
       pgraphics,

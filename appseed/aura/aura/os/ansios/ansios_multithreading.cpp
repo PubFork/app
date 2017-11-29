@@ -569,7 +569,7 @@ int32_t GetWorkItemPriority(int32_t nPriority)
 //         info.lpStartAddress     = lpStartAddress;
 //         info.lpParameter        = lpParameter;
 //         info.m_hthread    = threadHandle;
-//         info.suspensionEvent    = new event(get_thread_app(),false,true);
+//         info.suspensionEvent    = new event(get_app(),false,true);
 //         info.nPriority = 0;
 //
 //         synch_lock lock(g_pmutexPendingThreadsLock);

@@ -192,7 +192,7 @@ extern thread_int_ptr < HTHREAD > currentThread;
 //         info.m_pv                  = pv;
 //         info.m_hthread             = threadHandle;
 //         info.m_peventCompletion    = threadHandle->m_pevent;
-//         info.m_peventSuspension    = new manual_reset_event(get_thread_app());
+//         info.m_peventSuspension    = new manual_reset_event(get_app());
 //         info.m_iPriority           = 0;
 //
 //         synch_lock lock(g_pmutexPendingThreadsLock);

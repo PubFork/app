@@ -29,7 +29,7 @@ multi_lock::multi_lock(const sync_object_ptra & syncobjectptra,bool bInitialLock
    if(syncobjectptra.get_count() <= 0)
    {
 
-      throw invalid_argument_exception(::get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    }
 
@@ -46,7 +46,7 @@ multi_lock::multi_lock(const sync_object_ptra & syncobjectptra,bool bInitialLock
       if(m_syncobjectptra[i] == NULL)
       {
 
-         throw invalid_argument_exception(::get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       }
 
@@ -82,7 +82,7 @@ multi_lock::multi_lock(::count c, const sync_object_ptra & syncobjectptra, bool 
    if (syncobjectptra.get_count() <= 0 || c <= 0 || c > syncobjectptra.get_count())
    {
 
-      throw invalid_argument_exception(::get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    }
 
@@ -105,7 +105,7 @@ multi_lock::multi_lock(::count c, const sync_object_ptra & syncobjectptra, bool 
       if (m_syncobjectptra[i] == NULL)
       {
 
-         throw invalid_argument_exception(::get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       }
 

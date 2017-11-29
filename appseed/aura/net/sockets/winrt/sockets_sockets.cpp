@@ -17,7 +17,7 @@ namespace sockets
    }
 
 
-   bool sockets::initialize1()
+   bool sockets::init1()
    {
 
       m_spnet = canew(::sockets::net(get_app()));
@@ -26,7 +26,7 @@ namespace sockets
       if(m_spnet.is_null())
       {
 
-         m_iReturnCode = -1986;
+         m_iErrorCode = -1986;
 
          return false;
 
@@ -78,7 +78,7 @@ namespace sockets
    {
       UNREFERENCED_PARAMETER(pszUrl);
       //UNREFERENCED_PARAMETER(psocket);
-      //throw not_implemented(get_app());
+      //throw new not_implemented(get_app());
       psocket->m_bDirect = true;
    }
 

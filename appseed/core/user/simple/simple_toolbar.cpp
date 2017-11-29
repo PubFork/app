@@ -207,7 +207,7 @@ size simple_toolbar::CalcSimpleLayout()
 
 #else
 
-   throw todo(get_app());
+   throw new todo(get_app());
 
 #endif
 
@@ -296,7 +296,7 @@ void simple_toolbar::TransparentEraseNonClient(::draw2d::graphics * pgraphics)
    rectWindow.offset(-rectWindow.top_left());
    if (m_bTransparentBackground)
    {
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
       if (m_iHover >= -1)
       {
          imaging.color_blend(
@@ -805,7 +805,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             if ((m_dwCtrlStyle & TBSTYLE_FLAT) == TBSTYLE_FLAT)
             {
-               System.visual().imaging().color_blend(
+               Application.imaging().color_blend(
                   pgraphics,
                   rectItem.left,
                   rectItem.top,
@@ -871,7 +871,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
                _001GetElementRect(iItem, rect, ElementImageHover);
 
-               System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
+               Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.84);
 
             }
             else if (uiImage != 0xffffffffu)
@@ -919,7 +919,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             _001GetElementRect(iItem, rect, ElementImagePress);
 
-            System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
+            Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 1.0);
 
          }
          else if (uiImage != 0xffffffff)
@@ -956,7 +956,7 @@ void simple_toolbar::_001DrawSimpleToolbarItem(::draw2d::graphics * pgraphics, i
 
             _001GetElementRect(iItem, rect, element_image);
 
-            System.visual().imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
+            Application.imaging().color_blend(pgraphics, rect.top_left(), rect.size(), item.m_spdib->get_graphics(), null_point(), 0.23);
 
          }
          else if (uiImage != 0xffffffff)
@@ -1161,7 +1161,7 @@ void simple_toolbar::SetSizes(SIZE sizeButton, SIZE sizeImage)
 //      VERIFY(send_message(TB_SETBITMAPSIZE, 0, MAKELONG(sizeImage.cx, sizeImage.cy)));
 //      VERIFY(send_message(TB_SETBUTTONSIZE, 0, MAKELONG(sizeButton.cx, sizeButton.cy)));
 //#else
-//      //throw todo(get_app());
+//      //throw new todo(get_app());
 //#endif
 //
 //      Invalidate();   // just to be nice if called when toolbar is visible
@@ -1621,7 +1621,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    spgraphics->CreateDC("DISPLAY", NULL, NULL, NULL);
 
-   System.visual().imaging().CreateHueImageList(
+   Application.imaging().CreateHueImageList(
       &spgraphics,
       m_pimagelistHue,
       m_pimagelist,
@@ -1636,7 +1636,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    }
 
-   System.visual().imaging().Createcolor_blend_ImageList(
+   Application.imaging().Createcolor_blend_ImageList(
       m_pimagelistBlend,
       m_pimagelist,
       RGB(255, 255, 240),
@@ -1650,7 +1650,7 @@ void simple_toolbar::_001OnImageListAttrib()
 
    }
 
-   System.visual().imaging().CreateHueImageList(
+   Application.imaging().CreateHueImageList(
       &spgraphics,
       m_pimagelistHueLight,
       m_pimagelist,
@@ -1843,7 +1843,7 @@ void simple_toolbar::_001OnNcCalcSize(::message::message * pobj)
 
 #else
 
-   throw todo(get_app());
+   throw new todo(get_app());
 
 #endif
 

@@ -40,7 +40,7 @@ void simple_status_bar::_001OnDraw(::draw2d::graphics * pgraphics)
 //
 //   
 //
-//   class imaging & imaging = System.visual().imaging();
+//   class imaging & imaging = Application.imaging();
 //#ifdef WINDOWSEX
 //   imaging.color_blend(
 //      pgraphics,

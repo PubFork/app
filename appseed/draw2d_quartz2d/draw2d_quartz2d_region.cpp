@@ -91,7 +91,7 @@ namespace draw2d_quartz2d
       else if(m_etype == ::draw2d::region::type_combine)
       {
          
-         throw simple_exception(get_app(), "not supported");
+         throw new simple_exception(get_app(), "not supported");
          
       }
       
@@ -181,7 +181,7 @@ namespace draw2d_quartz2d
          case type_combine:
             return get_combine(pgraphics);
          default:
-            throw not_implemented(get_app());
+            throw new not_implemented(get_app());
       }
       
       return false;

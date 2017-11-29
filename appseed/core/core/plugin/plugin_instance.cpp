@@ -3,7 +3,7 @@
 //#include "plugin_instance.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 ::hotplugin::plugin * new_hotplugin(::aura::application * papp);

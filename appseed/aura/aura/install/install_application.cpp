@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #define ID_ONE 1
 
@@ -96,7 +96,7 @@ namespace install
       if (m_spmutexAppInstall->already_exists())
       {
 
-         m_iReturnCode = -202;
+         m_error.m_iaErrorCode.add(-202);
 
          return false;
 
@@ -113,7 +113,7 @@ namespace install
       if (!m_rxchannel.create(strChannel))
       {
 
-         m_iReturnCode = -1;
+         m_error.m_iaErrorCode.add(-1);
 
          return false;
 
@@ -124,7 +124,7 @@ namespace install
    }
 
 
-   bool application::start_instance()
+   bool application::init_instance()
    {
 
       defer_show_debug_box();
@@ -253,7 +253,9 @@ namespace install
 
          m_strInstallTraceLabel = "install-" + System.get_system_configuration() + "-" + ::str::from(OSBIT);
 
-         m_iReturnCode = app_app_main();
+         //m_iErrorCode = app_app_main();
+         
+         app_app_main();
 
       }
 
@@ -265,7 +267,7 @@ namespace install
 
       {
 
-         ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+         ::mutex mutexCommandFile(get_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
 
          ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
 
@@ -288,7 +290,7 @@ namespace install
    string application::pick_command_line()
    {
 
-      ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+      ::mutex mutexCommandFile(get_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
 
       ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
 
@@ -392,7 +394,7 @@ namespace install
    }
 
 
-   int application::app_app_main()
+   void application::app_app_main()
    {
 
       ::install::mutex mutex(process_platform_dir_name2());
@@ -402,7 +404,9 @@ namespace install
 
          add_command_line(System.os().get_command_line());
 
-         return -34;
+         m_error.m_iaErrorCode.add(-34);
+         
+         return;
 
       }
 
@@ -414,7 +418,7 @@ namespace install
          if (check_soon_launch(str, true, m_dwInstallGoodToCheckAgain))
          {
 
-            return 0;
+            return;
 
          }
 
@@ -424,8 +428,10 @@ namespace install
 
       if (!show_window())
       {
+         
+         m_error.m_iaErrorCode.add(-1);
 
-         return -1;
+         return;
 
       }
 
@@ -434,13 +440,15 @@ namespace install
       if (!start_app_app(process_platform_dir_name2()))
       {
 
-         return -2;
+         m_error.m_iaErrorCode.add(-2);
+         
+         return;
 
       }
 
       m_pwindow->main();
 
-      return m_iReturnCode;
+      //return m_iErrorCode;
 
    }
 
@@ -454,7 +462,7 @@ namespace install
 
       m_bootstrap[strPlatform] = new bootstrap(this);
 
-      m_bootstrap[strPlatform]->m_pthreadInstall = ::fork(this, [=]()
+      m_bootstrap[strPlatform]->m_pthreadInstall = fork([=]()
       {
 
 #ifdef WINDOWS
@@ -470,11 +478,21 @@ namespace install
          try
          {
 
-            m_iReturnCode = m_bootstrap[strPlatform]->install();
+            
+            int iErrorCode = m_bootstrap[strPlatform]->install();
+            
+            if(iErrorCode != 0)
+            {
+            
+               m_error.m_iaErrorCode.add(iErrorCode);
+               
+            }
 
          }
          catch (...)
          {
+            
+            m_error.m_iaErrorCode.add(-1);
 
          }
 
@@ -482,11 +500,11 @@ namespace install
 
          m_bFinished = true;
 
-         return m_iReturnCode;
+         //return m_iErrorCode;
 
       });
 
-      return 1;
+//      return 1;
 
    }
 
@@ -583,7 +601,7 @@ namespace install
    bool application::is_user_service_running()
    {
 
-      ::mutex mutex(get_thread_app(), "Local\\ca2_application_local_mutex:application-core/user_service");
+      ::mutex mutex(get_app(), "Local\\ca2_application_local_mutex:application-core/user_service");
 
       return mutex.already_exists();
 
@@ -801,10 +819,10 @@ namespace install
    }
 
 
-   int32_t application::exit_application()
+   void application::term_instance()
    {
 
-      ::aura::application::exit_application();
+      ::aura::application::term_instance();
 
 
       if(m_pwindow != NULL)
@@ -981,6 +999,5 @@ DWORD install_status::calc_when_is_good_to_check_again()
    return dwGoodToCheckAgain;
 
 }
-
 
 

@@ -23,12 +23,12 @@ namespace simpledb
       strMetaPath = System.dir().element() / "database" / m_pdatabase->getDatabase() / m_strName/ "meta.xml";
 
       if(!m_spfileMeta->open(strMetaPath, ::file::type_binary | ::file::mode_read_write | ::file::share_exclusive))
-         throw 0;
+         throw new 0;
 
       ::file::istream is(m_spfileMeta);
 
       if(!m_xmldocumentMeta.load(is))
-         throw 0;
+         throw new 0;
 
       sp(::xml::node) pfields = m_xmldocumentMeta.get_root()->get_child("fields");
 
@@ -48,7 +48,7 @@ namespace simpledb
 
       if(!m_spfileFixed->open(strMetaPath, ::file::mode_create | ::file::mode_no_truncate | ::file::type_binary | ::file::mode_read_write | ::file::share_exclusive |
          ::file::defer_create_directory))
-         throw 0;
+         throw new 0;
 
    }
 

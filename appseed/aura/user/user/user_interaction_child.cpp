@@ -438,7 +438,7 @@ namespace user
 //   {
 //#ifdef METROWIN
 //
-//      throw todo(get_thread_app());
+//      throw new todo(get_app());
 //
 //#else
 //
@@ -461,7 +461,7 @@ namespace user
 //
 //#else
 //
-//      throw todo(get_thread_app());
+//      throw new todo(get_app());
 //
 //#endif
 //
@@ -480,7 +480,7 @@ namespace user
 //
 //#else
 //
-//         throw todo(get_thread_app());
+//         throw new todo(get_app());
 //
 //#endif
 //

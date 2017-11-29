@@ -19,7 +19,7 @@ event_collection::event_collection(::aura::application * papp) :
 //{
 //	if ( m_objecta.size() > MAXIMUM_WAIT_OBJECTS ) {
 //		m_objecta.clear();
-//		throw invalid_argument_exception("event_collection: too many wait objects");
+//		throw new invalid_argument_exception("event_collection: too many wait objects");
 //	}
 //}
 
@@ -116,7 +116,7 @@ void event_collection::remove(index index)
 {
 
    if ( index > m_objecta.size() )
-      throw range_error(get_app(), "event_collection::remove: index out of bounds");
+      throw new range_error(get_app(), "event_collection::remove: index out of bounds");
 
    if(m_waitableelementa[index].callback!=0)
       callback_cnt--;
@@ -249,7 +249,7 @@ wait_result event_collection::wait(bool waitForAll, const duration & duration)
 wait_result event_collection::find_next( const wait_result& result ) const
 {
    if ( !result.abandoned() && !result.signaled() )
-      throw range_error(get_app(), "no element signaled");
+      throw new range_error(get_app(), "no element signaled");
 
    index position = result.abandoned() ? result.abandoned_index() : result.signaled_index();
    for ( ++position; position<m_objecta.get_size(); ++position ) {
@@ -269,7 +269,7 @@ wait_result event_collection::find_next( const wait_result& result ) const
 event_collection::event_collection( const event_collection& )
 {
 
-   throw void_implementation_exception(get_app());
+   throw new void_implementation_exception(get_app());
 
 }
 
@@ -277,7 +277,7 @@ event_collection::event_collection( const event_collection& )
 const event_collection& event_collection::operator=( const event_collection& )
 {
 
-    throw void_implementation_exception(get_app());
+    throw new void_implementation_exception(get_app());
 
    return *this;
 

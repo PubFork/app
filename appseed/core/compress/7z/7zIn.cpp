@@ -106,7 +106,7 @@ bool CFolder::CheckStructure() const
 
 class CInArchiveException {};
 
-static void ThrowException() { throw CInArchiveException(); }
+static void ThrowException() { throw new CInArchiveException(); }
 static inline void ThrowEndOfData()   { ThrowException(); }
 static inline void ThrowUnsupported() { ThrowException(); }
 static inline void ThrowIncorrect()   { ThrowException(); }
@@ -126,7 +126,7 @@ public:
   CInArchiveException(CCauseType cause): Cause(cause) {};
 };
 
-static void ThrowException(CInArchiveException::CCauseType ca) { throw CInArchiveException(ca); }
+static void ThrowException(CInArchiveException::CCauseType ca) { throw new CInArchiveException(ca); }
 static void ThrowEndOfData()   { ThrowException(CInArchiveException::kEndOfData); }
 static void ThrowUnsupported() { ThrowException(CInArchiveException::kUnsupported); }
 static void ThrowIncorrect()   { ThrowException(CInArchiveException::kIncorrect); }
@@ -841,7 +841,7 @@ HRESULT CInArchive::ReadAndDecodePackedStreams(
       ThrowUnsupported();
     data.SetCapacity(unpackSize);
 
-    throw "should implement below";
+    throw new "should implement below";
     /*CBufPtrSeqOutStream *outStreamSpec = new CBufPtrSeqOutStream;
     smart_pointer<::file::writer> outStream = outStreamSpec;
     outStreamSpec->Init(data, unpackSize);

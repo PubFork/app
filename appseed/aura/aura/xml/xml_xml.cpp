@@ -28,15 +28,15 @@ namespace xml
    }
 
 
-   bool department::initialize1()
+   bool department::init1()
    {
 
       if(Application.is_system())
       {
-         Sys(get_app()).factory().cloneable_large < edit_item > ();
+         System.factory().cloneable_large < edit_item > ();
       }
 
-      if(!::aura::department::initialize1())
+      if(!::aura::department::init1())
          return false;
 
       m_poptionDefault     = new disp_option(get_app());

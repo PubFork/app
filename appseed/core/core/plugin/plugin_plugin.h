@@ -14,7 +14,7 @@ namespace core
 }
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace plugin

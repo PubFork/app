@@ -194,7 +194,7 @@
             {
                log("listen", Errno, bsd_socket_error(Errno), ::ca::log::level_fatal);
                ::closesocket(s);
-               throw simple_exception(get_app(), "listen() failed for port " + ::ca::str::from(ad.GetPort()) + ": " + bsd_socket_error(Errno));
+               throw new simple_exception(get_app(), "listen() failed for port " + ::ca::str::from(ad.GetPort()) + ": " + bsd_socket_error(Errno));
                return -1;
             }*/
             m_depth = depth;

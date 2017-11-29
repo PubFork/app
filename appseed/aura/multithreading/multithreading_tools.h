@@ -25,7 +25,7 @@ public:
 
    tool_thread(::thread_tools * ptools);
 
-   virtual int run() override;
+   virtual void run() override;
 
    //bool set_tool(::thread_tool * ptool);
    bool set_pred(::pred_holder_base * ppred);

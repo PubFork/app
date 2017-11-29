@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 
@@ -71,11 +71,11 @@ namespace sockets
 
          virtual ~socket_thread();
 
-         virtual bool initialize_thread() override;
+         virtual bool init_thread() override;
 
          sp(base_socket) get_socket() const { return m_spsocket; }
 
-         virtual int run() override;
+         virtual void run() override;
 
       };
 

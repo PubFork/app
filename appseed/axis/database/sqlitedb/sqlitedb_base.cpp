@@ -118,22 +118,22 @@ namespace sqlite
          if(setErr(sqlite3_exec((sqlite3 *) getHandle(),"PRAGMA empty_result_callbacks=ON",NULL,NULL,&err)) != SQLITE_OK)
          {
             fprintf(stderr,"Error: %s",err);
-            throw database::DbErrors(getErrorMsg());
+            throw new database::DbErrors(getErrorMsg());
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA cache_size=-20000", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            throw new database::DbErrors(getErrorMsg());
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA synchronous=OFF", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            throw new database::DbErrors(getErrorMsg());
          }
          if (setErr(sqlite3_exec((sqlite3 *)getHandle(), "PRAGMA temp_store=MEMORY", NULL, NULL, &err)) != SQLITE_OK)
          {
             fprintf(stderr, "Error: %s", err);
-            throw database::DbErrors(getErrorMsg());
+            throw new database::DbErrors(getErrorMsg());
          }
          active = true;
          return DB_CONNECTION_OK;

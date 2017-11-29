@@ -166,52 +166,11 @@ public:
    bool parse(const char * & s);
 
 
-   inline bool defer_get_additional_argument(const char * & s)
-   {
-
-      throw "missing argument value";
-
-   }
+   inline bool defer_get_additional_argument(const char * & s);
 
 
    template < typename T, typename... Args>
-   inline void defer_get_additional_argument(const char * & s, const T & value, Args... args)
-   {
-
-      if(m_estate == state_initial || m_estate == state_parse_precision || m_estate == state_parse_length)
-      {
-
-         if(!parse(s))
-         {
-
-            ::str::format_type(this, value);
-
-            m_estate = state_initial;
-
-            format(s, args...);
-
-            return;
-
-         }
-
-      }
-
-      if(m_estate == state_waiting_width)
-      {
-
-         throw "width should plain int32_t";
-
-      }
-      else if(m_estate == state_waiting_precision)
-      {
-
-         throw "width should plain int32_t";
-
-      }
-
-      defer_get_additional_argument(s, args...);
-
-   }
+   inline void defer_get_additional_argument(const char * & s, const T & value, Args... args);
 
    template < typename T, typename... Args>
    inline void defer_get_additional_argument(const char * & s, const int32_t & value, Args... args)

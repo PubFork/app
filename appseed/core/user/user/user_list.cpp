@@ -2297,7 +2297,7 @@ namespace user
 
 //         return;
 
-//         throw "subitem rectangle on icon view? why are you asking for that now?";
+//         throw new "subitem rectangle on icon view? why are you asking for that now?";
 
       }
 

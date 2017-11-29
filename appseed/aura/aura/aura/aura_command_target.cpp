@@ -117,7 +117,7 @@ void command_target::_001OnCmdMsg(::user::command * pcommand)
    else
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
    }
 

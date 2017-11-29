@@ -361,7 +361,7 @@ string normalize_path(const char * lpcszPath)
 
 string key_to_char(WPARAM wparam, LPARAM lparam)
 {
-   throw "todo";
+   throw new "todo";
 }
 
 

@@ -1,11 +1,13 @@
 ﻿#include "framework.h"
 
 
-#ifdef LINUX
+//#if defined()
+
+//#ifdef LINUX
 
 //#include <unistd.h>
 
-#endif
+//#endif
 
 
 
@@ -110,9 +112,6 @@ string url_query_param(int32_t & iParam, const char * pszParam)
       return str + pszParam;
    }
 }
-
-
-
 
 
 

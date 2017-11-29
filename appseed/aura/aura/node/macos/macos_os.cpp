@@ -77,7 +77,7 @@ namespace macos
        AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
        return retval;*/
 
-    //  throw not_implemented(get_app());
+    //  throw new not_implemented(get_app());
       return false;
 
    }
@@ -138,14 +138,14 @@ namespace macos
       /*    tkp.Privileges[0].Attributes = 0;
        AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
        return true;*/
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
    }
 
    void os::terminate_processes_by_title(const char * pszName)
    {
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       return;
 
       /*      DWORD dwPid;
@@ -229,7 +229,7 @@ namespace macos
 
        CloseHandle( hProcess );
        return strName;*/
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return "";
 
    }
@@ -237,7 +237,7 @@ namespace macos
    void os::get_all_processes(uint_array & dwa )
    {
 
-    //  throw not_implemented(get_app());
+    //  throw new not_implemented(get_app());
       return;
 
       /*
@@ -261,7 +261,7 @@ namespace macos
 
    bool os::connection_settings_get_auto_detect()
    {
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       return false;
 
       /*
@@ -284,7 +284,7 @@ namespace macos
    string os::connection_settings_get_auto_config_url()
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       return "";
       /*
        registry::Key key;
@@ -302,7 +302,7 @@ namespace macos
    bool os::local_machine_set_run(const char * pszKey, const char * pszCommand)
    {
 
- //     throw not_implemented(get_app());
+ //     throw new not_implemented(get_app());
       return false;
 
       /*
@@ -321,7 +321,7 @@ namespace macos
    {
 
 
- //     throw not_implemented(get_app());
+ //     throw new not_implemented(get_app());
       return false;
       /*    registry::Key keyKar(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
 
@@ -336,7 +336,7 @@ namespace macos
    bool os::current_user_set_run(const char * pszKey, const char * pszCommand)
    {
 
-   //   throw not_implemented(get_app());
+   //   throw new not_implemented(get_app());
       return false;
 
       /*
@@ -353,7 +353,7 @@ namespace macos
    bool os::current_user_set_run_once(const char * pszKey, const char * pszCommand)
    {
 
- //    throw not_implemented(get_app());
+ //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -370,7 +370,7 @@ namespace macos
 
    bool os::defer_register_ca2_plugin_for_mozilla()
    {
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -409,7 +409,7 @@ namespace macos
 
    bool os::file_extension_get_open_with_list_keys(stringa & straKey, const char * pszExtension)
    {
-   //   throw not_implemented(get_app());
+   //   throw new not_implemented(get_app());
       return false;
 
       /*
@@ -448,7 +448,7 @@ namespace macos
    bool os::file_association_set_default_icon(const char * pszExtension, const char * pszExtensionNamingClass, const char * pszIconPath)
    {
 
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -465,7 +465,7 @@ namespace macos
 
    bool os::file_association_set_shell_open_command(const char * pszExtension, const char * pszExtensionNamingClass,  const char * pszCommand, const char * pszParam)
    {
-   //   throw not_implemented(get_app());
+   //   throw new not_implemented(get_app());
       return false;
 
       /*
@@ -497,7 +497,7 @@ namespace macos
 
    bool os::file_association_get_shell_open_command(const char * pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
    {
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -541,7 +541,7 @@ namespace macos
    bool os::open_in_ie(const char * lpcsz)
    {
 
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*    registry reg;
@@ -590,7 +590,7 @@ namespace macos
    bool os::create_service(sp(::aura::application) papp)
    {
 
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -642,7 +642,7 @@ namespace macos
 
    bool os::remove_service(sp(::aura::application) papp)
    {
-   //   throw not_implemented(get_app());
+   //   throw new not_implemented(get_app());
       return false;
 
       /*
@@ -683,7 +683,7 @@ namespace macos
 
    bool os::start_service(sp(::aura::application) papp)
    {
-    //  throw not_implemented(get_app());
+    //  throw new not_implemented(get_app());
       return false;
 
       /*
@@ -724,7 +724,7 @@ namespace macos
 
    bool os::stop_service(sp(::aura::application) papp)
    {
-  //    throw not_implemented(get_app());
+  //    throw new not_implemented(get_app());
       return false;
 
       /*
@@ -772,7 +772,7 @@ namespace macos
    bool os::resolve_link(string & strTarget, string & strFolder, string & strParams, const string & strSource, ::user::primitive * puiMessageParentOptional)
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       
       strTarget = strSource;
       
@@ -785,7 +785,7 @@ namespace macos
    void os::raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags)
    {
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       return;
       /*
        RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
@@ -795,7 +795,7 @@ namespace macos
    bool os::is_remote_session()
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       return false;
       /*
        return GetSystemMetrics(SM_REMOTESESSION) != FALSE;
@@ -814,7 +814,7 @@ namespace macos
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-//      throw not_implemented(get_app());
+//      throw new not_implemented(get_app());
       return;
 
    }

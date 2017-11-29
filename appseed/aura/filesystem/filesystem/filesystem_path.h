@@ -81,7 +81,7 @@ namespace file
          //path(const var & var,e_path epath = path_file);
          path(const property & property, e_path epath = path_none, int iDir = -1);
 
-         ~path() throw();
+         ~path() NOTHROW;
 
 
          void set_type(e_path epath);

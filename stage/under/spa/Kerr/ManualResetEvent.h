@@ -13,44 +13,44 @@
 class CHandle
 {
 public:
-	CHandle() throw();
-	CHandle( CHandle& h ) throw();
-	explicit CHandle( HANDLE h ) throw();
-	~CHandle() throw();
+	CHandle() NOTHROW;
+	CHandle( CHandle& h ) NOTHROW;
+	explicit CHandle( HANDLE h ) NOTHROW;
+	~CHandle() NOTHROW;
 
-	CHandle& operator=( CHandle& h ) throw();
+	CHandle& operator=( CHandle& h ) NOTHROW;
 
-	operator HANDLE() const throw();
+	operator HANDLE() const NOTHROW;
 
 	// Attach to an existing handle (takes ownership).
-	void Attach( HANDLE h ) throw();
+	void Attach( HANDLE h ) NOTHROW;
 	// Detach the handle from the object (releases ownership).
-	HANDLE Detach() throw();
+	HANDLE Detach() NOTHROW;
 
 	// Close the handle.
-	void Close() throw();
+	void Close() NOTHROW;
 
 public:
 	HANDLE m_h;
 };
 
-inline CHandle::CHandle() throw() :
+inline CHandle::CHandle() NOTHROW :
 	m_h( NULL )
 {
 }
 
-inline CHandle::CHandle( CHandle& h ) throw() :
+inline CHandle::CHandle( CHandle& h ) NOTHROW :
 	m_h( NULL )
 {
 	Attach( h.Detach() );
 }
 
-inline CHandle::CHandle( HANDLE h ) throw() :
+inline CHandle::CHandle( HANDLE h ) NOTHROW :
 	m_h( h )
 {
 }
 
-inline CHandle::~CHandle() throw()
+inline CHandle::~CHandle() NOTHROW
 {
 	if( m_h != NULL )
 	{
@@ -58,7 +58,7 @@ inline CHandle::~CHandle() throw()
 	}
 }
 
-inline CHandle& CHandle::operator=( CHandle& h ) throw()
+inline CHandle& CHandle::operator=( CHandle& h ) NOTHROW
 {
 	if( this != &h )
 	{
@@ -72,18 +72,18 @@ inline CHandle& CHandle::operator=( CHandle& h ) throw()
 	return( *this );
 }
 
-inline CHandle::operator HANDLE() const throw()
+inline CHandle::operator HANDLE() const NOTHROW
 {
 	return( m_h );
 }
 
-inline void CHandle::Attach( HANDLE h ) throw()
+inline void CHandle::Attach( HANDLE h ) NOTHROW
 {
 //	ATLASSUME( m_h == NULL );
 	m_h = h;  // Take ownership
 }
 
-inline HANDLE CHandle::Detach() throw()
+inline HANDLE CHandle::Detach() NOTHROW
 {
 	HANDLE h;
 
@@ -93,7 +93,7 @@ inline HANDLE CHandle::Detach() throw()
 	return( h );
 }
 
-inline void CHandle::Close() throw()
+inline void CHandle::Close() NOTHROW
 {
 	if( m_h != NULL )
 	{
@@ -107,29 +107,29 @@ class CEvent :
 	public CHandle
 {
 public:
-	CEvent() throw();
-	CEvent( CEvent& h ) throw();
+	CEvent() NOTHROW;
+	CEvent( CEvent& h ) NOTHROW;
 	CEvent( BOOL bManualReset, BOOL bInitialState );
 	CEvent( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, BOOL bInitialState, LPCTSTR pszName );
-	explicit CEvent( HANDLE h ) throw();
+	explicit CEvent( HANDLE h ) NOTHROW;
 
 	// Create a new event
-	BOOL Create( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, BOOL bInitialState, LPCTSTR pszName ) throw();
+	BOOL Create( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, BOOL bInitialState, LPCTSTR pszName ) NOTHROW;
 	// Open an existing named event
-	BOOL Open( DWORD dwAccess, BOOL bInheritHandle, LPCTSTR pszName ) throw();
+	BOOL Open( DWORD dwAccess, BOOL bInheritHandle, LPCTSTR pszName ) NOTHROW;
 	// Pulse the event (signals waiting objects, then resets)
-	BOOL Pulse() throw();
+	BOOL Pulse() NOTHROW;
 	// Set the event to the non-signaled state
-	BOOL Reset() throw();
+	BOOL Reset() NOTHROW;
 	// Set the event to the signaled state
-	BOOL Set() throw();
+	BOOL Set() NOTHROW;
 };
 
-inline CEvent::CEvent() throw()
+inline CEvent::CEvent() NOTHROW
 {
 }
 
-inline CEvent::CEvent( CEvent& hEvent ) throw() :
+inline CEvent::CEvent( CEvent& hEvent ) NOTHROW :
 	CHandle( hEvent )
 {
 }
@@ -157,12 +157,12 @@ inline CEvent::CEvent( LPSECURITY_ATTRIBUTES pAttributes, BOOL bManualReset, BOO
 }
 
 
-inline CEvent::CEvent( HANDLE h ) throw() :
+inline CEvent::CEvent( HANDLE h ) NOTHROW :
 	CHandle( h )
 {
 }
 
-inline BOOL CEvent::Create( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, BOOL bInitialState, LPCTSTR pszName ) throw()
+inline BOOL CEvent::Create( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, BOOL bInitialState, LPCTSTR pszName ) NOTHROW
 {
 //	ATLASSUME( m_h == NULL );
 
@@ -171,7 +171,7 @@ inline BOOL CEvent::Create( LPSECURITY_ATTRIBUTES pSecurity, BOOL bManualReset, 
 	return( m_h != NULL );
 }
 
-inline BOOL CEvent::Open( DWORD dwAccess, BOOL bInheritHandle, LPCTSTR pszName ) throw()
+inline BOOL CEvent::Open( DWORD dwAccess, BOOL bInheritHandle, LPCTSTR pszName ) NOTHROW
 {
 //	ATLASSUME( m_h == NULL );
 
@@ -179,21 +179,21 @@ inline BOOL CEvent::Open( DWORD dwAccess, BOOL bInheritHandle, LPCTSTR pszName )
 	return( m_h != NULL );
 }
 
-inline BOOL CEvent::Pulse() throw()
+inline BOOL CEvent::Pulse() NOTHROW
 {
 //	ATLASSUME( m_h != NULL );
 
 	return( ::PulseEvent( m_h ) );
 }
 
-inline BOOL CEvent::Reset() throw()
+inline BOOL CEvent::Reset() NOTHROW
 {
 //	ATLASSUME( m_h != NULL );
 
 	return( ::ResetEvent( m_h ) );
 }
 
-inline BOOL CEvent::Set() throw()
+inline BOOL CEvent::Set() NOTHROW
 {
 //	ATLASSUME( m_h != NULL );
 

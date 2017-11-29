@@ -2,7 +2,7 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #undef new
@@ -293,7 +293,7 @@ namespace hotplugin
 
       {
 
-         sp(mutex) pmutex = canew(mutex(get_thread_app(),"Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
+         sp(mutex) pmutex = canew(mutex(get_app(),"Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
 
          if(::GetLastError() == ERROR_ALREADY_EXISTS)
          {
@@ -481,7 +481,7 @@ namespace hotplugin
       try
       {
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
          //::draw2d::bitmap_sp b(allocer());
 
@@ -521,7 +521,7 @@ namespace hotplugin
       try
       {
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
          //simple_bitmap b;
 
@@ -562,7 +562,7 @@ namespace hotplugin
 
       synch_lock ml(m_pmutexBitmap);
 
-      //throw todo(get_app());
+      //throw new todo(get_app());
       //pgraphics.blend_bitmap_data(lprect.left, lprect.top, m_sizeBitmap.cx, m_sizeBitmap.cy, m_pcolorref);
 
       if (m_dib.is_null())

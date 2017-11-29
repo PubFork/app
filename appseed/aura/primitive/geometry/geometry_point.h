@@ -20,69 +20,69 @@ class CLASS_DECL_AURA point : public POINT
       typedef ::size SIZE;
 
       // create an uninitialized point
-      point() throw();
+      point() NOTHROW;
       // create from two integers
-      point(int64_t initX, int64_t initY) throw();
+      point(int64_t initX, int64_t initY) NOTHROW;
       // create from another point
-      point(POINT initPt) throw();
-      point(const POINT * pinitPt) throw();
-      point(POINT64 initPt) throw();
-      point(const POINT64 * pinitPt) throw();
-      point(POINTD initPt) throw();
-      point(const POINTD * pinitPt) throw();
+      point(POINT initPt) NOTHROW;
+      point(const POINT * pinitPt) NOTHROW;
+      point(POINT64 initPt) NOTHROW;
+      point(const POINT64 * pinitPt) NOTHROW;
+      point(POINTD initPt) NOTHROW;
+      point(const POINTD * pinitPt) NOTHROW;
       // create from a size
-      point(SIZE initSize) throw();
+      point(SIZE initSize) NOTHROW;
       // create from an LPARAM: x = LOWORD(dw) y = HIWORD(dw)
-      point(const ::lparam & dwPoint) throw();
+      point(const ::lparam & dwPoint) NOTHROW;
 
 
-      operator POINT *() throw();
-      operator const POINT *() const throw();
+      operator POINT *() NOTHROW;
+      operator const POINT *() const NOTHROW;
 
 // Operations
 
 // translate the point
-      void offset(int32_t xOffset, int32_t yOffset) throw();
-      void offset(POINT point) throw();
-      void offset(SIZE size) throw();
-      void SetPoint(int32_t X, int32_t Y) throw();
+      void offset(int32_t xOffset, int32_t yOffset) NOTHROW;
+      void offset(POINT point) NOTHROW;
+      void offset(SIZE size) NOTHROW;
+      void SetPoint(int32_t X, int32_t Y) NOTHROW;
 
 
-      uint32_t uint32() const throw();
-      uint64_t uint64() const throw();
-      ::lparam lparam() const throw();
+      uint32_t uint32() const NOTHROW;
+      uint64_t uint64() const NOTHROW;
+      ::lparam lparam() const NOTHROW;
 
       operator ::lparam() const { return lparam(); }
 
-      inline LONG get_dimension(e_orientation eorientation) const throw();
-      inline LONG get_orthogonal_dimension(e_orientation eorientation) const throw();
-      inline LONG get_orthogonal(e_orientation eorientation)const throw() { return get_orthogonal_dimension(eorientation); }
-      inline LONG get_normal_dimension(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
-      inline LONG get_normal(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
+      inline LONG get_dimension(e_orientation eorientation) const NOTHROW;
+      inline LONG get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
+      inline LONG get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline LONG get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline LONG get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
-      inline LONG set_dimension(e_orientation eorientation,LONG l) throw();
-      inline LONG set_orthogonal_dimension(e_orientation eorientation,LONG l) throw();
-      inline LONG set_orthogonal(e_orientation eorientation,LONG l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline LONG set_normal_dimension(e_orientation eorientation,LONG l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline LONG set_normal(e_orientation eorientation,LONG l) throw() { return set_orthogonal_dimension(eorientation,l); }
+      inline LONG set_dimension(e_orientation eorientation,LONG l) NOTHROW;
+      inline LONG set_orthogonal_dimension(e_orientation eorientation,LONG l) NOTHROW;
+      inline LONG set_orthogonal(e_orientation eorientation,LONG l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline LONG set_normal_dimension(e_orientation eorientation,LONG l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline LONG set_normal(e_orientation eorientation,LONG l) NOTHROW { return set_orthogonal_dimension(eorientation,l); }
 
 };
 
 
-inline void operator+=(point & p, SIZE size) throw();
-inline bool operator==(const point & p, POINT point) throw();
-inline bool operator!=(const point & p, POINT point) throw();
-inline void operator-=(point & p, SIZE size) throw();
-inline void operator+=(point & p, POINT point) throw();
-inline void operator-=(point & p, POINT point) throw();
-inline point operator+(const point & p, SIZE size) throw();
-inline point operator-(const point & p, SIZE size) throw();
-inline point operator-(const point & p) throw();
-inline point operator+(const point & p, POINT pt) throw();
-inline size operator-(const point & p, POINT  pt) throw();
-inline rect operator+(const point & p, LPCRECT lpRect) throw();
-inline rect operator-(const point & p, LPCRECT lpRect) throw();
-inline bool operator < (const point & p, const point & pt) throw();
+inline void operator+=(point & p, SIZE size) NOTHROW;
+inline bool operator==(const point & p, POINT point) NOTHROW;
+inline bool operator!=(const point & p, POINT point) NOTHROW;
+inline void operator-=(point & p, SIZE size) NOTHROW;
+inline void operator+=(point & p, POINT point) NOTHROW;
+inline void operator-=(point & p, POINT point) NOTHROW;
+inline point operator+(const point & p, SIZE size) NOTHROW;
+inline point operator-(const point & p, SIZE size) NOTHROW;
+inline point operator-(const point & p) NOTHROW;
+inline point operator+(const point & p, POINT pt) NOTHROW;
+inline size operator-(const point & p, POINT  pt) NOTHROW;
+inline rect operator+(const point & p, LPCRECT lpRect) NOTHROW;
+inline rect operator-(const point & p, LPCRECT lpRect) NOTHROW;
+inline bool operator < (const point & p, const point & pt) NOTHROW;
 
 inline point null_point();
 
@@ -105,64 +105,64 @@ class CLASS_DECL_AURA point64 : public POINT64
       typedef ::size64 SIZE;
 
       // create an uninitialized point64
-      point64() throw();
+      point64() NOTHROW;
       // create from two integers
-      point64(int64_t initX, int64_t initY) throw();
+      point64(int64_t initX, int64_t initY) NOTHROW;
       // create from another point64
-      point64(POINT64 initPt) throw();
-      point64(POINT pt) throw();
-      point64(const POINT64 * pinitPt) throw();
+      point64(POINT64 initPt) NOTHROW;
+      point64(POINT pt) NOTHROW;
+      point64(const POINT64 * pinitPt) NOTHROW;
       // create from a size
-      point64(SIZE64 initSize) throw();
+      point64(SIZE64 initSize) NOTHROW;
       // create from an UINT64: x = LODWORD(dw) y = HIDWORD(dw)
-      point64(const ::lparam & dwPoint) throw();
+      point64(const ::lparam & dwPoint) NOTHROW;
 
-      operator POINT64 *() throw();
-      operator const POINT64 *() const throw();
+      operator POINT64 *() NOTHROW;
+      operator const POINT64 *() const NOTHROW;
 
 // Operations
 
 // translate the point64
-      void offset(int64_t xOffset, int64_t yOffset) throw();
-      void offset(POINT64 point64) throw();
-      void offset(SIZE64 size) throw();
-      void SetPoint(int64_t X, int64_t Y) throw();
+      void offset(int64_t xOffset, int64_t yOffset) NOTHROW;
+      void offset(POINT64 point64) NOTHROW;
+      void offset(SIZE64 size) NOTHROW;
+      void SetPoint(int64_t X, int64_t Y) NOTHROW;
 
-      bool operator==(POINT64 point64) const throw();
-      bool operator!=(POINT64 point64) const throw();
-      void operator+=(SIZE64 size) throw();
-      void operator-=(SIZE64 size) throw();
-      void operator+=(POINT64 point64) throw();
-      void operator-=(POINT64 point64) throw();
+      bool operator==(POINT64 point64) const NOTHROW;
+      bool operator!=(POINT64 point64) const NOTHROW;
+      void operator+=(SIZE64 size) NOTHROW;
+      void operator-=(SIZE64 size) NOTHROW;
+      void operator+=(POINT64 point64) NOTHROW;
+      void operator-=(POINT64 point64) NOTHROW;
 
 // Operators returning point64 values
-      point64 operator+(SIZE64 size) const throw();
-      point64 operator-(SIZE64 size) const throw();
-      point64 operator-() const throw();
-      point64 operator+(POINT64 point64) const throw();
+      point64 operator+(SIZE64 size) const NOTHROW;
+      point64 operator-(SIZE64 size) const NOTHROW;
+      point64 operator-() const NOTHROW;
+      point64 operator+(POINT64 point64) const NOTHROW;
 
 // Operators returning size values
-      size64 operator-(POINT64 point64) const throw();
+      size64 operator-(POINT64 point64) const NOTHROW;
 
 // Operators returning rect values
-      rect64 operator+(const RECT64 * lpRect) const throw();
-      rect64 operator-(const RECT64 * lpRect) const throw();
+      rect64 operator+(const RECT64 * lpRect) const NOTHROW;
+      rect64 operator-(const RECT64 * lpRect) const NOTHROW;
 
-      uint32_t ui32() const throw();
-      uint64_t ui64() const throw();
-      LPARAM   lparam() const throw();
+      uint32_t ui32() const NOTHROW;
+      uint64_t ui64() const NOTHROW;
+      LPARAM   lparam() const NOTHROW;
 
-      inline int64_t get_dimension(e_orientation eorientation) const throw();
-      inline int64_t get_orthogonal_dimension(e_orientation eorientation) const throw();
-      inline int64_t get_orthogonal(e_orientation eorientation)const throw() { return get_orthogonal_dimension(eorientation); }
-      inline int64_t get_normal_dimension(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
-      inline int64_t get_normal(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
+      inline int64_t get_dimension(e_orientation eorientation) const NOTHROW;
+      inline int64_t get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
+      inline int64_t get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline int64_t get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline int64_t get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
-      inline int64_t set_dimension(e_orientation eorientation,int64_t l) throw();
-      inline int64_t set_orthogonal_dimension(e_orientation eorientation,int64_t l) throw();
-      inline int64_t set_orthogonal(e_orientation eorientation,int64_t l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline int64_t set_normal_dimension(e_orientation eorientation,int64_t l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline int64_t set_normal(e_orientation eorientation,int64_t l) throw() { return set_orthogonal_dimension(eorientation,l); }
+      inline int64_t set_dimension(e_orientation eorientation,int64_t l) NOTHROW;
+      inline int64_t set_orthogonal_dimension(e_orientation eorientation,int64_t l) NOTHROW;
+      inline int64_t set_orthogonal(e_orientation eorientation,int64_t l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline int64_t set_normal_dimension(e_orientation eorientation,int64_t l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline int64_t set_normal(e_orientation eorientation,int64_t l) NOTHROW { return set_orthogonal_dimension(eorientation,l); }
 
 
 };
@@ -191,67 +191,67 @@ class CLASS_DECL_AURA pointd : public POINTD
       typedef ::sized SIZE;
 
       // create an uninitialized pointd
-      pointd() throw();
+      pointd() NOTHROW;
       // create from two integers
-      pointd(double initX, double initY) throw();
+      pointd(double initX, double initY) NOTHROW;
       // create from another pointd
-      pointd(POINTD initPt) throw();
-      pointd(POINT initPt) throw();
-      pointd(const POINTD * pinitPt) throw();
-      pointd(POINT64 initPt) throw();
-      pointd(const POINT64 * pinitPt) throw();
+      pointd(POINTD initPt) NOTHROW;
+      pointd(POINT initPt) NOTHROW;
+      pointd(const POINTD * pinitPt) NOTHROW;
+      pointd(POINT64 initPt) NOTHROW;
+      pointd(const POINT64 * pinitPt) NOTHROW;
       // create from a sized
-      pointd(SIZED initSize) throw();
+      pointd(SIZED initSize) NOTHROW;
       // create from an LPARAM: x = LOWORD(dw) y = HIWORD(dw)
-      pointd(const ::lparam & dwPoint) throw();
+      pointd(const ::lparam & dwPoint) NOTHROW;
 
 
-      operator POINTD *() throw();
-      operator const POINTD *() const throw();
+      operator POINTD *() NOTHROW;
+      operator const POINTD *() const NOTHROW;
 
 // Operations
 
 // translate the pointd
-      void offset(int32_t xOffset, int32_t yOffset) throw();
-      void offset(POINTD pointd) throw();
-      void offset(SIZED sized) throw();
-      void SetPoint(int32_t X, int32_t Y) throw();
+      void offset(int32_t xOffset, int32_t yOffset) NOTHROW;
+      void offset(POINTD pointd) NOTHROW;
+      void offset(SIZED sized) NOTHROW;
+      void SetPoint(int32_t X, int32_t Y) NOTHROW;
 
-      bool operator==(POINTD pointd) const throw();
-      bool operator!=(POINTD pointd) const throw();
-      void operator+=(SIZED sized) throw();
-      void operator-=(SIZED sized) throw();
-      void operator+=(POINTD pointd) throw();
-      void operator-=(POINTD pointd) throw();
+      bool operator==(POINTD pointd) const NOTHROW;
+      bool operator!=(POINTD pointd) const NOTHROW;
+      void operator+=(SIZED sized) NOTHROW;
+      void operator-=(SIZED sized) NOTHROW;
+      void operator+=(POINTD pointd) NOTHROW;
+      void operator-=(POINTD pointd) NOTHROW;
 
 // Operators returning pointd values
-      pointd operator+(SIZED sized) const throw();
-      pointd operator-(SIZED sized) const throw();
-      pointd operator-() const throw();
-      pointd operator+(POINTD pointd) const throw();
+      pointd operator+(SIZED sized) const NOTHROW;
+      pointd operator-(SIZED sized) const NOTHROW;
+      pointd operator-() const NOTHROW;
+      pointd operator+(POINTD pointd) const NOTHROW;
 
 // Operators returning sized values
-      sized operator-(POINTD pointd) const throw();
+      sized operator-(POINTD pointd) const NOTHROW;
 
 // Operators returning rectd values
-      rectd operator+(LPCRECTD lpRect) const throw();
-      rectd operator-(LPCRECTD lpRect) const throw();
+      rectd operator+(LPCRECTD lpRect) const NOTHROW;
+      rectd operator-(LPCRECTD lpRect) const NOTHROW;
 
-      uint32_t ui32() const throw();
-      uint64_t ui64() const throw();
-      LPARAM   lparam() const throw();
+      uint32_t ui32() const NOTHROW;
+      uint64_t ui64() const NOTHROW;
+      LPARAM   lparam() const NOTHROW;
 
-      inline double get_dimension(e_orientation eorientation) const throw();
-      inline double get_orthogonal_dimension(e_orientation eorientation) const throw();
-      inline double get_orthogonal(e_orientation eorientation)const throw() { return get_orthogonal_dimension(eorientation); }
-      inline double get_normal_dimension(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
-      inline double get_normal(e_orientation eorientation) const throw() { return get_orthogonal_dimension(eorientation); }
+      inline double get_dimension(e_orientation eorientation) const NOTHROW;
+      inline double get_orthogonal_dimension(e_orientation eorientation) const NOTHROW;
+      inline double get_orthogonal(e_orientation eorientation)const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline double get_normal_dimension(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
+      inline double get_normal(e_orientation eorientation) const NOTHROW { return get_orthogonal_dimension(eorientation); }
 
-      inline double set_dimension(e_orientation eorientation,double l) throw();
-      inline double set_orthogonal_dimension(e_orientation eorientation,double l) throw();
-      inline double set_orthogonal(e_orientation eorientation,double l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline double set_normal_dimension(e_orientation eorientation,double l)  throw() { return set_orthogonal_dimension(eorientation,l); }
-      inline double set_normal(e_orientation eorientation,double l) throw() { return set_orthogonal_dimension(eorientation,l); }
+      inline double set_dimension(e_orientation eorientation,double l) NOTHROW;
+      inline double set_orthogonal_dimension(e_orientation eorientation,double l) NOTHROW;
+      inline double set_orthogonal(e_orientation eorientation,double l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline double set_normal_dimension(e_orientation eorientation,double l)  NOTHROW { return set_orthogonal_dimension(eorientation,l); }
+      inline double set_normal(e_orientation eorientation,double l) NOTHROW { return set_orthogonal_dimension(eorientation,l); }
 
 };
 
@@ -260,7 +260,7 @@ inline pointd null_pointd() { return pointd(0.0, 0.0); }
 
 
 
-inline LONG point::get_dimension(e_orientation eorientation) const throw()
+inline LONG point::get_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -277,7 +277,7 @@ inline LONG point::get_dimension(e_orientation eorientation) const throw()
 }
 
 
-inline LONG point::get_orthogonal_dimension(e_orientation eorientation) const throw()
+inline LONG point::get_orthogonal_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -294,7 +294,7 @@ inline LONG point::get_orthogonal_dimension(e_orientation eorientation) const th
 }
 
 
-inline LONG point::set_dimension(e_orientation eorientation,LONG l) throw()
+inline LONG point::set_dimension(e_orientation eorientation,LONG l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -311,7 +311,7 @@ inline LONG point::set_dimension(e_orientation eorientation,LONG l) throw()
 }
 
 
-inline LONG point::set_orthogonal_dimension(e_orientation eorientation,LONG l) throw()
+inline LONG point::set_orthogonal_dimension(e_orientation eorientation,LONG l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -329,7 +329,7 @@ inline LONG point::set_orthogonal_dimension(e_orientation eorientation,LONG l) t
 
 
 
-inline int64_t point64::get_dimension(e_orientation eorientation) const throw()
+inline int64_t point64::get_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -346,7 +346,7 @@ inline int64_t point64::get_dimension(e_orientation eorientation) const throw()
 }
 
 
-inline int64_t point64::get_orthogonal_dimension(e_orientation eorientation) const throw()
+inline int64_t point64::get_orthogonal_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -363,7 +363,7 @@ inline int64_t point64::get_orthogonal_dimension(e_orientation eorientation) con
 }
 
 
-inline int64_t point64::set_dimension(e_orientation eorientation,int64_t l) throw()
+inline int64_t point64::set_dimension(e_orientation eorientation,int64_t l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -380,7 +380,7 @@ inline int64_t point64::set_dimension(e_orientation eorientation,int64_t l) thro
 }
 
 
-inline int64_t point64::set_orthogonal_dimension(e_orientation eorientation,int64_t l) throw()
+inline int64_t point64::set_orthogonal_dimension(e_orientation eorientation,int64_t l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -397,7 +397,7 @@ inline int64_t point64::set_orthogonal_dimension(e_orientation eorientation,int6
 }
 
 
-inline double pointd::get_dimension(e_orientation eorientation) const throw()
+inline double pointd::get_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -414,7 +414,7 @@ inline double pointd::get_dimension(e_orientation eorientation) const throw()
 }
 
 
-inline double pointd::get_orthogonal_dimension(e_orientation eorientation) const throw()
+inline double pointd::get_orthogonal_dimension(e_orientation eorientation) const NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -431,7 +431,7 @@ inline double pointd::get_orthogonal_dimension(e_orientation eorientation) const
 }
 
 
-inline double pointd::set_dimension(e_orientation eorientation,double l) throw()
+inline double pointd::set_dimension(e_orientation eorientation,double l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {
@@ -448,7 +448,7 @@ inline double pointd::set_dimension(e_orientation eorientation,double l) throw()
 }
 
 
-inline double pointd::set_orthogonal_dimension(e_orientation eorientation,double l) throw()
+inline double pointd::set_orthogonal_dimension(e_orientation eorientation,double l) NOTHROW
 {
    if(eorientation == orientation_horizontal)
    {

@@ -43,7 +43,7 @@ namespace userstack
       void construct();
       
 
-      virtual bool initialize_application() override;
+      virtual bool init_instance() override;
       virtual int32_t exit_application() override;
 
       virtual bool bergedge_start() override;
@@ -67,7 +67,7 @@ namespace userstack
       void launch_app(const char * psz);
       void install_app(const char * psz);
 
-      virtual bool initialize1() override;
+      virtual bool init1() override;
 
       virtual bool initialize() override;
 
@@ -75,7 +75,7 @@ namespace userstack
 
       virtual int32_t main() override;
 
-      virtual bool on_uninstall() override;
+      virtual bool on_unstall() override;
 
       virtual bool is_serviceable() override;
 

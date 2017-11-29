@@ -31,7 +31,7 @@ namespace file
       byte_buffer byteBuffer2;
       byteBuffer2.SetCapacity(signatureSize);
       if(FAILED(read_false(this, byteBuffer2, signatureSize)))
-         throw simple_exception(get_app());
+         throw new simple_exception(get_app());
 
       if (memcmp(byteBuffer2, signature, signatureSize) == 0)
          return resPos;
@@ -47,7 +47,7 @@ namespace file
       {
          if (limit != NULL)
             if (resPos > *limit)
-               throw simple_exception(get_app());
+               throw new simple_exception(get_app());
          do
          {
             memory_size_t numReadBytes = kBufferSize - numPrevBytes;
@@ -55,7 +55,7 @@ namespace file
             processedSize = read(buffer + numPrevBytes, numReadBytes);
             numPrevBytes += processedSize;
             if (processedSize == 0)
-               throw simple_exception(get_app());
+               throw new simple_exception(get_app());
          }
          while (numPrevBytes < signatureSize);
          uint32_t numTests = (uint32_t) (numPrevBytes - signatureSize + 1);
@@ -136,7 +136,7 @@ namespace file
       memory buf;
       buf.allocate(uiBufMax);
       if(buf.get_data() == NULL)
-         throw "no memory";
+         throw new "no memory";
       try
       {
          while(true)

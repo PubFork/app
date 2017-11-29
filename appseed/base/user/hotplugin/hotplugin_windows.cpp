@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #ifdef WINDOWSEX

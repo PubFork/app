@@ -274,7 +274,7 @@ public:
          if (nElemCount)
          {
             if ((m_parrAttrib = new CElemAttrArray) == NULL)
-               throw memory_exception(get_thread_app());
+               throw new memory_exception(get_app());
 
             LiteHTMLElemAttr   *pItem = NULL;
             m_parrAttrib->allocate(nElemCount);
@@ -285,7 +285,7 @@ public:
                if ((pItem = new LiteHTMLElemAttr(rSource[iElem])) == NULL)
                {
                   removeAll();
-                  throw memory_exception(get_thread_app());
+                  throw new memory_exception(get_app());
                   return;
                }
 

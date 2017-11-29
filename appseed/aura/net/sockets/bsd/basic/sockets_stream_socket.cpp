@@ -167,7 +167,7 @@ namespace sockets
    int32_t stream_socket::Protocol()
    {
       
-      throw interface_only_exception(get_app());
+      throw new interface_only_exception(get_app());
 
    }
 

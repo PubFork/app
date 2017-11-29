@@ -268,7 +268,7 @@ bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::ar
       return false;
 
    if (papp == NULL)
-      papp = get_thread_app();
+      papp = get_app();
 
    ::visual::dib_sp::pointer * p = pdiba->element_at(iFrame);
 

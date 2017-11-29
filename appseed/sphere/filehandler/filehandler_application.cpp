@@ -29,7 +29,7 @@ namespace filehandler
 
    }
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
 
@@ -38,7 +38,7 @@ namespace filehandler
       System.factory().creatable_small < frame >();
       System.factory().creatable_small < view >();
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
 

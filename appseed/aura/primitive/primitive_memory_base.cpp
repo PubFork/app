@@ -282,7 +282,7 @@ namespace primitive
          return;
 
       if(!allocate_internal(dwNewLength))
-         throw memory_exception(get_app());
+         throw new memory_exception(get_app());
 
    }
 
@@ -705,7 +705,7 @@ namespace primitive
       if (pos > this->get_size())
       {
 
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
 
       }
 
@@ -1303,7 +1303,7 @@ namespace primitive
    Array < uchar, 1U > ^ memory_base::get_os_bytes(memory_position_t pos, memory_size_t size) const
    {
       if (pos > get_size())
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
       if (size < 0 || pos + size > get_size())
          size = get_size() - pos;
       return ref new Array < uchar, 1U >((uchar *)&get_data()[pos], size);
@@ -1329,10 +1329,10 @@ namespace primitive
          return;
 
       if (pos > a->Length)
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
 
       if (pos > a->Length)
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
 
       if (size < 0 || pos + size > a->Length)
          size = a->Length - pos;
@@ -1364,7 +1364,7 @@ namespace primitive
    CFDataRef memory_base::get_os_cf_data(memory_position_t pos, memory_size_t size) const
    {
       if (pos > get_size())
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
       if (pos + size > get_size())
          size = get_size() - pos;
       return CFDataCreate(kCFAllocatorDefault, (const UInt8 *)&get_data()[pos], (CFIndex)size);
@@ -1373,9 +1373,9 @@ namespace primitive
    void memory_base::set_os_cf_data(CFDataRef data, memory_position_t pos, memory_size_t size)
    {
       if (pos > CFDataGetLength(data))
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
       if (pos > CFDataGetLength(data))
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
       if (pos + size > CFDataGetLength(data))
          size = CFDataGetLength(data) - pos;
       allocate(size);

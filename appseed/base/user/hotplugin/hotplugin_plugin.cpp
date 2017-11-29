@@ -2,7 +2,7 @@
 //#include "base/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #undef new
@@ -280,7 +280,7 @@ namespace hotplugin
 
 #else
 
-         throw "not implemented";
+         throw new "not implemented";
 
 #endif
 
@@ -799,7 +799,7 @@ namespace hotplugin
             if(bCreate)
             {
 
-               throw "resource_exception";
+               throw new "resource_exception";
 
             }
 
@@ -836,7 +836,7 @@ namespace hotplugin
 //            if(bCreateFile)
 //            {
 //
-//               throw "resource exception";
+//               throw new "resource exception";
 //
 //            }
 //            else
@@ -866,7 +866,7 @@ namespace hotplugin
 //         {
 //            CloseHandle(m_hfileBitmap);
 //            m_hfileBitmap = INVALID_HANDLE_VALUE;
-//            throw "resource exception";
+//            throw new "resource exception";
 //         }
 //
 //#elif defined(WINDOWS)
@@ -885,7 +885,7 @@ namespace hotplugin
 //         {
 //            CloseHandle(m_hfileBitmap);
 //            m_hfileBitmap = INVALID_HANDLE_VALUE;
-//            throw "resource exception";
+//            throw new "resource exception";
 //         }
 //#else
 //
@@ -926,10 +926,10 @@ namespace hotplugin
 //            ::close(m_hfileBitmap);
 //            m_hfileBitmap = -1;
 //#endif
-//            throw "resource exception";
+//            throw new "resource exception";
 //         }
 
-         m_pmutexBitmap = new mutex(get_thread_app(), false, string("Global\\app_app_nest-") + hex::lower_from((int_ptr)this));
+         m_pmutexBitmap = new mutex(get_app(), false, string("Global\\app_app_nest-") + hex::lower_from((int_ptr)this));
 
       }
 

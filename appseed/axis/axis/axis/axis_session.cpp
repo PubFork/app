@@ -155,12 +155,12 @@ namespace axis
 
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
       thisstart;
 
-      if (!::aura::session::process_initialize())
+      if (!::aura::session::process_init())
       {
 
          thisfail << 1;
@@ -229,7 +229,7 @@ namespace axis
 
       thisok << 2;
 
-      if (!::axis::application::process_initialize())
+      if (!::axis::application::process_init())
       {
 
          thisfail << 3;
@@ -247,7 +247,7 @@ namespace axis
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
       m_spfs = canew(::fs::fs(this));
@@ -265,10 +265,10 @@ namespace axis
       //if(!m_spcopydesk->initialize())
       //   return false;
 
-      if(!::aura::session::initialize1())
+      if(!::aura::session::init1())
          return false;
 
-      if(!::axis::application::initialize1())
+      if(!::axis::application::init1())
          return false;
 
       m_puserpresence = new ::userpresence::userpresence(this);
@@ -312,13 +312,13 @@ namespace axis
    }
 
 
-   bool session::initialize2()
+   bool session::init2()
    {
 
-      if(!::aura::session::initialize2())
+      if(!::aura::session::init2())
          return false;
 
-      if(!::axis::application::initialize2())
+      if(!::axis::application::init2())
          return false;
 
       return true;
@@ -327,10 +327,10 @@ namespace axis
 
 
 
-   bool session::initialize_application()
+   bool session::init_application()
    {
 
-      if (!m_pfontopus->initialize_application())
+      if (!m_pfontopus->init_application())
       {
 
          return false;
@@ -346,14 +346,14 @@ namespace axis
 
       }
 
-      if (!::aura::session::initialize_application())
+      if (!::aura::session::init_application())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_application())
       {
 
          return false;
@@ -782,10 +782,10 @@ namespace axis
          m_pkeyboard = new ::user::keyboard(m_pauraapp);
 
          if(m_pkeyboard == NULL)
-            throw simple_exception(get_app(),"Could not create keyboard");
+            throw new simple_exception(get_app(),"Could not create keyboard");
 
          if(!m_pkeyboard->initialize())
-            throw simple_exception(get_app(),"Could not initialize keyboard");
+            throw new simple_exception(get_app(),"Could not initialize keyboard");
 
          Application.on_create_keyboard();
 

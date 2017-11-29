@@ -519,7 +519,7 @@ FileSystemSizeServerThread::FileSystemSizeServerThread(::aura::application * pap
 {
 }
 
-bool FileSystemSizeServerThread::initialize_instance()
+bool FileSystemSizeServerThread::init_instance()
 {
    db_server * pcentral = &System.m_simpledb.db();
    pcentral->m_pfilesystemsizeset->m_table.m_pwndServer->CreateServer();
@@ -568,7 +568,7 @@ void file_size_table::get_fs_size::write(::file::output_stream & ostream) const
 
 #else
 
-   throw not_implemented(get_thread_app());
+   throw new not_implemented(get_app());
 
 #endif
 
@@ -588,7 +588,7 @@ void file_size_table::get_fs_size::read(::file::input_stream & istream)
 
 #else
 
-   throw not_implemented(get_thread_app());
+   throw new not_implemented(get_app());
 
 #endif
 

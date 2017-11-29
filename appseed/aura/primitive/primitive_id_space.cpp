@@ -75,7 +75,7 @@ id id_space::operator()(const char * psz)
    char * pszNew = (char *)memory_alloc(strlen(psz) + 1);
 
    if(pszNew == NULL)
-      throw memory_exception(::get_thread_app());
+      throw new memory_exception(get_app());
 
    strcpy(pszNew,psz);
 
@@ -273,7 +273,7 @@ strid_array::strid_array(bool bSynch)
    if(bSynch)
    {
 
-      m_pmutex = canew(mutex(get_thread_app()));
+      m_pmutex = canew(mutex(get_app()));
 
    }
 

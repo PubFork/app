@@ -131,13 +131,13 @@ namespace core
 
    }
 
-   bool system::initialize2()
+   bool system::init2()
    {
 
-      if(!::core::application::initialize2())
+      if(!::core::application::init2())
          return false;
 
-      if(!::base::system::initialize2())
+      if(!::base::system::init2())
          return false;
 
       return true;
@@ -160,7 +160,7 @@ namespace core
    }
 
 
-   bool system::process_initialize()
+   bool system::process_init()
    {
 
       if (m_bProcessInitialize)
@@ -187,7 +187,7 @@ namespace core
 
 #endif
 
-      if (!::core::application::process_initialize())
+      if (!::core::application::process_init())
       {
 
          thiserr << "end failure (1)";
@@ -196,7 +196,7 @@ namespace core
 
       }
 
-      if (!::base::system::process_initialize())
+      if (!::base::system::process_init())
       {
 
          thiserr << "end failure (2)";
@@ -268,7 +268,7 @@ namespace core
 
 
 
-   bool system::initialize1()
+   bool system::init1()
    {
 
 
@@ -280,10 +280,10 @@ namespace core
 
 
 
-      if(!::core::application::initialize1())
+      if(!::core::application::init1())
          return false;
 
-      if(!::base::system::initialize1())
+      if(!::base::system::init1())
          return false;
 
       //if(Session.fontopus()->create_system_user("system") == NULL)
@@ -352,10 +352,10 @@ namespace core
 
    }
 
-   bool system::initialize3()
+   bool system::init3()
    {
 
-      if(!::core::application::initialize3())
+      if(!::core::application::init3())
          return false;
 
       if(m_phistory == NULL)
@@ -368,10 +368,10 @@ namespace core
    }
 
 
-   bool system::initialize_application()
+   bool system::init_application()
    {
 
-      if(!::base::system::initialize_application())
+      if(!::base::system::init_application())
       {
 
          return false;
@@ -387,7 +387,7 @@ namespace core
       set_enum_name(var::type_bool      , "bool");
       set_enum_name(var::type_double    , "double");*/
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_application())
       {
 
          return false;
@@ -459,7 +459,7 @@ namespace core
 
 #endif
 
-      int32_t iRet = m_iReturnCode;
+      int32_t iRet = m_iErrorCode;
 
       try
       {

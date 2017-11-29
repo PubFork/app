@@ -76,11 +76,11 @@ namespace core
 
       virtual bool is_system() override;
 
-      virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
-      virtual bool initialize2() override;
+         virtual bool init2() override;
 
-      virtual bool initialize_application() override;
+         virtual bool init_application() override;
 
       virtual bool finalize() override;
 
@@ -91,9 +91,9 @@ namespace core
       //virtual int32_t main();
       virtual bool InitApplication() override;
 
-      virtual bool initialize() override;
-      virtual bool initialize1() override;
-      virtual bool initialize3() override;
+         virtual bool initialize() override;
+         virtual bool init1() override;
+         virtual bool init3() override;
 
       virtual bool bergedge_start() override;
 

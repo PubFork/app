@@ -424,7 +424,7 @@ namespace net
 //
 //#else
 
-      ::aura::application * pappThread = ::get_thread_app();
+      ::aura::application * pappThread = get_app();
 
       auto * psession = pappThread->m_paurasession;
 
@@ -463,7 +463,7 @@ namespace net
 
    string tmp;
 
-   Sess(get_thread_app()).sockets().net().reverse((sockaddr *) &m_sa, sa_len(), tmp);
+   Session.sockets().net().reverse((sockaddr *) &m_sa, sa_len(), tmp);
 
    return tmp;
 

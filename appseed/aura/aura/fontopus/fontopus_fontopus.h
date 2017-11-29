@@ -79,7 +79,7 @@ namespace fontopus
       create_user_thread(::aura::application * papp);
       virtual ~create_user_thread();
 
-      int32_t run();
+      virtual void run() override;
 
 
 

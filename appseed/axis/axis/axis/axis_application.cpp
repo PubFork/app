@@ -384,7 +384,7 @@ namespace axis
 
 #ifdef 
 
-      if (is_installing() || is_uninstalling())
+      if (is_installing() || is_unstalling())
       {
 
          if (is_system())
@@ -608,7 +608,7 @@ namespace axis
    void application::_001CloseApplication()
    {
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
    }
 
@@ -809,7 +809,7 @@ namespace axis
       {
 
          // get_app() may be it self, it is ok...
-         if(Sys(get_app()).final_handle_exception((::exception::exception &) e))
+         if(System.final_handle_exception((::exception::exception &) e))
             return true;
 
 
@@ -841,22 +841,22 @@ namespace axis
 
    //      m_dwAlive = ::get_tick_count();
    //      TRACE(string(typeid(*this).name()) + "application_pre_run");;
-   //      int32_t m_iReturnCode = application_pre_run();
-   //      if(m_iReturnCode != 0)
+   //      int32_t m_iErrorCode = application_pre_run();
+   //      if(m_iErrorCode != 0)
    //      {
-   //         dappy(string(typeid(*this).name()) + " : applicationpre_run failure : " + ::str::from(m_iReturnCode));
+   //         dappy(string(typeid(*this).name()) + " : applicationpre_run failure : " + ::str::from(m_iErrorCode));
    //         m_bReady = true;
    //         TRACE("application::main application_pre_run failure");
    //         return false;
    //      }
 
    //      xxdebug_box("pre_runnned","pre_runnned",MB_ICONINFORMATION);
-   //      dappy(string(typeid(*this).name()) + " : pre_runned : " + ::str::from(m_iReturnCode));
+   //      dappy(string(typeid(*this).name()) + " : pre_runned : " + ::str::from(m_iErrorCode));
    //      TRACE(string(typeid(*this).name()) + " initial_check_directrix");;
    //      if(!initial_check_directrix())
    //      {
    //         dappy(string(typeid(*this).name()) + " : initial_check_directrix failure");
-   //         m_iReturnCode = -1;
+   //         m_iErrorCode = -1;
    //         exit_thread();
    //         m_bReady = true;
    //         ::output_debug_string("exiting on check handler\n");
@@ -870,7 +870,7 @@ namespace axis
    //      {
    //         dappy(string(typeid(*this).name()) + " : os_native_bergedge_start failure");
    //         exit_thread();
-   //         m_iReturnCode = -1;
+   //         m_iErrorCode = -1;
    //         m_bReady = true;
    //         ::output_debug_string("application::main os_native_bergedge_start failure");
    //         return false;
@@ -896,7 +896,7 @@ namespace axis
 
    int32_t application::on_run()
    {
-      int32_t m_iReturnCode = 0;
+      int32_t m_iErrorCode = 0;
 
       try
       {
@@ -910,13 +910,13 @@ namespace axis
       {
       }
 
-      dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iReturnCode));
+      dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iErrorCode));
 
       thread * pthread = ::get_thread();
 
       install_message_routing(pthread);
 
-      dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
+      dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iErrorCode));
 
       try
       {
@@ -932,13 +932,13 @@ namespace axis
 run:
          try
          {
-            m_iReturnCode = run();
+            m_iErrorCode = run();
 
          }
          catch(::exit_exception & e)
          {
 
-            throw e;
+            throw new e;
 
          }
          catch(const ::exception::exception & e)
@@ -949,17 +949,17 @@ run:
                goto run;
             try
             {
-               m_iReturnCode = exit_thread();
+               m_iErrorCode = exit_thread();
             }
             catch(::exit_exception & e)
             {
 
-               throw e;
+               throw new e;
 
             }
             catch(...)
             {
-               m_iReturnCode = -1;
+               m_iErrorCode = -1;
             }
             goto InitFailure;
          }
@@ -967,7 +967,7 @@ run:
       catch(::exit_exception & e)
       {
 
-         throw e;
+         throw new e;
 
       }
       catch(...)
@@ -1064,7 +1064,7 @@ InitFailure:
       translator::detach();
       }*/
 
-      return m_iReturnCode;
+      return m_iErrorCode;
    }
 
 
@@ -1109,7 +1109,7 @@ InitFailure:
 
                   ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
-                  System.m_iReturnCode = -1;
+                  System.m_iErrorCode = -1;
 
                   return false;
 
@@ -1172,7 +1172,7 @@ InitFailure:
             else if (handler()->m_varTopicQuery.has_property("uninstall"))
             {
 
-               if (!on_uninstall())
+               if (!on_unstall())
                {
 
                   return false;
@@ -1267,10 +1267,10 @@ InitFailure:
    }
 
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
 
-      bool bOk = aura::application::on_uninstall();
+      bool bOk = aura::application::on_unstall();
 
       return bOk;
 
@@ -1381,7 +1381,7 @@ InitFailure:
    //}
 
 
-   //bool application::is_uninstalling()
+   //bool application::is_unstalling()
    //{
 
    //   return handler()->has_property("uninstall");
@@ -1467,7 +1467,7 @@ InitFailure:
 
 
 
-   bool application::process_initialize()
+   bool application::process_init()
    {
 
       if (m_bAxisProcessInitialize)
@@ -1483,7 +1483,7 @@ InitFailure:
 
       m_bAxisProcessInitializeResult = false;
 
-      if (!::aura::application::process_initialize())
+      if (!::aura::application::process_init())
       {
 
          thisfail << 1;
@@ -1519,7 +1519,7 @@ InitFailure:
    }
 
 
-   bool application::initialize_application()
+   bool application::init_application()
    {
 
       if(m_bAxisInitializeInstance)
@@ -1530,7 +1530,7 @@ InitFailure:
       m_bAxisInitializeInstance = true;
       m_bAxisInitializeInstanceResult = false;
 
-      if(!::aura::application::initialize_application())
+      if(!::aura::application::init_application())
       {
 
          thisfail << 1;
@@ -1558,7 +1558,7 @@ InitFailure:
    }
 
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
       if (m_bAxisInitialize1)
@@ -1576,7 +1576,7 @@ InitFailure:
          if (!m_simpledb.initialize())
             return false;
 
-         if (!m_simpledb.initialize2())
+         if (!m_simpledb.init2())
             return false;
 
 
@@ -1591,7 +1591,7 @@ InitFailure:
 
       m_dwAlive = ::get_tick_count();
 
-      if(!::aura::application::initialize1())
+      if(!::aura::application::init1())
          return false;
 
 
@@ -1611,10 +1611,10 @@ InitFailure:
    }
 
 
-   bool application::initialize2()
+   bool application::init2()
    {
 
-      if(!::aura::application::initialize2())
+      if(!::aura::application::init2())
          return false;
 
       if(!ca_initialize2())
@@ -1625,10 +1625,10 @@ InitFailure:
    }
 
 
-   bool application::initialize3()
+   bool application::init3()
    {
 
-      if(!::aura::application::initialize3())
+      if(!::aura::application::init3())
       {
 
          return false;
@@ -1739,7 +1739,7 @@ InitFailure:
 
       m_bAxisInitializeResult = true;
 
-      dappy(string(typeid(*this).name()) + " : initialize ok : " + ::str::from(m_iReturnCode));
+      dappy(string(typeid(*this).name()) + " : initialize ok : " + ::str::from(m_iErrorCode));
 
       return true;
 
@@ -1789,7 +1789,7 @@ InitFailure:
       catch(...)
       {
 
-         m_iReturnCode = -1;
+         m_iErrorCode = -1;
 
       }
 
@@ -1935,7 +1935,7 @@ InitFailure:
 
       }
 
-      return m_iReturnCode;
+      return m_iErrorCode;
 
    }
 
@@ -2300,7 +2300,7 @@ InitFailure:
       }
 
       if(m_paxissession->fontopus()->get_user(true,pszRequestUrl) == NULL)
-         //   throw exit_exception(get_app(),"You have not logged in!! db_str_set::load");
+         //   throw new exit_exception(get_app(),"You have not logged in!! db_str_set::load");
          return false;
 
       return true;
@@ -2760,7 +2760,7 @@ namespace axis
    //bool application::get_temp_file_name_template(string & strRet,const char * pszName,const char * pszExtension,const char * pszTemplate)
    //{
 
-   //   throw not_implemented(this);
+   //   throw new not_implemented(this);
 
    //   return false;
 
@@ -2807,7 +2807,7 @@ namespace axis
    //   {
 
    //      // get_app() may be it self, it is ok...
-   //      if(Sys(get_app()).final_handle_exception((::exception::exception &) e))
+   //      if(System.final_handle_exception((::exception::exception &) e))
    //         return true;
 
 
@@ -2831,14 +2831,14 @@ namespace axis
    //   {
 
    //      TRACE(string(typeid(*this).name()) + " on_run");;
-   //      dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iReturnCode));
-   //      m_iReturnCode = 0;
+   //      dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iErrorCode));
+   //      m_iErrorCode = 0;
    //      m_bReady = true;
    //      m_bRun = true;
-   //      m_iReturnCode = on_run();
-   //      if(m_iReturnCode != 0)
+   //      m_iErrorCode = on_run();
+   //      if(m_iErrorCode != 0)
    //      {
-   //         dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iReturnCode));
+   //         dappy(string(typeid(*this).name()) + " : on_run failure : " + ::str::from(m_iErrorCode));
    //         ::output_debug_string(L"application::main on_run termination failure");
    //      }
 
@@ -2887,7 +2887,7 @@ namespace axis
    //   try
    //   {
 
-   //      m_iReturnCode = exit();
+   //      m_iErrorCode = exit();
 
    //   }
    //   catch(::exit_exception &)
@@ -2895,17 +2895,17 @@ namespace axis
 
    //      ::aura::post_quit_thread(&System);
 
-   //      m_iReturnCode = -1;
+   //      m_iErrorCode = -1;
 
    //   }
    //   catch(...)
    //   {
 
-   //      m_iReturnCode = -1;
+   //      m_iErrorCode = -1;
 
    //   }
 
-   //   return m_iReturnCode;
+   //   return m_iErrorCode;
 
    //}
 
@@ -2921,22 +2921,22 @@ namespace axis
 
    //      m_dwAlive = ::get_tick_count();
    //      TRACE(string(typeid(*this).name()) + "application_pre_run");;
-   //      int32_t m_iReturnCode = application_pre_run();
-   //      if(m_iReturnCode != 0)
+   //      int32_t m_iErrorCode = application_pre_run();
+   //      if(m_iErrorCode != 0)
    //      {
-   //         dappy(string(typeid(*this).name()) + " : applicationpre_run failure : " + ::str::from(m_iReturnCode));
+   //         dappy(string(typeid(*this).name()) + " : applicationpre_run failure : " + ::str::from(m_iErrorCode));
    //         m_bReady = true;
    //         TRACE("application::main application_pre_run failure");
    //         return false;
    //      }
 
    //      xxdebug_box("pre_runnned","pre_runnned",MB_ICONINFORMATION);
-   //      dappy(string(typeid(*this).name()) + " : pre_runned : " + ::str::from(m_iReturnCode));
+   //      dappy(string(typeid(*this).name()) + " : pre_runned : " + ::str::from(m_iErrorCode));
    //      TRACE(string(typeid(*this).name()) + " initial_check_directrix");;
    //      if(!initial_check_directrix())
    //      {
    //         dappy(string(typeid(*this).name()) + " : initial_check_directrix failure");
-   //         m_iReturnCode = -1;
+   //         m_iErrorCode = -1;
    //         exit();
    //         m_bReady = true;
    //         ::output_debug_string(L"exiting on check handler");
@@ -2950,7 +2950,7 @@ namespace axis
    //      {
    //         dappy(string(typeid(*this).name()) + " : os_native_bergedge_start failure");
    //         exit();
-   //         m_iReturnCode = -1;
+   //         m_iErrorCode = -1;
    //         m_bReady = true;
    //         ::output_debug_string(L"application::main os_native_bergedge_start failure");
    //         return false;
@@ -2976,7 +2976,7 @@ namespace axis
 
    //int32_t application::on_run()
    //{
-   //   int32_t m_iReturnCode = 0;
+   //   int32_t m_iErrorCode = 0;
 
    //   try
    //   {
@@ -2987,13 +2987,13 @@ namespace axis
    //   {
    //   }
 
-   //   dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iReturnCode));
+   //   dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iErrorCode));
 
    //   thread * pthread = ::get_thread();
 
    //   install_message_routing(pthread->m_pthreadimpl);
 
-   //   dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iReturnCode));
+   //   dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iErrorCode));
 
    //   try
    //   {
@@ -3009,13 +3009,13 @@ namespace axis
    //   run:
    //      try
    //      {
-   //         m_iReturnCode = run();
+   //         m_iErrorCode = run();
 
    //      }
    //      catch(::exit_exception & e)
    //      {
 
-   //         throw e;
+   //         throw new e;
 
    //      }
    //      catch(const ::exception::exception & e)
@@ -3026,17 +3026,17 @@ namespace axis
    //            goto run;
    //         try
    //         {
-   //            m_iReturnCode = exit();
+   //            m_iErrorCode = exit();
    //         }
    //         catch(::exit_exception & e)
    //         {
 
-   //            throw e;
+   //            throw new e;
 
    //         }
    //         catch(...)
    //         {
-   //            m_iReturnCode = -1;
+   //            m_iErrorCode = -1;
    //         }
    //         goto InitFailure;
    //      }
@@ -3044,7 +3044,7 @@ namespace axis
    //   catch(::exit_exception & e)
    //   {
 
-   //      throw e;
+   //      throw new e;
 
    //   }
    //   catch(...)
@@ -3142,7 +3142,7 @@ namespace axis
    //   translator::detach();
    //   }*/
 
-   //   return m_iReturnCode;
+   //   return m_iErrorCode;
    //}
 
 
@@ -3187,10 +3187,10 @@ namespace axis
    //}
 
 
-   //bool application::on_uninstall()
+   //bool application::on_unstall()
    //{
 
-   //   bool bOk = axis::application::on_uninstall();
+   //   bool bOk = axis::application::on_unstall();
 
 
    //   if(is_serviceable())
@@ -3335,7 +3335,7 @@ namespace axis
    //   return ::core::application::on_install();
    //}
 
-   //bool application::on_uninstall()
+   //bool application::on_unstall()
    //{
    //   string strId = m_strId;
    //   char chFirst = '\0';
@@ -3343,7 +3343,7 @@ namespace axis
    //   {
    //      chFirst = strId[0];
    //   }
-   //   return ::core::application::on_uninstall();
+   //   return ::core::application::on_unstall();
    //}
 
 
@@ -3704,7 +3704,7 @@ namespace axis
 
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
    int32_t application::hotplugin_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,hotplugin::host * phost,hotplugin::plugin * pplugin)
    {

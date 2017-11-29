@@ -24,19 +24,19 @@ namespace colorertake5
       }
       catch(exception &e)
       {
-         throw ParserFactoryException(get_app(), e.getMessage());
+         throw new ParserFactoryException(get_app(), e.getMessage());
       }
       catch(::exception::base * pe)
       {
          string str;
          pe->get_error_message(str);
-         throw ParserFactoryException(get_app(), str);
+         throw new ParserFactoryException(get_app(), str);
       }
 
       sp(::xml::node) catalog = document.get_root();
       if(catalog == NULL || catalog->get_name() != "catalog")
       {
-         throw ParserFactoryException(get_app(), string("bad catalog structure"));
+         throw new ParserFactoryException(get_app(), string("bad catalog structure"));
       }
 
       sp(::xml::node) elem = catalog->first_child();
@@ -252,7 +252,7 @@ namespace colorertake5
          hrdClass = hrdLocations.pget(classID);
 
       if (hrdClass == NULL)
-         throw ParserFactoryException(get_app(), string("can't find hrdClass '")+classID+"'");
+         throw new ParserFactoryException(get_app(), string("can't find hrdClass '")+classID+"'");
 
       stringa *hrdLocV = NULL;
       if (nameID.is_empty())
@@ -270,7 +270,7 @@ namespace colorertake5
       else
          hrdLocV = hrdClass->pget(nameID);
       if (hrdLocV == NULL)
-         throw ParserFactoryException(get_app(), string("can't find hrdName '")+nameID+"'");
+         throw new ParserFactoryException(get_app(), string("can't find hrdName '")+nameID+"'");
 
       StyledHRDMapper *mapper = new StyledHRDMapper(get_app());
 
@@ -314,7 +314,7 @@ namespace colorertake5
    {
       // fixed class 'text'
       string_map<stringa> *hrdClass = hrdLocations.pget(("text"));
-      if (hrdClass == NULL) throw ParserFactoryException(get_app(), string("can't find hrdClass 'text'"));
+      if (hrdClass == NULL) throw new ParserFactoryException(get_app(), string("can't find hrdClass 'text'"));
 
       stringa *hrdLocV = NULL;
       if (nameID.is_empty())
@@ -322,7 +322,7 @@ namespace colorertake5
       else
          hrdLocV = hrdClass->pget(nameID);
       if (hrdLocV == NULL)
-         throw ParserFactoryException(get_app(), string("can't find hrdName '")+nameID+"'");
+         throw new ParserFactoryException(get_app(), string("can't find hrdName '")+nameID+"'");
 
       TextHRDMapper *mapper = new TextHRDMapper(get_app());
       for(int32_t idx = 0; idx < hrdLocV->get_size(); idx++)

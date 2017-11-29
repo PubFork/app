@@ -132,7 +132,7 @@ string::string(const unichar* pch,strsize nLength):
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar),FALSE));
       if(pch == NULL)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       //strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       strsize nDestLength = nLength * 4;
@@ -152,7 +152,7 @@ string::string(const unichar32* pch,strsize nLength):
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar32),FALSE));
       if(pch == NULL)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       char * pszBuffer = GetBuffer(nDestLength);
@@ -169,7 +169,7 @@ string::string(const unichar* pch,strsize nLength,string_manager * pstringmanage
    {
       ASSERT(__is_valid_address(pch,nLength*sizeof(unichar),FALSE));
       if(pch == NULL)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       strsize nDestLength = string_trait::GetcharLength(pch,nLength);
       char * pszBuffer = GetBuffer(nDestLength);
@@ -181,7 +181,7 @@ string::string(const unichar* pch,strsize nLength,string_manager * pstringmanage
 
 /*
 
-void fixed_string_log::OnAllocateSpill(strsize nActualChars,strsize nFixedChars,const string_data* pData ) throw()
+void fixed_string_log::OnAllocateSpill(strsize nActualChars,strsize nFixedChars,const string_data* pData ) NOTHROW
 {
 ()nActualChars;
 ()nFixedChars;
@@ -190,7 +190,7 @@ void fixed_string_log::OnAllocateSpill(strsize nActualChars,strsize nFixedChars,
 ::output_debug_string("fixed_string_log::OnAllocateSpill");
 }
 
-void fixed_string_log::OnReallocateSpill(strsize nActualChars,strsize nFixedChars,const string_data* pData ) throw()
+void fixed_string_log::OnReallocateSpill(strsize nActualChars,strsize nFixedChars,const string_data* pData ) NOTHROW
 {
 ()nActualChars;
 ()nFixedChars;
@@ -202,89 +202,89 @@ void fixed_string_log::OnReallocateSpill(strsize nActualChars,strsize nFixedChar
 */
 
 
-char* __cdecl crt_char_traits::CharNext(const char* p) throw()
+char* __cdecl crt_char_traits::CharNext(const char* p) NOTHROW
 {
    return const_cast<char*>(::str::utf8_inc(p));
 }
 
 
 
-int32_t __cdecl crt_char_traits::IsDigit(const char * pch) throw()
+int32_t __cdecl crt_char_traits::IsDigit(const char * pch) NOTHROW
 {
    return ::str::ch::is_digit(pch) ? 1 : 0;
 }
 
-int32_t __cdecl crt_char_traits::IsSpace(const char * pch) throw()
+int32_t __cdecl crt_char_traits::IsSpace(const char * pch) NOTHROW
 {
    return ::str::ch::is_whitespace(pch) ? 1 : 0;
 }
 
 
 
-int32_t __cdecl crt_char_traits::StringCollate(const char * pszA,const char * pszB) throw()
+int32_t __cdecl crt_char_traits::StringCollate(const char * pszA,const char * pszB) NOTHROW
 {
    return strcmp(reinterpret_cast<const  char*>(pszA),reinterpret_cast<const  char*>(pszB));
 }
 
-int32_t __cdecl crt_char_traits::StringCollateIgnore(const char * pszA,const char * pszB) throw()
+int32_t __cdecl crt_char_traits::StringCollateIgnore(const char * pszA,const char * pszB) NOTHROW
 {
    return stricmp_dup(reinterpret_cast<const  char*>(pszA),reinterpret_cast<const  char*>(pszB));
 }
 
-const char * __cdecl crt_char_traits::StringFindString(const char * pszBlock,const char * pszMatch) throw()
+const char * __cdecl crt_char_traits::StringFindString(const char * pszBlock,const char * pszMatch) NOTHROW
 {
    return reinterpret_cast<const char *>(strstr(reinterpret_cast<const  char*>(pszBlock),
                                          reinterpret_cast<const  char*>(pszMatch)));
 }
 
-char * __cdecl crt_char_traits::StringFindString(char * pszBlock,const char * pszMatch) throw()
+char * __cdecl crt_char_traits::StringFindString(char * pszBlock,const char * pszMatch) NOTHROW
 {
    return(const_cast<char *>(StringFindString(const_cast<const char *>(pszBlock),pszMatch)));
 }
 
-const char * __cdecl crt_char_traits::StringFindChar(const char * pszBlock,char chMatch) throw()
+const char * __cdecl crt_char_traits::StringFindChar(const char * pszBlock,char chMatch) NOTHROW
 {
    return reinterpret_cast<const char *>(strchr(reinterpret_cast<const  char*>(pszBlock),(char)chMatch));
 }
 
 /*
-strsize __cdecl crt_char_traits::StringCompare(const char * pszA,const char * pszB ) throw()
+strsize __cdecl crt_char_traits::StringCompare(const char * pszA,const char * pszB ) NOTHROW
 {
 return _mbscmp( reinterpret_cast< const uchar* >( pszA ), reinterpret_cast< const uchar* >( pszB ) );
 }
 
-strsize __cdecl crt_char_traits::StringCompareIgnore(const char * pszA,const char * pszB ) throw()
+strsize __cdecl crt_char_traits::StringCompareIgnore(const char * pszA,const char * pszB ) NOTHROW
 {
 return _mbsicmp( reinterpret_cast< const uchar* >( pszA ), reinterpret_cast< const uchar* >( pszB ) );
 }
 
-strsize __cdecl crt_char_traits::StringCollate(const char * pszA,const char * pszB ) throw()
+strsize __cdecl crt_char_traits::StringCollate(const char * pszA,const char * pszB ) NOTHROW
 {
 return _mbscoll( reinterpret_cast< const uchar* >( pszA ), reinterpret_cast< const uchar* >( pszB ) );
 }
 
-strsize __cdecl crt_char_traits::StringCollateIgnore(const char * pszA,const char * pszB ) throw()
+strsize __cdecl crt_char_traits::StringCollateIgnore(const char * pszA,const char * pszB ) NOTHROW
 {
 return _mbsicoll( reinterpret_cast< const uchar* >( pszA ), reinterpret_cast< const uchar* >( pszB ) );
 }
 
-const char * __cdecl crt_char_traits::StringFindString(const char * pszBlock,const char * pszMatch ) throw()
+const char * __cdecl crt_char_traits::StringFindString(const char * pszBlock,const char * pszMatch ) NOTHROW
 {
 return reinterpret_cast< const char * >( _mbsstr( reinterpret_cast< const uchar* >( pszBlock ),
 reinterpret_cast< const uchar* >( pszMatch ) ) );
 }
 
-char * __cdecl crt_char_traits::StringFindString(char * pszBlock,const char * pszMatch ) throw()
+char * __cdecl crt_char_traits::StringFindString(char * pszBlock,const char * pszMatch ) NOTHROW
 {
 return( const_cast< char * >( StringFindString( const_cast< const char * >( pszBlock ), pszMatch ) ) );
 }
 
-const char * __cdecl crt_char_traits::StringFindChar(const char * pszBlock,char chMatch ) throw()
+const char * __cdecl crt_char_traits::StringFindChar(const char * pszBlock,char chMatch ) NOTHROW
 {
 return reinterpret_cast< const char * >( _mbschr( reinterpret_cast< const uchar* >( pszBlock ), (uchar)chMatch ) );
 }
 */
-const char * __cdecl crt_char_traits::StringFindCharRev(const char * psz,char ch,strsize iStart) throw()
+const char * __cdecl crt_char_traits::StringFindCharRev(const char * psz,char ch,strsize iStart) NOTHROW
 {
    if(iStart < 0)
       iStart = (strsize)(strlen(psz) + iStart);
@@ -301,7 +301,7 @@ const char * __cdecl crt_char_traits::StringFindCharRev(const char * psz,char ch
 }
 
 
-const char * __cdecl crt_char_traits::StringFindStrRev(const char * psz,const char * pszFind,strsize iStart) throw()
+const char * __cdecl crt_char_traits::StringFindStrRev(const char * psz,const char * pszFind,strsize iStart) NOTHROW
 {
    strsize iLen = strsize(strlen(psz));
    strsize iLenFind = strsize(strlen(pszFind));
@@ -320,7 +320,7 @@ const char * __cdecl crt_char_traits::StringFindStrRev(const char * psz,const ch
 }
 
 
-const char * __cdecl crt_char_traits::StringScanSet(const char * pszBlock,const char * pszMatch) throw()
+const char * __cdecl crt_char_traits::StringScanSet(const char * pszBlock,const char * pszMatch) NOTHROW
 {
    if(pszMatch == NULL || pszBlock == NULL || *pszBlock == '\0')
       return NULL;
@@ -342,7 +342,7 @@ const char * __cdecl crt_char_traits::StringScanSet(const char * pszBlock,const 
    // reinterpret_cast< const uchar* >( pszMatch ) ) );
 }
 
-strsize __cdecl crt_char_traits::StringSpanIncluding(const char * pszBlock,const char * pszSet) throw()
+strsize __cdecl crt_char_traits::StringSpanIncluding(const char * pszBlock,const char * pszSet) NOTHROW
 {
    if(pszSet == NULL || pszBlock == NULL)
       return 0;
@@ -360,7 +360,7 @@ strsize __cdecl crt_char_traits::StringSpanIncluding(const char * pszBlock,const
    //return (strsize)_mbsspn( reinterpret_cast< const uchar* >( pszBlock ), reinterpret_cast< const uchar* >( pszSet ) );
 }
 
-strsize __cdecl crt_char_traits::StringSpanExcluding(const char * pszBlock,const char * pszSet) throw()
+strsize __cdecl crt_char_traits::StringSpanExcluding(const char * pszBlock,const char * pszSet) NOTHROW
 {
    //   return (strsize)_mbscspn( reinterpret_cast< const uchar* >( pszBlock ), reinterpret_cast< const uchar* >( pszSet ) );
    if(pszSet == NULL || pszBlock == NULL)
@@ -376,7 +376,7 @@ strsize __cdecl crt_char_traits::StringSpanExcluding(const char * pszBlock,const
 #ifdef WINDOWS
 _INSECURE_DEPRECATE("You must pass an output size to crt_char_traits::StringUppercase")
 #endif
-char * __cdecl crt_char_traits::StringUppercase(char * psz) throw()
+char * __cdecl crt_char_traits::StringUppercase(char * psz) NOTHROW
 {
 #pragma warning (push)
 #pragma warning(disable : 4996)
@@ -400,7 +400,7 @@ char * __cdecl crt_char_traits::StringUppercase(char * psz) throw()
 #if defined(WINDOWS)
 _INSECURE_DEPRECATE("You must pass an output size to crt_char_traits::StringLowercase")
 #endif
-char * __cdecl crt_char_traits::StringLowercase(char * psz) throw()
+char * __cdecl crt_char_traits::StringLowercase(char * psz) NOTHROW
 {
 #pragma warning (push)
 #pragma warning(disable : 4996)
@@ -420,7 +420,7 @@ char * __cdecl crt_char_traits::StringLowercase(char * psz) throw()
 #pragma warning (pop)
 }
 
-char * __cdecl crt_char_traits::StringUppercase(char * psz,size_t size) throw()
+char * __cdecl crt_char_traits::StringUppercase(char * psz,size_t size) NOTHROW
 {
 
    ::aura::strupr_s(psz,size);
@@ -429,7 +429,7 @@ char * __cdecl crt_char_traits::StringUppercase(char * psz,size_t size) throw()
 
 }
 
-char * __cdecl crt_char_traits::StringLowercase(char * psz,size_t size) throw()
+char * __cdecl crt_char_traits::StringLowercase(char * psz,size_t size) NOTHROW
 {
 
    ::aura::strlwr_s(psz,size);
@@ -438,7 +438,7 @@ char * __cdecl crt_char_traits::StringLowercase(char * psz,size_t size) throw()
 
 }
 
-char * __cdecl crt_char_traits::StringReverse(char * psz) throw()
+char * __cdecl crt_char_traits::StringReverse(char * psz) NOTHROW
 {
    if(psz == NULL)
       return NULL;
@@ -453,7 +453,7 @@ char * __cdecl crt_char_traits::StringReverse(char * psz) throw()
    //return reinterpret_cast< char * >( _mbsrev( reinterpret_cast< uchar* >( psz ) ) );
 }
 
-strsize __cdecl crt_char_traits::GetFormattedLength(const char * pszFormat,va_list args) throw()
+strsize __cdecl crt_char_traits::GetFormattedLength(const char * pszFormat,va_list args) NOTHROW
 {
 
 #ifdef WINDOWS
@@ -468,14 +468,14 @@ strsize __cdecl crt_char_traits::GetFormattedLength(const char * pszFormat,va_li
 
 }
 
-strsize __cdecl crt_char_traits::Format(char * pszBuffer,const char * pszFormat,va_list args) throw()
+strsize __cdecl crt_char_traits::Format(char * pszBuffer,const char * pszFormat,va_list args) NOTHROW
 {
 
    return vsprintf(pszBuffer,pszFormat,args);
 
 }
 
-strsize __cdecl crt_char_traits::Format(char * pszBuffer,size_t nlength,const char * pszFormat,va_list args) throw()
+strsize __cdecl crt_char_traits::Format(char * pszBuffer,size_t nlength,const char * pszFormat,va_list args) NOTHROW
 {
 
 #ifdef WINDOWS
@@ -490,43 +490,43 @@ strsize __cdecl crt_char_traits::Format(char * pszBuffer,size_t nlength,const ch
 
 }
 
-strsize __cdecl crt_char_traits::GetcharLength(const char * pszSrc) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const char * pszSrc) NOTHROW
 {
    // Returns required buffer length in XCHARs
    return strsize(strlen(pszSrc));
 }
 
-strsize __cdecl crt_char_traits::GetcharLength(const char * pszSrc,strsize nLength) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const char * pszSrc,strsize nLength) NOTHROW
 {
    (void)pszSrc;
    // Returns required buffer length in XCHARs
    return nLength;
 }
 
-strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource) NOTHROW
 {
    // Returns required buffer length in XCHARs
    return ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSource,-1,NULL,0,NULL,NULL) - 1;
 }
 
-strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource,strsize nLength) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const unichar * pszSource,strsize nLength) NOTHROW
 {
    // Returns required buffer length in XCHARs
    return ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSource,(int32_t)nLength,NULL,0,NULL,NULL);
 }
 
 
-strsize __cdecl crt_char_traits::GetcharLength(const unichar32 * pszSource) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const unichar32 * pszSource) NOTHROW
 {
    return utf32_to_utf8_len(pszSource);
 }
 
-strsize __cdecl crt_char_traits::GetcharLength(const unichar32 * pszSource,strsize nLength) throw()
+strsize __cdecl crt_char_traits::GetcharLength(const unichar32 * pszSource,strsize nLength) NOTHROW
 {
    return utf32_to_utf8_len(pszSource, nLength);
 }
 
-void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const char * pszSrc,strsize nSrcLength) throw()
+void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const char * pszSrc,strsize nSrcLength) NOTHROW
 {
    if(nSrcLength == -1) { nSrcLength=1 + GetcharLength(pszSrc); }
    // nLen is in XCHARs
@@ -534,19 +534,19 @@ void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,c
                     pszSrc,nSrcLength*sizeof(char));
 }
 
-void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar * pszSrc,strsize nSrcLength) throw()
+void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar * pszSrc,strsize nSrcLength) NOTHROW
 {
    // nLen is in XCHARs
    ::WideCharToMultiByte(_gen_GetConversionACP(),0,pszSrc,(int32_t)nSrcLength,pszDest,(int32_t)nDestLength,NULL,NULL);
 }
 
 
-void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar32 * pszSrc,strsize nSrcLength) throw()
+void __cdecl crt_char_traits::ConvertTochar(char * pszDest,strsize nDestLength,const unichar32 * pszSrc,strsize nSrcLength) NOTHROW
 {
 
    //if(nDestLength >= 0)
    //{
-   //   throw simple_exception(get_thread_app(),"I am wasting this branching (if(nDestLength >= 0) to tell you that nDestLength should be negative so the buffer is already correct size... or you like incorrect size? Go to Facebook and click in Like for Community \"I Like incorrect size!!\", there should exist such community... there are so many things in the multi bramas... The hardware will check again if you didn't dirtied any other process... (only another process, though)... and you're probably be fired or even not be hired if incorrect size");
+   //   throw new simple_exception(get_app(),"I am wasting this branching (if(nDestLength >= 0) to tell you that nDestLength should be negative so the buffer is already correct size... or you like incorrect size? Go to Facebook and click in Like for Community \"I Like incorrect size!!\", there should exist such community... there are so many things in the multi bramas... The hardware will check again if you didn't dirtied any other process... (only another process, though)... and you're probably be fired or even not be hired if incorrect size");
    //}
 
    utf32_to_utf8(pszDest,pszSrc,nSrcLength);
@@ -571,7 +571,7 @@ void crt_char_traits::ConvertToAnsi(char* pstrString) RELEASENOTHROW
 #endif
 }
 
-void __cdecl crt_char_traits::FloodCharacters(char ch,strsize nLength,char* pch) throw()
+void __cdecl crt_char_traits::FloodCharacters(char ch,strsize nLength,char* pch) NOTHROW
 {
    // nLength is in XCHARs
    memset(pch,ch,nLength);
@@ -579,7 +579,7 @@ void __cdecl crt_char_traits::FloodCharacters(char ch,strsize nLength,char* pch)
 
 #ifdef WINDOWS
 
-BSTR __cdecl crt_char_traits::AllocSysString(const char* pchData,strsize nDataLength) throw()
+BSTR __cdecl crt_char_traits::AllocSysString(const char* pchData,strsize nDataLength) NOTHROW
 {
 
    strsize nLen = ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
@@ -595,7 +595,7 @@ BSTR __cdecl crt_char_traits::AllocSysString(const char* pchData,strsize nDataLe
 
 }
 
-bool __cdecl crt_char_traits::ReAllocSysString(const char* pchData,BSTR* pbstr,strsize nDataLength) throw()
+bool __cdecl crt_char_traits::ReAllocSysString(const char* pchData,BSTR* pbstr,strsize nDataLength) NOTHROW
 {
 
    strsize nLen = ::MultiByteToWideChar(_gen_GetConversionACP(),0,pchData,(int32_t)nDataLength,NULL,0);
@@ -613,7 +613,7 @@ bool __cdecl crt_char_traits::ReAllocSysString(const char* pchData,BSTR* pbstr,s
 
 #endif
 
-uint32_t __cdecl crt_char_traits::FormatMessage(uint32_t dwFlags,LPCVOID pSource,uint32_t dwMessageID,uint32_t dwLanguageID,char * pszBuffer,uint32_t nSize,va_list* pArguments) throw()
+uint32_t __cdecl crt_char_traits::FormatMessage(uint32_t dwFlags,LPCVOID pSource,uint32_t dwMessageID,uint32_t dwLanguageID,char * pszBuffer,uint32_t nSize,va_list* pArguments) NOTHROW
 {
 
 #ifdef WINDOWS
@@ -630,7 +630,7 @@ uint32_t __cdecl crt_char_traits::FormatMessage(uint32_t dwFlags,LPCVOID pSource
 
 }
 
-uint32_t __cdecl crt_char_traits::format_message(uint32_t dwFlags,LPCVOID pSource,uint32_t dwMessageID,uint32_t dwLanguageID,char * pszBuffer,uint32_t nSize,va_list* pArguments) throw()
+uint32_t __cdecl crt_char_traits::format_message(uint32_t dwFlags,LPCVOID pSource,uint32_t dwMessageID,uint32_t dwLanguageID,char * pszBuffer,uint32_t nSize,va_list* pArguments) NOTHROW
 {
 
 #ifdef WINDOWS
@@ -645,13 +645,13 @@ uint32_t __cdecl crt_char_traits::format_message(uint32_t dwFlags,LPCVOID pSourc
 
 }
 
-strsize __cdecl crt_char_traits::SafeStringLen(const char * psz) throw()
+strsize __cdecl crt_char_traits::SafeStringLen(const char * psz) NOTHROW
 {
    // returns length in bytes
    return (psz != NULL) ? strsize(strlen(psz)) : 0;
 }
 
-strsize __cdecl crt_char_traits::SafeStringLen(const unichar * psz) throw()
+strsize __cdecl crt_char_traits::SafeStringLen(const unichar * psz) NOTHROW
 {
    // returns length in wchar_ts
 #ifdef WINDOWS
@@ -661,14 +661,14 @@ strsize __cdecl crt_char_traits::SafeStringLen(const unichar * psz) throw()
 #endif
 }
 
-strsize __cdecl crt_char_traits::GetCharLen(const unichar* pch) throw()
+strsize __cdecl crt_char_traits::GetCharLen(const unichar* pch) NOTHROW
 {
    (void)pch;
    // returns char length
    return 1;
 }
 
-strsize __cdecl crt_char_traits::GetCharLen(const char* pch) throw()
+strsize __cdecl crt_char_traits::GetCharLen(const char* pch) NOTHROW
 {
    // returns char length
    return  ::str::get_utf8_char(pch).get_length();
@@ -679,7 +679,7 @@ uint32_t __cdecl crt_char_traits::GetEnvironmentVariable(const char * pszVar, ch
 
 #ifdef METROWIN
 
-   throw todo(get_thread_app());
+   throw new todo(get_app());
 
 #elif defined(WINDOWSEX)
 
@@ -702,13 +702,13 @@ void crt_char_traits::ConvertToAnsi(char* pstrString,size_t size)
    if(size > UINT_MAX)
    {
       // API only allows uint32_t size
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
    }
    uint32_t dwSize=static_cast<uint32_t>(size);
    bool fSuccess=::OemToCharBuffA(pstrString,pstrString,dwSize) != 0;
    if(!fSuccess)
    {
-      throw last_error_exception(get_thread_app());
+      throw new last_error_exception(get_app());
    }
 
 #endif
@@ -724,13 +724,13 @@ void crt_char_traits::ConvertToOem(char* pstrString,size_t size)
    if(size > UINT_MAX)
    {
       // API only allows uint32_t size
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
    }
    uint32_t dwSize=static_cast<uint32_t>(size);
    bool fSuccess=::CharToOemBuffA(pstrString,pstrString,dwSize) != 0;
    if(!fSuccess)
    {
-      throw last_error_exception(get_thread_app());
+      throw new last_error_exception(get_app());
    }
 
 #endif
@@ -757,13 +757,13 @@ void crt_char_traits::ConvertToOem(char* pstrString,size_t size)
 //}
 
 
-void string::construct() throw()
+void string::construct() NOTHROW
 {
    simple_string::construct(string_trait::GetDefaultManager());
 }
 
 
-string::string(string_manager * pstringmanager) throw():
+string::string(string_manager * pstringmanager) NOTHROW:
    stdstring < simple_string >(pstringmanager)
 {
 }
@@ -989,7 +989,7 @@ string::string(const char* pch,strsize nLength,string_manager * pstringmanager) 
 {
 }
 
-string::~string() throw()
+string::~string() NOTHROW
 {
 }
 
@@ -1140,7 +1140,7 @@ string & string::operator+=(unichar ch)
 }
 
 // Override from aura class
-string_manager * string::GetManager() const throw()
+string_manager * string::GetManager() const NOTHROW
 {
    string_manager * pstringmanager = simple_string::GetManager();
    if(pstringmanager) { return pstringmanager; }
@@ -1204,13 +1204,13 @@ string & string::assign(uint64_t n,uint64_t ca)
 // Comparison
 
 
-int32_t string::collate(const char * psz) const throw()
+int32_t string::collate(const char * psz) const NOTHROW
 {
    //ASSERT(__is_valid_string(psz));
    return(string_trait::StringCollate(GetString(),psz));
 }
 
-int32_t string::collate_ci(const char * psz) const throw()
+int32_t string::collate_ci(const char * psz) const NOTHROW
 {
    //ASSERT(__is_valid_string(psz));
    return(string_trait::StringCollateIgnore(GetString(),psz));
@@ -1221,17 +1221,17 @@ int32_t string::collate_ci(const char * psz) const throw()
 //   return compare(psz);
 //}
 //
-//int32_t string::compare_no_case(const char * psz) const throw()
+//int32_t string::compare_no_case(const char * psz) const NOTHROW
 //{
 //   return compare_ci(psz);
 //}
 
-//int32_t string::collate(const char * psz) const throw()
+//int32_t string::collate(const char * psz) const NOTHROW
 //{
 //   return Collate(psz);
 //}
 //
-//int32_t string::collate_no_case(const char * psz) const throw()
+//int32_t string::collate_no_case(const char * psz) const NOTHROW
 //{
 //   return CollateNoCase(psz);
 //}
@@ -1675,7 +1675,7 @@ string string::Tokenize(const char * pszTokens,strsize& iStart) const
    ASSERT(iStart >= 0);
 
    if(iStart < 0)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    if((pszTokens == NULL) || (*pszTokens == (char)0))
    {
@@ -2797,7 +2797,7 @@ string string::SpanIncluding(const char * pszCharSet) const
 {
    ASSERT(__is_valid_string(pszCharSet));
    if(pszCharSet == NULL)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    return(Left(string_trait::StringSpanIncluding(GetString(),pszCharSet)));
 }
@@ -2807,7 +2807,7 @@ string string::SpanExcluding(const char * pszCharSet) const
 {
    ASSERT(__is_valid_string(pszCharSet));
    if(pszCharSet == NULL)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    return(Left(string_trait::StringSpanExcluding(GetString(),pszCharSet)));
 }
@@ -2839,7 +2839,7 @@ void string::FormatV(const char * pszFormat,va_list args)
    ASSERT(__is_valid_string(pszFormat));
 
    if(pszFormat == NULL)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    strsize nLength = string_trait::GetFormattedLength(pszFormat,args);
    char * pszBuffer = GetBuffer(nLength);
@@ -3045,7 +3045,7 @@ void __cdecl string::AppendFormat(const char * pszFormat,...)
 void __cdecl string::format_message(const char * pszFormat,...)
 {
    if(pszFormat == NULL)
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
    va_list argList;
    va_start(argList,pszFormat);

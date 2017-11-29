@@ -216,7 +216,7 @@ namespace aura
 
       set_os_data(NULL);
 
-      //int32_t iRet = ::aura::application::exit_application();
+      //int32_t iRet = ::aura::application::term_instance();
 
       return 0;
 
@@ -230,7 +230,7 @@ namespace aura
 
    //   //string strExeName;
    //   //strExeName = System.get_module_title();
-   //   dappy(string(typeid(*this).name()) + " : got module title windows application : " + ::str::from(m_iReturnCode));
+   //   dappy(string(typeid(*this).name()) + " : got module title windows application : " + ::str::from(m_iErrorCode));
 
    //   __init_thread();
 

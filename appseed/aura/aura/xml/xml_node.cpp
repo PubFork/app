@@ -202,7 +202,7 @@ namespace xml
          return NULL;
       index i = m_pnodeParent->find(this);
       if(i < 0)
-         throw "strange: this is not child of this->parent";
+         throw new "strange: this is not child of this->parent";
       i++;
       if(i >= m_pnodeParent->get_children_count())
          return NULL;
@@ -221,7 +221,7 @@ namespace xml
    char * node::LoadDocType( const char * pszXml, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
       if(pszXml[0] != '<' || pszXml[1] != '!')
          return (char *) pszXml;
 
@@ -317,7 +317,7 @@ namespace xml
    char * node::LoadAttributes( const char * pszAttrs, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       char * xml = (char *)pszAttrs;
 
@@ -440,7 +440,7 @@ namespace xml
    char * node::LoadProcessingInstruction( const char * pszXml, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       // find the end of pparseinfo
       char * end = _tcsenistr( pszXml, astr.szXMLPIClose, astr.szXMLPIClose.get_length(), pparseinfo ? pparseinfo->m_chEscapeValue : 0 );
@@ -493,7 +493,7 @@ namespace xml
    char * node::LoadAttributes( const char * pszAttrs, const char * pszEnd, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       char * xml = (char *)pszAttrs;
 
@@ -587,7 +587,7 @@ namespace xml
    char * node::LoadComment( const char * pszXml, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       // find the end of comment
       char * end = _tcsenistr( pszXml, astr.szXMLCommentClose, astr.szXMLCommentClose.get_length(), pparseinfo ? pparseinfo->m_chEscapeValue : 0 );
@@ -632,7 +632,7 @@ namespace xml
    char * node::LoadCDATA( const char * pszXml, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       // find the end of CDATA
       char * end = _tcsenistr( pszXml, astr.szXMLCDATAClose, astr.szXMLCDATAClose.get_length(), pparseinfo ? pparseinfo->m_chEscapeValue : 0 );
@@ -679,7 +679,7 @@ namespace xml
    char * node::LoadOtherNodes(bool* pbRet, const char * pszXml, parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       char * xml = (char *)pszXml;
       bool do_other_type = true;
@@ -789,7 +789,7 @@ namespace xml
    char * node::_load(const char * pszXml,const char * pszEndXml,parse_info * pparseinfo)
    {
       if(pparseinfo == NULL)
-         pparseinfo = Sys(get_app()).xml().m_pparseinfoDefault;
+         pparseinfo = System.xml().m_pparseinfoDefault;
 
       // close it
       close();
@@ -1041,7 +1041,7 @@ namespace xml
 
       if(opt == NULL)
       {
-         opt = Sys(get_app()).xml().m_poptionDefault;
+         opt = System.xml().m_poptionDefault;
       }
 
       // tab
@@ -1173,7 +1173,7 @@ namespace xml
 
       if(opt == NULL)
       {
-         opt = Sys(get_app()).xml().m_poptionDefault;
+         opt = System.xml().m_poptionDefault;
       }
 
       if( m_etype == node_document )

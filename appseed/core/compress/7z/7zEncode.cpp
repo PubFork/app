@@ -293,7 +293,7 @@ namespace n7z
       _constructed(false)
    {
       if (options.is_empty())
-         throw 1;
+         throw new 1;
 
       _options = options;
       _mixerCoderSpec = NULL;
@@ -307,9 +307,9 @@ namespace n7z
       {
          // it has only password method;
          if (!_options.PasswordIsDefined)
-            throw 1;
+            throw new 1;
          if (!_options.Binds.is_empty())
-            throw 1;
+            throw new 1;
          ::libcompress::coder_mixer::CCoderStreamsInfo coderStreamsInfo;
          CMethodFull method;
 
@@ -377,7 +377,7 @@ namespace n7z
                _bindInfo.InStreams.add(i);
 
          if (_bindInfo.InStreams.is_empty())
-            throw 1; // this is error
+            throw new 1; // this is error
 
          // Make main stream first in list
          int32_t inIndex = _bindInfo.InStreams[0];

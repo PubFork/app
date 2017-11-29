@@ -710,7 +710,7 @@ namespace crypto
 
 //#ifdef METROWIN
 //
-//      throw interface_only_exception(get_app());
+//      throw new interface_only_exception(get_app());
 //
 //#else
 
@@ -728,7 +728,7 @@ namespace crypto
 
 //#ifdef METROWIN
 //
-//      throw interface_only_exception(get_app());
+//      throw new interface_only_exception(get_app());
 //
 //#else
 
@@ -1170,7 +1170,7 @@ namespace crypto
 
          CFRelease(error);
 
-         throw resource_exception(get_app());
+         throw new resource_exception(get_app());
 
       }
 

@@ -35,11 +35,11 @@ namespace linux
 
       virtual bool process_command(::command::command * pdata);
 
-      virtual bool process_initialize();
-      virtual bool initialize1();
-      virtual bool initialize2();
-      virtual bool initialize3();
-      virtual int32_t  exit_application() override;
+      virtual bool process_init();
+      virtual bool init1();
+      virtual bool init2();
+      virtual bool init3();
+      virtual int32_t  term_instance() override;
 
 
 
@@ -107,7 +107,7 @@ namespace linux
 
    // Overridables
       // thread initialization
-      virtual bool initialize_application();
+      virtual bool init_application();
 
       virtual ::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
@@ -119,7 +119,7 @@ namespace linux
       virtual bool is_idle_message(MESSAGE* pMsg);  // checks for special messages
 
       // thread termination
-      virtual int32_t exit_application() override; // default will 'delete this'
+      virtual int32_t term_instance() override; // default will 'delete this'
 
       // Advanced: exception handling
       virtual LRESULT ProcessWndProcException(::exception::aura* e, const MESSAGE* pMsg);

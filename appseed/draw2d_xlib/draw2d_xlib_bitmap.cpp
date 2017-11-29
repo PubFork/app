@@ -34,7 +34,7 @@ namespace draw2d_xlib
       if(nPlanes != 1 || nBitcount != 32)
       {
 
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
 
       }
 
@@ -121,7 +121,7 @@ namespace draw2d_xlib
       if(lpbmi->bmiHeader.biPlanes != 1 || lpbmi->bmiHeader.biBitCount != 32)
       {
 
-         throw not_implemented(get_app());
+         throw new not_implemented(get_app());
 
       }
 
@@ -241,7 +241,7 @@ namespace draw2d_xlib
    {
 
 
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
 
       //SIZE size;
       //VERIFY(::SetBitmapDimensionEx((HBITMAP)get_handle(), nWidth, nHeight, &size));

@@ -2,7 +2,7 @@
 //#include "core/user/user/user.h"
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 #ifdef WINDOWS
@@ -25,7 +25,7 @@ void CLASS_DECL_CORE __cdecl _ca2_purecall_();
 
 void CLASS_DECL_CORE __cdecl _ca2_purecall_()
 {
-    throw simple_exception(get_thread_app());
+    throw new simple_exception(get_app());
 }
 
 namespace plugin
@@ -100,7 +100,7 @@ namespace plugin
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
       return 0;
 
@@ -110,7 +110,7 @@ namespace plugin
 
       ::str::begins_eat_ci(strMutex, "\\core\\");
 
-      m_pmutexBitmap = new mutex(get_thread_app(), false, "Global\\" + strMutex);
+      m_pmutexBitmap = new mutex(get_app(), false, "Global\\" + strMutex);
 
       bool bNew = false;
 
@@ -156,7 +156,7 @@ namespace plugin
          if(!psystem->InitApplication())
             return 0;
 
-         if(!psystem->process_initialize())
+         if(!psystem->process_init())
             return 0;
 
          psystem->start_application(true, NULL);

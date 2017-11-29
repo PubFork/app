@@ -998,7 +998,7 @@ command_retry:
          }
 #else
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
 #endif
 
@@ -1563,7 +1563,7 @@ command_retry:
    bool bootstrap::is_user_service_running()
    {
 
-      ::mutex mutex(get_thread_app(), false, "Local\\ca2_application_local_mutex:app-core/user_service");
+      ::mutex mutex(get_app(), false, "Local\\ca2_application_local_mutex:app-core/user_service");
 
       return mutex.already_exists();
 

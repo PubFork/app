@@ -51,11 +51,11 @@ Serial::SerialImpl::open ()
 {
    if (port_.empty ())
    {
-      throw invalid_argument_exception(get_app(), "Empty port is invalid.");
+      throw new invalid_argument_exception(get_app(), "Empty port is invalid.");
    }
    if (is_open_ == true)
    {
-      throw SerialException ("Serial port already open.");
+      throw new SerialException ("Serial port already open.");
    }
 
    // See: https://github.com/wjwwood/serial/issues/84
@@ -266,7 +266,7 @@ Serial::SerialImpl::reconfigurePort ()
    else if (bytesize_ == fivebits)
       dcbSerialParams.ByteSize = 5;
    else
-      throw invalid_argument_exception (get_app(), "invalid char len");
+      throw new invalid_argument_exception (get_app(), "invalid char len");
 
    // setup stopbits
    if (stopbits_ == stopbits_one)
@@ -276,7 +276,7 @@ Serial::SerialImpl::reconfigurePort ()
    else if (stopbits_ == stopbits_two)
       dcbSerialParams.StopBits = TWOSTOPBITS;
    else
-      throw invalid_argument_exception(get_app(), "invalid stop bit");
+      throw new invalid_argument_exception(get_app(), "invalid stop bit");
 
    // setup parity
    if (parity_ == parity_none)
@@ -301,7 +301,7 @@ Serial::SerialImpl::reconfigurePort ()
    }
    else
    {
-      throw invalid_argument_exception(get_app(), "invalid parity");
+      throw new invalid_argument_exception(get_app(), "invalid parity");
    }
 
    // setup flowcontrol
@@ -442,7 +442,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
 {
    if (!is_open_)
    {
-      throw PortNotOpenedException ("Serial::read");
+      throw new PortNotOpenedException ("Serial::read");
    }
    DWORD bytes_read;
    if (!ReadFile(fd_, buf, static_cast<DWORD>(size), &bytes_read, NULL))
@@ -459,7 +459,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::write");
+      throw new PortNotOpenedException ("Serial::write");
    }
    DWORD bytes_written;
    if (!WriteFile(fd_, data, static_cast<DWORD>(length), &bytes_written, NULL))
@@ -584,7 +584,7 @@ Serial::SerialImpl::flush ()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::flush");
+      throw new PortNotOpenedException ("Serial::flush");
    }
    FlushFileBuffers (fd_);
 }
@@ -612,7 +612,7 @@ Serial::SerialImpl::setBreak (bool level)
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::setBreak");
+      throw new PortNotOpenedException ("Serial::setBreak");
    }
    if (level)
    {
@@ -629,7 +629,7 @@ Serial::SerialImpl::setRTS (bool level)
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::setRTS");
+      throw new PortNotOpenedException ("Serial::setRTS");
    }
    if (level)
    {
@@ -646,7 +646,7 @@ Serial::SerialImpl::setDTR (bool level)
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::setDTR");
+      throw new PortNotOpenedException ("Serial::setDTR");
    }
    if (level)
    {
@@ -663,7 +663,7 @@ Serial::SerialImpl::waitForChange ()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::waitForChange");
+      throw new PortNotOpenedException ("Serial::waitForChange");
    }
    DWORD dwCommEvent;
 
@@ -690,7 +690,7 @@ Serial::SerialImpl::getCTS ()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::getCTS");
+      throw new PortNotOpenedException ("Serial::getCTS");
    }
    DWORD dwModemStatus;
    if (!GetCommModemStatus(fd_, &dwModemStatus))
@@ -706,7 +706,7 @@ Serial::SerialImpl::getDSR ()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::getDSR");
+      throw new PortNotOpenedException ("Serial::getDSR");
    }
    DWORD dwModemStatus;
    if (!GetCommModemStatus(fd_, &dwModemStatus))
@@ -722,7 +722,7 @@ Serial::SerialImpl::getRI()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::getRI");
+      throw new PortNotOpenedException ("Serial::getRI");
    }
    DWORD dwModemStatus;
    if (!GetCommModemStatus(fd_, &dwModemStatus))
@@ -738,7 +738,7 @@ Serial::SerialImpl::getCD()
 {
    if (is_open_ == false)
    {
-      throw PortNotOpenedException ("Serial::getCD");
+      throw new PortNotOpenedException ("Serial::getCD");
    }
    DWORD dwModemStatus;
    if (!GetCommModemStatus(fd_, &dwModemStatus))

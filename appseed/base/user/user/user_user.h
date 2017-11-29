@@ -35,8 +35,8 @@ namespace user
          //::user::style * get_user_style();
 
 
-         virtual bool initialize1();
-         virtual bool initialize2();
+         virtual bool init1();
+         virtual bool init2();
          virtual bool initialize();
 
 

@@ -245,7 +245,7 @@ namespace user
 
                   GetBorderRect(lpcrectClient, rect, eside);
 
-                  class imaging & imaging = System.visual().imaging();
+                  class imaging & imaging = Application.imaging();
 
                   imaging.color_blend(pgraphics, rect, crMoveableBorder, 127);
 
@@ -257,7 +257,7 @@ namespace user
 
                   GetBorderRect(lpcrectClient, rect, eside);
 
-                  class imaging & imaging = System.visual().imaging();
+                  class imaging & imaging = Application.imaging();
 
                   imaging.color_blend(pgraphics, rect, crMoveableBorder, 127);
 
@@ -285,7 +285,7 @@ namespace user
 
                   GetBorderRect(rectClient, rect, eside);
 
-                  class imaging & imaging = System.visual().imaging();
+                  class imaging & imaging = Application.imaging();
 
                   imaging.color_blend(pgraphics, rect, crMoveableBorder, 127);
 

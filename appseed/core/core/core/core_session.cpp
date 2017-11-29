@@ -100,13 +100,13 @@ namespace core
    }
 
 
-   bool session::process_initialize()
+   bool session::process_init()
    {
 
-      if(!::core::application::process_initialize())
+      if(!::core::application::process_init())
          return false;
 
-      if(!::base::session::process_initialize())
+      if(!::base::session::process_init())
          return false;
 
       if (!process_initialize_userex())
@@ -123,13 +123,13 @@ namespace core
    }
 
 
-   bool session::initialize1()
+   bool session::init1()
    {
 
-      if(!::core::application::initialize1())
+      if(!::core::application::init1())
          return false;
 
-      if(!::base::session::initialize1())
+      if(!::base::session::init1())
          return false;
 
       if (!initialize1_userex())
@@ -160,13 +160,13 @@ namespace core
    }
 
 
-   bool session::initialize2()
+   bool session::init2()
    {
 
-      if(!::core::application::initialize2())
+      if(!::core::application::init2())
          return false;
 
-      if(!::base::session::initialize2())
+      if(!::base::session::init2())
          return false;
 
       return true;
@@ -175,17 +175,17 @@ namespace core
 
 
 
-   bool session::initialize_application()
+   bool session::init_application()
    {
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_application())
       {
 
          return false;
 
       }
 
-      if (!::base::session::initialize_application())
+      if (!::base::session::init_application())
       {
 
          return false;
@@ -450,7 +450,7 @@ namespace core
    //
    //#else
    //
-   //          throw todo(get_app());
+   //          throw new todo(get_app());
    //
    //#endif
    //
@@ -515,14 +515,14 @@ namespace core
    catch(::exit_exception & e)
    {
 
-   throw e;
+   throw new e;
 
    }
    catch(::exception::exception &)
    {
 
    if(!Application.on_run_exception(e))
-   throw exit_exception(get_app());
+   throw new exit_exception(get_app());
 
    }
    catch(...)
@@ -602,7 +602,7 @@ namespace core
       }
       else
       {
-         throw "not expected e_mouse value";
+         throw new "not expected e_mouse value";
       }
 
 
@@ -643,13 +643,13 @@ namespace core
 
       //if(m_pdatabase == NULL)
       //{
-      //   TRACE("VmpLightApp::initialize_instance failed to instatiate LightDB\n");
+      //   TRACE("VmpLightApp::init_instance failed to instatiate LightDB\n");
       //   return false;
       //}
 
       //if(!m_pdatabase->Initialize())
       //{
-      //   TRACE("VmpLightApp::initialize_instance failed to initialize LightDB\n");
+      //   TRACE("VmpLightApp::init_instance failed to initialize LightDB\n");
       //   return false;
       //}
 
@@ -678,7 +678,7 @@ namespace core
 
 #else
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
 #endif
 
@@ -732,7 +732,7 @@ namespace core
          catch(::exit_exception & e)
          {
 
-            throw e;
+            throw new e;
 
          }
          catch(::exception::exception & e)
@@ -741,7 +741,7 @@ namespace core
             if (!App(this).on_run_exception(e))
             {
 
-               throw exit_exception(get_app());
+               throw new exit_exception(get_app());
 
             }
 
@@ -887,7 +887,7 @@ namespace core
    }
 
 
-   bool session::on_uninstall()
+   bool session::on_unstall()
    {
 
 
@@ -896,7 +896,7 @@ namespace core
 
       try
       {
-         bOk1 = ::core::application::on_uninstall();
+         bOk1 = ::core::application::on_unstall();
       }
       catch(...)
       {
@@ -967,7 +967,7 @@ namespace core
 
       Session.m_appptra.add_unique(papp);
 
-      if(System.is_installing() || System.is_uninstalling())
+      if(System.is_installing() || System.is_unstalling())
          System.m_bDoNotExitIfNoApplications = false;
       else if(!papp->is_session()
          && !papp->is_system()

@@ -97,7 +97,7 @@ namespace file
          exception_sp(e_context_switcher_no_exception) {}
          exception_sp(e_context_switcher_failed)
          {
-            m_p = canew(exception(::get_thread_app()));
+            m_p = canew(exception(get_app()));
             if(m_p != NULL)
             {
                m_p->add_ref();
@@ -129,7 +129,7 @@ namespace file
 
 inline ::exception::exception * fesp() { return (::file::exception *)NULL; }
 inline ::exception::exception * fesp(e_context_switcher_no_exception) { return (::file::exception *)NULL; }
-inline ::exception::exception * fesp(e_context_switcher_failed) { return canew(::file::exception(::get_thread_app())); }
+inline ::exception::exception * fesp(e_context_switcher_failed) { return canew(::file::exception(get_app())); }
 inline ::exception::exception * fesp(::aura::application * papp,::file::exception::e_cause cause = ::file::exception::none,LONG lOsError = -1,const char * lpszArchiveName = NULL)
 {
    return canew(::file::exception(papp,cause,lOsError,lpszArchiveName));

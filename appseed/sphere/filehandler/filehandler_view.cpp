@@ -120,7 +120,7 @@ namespace filehandler
          && !Sess(papp).savings().is_trying_to_save(::aura::resource_display_bandwidth)
          && !Sess(papp).savings().is_trying_to_save(::aura::resource_memory))
       {
-         class imaging & imaging = Sys(papp).visual().imaging();
+         class imaging & imaging = App(papp).imaging();
          imaging.color_blend(pgraphics, m_rectItem, cr, 127);
       }
       else

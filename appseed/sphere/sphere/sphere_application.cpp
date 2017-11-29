@@ -31,7 +31,7 @@ namespace sphere
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
 
@@ -48,20 +48,20 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::initialize_application();
+            return ::filehandler::application::init_instance();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::initialize_application();
+            return ::userstack::application::init_instance();
          }
       }
 
 
 
-      return asphere::application::initialize_application();
+      return asphere::application::init_instance();
    }
 
    int32_t application::exit_application()
@@ -159,7 +159,7 @@ namespace sphere
       return asphere::application::on_install();
    }
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
       string strId = m_strId;
       char chFirst = '\0';
@@ -171,18 +171,18 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::on_uninstall();
+            return ::filehandler::application::on_unstall();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::on_uninstall();
+            return ::userstack::application::on_unstall();
          }
       }
 
-      return asphere::application::on_uninstall();
+      return asphere::application::on_unstall();
    }
 
 

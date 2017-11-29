@@ -376,7 +376,7 @@ void oswindow_data::set_impl(::user::interaction_impl * pimpl)
    if (this == NULL)
    {
 
-      throw "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
+      throw new "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
 
    }
 
@@ -1144,7 +1144,7 @@ void _android_key(unsigned int message, int keyCode, int iUni)
    if (::aura::system::g_p->m_pbasesystem->m_possystemwindow->m_pui == NULL)
       return;
 
-   sp(::message::key) pkey = canew(::message::key(get_thread_app()));
+   sp(::message::key) pkey = canew(::message::key(get_app()));
 
    pkey->m_id = message;
 
@@ -1283,7 +1283,7 @@ namespace base
       if (m_possystemwindow == NULL || m_possystemwindow->m_pui == NULL)
          return;
 
-      sp(::message::key) pkey = canew(::message::key(get_thread_app()));
+      sp(::message::key) pkey = canew(::message::key(get_app()));
 
       pkey->m_id = WM_KEYDOWN;
 

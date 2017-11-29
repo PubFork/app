@@ -71,7 +71,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
       ENSURE( pstringmanager != NULL );
 
       if(pchSrc == NULL && nLength != 0)
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       if(nLength < 0)
          nLength = (strsize) strlen(pchSrc);
@@ -98,7 +98,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
       //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
 
       //if( (iChar < 0) || (iChar > get_length()) )
-        // throw invalid_argument_exception(get_thread_app());
+        // throw new invalid_argument_exception(get_app());
 
       return m_pszData[iChar];
 
@@ -107,7 +107,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
    {
       //ASSERT( (iChar >= 0) && (iChar <= get_length()) );  // Indexing the '\0' is OK
       //if( (iChar < 0) || (iChar > get_length()) )
-        // throw invalid_argument_exception(get_thread_app());
+        // throw new invalid_argument_exception(get_app());
 
       return m_pszData[iChar];
    }
@@ -118,7 +118,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
       ASSERT( (iChar >= 0) && (iChar < get_length()) );
 
       if( (iChar < 0) || (iChar >= get_length()) )
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       strsize nLength = get_length();
       char * pszBuffer = GetBuffer();
@@ -143,7 +143,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
          // into the newly allocated buffer instead.
 
          if(pszSrc == NULL)
-            throw invalid_argument_exception(get_thread_app());
+            throw new invalid_argument_exception(get_app());
 
          uint_ptr nOldLength = (uint_ptr) get_length();
          uint_ptr nOffset = (uint_ptr) (pszSrc - GetString());
@@ -179,7 +179,7 @@ inline simple_string::simple_string(const string_data  * pdata, string_manager *
       ASSERT( nLength <= m_nBufferLength );
 
       if( nLength < 0 )
-         throw invalid_argument_exception(get_thread_app());
+         throw new invalid_argument_exception(get_app());
 
       m_nLength = nLength;
    }

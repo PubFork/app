@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace install
@@ -39,4 +39,6 @@ namespace install
 
 
 #include "install_application.h"
+
+
 

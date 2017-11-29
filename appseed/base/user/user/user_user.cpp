@@ -23,7 +23,7 @@ namespace user
    }
 
 
-   bool user::initialize1()
+   bool user::init1()
    {
 
       //m_pufeschema = new ::user::front_end_schema(get_app());
@@ -44,7 +44,7 @@ namespace user
 
       }
 
-      if(!::aura::department::initialize1())
+      if(!::aura::department::init1())
          return false;
 
       return true;
@@ -114,10 +114,10 @@ namespace user
    }
 
 
-   bool user::initialize2()
+   bool user::init2()
    {
 
-      if(!::aura::department::initialize2())
+      if(!::aura::department::init2())
          return false;
 
       return true;

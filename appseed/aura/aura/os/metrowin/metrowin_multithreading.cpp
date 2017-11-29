@@ -235,7 +235,7 @@ WorkItemPriority GetWorkItemPriority(int nPriority)
 //         //info.m_pv                  = pv;
 //         //info.m_hthread             = threadHandle;
 //         //info.m_peventCompletion    = threadHandle->m_pevent;
-//         //info.m_peventSuspension    = new manual_reset_event(get_thread_app());
+//         //info.m_peventSuspension    = new manual_reset_event(get_app());
 //         //info.m_iPriority           = 0;
 //
 //         synch_lock lock(g_pmutexPendingThreadsLock);
@@ -607,7 +607,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //int thread_layer::run()
 //{
 //
-//   throw "todo"; // message pumping
+//   throw new "todo"; // message pumping
 //
 //   /*
 //   MSG msg;
@@ -661,7 +661,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //
 //   //   MSG msg;
 //
-//   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
+//   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
 //
 //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 //
@@ -674,7 +674,7 @@ HTHREAD start_thread(uint32_t ( * pfn)(void *), void * pv, int iPriority)
 //
 //   //   MSG msg;
 //
-//   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
+//   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
 //
 //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 //
@@ -700,7 +700,7 @@ void attach_thread_input_to_main_thread(int_bool bAttach)
    //   MSG msg;
 
    // metrowin todo
-   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
+   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
 
    //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 
@@ -1171,7 +1171,7 @@ void set_main_thread(HTHREAD hThread)
    //
    //   //   MSG msg;
    //
-   //   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
+   //   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
    //
    //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
    //
@@ -1184,7 +1184,7 @@ void set_main_thread_id(UINT uiThread)
 
    //   //   MSG msg;
    //
-   //   throw "todo"; // PeekMessage function used to create message queue Windows Desktop
+   //   throw new "todo"; // PeekMessage function used to create message queue Windows Desktop
    //
    //   //PeekMessage(&msg, NULL, 0, 0xffffffff, FALSE);
 

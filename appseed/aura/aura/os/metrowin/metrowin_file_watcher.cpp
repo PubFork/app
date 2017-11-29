@@ -212,7 +212,7 @@ namespace file_watcher
       watch_struct ^ pwatch = watch_struct::create_watch(directory, bRecursive);
 
 		if(pwatch == nullptr)
-			throw file_not_found_exception(directory);
+			throw new file_not_found_exception(directory);
 
       pwatch->m_id            = watchid;
 		pwatch->m_pwatcher      = (size_t) (int_ptr) (file_watcher_impl *) this;

@@ -22,7 +22,7 @@ namespace hellobase
       virtual ~application();
 
       virtual string preferred_userschema() override;
-      virtual bool initialize_application() override;
+      virtual bool init_instance() override;
       virtual int32_t  exit_application() override;
 
       virtual void on_request(::create * pcreate) override;

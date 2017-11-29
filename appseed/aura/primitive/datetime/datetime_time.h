@@ -141,47 +141,47 @@ namespace datetime
       return str;
    }
 
-   inline bool time::operator==(time time) const throw()
+   inline bool time::operator==(time time) const NOTHROW
    {
       return(m_time == time.m_time);
    }
 
-   inline bool time::operator!=(time time) const throw()
+   inline bool time::operator!=(time time) const NOTHROW
    {
       return(m_time != time.m_time);
    }
 
-   inline bool time::operator<(time time) const throw()
+   inline bool time::operator<(time time) const NOTHROW
    {
       return(m_time < time.m_time);
    }
 
-   inline bool time::operator>(time time) const throw()
+   inline bool time::operator>(time time) const NOTHROW
    {
       return(m_time > time.m_time);
    }
 
-   inline bool time::operator<=(time time) const throw()
+   inline bool time::operator<=(time time) const NOTHROW
    {
       return(m_time <= time.m_time);
    }
 
-   inline bool time::operator>=(time time) const throw()
+   inline bool time::operator>=(time time) const NOTHROW
    {
       return(m_time >= time.m_time);
    }
 
-   inline time_span time::operator-(time time) const throw()
+   inline time_span time::operator-(time time) const NOTHROW
    {
       return(time_span(m_time - time.m_time));
    }
 
-   inline ::datetime::time time::operator-(time_span span) const throw()
+   inline ::datetime::time time::operator-(time_span span) const NOTHROW
    {
       return(time(m_time - span.GetTimeSpan()));
    }
 
-   inline ::datetime::time time::operator+(time_span span) const throw()
+   inline ::datetime::time time::operator+(time_span span) const NOTHROW
    {
       return m_time + span.m_timeSpan;
    }
@@ -196,12 +196,12 @@ namespace datetime
       return time(m_time + duration.GetTimeSpan());
    }
 
-   inline time::time() throw() :
+   inline time::time() NOTHROW :
       m_time(0)
    {
    }
 
-   inline time::time(__time64_t time)  throw() :
+   inline time::time(__time64_t time)  NOTHROW :
       m_time(time)
    {
    }

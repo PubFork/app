@@ -41,7 +41,7 @@ bool machine_event_central::initialize()
 }
 
 
-int32_t machine_event_central::run()
+void machine_event_central::run()
 {
 
    // todo (camilo) instead of sleeping, wait for change messages pooling in the machine event data file.

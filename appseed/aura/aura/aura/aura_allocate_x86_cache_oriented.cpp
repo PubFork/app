@@ -117,7 +117,7 @@ class x86_cache_oriented_memory_pool
          {
             lpb = (LPBYTE) memory_alloc(c);
             // can use string because messed all with cache out hot hit !!/^`}{{ **!
-            ::aura::application * papp = ::get_thread_app();
+            ::aura::application * papp = get_app();
             APPTRACE("handler oriented cache: memory out of cache palace garden (size=%d)", c);
          }
          return lpb;
@@ -128,7 +128,7 @@ class x86_cache_oriented_memory_pool
          if((p >= m_p && p < m_ba) || (p >= &m_ba[m_iCurPos] && p < ((LPBYTE)m_p) + m_iMaxSize))
          {
             // freeing memory in palace garden (not supposed to allocated memory in these places as they would cause a cache fault)
-            throw invalid_argument_exception(get_thread_app());
+            throw new invalid_argument_exception(get_app());
          }
          else if(p < m_ba || p > &m_ba[m_iCurPos])
          {
@@ -165,7 +165,7 @@ CLASS_DECL_AURA int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolInde
    if(iPoolIndex < 0)
    {
 
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
       return false;
 
@@ -174,7 +174,7 @@ CLASS_DECL_AURA int_bool x86_cache_oriented_set_thread_memory_pool(int iPoolInde
    if(iPoolIndex >= MAX_PROC_CACHE_ORIENTED_MEM_POOL)
    {
 
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
 
       return false;
    }

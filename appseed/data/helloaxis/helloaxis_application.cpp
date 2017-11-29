@@ -40,12 +40,12 @@ namespace helloaxis
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       ::core::session * pcoression = m_pauraapp->m_pcoresession;
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_instance())
       {
 
          return false;

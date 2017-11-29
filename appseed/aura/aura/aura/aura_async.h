@@ -180,7 +180,6 @@ namespace async
       cancellation_token            m_cancellationtoken;
 
 
-
       inline task(task_completion_event < T > & ev, cancellation_token token)
       {
 
@@ -234,12 +233,10 @@ namespace async
 
       }
 
-      virtual int32_t run()
+      virtual void run() override
       {
 
          defer_call_completion(status_complete);
-
-         return 0;
 
       }
 
@@ -282,7 +279,7 @@ namespace async
 
    inline void cancel_current_task()
    {
-      throw "cancel_current_task";
+      throw new ::simple_exception(get_app(), "cancel_current_task");
    }
 
    template < typename T >

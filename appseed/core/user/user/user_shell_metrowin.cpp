@@ -1280,7 +1280,7 @@ namespace user
 
                if (crBk == 0)
                {
-                  System.visual().imaging().Createcolor_blend_ImageList(
+                  Application.imaging().Createcolor_blend_ImageList(
                      m_pil48,
                      m_pil48Hover,
                      RGB(255, 255, 240),
@@ -1382,7 +1382,7 @@ namespace user
 
             if (crBk == 0)
             {
-               System.visual().imaging().Createcolor_blend_ImageList(
+               Application.imaging().Createcolor_blend_ImageList(
                m_pil[48],
                m_pilHover[48],
                RGB(255, 255, 240),
@@ -1631,7 +1631,7 @@ namespace user
          {
 
             return m_pilHover[iSize]->pred_add_image([&](auto dib)
-            { System.visual().imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64); }
+            { Application.imaging().Createcolor_blend_dib(dib, RGB(255, 255, 240), 64); }
             , m_pil[iSize], iImage);
 
          }

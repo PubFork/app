@@ -493,7 +493,7 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
 
          System.remove_frame(this);
 
-         throw e;
+         throw new e;
 
       }
       catch (...)
@@ -885,7 +885,7 @@ void simple_frame_window::_001OnGetMinMaxInfo(::message::message * pobj)
       lpMMI->ptMaxTrackSize.x = lpMMI->ptMaxSize.x;
    }
 #else
-   throw todo(get_app());
+   throw new todo(get_app());
 #endif
 }
 
@@ -1965,7 +1965,7 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
    if(m_bblur_Background)
    {
 
-      class imaging & imaging = System.visual().imaging();
+      class imaging & imaging = Application.imaging();
 
       rect rectClient;
 
@@ -2290,7 +2290,7 @@ void simple_frame_window::_001OnUser184(::message::message * pobj)
    else if(pbase->m_wparam == 2)
    {
 
-      throw simple_exception(get_app());
+      throw new simple_exception(get_app());
 
    }
    else if(pbase->m_wparam == 123)
@@ -2718,7 +2718,7 @@ void simple_frame_window::NotifyFloatingWindows(uint32_t dwFlags)
    }
 
 #else
-   throw todo(get_app());
+   throw new todo(get_app());
 #endif
 }
 

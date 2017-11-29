@@ -40,7 +40,7 @@ extern "C" {
  * length automatically.
  *
  * @remark apr_hash will use strlen(key) for the length. The NUL terminator
- *         is not included in the hash value (why throw a constant in?).
+ *         is not included in the hash value (why throw new a constant in?).
  *         Since the hash table merely references the provided key (rather
  *         than copying it), apr_hash_this() will return the NUL-term'd key.
  */

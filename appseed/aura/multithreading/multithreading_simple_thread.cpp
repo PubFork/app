@@ -21,7 +21,7 @@ simple_thread::~simple_thread()
 }
 
 
-bool simple_thread::initialize_thread()
+bool simple_thread::init_thread()
 {
 
    return true;

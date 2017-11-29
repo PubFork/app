@@ -160,7 +160,7 @@ namespace n7z
       int32_t indexInMap = FindPropInMap(_fileInfoPopIDs[index]);
       if (indexInMap == -1)
          return E_INVALIDARG;
-      throw not_implemented(get_app());
+      throw new not_implemented(get_app());
       /*
       const STATPROPSTG &srcItem = kPropMap[indexInMap].StatPROPSTG;
       *propID = srcItem.propid;

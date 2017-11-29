@@ -606,7 +606,7 @@ namespace visual
 
 #ifdef METROWIN
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #else
       FreeImage_Unload(pfibitmap);
@@ -913,7 +913,7 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 //
 //#else
 //
-//   throw todo(pgraphics->get_app());
+//   throw new todo(pgraphics->get_app());
 //
 //#endif
 //

@@ -43,7 +43,7 @@ namespace multimedia
 
          
          
-         virtual bool initialize_instance();
+         virtual bool init_instance();
          virtual int32_t exit_instance();
          
          

@@ -2569,7 +2569,7 @@ else
       catch(::exit_exception & e)
       {
 
-         throw e;
+         throw new e;
 
       }
       catch(::exception::exception &)

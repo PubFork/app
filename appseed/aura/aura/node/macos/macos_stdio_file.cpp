@@ -321,7 +321,7 @@ namespace macos
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
       return NULL;
    }
 
@@ -330,7 +330,7 @@ namespace macos
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
    }
 
    void stdio_file::UnlockRange(uint_ptr /* dwPos */, uint_ptr /* dwCount */)
@@ -338,7 +338,7 @@ namespace macos
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception(get_app());
+      throw new not_supported_exception(get_app());
    }
 
 #ifdef _DEBUG

@@ -39,17 +39,17 @@ namespace helloaxis
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
-      if (!::axis::application::initialize_application())
+      if (!::axis::application::init_instance())
       {
 
          return false;
 
       }
 
-      if (!::helloaura::application::initialize_application())
+      if (!::helloaura::application::init_instance())
       {
 
          return false;

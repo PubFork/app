@@ -32,7 +32,7 @@ namespace simpledb
       simpledb(::aura::application * papp);
       virtual ~simpledb();
 
-      virtual bool initialize2();
+      virtual bool init2();
       virtual bool initialize();
       virtual bool finalize();
 

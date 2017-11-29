@@ -363,7 +363,7 @@ void oswindow_data::set_user_interaction(::user::interaction * pui)
    single_lock slOsWindow(s_pmutex, true);
 
    if(this == NULL)
-      throw "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
+      throw new "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction";
 
    m_pui = pui;
 
@@ -886,7 +886,7 @@ int32_t WINAPI MessageBoxA_x11(oswindow hWnd, const char * lpText, const char * 
    if(hWnd == NULL || hWnd->get_user_interaction() == NULL || hWnd->get_user_interaction()->get_app() == NULL)
    {
 
-      papp = get_thread_app();
+      papp = get_app();
 
    }
    else
@@ -896,7 +896,7 @@ int32_t WINAPI MessageBoxA_x11(oswindow hWnd, const char * lpText, const char * 
 
    }
 
-   return message_box_show_xlib(get_thread_app(), lpText, lpCaption);
+   return message_box_show_xlib(get_app(), lpText, lpCaption);
 
 }
 
@@ -917,7 +917,7 @@ static void initialize_x11_message_box()
 int32_t WINAPI MessageBoxA(oswindow hWnd, const char * lpText, const char * lpCaption, UINT uType)
 {
 
-   message_box_show_xlib(get_thread_app(), lpText, lpCaption);
+   message_box_show_xlib(get_app(), lpText, lpCaption);
 
    return 0;
 

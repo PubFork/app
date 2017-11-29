@@ -389,7 +389,7 @@ namespace datetime
                      input = scanner;
                      if(!check_expression_separator(input, scanner))
                      {
-                        throw "invalid date";
+                        throw new "invalid date";
                      }
                      return string(start, scanner - start);
                   }
@@ -404,13 +404,13 @@ namespace datetime
                      input = scanner;
                      if(!check_expression_separator(input, scanner))
                      {
-                        throw "invalid date";
+                        throw new "invalid date";
                      }
                      return string(start, scanner - start);
                   }
                   else
                   {
-                     throw "invalid date";
+                     throw new "invalid date";
                   }
                }
                else if(!strSep2.has_char())
@@ -418,13 +418,13 @@ namespace datetime
                   input = scanner;
                   if(!check_expression_separator(input, scanner))
                   {
-                     throw "invalid date";
+                     throw new "invalid date";
                   }
                   return string(start, scanner - start);
                }
                else
                {
-                  throw "invalid date";
+                  throw new "invalid date";
                }
             }
             else
@@ -444,7 +444,7 @@ namespace datetime
                         input = scanner;
                         if(!check_expression_separator(input, scanner))
                         {
-                           throw "invalid date";
+                           throw new "invalid date";
                         }
                         return string(start, scanner - start);
                      }
@@ -459,18 +459,18 @@ namespace datetime
                         input = scanner;
                         if(!check_expression_separator(input, scanner))
                         {
-                           throw "invalid date";
+                           throw new "invalid date";
                         }
                         return string(start, scanner - start);
                      }
                      else
                      {
-                        throw "invalid date";
+                        throw new "invalid date";
                      }
                   }
                   else
                   {
-                     throw "invalid date";
+                     throw new "invalid date";
                   }
                }
             }
@@ -533,7 +533,7 @@ namespace datetime
                return string(start, scanner - start);
             else
             {
-               throw "invalid date expression";
+               throw new "invalid date expression";
             }
          }
          else
@@ -543,7 +543,7 @@ namespace datetime
                return string(start, scanner - start);
             else
             {
-               throw "invalid date expression";
+               throw new "invalid date expression";
             }
          }
       }
@@ -561,7 +561,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  throw "invalid date expression";
+                  throw new "invalid date expression";
                }
             }
             else
@@ -571,7 +571,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  throw "invalid date expression";
+                  throw new "invalid date expression";
                }
             }
          }
@@ -586,7 +586,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  throw "invalid date expression";
+                  throw new "invalid date expression";
                }
             }
             else
@@ -596,7 +596,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  throw "invalid date expression";
+                  throw new "invalid date expression";
                }
             }
          }
@@ -643,7 +643,7 @@ namespace datetime
       token * token;
       token = new class token;
       if(token == NULL)
-         throw memory_exception(get_app());
+         throw new memory_exception(get_app());
       while(isspace_dup(*input))
          input++;
       if(*input == '\0')

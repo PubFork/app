@@ -81,7 +81,7 @@ namespace libcompress
             uint32_t index = m_Positions[numBits] +
                ((value - m_Limits[numBits - 1]) >> (kNumBitsMax - numBits));
             if (index >= m_NumSymbols)
-               // throw CDecoderException(); // test it
+               // throw new CDecoderException(); // test it
                return 0xFFFFFFFF;
             return m_Symbols[index];
          }

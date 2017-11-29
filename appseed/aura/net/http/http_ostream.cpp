@@ -94,7 +94,7 @@ namespace http
       memory mem;
       if(!mem.allocate(1024 * 1024))
       {
-         throw memory_exception(get_app());
+         throw new memory_exception(get_app());
       }
       while((nRead = spbuf->read(mem.get_data(), mem.get_size())) > 0)
       {

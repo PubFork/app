@@ -29,7 +29,7 @@ namespace xml
       {
          if(m_pdocument == NULL)
          {
-            throw "Cannot output to a NULL document";
+            throw new ::simple_exception(get_app(), "Cannot output to a NULL document");
          }
          m_pnode = m_pdocument->get_root();
          m_pnode->set_name(lpcszName);

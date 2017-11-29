@@ -2144,7 +2144,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         throw "todo";
+         throw new "todo";
 
 #else
 
@@ -2169,7 +2169,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         throw "todo";
+         throw new "todo";
 
 #else
          ::aura::shell_launcher launcher(m_pwindow == NULL ? NULL : m_pwindow->get_safe_handle(), "open", strStage, (" : " + str2.substr(0, iPos) + " usehostlogin"), dir::name(strStage), SW_SHOWNORMAL);
@@ -2188,11 +2188,11 @@ retry_host:
 
 #ifdef METROWIN
 
-      throw "todo";
+      throw new "todo";
 
 #elif defined(WINDOWS)
 
-      ::aura::ipc::tx txchannel(get_thread_app());
+      ::aura::ipc::tx txchannel(get_app());
 
       if (!txchannel.open("core/spaboot_install_callback"))
          return;
@@ -2771,7 +2771,7 @@ retry_host:
       strMutex = "Global\\ca2_application_global_mutex:";
       strMutex += psz;
 
-      ::mutex mutex(get_thread_app(), false, strMutex);
+      ::mutex mutex(get_app(), false, strMutex);
       bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
       if (bOpened)
       {
@@ -2950,7 +2950,7 @@ retry_host:
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -3007,7 +3007,7 @@ retry_host:
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 

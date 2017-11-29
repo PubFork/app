@@ -71,7 +71,7 @@ namespace visual
 
             dib->get_graphics()->OffsetViewportOrg(-rectCache.left + lpcrect->left, -rectCache.top + lpcrect->top);
 
-            System.visual().imaging().channel_spread_set_color(dib2->get_graphics(), null_point(), size, dib->get_graphics(), null_point(), ::visual::rgba::channel_alpha, iEffectiveSpreadRadius, ARGB(255, 255, 255, 255));
+            Application.imaging().channel_spread_set_color(dib2->get_graphics(), null_point(), size, dib->get_graphics(), null_point(), ::visual::rgba::channel_alpha, iEffectiveSpreadRadius, ARGB(255, 255, 255, 255));
 
             for (index i = 0; i < iBlur; i++)
             {

@@ -35,8 +35,8 @@ namespace asphere
          virtual ~application();
 
 
-         virtual bool initialize_application() override;
-         virtual bool initialize1() override;
+         virtual bool init_instance() override;
+         virtual bool init1() override;
          virtual bool initialize() override;
 
 

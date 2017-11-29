@@ -89,7 +89,7 @@ namespace simpledb
       return true;
    }
 
-   bool simpledb::initialize2()
+   bool simpledb::init2()
    {
 
       if(m_pauraapp->m_pcoreapp->handler()->m_varTopicQuery["locale"].get_count() > 0)
@@ -129,7 +129,7 @@ namespace simpledb
       m_pauraapp->m_pbasesession->fill_locale_schema(*m_pauraapp->m_pbasesession->str_context()->m_plocaleschema);
 
 
-      //if(!m_pauraapp->m_pcoreapp->is_installing() && !m_pauraapp->m_pcoreapp->is_uninstalling() && !m_pauraapp->m_pcoreapp->is_system())
+      //if(!m_pauraapp->m_pcoreapp->is_installing() && !m_pauraapp->m_pcoreapp->is_unstalling() && !m_pauraapp->m_pcoreapp->is_system())
       //{
 
       //   set_keyboard_layout(NULL, ::action::source::system());

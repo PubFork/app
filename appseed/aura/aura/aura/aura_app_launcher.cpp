@@ -49,7 +49,7 @@ namespace aura
 
       }
 
-      return Sys(get_thread_app()).dir().ca2module() / "app";
+      return System.dir().ca2module() / "app";
 
 #else
 
@@ -63,20 +63,20 @@ namespace aura
       strApp.replace("-", "_");
       strApp.replace("/", "_");
 
-      ::file::path pathCandidate = Sys(get_thread_app()).dir().ca2module() / strApp + ".exe";
+      ::file::path pathCandidate = System.dir().ca2module() / strApp + ".exe";
 
-      if (App(get_thread_app()).file().exists(pathCandidate))
+      if (Application.file().exists(pathCandidate))
       {
 
          return pathCandidate;
 
       }
 
-      return Sys(get_thread_app()).dir().ca2module() / "app.exe";
+      return System.dir().ca2module() / "app.exe";
 
 #else
 
-      return Sys(get_thread_app()).dir().ca2module() / "app";
+      return System.dir().ca2module() / "app";
 
 #endif
 

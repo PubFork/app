@@ -322,7 +322,7 @@ sp(::file::file) stdio_file::Duplicate() const
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   throw new not_supported_exception(get_app());
    return NULL;
 }
 
@@ -332,7 +332,7 @@ void stdio_file::LockRange(file_position_t /* dwPos */, file_position_t /* dwCou
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   throw new not_supported_exception(get_app());
 }
 
 void stdio_file::UnlockRange(file_position_t /* dwPos */, file_position_t /* dwCount */)
@@ -340,7 +340,7 @@ void stdio_file::UnlockRange(file_position_t /* dwPos */, file_position_t /* dwC
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   throw not_supported_exception(get_app());
+   throw new not_supported_exception(get_app());
 }
 
 #ifdef _DEBUG

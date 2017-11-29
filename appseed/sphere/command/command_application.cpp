@@ -27,7 +27,7 @@ namespace prompt
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       System.factory().creatable_small < prompt::document >();
@@ -36,7 +36,7 @@ namespace prompt
       System.factory().creatable_small < prompt::pane_view >();
       System.factory().creatable_small < prompt::primary_view >();
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
       Session.filemanager()->m_strLevelUp = "levelup";
@@ -93,7 +93,7 @@ namespace prompt
 
 #else
 
-         throw todo(get_app());
+         throw new todo(get_app());
 
 #endif
 

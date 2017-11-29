@@ -4857,7 +4857,7 @@ restart:
    void dib::SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy)
    {
 
-//      throw todo(get_app());
+//      throw new todo(get_app());
 //
 //      // xxx todo create(m_size.cx, m_size.cy);
 //
@@ -4870,7 +4870,7 @@ restart:
 //      // White blend dib
 //      dib dib1;
 //
-//      throw todo(get_app());
+//      throw new todo(get_app());
 //
 //      // xxx todo dib1.create(m_size.cx, m_size.cy);
 //
@@ -4896,7 +4896,7 @@ restart:
 //      ::draw2d::dib_sp spdib2(allocer());
 //
 //
-//      throw todo(get_app());
+//      throw new todo(get_app());
 //
 //      // xxx todo spdib2->create(m_size.cx, m_size.cy);
 //      spdib2->Fill(0, 0, 0, 0);
@@ -4919,7 +4919,7 @@ restart:
 //
 //      // Mask dib
 //      dib dibM;
-//      throw todo(get_app());
+//      throw new todo(get_app());
 //
 //      // xxx todo dibM.create(m_size.cx, m_size.cy);
 //
@@ -6150,7 +6150,7 @@ restart:
       if ((width * height) <= 0)
          return;
       if (!create(width, height))
-         throw 0;
+         throw new 0;
       map();
       int wc = width * sizeof(COLORREF);
       if (wc == m_iScan)

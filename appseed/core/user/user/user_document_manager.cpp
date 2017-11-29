@@ -695,7 +695,7 @@ namespace user
 
       if(pcreate->m_spCommandLine->m_varFile.is_empty())
       {
-         throw invalid_argument_exception(get_app());
+         throw new invalid_argument_exception(get_app());
       }
 
       // find the highest confidence
@@ -906,7 +906,7 @@ namespace core
       if (ptemplate == NULL)
       {
 
-         throw invalid_argument_exception(this, "impact system template should be valid");
+         throw new invalid_argument_exception(this, "impact system template should be valid");
 
          return;
 

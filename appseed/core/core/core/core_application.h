@@ -93,11 +93,11 @@ namespace core
       virtual ~application();
 
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
-      virtual bool initialize1() override; // first initialization
-      virtual bool initialize2() override; // second initialization
-      virtual bool initialize3() override; // third initialization and so on...
+      virtual bool init1() override; // first initialization
+      virtual bool init2() override; // second initialization
+      virtual bool init3() override; // third initialization and so on...
 
       virtual bool initialize() override; // last initialization
 
@@ -116,7 +116,7 @@ namespace core
       virtual bool is_session() override;
 
       virtual bool is_installing() override;
-      virtual bool is_uninstalling() override;
+      virtual bool is_unstalling() override;
 
       virtual bool is_serviceable() override;
 
@@ -159,7 +159,7 @@ namespace core
 
 
       virtual bool on_install() override;
-      virtual bool on_uninstall() override;
+      virtual bool on_unstall() override;
       virtual bool on_run_install();
       virtual bool on_run_uninstall();
 
@@ -312,7 +312,7 @@ namespace core
       // System Policy Settings
       virtual bool LoadSysPolicies(); // Override to load policies other than the system policies that core API loads.
       bool GetSysPolicyValue(uint32_t dwPolicyID,bool *pbValue); // returns the policy's setting in the out parameter
-      bool _LoadSysPolicies() throw(); // Implementation helper
+      bool _LoadSysPolicies() NOTHROW; // Implementation helper
       static const char gen_FileSection[];
       static const char gen_FileEntry[];
       static const char gen_PreviewSection[];
@@ -333,7 +333,7 @@ namespace core
 
 
 
-      virtual bool initialize_application() override;
+      virtual bool init_application() override;
 
 
 
@@ -361,7 +361,7 @@ namespace core
 
       virtual ::window_sp get_desktop_window();
 
-      virtual int32_t run() override;
+      virtual void run() override;
 
       ::aura::application * get_system();
 

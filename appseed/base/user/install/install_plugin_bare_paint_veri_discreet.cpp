@@ -5,7 +5,7 @@
 //#include <math.h>
 
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
 
 namespace hotplugin

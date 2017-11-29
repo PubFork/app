@@ -749,7 +749,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
 //{
 //
 //
-//   throw not_implemented(NULL);
+//   throw new not_implemented(NULL);
 //
 //   return false;
 //

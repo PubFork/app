@@ -39,10 +39,10 @@ namespace userstack
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
-      if(!::asphere::application::initialize_application())
+      if(!::asphere::application::init_instance())
          return false;
 
       set_data_key_modifier("&data_source=local&");
@@ -186,7 +186,7 @@ namespace userstack
 
             return true;
 #else
-            throw todo(get_app());
+            throw new todo(get_app());
 #endif
          }
 
@@ -384,11 +384,11 @@ namespace userstack
    }
 
 
-   bool application::initialize1()
+   bool application::init1()
    {
 
 
-      if(!::asphere::application::initialize1())
+      if(!::asphere::application::init1())
          return false;
 
 
@@ -426,7 +426,7 @@ namespace userstack
 
    }
 
-   bool application::on_uninstall()
+   bool application::on_unstall()
    {
 
       bool bOk1 = false;
@@ -434,7 +434,7 @@ namespace userstack
 
       try
       {
-         bOk1 = ::asphere::application::on_uninstall();
+         bOk1 = ::asphere::application::on_unstall();
       }
       catch(...)
       {

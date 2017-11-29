@@ -186,7 +186,7 @@ CLASS_DECL_AXIS __MODULE_THREAD_STATE* __get_module_thread_state();
 
 struct CLASS_DECL_AXIS __MAINTAIN_STATE
 {
-   explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
+   explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) NOTHROW;
    ~__MAINTAIN_STATE();
    
 protected:

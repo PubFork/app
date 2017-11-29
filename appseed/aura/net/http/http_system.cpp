@@ -1141,7 +1141,7 @@ retry:
 
                   psession.release();
 
-                  throw not_licensed(get_app(),strCa2Realm,strLocation);
+                  throw new not_licensed(get_app(),strCa2Realm,strLocation);
 
                   return NULL;
 
@@ -1876,7 +1876,7 @@ retry_session:
             TRACE("Not Licensed Result Total time ::http::system::get(\"%s\") %d", strUrl.Left(MIN(255,strUrl.get_length())), dwTimeProfile2 - dwTimeProfile1);
             string strLocation = psocket->outheader("Location");
 //            delete psocket;
-            throw not_licensed(get_app(), strCa2Realm, strLocation);
+            throw new not_licensed(get_app(), strCa2Realm, strLocation);
             return NULL;
          }
          string strLocation = psocket->outheader("location");

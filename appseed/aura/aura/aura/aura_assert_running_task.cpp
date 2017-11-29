@@ -23,7 +23,7 @@ namespace aura
    }
 
 
-   int32_t assert_running_task::run()
+   void assert_running_task::run()
    {
 
       while(thread_get_run())

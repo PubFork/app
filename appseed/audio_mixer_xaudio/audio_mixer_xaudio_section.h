@@ -30,7 +30,7 @@ namespace multimedia
          virtual ~department();
 
 
-         virtual bool initialize1();
+         virtual bool init1();
 
 
 

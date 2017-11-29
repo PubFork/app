@@ -13,7 +13,7 @@ namespace sockets
    public:
 
 
-      int32_t                                      m_iReturnCode;
+      int32_t                                      m_iErrorCode;
 
       SSLInitializer *                             m_psslinit;
 
@@ -42,7 +42,7 @@ namespace sockets
 
       class ::sockets::net                         & net();
 
-      bool initialize1();
+      bool init1();
 
       bool finalize();
 

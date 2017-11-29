@@ -120,7 +120,12 @@ CLASS_DECL_AURA bool __node_pre_term()
 
 CLASS_DECL_AURA bool __node_pos_term()
 {
-   
+   //#elif defined(APPLEIOS)
+   //
+   ui_app_terminate();
+   //
+   //#endif
+
    return true;
    
 }

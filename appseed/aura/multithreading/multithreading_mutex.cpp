@@ -49,7 +49,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          DWORD dwError2 = ::GetLastError();
 
-         throw resource_exception(papp);
+         throw new resource_exception(papp);
 
       }
 
@@ -119,7 +119,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (err != EEXIST)
          {
 
-            throw resource_exception(get_app());
+            throw new resource_exception(get_app());
 
          }
 
@@ -130,7 +130,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
          if (m_psem == SEM_FAILED)
          {
 
-            throw resource_exception(get_app());;
+            throw new resource_exception(get_app());;
 
          }
 
@@ -200,7 +200,7 @@ mutex::mutex(::aura::application * papp, bool bInitiallyOwn, const char * pstrNa
 
          const char * pszError = strerror(iErr);
 
-         throw resource_exception(get_app());
+         throw new resource_exception(get_app());
 
       }
 
@@ -304,7 +304,7 @@ get_existing:
       if(m_semid < 0)
       {
 
-         throw resource_exception(get_app());
+         throw new resource_exception(get_app());
 
       }
 
@@ -1412,8 +1412,8 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
       if (psem == SEM_FAILED)
       {
 
-         //throw resource_exception(papp,"failed to create named mutex");
-         throw resource_exception(papp);
+         //throw new resource_exception(papp,"failed to create named mutex");
+         throw new resource_exception(papp);
 
       }
 
@@ -1460,7 +1460,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    if (iFd < 0)
    {
 
-      throw resource_exception(::get_thread_app());
+      throw new resource_exception(get_app());
 
    }
 
@@ -1512,7 +1512,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
 void wait_until_mutex_does_not_exist(const char * pszName)
 {
 
-   mutex * pmutex = new mutex(get_thread_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+   mutex * pmutex = new mutex(get_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
@@ -1524,7 +1524,7 @@ void wait_until_mutex_does_not_exist(const char * pszName)
 
          Sleep(200);
 
-         pmutex = new mutex(get_thread_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+         pmutex = new mutex(get_app(), false, "Global\\::ca::fontopus::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
       }
 

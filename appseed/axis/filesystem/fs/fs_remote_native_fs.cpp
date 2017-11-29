@@ -100,7 +100,7 @@ namespace fs
          if(str == "You have not logged in! Exiting!")
          {
 
-            throw string("uifs:// You have not logged in!");
+            throw new string("uifs:// You have not logged in!");
 
          }
 

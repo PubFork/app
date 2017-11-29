@@ -51,7 +51,7 @@ CLASS_DECL_AURA bool file_put(const char * path, ::file::serializable & s, ::aur
       if (papp == NULL)
       {
 
-         papp = ::get_thread_app();
+         papp = get_app();
 
       }
 
@@ -98,7 +98,7 @@ CLASS_DECL_AURA bool file_as(::file::serializable & s, const char * path, ::aura
       if (papp == NULL)
       {
 
-         papp = ::get_thread_app();
+         papp = get_app();
 
       }
 

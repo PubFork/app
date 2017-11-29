@@ -65,13 +65,13 @@ namespace axis
 
          void construct(::aura::application * papp, int iPhase) override;
 
-         virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
-         virtual bool initialize1() override;
+         virtual bool init1() override;
 
-         virtual bool initialize2() override;
+         virtual bool init2() override;
 
-         virtual bool initialize_application() override;
+         virtual bool init_application() override;
 
          virtual bool initialize() override;
 
@@ -112,13 +112,13 @@ namespace axis
 
          //void construct(::aura::application * papp,int iPhase);
 
-         //virtual bool process_initialize();
+         //virtual bool process_init();
 
-         //virtual bool initialize1();
+         //virtual bool init1();
 
-         /*virtual bool initialize2();*/
+         /*virtual bool init2();*/
 
-         //virtual bool initialize_application() override;
+         //virtual bool init_application() override;
 
          //virtual bool initialize();
 

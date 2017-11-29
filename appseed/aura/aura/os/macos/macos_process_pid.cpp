@@ -49,7 +49,7 @@ extern int strncmp_dup(const char * sz1, const char * sz2, int_ptr iLen);
 //                if (sNewProcesses == 0) {
 //                        if (sProcesses)
 //                                free(sProcesses);
-//                                throw "could not reallocate memory";
+//                                throw new "could not reallocate memory";
 //                }
 //                sProcesses = sNewProcesses;
 //                iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);
@@ -474,7 +474,7 @@ int get_process_pid(const char * csProcessName)
       if (sNewProcesses == 0) {
          if (sProcesses)
             free(sProcesses);
-         throw "could not reallocate memory";
+         throw ::simple_exception(get_app(), "could not reallocate memory");
       }
       sProcesses = sNewProcesses;
       iRetCode = sysctl(aiNames, (u_int) iNamesLength, sProcesses, &iSize, NULL, 0);

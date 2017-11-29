@@ -26,7 +26,7 @@ namespace user
       return (int32_t) send_message( TB_ADDBITMAP, (WPARAM)nNumButtons,
          (LPARAM)&tbab);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -63,7 +63,7 @@ namespace user
 #ifdef WINDOWSEX
       SetButtonStructSize(sizeof(TBBUTTON));
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 
    }
@@ -76,7 +76,7 @@ namespace user
 #ifdef WINDOWSEX
       return (HRESULT) send_message( TB_GETOBJECT, (WPARAM)&IID_IDropTarget, (LPARAM)ppDropTarget);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -218,7 +218,7 @@ namespace user
          nSize += 256;*/
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -231,7 +231,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ENABLEBUTTON, nID, MAKELPARAM(bEnable, 0)) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 
    }
@@ -240,7 +240,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_CHECKBUTTON, nID, MAKELPARAM(bCheck, 0)) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 
    }
@@ -249,7 +249,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_PRESSBUTTON, nID, MAKELPARAM(bPress, 0)) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -260,7 +260,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_HIDEBUTTON, nID, MAKELPARAM(bHide, 0)) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -270,7 +270,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_INDETERMINATE, nID, MAKELPARAM(bIndeterminate, 0)) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -280,7 +280,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ISBUTTONENABLED, nID) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -291,7 +291,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ISBUTTONCHECKED, nID) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -301,7 +301,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ISBUTTONPRESSED, nID) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -311,7 +311,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ISBUTTONHIDDEN, nID) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -321,7 +321,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ISBUTTONINDETERMINATE, nID) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -332,7 +332,7 @@ namespace user
       ASSERT(IsWindow()); 
       return send_message( TB_SETSTATE, nID, (LPARAM) nState) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -342,7 +342,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return (int32_t) send_message( TB_GETSTATE, nID);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -353,7 +353,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_ADDBUTTONSW, nNumButtons, (LPARAM)lpButtons) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
    bool toolbar_control::InsertButton(int32_t nIndex, LPTBBUTTON lpButton)
@@ -361,7 +361,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_INSERTBUTTON, nIndex, (LPARAM)lpButton) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 #endif
@@ -372,7 +372,7 @@ namespace user
 #ifdef WINDOWSEX
       ASSERT(IsWindow()); return send_message( TB_DELETEBUTTON, nIndex) != FALSE;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -399,7 +399,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
    }
@@ -412,7 +412,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -427,7 +427,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -443,7 +443,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -458,7 +458,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -473,7 +473,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -488,7 +488,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -503,7 +503,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -519,7 +519,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -535,7 +535,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
       return pwindow;
@@ -552,7 +552,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -568,7 +568,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -584,7 +584,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -600,7 +600,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -616,7 +616,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -632,7 +632,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -648,7 +648,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -664,7 +664,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -680,7 +680,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -697,7 +697,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -713,7 +713,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -729,7 +729,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -745,7 +745,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -761,7 +761,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -779,7 +779,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -795,7 +795,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -811,7 +811,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -827,7 +827,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -843,7 +843,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -860,7 +860,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -877,7 +877,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -896,7 +896,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -911,7 +911,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -924,7 +924,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -937,7 +937,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1001,7 +1001,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1014,7 +1014,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1027,7 +1027,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1040,7 +1040,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1053,7 +1053,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1093,7 +1093,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1120,7 +1120,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1133,7 +1133,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 
@@ -1147,7 +1147,7 @@ namespace user
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 

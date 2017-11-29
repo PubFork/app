@@ -35,7 +35,7 @@ namespace base
 
 
 
-         virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
 
 
@@ -68,12 +68,7 @@ namespace base
          //virtual void process_message(::message::base * pbase) override;
          virtual bool process_message(LPMESSAGE lpmessage) override;
 
-
-#ifdef HOTPLUGIN_SUBSYSTEM
-
          int32_t hotplugin_host_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,::hotplugin::host * phost,::hotplugin::plugin * pplugin) override;
-
-#endif
 
          virtual ::user::interaction * FindWindow(const char * lpszClassName,const char * lpszWindowName);
          virtual ::user::interaction * FindWindowEx(oswindow oswindowParent,oswindow oswindowChildAfter,const char * lpszClass,const char * lpszWindow);

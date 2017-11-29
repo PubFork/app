@@ -44,7 +44,7 @@ namespace helloworld
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
 
       ::core::session * pcoression = m_pauraapp->m_pcoresession;
@@ -60,7 +60,7 @@ namespace helloworld
       System.factory().creatable_small < ::helloworld::switcher_view >();
       System.factory().creatable_small < ::helloworld::pane_view >();
 
-      if (!::core::application::initialize_application())
+      if (!::core::application::init_instance())
       {
 
          return false;

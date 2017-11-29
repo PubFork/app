@@ -487,7 +487,7 @@ namespace sockets
             if (spfile->open(strFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_none).failed())
             {
 
-               throw io_exception(get_app(), "http_socket::SendResponseBody(1) file=" + strFile + "\n");
+               throw new io_exception(get_app(), "http_socket::SendResponseBody(1) file=" + strFile + "\n");
 
             }
 
@@ -495,7 +495,7 @@ namespace sockets
          catch (...)
          {
 
-            throw io_exception(get_app(), "http_socket::SendResponseBody(2) file=" + strFile + "\n");
+            throw new io_exception(get_app(), "http_socket::SendResponseBody(2) file=" + strFile + "\n");
 
          }
 

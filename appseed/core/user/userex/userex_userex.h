@@ -42,8 +42,8 @@ namespace userex
 
       ::user::shell::shell * shell();
 
-      virtual bool initialize1() override;
-      virtual bool initialize2() override;
+      virtual bool init1() override;
+      virtual bool init2() override;
       virtual bool initialize() override;
 
 

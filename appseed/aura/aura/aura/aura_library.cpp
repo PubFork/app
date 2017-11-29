@@ -632,7 +632,7 @@ string_map < sp(::aura::library) > * g_pmapLibCall = NULL;
 
    if(lib.is_null())
    {
-      lib = canew(::aura::library(::get_thread_app()));
+      lib = canew(::aura::library(get_app()));
       lib->open(psz);
    }
 

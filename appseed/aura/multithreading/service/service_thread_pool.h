@@ -67,13 +67,13 @@ public:
       if(!::QueueUserWorkItem((LPTHREAD_START_ROUTINE) thread_proc < T >, psignal, flags))
       {
          delete psignal;
-         throw last_error_exception(pobject->get_app());
+         throw new last_error_exception(pobject->get_app());
       }
 #else
-      if(!__begin_thread(get_thread_app(), thread_proc < T >, psignal))
+      if(!__begin_thread(get_app(), thread_proc < T >, psignal))
       {
          delete psignal;
-         throw 0;
+         throw new ::simple_exception(get_app(), "failed to start QueueUserWorkItem");
       }
 #endif
    }

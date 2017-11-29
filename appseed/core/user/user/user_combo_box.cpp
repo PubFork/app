@@ -771,7 +771,7 @@ namespace user
          if(m_plist == NULL)
          {
             pca.release();
-            throw resource_exception(get_app());
+            throw new resource_exception(get_app());
          }
 
          m_plist->m_pcombo = this;
@@ -786,7 +786,7 @@ namespace user
             
             m_plist.release();
             
-            throw resource_exception(get_app());
+            throw new resource_exception(get_app());
 
          }
          sp(::user::interaction_impl) pimpl = m_plist->m_pimpl;
@@ -962,28 +962,28 @@ namespace user
 #ifdef WINODWSEX
          DrawItem((LPDRAWITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
          break;
       case WM_MEASUREITEM:
 #ifdef WINODWSEX
          MeasureItem((LPMEASUREITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
          break;
       case WM_COMPAREITEM:
 #ifdef WINODWSEX
          *pResult = CompareItem((LPCOMPAREITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
          break;
       case WM_DELETEITEM:
 #ifdef WINODWSEX
          DeleteItem((LPDELETEITEMSTRUCT)pbase->m_lparam);
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
          break;
       default:

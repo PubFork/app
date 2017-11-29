@@ -651,7 +651,7 @@ namespace user
    //
    //      }
    //
-   //      throw invalid_argument_exception(::get_thread_app());
+   //      throw new invalid_argument_exception(get_app());
    //
    //   }
    //

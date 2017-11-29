@@ -35,11 +35,11 @@ namespace android
 
          virtual bool process_command(::command::command * pdata);
 
-         virtual bool process_initialize();
-         virtual bool initialize1();
-         virtual bool initialize2();
-         virtual bool initialize3();
-         virtual int32_t  exit_application() override;
+         virtual bool process_init();
+         virtual bool init1();
+         virtual bool init2();
+         virtual bool init3();
+         virtual int32_t  term_instance() override;
 
          virtual bool win_init(::command::command * pdata);
 

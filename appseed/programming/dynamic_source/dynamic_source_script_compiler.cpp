@@ -263,7 +263,7 @@ void script_compiler::prepare_compile_and_link_environment()
 
 //#ifdef METROWIN
 //
-//   throw todo(get_app());
+//   throw new todo(get_app());
 //
 //#elif defined(LINUX)
 //#else
@@ -290,7 +290,7 @@ void script_compiler::prepare_compile_and_link_environment()
 #endif
 //#elif defined(METROWIN)
 //
-//   throw todo(get_app());
+//   throw new todo(get_app());
 //
 //#else
 //   str += getenv("PATH");
@@ -300,7 +300,7 @@ void script_compiler::prepare_compile_and_link_environment()
 //   bResult = SetEnvironmentVariable("PATH", str) != FALSE;
 //#elif defined(METROWIN)
 //
-//   throw todo(get_app());
+//   throw new todo(get_app());
 //
 //#elif defined(LINUX)
 //#else
@@ -2202,7 +2202,7 @@ string script_compiler::cppize2(const string & psz,bool bScript,stringa & straId
                   strResult += ":*<invalid-syntax>*:"; // fatal;
                   break;
                   break;
-                  //throw simple_exception(get_app(), "invalid syntax.");
+                  //throw new simple_exception(get_app(), "invalid syntax.");
                }
             }
             continue;

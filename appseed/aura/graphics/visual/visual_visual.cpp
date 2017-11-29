@@ -73,10 +73,11 @@ namespace visual
 
    }
 
-   bool visual::initialize1()
+
+   bool visual::init1()
    {
 
-      if (!::aura::department::initialize1())
+      if (!::aura::department::init1())
          return false;
 
       synch_lock sl(m_pmutex);
@@ -94,25 +95,15 @@ namespace visual
 
       }
 
-      if (m_pimaging == NULL)
-      {
-
-         m_pimaging = new class imaging(get_app());
-
-         if (m_pimaging == NULL)
-            throw memory_exception(get_app());
-
-      }
-
       return true;
 
    }
 
 
-   bool visual::process_initialize()
+   bool visual::process_init()
    {
 
-      if (!::aura::department::process_initialize())
+      if (!::aura::department::process_init())
          return false;
 
       synch_lock sl(m_pmutex);
@@ -125,11 +116,15 @@ namespace visual
    }
 
 
-   bool visual::initialize()
+   bool visual::init()
    {
 
-      if (!::aura::department::initialize())
+      if (!::aura::department::init())
+      {
+         
          return false;
+         
+      }
 
       ////if(Application.dir().is(System.dir().commonappdata("")))
       //{
@@ -154,10 +149,8 @@ namespace visual
    //}
 
 
-   bool visual::finalize()
+   void visual::term()
    {
-
-      bool bOk = true;
 
       synch_lock sl(m_pmutex);
 
@@ -167,15 +160,13 @@ namespace visual
          if (m_pvisualapi != NULL)
          {
 
-            bOk = m_pvisualapi->close();
+            m_pvisualapi->close();
 
          }
 
       }
       catch (...)
       {
-
-         bOk = false;
 
       }
 
@@ -200,8 +191,6 @@ namespace visual
 
       ::aura::del(m_pfontdepartment);
 
-      ::aura::del(m_pimaging);
-
       for (auto & p : m_cursormap)
       {
 
@@ -210,8 +199,6 @@ namespace visual
       }
 
       m_cursormap.remove_all();
-
-      return bOk;
 
    }
 
@@ -228,7 +215,7 @@ namespace visual
 
       cursor * pcursor = get_cursor(ecursor);
 
-      if (System.visual().imaging().load_from_file(pcursor, psz, bFromCache))
+      if (Application.imaging().load_from_file(pcursor, psz, bFromCache))
       {
 
          return pcursor;
@@ -499,15 +486,13 @@ namespace visual
 
 
    // should not call axis class implementation because visual::visual is inside a n-furcation of user::visual
-   int32_t visual::exit_application()
+   void visual::term_instance()
    {
-
-      int32_t iExitCode = 0;
 
       try
       {
 
-         iExitCode = ::aura::department::exit_application();
+         ::aura::department::term_instance();
 
       }
       catch (...)
@@ -515,11 +500,7 @@ namespace visual
 
          ::simple_message_box(NULL, "except", "except", MB_OK);
 
-         iExitCode = -1;
-
       }
-
-      return iExitCode;
 
    }
 

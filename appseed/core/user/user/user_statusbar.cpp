@@ -103,7 +103,7 @@ namespace user
 //         HFONT hFont = (HFONT)send_message(WM_GETFONT);
       ::draw2d::graphics_sp spgraphicsScreen(allocer());
 
-      //throw todo(get_app());
+      //throw new todo(get_app());
       /*         HGDIOBJ hOldFont = NULL;
                if (hFont != NULL)
                   hOldFont = spgraphicsScreen->SelectObject(hFont);*/
@@ -139,7 +139,7 @@ namespace user
             if (i == 0)
                pSBP->nStyle |= (SBPS_STRETCH | SBPS_NOBORDERS);
 #else
-            throw todo(get_app());
+            throw new todo(get_app());
 #endif
          }
          ++pSBP;
@@ -205,7 +205,7 @@ namespace user
                        ::GetSystemMetrics(SM_CXBORDER) * 2;
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -287,7 +287,7 @@ namespace user
          }
       }
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -331,7 +331,7 @@ namespace user
       if (!pBar->DefWindowProc(SB_GETRECT, nIndex, (LPARAM)lpRect))
          ::SetRectEmpty(lpRect);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -541,7 +541,7 @@ namespace user
       pnccalcsize->m_pparams->rgrc[0].right += rect.right;
       pnccalcsize->m_pparams->rgrc[0].bottom += rect.bottom;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -630,7 +630,7 @@ namespace user
       pwindowpos->previous();
       m_dwStyle = dwStyle;
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
    }
 
@@ -755,7 +755,7 @@ namespace user
          nNewStyle |= SBPS_POPOUT;
       pStatusBar->SetPaneStyle((int32_t) m_iIndex, nNewStyle);
 #else
-      throw todo(get_app());
+      throw new todo(get_app());
 #endif
 
    }

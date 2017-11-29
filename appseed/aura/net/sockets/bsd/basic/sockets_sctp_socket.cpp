@@ -58,7 +58,7 @@ namespace sockets
          {
             log("SctpSocket", -1, "bind() failed", ::aura::log::level_error);
    #ifdef ENABLE_EXCEPTIONS
-            throw Exception("bind() failed for SctpSocket, port: " + Utility::l2string(ad.GetPort()));
+            throw new Exception("bind() failed for SctpSocket, port: " + Utility::l2string(ad.GetPort()));
    #endif
          }
          return n;

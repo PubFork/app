@@ -449,17 +449,17 @@ private:
 
 	void _Xinv() const
    {	// report invalid string element in bitset conversion
-		throw invalid_argument_exception(get_thread_app(), "invalid bitset<N> char");
+		throw new invalid_argument_exception(get_app(), "invalid bitset<N> char");
 	}
 
 	void _Xoflo() const
 	{	// report converted value too big to represent
-		throw overflow_error(get_thread_app(), "bitset<N> overflow");
+		throw new overflow_error(get_app(), "bitset<N> overflow");
 	}
 
 	void _Xran() const
 	{	// report bit index out of range
-		throw range_error(get_thread_app(), "invalid bitset<N> position");
+		throw new range_error(get_app(), "invalid bitset<N> position");
 	}
 
 };

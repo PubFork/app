@@ -104,7 +104,7 @@ namespace sockets
             log("bind", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
 #endif
             SetCloseAndDelete();
-            throw simple_exception(get_app(), "bind() failed for udp_socket, port:range: " + ::str::from(ad.get_service_number()) + ":" + ::str::from(range));
+            throw new simple_exception(get_app(), "bind() failed for udp_socket, port:range: " + ::str::from(ad.get_service_number()) + ":" + ::str::from(range));
             return -1;
          }
          m_bind_ok = true;

@@ -34,7 +34,10 @@ namespace axis
       virtual bool initialize_application() override;
       virtual int32_t exit_application() override;
 
-      virtual bool finalize() override;
+         virtual bool init_application() override;
+         virtual int32_t exit_application() override;
+
+         virtual bool term() override;
 
       //::url::department                           & url()     { return m_urldepartment; }
 
@@ -64,9 +67,11 @@ namespace axis
 
       virtual bool process_initialize() override;
 
-      virtual bool initialize1() override;
+         virtual bool process_init() override;
 
-      virtual bool initialize2() override;
+         virtual bool init1() override;
+
+         virtual bool init2() override;
 
 
       virtual bool verb() override; // ambigous inheritance from ::aura::system/::axis::application
@@ -94,8 +99,8 @@ namespace axis
 
       //virtual bool initialize_application() override;
 
-      //virtual int32_t exit_instance();
-      //virtual bool finalize();
+         //virtual int32_t exit_instance();
+         //virtual bool finalize();
 
 
 
@@ -110,11 +115,13 @@ namespace axis
 
       //virtual bool process_initialize();
 
-      //virtual bool initialize1();
+         //virtual bool process_init();
 
-      //virtual bool initialize2();
+         //virtual bool init1();
 
-      //virtual bool is_system();
+         //virtual bool init2();
+
+         //virtual bool is_system();
 
 
 

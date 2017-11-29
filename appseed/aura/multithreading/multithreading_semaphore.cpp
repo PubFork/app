@@ -24,7 +24,7 @@ semaphore::semaphore(::aura::application * papp, LONG lInitialCount, LONG lMaxCo
 
    m_object = ::CreateSemaphoreExW(lpsaAttributes, lInitialCount, lMaxCount, pstrName == NULL ? NULL : (const wchar_t *)  ::str::international::utf8_to_unicode(pstrName), 0, SEMAPHORE_MODIFY_STATE | DELETE | SYNCHRONIZE);
    if (m_object == NULL)
-      throw resource_exception(papp);
+      throw new resource_exception(papp);
 
 #elif defined(ANDROID)
 
@@ -47,14 +47,14 @@ semaphore::semaphore(::aura::application * papp, LONG lInitialCount, LONG lMaxCo
       {
 
          if (errno != EEXIST)
-            throw resource_exception(get_app());
+            throw new resource_exception(get_app());
 
          // We're not first.  Try again
 
          m_psem = sem_open(m_strName,0);
 
          if (m_psem == SEM_FAILED)
-            throw resource_exception(get_app());;
+            throw new resource_exception(get_app());;
 
       }
 

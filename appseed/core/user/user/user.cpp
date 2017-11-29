@@ -350,7 +350,7 @@ namespace core
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_iErrorCode = -2;
 
       }
 
@@ -385,7 +385,7 @@ namespace core
       catch (...)
       {
 
-         m_iReturnCode = -2;
+         m_iErrorCode = -2;
 
       }
 

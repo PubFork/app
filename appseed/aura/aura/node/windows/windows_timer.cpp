@@ -37,7 +37,7 @@ void timer::impl_init()
    if(NULL == m_hTimerQueue)
    {
             
-      throw - 1;
+      throw new - 1;
             
    }
          

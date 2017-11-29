@@ -54,7 +54,7 @@ namespace android
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
+         throw new ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
 
    }
 
@@ -857,7 +857,7 @@ namespace android
 
 
          //if (m_strFileName.is_empty())
-         // throw todo(get_app());
+         // throw new todo(get_app());
          rStatus.m_attribute = 0;
          /*         else
                   {
@@ -1652,7 +1652,7 @@ void CLASS_DECL_AURA vfxThrowFileException(::aura::application * papp, ::file::e
       lpsz = ::android::szUnknown;
    APPTRACE("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw ::file::exception(papp, ecause, lOsError, lpszFileName);
+   throw new ::file::exception(papp, ecause, lOsError, lpszFileName);
 }
 
 namespace android

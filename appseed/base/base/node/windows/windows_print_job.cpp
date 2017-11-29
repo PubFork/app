@@ -31,12 +31,12 @@ namespace windows
       {
          // TODO:
          // m_printer.open(&callback_form);
-         throw "printer not opened";
+         throw new "printer not opened";
       }
 
       if (m_pui == NULL)
       {
-         throw "a view should collaborate";
+         throw new "a view should collaborate";
       }
 
       ::draw2d::graphics * pgraphics = m_phprinter->create_graphics();

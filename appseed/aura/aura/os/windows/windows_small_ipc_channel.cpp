@@ -90,7 +90,7 @@ HWND FindDesktopWindow(const string & strWindowName)
  
    HWINSTA hWindowsStation = GetProcessWindowStation();
    if(NULL == hWindowsStation)
-      throw false;
+      throw new false;
 
    find_desktop_window find;
 

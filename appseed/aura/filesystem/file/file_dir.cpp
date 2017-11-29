@@ -287,10 +287,10 @@ found:
 
          string buf;
 
-         throw metrowin_todo();
+         throw new metrowin_todo();
          //HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramFiles, KF_FLAG_NO_ALIAS, NULL, wtostring(buf, 4096));
          //if(FAILED(hr))
-         // throw "dir::ca2_module_dup : SHGetKnownFolderPath failed";
+         // throw new "dir::ca2_module_dup : SHGetKnownFolderPath failed";
 
          strcpy(lpszModuleFilePath, buf.c_str());
 
@@ -312,18 +312,18 @@ found:
 
       }
 
-      throw metrowin_todo();
+      throw new metrowin_todo();
       //GetModuleFileName(hmodule, lpszModuleFilePath, sizeof(lpszModuleFilePath));
 
       // xxx   LPTSTR lpszModuleFileName;
 
-      throw metrowin_todo();
+      throw new metrowin_todo();
       //GetFullPathName(lpszModuleFilePath, sizeof(lpszModuleFilePath), lpszModuleFolder, &lpszModuleFileName);
 
-      throw metrowin_todo();
+      throw new metrowin_todo();
       //lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
 
-      throw metrowin_todo();
+      throw new metrowin_todo();
       /*
       if(strlen_dup(lpszModuleFolder) > 0)
       {
@@ -415,7 +415,7 @@ found:
 
    hwstring lpszModuleFolder(MAX_PATH * 8);
 
-   throw todo(::get_thread_app());
+   throw new todo(get_app());
 
 //   wcscpy_dup(lpszModuleFolder, unitext("/core/"));
 

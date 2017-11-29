@@ -237,9 +237,6 @@ namespace install
 
 } // namespace install
 
-
-
-
 namespace data
 {
 
@@ -374,15 +371,13 @@ namespace file
 
 class machine_event_data;
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
 namespace hotplugin
 {
+   
    class host;
    class plugin;
+   
 }
-
-#endif
 
 
 
@@ -393,6 +388,19 @@ namespace html
 
 } // namespace html
 
+
+namespace multimedia
+{
+   
+   namespace audio_plugin
+   {
+      
+      class plugin;
+      
+   } // namespace audio_plugin
+   
+   
+} // namespace multimedia
 
 #include "aura/aura/aura/aura_auto.h"
 #include "aura/primitive/comparison/comparison_compare.h"
@@ -733,7 +741,7 @@ namespace html
 #define CaSys(pca) (*pca->m_pauraapp->m_paurasystem)
 #define Sys(pauraapp) (*pauraapp->m_paurasystem)
 #define System (Sys(this->m_pauraapp))
-#define threadSystem (Sys(get_thread_app()))
+#define threadSystem (System)
 
 
 #define Sess(pauraapp) (*pauraapp->m_paurasession)
@@ -753,7 +761,7 @@ namespace html
 #define RINOK(x) { int32_t __result__ = (x); if (__result__ != 0) return __result__; }
 #endif
 
-// throw - exception - result exception - if not ok
+// throw new - exception - result exception - if not ok
 #ifndef TINOK
 #define TINOK(e, x) { int32_t __result__ = (x); if (__result__ != 0) throw new e(get_app(), __result__); }
 #endif
@@ -798,7 +806,7 @@ CLASS_DECL_AURA ::aura::PFN_GET_NEW_LIBRARY get_library_factory(const char * psz
 extern "C"
 CLASS_DECL_AURA void register_library(const char * psz, ::aura::PFN_GET_NEW_LIBRARY p);
 
-CLASS_DECL_AURA ::aura::application * get_thread_app();
+CLASS_DECL_AURA ::aura::application * get_app();
 
 #include "aura/primitive/primitive_cflag.h"
 
@@ -1383,6 +1391,27 @@ public:
 typedef ::map < sp(object), sp(object), sp(object), sp(object) > element_map;
 typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 
+struct install_status
+{
+   
+   int         m_iCheck;
+   bool        m_bOk;
+   
+   install_status()
+   {
+      
+      m_iCheck = 0;
+      m_bOk = false;
+      
+   }
+   
+   
+   DWORD calc_when_is_good_to_check_again();
+   
+};
+
+
+
 #include "aura/aura/os/os_text.h"
 
 #ifdef VSNORD
@@ -1479,13 +1508,13 @@ typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 template < typename T >
 inline T get_maximum_value()
 {
-throw not_implemented(get_thread_app());
+throw new not_implemented(get_app());
 }
 
 template < typename T >
 inline T get_minimum_value()
 {
-throw not_implemented(get_thread_app());
+throw new not_implemented(get_app());
 }
 template < typename T >
 inline T get_null_value()
@@ -1553,7 +1582,7 @@ inline void string_format::format(const char * & s,const T & value,Args... args)
 
    }
 
-   throw simple_exception(get_thread_app(),"extra arguments provided to format");
+   throw new simple_exception(get_app(),"extra arguments provided to format");
 
 
 }

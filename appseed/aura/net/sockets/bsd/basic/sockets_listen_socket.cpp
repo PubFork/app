@@ -227,7 +227,7 @@ namespace sockets
          log("listen", Errno, bsd_socket_error(Errno), ::aura::log::level_fatal);
 #endif
          close_socket(s);
-         throw simple_exception(get_app(), "listen() failed for port " + ::str::from(ad.get_service_number()) + ": " + bsd_socket_error(Errno));
+         throw new simple_exception(get_app(), "listen() failed for port " + ::str::from(ad.get_service_number()) + ": " + bsd_socket_error(Errno));
          return -1;
       }
       m_depth = depth;

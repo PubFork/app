@@ -38,7 +38,7 @@ namespace userstack
 
       m_bWindowFrame = true;
 
-#ifdef HOTPLUGIN_SUBSYSTEM
+#ifdef 
 
       m_bWindowFrame = GetTypedParent < ::plugin::host_interaction >() == NULL;
 
@@ -249,7 +249,7 @@ namespace userstack
             Session.open_by_file_extension(strPath);
          }
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
       }
 
@@ -289,7 +289,7 @@ namespace userstack
                ShowWindow(SW_HIDE);
             }
 #else
-            throw todo(get_app());
+            throw new todo(get_app());
 #endif
          }
       }
@@ -363,7 +363,7 @@ namespace userstack
 #ifdef WINDOWSEX
          pbase->set_lresult((LRESULT) GetTopLevelFrame()->get_safe_handle());
 #else
-         throw todo(get_app());
+         throw new todo(get_app());
 #endif
       }
       pbase->m_bRet = true;
@@ -457,7 +457,7 @@ namespace userstack
 
 #else
 
-      throw todo(get_app());
+      throw new todo(get_app());
 
 #endif
 

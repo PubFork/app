@@ -22,7 +22,7 @@ namespace prompt
       void construct();
 
 
-      bool initialize_application() override;
+      bool init_instance() override;
       virtual int32_t exit_application() override;
 
 

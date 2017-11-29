@@ -32,7 +32,7 @@ namespace windows
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
+         throw new ::file::exception(papp, ::file::exception::none, -1, lpszFileName);
 
    }
 
@@ -58,7 +58,7 @@ namespace windows
       {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-         throw 0;
+         throw new 0;
       }
       pFile->m_hFile = hFile;
       ASSERT(pFile->m_hFile != hFileNull);
@@ -402,7 +402,7 @@ retry:
       dwCur = pFile->seek(0L, ::file::seek_current);
       dwLen = pFile->seek_to_end();
       if(dwCur != (uint64_t)pFile->seek((file_offset_t)dwCur,::file::seek_begin))
-         throw simple_exception(get_app(),"file cursor not in same place after getting length");
+         throw new simple_exception(get_app(),"file cursor not in same place after getting length");
 
       return (file_size_t) dwLen;
    }

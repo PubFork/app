@@ -152,11 +152,11 @@ namespace exception
    void rethrow(exception * pe)
    {
 
-      throw pe;
+      throw new pe;
 
    }
 
-   const char * exception::what() const throw()
+   const char * exception::what() const NOTHROW
    {
 
       return m_pszMessage;
@@ -209,11 +209,11 @@ errno_t c_runtime_error_check(errno_t error)
    switch(error)
    {
    case ENOMEM:
-      throw memory_exception(get_thread_app());
+      throw new memory_exception(get_app());
       break;
    case EINVAL:
    case ERANGE:
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
       break;
 #if defined(WINDOWS)
    case STRUNCATE:
@@ -221,7 +221,7 @@ errno_t c_runtime_error_check(errno_t error)
    case 0:
       break;
    default:
-      throw invalid_argument_exception(get_thread_app());
+      throw new invalid_argument_exception(get_app());
       break;
    }
    return error;
@@ -244,12 +244,12 @@ namespace exception
 
    CLASS_DECL_AURA void throw_interface_only(::aura::application * papp)
    {
-      throw interface_only_exception(papp);
+      throw new interface_only_exception(papp);
    }
 
    CLASS_DECL_AURA void throw_not_implemented(::aura::application * papp)
    {
-      throw not_implemented(papp);
+      throw new not_implemented(papp);
    }
 
 

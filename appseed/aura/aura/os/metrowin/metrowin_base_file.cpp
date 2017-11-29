@@ -1813,7 +1813,7 @@ DWORD WinSetFilePointer(HANDLE h,LONG lMove,PLONG plHi,DWORD dwMeth)
    }
 
    if(!SetFilePointerEx(h,liMove,&liRes,dwMeth))
-      throw "SetFilePointer error";
+      throw new "SetFilePointer error";
 
    if(plHi != NULL)
    {
@@ -1833,7 +1833,7 @@ DWORD GetFileSize(HANDLE h,LPDWORD lpdwHi)
    FILE_STANDARD_INFO info;
 
    if(!GetFileInformationByHandleEx(h,FileStandardInfo,&info,sizeof(info)))
-      throw "GetFileSize Error";
+      throw new "GetFileSize Error";
 
    if(lpdwHi != NULL)
    {
@@ -2482,7 +2482,7 @@ int_bool file_is_equal_path(const char * psz1,const char * psz2)
 string file_get_mozilla_firefox_plugin_container_path()
 {
 
-   throw " todo ";
+   throw new " todo ";
 
    return "";
 

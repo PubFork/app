@@ -32,7 +32,7 @@ CLASS_DECL_AURA bool throw_parsing_exception(const string & strMessage)
    if(get_avoid_parsing_exception())
       return false;
 
-   throw parsing_exception(::get_thread_app(),strMessage);
+   throw new parsing_exception(get_app(),strMessage);
 
    return true;
 
@@ -86,7 +86,7 @@ CLASS_DECL_AURA bool throw_json_parsing_exception(const string & strMessage)
    if (get_avoid_parsing_exception())
       return false;
 
-   throw json_parsing_exception(::get_thread_app(), strMessage);
+   throw new json_parsing_exception(get_app(), strMessage);
 
    return true;
 

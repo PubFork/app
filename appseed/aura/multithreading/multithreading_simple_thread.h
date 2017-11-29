@@ -16,7 +16,7 @@ public:
    virtual ~simple_thread();
 
 
-   virtual bool initialize_thread() override;
+   virtual bool init_thread() override;
 
 
 };

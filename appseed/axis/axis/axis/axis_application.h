@@ -111,30 +111,30 @@ namespace axis
 
 
 
-         virtual bool initialize1() override;
-         virtual bool initialize2() override;
-         virtual bool initialize3() override;
+         virtual bool init1() override;
+         virtual bool init2() override;
+         virtual bool init3() override;
 
-         virtual bool initialize_application() override;
-         virtual int32_t exit_application() override;
+         virtual bool init_application() override;
+         virtual void term_application() override;
 
-         virtual bool initialize() override;
-         virtual bool finalize() override;
+         virtual bool init() override;
+         virtual void term() override;
 
 
 
-         virtual int32_t run() override;
+         virtual void run() override;
 
-         virtual int32_t main() override;
-         virtual int32_t on_run() override;
-         virtual int32_t application_pre_run() override;
+         virtual void main() override;
+         virtual void on_run() override;
+         virtual bool application_pre_run() override;
          virtual bool initial_check_directrix() override;
          virtual bool os_native_bergedge_start() override;
 
          virtual bool InitApplication() override;
 
          virtual bool on_install() override;
-         virtual bool on_uninstall() override;
+         virtual bool on_unstall() override;
 
 
 
@@ -213,7 +213,7 @@ namespace axis
 
 
 
-         virtual bool process_initialize() override;
+         virtual bool process_init() override;
 
 
 
@@ -244,12 +244,8 @@ namespace axis
 
          virtual bool set_keyboard_layout(const char * pszPath, ::action::context actioncontext);
 
-#ifdef HOTPLUGIN_SUBSYSTEM
-
          virtual int32_t hotplugin_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin = NULL) override;
          virtual int32_t hotplugin_host_host_starter_start_sync(const char * pszCommandLine, ::aura::application * papp, hotplugin::host * phost, hotplugin::plugin * pplugin = NULL);
-
-#endif
 
          virtual void on_update_view(::user::impact * pview, ::user::impact * pviewSender, LPARAM lHint, object* pHint);
 
@@ -260,13 +256,7 @@ namespace axis
          virtual bool on_open_document(::user::document * pdocument, var varFile);
          virtual bool on_save_document(::user::document * pdocument, var varFile);
 
-
-
-#ifdef 
-
          virtual bool check_install() override;
-
-#endif
 
          inline ::html::html * html() { return m_pauraapp->m_paurasystem->m_phtml; }
 

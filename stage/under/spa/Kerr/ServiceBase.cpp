@@ -194,7 +194,7 @@ void WINAPI Kerr::ServiceBase::ServiceMain(DWORD argumentCount,
     catch (const char * psz)
     {
         //
-        // If the service can't start it should throw an exception from the 
+        // If the service can't start it should throw new an exception from the 
         // Start method. If this happens, we catch it here and notify the 
         // SCM so that it can log the error code.
         //

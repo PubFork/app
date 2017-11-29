@@ -129,7 +129,7 @@ namespace user
       case control_type_combo_box:
       {
 
-         //throw todo(get_app());
+         //throw new todo(get_app());
 
 //            m_data.m_pcombobox = new Ex1FormInterfaceComboBox;
 
@@ -627,7 +627,7 @@ namespace user
 //            //#ifdef WINDOWSEX
 //            //            pwnd->send_message(control::g_uiMessage, control::MessageParamGetBaseControlExPtr, (LPARAM) &pcontrolex);
 //            //#else
-//            throw todo(pwnd->get_app());
+//            throw new todo(pwnd->get_app());
 //            //#endif
 //         }
 //         if (pcontrolex != NULL)

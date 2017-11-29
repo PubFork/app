@@ -34,12 +34,12 @@ namespace music
 
             }
 
-            bool player::initialize_instance()
+            bool player::init_instance()
             {
 
                m_psequencethread->ResumeThread();
 
-               TRACE("player::initialize_instance %X\n", get_os_int());
+               TRACE("player::init_instance %X\n", get_os_int());
                //SetMainWnd(NULL);
                //ASSERT(GetMainWnd() == NULL);
 

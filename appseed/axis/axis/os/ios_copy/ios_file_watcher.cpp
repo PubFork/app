@@ -95,7 +95,7 @@ namespace file_watcher
 			int fd = open(name, O_RDONLY);
 
 			if(fd == -1)
-				throw file_not_found_exception(name);
+				throw new file_not_found_exception(name);
 			
 			++m_iChangeCount;
 			
@@ -126,7 +126,7 @@ namespace file_watcher
 			target.udata = &tempEntry;
 			KEvent* ke = (KEvent*)bsearch(&target, &m_keventaChange, m_iChangeCount + 1, sizeof(KEvent), comparator);
 			if(!ke)
-				throw file_not_found_exception(name);
+				throw new file_not_found_exception(name);
 
 			tempEntry.m_strFileName = "";
 			
@@ -232,7 +232,7 @@ namespace file_watcher
 			// scan directory and call addFile(name, false) on each file
 			DIR* dir = opendir(m_strDirName);
 			if(!dir)
-				throw file_not_found_exception(m_strDirName);
+				throw new file_not_found_exception(m_strDirName);
 			
 			struct dirent* entry;
 			struct stat attrib;
