@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -740,20 +740,20 @@ namespace html
 
 #define CaSys(pca) (*pca->m_pauraapp->m_paurasystem)
 #define Sys(pauraapp) (*pauraapp->m_paurasystem)
-#define System (Sys(this->m_pauraapp))
+#define System (Sys(get_app()))
 #define threadSystem (System)
 
 
 #define Sess(pauraapp) (*pauraapp->m_paurasession)
-#define Session (Sess(m_pauraapp))
+#define Session (Sess(get_app()))
 
 
 #undef App
 #define App(pauraapp) (*pauraapp)
-#define Application (App(m_pauraapp))
+#define Application (App(get_app()))
 
 #define AppUser(pauraapp) (*pauraapp->m_paurasession->fontopus()->get_user())
-#define ApplicationUser (AppUser(m_pauraapp))
+#define ApplicationUser (AppUser(get_app()))
 
 
 // return - result - if not ok

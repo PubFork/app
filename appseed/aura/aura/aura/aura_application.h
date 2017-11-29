@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace aura
@@ -310,7 +310,6 @@ namespace aura
 
       virtual bool process_init();
       virtual void process_term();
->>>>>>> Stashed changes
 
       virtual bool impl_process_init();
       virtual bool impl_init1();
@@ -354,7 +353,6 @@ namespace aura
       virtual bool is_installing();
       virtual bool is_unstalling();
 
-<<<<<<< Updated upstream
       //virtual string get_version();
       virtual void run() override;
       virtual void main() override;
@@ -645,9 +643,6 @@ namespace aura
 
          virtual ::visual::icon * set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon);
          virtual ::visual::icon * get_icon(object * pobject, bool bBigIcon) const;
-
-
-      imaging & imaging();
 
 
    };

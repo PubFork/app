@@ -448,7 +448,7 @@ var property::element_at(index iIndex) const
    default:
       if(const_cast<property *>(this)->get_count() == 1)
          return const_cast<property *>(this)->get_value();
-      throw new "unsuported!!";
+      throw new simple_exception(get_app(), "unsuported!!");
    }
 }
 

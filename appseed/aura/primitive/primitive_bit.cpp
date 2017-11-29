@@ -13,7 +13,7 @@ namespace core
       {
          if((iDest % INT_ALIGN) != (iSrc %INT_ALIGN))
          {
-            throw new "int32_t aligned only";
+            throw new simple_exception(get_app(), "int32_t aligned only");
          }
          int32_t * pFullDest = &pDest[iDest / INT_ALIGN];
          int32_t * pFullSrc = &pSrc[iSrc / INT_ALIGN];

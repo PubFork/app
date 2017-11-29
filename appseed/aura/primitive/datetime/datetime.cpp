@@ -130,7 +130,7 @@ namespace datetime
                else if(strText1 == "now"
                        || (pcontext != NULL && pcontext->matches(idCalendarNow,strText1)))
                {
-                  throw new "now cannot be span";
+                  throw new simple_exception(get_app(), "now cannot be span");
                }
                else
                {

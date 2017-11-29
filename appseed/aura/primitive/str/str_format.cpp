@@ -242,7 +242,7 @@ bool string_format::parse(const char * & s)
    }
    else
    {
-      throw new "invalid state";
+      throw new simple_exception(get_app(), "invalid state");
    }
 
 

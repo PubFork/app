@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 /*
 namespace visual
@@ -876,7 +876,7 @@ breakFilter:
    }
 
 
-   bool imaging::channel_spread__32CC(::draw2d::dib * pdibDst, ::draw2d::dib * pdibSrc, int32_t iChannel, int32_t iRadius, COLORREF crSpreadSetColor)
+   bool visual::channel_spread__32CC(::draw2d::dib * pdibDst, ::draw2d::dib * pdibSrc, int32_t iChannel, int32_t iRadius, COLORREF crSpreadSetColor)
    {
       int32_t iFilterW = iRadius * 2 + 1;
       int32_t iFilterH = iRadius * 2 + 1;

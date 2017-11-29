@@ -495,7 +495,7 @@ namespace zip
       m_strFileName.Empty();
 
       if(bError)
-         throw new 0;
+         throw new simple_exception(get_app(),0);
    }
 
    void in_file::Abort()
@@ -732,7 +732,7 @@ namespace zip
       file = Application.file().get_file(strPath,::file::mode_read | ::file::type_binary);
 
       if(file.is_null())
-         throw new "failed to open file for compressing";
+         throw new simple_exception(get_app(), "failed to open file for compressing");
 
       ::file::file_status status;
 

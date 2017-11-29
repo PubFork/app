@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 //#include <stdarg.h>
 
 namespace xml
@@ -152,7 +152,7 @@ namespace xml
       }
       if(ent.is_empty() && extEnt.is_empty())
       {
-         throw new "Undefined Entity Reference";
+         throw new simple_exception(get_app(), "Undefined Entity Reference");
       }
       if(ent.has_char())
       {
@@ -197,7 +197,7 @@ namespace xml
          }
          else
          {
-            throw new "pointer to be offset cannot lie inside the entity ref";
+            throw new simple_exception(get_app(), "pointer to be offset cannot lie inside the entity ref");
          }
       }
       va_end(ptr);

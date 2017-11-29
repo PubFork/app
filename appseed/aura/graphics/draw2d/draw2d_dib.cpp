@@ -6150,7 +6150,7 @@ restart:
       if ((width * height) <= 0)
          return;
       if (!create(width, height))
-         throw new 0;
+         throw new simple_exception(get_app(), "dib::read");
       map();
       int wc = width * sizeof(COLORREF);
       if (wc == m_iScan)

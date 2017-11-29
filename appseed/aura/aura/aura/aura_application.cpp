@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -414,16 +414,16 @@ namespace aura
          throw new exit_exception(e.get_app(), ::exit_application);
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
-         throw new e;
+         throw pe;
 
       }
-      catch (::exception::exception & e)
+      catch (::exception::exception * pe)
       {
 
-         if (!Application.on_run_exception(e))
+         if (!Application.on_run_exception(*pe))
          {
             
             throw new exit_exception(get_app(), ::exit_application);
@@ -2436,12 +2436,6 @@ namespace aura
 
 
 
-   imaging & application::imaging()
-   {
-
-      return *m_pimaging;
-
-   }
 
 
 
@@ -2760,12 +2754,12 @@ namespace aura
          return true;
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
 //         thisexc << "exit_exception (4): " << m_iErrorCode;
 //
-         m_error.m_iaErrorCode.add(-1000 - ((int) e.m_eexit));
+         m_error.set(pe);
 
       }
       catch (...)
@@ -2833,23 +2827,23 @@ run:
             run();
 
          }
-         catch (::exit_exception & e)
+         catch (::exit_exception * pe)
          {
 
-            throw new e;
+            throw pe;
 
          }
-         catch (const ::exception::exception & e)
+         catch (const ::exception::exception * pe)
          {
 
-            if (on_run_exception((::exception::exception &) e))
+            if (on_run_exception((::exception::exception &) *pe))
             {
 
                goto run;
 
             }
 
-            if (final_handle_exception((::exception::exception &) e))
+            if (final_handle_exception((::exception::exception &) *pe))
             {
 
                goto run;
@@ -2859,10 +2853,10 @@ run:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
-         throw new e;
+         throw pe;
 
       }
       catch (...)
@@ -2991,18 +2985,20 @@ run:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
          //thisexit << 1 << m_iErrorCode;
 
-         throw new e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
          //thisexc << 1 << m_iErrorCode;
+         
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3033,18 +3029,20 @@ run:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
          //thisexit << 2 << m_iErrorCode;
 
-         throw new e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
          //thisexc << 2 << m_iErrorCode;
+         
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3077,18 +3075,20 @@ run:
          }
 
       }
-      catch (const ::exit_exception & e)
+      catch (const ::exit_exception * pe)
       {
 
          //thisexit << 3 << m_iErrorCode;
 
-         throw new e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
          //thisexc << 3 << m_iErrorCode;
+         
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3124,18 +3124,20 @@ run:
          }
 
       }
-      catch (::exit_exception & e)
+      catch (::exit_exception * pe)
       {
 
          //thisexit << 3.1 << m_iErrorCode;
 
-         throw new e;
+         throw pe;
 
       }
-      catch (const ::exception::exception &)
+      catch (const ::exception::exception * pe)
       {
 
          //thisexc << 3.1 << m_iErrorCode;
+         
+         ::aura::del(pe);
 
          goto InitFailure;
 
@@ -3300,7 +3302,7 @@ InitFailure:
 
             //System.m_iErrorCode = -1;
             
-            System.m_error.m_iaErrorCode.add(-1);
+            System.m_error.set(-1);
 
             return false;
 
