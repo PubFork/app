@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -22,11 +22,11 @@ namespace prompt
       void construct();
 
 
-      bool init_instance() override;
-      virtual int32_t exit_application() override;
+      virtual bool init_instance() override;
+      virtual void term_application() override;
 
 
-	   virtual void _001OnCmdMsg(::user::command * pcommand) override;
+      virtual void _001OnCmdMsg(::user::command * pcommand) override;
 
 
       void OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema);

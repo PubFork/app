@@ -99,7 +99,7 @@ event::event(::aura::application * papp, bool bInitiallyOwn, bool bManualReset, 
       m_pmutex = new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_pmutex,&attr)))
       {
-         _throw("RC_OBJECT_NOT_CREATED");
+         _throw(simple_exception(get_app(), "RC_OBJECT_NOT_CREATED"));
       }
 
 

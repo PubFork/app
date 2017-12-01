@@ -2,9 +2,6 @@
 //#include "core/user/user/user.h"
 
 
-#ifdef 
-
-
 namespace plugin
 {
 
@@ -60,9 +57,5 @@ namespace plugin
 
 
 } // namespace plugin
-
-
-#endif
-
 
 

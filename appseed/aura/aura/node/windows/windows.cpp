@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace windows
@@ -74,23 +74,23 @@ namespace windows
       {
          lResult = RegQueryValueEx(hkey,lpszSubKey,NULL,&dwType,(LPBYTE)str.GetBufferSetLength(dwSize),&dwSize);
          str.ReleaseBuffer(dwSize);
-         
+
          return lResult;
 
       }
       else
       {
-         
+
          return ERROR_NOT_SUPPORTED;
 
       }
 
    }
 
-   
+
    HICON extract_icon(HINSTANCE hInst,const char * lpszExeFileName,UINT nIconIndex)
    {
-      
+
       return ::ExtractIconW(hInst,::str::international::utf8_to_unicode(lpszExeFileName),nIconIndex);
 
    }
@@ -98,7 +98,7 @@ namespace windows
 
    bool delete_file(const char * lpFileName)
    {
-      
+
       return ::DeleteFileW(::str::international::utf8_to_unicode(lpFileName)) != FALSE;
 
    }
@@ -140,12 +140,18 @@ CLASS_DECL_AURA int32_t app_main(::aura::system * psystem, HINSTANCE hInstance, 
 
    __node_init_main_data(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
-   int32_t iRet;
+   //t32_t iRet;
 
-   iRet = psystem->main();
+   //iRet = psystem->main();
+
+   error error;
+
+   psystem->main();
 
    try
    {
+
+      error = psystem->m_error;
 
       delete psystem;
 
@@ -154,10 +160,11 @@ CLASS_DECL_AURA int32_t app_main(::aura::system * psystem, HINSTANCE hInstance, 
    }
    catch (...)
    {
-         
+
    }
 
-   return iRet;
+   return error.get_exit_code();
+
 
 }
 

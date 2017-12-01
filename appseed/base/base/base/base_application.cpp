@@ -1,4 +1,4 @@
-#include "framework.h" // from "axis/user/user.h"
+﻿#include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
 //#include "base/os/windows/windows_system_interaction_impl.h"
@@ -19,7 +19,7 @@ namespace base
    {
 
       m_puiptraFrame = new ::user::interaction_spa();
-      m_peventReady = NULL;
+      m_pevAppBeg = NULL;
 
 
 #ifdef WINDOWS
@@ -474,16 +474,12 @@ namespace base
    }
 
 
-#ifdef 
-
    int32_t application::hotplugin_host_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,::hotplugin::host * phost,::hotplugin::plugin * pplugin)
    {
 
       return hotplugin::host::host_starter_start_sync(pszCommandLine,get_app(),NULL);
 
    }
-
-#endif
 
 
    ::user::interaction * application::FindWindow(const char * lpszClassName,const char * lpszWindowName)
@@ -566,11 +562,10 @@ namespace base
 
       ::axis::application::SetCurrentHandles();
 
-
-
    }
 
-   int32_t application::exit_application()
+
+   void application::term_application()
    {
 
       try
@@ -606,7 +601,7 @@ namespace base
       try
       {
 
-         axis::application::exit_application();
+         axis::application::term_application();
 
       }
       catch(...)
@@ -614,15 +609,7 @@ namespace base
 
       }
 
-      return m_iErrorCode;
-
    }
-
-
-
-
-
-
 
 
    ::visual::icon * application::set_icon(object * pobject, ::visual::icon * picon, bool bBigIcon)
@@ -679,8 +666,8 @@ namespace base
             try
             {
                pevent->m_puie->_001SetCheck(
-                  System.os().is_user_auto_start(get_executable_appid()),
-                  ::action::source_initialize);
+               System.os().is_user_auto_start(get_executable_appid()),
+               ::action::source_initialize);
             }
             catch (...)
             {
@@ -701,9 +688,9 @@ namespace base
             {
 
                System.os().register_user_auto_start(
-                  get_executable_appid(),
-                  get_executable_path(),
-                  pevent->m_puie->_001GetCheck() == ::check::checked);
+               get_executable_appid(),
+               get_executable_path(),
+               pevent->m_puie->_001GetCheck() == ::check::checked);
 
                return true;
 

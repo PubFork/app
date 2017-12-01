@@ -841,7 +841,7 @@ HRESULT CInArchive::ReadAndDecodePackedStreams(
       ThrowUnsupported();
     data.SetCapacity(unpackSize);
 
-    _throw("should implement below");
+    _throw(simple_exception(get_app(), "should implement below"));
     /*CBufPtrSeqOutStream *outStreamSpec = new CBufPtrSeqOutStream;
     smart_pointer<::file::writer> outStream = outStreamSpec;
     outStreamSpec->Init(data, unpackSize);

@@ -241,50 +241,48 @@ namespace core
    }
 
 
-   bool system::initialize()
+   bool system::init()
    {
-
-
 
 #ifndef APPLEOS
 
       if(m_pparserfactory == NULL)
       {
 
-
-
       }
 
 #endif
 
+      if (!::core::application::init())
+      {
 
-      if(!::core::application::initialize())
          return false;
 
-
+      }
 
       return true;
-   }
 
+   }
 
 
    bool system::init1()
    {
 
-
-
-
-
       m_pfilehandler = new ::filehandler::handler(this);
 
+      if (!::core::application::init1())
+      {
 
-
-
-      if(!::core::application::init1())
          return false;
 
-      if(!::base::system::init1())
+      }
+
+      if (!::base::system::init1())
+      {
+
          return false;
+
+      }
 
       //if(Session.fontopus()->create_system_user("system") == NULL)
       // return false;
@@ -308,13 +306,9 @@ namespace core
       //if(!m_phtml->initialize())
       //   return false;
 
-
-
       return true;
 
    }
-
-
 
 
    ::filehandler::handler & system::filehandler()
@@ -416,9 +410,8 @@ namespace core
    }
 
 
-   int32_t system::exit_application()
+   void system::term_application()
    {
-
 
       try
       {
@@ -459,16 +452,16 @@ namespace core
 
 #endif
 
-      int32_t iRet = m_iErrorCode;
-
       try
       {
 
-         iRet = ::base::system::exit_application();
+         ::base::system::term_application();
 
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -486,6 +479,8 @@ namespace core
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -496,6 +491,8 @@ namespace core
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -508,6 +505,8 @@ namespace core
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -519,6 +518,8 @@ namespace core
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       m_plog.release();
@@ -526,8 +527,6 @@ namespace core
       m_typemap.remove_all();
 
       m_typemap.release();
-
-      return iRet;
 
    }
 
@@ -635,25 +634,25 @@ namespace core
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       ::aura::del(m_phistory);
 
       ::aura::del(m_pfilehandler);
 
-      bool bOk = true;
-
-
-
-      if(!::base::system::finalize())
+      try
       {
 
-         bOk = false;
+         ::base::system::term();
 
       }
+      catch(...)
+      {
 
-      return bOk;
+         m_error.set_if_not_set();
+
+      }
 
    }
 
@@ -930,12 +929,10 @@ namespace core
    }
 
 
-   int32_t system::main()
+   void system::main()
    {
 
-      int iRet = ::base::system::main();
-
-      return iRet;
+      ::base::system::main();
 
    }
 
@@ -981,7 +978,9 @@ uint32_t _thread_proc_start_core_system_main(void * p)
 
    ::set_thread(psystem);
 
-   return pplanesystem->::core::system::main();
+   pplanesystem->::core::system::main();
+
+   return pplanesystem->get_exit_code();
 
 }
 

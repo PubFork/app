@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
-
-
-#ifdef 
 
 
 #undef new
@@ -629,7 +626,7 @@ namespace hotplugin
 
    }
 
-   
+
    void host::plugin_message_handler(UINT message,WPARAM wparam,LPARAM lparam, bool bEnsureTx)
    {
 
@@ -740,13 +737,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
-
-
-
-
-
 
 

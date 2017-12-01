@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #define ID_ONE 1
 
@@ -254,7 +254,7 @@ namespace install
          m_strInstallTraceLabel = "install-" + System.get_system_configuration() + "-" + ::str::from(OSBIT);
 
          //m_iErrorCode = app_app_main();
-         
+
          app_app_main();
 
       }
@@ -405,7 +405,7 @@ namespace install
          add_command_line(System.os().get_command_line());
 
          m_error.set(-34);
-         
+
          return;
 
       }
@@ -428,7 +428,7 @@ namespace install
 
       if (!show_window())
       {
-         
+
          m_error.set(-1);
 
          return;
@@ -441,7 +441,7 @@ namespace install
       {
 
          m_error.set(-2);
-         
+
          return;
 
       }
@@ -455,7 +455,7 @@ namespace install
 
 
 
-   int application::start_app_app(string strPlatform)
+   bool application::start_app_app(string strPlatform)
    {
 
       m_bFinished = false;
@@ -478,20 +478,20 @@ namespace install
          try
          {
 
-            
+
             int iErrorCode = m_bootstrap[strPlatform]->install();
-            
+
             if(iErrorCode != 0)
             {
-            
+
                m_error.set(iErrorCode);
-               
+
             }
 
          }
          catch (...)
          {
-            
+
             m_error.set(-1);
 
          }
@@ -504,7 +504,7 @@ namespace install
 
       });
 
-//      return 1;
+      return true;
 
    }
 
@@ -835,7 +835,7 @@ namespace install
 
       ::aura::del(m_pinstaller);
 
-      return true;
+//      return true;
 
    }
 

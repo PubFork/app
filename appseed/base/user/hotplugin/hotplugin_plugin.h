@@ -1,7 +1,4 @@
-#pragma once
-
-
-#ifdef 
+﻿#pragma once
 
 
 #include "base/user/simple_ui/simple_ui_style.h"
@@ -178,9 +175,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
-
 
 

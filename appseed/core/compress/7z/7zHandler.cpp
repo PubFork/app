@@ -224,7 +224,7 @@ HRes handler::GetProperty(uint32_t index, int32_t propID,  var *value)
   case ::libcompress::kpidPath:
       if (!item.Name.is_empty())
       {
-         _throw("should implement following");
+         _throw(simple_exception(get_app(), "should implement following"));
        // prop = NItemName::GetOSName(item.Name);
       }
       break;

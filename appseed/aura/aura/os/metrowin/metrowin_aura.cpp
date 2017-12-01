@@ -361,7 +361,7 @@ string normalize_path(const char * lpcszPath)
 
 string key_to_char(WPARAM wparam, LPARAM lparam)
 {
-   _throw("todo");
+   _throw(simple_exception(get_app(), "todo"));
 }
 
 

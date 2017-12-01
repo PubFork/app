@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 //namespace install
@@ -37,8 +34,4 @@
 
 
 //#include "install_install.h"
-
-#endif
-
-
 

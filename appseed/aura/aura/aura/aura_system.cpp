@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 //#include "aura/user/colorertake5/colorertake5.h"
 
 
@@ -170,11 +170,11 @@ namespace aura
       // compilation to enable log tracing
       if(!initialize_log(strId))
       {
-         
+
          xxdebug_box("Could not initialize log","Failed to initialize log",0);
-         
+
          _throw(simple_exception(get_app(), "failed to initialize log"));
-         
+
       }
 
       /*
@@ -228,7 +228,7 @@ namespace aura
       if(!m_pxml->init1())
          _throw(simple_exception(this,"failed to construct system m_pxml->init1()"));
 
-      if(!m_pxml->initialize())
+      if(!m_pxml->init())
          _throw(simple_exception(this,"failed to construct system m_pxml->initialize()"));
 
 
@@ -497,10 +497,10 @@ namespace aura
 #endif
 
 #if 0
-         
+
          // Create authorization reference
          OSStatus status;
-         
+
          AuthorizationRef authorizationRef;
 
          // AuthorizationCreate and pass NULL as the initial
@@ -510,66 +510,66 @@ namespace aura
          // http://developer.apple.com/qa/qa2001/qa1172.html
          status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                       kAuthorizationFlagDefaults, &authorizationRef);
-         
+
          if(status != errAuthorizationSuccess)
          {
             TRACE("Error Creating Initial Authorization: %d", status);
-            
+
             return false;
-            
+
          }
 
          // kAuthorizationRightExecute == "system.privilege.admin"
          AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
-         
+
          AuthorizationRights rights = {1, &right};
-         
+
          AuthorizationFlags flags = kAuthorizationFlagDefaults |
                                     kAuthorizationFlagInteractionAllowed |
                                     kAuthorizationFlagPreAuthorize |
                                     kAuthorizationFlagExtendRights;
 
          // Call AuthorizationCopyRights to determine or extend the allowable rights.
-         
+
          status = AuthorizationCopyRights(authorizationRef, &rights, NULL, flags, NULL);
-         
+
          if (status != errAuthorizationSuccess)
          {
-            
+
             TRACE("Copy Rights Unsuccessful: %d", status);
-            
+
             return false;
-            
+
          }
-         
+
 #endif
-         
+
       }
 
 
       if(m_pmachineeventcentral == NULL)
       {
-         
+
 #ifndef APPLE_IOS
-         
+
          m_pmachineeventcentral = canew(::machine_event_central(this));
-         
+
          if(!m_pmachineeventcentral->initialize())
          {
-            
+
             return false;
-            
+
          }
-         
+
          if(m_pmachineeventcentral->is_close_application())
          {
-            
+
             return false;
-            
+
          }
-         
+
 #endif
-         
+
       }
 
       m_spfile.alloc(allocer());
@@ -614,9 +614,9 @@ namespace aura
 
       if (!m_spcrypto.is_set())
       {
-         
+
          return false;
-         
+
       }
 
       bool bOk = true;
@@ -860,19 +860,19 @@ namespace aura
 
       try
       {
-         
+
          if (m_pvisual.is_set())
          {
-            
+
             m_pvisual->term();
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
-         
+
+
       }
 
       m_pvisual.release();
@@ -1756,7 +1756,7 @@ namespace aura
       ::aura::system * psystem = (::aura::system *)p;
 
       psystem->main();
-      
+
       return psystem->get_exit_code();
 
    }
@@ -2055,9 +2055,7 @@ RetryBuildNumber:
 
       ::output_debug_string("::aura::system::on_request session = " + demangle(typeid(*psession).name()) + "("+::str::from((int_ptr) psession)+")\n\n");
 
-
       psession->request_create(pcreate);
-
 
    }
 
@@ -3276,12 +3274,12 @@ success:
 
 #ifdef WINDOWSEX
 
-      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
+//      dappy(string(typeid(*this).name()) + " : Going to ::axis::system::m_spwindow->create_window_ex : " + ::str::from(m_iErrorCode));
 
       if (!m_psystemwindow->create_window_ex(0, NULL, NULL, 0, null_rect(), NULL, "::axis::system::interaction_impl::no_twf"))
       {
 
-         dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));
+         //       dappy(string(typeid(*this).name()) + " : ::axis::system::m_spwindow->create_window_ex failure : " + ::str::from(m_iErrorCode));
 
          return false;
 

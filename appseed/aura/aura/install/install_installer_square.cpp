@@ -50,7 +50,7 @@ CLASS_DECL_AURA bool send_short_message_to_installer(const char * psz, bool bLau
 
 #ifdef METROWIN
 
-   _throw("todo");
+   _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -67,7 +67,7 @@ void send_spaboot_install_response(const char * param)
 
 #ifdef METROWIN
 
-   _throw("todo");
+   _throw(simple_exception(get_app(), "todo"));
 
 #else
 

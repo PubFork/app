@@ -260,10 +260,10 @@ get_existing:
       SetLastError(0);
 
       m_semid = semget(
-                   m_key, // a unique identifier to identify semaphore set
-                   1,  // number of semaphore in the semaphore set
-                   0// permissions (rwxrwxrwx) on the new
-                   //semaphore set and creation flag
+                m_key, // a unique identifier to identify semaphore set
+                1,  // number of semaphore in the semaphore set
+                0// permissions (rwxrwxrwx) on the new
+                //semaphore set and creation flag
                 );
 
       if(m_semid >= 0)
@@ -286,10 +286,10 @@ get_existing:
          bAlreadyExists = false;
 
          m_semid = semget(
-                      m_key, // a unique identifier to identify semaphore set
-                      1,  // number of semaphore in the semaphore set
-                      0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
-                      //semaphore set and creation flag
+                   m_key, // a unique identifier to identify semaphore set
+                   1,  // number of semaphore in the semaphore set
+                   0777 | IPC_CREAT | IPC_EXCL// permissions (rwxrwxrwx) on the new
+                   //semaphore set and creation flag
                    );
 
          if(m_semid == -1 && errno == EEXIST)
@@ -1488,10 +1488,10 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    key_t key = ftok(strName, 0); //Generate a unique key or supply a value
 
    int32_t semid = semget(
-                      key, // a unique identifier to identify semaphore set
-                      1,  // number of semaphore in the semaphore set
-                      0666 // permissions (rwxrwxrwx) on the new
-                      //semaphore set and creation flag
+                   key, // a unique identifier to identify semaphore set
+                   1,  // number of semaphore in the semaphore set
+                   0666 // permissions (rwxrwxrwx) on the new
+                   //semaphore set and creation flag
                    );
    if(semid < 0)
    {
@@ -1580,8 +1580,6 @@ null_dacl_security_attributes::null_dacl_security_attributes()
 #endif
 
 
-#if defined()
-
 namespace install
 {
 
@@ -1614,6 +1612,4 @@ namespace install
 
 } // namespace install
 
-
-#endif
 

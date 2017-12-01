@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace exception
@@ -40,9 +40,6 @@ namespace exception
       virtual const char * what () const NOTHROW;
 
    };
-
-
-   void CLASS_DECL_AURA rethrow(exception * pe);
 
 
    class CLASS_DECL_AURA result:
@@ -110,9 +107,9 @@ namespace exception
 //         exception * pexception = t.template cast < exception >();
 //         if(pexception == NULL)
 //         {
-//            
+//
 //            _throw(simple_exception(get_app(), "smart pointer is not exception"));
-//            
+//
 //         }
 //         m_p = canew(result({pexception}));
 //         if(m_p != NULL)
@@ -158,16 +155,35 @@ namespace exception
    };
 
 
+   class CLASS_DECL_AURA exception_sp :
+      public sp(exception)
+   {
+   public:
+
+
+      exception_sp() { }
+      exception_sp(exception * pexception) : sp(exception)(pexception) { }
+      exception_sp(const sp(exception)  spexception) : sp(exception)(spexception) { }
+      ~exception_sp() { }
+
+
+      inline bool is_exit();
+      void rethrow_exit();
+
+
+   };
+
+
 } // namespace exception
-
-
 
 
 typedef ::exception::result_sp cres;
 
-typedef sp(::exception::exception) exception_sp;
-
-typedef ::exception_sp esp;
+typedef ::exception::exception_sp esp;
 
 #define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw ::esp((canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)))
+
+void CLASS_DECL_AURA _rethrow(::exception::exception * pe);
+
+#define _throw_exit(e) _throw(exit_exception(get_app(), e))
 

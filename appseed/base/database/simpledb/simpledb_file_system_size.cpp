@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "base/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 //
@@ -39,37 +39,37 @@ file_size_table::file_size_table(::aura::application * papp) :
    m_pwndServer = NULL;
    m_oswindowServer = NULL;
 
-/*   SECURITY_ATTRIBUTES MutexAttributes;
-   ZeroMemory( &MutexAttributes, sizeof(MutexAttributes) );
-   MutexAttributes.nLength = sizeof( MutexAttributes );
-   MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+   /*   SECURITY_ATTRIBUTES MutexAttributes;
+      ZeroMemory( &MutexAttributes, sizeof(MutexAttributes) );
+      MutexAttributes.nLength = sizeof( MutexAttributes );
+      MutexAttributes.bInheritHandle = FALSE; // object uninheritable
 
-   // declare and initialize a security descriptor
-   SECURITY_DESCRIPTOR SD;
-   bool bInitOk = InitializeSecurityDescriptor(
-                     &SD,
-                     SECURITY_DESCRIPTOR_REVISION );
-   if ( bInitOk )
-   {
-      // give the security descriptor a Null Dacl
-      // done using the  "TRUE, (PACL)NULL" here
-      bool bSetOk = SetSecurityDescriptorDacl( &SD,
-                                            TRUE,
-                                            (PACL)NULL,
-                                            FALSE );
-      if ( bSetOk )
+      // declare and initialize a security descriptor
+      SECURITY_DESCRIPTOR SD;
+      bool bInitOk = InitializeSecurityDescriptor(
+                        &SD,
+                        SECURITY_DESCRIPTOR_REVISION );
+      if ( bInitOk )
       {
-         // Make the security attributes point
-         // to the security descriptor
-         MutexAttributes.lpSecurityDescriptor = &SD;*/
-         //m_pmutex = new mutex(FALSE, "Global\\::draw2d::fontopus::file_system_size::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
-         //m_pevExec = new event(FALSE, FALSE, "Global\\::draw2d::fontopus::file_system_size::exec_event::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
-         //m_pevDone = new event(FALSE, FALSE, "Global\\::draw2d::fontopus::file_system_size::done_event::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
-         //m_pmutex = new mutex(FALSE, "Local\\::draw2d::fontopus::file_system_size::7807e510-5579-11dd-ae16-0800200c7784");
-         //m_pevExec = new event(FALSE, FALSE, "Local\\::draw2d::fontopus::file_system_size::exec_event::7807e510-5579-11dd-ae16-0800200c7784");
-         //m_pevDone = new event(FALSE, FALSE, "Local\\::draw2d::fontopus::file_system_size::done_event::7807e510-5579-11dd-ae16-0800200c7784");
-/*      }
-   }*/
+         // give the security descriptor a Null Dacl
+         // done using the  "TRUE, (PACL)NULL" here
+         bool bSetOk = SetSecurityDescriptorDacl( &SD,
+                                               TRUE,
+                                               (PACL)NULL,
+                                               FALSE );
+         if ( bSetOk )
+         {
+            // Make the security attributes point
+            // to the security descriptor
+            MutexAttributes.lpSecurityDescriptor = &SD;*/
+   //m_pmutex = new mutex(FALSE, "Global\\::draw2d::fontopus::file_system_size::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
+   //m_pevExec = new event(FALSE, FALSE, "Global\\::draw2d::fontopus::file_system_size::exec_event::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
+   //m_pevDone = new event(FALSE, FALSE, "Global\\::draw2d::fontopus::file_system_size::done_event::7807e510-5579-11dd-ae16-0800200c7784", &MutexAttributes);
+   //m_pmutex = new mutex(FALSE, "Local\\::draw2d::fontopus::file_system_size::7807e510-5579-11dd-ae16-0800200c7784");
+   //m_pevExec = new event(FALSE, FALSE, "Local\\::draw2d::fontopus::file_system_size::exec_event::7807e510-5579-11dd-ae16-0800200c7784");
+   //m_pevDone = new event(FALSE, FALSE, "Local\\::draw2d::fontopus::file_system_size::done_event::7807e510-5579-11dd-ae16-0800200c7784");
+   /*      }
+      }*/
    m_pwnd  = new FileSystemSizeWnd(papp);
    m_pwnd->CreateClient();
 }
@@ -252,9 +252,9 @@ DBFileSystemSizeSet::~DBFileSystemSizeSet()
 
 bool DBFileSystemSizeSet::get_cache_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
 {
-   
+
    return false;
-   
+
 //   single_lock sl(m_table.m_pmutex, FALSE);
 //  // Wait for mutex. Once it is obtained, no other client may
 //  // communicate with the server
@@ -294,7 +294,7 @@ bool DBFileSystemSizeSet::get_cache_fs_size(int64_t & i64Size, const char * pszP
 //      // Timeout waiting for response from server
 //       return false;
 //    }*/
-   
+
 }
 
 
@@ -353,7 +353,7 @@ FileSystemSizeWnd::FileSystemSizeWnd(::aura::application * papp) :
 
 void FileSystemSizeWnd::install_message_routing(::message::sender * pinterface)
 {
-   
+
    m_pui->install_message_routing(pinterface);
 
    IGUI_MSG_LINK(WM_COPYDATA, pinterface, this, &FileSystemSizeWnd::_001OnCopyData);
@@ -368,13 +368,13 @@ bool FileSystemSizeWnd::CreateClient()
 
    m_bServer = false;
    return m_pui->create_message_queue("::draw2d::fontopus::FileSystemSizeWnd::Client");
-/*  sp(::user::interaction) puiMessage = NULL;
-   puiMessage = System.ui_from_handle(HWND_MESSAGE);
-   return m_pui->create(NULL, "::draw2d::fontopus::FileSystemSizeWnd::Client", 0, rect(0, 0, 0, 0), puiMessage, id()) != FALSE;*/
+   /*  sp(::user::interaction) puiMessage = NULL;
+      puiMessage = System.ui_from_handle(HWND_MESSAGE);
+      return m_pui->create(NULL, "::draw2d::fontopus::FileSystemSizeWnd::Client", 0, rect(0, 0, 0, 0), puiMessage, id()) != FALSE;*/
 
 //#else
 
-  // ::exception::throw_not_implemented(get_app());
+   // ::exception::throw_not_implemented(get_app());
 
 //#endif
 
@@ -394,7 +394,7 @@ bool FileSystemSizeWnd::CreateServer()
 #else
 
    ::exception::throw_not_implemented(get_app());
-   
+
    return false;
 
 #endif
@@ -448,7 +448,7 @@ bool FileSystemSizeWnd::get_fs_size(int64_t & i64Size, const char * pszPath, boo
 #else
 
    ::exception::throw_not_implemented(get_app());
-   
+
    return false;
 
 #endif
@@ -470,7 +470,7 @@ void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
       db_server * pcentral = &System.m_simpledb.db();
       file_size_table::get_fs_size size;
       memory_file file(get_app(), pstruct->lpData, pstruct->cbData);
-      
+
       ::file::byte_stream stream(&file);
 
       size.read(stream);
@@ -480,9 +480,9 @@ void FileSystemSizeWnd::_001OnCopyData(::message::message * pobj)
       size.m_oswindow = (oswindow) pbase->m_wparam;
 
       size.m_bRet =  pcentral->m_pfilesystemsizeset->get_fs_size(
-         size.m_iSize,
-         size.m_strPath,
-         size.m_bPending);
+                     size.m_iSize,
+                     size.m_strPath,
+                     size.m_bPending);
       m_sizea.add(size);
       pbase->set_lresult(1);
    }
@@ -560,7 +560,7 @@ FileSystemSizeServerThread::FileSystemSizeServerThread(::aura::application * pap
 {
 }
 
-bool FileSystemSizeServerThread::initialize_thread()
+bool FileSystemSizeServerThread::init_thread()
 {
    db_server * pcentral = &System.m_simpledb.db();
    pcentral->m_pfilesystemsizeset->m_table.m_pwndServer->CreateServer();

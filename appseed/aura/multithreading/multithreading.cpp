@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multithreading
@@ -121,7 +121,7 @@ namespace multithreading
 
          ::aura::application * papp = pthread->get_app();
 
-         nExitCode = pthread->m_iErrorCode;
+         nExitCode = pthread->m_error.get_exit_code();
 
          try
          {
@@ -164,12 +164,12 @@ namespace multithreading
          {
 
 //            if(pthread->m_bAutoDelete)
-  //          {
+            //          {
 
-      //         ::aura::del(pthread);
-                  
+            //         ::aura::del(pthread);
 
-    //        }
+
+            //        }
 
             ::release(pthread);
 
@@ -211,14 +211,14 @@ thread_pointer < ::thread > t_pthread;
 
 bool get_thread_run()
 {
-   
+
    if(t_pthread == NULL) // system threads don't have generally associated ca2 thread object
    {
       // and have short life, so it is safe to keep it running
       return true;
-      
+
    }
-   
+
    try
    {
 
@@ -255,7 +255,7 @@ namespace multithreading
    }
 
 
-   
+
    bool post_quit(::thread * pthread)
    {
 
@@ -296,7 +296,7 @@ namespace multithreading
 
    }
 
-   
+
    bool post_quit_and_wait(::thread * pthread, const duration & duration)
    {
 
@@ -370,7 +370,7 @@ void set_thread(::thread* pthread)
 
 
 
-thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority,UINT nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority,UINT nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
    ASSERT(pfnThreadProc != NULL);
@@ -379,7 +379,7 @@ thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPV
 
    ASSERT_VALID(pThread);
 
-   if(!pThread->create_thread(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId))
+   if(!pThread->create_thread(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror))
    {
 
       pThread->Delete();
@@ -475,9 +475,9 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
    try
    {
-      
+
       ::count cCount = get_count();
-      
+
       ::datetime::time timeNow = ::datetime::time::get_current_time();
 
       while (cCount &&  timeNow < timeEnd)
@@ -485,7 +485,7 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
          sl.lock();
 
-      restart1:
+restart1:
 
          for (index i = 0; i < get_count(); i++)
          {
@@ -515,7 +515,7 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
 
          }
 
-      restart2:
+restart2:
 
          for (index i = 0; i < get_count(); i++)
          {
@@ -551,9 +551,9 @@ bool thread_refa::post_quit_and_wait(const duration & duration)
             }
 
          }
-         
+
          timeNow = ::datetime::time::get_current_time();
-         
+
          cCount = get_count();
 
       }

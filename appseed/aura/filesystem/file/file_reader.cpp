@@ -136,7 +136,7 @@ namespace file
       memory buf;
       buf.allocate(uiBufMax);
       if(buf.get_data() == NULL)
-         _throw("no memory");
+         _throw(simple_exception(get_app(), "no memory"));
       try
       {
          while(true)

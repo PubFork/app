@@ -1,100 +1,130 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 error::error()
 {
-   
+
 }
 
 
 error::~error()
 {
-   
+
 }
 
 
 void error::set(int iErrorCode, ::exception::exception * pexception)
 {
-   
+
    if(pexception != NULL)
    {
-      
+
       if(iErrorCode == 0)
       {
-       
+
          iErrorCode = -1;
-         
+
       }
-      
+
       m_mapError2[m_iaErrorCode2.get_size()] = pexception;
-                     
+
    }
    else if(iErrorCode == 0)
    {
-    
+
       return;
-      
+
    }
-                     
+
    m_iaErrorCode2.add(iErrorCode);
-   
+
 }
 
 
 void error::set(int iErrorCode)
 {
-   
+
    set(iErrorCode, NULL);
-   
+
+}
+
+
+void error::set_last_error()
+{
+
+#ifdef WINDOWS
+
+   set(::GetLastError());
+
+#else
+
+   set(errno);
+
+#endif
+
+}
+
+
+void error::set_if_not_set(int iErrorCode)
+{
+
+   if (get_exit_code() == 0)
+   {
+
+      set(iErrorCode);
+
+   }
+
+
 }
 
 
 void error::set(::exception::exception * pexception)
 {
-   
+
    set(-3, pexception);
-   
+
 }
 
 
 error & error::operator =(const error & error)
 {
-   
+
    if(this == &error)
    {
-    
+
       return *this;
-      
+
    }
-   
+
    m_iaErrorCode2     = error.m_iaErrorCode2;
-   
+
    m_mapError2        = error.m_mapError2;
-   
+
    return *this;
-   
+
 }
 
 
 ::exception::exception * error::get_exception()
 {
-   
+
    for(index i = 0; i < m_iaErrorCode2.get_count(); i++)
    {
-    
+
       auto & spe = m_mapError2[i];
-      
+
       if(m_mapError2[i].is_set())
       {
-       
+
          return spe.m_p;
-         
+
       }
-      
+
    }
-   
+
    return NULL;
-   
+
 }
 
 
@@ -425,7 +455,7 @@ void thread::on_pos_run_thread()
 
    close_dependent_threads(minutes(1));
 
-   return true;
+   //return true;
 
 }
 
@@ -545,9 +575,9 @@ bool thread::pump_message()
 
       if(esp.is < exit_exception >())
       {
-      
+
          throw esp;
-         
+
       }
       else
       {
@@ -560,7 +590,7 @@ bool thread::pump_message()
             return true;
 
          return false;
-         
+
       }
 
    }
@@ -1428,9 +1458,9 @@ void thread::pre_translate_message(::message::message * pobj)
       }
       catch(ap(exit_exception) pe)
       {
-         
+
          throw pe;
-         
+
       }
       catch(...)
       {
@@ -1526,18 +1556,18 @@ thread_startup::~thread_startup()
 
 
 
-bool thread::begin_thread(bool bSynch, error * perror, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlagsParam,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
    error error;
-   
+
    if(perror == NULL)
    {
-      
+
       perror = &error;
-      
+
    }
-   
+
    m_bRunThisThread = true;
 
    DWORD dwCreateFlags = dwCreateFlagsParam;
@@ -1570,9 +1600,9 @@ bool thread::begin_thread(bool bSynch, error * perror, int32_t epriority,uint_pt
 
          if (perror == &error)
          {
-            
+
             perror = &pstartup->m_error;
-            
+
          }
          else
          {
@@ -1588,14 +1618,14 @@ bool thread::begin_thread(bool bSynch, error * perror, int32_t epriority,uint_pt
       }
 
       release();
-      
+
       auto pexitexception = perror->get_exception();
-      
+
       if(pexitexception != NULL)
       {
-         
+
          throw pexitexception;
-         
+
       }
 
       return false;
@@ -1619,15 +1649,15 @@ bool thread::begin_thread(bool bSynch, error * perror, int32_t epriority,uint_pt
 
    if(pstartup->m_bError)
    {
-      
+
       try
       {
 
          if (perror != NULL)
          {
-            
+
             *perror = pstartup->m_error;
-            
+
          }
 
       }
@@ -1644,26 +1674,26 @@ bool thread::begin_thread(bool bSynch, error * perror, int32_t epriority,uint_pt
 }
 
 
-bool thread::create_thread(error * perror, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::create_thread(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   return begin_thread(false,perror,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId);
+   return begin_thread(false,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror);
 
 }
 
 
-bool thread::create_thread_synch(error * perror, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::create_thread_synch(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   return begin_thread(true,perror,epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId);
+   return begin_thread(true, epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror);
 
 }
 
 
-bool thread::begin(error * perror, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
 
-   if(!create_thread(perror, epriority,nStackSize,dwCreateFlags, lpSecurityAttrs, puiId))
+   if(!create_thread(epriority,nStackSize,dwCreateFlags, lpSecurityAttrs, puiId, perror))
    {
 
       return false;
@@ -1675,12 +1705,12 @@ bool thread::begin(error * perror, int32_t epriority,uint_ptr nStackSize,uint32_
 }
 
 
-bool thread::begin_synch(error * perror, int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId)
+bool thread::begin_synch(int32_t epriority,uint_ptr nStackSize,uint32_t dwCreateFlags,LPSECURITY_ATTRIBUTES lpSecurityAttrs, IDTHREAD * puiId, error * perror)
 {
-   
-   if(!create_thread_synch(perror, epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId))
+
+   if(!create_thread_synch(epriority,nStackSize, dwCreateFlags,lpSecurityAttrs, puiId, perror))
    {
-      
+
       return false;
 
    }
@@ -1756,8 +1786,8 @@ uint32_t __thread_entry(void * pparam)
 #if defined(WINDOWSEX) || defined(LINUX)
 
             WINBOOL bOk =
-               ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
-               || ::GetLastError() == 0;
+            ::SetThreadAffinityMask(::GetCurrentThread(), pthread->m_dwThreadAffinityMask) == 0
+            || ::GetLastError() == 0;
 
             if (bOk)
             {
@@ -1857,9 +1887,9 @@ uint32_t __thread_entry(void * pparam)
 
          if(pstartup->m_error.get_exit_code() == 0)
          {
-            
+
             pstartup->m_error.set(-1);
-            
+
          }
 
          pstartup->m_event.set_event();
@@ -1896,10 +1926,23 @@ uint32_t __thread_entry(void * pparam)
          }
 
       }
-      catch(::exit_exception * pe)
+      catch(esp esp)
       {
 
-         pthread->m_error.set(pe);
+         if (esp.is_exit())
+         {
+
+            // allow the creating thread to return from thread::create_thread
+            pstartup->m_event.set_event();
+
+            esp.cast < exit_exception >()->post_quit();
+
+            return uiRet;
+
+         }
+
+
+         pthread->m_error.set(esp);
 
          bError = true;
 
@@ -1957,13 +2000,19 @@ uint32_t __thread_entry(void * pparam)
       return ::multithreading::__on_thread_finally(pthread);
 
    }
-   catch (const ::exception::exception* pe)
+   catch (esp esp)
    {
 
-      if (stricmp(pe->what(),"rethrow")==0)
+      if (esp.is_exit())
       {
 
-         throw pe;
+         esp.cast < exit_exception > ()->post_quit();
+
+      }
+      else if (stricmp(esp->what(), "rethrow")==0)
+      {
+
+         throw esp;
 
       }
 
@@ -2273,6 +2322,14 @@ bool thread::thread_entry()
       }
 
    }
+   catch (esp esp)
+   {
+
+      esp.rethrow_exit();
+
+      bError = true;
+
+   }
    catch(...)
    {
 
@@ -2328,38 +2385,38 @@ void thread::main()
 {
 
    // first -- check for simple worker thread
-   
+
    DWORD nResult = 0;
-   
+
    if(m_pfnThreadProc != NULL)
    {
-      
+
       nResult = (*m_pfnThreadProc)(m_pThreadParams);
-      
+
    }
    else
    {
-      
+
       // else check for thread with message loop
 
       ASSERT_VALID(this);
-      
+
 run:
-      
+
       try
       {
-         
+
          m_bReady = true;
-         
+
          run();
-         
+
       }
       catch(esp esp)
       {
 
          if(esp.is < exit_exception > ())
          {
-            
+
             try
             {
 
@@ -2372,7 +2429,7 @@ run:
             }
 
             throw esp;
-            
+
          }
          else
          {
@@ -2389,15 +2446,15 @@ run:
 
             if(Application.final_handle_exception(esp))
                goto run;
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
    }
 
    try
@@ -2420,11 +2477,12 @@ run:
    catch(...)
    {
 
-      nResult = (DWORD)-1;
+      m_error.set_if_not_set(-1);
+      //nResult = (DWORD)-1;
 
    }
 
-   return nResult;
+//   return nResult;
 
 }
 
@@ -2859,25 +2917,25 @@ bool thread::process_message(LPMESSAGE lpmessage)
    }
    catch(esp esp)
    {
-      
+
       if(esp.is < exit_exception > ())
       {
 
          throw esp;
-         
+
       }
       else
       {
-      
-         if(on_run_exception((::exception::exception &) *pe))
+
+         if(on_run_exception(esp))
             return true;
 
          // get_app() may be it self, it is ok...
-         if(Application.final_handle_exception((::exception::exception &) *pe))
+         if(Application.final_handle_exception(esp))
             return true;
 
          return false;
-         
+
       }
 
    }
@@ -3059,7 +3117,7 @@ int32_t thread::priority()
 
 
 
-bool thread::on_run_exception(::exception::exception &)
+bool thread::on_run_exception(::exception::exception * pexception)
 {
 
    return false;
@@ -3184,18 +3242,18 @@ void thread::on_create(::create * pcreate)
    }
    catch (esp pe)
    {
-      
-      if(pe->is < exit_exception > ())
+
+      if(pe.is < exit_exception > ())
       {
-       
+
          throw pe;
-         
+
       }
       else if(!Application.on_run_exception(pe))
       {
-      
-         _throw(exit_exception(get_app()));
-                
+
+         _throw(exit_exception(get_app(), exit_thread));
+
       }
 
    }
@@ -3387,24 +3445,31 @@ CLASS_DECL_AURA bool thread_sleep(DWORD dwMillis)
 }
 
 
+int error::get_exit_code()
+{
+
+   if(m_iaErrorCode2.get_count() <= 0)
+   {
+
+      return 0;
+
+   }
+
+   if(m_iaErrorCode2.get_count() == 1)
+   {
+
+      return m_iaErrorCode2[0];
+
+   }
+
+   return -100000 - m_iaErrorCode2.get_count();
+
+}
+
+
 int thread::get_exit_code()
 {
-   
-   if(m_iaErrorCode.get_count() <= 0)
-   {
-      
-      return 0;
-      
-   }
-   
-   if(m_iaErrorCode.get_count() == 1)
-   {
-    
-      return m_iaErrorCode[0];
-      
-   }
-   
-   return 0x80000000;
-   
-}
+
+   return m_error.get_exit_code();
+
 }

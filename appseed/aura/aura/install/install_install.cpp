@@ -218,7 +218,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -246,7 +246,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -333,7 +333,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -660,7 +660,7 @@ namespace install
 
 #else
 
-      _throw("TODO");
+      _throw(simple_exception(get_app(), "TODO"));
 
 #endif
 
@@ -794,7 +794,7 @@ md5retry:
 
 #else
 
-      _throw("TODO");
+      _throw(simple_exception(get_app(), "TODO"));
 
 #endif
 

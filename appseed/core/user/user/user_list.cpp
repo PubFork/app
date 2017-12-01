@@ -2297,7 +2297,7 @@ namespace user
 
 //         return;
 
-//         _throw("subitem rectangle on icon view? why are you asking for that now?");
+//         _throw(simple_exception(get_app(), "subitem rectangle on icon view? why are you asking for that now?"));
 
       }
 

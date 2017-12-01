@@ -33,7 +33,7 @@
 
 void simple_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers)
 {
-   //_throw(0);
+   //_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 }
 
 #endif // defined WINDOWS
@@ -95,7 +95,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo"); // aura::ipc::ipc
+      _throw(simple_exception(get_app(), "todo")); // aura::ipc::ipc
 
 #else
 
@@ -242,7 +242,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -829,7 +829,7 @@ namespace install
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -1617,7 +1617,7 @@ restart:
 
 #ifdef METROWIN
 
-         _throw("todo");
+         _throw(simple_exception(get_app(), "todo"));
 
 #else
 

@@ -103,7 +103,7 @@ namespace libcompress
                }
                streamIndex -= curSize;
             }
-            _throw(1);
+            _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
          }
          void FindOutStream(uint32_t streamIndex, uint32_t &coderIndex,
             uint32_t &coderStreamIndex) const
@@ -118,7 +118,7 @@ namespace libcompress
                }
                streamIndex -= curSize;
             }
-            _throw(1);
+            _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
          }
       };
 

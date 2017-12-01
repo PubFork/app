@@ -4735,6 +4735,9 @@
     <ClCompile Include="net\http\_http.cpp">
       <Filter>Source Files\net\http</Filter>
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_window.cpp">
+      <Filter>Source Files\aura\os\windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="multithreading\multithreading.inl">
@@ -4814,6 +4817,9 @@
     </None>
     <None Include="aura\app\aura.inl">
       <Filter>Header Files\aura\app</Filter>
+    </None>
+    <None Include="aura\exception\exception.inl">
+      <Filter>Header Files\aura\exception</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

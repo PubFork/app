@@ -1,13 +1,10 @@
-#pragma once
-
-
-#ifdef 
+﻿#pragma once
 
 
 namespace hotplugin
 {
 
-   
+
    class CLASS_DECL_BASE host :
       virtual public plugin
    {
@@ -54,7 +51,7 @@ namespace hotplugin
       virtual bool         open_link(const string & strLink,const string & pszTarget) override;
       virtual bool         reload_plugin() override;
 
-      // Host location is not the updated url - if there is a way to update the url and 
+      // Host location is not the updated url - if there is a way to update the url and
       // maintain the same plugin instance, what would lead to an out-of-date location url.
       // It is the location url of the page that hosts the plugin when the plugin was created.
       virtual string     get_host_location_url() override;
@@ -143,8 +140,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

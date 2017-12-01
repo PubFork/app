@@ -96,7 +96,7 @@ namespace filemanager
    {
 
       if(m_bRecursive)
-         _throw("incorrect usage of this class object");
+         _throw(simple_exception(get_app(), "incorrect usage of this class object"));
 
       if(stra.get_size() == 0)
          return true;
@@ -117,7 +117,7 @@ namespace filemanager
    {
 
       if(!m_bRecursive)
-         _throw("incorrect usage of this class object");
+         _throw(simple_exception(get_app(), "incorrect usage of this class object"));
 
       if(stra.get_size() == 0)
          return true;

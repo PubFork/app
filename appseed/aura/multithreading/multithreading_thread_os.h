@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 //struct CLASS_DECL_AURA hthread :
@@ -64,8 +64,6 @@
 //
 //};
 
-<<<<<<< Updated upstream
-
 //#ifdef WINDOWS
 //
 //typedef uint32_t IDTHREAD;
@@ -83,8 +81,6 @@
 //
 //#endif
 
-=======
->>>>>>> Stashed changes
 CLASS_DECL_AURA HTHREAD start_thread(uint32_t (*)(void *), void * pv, int32_t iPriority = 0);
 
 CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa, uint_ptr cbStack, uint32_t (*)(void *), void * pv, uint32_t uiFlags, IDTHREAD * puiId);
@@ -124,9 +120,9 @@ CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa, uint_ptr cbSta
 CLASS_DECL_AURA IDTHREAD get_current_thread_id();
 
 
+class error;
 
-
-CLASS_DECL_AURA thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority = ::multithreading::priority_normal,UINT nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+CLASS_DECL_AURA thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority = ::multithreading::priority_normal,UINT nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
 /* xxx CLASS_DECL_AURA thread* __begin_thread(sp(::coretype) pThreadClass,
 int32_t nPriority = scheduling_priority_normal, UINT nStackSize = 0,
 uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL); xxxx */
@@ -185,23 +181,23 @@ CLASS_DECL_AURA void __dec_threading_count();
 
 class CLASS_DECL_AURA keep_threading_count
 {
-   public:
+public:
 
 
-      keep_threading_count()
-      {
+   keep_threading_count()
+   {
 
-         __inc_threading_count();
+      __inc_threading_count();
 
-      }
+   }
 
 
-      ~keep_threading_count()
-      {
+   ~keep_threading_count()
+   {
 
-         __dec_threading_count();
+      __dec_threading_count();
 
-      }
+   }
 
 
 };

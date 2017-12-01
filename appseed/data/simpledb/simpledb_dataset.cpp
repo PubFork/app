@@ -429,7 +429,7 @@ namespace simpledb
       string qc = ::str::get_utf8_char(psz);
       if(qc != "\'")
       {
-         _throw("Quote character is required here");
+         _throw(simple_exception(get_app(), "Quote character is required here"));
       }
       string str;
       while(true)
@@ -439,7 +439,7 @@ namespace simpledb
          //string str = ::str::international::utf8_to_unicode(qc2);
          if(qc2.is_empty())
          {
-            _throw("Quote character is required here, premature end");
+            _throw(simple_exception(get_app(), "Quote character is required here, premature end"));
          }
          if(qc2 == qc)
             break;

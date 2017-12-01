@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace aura
@@ -77,6 +77,13 @@ namespace aura
 
    }
 
+   bool department::init_instance()
+   {
+
+      return true;
+
+   }
+
 
    void department::term_instance()
    {
@@ -89,6 +96,20 @@ namespace aura
 
    }
 
+   void department::term3()
+   {
+
+   }
+
+   void department::term2()
+   {
+
+   }
+
+   void department::term1()
+   {
+
+   }
 
    void department::on_application_message(::message::message * pobj)
    {
@@ -99,87 +120,87 @@ namespace aura
       {
          if(papplicationsignal->m_esignal == ::aura::application_message_process_init)
          {
-            
+
             papplicationsignal->m_bOk = process_init();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_init)
          {
-            
+
             papplicationsignal->m_bOk = init();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_init1)
          {
-            
+
             papplicationsignal->m_bOk = init1();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_init2)
          {
-            
+
             papplicationsignal->m_bOk = init2();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_init3)
          {
-            
+
             papplicationsignal->m_bOk = init3();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_init_instance)
          {
-            
+
             papplicationsignal->m_bOk = init_instance();
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_term_instance)
          {
-            
+
             term_instance();
-            
+
             papplicationsignal->m_bOk = true;
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_term3)
          {
-            
+
             term3();
-            
+
             papplicationsignal->m_bOk = true;
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_term2)
          {
-            
+
             term2();
-            
+
             papplicationsignal->m_bOk = true;
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_term1)
          {
-            
+
             term1();
-            
+
             papplicationsignal->m_bOk = true;
-            
+
          }
          else if(papplicationsignal->m_esignal == ::aura::application_message_process_term)
          {
-            
+
             term();
-            
+
             papplicationsignal->m_bOk = true;
-            
+
          }
-         
+
       }
       catch(...)
       {
-         
+
          papplicationsignal->m_bOk = false;
-         
+
       }
 
    }

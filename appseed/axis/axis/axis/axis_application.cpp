@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "fiasco_finder.h"
 #include "aura/compress/zip/zip.h"
 
@@ -16,7 +16,7 @@ namespace axis
          m_bInitializeDataCentral = m_paxissystem->m_bInitializeDataCentral;
 
       }
-      m_peventReady = NULL;
+      //m_peventReady = NULL;
 
 
 #ifdef WINDOWS
@@ -382,8 +382,6 @@ namespace axis
 
       ::aura::application::SetCurrentHandles();
 
-#ifdef 
-
       if (is_installing() || is_unstalling())
       {
 
@@ -395,8 +393,6 @@ namespace axis
          }
 
       }
-
-#endif
 
    }
 
@@ -471,8 +467,6 @@ namespace axis
 
          strRet = ::file::path(str) / (strRelative + "-" + hex::lower_from(i + 1)) / (string(pszName) + string(".") + pszExtension);
 
-#ifdef 
-
          if (pszTemplate != NULL)
          {
 
@@ -480,8 +474,6 @@ namespace axis
                return true;
 
          }
-
-#endif
 
 
          if (file_exists_dup(strRet))
@@ -800,16 +792,17 @@ namespace axis
    */
 
 
-   bool application::final_handle_exception(::exception::exception & e)
+   bool application::final_handle_exception(::exception::exception * pexception)
    {
-      UNREFERENCED_PARAMETER(e);
+
+      UNREFERENCED_PARAMETER(pexception);
       //linux      exit(-1);
 
       if(!is_system())
       {
 
          // get_app() may be it self, it is ok...
-         if(System.final_handle_exception((::exception::exception &) e))
+         if(System.final_handle_exception(pexception))
             return true;
 
 
@@ -819,17 +812,12 @@ namespace axis
    }
 
 
-
-
-   int32_t application::main()
+   void application::main()
    {
 
-      return ::aura::application::main();
-
+      ::aura::application::main();
 
    }
-
-
 
 
    //bool application::pre_run()
@@ -893,184 +881,201 @@ namespace axis
 
 
 
-
-   int32_t application::on_run()
+   void application::on_run()
    {
-      int32_t m_iErrorCode = 0;
+
 
       try
       {
 
-         ::aura::application_message signal(::aura::application_message_start);
+         ::aura::application_message signal(::aura::application_message_beg);
 
          route_message(&signal);
 
       }
       catch(...)
       {
+
       }
 
-      dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iErrorCode));
+      //dappy(string(typeid(*this).name()) + " : starting on_run : " + ::str::from(m_iErrorCode));
 
       thread * pthread = ::get_thread();
 
       install_message_routing(pthread);
 
-      dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iErrorCode));
+      //dappy(string(typeid(*this).name()) + " : starting on_run 2 : " + ::str::from(m_iErrorCode));
 
       try
       {
+
          try
          {
+
             m_bReady = true;
-            if(m_peventReady != NULL)
-               m_peventReady->SetEvent();
+
+            if (m_pevAppBeg != NULL)
+            {
+
+               m_pevAppBeg->SetEvent();
+
+            }
+
          }
          catch(...)
          {
+
          }
+
 run:
          try
          {
-            m_iErrorCode = run();
+
+            run();
 
          }
-         catch(::exit_exception & e)
+         catch(esp esp)
          {
 
-            _throw(e);
+            if (esp.is < exit_exception >())
+            {
+
+               throw esp;
+
+            }
+            else
+            {
+
+               if (on_run_exception(esp))
+               {
+
+                  goto run;
+
+               }
+
+               if (final_handle_exception(esp))
+               {
+
+                  goto run;
+
+               }
+
+               try
+               {
+
+                  term_thread();
+
+               }
+               catch (::esp esp)
+               {
+
+                  if (esp.is < ::exit_exception >())
+                  {
+
+                     throw esp;
+
+                  }
+                  else
+                  {
+
+                     m_error.set(-1);
+
+                  }
+
+                  goto InitFailure;
+
+               }
+
+            }
 
          }
-         catch(const ::exception::exception & e)
+
+      }
+      catch(esp esp)
+      {
+
+         if (esp.is < exit_exception >())
          {
-            if(on_run_exception((::exception::exception &) e))
-               goto run;
-            if(final_handle_exception((::exception::exception &) e))
-               goto run;
-            try
-            {
-               m_iErrorCode = exit_thread();
-            }
-            catch(::exit_exception & e)
-            {
 
-               _throw(e);
+            throw esp;
 
-            }
-            catch(...)
-            {
-               m_iErrorCode = -1;
-            }
-            goto InitFailure;
          }
+         else
+         {
+
+
+         }
+
       }
-      catch(::exit_exception & e)
+      catch (...)
       {
 
-         _throw(e);
 
       }
-      catch(...)
-      {
-         // linux-like exit style on crash, differently from general windows error message approach
-         // to prevent or correct from crash, should:
-         // - look at dumps - to do;
-         // - look at trace and log - always doing;
-         // - look at debugger with the visual or other tool atashed - to doing;
-         // - fill other possibilities;
-         // - restart and send information in the holy back, and stateful or self-heal as feedback from below;
-         // - ...
-         // - ..
-         // - .
-         // - .
-         // - .
-         // - .
-         // -  .
-         // - ...
-         // - ...
-         // - ...
-         // to pro-activia and overall benefits workaround:
-         // - stateful applications:
-         //      - browser urls, tabs, entire history, in the ca2computing cloud;
-         //      - uint16_t - html document to simplify here - with all history of undo and redos per document optimized by cvs, svn, syllomatter;
-         //           - not directly related but use date and title to name document;
-         //      - save forms after every key press in .undo.redo.form file parallel to appmatter / form/undo.redo.file parity;
-         //      - last ::ikaraoke::karaoke song and scoring, a little less motivated at time of writing;
-         //
-         // - ex-new-revolut-dynamic-news-self-healing
-         //      - pre-history, antecendentes
-         //            - sometimes we can't recover from the last state
-         //            - to start from the beggining can be too heavy, waity, worky, bory(ing)
-         //      - try to creativetily under-auto-domain with constrained-learning, or heuristcally recover from restart, shutdown, login, logoff;
-         //           - reification :
-         //           - if the document is corrupted, try to open the most of it
-         //           - if can only detect that the document cannot be opened or damaged, should creatively workarounds as it comes, as could it be
-         //              done, for example search in the web for a proper solution?
-         //           - ::ikaraoke::karaoke file does not open? can open next? do it... may animate with a temporary icon...
-         //               speed into cartesian dimensions of
-         //               I think no one likes to be boring, but a entire background in black... I don't know... only for your personal office, may be...
-         //           - could an online colaborator investigate crashes promptly in a funny way, and make news and jokes? Like terra and UOL for the real world?
-         //               - new crash, two documents lost, weathers fault, too hot, can't think, my mother was angry with me, lead to buggy code;
-         //               - new version with bug fixes;
-         //      - new versions
-         //      - automatic updates
-         //      - upgrades
-         //      - rearrangemntes
-         //      - downgrade in the form of retro
-         // - ...
-         // - ..
-         // - .
-         // - .
-         // - .
-         // - .
-         // -  .
-         // - ...
-         // - ...
-         // - ...
 
-      }
+
 InitFailure:
+
       try
       {
-         if(m_peventReady != NULL)
-            m_peventReady->SetEvent();
+
+         if (m_pevAppEnd != NULL)
+         {
+
+            m_pevAppEnd->SetEvent();
+
+         }
+
       }
       catch(...)
       {
+
       }
+
       try
       {
+
          thread * pthread = this;
+
          if(pthread != NULL && pthread->m_pevReady != NULL)
          {
+
             pthread->m_pevReady->SetEvent();
+
          }
+
       }
       catch(...)
       {
-      }
-      /*try
-      {
-      thread * pthread = dynamic_cast < thread * > (this);
-      ::SetEvent((HANDLE) pthread->m_peventReady);
-      }
-      catch(...)
-      {
-      }*/
 
-      // let translator run undefinetely
-      /*if(is_system())
-      {
-      translator::detach();
-      }*/
+         m_error.set_if_not_set();
 
-      return m_iErrorCode;
+      }
+
+      try
+      {
+
+         term_thread();
+
+      }
+      catch (...)
+      {
+
+
+      }
+
    }
 
 
+   bool application::init_application()
+   {
+
+      return ::aura::application::init_application();
+
+   }
 
 
-   int32_t application::application_pre_run()
+   bool application::application_pre_run()
    {
 
       return ::aura::application::application_pre_run();
@@ -1086,8 +1091,6 @@ InitFailure:
 
    }
 
-
-#ifdef 
 
    bool application::check_install()
    {
@@ -1179,7 +1182,7 @@ InitFailure:
 
                }
 
-      #ifdef 
+      #ifdef
 
                System.install().remove_spa_start(m_strAppId);
 
@@ -1190,9 +1193,6 @@ InitFailure:
       return true;
 
    }
-
-
-#endif
 
 
    bool application::initial_check_directrix()
@@ -1308,14 +1308,12 @@ InitFailure:
    }
 
 
-   int32_t application::run()
+   void application::run()
    {
 
-      return ::aura::application::run();
+      ::aura::application::run();
 
    }
-
-
 
 
    sp(::aura::application) application::assert_running(const char * pszAppId)
@@ -1519,15 +1517,20 @@ InitFailure:
    }
 
 
-   bool application::init_application()
+   bool application::init_instance()
    {
 
-      if(m_bAxisInitializeInstance)
+      if (m_bAxisInitializeInstance)
+      {
+
          return m_bAxisInitializeInstanceResult;
+
+      }
 
       thisstart;
 
       m_bAxisInitializeInstance = true;
+
       m_bAxisInitializeInstanceResult = false;
 
       if(!::aura::application::init_application())
@@ -1617,9 +1620,6 @@ InitFailure:
       if(!::aura::application::init2())
          return false;
 
-      if(!ca_initialize2())
-         return false;
-
       return true;
 
    }
@@ -1635,15 +1635,12 @@ InitFailure:
 
       }
 
-      if(!ca_initialize3())
-         return false;
-
       return true;
 
    }
 
 
-   bool application::initialize()
+   bool application::init()
    {
 
       if(m_bAxisInitialize)
@@ -1652,7 +1649,7 @@ InitFailure:
       m_bAxisInitialize = true;
       m_bAxisInitializeResult = false;
 
-      ::aura::application_message signal(::aura::application_message_initialize);
+      ::aura::application_message signal(::aura::application_message_init);
 
       route_message(&signal);
 
@@ -1711,9 +1708,9 @@ InitFailure:
          hprocess = ::GetCurrentProcess();
 
          if(!OpenProcessToken(
-                  hprocess,
-                  TOKEN_ALL_ACCESS,
-                  &htoken))
+               hprocess,
+               TOKEN_ALL_ACCESS,
+               &htoken))
             return false;
 
          if(!ImpersonateLoggedOnUser(htoken))
@@ -1739,14 +1736,14 @@ InitFailure:
 
       m_bAxisInitializeResult = true;
 
-      dappy(string(typeid(*this).name()) + " : initialize ok : " + ::str::from(m_iErrorCode));
+//      dappy(string(typeid(*this).name()) + " : initialize ok : " + ::str::from(m_iErrorCode));
 
       return true;
 
    }
 
 
-   int32_t application::exit_application()
+   void application::term_application()
    {
 
       try
@@ -1789,7 +1786,10 @@ InitFailure:
       catch(...)
       {
 
-         m_iErrorCode = -1;
+         //m_iErrorCode = -1;
+
+         m_error.set_if_not_set();
+
 
       }
 
@@ -1830,8 +1830,7 @@ InitFailure:
 
       }
 
-
-      ::aura::application_message signal(::aura::application_message_exit_instance);
+      ::aura::application_message signal(::aura::application_message_term_instance);
 
       try
       {
@@ -1897,7 +1896,7 @@ InitFailure:
          try
          {
 
-            aura::application::exit_application();
+            aura::application::term_application();
 
          }
          catch(...)
@@ -1932,33 +1931,30 @@ InitFailure:
       catch (...)
       {
 
+         m_error.set_if_not_set();
 
       }
 
-      return m_iErrorCode;
+//      return m_iErrorCode;
 
    }
 
 
-   bool application::finalize()
+   void application::term()
    {
-
-      bool bOk = false;
 
       try
       {
 
-         bOk = ::aura::application::finalize();
+         ::aura::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
-
-      return bOk;
 
    }
 
@@ -3701,11 +3697,6 @@ namespace axis
    }
 
 
-
-
-
-#ifdef 
-
    int32_t application::hotplugin_host_starter_start_sync(const char * pszCommandLine,::aura::application * papp,hotplugin::host * phost,hotplugin::plugin * pplugin)
    {
 
@@ -3755,9 +3746,6 @@ namespace axis
       return -1;
 
    }
-
-
-#endif
 
 
 

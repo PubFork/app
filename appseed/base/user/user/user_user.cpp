@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -52,11 +52,15 @@ namespace user
    }
 
 
-   bool user::initialize()
+   bool user::init()
    {
 
-      if(!::aura::department::initialize())
+      if (!::aura::department::init())
+      {
+
          return false;
+
+      }
 
       TRACE("::user::application::initialize");
 
@@ -106,8 +110,12 @@ namespace user
 
       debug_print("user::initialize bHasUninstall %c", bHasUninstall);
 
-      if(!::aura::department::initialize())
+      if (!::aura::department::init())
+      {
+
          return false;
+
+      }
 
       return true;
 
@@ -125,7 +133,7 @@ namespace user
    }
 
 
-   bool user::finalize()
+   void user::term()
    {
 
 
@@ -138,15 +146,13 @@ namespace user
       try
       {
 
-         ::aura::department::finalize();
+         ::aura::department::term();
 
       }
       catch(...)
       {
 
       }
-
-      return true;
 
    }
 

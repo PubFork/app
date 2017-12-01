@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 //#if defined(LINUX) || defined(APPLEOS)
 //#include <dlfcn.h>
@@ -123,12 +123,16 @@ namespace asphere
 
    }
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
-      if(!::core::application::initialize())
+      if (!::core::application::init())
+      {
+
          return false;
 
+      }
 
       return true;
 

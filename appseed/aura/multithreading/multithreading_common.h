@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -200,9 +200,9 @@ class user_interaction_ptr_array;
 class thread_startup;
 
 namespace primitive
-{ 
-   
-   class command; 
+{
+
+   class command;
 
 } // namespace primitive
 
@@ -210,7 +210,7 @@ namespace primitive
 namespace exception
 {
 
-   
+
    class exception;
    class base;
 
@@ -219,4 +219,4 @@ namespace exception
 
 
 
-CLASS_DECL_AURA thread* __begin_thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam, int32_t epriority = ::multithreading::priority_normal, UINT nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL);
+CLASS_DECL_AURA thread* __begin_thread(::aura::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam, int32_t epriority = ::multithreading::priority_normal, UINT nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);

@@ -253,9 +253,22 @@ namespace user
          return true;
 
       }
-      catch (exit_exception & e)
+      catch (esp esp)
       {
-         _throw(e);
+
+         if (esp.is < exit_exception >())
+         {
+
+            throw esp;
+
+         }
+         else
+         {
+
+            return false;
+
+         }
+
       }
       catch (...)
       {

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace xml
@@ -10,7 +10,7 @@ namespace xml
    {
    public:
 
-      
+
       entities       m_entities;
       disp_option *  m_poptionDefault;
       parse_info *   m_pparseinfoDefault;
@@ -21,7 +21,7 @@ namespace xml
 
       virtual bool init1();
 
-      virtual bool initialize();
+      virtual bool init();
 
 
 

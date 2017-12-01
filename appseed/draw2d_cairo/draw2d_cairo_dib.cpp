@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 
@@ -83,11 +83,11 @@ namespace draw2d_cairo
    bool dib::create(int32_t width, int32_t height)
    {
       if(m_spbitmap.is_set()
-      && m_spbitmap->get_os_data() != NULL
-      && m_spgraphics.is_set()
-      && m_spgraphics->get_os_data() != NULL
-      && width == m_size.cx
-      && height == m_size.cy)
+            && m_spbitmap->get_os_data() != NULL
+            && m_spgraphics.is_set()
+            && m_spgraphics->get_os_data() != NULL
+            && width == m_size.cx
+            && height == m_size.cy)
          return true;
 
       Destroy();
@@ -139,7 +139,7 @@ namespace draw2d_cairo
          ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
          m_size.cx = width;
          m_size.cy = height;
-         m_spgraphics->m_pdib = this;
+         m_spgraphics->m_pdibDraw2dGraphics = this;
 
          return TRUE;
       }
@@ -152,14 +152,14 @@ namespace draw2d_cairo
 
    bool dib::dc_select(bool bSelect)
    {
-/*      if(bSelect)
-      {
-         return m_spgraphics->SelectObject(m_spbitmap) != NULL;
-      }
-      else
-      {
-         return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
-      }*/
+      /*      if(bSelect)
+            {
+               return m_spgraphics->SelectObject(m_spbitmap) != NULL;
+            }
+            else
+            {
+               return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
+            }*/
       return true;
    }
 
@@ -180,10 +180,10 @@ namespace draw2d_cairo
    bool dib::Destroy ()
    {
 
-    m_spbitmap.release();
+      m_spbitmap.release();
 
 
-    m_spgraphics.release();
+      m_spgraphics.release();
 
       m_size.cx             = 0;
       m_size.cy             = 0;
@@ -197,13 +197,13 @@ namespace draw2d_cairo
 
       return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
 
-    /*  return SetDIBitsToDevice(
-         (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(),
-         pt.x, pt.y,
-         size.cx, size.cy,
-         ptSrc.x, ptSrc.y, ptSrc.y, cy - ptSrc.y,
-         m_pcolorref, &m_info, 0)
-            != FALSE; */
+      /*  return SetDIBitsToDevice(
+           (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(),
+           pt.x, pt.y,
+           size.cx, size.cy,
+           ptSrc.x, ptSrc.y, ptSrc.y, cy - ptSrc.y,
+           m_pcolorref, &m_info, 0)
+              != FALSE; */
 
    }
 
@@ -399,23 +399,23 @@ namespace draw2d_cairo
       if(m_pcolorref == NULL)
          return;
 
-     if(m_spbitmap.m_p == NULL)
+      if(m_spbitmap.m_p == NULL)
          return;
 
-     cairo_surface_t * surface = dynamic_cast < ::draw2d_cairo::bitmap * > (m_spbitmap.m_p)->m_psurface;
+      cairo_surface_t * surface = dynamic_cast < ::draw2d_cairo::bitmap * > (m_spbitmap.m_p)->m_psurface;
 
-     if(surface == NULL)
+      if(surface == NULL)
          return;
 
-     cairo_surface_flush (surface);
+      cairo_surface_flush (surface);
 
 
-     byte  * pdata = (byte *) cairo_image_surface_get_data(surface);
+      byte  * pdata = (byte *) cairo_image_surface_get_data(surface);
 
-     if(pdata != (byte *) m_pcolorref && pdata != NULL)
-     {
+      if(pdata != (byte *) m_pcolorref && pdata != NULL)
+      {
          memcpy(m_pcolorref, pdata, m_size.cy * m_iScan);
-     }
+      }
 
 
       pdata = (byte *) m_pcolorref;
@@ -1820,12 +1820,12 @@ namespace draw2d_cairo
       dib1.set(255, 255, 255);
 
       dib1.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Black blend dib
       ::draw2d::dib_sp spdib2(allocer());
@@ -1833,24 +1833,24 @@ namespace draw2d_cairo
       spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Mask dib
       dib dibM(get_app());
       dibM.create(cx, cy);
 
       dibM.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_MASK);
 
       BYTE * r1=(BYTE*)dib1.m_pcolorref;
       BYTE * r2=(BYTE*)spdib2->get_data();
@@ -1860,31 +1860,31 @@ namespace draw2d_cairo
 
       BYTE b;
       BYTE bMax;
-         while ( iSize-- > 0)
+      while ( iSize-- > 0)
+      {
+         if(srcM[0] == 255)
          {
-            if(srcM[0] == 255)
-            {
-               bMax = 0;
-            }
-            else
-            {
-               bMax = 0;
-               b =(BYTE)(r1[0]  - r2[0]);
-               bMax = MAX(b, bMax);
-               b =(BYTE)(r1[1]  - r2[1]);
-               bMax = MAX(b, bMax);
-               b =(BYTE)(r1[2]  - r2[2]);
-               bMax = MAX(b, bMax);
-               bMax = 255 - bMax;
-            }
-            dest[0]  =  bMax;
-            dest[1]  =  bMax;
-            dest[2]  =  bMax;
-            dest     += 4;
-            srcM     += 4;
-            r1       += 4;
-            r2       += 4;
+            bMax = 0;
          }
+         else
+         {
+            bMax = 0;
+            b =(BYTE)(r1[0]  - r2[0]);
+            bMax = MAX(b, bMax);
+            b =(BYTE)(r1[1]  - r2[1]);
+            bMax = MAX(b, bMax);
+            b =(BYTE)(r1[2]  - r2[2]);
+            bMax = MAX(b, bMax);
+            bMax = 255 - bMax;
+         }
+         dest[0]  =  bMax;
+         dest[1]  =  bMax;
+         dest[2]  =  bMax;
+         dest     += 4;
+         srcM     += 4;
+         r1       += 4;
+         r2       += 4;
+      }
 
 
 
@@ -2512,62 +2512,62 @@ namespace draw2d_cairo
       return m_spgraphics;
    }
 
-/*   double dib::pi()
-   {
-      return dPi;
-   }*/
+   /*   double dib::pi()
+      {
+         return dPi;
+      }*/
 
-  // void dib::fill_channel(int32_t intensity, visual::rgba::echannel echannel)
-  // {
-  //     int32_t offset = ((int32_t)echannel) % 4;
-  //    int32_t size=cx*cy;
+   // void dib::fill_channel(int32_t intensity, visual::rgba::echannel echannel)
+   // {
+   //     int32_t offset = ((int32_t)echannel) % 4;
+   //    int32_t size=cx*cy;
 
-  //    BYTE * pb;
+   //    BYTE * pb;
 
-  //    int32_t iSize32 = size / 32;
-  //    int32_t i;
-  //    for (i=0; i < iSize32; i+=32 )
-  //    {
-  //       pb = ((BYTE * ) &m_pcolorref[i]) + offset;
-  //       pb[0 * 4] = (byte) intensity;
-  //       pb[1 * 4] = (byte) intensity;
-  //       pb[2 * 4] = (byte) intensity;
-  //       pb[3 * 4] = (byte) intensity;
-  //       pb[4 * 4] = (byte) intensity;
-  //       pb[5 * 4] = (byte) intensity;
-  //       pb[6 * 4] = (byte) intensity;
-  //       pb[7 * 4] = (byte) intensity;
-  //       pb[8 * 4] = (byte) intensity;
-  //       pb[9 * 4] = (byte) intensity;
-  //       pb[10 * 4] = (byte) intensity;
-  //       pb[11 * 4] = (byte) intensity;
-  //       pb[12 * 4] = (byte) intensity;
-  //       pb[13 * 4] = (byte) intensity;
-  //       pb[14 * 4] = (byte) intensity;
-  //       pb[15 * 4] = (byte) intensity;
-  //       pb[16 * 4] = (byte) intensity;
-  //       pb[17 * 4] = (byte) intensity;
-  //       pb[18 * 4] = (byte) intensity;
-  //       pb[19 * 4] = (byte) intensity;
-  //       pb[20 * 4] = (byte) intensity;
-  //       pb[21 * 4] = (byte) intensity;
-  //       pb[22 * 4] = (byte) intensity;
-  //       pb[23 * 4] = (byte) intensity;
-  //       pb[24 * 4] = (byte) intensity;
-  //       pb[25 * 4] = (byte) intensity;
-  //       pb[26 * 4] = (byte) intensity;
-  //       pb[27 * 4] = (byte) intensity;
-  //       pb[28 * 4] = (byte) intensity;
-  //       pb[29 * 4] = (byte) intensity;
-  //       pb[30 * 4] = (byte) intensity;
-  //       pb[31 * 4] = (byte) intensity;
-  //    }
+   //    int32_t iSize32 = size / 32;
+   //    int32_t i;
+   //    for (i=0; i < iSize32; i+=32 )
+   //    {
+   //       pb = ((BYTE * ) &m_pcolorref[i]) + offset;
+   //       pb[0 * 4] = (byte) intensity;
+   //       pb[1 * 4] = (byte) intensity;
+   //       pb[2 * 4] = (byte) intensity;
+   //       pb[3 * 4] = (byte) intensity;
+   //       pb[4 * 4] = (byte) intensity;
+   //       pb[5 * 4] = (byte) intensity;
+   //       pb[6 * 4] = (byte) intensity;
+   //       pb[7 * 4] = (byte) intensity;
+   //       pb[8 * 4] = (byte) intensity;
+   //       pb[9 * 4] = (byte) intensity;
+   //       pb[10 * 4] = (byte) intensity;
+   //       pb[11 * 4] = (byte) intensity;
+   //       pb[12 * 4] = (byte) intensity;
+   //       pb[13 * 4] = (byte) intensity;
+   //       pb[14 * 4] = (byte) intensity;
+   //       pb[15 * 4] = (byte) intensity;
+   //       pb[16 * 4] = (byte) intensity;
+   //       pb[17 * 4] = (byte) intensity;
+   //       pb[18 * 4] = (byte) intensity;
+   //       pb[19 * 4] = (byte) intensity;
+   //       pb[20 * 4] = (byte) intensity;
+   //       pb[21 * 4] = (byte) intensity;
+   //       pb[22 * 4] = (byte) intensity;
+   //       pb[23 * 4] = (byte) intensity;
+   //       pb[24 * 4] = (byte) intensity;
+   //       pb[25 * 4] = (byte) intensity;
+   //       pb[26 * 4] = (byte) intensity;
+   //       pb[27 * 4] = (byte) intensity;
+   //       pb[28 * 4] = (byte) intensity;
+   //       pb[29 * 4] = (byte) intensity;
+   //       pb[30 * 4] = (byte) intensity;
+   //       pb[31 * 4] = (byte) intensity;
+   //    }
 
-  //    for (i=0; i<size; i++ )
-  //    {
-  //       *(((BYTE * ) &m_pcolorref[i]) + offset) = (byte) intensity;
-  //    }
-  //}
+   //    for (i=0; i<size; i++ )
+   //    {
+   //       *(((BYTE * ) &m_pcolorref[i]) + offset) = (byte) intensity;
+   //    }
+   //}
 
 
    //int32_t dib::cos(int32_t i, int32_t iAngle)
@@ -2673,7 +2673,7 @@ namespace draw2d_cairo
          m_spgraphics->SelectClipRgn(NULL);
          pwnd->_001OnDeferPaintLayeredWindowBackground(dib->get_graphics());
          m_spgraphics->SelectClipRgn(NULL);
-        m_spgraphics-> SetViewportOrg(point(0, 0));
+         m_spgraphics-> SetViewportOrg(point(0, 0));
          pwnd->_000OnDraw(dib->get_graphics());
          m_spgraphics->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
@@ -2682,9 +2682,9 @@ namespace draw2d_cairo
 
          m_spgraphics->SelectClipRgn( NULL);
          m_spgraphics->BitBlt(rectPaint.left, rectPaint.top,
-            rectPaint.width(), rectPaint.height(),
-            pgraphics, rectUpdate.left, rectUpdate.top,
-            SRCCOPY);
+                              rectPaint.width(), rectPaint.height(),
+                              pgraphics, rectUpdate.left, rectUpdate.top,
+                              SRCCOPY);
 
       }
       catch(...)
@@ -2743,7 +2743,7 @@ namespace draw2d_cairo
       return true;
 
 
-      }
+   }
 
 
 #elif defined(VSNORD)
@@ -2753,14 +2753,12 @@ namespace draw2d_cairo
 
 
 
-bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
-{
+   bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
+   {
 
-   return true;
+      return true;
 
-}
-
-
+   }
 
 
 
@@ -2769,26 +2767,28 @@ bool dib::print_window(::aura::draw_interface * pwnd, ::message::message * pobj)
 
 
 
-bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
-{
 
 
-   rect64 rectWindow;
-
-   pwnd->GetWindowRect(rectWindow);
-
-   m_spgraphics->SetViewportOrg(0, 0);
-
-   map(false);
-
-   rect rect(rectWindow);
-
-   //Application.window_graphics_update_window(pwnd->get_window_graphics(), pwnd->get_handle(), m_pcolorref, rect, m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
-
-   return true;
+   bool dib::update_window(::aura::draw_interface * pwnd, ::message::message * pobj, bool bTransferBuffer)
+   {
 
 
-}
+      rect64 rectWindow;
+
+      pwnd->GetWindowRect(rectWindow);
+
+      m_spgraphics->SetViewportOrg(0, 0);
+
+      map(false);
+
+      rect rect(rectWindow);
+
+      //Application.window_graphics_update_window(pwnd->get_window_graphics(), pwnd->get_handle(), m_pcolorref, rect, m_size.cx, m_size.cy, m_iScan, bTransferBuffer);
+
+      return true;
+
+
+   }
 
 
 #endif

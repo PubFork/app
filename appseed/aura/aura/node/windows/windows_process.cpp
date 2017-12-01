@@ -129,15 +129,15 @@ namespace windows
       }
 
       bSuccess = CreateProcessW(NULL,
-         pwszCommandLine, 
-         NULL,          // process security attributes
-         NULL,          // primary thread security attributes
-         TRUE,          // handles are inherited
-         dwFlags | dwPriorityClass,             // creation flags
-         NULL,          // use parent's environment
-         pwszDir,
-         &m_si,  // STARTUPINFO pointer
-         &m_pi) != FALSE;  // receives PROCESS_INFORMATION
+                                pwszCommandLine,
+                                NULL,          // process security attributes
+                                NULL,          // primary thread security attributes
+                                TRUE,          // handles are inherited
+                                dwFlags | dwPriorityClass,             // creation flags
+                                NULL,          // use parent's environment
+                                pwszDir,
+                                &m_si,  // STARTUPINFO pointer
+                                &m_pi) != FALSE;  // receives PROCESS_INFORMATION
 
       // If an error occurs, exit the application.
       if (!bSuccess)
@@ -210,7 +210,7 @@ namespace windows
    }
 
 
-   int32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   uint32_t process::synch_elevated(const char * pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       DWORD dwExitCode = 0;
@@ -225,7 +225,9 @@ namespace windows
 
       if(parse.getrestlen())
       {
+
          parse.getword(strPath);
+
       }
 
       string strParam;
@@ -234,12 +236,13 @@ namespace windows
 
       if(VistaTools::RunElevated(NULL,strPath,strParam,NULL,&h))
       {
-         
+
          dwExitCode = 0;
 
       }
       else
       {
+
          return -1;
 
       }
@@ -253,8 +256,12 @@ namespace windows
       while(::get_tick_count() - dwStart < dwTimeOut)
       {
 
-         if(!::GetExitCodeProcess(h,&dwExitCode))
+         if (!::GetExitCodeProcess(h, &dwExitCode))
+         {
+
             break;
+
+         }
 
          if(dwExitCode != STILL_ACTIVE)
          {

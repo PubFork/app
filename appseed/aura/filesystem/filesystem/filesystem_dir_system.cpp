@@ -427,7 +427,7 @@ namespace file
             if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
-               //_throw("should implement recursive zip");
+               //_throw(simple_exception(get_app(), "should implement recursive zip"));
 
                //m_pziputil->ls(papp,l);
 
@@ -486,7 +486,7 @@ namespace file
             if (l.m_eextract != extract_none && ::get_thread() != NULL && ::get_thread()->m_bZipIsDir && (icmp(l.m_path.ext(), ".zip") == 0 || l.m_path.find_ci("zip:") >= 0))
             {
 
-               //_throw("should implement recursive zip");
+               //_throw(simple_exception(get_app(), "should implement recursive zip"));
 
                //m_pziputil->ls(papp,l);
 

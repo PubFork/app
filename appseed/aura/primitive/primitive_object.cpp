@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -91,9 +91,9 @@ int64_t object::add_ref()
    return InterlockedIncrement64(&m_countReference);
 
 #elif defined(RASPBIAN) && defined(OS32BIT)
-   
+
    return __sync_add_and_fetch_4(&m_countReference,1);
-   
+
 #else
 
    return __sync_add_and_fetch(&m_countReference,1);
@@ -111,9 +111,9 @@ int64_t object::dec_ref()
    return InterlockedDecrement64(&m_countReference);
 
 #elif defined(RASPBIAN) && defined(OS32BIT)
-   
+
    return __sync_sub_and_fetch_4(&m_countReference,1);
-   
+
 #else
 
    return __sync_sub_and_fetch(&m_countReference,1);
@@ -890,10 +890,19 @@ void object::on_handle(::create * pcreate)
 void object::threadrefa_post_quit_and_wait(::duration duration)
 {
 
-   if (m_pthreadrefa != NULL)
+   try
    {
 
-      m_pthreadrefa->post_quit_and_wait(duration);
+      if (m_pthreadrefa != NULL)
+      {
+
+         m_pthreadrefa->post_quit_and_wait(duration);
+
+      }
+
+   }
+   catch (...)
+   {
 
    }
 

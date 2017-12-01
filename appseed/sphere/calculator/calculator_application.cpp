@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace calculator
@@ -12,21 +12,23 @@ namespace calculator
    {
    }
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
+      if (!::asphere::application::init())
+      {
 
-      if(!::asphere::application::initialize())
          return false;
 
+      }
 
       return true;
-
 
    }
 
 
-
 } // namespace calculator
+
 
 

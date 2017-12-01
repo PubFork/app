@@ -37,18 +37,17 @@ namespace windows
    }
 
 
-   int32_t folder_watch::run() // thread procedure
+   void folder_watch::run() // thread procedure
    {
       HANDLE hDirectory = ::CreateFileW(::str::international::utf8_to_unicode(get_volume_path(m_strPath)),
-                      FILE_LIST_DIRECTORY,
-                      FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-                      NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-   
+                                        FILE_LIST_DIRECTORY,
+                                        FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
+                                        NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+
       if(INVALID_HANDLE_VALUE == hDirectory)
       {
-         DWORD dwError = ::GetLastError();
-         // handle error (see this FAQ)
-         return dwError;
+         m_error.set_last_error();
+         return;
       }
 
       DWORD dwBytesReturned = 0;
@@ -56,11 +55,11 @@ namespace windows
       BYTE buffer[dwBuffLength];
       WCHAR wchFileName[dwBuffLength];
 
-   
+
       while(::ReadDirectoryChangesW(hDirectory, buffer, dwBuffLength, TRUE,
                                     FILE_NOTIFY_CHANGE_FILE_NAME |
                                     FILE_NOTIFY_CHANGE_LAST_WRITE |
-                                    FILE_NOTIFY_CHANGE_CREATION, &dwBytesReturned, 
+                                    FILE_NOTIFY_CHANGE_CREATION, &dwBytesReturned,
                                     NULL, NULL))
       {
          DWORD dwNextEntryOffset = 0;
@@ -78,31 +77,31 @@ namespace windows
             dwNextEntryOffset += pfni->NextEntryOffset; // next please!
          }
          while(pfni->NextEntryOffset != 0);
-      } 
+      }
       ::CloseHandle(hDirectory);
-      return 0;
+      //return 0;
    }
 
    folder_watch::e_action folder_watch::translate_os_action(int32_t iAction)
    {
       switch(iAction)
       {
-      case FILE_ACTION_ADDED: 
-         // The file was added to the directory. 
+      case FILE_ACTION_ADDED:
+         // The file was added to the directory.
          return action_added;
       case FILE_ACTION_MODIFIED:
-         // The file was changed at the directory. 
+         // The file was changed at the directory.
          return action_modified;
-      case FILE_ACTION_REMOVED: 
-         // The file was removed from the directory. 
+      case FILE_ACTION_REMOVED:
+         // The file was removed from the directory.
          return action_removed;
-      case FILE_ACTION_RENAMED_OLD_NAME: 
-         // The file was renamed and this is the old name. 
+      case FILE_ACTION_RENAMED_OLD_NAME:
+         // The file was renamed and this is the old name.
          return action_renamed_old_name;
-      case FILE_ACTION_RENAMED_NEW_NAME: 
+      case FILE_ACTION_RENAMED_NEW_NAME:
          // The file was renamed and this is the new name.
          return action_renamed_new_name;
-         // ...
+      // ...
       default:
          return action_unexpected;
       }

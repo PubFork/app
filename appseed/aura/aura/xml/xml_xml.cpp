@@ -53,10 +53,10 @@ namespace xml
    }
 
 
-   bool department::initialize()
+   bool department::init()
    {
 
-      if(!::aura::department::initialize())
+      if(!::aura::department::init())
          return false;
 
       return true;

@@ -376,7 +376,7 @@ void oswindow_data::set_impl(::user::interaction_impl * pimpl)
    if (this == NULL)
    {
 
-      _throw("error, m_pdata cannot be NULL to ::oswindow::set_user_interaction");
+      _throw(simple_exception(get_app(), "error, m_pdata cannot be NULL to ::oswindow::set_user_interaction"));
 
    }
 

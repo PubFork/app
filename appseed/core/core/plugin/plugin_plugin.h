@@ -1,20 +1,13 @@
-#pragma once
+﻿#pragma once
 
-
-#ifdef 
 
 int32_t spaboot_start(const char * pszVersion, const char * pszId);
-
-#endif
 
 
 namespace core
 {
    class file;
 }
-
-
-#ifdef 
 
 
 namespace plugin
@@ -44,7 +37,7 @@ namespace plugin
       string                        m_strCa2LoginRuri;
       string                        m_strCa2LogoutRuri;
       //::visual::dib_sp              m_dib;
-      
+
 
       plugin(::aura::application * papp);
 
@@ -89,9 +82,5 @@ namespace plugin
 
 
 } // namespace npca2
-
-
-#endif
-
 
 

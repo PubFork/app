@@ -1,4 +1,4 @@
-#include "framework.h" // from "axis/user/user.h"
+﻿#include "framework.h" // from "axis/user/user.h"
 #include "base/user/user.h"
 //#include "base/user/common_user.h"
 
@@ -159,18 +159,29 @@ namespace base
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if (!::axis::session::initialize())
+      if (!::axis::session::init())
+      {
+
          return false;
 
-      if (!::base::application::initialize())
+      }
+
+      if (!::base::application::init())
+      {
+
          return false;
 
-      if (!m_puser->initialize())
+      }
+
+      if (!m_puser->init())
+      {
+
          return false;
 
+      }
 
       ::set_simple_message_box(&::simple_ui_message_box);
 
@@ -179,7 +190,7 @@ namespace base
    }
 
 
-   int32_t session::exit_application()
+   void session::term_application()
    {
 
       try
@@ -212,14 +223,14 @@ namespace base
 
       }
 
-      ::base::application::exit_application();
+      ::base::application::term_application();
 
-      ::axis::session::exit_application();
+      ::axis::session::term_application();
 
       try
       {
 
-         m_puser->finalize();
+         m_puser->term();
 
       }
       catch (...)
@@ -228,8 +239,6 @@ namespace base
       }
 
       ::release(m_puser);
-
-      return m_iErrorCode;
 
    }
 
@@ -315,10 +324,10 @@ namespace base
                }
 
             }
-            catch (exit_exception & e)
+            catch (esp esp)
             {
 
-               _throw(e);
+               _rethrow(esp);
 
             }
             catch (...)
@@ -328,10 +337,10 @@ namespace base
          }
 
       }
-      catch (exit_exception & e)
+      catch (esp esp)
       {
 
-         _throw(e);
+         _rethrow(esp);
 
       }
       catch (...)

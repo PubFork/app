@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace windows
@@ -15,7 +15,7 @@ namespace windows
       virtual ~print_job();
 
 
-      virtual int32_t run();
+      virtual void run() override;
 
    };
 

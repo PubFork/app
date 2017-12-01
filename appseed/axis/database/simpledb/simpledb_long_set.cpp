@@ -107,17 +107,14 @@ public:
 
    virtual ~db_long_sync_queue() {}
 
-
-
-   virtual int32_t run();
-
+   virtual void run() override;
 
    void queue(const char * pszKey, int64_t l);
 
 };
 
 
-int32_t db_long_sync_queue::run()
+void db_long_sync_queue::run()
 {
 
    single_lock sl(&m_mutex, false);
@@ -252,11 +249,11 @@ int32_t db_long_sync_queue::run()
    catch (...)
    {
 
+      m_error.set_if_not_set();
+
    }
 
    ((db_long_set_core *)(m_pset->m_pcore->m_ptopthis))->m_pqueue = NULL;
-
-   return 0;
 
 }
 

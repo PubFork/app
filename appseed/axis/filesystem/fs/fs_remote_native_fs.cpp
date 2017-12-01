@@ -100,7 +100,7 @@ namespace fs
          if(str == "You have not logged in! Exiting!")
          {
 
-            _throw(string("uifs:// You have not logged in!"));
+            _throw(simple_exception(get_app(), string("uifs:// You have not logged in!")));
 
          }
 

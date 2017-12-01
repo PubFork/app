@@ -29,7 +29,7 @@ namespace calculator
          }
          else
          {
-            _throw("unknown identifier");
+            _throw(simple_exception(get_app(), "unknown identifier"));
          }
          return val;
       }
@@ -121,7 +121,7 @@ namespace calculator
          }
          else
          {
-            _throw("unknown function");
+            _throw(simple_exception(get_app(), "unknown function"));
          }
       }
       return value();
@@ -188,7 +188,7 @@ namespace calculator
          }
          else
          {
-            _throw("unknown function");
+            _throw(simple_exception(get_app(), "unknown function"));
          }
       }
       return "not supported operation";

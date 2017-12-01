@@ -83,7 +83,7 @@ namespace draw2d_direct2d
       m_pdevmode = (DEVMODE *) malloc(iSize);
       if(!DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR) (LPCSTR) pprinter->m_strName, m_pdevmode, NULL, DM_OUT_BUFFER))
       {
-         _throw("failed to get printer DocumentProperties");
+         _throw(simple_exception(get_app(), "failed to get printer DocumentProperties"));
          return false;
       }
 #else

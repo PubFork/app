@@ -983,7 +983,7 @@ return pil;
 //         catch(memory_exception * pe)
 //         {
 //            delete pe;
-//            _throw(4000);
+//            _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //         }
 //#ifdef WINDOWSEX
 //
@@ -1079,7 +1079,7 @@ try
 
 // This is a memory device context
 if(!pbmp->GetObject(sizeof(bm), &bm))
-_throw(3500);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 
 cx = bm.bmWidth;
 cy = bm.bmHeight;
@@ -1104,7 +1104,7 @@ memorystorage.allocate(iLineBytes * cy);
 catch(memory_exception * pe)
 {
 delete pe;
-_throw(4000);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 }
 LPVOID lpv = memorystorage.get_data();
 point pointViewport = pgraphics->GetViewportOrg();
@@ -1126,7 +1126,7 @@ lpv,
 DIB_RGB_COLORS
 )
 ))
-_throw(5000);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 }
 catch(int32_t)
 {
@@ -1149,7 +1149,7 @@ pbitmap->CreateBitmap(cx + 100, cy + 100, 1, 24, NULL);
 else
 {
 if(!pbitmap->GetObject(sizeof(bm), &bm))
-_throw(3500);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 if(bm.bmWidth < cx ||
 bm.bmHeight  < cy)
 {
@@ -1168,7 +1168,7 @@ pgraphics,
 x, y,
 SRCCOPY);
 if(!pbitmap->GetObject(sizeof(bm), &bm))
-_throw(3500);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 cx = bm.bmWidth;
 cy = bm.bmHeight;
 
@@ -1193,7 +1193,7 @@ memorystorage.allocate(iLineBytes * cy);
 catch(memory_exception * pe)
 {
 delete pe;
-_throw(4000);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 }
 
 LPVOID lpv = memorystorage.get_data();
@@ -1209,7 +1209,7 @@ UINT uiScanLines = cy;
 uiScanLineCountParam = uiScanLines;
 int32_t xOffset = (x + pointViewport.x) * 3;
 //if(!GetDIBits(dcAux.get_os_data(), bitmap, bm.bmHeight - cy, cy, lpv, &bmi, DIB_RGB_COLORS))
-//  _throw(5000);
+//  _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 int32_t iLimitY = cy;
 if(!(iLimitYParam =
 GetDIBits(
@@ -1220,7 +1220,7 @@ uiScanLines,
 lpv,
 &bmi,
 DIB_RGB_COLORS)))
-_throw(5000);
+_throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 int32_t iLimitX = cx;
 
 if(bm.bmWidth - x - pointViewport.x < iLimitX)
@@ -1861,7 +1861,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    {
    BITMAP bm;
    if(!bitmapA->GetObject(sizeof(bm), &bm))
-   _throw(3500);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    if(bm.bmWidth < cx ||
    bm.bmHeight  < cy)
    {
@@ -1880,7 +1880,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    SRCCOPY);
    BITMAP bm;
    if(!bitmapA->GetObject(sizeof(bm), &bm))
-   _throw(3500);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 
    memory memstorageA;
 
@@ -1905,7 +1905,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    catch(memory_exception * pe)
    {
    delete pe;
-   _throw(4000);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    }
 
    LPVOID lpv = memstorageA.get_data();
@@ -1917,7 +1917,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    UINT uiScanLines = cy;
    int32_t xOffset = (x + pointViewport.x) * 3;
    //if(!GetDIBits(dcAux.get_os_data(), bitmapA, bm.bmHeight - cy, cy, lpv, &bmi, DIB_RGB_COLORS))
-   //  _throw(5000);
+   //  _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    int32_t iLimitY = cy;
    if(!(iLimitY =
    GetDIBits(
@@ -1956,7 +1956,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    lpv,
    &bmi,
    DIB_RGB_COLORS))
-   _throw(6000);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    pgraphics->BitBlt(x, y, cx, cy, graphicsMem, 0, 0, SRCCOPY);
    graphicsMem->SelectObject(pbmpMemOld);
    graphicsMem->DeleteDC();
@@ -1977,7 +1977,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    // This is a memory device context
    BITMAP bm;
    if(!pbmp->GetObject(sizeof(bm), &bm))
-   _throw(3500);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 
    BITMAPINFO bmi;
    bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
@@ -2001,7 +2001,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    catch(memory_exception * pe)
    {
    delete pe;
-   _throw(4000);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    }
    LPVOID lpv = memstorageA.get_data();
    point pointViewport = pgraphics->GetViewportOrg();
@@ -2022,7 +2022,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    lpv,
    &bmi,
    DIB_RGB_COLORS)))
-   _throw(5000);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    int32_t iLimitX = cx;
 
 
@@ -2050,7 +2050,7 @@ bool imaging::ColorInvert(::draw2d::graphics * pgraphics,int32_t x,int32_t y,int
    (HBITMAP) pbmp->get_os_data(),
    uiStartScanLine, uiScanLines,
    lpv, &bmi, DIB_RGB_COLORS))
-   _throw(6000);
+   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
    }
    catch(int32_t)
    {
@@ -4106,7 +4106,7 @@ int32_t w3)
 //               lpbDst,
 //               &bmiDst,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDst);
 //      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
 //      {
@@ -4127,7 +4127,7 @@ int32_t w3)
 //               lpbDst,
 //               &bmiDst,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      pdcDst->SelectObject(bitmapDst);
 //   }
 //
@@ -4268,7 +4268,7 @@ int32_t w3)
 //               lpbDst,
 //               &bmiDest,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
 //      if(!pdcDst->BitBlt(ptDst.x,ptDst.y,size.cx,size.cy,graphicsMem,ptSrc.x,ptSrc.y,SRCCOPY))
 //      {
@@ -4289,7 +4289,7 @@ int32_t w3)
 //               lpbDst,
 //               &bmiDest,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      pdcDst->SelectObject(bitmapDest);
 //   }
 //
@@ -4480,6 +4480,7 @@ point ptSrc,
 int32_t iChannel,int32_t iRadius,
 COLORREF cr)
 {
+
    if(size.is_empty())
       return true;
 
@@ -4499,19 +4500,17 @@ COLORREF cr)
    if(!dibSrc->create(size))
       return false;
 
-
    dibSrc->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
    if(!dibSrc->from(null_point(),pdcSrc,ptSrc,size))
       return false;
 
-   if(!channel_spread__32CC(
+   if(!System.visual().channel_spread__32CC(
          dibDst,
          dibSrc,
          iChannel,
          iRadius,cr))
       return false;
-
 
    if(!dibDst->to(pdcDst,ptDst,size))
       return false;
@@ -4983,7 +4982,7 @@ breakFilter2:
 //   {
 //   BITMAP bm;
 //   if(!spbitmapB->GetObject(sizeof(bm), &bm))
-//   _throw(3500);
+//   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //   if(bm.bmWidth < cx ||
 //   bm.bmHeight  < cy)
 //   {
@@ -5151,7 +5150,7 @@ breakFilter2:
 //               lpbDst,
 //               &bmiDest,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
 //      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xSrc,ySrc,SRCCOPY))
 //      {
@@ -5617,7 +5616,7 @@ int32_t      iSize)
 //               lpbDst,
 //               &bmiDest,
 //               DIB_RGB_COLORS))
-//         _throw(6000);
+//         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 //      ::draw2d::bitmap * pbmpMemOld = graphicsMem->SelectObject(bitmapDest);
 //      if(!pdcDst->BitBlt(xDest,yDest,cx,cy,graphicsMem,xDest,yDest,SRCCOPY))
 //      {
@@ -6232,6 +6231,24 @@ bool imaging::load_image(::draw2d::dib * pdib, var varFile)
    }
 
    return load_image(pdib, file);
+
+}
+
+
+
+bool imaging::save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
+{
+
+   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read);
+
+   if (file.is_null())
+   {
+
+      return false;
+
+   }
+
+   return _save_image(file, pdib,  psaveimage);
 
 }
 

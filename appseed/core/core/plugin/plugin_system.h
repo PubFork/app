@@ -1,9 +1,6 @@
 ﻿#pragma once
 
 
-#ifdef 
-
-
 namespace plugin
 {
 
@@ -35,9 +32,5 @@ namespace plugin
 
 
 } // namespace plugin
-
-
-#endif
-
 
 

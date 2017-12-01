@@ -1,4 +1,4 @@
-#include "framework.h" // from "axis/net/net_sockets.h"
+﻿#include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 
 
@@ -87,7 +87,7 @@ namespace fontopus
 
    validate::~validate()
    {
-      
+
    }
 
 
@@ -99,16 +99,16 @@ namespace fontopus
       string strApp = handler()->property("app");
 
       if(strApp == "simpledbcfg"
-         || (strApp.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
-         || (strApp.begins_ci("app-core/netnode"))
-         || strApp == "veievserver"
-         || strApp == "simpledbcfg"
-         //|| handler()->property("app") == "veriwell_mplite"      // churrasco 2011 m_strLicense
-         || strApp == "app-core/netnodecfg"
-         || strApp == "app-core/netnode_dynamic_web_server"
-         || strApp == "app-core/netnode_dynamic_web_server_cfg"
-         || strApp == "app-gtech/sensible_netnode"
-         || strApp == "app-gtech/sensible_service")
+            || (strApp.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
+            || (strApp.begins_ci("app-core/netnode"))
+            || strApp == "veievserver"
+            || strApp == "simpledbcfg"
+            //|| handler()->property("app") == "veriwell_mplite"      // churrasco 2011 m_strLicense
+            || strApp == "app-core/netnodecfg"
+            || strApp == "app-core/netnode_dynamic_web_server"
+            || strApp == "app-core/netnode_dynamic_web_server_cfg"
+            || strApp == "app-gtech/sensible_netnode"
+            || strApp == "app-gtech/sensible_service")
       {
          m_puser = Session.fontopus()->allocate_user();
          m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
@@ -116,8 +116,8 @@ namespace fontopus
          return m_puser;
       }
       else if(handler()->property("app") == "app-core/mydns"
-         || handler()->has_property("install")
-         || handler()->has_property("uninstall"))
+              || handler()->has_property("install")
+              || handler()->has_property("uninstall"))
       {
          m_puser = Session.fontopus()->allocate_user();
          m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
@@ -130,7 +130,7 @@ namespace fontopus
       //   || System.handler()->m_varTopicQuery["app"] == "production"
       //   || System.get_license_id() == "winservice_filesystemsize")
       else if(handler()->property("app") == "backup"
-         || handler()->property("app") == "winservice_filesystemsize")
+              || handler()->property("app") == "winservice_filesystemsize")
       {
          m_puser = Session.fontopus()->allocate_user();
          m_puser->m_strPathPrefix = "system" + ::str::has_char(Application.handler()->m_varTopicQuery["systemid"],"-");
@@ -173,12 +173,12 @@ namespace fontopus
          }
          else
          {
-         
+
             strHost = Application.file().as_string(System.dir().appdata() / "database\\text\\last_good_known_fontopus_com.txt");
-            
+
             if(!straRequestingServer.contains_ci(strHost))
             {
-            
+
                if(straRequestingServer.has_elements())
                {
 
@@ -197,7 +197,7 @@ namespace fontopus
       }
 
       if(straRequestingServer.contains(Application.handler()->m_varTopicQuery["fontopus"].get_string())
-         && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
+            && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
       {
          m_loginthread.m_puser = Session.fontopus()->allocate_user();
          m_loginthread.m_puser->m_sessionidmap[Application.handler()->m_varTopicQuery["fontopus"].get_string()] = Application.handler()->m_varTopicQuery["sessid"].get_string();
@@ -246,7 +246,7 @@ namespace fontopus
       {
 
          ::aura::del(m_puser);
-         
+
          if(strResult == "cancel")
          {
 
@@ -297,42 +297,42 @@ namespace fontopus
    {
       string strLicense(psz);
       if(strLicense == "netnodeapp"
-         || strLicense == "netnodecfgapp"
-         || strLicense == "simpledbcfg"
-         || (strLicense.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
-         || (strLicense.begins_ci("app-core/netnode"))
-         || strLicense == "veievserver"
-         //|| strLicense == "veriwell_mplite"      // churrasco 2011 m_strLicense
-         || strLicense == "mydns"
-         || Application.handler()->m_varTopicQuery.has_property("install")
-         || Application.handler()->m_varTopicQuery.has_property("uninstall")
-         || strLicense == "netnode"
-         || strLicense == "netnode_dynamic_web_server"
-         || strLicense == "app-core/netnodecfg"
-         || strLicense == "app-core/netnode_dynamic_web_server"
-         || strLicense == "app-core/netnode_dynamic_web_server_cfg"
-         || strLicense == "app-gtech/sensible_netnode")
+            || strLicense == "netnodecfgapp"
+            || strLicense == "simpledbcfg"
+            || (strLicense.begins_ci("app-core/netnode") && handler()->property("root_handler") == "webserver")
+            || (strLicense.begins_ci("app-core/netnode"))
+            || strLicense == "veievserver"
+            //|| strLicense == "veriwell_mplite"      // churrasco 2011 m_strLicense
+            || strLicense == "mydns"
+            || Application.handler()->m_varTopicQuery.has_property("install")
+            || Application.handler()->m_varTopicQuery.has_property("uninstall")
+            || strLicense == "netnode"
+            || strLicense == "netnode_dynamic_web_server"
+            || strLicense == "app-core/netnodecfg"
+            || strLicense == "app-core/netnode_dynamic_web_server"
+            || strLicense == "app-core/netnode_dynamic_web_server_cfg"
+            || strLicense == "app-gtech/sensible_netnode")
       {
          return true;
       }
       else if(strLicense == "flag"
-         || strLicense == "alarm"
-         || strLicense == "biteditor"
-         || strLicense == "md5"
-         || strLicense == "vmp"
-         || strLicense == "veiev"
-         || strLicense == "netshareservercfg"
-         || strLicense == "netshareserver"
-         || strLicense == "veriedit"
-         || strLicense == "netshareclient"
-         || strLicense == "verisimplevideo"
-         || strLicense == "eluce"
-         || strLicense == "whiteboard"
-         || strLicense == "bergedge"
-         || strLicense == "app.sysutils.igd"
-         || strLicense == "projection"
-         || strLicense == "querydb"
-         )
+              || strLicense == "alarm"
+              || strLicense == "biteditor"
+              || strLicense == "md5"
+              || strLicense == "vmp"
+              || strLicense == "veiev"
+              || strLicense == "netshareservercfg"
+              || strLicense == "netshareserver"
+              || strLicense == "veriedit"
+              || strLicense == "netshareclient"
+              || strLicense == "verisimplevideo"
+              || strLicense == "eluce"
+              || strLicense == "whiteboard"
+              || strLicense == "bergedge"
+              || strLicense == "app.sysutils.igd"
+              || strLicense == "projection"
+              || strLicense == "querydb"
+             )
       {
          return true;
       }
@@ -341,8 +341,8 @@ namespace fontopus
       //   || !strcmp(System.get_module_name(), "backupapp")
       //   || System.get_license_id() == "winservice_filesystemsize")
       else if(strLicense == "backupapp"
-         || strLicense == "winservice_filesystemsize"
-         || strLicense == "production")
+              || strLicense == "winservice_filesystemsize"
+              || strLicense == "production")
       {
          return true;
       }
@@ -359,7 +359,7 @@ namespace fontopus
 
       if(strFirstFontopusServer.has_char())
       {
-         
+
          straRequestingServer.add(strFirstFontopusServer);
 
          strHost = strFirstFontopusServer;
@@ -385,7 +385,7 @@ namespace fontopus
       }
 
       if(straRequestingServer.contains(Application.handler()->m_varTopicQuery["fontopus"].get_string())
-         && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
+            && Application.handler()->m_varTopicQuery["sessid"].get_string().get_length() > 16)
       {
          strHost = Application.handler()->m_varTopicQuery["fontopus"].get_string();
       }
@@ -402,7 +402,7 @@ namespace fontopus
 
       property_set set;
 
-      
+
       set["post"]["entered_license"] = m_strLicense;
       //m_puser->set_sessid(ApplicationUser.m_str, strAuthUrl);
       //      uint32_t dwTimeProfile1 = get_tick_count();
@@ -426,10 +426,10 @@ namespace fontopus
 
          string strResSessId = doc.get_root()->attr("sessid");
 
-         if(strId.has_char() 
-            && strId == "licensed"
-            && m_strLicense == strLicense
-            && strReqSessId == strResSessId)
+         if(strId.has_char()
+               && strId == "licensed"
+               && m_strLicense == strLicense
+               && strReqSessId == strResSessId)
          {
 
             string strLogStats = doc.get_root()->attr("stats");
@@ -598,20 +598,26 @@ namespace fontopus
       return true;
    }
 
-   
+
    void login_thread::run()
    {
 
       int iRetryLogin = 0;
-      
+
       ::http::e_status estatus;
 
 //      RetryLogin:
-      
+
       string strResponse = Login(&estatus);
 
-      if(m_pcallback == NULL)
-         return 2;
+      if (m_pcallback == NULL)
+      {
+
+         m_error.set(-2);
+
+         return;
+
+      }
 
       e_result iAuth = result_fail;
       xml::document doc(get_app());
@@ -626,26 +632,26 @@ namespace fontopus
          if(strId.has_char() && strId == "auth")
          {
 
-               Session.fontopus()->m_authmap[m_strUsername].m_mapServer[m_strRequestingServer] = strResponse;
-               Session.fontopus()->m_authmap[m_strUsername].m_mapFontopus[m_strFontopusServer] = strResponse;
-               m_puser->m_strLogin = m_strUsername;
-               m_puser->m_strFontopusServerSessId = doc.get_root()->attr("sessid");
-               m_puser->set_sessid(m_puser->m_strFontopusServerSessId,m_strLoginUrl);
-               m_puser->m_strRequestingServer = m_strRequestingServer;
-               m_puser->set_sessid(m_puser->m_strFontopusServerSessId,m_strRequestingServer);
-               m_puser->m_strFunUserId = doc.get_root()->attr("secureuserid");
-               m_puser->m_strLoginStats = doc.get_root()->attr("stats");
-               m_strPasshash = doc.get_root()->attr("passhash");
-               iAuth = result_auth;
-               if(m_bFontopusServer)
-               {
-                  Application.file().put_contents(System.dir().appdata()/"database\\text\\last_good_known_fontopus_com.txt",m_strFontopusServer);
-               }
-               execute();
-               if(m_strLicense.has_char())
-               {
-                  m_strValidUntil = doc.get_root()->attr("valid_until");
-               }
+            Session.fontopus()->m_authmap[m_strUsername].m_mapServer[m_strRequestingServer] = strResponse;
+            Session.fontopus()->m_authmap[m_strUsername].m_mapFontopus[m_strFontopusServer] = strResponse;
+            m_puser->m_strLogin = m_strUsername;
+            m_puser->m_strFontopusServerSessId = doc.get_root()->attr("sessid");
+            m_puser->set_sessid(m_puser->m_strFontopusServerSessId,m_strLoginUrl);
+            m_puser->m_strRequestingServer = m_strRequestingServer;
+            m_puser->set_sessid(m_puser->m_strFontopusServerSessId,m_strRequestingServer);
+            m_puser->m_strFunUserId = doc.get_root()->attr("secureuserid");
+            m_puser->m_strLoginStats = doc.get_root()->attr("stats");
+            m_strPasshash = doc.get_root()->attr("passhash");
+            iAuth = result_auth;
+            if(m_bFontopusServer)
+            {
+               Application.file().put_contents(System.dir().appdata()/"database\\text\\last_good_known_fontopus_com.txt",m_strFontopusServer);
+            }
+            execute();
+            if(m_strLicense.has_char())
+            {
+               m_strValidUntil = doc.get_root()->attr("valid_until");
+            }
 
             //string strRsaModulus;
 
@@ -683,7 +689,7 @@ namespace fontopus
 
             //      goto RetryLogin;
 
-               //}
+            //}
 
             //}
             //else
@@ -715,11 +721,11 @@ namespace fontopus
          }
          else if(doc.get_root()->attr("id") == "registration_deferred")
          {
-            
+
             m_puser.release();
-            
+
             iAuth = result_registration_deferred;
-            
+
          }
          else if(doc.get_root()->attr("id") == "not_auth")
          {
@@ -760,11 +766,11 @@ namespace fontopus
          }
          else
          {
-            
+
             m_puser.release();
-            
+
             iAuth = result_fail;
-            
+
          }
 
       }
@@ -790,8 +796,8 @@ namespace fontopus
       //      char * psz = NULL;
       //    *psz = '2';
       m_pcallback->on_login_response(iAuth,strResponse);
-      
-      return 0;
+
+      //return 0;
 
    }
 
@@ -807,7 +813,7 @@ namespace fontopus
 
          if(::str::ends_ci(strIgnitionServer,".ca2.cc"))
          {
-            
+
             straRequestingServer.add(strIgnitionServer);
 
          }
@@ -957,13 +963,13 @@ namespace fontopus
       {
 
          string strAuthUrl("https://" + strApiServer + "/api/account/auth3?" + (m_pcallback == NULL ? string() : m_pcallback->oprop("defer_registration").get_string())
-            + (m_pcallback == NULL ? string() : "&ruri=" + System.url().url_encode((m_pcallback->oprop("ruri").get_string()))));
+                           + (m_pcallback == NULL ? string() : "&ruri=" + System.url().url_encode((m_pcallback->oprop("ruri").get_string()))));
 
          property_set set;
 
          //if(m_strPasshash.is_empty())
          {
-         //   set["post"]["entered_password"] = strPass;
+            //   set["post"]["entered_password"] = strPass;
          }
          //else
          //{
@@ -991,18 +997,18 @@ namespace fontopus
 
          set["app"] = get_app();
          set["user"] = m_puser;
-         
+
          if(m_puser != NULL)
          {
 
             set["cookies"] = m_puser->m_phttpcookies;
 
          }
-         
+
          uint32_t dwTimeProfile1 = get_tick_count();
 
          strAuth = Application.http().get(strAuthUrl, set);
-         
+
 
          *pestatus = (::http::e_status) set["get_status"].int64();
          uint32_t dwTimeProfile2 = get_tick_count();
@@ -1051,7 +1057,7 @@ namespace fontopus
       TRACE("The authentication has succeeded (%s[%s]).", m_loginthread.m_strFontopusServer, address.get_display_number());
       TRACE("Fontopus Server info = %s", m_loginthread.m_puser->m_strFontopusServerInfo);
 
-      
+
 
       string strUsername = m_loginthread.m_strUsername;
       string strPasshash = m_loginthread.m_strPasshash;
@@ -1063,7 +1069,7 @@ namespace fontopus
       Application.file().crypto_get(::dir::userappdata() / "license_auth/00002.data",strPasshashPrevious,calc_key_hash());
 
       if((strUsername.has_char() && strPasshash.has_char())
-         && (strUsernamePrevious != strUsername || strPasshashPrevious != strPasshash))
+            && (strUsernamePrevious != strUsername || strPasshashPrevious != strPasshash))
       {
          Application.file().crypto_set(::dir::userappdata() / "license_auth/00001.data",strUsername,"");
          Application.file().crypto_set(::dir::userappdata() / "license_auth/00002.data",strPasshash,calc_key_hash());

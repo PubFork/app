@@ -77,32 +77,33 @@ namespace aura
 
       DWORD dw;
 
-      DWORD dwResSize = GetFileVersionInfoSizeW(      
-         lpszModuleFilePath,
-         &dw);
+      DWORD dwResSize = GetFileVersionInfoSizeW(
+                        lpszModuleFilePath,
+                        &dw);
 
 
       if(dwResSize > 0)
       {
          LPVOID lpdata = new BYTE[dwResSize];
-         if(GetFileVersionInfoW(      
-            lpszModuleFilePath,
-            0,
-            dwResSize,
-            lpdata))
+         if(GetFileVersionInfoW(
+               lpszModuleFilePath,
+               0,
+               dwResSize,
+               lpdata))
          {
             UINT cbTranslate;
-            struct LANGANDCODEPAGE {
+            struct LANGANDCODEPAGE
+            {
                WORD wLanguage;
                WORD wCodePage;
             } *lpTranslate;
 
             // read the list of languages and code pages.
 
-            VerQueryValue(lpdata, 
-               TEXT("\\VarFileInfo\\Translation"),
-               (LPVOID*)&lpTranslate,
-               &cbTranslate);
+            VerQueryValue(lpdata,
+                          TEXT("\\VarFileInfo\\Translation"),
+                          (LPVOID*)&lpTranslate,
+                          &cbTranslate);
 
             string strKey;
             //for( i=0; i < (cbTranslate/sizeof(struct LANGANDCODEPAGE)); i++ )
@@ -112,23 +113,23 @@ namespace aura
                UINT uiSize;
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileDescription"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
 
 
 
                strKey.Format(
-                  TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
-                  lpTranslate[i].wLanguage,
-                  lpTranslate[i].wCodePage);
+               TEXT("\\StringFileInfo\\%04x%04x\\FileVersion"),
+               lpTranslate[i].wLanguage,
+               lpTranslate[i].wCodePage);
 
-               // Retrieve file description for language and code page "i". 
-               VerQueryValue(lpdata, 
-                  (LPTSTR) (const char *) strKey, 
-                  (LPVOID *)&lpsz, 
-                  &uiSize); 
+               // Retrieve file description for language and code page "i".
+               VerQueryValue(lpdata,
+                             (LPTSTR) (const char *) strKey,
+                             (LPVOID *)&lpsz,
+                             &uiSize);
 
 
                string strVersion(lpsz, uiSize);
@@ -156,7 +157,7 @@ namespace aura
 //            return false;
 //         }
 //      }
-//#endif 
+//#endif
 //      return true;
 //   }
 //
@@ -181,46 +182,6 @@ namespace aura
    //}
 
 
-
-
-
-   bool application::impl_process_initialize()
-   {
-
-      return true;
-
-   }
-
-   bool application::impl_initialize1()
-   {
-
-      //set_run();
-
-      return true;
-
-   }
-
-   bool application::impl_initialize2()
-   {
-      return true;
-   }
-
-   bool application::impl_initialize3()
-   {
-      return true;
-   }
-
-   // thread termination
-   int32_t application::impl_exit_instance() // default will 'delete this'
-   {
-
-      set_os_data(NULL);
-
-      //int32_t iRet = ::aura::application::term_instance();
-
-      return 0;
-
-   }
 
 
 
@@ -255,7 +216,7 @@ namespace aura
 
    void application::get_time(struct timeval *p)
    {
-   #ifdef _WIN32
+#ifdef _WIN32
       FILETIME ft; // Contains a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC).
       GetSystemTimeAsFileTime(&ft);
       uint64_t tt;
@@ -263,14 +224,14 @@ namespace aura
       tt /= 10; // make it usecs
       p->tv_sec = (long)tt / 1000000;
       p->tv_usec = (long)tt % 1000000;
-   #else
+#else
       gettimeofday(p, NULL);
-   #endif
+#endif
    }
 
    void application::set_env_var(const string & var,const string & value)
    {
-   #if (defined(SOLARIS8) || defined(SOLARIS))
+#if (defined(SOLARIS8) || defined(SOLARIS))
       {
          static stdmap<string, char *> vmap;
          if (vmap.find(var) != vmap.end())
@@ -281,14 +242,14 @@ namespace aura
          sprintf(vmap[var], "%s=%s", var, value);
          putenv( vmap[var] );
       }
-   #elif defined _WIN32
+#elif defined _WIN32
       {
          string slask = var + "=" + value;
          _putenv( (const char *)slask);
       }
-   #else
+#else
       setenv(var, value, 1);
-   #endif
+#endif
    }
 
    uint32_t application::get_thread_id()
@@ -360,9 +321,9 @@ namespace aura
          HCURSOR hcursorWait =  ::LoadCursor(NULL, IDC_WAIT);
 
          HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
-         
-    //     if(hcursorPrevious != hcursorWait)
-  //         m_hcurWaitCursorRestore = hcursorPrevious;
+
+         //     if(hcursorPrevious != hcursorWait)
+         //         m_hcurWaitCursorRestore = hcursorPrevious;
 
       }
       else
@@ -372,7 +333,7 @@ namespace aura
       }
 
    }
-   
+
 
    string application::veriwell_multimedia_music_midi_get_default_library_name()
    {

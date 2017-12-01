@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -243,11 +243,7 @@ bool tool_thread::set_pred(::pred_holder_base * ppred)
 }
 
 
-
-
-
-
-int tool_thread::run()
+void tool_thread::run()
 {
 
    while (get_thread_run())
@@ -278,8 +274,6 @@ int tool_thread::run()
       m_evReady.SetEvent();
 
    }
-
-   return 0;
 
 }
 

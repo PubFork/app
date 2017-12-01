@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace sphere
@@ -15,16 +15,16 @@ namespace sphere
 
    application::application(const char * pszId)
    {
-      
+
    }
 
 
    application::~application()
    {
-      
+
    }
 
-   
+
    sp(::aura::application) application::get_system()
    {
       return new application();
@@ -59,14 +59,13 @@ namespace sphere
          }
       }
 
-
-
       return asphere::application::init_instance();
+
    }
 
-   int32_t application::exit_application()
-   {
 
+   void application::term_application()
+   {
 
       System.factory().creatable_small < main_frame >();
 
@@ -80,30 +79,38 @@ namespace sphere
       {
          if(strId == "default_file_handler")
          {
-            return ::filehandler::application::exit_application();
+            return ::filehandler::application::term_application();
          }
       }
       else if(chFirst == 'u')
       {
          if(strId == "userstack")
          {
-            return ::userstack::application::exit_application();
+            return ::userstack::application::term_application();
          }
       }
 
+      return asphere::application::term_application();
 
-      return asphere::application::exit_application();
    }
+
 
    void application::_001OnFileNew()
    {
+
       string strId = m_strId;
+
       char chFirst = '\0';
+
       if(strId.get_length() > 0)
       {
+
          chFirst = strId[0];
+
       }
+
       ::asphere::application::_001OnFileNew();
+
    }
 
 
@@ -239,7 +246,7 @@ namespace sphere
          }
 
       }
-      
+
       return ::asphere::application::is_serviceable();
 
    }
@@ -259,7 +266,7 @@ namespace sphere
             return ::filehandler::application::allocate_new_service();
          }
       }
-      
+
       return ::asphere::application::allocate_new_service();
    }
 
@@ -288,10 +295,10 @@ namespace sphere
    }
 
 
-   int32_t application::run()
+   void application::run()
    {
 
-      return ::asphere::application::run();
+      ::asphere::application::run();
 
    }
 

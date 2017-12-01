@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace user
@@ -118,7 +118,7 @@ namespace user
          sp(::user::wndfrm::interaction) pinteraction = Session.m_mapUinteraction[pszUinteraction];
 
          if(Session.m_mapUinteraction[pszUinteraction] == NULL
-            && Session.wndfrm() != NULL)
+               && Session.wndfrm() != NULL)
          {
 
             Session.m_mapUinteraction[pszUinteraction] = Session.wndfrm()->get_new_wndfrm(pszUinteraction);
@@ -180,7 +180,7 @@ namespace user
 
          }
 
-            
+
          {
 
             string strWndFrm = Application.file().as_string(::dir::system() / "config" / Application.m_strAppName / "wndfrm.txt");
@@ -274,7 +274,7 @@ namespace user
          if (pinteraction.is_null())
          {
 
-            _throw(exit_exception(get_app(), "wndfrm_core plugin or any other wndfrm_* plugin is installed"));
+            _throw(exit_exception(get_app(), exit_application, "wndfrm_core plugin or any other wndfrm_* plugin is installed"));
 
          }
 
@@ -299,14 +299,7 @@ namespace user
    } // namespace wndfrm
 
 
-
-
 } // namespace user
-
-
-
-
-
 
 
 namespace core
@@ -332,7 +325,7 @@ namespace core
 
       wndfrm()->construct(this);
 
-      if (!wndfrm()->initialize())
+      if (!wndfrm()->init())
       {
 
          thiserr << "end failure (2)";
@@ -346,7 +339,7 @@ namespace core
       return true;
 
    }
-   
+
 
    ::user::wndfrm::wndfrm * application::wndfrm()
    {

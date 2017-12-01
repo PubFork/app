@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace install
@@ -72,7 +72,7 @@ namespace install
 
 
       virtual void app_app_main();
-      virtual int start_app_app(string strPlatform);
+      virtual bool start_app_app(string strPlatform);
 
       virtual bool install_get_admin() override;
       virtual void install_set_admin(bool bSet);

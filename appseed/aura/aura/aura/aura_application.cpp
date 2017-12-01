@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -283,19 +283,19 @@ namespace aura
    {
 
       ::message::receiver::install_message_routing(psender);
-      
+
       ::thread::install_message_routing(psender);
 
    }
 
-   
+
    imaging & application::imaging()
    {
-      
+
       return *m_pimaging;
-      
+
    }
-   
+
 
    bool application::app_data_set(class id id, ::file::ostream & os)
    {
@@ -377,38 +377,12 @@ namespace aura
       try
       {
 
-         if (pcreate->m_spCommandLine.is_set()
-               && (pcreate->m_spCommandLine->m_varQuery.has_property("install")
-                   || pcreate->m_spCommandLine->m_varQuery.has_property("uninstall")))
-         {
-
-            if (!is_system() && !is_session())
-            {
-
-               check_install();
-
-               ::multithreading::post_quit(&System);
-
-            }
-            else
-            {
-
-               on_request(pcreate);
-
-            }
-
-         }
-         else
-         {
-
-            on_request(pcreate);
-
-         }
+         on_request(pcreate);
 
       }
       catch (esp esp)
       {
-         
+
          if(esp.is < not_installed >())
          {
 
@@ -419,15 +393,15 @@ namespace aura
          }
          else if(esp.is < exit_exception > ())
          {
-            
+
             throw esp;
-            
+
          }
          else if (!Application.on_run_exception(esp))
          {
-            
+
             _throw(exit_exception(esp->get_app(), ::exit_application));
-            
+
          }
 
       }
@@ -2543,9 +2517,9 @@ namespace aura
 
    bool application::final_handle_exception(::exception::exception * pe)
    {
-      
+
       UNREFERENCED_PARAMETER(pe);
-      
+
       //linux      exit(-1);
 
       if (!is_system())
@@ -2573,15 +2547,15 @@ namespace aura
       {
 
          TRACE(string(typeid(*this).name()) + " on_run");;
-         
+
          //dappy(string(typeid(*this).name()) + " : going to on_run : " + ::str::from(m_iErrorCode));
-         
+
          //m_iErrorCode = 0;
-         
+
          m_bReady = true;
-         
+
          on_run();
-         
+
 //         if(m_iErrorCode != 0)
 //         {
 //
@@ -2592,16 +2566,26 @@ namespace aura
 //         }
 
       }
-      catch(::exit_exception & e)
+      catch(esp esp)
       {
 
 //         thisexit << "exit_exception: " << m_iErrorCode;
 //
-         m_error.set(&e);
 
-         dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+         if (esp.is_exit())
+         {
 
-         e.post_quit(this);
+            //m_error.set(&e);
+
+            dappy(string(typeid(*this).name()) + " : on_run exit_exception");
+
+            esp.cast < ::exit_exception > ()->post_quit();
+
+         }
+         else
+         {
+
+         }
 
       }
       catch(...)
@@ -2626,6 +2610,14 @@ namespace aura
             return false;
 
          }
+
+      }
+      catch (esp esp)
+      {
+
+         esp.rethrow_exit();
+
+         return false;
 
       }
       catch (...)
@@ -2752,12 +2744,12 @@ namespace aura
          return true;
 
       }
-      catch (::exit_exception * pe)
+      catch (esp esp)
       {
 
-//         thisexc << "exit_exception (4): " << m_iErrorCode;
-//
-         m_error.set(pe);
+         thisexcall << 3.9;
+
+         esp.rethrow_exit();
 
       }
       catch (...)
@@ -2771,7 +2763,7 @@ namespace aura
 
    }
 
-   
+
    void application::on_run()
    {
 
@@ -2798,22 +2790,22 @@ namespace aura
 
       try
       {
-         
+
          m_bReady = true;
-         
+
          if (m_pevAppBeg != NULL)
          {
-            
+
             m_pevAppBeg->SetEvent();
-            
+
          }
-         
+
       }
       catch (...)
       {
-         
+
       }
-      
+
       try
       {
 
@@ -2827,28 +2819,28 @@ run:
          }
          catch (esp esp)
          {
-            
+
             if(esp.is < exit_exception > ())
             {
 
                throw esp;
-               
+
             }
             else
             {
-               
+
                if (on_run_exception(esp))
                {
-                  
+
                   goto run;
-                  
+
                }
-               
+
                if (final_handle_exception(esp))
                {
-                  
+
                   goto run;
-                  
+
                }
 
             }
@@ -2858,7 +2850,7 @@ run:
       }
       catch (...)
       {
-         
+
          // here was a comment about recovering from bug...
          // kinda : universe in eletron? OMG
          // (no problem, but continue to be eletron...)
@@ -2878,68 +2870,105 @@ run:
          // and it is what exactly what exactly ca2 ca2 is about, this can of mean thing... so you stop at 8 ca2...
          // what you have back support? C++ and machines and components and reality stack...
       }
-      
+
       try
       {
-         
+
          if (m_pevAppEnd != NULL)
          {
-            
+
             m_pevAppEnd->SetEvent();
-            
+
          }
-         
+
       }
       catch (...)
       {
-         
+
       }
-      
+
    }
-   
-   
+
+
    void application::pos_run()
    {
-      
+
       thisstart;
-      
+
       try
       {
-         
+
          m_dwAlive = ::get_tick_count();
-         
+
          application_pos_run();
-         
+
 //         if (m_iErrorCode < 0)
 //         {
 //
 //            thisfail << 1 << m_iErrorCode;
 //
 //         }
-         
+
          xxdebug_box("pre_run 1 ok", "pre_run 1 ok", MB_ICONINFORMATION);
-         
+
          //thisok << 1 << m_iErrorCode;
-         
-         return true;
-         
+
+         //return true;
+
       }
       catch (...)
       {
-         
+
          thisexcall << 4;
-         
+
       }
-      
-      return false;
-      
+
+      //return false;
+
    }
-   
+
 
    bool application::init_instance()
    {
 
       return true;
+
+   }
+
+
+   void application::term_instance()
+   {
+
+
+   }
+
+   bool application::ca_init3()
+   {
+
+      application_message message(application_message_init3);
+
+      route_message(&message);
+
+      return message.m_bOk;
+
+   }
+
+
+   void application::ca_process_term()
+   {
+
+      application_message message(application_message_process_term);
+
+      route_message(&message);
+
+      //return message.m_bOk;
+
+   }
+
+
+   void application::TermApplication()
+   {
+
 
    }
 
@@ -2958,9 +2987,9 @@ run:
 
       if (!is_system() && (bool)oprop("SessionSynchronizedInput"))
       {
-         
+
          ::AttachThreadInput(GetCurrentThreadId(), (uint32_t)System.get_os_int(), TRUE);
-         
+
       }
 
 #endif
@@ -2994,7 +3023,7 @@ run:
       {
 
          //thisexc << 1 << m_iErrorCode;
-         
+
          ::aura::del(pe);
 
          goto InitFailure;
@@ -3038,7 +3067,7 @@ run:
       {
 
          //thisexc << 2 << m_iErrorCode;
-         
+
          ::aura::del(pe);
 
          goto InitFailure;
@@ -3072,47 +3101,50 @@ run:
          }
 
       }
-      catch (const ::exit_exception * pe)
+      catch (esp esp)
       {
 
-         //thisexit << 3 << m_iErrorCode;
+         if (esp.is < exit_exception >())
+         {
 
-         throw pe;
+            throw esp;
 
-      }
-      catch (const ::exception::exception * pe)
-      {
+         }
+         else
+         {
 
-         //thisexc << 3 << m_iErrorCode;
-         
-         ::aura::del(pe);
+            goto InitFailure;
 
-         goto InitFailure;
+         }
 
       }
       catch (...)
       {
 
-         //thisexcall << 3 << m_iErrorCode;
-
          goto InitFailure;
 
       }
-
-      //thisok << 3 << m_iErrorCode;
 
       m_dwAlive = ::get_tick_count();
 
       try
       {
 
-         if (!is_installing() && !is_unstalling())
+         if ((is_installing() || is_unstalling()) && !is_system() && !is_session())
+         {
+
+            //Sleep(15000);
+
+            check_install();
+
+            _throw_exit(exit_system);
+
+         }
+         else
          {
 
             if (!init_instance())
             {
-
-               //thisfail << 3.1 << m_iErrorCode;
 
                goto InitFailure;
 
@@ -3121,20 +3153,10 @@ run:
          }
 
       }
-      catch (::exit_exception * pe)
+      catch (esp esp)
       {
 
-         //thisexit << 3.1 << m_iErrorCode;
-
-         throw pe;
-
-      }
-      catch (const ::exception::exception * pe)
-      {
-
-         //thisexc << 3.1 << m_iErrorCode;
-         
-         ::aura::del(pe);
+         esp.rethrow_exit();
 
          goto InitFailure;
 
@@ -3142,76 +3164,62 @@ run:
       catch (...)
       {
 
-         //thisexcall << 3.1 << m_iErrorCode;
-
          goto InitFailure;
 
       }
-
-      //thisend << m_iErrorCode;
 
       return true;
 
 InitFailure:
 
-      //if (m_iErrorCode == 0)
-      //{
-
-        // m_iErrorCode = -1;
-
-      //}
-
-      //thiserr << "end failure " << m_iErrorCode;
-
-      //return m_iErrorCode;
       return false;
 
    }
-   
+
 
    void application::application_pos_run()
    {
-      
+
       thisstart;
-      
+
       //m_iErrorCode = 0;
-      
+
       m_dwAlive = ::get_tick_count();
-      
+
 //      thisok << 1 << m_iErrorCode;
 //
 //      m_dwAlive = ::get_tick_count();
-      
+
       try
       {
-         
+
          if (!is_installing() && !is_unstalling())
          {
-            
+
             //if (!exit_instance())
-            
+
             term_instance();
             //{
-               
-               //thisfail << 3.1 << m_iErrorCode;
-               
+
+            //thisfail << 3.1 << m_iErrorCode;
+
             //}
-            
+
          }
-         
+
       }
       catch (...)
       {
-         
+
          //thisexcall << 3.1 << m_iErrorCode;
-         
+
          //goto InitFailure;
-         
+
       }
-      
+
       try
       {
-         
+
          //if (!finalize_application())
          term_application();
 //         {
@@ -3219,22 +3227,22 @@ InitFailure:
 //            thisfail << 2 << m_iErrorCode;
 //
 //         }
-         
+
       }
       catch (...)
       {
-         
+
          //thisexcall << 3 << m_iErrorCode;
-         
+
       }
-      
+
       //thisok << 4 << m_iErrorCode;
-      
+
       m_dwAlive = ::get_tick_count();
-      
+
       try
       {
-         
+
          //if (!process_finalize())
          process_term();
 //         {
@@ -3242,18 +3250,18 @@ InitFailure:
 //            thisfail << 5 << m_iErrorCode;
 //
 //         }
-         
+
       }
       catch (...)
       {
-         
+
          //thisexcall << 6 << m_iErrorCode;
-         
+
       }
 
       try
       {
-         
+
          //if (!TermApplication())
          TermApplication();
 //         {
@@ -3261,19 +3269,19 @@ InitFailure:
 //            thisfail << 7 << m_iErrorCode;
 //
 //         }
-         
+
       }
       catch (...)
       {
-         
+
          //thisexcall << 8 << m_iErrorCode;
-         
+
       }
 
       //thisend << m_iErrorCode;
 
       //return m_iErrorCode;
-      
+
    }
 
 
@@ -3298,7 +3306,7 @@ InitFailure:
             ::output_debug_string("Failed at on_install : " + m_strAppId + "\n\n");
 
             //System.m_iErrorCode = -1;
-            
+
             System.m_error.set(-1);
 
             return false;
@@ -3558,7 +3566,7 @@ retry_license:
 
    }
 
-   
+
    bool application::os_native_bergedge_start()
    {
 
@@ -3583,7 +3591,7 @@ retry_license:
       m_phandler->merge(pcreate);
 
    }
-   
+
 
    void application::run()
    {
@@ -3702,6 +3710,13 @@ retry_license:
    bool application::is_installing()
    {
 
+      if (handler() == NULL)
+      {
+
+         return false;
+
+      }
+
       return handler()->has_property("install");
 
    }
@@ -3709,6 +3724,13 @@ retry_license:
 
    bool application::is_unstalling()
    {
+
+      if (handler() == NULL)
+      {
+
+         return false;
+
+      }
 
       return handler()->has_property("uninstall");
 
@@ -3767,34 +3789,34 @@ retry_license:
 
       if (!is_serviceable())
       {
-         
+
          return;
-         
+
       }
 
       if (pcreate->m_spCommandLine->m_varQuery.has_property("create_service"))
       {
-         
+
          create_service();
-         
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_service"))
       {
-         
+
          start_service();
-         
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("stop_service"))
       {
-         
+
          stop_service();
-         
+
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("remove_service"))
       {
-         
+
          remove_service();
-         
+
       }
 
    }
@@ -3871,46 +3893,46 @@ retry_license:
       return true;
 
    }
-   
-   
+
+
    void application::process_term()
    {
-      
+
       try
       {
-         
+
          impl_process_term();
-         
+
       }
       catch(...)
       {
-         
+
       }
 
       try
       {
-         
+
          ca_process_term();
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
       try
       {
-         
+
          release_exclusive();
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
       m_phandler.release();
-      
+
 //      try
 //      {
 //
@@ -3921,85 +3943,87 @@ retry_license:
 //      {
 //
 //      }
-      
+
       try
       {
-         
+
          if (!is_session() && !is_system())
          {
-         
+
             if (m_paurasystem != NULL && m_paurasystem->m_phandler.is_set())
             {
-            
+
                m_paurasystem->m_phandler->handle(::command_check_exit);
-            
+
             }
-         
+
          }
-         
+
       }
       catch(...)
       {
 
       }
-      
+
       try
       {
-         
+
          for (auto & p : m_stringtable)
          {
-         
+
             ::aura::del(p.m_element2);
-         
+
          }
-      
+
          m_stringtable.remove_all();
-      
+
          for (auto & p : m_stringtableStd)
          {
-         
+
             ::aura::del(p.m_element2);
-         
+
          }
-      
+
          m_stringtableStd.remove_all();
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
-      
+
       m_spfile.release();
-      
+
       m_spdir.release();
-      
+
       ::aura::del(m_pimaging);
-      
-      try
+
+      if (!is_session() && !is_system())
       {
-      
-         if (Session.appptra().get_count() <= 1)
+
+         try
          {
-         
-            if (System.thread::get_os_data() != NULL)
+
+            if (Session.appptra().get_count() <= 1)
             {
-            
-               ::multithreading::post_quit(&System);
-            
+
+               if (System.thread::get_os_data() != NULL)
+               {
+
+                  ::multithreading::post_quit(&System);
+
+               }
+
             }
-         
+
          }
-      
+         catch (...)
+         {
+
+         }
+
       }
-      catch (...)
-      {
-      
-         //m_iErrorCode = -1;
-      
-      }
-   
+
    }
 
 
@@ -4023,11 +4047,11 @@ retry_license:
 
       if (!init1())
       {
-         
+
          //dappy(string(typeid(*this).name()) + " : init1 failure : " + ::str::from(m_iErrorCode));
-         
+
          return false;
-         
+
       }
 
       xxdebug_box("check_exclusive", "check_exclusive", MB_ICONINFORMATION);
@@ -4114,11 +4138,11 @@ retry_license:
 
       if (!init2())
       {
-         
+
          //dappy(string(typeid(*this).name()) + " : init2 failure : " + ::str::from(m_iErrorCode));
-         
+
          return false;
-         
+
       }
 
       System.install_progress_add_up(); // 3
@@ -4129,11 +4153,11 @@ retry_license:
 
       if (!init3())
       {
-         
+
          //dappy(string(typeid(*this).name()) + " : init3 failure : " + ::str::from(m_iErrorCode));
-         
+
          return false;
-         
+
       }
 
       System.install_progress_add_up(); // 4
@@ -4143,32 +4167,32 @@ retry_license:
       m_dwAlive = ::get_tick_count();
 
       //dappy(string(typeid(*this).name()) + " : init3 ok : " + ::str::from(m_iErrorCode));
-      
+
       try
       {
 
          if (!init())
          {
-            
+
             //dappy(string(typeid(*this).name()) + " : initialize failure : " + ::str::from(m_iErrorCode));
-            
+
             return false;
-            
+
          }
-         
+
       }
       catch (const char * psz)
       {
-         
+
          if (!strcmp(psz, "You have not logged in! Exiting!"))
          {
-            
+
             return false;
-            
+
          }
-         
+
          return false;
-         
+
       }
 
       System.install_progress_add_up(); // 5
@@ -4179,7 +4203,7 @@ retry_license:
 
    }
 
-   
+
    ::aura::ipi * application::create_ipi()
    {
 
@@ -4199,7 +4223,7 @@ retry_license:
    }
 
 
-bool application::init1()
+   bool application::init1()
    {
 
       g_pf1 = (void *)(uint_ptr) ::str::to_uint64(file().as_string(::dir::system() / "config\\system\\pf1.txt"));
@@ -4217,32 +4241,32 @@ bool application::init1()
 
       if (!ca_init1())
       {
-         
+
          return false;
-         
+
       }
 
       if (!impl_init1())
       {
-         
+
          return false;
-         
+
       }
-      
+
       if (m_pimaging == NULL)
       {
-         
+
          m_pimaging = new class imaging(get_app());
-         
+
          if (m_pimaging == NULL)
          {
-            
+
             _throw(memory_exception(get_app()));
-            
+
          }
-         
+
       }
-      
+
       string strLocaleSystem;
 
       string strSchemaSystem;
@@ -4376,48 +4400,48 @@ bool application::init1()
    }
 
 
-void application::term1()
-{
-   
-   try
+   void application::term1()
    {
 
-      impl_term1();
+      try
+      {
+
+         impl_term1();
+
+      }
+      catch (...)
+      {
+
+      }
+
+      try
+      {
+
+         ca_term1();
+
+      }
+      catch(...)
+      {
+
+      }
 
    }
-   catch (...)
-   {
-
-   }
-   
-   try
-   {
-      
-      ca_term1();
-   
-   }
-   catch(...)
-   {
-      
-   }
-   
-}
 
    bool application::init2()
    {
 
       if (!impl_init2())
       {
-         
+
          return false;
-         
+
       }
 
       if (!ca_init2())
       {
-         
+
          return false;
-         
+
       }
 
       return true;
@@ -4426,29 +4450,29 @@ void application::term1()
 
    void application::term2()
    {
-      
+
       try
       {
-         
+
          impl_term2();
-         
+
       }
       catch (...)
       {
-         
+
       }
-      
+
       try
       {
-         
+
          ca_term2();
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
    }
 
    bool application::init3()
@@ -4464,48 +4488,48 @@ void application::term1()
 
       if (!impl_init3())
       {
-         
+
          return false;
-         
+
       }
 
       if (!ca_init3())
       {
-         
+
          return false;
-         
+
       }
 
       return true;
 
    }
 
-   
+
    void application::term3()
    {
-      
+
       try
       {
-         
+
          impl_term3();
-         
+
       }
       catch (...)
       {
-         
+
       }
-      
+
       try
       {
-         
+
          ca_term3();
-         
+
       }
       catch(...)
       {
-         
+
       }
-      
+
    }
 
 
@@ -4517,19 +4541,19 @@ void application::term1()
 
    }
 
-   
+
    void application::term()
    {
-      
+
       ::aura::del(m_pimaging);
-      
+
 //      bool bOk = true;
 //
 //      return bOk;
-      
+
    }
 
-   
+
 
    void application::term_application()
    {
@@ -4538,48 +4562,48 @@ void application::term1()
       {
 
          term();
-         
+
       }
       catch(...)
       {
-         
-         
+
+
       }
 
       try
       {
-         
+
          term3();
-         
+
       }
       catch(...)
       {
-         
-         
+
+
       }
 
       try
       {
-         
+
          term2();
-         
+
       }
       catch(...)
       {
-         
-         
+
+
       }
 
       try
       {
-         
+
          term1();
-         
+
       }
       catch(...)
       {
-         
-         
+
+
       }
 //
 //
@@ -4589,13 +4613,75 @@ void application::term1()
    }
 
 
+
+
+
+
+   bool application::impl_process_init()
+   {
+
+      return true;
+
+   }
+
+   bool application::impl_init1()
+   {
+
+      //set_run();
+
+      return true;
+
+   }
+
+   bool application::impl_init2()
+   {
+      return true;
+   }
+
+   bool application::impl_init3()
+   {
+      return true;
+   }
+
+   // thread termination
+   void application::impl_process_term() // default will 'delete this'
+   {
+
+      set_os_data(NULL);
+
+      //int32_t iRet = ::aura::application::term_instance();
+
+      //return 0;
+
+   }
+
+
+   void application::impl_term3()
+   {
+
+
+   }
+
+
+   void application::impl_term2()
+   {
+
+
+   }
+
+
+   void application::impl_term1()
+   {
+
+
+   }
    bool application::is_running()
    {
-      
+
       return is_alive();
-      
+
    }
-   
+
 
    service_base * application::allocate_new_service()
    {
@@ -4618,11 +4704,11 @@ void application::term1()
 
    void application::ca_term2()
    {
-      
+
       application_message message(application_message_term2);
-      
+
       route_message(&message);
-      
+
    }
 
 
@@ -6053,17 +6139,17 @@ void application::term1()
 
       try
       {
-         
+
          if (pbias != NULL)
          {
-            
+
             if (pbias->m_pcallback != NULL)
             {
-               
+
                pbias->m_pcallback->connect_to(this);
-               
+
             }
-            
+
          }
       }
       catch (...)
@@ -6082,9 +6168,9 @@ void application::term1()
 
          if (!begin_synch())
          {
-            
+
             return false;
-            
+
          }
 
       }
@@ -6110,7 +6196,7 @@ void application::term1()
       if (pe->m_bHandled)
       {
 
-         return !pe->m_bContinue;
+         return pe->m_bContinue;
 
       }
 
@@ -6319,14 +6405,6 @@ void application::term1()
 
                      ::duration durationWait = minutes(1);
 
-                     //#ifdef MACOS
-
-                     //                   TRACE0(strPath);
-
-                     //                 DWORD dwExitCode = System.process().synch(strPath,SW_HIDE,durationWait,&bTimedOut);
-
-                     //#else
-
 #ifdef LINUX
 
                      dwExitCode = System.process().synch(string(path) + strParam, SW_HIDE, durationWait, &bTimedOut);
@@ -6337,14 +6415,12 @@ void application::term1()
 
 #endif
 
-                     //#endif
-
                   }
-
 
                }
 
             }
+
             if (iRet == IDNO)
             {
 
@@ -6375,7 +6451,6 @@ void application::term1()
                pnotinstalled->m_bContinue = false;
 
             }
-
 
          }
          catch (...)
@@ -6410,6 +6485,8 @@ void application::term1()
          hotplugin_host_starter_start_sync(": app=" + pnotinstalled->m_strAppId + " install locale=" + pnotinstalled->m_strLocale + " schema=" + pnotinstalled->m_strSchema + " configuration=" + pnotinstalled->m_strConfiguration + " platform=" + pnotinstalled->m_strPlatform + strAddUp, get_app(), NULL);
 
       }
+
+      _throw_exit(exit_system);
 
       return false;
 

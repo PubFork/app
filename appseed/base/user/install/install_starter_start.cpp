@@ -1,8 +1,5 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "base/user/user.h"
-
-
-#if defined()
 
 
 namespace install
@@ -107,7 +104,7 @@ namespace install
 
          if (System.install().is_installing_ca2())
          {
-            
+
             Sleep(500);
 
             continue;
@@ -117,12 +114,12 @@ namespace install
          System.install().update_ca2_installed(true);
 
          if (System.install().is_ca2_installed() && System.is_application_installed(
-            strAppId, 
-            System.get_latest_build_number(System.get_system_platform()),
-            System.get_system_platform(), 
-            strConfiguration,
-            strLocale,
-            strSchema))
+               strAppId,
+               System.get_latest_build_number(System.get_system_platform()),
+               System.get_system_platform(),
+               strConfiguration,
+               strLocale,
+               strSchema))
          {
 
             break;
@@ -137,21 +134,21 @@ namespace install
 
          prepare_small_bell(true);
 
-         
+
 
       }
 
       if (System.install().is_ca2_installed() && System.is_application_installed(
-         strAppId,
-         System.get_latest_build_number(System.get_system_platform()),
-         System.get_system_platform(),
-         strConfiguration, 
-         strLocale,
-         strSchema) && m_pplugin != NULL)
+            strAppId,
+            System.get_latest_build_number(System.get_system_platform()),
+            System.get_system_platform(),
+            strConfiguration,
+            strLocale,
+            strSchema) && m_pplugin != NULL)
       {
-         
+
          defer_play_small_bell();
-         
+
          m_pplugin->set_ca2_installation_ready();
 
       }
@@ -195,11 +192,6 @@ namespace install
 
 } // namespace install
 
-
-
-
-
-#endif 
 
 
 

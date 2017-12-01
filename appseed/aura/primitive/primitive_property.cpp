@@ -70,7 +70,7 @@ property::property()
 //         return pair_set_interface_get_value(iFind);
 //   }
 //
-//   _throw("cannot reference absent property");
+//   _throw(simple_exception(get_app(), "cannot reference absent property"));
 //
 //}
 //

@@ -66,7 +66,7 @@ namespace file
    {
       uint64_t uiRead = m_spfile->read(&i, sizeof(i));
       if(uiRead != sizeof(i))
-         _throw("failed to read int32_t");
+         _throw(simple_exception(get_app(), "failed to read int32_t"));
 
    }
 
@@ -74,7 +74,7 @@ namespace file
    {
       uint64_t uiRead = m_spfile->read(&ui, sizeof(ui));
       if(uiRead != sizeof(ui))
-         _throw("failed to read uint32_t");
+         _throw(simple_exception(get_app(), "failed to read uint32_t"));
 
    }
 

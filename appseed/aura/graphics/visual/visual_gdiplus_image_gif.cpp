@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "fiasco_finder.h"
 #include <Wincodec.h>
 
@@ -14,7 +14,7 @@ bool gif_load_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba
 
 bool freeimage_load_diba_frame(::draw2d::dib * pdibCompose, ::visual::dib_sp::array * pdiba, int iFrame, FIBITMAP * pfi, ::aura::application * papp);
 
-bool dib_from_wicbitmapsource(::draw2d::dib & dib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory);
+bool dib_from_wicbitmapsource(::draw2d::dib * pdib, IWICBitmapSource * piConverter, IWICImagingFactory * piFactory);
 
 
 COLORREF metadata_GetBackgroundColor(IWICMetadataQueryReader *pMetadataQueryReader, IWICBitmapDecoder * piDecoder, IWICImagingFactory * piFactory)
@@ -355,7 +355,7 @@ bool freeimage_load_diba_from_file(::visual::dib_sp::array * pdiba, ::file::file
          if (SUCCEEDED(hr))
          {
 
-            hr = dib_from_wicbitmapsource(*p->m_dib.m_p, pConverter, piFactory) ? S_OK : E_FAIL;
+            hr = dib_from_wicbitmapsource(p->m_dib.m_p, pConverter, piFactory) ? S_OK : E_FAIL;
 
          }
 

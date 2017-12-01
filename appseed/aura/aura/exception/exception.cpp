@@ -1,8 +1,6 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #include <stdio.h>
-
-
 
 
 namespace exception
@@ -149,12 +147,6 @@ namespace exception
 
    }
 
-   void rethrow(exception * pe)
-   {
-
-      _throw(pe);
-
-   }
 
    const char * exception::what() const NOTHROW
    {
@@ -308,19 +300,27 @@ namespace exception
    }
 
 
+   void exception_sp::rethrow_exit()
+   {
+
+      if (is_exit())
+      {
+
+         throw *this;
+
+      }
+
+   }
+
+
 } // namespace exception
 
 
+void _rethrow(::exception::exception * pexception)
+{
 
+   throw ::esp(pexception);
 
-
-
-
-
-
-
-
-
-
+}
 
 

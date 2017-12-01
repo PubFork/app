@@ -25,19 +25,15 @@ namespace axis
       system(::aura::application * papp, app_core * pappcore);
       virtual ~system();
 
-      bool initialize() override;
 
+      virtual bool init() override;
+      //virtual bool init_instance() override;
+      //virtual void term_instance() override;
 
+      virtual bool init_application() override;
+      virtual void term_application() override;
 
-
-
-      virtual bool initialize_application() override;
-      virtual int32_t exit_application() override;
-
-         virtual bool init_application() override;
-         virtual int32_t exit_application() override;
-
-         virtual bool term() override;
+      virtual void term() override;
 
       //::url::department                           & url()     { return m_urldepartment; }
 
@@ -65,13 +61,11 @@ namespace axis
       //virtual int32_t install_start(const char * pszCommandLine,const char * pszBuild) override;
       //virtual int32_t install_progress_app_add_up(int iAddUp = 1) override;
 
-      virtual bool process_initialize() override;
+      virtual bool process_init() override;
 
-         virtual bool process_init() override;
+      virtual bool init1() override;
 
-         virtual bool init1() override;
-
-         virtual bool init2() override;
+      virtual bool init2() override;
 
 
       virtual bool verb() override; // ambigous inheritance from ::aura::system/::axis::application
@@ -99,8 +93,8 @@ namespace axis
 
       //virtual bool initialize_application() override;
 
-         //virtual int32_t exit_instance();
-         //virtual bool finalize();
+      //virtual int32_t exit_instance();
+      //virtual bool finalize();
 
 
 
@@ -115,13 +109,13 @@ namespace axis
 
       //virtual bool process_initialize();
 
-         //virtual bool process_init();
+      //virtual bool process_init();
 
-         //virtual bool init1();
+      //virtual bool init1();
 
-         //virtual bool init2();
+      //virtual bool init2();
 
-         //virtual bool is_system();
+      //virtual bool is_system();
 
 
 

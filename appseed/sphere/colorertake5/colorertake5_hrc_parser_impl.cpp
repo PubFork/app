@@ -1,4 +1,4 @@
-#include "framework.h" // previously aura/user/user.h
+﻿#include "framework.h" // previously aura/user/user.h
 
 
 namespace colorertake5
@@ -37,9 +37,11 @@ namespace colorertake5
       {
          parseHRC(pszSource);
       }
-      catch(exception &e)
+      catch(esp esp)
       {
-         _throw(e);
+
+         _rethrow(esp);
+
       }
       m_strCurrentSourceLocation = strPreviousSourceLocation;
       m_strCurrentSource = strPreviousSource;
@@ -154,17 +156,17 @@ namespace colorertake5
 
    class region *HRCParserImpl::getRegion(int32_t id)
    {
-         if (id < 0 || id >= regionNamesVector.get_size())
-         {
-            return NULL;
-         }
-         return regionNamesVector.element_at(id);
+      if (id < 0 || id >= regionNamesVector.get_size())
+      {
+         return NULL;
+      }
+      return regionNamesVector.element_at(id);
    }
 
    class region* HRCParserImpl::getRegion(const char *name)
    {
-         if (name == NULL) return NULL;
-         return getNCRegion(name, false); // regionNamesHash.get(name);
+      if (name == NULL) return NULL;
+      return getNCRegion(name, false); // regionNamesHash.get(name);
    }
 
    string HRCParserImpl::getVersion()
@@ -1120,28 +1122,28 @@ namespace colorertake5
 
    class region* HRCParserImpl::getNCRegion(const char * name, bool logErrors)
    {
-         if (name == NULL) return NULL;
-         class region *reg = NULL;
-         string qname = qualifyForeignName(name, QNT_DEFINE, logErrors);
-         if (qname.is_empty()) return NULL;
-         reg = regionNamesHash[qname];
-         /** Check for 'default' region request.
-         Regions with this name are always transparent
-         */
-         if (reg != NULL)
-         {
-            string name = reg->getName();
-            strsize idx = string(name).find(":default");
-            if (idx != -1  && idx+8 == string(name).get_length()) return NULL;
-         };
-         return reg;
+      if (name == NULL) return NULL;
+      class region *reg = NULL;
+      string qname = qualifyForeignName(name, QNT_DEFINE, logErrors);
+      if (qname.is_empty()) return NULL;
+      reg = regionNamesHash[qname];
+      /** Check for 'default' region request.
+      Regions with this name are always transparent
+      */
+      if (reg != NULL)
+      {
+         string name = reg->getName();
+         strsize idx = string(name).find(":default");
+         if (idx != -1  && idx+8 == string(name).get_length()) return NULL;
+      };
+      return reg;
    };
 
    class region* HRCParserImpl::getNCRegion(sp(::xml::node)el, const char * tag)
    {
-         string par = el->attr(tag);
-         if (par.is_empty()) return NULL;
-         return getNCRegion(par, true);
+      string par = el->attr(tag);
+      if (par.is_empty()) return NULL;
+      return getNCRegion(par, true);
    };
 
 } // namespace colorertake5

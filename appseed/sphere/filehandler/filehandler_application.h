@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace filehandler
@@ -11,7 +11,7 @@ namespace filehandler
    public:
 
 
-      sp(pane_view)                                  m_ppaneview;      
+      sp(pane_view)                                  m_ppaneview;
       sp(::user::single_document_template)       m_ptemplateMenu;
 
 
@@ -21,7 +21,7 @@ namespace filehandler
       void construct();
 
       virtual bool init_instance() override;
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
 
       virtual void on_request(::create * pcreate) override;

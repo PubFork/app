@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace file_watcher
@@ -68,9 +68,9 @@ namespace file_watcher
 
    }
 
-   
 
-   int32_t listener_thread::run()
+
+   void listener_thread::run()
    {
 
       try
@@ -83,7 +83,7 @@ namespace file_watcher
 
             if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
             {
-             
+
                if (!defer_pump_message())
                {
 
@@ -115,7 +115,7 @@ namespace file_watcher
 
       }
 
-      return 0;
+//      return 0;
 
    }
 

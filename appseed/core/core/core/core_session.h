@@ -81,7 +81,7 @@ namespace core
       virtual bool init2() override;
       bool init_application() override;
       bool on_initial_update();
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
       bool InitializeLocalDataCentral();
 
@@ -150,11 +150,11 @@ namespace core
 
       virtual bool init1() override;
 
-      virtual bool initialize() override;
+      virtual bool init() override;
 
       virtual bool os_native_bergedge_start() override;
 
-      virtual int32_t main() override;
+      virtual void main() override;
 
       virtual bool on_unstall() override;
 
@@ -172,7 +172,7 @@ namespace core
 
       virtual sp(::core::session) get_session();
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
       virtual bool open_by_file_extension(const char * pszPathName, application_bias * pbiasCreate = NULL) override;
       virtual bool open_by_file_extension(::create * pcc) override;

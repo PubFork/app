@@ -63,7 +63,7 @@ _ReadProc(png_structp png_ptr, unsigned char *data, png_size_t size)
    unsigned n = pfio->s_io->read_proc(data, (unsigned int)size, 1, pfio->s_handle);
    if(size && (n == 0))
    {
-      _throw("Read error: invalid or corrupted PNG file");
+      _throw(simple_exception(get_app(), "Read error: invalid or corrupted PNG file"));
    }
 }
 

@@ -220,7 +220,7 @@ namespace macos
 //         {
 //            System.dir().mk(str, papp);
 //            if(!System.dir().is(str, papp))
-//               _throw("time square dir does not exist");
+//               _throw(simple_exception(get_app(), "time square dir does not exist"));
 //            straTitle.remove_all();
 //            System.dir().ls(papp, str, NULL, &straTitle);
 //            if(i < iMaxLevel)
@@ -686,7 +686,7 @@ namespace macos
 //         if(bFailIfExists)
 //         {
 //            if(exists(pszNew, papp))
-//               _throw("Failed to copy file");
+//               _throw(simple_exception(get_app(), "Failed to copy file"));
 //         }
 //         if(System.dir().is(psz, papp) && (eextract == extract_first || eextract == extract_all || !(::str::ends_ci(psz, ".zip"))))
 //         {
@@ -834,7 +834,7 @@ namespace macos
 //         ::Windows::Storage::StorageFile ^ file = get_os_file(psz,  0, 0, NULL, OPEN_EXISTING, 0, NULL);
 //         
 //         if(file == nullptr)
-//            _throw("file::file_system::move Could not move file, could not open source file");
+//            _throw(simple_exception(get_app(), "file::file_system::move Could not move file, could not open source file"));
 //         
 //         string strDirOld     = System.dir().name(psz);
 //         string strDirNew     = System.dir().name(pszNew);

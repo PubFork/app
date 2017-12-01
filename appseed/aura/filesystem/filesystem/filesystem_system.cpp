@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 
@@ -249,7 +249,7 @@ restart:
          if (!System.dir().is(str, papp))
          {
 
-            _throw("time square dir does not exist");
+            _throw(simple_exception(get_app(), "time square dir does not exist"));
 
          }
 
@@ -1075,7 +1075,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open output file", psz, pszNew, bFailIfExists);
-            _throw(strError);
+            _throw(io_exception(papp, strError));
          }
 
          ::file::file_sp ifile;
@@ -1084,7 +1084,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to copy file \"%s\" to \"%s\" bFailIfExists=%d error=could not open input file", psz, pszNew, bFailIfExists);
-            _throw(strError);
+            _throw(io_exception(papp, strError));
          }
 
          ::file::ostream ostream(ofile);
@@ -1163,20 +1163,20 @@ restart:
             {
                string strError;
                strError.Format("During copy, failed to close both input file \"%s\" and output file \"%s\" bFailIfExists=%d", psz, pszNew, bFailIfExists);
-               _throw(strError);
+               _throw(io_exception(papp, strError));
             }
             else
             {
                string strError;
                strError.Format("During copy, failed to close input file \"%s\" bFailIfExists=%d", psz, bFailIfExists);
-               _throw(strError);
+               _throw(io_exception(papp, strError));
             }
          }
          else if (bOutputFail)
          {
             string strError;
             strError.Format("During copy, failed to close output file \"%s\" bFailIfExists=%d", pszNew, bFailIfExists);
-            _throw(strError);
+            _throw(io_exception(papp, strError));
          }
 
       }
@@ -1241,7 +1241,7 @@ restart:
 
          strError.Format("Failed to move file \"%s\" to \"%s\" error=%d", psz, pszNew, dwError);
 
-         _throw(strError);
+         _throw(io_exception(papp, strError));
 
       }
 
@@ -1254,7 +1254,7 @@ restart:
 
          output_debug_string("test");
 
-         _throw("file::system::move Could not move file, could not open source file");
+         _throw(simple_exception(get_app(), "file::system::move Could not move file, could not open source file"));
 
       }
 
@@ -1732,7 +1732,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_create | ::file::mode_write | ::file::type_binary);
 
       if (spfile.is_null())
-         _throw("failed");
+         _throw(simple_exception(get_app(), "failed"));
 
       string strVersion;
 
@@ -1770,7 +1770,7 @@ restart:
          string strRelative = stra[i].relative();
          write_gen_string(spfile, &ctx, strRelative);
          if (file2->open(stra[i], ::file::mode_read | ::file::type_binary).failed())
-            _throw("failed");
+            _throw(simple_exception(get_app(), "failed"));
          write_n_number(spfile, &ctx, (int32_t)file2->get_length());
          while ((uiRead = file2->read(buf, iBufSize)) > 0)
          {
@@ -1797,7 +1797,7 @@ restart:
       ::file::file_sp spfile = App(papp).file().get_file(pszFile, ::file::mode_read | ::file::type_binary);
 
       if (spfile.is_null())
-         _throw("failed");
+         _throw(simple_exception(get_app(), "failed"));
 
       read_gen_string(spfile, NULL, strVersion);
 
@@ -1826,7 +1826,7 @@ restart:
             ::file::path strPath = ::file::path(pszDir) / strRelative;
             App(papp).dir().mk(strPath.folder());
             if (file2->open(strPath, ::file::mode_create | ::file::type_binary | ::file::mode_write).failed())
-               _throw("failed");
+               _throw(simple_exception(get_app(), "failed"));
             read_n_number(spfile, &ctx, iLen);
             while (iLen > 0)
             {
@@ -1840,7 +1840,7 @@ restart:
             file2->close();
             strMd5New = ::str::from(ctx);
             if (strMd5 != strMd5New)
-               _throw("failed");
+               _throw(simple_exception(get_app(), "failed"));
          }
       }
 
@@ -1892,7 +1892,7 @@ restart:
       }
 
       if (ch != 'n')
-         _throw("failed");
+         _throw(simple_exception(get_app(), "failed"));
 
       if (pctx != NULL)
       {

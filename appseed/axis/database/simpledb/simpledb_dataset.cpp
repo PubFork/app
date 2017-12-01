@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace simpledb
@@ -20,7 +20,7 @@ namespace simpledb
    set::set(base *newDb) :
       ::database::set(newDb)
    {
-      
+
       //errmsg      = NULL;
       haveError = false;
       db = newDb;
@@ -58,165 +58,165 @@ namespace simpledb
 
       return false;
    }
-      /*if (!handle())
-      {
-         TRACE("vmssqlite::set::exec: No Database Connection");
-         m_strQueryErrorMessage = "No Database Connection";
-         m_strDatabaseErrorMessage = "No Database Connection";
-         return false;
-      }*/
-/*      m_resultsetExec.record_header.remove_all();
-      m_resultsetExec.records.remove_all();
-   database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-   int32_t sz = r->records.get_size();
-
-   //if (reslt == NULL ) cout << "EMPTY!!!\n";
-   if (r->record_header.get_size() <= 0)
+   /*if (!handle())
    {
-      r->record_header.set_size(ncol, 32);
-      for (int32_t i=0; i < ncol; i++)
+      TRACE("vmssqlite::set::exec: No Database Connection");
+      m_strQueryErrorMessage = "No Database Connection";
+      m_strDatabaseErrorMessage = "No Database Connection";
+      return false;
+   }*/
+   /*      m_resultsetExec.record_header.remove_all();
+         m_resultsetExec.records.remove_all();
+      database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
+      int32_t sz = r->records.get_size();
+
+      //if (reslt == NULL ) cout << "EMPTY!!!\n";
+      if (r->record_header.get_size() <= 0)
       {
-         r->record_header[i].name = cols[i];
-         if(cols[i + ncol] != NULL)
+         r->record_header.set_size(ncol, 32);
+         for (int32_t i=0; i < ncol; i++)
          {
-            string str(cols[i + ncol]);
-            str.make_lower();
-            if(str == "integer")
+            r->record_header[i].name = cols[i];
+            if(cols[i + ncol] != NULL)
             {
-               r->record_header[i].type = database::DataTypeLong;
-            }
-            else if(str == "string")
-            {
-               r->record_header[i].type = database::DataTypeString;
-            }
-            else if(str == "numeric")
-            {
-               r->record_header[i].type = database::DataTypeDouble;
+               string str(cols[i + ncol]);
+               str.make_lower();
+               if(str == "integer")
+               {
+                  r->record_header[i].type = database::DataTypeLong;
+               }
+               else if(str == "string")
+               {
+                  r->record_header[i].type = database::DataTypeString;
+               }
+               else if(str == "numeric")
+               {
+                  r->record_header[i].type = database::DataTypeDouble;
+               }
             }
          }
       }
-   }
 
 
-   database::SqlRecord rec;
-   var v;
+      database::SqlRecord rec;
+      var v;
 
-   if (reslt != NULL)
-   {
-      for (int32_t i=0; i<ncol; i++)
+      if (reslt != NULL)
       {
-         if (reslt[i] == NULL)
+         for (int32_t i=0; i<ncol; i++)
          {
-            v = "";
-            v.set_type(var::type_null);
+            if (reslt[i] == NULL)
+            {
+               v = "";
+               v.set_type(var::type_null);
+            }
+            else
+            {
+               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+               //{
+                 // v.SetDouble(strtod(reslt[i], NULL));
+               //}
+               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+               //{
+                 // v.SetLong(atoi(reslt[i]));
+               //}
+               //else
+               //{
+                 // string str;
+                  //::str::international::utf8_to_unicode(str, reslt[i]);
+               v = reslt[i];
+               //}
+            }
+            rec.set_at_grow(i, v);//(long)5;//reslt[i];
+         }
+         r->records.set_at_grow(sz, rec);
+      }
+      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
+      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+     return 0;
+         //if ((strncmp("select",sql,6) == 0) || (strncmp("SELECT",sql,6) == 0))
+         if(m_iLastResult = db->setErr(sqlite3_exec(handle(),sql,&callback,&m_resultsetExec,&errmsg)) == SQLITE_OK)
+         {
+            m_strQueryErrorMessage = "";
+            m_strDatabaseErrorMessage = "";
+            return true;
          }
          else
          {
-            //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
-            //{
-              // v.SetDouble(strtod(reslt[i], NULL));
-            //}
-            //if(r->record_header[i].type == vmssqlite::DataTypeLong)
-            //{
-              // v.SetLong(atoi(reslt[i]));
-            //}
-            //else
-            //{
-              // string str;
-               //::str::international::utf8_to_unicode(str, reslt[i]);
-            v = reslt[i];
-            //}
+            m_strQueryErrorMessage = errmsg;
+            m_strDatabaseErrorMessage = db->getErrorMsg();
+            TRACE("vmssqlite::set::exec: Error %s, %s", errmsg, db->getErrorMsg());
+            return false;
          }
-         rec.set_at_grow(i, v);//(long)5;//reslt[i];
       }
-      r->records.set_at_grow(sz, rec);
-   }
-   //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-   // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
-  return 0;
-      //if ((strncmp("select",sql,6) == 0) || (strncmp("SELECT",sql,6) == 0))
-      if(m_iLastResult = db->setErr(sqlite3_exec(handle(),sql,&callback,&m_resultsetExec,&errmsg)) == SQLITE_OK)
-      {
-         m_strQueryErrorMessage = "";
-         m_strDatabaseErrorMessage = "";
-         return true;
-      }
-      else
-      {
-         m_strQueryErrorMessage = errmsg;
-         m_strDatabaseErrorMessage = db->getErrorMsg();
-         TRACE("vmssqlite::set::exec: Error %s, %s", errmsg, db->getErrorMsg());
-         return false;
-      }
-   }
 
-   database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
-   int32_t sz = r->records.get_size();
+      database::result_set* r = (database::result_set*)res_ptr;//dynamic_cast<result_set*>(res_ptr);
+      int32_t sz = r->records.get_size();
 
-   //if (reslt == NULL ) cout << "EMPTY!!!\n";
-   if (r->record_header.get_size() <= 0)
-   {
-      r->record_header.set_size(ncol, 32);
-      for (int32_t i=0; i < ncol; i++)
+      //if (reslt == NULL ) cout << "EMPTY!!!\n";
+      if (r->record_header.get_size() <= 0)
       {
-         r->record_header[i].name = cols[i];
-         if(cols[i + ncol] != NULL)
+         r->record_header.set_size(ncol, 32);
+         for (int32_t i=0; i < ncol; i++)
          {
-            string str(cols[i + ncol]);
-            str.make_lower();
-            if(str == "integer")
+            r->record_header[i].name = cols[i];
+            if(cols[i + ncol] != NULL)
             {
-               r->record_header[i].type = database::DataTypeLong;
-            }
-            else if(str == "string")
-            {
-               r->record_header[i].type = database::DataTypeString;
-            }
-            else if(str == "numeric")
-            {
-               r->record_header[i].type = database::DataTypeDouble;
+               string str(cols[i + ncol]);
+               str.make_lower();
+               if(str == "integer")
+               {
+                  r->record_header[i].type = database::DataTypeLong;
+               }
+               else if(str == "string")
+               {
+                  r->record_header[i].type = database::DataTypeString;
+               }
+               else if(str == "numeric")
+               {
+                  r->record_header[i].type = database::DataTypeDouble;
+               }
             }
          }
       }
-   }
 
 
-   database::SqlRecord rec;
-   var v;
+      database::SqlRecord rec;
+      var v;
 
-   if (reslt != NULL)
-   {
-      for (int32_t i=0; i<ncol; i++)
+      if (reslt != NULL)
       {
-         if (reslt[i] == NULL)
+         for (int32_t i=0; i<ncol; i++)
          {
-            v = "";
-            v.set_type(var::type_null);
+            if (reslt[i] == NULL)
+            {
+               v = "";
+               v.set_type(var::type_null);
+            }
+            else
+            {
+               //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
+               //{
+                 // v.SetDouble(strtod(reslt[i], NULL));
+               //}
+               //if(r->record_header[i].type == vmssqlite::DataTypeLong)
+               //{
+                 // v.SetLong(atoi(reslt[i]));
+               //}
+               //else
+               //{
+                 // string str;
+                  //::str::international::utf8_to_unicode(str, reslt[i]);
+               v = reslt[i];
+               //}
+            }
+            rec.set_at_grow(i, v);//(long)5;//reslt[i];
          }
-         else
-         {
-            //if(r->record_header[i].type == vmssqlite::DataTypeDouble)
-            //{
-              // v.SetDouble(strtod(reslt[i], NULL));
-            //}
-            //if(r->record_header[i].type == vmssqlite::DataTypeLong)
-            //{
-              // v.SetLong(atoi(reslt[i]));
-            //}
-            //else
-            //{
-              // string str;
-               //::str::international::utf8_to_unicode(str, reslt[i]);
-            v = reslt[i];
-            //}
-         }
-         rec.set_at_grow(i, v);//(long)5;//reslt[i];
+         r->records.set_at_grow(sz, rec);
       }
-      r->records.set_at_grow(sz, rec);
-   }
-   //cout <<"Fsz:"<<r->record_header.size()<<"\n";
-   // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
-  return 0;  */
+      //cout <<"Fsz:"<<r->record_header.size()<<"\n";
+      // cout << "Recs:"<<r->records.size() <<" m_value |" <<reslt<<"|"<<cols<<"|"<<"\n\n";
+     return 0;  */
 
 
    bool set::sql_do_select(const char * & pszSql)
@@ -438,7 +438,7 @@ namespace simpledb
       string qc = ::str::get_utf8_char(psz);
       if(qc != "\'")
       {
-         _throw("Quote character is required here");
+         _throw(simple_exception(::get_app(), "Quote character is required here"));
       }
       string str;
       while(true)
@@ -448,7 +448,7 @@ namespace simpledb
          //string str = ::str::international::utf8_to_unicode(qc2);
          if(qc2.is_empty())
          {
-            _throw("Quote character is required here, premature end");
+            _throw(simple_exception(::get_app(), "Quote character is required here, premature end"));
          }
          if(qc2 == qc)
             break;
@@ -519,11 +519,11 @@ namespace simpledb
 //            char* err=NULL;
             set::parse_sql(query);
             //cout << "Executing: "<<query<<"\n\n";
-/*            if (db->setErr(sqlite3_exec((::sqlite3::sqlite3 *) this->handle(),query,NULL,NULL,&err))!=SQLITE_OK)
-            {
-               fprintf(stderr,"Error: %s",err);
-               _throw(database::DbErrors(db->getErrorMsg()));
-            }*/
+            /*            if (db->setErr(sqlite3_exec((::sqlite3::sqlite3 *) this->handle(),query,NULL,NULL,&err))!=SQLITE_OK)
+                        {
+                           fprintf(stderr,"Error: %s",err);
+                           _throw(database::DbErrors(db->getErrorMsg()));
+                        }*/
          } // end of for
 
 
@@ -628,37 +628,37 @@ namespace simpledb
          m_strDatabaseErrorMessage = "base is not valid";
          return false;
       }
-/*      if(dynamic_cast<base*>(db)->getHandle() == NULL)
-      {
-         TRACE("set::query: No base connection");
-         m_strQueryErrorMessage = "No base Connection";
-         m_strDatabaseErrorMessage = "No base Connection";
-         return false;
-      }
-      if(strncmp("select",query,6) != 0)
-      {
-         TRACE("set::query: Must be select SQL");
-         return false;
-      }
+      /*      if(dynamic_cast<base*>(db)->getHandle() == NULL)
+            {
+               TRACE("set::query: No base connection");
+               m_strQueryErrorMessage = "No base Connection";
+               m_strDatabaseErrorMessage = "No base Connection";
+               return false;
+            }
+            if(strncmp("select",query,6) != 0)
+            {
+               TRACE("set::query: Must be select SQL");
+               return false;
+            }
 
-      close();
+            close();
 
-      if(db->setErr(sqlite3_exec((::sqlite3::sqlite3 *) handle(),query,&callback,&m_resultset,&errmsg)) == SQLITE_OK)
-      {
-         m_strQueryErrorMessage = "";
-         m_strDatabaseErrorMessage = "";
-         active = true;
-         ds_state = database::dsSelect;
-         first();
-         return true;
-      }
-      else
-      {
-         //m_strQueryErrorMessage = errmsg;
-         //m_strDatabaseErrorMessage = db->getErrorMsg();
-         //TRACE("set::query: Error: %s, %s", errmsg, db->getErrorMsg());
-         //return false;
-      }*/
+            if(db->setErr(sqlite3_exec((::sqlite3::sqlite3 *) handle(),query,&callback,&m_resultset,&errmsg)) == SQLITE_OK)
+            {
+               m_strQueryErrorMessage = "";
+               m_strDatabaseErrorMessage = "";
+               active = true;
+               ds_state = database::dsSelect;
+               first();
+               return true;
+            }
+            else
+            {
+               //m_strQueryErrorMessage = errmsg;
+               //m_strDatabaseErrorMessage = db->getErrorMsg();
+               //TRACE("set::query: Error: %s, %s", errmsg, db->getErrorMsg());
+               //return false;
+            }*/
       return false;
    }
 
@@ -771,10 +771,10 @@ namespace simpledb
    long set::nextid(const char *seq_name)
    {
       UNREFERENCED_PARAMETER(seq_name);
-/*      if(handle())
-         return db->nextid(seq_name);
-      else*/
-         return DB_UNEXPECTED_RESULT;
+      /*      if(handle())
+               return db->nextid(seq_name);
+            else*/
+      return DB_UNEXPECTED_RESULT;
    }
 
    bool set::remove_row()
@@ -814,12 +814,12 @@ namespace simpledb
       {
          return set::SetFieldValue(f_name, value);
       }
-      
+
       //_throw(::database::DbErrors("Not in Insert or Edit or Select state"));
       //  return false;
-      
+
    }
-   
+
 
    bool set::SetFieldValue(index iFieldIndex, const var &value)
    {
@@ -892,16 +892,16 @@ namespace simpledb
                iFound = i;
                break;
             }
-            if (iFound < 0) _throw(::database::DbErrors("Field not found: %s",fieldname));
-            ::count iNumRows = num_rows();
-            for(i=0; i < iNumRows; i++)
-               if(m_resultset.records[i][iFound] == value)
-               {
-                  seek(i);
-                  return true;
-               }
+         if (iFound < 0) _throw(::database::DbErrors("Field not found: %s",fieldname));
+         ::count iNumRows = num_rows();
+         for(i=0; i < iNumRows; i++)
+            if(m_resultset.records[i][iFound] == value)
+            {
+               seek(i);
+               return true;
+            }
 
-               return false;
+         return false;
       }
       _throw(::database::DbErrors("not in Select state"));
    }

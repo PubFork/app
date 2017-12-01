@@ -1330,7 +1330,7 @@ namespace ios
 //   //	bool thread::has_message()
 //   //	{
 //
-//   //	   _throw("how to know?");
+//   //	   _throw(simple_exception(get_app(), "how to know?"));
 //
 //   //	}
 //

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 #include "base/database/simpledb/simpledb.h"
 
@@ -87,7 +87,7 @@ namespace core
       //add_(this, &application::on_application_signal);
 
       m_eexclusiveinstance = ExclusiveInstanceNone;
-      m_peventReady = NULL;
+      //m_pevAReady = NULL;
       m_strLocale = "_std";
       m_strSchema = "_std";
 
@@ -152,11 +152,10 @@ namespace core
    }
 
 
-
-   int32_t application::main()
+   void application::main()
    {
 
-      return ::base::application::main();
+      ::base::application::main();
 
    }
 
@@ -487,7 +486,7 @@ namespace core
    }
 
 
-   int32_t application::exit_application()
+   void application::term_application()
    {
 
       try
@@ -531,14 +530,16 @@ namespace core
 
       }
 
-
-
       try
       {
+
          if (!is_system())
          {
+
             Session.unregister_bergedge_application(this);
+
          }
+
       }
       catch (...)
       {
@@ -560,294 +561,104 @@ namespace core
       m_puserfs = NULL;
 
 
-
-
-
       try
       {
-         ::base::application::exit_application();
+
+         ::base::application::term_application();
+
       }
       catch (...)
       {
+
       }
-
-      return m_iErrorCode;
-
 
    }
 
 
    LRESULT application::GetPaintMsgProc(int32_t nCode, WPARAM wParam, LPARAM lParam)
    {
+
       UNREFERENCED_PARAMETER(nCode);
       UNREFERENCED_PARAMETER(wParam);
       UNREFERENCED_PARAMETER(lParam);
+
       return 0;
+
    }
-
-
-
 
 
    bool application::CreateFileFromRawResource(UINT nID, const char * lpcszType, const char * lpcszFilePath)
    {
+
       UNREFERENCED_PARAMETER(nID);
       UNREFERENCED_PARAMETER(lpcszType);
       UNREFERENCED_PARAMETER(lpcszFilePath);
-      /*      HINSTANCE hinst = ::core::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
-      if(hinst == NULL)
-      return false;
-      HRSRC hrsrc = ::FindResource(
-      hinst,
-      MAKEINTRESOURCE(nID),
-      lpcszType);
-      if(hrsrc == NULL)
-      return false;
-      HGLOBAL hres = ::LoadResource(hinst, hrsrc);
-      if(hres == NULL)
-      return false;
-      uint32_t dwResSize = ::SizeofResource(hinst, hrsrc);
-
-      if(hres != NULL)
-      {
-      UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
-      try
-      {
-      // create the .mdb file
-      ::file::file_sp f(get_app());
-
-      if(f->open(lpcszFilePath, ::file::mode_create | ::file::mode_write ))
-      {
-      // write the ::fontopus::user-defined resource to the .mdb file
-      f->write(lpnRes, dwResSize);
-      f->flush();
-      }
-      else
-      {
-      #ifdef DEBUG
-      *::aura::system::g_p->m_pdumpcontext << "File could not be opened \n";
-      #endif
-      }
-      }
-      catch(::core::file_exception_sp * pe)
-      {
-      #ifdef DEBUG
-      //         *::aura::system::g_p->m_pdumpcontext << "File could not be opened " << pe->m_cause << "\n";
-      #endif
-      }
-
-
-      #ifndef WIN32 //unlock Resource is obsolete in the Win32 API
-      ::UnlockResource(hres);
-      #endif
-      ::FreeResource(hres);
-      }
-      return true;*/
 
       return false;
+
    }
+
 
 #ifdef WINDOWS
 
    bool application::OnMessageWindowMessage(LPMESSAGE lpmsg)
    {
+
       UNREFERENCED_PARAMETER(lpmsg);
+
       return false;
+
    }
 
 #elif defined(LINUX)
 
    bool application::OnX11WindowMessage(void  * pXevent) // XEvent *
    {
+
       UNREFERENCED_PARAMETER(pXevent);
+
       return false;
+
    }
 
 #endif
 
-//    void application::send_app_language_changed()
-//    {
-
-//       ::message::message message(this);
-
-//       message.m_id = ::message::type_language;
-
-//       route_message(&message);
-
-//    }
-
-
-
    void application::OnUpdateRecentFileMenu(::user::command * pcommand)
    {
+
       UNREFERENCED_PARAMETER(pcommand);
-      /*TRACE("\nCVmsGenApp::OnUpdateRecentFileMenu");
-      if(m_pRecentFileList == NULL)
-      {
-      pcommand->Enable(FALSE);
-      //string str;
-      //str.load_string(IDS_RECENT_FILE);
-      //pcommand->SetText(str);
-      for (int32_t iMRU = 1; iMRU < 10; iMRU++)
-      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
-      return;
-      }
-
-      ASSERT(m_pRecentFileList->m_arrNames != NULL);
-
-      ::user::menu* pMenu = pcommand->m_pMenu;
-      if (m_pRecentFileList->m_strOriginal.is_empty() && pMenu != NULL)
-      pMenu->GetMenuString(pcommand->m_nID, m_pRecentFileList->m_strOriginal, MF_BYCOMMAND);
-
-      if (m_pRecentFileList->m_arrNames[0].is_empty())
-      {
-      // no MRU files
-      if (!m_pRecentFileList->m_strOriginal.is_empty())
-      pcommand->SetText(m_pRecentFileList->m_strOriginal);
-      pcommand->Enable(FALSE);
-      return;
-      }
-
-      if (pcommand->m_pMenu == NULL)
-      return;
-
-      ::user::menu * pmenu = CMenuUtil::FindPopupMenuFromID(pcommand->m_pMenu, pcommand->m_nID);
-
-      //if(pmenu == NULL)
-      //{
-      // pmenu = pcommand->m_pMenu;
-      //}
-
-      bool bCmdUIMenu = pmenu == pcommand->m_pMenu;
-
-      if(!bCmdUIMenu)
-      return;
-
-      int32_t nID = pcommand->m_nID;
-      int32_t nIndex = CMenuUtil::GetMenuPosition(pmenu, nID);
-
-      for (int32_t iMRU = 0; iMRU < m_pRecentFileList->m_nSize; iMRU++)
-      pcommand->m_pMenu->DeleteMenu(pcommand->m_nID + iMRU, MF_BYCOMMAND);
-
-
-
-      char szCurDir[_MAX_PATH];
-      GetCurrentDirectory(_MAX_PATH, szCurDir);
-      int32_t nCurDir = lstrlen(szCurDir);
-      ASSERT(nCurDir >= 0);
-      szCurDir[nCurDir] = '\\';
-      szCurDir[++nCurDir] = '\0';
-
-      string strName;
-      string strTemp;
-      for (iMRU = 0; iMRU < m_pRecentFileList->m_nSize; iMRU++)
-      {
-      if (!m_pRecentFileList->GetDisplayName(strName, iMRU, szCurDir, nCurDir))
-      break;
-
-      // double up any '&' characters so they are not underlined
-      const char * lpszSrc = strName;
-      LPTSTR lpszDest = strTemp.GetBuffer(strName.get_length()*2);
-      while (*lpszSrc != 0)
-      {
-      if (*lpszSrc == '&')
-      *lpszDest++ = '&';
-      if (_istlead(*lpszSrc))
-      *lpszDest++ = *lpszSrc++;
-      *lpszDest++ = *lpszSrc++;
-      }
-      *lpszDest = 0;
-      strTemp.ReleaseBuffer();
-
-      // insert mnemonic + the file name
-      char buf[10];
-      wsprintf(buf, "&%d ", (iMRU+1+m_pRecentFileList->m_nStart) % 10);
-
-      //      pcommand->m_pMenu->InsertMenu(pcommand->m_nIndex++,
-      //         MF_STRING | MF_BYPOSITION, pcommand->m_nID++,
-      //         string(buf) + strTemp);
-      pmenu->InsertMenu(nIndex,
-      MF_STRING | MF_BYPOSITION, nID,
-      string(buf) + strTemp);
-      nIndex++;
-      nID++;
-      if(bCmdUIMenu)
-      {
-      pcommand->m_nIndex = nIndex;
-      pcommand->m_nID = nID;
-      }
-      }
-
-      // update end menu count
-      if(bCmdUIMenu)
-      {
-      pcommand->m_nIndex--; // point to last menu added
-      pcommand->m_nIndexMax = pcommand->m_pMenu->GetMenuItemCount();
-      }
-
-      pcommand->m_bEnableChanged = TRUE;    // all the added items are enabled*/
 
    }
+
 
    bool application::GetResourceData(UINT nID, const char * lpcszType, memory &storage)
    {
+
       UNREFERENCED_PARAMETER(nID);
       UNREFERENCED_PARAMETER(lpcszType);
       UNREFERENCED_PARAMETER(storage);
-      /*      HINSTANCE hinst = ::core::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
 
-      if(hinst == NULL)
-      return false;
-
-      HRSRC hrsrc = ::FindResource(
-      hinst,
-      MAKEINTRESOURCE(nID),
-      lpcszType);
-
-      if(hrsrc == NULL)
-      return false;
-
-      HGLOBAL hres = ::LoadResource(hinst, hrsrc);
-      if(hres == NULL)
-      return false;
-
-      uint32_t dwResSize = ::SizeofResource(hinst, hrsrc);
-
-      if(hres != NULL)
-      {
-      UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
-      try
-      {
-      storage.set_data(lpnRes, dwResSize);
-      }
-      catch(::core::file_exception_sp * pe)
-      {
-      #ifdef DEBUG
-      //            *::aura::system::g_p->m_pdumpcontext << "File could not be opened " << pe->m_cause << "\n";
-      #endif
-      }
-
-
-      #ifndef WIN32 //unlock Resource is obsolete in the Win32 API
-      ::UnlockResource(hres);
-      #endif
-      ::FreeResource(hres);
-      }
-      return true;*/
       return false;
 
    }
+
 
 #ifdef WINDOWSEX
 
    HENHMETAFILE application::LoadEnhMetaFile(UINT uiResource)
    {
+
       memory storage;
+
       if (!GetResourceData(uiResource, "EnhMetaFile", storage))
       {
+
          return NULL;
+
       }
+
       return SetEnhMetaFileBits((UINT)storage.get_size(), storage.get_data());
+
    }
 
 #endif
@@ -862,88 +673,26 @@ namespace core
       UNUSED(bEnable);
 #endif
 
-      // no-op if main window is NULL or not a frame_window
-      /*      sp(::user::interaction) pMainWnd = System.m_puiMain;
-      if (pMainWnd == NULL || !pMainWnd->is_frame_window())
-      return;*/
-
-#ifndef ___NO_OLE_SUPPORT
-      // check if notify hook installed
-      /*   ::core::frame_window* pFrameWnd =
-      dynamic_cast < ::core::frame_window * > (pMainWnd);
-      ASSERT(pFrameWnd != NULL);
-      if (pFrameWnd->GetNotifyHook() != NULL)
-      pFrameWnd->GetNotifyHook()->OnEnableModeless(bEnable);*/
-#endif
-   }
-
-
-   /*id_space * application::GetGenIdSpace()
-   {
-   return m_pidspace;
-   }*/
-
-   /*
-   string application::load_string(const id_space * pspace, int32_t iKey)
-   {
-   string str;
-   int32_t iId = GetResourceId(pspace, iKey);
-   if(iId == -1)
-   return str;
-   str.load_string(iId);
-   return str;
-   }
-   */
-
-
-
-
-
-   // Main running routine until application exits
-   int32_t application::run()
-   {
-      /*   if (m_puiMain == NULL) // may be a service or console application window
-      {
-      // Not launched /Embedding or /Automation, but has no main window!
-      TRACE(::aura::trace::category_AppMsg, 0, "Warning: m_puiMain is NULL in application::run - quitting application.\n");
-      __post_quit_message(0);
-      }*/
-      //      return application::run();
-      return ::base::application::run();
 
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // application idle processing
+
+   void application::run()
+   {
+
+      ::base::application::run();
+
+   }
+
+
    bool application::on_idle(LONG lCount)
    {
-      /*      if (lCount <= 0)
-      {
-      thread::on_idle(lCount);
 
-      // call doc-template idle hook
-      ::count count = 0;
-      if (m_pdocmanager != NULL)
-      count = document_manager()->get_template_count();
+      return false;
 
-      for(index index = 0; index < count; index++)
-      {
-      sp(impact_system) ptemplate = document_manager()->get_template(index);
-      ASSERT_KINDOF(impact_system, ptemplate);
-      ptemplate->on_idle();
-      }
-      }
-      else if (lCount == 1)
-      {
-      VERIFY(!thread::on_idle(lCount));
-      }
-      return lCount < 1;  // more to do if lCount < 1*/
-      return 0;
    }
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Special exception handling
 
    void application::process_window_procedure_exception(::exception::base* e, ::message::message * pobj)
    {
@@ -1594,56 +1343,40 @@ namespace core
    }
 
 
-
-   bool application::on_run_exception(::exception::exception & e)
+   bool application::on_run_exception(::exception::exception * pexception)
    {
 
-      ::output_debug_string("core::application::on_run_exception An unexpected error has occurred and no special exception handling is available.\n");
-
-      if (e.m_bHandled)
+      if (!::base::application::on_run_exception(pexception))
       {
 
-         return e.m_bContinue;
+         return false;
 
       }
 
-      if (typeid(e) == typeid(not_installed))
-      {
-
-         not_installed & notinstalled = dynamic_cast <not_installed &> (e);
-
-         return handle_not_installed(notinstalled);
-
-      }
-
-      //simple_message_box_timeout("An unexpected error has occurred and no special exception handling is available.<br>Timeout: $simple_message_box_timeout", 5000);
-
-      return true; // continue or exit application? by default: continue by returning true
+      return true;
 
    }
 
 
-
-
-
-
-
-   bool application::final_handle_exception(::exception::exception & e)
+   bool application::final_handle_exception(::exception::exception * pexception)
    {
-      UNREFERENCED_PARAMETER(e);
-      //linux      exit(-1);
+
+      UNREFERENCED_PARAMETER(pexception);
 
       if (!is_system())
       {
 
-         // get_app() may be it self, it is ok...
-         if (System.final_handle_exception((::exception::exception &) e))
+         if (System.final_handle_exception(pexception))
+         {
+
             return true;
 
+         }
 
       }
 
       return false;
+
    }
 
 
@@ -2421,42 +2154,23 @@ namespace core
    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   bool application::finalize()
+   void application::term()
    {
-
-      bool bFinalize = true;
 
       try
       {
-         ::base::application::finalize();
+
+         ::base::application::term();
+
       }
       catch (...)
       {
-         bFinalize = false;
+
+         m_error.set_if_not_set();
+
       }
 
-      return bFinalize;
-
    }
-
-
 
 
    sp(::user::interaction) application::get_request_parent_ui(sp(::user::interaction) pinteraction, ::create * pcreate)
@@ -2702,77 +2416,31 @@ namespace core
       // Perform the test.
 
       return VerifyVersionInfo(
-                &osvi,
-                VER_MAJORVERSION | VER_MINORVERSION |
-                VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
-                dwlConditionMask) != FALSE;
+             &osvi,
+             VER_MAJORVERSION | VER_MINORVERSION |
+             VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR,
+             dwlConditionMask) != FALSE;
    }
+
 #endif
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
-      if (!::base::application::initialize())
+      if (!::base::application::init())
+      {
+
          return false;
 
+      }
+
       xxdebug_box("::base::application::initialize ok", "::base::application::initialize ok", MB_ICONINFORMATION);
-
-      //m_pcalculator = new ::calculator::calculator(this);
-
-      //m_pcalculator->construct(this);
-
-      //if(!m_pcalculator->initialize())
-      //   return false;
 
       xxdebug_box("m_pcalculator::initialize ok", "m_pcalculator::initialize ok", MB_ICONINFORMATION);
 
       xxdebug_box("m_pcolorertake5::initialize ok", "m_pcolorertake5::initialize ok", MB_ICONINFORMATION);
 
-      m_dwAlive = ::get_tick_count();
-
-
-      //m_dwAlive = ::get_tick_count();
-
-      //if(is_system())
-      //{
-
-      //   System.m_spcopydesk.alloc(allocer());
-
-      //   if(!System.m_spcopydesk->initialize())
-      //      return false;
-
-      //}
-
-      //if(is_system()
-      //   && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //   && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //   && handler()->m_varTopicQuery["app"] != "app-gtech/alarm"
-      //   && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
-      //{
-      //   System.http().defer_auto_initialize_proxy_configuration();
-      //}
-
-
-
-      //<<<<<<< .mine
-      //      if(!System.m_spcopydesk->initialize())
-      //         return false;
-      //
-      //   }
-      //
-      //   if(is_system()
-      //      && handler()->m_varTopicQuery["app"] != "app-core/netnodelite"
-      //      && handler()->m_varTopicQuery["app"] != "app-core/netnode_dynamic_web_server"
-      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_netnode"
-      //      && handler()->m_varTopicQuery["app"] != "app-gtech/sensible_service")
-      //   {
-      //      System.http().defer_auto_initialize_proxy_configuration();
-      //   }
-      //
-      //
-      //
-      //=======
-      //>>>>>>> .r7309
       m_dwAlive = ::get_tick_count();
 
       if (!initialize_userex())
@@ -2782,40 +2450,11 @@ namespace core
 
       }
 
-      //      if(!::cubebase::application::initialize())
-      //       return false;
-
-
-      //      m_puserbase = new ::user::user();
-
-      //    m_puserbase->construct(this);
-
-      //  if(!m_puserbase->initialize())
-      //return false;
-
-
       xxdebug_box("m_pfilemanager::initialize ok", "m_pfilemanager::initialize ok", MB_ICONINFORMATION);
-
 
       xxdebug_box("m_pusermail::initialize ok", "m_pusermail::initialize ok", MB_ICONINFORMATION);
 
       m_dwAlive = ::get_tick_count();
-
-
-
-
-
-      m_dwAlive = ::get_tick_count();
-
-      //m_splicense(new class ::fontopus::license(this));
-
-
-//      if(!is_system() && !is_session())
-//      {
-//
-//         Session.register_bergedge_application(this);
-//
-//      }
 
       xxdebug_box("register_bergedge_application ok", "register_bergedge_application ok", MB_ICONINFORMATION);
 
@@ -2823,25 +2462,37 @@ namespace core
 
       ensure_app_interest();
 
-
       xxdebug_box("ensure_app_interest ok", "ensure_app_interest ok", MB_ICONINFORMATION);
+
       return true;
 
    }
 
+
    void application::pre_translate_message(::message::message * pobj)
    {
+
       SCAST_PTR(::message::base, pbase, pobj);
+
       if (pbase->m_id == WM_USER + 124 && pbase->m_pwnd == NULL)
       {
-         /*      OnMachineEvent((flags < machine_event::e_flag> *) pmsg->lParam);
-         delete (flags < machine_event::e_flag> *) pmsg->lParam;*/
-         pbase->m_bRet = true;
-         return;
-      }
-      return thread::pre_translate_message(pobj);
-   }
 
+         /*
+
+         OnMachineEvent((flags < machine_event::e_flag> *) pmsg->lParam);
+         delete (flags < machine_event::e_flag> *) pmsg->lParam;
+
+         */
+
+         pbase->m_bRet = true;
+
+         return;
+
+      }
+
+      return thread::pre_translate_message(pobj);
+
+   }
 
 
    void application::_001CloseApplication()
@@ -2854,21 +2505,26 @@ namespace core
 
    void application::on_create_split_view(::user::split_view * psplit)
    {
-   }
 
+   }
 
 
    void application::EnableShellOpen()
    {
+
       ASSERT(m_atomApp == 0 && m_atomSystemTopic == 0); // do once
+
       if (m_atomApp != 0 || m_atomSystemTopic != 0)
       {
+
          return;
+
       }
 
       // Win95 & Win98 sends a WM_DDE_INITIATE with an atom that points to the
       // int16_t file name so we need to use the int16_t file name.
       string strShortName;
+
       strShortName = System.file().module();
 
       // strip out path
@@ -2880,8 +2536,8 @@ namespace core
 
       //      m_atomApp = ::GlobalAddAtom(strFileName);
       //    m_atomSystemTopic = ::GlobalAddAtom("system");
-   }
 
+   }
 
 
    sp(::user::interaction) application::uie_from_point(point pt)
@@ -2903,7 +2559,11 @@ namespace core
          sp(::user::interaction) puie = puieWindow->_001FromPoint(pt);
 
          if (puie != NULL)
+         {
+
             return puie;
+
+         }
 
       }
 
@@ -2916,7 +2576,11 @@ namespace core
    {
 
       if (!::base::application::on_install())
+      {
+
          return false;
+
+      }
 
       string strId = m_strId;
 
@@ -2936,21 +2600,29 @@ namespace core
 
    bool application::on_run_install()
    {
+
       if (m_strId == "session" || m_strAppName == "session")
       {
+
          if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
+
             ::multithreading::post_quit(&System);
+
          }
+
       }
       else
       {
+
          ::multithreading::post_quit(&System);
+
       }
 
-
       return true;
+
    }
+
 
    bool application::on_unstall()
    {
@@ -2958,49 +2630,52 @@ namespace core
       bool bOk = ::base::application::on_unstall();
 
       string strId = m_strId;
+
       char chFirst = '\0';
+
       if (strId.get_length() > 0)
       {
+
          chFirst = strId[0];
+
       }
 
       return bOk;
+
    }
+
 
    bool application::on_run_uninstall()
    {
 
       if (m_strId == "session")
       {
+
          if (!handler()->m_varTopicQuery.has_property("session_start"))
          {
+
             ::multithreading::post_quit(&System);
+
          }
+
       }
       else
       {
+
          ::multithreading::post_quit(&System);
+
       }
 
       return true;
+
    }
-
-
-
 
 
    void application::on_application_signal(::message::message * pobj)
    {
+
       UNREFERENCED_PARAMETER(pobj);
-      //      SCAST_PTR(::message::message, psignal, pobj);
-      /*if(psignal->m_esignal == signal_exit_instance)
-      {
-      if(m_copydesk.is_set()
-      && m_copydesk->IsWindow())
-      {
-      m_copydesk->DestroyWindow();
-      }
-      }*/
+
    }
 
 
@@ -3012,8 +2687,6 @@ namespace core
    }
 
 
-
-
    bool application::set_keyboard_layout(const char * pszPath, ::action::context actioncontext)
    {
 
@@ -3022,64 +2695,95 @@ namespace core
    }
 
 
-
-
-
-
    int32_t application::track_popup_menu(const char * pszMatter, point pt, sp(::user::interaction) puie)
    {
+
       UNREFERENCED_PARAMETER(pszMatter);
       UNREFERENCED_PARAMETER(pt);
       UNREFERENCED_PARAMETER(puie);
-      return 1;
-   }
 
+      return 1;
+
+   }
 
 
    bool application::get_fs_size(string & strSize, const char * pszPath, bool & bPending)
    {
+
       int64_t i64Size;
+
       if (!get_fs_size(i64Size, pszPath, bPending))
       {
+
          strSize.Empty();
+
          return false;
+
       }
+
       if (i64Size > 1024 * 1024 * 1024)
       {
+
          double d = (double)i64Size / (1024.0 * 1024.0 * 1024.0);
+
          strSize.Format("%0.2f GB", d);
+
       }
       else if (i64Size > 1024 * 1024)
       {
+
          double d = (double)i64Size / (1024.0 * 1024.0);
+
          strSize.Format("%0.1f MB", d);
+
       }
       else if (i64Size > 1024)
       {
+
          double d = (double)i64Size / (1024.0);
+
          strSize.Format("%0.0f KB", d);
+
       }
       else if (i64Size > 0)
       {
+
          strSize.Format("1 KB");
+
       }
       else
       {
+
          strSize.Format("0 KB");
+
       }
+
       if (bPending)
       {
+
          strSize = "~" + strSize;
+
       }
+
       return true;
+
    }
+
 
    bool application::get_fs_size(int64_t & i64Size, const char * pszPath, bool & bPending)
    {
+
       db_server * pcentral = dynamic_cast <db_server *> (&System.m_simpledb.db());
+
       if (pcentral == NULL)
+      {
+
          return false;
+
+      }
+
       return pcentral->m_pfilesystemsizeset->get_cache_fs_size(i64Size, pszPath, bPending);
+
    }
 
 
@@ -3119,8 +2823,11 @@ namespace core
 
    oswindow application::get_ca2_app_wnd(const char * psz)
    {
+
       UNREFERENCED_PARAMETER(psz);
+
       return NULL;
+
    }
 
 
@@ -3140,6 +2847,7 @@ namespace core
       }
       return -1;
    }
+
 
    int32_t application::send_simple_command(void * osdata, const char * psz, void * osdataSender)
    {
@@ -3680,17 +3388,17 @@ BOOL LaunchAppIntoDifferentSession(const char * pszProcess, const char * pszComm
    // Launch the process in the client's logon session.
 
    bResult = CreateProcessAsUser(
-                hUserTokenDup,                     // client's access token
-                pszProcess,    // file to execute
-                (char *)pszCommand,                 // command line
-                NULL,            // pointer to process SECURITY_ATTRIBUTES
-                NULL,               // pointer to thread SECURITY_ATTRIBUTES
-                FALSE,              // handles are not inheritable
-                dwCreationFlags,     // creation flags
-                pEnv,               // pointer to _new environment block
-                pszDir,               // name of current directory
-                psi,               // pointer to STARTUPINFO structure
-                ppi                // receives information about _new process
+             hUserTokenDup,                     // client's access token
+             pszProcess,    // file to execute
+             (char *)pszCommand,                 // command line
+             NULL,            // pointer to process SECURITY_ATTRIBUTES
+             NULL,               // pointer to thread SECURITY_ATTRIBUTES
+             FALSE,              // handles are not inheritable
+             dwCreationFlags,     // creation flags
+             pEnv,               // pointer to _new environment block
+             pszDir,               // name of current directory
+             psi,               // pointer to STARTUPINFO structure
+             ppi                // receives information about _new process
              );
    // End impersonation of client.
 
@@ -3845,17 +3553,17 @@ BOOL LaunchAppIntoSystemAcc(const char * pszProcess, const char * pszCommand, co
    // Launch the process in the client's logon session.
 
    bResult = CreateProcessAsUser(
-                hUserTokenDup,                     // client's access token
-                pszProcess,    // file to execute
-                (char *)pszCommand,                 // command line
-                NULL,            // pointer to process SECURITY_ATTRIBUTES
-                NULL,               // pointer to thread SECURITY_ATTRIBUTES
-                FALSE,              // handles are not inheritable
-                dwCreationFlags,     // creation flags
-                pEnv,               // pointer to _new environment block
-                pszDir,               // name of current directory
-                psi,               // pointer to STARTUPINFO structure
-                ppi                // receives information about _new process
+             hUserTokenDup,                     // client's access token
+             pszProcess,    // file to execute
+             (char *)pszCommand,                 // command line
+             NULL,            // pointer to process SECURITY_ATTRIBUTES
+             NULL,               // pointer to thread SECURITY_ATTRIBUTES
+             FALSE,              // handles are not inheritable
+             dwCreationFlags,     // creation flags
+             pEnv,               // pointer to _new environment block
+             pszDir,               // name of current directory
+             psi,               // pointer to STARTUPINFO structure
+             ppi                // receives information about _new process
              );
    // End impersonation of client.
 

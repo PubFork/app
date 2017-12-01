@@ -3,9 +3,6 @@
 //#include "hotplugin.h"
 
 
-#ifdef 
-
-
 namespace hotplugin
 {
 
@@ -27,15 +24,15 @@ namespace hotplugin
    }
 
 
-  CLASS_DECL_BASE bool defer_start_base_system()
-  {
+   CLASS_DECL_BASE bool defer_start_base_system()
+   {
 
-     if(g_paxissystem != NULL)
-        return true;
+      if(g_paxissystem != NULL)
+         return true;
 
-     g_iSystemCount++;
+      g_iSystemCount++;
 
-     _throw(todo(NULL));
+      _throw(todo(NULL));
 
 //      try
 //      {
@@ -93,7 +90,7 @@ namespace hotplugin
 
 //      return true;
 
-  }
+   }
 
 
    uint32_t c_cdecl base_system_main(LPVOID lpVoid)
@@ -107,12 +104,7 @@ namespace hotplugin
          if(!g_paxissystem->pre_run())
          {
 
-            if(g_paxissystem->m_iErrorCode == 0)
-            {
-
-               g_paxissystem->m_iErrorCode = -1;
-
-            }
+            g_paxissystem->m_error.set_if_not_set();
 
             g_paxissystem->m_bReady = true;
 
@@ -124,12 +116,7 @@ namespace hotplugin
       catch(...)
       {
 
-         if(g_paxissystem->m_iErrorCode == 0)
-         {
-
-            g_paxissystem->m_iErrorCode = -1;
-
-         }
+         g_paxissystem->m_error.set_if_not_set();
 
          g_paxissystem->m_bReady = true;
 
@@ -137,7 +124,9 @@ namespace hotplugin
 
       }
 
-      return g_paxissystem->main();
+      g_paxissystem->main();
+
+      return g_paxissystem->get_exit_code();
 
    }
 
@@ -191,9 +180,5 @@ namespace hotplugin
    }
 
 } // namespace hotplugin
-
-
-#endif
-
 
 

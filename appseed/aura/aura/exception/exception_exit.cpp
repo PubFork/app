@@ -1,12 +1,14 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
-exit_exception::exit_exception(::aura::application * papp, const char * pszMessage) :
+exit_exception::exit_exception(::aura::application * papp, e_exit eexit, const char * pszMessage) :
    object(papp),
    ::call_stack(papp),
    ::exception::base(papp),
    ::simple_exception(papp, pszMessage)
 {
+
+   m_eexit = eexit;
 
    m_iCheck = 0;
 
@@ -23,7 +25,7 @@ exit_exception::exit_exception(::aura::application * papp, const char * pszMessa
 
    }
 
-   
+
 
 }
 
@@ -46,117 +48,123 @@ exit_exception::~exit_exception()
 }
 
 
-void exit_excepation::post_quit(::thread * pthread)
+bool exit_exception::post_quit(::thread * pthread)
 {
-   
+
    try
    {
-   
+
       if(m_eexit == exit_none)
       {
-         
-         return;
-      
+
+         return true;
+
       }
-   
+
       if(pthread == NULL)
       {
-      
+
          pthread = ::get_thread();
-      
+
       }
-   
+
       if(pthread == NULL)
       {
-      
-         return;
-      
+
+         return false;
+
       }
-   
-      if(e.m_eexit == ::exit_thread)
+
+      if(m_eexit == ::exit_thread)
       {
-   
+
          ::multithreading::post_quit(pthread);
-      
-         return;
-   
+
+         return true;
+
       }
-   
+
       ::aura::application * papp = dynamic_cast < ::aura::application * >(pthread);
-   
+
       if(papp == NULL)
       {
-      
+
          papp = pthread->m_pauraapp;
-      
+
       }
-   
+
       if(papp == NULL)
       {
-      
-         return;
-      
+
+         return false;
+
       }
-   
-      if(e.m_eexit == ::exit_application)
+
+      if(m_eexit == ::exit_application)
       {
-      
+
          ::multithreading::post_quit(papp);
-      
-         return;
-      
+
+         return true;
+
       }
-   
+
       ::aura::session * psession = dynamic_cast < ::aura::session * >(papp);
-   
+
       if(psession == NULL)
       {
-      
+
          psession = papp->m_paurasession;
-      
+
       }
-      
-      if(e.m_eexit == ::exit_session)
+
+      if(m_eexit == ::exit_session)
       {
-         
+
          if(psession == NULL)
          {
-          
-            return NULL;
-            
+
+            return false;
+
          }
-         
-         ::multithreading::post_quit(psession)
-         
+
+         ::multithreading::post_quit(psession);
+
+         return true;
+
       }
-      
+
       ::aura::system * psystem = dynamic_cast < ::aura::system * >(papp);
-      
+
       if(psystem == NULL)
       {
-         
+
          psystem = papp->m_paurasystem;
-         
+
       }
-      
-      if(e.m_eexit == ::exit_system)
+
+      if(m_eexit == ::exit_system)
       {
-         
+
          if(psystem == NULL)
          {
-            
-            return NULL;
-            
+
+            return false;
+
          }
-         
-         ::multithreading::post_quit(psystem)
-         
+
+         ::multithreading::post_quit(psystem);
+
+         return true;
+
       }
 
    }
    catch(...)
    {
-      
+
    }
+
+   return false;
 
 }

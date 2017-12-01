@@ -291,7 +291,7 @@ namespace draw2d_opengl
    //      internal_end_figure(e.u.m_end.m_bClose);
    //      break;
    //   default:
-   //      _throw("unexpected simple os graphics element type");
+   //      _throw(simple_exception(get_app(), "unexpected simple os graphics element type"));
    //   }
 
    //   return false;

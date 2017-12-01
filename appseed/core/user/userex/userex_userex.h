@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace userex
@@ -42,9 +42,10 @@ namespace userex
 
       ::user::shell::shell * shell();
 
+
       virtual bool init1() override;
       virtual bool init2() override;
-      virtual bool initialize() override;
+      virtual bool init() override;
 
 
 
@@ -65,7 +66,7 @@ namespace userex
 
       virtual void AddToRecentFileList(const char * lpszPathName);
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
       virtual bool _001OnCmdMsg(::user::command * pcommand);
 
@@ -86,7 +87,7 @@ namespace userex
       //void send_language_change_message();
 
 
-      virtual int32_t exit_application() override;
+      virtual void term_instance() override;
 
       void LoadStdProfileSettings(UINT nMaxMRU = 10);
 

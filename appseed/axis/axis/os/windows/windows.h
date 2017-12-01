@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #ifdef cplusplus
@@ -77,8 +77,6 @@ CLASS_DECL_AXIS bool vfxResolveShortcut(string & strTarget,const char * pszSourc
 
 CLASS_DECL_AXIS WSADATA get_wsadata();
 
-#ifdef 
-
 #ifdef cplusplus
 
 namespace hotplugin
@@ -91,4 +89,3 @@ namespace hotplugin
 
 #endif
 
-#endif

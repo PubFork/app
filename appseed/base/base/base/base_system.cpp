@@ -154,8 +154,7 @@ namespace base
    }
 
 
-
-   int32_t system::exit_application()
+   void system::term_application()
    {
 
       try
@@ -199,17 +198,13 @@ namespace base
       catch (...)
       {
 
-         m_iErrorCode = -2;
+         m_error.set_if_not_set();
 
       }
 
-
 #endif
-      axis::system::exit_application();
 
-
-
-      return m_iErrorCode;
+      axis::system::term_application();
 
    }
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace aura
@@ -54,7 +54,7 @@ namespace aura
 
       }
 
-      return 0;
+//      return 0;
 
    }
 

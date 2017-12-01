@@ -78,10 +78,10 @@ Serial::SerialImpl::open ()
       case ERROR_FILE_NOT_FOUND:
          // Use this->getPort to convert to a std::string
          str.Format("Specified port, %d, does not exist.", this->getPort());
-         THROW (IOException, str);
+         THROW(IOException, str);
       default:
          str.Format("Unknown error opening the serial port: %d",  errno_);
-         THROW (IOException, str);
+         THROW(IOException, str);
       }
    }
 

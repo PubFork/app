@@ -125,7 +125,7 @@ namespace libcompress
       {
          /*
          if (_coders.get_count() != _bindInfo.Coders.get_count())
-         _throw(0);
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
          */
          int32_t i;
          for (i = 0; i < _coders.get_count(); i++)
@@ -152,7 +152,7 @@ namespace libcompress
             _streamBinders[i].CreateStreams(_coders[inCoderIndex].InStreams(inCoderStreamIndex),
                                             _coders[outCoderIndex].OutStreams(outCoderStreamIndex));
 
-            _throw("implement below");
+            _throw(simple_exception(get_app(), "implement below"));
             /*smart_pointer<::libcompress::set_buffer_size_interface> insert_atSize, outSetSize;
             insert_atSize = dynamic_cast < ::libcompress::set_buffer_size_interface * > (_coders[inCoderIndex].m_p);
             outSetSize = dynamic_cast < ::libcompress::set_buffer_size_interface * > (_coders[outCoderIndex].m_p);
@@ -213,7 +213,7 @@ namespace libcompress
 
             _coders[_progressCoderIndex].Code(progress);
 
-            _throw("should implement below");
+            _throw(simple_exception(get_app(), "should implement below"));
             /*
             for (i = 0; i < _coders.get_count(); i++)
                if (i != _progressCoderIndex)

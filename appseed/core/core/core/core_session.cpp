@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "core/user/user/user.h"
 //#include "core/filesystem/filemanager/filemanager.h"
 
@@ -59,7 +59,7 @@ namespace core
 
       m_puserex                           = NULL;
       m_pfilemanager = NULL;
-      
+
       m_strAppName         = "session";
       m_strBaseSupportId   = "ca2_bergedge";
       m_strInstallToken    = "session";
@@ -146,14 +146,22 @@ namespace core
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if(!::core::application::initialize())
+      if (!::core::application::init())
+      {
+
          return false;
 
-      if(!::base::session::initialize())
+      }
+
+      if (!::base::session::init())
+      {
+
          return false;
+
+      }
 
       return true;
 
@@ -163,11 +171,19 @@ namespace core
    bool session::init2()
    {
 
-      if(!::core::application::init2())
+      if (!::core::application::init2())
+      {
+
          return false;
 
-      if(!::base::session::init2())
+      }
+
+      if (!::base::session::init2())
+      {
+
          return false;
+
+      }
 
       return true;
 
@@ -222,42 +238,37 @@ namespace core
    }
 
 
-   bool session::finalize()
+   void session::term()
    {
 
 
-      bool bOk = true;
-
       try
       {
 
-         bOk = ::base::session::finalize();
+         ::base::session::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
       try
       {
 
-         bOk = ::core::application::finalize();
+         ::core::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
-
-      return bOk;
 
    }
-
-
 
 
    bool session::bergedge_start()
@@ -602,7 +613,7 @@ namespace core
       }
       else
       {
-         _throw("not expected e_mouse value");
+         _throw(simple_exception(get_app(), "not expected e_mouse value"));
       }
 
 
@@ -729,19 +740,15 @@ namespace core
             papp = create_application(pszAppId, bSynch, pbiasCreate);
 
          }
-         catch(::exit_exception & e)
+         catch(esp esp)
          {
 
-            _throw(e);
+            esp.rethrow_exit();
 
-         }
-         catch(::exception::exception & e)
-         {
-
-            if (!App(this).on_run_exception(e))
+            if (!App(this).on_run_exception(esp))
             {
 
-               _throw(exit_exception(get_app()));
+               papp = NULL;
 
             }
 
@@ -778,14 +785,18 @@ namespace core
    }
 
 
-
    void session::check_topic_file_change()
    {
+
       if(Session.m_varCurrentViewFile != Session.m_varTopicFile && !Session.m_varTopicFile.is_empty())
       {
+
          Session.m_varCurrentViewFile = Session.m_varTopicFile;
+
          request_topic_file();
+
       }
+
    }
 
 
@@ -941,20 +952,12 @@ namespace core
    }
 
 
-   int32_t session::main()
+   void session::main()
    {
 
-
-      return ::core::application::main();
-
+      ::core::application::main();
 
    }
-
-   /*   ::core::filehandler::handler & system::filehandler()
-   {
-   return *m_spfilehandler;
-   }*/
-
 
 
    void session::register_bergedge_application(::aura::application * papp)
@@ -967,11 +970,13 @@ namespace core
 
       Session.m_appptra.add_unique(papp);
 
-      if(System.is_installing() || System.is_unstalling())
+      if (System.is_installing() || System.is_unstalling())
+      {
+
          System.m_bDoNotExitIfNoApplications = false;
-      else if(!papp->is_session()
-         && !papp->is_system()
-         && !papp->is_serviceable())
+
+      }
+      else if(!papp->is_session() && !papp->is_system() && !papp->is_serviceable())
       {
 
          System.m_bDoNotExitIfNoApplications = false;
@@ -979,6 +984,7 @@ namespace core
       }
 
    }
+
 
    void session::unregister_bergedge_application(::aura::application * papp)
    {

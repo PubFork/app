@@ -738,27 +738,6 @@
     <ClCompile Include="axis\node\windows\windows_port_forward.cpp">
     </ClCompile>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="graphics\dib_console.h" />
-    <ClInclude Include="graphics\graphics.h" />
-    <ClInclude Include="graphics\visual\visual.h" />
-    <ClInclude Include="graphics\visual\visual_api.h" />
-    <ClInclude Include="graphics\visual\visual_buffered_graphics.h" />
-    <ClInclude Include="graphics\visual\visual_dib.h" />
-    <ClInclude Include="graphics\visual\visual_dib_pal.h" />
-    <ClInclude Include="graphics\visual\visual_fastblur.h" />
-    <ClInclude Include="graphics\visual\visual_font.h" />
-    <ClInclude Include="graphics\visual\visual_font_department.h" />
-    <ClInclude Include="graphics\visual\visual_font_enumeration.h" />
-    <ClInclude Include="graphics\visual\visual_font_list_data.h" />
-    <ClInclude Include="graphics\visual\visual_freeimage_image.h" />
-    <ClInclude Include="graphics\visual\visual_glyph.h" />
-    <ClInclude Include="graphics\visual\visual_glyph_set.h" />
-    <ClInclude Include="graphics\visual\visual_graphics_extension.h" />
-    <ClInclude Include="graphics\visual\visual_image_list.h" />
-    <ClInclude Include="graphics\visual\visual_imaging.h" />
-    <ClInclude Include="graphics\visual\visual_rgb_quad_array.h" />
-    <ClInclude Include="graphics\visual\visual_visual.h" />
-    <ClInclude Include="graphics\visual\visual_water_routine.h" />
     <ClInclude Include="html_lite\html\html.h" />
     <ClInclude Include="html_lite\html\html_enum.h" />
     <ClInclude Include="html_lite\html\html_html.h" />
@@ -877,14 +856,8 @@
     <ClInclude Include="user\userpresence\userpresence.h" />
     <ClInclude Include="user\userpresence\userpresence_userpresence.h" />
     <ClInclude Include="user\userpresence\userpresence_user_presence.h" />
-    <ClInclude Include="user\user\user_elemental.h" />
-    <ClInclude Include="user\user\user_enum.h" />
-    <ClInclude Include="user\user\user_job.h" />
     <ClInclude Include="user\user\user_keyboard.h" />
     <ClInclude Include="user\user\user_keyboard_layout.h" />
-    <ClInclude Include="user\user\user_key_enum.h" />
-    <ClInclude Include="user\user\user_print_job.h" />
-    <ClInclude Include="user\user\user_validate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="filesystem\fs\fs_data.cpp">
@@ -911,7 +884,6 @@
   <ItemGroup>
     <None Include="axis.def" />
     <None Include="axis\axis\axis.inl" />
-    <None Include="graphics\visual\visual.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ace\ace.vcxproj">
@@ -925,9 +897,6 @@
     </ProjectReference>
     <ProjectReference Include="..\aura\aura.vcxproj">
       <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\freeimage\axisfreeimage.vcxproj">
-      <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

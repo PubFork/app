@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 //#include "windows.h"
 
@@ -24,19 +24,19 @@ namespace windows
    }
 
 
-   int32_t print_job::run()
+   void print_job::run()
    {
 
       if (!m_phprinter->is_opened())
       {
          // TODO:
          // m_printer.open(&callback_form);
-         _throw("printer not opened");
+         _throw(simple_exception(get_app(), "printer not opened"));
       }
 
       if (m_pui == NULL)
       {
-         _throw("a view should collaborate");
+         _throw(simple_exception(get_app(), "a view should collaborate"));
       }
 
       ::draw2d::graphics * pgraphics = m_phprinter->create_graphics();
@@ -70,19 +70,29 @@ namespace windows
          if (m_bCancel)
          {
             pgraphics->AbortDoc();
-            return -1;
+
+            m_error.set_if_not_set();
+
+            return;
          }
          m_pui->_001OnDraw(pgraphics);
          if (m_bCancel)
          {
             pgraphics->AbortDoc();
-            return -1;
+
+            m_error.set_if_not_set();
+
+            return;
+
          }
          pgraphics->EndPage();
          if (m_bCancel)
          {
             pgraphics->AbortDoc();
-            return -1;
+            m_error.set_if_not_set();
+
+            return;
+
          }
 
       }
@@ -90,7 +100,7 @@ namespace windows
       pgraphics->EndDoc();
 
 
-      return 0;
+      //return 0;
 
    }
 

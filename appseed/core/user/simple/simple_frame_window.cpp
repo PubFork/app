@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 
@@ -35,12 +35,11 @@ simple_frame_window::helper_task::helper_task(simple_frame_window * pframe) :
 }
 
 
-int simple_frame_window::helper_task::run()
+void simple_frame_window::helper_task::run()
 {
 
    while(thread_get_run())
    {
-
 
       g_pevent->wait(millis(84));
 
@@ -49,7 +48,7 @@ int simple_frame_window::helper_task::run()
       {
 
          if( // slim and clean people (no drugs) do not like fatty acids double check in the bag( unless they are slim and clean?!?!?!)
-            ::get_tick_count() - m_pframe->m_dwLastSizeMove > 284)// the tester (without UPS) can loose a save specially here (where is the error, sixes or 666) // Halloween is coming
+         ::get_tick_count() - m_pframe->m_dwLastSizeMove > 284)// the tester (without UPS) can loose a save specially here (where is the error, sixes or 666) // Halloween is coming
             // this a reason for using manual_reset_event for every simple_frame_window, accepts the candy, and the trick? you get both, this the whole trick!!!
          {
 
@@ -78,19 +77,18 @@ int simple_frame_window::helper_task::run()
          }
 
       }
+
       //Sleep(200); // the tester (without UPS) can loose a save here
 
    }
-
-   return 0;
 
 }
 
 
 void simple_frame_window::helper_task::defer_save_window_rect()
 {
-}
 
+}
 
 
 simple_frame_window::simple_frame_window(::aura::application * papp) :
@@ -110,6 +108,7 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
    m_bTransparentFrame = false;
 
    m_bblur_Background = false;
+
    m_bCustomFrameBefore = true;
 
 #if defined(APPLE_IOS) || defined(VSNORD)
@@ -123,18 +122,25 @@ simple_frame_window::simple_frame_window(::aura::application * papp) :
 #endif
 
    m_bLayered = true;
+
    m_pframeschema = NULL;
+
    m_pdocumenttemplate = NULL;
 
    //m_phelpertask = new helper_task(this);
 
 }
 
+
 simple_frame_window::~simple_frame_window()
 {
+
    //m_phelpertask->m_pframe = NULL;
+
    //m_phelpertask->m_bRun = false;
+
 }
+
 
 void simple_frame_window::assert_valid() const
 {
@@ -488,12 +494,17 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
          pinteractionframe = create_frame_schema();
 
       }
-      catch (not_installed & e)
+      catch (esp esp)
       {
 
-         System.remove_frame(this);
+         if (esp.is < not_installed >())
+         {
 
-         _throw(e);
+            System.remove_frame(this);
+
+            _rethrow(esp);
+
+         }
 
       }
       catch (...)
@@ -559,10 +570,10 @@ void simple_frame_window::_001OnCreate(::message::message * pobj)
       m_pframeschema = pinteractionframe;
       m_workset.AttachFrameSchema(m_pframeschema);
       if (!m_workset.update(
-               this,
-               this,
-               this,
-               this))
+            this,
+            this,
+            this,
+            this))
       {
          pcreate->m_bRet = false;
          return;
@@ -1272,9 +1283,9 @@ void simple_frame_window::_001OnClose(::message::message * pobj)
 
    if (pobj)
    {
-      
+
       pobj->m_bRet = true;
-      
+
    }
 
    bool bDestroyWindow = false;
@@ -2004,12 +2015,12 @@ void simple_frame_window::_001OnDraw(::draw2d::graphics * pgraphics)
             m_fastblur->get_graphics()->BitBlt(0,0,rectClient.width(),rectClient.height(),pgraphics,0,0,SRCCOPY);
             m_fastblur.blur();
             imaging.bitmap_blend(
-               m_fastblur->get_graphics(),
-               null_point(),
-               rectClient.size(),
-               m_dibBk->get_graphics(),
-               null_point(),
-               49);
+            m_fastblur->get_graphics(),
+            null_point(),
+            rectClient.size(),
+            m_dibBk->get_graphics(),
+            null_point(),
+            49);
             pgraphics->from(rectClient.size(),
                             m_fastblur->get_graphics(),
                             null_point(),
@@ -3189,9 +3200,9 @@ void simple_frame_window::on_simple_command(::message::simple_command * psimplec
 class ::mini_dock_frame_window* simple_frame_window::CreateFloatingFrame(uint32_t dwStyle)
 {
 
-      UNREFERENCED_PARAMETER(dwStyle);
+   UNREFERENCED_PARAMETER(dwStyle);
 
-      return NULL;
+   return NULL;
 
 }
 

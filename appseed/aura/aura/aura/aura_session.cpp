@@ -218,7 +218,7 @@ namespace aura
 
          thisok << 4;
 
-         if (!m_psockets->initialize())
+         if (!m_psockets->init())
          {
 
             thisfail << 4.1;
@@ -280,34 +280,35 @@ namespace aura
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if (!::aura::application::initialize())
+      if (!::aura::application::init())
+      {
+
          return false;
 
+      }
 
       return true;
 
    }
 
 
-   bool session::finalize()
+   void session::term()
    {
-
-      bool bOk = true;
-
 
       try
       {
 
-         bOk = ::aura::application::finalize();
+         ::aura::application::term();
 
       }
       catch (...)
       {
 
-         bOk = false;
+         m_error.set(-1);
+
       }
 
 
@@ -324,12 +325,10 @@ namespace aura
 
       }
 
-      return bOk;
-
    }
 
 
-   int32_t session::term_application()
+   void session::term_application()
    {
 
       try
@@ -364,8 +363,6 @@ namespace aura
 
 
       ::aura::application::term_application();
-
-      return 0;
 
    }
 
@@ -426,13 +423,6 @@ namespace aura
       UNREFERENCED_PARAMETER(pobj);
 
    }
-
-
-
-
-
-
-
 
 
    void session::on_request(::create * pcreate)
@@ -752,24 +742,20 @@ namespace aura
             papp = create_application(pszAppId, bSynch, pbiasCreate);
 
          }
-         catch (::exit_exception & e)
+         catch (esp esp)
          {
 
-            _throw(e);
-
-         }
-         catch (::exception::exception & e)
-         {
+            esp.rethrow_exit();
 
             // aura::session, axis::session and ::base::session, could get more specialized handling in core::application (core::system)
             // Thank you Mummi (em São Paulo, cuidando do Lucinho e ajudando um monte a Carô 2015-02-03) !! Thank you God!!
-            if (!Sys(this).on_run_exception(e))
+            if (!Sys(this).on_run_exception(esp))
             {
 
-               if (!App(this).on_run_exception(e))
+               if (!App(this).on_run_exception(esp))
                {
 
-                  _throw(exit_exception(get_app()));
+                  papp = NULL;
 
                }
 

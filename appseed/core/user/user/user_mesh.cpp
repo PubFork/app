@@ -989,9 +989,9 @@ namespace user
                sizeTotal.cx = rectClient.right;
             else
                sizeTotal.cx  = (LONG)MIN(
-                                  m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
-                                  rectClient.height()
-                                  + itemFirst.m_rectItem.width(),MAXLONG);
+                               m_nItemCount * itemFirst.m_rectItem.width() * m_iItemHeight /
+                               rectClient.height()
+                               + itemFirst.m_rectItem.width(),MAXLONG);
          }
       }
       else if(m_eview == view_report)
@@ -2045,7 +2045,7 @@ namespace user
          return_(pdrawitem->m_bOk,true);
 
          //return;
-         //_throw("subitem rectangle on icon view? why are you asking for that now?");
+         //_throw(simple_exception(get_app(), "subitem rectangle on icon view? why are you asking for that now?"));
       }
 
       pdrawitem->m_bOk = false;
@@ -3031,12 +3031,12 @@ namespace user
       else if(get_form() != NULL)
       {
          get_form()->send_message(
-            ::message::message_event,0,(LPARAM)&ev);
+         ::message::message_event,0,(LPARAM)&ev);
       }
       else
       {
          GetParent()->send_message(
-            ::message::message_event,0,(LPARAM)&ev);
+         ::message::message_event,0,(LPARAM)&ev);
       }
       return true;
    }
@@ -3138,8 +3138,8 @@ namespace user
    }
 
    void mesh::_001GetSelection(
-      ::database::id & key,
-      ::database::selection &selection)
+   ::database::id & key,
+   ::database::selection &selection)
    {
       if(!_001HasConfigId(key))
          return;
@@ -4300,12 +4300,12 @@ namespace user
                         item_range itemrange;
 
                         itemrange.set(
-                           MIN(iItemSel,m_iItemSel),
-                           MAX(iItemSel,m_iItemSel),
-                           MIN(iSubItemSel,m_iSubItemSel),
-                           MAX(iSubItemSel,m_iSubItemSel),
-                           -1,
-                           -1);
+                        MIN(iItemSel,m_iItemSel),
+                        MAX(iItemSel,m_iItemSel),
+                        MIN(iSubItemSel,m_iSubItemSel),
+                        MAX(iSubItemSel,m_iSubItemSel),
+                        -1,
+                        -1);
 
                         _001AddSelection(itemrange);
 
@@ -4316,12 +4316,12 @@ namespace user
                         item_range itemrange;
 
                         itemrange.set(
-                           MIN(iItemSel,m_iItemSel),
-                           MAX(iItemSel,m_iItemSel),
-                           MIN(iSubItemSel,m_iSubItemSel),
-                           MAX(iSubItemSel,m_iSubItemSel),
-                           -1,
-                           -1);
+                        MIN(iItemSel,m_iItemSel),
+                        MAX(iItemSel,m_iItemSel),
+                        MIN(iSubItemSel,m_iSubItemSel),
+                        MAX(iSubItemSel,m_iSubItemSel),
+                        -1,
+                        -1);
 
                         range range;
 
@@ -4346,12 +4346,12 @@ namespace user
                      item_range itemrange;
 
                      itemrange.set(
-                        m_iItemSel,
-                        m_iItemSel,
-                        m_iSubItemSel,
-                        m_iSubItemSel,
-                        -1,
-                        -1);
+                     m_iItemSel,
+                     m_iItemSel,
+                     m_iSubItemSel,
+                     m_iSubItemSel,
+                     -1,
+                     -1);
 
                      _001AddSelection(itemrange);
 
@@ -4370,12 +4370,12 @@ namespace user
                      item_range itemrange;
 
                      itemrange.set(
-                        DisplayToStrict(m_iItemSel),
-                        DisplayToStrict(m_iItemSel),
-                        m_iSubItemSel,
-                        m_iSubItemSel,
-                        -1,
-                        -1);
+                     DisplayToStrict(m_iItemSel),
+                     DisplayToStrict(m_iItemSel),
+                     m_iSubItemSel,
+                     m_iSubItemSel,
+                     -1,
+                     -1);
 
                      range range;
 
@@ -4518,9 +4518,9 @@ namespace user
          int_ptr iItemCount = m_nDisplayCount;
          int_ptr iItemFirst = m_iTopIndex;
          m_pcache->_001CacheHint(
-            this,
-            iItemFirst,
-            iItemCount);
+         this,
+         iItemFirst,
+         iItemCount);
       }
 
    }
@@ -4685,10 +4685,10 @@ namespace user
       m_iLowerBound = iLowerBoundItem;
       m_iUpperBound = iUpperBoundItem;
       m_subitemrange.set(
-         iLowerBoundSubItem,
-         iUpperBoundSubItem,
-         iLowerBoundListItem,
-         iUpperBoundListItem);
+      iLowerBoundSubItem,
+      iUpperBoundSubItem,
+      iLowerBoundListItem,
+      iUpperBoundListItem);
    }
 
    void mesh::item_range::set_lower_bound(index iLowerBoundItem)
@@ -4706,8 +4706,8 @@ namespace user
       m_iLowerBound = iLowerBoundSubItem;
       m_iUpperBound = iUpperBoundSubItem;
       m_meshitemrange.set(
-         iLowerBoundListItem,
-         iUpperBoundListItem);
+      iLowerBoundListItem,
+      iUpperBoundListItem);
    }
 
    void mesh::mesh_item_range::set(index iLowerBoundListItem,index iUpperBoundListItem)
@@ -5082,9 +5082,9 @@ namespace user
       draw_mesh_item item(this);
 
       for(
-         iFilter1Step =  m_iFilter1Step;
-         iFilter1Step < iItemCount;
-         iFilter1Step++)
+      iFilter1Step =  m_iFilter1Step;
+      iFilter1Step < iItemCount;
+      iFilter1Step++)
       {
          //for(index j = 0; j < m_nColumnCount; j++)
          /*{
@@ -5834,23 +5834,23 @@ namespace user
 
    class size mesh::get_item_size()
    {
-         if(m_eview == view_icon)
+      if(m_eview == view_icon)
+      {
+         if(m_nColumnCount == 0)
          {
-            if(m_nColumnCount == 0)
-            {
-               return size(32,32);
-            }
+            return size(32,32);
+         }
 //         index iIconSize = MAX(32,m_columna[0]->m_sizeIcon.cy);
-            index iIconSize = 32;
-            index iItemSize = iIconSize * 2;
-            return size(iItemSize,iItemSize);
-         }
-         else
-         {
-            // not implemented
-            ASSERT(FALSE);
-            return size(0,0);
-         }
+         index iIconSize = 32;
+         index iItemSize = iIconSize * 2;
+         return size(iItemSize,iItemSize);
+      }
+      else
+      {
+         // not implemented
+         ASSERT(FALSE);
+         return size(0,0);
+      }
    }
 
    void mesh::auto_arrange(bool bAutoArrange)
@@ -6151,15 +6151,15 @@ namespace user
 
             ::aura::application * m_pauraapp = m_pmesh->get_app();
 
-            System.visual().imaging().channel_spread_set_color(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,2,ARGB(184,184,184,184));
+            Application.imaging().channel_spread_set_color(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,2,ARGB(184,184,184,184));
             dib->Fill(0,0,0,0);
-            System.visual().imaging().channel_alpha_gray_blur(dib->get_graphics(),null_point(),size,dib2->get_graphics(),null_point(),0,1);
+            Application.imaging().channel_alpha_gray_blur(dib->get_graphics(),null_point(),size,dib2->get_graphics(),null_point(),0,1);
             dib2->Fill(0,0,0,0);
-            System.visual().imaging().channel_alpha_gray_blur(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,1);
+            Application.imaging().channel_alpha_gray_blur(dib2->get_graphics(),null_point(),size,dib->get_graphics(),null_point(),0,1);
             dib2->set(0,0,0);
 
 
-            Sys(m_pmesh->get_app()).visual().imaging().color_blend(m_pgraphics,m_rectText,dib2->get_graphics(),point(1,1),0.50);
+            Application.imaging().color_blend(m_pgraphics,m_rectText,dib2->get_graphics(),point(1,1),0.50);
 
 
             brushText->create_solid(ARGB(255,255,255,255));

@@ -34,7 +34,7 @@ oswindow CLASS_DECL_AURA __child_window_from_point(oswindow oswindow, POINT pt)
    for (; oswindow_Child != NULL; oswindow_Child = ::GetWindow(oswindow_Child, GW_HWNDNEXT))
    {
       if (__get_dialog_control_id(oswindow_Child) != (WORD)0 &&
-         (::GetWindowLong(oswindow_Child, GWL_STYLE) & WS_VISIBLE))
+            (::GetWindowLong(oswindow_Child, GWL_STYLE) & WS_VISIBLE))
       {
          // see if point hits the child interaction_impl
          rect rect;
@@ -46,4 +46,10 @@ oswindow CLASS_DECL_AURA __child_window_from_point(oswindow oswindow, POINT pt)
 
    return NULL;    // not found
 }
+
+
+
+
+
+
 

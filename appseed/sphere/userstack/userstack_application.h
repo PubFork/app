@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace userstack
@@ -15,22 +15,22 @@ namespace userstack
 
 
       index                                                          m_iEdge;
-                                                                     
+
       bool                                                           m_bShowPlatform;
-                                                                     
+
       sp(::aura::application)                                            m_pappCurrent;
       string_map < sp(::aura::application) >               m_mapApplication;
-                                                                     
-      
+
+
       sp(::user::single_document_template)                         m_ptemplate_main;
       sp(::user::single_document_template)                         m_ptemplate_pane;
 
       pane_view *                                                    m_ppaneview;
-                                                                     
-                                                                     
+
+
       var                                                            m_varTopicFile;
       var                                                            m_varCurrentViewFile;
-                                                                     
+
       bool                                                           m_bDrawCursor;
 
       string_map < ::user::wndfrm::interaction * >     m_mapUinteraction;
@@ -38,13 +38,13 @@ namespace userstack
 
       application();
       virtual ~application();
-      
-      
+
+
       void construct();
-      
+
 
       virtual bool init_instance() override;
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
       virtual bool bergedge_start() override;
 
@@ -63,17 +63,17 @@ namespace userstack
       virtual void check_topic_file_change();
 
       bool on_exclusive_instance_conflict(::EExclusiveInstance eexclusive) override;
-      
+
       void launch_app(const char * psz);
       void install_app(const char * psz);
 
       virtual bool init1() override;
 
-      virtual bool initialize() override;
+      virtual bool init() override;
 
       virtual bool os_native_bergedge_start() override;
 
-      virtual int32_t main() override;
+      virtual void main() override;
 
       virtual bool on_unstall() override;
 

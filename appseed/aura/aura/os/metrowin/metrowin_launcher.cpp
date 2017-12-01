@@ -17,7 +17,7 @@ bool launcher::start()
 
 #ifdef METROWIN
 
-   _throw("todo");
+   _throw(simple_exception(get_app(), "todo"));
 
 #else
 

@@ -1,125 +1,140 @@
-#pragma once
+﻿#pragma once
 
 namespace colorertake5
 {
 
-/**
- * File Type storage implementation.
- * Contains different attributes of HRC file type.
- * @ingroup colorer_parsers
- */
-class file_type_impl : public file_type
-{
-  friend class HRCParserImpl;
-  friend class text_parser_impl;
-public:
-  const string getName() {
-    return name;
-  }
-  const string getGroup() {
-    return group;
-  }
-  const string getDescription() {
-    return description;
-  }
-  scheme * getBaseScheme() {
-    if (!typeLoaded) hrcParser->loadFileType(this);
-    return baseScheme;
-  }
+   /**
+    * File Type storage implementation.
+    * Contains different attributes of HRC file type.
+    * @ingroup colorer_parsers
+    */
+   class file_type_impl : public file_type
+   {
+      friend class HRCParserImpl;
+      friend class text_parser_impl;
+   public:
+      const string getName()
+      {
+         return name;
+      }
+      const string getGroup()
+      {
+         return group;
+      }
+      const string getDescription()
+      {
+         return description;
+      }
+      scheme * getBaseScheme()
+      {
+         if (!typeLoaded) hrcParser->loadFileType(this);
+         return baseScheme;
+      }
 
-  string enumerateParameters(int32_t idx)
-  {
-    if (idx >= paramVector.get_size() || idx < 0){
-      _throw(0);
-    }
-    return paramVector.element_at(idx);
-  }
 
-  string getParameterDescription(const char *name)
-  {
-    return paramDescriptionHash[name];
-  }
+      string enumerateParameters(int32_t idx)
+      {
 
-  string getParamValue(const char * name)
-  {
-    string val = paramHash[name];
-    if(val.is_empty())
-       return getParamDefaultValue(name);
-    return val;
-  }
-  string getParamDefaultValue(const char * name)
-  {
-    return paramDefaultHash[name];
-  }
+         if (idx >= paramVector.get_size() || idx < 0)
+         {
 
-  void setParamValue(const char * name, const char * value)
-  {
-    paramHash.set_at(name, value);
-  }
+            _throw(simple_exception(get_app(), "integer_exception 127"));
 
-  /**
-   * Returns total priority, accordingly to all it's
-   * choosers (filename and firstline choosers).
-   * All <code>fileContent</code> RE's are tested only if priority of previously
-   * computed <code>fileName</code> RE's is more, than zero.
-   * @param fileName string representation of file name (without path).
-   *        If NULL, method skips filename matching, and starts directly
-   *        with fileContent matching.
-   * @param fileContent Some part of file's starting content (first line,
-   *        for example). If NULL, skipped.
-   * @return Computed total filetype priority.
-   */
-  double getPriority(const char * fileName, const char * fileContent) const{
-    SMatches match;
-    double cur_prior = 0;
-    for(int32_t idx = 0; idx < chooserVector.get_size(); idx++){
-      FileTypeChooser *ftc = chooserVector.element_at(idx);
-      if (fileName != NULL && ftc->isFileName() && ftc->getRE()->parse(fileName, &match))
-        cur_prior += ftc->getPrior();
-      if (fileContent != NULL && ftc->isFileContent() && ftc->getRE()->parse(fileContent, &match))
-        cur_prior += ftc->getPrior();
-    }
-    return cur_prior;
-  }
-protected:
-  /// is prototype component loaded
-  bool protoLoaded;
-  /// is type component loaded
-  bool typeLoaded;
-  /// is type references fully resolved
-  bool loadDone;
-  /// is initial type load failed
-  bool loadBroken;
-  /// is this IS loading was started
-  bool inputSourceLoading;
+         }
 
-  string name, group, description;
-  bool isPackage;
-  HRCParserImpl *hrcParser;
-  scheme_impl *baseScheme;
+         return paramVector.element_at(idx);
 
-  ref_array < FileTypeChooser > chooserVector;
-  string_to_string paramDefaultHash;
-  string_to_string paramHash;
-  string_to_string paramDescriptionHash;
-  stringa paramVector;
-  stringa importVector;
-  string    m_strSourceLocation;
-  string    m_strSource;
+      }
 
-public:
-  file_type_impl(HRCParserImpl *hrcParser){
-    this->hrcParser = hrcParser;
-    protoLoaded = typeLoaded = loadDone = loadBroken = inputSourceLoading = false;
-    isPackage = false;
-    baseScheme = NULL;
-  }
 
-  ~file_type_impl()
-  {
-  }
+      string getParameterDescription(const char *name)
+      {
+         return paramDescriptionHash[name];
+      }
 
-};
+      string getParamValue(const char * name)
+      {
+         string val = paramHash[name];
+         if(val.is_empty())
+            return getParamDefaultValue(name);
+         return val;
+      }
+      string getParamDefaultValue(const char * name)
+      {
+         return paramDefaultHash[name];
+      }
+
+      void setParamValue(const char * name, const char * value)
+      {
+         paramHash.set_at(name, value);
+      }
+
+      /**
+       * Returns total priority, accordingly to all it's
+       * choosers (filename and firstline choosers).
+       * All <code>fileContent</code> RE's are tested only if priority of previously
+       * computed <code>fileName</code> RE's is more, than zero.
+       * @param fileName string representation of file name (without path).
+       *        If NULL, method skips filename matching, and starts directly
+       *        with fileContent matching.
+       * @param fileContent Some part of file's starting content (first line,
+       *        for example). If NULL, skipped.
+       * @return Computed total filetype priority.
+       */
+      double getPriority(const char * fileName, const char * fileContent) const
+      {
+         SMatches match;
+         double cur_prior = 0;
+         for(int32_t idx = 0; idx < chooserVector.get_size(); idx++)
+         {
+            FileTypeChooser *ftc = chooserVector.element_at(idx);
+            if (fileName != NULL && ftc->isFileName() && ftc->getRE()->parse(fileName, &match))
+               cur_prior += ftc->getPrior();
+            if (fileContent != NULL && ftc->isFileContent() && ftc->getRE()->parse(fileContent, &match))
+               cur_prior += ftc->getPrior();
+         }
+         return cur_prior;
+      }
+   protected:
+      /// is prototype component loaded
+      bool protoLoaded;
+      /// is type component loaded
+      bool typeLoaded;
+      /// is type references fully resolved
+      bool loadDone;
+      /// is initial type load failed
+      bool loadBroken;
+      /// is this IS loading was started
+      bool inputSourceLoading;
+
+      string name, group, description;
+      bool isPackage;
+      HRCParserImpl *hrcParser;
+      scheme_impl *baseScheme;
+
+      ref_array < FileTypeChooser > chooserVector;
+      string_to_string paramDefaultHash;
+      string_to_string paramHash;
+      string_to_string paramDescriptionHash;
+      stringa paramVector;
+      stringa importVector;
+      string    m_strSourceLocation;
+      string    m_strSource;
+
+   public:
+      file_type_impl(HRCParserImpl *hrcParser)
+      {
+         this->hrcParser = hrcParser;
+         protoLoaded = typeLoaded = loadDone = loadBroken = inputSourceLoading = false;
+         isPackage = false;
+         baseScheme = NULL;
+      }
+
+      ~file_type_impl()
+      {
+      }
+
+   };
 
 } // namespace colorertake5
 

@@ -151,7 +151,7 @@ element * parser::expr(::datetime::element * pelement1)
          }
          else
          {
-            _throw("unknown function");
+            _throw(simple_exception(get_app(), "unknown function"));
          }
          expect(token::open_paren);
          int32_t iElem = 1;

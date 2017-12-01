@@ -32,7 +32,7 @@ namespace zip
          {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError((LONG)::GetLastError());
-         _throw(0);
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
          }
          pFile->m_hFile = (UINT)hFile;
          ASSERT(pFile->m_hFile != (UINT)hFileNull);

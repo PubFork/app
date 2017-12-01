@@ -189,12 +189,10 @@ namespace axis
    }
 
 
-   bool system::finalize()
+   void system::term()
    {
 
       __wait_threading_count_except(this,::millis((5000) * 77));
-
-      bool bOk = false;
 
       try
       {
@@ -210,20 +208,20 @@ namespace axis
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
 
       try
       {
 
-         bOk = ::axis::application::finalize();
+         ::axis::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
 
@@ -241,26 +239,24 @@ namespace axis
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set(-1);
 
       }
-
-      return bOk;
 
    }
 
 
-   bool system::initialize()
+   bool system::init()
    {
 
-      if (!::axis::application::initialize())
+      if (!::axis::application::init())
       {
 
          return false;
 
       }
 
-      if (!::aura::system::initialize())
+      if (!::aura::system::init())
       {
 
          return false;
@@ -271,7 +267,8 @@ namespace axis
 
    }
 
-   int32_t system::exit_application()
+
+   void system::term_application()
    {
 
       try
@@ -317,7 +314,7 @@ namespace axis
       catch(...)
       {
 
-         m_iErrorCode = -86;
+         m_error.set_if_not_set(-86);
 
       }
 
@@ -355,16 +352,16 @@ namespace axis
 
       m_serviceptra.remove_all();
 
-      int32_t iRet = m_iErrorCode;
-
       try
       {
 
-         iRet = ::axis::application::exit_application();
+         ::axis::application::term_application();
 
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -382,6 +379,8 @@ namespace axis
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -392,6 +391,8 @@ namespace axis
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -404,6 +405,8 @@ namespace axis
       catch(...)
       {
 
+         m_error.set_if_not_set();
+
       }
 
       try
@@ -414,6 +417,8 @@ namespace axis
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -430,6 +435,8 @@ namespace axis
       }
       catch(...)
       {
+
+         m_error.set_if_not_set();
 
       }
 
@@ -450,7 +457,7 @@ namespace axis
       try
       {
 
-         ::aura::system::exit_application();
+         ::aura::system::term_application();
 
       }
       catch(...)
@@ -480,8 +487,6 @@ namespace axis
       {
 
       }
-
-      return iRet;
 
    }
 
@@ -515,9 +520,12 @@ namespace axis
 
       ::axis::system * psystem = (::axis::system *)p;
 
-      return psystem->main();
+      psystem->main();
+
+      return psystem->get_exit_code();
 
    }
+
 
    CLASS_DECL_AXIS void __start_system(::axis::system * psystem)
    {

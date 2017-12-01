@@ -218,7 +218,7 @@ namespace metrowin
       //{
       //   delete pnative_buffer;
       //   //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-      //   _throw(0);
+      //   _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
       //}
       //pnative_buffer->m_hnative_buffer = (UINT)hnative_buffer;
       //ASSERT(pnative_buffer->m_hnative_buffer != (UINT)hnative_bufferNull);

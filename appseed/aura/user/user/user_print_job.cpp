@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 //#include "base/user/user.h"
 
 
@@ -26,14 +26,13 @@ namespace user
    }
 
 
-   int32_t print_job::run()
+   void print_job::run()
    {
 
       ::exception::throw_interface_only(get_app());
 
-      return -1;
-
    }
+
 
 } // namespace user
 

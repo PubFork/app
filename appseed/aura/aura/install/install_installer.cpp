@@ -2144,7 +2144,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         _throw("todo");
+         _throw(simple_exception(get_app(), "todo"));
 
 #else
 
@@ -2169,7 +2169,7 @@ retry_host:
 
 #ifdef METROWIN
 
-         _throw("todo");
+         _throw(simple_exception(get_app(), "todo"));
 
 #else
          ::aura::shell_launcher launcher(m_pwindow == NULL ? NULL : m_pwindow->get_safe_handle(), "open", strStage, (" : " + str2.substr(0, iPos) + " usehostlogin"), dir::name(strStage), SW_SHOWNORMAL);
@@ -2188,7 +2188,7 @@ retry_host:
 
 #ifdef METROWIN
 
-      _throw("todo");
+      _throw(simple_exception(get_app(), "todo"));
 
 #elif defined(WINDOWS)
 

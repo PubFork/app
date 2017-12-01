@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace userstack
@@ -38,11 +38,7 @@ namespace userstack
 
       m_bWindowFrame = true;
 
-#ifdef 
-
       m_bWindowFrame = GetTypedParent < ::plugin::host_interaction >() == NULL;
-
-#endif
 
       if(pobj->previous())
          return;

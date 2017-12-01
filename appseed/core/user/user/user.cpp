@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 
 
@@ -350,7 +350,7 @@ namespace core
       catch (...)
       {
 
-         m_iErrorCode = -2;
+         m_error.set_if_not_set(-2);
 
       }
 
@@ -385,7 +385,7 @@ namespace core
       catch (...)
       {
 
-         m_iErrorCode = -2;
+         m_error.set_if_not_set(-2);
 
       }
 
@@ -420,6 +420,7 @@ namespace core
 
    }
 
+
    session_docs::~session_docs()
    {
 
@@ -427,26 +428,33 @@ namespace core
 
    }
 
+
    void session_docs::close_all_documents()
    {
 
       if (m_pnaturedocument != NULL)
       {
+
          m_pnaturedocument.cast < ::user::document>()->on_close_document();
+
       }
 
       if (m_pplatformdocument != NULL)
       {
+
          m_pplatformdocument.cast < ::user::document>()->on_close_document();
+
       }
 
       if (m_pbergedgedocument != NULL)
       {
+
          m_pbergedgedocument.cast < ::user::document>()->on_close_document();
+
       }
 
-
    }
+
 
    session_docs * create_session_docs()
    {
@@ -455,6 +463,7 @@ namespace core
 
    }
 
+
    void destroy_session_docs(session_docs * pdocs)
    {
 
@@ -462,8 +471,10 @@ namespace core
 
    }
 
+
    void session::on_app_request_bergedge_callback(::aura::application * papp)
    {
+
       if (&App(papp) != NULL)
       {
 
@@ -520,8 +531,11 @@ namespace core
 
    sp(::user::document) session::get_document()
    {
+
       return m_pdocs->m_pbergedgedocument;
+
    }
+
 
    sp(::user::impact) session::get_view()
    {

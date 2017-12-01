@@ -1,4 +1,4 @@
-#include "framework.h" // from "base/user/user.h"
+﻿#include "framework.h" // from "base/user/user.h"
 
 
 #ifdef WINDOWSEX
@@ -1735,9 +1735,9 @@ restart:
 
          ::draw2d::keep k(pgraphics);
 
-         int iGet = (get_tick_count() / 10) % 256;
+         //int iGet = (get_tick_count() / 10) % 256;
 
-         pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, 255 - iGet, iGet));
+         //pgraphics->FillSolidRect(10, 10, 50, 50, ARGB(255, iGet, 255 - iGet, iGet));
 
          try
          {
@@ -3509,7 +3509,7 @@ restart:
       index iFind = GetParent()->m_uiptraChild.find_first(this);
 
       if (iFind < 0)
-         _throw("not expected situation");
+         _throw(simple_exception(get_app(), "not expected situation"));
 
       if (iFind < GetParent()->m_uiptraChild.get_upper_bound())
       {
@@ -4594,35 +4594,35 @@ restart:
 
    id interaction::_001RunModalLoop(uint32_t dwFlags)
    {
-      
+
       ASSERT(!m_bModal);
-      
+
       if(m_bModal)
       {
-         
+
          return ::id();
-         
+
       }
 
       keep < bool > keepModal(&m_bModal, true, false, true);
-      
+
       keep < thread * > keepThreadModal(&m_pthreadModal, ::get_thread(), NULL, true);
-      
+
       while(true)
       {
-         
+
          if (!ContinueModal())
          {
-            
+
             break;
-            
+
          }
-         
+
          if(!::get_thread()->defer_pump_message())
          {
-          
+
             break;
-            
+
          }
 
       }
@@ -4631,18 +4631,18 @@ restart:
 
    }
 
-   
+
    bool interaction::ContinueModal()
    {
-      
+
       return m_bModal && ::get_thread_run();
-      
+
    }
-   
+
 
    void interaction::EndModalLoop(id nResult)
    {
-      
+
       ASSERT(IsWindow());
 
       // this result will be returned from interaction_impl::RunModalLoop
@@ -4650,9 +4650,9 @@ restart:
 
       // make sure a message goes through to exit the modal loop
       m_bModal = false;
-      
+
       m_pthreadModal->kick_thread();
-      
+
    }
 
 
@@ -6239,35 +6239,30 @@ restart:
          message_handler(spbase);
 
       }
-      catch (::exit_exception &)
+      catch (esp esp)
       {
 
-         ::multithreading::post_quit(&System);
-
-         return -1;
-
-      }
-      catch (const ::exception::exception & e)
-      {
-
-         if (!Application.on_run_exception((::exception::exception &) e))
+         if (esp.is < exit_exception >())
          {
 
-            ::multithreading::post_quit(&System);
+            esp.cast < exit_exception >()->post_quit();
+
+         }
+         else
+         {
+
+            if (!Application.on_run_exception(esp))
+            {
+
+               ::multithreading::post_quit(&System);
+
+               return -1;
+
+            }
 
             return -1;
 
          }
-
-         return -1;
-
-      }
-      catch (::exception::base * pe)
-      {
-
-         m_pauraapp->process_window_procedure_exception(pe, spbase);
-
-         pe->Delete();
 
       }
       catch (...)

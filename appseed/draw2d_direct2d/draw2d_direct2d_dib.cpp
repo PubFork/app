@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 extern CLASS_DECL_AURA spa(::draw2d::dib) * g_pdiba;
@@ -172,7 +172,7 @@ namespace draw2d_direct2d
 
       m_hrEndDraw = S_OK;
 
-      m_spgraphics->m_pdib = this;
+      m_spgraphics->m_pdibDraw2dGraphics = this;
 
       return true;
 
@@ -2600,7 +2600,7 @@ namespace draw2d_direct2d
       hr = m_spbitmapMap->get_typed_os_data < ID2D1Bitmap1 >(::draw2d_direct2d::bitmap::data_bitmap1)->Map(D2D1_MAP_OPTIONS_READ, &pb->m_map);
 
       if (FAILED(hr) || pb->m_map.bits == NULL)
-         _throw("");
+         _throw(simple_exception(get_app(), ""));
 
       ((dib *) this)->m_pcolorref = (COLORREF *)pb->m_map.bits;
 
@@ -2711,7 +2711,7 @@ namespace draw2d_direct2d
 
             ((dib *) this)->m_bMapped = false;
 
-            _throw("");
+            _throw(simple_exception(get_app(), ""));
 
          }
 

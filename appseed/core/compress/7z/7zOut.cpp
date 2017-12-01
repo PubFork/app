@@ -562,7 +562,7 @@ namespace n7z
       UNREFERENCED_PARAMETER(externalCodecs);
       UNREFERENCED_PARAMETER(encoder);
       UNREFERENCED_PARAMETER(packSizes);
-      _throw("implement below");
+      _throw(simple_exception(get_app(), "implement below"));
       //CBufInStream *streamSpec = new CBufInStream;
       //smart_pointer<::file::reader> stream = streamSpec;
       //streamSpec->Init(data, data.GetCapacity());
@@ -570,7 +570,7 @@ namespace n7z
       folderItem.UnpackCRCDefined = true;
       folderItem.UnpackCRC = crc_calc(data, data.GetCapacity());
       //  uint64_t dataSize64 = data.GetCapacity();
-      _throw("uncomment below if implement above");
+      _throw(simple_exception(get_app(), "uncomment below if implement above"));
       /*  RINOK(encoder.Encode(
       codecsInfo, externalCodecs,
       stream, NULL, &dataSize64, folderItem, SeqStream, packSizes, NULL))*/
@@ -821,7 +821,7 @@ namespace n7z
             _writeToStream = true;
 
             if (folders.get_count() == 0)
-               _throw(1);
+               _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 
             WriteID(NID::kEncodedHeader);
             bool_array ba;

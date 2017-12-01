@@ -1,16 +1,16 @@
-#pragma once
+﻿#pragma once
 
 
 namespace sphere
 {
 
 
-   class CLASS_DECL_SPHERE application : 
+   class CLASS_DECL_SPHERE application :
       virtual public ::console::application
    {
    public:
-      
-      
+
+
 
 
       application();
@@ -19,9 +19,9 @@ namespace sphere
 
 
 
-      
+
       virtual bool init_instance() override;
-      virtual int32_t  exit_application() override;
+      virtual void term_application() override;
 
       virtual void _001OnFileNew();
       virtual bool bergedge_start() override;
@@ -44,7 +44,7 @@ namespace sphere
 
    };
 
-   
+
 } // namespace sphere
 
 

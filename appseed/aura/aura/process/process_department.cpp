@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace process
@@ -98,7 +98,7 @@ namespace process
       m_strCmdLine(strCmdLine),
       m_spprocess(allocer()),
       m_pstrRead(pstrRead)
-      {
+   {
 
       if(dur.is_pos_infinity())
       {
@@ -121,31 +121,27 @@ namespace process
    }
 
 
-   int32_t department::process_thread::run()
+   void department::process_thread::run()
    {
-
-      int iRetCode;
 
       if(m_bElevated)
       {
 
-         iRetCode = run_elevated();
+         run_elevated();
 
       }
       else
       {
 
-         iRetCode = run_normal();
+         run_normal();
 
       }
-
-      return iRetCode;
 
    }
 
 
 
-   int32_t department::process_thread::run_normal()
+   void department::process_thread::run_normal()
    {
 
       if(!m_spprocess->create_child_process(m_strCmdLine,true))
@@ -165,7 +161,11 @@ namespace process
 
          }
 
-         return false;
+         ///return false;
+
+         m_error.set_if_not_set();
+
+         return;
 
       }
 
@@ -224,19 +224,21 @@ namespace process
 
       }
 
-      return 0;
+      //return 0;
 
    }
 
-   int32_t department::process_thread::run_elevated()
+   void department::process_thread::run_elevated()
    {
 
-      int32_t iRetCode = m_spprocess->synch_elevated(m_strCmdLine,SW_HIDE,millis(m_uiTimeout),m_pbPotentialTimeout);
+      uint32_t uiRetCode = m_spprocess->synch_elevated(m_strCmdLine,SW_HIDE,millis(m_uiTimeout),m_pbPotentialTimeout);
 
-      if(m_puiRetCode != NULL)
+      m_error.set(uiRetCode);
+
+      if (m_puiRetCode != NULL)
       {
 
-         *m_puiRetCode = iRetCode;
+         *m_puiRetCode = uiRetCode;
 
       }
 
@@ -247,10 +249,8 @@ namespace process
 
       }
 
-
-      return 0;
-
    }
+
 
    bool department::process_thread::retry()
    {

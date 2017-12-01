@@ -35,11 +35,7 @@ namespace core
 
       class ::core::patch   *                      m_ppatch;
 
-#ifdef 
-
       sp(::core::run_start_installer)              m_prunstartinstaller;
-
-#endif
 
       sp(::core::session::map)                     m_pbergedgemap;
       spa(::core::session)                         m_planesessionptra;
@@ -76,24 +72,24 @@ namespace core
 
       virtual bool is_system() override;
 
-         virtual bool process_init() override;
+      virtual bool process_init() override;
 
-         virtual bool init2() override;
+      virtual bool init2() override;
 
-         virtual bool init_application() override;
+      virtual bool init_application() override;
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
 
 
       //virtual int32_t main();
       virtual bool InitApplication() override;
 
-         virtual bool initialize() override;
-         virtual bool init1() override;
-         virtual bool init3() override;
+      virtual bool init() override;
+      virtual bool init1() override;
+      virtual bool init3() override;
 
       virtual bool bergedge_start() override;
 
@@ -197,7 +193,7 @@ namespace core
       void dump(dump_context & context) const override;
 
 
-      virtual int32_t main() override;
+      virtual void main() override;
       virtual void hist_hist(const char * psz) override;
 
 

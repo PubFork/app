@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ca2
 //
@@ -373,10 +373,10 @@ class machine_event_data;
 
 namespace hotplugin
 {
-   
+
    class host;
    class plugin;
-   
+
 }
 
 
@@ -391,15 +391,15 @@ namespace html
 
 namespace multimedia
 {
-   
+
    namespace audio_plugin
    {
-      
+
       class plugin;
-      
+
    } // namespace audio_plugin
-   
-   
+
+
 } // namespace multimedia
 
 #include "aura/aura/aura/aura_auto.h"
@@ -1383,21 +1383,21 @@ typedef ::map < sp(object), sp(object), ptra, ptra > map_many;
 
 struct install_status
 {
-   
+
    int         m_iCheck;
    bool        m_bOk;
-   
+
    install_status()
    {
-      
+
       m_iCheck = 0;
       m_bOk = false;
-      
+
    }
-   
-   
+
+
    DWORD calc_when_is_good_to_check_again();
-   
+
 };
 
 
@@ -2044,6 +2044,8 @@ namespace user
 #include "aura/net/net.inl"
 
 #include "aura/graphics/visual/visual.inl"
+
+#include "aura/aura/exception/exception.inl"
 
 
 

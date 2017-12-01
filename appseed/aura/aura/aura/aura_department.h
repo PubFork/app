@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 
 namespace aura
 {
 
-   
+
    class CLASS_DECL_AURA department :
       virtual public ::message::receiver
    {
@@ -27,13 +27,13 @@ namespace aura
       virtual bool init_instance();
 
       virtual void term_instance();
-      virtual bool term3();
-      virtual bool term2();
-      virtual bool term1();
+      virtual void term3();
+      virtual void term2();
+      virtual void term1();
       virtual void term();
 
       void on_application_message(::message::message * pobj);
-      
+
 
    };
 

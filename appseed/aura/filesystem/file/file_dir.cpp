@@ -290,7 +290,7 @@ found:
          _throw(metrowin_todo());
          //HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramFiles, KF_FLAG_NO_ALIAS, NULL, wtostring(buf, 4096));
          //if(FAILED(hr))
-         // _throw("dir::ca2_module_dup : SHGetKnownFolderPath failed");
+         // _throw(simple_exception(get_app(), "dir::ca2_module_dup : SHGetKnownFolderPath failed"));
 
          strcpy(lpszModuleFilePath, buf.c_str());
 

@@ -2,9 +2,6 @@
 //#include "base/user/user.h"
 
 
-#ifdef 
-
-
 namespace hotplugin
 {
 
@@ -87,12 +84,12 @@ namespace hotplugin
                if(::hotplugin::get_axis_system()->m_bReady)
                {
 
-                  if(::hotplugin::get_axis_system()->m_iErrorCode != 0)
+                  if(::hotplugin::get_axis_system()->get_exit_code() != 0)
                   {
 
                      string str;
-                     
-                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->m_iErrorCode);
+
+                     str.Format("::hotplugin::g_pbasesystem initialization error %d",::hotplugin::get_axis_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -138,12 +135,12 @@ namespace hotplugin
                if(get_composer_system()->m_bReady)
                {
 
-                  if(get_composer_system()->m_iErrorCode != 0)
+                  if(get_composer_system()->get_exit_code() != 0)
                   {
 
                      string str;
 
-                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->m_iErrorCode);
+                     str.Format("m_pcomposersystem initialization error %d",get_composer_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -192,12 +189,12 @@ namespace hotplugin
                if(m_paxishost->m_bReady)
                {
 
-                  if(m_paxishost->m_iErrorCode != 0)
+                  if(m_paxishost->get_exit_code() != 0)
                   {
 
                      string str;
 
-                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->m_iErrorCode);
+                     str.Format("::hotplugin::composer::m_paxishost initialization error %d",::hotplugin::get_axis_system()->get_exit_code());
 
                      ::output_debug_string(str);
 
@@ -496,12 +493,7 @@ namespace hotplugin
          if(!paxissystem->pre_run())
          {
 
-            if(paxissystem->m_iErrorCode == 0)
-            {
-
-               paxissystem->m_iErrorCode = -1;
-
-            }
+            paxissystem->m_error.set_if_not_set();
 
             paxissystem->m_bReady = true;
 
@@ -513,12 +505,7 @@ namespace hotplugin
       catch(...)
       {
 
-         if(paxissystem->m_iErrorCode == 0)
-         {
-
-            paxissystem->m_iErrorCode = -1;
-
-         }
+         paxissystem->m_error.set_if_not_set();
 
          paxissystem->m_bReady = true;
 
@@ -526,7 +513,9 @@ namespace hotplugin
 
       }
 
-      return paxissystem->main();
+      paxissystem->main();
+
+      return paxissystem->get_exit_code();
 
    }
 
@@ -547,8 +536,5 @@ namespace hotplugin
 
 
 } // namespace hotplugin
-
-
-#endif
 
 

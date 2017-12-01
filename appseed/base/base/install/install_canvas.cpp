@@ -1,9 +1,6 @@
 ﻿#include "framework.h"
 
 
-#if defined()
-
-
 #include "install_canvas.h"
 #include <stdio.h>
 
@@ -38,25 +35,25 @@ namespace install
 #ifdef SUPORTA_TELA_AVANCADA
    class canvas_zero
    {
-      public:
-         uint32_t m_dwCurZero;
-         uint32_t m_dwNextZero;
-         int32_t m_iMaxSize;
-         int32_t m_iLast;
-         array < POINT > m_pta;
-         int_array m_ia;
-         RECT m_rect;
-         HBITMAP m_hbm;
-         HDC m_hdc;
-         HBITMAP m_hbmZero;
-         HBITMAP m_hbmZeroOld;
-         HDC m_hdcZero;
-         COLORREF * m_pdata;
-         COLORREF * m_pdataZero;
-         canvas_zero();
-         void prepare(HDC hdc, const RECT & rect);
-         void on_paint(::draw2d::graphics * pgraphics, const RECT & rect);
-         virtual void zero(HDC hdc, POINT pt, int32_t iSize, int32_t iStep);
+   public:
+      uint32_t m_dwCurZero;
+      uint32_t m_dwNextZero;
+      int32_t m_iMaxSize;
+      int32_t m_iLast;
+      array < POINT > m_pta;
+      int_array m_ia;
+      RECT m_rect;
+      HBITMAP m_hbm;
+      HDC m_hdc;
+      HBITMAP m_hbmZero;
+      HBITMAP m_hbmZeroOld;
+      HDC m_hdcZero;
+      COLORREF * m_pdata;
+      COLORREF * m_pdataZero;
+      canvas_zero();
+      void prepare(HDC hdc, const RECT & rect);
+      void on_paint(::draw2d::graphics * pgraphics, const RECT & rect);
+      virtual void zero(HDC hdc, POINT pt, int32_t iSize, int32_t iStep);
    };
 
 #endif
@@ -689,10 +686,5 @@ namespace install
 //
 //
 //} // namespace base
-
-
-#endif
-
-
 
 

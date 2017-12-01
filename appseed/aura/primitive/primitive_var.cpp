@@ -954,7 +954,7 @@ void var::read(::file::istream & is)
       m_sp = Sys(is.m_spfile->get_app()).alloc(info);
       if(m_sp.is_null())
       {
-         _throw("object allocation is not implemented");
+         _throw(simple_exception(get_app(), "object allocation is not implemented"));
       }
       ::file::serializable * pserializable = m_sp.cast < ::file::serializable >();
       if(pserializable != NULL)
@@ -2038,7 +2038,7 @@ const class memory & var::memory() const
 {
    if(get_type() != type_memory)
    {
-      _throw(0);
+      _throw(simple_exception(get_app(), "integer_exception 122" ));
    }
    return *dynamic_cast < const class memory * > (m_sp.m_p);
 }
@@ -2233,7 +2233,7 @@ var var::key(index i) const
    case type_propset:
       return i;
    default:
-      _throw("not supported");
+      _throw(simple_exception(get_app(), "not supported"));
    }
 }
 
@@ -2280,7 +2280,7 @@ var var::at(index i) const
       }
       else
       {
-         _throw("index out of bounds");
+         _throw(simple_exception(get_app(), "index out of bounds"));
       }
    }
 }
@@ -2306,7 +2306,7 @@ var var::at(index i)
       }
       else
       {
-         _throw("index out of bounds");
+         _throw(simple_exception(get_app(), "index out of bounds"));
       }
    }
 }

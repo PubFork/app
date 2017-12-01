@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <stdio.h>
 
 const int string::npos = -1;
@@ -764,7 +764,7 @@ void string::construct() NOTHROW
 
 
 string::string(string_manager * pstringmanager) NOTHROW:
-   stdstring < simple_string >(pstringmanager)
+stdstring < simple_string >(pstringmanager)
 {
 }
 
@@ -1379,11 +1379,11 @@ strsize string::Delete(strsize iIndex,strsize nCount)
 
    if(nCount + iIndex > nLength)
    {
-      
+
       nCount = nLength - iIndex;
-      
+
    }
-   
+
    if(nCount > 0)
    {
       strsize nNewLength = nLength - nCount;
@@ -2735,11 +2735,11 @@ string string::Mid(strsize iFirst,strsize nCount) const
 
    if(iFirst + nCount > get_length())
    {
-      
+
       nCount = get_length() - iFirst;
-      
+
    }
-   
+
    if(iFirst > get_length())
    {
       nCount = 0;

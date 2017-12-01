@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class keyboard;
@@ -15,48 +15,48 @@ namespace user
    class CLASS_DECL_BASE user :
       virtual public ::aura::department
    {
-      public:
+   public:
 
 
 
-         ::user::elemental *           m_pmousefocusLButtonDown;
-         ::user::elemental *           m_pmousefocusRButtonDown;
-         stringa                       m_straEscape;
-         //::user::style_sp              m_puserstyle;
-
-
-
-
-         user(::aura::application * papp);
-         virtual ~user();
-
-
-
-         //::user::style * get_user_style();
-
-
-         virtual bool init1();
-         virtual bool init2();
-         virtual bool initialize();
+      ::user::elemental *           m_pmousefocusLButtonDown;
+      ::user::elemental *           m_pmousefocusRButtonDown;
+      stringa                       m_straEscape;
+      //::user::style_sp              m_puserstyle;
 
 
 
 
-         virtual ::user::elemental * get_mouse_focus_LButtonDown();
-         virtual void set_mouse_focus_LButtonDown(::user::elemental * pmousefocus);
-         virtual ::user::elemental * get_mouse_focus_RButtonDown();
-         virtual void set_mouse_focus_RButtonDown(::user::elemental * pmousefocus);
+      user(::aura::application * papp);
+      virtual ~user();
 
 
 
-         virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
-
-         virtual bool finalize();
+      //::user::style * get_user_style();
 
 
+      virtual bool init1() override;
+      virtual bool init2() override;
+      virtual bool init() override;
 
 
-         virtual sp(type) controltype_to_typeinfo(::user::e_control_type type);
+
+
+      virtual ::user::elemental * get_mouse_focus_LButtonDown();
+      virtual void set_mouse_focus_LButtonDown(::user::elemental * pmousefocus);
+      virtual ::user::elemental * get_mouse_focus_RButtonDown();
+      virtual void set_mouse_focus_RButtonDown(::user::elemental * pmousefocus);
+
+
+
+      virtual void SendMessageToWindows(UINT message, WPARAM wParam, LPARAM lParam);
+
+      virtual void term() override;
+
+
+
+
+      virtual sp(type) controltype_to_typeinfo(::user::e_control_type type);
 
 
 

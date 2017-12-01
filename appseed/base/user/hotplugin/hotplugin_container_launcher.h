@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 namespace hotplugin
@@ -13,12 +10,12 @@ namespace hotplugin
    {
    public:
 
-      
+
       string      m_strChannel;
       string      m_strPlatform;
 
       container_launcher(string strPlatform, const char * pszChannel);
-         
+
       virtual bool ensure_executable() { return true; }
 
       string get_params();
@@ -29,8 +26,5 @@ namespace hotplugin
 
 
 } // namespace ca2plugin_container
-
-
-#endif
 
 

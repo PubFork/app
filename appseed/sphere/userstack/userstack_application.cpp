@@ -58,17 +58,22 @@ namespace userstack
    }
 
 
-   int32_t application::exit_application()
+   void application::term_application()
    {
+
       try
       {
-         ::asphere::application::exit_application();
+
+         ::asphere::application::term_application();
+
       }
       catch(...)
       {
+
       }
 
       string strId;
+
       sp(::aura::application) pcaapp;
 
       POSITION pos = m_mapApplication.get_start_position();
@@ -77,6 +82,7 @@ namespace userstack
       {
 
          strId.Empty();
+
          pcaapp = NULL;
 
          m_mapApplication.get_next_assoc(pos, strId, pcaapp);
@@ -84,24 +90,27 @@ namespace userstack
          sp(::aura::application) papp =  (pcaapp);
 
          papp->m_pcoreapp->post_quit();
+
       }
 
-      return 0;
-
    }
+
 
    bool application::bergedge_start()
    {
+
       return true;
+
    }
-
-
 
 
    void application::OnFileManagerOpenFile(::filemanager::data * pdata, ::fs::item_array & itema)
    {
+
       UNREFERENCED_PARAMETER(pdata);
+
    }
+
 
    void application::load_string_table()
    {
@@ -110,8 +119,8 @@ namespace userstack
    }
 
    bool application::file_manager_open_file(
-      ::filemanager::data * pdata,
-      ::fs::item_array & itema)
+   ::filemanager::data * pdata,
+   ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
       if(itema.get_size() > 0)
@@ -133,11 +142,11 @@ namespace userstack
       System.factory().creatable < ::userstack::frame > (iCount);
 
       m_ptemplate_pane    = new ::user::single_document_template(
-         this,
-         "bergedge/frame",
-         System.type_info < document > (),
-         System.type_info < frame > (),
-         System.type_info < pane_view > ());
+      this,
+      "bergedge/frame",
+      System.type_info < document > (),
+      System.type_info < frame > (),
+      System.type_info < pane_view > ());
 
    }
 
@@ -397,18 +406,21 @@ namespace userstack
 
    }
 
-   bool application::initialize()
+
+   bool application::init()
    {
 
+      if (!::asphere::application::init())
+      {
 
-      if(!::asphere::application::initialize())
          return false;
 
+      }
 
       return true;
 
-
    }
+
 
    bool application::os_native_bergedge_start()
    {
@@ -417,51 +429,57 @@ namespace userstack
 
    }
 
-   int32_t application::main()
+
+   void application::main()
    {
 
-
-      return ::asphere::application::main();
-
+      ::asphere::application::main();
 
    }
+
 
    bool application::on_unstall()
    {
 
-      bool bOk1 = false;
-
+      bool bOk = true;
 
       try
       {
-         bOk1 = ::asphere::application::on_unstall();
+
+         if (!::asphere::application::on_unstall())
+         {
+
+            bOk = false;
+
+         }
+
       }
       catch(...)
       {
-         bOk1 = false;
+
+         m_error.set_if_not_set();
+
+         bOk = false;
+
       }
 
-
-      return bOk1;
-
+      return bOk;
 
    }
+
 
    bool application::is_serviceable()
    {
 
-
       return false;
 
-
    }
+
 
    service_base * application::allocate_new_service()
    {
 
-
       return NULL;
-
 
    }
 

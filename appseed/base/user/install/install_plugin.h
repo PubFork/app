@@ -1,7 +1,4 @@
-#pragma once
-
-
-#if defined()
+﻿#pragma once
 
 
 #include "base/install/install_canvas.h"
@@ -15,7 +12,7 @@ namespace install
 
    enum e_check
    {
-      
+
       check_before_auth,
       check_before_start
 
@@ -102,7 +99,7 @@ namespace install
       virtual void on_login_result(::fontopus::e_result eresult, const char * pszResponse);
 
       DECL_GEN_SIGNAL(_001OnLButtonUp);
-      
+
       virtual void message_handler(::message::base * pbase) override;
 
       virtual void on_paint_progress(::draw2d::graphics * pgraphics, const RECT & lprect) override;
@@ -136,7 +133,7 @@ namespace install
 
       using ::hotplugin::plugin::viewport_screen_to_client;
       virtual void viewport_screen_to_client(POINT * ppt) override;
-      
+
       using ::hotplugin::plugin::viewport_client_to_screen;
       virtual void viewport_client_to_screen(POINT * ppt) override;
 
@@ -154,6 +151,4 @@ namespace install
 } // namespace install
 
 
-
-#endif // 
 

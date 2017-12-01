@@ -330,7 +330,7 @@ namespace axis
    bool session::init_application()
    {
 
-      if (!m_pfontopus->init_application())
+      if (!m_pfontopus->init_instance())
       {
 
          return false;
@@ -365,17 +365,17 @@ namespace axis
    }
 
 
-   bool session::initialize()
+   bool session::init()
    {
 
-      if (!::aura::session::initialize())
+      if (!::aura::session::init())
       {
 
          return false;
 
       }
 
-      if (!::axis::application::initialize())
+      if (!::axis::application::init())
       {
 
          return false;
@@ -422,26 +422,20 @@ namespace axis
    }
 
 
-   bool session::finalize()
+   void session::term()
    {
-
-      bool bOk = true;
 
       try
       {
 
-         if(!::axis::application::finalize())
-         {
-
-            bOk = false;
-
-         }
+         ::axis::application::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
 
@@ -454,6 +448,7 @@ namespace axis
       catch (...)
       {
 
+         m_error.set_if_not_set();
 
       }
 
@@ -466,7 +461,7 @@ namespace axis
             if (!m_puserpresence->finalize())
             {
 
-               bOk = false;
+               m_error.set_if_not_set();
 
             }
 
@@ -479,7 +474,8 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
 
@@ -492,7 +488,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -506,7 +502,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -519,7 +515,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -532,7 +528,7 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
@@ -548,7 +544,7 @@ namespace axis
          catch (...)
          {
 
-            bOk = false;
+            m_error.set_if_not_set();
 
          }
 
@@ -563,43 +559,40 @@ namespace axis
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
+
       }
 
       try
       {
+
          ::aura::del(m_psockets);
+
       }
       catch (...)
       {
 
-         bOk = false;
+         m_error.set_if_not_set();
 
       }
 
       try
       {
 
-         if(!::aura::session::finalize())
-         {
-
-            bOk = false;
-
-         }
+         ::aura::session::term();
 
       }
       catch(...)
       {
 
-         bOk = false;
-      }
+         m_error.set_if_not_set();
 
-      return bOk;
+      }
 
    }
 
 
-   int32_t session::exit_application()
+   void session::term_application()
    {
 
       try
@@ -663,11 +656,9 @@ namespace axis
 
       ::aura::del(m_pkeyboard);
 
-      ::axis::application::exit_application();
+      ::axis::application::term_application();
 
-      ::aura::session::exit_application();
-
-      return 0;
+      ::aura::session::term_application();
 
    }
 

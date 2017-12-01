@@ -389,7 +389,7 @@ namespace datetime
                      input = scanner;
                      if(!check_expression_separator(input, scanner))
                      {
-                        _throw("invalid date");
+                        _throw(simple_exception(get_app(), "invalid date"));
                      }
                      return string(start, scanner - start);
                   }
@@ -404,13 +404,13 @@ namespace datetime
                      input = scanner;
                      if(!check_expression_separator(input, scanner))
                      {
-                        _throw("invalid date");
+                        _throw(simple_exception(get_app(), "invalid date"));
                      }
                      return string(start, scanner - start);
                   }
                   else
                   {
-                     _throw("invalid date");
+                     _throw(simple_exception(get_app(), "invalid date"));
                   }
                }
                else if(!strSep2.has_char())
@@ -418,13 +418,13 @@ namespace datetime
                   input = scanner;
                   if(!check_expression_separator(input, scanner))
                   {
-                     _throw("invalid date");
+                     _throw(simple_exception(get_app(), "invalid date"));
                   }
                   return string(start, scanner - start);
                }
                else
                {
-                  _throw("invalid date");
+                  _throw(simple_exception(get_app(), "invalid date"));
                }
             }
             else
@@ -444,7 +444,7 @@ namespace datetime
                         input = scanner;
                         if(!check_expression_separator(input, scanner))
                         {
-                           _throw("invalid date");
+                           _throw(simple_exception(get_app(), "invalid date"));
                         }
                         return string(start, scanner - start);
                      }
@@ -459,18 +459,18 @@ namespace datetime
                         input = scanner;
                         if(!check_expression_separator(input, scanner))
                         {
-                           _throw("invalid date");
+                           _throw(simple_exception(get_app(), "invalid date"));
                         }
                         return string(start, scanner - start);
                      }
                      else
                      {
-                        _throw("invalid date");
+                        _throw(simple_exception(get_app(), "invalid date"));
                      }
                   }
                   else
                   {
-                     _throw("invalid date");
+                     _throw(simple_exception(get_app(), "invalid date"));
                   }
                }
             }
@@ -533,7 +533,7 @@ namespace datetime
                return string(start, scanner - start);
             else
             {
-               _throw("invalid date expression");
+               _throw(simple_exception(get_app(), "invalid date expression"));
             }
          }
          else
@@ -543,7 +543,7 @@ namespace datetime
                return string(start, scanner - start);
             else
             {
-               _throw("invalid date expression");
+               _throw(simple_exception(get_app(), "invalid date expression"));
             }
          }
       }
@@ -561,7 +561,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  _throw("invalid date expression");
+                  _throw(simple_exception(get_app(), "invalid date expression"));
                }
             }
             else
@@ -571,7 +571,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  _throw("invalid date expression");
+                  _throw(simple_exception(get_app(), "invalid date expression"));
                }
             }
          }
@@ -586,7 +586,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  _throw("invalid date expression");
+                  _throw(simple_exception(get_app(), "invalid date expression"));
                }
             }
             else
@@ -596,7 +596,7 @@ namespace datetime
                   return string(start, scanner - start);
                else
                {
-                  _throw("invalid date expression");
+                  _throw(simple_exception(get_app(), "invalid date expression"));
                }
             }
          }

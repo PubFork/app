@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace userex
@@ -99,16 +99,16 @@ namespace core
       virtual bool init2() override; // second initialization
       virtual bool init3() override; // third initialization and so on...
 
-      virtual bool initialize() override; // last initialization
+      virtual bool init() override; // last initialization
 
       virtual bool bergedge_start();
       virtual bool os_native_bergedge_start() override;
 
-      virtual int32_t exit_application() override;
+      virtual void term_application() override;
 
-      virtual bool finalize() override;
+      virtual void term() override;
 
-      virtual int32_t main() override;
+      virtual void main() override;
 
       virtual application * get_app() const;
 
@@ -119,7 +119,6 @@ namespace core
       virtual bool is_unstalling() override;
 
       virtual bool is_serviceable() override;
-
 
 
       virtual void pre_translate_message(::message::message * pobj) override;
@@ -207,7 +206,7 @@ namespace core
 
 
 
-      virtual bool on_run_exception(::exception::exception &) override;
+      virtual bool on_run_exception(::exception::exception * pexception) override;
 
 
       // set regsitry key name to be used by application's

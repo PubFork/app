@@ -133,7 +133,7 @@ datetime::value operator + (const datetime::value & val1, const datetime::value 
    }
    else
    {
-      _throw("cannot add two dates");
+      _throw(simple_exception(get_app(), "cannot add two dates"));
    }
    return val;
 }
@@ -155,7 +155,7 @@ datetime::value operator - (const datetime::value & val1, const datetime::value 
    }
    else if(val1.m_bSpan && !val2.m_bSpan)
    {
-      _throw("cannot subtract a date from a span");
+      _throw(simple_exception(get_app(), "cannot subtract a date from a span"));
    }
    else if(val2.m_bSpan && !val1.m_bSpan)
    {
@@ -200,7 +200,7 @@ datetime::value operator * (const datetime::value & val1, double d)
    }
    else
    {
-      _throw("cannot multiply a date");
+      _throw(simple_exception(get_app(), "cannot multiply a date"));
    }
    return val;
 }
@@ -226,7 +226,7 @@ datetime::value operator / (const datetime::value & val1, double d)
    }
    else
    {
-      _throw("cannot multiply a date");
+      _throw(simple_exception(get_app(), "cannot multiply a date"));
    }
    return val;
 }

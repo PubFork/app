@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "base/database/simpledb/simpledb.h"
 
 
@@ -60,10 +60,10 @@ namespace userex
    }
 
 
-   bool userex::initialize()
+   bool userex::init()
    {
 
-      if (!::aura::department::initialize())
+      if (!::aura::department::init())
       {
 
          return false;
@@ -146,28 +146,28 @@ namespace userex
 
       Application.set_form_impact_system(
 
-         canew(::user::multiple_document_template(
+      canew(::user::multiple_document_template(
             get_app(),
             "system/form",
             System.type_info < html_document >(),
             System.get_simple_frame_window_type_info(),
             System.type_info < html_view >())),
 
-         canew(::user::multiple_document_template(
+      canew(::user::multiple_document_template(
             get_app(),
             "system/form",
             System.type_info < html_document >(),
             System.get_simple_child_frame_type_info(),
             System.type_info < html_view >())),
 
-         canew(::user::multiple_document_template(
+      canew(::user::multiple_document_template(
             get_app(),
             "system/form",
             System.type_info < ::user::document >(),
             System.get_simple_frame_window_type_info(),
             System.type_info < ::user::place_holder >()))
 
-         );
+      );
 
       TRACE("::userex::application::initialize");
 
@@ -202,8 +202,8 @@ namespace userex
       bool bHasUninstall = varTopicQuey.has_property("uninstall");
 
       if(!(bHasInstall || bHasUninstall)
-         && Application.m_bLicense
-         && strLicense.has_char())
+            && Application.m_bLicense
+            && strLicense.has_char())
       {
 
          if(&ApplicationUser == NULL)
@@ -219,7 +219,7 @@ namespace userex
 
          int32_t iRetry = 1;
 
-      retry_license:
+retry_license:
 
          iRetry--;
 
@@ -254,7 +254,7 @@ namespace userex
 
       }
 
-      if (!::aura::department::initialize())
+      if (!::aura::department::init())
       {
 
          return false;
@@ -281,13 +281,13 @@ namespace userex
    }
 
 
-   bool userex::finalize()
+   void userex::term()
    {
 
       try
       {
 
-         ::aura::department::finalize();
+         ::aura::department::term();
 
       }
       catch(...)
@@ -310,8 +310,6 @@ namespace userex
       {
 
       }
-
-      return true;
 
    }
 
@@ -344,90 +342,90 @@ namespace userex
       return iRet;
 
 //      class ::userex::message_box box(get_app());
-//      
+//
 //      property_set propertyset;
-//      
+//
 //      propertyset["message"] = pszMessage;
-//      
+//
 //      propertyset["application_name"] = pwndOwner == NULL ? Application.m_strAppName : App(pwndOwner->get_app()).m_strAppName;
-//      
+//
 //      string strMatter;
-//      
+//
 //      if(fuStyle & MB_YESNOCANCEL)
 //      {
-//         
+//
 //         strMatter = "system\\user\\simple_message_box\\yesnocancel.xhtml";
-//         
+//
 //      }
 //      else
 //      {
-//         
+//
 //         strMatter = "system\\user\\simple_message_box\\ok.xhtml";
-//         
+//
 //      }
-//      
+//
 //      try
 //      {
-//         
+//
 //         if(!box.show(strMatter,&propertyset))
 //         {
-//            
+//
 //            string strMessage = pszMessage;
-//            
+//
 //            strMessage.replace("<br>","\r\n");
-//            
+//
 //            return ::simple_message_box(pwndOwner->get_safe_handle(),strMessage,Application.m_strAppName,fuStyle);
-//            
+//
 //         }
-//         
+//
 //      }
 //      catch(...)
 //      {
-//         
+//
 //         string strMessage = pszMessage;
-//         
+//
 //         strMessage.replace("<br>","\r\n");
-//         
+//
 //         return ::simple_message_box(pwndOwner == NULL ? NULL : pwndOwner->get_handle(),strMessage,Application.m_strAppName,fuStyle);
-//         
+//
 //      }
-//      
+//
 //      if(box.m_strResponse == "ok")
 //      {
-//         
+//
 //         return IDOK;
-//         
+//
 //      }
 //      else if(box.m_strResponse == "yes")
 //      {
-//         
+//
 //         return IDYES;
-//         
+//
 //      }
 //      else if(box.m_strResponse == "no")
 //      {
-//         
+//
 //         return IDNO;
-//         
+//
 //      }
 //      else if(box.m_strResponse == "cancel")
 //      {
-//         
+//
 //         return IDCANCEL;
-//         
+//
 //      }
-//      
+//
 //      if(fuStyle & MB_YESNOCANCEL)
 //      {
-//         
+//
 //         return IDCANCEL;
-//         
+//
 //      }
 //      else
 //      {
-//         
+//
 //         return 0;
-//         
+//
 //      }
 
    }
@@ -666,16 +664,10 @@ namespace userex
    }
 
 
-
-
-   int32_t userex::exit_application()
+   void userex::term_instance()
    {
 
-      return 0;
-
    }
-
-
 
 
    sp(::user::document) userex::create_form(::aura::application * papp, sp(::user::form) pview, ::user::form_callback * pcallback, sp(::user::interaction) pwndParent, var var)
@@ -998,11 +990,11 @@ namespace userex
       {
 
          psystem = canew(::user::multiple_document_template(
-            papp,
-            m_ptemplateChildForm->m_strMatter,
-            m_ptemplateChildForm->m_typeinfoDocument,
-            m_ptemplateChildForm->m_typeinfoFrame,
-            pt));
+                         papp,
+                         m_ptemplateChildForm->m_strMatter,
+                         m_ptemplateChildForm->m_typeinfoDocument,
+                         m_ptemplateChildForm->m_typeinfoFrame,
+                         pt));
 
          m_mapTemplate[pt] = psystem;
 
@@ -1335,7 +1327,7 @@ namespace core
 
          strRet = ::base::application::fontopus_get_cred(get_app(), strRequestUrl, rect, strUsername, strPassword, strToken, strTitle, bInteractive, NULL);
 
-      finished:
+finished:
 
          ev.SetEvent();
 
@@ -1351,22 +1343,33 @@ namespace core
    bool session::initialize1_userex()
    {
 
+      if (!m_puserex->init())
+      {
 
-      if (!m_puserex->initialize())
          return false;
+
+      }
 
       if (!m_puserex->init1())
+      {
+
          return false;
+
+      }
 
       if (!m_puserex->init2())
+      {
+
          return false;
 
+      }
 
       return true;
 
    }
 
-   int32_t session::exit_application()
+
+   void session::term_application()
    {
 
       try
@@ -1402,7 +1405,7 @@ namespace core
       try
       {
 
-         ::base::session::exit_application();
+         ::base::session::term_instance();
 
       }
       catch (...)
@@ -1413,7 +1416,7 @@ namespace core
       try
       {
 
-         ::core::application::exit_application();
+         ::core::application::term_instance();
 
       }
       catch (...)
@@ -1427,7 +1430,7 @@ namespace core
          if (m_pfilemanager != NULL)
          {
 
-            m_pfilemanager->finalize();
+            m_pfilemanager->term();
 
          }
 
@@ -1456,7 +1459,7 @@ namespace core
       try
       {
 
-         m_puserex->finalize();
+         m_puserex->term();
 
       }
       catch (...)
@@ -1467,8 +1470,6 @@ namespace core
       m_puserex = NULL;
 
       m_pobjectUserex.release();
-
-      return 0;
 
    }
 
@@ -1482,11 +1483,16 @@ namespace core
 
    }
 
+
    void session::initialize_bergedge_application_interface()
    {
+
       //      int32_t iCount = 32; // todo: get from bergedge profile
+
       m_pdocs->m_pnaturedocument = NULL;
+
    }
+
 
    bool session::process_initialize_userex()
    {
@@ -1506,6 +1512,7 @@ namespace core
       return true;
 
    }
+
 
    void session::on_frame_window_drop_files(::user::interaction * pui, ::file::patha & patha)
    {
@@ -1527,6 +1534,7 @@ namespace core
 
    }
 
+
    ::user::document * session::userex_on_request(::create * pcreate)
    {
 
@@ -1535,6 +1543,7 @@ namespace core
       return ::user::get_document(pcreate);
 
    }
+
 
    void session::use_font_sel()
    {
@@ -1551,11 +1560,11 @@ namespace core
       System.factory().creatable_small < ::userex::font_view >();
 
       userex()->m_ptemplateFontSel = new  ::user::single_document_template(
-         get_app(),
-         "main",
-         System.type_info < ::user::document >(),
-         System.type_info < ::simple_frame_window >(),
-         System.type_info < ::userex::font_view >());
+      get_app(),
+      "main",
+      System.type_info < ::user::document >(),
+      System.type_info < ::simple_frame_window >(),
+      System.type_info < ::userex::font_view >());
 
 
       if (!is_installing() && !is_unstalling())
@@ -1578,15 +1587,10 @@ namespace core
 
       }
 
-
-
    }
 
 
-
 } // namespace core
-
-
 
 
 namespace user
@@ -1613,7 +1617,5 @@ namespace user
       return Session.userex()->default_create_list_data(get_app());
 
    }
-
-
 
 } // namespace user

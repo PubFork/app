@@ -58,7 +58,7 @@ namespace windows
       {
          delete pFile;
          //xxx      Ex1WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
-         _throw(0);
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from(121)));
       }
       pFile->m_hFile = hFile;
       ASSERT(pFile->m_hFile != hFileNull);

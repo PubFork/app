@@ -502,7 +502,7 @@
 ////   }
 ////
 ////   if(!SetFilePointerEx(h,liMove,&liRes,dwMeth))
-////      _throw("SetFilePointer error");
+////      _throw(simple_exception(get_app(), "SetFilePointer error"));
 ////
 ////   if(plHi != NULL)
 ////   {
@@ -522,7 +522,7 @@
 //   FILE_STANDARD_INFO info;
 //
 //   if(!GetFileInformationByHandleEx(h,FileStandardInfo,&info,sizeof(info)))
-//      _throw("GetFileSize Error");
+//      _throw(simple_exception(get_app(), "GetFileSize Error"));
 //
 //   if(lpdwHi != NULL)
 //   {
@@ -1174,7 +1174,7 @@
 ////string file_get_mozilla_firefox_plugin_container_path()
 ////{
 ////
-////   _throw(" todo ");
+////   _throw(simple_exception(get_app(), " todo "));
 ////
 ////   return "";
 ////

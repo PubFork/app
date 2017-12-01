@@ -5603,7 +5603,7 @@ ok:
          }
          break;
       default:
-         _throw("unexpected simple os graphics element type");
+         _throw(simple_exception(get_app(), "unexpected simple os graphics element type"));
       }*/
 
       return false;

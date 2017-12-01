@@ -46,11 +46,11 @@ namespace prompt
 
          ::user::single_document_template* pDocTemplate;
          pDocTemplate = new ::user::single_document_template(
-            this,
-            "system/form",
-            System.type_info < prompt::document > (),
-            System.type_info < prompt::frame > (),
-            System.type_info < prompt::pane_view > ());
+         this,
+         "system/form",
+         System.type_info < prompt::document > (),
+         System.type_info < prompt::frame > (),
+         System.type_info < prompt::pane_view > ());
          add_document_template(pDocTemplate);
          m_ptemplateCommandMain = pDocTemplate;
 
@@ -61,9 +61,10 @@ namespace prompt
       return true;
    }
 
-   int32_t application::exit_application()
+
+   void application::term_application()
    {
-      return 0;
+
    }
 
 
@@ -84,12 +85,12 @@ namespace prompt
 #ifdef WINDOWSEX
 
          ::ShellExecuteW(
-            NULL,
-            L"open",
-            ::str::international::utf8_to_unicode(itema[0]->m_filepath),
-            NULL,
-            ::str::international::utf8_to_unicode(itema[0]->m_filepath.folder()),
-            SW_SHOW);
+         NULL,
+         L"open",
+         ::str::international::utf8_to_unicode(itema[0]->m_filepath),
+         NULL,
+         ::str::international::utf8_to_unicode(itema[0]->m_filepath.folder()),
+         SW_SHOW);
 
 #else
 

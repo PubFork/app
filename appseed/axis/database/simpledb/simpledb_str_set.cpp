@@ -133,18 +133,14 @@ public:
    virtual ~db_str_sync_queue() {}
 
 
-   virtual int32_t run();
+   virtual void run();
 
    void queue(const char * pszKey, const char * psz);
 
 };
 
 
-
-
-
-
-int32_t db_str_sync_queue::run()
+void db_str_sync_queue::run()
 {
 
    single_lock sl(&m_mutex, false);
@@ -283,8 +279,6 @@ int32_t db_str_sync_queue::run()
    }
 
    ((db_str_set_core *)(m_pset->m_pcore->m_ptopthis))->m_pqueue = NULL;
-
-   return 0;
 
 }
 

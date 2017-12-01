@@ -1198,6 +1198,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="aura\os\windows\windows_window.cpp" />
     <ClCompile Include="aura\os\windows\windows_window_buffer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
@@ -4270,6 +4271,7 @@
     <ClInclude Include="version.h" />
     <None Include="aura\app\acid.inl" />
     <None Include="aura\app\aura.inl" />
+    <None Include="aura\exception\exception.inl" />
     <None Include="aura\os\windows\windows.inl" />
     <None Include="aura\os\windows\windows_app.inl" />
     <None Include="aura\os\windows\windows_app_console.inl" />

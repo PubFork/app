@@ -1,4 +1,4 @@
-/** \file base_socket.cpp
+﻿/** \file base_socket.cpp
 **   \date  2004-02-13
 **   \author grymse@alhem.net
 **/
@@ -903,9 +903,9 @@ namespace sockets
 
       if (!::thread::init_thread())
       {
-         
+
          return false;
-         
+
       }
 
       socket_handler & h = *m_sphandler;
@@ -947,8 +947,6 @@ namespace sockets
       }
 
       m_spsocket.release();
-
-      return 0;
 
    }
 

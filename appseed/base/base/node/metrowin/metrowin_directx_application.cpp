@@ -437,7 +437,7 @@ namespace metrowin
       m_strId = strId;
 
       if(!main_initialize())
-         _throw("");
+         _throw(simple_exception(get_app(), ""));
 
 
       //_set_purecall_handler(_ca2_purecall);
@@ -501,7 +501,7 @@ namespace metrowin
       if (!m_psystem->begin_synch())
       {
 
-         _throw(0);
+         _throw(simple_exception(get_app(), "integer_exception" + ::str::from($1)));
 
       }
 
