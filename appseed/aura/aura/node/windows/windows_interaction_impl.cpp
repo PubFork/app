@@ -6675,5 +6675,39 @@ void __term_windowing()
 
 ::user::interaction_impl * oswindow_get(HWND hwnd)
 {
-   return dynamic_cast <::user::interaction_impl *>(::aura::system::g_p->m_paurasession->window_map().get((int_ptr) hwnd));
+
+   if (hwnd == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   auto psystem = ::aura::system::g_p;
+   if (psystem == NULL)
+   {
+
+      return NULL;
+
+   }
+   synch_lock slSystem(psystem->m_pmutex);
+   auto psession = psystem->m_paurasession;
+   if (psession == NULL)
+   {
+
+      return NULL;
+
+   }
+   synch_lock slSession(psession->m_pmutex);
+   auto pmap = psession->m_pwindowmap;
+   if (psession->m_pwindowmap == NULL)
+   {
+
+      return NULL;
+
+   }
+   synch_lock slMap(pmap->m_pmutex);
+
+   return dynamic_cast <::user::interaction_impl *>(pmap->m_map[(int_ptr) hwnd]);
+
 }

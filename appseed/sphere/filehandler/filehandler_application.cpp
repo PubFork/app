@@ -57,13 +57,13 @@ namespace filehandler
    }
 
 
-   void application::term_application()
+   void application::term_instance()
    {
 
       try
       {
 
-         ::asphere::application::term_application();
+         ::asphere::application::term_instance();
 
       }
       catch(...)

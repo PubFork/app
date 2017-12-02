@@ -352,34 +352,12 @@ thread::~thread()
    try
    {
 
-      for (auto * pobject : m_objectrefaDependent)
+      synch_lock sl(m_objectrefaDependent.m_pmutex);
+
+      for (auto pobject : m_objectrefaDependent)
       {
 
-         try
-         {
-
-            if (pobject == NULL)
-            {
-
-               continue;
-
-            }
-
-            if (pobject->m_pthreadrefa != NULL)
-            {
-
-               synch_lock sl(pobject->m_pmutex);
-
-               pobject->m_pthreadrefa->remove(this);
-
-            }
-
-         }
-         catch (...)
-         {
-
-         }
-
+         pobject->threadrefa_remove(this);
 
       }
 
@@ -783,11 +761,18 @@ void thread::Delete()
 
 }
 
-void thread::register_dependent_thread(::thread * pthreadDependent)
+bool thread::register_dependent_thread(::thread * pthreadDependent)
 {
 
+   if (pthreadDependent == this)
+   {
+
+      return true;
+
+   }
+
    //post_thread_message(message_system, 90, (LPARAM) pthreadDependent);
-   on_register_dependent_thread(pthreadDependent);
+   return on_register_dependent_thread(pthreadDependent);
 
 }
 
@@ -799,31 +784,37 @@ void thread::unregister_dependent_thread(::thread * pthreadDependent)
 
 }
 
-void thread::on_register_dependent_thread(::thread * pthreadDependent)
+
+bool thread::on_register_dependent_thread(::thread * pthreadDependent)
 {
 
-   if(pthreadDependent == this)
-      return;
+   if (pthreadDependent == this)
+   {
 
-   if(pthreadDependent == NULL)
-      return;
+      return false;
+
+   }
+
+   if (pthreadDependent == NULL)
+   {
+
+      return false;
+
+   }
 
    {
 
-      synch_lock slThread(pthreadDependent->m_threadrefaRequired.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+
+      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
+
+      m_threadrefaDependent.add_unique(pthreadDependent);
 
       pthreadDependent->m_threadrefaRequired.add_unique(this);
 
    }
 
-   {
-
-      synch_lock sl(m_threadrefaDependent.m_pmutex);
-
-      m_threadrefaDependent.add_unique(pthreadDependent);
-
-   }
-
+   return true;
 
 }
 
@@ -837,15 +828,11 @@ void thread::on_unregister_dependent_thread(::thread * pthreadDependent)
 
    {
 
-      synch_lock sl(m_threadrefaDependent.m_pmutex);
+      synch_lock slRequired(pthreadDependent->m_threadrefaRequired.m_pmutex);
+
+      synch_lock slDependent(m_threadrefaDependent.m_pmutex);
 
       m_threadrefaDependent.remove(pthreadDependent);
-
-   }
-
-   {
-
-      synch_lock sl(pthreadDependent->m_threadrefaRequired.m_pmutex);
 
       pthreadDependent->m_threadrefaRequired.remove(this);
 
@@ -878,8 +865,6 @@ void thread::signal_close_dependent_threads()
 
       thread * pthread = m_threadrefaDependent[i];
 
-      sl.unlock();
-
       try
       {
 
@@ -898,10 +883,7 @@ void thread::signal_close_dependent_threads()
 
       }
 
-      sl.lock();
-
    }
-
 
 }
 
@@ -918,8 +900,12 @@ void thread::wait_close_dependent_threads(const duration & duration)
 
          synch_lock sl(m_threadrefaDependent.m_pmutex);
 
-         if(m_threadrefaDependent.get_count() <= 0)
+         if (m_threadrefaDependent.get_count() <= 0)
+         {
+
             break;
+
+         }
 
          output_debug_string(string("-------------------------\n"));
 
@@ -988,42 +974,36 @@ bool thread::register_at_required_threads()
       if(&System != NULL)
       {
 
-         if(!System.m_bRunThisThread)
+         if(!System.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         System.register_dependent_thread(this);
 
       }
 
       if(&Session != NULL)
       {
 
-         if(!Session.m_bRunThisThread)
+         if(!Session.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         Session.register_dependent_thread(this);
 
       }
 
       if(&Application != NULL)
       {
 
-         if(!Application.m_bRunThisThread)
+         if(!Application.register_dependent_thread(this))
          {
 
             return false;
 
          }
-
-         Application.register_dependent_thread(this);
 
       }
 
@@ -1110,41 +1090,50 @@ bool thread::should_enable_thread()
 }
 
 
-bool thread::post_quit()
+void thread::post_quit()
 {
 
-   string strName = demangle(typeid(*this).name());
-
-   if (strName == "::core::system")
+   try
    {
 
-      ::output_debug_string("\n\n\nWM_QUIT at ::core::system\n\n\n");
+      synch_lock sl(m_pmutex);
+
+      string strName = demangle(typeid(*this).name());
+
+      if (strName == "::core::system")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at ::core::system\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio_core_audio::wave_out")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio_core_audio::wave_out\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio::wave_out")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_out\n\n\n");
+
+      }
+      else if (strName == "multimedia::audio::wave_player")
+      {
+
+         ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_player\n\n\n");
+
+      }
+
+      m_bRunThisThread = false;
+
+      ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
 
    }
-   else if (strName == "multimedia::audio_core_audio::wave_out")
+   catch (...)
    {
 
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio_core_audio::wave_out\n\n\n");
-
    }
-   else if (strName == "multimedia::audio::wave_out")
-   {
-
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_out\n\n\n");
-
-   }
-   else if (strName == "multimedia::audio::wave_player")
-   {
-
-      ::output_debug_string("\n\n\nWM_QUIT at multimedia::audio::wave_player\n\n\n");
-
-   }
-
-   m_bRunThisThread = false;
-
-   ::PostThreadMessage(m_uiThread, WM_QUIT, 0, 0);
-
-   return true;
 
 }
 
@@ -1749,6 +1738,8 @@ uint32_t __thread_entry(void * pparam)
 
    UINT uiRet = 0;
 
+   ::thread * pthread = NULL;
+
    try
    {
 
@@ -1759,7 +1750,7 @@ uint32_t __thread_entry(void * pparam)
       //ASSERT(pstartup->m_pthreadimpl != NULL);
       ASSERT(!pstartup->m_bError);
 
-      ::thread * pthread = pstartup->m_pthread;
+      pthread = pstartup->m_pthread;
 
       set_thread_on(::GetCurrentThreadId());
 //#ifndef MACOS
@@ -1932,6 +1923,17 @@ uint32_t __thread_entry(void * pparam)
          if (esp.is_exit())
          {
 
+            try
+            {
+
+               uiRet = ::multithreading::__on_thread_finally(pthread);
+
+            }
+            catch (...)
+            {
+
+            }
+
             // allow the creating thread to return from thread::create_thread
             pstartup->m_event.set_event();
 
@@ -2003,6 +2005,17 @@ uint32_t __thread_entry(void * pparam)
    catch (esp esp)
    {
 
+      try
+      {
+
+         ::multithreading::__on_thread_finally(pthread);
+
+      }
+      catch (...)
+      {
+
+      }
+
       if (esp.is_exit())
       {
 
@@ -2020,11 +2033,9 @@ uint32_t __thread_entry(void * pparam)
    catch(...)
    {
 
-      return -1;
-
    }
 
-   return uiRet;
+   return ::multithreading::__on_thread_finally(pthread);
 
 }
 
@@ -2078,15 +2089,19 @@ void thread::post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam)
 
          try
          {
+
             pthread = dynamic_cast < thread * >(threadptra[i]);
+
             pthread->post_quit();
+
          }
          catch(...)
          {
+
          }
 
-
       }
+
       sl.unlock();
 
       return;

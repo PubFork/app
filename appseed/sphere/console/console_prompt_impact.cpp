@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace console
@@ -89,8 +89,11 @@ namespace console
       }
       else
       {
+
          m_dwLastError = ::get_tick_count();
+
          m_bOk = false;
+
       }
 
       if(m_bOk)

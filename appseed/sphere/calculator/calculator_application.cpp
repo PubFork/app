@@ -13,10 +13,10 @@ namespace calculator
    }
 
 
-   bool application::init()
+   bool application::init_instance()
    {
 
-      if (!::asphere::application::init())
+      if (!::asphere::application::init_instance())
       {
 
          return false;

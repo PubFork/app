@@ -64,33 +64,10 @@ namespace sphere
    }
 
 
-   void application::term_application()
+   void application::term_instance()
    {
 
-      System.factory().creatable_small < main_frame >();
-
-      string strId = m_strId;
-      char chFirst = '\0';
-      if(strId.get_length() > 0)
-      {
-         chFirst = strId[0];
-      }
-      if(chFirst == 'd')
-      {
-         if(strId == "default_file_handler")
-         {
-            return ::filehandler::application::term_application();
-         }
-      }
-      else if(chFirst == 'u')
-      {
-         if(strId == "userstack")
-         {
-            return ::userstack::application::term_application();
-         }
-      }
-
-      return asphere::application::term_application();
+      asphere::application::term_instance();
 
    }
 

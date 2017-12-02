@@ -58,19 +58,9 @@ namespace userstack
    }
 
 
-   void application::term_application()
+   void application::term_instance()
    {
 
-      try
-      {
-
-         ::asphere::application::term_application();
-
-      }
-      catch(...)
-      {
-
-      }
 
       string strId;
 
@@ -78,7 +68,7 @@ namespace userstack
 
       POSITION pos = m_mapApplication.get_start_position();
 
-      while(pos != NULL)
+      while (pos != NULL)
       {
 
          strId.Empty();
@@ -87,11 +77,24 @@ namespace userstack
 
          m_mapApplication.get_next_assoc(pos, strId, pcaapp);
 
-         sp(::aura::application) papp =  (pcaapp);
+         sp(::aura::application) papp = (pcaapp);
 
          papp->m_pcoreapp->post_quit();
 
       }
+
+      try
+      {
+
+         ::asphere::application::term_instance();
+
+      }
+      catch(...)
+      {
+
+      }
+
+
 
    }
 

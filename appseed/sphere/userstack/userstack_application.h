@@ -44,7 +44,7 @@ namespace userstack
 
 
       virtual bool init_instance() override;
-      virtual void term_application() override;
+      virtual void term_instance() override;
 
       virtual bool bergedge_start() override;
 

@@ -21,7 +21,7 @@ namespace filehandler
       void construct();
 
       virtual bool init_instance() override;
-      virtual void term_application() override;
+      virtual void term_instance() override;
 
 
       virtual void on_request(::create * pcreate) override;

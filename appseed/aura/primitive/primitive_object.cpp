@@ -829,12 +829,6 @@ namespace aura
 void object::copy_this(const object & o)
 {
 
-   // uint64_t                      m_ulFlags;
-   // factory_item_base *           m_pfactoryitembase;
-   // void *                        m_pthis;
-   // int64_t                       m_countReference;
-   // mutex *                       m_pmutex;
-
    m_pauraapp = o.m_pauraapp;
 
    ::aura::del(m_psetObject);
@@ -931,6 +925,8 @@ void object::threadrefa_add(::thread * pthread)
 
       synch_lock sl(m_pthreadrefa->m_pmutex);
 
+      synch_lock slThread(pthread->m_pmutex);
+
       m_pthreadrefa->add(pthread);
 
       pthread->m_objectrefaDependent.add(this);
@@ -949,10 +945,12 @@ void object::threadrefa_remove(::thread * pthread)
 
    }
 
-   synch_lock sl(m_pthreadrefa->m_pmutex);
-
    if (pthread != NULL)
    {
+
+      synch_lock sl(m_pthreadrefa->m_pmutex);
+
+      synch_lock slThread(pthread->m_pmutex);
 
       m_pthreadrefa->remove(pthread);
 

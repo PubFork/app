@@ -17,7 +17,7 @@ namespace calculator
       virtual ~application();
 
 
-      virtual bool init() override;
+      virtual bool init_instance() override;
 
 
 

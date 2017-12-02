@@ -305,9 +305,9 @@ public:
    virtual void post_to_all_threads(UINT message,WPARAM wparam,LPARAM lparam);
 
 
-   virtual void register_dependent_thread(::thread * pthread);
+   virtual bool register_dependent_thread(::thread * pthread);
    virtual void unregister_dependent_thread(::thread * pthread);
-   virtual void on_register_dependent_thread(::thread * pthread);
+   virtual bool on_register_dependent_thread(::thread * pthread);
    virtual void on_unregister_dependent_thread(::thread * pthread);
    virtual void signal_close_dependent_threads();
    virtual void wait_close_dependent_threads(const duration & duration);
@@ -319,7 +319,7 @@ public:
 
    virtual bool thread_get_run();
    virtual bool should_enable_thread();
-   virtual bool post_quit();
+   virtual void post_quit();
 
    virtual bool kick_thread();
 
@@ -397,59 +397,12 @@ namespace multithreading
 {
 
 
-   CLASS_DECL_AURA bool post_quit();
-   CLASS_DECL_AURA bool post_quit_and_wait(const duration & duration);
+   CLASS_DECL_AURA void post_quit();
+   CLASS_DECL_AURA void post_quit_and_wait(const duration & duration);
 
 
-   CLASS_DECL_AURA bool post_quit(::thread * pthread);
-   CLASS_DECL_AURA bool post_quit_and_wait(::thread * pthread, const duration & duration);
-
-
-   template < typename THREAD >
-   inline bool post_quit(THREAD & pthread)
-   {
-
-      bool bOk = post_quit((::thread *) pthread);
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk;
-
-   }
-
-
-   template < typename THREAD >
-   inline bool post_quit_and_wait(THREAD & pthread, const duration & duration)
-   {
-
-      bool bOk = post_quit_and_wait((::thread *) pthread, duration);
-
-      try
-      {
-
-         pthread = NULL;
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return bOk;
-
-   }
-
-
+   CLASS_DECL_AURA void post_quit(::thread * pthread);
+   CLASS_DECL_AURA void post_quit_and_wait(::thread * pthread, const duration & duration);
 
 
 } // namespace multithreading

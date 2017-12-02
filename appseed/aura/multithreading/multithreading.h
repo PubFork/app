@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #ifdef APPLEOS
@@ -124,7 +124,7 @@ public:
    virtual ~thread_refa();
 
 
-   virtual bool post_quit_and_wait(const duration & duration);
+   virtual void post_quit_and_wait(const duration & duration);
 
 
 };

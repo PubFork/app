@@ -21,7 +21,7 @@ namespace sphere
 
 
       virtual bool init_instance() override;
-      virtual void term_application() override;
+      virtual void term_instance() override;
 
       virtual void _001OnFileNew();
       virtual bool bergedge_start() override;

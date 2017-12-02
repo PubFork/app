@@ -62,8 +62,10 @@ namespace prompt
    }
 
 
-   void application::term_application()
+   void application::term_instance()
    {
+
+      asphere::application::term_instance();
 
    }
 
