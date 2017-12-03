@@ -103,8 +103,6 @@ extern mutex * g_pmutexOutputDebugStringA;
 
 extern mutex * g_pmutexMq;
 
-extern map < HTHREAD,HTHREAD,mq *,mq * > * g_pmapMq;
-
 #endif
 
 #if defined(LINUX) || defined(APPLEOS) || defined(METROWIN) || defined(ANDROID)
@@ -129,15 +127,10 @@ extern mutex * g_pmutexTlsData;
 
 extern mutex * g_pmutexTz;
 
-//extern map < HTHREAD, HTHREAD, PendingThreadInfo, PendingThreadInfo > * g_ppendingThreads;
-
 extern mutex * g_pmutexThreadHandleLock;
 
 #endif // defined(LINUX) || defined(APPLEOS)
 
-#if defined(LINUX)
-
-#endif
 
 
 /*
@@ -299,8 +292,6 @@ namespace aura
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
          g_pmutexMq = new mutex;
-
-         g_pmapMq = new map < HTHREAD,HTHREAD,mq *,mq * >;
 
 #endif
 
@@ -507,9 +498,6 @@ namespace aura
 #if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 
          ::aura::del(g_pmutexMq);
-
-         ::aura::del(g_pmapMq);
-
 
 #endif // defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
 

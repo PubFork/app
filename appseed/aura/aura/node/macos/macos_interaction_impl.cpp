@@ -398,7 +398,9 @@ namespace macos
          
          bOk = false;
          
-         threadrefa_post_quit_and_wait(one_minute());
+         threadrefa_post_quit();
+         
+         threadrefa_wait(one_minute());
          //::multithreading::post_quit_and_wait(m_pthreadUpdateWindow, seconds(5));
          
          //::multithreading::post_quit_and_wait(m_queuethread, seconds(5));

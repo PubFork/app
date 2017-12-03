@@ -61,9 +61,6 @@ class event;
 class mutex;
 
 
-//typedef hthread * HTHREAD;
-
-
 class oswindow_data;
 
 

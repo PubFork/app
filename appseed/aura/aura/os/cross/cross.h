@@ -2,22 +2,13 @@
 
 
 
-#ifdef WINDOWS
-
-typedef HANDLE HTHREAD;
-
-#else
+#ifndef WINDOWS
 
 #ifdef cplusplus
 
 class event;
 
 #endif
-
-//#include <pthread.h>
-//#ifndef LINUX
-//typedef void * HTHREAD;
-//#endif // LINUX
 
 struct oswindow_data;
 

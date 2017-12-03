@@ -95,8 +95,7 @@ bool app_core::beg()
 
 }
 
-
-void app_core::run()
+bool app_core::ini()
 {
 
    m_bAcidApp = m_pfnNewApp != NULL;
@@ -106,7 +105,7 @@ void app_core::run()
 
       on_result(-1);
 
-      return;
+      return false;
 
    }
 
@@ -117,24 +116,31 @@ void app_core::run()
 
       on_result(-1);
 
-      return;
+      return false;
 
    }
-
-   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
 
    // what could influence time before main?
    // cold start (never previously called program and its Dlls...)?
    m_psystem->m_dwMainStartTime = m_dwStartTime;
 
-   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
-
    xxdebug_box("box1", "box1", MB_ICONINFORMATION);
 
+   return true;
+
+}
+
+void app_core::run()
+{
+
    set_main_thread(GetCurrentThread());
-
+   
    set_main_thread_id(GetCurrentThreadId());
-
+   
+   m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
+   
+   m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
+   
    if (!m_psystem->pre_run())
    {
 
@@ -441,7 +447,28 @@ CLASS_DECL_AURA void aura_boot(app_core * pappcore)
 CLASS_DECL_AURA void aura_main(app_core * pappcore)
 {
 
+   pappcore->ini();
+
+#ifdef APPLEOS
+
+   if(pappcore->m_psystem->begin_synch())
+   {
+      
+      set_main_thread(pappcore->m_psystem->m_hthread);
+      
+      set_main_thread_id(pappcore->m_psystem->m_uiThread);
+
+      ns_shared_application(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv);
+      
+      ns_app_run();
+      
+   }
+
+#else
+
    pappcore->run();
+
+#endif
 
    pappcore->end();
 

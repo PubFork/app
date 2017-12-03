@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #ifdef WINDOWSEX
 #include "aura/aura/os/windows/windows_system_interaction_impl.h"
 #endif
@@ -2340,6 +2340,9 @@ namespace aura
 
    void application::SetCurrentHandles()
    {
+      
+      if(m_hthread == NULL)
+      {
 
       //dappy(string(typeid(*this).name()) + " : SetCurrentHandles 1 : " + ::str::from(m_iErrorCode));
 
@@ -2350,7 +2353,8 @@ namespace aura
       set_os_int(::get_current_thread_id());
 
       //dappy(string(typeid(*this).name()) + " : SetCurrentHandles impled : " + ::str::from(m_iErrorCode));
-
+      }
+      
    }
 
 
@@ -4617,64 +4621,64 @@ retry_license:
 
 
 
-   bool application::impl_process_init()
-   {
+//   bool application::impl_process_init()
+//   {
+//
+//      return true;
+//
+//   }
 
-      return true;
+//   bool application::impl_init1()
+//   {
+//
+//      //set_run();
+//
+//      return true;
+//
+//   }
 
-   }
+//   bool application::impl_init2()
+//   {
+//      return true;
+//   }
 
-   bool application::impl_init1()
-   {
-
-      //set_run();
-
-      return true;
-
-   }
-
-   bool application::impl_init2()
-   {
-      return true;
-   }
-
-   bool application::impl_init3()
-   {
-      return true;
-   }
+//   bool application::impl_init3()
+//   {
+//      return true;
+//   }
 
    // thread termination
-   void application::impl_process_term() // default will 'delete this'
-   {
-
-      set_os_data(NULL);
-
-      //int32_t iRet = ::aura::application::term_instance();
-
-      //return 0;
-
-   }
-
-
-   void application::impl_term3()
-   {
+//   void application::impl_process_term() // default will 'delete this'
+//   {
+//
+//      set_os_data(NULL);
+//
+//      //int32_t iRet = ::aura::application::term_instance();
+//
+//      //return 0;
+//
+//   }
 
 
-   }
-
-
-   void application::impl_term2()
-   {
-
-
-   }
-
-
-   void application::impl_term1()
-   {
-
-
-   }
+//   void application::impl_term3()
+//   {
+//
+//
+//   }
+//
+//
+//   void application::impl_term2()
+//   {
+//
+//
+//   }
+//
+//
+//   void application::impl_term1()
+//   {
+//
+//
+//   }
    bool application::is_running()
    {
 

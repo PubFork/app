@@ -5,23 +5,17 @@
 
 typedef HANDLE HTHREAD;
 
-#else
-
-#ifndef LINUX
-typedef void * HTHREAD;
-#endif
-
-#endif
-
-#ifdef WINDOWS
-
 typedef uint32_t IDTHREAD;
 
 inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
 
 #else
 
-typedef pthread_t IDTHREAD;
+#include <pthread.h>
+
+#define HTHREAD pthread_t
+
+#define IDTHREAD pthread_t
 
 inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
 

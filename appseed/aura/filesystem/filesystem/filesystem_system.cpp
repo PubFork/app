@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include <stdio.h>
 
 
@@ -1294,7 +1294,7 @@ restart:
          int32_t err = errno;
          string strError;
          strError.Format("Failed to delete file error=%d", err);
-         _throw(strError);
+         _throw(simple_exception(get_app(), strError));
       }
 #endif
 
@@ -1354,7 +1354,7 @@ restart:
          {
             string strError;
             strError.Format("Failed to delete file error=%d", err);
-            _throw(strError);
+            _throw(simple_exception(get_app(), strError));
          }
       }
 #endif

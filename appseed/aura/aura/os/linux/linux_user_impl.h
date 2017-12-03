@@ -66,9 +66,6 @@ class simple_event;
 class mutex;
 
 
-//typedef hthread * HTHREAD;
-
-
 class CLASS_DECL_AURA oswindow_data
 {
 public:

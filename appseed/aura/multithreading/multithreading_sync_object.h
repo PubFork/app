@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 /////////////////////////////////////////////////////////////////////////////
 // Basic synchronization object
@@ -55,16 +55,16 @@ public:
 
    operator HANDLE() const;
 
-   virtual bool lock();
-   virtual bool lock(const duration & durationTimeout);
+   virtual bool lock() override;
+   virtual bool lock(const duration & durationTimeout) override;
 
-   virtual wait_result wait();
-   virtual wait_result wait(const duration & durationTimeout);
+   virtual wait_result wait() override;
+   virtual wait_result wait(const duration & durationTimeout) override;
 
-   virtual bool is_locked() const;
+   virtual bool is_locked() const override;
 
-   virtual bool unlock();
-   virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
+   virtual bool unlock() override;
+   virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */) override;
 
 };
 

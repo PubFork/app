@@ -7,16 +7,11 @@
 #pragma once
 
 
-#ifdef WINDOWS
+#ifndef WINDOWS
 
-typedef uint32_t IDTHREAD;
-
-#else
 #define QS_ALLEVENTS 0xffff
 
 void __clear_mq();
-
-typedef pthread_t IDTHREAD;
 
 template <  >
 inline bool EqualElements<IDTHREAD>(IDTHREAD r1, IDTHREAD r2)

@@ -11,54 +11,6 @@ CLASS_DECL_AURA int32_t thread_get_scheduling_priority(int iOsPolicy, const sche
 
 CLASS_DECL_AURA int32_t process_get_scheduling_priority(int iOsPolicy, const sched_param * pparam);
 
-//mq * __get_mq(HTHREAD  h);
-//
-//
-//mq * __get_mq()
-//{
-//
-//   synch_lock sl(g_pmutexMq);
-//
-//   auto pmq = (mq *) thread_get_data(TLS_MESSAGE_QUEUE);
-//
-//   if(pmq != NULL)
-//      return pmq;
-//
-//   pmq   = new mq();
-//
-//   pmq->m_hthread    = (IDTHREAD) pthread_self();
-//
-//   thread_set_data(TLS_MESSAGE_QUEUE,pmq);
-//
-//   return pmq;
-//
-//}
-
-//
-//LPVOID WINAPI thread_get_data(IDTHREAD hthread,DWORD dwIndex);
-//
-//
-//int_bool WINAPI thread_set_data(HTHREAD hthread,DWORD dwIndex,LPVOID lpTlsValue);
-//
-
-//void __clear_mq()
-//{
-//
-//   synch_lock sl(g_pmutexMq);
-//
-//   HTHREAD hthread = GetCurrentThread();
-//
-//   auto pmq = (mq *) thread_get_data(hthread, TLS_MESSAGE_QUEUE);
-//
-//   if(pmq == NULL)
-//      return;
-//
-//   ::aura::del(pmq);
-//
-//   thread_set_data(hthread, TLS_MESSAGE_QUEUE, NULL);
-//
-//}
-//
 
 DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWORD dwTimeout, DWORD dwWakeMask, DWORD dwFlags)
 {
@@ -75,7 +27,7 @@ DWORD MsgWaitForMultipleObjectsEx(DWORD dwSize, sync_object * * pobjectptra, DWO
    if(dwWakeMask > 0)
    {
 
-      pmq = __get_mq((IDTHREAD)pthread_self(), false);
+      pmq = __get_mq(GetCurrentThreadId(), false);
 
       //if(pmq == NULL)
       // return 0;
@@ -392,63 +344,6 @@ void * os_thread_thread_proc(LPVOID lpparameter);
 
 
 
-//map < HTHREAD,HTHREAD,PendingThreadInfo,PendingThreadInfo > * g_ppendingThreads = NULL;
-//
-//mutex * g_pmutexPendingThreadsLock = NULL;
-
-//mutex * g_pmutexThreadHandleLock = NULL;
-//
-//mutex * g_pmutexThreadIdHandleLock = NULL;
-
-//mutex * g_pmutexThreadIdLock = NULL;
-
-//map < HTHREAD,HTHREAD,PendingThreadInfo,PendingThreadInfo > & pendingThreads()
-//{
-//
-//   return * g_ppendingThreads;
-//
-//}
-//
-
-
-//map < HTHREAD,HTHREAD,HTHREAD,HTHREAD > & thread_handle_map()
-//{
-//
-//   return *s_pmapHthreadHthread;
-//
-//}
-
-//map < DWORD,DWORD,HTHREAD,HTHREAD > & thread_id_handle_map()
-//{
-//
-//   return *s_pmapDwordHthread;
-//
-//}
-
-
-//map < HTHREAD,HTHREAD,DWORD,DWORD > & thread_id_map()
-//{
-//
-//   return *s_pmapHthreadDword;
-//
-//}
-
-//DWORD DwThreadId()
-//{
-//   static DWORD g_dw_thread_id = 0;
-//
-//   if(g_dw_thread_id <= 0)
-//      g_dw_thread_id = 1;
-//
-//   return g_dw_thread_id++;
-//}
-//
-
-
-
-
-//mutex * hthread::s_pmutex = NULL;
-//ref_array <  hthread > * hthread::s_pptra = NULL;
 
 
 // Converts a Win32 thread priority to WinRT format.
@@ -463,190 +358,10 @@ int32_t GetWorkItemPriority(int32_t nPriority)
 }
 
 
-// Helper shared between CreateThread and ResumeThread.
-//HTHREAD StartThread(LPTHREAD_START_ROUTINE pfn,LPVOID pv,HTHREAD hthread,int32_t nPriority,SIZE_T cbStack)
-//{
-//
-//
-//   //pthread->m_hthread = hthread;
-//
-//   //hthread->m_posthread = pthread;
-//
-//   pthread_t & thread = *(pthread_t*) pthread->m_pthread;
-//
-//   pthread_attr_t threadAttr;
-//
-//   pthread_attr_init(&threadAttr);
-//
-//   if(cbStack > 0)
-//   {
-//
-//      pthread_attr_setstacksize(&threadAttr,120 * 1024); // Set the stack size of the thread
-//
-//   }
-//
-//   int iPolicy;
-//
-//   sched_param schedparam; // scheduling priority
-//
-//   thread_get_os_priority(&iPolicy,&schedparam,nPriority);
-//
-//   pthread_attr_setschedpolicy(&threadAttr,iPolicy);
-//
-//   pthread_attr_setschedparam(&threadAttr,&schedparam);
-//
-//   pthread_attr_setdetachstate(&threadAttr,PTHREAD_CREATE_DETACHED); // Set thread to detached state. No need for pthread_join
-//
-//   pthread_create(&thread,&threadAttr,&hthread::thread_proc,(LPVOID)pthread); // Create the thread
-//
-//   return pthread;
-//
-//}
-
-
-
-//HTHREAD WINAPI CreateThread(LPSECURITY_ATTRIBUTES unusedThreadAttributes,uint_ptr cbStack,LPTHREAD_START_ROUTINE lpStartAddress,LPVOID lpParameter,uint32_t dwCreationFlags,uint32_t * lpdwThreadId)
-//{
-//   // Validate parameters.
-//   //   assert(unusedThreadAttributes == nullptr);
-//   //   assert(unusedStackSize == 0);
-//   //assert((dwCreationFlags & ~CREATE_SUSPENDED) == 0);
-//   //assert(unusedThreadId == nullptr);
-//
-//   // Create a handle that will be signalled when the thread has completed
-//   HTHREAD threadHandle = new hthread();
-//
-//   if(threadHandle == NULL)
-//      return NULL;
-//
-//
-//   synch_lock mlThreadId(g_pmutexThreadIdLock);
-//
-//   thread_id_map().set_at(threadHandle,DwThreadId());
-//
-//   if(lpdwThreadId != NULL)
-//   {
-//      *lpdwThreadId = thread_id_map()[threadHandle];
-//   }
-//
-//
-//
-//   synch_lock mlThreadIdHandle(g_pmutexThreadIdHandleLock);
-//
-//   thread_id_handle_map().set_at(thread_id_map()[threadHandle],threadHandle);
-//
-//   mlThreadIdHandle.unlock();
-//
-//   mlThreadId.unlock();
-//
-//   // Make a copy of the handle for internal use. This is necessary because
-//   // the caller is responsible for closing the handle returned by CreateThread,
-//   // and they may do that before or after the thread has finished running.
-//   /*HANDLE completionEvent;
-//
-//   if (!DuplicateHandle(GetCurrentProcess(), threadHandle, GetCurrentProcess(), &completionEvent, 0, false, DUPLICATE_SAME_ACCESS))
-//   {
-//   CloseHandle(threadHandle);
-//   return nullptr;
-//   }*/
-//
-//   //   synch_lock mlThreadHandle(threadHandleLock);
-//
-//   // thread_handle_map().set_at(completionEvent, threadHandle);
-//
-//   //mlThreadHandle.unlock();
-//
-//   PendingThreadInfo info;
-//
-//   ZERO(info);
-//
-//   try
-//   {
-//      if(dwCreationFlags & CREATE_SUSPENDED)
-//      {
-//         // Store info about a suspended thread.
-//
-//         info.lpStartAddress     = lpStartAddress;
-//         info.lpParameter        = lpParameter;
-//         info.m_hthread    = threadHandle;
-//         info.suspensionEvent    = new event(get_app(),false,true);
-//         info.nPriority = 0;
-//
-//         synch_lock lock(g_pmutexPendingThreadsLock);
-//
-//         pendingThreads()[threadHandle] = info;
-//
-//         //::WaitForSingleObjectEx(info.suspensionEvent, INFINITE, FALSE);
-//      }
-//      else
-//      {
-//         // Start the thread immediately.
-//         StartThread(lpStartAddress,lpParameter,threadHandle,0,cbStack);
-//      }
-//
-//      return threadHandle;
-//   }
-//   catch(...)
-//   {
-//      // Clean up if thread creation fails.
-//      threadHandle->m_pevent->set_event();
-//      delete threadHandle;
-//
-//      if(info.suspensionEvent)
-//      {
-//         info.suspensionEvent->set_event();
-//         delete info.suspensionEvent;
-//      }
-//
-//
-//      return NULL;
-//   }
-//}
-
-
-//DWORD WINAPI ResumeThread(HTHREAD hThread)
-//{
-//   synch_lock lock(g_pmutexPendingThreadsLock);
-//
-//   // Look up the requested thread.
-//   map < HTHREAD,HTHREAD,PendingThreadInfo,PendingThreadInfo >::pair * threadInfo = pendingThreads().PLookup(hThread);
-//
-//   if(threadInfo == NULL)
-//   {
-//      // Can only resume threads while they are in CREATE_SUSPENDED state.
-//      //assert(false);
-//      return (DWORD)-1;
-//   }
-//
-//   // Start the thread.
-//   try
-//   {
-//      PendingThreadInfo& info = threadInfo->m_element2;
-//
-//      StartThread(info.lpStartAddress,info.lpParameter,info.m_hthread,info.nPriority,info.cbStack);
-//   }
-//   catch(...)
-//   {
-//      return (DWORD)-1;
-//   }
-//
-//   // Remove this thread from the pending list.
-//   pendingThreads().remove_key(hThread);
-//
-//   return 0;
-//}
 
 
 int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 {
-
-   //synch_lock lock(g_pmutexPendingThreadsLock);
-
-   //// Look up the requested thread.
-   //map < HTHREAD,HTHREAD,PendingThreadInfo,PendingThreadInfo >::pair * threadInfo = pendingThreads().PLookup(hThread);
-
-   //if(threadInfo == NULL)
-   //{
 
    int32_t iPolicy;
 
@@ -654,16 +369,10 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 
    thread_get_os_priority(&iPolicy,&schedparam,nCa2Priority);
 
-   pthread_setschedparam((IDTHREAD) hThread,iPolicy,&schedparam);
+   pthread_setschedparam((pthread_t) hThread,iPolicy,&schedparam);
 
    return TRUE;
 
-   //}
-
-   //// Store the new priority.
-   //threadInfo->m_element2.nPriority = nCa2Priority;
-
-   return TRUE;
 }
 
 
@@ -675,14 +384,6 @@ int_bool WINAPI SetThreadPriority(HTHREAD hThread,int32_t nCa2Priority)
 int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 {
 
-   //synch_lock lock(g_pmutexPendingThreadsLock);
-
-   //// Look up the requested thread.
-   //map < HTHREAD,HTHREAD,PendingThreadInfo,PendingThreadInfo >::pair * threadInfo = pendingThreads().PLookup(hthread);
-
-   //if(threadInfo == NULL)
-   //{
-
    int iOsPolicy = SCHED_OTHER;
 
    sched_param schedparam;
@@ -693,152 +394,9 @@ int32_t WINAPI GetThreadPriority(HTHREAD  hthread)
 
    return thread_get_scheduling_priority(iOsPolicy,&schedparam);
 
-//   return threadInfo->m_element2.nPriority;
-
 }
 
 
-
-//void hthread::wait()
-//{
-//
-//   m_pevent->wait();
-//
-//}
-//
-//
-//
-//
-//hthread::~hthread()
-//{
-//   synch_lock ml(&*s_pmutex);
-//
-//   for(index i = s_pptra->get_count() - 1; i >= 0; i--)
-//   {
-//
-//      if(s_pptra->element_at(i) == this)
-//      {
-//
-//         s_pptra->remove_at(i);
-//
-//      }
-//
-//   }
-////htread
-//{
-//
-//delete m_pevent;
-//}
-//
-//}
-//
-//
-//void hthread::begin()
-//{
-//
-//   m_hthread = create_thread(NULL, 0, &::thread_layer::proc, this, 0, &m_nId);
-//
-//}
-//
-//
-//os_thread * os_thread::get()
-//{
-//
-//   return t_posthread;
-//
-//}
-//
-//void os_thread::set(os_thread * posthread)
-//{
-//
-//   t_posthread = posthread;
-//
-//}
-//
-//
-//void os_thread::stop_all(uint32_t millisMaxWait)
-//{
-//
-//   millisMaxWait = millisMaxWait;
-//
-//   uint32_t start = get_tick_count();
-//
-//   while(get_tick_count() - start < millisMaxWait)
-//   {
-//
-//      {
-//
-//         synch_lock ml(&*s_pmutex);
-//
-//         for(int i = 0; i < s_pptra->get_count(); i++)
-//         {
-//
-//            s_pptra->element_at(i)->m_bRun = false;
-//
-//         }
-//
-//         if(s_pptra->get_count() <= 0)
-//         {
-//
-//            break;
-//
-//         }
-//
-//      }
-//
-//      Sleep(200);
-//
-//   }
-//
-//
-//}
-//
-//extern "C"
-//void * os_thread_thread_proc(LPVOID lpparameter)
-//{
-//
-//   keep_threading_count keepthreadingcount;
-//
-//   os_thread * posthread = (os_thread *)lpparameter;
-//
-//   t_posthread = posthread;
-//
-//   if(!on_init_thread())
-//   {
-//
-//      return (void *) (int_ptr) 34;
-//
-//   }
-//
-//   void * pvRet = (void *)(int_ptr)posthread->run();
-//
-//   t_posthread = NULL;
-//
-//   on_term_thread();
-//
-//   delete posthread;
-//
-//   return pvRet;
-//
-//}
-//
-//
-//HTHREAD start_thread(DWORD(WINAPI * pfn)(LPVOID),LPVOID pv,int32_t iPriority)
-//{
-//
-//   UNREFERENCED_PARAMETER(iPriority);
-//
-//   return create_thread(NULL,0,pfn,pv,0,NULL);
-//
-//}
-//
-//HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa,uint_ptr cbStack,LPTHREAD_START_ROUTINE pfn,LPVOID pv,uint32_t f,uint32_t * lpdwId)
-//{
-//
-//   return ::CreateThread(lpsa,cbStack,pfn,pv,f,lpdwId);
-//
-//}
-//
 
 
 static HTHREAD g_hMainThread = NULL;
@@ -846,7 +404,7 @@ static HTHREAD g_hMainThread = NULL;
 static IDTHREAD g_uiMainThread = (IDTHREAD) -1;
 
 
-CLASS_DECL_AURA void set_main_thread(HANDLE hThread)
+CLASS_DECL_AURA void set_main_thread(HTHREAD hThread)
 {
 
    // MESSAGE msg;
@@ -907,13 +465,7 @@ int g_iDebug_post_thread_msg_time;
 CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,WPARAM wParam,LPARAM lParam)
 {
 
-   //HTHREAD h = ::get_thread_handle(idThread);
-
-   //if(h == NULL)
-   //   return FALSE;
-
-
-   mq * pmq = __get_mq((IDTHREAD) iThreadId, Msg != WM_QUIT);
+   mq * pmq = __get_mq(iThreadId, Msg != WM_QUIT);
 
    if(pmq == NULL)
       return FALSE;
@@ -1017,7 +569,7 @@ CLASS_DECL_AURA int_bool WINAPI PostThreadMessageW(IDTHREAD iThreadId,UINT Msg,W
 CLASS_DECL_AURA HTHREAD GetCurrentThread()
 {
 
-   return (HTHREAD) pthread_self();
+   return pthread_self();
 
 }
 

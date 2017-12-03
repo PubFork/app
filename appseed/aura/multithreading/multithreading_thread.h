@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 class CLASS_DECL_AURA error :
@@ -175,7 +175,7 @@ public:
    ::duration set_file_sharing_violation_timeout(::duration duration);
 
 
-   virtual void threadrefa_add(::thread * pthread);
+   virtual void threadrefa_add(::thread * pthread) override;
 
    ///  \brief    starts thread on first call
    virtual void start();

@@ -331,12 +331,6 @@ void service_base::call_server()
 
    m_bStopping = false;
 
-   //HTHREAD posthreadNew = NULL;
-
-   //if(::hthread::get() == NULL)
-   //   ::hthread::set(posthreadNew = new ::hthread(NULL, NULL));
-
-
    ::set_thread(m_pauraapp);
 
    serve();

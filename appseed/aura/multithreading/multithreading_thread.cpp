@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 error::error()
@@ -1627,7 +1627,16 @@ bool thread::begin_thread(bool bSynch, int32_t epriority,uint_ptr nStackSize,uin
 
    add_ref();
 
-   m_hthread = (HTHREAD)(uint_ptr) ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
+  HTHREAD hthread = ::create_thread(lpSecurityAttrs,nStackSize,&__thread_entry,pstartup.m_p,dwCreateFlags,&m_uiThread);
+   
+   m_hthread = hthread;
+   
+   if(m_hthread == m_uiThread)
+   {
+      
+      output_debug_string("Thread IS OK!!!\n");
+      
+   }
 
    if(m_hthread == (HTHREAD) NULL)
    {
@@ -3541,7 +3550,7 @@ int error::get_exit_code()
 
    }
 
-   return -100000 - m_iaErrorCode2.get_count();
+   return -100000 - (int) m_iaErrorCode2.get_count();
 
 }
 

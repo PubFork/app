@@ -591,6 +591,6 @@ namespace aura
 
 
 
-CLASS_DECL_AURA ::aura::system * create_aura_system();
+CLASS_DECL_AURA ::aura::system * create_aura_system(app_core * pappcore);
 
 

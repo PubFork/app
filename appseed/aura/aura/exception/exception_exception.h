@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 namespace exception
@@ -177,6 +177,22 @@ namespace exception
 } // namespace exception
 
 
+#if defined(APPLEOS)
+class ns_exception :
+virtual public ::exception::exception
+{
+public:
+   
+   int m_iCode;
+   
+   ns_exception();
+   ~ns_exception();
+   
+};
+
+#endif
+
+
 typedef ::exception::result_sp cres;
 
 typedef ::exception::exception_sp esp;
@@ -186,4 +202,8 @@ typedef ::exception::exception_sp esp;
 void CLASS_DECL_AURA _rethrow(::exception::exception * pe);
 
 #define _throw_exit(e) _throw(exit_exception(get_app(), e))
+
+
+
+
 

@@ -10,14 +10,8 @@
 
 
 class thread;
-//
-//class CLASS_DECL_AURA message_array :
-//public array < MESSAGE > {
-//};
 class mq;
 
-
-//typedef HTHREAD idthread;
 
 CLASS_DECL_AURA mq * __get_mq(IDTHREAD id, bool bCreate);
 
@@ -42,20 +36,6 @@ CLASS_DECL_AURA IDTHREAD GetCurrentThreadId();
 
 
 
-// Stored data for CREATE_SUSPENDED and ResumeThread.
-
-//struct PendingThreadInfo {
-//    DWORD(WINAPI * lpStartAddress)(LPVOID);
-//    LPVOID lpParameter;
-//    HTHREAD m_hthread;
-//    event * suspensionEvent;
-//    int32_t nPriority;
-//    int32_t cbStack;
-//
-//    PendingThreadInfo() {
-//    }
-//
-//};
 
 
 #endif // AXIS_ANSIOS_THREAD_H

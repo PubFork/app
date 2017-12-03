@@ -13,21 +13,21 @@ class single_lock;
 typedef uint32_t IDTHREAD;
 
 #else
+
 #define QS_ALLEVENTS 0xffff
 
 void __clear_mq();
-
-typedef HTHREAD IDTHREAD;
 
 template <  >
 inline bool EqualElements<IDTHREAD>(IDTHREAD r1, IDTHREAD r2)
 {
    return id_thread_equals(r1, r2) != 0;
 }
+
 template <  >
 inline UINT HashKey(IDTHREAD key)
 {
-   return 0;
+   return (uint_ptr) key;
 }
 
 #endif

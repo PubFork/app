@@ -112,6 +112,8 @@ public:
 
    bool beg();
 
+   bool ini();
+
    void run();
 
    void end();

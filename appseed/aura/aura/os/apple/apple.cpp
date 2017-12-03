@@ -76,10 +76,19 @@ void ReleaseDispatch(void * p)
 
 
 
-
+static bool g_bRunSystem = false;
 
 int32_t defer_run_system()
 {
+   
+   if(g_bRunSystem)
+   {
+      
+      return 0;
+      
+   }
+   
+   g_bRunSystem = true;
    
    return __start_system_with_file(NULL);
    

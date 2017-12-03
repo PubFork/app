@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #if defined(LINUX) || defined(SOLARIS) || defined(APPLEOS)
@@ -1460,7 +1460,7 @@ mutex * mutex::open_mutex(::aura::application * papp,  const char * pstrName)
    if (iFd < 0)
    {
 
-      _throw(resource_exception(get_app()));
+      _throw(resource_exception(::get_app()));
 
    }
 

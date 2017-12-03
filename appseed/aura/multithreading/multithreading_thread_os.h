@@ -1,120 +1,12 @@
 ﻿#pragma once
 
 
-//struct CLASS_DECL_AURA hthread :
-//   virtual public object
-//{
-//public:
-//
-//
-//   uint32_t (*                            m_pfn)(void *);
-//   LPVOID                                 m_pv;
-//   bool                                   m_bRun;
-//   //HTHREAD                              m_hthread;
-//   string                                 m_strDebug;
-//   int32_t                                m_iSleepiness;
-//   int32_t                                m_iResult;
-//   //HTHREAD                              m_hthread;
-//   UINT                                   m_nId;
-//   //bool                                 m_bRun;
-//   event *                                m_pevent;
-//   ::thread *                             m_pthread;
-//
-//#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID) || defined(SOLARIS)
-//
-//   void *                                 m_pthread;
-//
-//#endif
-//
-//   static mutex *                  s_pmutex;
-//   static ref_array <  hthread > *  s_pptra;
-//
-//
-//   hthread(uint32_t ( * pfn)(void *) = NULL, void * pv = NULL);
-//   virtual ~hthread();
-//
-//
-//#if defined(LINUX) || defined(APPLEOS) || defined(ANDROID)
-//
-//   static void * thread_proc(void * pparam);
-//
-//#else
-//
-//   static DWORD WINAPI thread_proc(void * pparam);
-//
-//#endif
-//
-//   //uint32_t run();
-//
-//
-//   virtual bool begin(LPSECURITY_ATTRIBUTES lpsa = NULL,uint32_t cbStack = 0,uint32_t uiFlags = 0,uint32_t * lpuiId = NULL,uint32_t(* pfn)(void *) = NULL,void * pv = NULL);
-//
-//
-//   static uint32_t proc(void * lp);
-//
-//   virtual int32_t run();
-//   virtual bool on_idle();
-//
-//   virtual void wait_thread(uint32_t dwMillis = INFINITE);
-//
-//   static HTHREAD get();
-//   static void set(HTHREAD hthread);
-//   static void stop_all(uint32_t millisMaxWait);
-//
-//
-//};
-
-//#ifdef WINDOWS
-//
-//typedef uint32_t IDTHREAD;
-//
-//inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return a==b;}
-//
-//#else
-//
-//
-//typedef pthread_t IDTHREAD;
-//
-//
-//inline int id_thread_equals(IDTHREAD a, IDTHREAD b) {return pthread_equal(a, b);}
-//
-//
-//#endif
 
 CLASS_DECL_AURA HTHREAD start_thread(uint32_t (*)(void *), void * pv, int32_t iPriority = 0);
 
 CLASS_DECL_AURA HTHREAD create_thread(LPSECURITY_ATTRIBUTES lpsa, uint_ptr cbStack, uint32_t (*)(void *), void * pv, uint32_t uiFlags, IDTHREAD * puiId);
 
 
-//class CLASS_DECL_AURA thread_layer
-//{
-//public:
-//
-//
-//   int32_t              m_iSleepiness;
-//   int32_t              m_iResult;
-//   HTHREAD              m_hthread;
-//   UINT                 m_nId;
-//   bool                 m_bRun;
-//
-//
-//   thread_layer();
-//   virtual ~thread_layer();
-//
-//
-//   void begin();
-//
-//
-//   static uint32_t proc(void * lp);
-//
-//   virtual int32_t run();
-//   virtual bool on_idle();
-//
-//   virtual void wait_thread(uint32_t dwMillis = INFINITE);
-//
-//};
-//
-//
 
 
 CLASS_DECL_AURA IDTHREAD get_current_thread_id();
@@ -123,9 +15,6 @@ CLASS_DECL_AURA IDTHREAD get_current_thread_id();
 class error;
 
 CLASS_DECL_AURA thread* __begin_thread(::aura::application * papp,__THREADPROC pfnThreadProc,LPVOID pParam,int32_t epriority = ::multithreading::priority_normal,UINT nStackSize = 0,uint32_t dwCreateFlags = 0,LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, IDTHREAD * puiId = NULL, error * perror = NULL);
-/* xxx CLASS_DECL_AURA thread* __begin_thread(sp(::coretype) pThreadClass,
-int32_t nPriority = scheduling_priority_normal, UINT nStackSize = 0,
-uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL); xxxx */
 
 template < class T >
 T * c_new(T * p)

@@ -148,9 +148,9 @@ Serial::SerialImpl::open ()
       return;
     case ENFILE:
     case EMFILE:
-      _throw(IOException("Too many file handles open."));
+      THROW(IOException, "Too many file handles open.");
     default:
-      _throw(IOException(errno));
+      THROW(IOException, errno);
     }
   }
 
@@ -581,8 +581,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
         // Disconnected devices, at least on Linux, show the
         // behavior that they are always ready to read immediately
         // but reading returns nothing.
-        _throw( SerialException ("device reports readiness to read but "
-                               "returned no data (device disconnected?)");
+        _throw( SerialException( "device reports readiness to read but returned no data (device disconnected?)"));
       }
       // Update bytes_read
       bytes_read += static_cast<size_t> (bytes_read_now);
@@ -598,7 +597,7 @@ Serial::SerialImpl::read (uint8_t *buf, size_t size)
       if (bytes_read > size) {
         _throw( SerialException ("read over read, too many bytes where "
                                "read, this shouldn't happen, might be "
-                               "a logical error!");
+                               "a logical error!"));
       }
     }
   }
@@ -666,7 +665,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
           // behavior that they are always ready to write immediately
           // but writing returns nothing.
           _throw( SerialException ("device reports readiness to write but "
-                                 "returned no data (device disconnected?)");
+                                 "returned no data (device disconnected?)"));
         }
         // Update bytes_written
         bytes_written += static_cast<size_t> (bytes_written_now);
@@ -682,7 +681,7 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
         if (bytes_written > length) {
           _throw( SerialException ("write over wrote, too many bytes where "
                                  "written, this shouldn't happen, might be "
-                                 "a logical error!");
+                                 "a logical error!"));
         }
       }
       // This shouldn't happen, if r > 0 our fd has to be in the list!
