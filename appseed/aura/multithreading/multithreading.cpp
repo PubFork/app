@@ -97,30 +97,27 @@ namespace multithreading
 
       }
 
-      //try
-      //{
+      try
+      {
 
-      //   single_lock sl(&pthread->m_mutexUiPtra, TRUE);
+         pthread->threadrefa_post_quit();
 
-      //   if (pthread->m_spuiptra.is_set())
-      //   {
+      }
+      catch (...)
+      {
 
-      //      while (pthread->m_spuiptra->has_elements())
-      //      {
+      }
 
-      //         pthread->remove(pthread->m_spuiptra->element_at(0));
+      try
+      {
 
-      //      }
+         pthread->threadrefa_wait(one_minute());
 
-      //      pthread->m_spuiptra.release();
+      }
+      catch (...)
+      {
 
-      //   }
-
-      //}
-      //catch (...)
-      //{
-
-      //}
+      }
 
       int nExitCode = -1;
 
@@ -435,12 +432,8 @@ void do_events(const duration & duration)
 
 
 
-
-
-void thread_refa::post_quit_and_wait(const duration & duration)
+void thread_refa::post_quit()
 {
-
-   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
 
    try
    {
@@ -471,6 +464,25 @@ void thread_refa::post_quit_and_wait(const duration & duration)
 
       }
 
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void thread_refa::wait(const duration & duration, ::sync_interface * psyncParent)
+{
+
+   ::datetime::time timeEnd = ::datetime::time::get_current_time() + MAX(2, duration.get_total_seconds());
+
+   try
+   {
+
+      synch_lock sl(m_pmutex);
+
       ::count cCount = get_count();
 
       ::datetime::time timeNow = ::datetime::time::get_current_time();
@@ -478,13 +490,28 @@ void thread_refa::post_quit_and_wait(const duration & duration)
       while (cCount > 0 &&  timeNow < timeEnd)
       {
 
+
          sl.unlock();
+
+         if (psyncParent != NULL)
+         {
+
+            psyncParent->unlock();
+
+         }
 
          timeNow = ::datetime::time::get_current_time();
 
          cCount = get_count();
 
          Sleep(200);
+
+         if (psyncParent != NULL)
+         {
+
+            psyncParent->lock();
+
+         }
 
          sl.lock();
 

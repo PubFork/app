@@ -418,9 +418,19 @@ HTHREAD thread::get_os_handle() const
 void thread::on_pos_run_thread()
 {
 
+   try
    {
 
-      synch_lock sl(m_objectrefaDependent.m_pmutex);
+      threadrefa_post_quit();
+
+   }
+   catch (...)
+   {
+
+   }
+
+   {
+
 
       for(auto pobject : m_objectrefaDependent)
       {
@@ -1144,7 +1154,7 @@ bool thread::thread_get_run()
    try
    {
 
-      if(!get_app()->m_bRunThisThread)
+      if(!Application.m_bRunThisThread)
       {
 
          return false;
@@ -1155,7 +1165,45 @@ bool thread::thread_get_run()
    catch (...)
    {
 
+      return false;
+
    }
+
+   //try
+   //{
+
+   //   if (!Session.m_bRunThisThread)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //}
+   //catch (...)
+   //{
+
+   //   return false;
+
+   //}
+
+   //try
+   //{
+
+   //   if (!System.m_bRunThisThread)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //}
+   //catch (...)
+   //{
+
+   //   return false;
+
+   //}
 
    return m_bRunThisThread;
 
@@ -2548,6 +2596,22 @@ int32_t thread::thread_term()
    return iResult;
 
 }
+
+
+void thread::threadrefa_add(::thread * pthread)
+{
+
+   if (pthread == this)
+   {
+
+      return;
+
+   }
+
+   command_target::threadrefa_add(pthread);
+
+}
+
 
 int32_t thread::thread_exit()
 {

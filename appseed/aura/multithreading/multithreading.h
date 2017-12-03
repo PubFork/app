@@ -111,7 +111,7 @@ namespace multithreading
 } // namespace multithreading
 
 
-
+class sync_interface;
 
 
 class CLASS_DECL_AURA thread_refa :
@@ -123,8 +123,8 @@ public:
    thread_refa();
    virtual ~thread_refa();
 
-
-   virtual void post_quit_and_wait(const duration & duration);
+   virtual void post_quit();
+   virtual void wait(const duration & duration, ::sync_interface * psyncParent = NULL);
 
 
 };

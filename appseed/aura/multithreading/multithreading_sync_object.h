@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 /////////////////////////////////////////////////////////////////////////////
 // Basic synchronization object
@@ -9,41 +9,62 @@
  **   \author grymse@alhem.net
 **/
 
-class CLASS_DECL_AURA sync_object :
-   virtual public object
+
+class CLASS_DECL_AURA sync_interface
 {
-   public:
+public:
+
+
+   virtual bool lock();
+   virtual bool lock(const duration & durationTimeout);
+
+   virtual wait_result wait();
+   virtual wait_result wait(const duration & durationTimeout);
+
+   virtual bool is_locked() const;
+
+   virtual bool unlock();
+   virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
+
+
+};
+
+class CLASS_DECL_AURA sync_object :
+   virtual public object,
+   virtual public sync_interface
+{
+public:
 
 #ifdef WINDOWS
-      HANDLE      m_object;
+   HANDLE      m_object;
 #endif
-      char *                  m_pszName;
-      bool                    m_bOwner;
+   char *                  m_pszName;
+   bool                    m_bOwner;
 
 
-      sync_object(const char * pstrName);
-      virtual ~sync_object();
+   sync_object(const char * pstrName = NULL);
+   virtual ~sync_object();
 
 
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
+   virtual void assert_valid() const override;
+   virtual void dump(dump_context & dumpcontext) const override;
 
 
 
-      virtual void * get_os_data() const;
+   virtual void * get_os_data() const;
 
-      operator HANDLE() const;
+   operator HANDLE() const;
 
-      virtual bool lock();
-      virtual bool lock(const duration & durationTimeout);
+   virtual bool lock();
+   virtual bool lock(const duration & durationTimeout);
 
-      virtual wait_result wait();
-      virtual wait_result wait(const duration & durationTimeout);
+   virtual wait_result wait();
+   virtual wait_result wait(const duration & durationTimeout);
 
-      virtual bool is_locked() const;
+   virtual bool is_locked() const;
 
-      virtual bool unlock();
-      virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
+   virtual bool unlock();
+   virtual bool unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */);
 
 };
 

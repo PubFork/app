@@ -2,6 +2,9 @@
 //#include "base/user/user/user_windowing.h"
 #include "base/user/user.h"
 #include "base/node/node.h"
+#ifdef WINDOWSEX
+#include "aura/aura/os/windows/windows_system_interaction_impl.h"
+#endif
 
 
 #ifndef WINDOWS

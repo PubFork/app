@@ -92,7 +92,7 @@ namespace asphere
 
       sync_context_theme();
 
-      ::fork(this, [&]()
+      fork([&]()
       {
 
          while (get_thread_run())

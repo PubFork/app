@@ -175,6 +175,8 @@ public:
    ::duration set_file_sharing_violation_timeout(::duration duration);
 
 
+   virtual void threadrefa_add(::thread * pthread);
+
    ///  \brief    starts thread on first call
    virtual void start();
 

@@ -1,4 +1,59 @@
-#include "framework.h"
+﻿#include "framework.h"
+
+
+bool sync_interface::lock()
+{
+
+   return false;
+
+}
+
+
+bool sync_interface::lock(const duration & durationTimeout)
+{
+
+   return false;
+
+}
+
+
+wait_result sync_interface::wait()
+{
+
+   return wait_result(wait_result::Failure);
+
+}
+
+
+wait_result sync_interface::wait(const duration & durationTimeout)
+{
+
+   return wait_result(wait_result::Failure);
+
+}
+
+
+bool sync_interface::is_locked() const
+{
+
+   return false;
+
+}
+
+
+bool sync_interface::unlock()
+{
+
+   return false;
+
+}
+
+bool sync_interface::unlock(LONG /* lCount */, LPLONG /* lpPrevCount=NULL */)
+{
+
+   return false;
+
+}
 
 
 sync_object::sync_object(const char * pszName)
@@ -26,6 +81,7 @@ sync_object::sync_object(const char * pszName)
    }
 
 }
+
 
 sync_object::~sync_object()
 {

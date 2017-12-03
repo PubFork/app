@@ -1152,24 +1152,7 @@ restart:
 
       m_bUserElementalOk = false;
 
-      if (m_pthreadrefa != NULL)
-      {
-
-         duration durationWait;
-
-#ifdef DEBUG
-
-         durationWait = minutes(5);
-
-#else
-
-         durationWait = one_minute();
-
-#endif
-
-         threadrefa_post_quit_and_wait(durationWait);
-
-      }
+      threadrefa_post_quit();
 
       try
       {
@@ -3945,16 +3928,20 @@ restart:
    void interaction::PostNcDestroy()
    {
 
-      synch_lock sl(m_pmutex);
-
-      try
       {
 
-         remove_all_routes();
+         synch_lock sl(m_pmutex);
 
-      }
-      catch (...)
-      {
+         try
+         {
+
+            remove_all_routes();
+
+         }
+         catch (...)
+         {
+
+         }
 
       }
 
@@ -4055,7 +4042,13 @@ restart:
 
       {
 
-         m_pimpl.release();
+         synch_lock sl(m_pmutex);
+
+         {
+
+            m_pimpl.release();
+
+         }
 
       }
 
@@ -8290,7 +8283,7 @@ restart:
 
 #ifdef WINDOWSEX
 
-      ::fork(get_app(), [=]()
+      fork([&]()
       {
 
          point pt;
@@ -8298,7 +8291,13 @@ restart:
          while (get_thread_run())
          {
 
-            defer_notify_mouse_move(pt);
+            {
+
+               sp(::user::interaction) spui = this;
+
+               spui->defer_notify_mouse_move(pt);
+
+            }
 
             Sleep(5);
 

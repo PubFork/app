@@ -72,7 +72,9 @@ object::object(::aura::application * papp)
 object::~object()
 {
 
-   threadrefa_post_quit_and_wait(one_minute());
+   threadrefa_post_quit();
+
+   threadrefa_wait(one_minute());
 
    ::aura::del(m_pthreadrefa);
 
@@ -881,8 +883,10 @@ void object::on_handle(::create * pcreate)
 }
 
 
-void object::threadrefa_post_quit_and_wait(::duration duration)
+void object::threadrefa_post_quit()
 {
+
+   synch_lock sl(m_pmutex);
 
    try
    {
@@ -890,7 +894,51 @@ void object::threadrefa_post_quit_and_wait(::duration duration)
       if (m_pthreadrefa != NULL)
       {
 
-         m_pthreadrefa->post_quit_and_wait(duration);
+         m_pthreadrefa->post_quit();
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
+}
+
+
+void object::threadrefa_wait(::duration duration)
+{
+
+   {
+
+      synch_lock sl(m_pmutex);
+
+      try
+      {
+
+         if (m_pthreadrefa != NULL)
+         {
+
+            m_pthreadrefa->wait(duration, &sl);
+
+         }
+
+      }
+      catch (...)
+      {
+
+      }
+
+   }
+
+   try
+   {
+
+      if (m_pthreadrefa != NULL)
+      {
+
+         m_pthreadrefa->wait(duration);
 
       }
 
@@ -914,6 +962,8 @@ void object::threadrefa_add(::thread * pthread)
 
    }
 
+   synch_lock slObject(m_pmutex);
+
    if (m_pthreadrefa == NULL)
    {
 
@@ -921,22 +971,28 @@ void object::threadrefa_add(::thread * pthread)
 
    }
 
-   {
+   synch_lock sl(m_pthreadrefa->m_pmutex);
 
-      synch_lock sl(m_pthreadrefa->m_pmutex);
+   synch_lock slThread(pthread->m_pmutex);
 
-      synch_lock slThread(pthread->m_pmutex);
+   m_pthreadrefa->add(pthread);
 
-      m_pthreadrefa->add(pthread);
-
-      pthread->m_objectrefaDependent.add(this);
-
-   }
+   pthread->m_objectrefaDependent.add(this);
 
 }
 
+
 void object::threadrefa_remove(::thread * pthread)
 {
+
+   if (pthread == NULL)
+   {
+
+      return;
+
+   }
+
+   synch_lock slObject(m_pmutex);
 
    if (m_pthreadrefa == NULL)
    {
@@ -945,18 +1001,13 @@ void object::threadrefa_remove(::thread * pthread)
 
    }
 
-   if (pthread != NULL)
-   {
+   synch_lock sl(m_pthreadrefa->m_pmutex);
 
-      synch_lock sl(m_pthreadrefa->m_pmutex);
+   synch_lock slThread(pthread->m_pmutex);
 
-      synch_lock slThread(pthread->m_pmutex);
+   m_pthreadrefa->remove(pthread);
 
-      m_pthreadrefa->remove(pthread);
-
-      pthread->m_objectrefaDependent.remove(this);
-
-   }
+   pthread->m_objectrefaDependent.remove(this);
 
 }
 

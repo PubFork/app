@@ -22,6 +22,8 @@ bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::
 
    }
 
+   defer_co_initialize_ex(false);
+
 #ifdef METROWIN
 
    Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();

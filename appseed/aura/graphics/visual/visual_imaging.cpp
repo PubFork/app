@@ -6221,7 +6221,7 @@ bool imaging::load_from_file(::visual::cursor * pcursor,var varFile, bool bFromC
 bool imaging::load_image(::draw2d::dib * pdib, var varFile)
 {
 
-   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read);
+   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_write);
 
    if (file.is_null())
    {
@@ -6239,7 +6239,7 @@ bool imaging::load_image(::draw2d::dib * pdib, var varFile)
 bool imaging::save_image(var varFile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
 {
 
-   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_read);
+   ::file::file_sp file = Application.file().get_file(varFile, ::file::type_binary | ::file::mode_write | ::file::share_exclusive);
 
    if (file.is_null())
    {
