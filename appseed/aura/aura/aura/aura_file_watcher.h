@@ -44,7 +44,8 @@ namespace file_watcher
 
 	/// Base exception class
 	/// @class Exception
-	class CLASS_DECL_AURA exception
+	class CLASS_DECL_AURA exception :
+	virtual public ::exception::exception
 	{
 	public:
 
@@ -53,7 +54,7 @@ namespace file_watcher
          m_strMessage(message)
 		{
 		}
-      
+
 	};
 
 	/// Exception thrown when a file is not found.
@@ -136,8 +137,8 @@ namespace file_watcher
 
    }; // class file_watch_listener
 
-   
-   
+
+
 	/// Listens to files and directories and dispatches events
 	/// to notify the parent program of the changes.
 	/// @class file_watcher
@@ -145,7 +146,7 @@ namespace file_watcher
       virtual public object
 	{
 	private:
-		
+
       /// The implementation
 		file_watcher_impl       * m_pimpl;
 
@@ -190,7 +191,7 @@ namespace file_watcher
    //   class CLASS_DECL_AURA add
    //   {
    //   public:
-   //      
+   //
    //      string directory;
    //      file_watch_listener * pwatcher;
    //      bool bRecursive;

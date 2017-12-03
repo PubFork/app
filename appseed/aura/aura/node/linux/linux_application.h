@@ -39,7 +39,7 @@ namespace linux
       virtual bool init1();
       virtual bool init2();
       virtual bool init3();
-      virtual int32_t  term_instance() override;
+      virtual void term_instance() override;
 
 
 

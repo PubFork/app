@@ -2682,7 +2682,7 @@ return 0;
       // check if in permanent ::collection::map, if it is reflect it (could be OLE control)
       sp(::interaction_impl) pWnd =  (pMap->lookup_permanent(hWndChild)); */
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
 //      sp(::user::interaction) pWnd =  (FromHandlePermanent(hWndChild));
 //      ASSERT(pWnd == NULL || pWnd->get_handle() == hWndChild);
 //      if (pWnd == NULL)
@@ -2928,7 +2928,7 @@ return 0;
 
    void interaction_impl::get_app_wnda(user::oswindow_array & wnda)
    {
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
 
@@ -3222,7 +3222,7 @@ _throw(not_implemented(get_app()));
    bool PASCAL interaction_impl::GrayCtlColor(HDC hDC, oswindow hWnd, UINT nCtlColor,
       HBRUSH hbrGray, COLORREF clrText)
    {
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      if (hDC == NULL)
 //      {
 //         // sometimes Win32 passes a NULL hDC in the WM_CTLCOLOR message.
@@ -5064,7 +5064,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * interaction_impl::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow));
 
    }
@@ -5119,7 +5119,7 @@ if(psurface == g_cairosurface)
    {
 
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::oswindowFromPoint(point));
 
    }
@@ -5164,7 +5164,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetOpenClipboardWindow()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::GetOpenClipboardWindow());
 
    }
@@ -5172,7 +5172,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetClipboardOwner()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::GetClipboardOwner());
 
    }
@@ -5180,7 +5180,7 @@ if(psurface == g_cairosurface)
    ::user::interaction * PASCAL interaction_impl::GetClipboardViewer()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::GetClipboardViewer());
 
    }
@@ -5215,7 +5215,7 @@ if(psurface == g_cairosurface)
    point PASCAL interaction_impl::GetCaretPos()
    {
 
-      _throw(not_implemented(get_app()));
+      _throw(not_implemented(::get_app()));
 //      point point;
 //      ::GetcaretPos((LPPOINT)&point); return point;
 
@@ -5224,7 +5224,7 @@ if(psurface == g_cairosurface)
    void PASCAL interaction_impl::SetCaretPos(POINT point)
    {
 
-    _throw(not_implemented(get_app()));
+    _throw(not_implemented(::get_app()));
 //      ::SetcaretPos(point.x, point.y);
 
    }
@@ -5258,7 +5258,7 @@ if(psurface == g_cairosurface)
 
       return NULL;
 
-         _throw(not_implemented(get_app()));
+         _throw(not_implemented(::get_app()));
 //      return ::linux::interaction_impl::from_handle(::GetForegroundWindow());
 
    }
@@ -5668,7 +5668,7 @@ if(psurface == g_cairosurface)
          hWndTemp = ::GetParent(hWndTop);
       }
 
-      _throw(todo(get_app()));
+      _throw(todo(::get_app()));
       // get last active popup of first non-child that was found
   //    if (hParent == NULL && hWnd != NULL)
   //       hWnd = ::GetLastActivePopup(hWnd);

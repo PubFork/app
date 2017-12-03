@@ -934,7 +934,7 @@ while (is_open_ == true) {
   if (-1 == ioctl (fd_, TIOCMIWAIT, &command)) {
     string ss;
     ss.Format("waitForDSR failed on a call to ioctl(TIOCMIWAIT): %d %s", errno, strerror(errno));
-    _throw((SerialException(ss)));
+    _throw(SerialException(ss.str().c_str()));
   }
   return true;
 #endif

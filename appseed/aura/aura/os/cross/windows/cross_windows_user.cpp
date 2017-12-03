@@ -1,6 +1,6 @@
 #include "framework.h"
 #if defined(LINUX)
-#include "aura/aura/os/linux/linux_user_impl.h""
+#include "aura/aura/os/linux/linux_user_impl.h"
 #endif
 #if defined(APPLEOS) || defined(LINUX) || defined(ANDROID)
 #include <iconv.h>

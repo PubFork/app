@@ -152,18 +152,30 @@ class CLASS_DECL_AURA aura_prelude
 public:
 
 
-   static PFN_AURA_APP_CORE            s_pfnPrelude;
+   static aura_prelude *         s_pprelude;
 
-   static ::aura::PFN_GET_NEW_APP      s_pfnNewApp;
+   ::aura::PFN_GET_NEW_APP       m_pfnNewApp;
 
 
-   aura_prelude(PFN_AURA_APP_CORE pprelude);
+   aura_prelude();
 
 
    aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp);
 
 
-   static bool acid_get_preamble(app_core * pappcore);
+   virtual ~aura_prelude();
+
+
+   static bool defer_call_construct(app_core * pappcore);
+
+
+   virtual bool construct(app_core * pappcore);
+
+
+   static bool defer_call_prelude(app_core * pappcore);
+
+
+   virtual bool prelude(app_core * pappcore);
 
 
 };

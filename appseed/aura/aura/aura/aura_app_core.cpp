@@ -2,9 +2,9 @@
 #include <time.h>
 
 
-PFN_AURA_APP_CORE aura_prelude::s_pfnPrelude = NULL;
+::aura_prelude * aura_prelude::s_pprelude = NULL;
 
-::aura::PFN_GET_NEW_APP aura_prelude::s_pfnNewApp = NULL;
+//::aura::PFN_GET_NEW_APP aura_prelude::s_pfnNewApp = NULL;
 
 
 #ifdef WINDOWS
@@ -63,6 +63,7 @@ bool app_core::on_result(int iResultCode)
 bool app_core::beg()
 {
 
+   aura_prelude::defer_call_construct(this);
 
    if (!defer_aura_init())
    {
@@ -134,40 +135,40 @@ void app_core::run()
 {
 
    set_main_thread(GetCurrentThread());
-   
+
    set_main_thread_id(GetCurrentThreadId());
-   
+
    m_psystem->m_strAppId = m_pmaindata->m_pmaininitdata->m_strAppId;
-   
+
    m_psystem->startup_command(m_pmaindata->m_pmaininitdata);
-   
+
    if (!m_psystem->pre_run())
    {
 
       return;
 
    }
-   
+
    try
    {
-      
+
       m_psystem->main();
-      
+
       for(int i = 0; i < m_psystem->m_error.m_iaErrorCode2.get_count(); i++)
       {
-      
+
          on_result(m_psystem->m_error.m_iaErrorCode2[i]);
-         
+
       }
 
    }
    catch (...)
    {
-      
+
       on_result(-2004);
-      
+
    }
-   
+
    try
    {
 
@@ -191,7 +192,7 @@ void app_core::run()
    {
 
       on_result(-2006);
-      
+
    }
 
    ::aura::del(m_psystem);
@@ -222,17 +223,17 @@ void app_core::end()
    ::time_t timet = ::time(NULL);
 
    tm t;
-   
+
 #ifdef WINDOWS
 
    errno_t err = _localtime64_s(&t, &timet);
-   
+
 #else
-   
+
    localtime_r(&timet, &t);
-   
+
    errno_t err = errno;
-   
+
 #endif
 
    char szTime[2048];
@@ -373,31 +374,7 @@ typedef DEFER_INIT * PFN_DEFER_INIT;
 #undef new
 
 
-CLASS_DECL_AURA int main(int argc, char * argv[])
-{
 
-   ap(aura_main_data) pmaindata = new aura_main_data(argc, argv);
-
-   return (int) aura_aura(pmaindata);
-
-   //app_core appcore(&maindata);
-
-   //int iError = 0;
-
-   //iError = appcore.start();
-
-   //if (iError != NOERROR)
-   //{
-
-   //   return iError;
-
-   //}
-
-   //iError = app_common_main(argc, argv, appcore);
-
-   //return appcore.end();
-
-}
 
 
 long aura_aura(aura_main_data * pmaindata)
@@ -424,17 +401,12 @@ long aura_aura(aura_main_data * pmaindata)
 CLASS_DECL_AURA void aura_boot(app_core * pappcore)
 {
 
-   if (::aura_prelude::s_pfnPrelude != NULL)
+   if (!::aura_prelude::defer_call_prelude(pappcore))
    {
 
-      if (!::aura_prelude::s_pfnPrelude(pappcore))
-      {
+      pappcore->on_result(-1);
 
-         pappcore->on_result(-1);
-
-         return;
-
-      }
+      return;
 
    }
 
@@ -453,15 +425,15 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
    if(pappcore->m_psystem->begin_synch())
    {
-      
+
       set_main_thread(pappcore->m_psystem->m_hthread);
-      
+
       set_main_thread_id(pappcore->m_psystem->m_uiThread);
 
       ns_shared_application(pappcore->m_pmaindata->m_argc, pappcore->m_pmaindata->m_argv);
-      
+
       ns_app_run();
-      
+
    }
 
 #else
@@ -479,12 +451,10 @@ CLASS_DECL_AURA void aura_main(app_core * pappcore)
 
 
 
-
-
-aura_prelude::aura_prelude(PFN_AURA_APP_CORE pprelude)
+aura_prelude::aura_prelude()
 {
 
-   s_pfnPrelude = pprelude;
+   s_pprelude = this;
 
 }
 
@@ -492,17 +462,76 @@ aura_prelude::aura_prelude(PFN_AURA_APP_CORE pprelude)
 aura_prelude::aura_prelude(::aura::PFN_GET_NEW_APP pgetnewapp)
 {
 
-   s_pfnPrelude = &acid_get_preamble;
+   s_pprelude = this;
 
-   s_pfnNewApp = pgetnewapp;
+   m_pfnNewApp = pgetnewapp;
 
 }
 
 
-bool aura_prelude::acid_get_preamble(app_core * pappcore)
+aura_prelude::~aura_prelude()
 {
 
-   pappcore->m_pfnNewApp = s_pfnNewApp;
+}
+
+
+bool aura_prelude::defer_call_construct(app_core * pappcore)
+{
+
+   if(s_pprelude == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   if(!s_pprelude->construct(pappcore))
+   {
+
+      return NULL;
+
+   }
+
+   return true;
+
+}
+
+
+bool aura_prelude::construct(app_core * pappcore)
+{
+
+   return true;
+
+}
+
+
+bool aura_prelude::defer_call_prelude(app_core * pappcore)
+{
+
+   if(s_pprelude == NULL)
+   {
+
+      return NULL;
+
+   }
+
+   if(!s_pprelude->prelude(pappcore))
+   {
+
+      return NULL;
+
+   }
+
+   return true;
+
+}
+
+
+
+bool aura_prelude::prelude(app_core * pappcore)
+{
+
+   pappcore->m_pfnNewApp = m_pfnNewApp;
 
    return true;
 

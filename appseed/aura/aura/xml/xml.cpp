@@ -1,7 +1,4 @@
 #include "framework.h"
-#include "xml_disp_option.h"
-#include "xml_department.h"
-#include "aura/primitive/primitive_property.h"
 
 
 namespace xml

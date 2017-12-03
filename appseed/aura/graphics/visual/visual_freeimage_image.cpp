@@ -614,10 +614,15 @@ namespace visual
    }
 
 
+}
 
-   bool dib_sp::write_to_file(::file::file_sp pfile, save_image * psaveimage)
+   bool imaging::_save_image(::file::file * pfile, ::draw2d::dib * pdib, ::visual::save_image * psaveimage)
    {
-      save_image saveimageDefault;
+   if(pdib == NULL)
+   {
+   return false;
+   }
+      ::visual::save_image saveimageDefault;
       if (psaveimage == NULL)
          psaveimage = &saveimageDefault;
       //#ifdef WINDOWS
@@ -682,7 +687,7 @@ namespace visual
 
 
       FIMEMORY * pfm1 = FreeImage_OpenMemory();
-      FIBITMAP * pfi7 = freeimage_from_dib(m_p);
+      FIBITMAP * pfi7 = freeimage_from_dib(pdib);
       FIBITMAP * pfi8 = NULL;
       bool bConv;
       if (b8)
@@ -821,9 +826,6 @@ namespace visual
 
 
 
-} // namespace visual
-
-
 
 
 //bool imaging::load_image(::draw2d::dib & dib, var varFile, ::aura::application * papp)
@@ -841,34 +843,34 @@ namespace visual
 //}
 
 
-bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
-{
-
-   auto * fi = freeimage_from_dib(&dib);
-
-   if (fi == NULL)
-   {
-
-      return false;
-
-   }
-
-   bool bOk = false;
-
-   if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), fi, lpcszFile, 0))
-   {
-
-      bOk = true;
-
-   }
-
-   FreeImage_Unload(fi);
-
-   return bOk;
-
-}
-
-
+//bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
+//{
+//
+//   auto * fi = freeimage_from_dib(&dib);
+//
+//   if (fi == NULL)
+//   {
+//
+//      return false;
+//
+//   }
+//
+//   bool bOk = false;
+//
+//   if (FreeImage_Save(FreeImage_GetFIFFromFormat("PNG"), fi, lpcszFile, 0))
+//   {
+//
+//      bOk = true;
+//
+//   }
+//
+//   FreeImage_Unload(fi);
+//
+//   return bOk;
+//
+//}
+//
+//
 ::draw2d::bitmap_sp freeimage_to_hbitmap(FIBITMAP * pfibitmap, ::aura::application * papp)
 {
 
@@ -934,7 +936,7 @@ bool imaging::save_png(const char * lpcszFile, draw2d::dib & dib)
 }
 
 
-bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
+bool imaging::_load_image(::draw2d::dib * pdib, ::file::file *  pfile)
 {
 
    if (pfile == NULL)
@@ -944,7 +946,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    }
 
-   if (is_null(dib))
+   if (is_null(pdib))
    {
 
       return false;
@@ -970,11 +972,11 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
       FREE_IMAGE_FORMAT format;
 
-      format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile.m_p);
+      format = FreeImage_GetFileTypeFromHandle(&io, (::file::file *)pfile);
 
       pfile->seek_to_begin();
 
-      pfibitmap = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile.m_p);
+      pfibitmap = FreeImage_LoadFromHandle(format, &io, (::file::file *)pfile);
 
    }
    catch (...)
@@ -1036,7 +1038,7 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
 
    }
 
-   if(!dib_from_freeimage(&dib, pfibitmap))
+   if(!dib_from_freeimage(pdib, pfibitmap))
    {
 
       FreeImage_Unload(pfibitmap);
@@ -1069,32 +1071,32 @@ bool imaging::load_image(::draw2d::dib & dib, ::file::file_sp  pfile)
       switch (iExifOrientation)
       {
       case 2:
-         dib2->flip_horizontal(&dib);
-         dib.from(dib2);
+         dib2->flip_horizontal(pdib);
+         pdib->from(dib2);
          break;
       case 3:
-         dib2->rotate(&dib, 180.0);
-         dib.from(dib2);
+         dib2->rotate(pdib, 180.0);
+         pdib->from(dib2);
          break;
       case 4:
-         dib2->flip_vertical(&dib);
-         dib.from(dib2);
+         dib2->flip_vertical(pdib);
+         pdib->from(dib2);
          break;
       case 5:
-         dib2->flip_horizontal(&dib);
-         dib.rotate(dib2, -270.0);
+         dib2->flip_horizontal(pdib);
+         pdib->rotate(dib2, -270.0);
          break;
       case 6:
-         dib2->rotate(&dib, -90.0);
-         dib.from(dib2);
+         dib2->rotate(pdib, -90.0);
+         pdib->from(dib2);
          break;
       case 7:
-         dib2->flip_horizontal(&dib);
-         dib.rotate(dib2, -90.0);
+         dib2->flip_horizontal(pdib);
+         pdib->rotate(dib2, -90.0);
          break;
       case 8:
-         dib2->rotate(&dib, -270.0);
-         dib.from(dib2);
+         dib2->rotate(pdib, -270.0);
+         pdib->from(dib2);
          break;
       case 1:
       default:
