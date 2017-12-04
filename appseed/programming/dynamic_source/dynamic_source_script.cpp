@@ -22,10 +22,10 @@ namespace dynamic_source
 
 script::script(::aura::application * papp) :
    ::object(papp),
-    m_memfileError(papp),
-    m_mutex(papp)
+    m_memfileError(papp)
 {
 
+   defer_create_mutex();
 
 }
 
@@ -78,7 +78,7 @@ bool ds_script::DoesMatchVersion()
 
    m_dwLastVersionCheck = get_tick_count();
 
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    bool bMatches = false;
 
@@ -93,7 +93,7 @@ bool ds_script::DoesMatchVersion()
 bool ds_script::ShouldBuild()
 {
    
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    bool bManagerShouldBuild = m_pmanager->should_build(m_strSourcePath);
 
@@ -111,7 +111,7 @@ bool ds_script::ShouldBuild()
 void ds_script::on_start_build()
 {
 
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    m_bShouldCalcTempError     = true;
 
@@ -129,14 +129,14 @@ void ds_script::on_start_build()
 
 bool ds_script::HasTimedOutLastBuild()
 {
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
    return (::get_tick_count() - m_dwLastBuildTime) >
           (m_pmanager->m_dwBuildTimeWindow + System.math().RandRange(0, m_pmanager->m_dwBuildTimeRandomWindow));
 }
 
 bool ds_script::HasCompileOrLinkError()
 {
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    string str;
 
@@ -161,7 +161,7 @@ bool ds_script::HasDelayedTempError()
 
 bool ds_script::HasTempError()
 {
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
    // if m_strError is empty, sure there is a error... at least the
    // successfull compilation/linking message ("error message" => m_strError) should exist
    // If it is empty, it is considered a temporary error (due locks or race conditions...)
@@ -176,7 +176,7 @@ bool ds_script::HasTempError()
 bool ds_script::CalcHasTempError()
 {
 
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    if (m_bHasTempOsError)
       return true;
@@ -253,7 +253,7 @@ bool ds_script::CalcHasTempError()
 void ds_script::Load()
 {
    
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    
 #ifdef WINDOWS
@@ -349,7 +349,7 @@ void ds_script::Unload()
 
    m_evCreationEnabled.ResetEvent();
 
-   synch_lock sl(&m_mutex);
+   synch_lock sl(m_pmutex);
 
    if(m_library.is_opened())
    {
@@ -403,8 +403,6 @@ ds_script::~ds_script()
 
 script_instance * ds_script::create_instance()
 {
-
-   synch_lock sl(&m_mutex);
 
    if (m_strSourcePath.find_ci("\\applications\\basic\\") > 0)
    {

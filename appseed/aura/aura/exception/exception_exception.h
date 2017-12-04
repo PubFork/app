@@ -197,7 +197,7 @@ typedef ::exception::result_sp cres;
 
 typedef ::exception::exception_sp esp;
 
-#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw ::esp((canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)))
+#define _throw(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION) throw canew(EXCEPTION_WITH_OPTIONAL_CONSTRUCTION)
 
 void CLASS_DECL_AURA _rethrow(::exception::exception * pe);
 

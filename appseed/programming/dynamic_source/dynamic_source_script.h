@@ -19,7 +19,6 @@ public:
 
    sp(script_manager)                        m_pmanager;
    string                                    m_strName;
-   mutex                                     m_mutex;
    ::file::plain_text_stream_memory_file     m_memfileError;
    string                                    m_strError;
 

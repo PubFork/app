@@ -324,6 +324,9 @@ void script_compiler::prepare_compile_and_link_environment()
 void script_compiler::compile(ds_script * pscript)
 {
 
+   
+   synch_lock sl(pscript->m_pmutex);
+
    TRACE("Compiling script \"%s\"\n",pscript->m_strName.c_str());
 
 
@@ -566,9 +569,11 @@ void script_compiler::compile(ds_script * pscript)
          Application.file().del(pscript->m_strScriptPath + ".old");
       }
    }
-   catch(string strError)
+   catch (::exception::exception * pexception)
    {
-      TRACE("%s", strError);
+      esp esp(pexception);
+
+      TRACE("%s", esp->what());
    }
    try
    {
@@ -577,9 +582,10 @@ void script_compiler::compile(ds_script * pscript)
          Application.file().move(pscript->m_strScriptPath + ".old",pscript->m_strScriptPath);
       }
    }
-   catch(string strError)
+   catch(::exception::exception * pexception)
    {
-      TRACE("%s", strError);
+      esp esp(pexception);
+      TRACE("%s", esp->what());
    }
    try
    {
@@ -588,9 +594,11 @@ void script_compiler::compile(ds_script * pscript)
          Application.file().del(pscript->m_strScriptPath + ".old");
       }
    }
-   catch(string strError)
+   catch (::exception::exception * pexception)
    {
-      TRACE("%s", strError);
+      esp esp(pexception);
+
+      TRACE("%s", esp->what());
    }
 #ifndef LINUX
 
@@ -3021,6 +3029,11 @@ void script_compiler::parse_pstr_set()
             {
                pstr_set(strId,strLocale,strSchema,strValue);
             }
+
+         }
+         catch (::exception::exception * pexception)
+         {
+            esp esp(pexception);
 
          }
          catch(...)

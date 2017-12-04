@@ -2398,10 +2398,16 @@ bool thread::thread_entry()
       }
 
    }
-   catch (esp esp)
+   catch (::exit_exception * pexception)
    {
 
-      esp.rethrow_exit();
+      _rethrow(pexception);
+
+   }
+   catch (::exception::exception * pexception)
+   {
+
+      esp esp(pexception);
 
       bError = true;
 
