@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 extern CLASS_DECL_CORE thread_int_ptr < DWORD_PTR > t_time1;
@@ -39,7 +39,7 @@ namespace user
          bool SizeManager::_000OnLButtonDown(::message::mouse * pmouse)
          {
             ASSERT(pmouse->m_id == WM_LBUTTONDOWN
-               || pmouse->m_id == WM_NCLBUTTONDOWN);
+                   || pmouse->m_id == WM_NCLBUTTONDOWN);
 
             if(!m_pworkset->IsSizingEnabled())
                return false;
@@ -226,11 +226,11 @@ namespace user
 
          void SizeManager::SizeWindow(sp(::user::interaction)pwnd, point pt, bool bTracking)
          {
-            
+
             UNREFERENCED_PARAMETER(pwnd);
-            
+
             bool bSize = true;
-            
+
             rect rectWindow;
 
             class rect rectMonitor;
@@ -239,7 +239,7 @@ namespace user
 //               DWORD dwTime2 = ::get_tick_count();
 
                //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-            //   TRACE("SizeManager::Mv call time3= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+               //   TRACE("SizeManager::Mv call time3= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
             }
 
@@ -253,7 +253,7 @@ namespace user
 //               DWORD dwTime2 = ::get_tick_count();
 
                //TRACE("message_handler call time0= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
-              // TRACE("SizeManager::Mv call time4= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
+               // TRACE("SizeManager::Mv call time4= %d ms",dwTime2 - t_time1.operator DWORD_PTR());
 
             }
 
@@ -268,7 +268,7 @@ namespace user
                rectWindow.bottom = m_rcWindowOrigin.bottom;
                rectWindow.right = m_rcWindowOrigin.right;
                bSize = rectWindow.width() > 0 &&
-                  rectWindow.height() > 0;
+                       rectWindow.height() > 0;
                if(rectWindow.width() < m_minSize.cx)
                {
                   rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
@@ -358,7 +358,7 @@ namespace user
                }
                rectWindow.bottom = MAX(rectWindow.bottom, rectMonitor.top + m_minBorder.cy);
                sp(WorkSetClientInterface) pinterface = m_pworkset->get_draw_window();
-               
+
                if (pinterface->oprop("ysnap").int32() > 1)
                {
                   int h = rectWindow.height();
@@ -450,7 +450,7 @@ namespace user
             ::rect rectWindow = rect;
 
             if(!(rectWindow.width() >= m_minSize.cx  &&
-               rectWindow.height() >= m_minSize.cy))
+                  rectWindow.height() >= m_minSize.cy))
                return;
 
 
@@ -466,12 +466,12 @@ namespace user
                //if(pwnd->GetParent() == NULL)
                if(true)
                {
-                  
+
                   m_pworkset->_000OnBeforeSize(rectWindow);
-                  
+
                   if(m_pworkset->GetWndDraw()->WfiIsZoomed())
                   {
-                  
+
                      m_pworkset->GetWndDraw()->WfiRestore(true);
 
                   }
@@ -499,12 +499,12 @@ namespace user
 
 
                   pwnd->SetWindowPos(
-                     ZORDER_TOP,
-                     rectParentClient.left,
-                     rectParentClient.top,
-                     rectParentClient.width(),
-                     rectParentClient.height(),
-                     (m_uiSWPFlags | SWP_NOZORDER) & ~SWP_SHOWWINDOW);
+                  ZORDER_TOP,
+                  rectParentClient.left,
+                  rectParentClient.top,
+                  rectParentClient.width(),
+                  rectParentClient.height(),
+                  (m_uiSWPFlags | SWP_NOZORDER) & ~SWP_SHOWWINDOW);
 
                   {
 
@@ -615,7 +615,7 @@ namespace user
 
             if(pbase->m_id == WM_LBUTTONDOWN)
             {
-               
+
                SCAST_PTR(::message::mouse, pmouse, pbase);
 
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
@@ -649,7 +649,7 @@ namespace user
             }
             else if(pbase->m_id == WM_MOUSEMOVE || pbase->m_id == WM_LBUTTONUP)
             {
-               
+
                SCAST_PTR(::message::mouse, pmouse, pbase);
 
                point ptCursor((int16_t)LOWORD(pbase->m_lparam), (int16_t)HIWORD(pbase->m_lparam));
@@ -668,7 +668,7 @@ namespace user
                   bSize = false;
                   sp(::user::interaction) pWndCapture = Session.GetCapture();
                   if(pWndCapture == NULL ||
-                     pWndCapture->get_handle() != GetEventWindow()->get_handle())
+                        pWndCapture->get_handle() != GetEventWindow()->get_handle())
                   {
                      EHitTest emode = hit_test(ptCursor);
                      if(emode != HitTestNone)
@@ -705,7 +705,7 @@ namespace user
                   rectWindow.bottom = m_rcWindowOrigin.bottom;
                   rectWindow.right = m_rcWindowOrigin.right;
                   bSize = rectWindow.width() > 0 &&
-                     rectWindow.height() > 0;
+                          rectWindow.height() > 0;
                   if(rectWindow.width() < m_minSize.cx)
                   {
                      rectWindow.left = m_rcWindowOrigin.right - m_minSize.cx;
@@ -876,7 +876,7 @@ namespace user
                if(bSize)
                {
                   MoveWindow(GetSizingWindow(), rectWindow);
-                  
+
                   sp(WorkSetClientInterface) pinterface = m_pworkset->GetEventWindow();
 
                   pinterface->WfiOnSize(pbase->m_id == WM_MOUSEMOVE);
@@ -945,8 +945,6 @@ namespace user
    } // namespace wndfrm
 
 
-
-
-
-
 } // namespace user
+
+
